@@ -1,0 +1,86 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { createChart, ColorType, IChartApi } from "lightweight-charts";
+import { HistoricalPrice } from "@/lib/hooks/use-stock-history";
+
+interface StockChartProps {
+  data: HistoricalPrice[];
+}
+
+export function StockChart({ data }: StockChartProps) {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<IChartApi | null>(null);
+
+  useEffect(() => {
+    if (!chartContainerRef.current || data.length === 0) return;
+
+    // Create chart
+    const chart = createChart(chartContainerRef.current, {
+      layout: {
+        background: { type: ColorType.Solid, color: "transparent" },
+        textColor: "#9ca3af",
+      },
+      grid: {
+        vertLines: { color: "#1f2937" },
+        horzLines: { color: "#1f2937" },
+      },
+      width: chartContainerRef.current.clientWidth,
+      height: 400,
+      rightPriceScale: {
+        borderColor: "#374151",
+      },
+      timeScale: {
+        borderColor: "#374151",
+        timeVisible: true,
+      },
+      crosshair: {
+        mode: 1,
+      },
+    });
+
+    chartRef.current = chart;
+
+    // Add candlestick series
+    const candlestickSeries = chart.addCandlestickSeries({
+      upColor: "#22c55e",
+      downColor: "#ef4444",
+      borderDownColor: "#ef4444",
+      borderUpColor: "#22c55e",
+      wickDownColor: "#ef4444",
+      wickUpColor: "#22c55e",
+    });
+
+    // Format data for lightweight-charts
+    const chartData = data.map((d) => ({
+      time: d.time,
+      open: d.open,
+      high: d.high,
+      low: d.low,
+      close: d.close,
+    }));
+
+    candlestickSeries.setData(chartData);
+
+    // Fit content
+    chart.timeScale().fitContent();
+
+    // Handle resize
+    const handleResize = () => {
+      if (chartContainerRef.current) {
+        chart.applyOptions({
+          width: chartContainerRef.current.clientWidth,
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      chart.remove();
+    };
+  }, [data]);
+
+  return <div ref={chartContainerRef} className="w-full" />;
+}
