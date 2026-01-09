@@ -24,6 +24,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
+import { FairValueCalculator } from "@/components/fair-value-calculator";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -344,6 +345,21 @@ export default function CompanyPage() {
             <span>Terminal</span>
           </div>
         </div>
+
+        {/* Fair Value Calculator */}
+        {cryptoPrice > 0 && marketCap > 0 && (
+          <div className="mb-8">
+            <FairValueCalculator
+              holdings={company.holdings}
+              assetPrice={cryptoPrice}
+              marketCap={marketCap}
+              asset={company.asset}
+              defaultStakingPct={company.stakingPct}
+              defaultStakingApy={company.stakingApy}
+              defaultQuarterlyBurn={company.quarterlyBurnUsd}
+            />
+          </div>
+        )}
 
         {/* Strategy & Notes */}
         {(company.strategy || company.notes) && (
