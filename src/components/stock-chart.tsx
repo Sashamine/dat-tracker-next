@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { createChart, ColorType, IChartApi } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, CandlestickSeries } from "lightweight-charts";
 import { HistoricalPrice } from "@/lib/hooks/use-stock-history";
 
 interface StockChartProps {
@@ -41,8 +41,8 @@ export function StockChart({ data }: StockChartProps) {
 
     chartRef.current = chart;
 
-    // Add candlestick series
-    const candlestickSeries = chart.addCandlestickSeries({
+    // Add candlestick series (v5 API)
+    const candlestickSeries = chart.addSeries(CandlestickSeries, {
       upColor: "#22c55e",
       downColor: "#ef4444",
       borderDownColor: "#ef4444",
