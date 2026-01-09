@@ -17,11 +17,9 @@ import {
   calculateFairValue,
   formatLargeNumber,
   formatMNAV,
-  formatPercent as formatPct,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { useFilters } from "@/lib/hooks/use-filters";
-import { StockPriceCell } from "@/components/price-cell";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -90,14 +88,6 @@ const assetColors: Record<string, string> = {
   AVAX: "bg-rose-500/10 text-rose-600 border-rose-500/20",
   ADA: "bg-blue-500/10 text-blue-600 border-blue-500/20",
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
-};
-
-// Verdict colors
-const verdictColors: Record<string, string> = {
-  Cheap: "text-green-600",
-  Fair: "text-blue-600",
-  Expensive: "text-red-600",
-  "N/A": "text-gray-600",
 };
 
 export function DataTable({ companies, prices, showFilters = true }: DataTableProps) {
@@ -309,26 +299,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 >
                   Company {sortField === "ticker" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("stockPrice")}
-                >
-                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
                 <TableHead>Asset</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("stockVolume")}
-                >
-                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("holdingsValue")}
-                >
-                  Value {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("mNAV")}
@@ -337,11 +308,29 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("upside")}
+                  onClick={() => handleSort("stockPrice")}
                 >
-                  Upside {sortField === "upside" && (sortDir === "desc" ? "↓" : "↑")}
+                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
-                <TableHead>Verdict</TableHead>
+                <TableHead className="text-right">24h %</TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockVolume")}
+                >
+                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("marketCap")}
+                >
+                  Market Cap {sortField === "marketCap" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("holdingsValue")}
+                >
+                  Holdings {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -367,12 +356,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">
-                    <StockPriceCell
-                      price={company.stockPrice}
-                      change24h={company.stockChange}
-                    />
-                  </TableCell>
                   <TableCell>
                     <Badge
                       variant="outline"
@@ -381,34 +364,27 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                       {company.asset}
                     </Badge>
                   </TableCell>
-                  <TableCell>
-                    <span className={cn(
-                      "text-xs font-medium px-2 py-0.5 rounded",
-                      company.companyType === "Miner"
-                        ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                        : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-                    )}>
-                      {company.companyType}
-                    </span>
+                  <TableCell className="text-right font-mono">
+                    {formatMNAV(company.mNAV)}
+                  </TableCell>
+                  <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
+                    {company.stockPrice ? `$${company.stockPrice.toFixed(2)}` : "—"}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm">
+                    {company.stockChange !== undefined ? (
+                      <span className={cn(company.stockChange >= 0 ? "text-green-600" : "text-red-600")}>
+                        {company.stockChange >= 0 ? "+" : ""}{company.stockChange.toFixed(2)}%
+                      </span>
+                    ) : "—"}
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
                     {company.stockVolume > 0 ? formatNumber(company.stockVolume) : "—"}
                   </TableCell>
+                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
+                    {formatLargeNumber(company.marketCap)}
+                  </TableCell>
                   <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
                     {formatLargeNumber(company.holdingsValue)}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {formatMNAV(company.mNAV)}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    <span className={cn(company.upside > 0 ? "text-green-600" : "text-red-600")}>
-                      {formatPct(company.upside, true)}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className={cn("font-medium", verdictColors[company.verdict])}>
-                      {company.verdict}
-                    </span>
                   </TableCell>
                 </TableRow>
               ))}
