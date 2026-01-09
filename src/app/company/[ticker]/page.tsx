@@ -25,6 +25,7 @@ import {
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { FairValueCalculator } from "@/components/fair-value-calculator";
+import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -152,16 +153,50 @@ export default function CompanyPage() {
             {company.leader && (
               <p className="mt-1 text-sm text-gray-500">Led by {company.leader}</p>
             )}
+            {/* Links - Website, Twitter, Tokenized Stock */}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {company.website && (
+                <a
+                  href={company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <span>Website</span>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              )}
+              {company.twitter && (
+                <a
+                  href={company.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <span>Twitter</span>
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+              )}
+              {company.tokenizedAddress && (
+                <a
+                  href={`https://solscan.io/token/${company.tokenizedAddress}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors"
+                >
+                  <span>Tokenized ({company.tokenizedChain})</span>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              )}
+              {company.isMiner && (
+                <span className="inline-flex items-center px-3 py-1 text-sm bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">
+                  Miner
+                </span>
+              )}
+            </div>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-              {stockPrice ? `$${stockPrice.toFixed(2)}` : "—"}
-            </p>
-            {stockChange !== undefined && (
-              <p className={cn("text-lg font-medium", stockChange >= 0 ? "text-green-600" : "text-red-600")}>
-                {stockChange >= 0 ? "+" : ""}{stockChange.toFixed(2)}%
-              </p>
-            )}
+            <StockPriceCell price={stockPrice} change24h={stockChange} className="text-2xl" />
           </div>
         </div>
 

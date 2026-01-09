@@ -21,6 +21,7 @@ import {
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { useFilters } from "@/lib/hooks/use-filters";
+import { StockPriceCell } from "@/components/price-cell";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -253,7 +254,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
               >
                 Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
               </TableHead>
-              <TableHead className="text-right">24h</TableHead>
               <TableHead>Asset</TableHead>
               <TableHead
                 className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
@@ -296,17 +296,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     </span>
                   </div>
                 </TableCell>
-                <TableCell className="text-right font-mono font-medium">
-                  {company.stockPrice ? `$${company.stockPrice.toFixed(2)}` : "—"}
-                </TableCell>
-                <TableCell className="text-right font-mono">
-                  {company.stockChange !== undefined ? (
-                    <span className={cn(
-                      company.stockChange >= 0 ? "text-green-600" : "text-red-600"
-                    )}>
-                      {formatPercent(company.stockChange, true)}
-                    </span>
-                  ) : "—"}
+                <TableCell className="text-right">
+                  <StockPriceCell
+                    price={company.stockPrice}
+                    change24h={company.stockChange}
+                  />
                 </TableCell>
                 <TableCell>
                   <Badge

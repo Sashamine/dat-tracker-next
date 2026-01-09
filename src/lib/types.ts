@@ -6,6 +6,9 @@ export type Asset =
 // Company tier (1 = highest conviction, 3 = speculative)
 export type Tier = 1 | 2 | 3;
 
+// Company type
+export type CompanyType = "Treasury" | "Miner";
+
 // Base company interface
 export interface Company {
   id: string;
@@ -15,6 +18,15 @@ export interface Company {
   tier: Tier;
   holdings: number;
   datStartDate: string;
+
+  // Company info (CMC-style) - all optional for backwards compatibility
+  website?: string;
+  twitter?: string;
+  tokenizedAddress?: string; // On-chain tokenized stock (e.g., Solana)
+  tokenizedChain?: string; // Which chain the token is on
+  logoUrl?: string;
+
+  // Financials
   costBasisAvg?: number;
   stakingPct?: number;
   stakingApy?: number;
@@ -33,6 +45,7 @@ export interface Company {
   leader?: string;
   strategy?: string;
   notes?: string;
+
   // BTC-specific
   isMiner?: boolean;
   btcMinedAnnual?: number;
