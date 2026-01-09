@@ -110,6 +110,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     minUpside,
     maxUpside,
     verdicts,
+    assets,
+    companyTypes,
     search,
     sortField,
     sortDir,
@@ -199,6 +201,20 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
   if (verdicts.length > 0) {
     filteredCompanies = filteredCompanies.filter((c) =>
       verdicts.includes(c.verdict)
+    );
+  }
+
+  // Asset filter
+  if (assets.length > 0) {
+    filteredCompanies = filteredCompanies.filter((c) =>
+      assets.includes(c.asset)
+    );
+  }
+
+  // Company type filter
+  if (companyTypes.length > 0) {
+    filteredCompanies = filteredCompanies.filter((c) =>
+      companyTypes.includes(c.companyType)
     );
   }
 

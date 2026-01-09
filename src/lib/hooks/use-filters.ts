@@ -10,6 +10,7 @@ export const SORT_FIELDS = [
   "marketCap",
   "holdings",
   "ticker",
+  "stockVolume",
 ] as const;
 
 export type SortField = (typeof SORT_FIELDS)[number];
@@ -18,6 +19,14 @@ export type SortDirection = "asc" | "desc";
 // Verdict options
 export const VERDICTS = ["Cheap", "Fair", "Expensive"] as const;
 export type Verdict = (typeof VERDICTS)[number];
+
+// Asset options
+export const ASSETS = ["ETH", "BTC", "SOL", "HYPE", "BNB", "TAO", "LINK", "TRX", "XRP", "ZEC", "LTC", "SUI", "DOGE", "AVAX", "ADA", "HBAR"] as const;
+export type Asset = (typeof ASSETS)[number];
+
+// Company type options
+export const COMPANY_TYPES = ["Treasury", "Miner"] as const;
+export type CompanyType = (typeof COMPANY_TYPES)[number];
 
 export function useFilters() {
   // Market cap range (in millions)
@@ -56,6 +65,18 @@ export function useFilters() {
     parseAsArrayOf(parseAsString).withDefault([])
   );
 
+  // Asset filter (multi-select)
+  const [assets, setAssets] = useQueryState(
+    "asset",
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
+
+  // Company type filter (multi-select)
+  const [companyTypes, setCompanyTypes] = useQueryState(
+    "type",
+    parseAsArrayOf(parseAsString).withDefault([])
+  );
+
   // Sort state
   const [sortField, setSortField] = useQueryState(
     "sort",
@@ -81,6 +102,8 @@ export function useFilters() {
     setMinUpside(-100);
     setMaxUpside(1000);
     setVerdicts([]);
+    setAssets([]);
+    setCompanyTypes([]);
     setSearch("");
   };
 
@@ -93,6 +116,8 @@ export function useFilters() {
     minUpside > -100 ||
     maxUpside < 1000 ||
     verdicts.length > 0 ||
+    assets.length > 0 ||
+    companyTypes.length > 0 ||
     search.length > 0;
 
   return {
@@ -104,6 +129,8 @@ export function useFilters() {
     minUpside,
     maxUpside,
     verdicts,
+    assets,
+    companyTypes,
     search,
     sortField,
     sortDir,
@@ -116,6 +143,8 @@ export function useFilters() {
     setMinUpside,
     setMaxUpside,
     setVerdicts,
+    setAssets,
+    setCompanyTypes,
     setSearch,
     setSortField,
     setSortDir,

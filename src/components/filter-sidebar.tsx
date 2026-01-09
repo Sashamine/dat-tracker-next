@@ -1,10 +1,30 @@
 "use client";
 
-import { useFilters, VERDICTS } from "@/lib/hooks/use-filters";
+import { useFilters, VERDICTS, ASSETS, COMPANY_TYPES } from "@/lib/hooks/use-filters";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+
+// Asset colors for filter badges
+const assetColors: Record<string, string> = {
+  ETH: "bg-indigo-100 text-indigo-700 border-indigo-300",
+  BTC: "bg-orange-100 text-orange-700 border-orange-300",
+  SOL: "bg-purple-100 text-purple-700 border-purple-300",
+  HYPE: "bg-green-100 text-green-700 border-green-300",
+  BNB: "bg-yellow-100 text-yellow-700 border-yellow-300",
+  TAO: "bg-cyan-100 text-cyan-700 border-cyan-300",
+  LINK: "bg-blue-100 text-blue-700 border-blue-300",
+  TRX: "bg-red-100 text-red-700 border-red-300",
+  XRP: "bg-gray-100 text-gray-700 border-gray-300",
+  ZEC: "bg-amber-100 text-amber-700 border-amber-300",
+  LTC: "bg-slate-100 text-slate-700 border-slate-300",
+  SUI: "bg-sky-100 text-sky-700 border-sky-300",
+  DOGE: "bg-amber-100 text-amber-700 border-amber-300",
+  AVAX: "bg-rose-100 text-rose-700 border-rose-300",
+  ADA: "bg-blue-100 text-blue-700 border-blue-300",
+  HBAR: "bg-gray-100 text-gray-700 border-gray-300",
+};
 
 export function FilterSidebar() {
   const {
@@ -15,6 +35,8 @@ export function FilterSidebar() {
     minUpside,
     maxUpside,
     verdicts,
+    assets,
+    companyTypes,
     search,
     setMinMarketCap,
     setMaxMarketCap,
@@ -23,6 +45,8 @@ export function FilterSidebar() {
     setMinUpside,
     setMaxUpside,
     setVerdicts,
+    setAssets,
+    setCompanyTypes,
     setSearch,
     resetFilters,
     hasActiveFilters,
@@ -33,6 +57,22 @@ export function FilterSidebar() {
       setVerdicts(verdicts.filter((v) => v !== verdict));
     } else {
       setVerdicts([...verdicts, verdict]);
+    }
+  };
+
+  const toggleAsset = (asset: string) => {
+    if (assets.includes(asset)) {
+      setAssets(assets.filter((a) => a !== asset));
+    } else {
+      setAssets([...assets, asset]);
+    }
+  };
+
+  const toggleCompanyType = (type: string) => {
+    if (companyTypes.includes(type)) {
+      setCompanyTypes(companyTypes.filter((t) => t !== type));
+    } else {
+      setCompanyTypes([...companyTypes, type]);
     }
   };
 
@@ -66,6 +106,54 @@ export function FilterSidebar() {
           onChange={(e) => setSearch(e.target.value || "")}
           className="h-9"
         />
+      </div>
+
+      {/* Asset Filter */}
+      <div className="space-y-2">
+        <Label className="text-sm text-gray-600 dark:text-gray-400">
+          Asset
+        </Label>
+        <div className="flex flex-wrap gap-1.5">
+          {ASSETS.map((asset) => (
+            <button
+              key={asset}
+              onClick={() => toggleAsset(asset)}
+              className={cn(
+                "px-2 py-0.5 text-xs rounded-md transition-colors border",
+                assets.includes(asset)
+                  ? assetColors[asset] || "bg-indigo-600 text-white border-indigo-600"
+                  : "bg-white dark:bg-gray-800 text-gray-500 border-gray-200 dark:border-gray-700 hover:bg-gray-100"
+              )}
+            >
+              {asset}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Company Type Filter */}
+      <div className="space-y-2">
+        <Label className="text-sm text-gray-600 dark:text-gray-400">
+          Type
+        </Label>
+        <div className="flex flex-wrap gap-2">
+          {COMPANY_TYPES.map((type) => (
+            <button
+              key={type}
+              onClick={() => toggleCompanyType(type)}
+              className={cn(
+                "px-3 py-1 text-sm rounded-full transition-colors",
+                companyTypes.includes(type)
+                  ? type === "Miner"
+                    ? "bg-amber-600 text-white"
+                    : "bg-gray-600 text-white"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+              )}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Verdict Filter */}
