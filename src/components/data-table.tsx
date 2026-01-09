@@ -50,6 +50,28 @@ function formatPercent(num: number | undefined, includeSign = false): string {
   return `${sign}${num.toFixed(1)}%`;
 }
 
+// Company logo URLs (Clearbit + manual overrides)
+const COMPANY_LOGOS: Record<string, string> = {
+  // BTC companies
+  MSTR: "https://logo.clearbit.com/strategy.com",
+  MARA: "https://logo.clearbit.com/mara.com",
+  RIOT: "https://logo.clearbit.com/riotplatforms.com",
+  CLSK: "https://logo.clearbit.com/cleanspark.com",
+  HUT: "https://logo.clearbit.com/hut8.com",
+  BITF: "https://logo.clearbit.com/bitfarms.com",
+  WULF: "https://logo.clearbit.com/terawulf.com",
+  CIFR: "https://logo.clearbit.com/ciphermining.com",
+  KULR: "https://logo.clearbit.com/kulrtechnology.com",
+  SMLR: "https://logo.clearbit.com/semlerscientific.com",
+  // ETH companies
+  BTBT: "https://logo.clearbit.com/bit-digital.com",
+  BTCS: "https://logo.clearbit.com/btcs.com",
+  SBET: "https://logo.clearbit.com/sharplink.com",
+  EXOD: "https://logo.clearbit.com/exodus.com",
+  // SOL companies
+  // General fallback
+};
+
 // Asset colors (CMC-style)
 const assetColors: Record<string, string> = {
   ETH: "bg-indigo-500/10 text-indigo-600 border-indigo-500/20",
@@ -68,13 +90,6 @@ const assetColors: Record<string, string> = {
   AVAX: "bg-rose-500/10 text-rose-600 border-rose-500/20",
   ADA: "bg-blue-500/10 text-blue-600 border-blue-500/20",
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
-};
-
-// Tier badges
-const tierColors: Record<number, string> = {
-  1: "bg-green-500/10 text-green-600 border-green-500/20",
-  2: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  3: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
 // Verdict colors
@@ -109,6 +124,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const marketCap = stockData?.marketCap || company.marketCap || 0;
     const stockPrice = stockData?.price;
     const stockChange = stockData?.change24h;
+    const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
     const holdingsValue = company.holdings * cryptoPrice;
 
     const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
@@ -124,16 +140,21 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       networkStakingApy
     );
 
+    // Determine company type
+    const companyType = company.isMiner ? "Miner" : "Treasury";
+
     return {
       ...company,
       holdingsValue,
       marketCap,
       stockPrice,
       stockChange,
+      stockVolume,
       mNAV: mNAV || 0,
       upside: fairValue.upside,
       verdict: fairValue.verdict,
       fairPremium: fairValue.fairPremium,
+      companyType,
     };
   });
 
@@ -210,6 +231,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
         aVal = a.marketCap || 0;
         bVal = b.marketCap || 0;
         break;
+      case "stockVolume":
+        aVal = a.stockVolume || 0;
+        bVal = b.stockVolume || 0;
+        break;
       case "ticker":
         return sortDir === "desc"
           ? b.ticker.localeCompare(a.ticker)
@@ -231,6 +256,24 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     }
   };
 
+  // Logo component with fallback
+  const CompanyLogo = ({ ticker }: { ticker: string }) => {
+    const logoUrl = COMPANY_LOGOS[ticker];
+    if (!logoUrl) return <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700" />;
+
+    return (
+      <img
+        src={logoUrl}
+        alt={ticker}
+        className="w-7 h-7 rounded-full object-cover"
+        onError={(e) => {
+          // Hide image on error
+          (e.target as HTMLImageElement).style.display = 'none';
+        }}
+      />
+    );
+  };
+
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
       {filteredCompanies.length === 0 ? (
@@ -238,98 +281,124 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
           No companies match the current filters.
         </div>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-gray-50 dark:bg-gray-900/50">
-              <TableHead className="w-[50px]">#</TableHead>
-              <TableHead
-                className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                onClick={() => handleSort("ticker")}
-              >
-                Company {sortField === "ticker" && (sortDir === "desc" ? "↓" : "↑")}
-              </TableHead>
-              <TableHead
-                className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                onClick={() => handleSort("stockPrice")}
-              >
-                Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
-              </TableHead>
-              <TableHead>Asset</TableHead>
-              <TableHead
-                className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                onClick={() => handleSort("holdingsValue")}
-              >
-                Value {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
-              </TableHead>
-              <TableHead
-                className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                onClick={() => handleSort("mNAV")}
-              >
-                mNAV {sortField === "mNAV" && (sortDir === "desc" ? "↓" : "↑")}
-              </TableHead>
-              <TableHead
-                className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                onClick={() => handleSort("upside")}
-              >
-                Upside {sortField === "upside" && (sortDir === "desc" ? "↓" : "↑")}
-              </TableHead>
-              <TableHead>Verdict</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedCompanies.map((company, index) => (
-              <TableRow
-                key={company.id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-900/30 cursor-pointer transition-colors"
-                onClick={() => router.push(`/company/${company.ticker}`)}
-              >
-                <TableCell className="text-gray-500 font-medium">
-                  {index + 1}
-                </TableCell>
-                <TableCell>
-                  <div className="flex flex-col">
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">
-                      {company.ticker}
-                    </span>
-                    <span className="text-sm text-gray-500 truncate max-w-[200px]">
-                      {company.name}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="text-right">
-                  <StockPriceCell
-                    price={company.stockPrice}
-                    change24h={company.stockChange}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant="outline"
-                    className={cn("font-medium", assetColors[company.asset] || assetColors.ETH)}
-                  >
-                    {company.asset}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
-                  {formatLargeNumber(company.holdingsValue)}
-                </TableCell>
-                <TableCell className="text-right font-mono">
-                  {formatMNAV(company.mNAV)}
-                </TableCell>
-                <TableCell className="text-right font-mono">
-                  <span className={cn(company.upside > 0 ? "text-green-600" : "text-red-600")}>
-                    {formatPct(company.upside, true)}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <span className={cn("font-medium", verdictColors[company.verdict])}>
-                    {company.verdict}
-                  </span>
-                </TableCell>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-gray-50 dark:bg-gray-900/50">
+                <TableHead className="w-[40px]">#</TableHead>
+                <TableHead className="w-[40px]"></TableHead>
+                <TableHead
+                  className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("ticker")}
+                >
+                  Company {sortField === "ticker" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockPrice")}
+                >
+                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead>Asset</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockVolume")}
+                >
+                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("holdingsValue")}
+                >
+                  Value {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("mNAV")}
+                >
+                  mNAV {sortField === "mNAV" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("upside")}
+                >
+                  Upside {sortField === "upside" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead>Verdict</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {sortedCompanies.map((company, index) => (
+                <TableRow
+                  key={company.id}
+                  className="hover:bg-gray-50 dark:hover:bg-gray-900/30 cursor-pointer transition-colors"
+                  onClick={() => router.push(`/company/${company.ticker}`)}
+                >
+                  <TableCell className="text-gray-500 font-medium text-sm">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell className="p-2">
+                    <CompanyLogo ticker={company.ticker} />
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        {company.ticker}
+                      </span>
+                      <span className="text-sm text-gray-500 truncate max-w-[180px]">
+                        {company.name}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <StockPriceCell
+                      price={company.stockPrice}
+                      change24h={company.stockChange}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant="outline"
+                      className={cn("font-medium", assetColors[company.asset] || assetColors.ETH)}
+                    >
+                      {company.asset}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <span className={cn(
+                      "text-xs font-medium px-2 py-0.5 rounded",
+                      company.companyType === "Miner"
+                        ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                        : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                    )}>
+                      {company.companyType}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
+                    {company.stockVolume > 0 ? formatNumber(company.stockVolume) : "—"}
+                  </TableCell>
+                  <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
+                    {formatLargeNumber(company.holdingsValue)}
+                  </TableCell>
+                  <TableCell className="text-right font-mono">
+                    {formatMNAV(company.mNAV)}
+                  </TableCell>
+                  <TableCell className="text-right font-mono">
+                    <span className={cn(company.upside > 0 ? "text-green-600" : "text-red-600")}>
+                      {formatPct(company.upside, true)}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <span className={cn("font-medium", verdictColors[company.verdict])}>
+                      {company.verdict}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
       {filteredCompanies.length > 0 && (
         <div className="px-4 py-2 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-800 text-sm text-gray-500">
