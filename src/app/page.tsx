@@ -1,9 +1,10 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
+import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ const assetBgColors: Record<string, string> = {
 
 export default function Home() {
   const { data: prices, isLoading, dataUpdatedAt } = usePrices();
+  const [viewMode, setViewMode] = useState<"table" | "bar" | "scatter">("table");
 
   const assetStats = getAssetStats(allCompanies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
@@ -122,20 +124,70 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Main Content - Sidebar + Table */}
-        <div className="flex gap-6">
-          {/* Filter Sidebar */}
-          <Suspense fallback={<div className="w-64 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
-            <FilterSidebar />
-          </Suspense>
-
-          {/* Data Table */}
-          <div className="flex-1 min-w-0">
-            <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
-              <DataTable companies={allCompanies} prices={prices} />
-            </Suspense>
-          </div>
+        {/* View Mode Toggle */}
+        <div className="flex items-center gap-2 mb-6">
+          <span className="text-sm text-gray-500 mr-2">View:</span>
+          <button
+            onClick={() => setViewMode("table")}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-md transition-colors",
+              viewMode === "table"
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+            )}
+          >
+            Table
+          </button>
+          <button
+            onClick={() => setViewMode("bar")}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-md transition-colors",
+              viewMode === "bar"
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+            )}
+          >
+            Upside Chart
+          </button>
+          <button
+            onClick={() => setViewMode("scatter")}
+            className={cn(
+              "px-3 py-1.5 text-sm rounded-md transition-colors",
+              viewMode === "scatter"
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+            )}
+          >
+            mNAV Scatter
+          </button>
         </div>
+
+        {/* Main Content */}
+        {viewMode === "table" ? (
+          <div className="flex gap-6">
+            {/* Filter Sidebar */}
+            <Suspense fallback={<div className="w-64 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
+              <FilterSidebar />
+            </Suspense>
+
+            {/* Data Table */}
+            <div className="flex-1 min-w-0">
+              <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
+                <DataTable companies={allCompanies} prices={prices} />
+              </Suspense>
+            </div>
+          </div>
+        ) : viewMode === "bar" ? (
+          <PremiumDiscountChart
+            companies={allCompanies}
+            prices={prices}
+            maxBars={20}
+            sortBy="upside"
+            title="Top 20 Companies by Upside to Fair Value"
+          />
+        ) : (
+          <MNAVScatterChart companies={allCompanies} prices={prices} />
+        )}
 
         {/* Footer */}
         <footer className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
