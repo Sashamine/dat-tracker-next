@@ -1,7 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
+import { FilterSidebar } from "@/components/filter-sidebar";
 import { allCompanies } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
 import { cn } from "@/lib/utils";
@@ -120,8 +122,20 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Data Table */}
-        <DataTable companies={allCompanies} prices={prices} />
+        {/* Main Content - Sidebar + Table */}
+        <div className="flex gap-6">
+          {/* Filter Sidebar */}
+          <Suspense fallback={<div className="w-64 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
+            <FilterSidebar />
+          </Suspense>
+
+          {/* Data Table */}
+          <div className="flex-1 min-w-0">
+            <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
+              <DataTable companies={allCompanies} prices={prices} />
+            </Suspense>
+          </div>
+        </div>
 
         {/* Footer */}
         <footer className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
