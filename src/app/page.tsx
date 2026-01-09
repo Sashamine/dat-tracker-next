@@ -6,6 +6,7 @@ import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
 import { AppSidebar, CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
 import { InvestmentFramework } from "@/components/investment-framework";
+import { FairValueModel } from "@/components/fair-value-model";
 import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
@@ -63,6 +64,9 @@ export default function Home() {
 
           {/* Investment Framework */}
           <InvestmentFramework />
+
+          {/* Fair Value Model */}
+          <FairValueModel companies={allCompanies} prices={prices} />
 
           {/* Yielding Assets Grid */}
           <div className="mb-8">
