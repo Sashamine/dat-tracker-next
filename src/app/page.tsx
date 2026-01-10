@@ -70,7 +70,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex">
       {/* Left Sidebar - Navigation */}
-      <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
+      <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
+        <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
+      </Suspense>
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64 lg:mr-72">

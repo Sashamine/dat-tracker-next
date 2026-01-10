@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { usePrices } from "@/lib/hooks/use-prices";
+import { useFilters } from "@/lib/hooks/use-filters";
 
 // Asset categorization - same as Streamlit
 const YIELDING_ASSETS = ["ETH", "SOL", "BNB", "TAO", "LINK", "TRX", "SUI", "AVAX", "ADA", "HBAR"];
@@ -50,6 +51,7 @@ interface AppSidebarProps {
 export function AppSidebar({ className }: AppSidebarProps) {
   const pathname = usePathname();
   const { data: prices } = usePrices();
+  const { assets: filteredAssets } = useFilters();
 
   // Determine current asset from path
   const currentAsset = pathname.startsWith("/asset/")
@@ -61,6 +63,14 @@ export function AppSidebar({ className }: AppSidebarProps) {
   // Get price data for display
   const getAssetPrice = (asset: string) => prices?.crypto[asset]?.price || 0;
   const getAssetChange = (asset: string) => prices?.crypto[asset]?.change24h;
+
+  // Determine which assets to show in market data
+  // Priority: 1) Current asset page, 2) Filtered assets, 3) Default ETH/BTC
+  const marketDataAssets = currentAsset
+    ? [currentAsset.toUpperCase()]
+    : filteredAssets.length > 0
+    ? filteredAssets.slice(0, 4) // Max 4 assets
+    : ["ETH", "BTC"];
 
   return (
     <aside className={cn("w-64 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 min-h-screen", className)}>
@@ -158,86 +168,54 @@ export function AppSidebar({ className }: AppSidebarProps) {
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
-        {/* Market Data Section */}
+        {/* Market Data Section - Contextual based on filters */}
         <div>
-          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
-            Market Data
+          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            {filteredAssets.length > 0 ? "Filtered Assets" : "Market Data"}
           </h3>
-
-          {/* Show relevant asset or default to ETH/BTC */}
-          {currentAsset ? (
-            <div className="space-y-2">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  {CRYPTO_ICONS[currentAsset.toUpperCase()] && (
-                    <img src={CRYPTO_ICONS[currentAsset.toUpperCase()]} alt={currentAsset} className="w-4 h-4 rounded-full" />
-                  )}
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {currentAsset.toUpperCase()}
-                  </span>
-                </div>
-                <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  ${getAssetPrice(currentAsset.toUpperCase()).toLocaleString(undefined, { maximumFractionDigits: 2 })}
-                </p>
-                {getAssetChange(currentAsset.toUpperCase()) !== undefined && (
-                  <p className={cn(
-                    "text-xs font-medium",
-                    (getAssetChange(currentAsset.toUpperCase()) || 0) >= 0 ? "text-green-600" : "text-red-600"
-                  )}>
-                    {(getAssetChange(currentAsset.toUpperCase()) || 0) >= 0 ? "+" : ""}
-                    {getAssetChange(currentAsset.toUpperCase())?.toFixed(2)}%
-                  </p>
-                )}
-                {STAKING_APYS[currentAsset.toUpperCase()] && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    Staking APY: {(STAKING_APYS[currentAsset.toUpperCase()] * 100).toFixed(1)}%
-                  </p>
-                )}
-                {!STAKING_APYS[currentAsset.toUpperCase()] && (
-                  <p className="text-xs text-gray-400 mt-1">No native staking</p>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {/* ETH Price */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <img src={CRYPTO_ICONS.ETH} alt="ETH" className="w-4 h-4 rounded-full" />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">ETH</span>
-                </div>
-                <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  ${getAssetPrice("ETH").toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                </p>
-                {getAssetChange("ETH") !== undefined && (
-                  <p className={cn(
-                    "text-xs font-medium",
-                    (getAssetChange("ETH") || 0) >= 0 ? "text-green-600" : "text-red-600"
-                  )}>
-                    {(getAssetChange("ETH") || 0) >= 0 ? "+" : ""}{getAssetChange("ETH")?.toFixed(2)}%
-                  </p>
-                )}
-              </div>
-              {/* BTC Price */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <img src={CRYPTO_ICONS.BTC} alt="BTC" className="w-4 h-4 rounded-full" />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">BTC</span>
-                </div>
-                <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  ${getAssetPrice("BTC").toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                </p>
-                {getAssetChange("BTC") !== undefined && (
-                  <p className={cn(
-                    "text-xs font-medium",
-                    (getAssetChange("BTC") || 0) >= 0 ? "text-green-600" : "text-red-600"
-                  )}>
-                    {(getAssetChange("BTC") || 0) >= 0 ? "+" : ""}{getAssetChange("BTC")?.toFixed(2)}%
-                  </p>
-                )}
-              </div>
-            </div>
+          {filteredAssets.length > 0 && (
+            <p className="text-[10px] text-gray-400 mb-2">
+              Showing prices for your filter selection
+            </p>
           )}
+
+          <div className="space-y-1.5">
+            {marketDataAssets.map((asset) => (
+              <div key={asset} className="bg-white dark:bg-gray-800 rounded-lg p-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    {CRYPTO_ICONS[asset] && (
+                      <img src={CRYPTO_ICONS[asset]} alt={asset} className="w-5 h-5 rounded-full" />
+                    )}
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {asset}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                      ${getAssetPrice(asset).toLocaleString(undefined, {
+                        maximumFractionDigits: getAssetPrice(asset) > 100 ? 0 : 2
+                      })}
+                    </p>
+                    {getAssetChange(asset) !== undefined && (
+                      <p className={cn(
+                        "text-[10px] font-medium",
+                        (getAssetChange(asset) || 0) >= 0 ? "text-green-600" : "text-red-600"
+                      )}>
+                        {(getAssetChange(asset) || 0) >= 0 ? "+" : ""}
+                        {getAssetChange(asset)?.toFixed(1)}%
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {STAKING_APYS[asset] && marketDataAssets.length === 1 && (
+                  <p className="text-[10px] text-gray-400 mt-1">
+                    Staking: {(STAKING_APYS[asset] * 100).toFixed(1)}% APY
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         <hr className="border-gray-200 dark:border-gray-700" />
