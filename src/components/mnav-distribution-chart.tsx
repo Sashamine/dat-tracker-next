@@ -12,6 +12,7 @@ interface PriceData {
 interface MNAVDistributionChartProps {
   companies: Company[];
   prices?: PriceData;
+  compact?: boolean;
 }
 
 // Define histogram buckets
@@ -27,7 +28,7 @@ const BUCKETS = [
   { min: 5.0, max: 10.0, label: "5-10x" },
 ];
 
-export function MNAVDistributionChart({ companies, prices }: MNAVDistributionChartProps) {
+export function MNAVDistributionChart({ companies, prices, compact = false }: MNAVDistributionChartProps) {
   const { bucketCounts, median, average, totalCount } = useMemo(() => {
     // Calculate mNAV for each company
     const mnavs = companies
@@ -75,6 +76,57 @@ export function MNAVDistributionChart({ companies, prices }: MNAVDistributionCha
     return ((bucketIndex + withinBucket) / BUCKETS.length) * 100;
   };
 
+  // Compact view for sidebar
+  if (compact) {
+    return (
+      <div>
+        {/* Compact Chart */}
+        <div className="relative">
+          <div className="flex items-end gap-0.5 h-24">
+            {bucketCounts.map((bucket, i) => {
+              const heightPercent = maxCount > 0 ? (bucket.count / maxCount) * 100 : 0;
+              const isUndervalued = bucket.max <= 1.0;
+              const isFairValue = bucket.min >= 1.0 && bucket.max <= 1.5;
+
+              return (
+                <div key={i} className="flex-1 flex flex-col items-center">
+                  <div
+                    className="w-full rounded-t transition-all duration-300 hover:opacity-80 relative group"
+                    style={{
+                      height: `${heightPercent}%`,
+                      minHeight: bucket.count > 0 ? "4px" : "0",
+                      backgroundColor: isUndervalued
+                        ? "rgb(34, 197, 94)"
+                        : isFairValue
+                          ? "rgb(59, 130, 246)"
+                          : "rgb(239, 68, 68)",
+                    }}
+                  >
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-1.5 py-0.5 bg-gray-800 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                      {bucket.count} ({bucket.label})
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Median line */}
+          <div
+            className="absolute top-0 bottom-0 w-0.5 bg-indigo-500 pointer-events-none"
+            style={{ left: `${getPositionPercent(median)}%` }}
+          />
+        </div>
+        {/* Compact Legend */}
+        <div className="flex justify-between mt-2 text-[10px] text-gray-500">
+          <span className="text-green-600">&lt;1x</span>
+          <span className="text-gray-400">1x</span>
+          <span className="text-red-600">&gt;1.5x</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Full view
   return (
     <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">

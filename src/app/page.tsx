@@ -4,9 +4,9 @@ import { Suspense, useState, useMemo } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
-import { AppSidebar, CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
+import { AppSidebar, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
+import { OverviewSidebar } from "@/components/overview-sidebar";
 import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
-import { MNAVDistributionChart } from "@/components/mnav-distribution-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
@@ -48,10 +48,6 @@ export default function Home() {
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
   const totalCompanies = companies.length;
 
-  // Separate into yielding and non-yielding
-  const yieldingStats = assetStats.filter(s => YIELDING_ASSETS.includes(s.asset));
-  const nonYieldingStats = assetStats.filter(s => NON_YIELDING_ASSETS.includes(s.asset));
-
   // Calculate mNAV stats for all companies
   const mnavStats = useMemo(() => {
     const mnavs = companies
@@ -61,7 +57,7 @@ export default function Home() {
         const marketCap = stockData?.marketCap || company.marketCap || 0;
         return calculateMNAV(marketCap, company.holdings, cryptoPrice);
       })
-      .filter((mnav): mnav is number => mnav !== null && mnav > 0 && mnav < 10); // Filter valid mNAVs
+      .filter((mnav): mnav is number => mnav !== null && mnav > 0 && mnav < 10);
 
     if (mnavs.length === 0) return { median: 0, average: 0, count: 0, mnavs: [] };
 
@@ -73,20 +69,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex">
-      {/* Sidebar */}
+      {/* Left Sidebar - Navigation */}
       <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64">
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <main className="flex-1 lg:ml-64 lg:mr-72">
+        <div className="px-4 py-6 max-w-full">
           {/* Header */}
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-6 flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                DAT Universe Overview
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                All DAT Companies
               </h1>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
-                Tracking the race to become institutional-grade crypto yield vehicles
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury
               </p>
             </div>
             <div className="text-right">
@@ -97,167 +93,49 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Yielding Assets Grid */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
-              <span className="text-green-500">📈</span> Yielding Assets
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              Benchmark: Native staking APY. Only EXCESS yield justifies premium.
-            </p>
-            <div className="grid grid-cols-5 md:grid-cols-10 gap-3">
-              {YIELDING_ASSETS.map((asset) => {
-                const stats = assetStats.find(s => s.asset === asset);
-                return (
-                  <Link
-                    key={asset}
-                    href={`/asset/${asset.toLowerCase()}`}
-                    className="flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                  >
-                    {CRYPTO_ICONS[asset] && (
-                      <img
-                        src={CRYPTO_ICONS[asset]}
-                        alt={asset}
-                        className="w-10 h-10 rounded-full mb-2 group-hover:scale-110 transition-transform"
-                      />
-                    )}
-                    <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{asset}</span>
-                    <span className="text-xs text-gray-500">{stats?.count || 0} cos</span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Non-Yielding Assets Grid */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
-              <span className="text-blue-500">💎</span> Non-Yielding Assets
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              Benchmark: 1.0x NAV. Vol harvesting optionality drives premium.
-            </p>
-            <div className="grid grid-cols-6 gap-3">
-              {NON_YIELDING_ASSETS.map((asset) => {
-                const stats = assetStats.find(s => s.asset === asset);
-                return (
-                  <Link
-                    key={asset}
-                    href={`/asset/${asset.toLowerCase()}`}
-                    className="flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                  >
-                    {CRYPTO_ICONS[asset] && (
-                      <img
-                        src={CRYPTO_ICONS[asset]}
-                        alt={asset}
-                        className="w-10 h-10 rounded-full mb-2 group-hover:scale-110 transition-transform"
-                      />
-                    )}
-                    <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{asset}</span>
-                    <span className="text-xs text-gray-500">{stats?.count || 0} cos</span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Summary Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Companies</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalCompanies}</p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Treasury Value</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                ${(totalValue / 1_000_000_000).toFixed(2)}B
-              </p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Median mNAV</p>
-              <p className="text-2xl font-bold text-indigo-600">
-                {mnavStats.median.toFixed(2)}x
-              </p>
-              <p className="text-xs text-gray-400">{mnavStats.count} companies</p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Average mNAV</p>
-              <p className="text-2xl font-bold text-purple-600">
-                {mnavStats.average.toFixed(2)}x
-              </p>
-              <p className="text-xs text-gray-400">
-                {mnavStats.average > mnavStats.median ? "Right-skewed" : "Left-skewed"}
-              </p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Yielding Assets</p>
-              <p className="text-2xl font-bold text-green-600">
-                {yieldingStats.reduce((sum, s) => sum + s.count, 0)} cos
-              </p>
-              <p className="text-xs text-gray-400">{YIELDING_ASSETS.length} assets</p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Non-Yielding Assets</p>
-              <p className="text-2xl font-bold text-blue-600">
-                {nonYieldingStats.reduce((sum, s) => sum + s.count, 0)} cos
-              </p>
-              <p className="text-xs text-gray-400">{NON_YIELDING_ASSETS.length} assets</p>
-            </div>
-          </div>
-
-          {/* mNAV Distribution Chart */}
-          <div className="mb-8">
-            <MNAVDistributionChart companies={companies} prices={prices} />
-          </div>
-
-          {/* All DAT Companies Section */}
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">All DAT Companies</h2>
-
-            {/* View Mode Toggle */}
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-sm text-gray-500 mr-2">View:</span>
-              <button
-                onClick={() => setViewMode("table")}
-                className={cn(
-                  "px-3 py-1.5 text-sm rounded-md transition-colors",
-                  viewMode === "table"
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-                )}
-              >
-                Table
-              </button>
-              <button
-                onClick={() => setViewMode("bar")}
-                className={cn(
-                  "px-3 py-1.5 text-sm rounded-md transition-colors",
-                  viewMode === "bar"
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-                )}
-              >
-                Upside Chart
-              </button>
-              <button
-                onClick={() => setViewMode("scatter")}
-                className={cn(
-                  "px-3 py-1.5 text-sm rounded-md transition-colors",
-                  viewMode === "scatter"
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-                )}
-              >
-                mNAV Scatter
-              </button>
-            </div>
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-sm text-gray-500 mr-2">View:</span>
+            <button
+              onClick={() => setViewMode("table")}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-md transition-colors",
+                viewMode === "table"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+              )}
+            >
+              Table
+            </button>
+            <button
+              onClick={() => setViewMode("bar")}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-md transition-colors",
+                viewMode === "bar"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+              )}
+            >
+              Upside Chart
+            </button>
+            <button
+              onClick={() => setViewMode("scatter")}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-md transition-colors",
+                viewMode === "scatter"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+              )}
+            >
+              mNAV Scatter
+            </button>
           </div>
 
           {/* Main Content */}
           {viewMode === "table" ? (
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               {/* Filter Sidebar */}
-              <Suspense fallback={<div className="w-64 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
+              <Suspense fallback={<div className="w-56 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
                 <FilterSidebar />
               </Suspense>
 
@@ -281,11 +159,22 @@ export default function Home() {
           )}
 
           {/* Footer */}
-          <footer className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
+          <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             <p>Prices from CoinGecko and FMP. Updates every 5 seconds.</p>
           </footer>
         </div>
       </main>
+
+      {/* Right Sidebar - Overview */}
+      <OverviewSidebar
+        assetStats={assetStats}
+        mnavStats={mnavStats}
+        totalCompanies={totalCompanies}
+        totalValue={totalValue}
+        companies={companies}
+        prices={prices}
+        className="hidden lg:block fixed right-0 top-0 h-full"
+      />
     </div>
   );
 }
