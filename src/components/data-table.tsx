@@ -48,58 +48,8 @@ function formatPercent(num: number | undefined, includeSign = false): string {
   return `${sign}${num.toFixed(1)}%`;
 }
 
-// Company logo URLs (Clearbit + manual overrides)
-const COMPANY_LOGOS: Record<string, string> = {
-  // BTC companies
-  MSTR: "https://logo.clearbit.com/strategy.com",
-  MARA: "https://logo.clearbit.com/mara.com",
-  RIOT: "https://logo.clearbit.com/riotplatforms.com",
-  CLSK: "https://logo.clearbit.com/cleanspark.com",
-  HUT: "https://logo.clearbit.com/hut8.com",
-  BITF: "https://logo.clearbit.com/bitfarms.com",
-  WULF: "https://logo.clearbit.com/terawulf.com",
-  CIFR: "https://logo.clearbit.com/ciphermining.com",
-  KULR: "https://logo.clearbit.com/kulrtechnology.com",
-  SMLR: "https://logo.clearbit.com/semlerscientific.com",
-  XXI: "https://logo.clearbit.com/twentyone.capital",
-  ASST: "https://logo.clearbit.com/assetentities.com",
-  // ETH companies
-  BMNR: "https://logo.clearbit.com/bitmine.com",
-  SBET: "https://logo.clearbit.com/sharplink.com",
-  ETHM: "https://logo.clearbit.com/dynamixgroup.com",
-  BTBT: "https://logo.clearbit.com/bit-digital.com",
-  ETHZ: "https://logo.clearbit.com/ethzilla.com",
-  BTCS: "https://logo.clearbit.com/btcs.com",
-  GAME: "https://logo.clearbit.com/gamestop.com",
-  FGNX: "https://logo.clearbit.com/firgenix.com",
-  ICG: "https://logo.clearbit.com/intchains.com",
-  EXOD: "https://logo.clearbit.com/exodus.com",
-  // SOL companies
-  FWDI: "https://logo.clearbit.com/forwardind.com",
-  HSDT: "https://logo.clearbit.com/heliossolartech.com",
-  DFDV: "https://logo.clearbit.com/dfdev.com",
-  UPXI: "https://logo.clearbit.com/upxi.com",
-  STKE: "https://logo.clearbit.com/stakehub.com",
-  // HYPE companies
-  PURR: "https://logo.clearbit.com/purr.com",
-  HYPD: "https://logo.clearbit.com/hyperdrive.com",
-  // TAO companies
-  TAOX: "https://logo.clearbit.com/taox.io",
-  // XRP companies
-  XRPN: "https://logo.clearbit.com/xrpnetworks.com",
-  WKSP: "https://logo.clearbit.com/worksport.com",
-  // ZEC companies
-  CYPH: "https://logo.clearbit.com/cypherblock.com",
-  // DOGE companies
-  ZONE: "https://logo.clearbit.com/zonedigital.com",
-  BTOG: "https://logo.clearbit.com/btog.io",
-  // AVAX companies
-  AVX: "https://logo.clearbit.com/avax.network",
-  // ADA companies
-  CBLO: "https://logo.clearbit.com/cardanoblockchain.com",
-  // HBAR companies
-  IMTL: "https://logo.clearbit.com/imtl.com",
-};
+// All logos are stored locally in /public/logos/TICKER.png
+// No need for a mapping - just construct the path from ticker
 
 // Asset colors (CMC-style)
 const assetColors: Record<string, string> = {
@@ -300,17 +250,15 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     </div>
   );
 
-  // Logo component with fallback - always show fallback, overlay with image if available
+  // Logo component - uses local files from /logos/TICKER.png
   const CompanyLogo = ({ ticker }: { ticker: string }) => {
-    const logoUrl = COMPANY_LOGOS[ticker];
-
-    if (!logoUrl) return <FallbackLogo ticker={ticker} />;
+    const logoPath = `/logos/${ticker}.png`;
 
     return (
       <div className="relative w-7 h-7">
         <FallbackLogo ticker={ticker} />
         <img
-          src={logoUrl}
+          src={logoPath}
           alt={ticker}
           className="absolute inset-0 w-7 h-7 rounded-full object-cover"
           onError={(e) => {
