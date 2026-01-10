@@ -51,9 +51,11 @@ export function FairValueCalculator({
       stakingApy / 100,
       quarterlyBurn * 1_000_000,
       networkApy,
-      riskFreeRate / 100
+      riskFreeRate / 100,
+      asset,
+      1.0 // Default leverage ratio
     );
-  }, [holdings, assetPrice, marketCap, stakingPct, stakingApy, quarterlyBurn, networkApy, riskFreeRate]);
+  }, [holdings, assetPrice, marketCap, stakingPct, stakingApy, quarterlyBurn, networkApy, riskFreeRate, asset]);
 
   // Calculate with benchmark (network staking for all)
   const benchmarkValue = useMemo(() => {
@@ -65,9 +67,11 @@ export function FairValueCalculator({
       networkApy,
       0, // No burn
       networkApy,
-      riskFreeRate / 100
+      riskFreeRate / 100,
+      asset,
+      1.0
     );
-  }, [holdings, assetPrice, marketCap, networkApy, riskFreeRate]);
+  }, [holdings, assetPrice, marketCap, networkApy, riskFreeRate, asset]);
 
   const resetToDefaults = () => {
     setStakingPct(defaultStakingPct * 100);

@@ -110,7 +110,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       company.stakingPct || 0,
       company.stakingApy || networkStakingApy,
       company.quarterlyBurnUsd || 0,
-      networkStakingApy
+      networkStakingApy,
+      0.04, // riskFreeRate
+      company.asset,
+      company.leverageRatio || 1.0
     );
 
     // Determine company type

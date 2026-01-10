@@ -58,7 +58,10 @@ export function PremiumDiscountChart({
           company.stakingPct || 0,
           company.stakingApy || networkStakingApy,
           company.quarterlyBurnUsd || 0,
-          networkStakingApy
+          networkStakingApy,
+          0.04,
+          company.asset,
+          company.leverageRatio || 1.0
         );
 
         return {
@@ -230,7 +233,10 @@ export function MNAVScatterChart({
           company.stakingPct || 0,
           company.stakingApy || networkStakingApy,
           company.quarterlyBurnUsd || 0,
-          networkStakingApy
+          networkStakingApy,
+          0.04,
+          company.asset,
+          company.leverageRatio || 1.0
         );
 
         return {

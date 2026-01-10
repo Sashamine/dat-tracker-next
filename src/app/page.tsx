@@ -1,15 +1,16 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useMemo } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
 import { AppSidebar, CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
-import { InvestmentFramework } from "@/components/investment-framework";
-import { FairValueModel } from "@/components/fair-value-model";
 import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
+import { MNAVDistributionChart } from "@/components/mnav-distribution-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
+import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { calculateMNAV } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
 
 // Get unique assets and count companies
@@ -24,17 +25,51 @@ function getAssetStats(companies: typeof allCompanies, prices: any) {
   }).sort((a, b) => b.totalValue - a.totalValue);
 }
 
+// Calculate median of an array
+function median(arr: number[]): number {
+  if (arr.length === 0) return 0;
+  const sorted = [...arr].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
 export default function Home() {
   const { data: prices, isLoading, dataUpdatedAt } = usePrices();
+  const { overrides } = useCompanyOverrides();
   const [viewMode, setViewMode] = useState<"table" | "bar" | "scatter">("table");
 
-  const assetStats = getAssetStats(allCompanies, prices);
+  // Merge base company data with Google Sheets overrides
+  const companies = useMemo(
+    () => mergeAllCompanies(allCompanies, overrides),
+    [overrides]
+  );
+
+  const assetStats = getAssetStats(companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
-  const totalCompanies = allCompanies.length;
+  const totalCompanies = companies.length;
 
   // Separate into yielding and non-yielding
   const yieldingStats = assetStats.filter(s => YIELDING_ASSETS.includes(s.asset));
   const nonYieldingStats = assetStats.filter(s => NON_YIELDING_ASSETS.includes(s.asset));
+
+  // Calculate mNAV stats for all companies
+  const mnavStats = useMemo(() => {
+    const mnavs = companies
+      .map((company) => {
+        const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
+        const stockData = prices?.stocks[company.ticker];
+        const marketCap = stockData?.marketCap || company.marketCap || 0;
+        return calculateMNAV(marketCap, company.holdings, cryptoPrice);
+      })
+      .filter((mnav): mnav is number => mnav !== null && mnav > 0 && mnav < 10); // Filter valid mNAVs
+
+    if (mnavs.length === 0) return { median: 0, average: 0, count: 0, mnavs: [] };
+
+    const avg = mnavs.reduce((sum, m) => sum + m, 0) / mnavs.length;
+    const med = median(mnavs);
+
+    return { median: med, average: avg, count: mnavs.length, mnavs };
+  }, [companies, prices]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex">
@@ -61,12 +96,6 @@ export default function Home() {
               <p className="text-xs text-gray-400">Auto-refreshes every 5s</p>
             </div>
           </div>
-
-          {/* Investment Framework */}
-          <InvestmentFramework />
-
-          {/* Fair Value Model */}
-          <FairValueModel companies={allCompanies} prices={prices} />
 
           {/* Yielding Assets Grid */}
           <div className="mb-8">
@@ -133,7 +162,7 @@ export default function Home() {
           </div>
 
           {/* Summary Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Total Companies</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalCompanies}</p>
@@ -142,6 +171,22 @@ export default function Home() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Total Treasury Value</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 ${(totalValue / 1_000_000_000).toFixed(2)}B
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Median mNAV</p>
+              <p className="text-2xl font-bold text-indigo-600">
+                {mnavStats.median.toFixed(2)}x
+              </p>
+              <p className="text-xs text-gray-400">{mnavStats.count} companies</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Average mNAV</p>
+              <p className="text-2xl font-bold text-purple-600">
+                {mnavStats.average.toFixed(2)}x
+              </p>
+              <p className="text-xs text-gray-400">
+                {mnavStats.average > mnavStats.median ? "Right-skewed" : "Left-skewed"}
               </p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -158,6 +203,11 @@ export default function Home() {
               </p>
               <p className="text-xs text-gray-400">{NON_YIELDING_ASSETS.length} assets</p>
             </div>
+          </div>
+
+          {/* mNAV Distribution Chart */}
+          <div className="mb-8">
+            <MNAVDistributionChart companies={companies} prices={prices} />
           </div>
 
           {/* All DAT Companies Section */}
@@ -214,20 +264,20 @@ export default function Home() {
               {/* Data Table */}
               <div className="flex-1 min-w-0">
                 <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
-                  <DataTable companies={allCompanies} prices={prices} />
+                  <DataTable companies={companies} prices={prices} />
                 </Suspense>
               </div>
             </div>
           ) : viewMode === "bar" ? (
             <PremiumDiscountChart
-              companies={allCompanies}
+              companies={companies}
               prices={prices}
               maxBars={20}
               sortBy="upside"
               title="Top 20 Companies by Upside to Fair Value"
             />
           ) : (
-            <MNAVScatterChart companies={allCompanies} prices={prices} />
+            <MNAVScatterChart companies={companies} prices={prices} />
           )}
 
           {/* Footer */}

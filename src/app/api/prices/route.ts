@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// FMP API Key - using stable endpoint (not legacy v3)
+const FMP_API_KEY = process.env.FMP_API_KEY || "ZIzI2F5LvsoeNW2FhkPUtzcBZEItvxmU";
+
 // Cache for prices (simple in-memory cache)
 let priceCache: { data: any; timestamp: number } | null = null;
 const CACHE_TTL = 30000; // 30 seconds
@@ -84,50 +87,43 @@ export async function GET() {
       };
     }
 
-    // Fetch stock prices from Yahoo Finance v8 chart endpoint (no API key needed)
+    // Fetch stock prices from FMP (using stable endpoint - not legacy v3)
     const stockPrices: Record<string, any> = {};
 
-    // Fetch stocks in parallel with concurrency limit
-    const fetchStock = async (ticker: string) => {
+    // Fetch all stocks in parallel using stable endpoint
+    const stockPromises = STOCK_TICKERS.map(async (ticker) => {
       try {
         const response = await fetch(
-          `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1d`,
-          {
-            headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            }
-          }
+          `https://financialmodelingprep.com/stable/quote?symbol=${ticker}&apikey=${FMP_API_KEY}`,
+          { next: { revalidate: 30 } }
         );
         const data = await response.json();
-        const meta = data?.chart?.result?.[0]?.meta;
-        if (meta) {
-          const price = meta.regularMarketPrice || 0;
-          const prevClose = meta.chartPreviousClose || price;
-          const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
+        if (Array.isArray(data) && data.length > 0) {
+          const stock = data[0];
           return {
-            ticker,
-            data: {
-              price,
-              change24h,
-              volume: meta.regularMarketVolume || 0,
-              marketCap: 0, // Chart endpoint doesn't have market cap, will use company data
-            }
+            symbol: stock.symbol,
+            price: stock.price,
+            change24h: stock.changePercentage,
+            volume: stock.volume,
+            marketCap: stock.marketCap,
           };
         }
+        return null;
       } catch (e) {
-        // Silently fail for individual stocks
+        console.error(`Error fetching ${ticker}:`, e);
+        return null;
       }
-      return null;
-    };
+    });
 
-    // Process in batches of 5 to avoid rate limiting
-    for (let i = 0; i < STOCK_TICKERS.length; i += 5) {
-      const batch = STOCK_TICKERS.slice(i, i + 5);
-      const results = await Promise.all(batch.map(fetchStock));
-      for (const result of results) {
-        if (result) {
-          stockPrices[result.ticker] = result.data;
-        }
+    const stockResults = await Promise.all(stockPromises);
+    for (const stock of stockResults) {
+      if (stock) {
+        stockPrices[stock.symbol] = {
+          price: stock.price,
+          change24h: stock.change24h,
+          volume: stock.volume,
+          marketCap: stock.marketCap,
+        };
       }
     }
 

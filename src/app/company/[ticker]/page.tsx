@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getCompanyByTicker } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
+import { useCompanyOverrides, mergeCompanyWithOverrides } from "@/lib/hooks/use-company-overrides";
 import { useStockHistory } from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
 import { Badge } from "@/components/ui/badge";
@@ -56,8 +57,15 @@ const verdictColors: Record<string, string> = {
 export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
-  const company = getCompanyByTicker(ticker);
+  const baseCompany = getCompanyByTicker(ticker);
   const { data: prices } = usePrices();
+  const { overrides } = useCompanyOverrides();
+
+  // Merge with overrides from Google Sheets
+  const company = useMemo(
+    () => baseCompany ? mergeCompanyWithOverrides(baseCompany, overrides) : null,
+    [baseCompany, overrides]
+  );
   const { data: history, isLoading: historyLoading } = useStockHistory(ticker);
   const [timeRange, setTimeRange] = useState("6mo");
 
@@ -116,7 +124,10 @@ export default function CompanyPage() {
     company.stakingPct || 0,
     companyStakingApy,
     company.quarterlyBurnUsd || 0,
-    networkStakingApy
+    networkStakingApy,
+    0.04,
+    company.asset,
+    company.leverageRatio || 1.0
   );
 
   // Phase determination

@@ -50,6 +50,9 @@ export interface Company {
   isMiner?: boolean;
   btcMinedAnnual?: number;
   btcAcquired2025?: number;
+
+  // Leverage/optionality (for non-yielding assets)
+  leverageRatio?: number; // > 1 means company uses debt/converts to amplify exposure
 }
 
 // Live price data

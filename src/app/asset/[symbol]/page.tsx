@@ -1,9 +1,11 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { getCompaniesByAsset, allCompanies } from "@/lib/data/companies";
 import { usePrices } from "@/lib/hooks/use-prices";
+import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -24,7 +26,8 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { useState } from "react";
+import { AssetInvestmentFramework } from "@/components/asset-investment-framework";
+import { FairValueModel } from "@/components/fair-value-model";
 
 // Asset metadata
 const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: boolean }> = {
@@ -65,10 +68,17 @@ export default function AssetPage() {
   const params = useParams();
   const router = useRouter();
   const symbol = (params.symbol as string).toUpperCase();
-  const companies = getCompaniesByAsset(symbol);
+  const baseCompanies = getCompaniesByAsset(symbol);
   const { data: prices, isLoading } = usePrices();
+  const { overrides } = useCompanyOverrides();
   const [sortField, setSortField] = useState<string>("holdingsValue");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+
+  // Merge with overrides from Google Sheets
+  const companies = useMemo(
+    () => mergeAllCompanies(baseCompanies, overrides),
+    [baseCompanies, overrides]
+  );
 
   const assetInfo = ASSET_INFO[symbol];
 
@@ -111,7 +121,10 @@ export default function AssetPage() {
       company.stakingPct || 0,
       company.stakingApy || networkStakingApy,
       company.quarterlyBurnUsd || 0,
-      networkStakingApy
+      networkStakingApy,
+      0.04,
+      company.asset,
+      company.leverageRatio || 1.0
     );
 
     return {
@@ -216,6 +229,12 @@ export default function AssetPage() {
             </p>
           </div>
         </div>
+
+        {/* Investment Framework */}
+        <AssetInvestmentFramework asset={symbol} />
+
+        {/* Fair Value Model */}
+        <FairValueModel companies={companies} prices={prices} />
 
         {/* Summary Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
