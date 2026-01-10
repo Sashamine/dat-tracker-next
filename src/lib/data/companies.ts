@@ -1014,26 +1014,8 @@ export const avaxCompanies: Company[] = [
 ];
 
 // ADA DAT Companies
-export const adaCompanies: Company[] = [
-  {
-    id: "cblo",
-    name: "C2 Blockchain",
-    ticker: "CBLO",
-    asset: "ADA",
-    tier: 2,
-    holdings: 1_000_000,
-    datStartDate: "2025-05-27",
-    costBasisAvg: 0.40,
-    stakingPct: 1.0,
-    stakingApy: 0.045,
-    quarterlyBurnUsd: 200_000,
-    capitalRaisedPipe: 500_000,
-    avgDailyVolume: 500_000,
-    marketCap: 5_000_000,
-    strategy: "First public company ADA treasury. Long-term hold + staking.",
-    notes: "OTC Pink. Digital asset infrastructure company.",
-  },
-];
+// CBLO removed - diversified multi-chain mining company (BTC mining + ETH + ADA + DOG), not pure ADA beta
+export const adaCompanies: Company[] = [];
 
 // HBAR DAT Companies
 export const hbarCompanies: Company[] = [
