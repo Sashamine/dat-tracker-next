@@ -61,13 +61,44 @@ const COMPANY_LOGOS: Record<string, string> = {
   CIFR: "https://logo.clearbit.com/ciphermining.com",
   KULR: "https://logo.clearbit.com/kulrtechnology.com",
   SMLR: "https://logo.clearbit.com/semlerscientific.com",
+  XXI: "https://logo.clearbit.com/twentyone.capital",
+  ASST: "https://logo.clearbit.com/assetentities.com",
   // ETH companies
-  BTBT: "https://logo.clearbit.com/bit-digital.com",
-  BTCS: "https://logo.clearbit.com/btcs.com",
+  BMNR: "https://logo.clearbit.com/bitmine.com",
   SBET: "https://logo.clearbit.com/sharplink.com",
+  ETHM: "https://logo.clearbit.com/dynamixgroup.com",
+  BTBT: "https://logo.clearbit.com/bit-digital.com",
+  ETHZ: "https://logo.clearbit.com/ethzilla.com",
+  BTCS: "https://logo.clearbit.com/btcs.com",
+  GAME: "https://logo.clearbit.com/gamestop.com",
+  FGNX: "https://logo.clearbit.com/firgenix.com",
+  ICG: "https://logo.clearbit.com/intchains.com",
   EXOD: "https://logo.clearbit.com/exodus.com",
   // SOL companies
-  // General fallback
+  FWDI: "https://logo.clearbit.com/forwardind.com",
+  HSDT: "https://logo.clearbit.com/heliossolartech.com",
+  DFDV: "https://logo.clearbit.com/dfdev.com",
+  UPXI: "https://logo.clearbit.com/upxi.com",
+  STKE: "https://logo.clearbit.com/stakehub.com",
+  // HYPE companies
+  PURR: "https://logo.clearbit.com/purr.com",
+  HYPD: "https://logo.clearbit.com/hyperdrive.com",
+  // TAO companies
+  TAOX: "https://logo.clearbit.com/taox.io",
+  // XRP companies
+  XRPN: "https://logo.clearbit.com/xrpnetworks.com",
+  WKSP: "https://logo.clearbit.com/worksport.com",
+  // ZEC companies
+  CYPH: "https://logo.clearbit.com/cypherblock.com",
+  // DOGE companies
+  ZONE: "https://logo.clearbit.com/zonedigital.com",
+  BTOG: "https://logo.clearbit.com/btog.io",
+  // AVAX companies
+  AVX: "https://logo.clearbit.com/avax.network",
+  // ADA companies
+  CBLO: "https://logo.clearbit.com/cardanoblockchain.com",
+  // HBAR companies
+  IMTL: "https://logo.clearbit.com/imtl.com",
 };
 
 // Asset colors (CMC-style)
@@ -265,16 +296,26 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
   // Logo component with fallback
   const CompanyLogo = ({ ticker }: { ticker: string }) => {
     const logoUrl = COMPANY_LOGOS[ticker];
-    if (!logoUrl) return <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700" />;
+
+    // Fallback: show ticker initials in a colored circle
+    const FallbackLogo = () => (
+      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+        <span className="text-[10px] font-bold text-white">{ticker.slice(0, 2)}</span>
+      </div>
+    );
+
+    if (!logoUrl) return <FallbackLogo />;
 
     return (
       <img
         src={logoUrl}
         alt={ticker}
-        className="w-7 h-7 rounded-full object-cover"
+        className="w-7 h-7 rounded-full object-cover bg-gray-100"
         onError={(e) => {
-          // Hide image on error
-          (e.target as HTMLImageElement).style.display = 'none';
+          // Replace with fallback on error
+          const target = e.target as HTMLImageElement;
+          target.style.display = 'none';
+          target.parentElement?.classList.add('logo-error');
         }}
       />
     );
