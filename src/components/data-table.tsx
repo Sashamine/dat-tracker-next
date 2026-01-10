@@ -293,31 +293,31 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     }
   };
 
-  // Logo component with fallback
+  // Fallback logo component - shows ticker initials
+  const FallbackLogo = ({ ticker }: { ticker: string }) => (
+    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+      <span className="text-[10px] font-bold text-white">{ticker.slice(0, 2)}</span>
+    </div>
+  );
+
+  // Logo component with fallback - always show fallback, overlay with image if available
   const CompanyLogo = ({ ticker }: { ticker: string }) => {
     const logoUrl = COMPANY_LOGOS[ticker];
 
-    // Fallback: show ticker initials in a colored circle
-    const FallbackLogo = () => (
-      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-        <span className="text-[10px] font-bold text-white">{ticker.slice(0, 2)}</span>
-      </div>
-    );
-
-    if (!logoUrl) return <FallbackLogo />;
+    if (!logoUrl) return <FallbackLogo ticker={ticker} />;
 
     return (
-      <img
-        src={logoUrl}
-        alt={ticker}
-        className="w-7 h-7 rounded-full object-cover bg-gray-100"
-        onError={(e) => {
-          // Replace with fallback on error
-          const target = e.target as HTMLImageElement;
-          target.style.display = 'none';
-          target.parentElement?.classList.add('logo-error');
-        }}
-      />
+      <div className="relative w-7 h-7">
+        <FallbackLogo ticker={ticker} />
+        <img
+          src={logoUrl}
+          alt={ticker}
+          className="absolute inset-0 w-7 h-7 rounded-full object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      </div>
     );
   };
 
