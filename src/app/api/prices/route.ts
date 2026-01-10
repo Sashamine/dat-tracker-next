@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 
-// FMP API Key (from your config)
-const FMP_API_KEY = process.env.FMP_API_KEY || "ZIzI2F5LvsoeNW2FhkPUtzcBZEItvxmU";
-
 // Cache for prices (simple in-memory cache)
 let priceCache: { data: any; timestamp: number } | null = null;
 const CACHE_TTL = 30000; // 30 seconds
@@ -87,34 +84,41 @@ export async function GET() {
       };
     }
 
-    // Fetch stock prices from FMP (batch quote) - split into chunks of 20
+    // Fetch stock prices from Yahoo Finance (no API key needed)
     const stockPrices: Record<string, any> = {};
+
+    // Split tickers into chunks for Yahoo Finance
     const chunks = [];
-    for (let i = 0; i < STOCK_TICKERS.length; i += 20) {
-      chunks.push(STOCK_TICKERS.slice(i, i + 20));
+    for (let i = 0; i < STOCK_TICKERS.length; i += 10) {
+      chunks.push(STOCK_TICKERS.slice(i, i + 10));
     }
 
     for (const chunk of chunks) {
       try {
         const tickers = chunk.join(",");
-        const stockResponse = await fetch(
-          `https://financialmodelingprep.com/api/v3/quote/${tickers}?apikey=${FMP_API_KEY}`,
-          { next: { revalidate: 30 } }
+        const yahooResponse = await fetch(
+          `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${tickers}`,
+          {
+            next: { revalidate: 30 },
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            }
+          }
         );
-        const stockData = await stockResponse.json();
+        const yahooData = await yahooResponse.json();
 
-        if (Array.isArray(stockData)) {
-          for (const stock of stockData) {
+        if (yahooData?.quoteResponse?.result) {
+          for (const stock of yahooData.quoteResponse.result) {
             stockPrices[stock.symbol] = {
-              price: stock.price,
-              change24h: stock.changesPercentage,
-              volume: stock.volume,
-              marketCap: stock.marketCap,
+              price: stock.regularMarketPrice || 0,
+              change24h: stock.regularMarketChangePercent || 0,
+              volume: stock.regularMarketVolume || 0,
+              marketCap: stock.marketCap || 0,
             };
           }
         }
       } catch (e) {
-        console.error("Error fetching stock chunk:", e);
+        console.error("Error fetching stock chunk from Yahoo:", e);
       }
     }
 
