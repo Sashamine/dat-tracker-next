@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { usePrices } from "@/lib/hooks/use-prices";
+import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useFilters } from "@/lib/hooks/use-filters";
 
 // Asset categorization - same as Streamlit
@@ -50,7 +50,7 @@ interface AppSidebarProps {
 
 export function AppSidebar({ className }: AppSidebarProps) {
   const pathname = usePathname();
-  const { data: prices } = usePrices();
+  const { data: prices } = usePricesStream();
   const { assets: filteredAssets } = useFilters();
 
   // Determine current asset from path
@@ -222,7 +222,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
 
         {/* Data Sources */}
         <div className="text-xs text-gray-400 dark:text-gray-500">
-          <p>Data: CoinGecko, FMP, Yahoo</p>
+          <p>Data: Alpaca (real-time)</p>
         </div>
       </div>
     </aside>

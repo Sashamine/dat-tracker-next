@@ -23,7 +23,8 @@ import { useFilters } from "@/lib/hooks/use-filters";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
-  stocks: Record<string, { price: number; change24h: number; volume: number; marketCap: number }>;
+  stocks: Record<string, { price: number; change24h: number; volume: number; marketCap: number; isAfterHours?: boolean }>;
+  marketOpen?: boolean;
 }
 
 interface DataTableProps {
@@ -99,6 +100,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
     const holdingsValue = company.holdings * cryptoPrice;
+    const isAfterHours = stockData?.isAfterHours || false;
 
     const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
     const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
@@ -131,6 +133,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       verdict: fairValue.verdict,
       fairPremium: fairValue.fairPremium,
       companyType,
+      isAfterHours,
     };
   });
 
@@ -360,7 +363,14 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     {formatMNAV(company.mNAV)}
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
-                    {company.stockPrice ? `$${company.stockPrice.toFixed(2)}` : "—"}
+                    <span className="inline-flex items-center gap-1">
+                      {company.stockPrice ? `$${company.stockPrice.toFixed(2)}` : "—"}
+                      {company.isAfterHours && (
+                        <span className="text-[10px] px-1 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded font-medium">
+                          AH
+                        </span>
+                      )}
+                    </span>
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm">
                     {company.stockChange !== undefined ? (

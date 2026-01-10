@@ -51,7 +51,7 @@ export function StockChart({ data }: StockChartProps) {
       wickUpColor: "#22c55e",
     });
 
-    // Format data for lightweight-charts
+    // Format data for lightweight-charts (daily data in YYYY-MM-DD format)
     const chartData = data.map((d) => ({
       time: d.time,
       open: d.open,

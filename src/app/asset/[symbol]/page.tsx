@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { getCompaniesByAsset, allCompanies } from "@/lib/data/companies";
-import { usePrices } from "@/lib/hooks/use-prices";
+import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -19,15 +19,11 @@ import { cn } from "@/lib/utils";
 import {
   calculateNAV,
   calculateMNAV,
-  calculateFairValue,
   formatLargeNumber,
   formatTokenAmount,
-  formatPercent,
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { AssetInvestmentFramework } from "@/components/asset-investment-framework";
-import { FairValueModel } from "@/components/fair-value-model";
 
 // Asset metadata
 const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: boolean }> = {
@@ -56,20 +52,13 @@ const tierColors: Record<number, string> = {
   3: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
-// Verdict colors
-const verdictColors: Record<string, string> = {
-  Cheap: "text-green-600",
-  Fair: "text-blue-600",
-  Expensive: "text-red-600",
-  "N/A": "text-gray-600",
-};
 
 export default function AssetPage() {
   const params = useParams();
   const router = useRouter();
   const symbol = (params.symbol as string).toUpperCase();
   const baseCompanies = getCompaniesByAsset(symbol);
-  const { data: prices, isLoading } = usePrices();
+  const { data: prices } = usePricesStream();
   const { overrides } = useCompanyOverrides();
   const [sortField, setSortField] = useState<string>("holdingsValue");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
@@ -114,19 +103,6 @@ export default function AssetPage() {
     const holdingsValue = calculateNAV(company.holdings, cryptoPrice);
     const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
 
-    const fairValue = calculateFairValue(
-      company.holdings,
-      cryptoPrice,
-      marketCap,
-      company.stakingPct || 0,
-      company.stakingApy || networkStakingApy,
-      company.quarterlyBurnUsd || 0,
-      networkStakingApy,
-      0.04,
-      company.asset,
-      company.leverageRatio || 1.0
-    );
-
     return {
       ...company,
       holdingsValue,
@@ -134,9 +110,6 @@ export default function AssetPage() {
       stockPrice,
       stockChange,
       mNAV,
-      fairPremium: fairValue.fairPremium,
-      upside: fairValue.upside,
-      verdict: fairValue.verdict,
     };
   });
 
@@ -149,9 +122,6 @@ export default function AssetPage() {
     } else if (sortField === "mNAV") {
       aVal = a.mNAV || 0;
       bVal = b.mNAV || 0;
-    } else if (sortField === "upside") {
-      aVal = a.upside || 0;
-      bVal = b.upside || 0;
     } else if (sortField === "holdings") {
       aVal = a.holdings || 0;
       bVal = b.holdings || 0;
@@ -176,7 +146,6 @@ export default function AssetPage() {
   const totalValue = totalHoldings * cryptoPrice;
   const totalMarketCap = companiesWithMetrics.reduce((sum, c) => sum + (c.marketCap || 0), 0);
   const avgMNAV = companiesWithMetrics.filter(c => c.mNAV).reduce((sum, c) => sum + (c.mNAV || 0), 0) / companiesWithMetrics.filter(c => c.mNAV).length || 0;
-  const cheapCount = companiesWithMetrics.filter(c => c.verdict === "Cheap").length;
 
   // Get all unique assets for navigation
   const allAssets = [...new Set(allCompanies.map(c => c.asset))];
@@ -217,7 +186,7 @@ export default function AssetPage() {
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
               {companies.length} companies holding {symbol}
-              {assetInfo.hasStaking && ` · ${formatPercent(networkStakingApy)} staking benchmark`}
+              {assetInfo.hasStaking && ` · ${(networkStakingApy * 100).toFixed(1)}% staking benchmark`}
             </p>
           </div>
           <div className="text-right">
@@ -230,14 +199,8 @@ export default function AssetPage() {
           </div>
         </div>
 
-        {/* Investment Framework */}
-        <AssetInvestmentFramework asset={symbol} />
-
-        {/* Fair Value Model */}
-        <FairValueModel companies={companies} prices={prices} />
-
         {/* Summary Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">Total Holdings</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -260,12 +223,6 @@ export default function AssetPage() {
             <p className="text-sm text-gray-500 dark:text-gray-400">Avg mNAV</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatMNAV(avgMNAV)}
-            </p>
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Cheap</p>
-            <p className="text-2xl font-bold text-green-600">
-              {cheapCount}/{companies.length}
             </p>
           </div>
         </div>
@@ -297,14 +254,6 @@ export default function AssetPage() {
                 >
                   mNAV {sortField === "mNAV" && (sortDirection === "desc" ? "↓" : "↑")}
                 </TableHead>
-                <TableHead className="text-right">Fair</TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900"
-                  onClick={() => handleSort("upside")}
-                >
-                  Upside {sortField === "upside" && (sortDirection === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead>Verdict</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -343,19 +292,6 @@ export default function AssetPage() {
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     {formatMNAV(company.mNAV)}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {formatMNAV(company.fairPremium)}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    <span className={cn(company.upside > 0 ? "text-green-600" : "text-red-600")}>
-                      {formatPercent(company.upside, true)}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className={cn("font-medium", verdictColors[company.verdict])}>
-                      {company.verdict}
-                    </span>
                   </TableCell>
                 </TableRow>
               ))}

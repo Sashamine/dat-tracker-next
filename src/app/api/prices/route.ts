@@ -1,148 +1,182 @@
 import { NextResponse } from "next/server";
+import { getBinancePrices } from "@/lib/binance";
+import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
 
-// FMP API Key - using stable endpoint (not legacy v3)
-const FMP_API_KEY = process.env.FMP_API_KEY || "ZIzI2F5LvsoeNW2FhkPUtzcBZEItvxmU";
+// FMP for market caps and OTC stocks
+const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
-// Cache for prices (simple in-memory cache)
+// Stocks not on major exchanges (OTC/international) - use FMP
+const FMP_ONLY_STOCKS = ["ALTBG", "XTAIF", "LUXFF", "NA"];
+
+// Cache for prices (2 second TTL)
 let priceCache: { data: any; timestamp: number } | null = null;
-const CACHE_TTL = 30000; // 30 seconds
+const CACHE_TTL = 2000;
 
-// CoinGecko ID mapping
-const COINGECKO_IDS: Record<string, string> = {
-  ETH: "ethereum",
-  BTC: "bitcoin",
-  SOL: "solana",
-  HYPE: "hyperliquid",
-  BNB: "binancecoin",
-  TAO: "bittensor",
-  LINK: "chainlink",
-  TRX: "tron",
-  XRP: "ripple",
-  ZEC: "zcash",
-  LTC: "litecoin",
-  SUI: "sui",
-  DOGE: "dogecoin",
-  AVAX: "avalanche-2",
-  ADA: "cardano",
-  HBAR: "hedera-hashgraph",
+// Cache for market caps (5 minute TTL)
+let marketCapCache: { data: Record<string, number>; timestamp: number } | null = null;
+const MARKET_CAP_CACHE_TTL = 5 * 60 * 1000;
+
+// Response headers to prevent any caching
+const RESPONSE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+  "Pragma": "no-cache",
+  "Expires": "0",
 };
 
-// All stock tickers
-const STOCK_TICKERS = [
-  // ETH
-  "BMNR", "SBET", "ETHM", "BTBT", "ETHZ", "BTCS", "GAME", "FGNX", "ICG", "EXOD",
-  // BTC
-  "MSTR", "XXI", "BSTR", "MARA", "RIOT", "CLSK", "HUT", "ASST", "SMLR", "BITF", "WULF", "KULR", "CIFR", "ALTBG",
-  // SOL
-  "FWDI", "HSDT", "DFDV", "UPXI", "STKE",
-  // HYPE
-  "PURR", "HYPD",
-  // BNB
-  "BNC", "WINT", "NA",
-  // TAO
-  "TAOX", "XTAIF", "TWAV",
-  // LINK
-  "CWD",
-  // TRX
-  "TRON",
-  // XRP
-  "XRPN", "VVPR", "WKSP", "GPUS",
-  // ZEC
-  "CYPH", "RELI",
-  // LTC
-  "LITS", "LUXFF",
-  // SUI
-  "SUIG", "DEFT",
-  // DOGE
-  "ZONE", "TBH", "BTOG",
-  // AVAX
-  "AVX", "MLAC",
-  // ADA
-  "CBLO",
-  // HBAR
-  "IMTL",
-];
+// Fetch HYPE from CoinGecko (not on Binance)
+async function fetchCoinGeckoFallback(): Promise<Record<string, { price: number; change24h: number }>> {
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=hyperliquid&vs_currencies=usd&include_24hr_change=true",
+      { cache: "no-store" }
+    );
+    const data = await response.json();
+
+    const result: Record<string, { price: number; change24h: number }> = {};
+    if (data.hyperliquid) {
+      result["HYPE"] = {
+        price: data.hyperliquid.usd || 0,
+        change24h: data.hyperliquid.usd_24h_change || 0,
+      };
+    }
+    return result;
+  } catch (error) {
+    console.error("CoinGecko fallback error:", error);
+    return {};
+  }
+}
+
+// Fetch market caps from FMP (cached)
+async function fetchMarketCaps(): Promise<Record<string, number>> {
+  if (marketCapCache && Date.now() - marketCapCache.timestamp < MARKET_CAP_CACHE_TTL) {
+    return marketCapCache.data;
+  }
+
+  try {
+    const response = await fetch(
+      `https://financialmodelingprep.com/stable/batch-quote?symbols=${STOCK_TICKERS.join(",")}&apikey=${FMP_API_KEY}`,
+      { cache: "no-store" }
+    );
+    const data = await response.json();
+
+    const result: Record<string, number> = {};
+    if (Array.isArray(data)) {
+      for (const stock of data) {
+        if (stock?.symbol && stock?.marketCap) {
+          result[stock.symbol] = stock.marketCap;
+        }
+      }
+    }
+
+    marketCapCache = { data: result, timestamp: Date.now() };
+    return result;
+  } catch (error) {
+    console.error("FMP market caps error:", error);
+    return marketCapCache?.data || {};
+  }
+}
+
+// Fetch FMP stocks (for OTC/international)
+async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
+  if (tickers.length === 0) return {};
+
+  try {
+    const response = await fetch(
+      `https://financialmodelingprep.com/stable/batch-quote?symbols=${tickers.join(",")}&apikey=${FMP_API_KEY}`,
+      { cache: "no-store" }
+    );
+    const data = await response.json();
+
+    const result: Record<string, any> = {};
+    if (Array.isArray(data)) {
+      for (const stock of data) {
+        if (stock?.symbol) {
+          result[stock.symbol] = {
+            price: stock.price || 0,
+            change24h: stock.changePercentage || 0,
+            volume: stock.volume || 0,
+            marketCap: stock.marketCap || 0,
+          };
+        }
+      }
+    }
+    return result;
+  } catch (error) {
+    console.error("FMP stocks error:", error);
+    return {};
+  }
+}
 
 export async function GET() {
   // Return cached data if fresh
   if (priceCache && Date.now() - priceCache.timestamp < CACHE_TTL) {
-    return NextResponse.json(priceCache.data);
+    return NextResponse.json(priceCache.data, { headers: RESPONSE_HEADERS });
   }
 
   try {
-    // Fetch crypto prices from CoinGecko
-    const cryptoIds = Object.values(COINGECKO_IDS).join(",");
-    const cryptoResponse = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd&include_24hr_change=true`,
-      { next: { revalidate: 30 } }
-    );
-    const cryptoPrices = await cryptoResponse.json();
+    const marketOpen = isMarketOpen();
+    const extendedHours = isExtendedHours();
 
-    // Format crypto prices
-    const formattedCrypto: Record<string, any> = {};
-    for (const [symbol, geckoId] of Object.entries(COINGECKO_IDS)) {
-      formattedCrypto[symbol] = {
-        price: cryptoPrices[geckoId]?.usd || 0,
-        change24h: cryptoPrices[geckoId]?.usd_24h_change || 0,
-      };
-    }
+    const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
-    // Fetch stock prices from FMP (using stable endpoint - not legacy v3)
+    // Parallel fetch
+    const [binanceCrypto, coinGeckoFallback, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
+      getBinancePrices(),
+      fetchCoinGeckoFallback(),
+      getStockSnapshots(alpacaStockTickers).catch(() => ({})),
+      fetchFMPStocks(FMP_ONLY_STOCKS),
+      fetchMarketCaps(),
+    ]);
+
+    // Merge crypto prices
+    const cryptoPrices: Record<string, { price: number; change24h: number }> = {
+      ...binanceCrypto,
+      ...coinGeckoFallback,
+    };
+
+    // Format stock prices
     const stockPrices: Record<string, any> = {};
 
-    // Fetch all stocks in parallel using stable endpoint
-    const stockPromises = STOCK_TICKERS.map(async (ticker) => {
-      try {
-        const response = await fetch(
-          `https://financialmodelingprep.com/stable/quote?symbol=${ticker}&apikey=${FMP_API_KEY}`,
-          { next: { revalidate: 30 } }
-        );
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const stock = data[0];
-          return {
-            symbol: stock.symbol,
-            price: stock.price,
-            change24h: stock.changePercentage,
-            volume: stock.volume,
-            marketCap: stock.marketCap,
-          };
-        }
-        return null;
-      } catch (e) {
-        console.error(`Error fetching ${ticker}:`, e);
-        return null;
-      }
-    });
+    for (const ticker of alpacaStockTickers) {
+      const snapshot = (stockSnapshots as any)[ticker];
+      if (snapshot) {
+        const currentPrice = snapshot.latestTrade?.p || snapshot.latestQuote?.ap || 0;
+        const prevClose = snapshot.prevDailyBar?.c || currentPrice;
+        const change24h = prevClose > 0 ? ((currentPrice - prevClose) / prevClose) * 100 : 0;
+        const dailyBar = snapshot.dailyBar || {};
 
-    const stockResults = await Promise.all(stockPromises);
-    for (const stock of stockResults) {
-      if (stock) {
-        stockPrices[stock.symbol] = {
-          price: stock.price,
-          change24h: stock.change24h,
-          volume: stock.volume,
-          marketCap: stock.marketCap,
+        stockPrices[ticker] = {
+          price: currentPrice,
+          change24h,
+          volume: dailyBar.v || 0,
+          marketCap: marketCaps[ticker] || 0,
+          isAfterHours: extendedHours && !marketOpen,
+          regularPrice: snapshot.prevDailyBar?.c || currentPrice,
         };
       }
     }
 
+    // Merge FMP stocks
+    for (const [ticker, data] of Object.entries(fmpStocks)) {
+      stockPrices[ticker] = data;
+    }
+
     const result = {
-      crypto: formattedCrypto,
+      crypto: cryptoPrices,
       stocks: stockPrices,
       timestamp: new Date().toISOString(),
+      marketOpen,
+      extendedHours,
     };
 
-    // Update cache
     priceCache = { data: result, timestamp: Date.now() };
 
-    return NextResponse.json(result);
+    return NextResponse.json(result, { headers: RESPONSE_HEADERS });
   } catch (error) {
     console.error("Error fetching prices:", error);
-    // Return cached data if available, even if stale
     if (priceCache) {
-      return NextResponse.json(priceCache.data);
+      return NextResponse.json(priceCache.data, { headers: RESPONSE_HEADERS });
     }
-    return NextResponse.json({ error: "Failed to fetch prices" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch prices" }, { status: 500, headers: RESPONSE_HEADERS });
   }
 }

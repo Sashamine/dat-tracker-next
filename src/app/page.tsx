@@ -8,7 +8,7 @@ import { AppSidebar, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/a
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
 import { allCompanies } from "@/lib/data/companies";
-import { usePrices } from "@/lib/hooks/use-prices";
+import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { calculateMNAV } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
@@ -34,7 +34,7 @@ function median(arr: number[]): number {
 }
 
 export default function Home() {
-  const { data: prices, isLoading, dataUpdatedAt } = usePrices();
+  const { data: prices, isConnected } = usePricesStream();
   const { overrides } = useCompanyOverrides();
   const [viewMode, setViewMode] = useState<"table" | "bar" | "scatter">("table");
 
@@ -89,9 +89,21 @@ export default function Home() {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-500">
-                {isLoading ? "Loading..." : `Updated ${new Date(dataUpdatedAt).toLocaleTimeString()}`}
+                {prices?.timestamp ? `Updated ${new Date(prices.timestamp).toLocaleTimeString()}` : "Connecting..."}
               </p>
-              <p className="text-xs text-gray-400">Auto-refreshes every 5s</p>
+              <p className="text-xs text-gray-400">
+                {isConnected ? (
+                  <span className="inline-flex items-center gap-1">
+                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    Live streaming
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1">
+                    <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                    Reconnecting...
+                  </span>
+                )}
+              </p>
             </div>
           </div>
 
@@ -144,25 +156,25 @@ export default function Home() {
               {/* Data Table */}
               <div className="flex-1 min-w-0">
                 <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
-                  <DataTable companies={companies} prices={prices} />
+                  <DataTable companies={companies} prices={prices ?? undefined} />
                 </Suspense>
               </div>
             </div>
           ) : viewMode === "bar" ? (
             <PremiumDiscountChart
               companies={companies}
-              prices={prices}
+              prices={prices ?? undefined}
               maxBars={20}
               sortBy="upside"
               title="Top 20 Companies by Upside to Fair Value"
             />
           ) : (
-            <MNAVScatterChart companies={companies} prices={prices} />
+            <MNAVScatterChart companies={companies} prices={prices ?? undefined} />
           )}
 
           {/* Footer */}
           <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>Prices from CoinGecko and FMP. Updates every 5 seconds.</p>
+            <p>Real-time prices from Alpaca. Live streaming updates.</p>
           </footer>
         </div>
       </main>
@@ -174,7 +186,7 @@ export default function Home() {
         totalCompanies={totalCompanies}
         totalValue={totalValue}
         companies={companies}
-        prices={prices}
+        prices={prices ?? undefined}
         className="hidden lg:block fixed right-0 top-0 h-full"
       />
     </div>

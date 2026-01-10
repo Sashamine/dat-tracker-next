@@ -4,9 +4,9 @@ import { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getCompanyByTicker } from "@/lib/data/companies";
-import { usePrices } from "@/lib/hooks/use-prices";
+import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeCompanyWithOverrides } from "@/lib/hooks/use-company-overrides";
-import { useStockHistory } from "@/lib/hooks/use-stock-history";
+import { useStockHistory, TimeRange } from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -58,7 +58,7 @@ export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
   const baseCompany = getCompanyByTicker(ticker);
-  const { data: prices } = usePrices();
+  const { data: prices } = usePricesStream();
   const { overrides } = useCompanyOverrides();
 
   // Merge with overrides from Google Sheets
@@ -66,8 +66,8 @@ export default function CompanyPage() {
     () => baseCompany ? mergeCompanyWithOverrides(baseCompany, overrides) : null,
     [baseCompany, overrides]
   );
-  const { data: history, isLoading: historyLoading } = useStockHistory(ticker);
-  const [timeRange, setTimeRange] = useState("6mo");
+  const [timeRange, setTimeRange] = useState<TimeRange>("1y");
+  const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange);
 
   if (!company) {
     return (
@@ -263,18 +263,24 @@ export default function CompanyPage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
             <div className="flex gap-2">
-              {["1mo", "3mo", "6mo", "1y", "2y"].map((range) => (
+              {([
+                { value: "1d", label: "24H" },
+                { value: "7d", label: "7D" },
+                { value: "1mo", label: "1M" },
+                { value: "1y", label: "1Y" },
+                { value: "all", label: "ALL" },
+              ] as const).map(({ value, label }) => (
                 <button
-                  key={range}
-                  onClick={() => setTimeRange(range)}
+                  key={value}
+                  onClick={() => setTimeRange(value)}
                   className={cn(
                     "px-3 py-1 text-sm rounded-md transition-colors",
-                    timeRange === range
+                    timeRange === value
                       ? "bg-indigo-600 text-white"
                       : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
                   )}
                 >
-                  {range.toUpperCase()}
+                  {label}
                 </button>
               ))}
             </div>
