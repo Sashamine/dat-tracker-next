@@ -84,41 +84,50 @@ export async function GET() {
       };
     }
 
-    // Fetch stock prices from Yahoo Finance (no API key needed)
+    // Fetch stock prices from Yahoo Finance v8 chart endpoint (no API key needed)
     const stockPrices: Record<string, any> = {};
 
-    // Split tickers into chunks for Yahoo Finance
-    const chunks = [];
-    for (let i = 0; i < STOCK_TICKERS.length; i += 10) {
-      chunks.push(STOCK_TICKERS.slice(i, i + 10));
-    }
-
-    for (const chunk of chunks) {
+    // Fetch stocks in parallel with concurrency limit
+    const fetchStock = async (ticker: string) => {
       try {
-        const tickers = chunk.join(",");
-        const yahooResponse = await fetch(
-          `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${tickers}`,
+        const response = await fetch(
+          `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1d`,
           {
-            next: { revalidate: 30 },
             headers: {
               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
             }
           }
         );
-        const yahooData = await yahooResponse.json();
-
-        if (yahooData?.quoteResponse?.result) {
-          for (const stock of yahooData.quoteResponse.result) {
-            stockPrices[stock.symbol] = {
-              price: stock.regularMarketPrice || 0,
-              change24h: stock.regularMarketChangePercent || 0,
-              volume: stock.regularMarketVolume || 0,
-              marketCap: stock.marketCap || 0,
-            };
-          }
+        const data = await response.json();
+        const meta = data?.chart?.result?.[0]?.meta;
+        if (meta) {
+          const price = meta.regularMarketPrice || 0;
+          const prevClose = meta.chartPreviousClose || price;
+          const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
+          return {
+            ticker,
+            data: {
+              price,
+              change24h,
+              volume: meta.regularMarketVolume || 0,
+              marketCap: 0, // Chart endpoint doesn't have market cap, will use company data
+            }
+          };
         }
       } catch (e) {
-        console.error("Error fetching stock chunk from Yahoo:", e);
+        // Silently fail for individual stocks
+      }
+      return null;
+    };
+
+    // Process in batches of 5 to avoid rate limiting
+    for (let i = 0; i < STOCK_TICKERS.length; i += 5) {
+      const batch = STOCK_TICKERS.slice(i, i + 5);
+      const results = await Promise.all(batch.map(fetchStock));
+      for (const result of results) {
+        if (result) {
+          stockPrices[result.ticker] = result.data;
+        }
       }
     }
 
