@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getBinancePrices, NON_BINANCE_COINS } from "@/lib/binance";
+import { getBinancePrices } from "@/lib/binance";
 import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
 
 // FMP for market caps and fallback data
@@ -12,29 +12,6 @@ const FMP_ONLY_STOCKS = ["ALTBG", "XTAIF", "LUXFF", "NA"];
 let marketCapCache: { data: Record<string, number>; timestamp: number } | null = null;
 const MARKET_CAP_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-// Fetch HYPE from CoinGecko (not on Binance)
-async function fetchCoinGeckoFallback(): Promise<Record<string, { price: number; change24h: number }>> {
-  try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=hyperliquid&vs_currencies=usd&include_24hr_change=true",
-      { cache: "no-store" }
-    );
-    const data = await response.json();
-
-    const result: Record<string, { price: number; change24h: number }> = {};
-    if (data.hyperliquid) {
-      result["HYPE"] = {
-        price: data.hyperliquid.usd || 0,
-        change24h: data.hyperliquid.usd_24h_change || 0,
-      };
-    }
-    return result;
-  } catch (error) {
-    console.error("CoinGecko fallback error:", error);
-    return {};
-  }
-}
-
 // Fetch market caps from FMP (cached for 5 minutes)
 async function fetchMarketCaps(): Promise<Record<string, number>> {
   // Return cached if fresh
@@ -42,11 +19,12 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
     return marketCapCache.data;
   }
 
+  if (!FMP_API_KEY) return marketCapCache?.data || {};
+
   try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/stable/batch-quote?symbols=${STOCK_TICKERS.join(",")}&apikey=${FMP_API_KEY}`,
-      { cache: "no-store" }
-    );
+    const tickerList = STOCK_TICKERS.join(",");
+    const url = "https://financialmodelingprep.com/stable/batch-quote?symbols=" + tickerList + "&apikey=" + FMP_API_KEY;
+    const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
     const result: Record<string, number> = {};
@@ -69,13 +47,12 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
 
 // Fetch FMP stocks (for OTC/international not on Alpaca)
 async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
-  if (tickers.length === 0) return {};
+  if (tickers.length === 0 || !FMP_API_KEY) return {};
 
   try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/stable/batch-quote?symbols=${tickers.join(",")}&apikey=${FMP_API_KEY}`,
-      { cache: "no-store" }
-    );
+    const tickerList = tickers.join(",");
+    const url = "https://financialmodelingprep.com/stable/batch-quote?symbols=" + tickerList + "&apikey=" + FMP_API_KEY;
+    const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
     const result: Record<string, any> = {};
@@ -105,20 +82,13 @@ async function fetchAllPrices() {
   // Alpaca stocks (excluding OTC/international)
   const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
-  // Parallel fetch all data sources
-  const [binanceCrypto, coinGeckoFallback, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
-    getBinancePrices(),                           // Free real-time crypto
-    fetchCoinGeckoFallback(),                     // HYPE (not on Binance)
+  // Parallel fetch all data sources - CoinGecko now handles all crypto including HYPE
+  const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
+    getBinancePrices(),                           // CoinGecko for all crypto
     getStockSnapshots(alpacaStockTickers).catch(() => ({})), // Free IEX stocks
     fetchFMPStocks(FMP_ONLY_STOCKS),              // OTC stocks from FMP
     fetchMarketCaps(),                            // Cached market caps
   ]);
-
-  // Merge crypto prices (Binance + CoinGecko fallback)
-  const cryptoPrices: Record<string, { price: number; change24h: number }> = {
-    ...binanceCrypto,
-    ...coinGeckoFallback,
-  };
 
   // Format stock prices from Alpaca
   const stockPrices: Record<string, any> = {};
@@ -189,7 +159,7 @@ export async function GET(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       const sendEvent = (data: any) => {
-        const message = `data: ${JSON.stringify(data)}\n\n`;
+        const message = "data: " + JSON.stringify(data) + "\n\n";
         controller.enqueue(encoder.encode(message));
       };
 
@@ -213,13 +183,10 @@ export async function GET(request: NextRequest) {
             sendEvent(data);
           } else {
             // Crypto-only update (every 2 seconds) - this is the "live" feel
-            const [binanceCrypto, coinGeckoFallback] = await Promise.all([
-              getBinancePrices(),
-              fetchCoinGeckoFallback(),
-            ]);
+            const cryptoPrices = await getBinancePrices();
 
             sendEvent({
-              crypto: { ...binanceCrypto, ...coinGeckoFallback },
+              crypto: cryptoPrices,
               timestamp: new Date().toISOString(),
               partialUpdate: true, // Signal this is crypto-only
             });
