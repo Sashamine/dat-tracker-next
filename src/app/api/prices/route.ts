@@ -23,40 +23,23 @@ const RESPONSE_HEADERS = {
   "Expires": "0",
 };
 
-// Fetch HYPE from CoinGecko (not on Binance)
-async function fetchCoinGeckoFallback(): Promise<Record<string, { price: number; change24h: number }>> {
-  try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=hyperliquid&vs_currencies=usd&include_24hr_change=true",
-      { cache: "no-store" }
-    );
-    const data = await response.json();
-
-    const result: Record<string, { price: number; change24h: number }> = {};
-    if (data.hyperliquid) {
-      result["HYPE"] = {
-        price: data.hyperliquid.usd || 0,
-        change24h: data.hyperliquid.usd_24h_change || 0,
-      };
-    }
-    return result;
-  } catch (error) {
-    console.error("CoinGecko fallback error:", error);
-    return {};
-  }
-}
-
 // Fetch market caps from FMP (cached)
 async function fetchMarketCaps(): Promise<Record<string, number>> {
   if (marketCapCache && Date.now() - marketCapCache.timestamp < MARKET_CAP_CACHE_TTL) {
     return marketCapCache.data;
   }
 
+  if (!FMP_API_KEY) {
+    console.error("FMP_API_KEY not configured");
+    return marketCapCache?.data || {};
+  }
+
   try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/stable/batch-quote?symbols=${STOCK_TICKERS.join(",")}&apikey=${FMP_API_KEY}`,
-      { cache: "no-store" }
-    );
+    const tickerList = STOCK_TICKERS.join(",");
+    const url = "https://financialmodelingprep.com/stable/batch-quote?symbols=" + tickerList + "&apikey=" + FMP_API_KEY;
+    console.log("Fetching market caps from FMP:", STOCK_TICKERS.length, "tickers");
+    
+    const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
     const result: Record<string, number> = {};
@@ -66,6 +49,9 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
           result[stock.symbol] = stock.marketCap;
         }
       }
+      console.log("FMP returned market caps for", Object.keys(result).length, "stocks");
+    } else {
+      console.error("FMP returned non-array:", data);
     }
 
     marketCapCache = { data: result, timestamp: Date.now() };
@@ -78,13 +64,12 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
 
 // Fetch FMP stocks (for OTC/international)
 async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
-  if (tickers.length === 0) return {};
+  if (tickers.length === 0 || !FMP_API_KEY) return {};
 
   try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/stable/batch-quote?symbols=${tickers.join(",")}&apikey=${FMP_API_KEY}`,
-      { cache: "no-store" }
-    );
+    const tickerList = tickers.join(",");
+    const url = "https://financialmodelingprep.com/stable/batch-quote?symbols=" + tickerList + "&apikey=" + FMP_API_KEY;
+    const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
     const result: Record<string, any> = {};
@@ -119,20 +104,13 @@ export async function GET() {
 
     const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
-    // Parallel fetch
-    const [binanceCrypto, coinGeckoFallback, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
+    // Parallel fetch - CoinGecko now handles all crypto including HYPE
+    const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
       getBinancePrices(),
-      fetchCoinGeckoFallback(),
       getStockSnapshots(alpacaStockTickers).catch(() => ({})),
       fetchFMPStocks(FMP_ONLY_STOCKS),
       fetchMarketCaps(),
     ]);
-
-    // Merge crypto prices
-    const cryptoPrices: Record<string, { price: number; change24h: number }> = {
-      ...binanceCrypto,
-      ...coinGeckoFallback,
-    };
 
     // Format stock prices
     const stockPrices: Record<string, any> = {};

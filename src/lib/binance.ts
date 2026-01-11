@@ -1,93 +1,85 @@
-// Binance API Service for free real-time crypto prices
-// Docs: https://binance-docs.github.io/apidocs/spot/en/
-// No API key needed for public market data
+// CoinGecko API Service for free crypto prices
+// Using CoinGecko instead of Binance (Binance blocks US servers with 451 error)
+// Docs: https://www.coingecko.com/api/documentation
 
-const BINANCE_BASE_URL = "https://api.binance.com";
+const COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3";
 
-// Map our symbols to Binance trading pairs
-export const BINANCE_SYMBOLS: Record<string, string> = {
-  BTC: "BTCUSDT",
-  ETH: "ETHUSDT",
-  SOL: "SOLUSDT",
-  BNB: "BNBUSDT",
-  XRP: "XRPUSDT",
-  DOGE: "DOGEUSDT",
-  ADA: "ADAUSDT",
-  AVAX: "AVAXUSDT",
-  LINK: "LINKUSDT",
-  TRX: "TRXUSDT",
-  LTC: "LTCUSDT",
-  SUI: "SUIUSDT",
-  HBAR: "HBARUSDT",
-  TAO: "TAOUSDT",
-  ZEC: "ZECUSDT",
+// Map our symbols to CoinGecko IDs
+export const COINGECKO_IDS: Record<string, string> = {
+  BTC: "bitcoin",
+  ETH: "ethereum",
+  SOL: "solana",
+  BNB: "binancecoin",
+  XRP: "ripple",
+  DOGE: "dogecoin",
+  ADA: "cardano",
+  AVAX: "avalanche-2",
+  LINK: "chainlink",
+  TRX: "tron",
+  LTC: "litecoin",
+  SUI: "sui",
+  HBAR: "hedera-hashgraph",
+  TAO: "bittensor",
+  ZEC: "zcash",
+  HYPE: "hyperliquid",
 };
-
-// Coins not on Binance - need CoinGecko fallback
-export const NON_BINANCE_COINS = ["HYPE"];
-
-interface BinanceTicker {
-  symbol: string;
-  lastPrice: string;
-  priceChangePercent: string;
-  volume: string;
-}
 
 // Fetch all crypto prices in one call (free, no auth)
 export async function getBinancePrices(): Promise<Record<string, { price: number; change24h: number }>> {
   try {
-    // Get 24hr ticker for all symbols we care about
-    const symbols = Object.values(BINANCE_SYMBOLS);
+    const ids = Object.values(COINGECKO_IDS).join(",");
     const response = await fetch(
-      `${BINANCE_BASE_URL}/api/v3/ticker/24hr?symbols=${JSON.stringify(symbols)}`,
+      `${COINGECKO_BASE_URL}/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`,
       { cache: "no-store" }
     );
 
     if (!response.ok) {
-      throw new Error(`Binance API error: ${response.status}`);
+      throw new Error(`CoinGecko API error: ${response.status}`);
     }
 
-    const data: BinanceTicker[] = await response.json();
-
+    const data = await response.json();
     const result: Record<string, { price: number; change24h: number }> = {};
 
-    for (const [symbol, binanceSymbol] of Object.entries(BINANCE_SYMBOLS)) {
-      const ticker = data.find(t => t.symbol === binanceSymbol);
-      if (ticker) {
+    for (const [symbol, geckoId] of Object.entries(COINGECKO_IDS)) {
+      const coinData = data[geckoId];
+      if (coinData) {
         result[symbol] = {
-          price: parseFloat(ticker.lastPrice),
-          change24h: parseFloat(ticker.priceChangePercent),
+          price: coinData.usd || 0,
+          change24h: coinData.usd_24h_change || 0,
         };
       }
     }
 
     return result;
   } catch (error) {
-    console.error("Binance fetch error:", error);
+    console.error("CoinGecko fetch error:", error);
     return {};
   }
 }
 
 // Fetch single price (useful for specific lookups)
 export async function getBinancePrice(symbol: string): Promise<{ price: number; change24h: number } | null> {
-  const binanceSymbol = BINANCE_SYMBOLS[symbol];
-  if (!binanceSymbol) return null;
+  const geckoId = COINGECKO_IDS[symbol];
+  if (!geckoId) return null;
 
   try {
     const response = await fetch(
-      `${BINANCE_BASE_URL}/api/v3/ticker/24hr?symbol=${binanceSymbol}`,
+      `${COINGECKO_BASE_URL}/simple/price?ids=${geckoId}&vs_currencies=usd&include_24hr_change=true`,
       { cache: "no-store" }
     );
 
     if (!response.ok) return null;
 
-    const data: BinanceTicker = await response.json();
+    const data = await response.json();
+    const coinData = data[geckoId];
+    if (!coinData) return null;
+
     return {
-      price: parseFloat(data.lastPrice),
-      change24h: parseFloat(data.priceChangePercent),
+      price: coinData.usd || 0,
+      change24h: coinData.usd_24h_change || 0,
     };
   } catch (error) {
-    console.error(`Binance fetch error for ${symbol}:`, error);
+    console.error(`CoinGecko fetch error for ${symbol}:`, error);
     return null;
   }
 }
