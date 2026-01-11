@@ -191,7 +191,8 @@ export async function getStockSnapshots(symbols: string[]): Promise<Record<strin
     throw new Error(`Alpaca stock snapshots failed: ${response.status}`);
   }
 
-  return response.json();
+  const data = await response.json();
+  return data.snapshots || {};
 }
 
 // Fetch latest crypto quotes (batch)
@@ -257,7 +258,8 @@ export async function getCryptoSnapshots(symbols: string[]): Promise<Record<stri
     throw new Error(`Alpaca crypto snapshots failed: ${response.status}`);
   }
 
-  return response.json();
+  const data = await response.json();
+  return data.snapshots || {};
 }
 
 // Check if US stock market is open (9:30 AM - 4:00 PM ET, Mon-Fri)
