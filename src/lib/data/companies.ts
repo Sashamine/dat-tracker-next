@@ -8,7 +8,7 @@ export const ethCompanies: Company[] = [
     ticker: "BMNR",
     asset: "ETH",
     tier: 1,
-    holdings: 4_066_000,
+    holdings: 4_144_000,  // Updated Jan 2026
     datStartDate: "2025-07-01",
     stakingPct: 0.85,
     stakingMethod: "MAVAN validators",
