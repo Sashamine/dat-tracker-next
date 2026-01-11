@@ -27,7 +27,7 @@ export const ethCompanies: Company[] = [
     ticker: "SBET",
     asset: "ETH",
     tier: 1,
-    holdings: 860_000,
+    holdings: 863_424,  // Updated Jan 2026
     datStartDate: "2025-05-01",
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkGaming",
@@ -156,7 +156,7 @@ export const btcCompanies: Company[] = [
     ticker: "MSTR",
     asset: "BTC",
     tier: 1,
-    holdings: 628_791,
+    holdings: 673_783,  // Updated Jan 2026
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
@@ -533,7 +533,7 @@ export const solCompanies: Company[] = [
     ticker: "DFDV",
     asset: "SOL",
     tier: 1,
-    holdings: 2_195_926,
+    holdings: 2_221_329,  // Updated Jan 2026
     datStartDate: "2025-04-01",
     costBasisAvg: 110.00,
     stakingPct: 0.90,
