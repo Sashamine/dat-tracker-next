@@ -1,46 +1,44 @@
-// CoinGecko API Service for free crypto prices
-// Using CoinGecko instead of Binance (Binance blocks US servers with 451 error)
-// Docs: https://www.coingecko.com/api/documentation
+// Crypto prices - uses Alpaca (primary) + CoinGecko (fallback for altcoins)
+import { getCryptoSnapshots, CRYPTO_SYMBOLS } from "./alpaca";
 
 const COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3";
 
-// Map our symbols to CoinGecko IDs
-export const COINGECKO_IDS: Record<string, string> = {
-  BTC: "bitcoin",
-  ETH: "ethereum",
-  SOL: "solana",
-  BNB: "binancecoin",
-  XRP: "ripple",
-  DOGE: "dogecoin",
-  ADA: "cardano",
-  AVAX: "avalanche-2",
-  LINK: "chainlink",
-  TRX: "tron",
-  LTC: "litecoin",
-  SUI: "sui",
-  HBAR: "hedera-hashgraph",
-  TAO: "bittensor",
-  ZEC: "zcash",
+// Coins NOT on Alpaca - need CoinGecko
+const COINGECKO_ONLY: Record<string, string> = {
   HYPE: "hyperliquid",
+  BNB: "binancecoin",
+  TAO: "bittensor",
+  TRX: "tron",
+  ZEC: "zcash",
+  SUI: "sui",
+  ADA: "cardano",
+  HBAR: "hedera-hashgraph",
 };
 
-// Fetch all crypto prices in one call (free, no auth)
-export async function getBinancePrices(): Promise<Record<string, { price: number; change24h: number }>> {
+// Cache for CoinGecko (reduce rate limit hits)
+let geckoCache: { data: Record<string, { price: number; change24h: number }>; timestamp: number } | null = null;
+const GECKO_CACHE_TTL = 60 * 1000; // 60 seconds
+
+// Fetch altcoins from CoinGecko (cached)
+async function fetchCoinGeckoAltcoins(): Promise<Record<string, { price: number; change24h: number }>> {
+  if (geckoCache && Date.now() - geckoCache.timestamp < GECKO_CACHE_TTL) {
+    return geckoCache.data;
+  }
+
   try {
-    const ids = Object.values(COINGECKO_IDS).join(",");
-    const response = await fetch(
-      `${COINGECKO_BASE_URL}/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`,
-      { cache: "no-store" }
-    );
+    const ids = Object.values(COINGECKO_ONLY).join(",");
+    const url = COINGECKO_BASE_URL + "/simple/price?ids=" + ids + "&vs_currencies=usd&include_24hr_change=true";
+    const response = await fetch(url, { cache: "no-store" });
 
     if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`);
+      console.error("CoinGecko error:", response.status);
+      return geckoCache?.data || {};
     }
 
     const data = await response.json();
     const result: Record<string, { price: number; change24h: number }> = {};
 
-    for (const [symbol, geckoId] of Object.entries(COINGECKO_IDS)) {
+    for (const [symbol, geckoId] of Object.entries(COINGECKO_ONLY)) {
       const coinData = data[geckoId];
       if (coinData) {
         result[symbol] = {
@@ -50,36 +48,53 @@ export async function getBinancePrices(): Promise<Record<string, { price: number
       }
     }
 
+    geckoCache = { data: result, timestamp: Date.now() };
     return result;
   } catch (error) {
     console.error("CoinGecko fetch error:", error);
-    return {};
+    return geckoCache?.data || {};
   }
 }
 
-// Fetch single price (useful for specific lookups)
-export async function getBinancePrice(symbol: string): Promise<{ price: number; change24h: number } | null> {
-  const geckoId = COINGECKO_IDS[symbol];
-  if (!geckoId) return null;
+// Main function - Alpaca for major coins, CoinGecko for altcoins
+export async function getBinancePrices(): Promise<Record<string, { price: number; change24h: number }>> {
+  const result: Record<string, { price: number; change24h: number }> = {};
 
   try {
-    const response = await fetch(
-      `${COINGECKO_BASE_URL}/simple/price?ids=${geckoId}&vs_currencies=usd&include_24hr_change=true`,
-      { cache: "no-store" }
-    );
+    // Fetch from Alpaca (BTC, ETH, SOL, etc.)
+    const alpacaSymbols = Object.values(CRYPTO_SYMBOLS);
+    const snapshots = await getCryptoSnapshots(alpacaSymbols);
 
-    if (!response.ok) return null;
+    for (const [symbol, alpacaSymbol] of Object.entries(CRYPTO_SYMBOLS)) {
+      const snapshot = snapshots[alpacaSymbol];
+      if (snapshot) {
+        const price = snapshot.latestTrade?.p || snapshot.latestQuote?.ap || 0;
+        const prevClose = snapshot.prevDailyBar?.c || price;
+        const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
+        
+        result[symbol] = { price, change24h };
+      }
+    }
 
-    const data = await response.json();
-    const coinData = data[geckoId];
-    if (!coinData) return null;
-
-    return {
-      price: coinData.usd || 0,
-      change24h: coinData.usd_24h_change || 0,
-    };
+    console.log("Alpaca crypto:", Object.keys(result).length, "coins");
   } catch (error) {
-    console.error(`CoinGecko fetch error for ${symbol}:`, error);
-    return null;
+    console.error("Alpaca crypto error:", error);
   }
+
+  try {
+    // Fetch altcoins from CoinGecko (cached)
+    const altcoins = await fetchCoinGeckoAltcoins();
+    Object.assign(result, altcoins);
+    console.log("Total crypto prices:", Object.keys(result).length);
+  } catch (error) {
+    console.error("CoinGecko altcoin error:", error);
+  }
+
+  return result;
+}
+
+// Single price lookup
+export async function getBinancePrice(symbol: string): Promise<{ price: number; change24h: number } | null> {
+  const prices = await getBinancePrices();
+  return prices[symbol] || null;
 }
