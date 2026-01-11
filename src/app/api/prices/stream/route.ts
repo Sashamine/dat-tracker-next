@@ -11,6 +11,15 @@ const FMP_TICKER_MAP: Record<string, string> = {
   "ALTBG.PA": "ALTBG",   // Euronext Paris
   "HOGPF": "H100.ST",    // H100 Group OTC ticker -> display as H100.ST
 };
+
+// Fallback prices for illiquid stocks not covered by data providers
+const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: string }> = {
+  "CEPO": { price: 10.50, marketCap: 200000000, note: "BSTR Holdings pre-merger SPAC" },
+  "XTAIF": { price: 0.75, marketCap: 20000000, note: "xTAO Inc OTC" },
+  "IHLDF": { price: 0.10, marketCap: 10000000, note: "Immutable Holdings OTC" },
+  "ALTBG": { price: 0.50, marketCap: 200000000, note: "The Blockchain Group" },
+  "H100.ST": { price: 0.10, marketCap: 150000000, note: "H100 Group" },
+};
 const FMP_ONLY_STOCKS = [
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
   "LUXFF",     // Luxxfolio (OTC)
@@ -128,6 +137,19 @@ async function fetchAllPrices() {
   for (const [ticker, data] of Object.entries(fmpStocks)) {
     const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
     stockPrices[displayTicker] = data;
+  }
+
+  // Add fallback data for illiquid stocks without real-time data
+  for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
+    if (!stockPrices[ticker]) {
+      stockPrices[ticker] = {
+        price: fallback.price,
+        change24h: 0,
+        volume: 0,
+        marketCap: fallback.marketCap,
+        isStatic: true,
+      };
+    }
   }
 
   return {
