@@ -34,7 +34,7 @@ export const STOCK_TICKERS = [
   // ETH
   "BMNR", "SBET", "ETHM", "BTBT", "BTCS", "GAME", "FGNX", "ICG",
   // BTC
-  "MSTR", "XXI", "BSTR", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "GNS", "ABTC",
+  "MSTR", "XXI", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "GNS", "ABTC",
   // SOL
   "FWDI", "HSDT", "DFDV", "UPXI", "STKE",
   // HYPE
@@ -59,8 +59,7 @@ export const STOCK_TICKERS = [
   "ZONE", "TBH", "BTOG",
   // AVAX
   "AVX",
-  // HBAR
-  "IMTL",
+  // HBAR - IMTL moved to FMP_ONLY_STOCKS (OTC)
 ];
 
 export interface AlpacaStockQuote {

@@ -6,7 +6,22 @@ import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from 
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Stocks not on major exchanges (OTC/international) - use FMP
-const FMP_ONLY_STOCKS = ["ALTBG", "XTAIF", "LUXFF", "NA", "3350.T", "H100.ST", "0434.HK"];
+// Map: FMP ticker -> display ticker (for tickers with different formats)
+const FMP_TICKER_MAP: Record<string, string> = {
+  "ALTBG.PA": "ALTBG",   // Euronext Paris
+  "HOGPF": "H100.ST",    // H100 Group OTC ticker -> display as H100.ST
+};
+const FMP_ONLY_STOCKS = [
+  "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
+  "XTAIF",     // xTAO Inc (OTC)
+  "LUXFF",     // Luxxfolio (OTC)
+  "NA",        // Nano Labs
+  "3350.T",    // Metaplanet (Tokyo)
+  "HOGPF",     // H100 Group (OTC ticker for Swedish company)
+  "0434.HK",   // Boyaa Interactive (Hong Kong)
+  "BSTR",      // BSTR Holdings (may be OTC/new)
+  "IMTL",      // Immutable Holdings (OTC)
+];
 
 // Cache for market caps (update every 5 minutes, not every tick)
 let marketCapCache: { data: Record<string, number>; timestamp: number } | null = null;
@@ -112,9 +127,10 @@ async function fetchAllPrices() {
     }
   }
 
-  // Merge FMP stocks (OTC/international)
+  // Merge FMP stocks (OTC/international) with ticker mapping
   for (const [ticker, data] of Object.entries(fmpStocks)) {
-    stockPrices[ticker] = data;
+    const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
+    stockPrices[displayTicker] = data;
   }
 
   return {
