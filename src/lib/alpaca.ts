@@ -191,8 +191,8 @@ export async function getStockSnapshots(symbols: string[]): Promise<Record<strin
     throw new Error(`Alpaca stock snapshots failed: ${response.status}`);
   }
 
-  const data = await response.json();
-  return data.snapshots || {};
+  // Stock API returns data directly (not wrapped in snapshots)
+  return response.json();
 }
 
 // Fetch latest crypto quotes (batch)
