@@ -21,6 +21,12 @@ const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: 
   "ALTBG": { price: 0.50, marketCap: 200000000, note: "The Blockchain Group" },
   "H100.ST": { price: 0.10, marketCap: 150000000, note: "H100 Group" },
 };
+
+// Market cap overrides for stocks with incorrect FMP data
+// These are manually updated based on current shares outstanding × price
+const MARKET_CAP_OVERRIDES: Record<string, number> = {
+  "BMNR": 12_800_000_000,  // ~425M shares × $30.12 (Jan 2026)
+};
 const FMP_ONLY_STOCKS = [
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
   "LUXFF",     // Luxxfolio (OTC)
@@ -149,7 +155,7 @@ export async function GET() {
           price: currentPrice,
           change24h,
           volume: dailyBar.v || 0,
-          marketCap: marketCaps[ticker] || 0,
+          marketCap: MARKET_CAP_OVERRIDES[ticker] || marketCaps[ticker] || 0,
           isAfterHours: extendedHours && !marketOpen,
           regularPrice: snapshot.prevDailyBar?.c || currentPrice,
         };
