@@ -13,15 +13,12 @@ const FMP_TICKER_MAP: Record<string, string> = {
 };
 const FMP_ONLY_STOCKS = [
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
-  "XTAIF",     // xTAO Inc (OTC)
   "LUXFF",     // Luxxfolio (OTC)
   "NA",        // Nano Labs
   "3350.T",    // Metaplanet (Tokyo)
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
-  "CEPO",      // BSTR Holdings pre-merger SPAC
-  "IHLDF",     // Immutable Holdings (OTC)
-];
+  ];
 
 // Cache for prices (2 second TTL)
 let priceCache: { data: any; timestamp: number } | null = null;
