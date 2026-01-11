@@ -201,9 +201,10 @@ export async function getCryptoQuotes(symbols: string[]): Promise<Record<string,
     throw new Error("Alpaca API keys not configured");
   }
 
-  // Alpaca crypto uses format like "BTC/USD"
+  // URL-encode symbols (e.g., "ETH/USD" -> "ETH%2FUSD")
+  const encodedSymbols = symbols.map(s => encodeURIComponent(s)).join(",");
   const response = await fetch(
-    `${DATA_BASE_URL}/v1beta3/crypto/us/latest/quotes?symbols=${symbols.join(",")}`,
+    `${DATA_BASE_URL}/v1beta3/crypto/us/latest/quotes?symbols=${encodedSymbols}`,
     {
       headers: getHeaders(),
       cache: "no-store",
@@ -224,8 +225,10 @@ export async function getCryptoTrades(symbols: string[]): Promise<Record<string,
     throw new Error("Alpaca API keys not configured");
   }
 
+  // URL-encode symbols (e.g., "ETH/USD" -> "ETH%2FUSD")
+  const encodedSymbols = symbols.map(s => encodeURIComponent(s)).join(",");
   const response = await fetch(
-    `${DATA_BASE_URL}/v1beta3/crypto/us/latest/trades?symbols=${symbols.join(",")}`,
+    `${DATA_BASE_URL}/v1beta3/crypto/us/latest/trades?symbols=${encodedSymbols}`,
     {
       headers: getHeaders(),
       cache: "no-store",
@@ -246,8 +249,10 @@ export async function getCryptoSnapshots(symbols: string[]): Promise<Record<stri
     throw new Error("Alpaca API keys not configured");
   }
 
+  // URL-encode symbols (e.g., "ETH/USD" -> "ETH%2FUSD")
+  const encodedSymbols = symbols.map(s => encodeURIComponent(s)).join(",");
   const response = await fetch(
-    `${DATA_BASE_URL}/v1beta3/crypto/us/snapshots?symbols=${symbols.join(",")}`,
+    `${DATA_BASE_URL}/v1beta3/crypto/us/snapshots?symbols=${encodedSymbols}`,
     {
       headers: getHeaders(),
       cache: "no-store",
