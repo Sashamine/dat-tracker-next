@@ -19,8 +19,8 @@ const FMP_ONLY_STOCKS = [
   "3350.T",    // Metaplanet (Tokyo)
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
-  "BSTR",      // BSTR Holdings (may be OTC/new)
-  "IMTL",      // Immutable Holdings (OTC)
+  "CEPO",      // BSTR Holdings pre-merger SPAC
+  "IHLDF",     // Immutable Holdings (OTC)
 ];
 
 // Cache for prices (2 second TTL)

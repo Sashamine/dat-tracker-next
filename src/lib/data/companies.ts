@@ -210,9 +210,9 @@ export const btcCompanies: Company[] = [
     notes: "Tether/SoftBank/Cantor backed. 3rd largest public holder.",
   },
   {
-    id: "bstr",
+    id: "cepo",  // BSTR Holdings pre-merger
     name: "BSTR Holdings",
-    ticker: "BSTR",
+    ticker: "CEPO",  // Pre-merger SPAC, will become BSTR
     asset: "BTC",
     tier: 1,
     holdings: 30_021,
@@ -225,7 +225,7 @@ export const btcCompanies: Company[] = [
     marketCap: 3_500_000_000,
     leader: "Adam Back (CEO)",
     strategy: "Hashcash inventor's BTC treasury play. Target 50K+ BTC.",
-    notes: "Blockstream founder. 25K BTC from Adam Back personally.",
+    notes: "Blockstream founder. 25K BTC from Adam Back personally. Trading as CEPO until merger closes.",
   },
   {
     id: "mara",
@@ -1022,7 +1022,7 @@ export const hbarCompanies: Company[] = [
   {
     id: "imtl",
     name: "Immutable Holdings",
-    ticker: "IMTL",
+    ticker: "IHLDF",
     asset: "HBAR",
     tier: 1,
     holdings: 48_000_000,
