@@ -6,7 +6,7 @@ import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from 
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Stocks not on major exchanges (OTC/international) - use FMP
-const FMP_ONLY_STOCKS = ["ALTBG", "XTAIF", "LUXFF", "NA"];
+const FMP_ONLY_STOCKS = ["ALTBG", "XTAIF", "LUXFF", "NA", "3350.T", "H100.ST", "0434.HK"];
 
 // Cache for prices (2 second TTL)
 let priceCache: { data: any; timestamp: number } | null = null;
