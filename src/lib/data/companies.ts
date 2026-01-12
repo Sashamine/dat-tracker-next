@@ -119,7 +119,7 @@ export const ethCompanies: Company[] = [
     ticker: "FGNX",
     asset: "ETH",
     tier: 1,
-    holdings: 50_000,
+    holdings: 40_005,  // Updated Jan 2026 - sold 10,922 ETH in Nov 2025
     datStartDate: "2025-07-30",
     stakingPct: 0.80,
     stakingMethod: "Native staking",
@@ -128,7 +128,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 10_000_000,
     leader: "Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
-    notes: "Formerly Fundamental Global. Reached 50K ETH milestone Sep 2025.",
+    notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some Nov 2025.",
   },
   {
     id: "icg",
@@ -453,7 +453,7 @@ export const btcCompanies: Company[] = [
     ticker: "GNS",
     asset: "BTC",
     tier: 2,
-    holdings: 200,
+    holdings: 180,  // Updated Jan 2026
     datStartDate: "2024-11-01",
     costBasisAvg: 90_000,
     isMiner: false,
@@ -666,7 +666,7 @@ export const bnbCompanies: Company[] = [
     ticker: "NA",
     asset: "BNB",
     tier: 2,
-    holdings: 128_000,
+    holdings: 130_000,  // Updated Jan 2026
     datStartDate: "2025-06-01",
     costBasisAvg: 600.00,
     stakingPct: 0.30,
@@ -796,39 +796,21 @@ export const xrpCompanies: Company[] = [
     notes: "Pre-IPO. 0.47% of XRP supply. SBI, Ripple, Pantera backed.",
   },
   {
-    id: "vvpr",
-    name: "VivoPower International",
-    ticker: "VVPR",
-    asset: "XRP",
-    tier: 2,
-    holdings: 0,
-    datStartDate: "2025-06-01",
-    stakingPct: 0.90,
-    stakingApy: 0.035,
-    quarterlyBurnUsd: 3_200_000,
-    capitalRaisedPipe: 121_000_000,
-    avgDailyVolume: 5_000_000,
-    marketCap: 35_000_000,
-    leader: "Kevin Chin (CEO)",
-    strategy: "$100M XRP treasury via Flare Network staking",
-    notes: "Saudi Prince backing. Adam Traidman advisor.",
-  },
-  {
     id: "wksp",
     name: "Worksport Ltd",
     ticker: "WKSP",
     asset: "XRP",
     tier: 2,
-    holdings: 50_000,
+    holdings: 15_000,  // Estimated - six-figure initial purchase
     datStartDate: "2025-01-01",
-    costBasisAvg: 2.00,
+    costBasisAvg: 2.50,
     quarterlyBurnUsd: 4_000_000,
     capitalRaisedPipe: 5_000_000,
     avgDailyVolume: 3_000_000,
     marketCap: 18_650_000,
     leader: "Steven Rossi (CEO)",
     strategy: "Dual BTC/XRP treasury, crypto payments",
-    notes: "Clean energy auto tech company.",
+    notes: "Clean energy auto tech. Holdings estimated from six-figure purchase.",
   },
 ];
 
@@ -858,15 +840,15 @@ export const zecCompanies: Company[] = [
     ticker: "RELI",
     asset: "ZEC",
     tier: 2,
-    holdings: 10_000,
+    holdings: 10_000,  // Estimated - no disclosure
     datStartDate: "2025-11-01",
-    costBasisAvg: 500.00,
+    costBasisAvg: 50.00,  // Nov 2025 consolidation price
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 1_000_000,
     marketCap: 6_540_000,
     leader: "Ezra Beyman (CEO)",
-    strategy: "100% ZEC allocation, exited all other crypto",
-    notes: "InsurTech company. Privacy coin focus.",
+    strategy: "100% ZEC allocation, exited all other crypto Nov 2025",
+    notes: "InsurTech company. Holdings estimated - no public disclosure.",
   },
 ];
 
@@ -919,7 +901,7 @@ export const suiCompanies: Company[] = [
     ticker: "SUIG",
     asset: "SUI",
     tier: 1,
-    holdings: 105_000_000,
+    holdings: 108_098_436,  // Updated Jan 2026
     datStartDate: "2025-08-01",
     costBasisAvg: 2.23,
     stakingPct: 1.0,
@@ -931,7 +913,7 @@ export const suiCompanies: Company[] = [
     marketCap: 160_000_000,
     leader: "Douglas Polinsky (CEO)",
     strategy: "Only public company with Sui Foundation relationship",
-    notes: "Formerly Mill City Ventures. 2.8% of SUI supply.",
+    notes: "Formerly Mill City Ventures. ~2.9% of SUI supply.",
   },
 ];
 
