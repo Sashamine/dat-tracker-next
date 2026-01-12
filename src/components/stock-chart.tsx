@@ -51,14 +51,19 @@ export function StockChart({ data }: StockChartProps) {
       wickUpColor: "#22c55e",
     });
 
-    // Format data for lightweight-charts (daily data in YYYY-MM-DD format)
-    const chartData = data.map((d) => ({
-      time: d.time,
-      open: d.open,
-      high: d.high,
-      low: d.low,
-      close: d.close,
-    }));
+    // Format data for lightweight-charts
+    // time can be YYYY-MM-DD (daily) or Unix timestamp string (intraday)
+    const chartData = data.map((d) => {
+      // If time is all digits, it's a Unix timestamp - convert to number
+      const isUnixTimestamp = /^\d+$/.test(d.time);
+      return {
+        time: isUnixTimestamp ? parseInt(d.time, 10) : d.time,
+        open: d.open,
+        high: d.high,
+        low: d.low,
+        close: d.close,
+      };
+    }) as { time: string | number; open: number; high: number; low: number; close: number }[];
 
     candlestickSeries.setData(chartData);
 

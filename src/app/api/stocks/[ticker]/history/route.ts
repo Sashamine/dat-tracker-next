@@ -10,14 +10,13 @@ interface HistoricalPrice {
 }
 
 // Range configuration: days to fetch and Yahoo interval
-// Note: Yahoo Finance intraday data is limited - use daily for all ranges
-// and let the frontend filter based on date range
-const RANGE_CONFIG: Record<string, { days: number; interval: string }> = {
-  "1d": { days: 5, interval: "1d" },      // Show last few days (intraday not available)
-  "7d": { days: 10, interval: "1d" },     // Daily candles for 7d
-  "1mo": { days: 35, interval: "1d" },    // Daily candles for 1 month
-  "1y": { days: 365, interval: "1d" },    // Daily candles for 1 year
-  "all": { days: 3650, interval: "1d" },  // Daily candles for all time
+// Yahoo Finance intraday intervals: 1m (7d max), 5m/15m (60d max), 1h (730d max)
+const RANGE_CONFIG: Record<string, { days: number; interval: string; intraday: boolean }> = {
+  "1d": { days: 1, interval: "5m", intraday: true },    // 5-minute candles for 1 day (~78 candles)
+  "7d": { days: 7, interval: "15m", intraday: true },   // 15-minute candles for 7 days (~672 candles)
+  "1mo": { days: 35, interval: "15m", intraday: true }, // 15-minute candles for 1 month (~3360 candles)
+  "1y": { days: 365, interval: "1d", intraday: false }, // Daily candles for 1 year
+  "all": { days: 3650, interval: "1d", intraday: false }, // Daily candles for all time
 };
 
 // Cache for historical data (5 minute TTL)
@@ -43,8 +42,8 @@ export async function GET(
   }
 
   try {
-    // Use Yahoo Finance for historical data (all daily)
-    const yahooData = await fetchFromYahoo(ticker, config.days, config.interval);
+    // Use Yahoo Finance for historical data
+    const yahooData = await fetchFromYahoo(ticker, config.days, config.interval, config.intraday);
     if (yahooData.length > 0) {
       cache.set(cacheKey, { data: yahooData, timestamp: Date.now() });
       return NextResponse.json(yahooData);
@@ -87,7 +86,7 @@ async function fetchFromFMP(ticker: string, apiKey: string, days: number): Promi
   }
 }
 
-async function fetchFromYahoo(ticker: string, days: number, interval: string): Promise<HistoricalPrice[]> {
+async function fetchFromYahoo(ticker: string, days: number, interval: string, intraday: boolean): Promise<HistoricalPrice[]> {
   try {
     // Calculate date range
     const endDate = Math.floor(Date.now() / 1000);
@@ -116,8 +115,13 @@ async function fetchFromYahoo(ticker: string, days: number, interval: string): P
     for (let i = 0; i < timestamps.length; i++) {
       if (quotes.open?.[i] != null && quotes.close?.[i] != null) {
         const date = new Date(timestamps[i] * 1000);
+        // For intraday data, use Unix timestamp for proper time handling
+        // For daily data, use YYYY-MM-DD format
+        const time = intraday
+          ? Math.floor(timestamps[i]).toString() // Unix timestamp as string
+          : date.toISOString().split("T")[0];    // YYYY-MM-DD
         prices.push({
-          time: date.toISOString().split("T")[0], // YYYY-MM-DD
+          time,
           open: quotes.open[i],
           high: quotes.high[i],
           low: quotes.low[i],
