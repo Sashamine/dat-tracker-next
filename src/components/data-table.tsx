@@ -21,6 +21,7 @@ import {
 } from "@/lib/calculations";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
+import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -365,7 +366,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
                     <span className="inline-flex items-center gap-1">
-                      {company.stockPrice ? `$${company.stockPrice.toFixed(2)}` : "—"}
+                      <FlashingPrice
+                        value={company.stockPrice}
+                        format={(v) => `$${v.toFixed(2)}`}
+                      />
                       {company.isAfterHours && (
                         <span className="text-[10px] px-1 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded font-medium">
                           AH
@@ -374,24 +378,21 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     </span>
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm">
-                    {company.stockChange !== undefined ? (
-                      <span className={cn(company.stockChange >= 0 ? "text-green-600" : "text-red-600")}>
-                        {company.stockChange >= 0 ? "+" : ""}{company.stockChange.toFixed(2)}%
-                      </span>
-                    ) : "—"}
+                    <FlashingPercent value={company.stockChange} />
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
                     {company.stockVolume > 0 ? formatNumber(company.stockVolume) : "—"}
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
-                    {formatLargeNumber(company.marketCap)}
+                    <FlashingLargeNumber value={company.marketCap} />
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex flex-col items-end">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-medium text-gray-900 dark:text-gray-100">
-                          {formatLargeNumber(company.holdingsValue)}
-                        </span>
+                        <FlashingLargeNumber
+                          value={company.holdingsValue}
+                          className="font-mono font-medium text-gray-900 dark:text-gray-100"
+                        />
                         <StalenessCompact lastUpdated={company.holdingsLastUpdated} />
                       </div>
                       <span className="text-xs text-gray-500 font-mono">
