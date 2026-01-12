@@ -11,10 +11,11 @@ interface HistoricalPrice {
 
 // Range configuration: days to fetch and Yahoo interval
 // Yahoo Finance intraday intervals: 1m (7d max), 5m/15m (60d max), 1h (730d max)
+// Note: 1d uses 5 days lookback to ensure we get data on weekends/holidays
 const RANGE_CONFIG: Record<string, { days: number; interval: string; intraday: boolean }> = {
-  "1d": { days: 1, interval: "5m", intraday: true },    // 5-minute candles for 1 day (~78 candles)
-  "7d": { days: 7, interval: "15m", intraday: true },   // 15-minute candles for 7 days (~672 candles)
-  "1mo": { days: 35, interval: "15m", intraday: true }, // 15-minute candles for 1 month (~3360 candles)
+  "1d": { days: 5, interval: "5m", intraday: true },    // 5-minute candles, 5 day lookback for weekends
+  "7d": { days: 10, interval: "15m", intraday: true },  // 15-minute candles, extra days for holidays
+  "1mo": { days: 40, interval: "15m", intraday: true }, // 15-minute candles for 1 month
   "1y": { days: 365, interval: "1d", intraday: false }, // Daily candles for 1 year
   "all": { days: 3650, interval: "1d", intraday: false }, // Daily candles for all time
 };
