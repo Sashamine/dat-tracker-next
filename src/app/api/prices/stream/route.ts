@@ -14,7 +14,7 @@ const FMP_TICKER_MAP: Record<string, string> = {
 
 // Fallback prices for illiquid stocks not covered by data providers
 const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: string }> = {
-  "CEPO": { price: 10.50, marketCap: 200000000, note: "BSTR Holdings pre-merger SPAC" },
+  "CEPO": { price: 10.50, marketCap: 3_500_000_000, note: "BSTR Holdings pre-merger SPAC ~$3.5B" },
   "XTAIF": { price: 0.75, marketCap: 20000000, note: "xTAO Inc OTC" },
   "IHLDF": { price: 0.10, marketCap: 10000000, note: "Immutable Holdings OTC" },
   "ALTBG": { price: 0.50, marketCap: 200000000, note: "The Blockchain Group" },
@@ -29,6 +29,10 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
   "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
   "XXI": 4_000_000_000,    // 21 Capital - FMP data inconsistent, ~$4B SPAC merger valuation
+  "FWDI": 1_600_000_000,   // Forward Industries SOL treasury - ~$1.6B PIPE raise
+  "NXTT": 600_000_000,     // NextTech (WeTrade) - ~$600M market cap
+  "BNC": 500_000_000,      // Banyan BNB treasury - ~$500M PIPE raise
+  "CWD": 15_000_000,       // Calamos LINK treasury - smaller ~$15M
   // High-mNAV stocks with incorrect FMP data (Jan 2026)
   "SUIG": 150_000_000,     // SUI Group Holdings - actual ~$150M
   "XRPN": 1_000_000_000,   // Evernorth Holdings - $1B SPAC merger
