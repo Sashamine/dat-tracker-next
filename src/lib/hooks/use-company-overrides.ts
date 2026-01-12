@@ -53,8 +53,10 @@ export function mergeCompanyWithOverrides(
 
   return {
     ...company,
-    // Override numeric fields if present
-    holdings: override.holdings ?? company.holdings,
+    // Holdings: ALWAYS use companies.ts (single source of truth)
+    // Google Sheet holdings data was stale and causing incorrect mNAV calculations
+    // holdings: override.holdings ?? company.holdings,
+    // Override other numeric fields if present
     quarterlyBurnUsd: override.quarterlyBurnUsd ?? company.quarterlyBurnUsd,
     stakingPct: override.stakingPct ?? company.stakingPct,
     stakingApy: override.stakingApy ?? company.stakingApy,
