@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { createChart, ColorType, IChartApi, CandlestickSeries } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, CandlestickSeries, CandlestickData, Time } from "lightweight-charts";
 import { HistoricalPrice } from "@/lib/hooks/use-stock-history";
 
 interface StockChartProps {
@@ -53,17 +53,17 @@ export function StockChart({ data }: StockChartProps) {
 
     // Format data for lightweight-charts
     // time can be YYYY-MM-DD (daily) or Unix timestamp string (intraday)
-    const chartData = data.map((d) => {
+    const chartData: CandlestickData<Time>[] = data.map((d) => {
       // If time is all digits, it's a Unix timestamp - convert to number
       const isUnixTimestamp = /^\d+$/.test(d.time);
       return {
-        time: isUnixTimestamp ? parseInt(d.time, 10) : d.time,
+        time: (isUnixTimestamp ? parseInt(d.time, 10) : d.time) as Time,
         open: d.open,
         high: d.high,
         low: d.low,
         close: d.close,
       };
-    }) as { time: string | number; open: number; high: number; low: number; close: number }[];
+    });
 
     candlestickSeries.setData(chartData);
 
