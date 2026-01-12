@@ -1,9 +1,11 @@
 "use client";
 
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { getCompaniesNeedingData, getDataCoverageSummary } from "@/lib/data/holdings-data-status";
 
 interface VerificationData {
   summary: {
@@ -96,6 +98,10 @@ export default function VerifyPage() {
     queryFn: fetchVerificationData,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
+
+  // Holdings per share data coverage
+  const companiesNeedingData = useMemo(() => getCompaniesNeedingData(), []);
+  const dataCoverage = useMemo(() => getDataCoverageSummary(), []);
 
   if (isLoading) {
     return (
@@ -322,6 +328,77 @@ export default function VerifyPage() {
             </div>
           </div>
         )}
+
+        {/* Holdings Per Share Data Coverage */}
+        <div className="bg-white dark:bg-gray-900 border border-purple-200 dark:border-purple-800 rounded-lg p-6 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-lg font-semibold text-purple-700 dark:text-purple-400">
+                Holdings/Share Historical Data
+              </h2>
+              <p className="text-sm text-gray-500">
+                {dataCoverage.withData} of {dataCoverage.total} companies have historical data ({dataCoverage.coveragePercent}%)
+              </p>
+            </div>
+            <div className="flex gap-2">
+              {Object.entries(dataCoverage.byAsset).map(([asset, stats]) => (
+                <Badge
+                  key={asset}
+                  variant="outline"
+                  className={stats.withData === stats.total ? "border-green-500 text-green-600" : ""}
+                >
+                  {asset}: {stats.withData}/{stats.total}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
+          {companiesNeedingData.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Companies Needing Data Collection ({companiesNeedingData.length})
+              </h3>
+              <div className="max-h-96 overflow-y-auto">
+                <table className="w-full text-sm">
+                  <thead className="sticky top-0 bg-white dark:bg-gray-900">
+                    <tr className="text-left text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                      <th className="p-2">Ticker</th>
+                      <th className="p-2">Name</th>
+                      <th className="p-2">Asset</th>
+                      <th className="p-2">Priority</th>
+                      <th className="p-2">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {companiesNeedingData.map((company) => (
+                      <tr key={company.ticker} className="border-t border-gray-100 dark:border-gray-800">
+                        <td className="p-2">
+                          <Link href={`/company/${company.ticker}`} className="font-mono font-medium text-indigo-600 hover:underline">
+                            {company.ticker}
+                          </Link>
+                        </td>
+                        <td className="p-2 text-gray-600 dark:text-gray-400 truncate max-w-[180px]">
+                          {company.name}
+                        </td>
+                        <td className="p-2">
+                          <Badge variant="outline">{company.asset}</Badge>
+                        </td>
+                        <td className="p-2">
+                          <Badge className={priorityColors[company.priority]}>
+                            {company.priority}
+                          </Badge>
+                        </td>
+                        <td className="p-2 text-xs text-gray-500 truncate max-w-[250px]">
+                          {company.notes || "Check quarterly filings"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Full Staleness Report */}
         <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6">
