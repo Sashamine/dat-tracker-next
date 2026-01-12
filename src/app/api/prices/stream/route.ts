@@ -132,6 +132,7 @@ async function fetchCryptoPrices(): Promise<Record<string, { price: number; chan
 }
 
 // Fetch stock quotes from FMP REST API (for initial data)
+// Note: Extended hours data requires legacy FMP subscription, so we only get regular market prices
 async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
   if (!FMP_API_KEY) return {};
 
@@ -156,7 +157,7 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
       }
     }
 
-    // Add fallbacks
+    // Add fallbacks for international/illiquid stocks
     for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
       if (!result[ticker]) {
         result[ticker] = {

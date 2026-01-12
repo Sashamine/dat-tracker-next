@@ -1,18 +1,15 @@
 "use client";
 
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
-import { AppSidebar, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
-import { MNAVScatterChart } from "@/components/premium-discount-chart";
-import { MNAVChart } from "@/components/mnav-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { calculateMNAV } from "@/lib/calculations";
-import { cn } from "@/lib/utils";
 
 // Get unique assets and count companies
 function getAssetStats(companies: typeof allCompanies, prices: any) {
@@ -37,7 +34,6 @@ function median(arr: number[]): number {
 export default function Home() {
   const { data: prices, isConnected } = usePricesStream();
   const { overrides } = useCompanyOverrides();
-  const [viewMode, setViewMode] = useState<"table" | "scatter" | "mnav">("table");
 
   // Merge base company data with Google Sheets overrides
   const companies = useMemo(
@@ -99,81 +95,56 @@ export default function Home() {
                 <p className="text-sm text-gray-500">
                   {prices?.timestamp ? `Updated ${new Date(prices.timestamp).toLocaleTimeString()}` : "Connecting..."}
                 </p>
-                <p className="text-xs text-gray-400">
-                  {isConnected ? (
-                    <span className="inline-flex items-center gap-1">
-                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                      Live streaming
+                <div className="flex items-center justify-end gap-2 text-xs">
+                  {/* Market Status */}
+                  {prices?.marketOpen ? (
+                    <span className="inline-flex items-center gap-1 text-green-600 dark:text-green-400">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                      Market Open
+                    </span>
+                  ) : prices?.extendedHours ? (
+                    <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                      <span className="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+                      Extended Hours
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1">
-                      <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                      Reconnecting...
+                    <span className="inline-flex items-center gap-1 text-gray-500">
+                      <span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                      Market Closed
                     </span>
                   )}
-                </p>
+                  <span className="text-gray-300 dark:text-gray-600">|</span>
+                  {/* Stream Status */}
+                  {isConnected ? (
+                    <span className="inline-flex items-center gap-1 text-gray-400">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                      Live
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-yellow-500">
+                      <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
+                      Reconnecting
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* View Mode Toggle */}
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-sm text-gray-500 mr-2">View:</span>
-            <button
-              onClick={() => setViewMode("table")}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-md transition-colors",
-                viewMode === "table"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-              )}
-            >
-              Table
-            </button>
-            <button
-              onClick={() => setViewMode("scatter")}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-md transition-colors",
-                viewMode === "scatter"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-              )}
-            >
-              mNAV Scatter
-            </button>
-            <button
-              onClick={() => setViewMode("mnav")}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-md transition-colors",
-                viewMode === "mnav"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-              )}
-            >
-              mNAV History
-            </button>
           </div>
 
           {/* Main Content */}
-          {viewMode === "table" ? (
-            <div className="flex gap-4">
-              {/* Filter Sidebar */}
-              <Suspense fallback={<div className="w-56 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
-                <FilterSidebar />
-              </Suspense>
+          <div className="flex gap-4">
+            {/* Filter Sidebar */}
+            <Suspense fallback={<div className="w-56 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
+              <FilterSidebar />
+            </Suspense>
 
-              {/* Data Table */}
-              <div className="flex-1 min-w-0">
-                <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
-                  <DataTable companies={companies} prices={prices ?? undefined} />
-                </Suspense>
-              </div>
+            {/* Data Table */}
+            <div className="flex-1 min-w-0">
+              <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
+                <DataTable companies={companies} prices={prices ?? undefined} />
+              </Suspense>
             </div>
-          ) : viewMode === "scatter" ? (
-            <MNAVScatterChart companies={companies} prices={prices ?? undefined} />
-          ) : (
-            <MNAVChart />
-          )}
+          </div>
 
           {/* Footer */}
           <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
