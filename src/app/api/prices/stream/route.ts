@@ -222,11 +222,17 @@ function createFMPWebSocket(
     ws.onmessage = (event) => {
       try {
         const rawData = typeof event.data === 'string' ? event.data : event.data.toString();
+        console.log("[FMP WS] Raw message:", rawData.substring(0, 200));
+
         const msg = JSON.parse(rawData);
 
-        // Handle login response
-        if (msg.event === "login" || msg.status === "connected" || msg.message?.includes("Authenticated")) {
-          console.log("[FMP WS] Authenticated successfully");
+        // Log all message types for debugging
+        console.log("[FMP WS] Parsed:", JSON.stringify(msg).substring(0, 150));
+
+        // Handle login response - FMP may use different formats
+        if (msg.event === "login" || msg.status === "connected" || msg.status === "success" ||
+            msg.message?.includes("Authenticated") || msg.message?.includes("success")) {
+          console.log("[FMP WS] Authenticated successfully!");
           authenticated = true;
 
           // Subscribe to all symbols
@@ -246,16 +252,16 @@ function createFMPWebSocket(
           return;
         }
 
-        // Handle price updates
+        // Handle price updates - check various formats
         if (msg.s && msg.type) {
           const symbol = msg.s.toUpperCase();
           const timestamp = msg.t ? new Date(msg.t).toISOString() : new Date().toISOString();
 
           if (msg.type === "T" && msg.lp) {
-            // Trade message
+            console.log(`[FMP WS] Trade: ${symbol} @ ${msg.lp}`);
             onTrade(symbol, msg.lp, timestamp);
           } else if (msg.type === "Q" && (msg.bp || msg.ap)) {
-            // Quote message
+            console.log(`[FMP WS] Quote: ${symbol} bid=${msg.bp} ask=${msg.ap}`);
             onQuote(symbol, msg.bp || 0, msg.ap || 0, timestamp);
           }
           return;
@@ -263,14 +269,14 @@ function createFMPWebSocket(
 
         // Handle errors
         if (msg.error || msg.status === "error") {
-          console.error("[FMP WS] Error:", msg.error || msg.message);
+          console.error("[FMP WS] Error:", JSON.stringify(msg));
           if (!authenticated) {
             reject(new Error(`FMP auth failed: ${msg.error || msg.message}`));
           }
         }
 
       } catch (e) {
-        console.error("[FMP WS] Parse error:", e);
+        console.error("[FMP WS] Parse error:", e, "Raw:", event.data?.toString().substring(0, 100));
       }
     };
 
