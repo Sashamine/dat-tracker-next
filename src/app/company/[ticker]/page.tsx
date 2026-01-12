@@ -15,6 +15,7 @@ import {
   INTERVAL_LABELS,
 } from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
+import { PerformanceComparisonChart } from "@/components/performance-comparison-chart";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
@@ -381,6 +382,13 @@ export default function CompanyPage() {
             )}
           </div>
         </div>
+
+        {/* Performance Comparison Chart */}
+        <PerformanceComparisonChart
+          ticker={company.ticker}
+          asset={company.asset}
+          className="mb-8"
+        />
 
         {/* Phase Status */}
         <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
