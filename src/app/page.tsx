@@ -6,7 +6,7 @@ import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
 import { AppSidebar, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
-import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
+import { MNAVScatterChart } from "@/components/premium-discount-chart";
 import { MNAVChart } from "@/components/mnav-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
@@ -37,7 +37,7 @@ function median(arr: number[]): number {
 export default function Home() {
   const { data: prices, isConnected } = usePricesStream();
   const { overrides } = useCompanyOverrides();
-  const [viewMode, setViewMode] = useState<"table" | "bar" | "scatter" | "mnav">("table");
+  const [viewMode, setViewMode] = useState<"table" | "scatter" | "mnav">("table");
 
   // Merge base company data with Google Sheets overrides
   const companies = useMemo(
@@ -131,17 +131,6 @@ export default function Home() {
               Table
             </button>
             <button
-              onClick={() => setViewMode("bar")}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-md transition-colors",
-                viewMode === "bar"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
-              )}
-            >
-              Upside Chart
-            </button>
-            <button
               onClick={() => setViewMode("scatter")}
               className={cn(
                 "px-3 py-1.5 text-sm rounded-md transition-colors",
@@ -180,14 +169,6 @@ export default function Home() {
                 </Suspense>
               </div>
             </div>
-          ) : viewMode === "bar" ? (
-            <PremiumDiscountChart
-              companies={companies}
-              prices={prices ?? undefined}
-              maxBars={20}
-              sortBy="upside"
-              title="Top 20 Companies by Upside to Fair Value"
-            />
           ) : viewMode === "scatter" ? (
             <MNAVScatterChart companies={companies} prices={prices ?? undefined} />
           ) : (

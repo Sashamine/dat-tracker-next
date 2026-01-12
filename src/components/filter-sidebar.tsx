@@ -1,6 +1,6 @@
 "use client";
 
-import { useFilters, VERDICTS, ASSETS, COMPANY_TYPES } from "@/lib/hooks/use-filters";
+import { useFilters, ASSETS, COMPANY_TYPES } from "@/lib/hooks/use-filters";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,9 +32,6 @@ export function FilterSidebar() {
     maxMarketCap,
     minMNAV,
     maxMNAV,
-    minUpside,
-    maxUpside,
-    verdicts,
     assets,
     companyTypes,
     search,
@@ -42,23 +39,12 @@ export function FilterSidebar() {
     setMaxMarketCap,
     setMinMNAV,
     setMaxMNAV,
-    setMinUpside,
-    setMaxUpside,
-    setVerdicts,
     setAssets,
     setCompanyTypes,
     setSearch,
     resetFilters,
     hasActiveFilters,
   } = useFilters();
-
-  const toggleVerdict = (verdict: string) => {
-    if (verdicts.includes(verdict)) {
-      setVerdicts(verdicts.filter((v) => v !== verdict));
-    } else {
-      setVerdicts([...verdicts, verdict]);
-    }
-  };
 
   const toggleAsset = (asset: string) => {
     if (assets.includes(asset)) {
@@ -156,33 +142,6 @@ export function FilterSidebar() {
         </div>
       </div>
 
-      {/* Verdict Filter */}
-      <div className="space-y-2">
-        <Label className="text-sm text-gray-600 dark:text-gray-400">
-          Verdict
-        </Label>
-        <div className="flex flex-wrap gap-2">
-          {VERDICTS.map((verdict) => (
-            <button
-              key={verdict}
-              onClick={() => toggleVerdict(verdict)}
-              className={cn(
-                "px-3 py-1 text-sm rounded-full transition-colors",
-                verdicts.includes(verdict)
-                  ? verdict === "Cheap"
-                    ? "bg-green-600 text-white"
-                    : verdict === "Fair"
-                    ? "bg-blue-600 text-white"
-                    : "bg-red-600 text-white"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
-              )}
-            >
-              {verdict}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Market Cap Range */}
       <div className="space-y-2">
         <Label className="text-sm text-gray-600 dark:text-gray-400">
@@ -239,34 +198,6 @@ export function FilterSidebar() {
               setMaxMNAV(
                 e.target.value ? parseFloat(e.target.value) : Infinity
               )
-            }
-            className="h-9"
-          />
-        </div>
-      </div>
-
-      {/* Upside Range */}
-      <div className="space-y-2">
-        <Label className="text-sm text-gray-600 dark:text-gray-400">
-          Upside (%)
-        </Label>
-        <div className="flex items-center gap-2">
-          <Input
-            type="number"
-            placeholder="Min"
-            value={minUpside > -100 ? minUpside : ""}
-            onChange={(e) =>
-              setMinUpside(e.target.value ? parseFloat(e.target.value) : -100)
-            }
-            className="h-9"
-          />
-          <span className="text-gray-400">—</span>
-          <Input
-            type="number"
-            placeholder="Max"
-            value={maxUpside < 1000 ? maxUpside : ""}
-            onChange={(e) =>
-              setMaxUpside(e.target.value ? parseFloat(e.target.value) : 1000)
             }
             className="h-9"
           />

@@ -24,7 +24,6 @@ import {
   calculateNAVDiscount,
   calculateHoldingsPerShare,
   calculateNetYield,
-  calculateFairValue,
   determineDATPhase,
   formatLargeNumber,
   formatTokenAmount,
@@ -32,7 +31,6 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { FairValueCalculator } from "@/components/fair-value-calculator";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
 
@@ -52,14 +50,6 @@ const tierColors: Record<number, string> = {
   1: "bg-green-500/10 text-green-600 border-green-500/20",
   2: "bg-blue-500/10 text-blue-600 border-blue-500/20",
   3: "bg-gray-500/10 text-gray-600 border-gray-500/20",
-};
-
-// Verdict colors
-const verdictColors: Record<string, string> = {
-  Cheap: "text-green-600 bg-green-50",
-  Fair: "text-blue-600 bg-blue-50",
-  Expensive: "text-red-600 bg-red-50",
-  "N/A": "text-gray-600 bg-gray-50",
 };
 
 export default function CompanyPage() {
@@ -132,20 +122,6 @@ export default function CompanyPage() {
     cryptoPrice
   );
 
-  // Fair value calculation
-  const fairValue = calculateFairValue(
-    company.holdings,
-    cryptoPrice,
-    marketCap,
-    company.stakingPct || 0,
-    companyStakingApy,
-    company.quarterlyBurnUsd || 0,
-    networkStakingApy,
-    0.04,
-    company.asset,
-    company.leverageRatio || 1.0
-  );
-
   // Phase determination
   const phase = determineDATPhase(navDiscount, false, null);
 
@@ -171,9 +147,6 @@ export default function CompanyPage() {
               </Badge>
               <Badge variant="outline" className={cn("font-medium", tierColors[company.tier])}>
                 T{company.tier}
-              </Badge>
-              <Badge variant="outline" className={cn("font-medium px-3 py-1", verdictColors[fairValue.verdict])}>
-                {fairValue.verdict}
               </Badge>
             </div>
             <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{company.name}</p>
@@ -227,28 +200,14 @@ export default function CompanyPage() {
           </div>
         </div>
 
-        {/* Key Valuation Metrics - THE IMPORTANT ONES */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        {/* Key Valuation Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatMNAV(mNAV)}
             </p>
             <p className="text-xs text-gray-400">Market Cap / NAV</p>
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Fair Premium</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {formatMNAV(fairValue.fairPremium)}
-            </p>
-            <p className="text-xs text-gray-400">Model estimate</p>
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Upside</p>
-            <p className={cn("text-2xl font-bold", fairValue.upside > 0 ? "text-green-600" : "text-red-600")}>
-              {formatPercent(fairValue.upside, true)}
-            </p>
-            <p className="text-xs text-gray-400">To fair value</p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">NAV/Share</p>
@@ -441,25 +400,6 @@ export default function CompanyPage() {
             <span>Terminal</span>
           </div>
         </div>
-
-        {/* Fair Value Calculator */}
-        {cryptoPrice > 0 && marketCap > 0 && (
-          <div className="mb-8">
-            <FairValueCalculator
-              holdings={company.holdings}
-              assetPrice={cryptoPrice}
-              marketCap={marketCap}
-              asset={company.asset}
-              defaultStakingPct={company.stakingPct}
-              defaultStakingApy={company.stakingApy}
-              defaultQuarterlyBurn={company.quarterlyBurnUsd}
-              capitalRaisedConverts={company.capitalRaisedConverts}
-              avgDailyVolume={company.avgDailyVolume}
-              hasOptions={company.hasOptions}
-              optionsOi={company.optionsOi}
-            />
-          </div>
-        )}
 
         {/* Strategy & Notes */}
         {(company.strategy || company.notes) && (

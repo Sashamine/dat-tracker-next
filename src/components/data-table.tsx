@@ -14,10 +14,7 @@ import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
   calculateMNAV,
-  calculateFairValue,
-  formatLargeNumber,
   formatMNAV,
-  NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
@@ -81,9 +78,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     maxMarketCap,
     minMNAV,
     maxMNAV,
-    minUpside,
-    maxUpside,
-    verdicts,
     assets,
     companyTypes,
     search,
@@ -105,20 +99,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const isAfterHours = stockData?.isAfterHours || false;
 
     const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
-    const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
-
-    const fairValue = calculateFairValue(
-      company.holdings,
-      cryptoPrice,
-      marketCap,
-      company.stakingPct || 0,
-      company.stakingApy || networkStakingApy,
-      company.quarterlyBurnUsd || 0,
-      networkStakingApy,
-      0.04, // riskFreeRate
-      company.asset,
-      company.leverageRatio || 1.0
-    );
 
     // Determine company type
     const companyType = company.isMiner ? "Miner" : "Treasury";
@@ -131,9 +111,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       stockChange,
       stockVolume,
       mNAV: mNAV || 0,
-      upside: fairValue.upside,
-      verdict: fairValue.verdict,
-      fairPremium: fairValue.fairPremium,
       companyType,
       isAfterHours,
     };
@@ -166,21 +143,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       const mNav = c.mNAV || 0;
       return mNav >= minMNAV && mNav <= (maxMNAV === Infinity ? Number.MAX_VALUE : maxMNAV);
     });
-  }
-
-  // Upside filter (stored as percentage in URL, but calculated as decimal)
-  if (minUpside > -100 || maxUpside < 1000) {
-    filteredCompanies = filteredCompanies.filter((c) => {
-      const upsidePct = (c.upside || 0) * 100;
-      return upsidePct >= minUpside && upsidePct <= maxUpside;
-    });
-  }
-
-  // Verdict filter
-  if (verdicts.length > 0) {
-    filteredCompanies = filteredCompanies.filter((c) =>
-      verdicts.includes(c.verdict)
-    );
   }
 
   // Asset filter
@@ -217,10 +179,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       case "mNAV":
         aVal = a.mNAV || 0;
         bVal = b.mNAV || 0;
-        break;
-      case "upside":
-        aVal = a.upside || 0;
-        bVal = b.upside || 0;
         break;
       case "marketCap":
         aVal = a.marketCap || 0;

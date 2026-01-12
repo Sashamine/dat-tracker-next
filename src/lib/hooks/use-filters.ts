@@ -6,7 +6,6 @@ import { useQueryState, parseAsFloat, parseAsString, parseAsArrayOf, parseAsStri
 export const SORT_FIELDS = [
   "holdingsValue",
   "mNAV",
-  "upside",
   "marketCap",
   "holdings",
   "ticker",
@@ -15,10 +14,6 @@ export const SORT_FIELDS = [
 
 export type SortField = (typeof SORT_FIELDS)[number];
 export type SortDirection = "asc" | "desc";
-
-// Verdict options
-export const VERDICTS = ["Cheap", "Fair", "Expensive"] as const;
-export type Verdict = (typeof VERDICTS)[number];
 
 // Asset options
 export const ASSETS = ["ETH", "BTC", "SOL", "HYPE", "BNB", "TAO", "LINK", "TRX", "XRP", "ZEC", "LTC", "SUI", "DOGE", "AVAX", "ADA", "HBAR"] as const;
@@ -47,22 +42,6 @@ export function useFilters() {
   const [maxMNAV, setMaxMNAV] = useQueryState(
     "maxMnav",
     parseAsFloat.withDefault(Infinity)
-  );
-
-  // Upside range (as percentage, -100 to 1000)
-  const [minUpside, setMinUpside] = useQueryState(
-    "minUp",
-    parseAsFloat.withDefault(-100)
-  );
-  const [maxUpside, setMaxUpside] = useQueryState(
-    "maxUp",
-    parseAsFloat.withDefault(1000)
-  );
-
-  // Verdict filter (multi-select)
-  const [verdicts, setVerdicts] = useQueryState(
-    "verdict",
-    parseAsArrayOf(parseAsString).withDefault([])
   );
 
   // Asset filter (multi-select)
@@ -99,9 +78,6 @@ export function useFilters() {
     setMaxMarketCap(Infinity);
     setMinMNAV(0);
     setMaxMNAV(Infinity);
-    setMinUpside(-100);
-    setMaxUpside(1000);
-    setVerdicts([]);
     setAssets([]);
     setCompanyTypes([]);
     setSearch("");
@@ -113,9 +89,6 @@ export function useFilters() {
     maxMarketCap < Infinity ||
     minMNAV > 0 ||
     maxMNAV < Infinity ||
-    minUpside > -100 ||
-    maxUpside < 1000 ||
-    verdicts.length > 0 ||
     assets.length > 0 ||
     companyTypes.length > 0 ||
     search.length > 0;
@@ -126,9 +99,6 @@ export function useFilters() {
     maxMarketCap,
     minMNAV,
     maxMNAV,
-    minUpside,
-    maxUpside,
-    verdicts,
     assets,
     companyTypes,
     search,
@@ -140,9 +110,6 @@ export function useFilters() {
     setMaxMarketCap,
     setMinMNAV,
     setMaxMNAV,
-    setMinUpside,
-    setMaxUpside,
-    setVerdicts,
     setAssets,
     setCompanyTypes,
     setSearch,
