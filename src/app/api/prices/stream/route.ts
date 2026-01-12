@@ -187,24 +187,45 @@ function createAlpacaWebSocket(
   onTrade: (symbol: string, price: number, timestamp: string) => void
 ): Promise<WebSocket> {
   return new Promise((resolve, reject) => {
+    // Debug: Check if env vars are present
+    const keyPresent = !!ALPACA_API_KEY;
+    const secretPresent = !!ALPACA_SECRET_KEY;
+    const keyLength = ALPACA_API_KEY?.length || 0;
+    const secretLength = ALPACA_SECRET_KEY?.length || 0;
+    console.log(`[WS] Auth check - key: ${keyPresent} (${keyLength} chars), secret: ${secretPresent} (${secretLength} chars)`);
+
+    if (!keyPresent || !secretPresent) {
+      reject(new Error(`Missing credentials: key=${keyPresent}, secret=${secretPresent}`));
+      return;
+    }
+
     const ws = new WebSocket(url);
 
     ws.onopen = () => {
       console.log(`[WS] Connected to ${url}`);
-      // Authenticate
-      ws.send(JSON.stringify({
+      // Authenticate - Alpaca expects exact format
+      const authMsg = {
         action: "auth",
         key: ALPACA_API_KEY,
         secret: ALPACA_SECRET_KEY,
-      }));
+      };
+      console.log(`[WS] Sending auth with key prefix: ${ALPACA_API_KEY.substring(0, 4)}...`);
+      ws.send(JSON.stringify(authMsg));
     };
 
     ws.onmessage = (event) => {
       try {
-        const messages = JSON.parse(event.data);
+        const rawData = typeof event.data === 'string' ? event.data : event.data.toString();
+        const messages = JSON.parse(rawData);
+
         for (const msg of Array.isArray(messages) ? messages : [messages]) {
+          // Log all message types for debugging
+          if (msg.T === "success") {
+            console.log(`[WS] Success: ${msg.msg}`);
+          }
+
           if (msg.T === "success" && msg.msg === "authenticated") {
-            console.log(`[WS] Authenticated, subscribing to ${symbols.length} symbols`);
+            console.log(`[WS] Authenticated! Subscribing to ${symbols.length} symbols`);
             ws.send(JSON.stringify({
               action: "subscribe",
               trades: symbols,
@@ -212,16 +233,19 @@ function createAlpacaWebSocket(
             resolve(ws);
           }
 
+          if (msg.T === "subscription") {
+            console.log(`[WS] Subscribed to trades:`, msg.trades?.length || 0);
+          }
+
           if (msg.T === "t") {
-            // Trade update - convert crypto symbols (ETH/USD -> ETH)
             const symbol = msg.S.includes("/") ? msg.S.replace("/USD", "") : msg.S;
             onTrade(symbol, msg.p, msg.t);
           }
 
           if (msg.T === "error") {
-            console.error(`[WS] Error:`, msg.msg);
-            if (msg.msg === "auth failed") {
-              reject(new Error("Alpaca auth failed"));
+            console.error(`[WS] Error message:`, JSON.stringify(msg));
+            if (msg.msg === "auth failed" || msg.msg?.includes("auth")) {
+              reject(new Error(`Alpaca auth failed: ${msg.msg} (code: ${msg.code})`));
             }
           }
         }
@@ -231,8 +255,12 @@ function createAlpacaWebSocket(
     };
 
     ws.onerror = (error) => {
-      console.error("[WS] Error:", error);
+      console.error("[WS] WebSocket error event:", error);
       reject(error);
+    };
+
+    ws.onclose = (event) => {
+      console.log(`[WS] Closed: code=${event.code}, reason=${event.reason}`);
     };
   });
 }
