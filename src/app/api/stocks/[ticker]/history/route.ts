@@ -14,7 +14,7 @@ interface HistoricalPrice {
 // Note: 1d uses 5 days lookback to ensure we get data on weekends/holidays, then filters to last day
 const RANGE_CONFIG: Record<string, { days: number; interval: string; intraday: boolean; filterToLastDay?: boolean }> = {
   "1d": { days: 5, interval: "5m", intraday: true, filterToLastDay: true },  // 5-minute candles, filtered to last trading day
-  "7d": { days: 10, interval: "1d", intraday: false },  // Daily candles for 7 days (no overnight gaps)
+  "7d": { days: 10, interval: "1h", intraday: true },   // Hourly candles for 7 days (~50 candles)
   "1mo": { days: 40, interval: "1d", intraday: false }, // Daily candles for 1 month
   "1y": { days: 365, interval: "1d", intraday: false }, // Daily candles for 1 year
   "all": { days: 3650, interval: "1d", intraday: false }, // Daily candles for all time
