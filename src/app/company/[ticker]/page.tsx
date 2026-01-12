@@ -6,7 +6,14 @@ import Link from "next/link";
 import { getCompanyByTicker } from "@/lib/data/companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeCompanyWithOverrides } from "@/lib/hooks/use-company-overrides";
-import { useStockHistory, TimeRange } from "@/lib/hooks/use-stock-history";
+import {
+  useStockHistory,
+  TimeRange,
+  ChartInterval,
+  VALID_INTERVALS,
+  DEFAULT_INTERVAL,
+  INTERVAL_LABELS,
+} from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -67,7 +74,15 @@ export default function CompanyPage() {
     [baseCompany, overrides]
   );
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
-  const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange);
+  const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
+  const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange, interval);
+
+  // Update interval when time range changes
+  const handleTimeRangeChange = (newRange: TimeRange) => {
+    setTimeRange(newRange);
+    // Reset to default interval for the new range
+    setInterval(DEFAULT_INTERVAL[newRange]);
+  };
 
   if (!company) {
     return (
@@ -260,29 +275,54 @@ export default function CompanyPage() {
 
         {/* Chart with Time Range Selector */}
         <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
-            <div className="flex gap-2">
-              {([
-                { value: "1d", label: "24H" },
-                { value: "7d", label: "7D" },
-                { value: "1mo", label: "1M" },
-                { value: "1y", label: "1Y" },
-                { value: "all", label: "ALL" },
-              ] as const).map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => setTimeRange(value)}
-                  className={cn(
-                    "px-3 py-1 text-sm rounded-md transition-colors",
-                    timeRange === value
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                  )}
-                >
-                  {label}
-                </button>
-              ))}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Time Range Buttons */}
+              <div className="flex gap-1">
+                {([
+                  { value: "1d", label: "24H" },
+                  { value: "7d", label: "7D" },
+                  { value: "1mo", label: "1M" },
+                  { value: "1y", label: "1Y" },
+                  { value: "all", label: "ALL" },
+                ] as const).map(({ value, label }) => (
+                  <button
+                    key={value}
+                    onClick={() => handleTimeRangeChange(value)}
+                    className={cn(
+                      "px-3 py-1 text-sm rounded-md transition-colors",
+                      timeRange === value
+                        ? "bg-indigo-600 text-white"
+                        : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {/* Interval Buttons (only show if multiple options) */}
+              {VALID_INTERVALS[timeRange].length > 1 && (
+                <>
+                  <span className="text-gray-400 text-sm hidden sm:inline">|</span>
+                  <div className="flex gap-1">
+                    {VALID_INTERVALS[timeRange].map((int) => (
+                      <button
+                        key={int}
+                        onClick={() => setInterval(int)}
+                        className={cn(
+                          "px-2 py-1 text-xs rounded transition-colors",
+                          interval === int
+                            ? "bg-gray-600 text-white"
+                            : "bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-300"
+                        )}
+                      >
+                        {INTERVAL_LABELS[int]}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
           {historyLoading ? (

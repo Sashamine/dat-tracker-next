@@ -9,15 +9,32 @@ interface HistoricalPrice {
   volume: number;
 }
 
-// Range configuration: days to fetch and Yahoo interval
-// Yahoo Finance intraday intervals: 1m (7d max), 5m/15m (60d max), 1h (730d max)
-// Note: 1d uses 5 days lookback to ensure we get data on weekends/holidays, then filters to last day
-const RANGE_CONFIG: Record<string, { days: number; interval: string; intraday: boolean; filterToLastDay?: boolean }> = {
-  "1d": { days: 5, interval: "5m", intraday: true, filterToLastDay: true },  // 5-minute candles, filtered to last trading day
-  "7d": { days: 10, interval: "1h", intraday: true },   // Hourly candles for 7 days (~50 candles)
-  "1mo": { days: 40, interval: "1d", intraday: false }, // Daily candles for 1 month
-  "1y": { days: 365, interval: "1d", intraday: false }, // Daily candles for 1 year
-  "all": { days: 3650, interval: "1d", intraday: false }, // Daily candles for all time
+// Days to fetch per range (extra buffer for weekends/holidays)
+const RANGE_DAYS: Record<string, number> = {
+  "1d": 5,      // 5 days lookback to handle weekends
+  "7d": 10,     // Extra days for holidays
+  "1mo": 40,    // Buffer for month
+  "1y": 400,    // Extra for holidays
+  "all": 3650,  // ~10 years
+};
+
+// Valid intervals per range (based on Yahoo Finance limits)
+// 5m/15m: 60 days max, 1h: 730 days max, 1d: unlimited
+const VALID_INTERVALS: Record<string, string[]> = {
+  "1d": ["5m", "15m", "1h"],
+  "7d": ["15m", "1h", "1d"],
+  "1mo": ["1h", "1d"],
+  "1y": ["1d"],
+  "all": ["1d"],
+};
+
+// Default intervals per range
+const DEFAULT_INTERVAL: Record<string, string> = {
+  "1d": "5m",
+  "7d": "1h",
+  "1mo": "1d",
+  "1y": "1d",
+  "all": "1d",
 };
 
 // Cache for historical data (5 minute TTL)
@@ -31,10 +48,25 @@ export async function GET(
   const { ticker } = await params;
   const { searchParams } = new URL(request.url);
   const range = searchParams.get("range") || "1y";
-  const config = RANGE_CONFIG[range] || RANGE_CONFIG["1y"];
+  const requestedInterval = searchParams.get("interval");
 
-  // Cache key includes range
-  const cacheKey = `${ticker}-${range}`;
+  // Get days for this range
+  const days = RANGE_DAYS[range] || RANGE_DAYS["1y"];
+
+  // Validate and select interval
+  const validIntervals = VALID_INTERVALS[range] || ["1d"];
+  let interval = DEFAULT_INTERVAL[range] || "1d";
+  if (requestedInterval && validIntervals.includes(requestedInterval)) {
+    interval = requestedInterval;
+  }
+
+  // Determine if intraday (affects timestamp format)
+  const intraday = interval !== "1d";
+  // Filter to last day only for "1d" range with intraday intervals
+  const filterToLastDay = range === "1d" && intraday;
+
+  // Cache key includes range and interval
+  const cacheKey = `${ticker}-${range}-${interval}`;
 
   // Check cache
   const cached = cache.get(cacheKey);
@@ -44,7 +76,7 @@ export async function GET(
 
   try {
     // Use Yahoo Finance for historical data
-    const yahooData = await fetchFromYahoo(ticker, config.days, config.interval, config.intraday, config.filterToLastDay);
+    const yahooData = await fetchFromYahoo(ticker, days, interval, intraday, filterToLastDay);
     if (yahooData.length > 0) {
       cache.set(cacheKey, { data: yahooData, timestamp: Date.now() });
       return NextResponse.json(yahooData);
@@ -58,36 +90,13 @@ export async function GET(
   }
 }
 
-async function fetchFromFMP(ticker: string, apiKey: string, days: number): Promise<HistoricalPrice[]> {
-  try {
-    const response = await fetch(
-      `https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?apikey=${apiKey}`,
-      { next: { revalidate: 300 } }
-    );
-
-    if (!response.ok) return [];
-
-    const data = await response.json();
-    if (!data.historical) return [];
-
-    // Take requested days and reverse for chronological order
-    return data.historical
-      .slice(0, days)
-      .reverse()
-      .map((d: { date: string; open: number; high: number; low: number; close: number; volume: number }) => ({
-        time: d.date,
-        open: d.open,
-        high: d.high,
-        low: d.low,
-        close: d.close,
-        volume: d.volume,
-      }));
-  } catch {
-    return [];
-  }
-}
-
-async function fetchFromYahoo(ticker: string, days: number, interval: string, intraday: boolean, filterToLastDay: boolean = false): Promise<HistoricalPrice[]> {
+async function fetchFromYahoo(
+  ticker: string,
+  days: number,
+  interval: string,
+  intraday: boolean,
+  filterToLastDay: boolean = false
+): Promise<HistoricalPrice[]> {
   try {
     // Calculate date range
     const endDate = Math.floor(Date.now() / 1000);
@@ -132,7 +141,7 @@ async function fetchFromYahoo(ticker: string, days: number, interval: string, in
       }
     }
 
-    // For "1d" view, filter to only the most recent trading day
+    // For "1d" view with intraday intervals, filter to only the most recent trading day
     if (filterToLastDay && prices.length > 0) {
       const lastTimestamp = parseInt(prices[prices.length - 1].time, 10);
       const lastDate = new Date(lastTimestamp * 1000);
