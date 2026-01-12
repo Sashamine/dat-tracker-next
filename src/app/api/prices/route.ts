@@ -30,6 +30,7 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
   "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
   "XXI": 4_000_000_000,    // 21 Capital - FMP data inconsistent, ~$4B SPAC merger valuation
+  "CEPO": 3_500_000_000,   // BSTR Holdings - ~$3.5B pre-merger SPAC valuation
   "FWDI": 1_600_000_000,   // Forward Industries SOL treasury - ~$1.6B PIPE raise
   "NXTT": 600_000_000,     // NextTech (WeTrade) - ~$600M market cap
   "BNC": 500_000_000,      // Banyan BNB treasury - ~$500M PIPE raise
