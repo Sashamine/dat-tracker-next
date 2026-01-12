@@ -130,22 +130,7 @@ export const ethCompanies: Company[] = [
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
     notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some Nov 2025.",
   },
-  {
-    id: "icg",
-    name: "Intchains Group",
-    ticker: "ICG",
-    asset: "ETH",
-    tier: 2,
-    holdings: 8_816,
-    datStartDate: "2025-04-01",
-    stakingPct: 0.11,
-    stakingMethod: "FalconX staking",
-    quarterlyBurnUsd: 5_000_000,
-    avgDailyVolume: 3_000_000,
-    leader: "Goldshell ASIC brand",
-    strategy: "DCA approach + FalconX yield strategies (up to 10% APY).",
-    notes: "ASIC chip company. 26% ETH growth Q1-Q2 2025.",
-  },
+  // ICG (Intchains) removed - ASIC chip company, not beta to ETH
 ];
 
 // BTC DAT Companies
@@ -447,25 +432,7 @@ export const btcCompanies: Company[] = [
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
     notes: "Formerly WeTrade Group. Shenzhen-based. $526M BTC holdings.",
   },
-  {
-    id: "gns",
-    name: "Genius Group",
-    ticker: "GNS",
-    asset: "BTC",
-    tier: 2,
-    holdings: 180,  // Updated Jan 2026
-    datStartDate: "2024-11-01",
-    costBasisAvg: 90_000,
-    isMiner: false,
-    quarterlyBurnUsd: 3_000_000,
-    capitalRaisedAtm: 100_000_000,
-    avgDailyVolume: 10_000_000,
-    hasOptions: true,
-    marketCap: 50_000_000,
-    leader: "Roger Hamilton (CEO)",
-    strategy: "AI-powered education company. Target 10K BTC. Reports BTC Yield.",
-    notes: "1,649% BTC Yield Q4 2025. $1.1B ATM facility with H.C. Wainwright.",
-  },
+  // GNS (Genius Group) removed - AI education company, not beta to BTC
   {
     id: "abtc",
     name: "American Bitcoin",
@@ -643,23 +610,7 @@ export const bnbCompanies: Company[] = [
     strategy: "Target 1% of BNB supply.",
     notes: "YZi Labs owns 7%.",
   },
-  {
-    id: "wint",
-    name: "Windtree Therapeutics",
-    ticker: "WINT",
-    asset: "BNB",
-    tier: 2,
-    holdings: 100_000,
-    datStartDate: "2025-08-01",
-    costBasisAvg: 650.00,
-    stakingPct: 0.40,
-    stakingApy: 0.03,
-    quarterlyBurnUsd: 4_000_000,
-    capitalRaisedPipe: 520_000_000,
-    leader: "First US biopharma with BNB treasury",
-    strategy: "$520M commitment for BNB via Kraken custody",
-    notes: "$500M ELOC + $20M from Build & Build Corp.",
-  },
+  // WINT (Windtree) removed - Biopharma company, not beta to BNB
   {
     id: "na",
     name: "Nano Labs",
@@ -795,23 +746,7 @@ export const xrpCompanies: Company[] = [
     strategy: "Institutional-scale XRP adoption, SPAC merger Q1 2026",
     notes: "Pre-IPO. 0.47% of XRP supply. SBI, Ripple, Pantera backed.",
   },
-  {
-    id: "wksp",
-    name: "Worksport Ltd",
-    ticker: "WKSP",
-    asset: "XRP",
-    tier: 2,
-    holdings: 60_000,  // Estimated - six-figure BTC+XRP purchase split ~50/50
-    datStartDate: "2025-01-01",
-    costBasisAvg: 2.50,
-    quarterlyBurnUsd: 4_000_000,
-    capitalRaisedPipe: 5_000_000,
-    avgDailyVolume: 3_000_000,
-    marketCap: 18_650_000,
-    leader: "Steven Rossi (CEO)",
-    strategy: "Dual BTC/XRP treasury, crypto payments",
-    notes: "Clean energy auto tech. Small crypto allocation (~10% of excess cash).",
-  },
+  // WKSP (Worksport) removed - Auto tech company, not beta to XRP
 ];
 
 // ZEC DAT Companies
@@ -834,22 +769,7 @@ export const zecCompanies: Company[] = [
     strategy: "Target 5% of ZEC supply (~540K ZEC). Winklevoss backed.",
     notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply.",
   },
-  {
-    id: "reli",
-    name: "Reliance Global Group",
-    ticker: "RELI",
-    asset: "ZEC",
-    tier: 2,
-    holdings: 10_000,  // Estimated - no disclosure
-    datStartDate: "2025-11-01",
-    costBasisAvg: 50.00,  // Nov 2025 consolidation price
-    quarterlyBurnUsd: 3_000_000,
-    avgDailyVolume: 1_000_000,
-    marketCap: 6_540_000,
-    leader: "Ezra Beyman (CEO)",
-    strategy: "100% ZEC allocation, exited all other crypto Nov 2025",
-    notes: "InsurTech company. Holdings estimated - no public disclosure.",
-  },
+  // RELI (Reliance Global) removed - InsurTech company, not beta to ZEC
 ];
 
 // LTC DAT Companies

@@ -6,6 +6,15 @@ export type Asset =
 // Company tier (1 = highest conviction, 3 = speculative)
 export type Tier = 1 | 2 | 3;
 
+// Holdings data source
+export type HoldingsSource =
+  | "8-K filing"
+  | "press release"
+  | "company website"
+  | "bitcointreasuries.net"
+  | "manual"
+  | "api";
+
 // Company type
 export type CompanyType = "Treasury" | "Miner";
 
@@ -53,6 +62,10 @@ export interface Company {
 
   // Leverage/optionality (for non-yielding assets)
   leverageRatio?: number; // > 1 means company uses debt/converts to amplify exposure
+
+  // Holdings tracking
+  holdingsLastUpdated?: string; // ISO date when holdings were last verified
+  holdingsSource?: HoldingsSource; // Where the holdings data came from
 }
 
 // Live price data

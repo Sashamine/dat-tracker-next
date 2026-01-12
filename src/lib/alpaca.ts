@@ -32,15 +32,15 @@ export const CRYPTO_SYMBOLS: Record<string, string> = {
 // Stock tickers (must match companies.ts)
 export const STOCK_TICKERS = [
   // ETH
-  "BMNR", "SBET", "ETHM", "BTBT", "BTCS", "GAME", "FGNX", "ICG",
+  "BMNR", "SBET", "ETHM", "BTBT", "BTCS", "GAME", "FGNX",
   // BTC
-  "MSTR", "XXI", "CEPO", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "GNS", "ABTC",
+  "MSTR", "XXI", "CEPO", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "ABTC",
   // SOL
   "FWDI", "HSDT", "DFDV", "UPXI", "STKE",
   // HYPE
   "PURR", "HYPD",
   // BNB
-  "BNC", "WINT",
+  "BNC",
   // TAO
   "TAOX", "XTAIF", "TWAV",
   // LINK
@@ -48,9 +48,9 @@ export const STOCK_TICKERS = [
   // TRX
   "TRON",
   // XRP
-  "XRPN", "VVPR", "WKSP",
+  "XRPN",
   // ZEC
-  "CYPH", "RELI",
+  "CYPH",
   // LTC
   "LITS",
   // SUI
