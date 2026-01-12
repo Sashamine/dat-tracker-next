@@ -117,6 +117,53 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 95000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.002714, source: "Q4 2024 estimate" },
 ];
 
+// KULR Technology - Bitcoin First Company
+// Note: 1-for-8 reverse stock split on June 23, 2025
+const KULR_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-12-26", holdings: 217.18, sharesOutstanding: 210_000_000, holdingsPerShare: 0.00000103, source: "Initial BTC purchase 8-K" },
+  { date: "2025-01-06", holdings: 430.6, sharesOutstanding: 220_000_000, holdingsPerShare: 0.00000196, source: "8-K filing" },
+  { date: "2025-01-21", holdings: 510, sharesOutstanding: 240_000_000, holdingsPerShare: 0.00000213, source: "Press release" },
+  { date: "2025-02-11", holdings: 610.3, sharesOutstanding: 260_000_000, holdingsPerShare: 0.00000235, source: "Press release" },
+  { date: "2025-03-25", holdings: 668.3, sharesOutstanding: 270_000_000, holdingsPerShare: 0.00000248, source: "Press release" },
+  { date: "2025-05-20", holdings: 800.3, sharesOutstanding: 290_000_000, holdingsPerShare: 0.00000276, source: "Press release" },
+  // Post reverse split (1-for-8) - shares divided by 8
+  { date: "2025-06-23", holdings: 920, sharesOutstanding: 37_500_000, holdingsPerShare: 0.0000245, source: "Press release + reverse split" },
+  { date: "2025-07-10", holdings: 1021, sharesOutstanding: 40_000_000, holdingsPerShare: 0.0000255, source: "Press release" },
+];
+
+// Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
+// Data from HKEX filings and press releases
+const BOYAA_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-01-26", holdings: 1100, sharesOutstanding: 660_000_000, holdingsPerShare: 0.00000167, source: "Initial accumulation" },
+  { date: "2024-03-29", holdings: 1194, sharesOutstanding: 660_000_000, holdingsPerShare: 0.00000181, source: "HKEX filing" },
+  { date: "2024-05-22", holdings: 1956, sharesOutstanding: 660_000_000, holdingsPerShare: 0.00000296, source: "HKEX filing" },
+  { date: "2024-06-28", holdings: 2079, sharesOutstanding: 660_000_000, holdingsPerShare: 0.00000315, source: "HKEX filing" },
+  { date: "2024-08-21", holdings: 2410, sharesOutstanding: 660_000_000, holdingsPerShare: 0.00000365, source: "HKEX filing" },
+  { date: "2024-09-27", holdings: 2635, sharesOutstanding: 660_000_000, holdingsPerShare: 0.00000399, source: "Q3 report" },
+  { date: "2024-11-29", holdings: 3183, sharesOutstanding: 664_000_000, holdingsPerShare: 0.00000479, source: "ETH-to-BTC swap announcement" },
+  { date: "2024-12-30", holdings: 3274, sharesOutstanding: 664_000_000, holdingsPerShare: 0.00000493, source: "HKEX filing" },
+  { date: "2025-02-28", holdings: 3350, sharesOutstanding: 664_000_000, holdingsPerShare: 0.00000505, source: "Press release" },
+  { date: "2025-08-22", holdings: 3670, sharesOutstanding: 686_000_000, holdingsPerShare: 0.00000535, source: "Press release" },
+  { date: "2025-09-16", holdings: 3925, sharesOutstanding: 686_000_000, holdingsPerShare: 0.00000572, source: "HKEX filing" },
+  { date: "2025-11-17", holdings: 4091, sharesOutstanding: 686_000_000, holdingsPerShare: 0.00000596, source: "Q3 2025 report" },
+];
+
+// Bitmine Immersion (BMNR) - World's largest ETH treasury
+// Data from SEC filings and weekly press releases
+const BMNR_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-07-17", holdings: 300657, sharesOutstanding: 50_000_000, holdingsPerShare: 0.006013, source: "$1B milestone press release" },
+  { date: "2025-08-10", holdings: 1150263, sharesOutstanding: 150_000_000, holdingsPerShare: 0.007668, source: "Press release" },
+  { date: "2025-08-17", holdings: 1523373, sharesOutstanding: 180_000_000, holdingsPerShare: 0.008463, source: "Press release" },
+  { date: "2025-08-24", holdings: 1713899, sharesOutstanding: 221_515_180, holdingsPerShare: 0.007738, source: "Press release" },
+  { date: "2025-09-07", holdings: 2069443, sharesOutstanding: 260_000_000, holdingsPerShare: 0.007959, source: "2M milestone" },
+  { date: "2025-11-09", holdings: 3505723, sharesOutstanding: 350_000_000, holdingsPerShare: 0.010016, source: "Press release" },
+  { date: "2025-11-20", holdings: 3559879, sharesOutstanding: 384_067_823, holdingsPerShare: 0.009269, source: "10-K filing" },
+  { date: "2025-11-30", holdings: 3726499, sharesOutstanding: 400_000_000, holdingsPerShare: 0.009316, source: "Press release" },
+  { date: "2025-12-14", holdings: 3967210, sharesOutstanding: 410_000_000, holdingsPerShare: 0.009676, source: "Press release" },
+  { date: "2025-12-28", holdings: 4110525, sharesOutstanding: 425_000_000, holdingsPerShare: 0.009672, source: "Press release" },
+  { date: "2026-01-04", holdings: 4143502, sharesOutstanding: 430_000_000, holdingsPerShare: 0.009636, source: "Press release" },
+];
+
 // ==================== OTHER ASSETS ====================
 
 // CleanSpark (CLSK) - BTC miner
@@ -136,10 +183,13 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   CLSK: { ticker: "CLSK", asset: "BTC", history: CLSK_HISTORY },
   "3350.T": { ticker: "3350.T", asset: "BTC", history: METAPLANET_HISTORY },
   SMLR: { ticker: "SMLR", asset: "BTC", history: SMLR_HISTORY },
+  KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },
+  "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },
   BTBT: { ticker: "BTBT", asset: "ETH", history: BTBT_HISTORY },
+  BMNR: { ticker: "BMNR", asset: "ETH", history: BMNR_HISTORY },
 
   // SOL Companies
   STKE: { ticker: "STKE", asset: "SOL", history: STKE_HISTORY },

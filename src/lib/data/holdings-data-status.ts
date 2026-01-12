@@ -70,6 +70,9 @@ const LAST_CHECKED: Record<string, string> = {
   BTBT: "2025-01-12",
   STKE: "2025-01-12",
   DFDV: "2025-01-12",
+  KULR: "2026-01-12",
+  "0434.HK": "2026-01-12",
+  BMNR: "2026-01-12",
 };
 
 export function getCompanyDataStatus(): CompanyDataStatus[] {
