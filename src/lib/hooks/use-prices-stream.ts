@@ -14,6 +14,7 @@ interface StockPrice {
   marketCap: number;
   isAfterHours?: boolean;
   regularPrice?: number;
+  lastTrade?: string;
 }
 
 export interface PricesData {
@@ -24,27 +25,45 @@ export interface PricesData {
   extendedHours?: boolean;
 }
 
-interface StreamMessage {
-  crypto?: Record<string, CryptoPrice>;
-  stocks?: Record<string, StockPrice>;
+// Message types from the server
+interface FullUpdateMessage {
+  crypto: Record<string, CryptoPrice>;
+  stocks: Record<string, StockPrice>;
   timestamp: string;
   marketOpen?: boolean;
   extendedHours?: boolean;
+  fullRefresh?: boolean;
   partialUpdate?: boolean;
-  error?: string;
 }
+
+interface TradeMessage {
+  type: "trade";
+  symbol: string;
+  price: number;
+  change24h?: number;
+  timestamp: string;
+  assetType: "stock" | "crypto";
+}
+
+interface ErrorMessage {
+  error: string;
+}
+
+type StreamMessage = FullUpdateMessage | TradeMessage | ErrorMessage;
 
 interface UsePricesStreamResult {
   data: PricesData | null;
   isConnected: boolean;
   error: Error | null;
   reconnect: () => void;
+  lastTradeTime: string | null;
 }
 
 export function usePricesStream(): UsePricesStreamResult {
   const [data, setData] = useState<PricesData | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [lastTradeTime, setLastTradeTime] = useState<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttempts = useRef(0);
@@ -74,30 +93,74 @@ export function usePricesStream(): UsePricesStreamResult {
         try {
           const message: StreamMessage = JSON.parse(event.data);
 
-          if (message.error) {
+          // Handle error messages
+          if ("error" in message) {
             console.error("Stream error:", message.error);
             return;
           }
 
-          setData((prevData) => {
-            // If it's a partial update (crypto only), merge with existing stock data
-            if (message.partialUpdate && prevData) {
+          // Handle real-time trade updates
+          if ("type" in message && message.type === "trade") {
+            const trade = message as TradeMessage;
+            setLastTradeTime(trade.timestamp);
+
+            setData((prevData) => {
+              if (!prevData) return prevData;
+
+              if (trade.assetType === "stock") {
+                return {
+                  ...prevData,
+                  stocks: {
+                    ...prevData.stocks,
+                    [trade.symbol]: {
+                      ...prevData.stocks[trade.symbol],
+                      price: trade.price,
+                      change24h: trade.change24h ?? prevData.stocks[trade.symbol]?.change24h ?? 0,
+                      lastTrade: trade.timestamp,
+                    },
+                  },
+                  timestamp: trade.timestamp,
+                };
+              } else {
+                return {
+                  ...prevData,
+                  crypto: {
+                    ...prevData.crypto,
+                    [trade.symbol]: {
+                      ...prevData.crypto[trade.symbol],
+                      price: trade.price,
+                    },
+                  },
+                  timestamp: trade.timestamp,
+                };
+              }
+            });
+            return;
+          }
+
+          // Handle full updates (initial or refresh)
+          const fullUpdate = message as FullUpdateMessage;
+
+          if (fullUpdate.partialUpdate) {
+            // Crypto-only partial update (legacy support)
+            setData((prevData) => {
+              if (!prevData) return prevData;
               return {
                 ...prevData,
-                crypto: message.crypto || prevData.crypto,
-                timestamp: message.timestamp,
+                crypto: fullUpdate.crypto || prevData.crypto,
+                timestamp: fullUpdate.timestamp,
               };
-            }
-
+            });
+          } else {
             // Full update - replace everything
-            return {
-              crypto: message.crypto || {},
-              stocks: message.stocks || {},
-              timestamp: message.timestamp,
-              marketOpen: message.marketOpen,
-              extendedHours: message.extendedHours,
-            };
-          });
+            setData({
+              crypto: fullUpdate.crypto || {},
+              stocks: fullUpdate.stocks || {},
+              timestamp: fullUpdate.timestamp,
+              marketOpen: fullUpdate.marketOpen,
+              extendedHours: fullUpdate.extendedHours,
+            });
+          }
         } catch (e) {
           console.error("Failed to parse price data:", e);
         }
@@ -153,5 +216,5 @@ export function usePricesStream(): UsePricesStreamResult {
     };
   }, [isConnected, reconnect]);
 
-  return { data, isConnected, error, reconnect };
+  return { data, isConnected, error, reconnect, lastTradeTime };
 }

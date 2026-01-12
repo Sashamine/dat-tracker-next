@@ -1,64 +1,62 @@
 import { NextRequest } from "next/server";
 import { getBinancePrices } from "@/lib/binance";
-import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
+import { getStockSnapshots, STOCK_TICKERS, CRYPTO_SYMBOLS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
+
+// Use Edge Runtime for WebSocket support
+export const runtime = "edge";
+
+const ALPACA_API_KEY = process.env.ALPACA_API_KEY || "";
+const ALPACA_SECRET_KEY = process.env.ALPACA_SECRET_KEY || "";
 
 // FMP for market caps and fallback data
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
+// WebSocket endpoints
+const STOCK_WS_URL = "wss://stream.data.alpaca.markets/v2/iex";
+const CRYPTO_WS_URL = "wss://stream.data.alpaca.markets/v1beta3/crypto/us";
+
 // Stocks not on major exchanges (OTC/international) - use FMP
-// Map: FMP ticker -> display ticker (for tickers with different formats)
 const FMP_TICKER_MAP: Record<string, string> = {
-  "ALTBG.PA": "ALTBG",   // Euronext Paris
-  "HOGPF": "H100.ST",    // H100 Group OTC ticker -> display as H100.ST
+  "ALTBG.PA": "ALTBG",
+  "HOGPF": "H100.ST",
 };
 
-// Fallback prices for illiquid stocks not covered by data providers
-const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: string }> = {
-  "CEPO": { price: 10.50, marketCap: 3_500_000_000, note: "BSTR Holdings pre-merger SPAC ~$3.5B" },
-  "XTAIF": { price: 0.75, marketCap: 20000000, note: "xTAO Inc OTC" },
-  "IHLDF": { price: 0.10, marketCap: 10000000, note: "Immutable Holdings OTC" },
-  "ALTBG": { price: 0.50, marketCap: 200000000, note: "The Blockchain Group" },
-  "H100.ST": { price: 0.10, marketCap: 150000000, note: "H100 Group" },
+// Fallback prices for illiquid stocks
+const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number }> = {
+  "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
+  "XTAIF": { price: 0.75, marketCap: 20000000 },
+  "IHLDF": { price: 0.10, marketCap: 10000000 },
+  "ALTBG": { price: 0.50, marketCap: 200000000 },
+  "H100.ST": { price: 0.10, marketCap: 150000000 },
 };
 
-// Market cap overrides for stocks with incorrect FMP data
-// These are manually updated based on current shares outstanding × price
-// Common issues: FMP returns local currency as USD for non-US stocks, or wrong data entirely
+// Market cap overrides
 const MARKET_CAP_OVERRIDES: Record<string, number> = {
-  "BMNR": 12_800_000_000,  // ~425M shares × $30.12 (Jan 2026)
-  "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
-  "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
-  "XXI": 4_000_000_000,    // 21 Capital - FMP data inconsistent, ~$4B SPAC merger valuation
-  "CEPO": 3_500_000_000,   // BSTR Holdings - ~$3.5B pre-merger SPAC valuation
-  "FWDI": 1_600_000_000,   // Forward Industries SOL treasury - ~$1.6B PIPE raise
-  "NXTT": 600_000_000,     // NextTech (WeTrade) - ~$600M market cap
-  "BNC": 500_000_000,      // Banyan BNB treasury - ~$500M PIPE raise
-  "CWD": 15_000_000,       // Calamos LINK treasury - smaller ~$15M
-  // High-mNAV stocks with incorrect FMP data (Jan 2026)
-  "SUIG": 150_000_000,     // SUI Group Holdings - actual ~$150M
-  "XRPN": 1_000_000_000,   // Evernorth Holdings - $1B SPAC merger
-  "CYPH": 65_000_000,      // Cypherpunk Technologies - actual ~$65M
-  "LITS": 55_000_000,      // Lite Strategy - actual ~$55M
-  "NA": 81_000_000,        // Nano Labs - actual ~$81M
-  "FGNX": 110_000_000,     // FG Nexus - actual ~$110M
-  "AVX": 130_000_000,      // AVAX One Technology - actual ~$130M
+  "BMNR": 12_800_000_000,
+  "3350.T": 3_500_000_000,
+  "0434.HK": 315_000_000,
+  "XXI": 4_000_000_000,
+  "CEPO": 3_500_000_000,
+  "FWDI": 1_600_000_000,
+  "NXTT": 600_000_000,
+  "BNC": 500_000_000,
+  "CWD": 15_000_000,
+  "SUIG": 150_000_000,
+  "XRPN": 1_000_000_000,
+  "CYPH": 65_000_000,
+  "LITS": 55_000_000,
+  "NA": 81_000_000,
+  "FGNX": 110_000_000,
+  "AVX": 130_000_000,
 };
-const FMP_ONLY_STOCKS = [
-  "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
-  "LUXFF",     // Luxxfolio (OTC)
-  "NA",        // Nano Labs
-  "3350.T",    // Metaplanet (Tokyo)
-  "HOGPF",     // H100 Group (OTC ticker for Swedish company)
-  "0434.HK",   // Boyaa Interactive (Hong Kong)
-  ];
 
-// Cache for market caps (update every 5 minutes, not every tick)
+const FMP_ONLY_STOCKS = ["ALTBG.PA", "LUXFF", "NA", "3350.T", "HOGPF", "0434.HK"];
+
+// Cache for market caps (update every 5 minutes)
 let marketCapCache: { data: Record<string, number>; timestamp: number } | null = null;
-const MARKET_CAP_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const MARKET_CAP_CACHE_TTL = 5 * 60 * 1000;
 
-// Fetch market caps from FMP (cached for 5 minutes)
 async function fetchMarketCaps(): Promise<Record<string, number>> {
-  // Return cached if fresh
   if (marketCapCache && Date.now() - marketCapCache.timestamp < MARKET_CAP_CACHE_TTL) {
     return marketCapCache.data;
   }
@@ -67,7 +65,7 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
 
   try {
     const tickerList = STOCK_TICKERS.join(",");
-    const url = "https://financialmodelingprep.com/stable/batch-quote?symbols=" + tickerList + "&apikey=" + FMP_API_KEY;
+    const url = `https://financialmodelingprep.com/stable/batch-quote?symbols=${tickerList}&apikey=${FMP_API_KEY}`;
     const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
@@ -80,7 +78,6 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
       }
     }
 
-    // Update cache
     marketCapCache = { data: result, timestamp: Date.now() };
     return result;
   } catch (error) {
@@ -89,13 +86,12 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
   }
 }
 
-// Fetch FMP stocks (for OTC/international not on Alpaca)
 async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
   if (tickers.length === 0 || !FMP_API_KEY) return {};
 
   try {
     const tickerList = tickers.join(",");
-    const url = "https://financialmodelingprep.com/stable/batch-quote?symbols=" + tickerList + "&apikey=" + FMP_API_KEY;
+    const url = `https://financialmodelingprep.com/stable/batch-quote?symbols=${tickerList}&apikey=${FMP_API_KEY}`;
     const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
@@ -119,22 +115,20 @@ async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
   }
 }
 
+// Fetch initial snapshot data
 async function fetchAllPrices() {
   const marketOpen = isMarketOpen();
   const extendedHours = isExtendedHours();
 
-  // Alpaca stocks (excluding OTC/international)
   const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
-  // Parallel fetch all data sources - CoinGecko now handles all crypto including HYPE
   const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
-    getBinancePrices(),                           // CoinGecko for all crypto
-    getStockSnapshots(alpacaStockTickers).catch(() => ({})), // Free IEX stocks
-    fetchFMPStocks(FMP_ONLY_STOCKS),              // OTC stocks from FMP
-    fetchMarketCaps(),                            // Cached market caps
+    getBinancePrices(),
+    getStockSnapshots(alpacaStockTickers).catch(() => ({})),
+    fetchFMPStocks(FMP_ONLY_STOCKS),
+    fetchMarketCaps(),
   ]);
 
-  // Format stock prices from Alpaca
   const stockPrices: Record<string, any> = {};
 
   for (const ticker of alpacaStockTickers) {
@@ -147,6 +141,7 @@ async function fetchAllPrices() {
 
       stockPrices[ticker] = {
         price: currentPrice,
+        prevClose,
         change24h,
         volume: dailyBar.v || 0,
         marketCap: MARKET_CAP_OVERRIDES[ticker] || marketCaps[ticker] || 0,
@@ -156,17 +151,14 @@ async function fetchAllPrices() {
     }
   }
 
-  // Merge FMP stocks (OTC/international) with ticker mapping and market cap overrides
   for (const [ticker, data] of Object.entries(fmpStocks)) {
     const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
     stockPrices[displayTicker] = {
       ...data,
-      // Apply market cap override if available (fixes currency conversion issues)
       marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
     };
   }
 
-  // Add fallback data for illiquid stocks without real-time data
   for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
     if (!stockPrices[ticker]) {
       stockPrices[ticker] = {
@@ -188,10 +180,65 @@ async function fetchAllPrices() {
   };
 }
 
+// Create WebSocket connection to Alpaca
+function createAlpacaWebSocket(
+  url: string,
+  symbols: string[],
+  onTrade: (symbol: string, price: number, timestamp: string) => void
+): Promise<WebSocket> {
+  return new Promise((resolve, reject) => {
+    const ws = new WebSocket(url);
+
+    ws.onopen = () => {
+      console.log(`[WS] Connected to ${url}`);
+      // Authenticate
+      ws.send(JSON.stringify({
+        action: "auth",
+        key: ALPACA_API_KEY,
+        secret: ALPACA_SECRET_KEY,
+      }));
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const messages = JSON.parse(event.data);
+        for (const msg of Array.isArray(messages) ? messages : [messages]) {
+          if (msg.T === "success" && msg.msg === "authenticated") {
+            console.log(`[WS] Authenticated, subscribing to ${symbols.length} symbols`);
+            ws.send(JSON.stringify({
+              action: "subscribe",
+              trades: symbols,
+            }));
+            resolve(ws);
+          }
+
+          if (msg.T === "t") {
+            // Trade update - convert crypto symbols (ETH/USD -> ETH)
+            const symbol = msg.S.includes("/") ? msg.S.replace("/USD", "") : msg.S;
+            onTrade(symbol, msg.p, msg.t);
+          }
+
+          if (msg.T === "error") {
+            console.error(`[WS] Error:`, msg.msg);
+            if (msg.msg === "auth failed") {
+              reject(new Error("Alpaca auth failed"));
+            }
+          }
+        }
+      } catch (e) {
+        console.error("[WS] Parse error:", e);
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error("[WS] Error:", error);
+      reject(error);
+    };
+  });
+}
+
 export async function GET(request: NextRequest) {
   const encoder = new TextEncoder();
-
-  // Check if client wants SSE stream
   const accept = request.headers.get("accept");
   const isSSE = accept?.includes("text/event-stream");
 
@@ -214,54 +261,140 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // SSE stream - crypto every 2s, full update every 15s
-  let tickCount = 0;
-  const FULL_UPDATE_INTERVAL = 15; // Every 15 ticks (30 seconds)
+  // SSE stream with real-time WebSocket data
+  let stockWs: WebSocket | null = null;
+  let cryptoWs: WebSocket | null = null;
+  let isAborted = false;
+
+  // Price state - updated by WebSocket
+  let stockPrices: Record<string, any> = {};
+  let cryptoPrices: Record<string, { price: number; change24h: number }> = {};
+  let lastFullUpdate = 0;
 
   const stream = new ReadableStream({
     async start(controller) {
       const sendEvent = (data: any) => {
-        const message = "data: " + JSON.stringify(data) + "\n\n";
-        controller.enqueue(encoder.encode(message));
+        if (isAborted) return;
+        try {
+          const message = `data: ${JSON.stringify(data)}\n\n`;
+          controller.enqueue(encoder.encode(message));
+        } catch (e) {
+          // Stream closed
+        }
       };
 
-      // Send initial full data immediately
+      // Send initial full data
       try {
         const initialData = await fetchAllPrices();
+        stockPrices = initialData.stocks;
+        cryptoPrices = initialData.crypto;
+        lastFullUpdate = Date.now();
         sendEvent(initialData);
       } catch (error) {
         console.error("Initial fetch error:", error);
         sendEvent({ error: "Failed to fetch initial prices" });
       }
 
-      // Stream updates - crypto fast, stocks slower
-      const interval = setInterval(async () => {
-        try {
-          tickCount++;
+      // Connect to Alpaca WebSockets for real-time updates
+      try {
+        // Stock WebSocket
+        const stockSymbols = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
+        stockWs = await createAlpacaWebSocket(
+          STOCK_WS_URL,
+          stockSymbols,
+          (symbol, price, timestamp) => {
+            if (stockPrices[symbol]) {
+              const prevClose = stockPrices[symbol].prevClose || stockPrices[symbol].price;
+              const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
+              stockPrices[symbol] = {
+                ...stockPrices[symbol],
+                price,
+                change24h,
+                lastTrade: timestamp,
+              };
 
-          if (tickCount % FULL_UPDATE_INTERVAL === 0) {
-            // Full update including stocks (every 30 seconds)
-            const data = await fetchAllPrices();
-            sendEvent(data);
-          } else {
-            // Crypto-only update (every 2 seconds) - this is the "live" feel
-            const cryptoPrices = await getBinancePrices();
-
-            sendEvent({
-              crypto: cryptoPrices,
-              timestamp: new Date().toISOString(),
-              partialUpdate: true, // Signal this is crypto-only
-            });
+              // Send real-time update
+              sendEvent({
+                type: "trade",
+                symbol,
+                price,
+                change24h,
+                timestamp,
+                assetType: "stock",
+              });
+            }
           }
-        } catch (error) {
-          console.error("Stream fetch error:", error);
+        );
+        console.log("[Stream] Stock WebSocket connected");
+      } catch (e) {
+        console.error("[Stream] Stock WebSocket failed:", e);
+      }
+
+      try {
+        // Crypto WebSocket
+        const cryptoSymbols = Object.values(CRYPTO_SYMBOLS);
+        cryptoWs = await createAlpacaWebSocket(
+          CRYPTO_WS_URL,
+          cryptoSymbols,
+          (symbol, price, timestamp) => {
+            if (cryptoPrices[symbol]) {
+              // Keep existing change24h as we don't have prevClose in real-time
+              cryptoPrices[symbol] = {
+                ...cryptoPrices[symbol],
+                price,
+              };
+
+              // Send real-time update
+              sendEvent({
+                type: "trade",
+                symbol,
+                price,
+                timestamp,
+                assetType: "crypto",
+              });
+            }
+          }
+        );
+        console.log("[Stream] Crypto WebSocket connected");
+      } catch (e) {
+        console.error("[Stream] Crypto WebSocket failed:", e);
+      }
+
+      // Periodic full refresh for market caps and new data (every 60 seconds)
+      const fullRefreshInterval = setInterval(async () => {
+        if (isAborted) return;
+        try {
+          const data = await fetchAllPrices();
+          // Merge with real-time prices
+          for (const [symbol, rtData] of Object.entries(stockPrices)) {
+            if (data.stocks[symbol] && rtData.lastTrade) {
+              data.stocks[symbol].price = rtData.price;
+              data.stocks[symbol].change24h = rtData.change24h;
+            }
+          }
+          sendEvent({ ...data, fullRefresh: true });
+        } catch (e) {
+          console.error("Full refresh error:", e);
         }
-      }, 2000); // Every 2 seconds
+      }, 60000);
 
       // Handle client disconnect
       request.signal.addEventListener("abort", () => {
-        clearInterval(interval);
-        controller.close();
+        isAborted = true;
+        clearInterval(fullRefreshInterval);
+        if (stockWs) {
+          stockWs.close();
+          stockWs = null;
+        }
+        if (cryptoWs) {
+          cryptoWs.close();
+          cryptoWs = null;
+        }
+        try {
+          controller.close();
+        } catch (e) {
+          // Already closed
+        }
       });
     },
   });
