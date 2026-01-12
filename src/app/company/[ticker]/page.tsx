@@ -15,7 +15,7 @@ import {
   INTERVAL_LABELS,
 } from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
-import { PerformanceComparisonChart } from "@/components/performance-comparison-chart";
+import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
@@ -383,10 +383,11 @@ export default function CompanyPage() {
           </div>
         </div>
 
-        {/* Performance Comparison Chart */}
-        <PerformanceComparisonChart
+        {/* Holdings Per Share Growth Chart */}
+        <HoldingsPerShareChart
           ticker={company.ticker}
           asset={company.asset}
+          currentHoldingsPerShare={holdingsPerShare}
           className="mb-8"
         />
 
