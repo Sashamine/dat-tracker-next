@@ -87,23 +87,31 @@ export default function Home() {
                 {totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">
-                {prices?.timestamp ? `Updated ${new Date(prices.timestamp).toLocaleTimeString()}` : "Connecting..."}
-              </p>
-              <p className="text-xs text-gray-400">
-                {isConnected ? (
-                  <span className="inline-flex items-center gap-1">
-                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Live streaming
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                    Reconnecting...
-                  </span>
-                )}
-              </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/verify"
+                className="px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              >
+                Verify Holdings
+              </Link>
+              <div className="text-right">
+                <p className="text-sm text-gray-500">
+                  {prices?.timestamp ? `Updated ${new Date(prices.timestamp).toLocaleTimeString()}` : "Connecting..."}
+                </p>
+                <p className="text-xs text-gray-400">
+                  {isConnected ? (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                      Live streaming
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                      Reconnecting...
+                    </span>
+                  )}
+                </p>
+              </div>
             </div>
           </div>
 
