@@ -801,7 +801,7 @@ export const xrpCompanies: Company[] = [
     ticker: "WKSP",
     asset: "XRP",
     tier: 2,
-    holdings: 15_000,  // Estimated - six-figure initial purchase
+    holdings: 60_000,  // Estimated - six-figure BTC+XRP purchase split ~50/50
     datStartDate: "2025-01-01",
     costBasisAvg: 2.50,
     quarterlyBurnUsd: 4_000_000,
@@ -810,7 +810,7 @@ export const xrpCompanies: Company[] = [
     marketCap: 18_650_000,
     leader: "Steven Rossi (CEO)",
     strategy: "Dual BTC/XRP treasury, crypto payments",
-    notes: "Clean energy auto tech. Holdings estimated from six-figure purchase.",
+    notes: "Clean energy auto tech. Small crypto allocation (~10% of excess cash).",
   },
 ];
 
