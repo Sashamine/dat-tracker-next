@@ -24,8 +24,11 @@ const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: 
 
 // Market cap overrides for stocks with incorrect FMP data
 // These are manually updated based on current shares outstanding × price
+// Common issues: FMP returns local currency as USD for non-US stocks
 const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "BMNR": 12_800_000_000,  // ~425M shares × $30.12 (Jan 2026)
+  "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
+  "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
 };
 const FMP_ONLY_STOCKS = [
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
@@ -162,10 +165,14 @@ export async function GET() {
       }
     }
 
-    // Merge FMP stocks (with ticker mapping)
+    // Merge FMP stocks (with ticker mapping and market cap overrides)
     for (const [ticker, data] of Object.entries(fmpStocks)) {
       const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
-      stockPrices[displayTicker] = data;
+      stockPrices[displayTicker] = {
+        ...data,
+        // Apply market cap override if available (fixes currency conversion issues)
+        marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
+      };
     }
 
 
