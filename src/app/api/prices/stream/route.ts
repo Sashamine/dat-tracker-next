@@ -53,13 +53,19 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "AVX": 130_000_000,
 };
 
-// Fallback prices for illiquid stocks
+// Fallback prices for illiquid/international stocks (FMP may not have data)
 const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number }> = {
+  // BTC International
+  "3350.T": { price: 7500, marketCap: 3_500_000_000 },     // Metaplanet (JPY ~7500)
+  "0434.HK": { price: 1.50, marketCap: 500_000_000 },      // Boyaa Interactive (HKD)
+  "ALTBG": { price: 0.50, marketCap: 200_000_000 },        // Blockchain Group (EUR)
+  "H100.ST": { price: 0.10, marketCap: 150_000_000 },      // H100 Group (SEK)
+  // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
   "XTAIF": { price: 0.75, marketCap: 20_000_000 },
   "IHLDF": { price: 0.10, marketCap: 10_000_000 },
-  "ALTBG": { price: 0.50, marketCap: 200_000_000 },
-  "H100.ST": { price: 0.10, marketCap: 150_000_000 },
+  "LUXFF": { price: 0.05, marketCap: 3_860_000 },          // Luxxfolio (OTC)
+  "NA": { price: 1.50, marketCap: 81_000_000 },            // Nano Labs
 };
 
 // Check if US stock market is open

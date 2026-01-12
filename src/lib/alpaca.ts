@@ -33,14 +33,19 @@ export const CRYPTO_SYMBOLS: Record<string, string> = {
 export const STOCK_TICKERS = [
   // ETH
   "BMNR", "SBET", "ETHM", "BTBT", "BTCS", "GAME", "FGNX",
-  // BTC
+  // BTC - US
   "MSTR", "XXI", "CEPO", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "ABTC",
+  // BTC - International
+  "3350.T",    // Metaplanet (Japan)
+  "0434.HK",   // Boyaa Interactive (Hong Kong)
+  "ALTBG",     // The Blockchain Group (France/Euronext)
+  "H100.ST",   // H100 Group (Sweden)
   // SOL
   "FWDI", "HSDT", "DFDV", "UPXI", "STKE",
   // HYPE
   "PURR", "HYPD",
   // BNB
-  "BNC",
+  "BNC", "NA",  // NA = Nano Labs
   // TAO
   "TAOX", "XTAIF", "TWAV",
   // LINK
@@ -52,7 +57,7 @@ export const STOCK_TICKERS = [
   // ZEC
   "CYPH",
   // LTC
-  "LITS",
+  "LITS", "LUXFF",  // LUXFF = Luxxfolio (OTC)
   // SUI
   "SUIG",
   // DOGE
