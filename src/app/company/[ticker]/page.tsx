@@ -34,6 +34,7 @@ import {
 } from "@/lib/calculations";
 import { FairValueCalculator } from "@/components/fair-value-calculator";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
+import { StalenessBadge } from "@/components/staleness-indicator";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -341,7 +342,13 @@ export default function CompanyPage() {
         {/* Treasury & Holdings */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Holdings</p>
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Holdings</p>
+              <StalenessBadge
+                lastUpdated={company.holdingsLastUpdated}
+                source={company.holdingsSource}
+              />
+            </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatLargeNumber(nav)}
             </p>

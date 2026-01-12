@@ -20,6 +20,7 @@ import {
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { useFilters } from "@/lib/hooks/use-filters";
+import { StalenessCompact } from "@/components/staleness-indicator";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -387,9 +388,12 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex flex-col items-end">
-                      <span className="font-mono font-medium text-gray-900 dark:text-gray-100">
-                        {formatLargeNumber(company.holdingsValue)}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono font-medium text-gray-900 dark:text-gray-100">
+                          {formatLargeNumber(company.holdingsValue)}
+                        </span>
+                        <StalenessCompact lastUpdated={company.holdingsLastUpdated} />
+                      </div>
                       <span className="text-xs text-gray-500 font-mono">
                         {formatNumber(company.holdings)} {company.asset}
                       </span>
