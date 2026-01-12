@@ -150,10 +150,13 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 15_000_000,
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
+    optionsOi: 500_000,  // Deep options market
     marketCap: 45_000_000_000,
+    capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
+    capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
-    notes: "628K BTC @ $75K avg. STRK/STRF 8% perpetual preferred.",
+    notes: "673K BTC @ $75K avg. STRK/STRF 8% perpetual preferred. Bitcoin credit company thesis.",
     leverageRatio: 1.5, // ~$21B debt provides leveraged BTC exposure via converts
   },
   {

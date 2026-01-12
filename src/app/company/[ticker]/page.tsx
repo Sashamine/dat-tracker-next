@@ -449,6 +449,10 @@ export default function CompanyPage() {
               defaultStakingPct={company.stakingPct}
               defaultStakingApy={company.stakingApy}
               defaultQuarterlyBurn={company.quarterlyBurnUsd}
+              capitalRaisedConverts={company.capitalRaisedConverts}
+              avgDailyVolume={company.avgDailyVolume}
+              hasOptions={company.hasOptions}
+              optionsOi={company.optionsOi}
             />
           </div>
         )}
