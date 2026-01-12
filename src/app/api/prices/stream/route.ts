@@ -295,81 +295,119 @@ export async function GET(request: NextRequest) {
         sendEvent({ error: "Failed to fetch initial prices" });
       }
 
+      // Track if WebSocket is working
+      let wsConnected = false;
+
       // Connect to Alpaca WebSockets for real-time updates
-      try {
-        // Stock WebSocket
-        const stockSymbols = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
-        stockWs = await createAlpacaWebSocket(
-          STOCK_WS_URL,
-          stockSymbols,
-          (symbol, price, timestamp) => {
-            if (stockPrices[symbol]) {
-              const prevClose = stockPrices[symbol].prevClose || stockPrices[symbol].price;
-              const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
-              stockPrices[symbol] = {
-                ...stockPrices[symbol],
-                price,
-                change24h,
-                lastTrade: timestamp,
-              };
+      if (ALPACA_API_KEY && ALPACA_SECRET_KEY) {
+        try {
+          // Stock WebSocket
+          const stockSymbols = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
+          stockWs = await createAlpacaWebSocket(
+            STOCK_WS_URL,
+            stockSymbols,
+            (symbol, price, timestamp) => {
+              if (stockPrices[symbol]) {
+                const prevClose = stockPrices[symbol].prevClose || stockPrices[symbol].price;
+                const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
+                stockPrices[symbol] = {
+                  ...stockPrices[symbol],
+                  price,
+                  change24h,
+                  lastTrade: timestamp,
+                };
 
-              // Send real-time update
-              sendEvent({
-                type: "trade",
-                symbol,
-                price,
-                change24h,
-                timestamp,
-                assetType: "stock",
-              });
+                // Send real-time update
+                sendEvent({
+                  type: "trade",
+                  symbol,
+                  price,
+                  change24h,
+                  timestamp,
+                  assetType: "stock",
+                });
+              }
             }
-          }
-        );
-        console.log("[Stream] Stock WebSocket connected");
-      } catch (e) {
-        console.error("[Stream] Stock WebSocket failed:", e);
+          );
+          wsConnected = true;
+          console.log("[Stream] Stock WebSocket connected");
+        } catch (e: any) {
+          console.error("[Stream] Stock WebSocket failed:", e?.message || e);
+        }
+
+        try {
+          // Crypto WebSocket
+          const cryptoSymbols = Object.values(CRYPTO_SYMBOLS);
+          cryptoWs = await createAlpacaWebSocket(
+            CRYPTO_WS_URL,
+            cryptoSymbols,
+            (symbol, price, timestamp) => {
+              if (cryptoPrices[symbol]) {
+                cryptoPrices[symbol] = {
+                  ...cryptoPrices[symbol],
+                  price,
+                };
+
+                sendEvent({
+                  type: "trade",
+                  symbol,
+                  price,
+                  timestamp,
+                  assetType: "crypto",
+                });
+              }
+            }
+          );
+          wsConnected = true;
+          console.log("[Stream] Crypto WebSocket connected");
+        } catch (e: any) {
+          console.error("[Stream] Crypto WebSocket failed:", e?.message || e);
+        }
       }
 
-      try {
-        // Crypto WebSocket
-        const cryptoSymbols = Object.values(CRYPTO_SYMBOLS);
-        cryptoWs = await createAlpacaWebSocket(
-          CRYPTO_WS_URL,
-          cryptoSymbols,
-          (symbol, price, timestamp) => {
-            if (cryptoPrices[symbol]) {
-              // Keep existing change24h as we don't have prevClose in real-time
-              cryptoPrices[symbol] = {
-                ...cryptoPrices[symbol],
-                price,
-              };
-
-              // Send real-time update
+      // Fallback polling if WebSocket failed (every 5 seconds for stocks, 2 for crypto)
+      let pollInterval: NodeJS.Timeout | null = null;
+      if (!wsConnected) {
+        console.log("[Stream] Using polling fallback (WebSocket unavailable)");
+        let tickCount = 0;
+        pollInterval = setInterval(async () => {
+          if (isAborted) return;
+          tickCount++;
+          try {
+            if (tickCount % 3 === 0) {
+              // Full update every 15 seconds (3 ticks × 5s)
+              const data = await fetchAllPrices();
+              stockPrices = data.stocks;
+              cryptoPrices = data.crypto;
+              sendEvent(data);
+            } else {
+              // Crypto-only update
+              const crypto = await getBinancePrices();
+              cryptoPrices = crypto;
               sendEvent({
-                type: "trade",
-                symbol,
-                price,
-                timestamp,
-                assetType: "crypto",
+                crypto,
+                timestamp: new Date().toISOString(),
+                partialUpdate: true,
               });
             }
+          } catch (e) {
+            console.error("Poll error:", e);
           }
-        );
-        console.log("[Stream] Crypto WebSocket connected");
-      } catch (e) {
-        console.error("[Stream] Crypto WebSocket failed:", e);
+        }, 5000);
       }
 
-      // Periodic full refresh for market caps and new data (every 60 seconds)
+      // Periodic full refresh for market caps (every 60 seconds)
       const fullRefreshInterval = setInterval(async () => {
         if (isAborted) return;
         try {
           const data = await fetchAllPrices();
-          // Merge with real-time prices
-          for (const [symbol, rtData] of Object.entries(stockPrices)) {
-            if (data.stocks[symbol] && rtData.lastTrade) {
-              data.stocks[symbol].price = rtData.price;
-              data.stocks[symbol].change24h = rtData.change24h;
+          // Merge with real-time prices if WS is active
+          if (wsConnected) {
+            for (const [symbol, rtData] of Object.entries(stockPrices)) {
+              if (data.stocks[symbol] && rtData.lastTrade) {
+                data.stocks[symbol].price = rtData.price;
+                data.stocks[symbol].change24h = rtData.change24h;
+              }
             }
           }
           sendEvent({ ...data, fullRefresh: true });
@@ -382,6 +420,9 @@ export async function GET(request: NextRequest) {
       request.signal.addEventListener("abort", () => {
         isAborted = true;
         clearInterval(fullRefreshInterval);
+        if (pollInterval) {
+          clearInterval(pollInterval);
+        }
         if (stockWs) {
           stockWs.close();
           stockWs = null;
