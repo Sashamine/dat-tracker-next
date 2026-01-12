@@ -7,6 +7,7 @@ import { FilterSidebar } from "@/components/filter-sidebar";
 import { AppSidebar, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { PremiumDiscountChart, MNAVScatterChart } from "@/components/premium-discount-chart";
+import { MNAVChart } from "@/components/mnav-chart";
 import { allCompanies } from "@/lib/data/companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
@@ -36,7 +37,7 @@ function median(arr: number[]): number {
 export default function Home() {
   const { data: prices, isConnected } = usePricesStream();
   const { overrides } = useCompanyOverrides();
-  const [viewMode, setViewMode] = useState<"table" | "bar" | "scatter">("table");
+  const [viewMode, setViewMode] = useState<"table" | "bar" | "scatter" | "mnav">("table");
 
   // Merge base company data with Google Sheets overrides
   const companies = useMemo(
@@ -151,6 +152,17 @@ export default function Home() {
             >
               mNAV Scatter
             </button>
+            <button
+              onClick={() => setViewMode("mnav")}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-md transition-colors",
+                viewMode === "mnav"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200"
+              )}
+            >
+              mNAV History
+            </button>
           </div>
 
           {/* Main Content */}
@@ -176,8 +188,10 @@ export default function Home() {
               sortBy="upside"
               title="Top 20 Companies by Upside to Fair Value"
             />
-          ) : (
+          ) : viewMode === "scatter" ? (
             <MNAVScatterChart companies={companies} prices={prices ?? undefined} />
+          ) : (
+            <MNAVChart />
           )}
 
           {/* Footer */}
