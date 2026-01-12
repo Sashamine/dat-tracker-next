@@ -1,16 +1,13 @@
 import { NextRequest } from "next/server";
 import { STOCK_TICKERS } from "@/lib/alpaca";
 
-// Use Edge Runtime for WebSocket support
+// Use Edge Runtime for streaming support
 export const runtime = "edge";
 
 // FMP API Key
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
-// FMP WebSocket endpoint
-const FMP_WS_URL = "wss://websockets.financialmodelingprep.com";
-
-// Crypto - keep using CoinGecko (FMP crypto websocket is separate)
+// Crypto - keep using CoinGecko
 const COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3";
 
 const COINGECKO_IDS: Record<string, string> = {
@@ -193,112 +190,6 @@ async function fetchAllPrices() {
   };
 }
 
-// Create FMP WebSocket connection
-function createFMPWebSocket(
-  symbols: string[],
-  onTrade: (symbol: string, price: number, timestamp: string) => void,
-  onQuote: (symbol: string, bid: number, ask: number, timestamp: string) => void
-): Promise<WebSocket> {
-  return new Promise((resolve, reject) => {
-    if (!FMP_API_KEY) {
-      reject(new Error("FMP API key not configured"));
-      return;
-    }
-
-    console.log(`[FMP WS] Connecting to ${FMP_WS_URL}...`);
-    const ws = new WebSocket(FMP_WS_URL);
-
-    ws.onopen = () => {
-      console.log("[FMP WS] Connected, sending login...");
-      // Authenticate
-      ws.send(JSON.stringify({
-        event: "login",
-        data: { apiKey: FMP_API_KEY }
-      }));
-    };
-
-    let authenticated = false;
-
-    ws.onmessage = (event) => {
-      try {
-        const rawData = typeof event.data === 'string' ? event.data : event.data.toString();
-        console.log("[FMP WS] Raw message:", rawData.substring(0, 200));
-
-        const msg = JSON.parse(rawData);
-
-        // Log all message types for debugging
-        console.log("[FMP WS] Parsed:", JSON.stringify(msg).substring(0, 150));
-
-        // Handle login response - FMP may use different formats
-        if (msg.event === "login" || msg.status === "connected" || msg.status === "success" ||
-            msg.message?.includes("Authenticated") || msg.message?.includes("success")) {
-          console.log("[FMP WS] Authenticated successfully!");
-          authenticated = true;
-
-          // Subscribe to all symbols
-          console.log(`[FMP WS] Subscribing to ${symbols.length} symbols...`);
-          ws.send(JSON.stringify({
-            event: "subscribe",
-            data: { ticker: symbols.map(s => s.toLowerCase()) }
-          }));
-
-          resolve(ws);
-          return;
-        }
-
-        // Handle subscription confirmation
-        if (msg.event === "subscribe") {
-          console.log("[FMP WS] Subscription confirmed");
-          return;
-        }
-
-        // Handle price updates - check various formats
-        if (msg.s && msg.type) {
-          const symbol = msg.s.toUpperCase();
-          const timestamp = msg.t ? new Date(msg.t).toISOString() : new Date().toISOString();
-
-          if (msg.type === "T" && msg.lp) {
-            console.log(`[FMP WS] Trade: ${symbol} @ ${msg.lp}`);
-            onTrade(symbol, msg.lp, timestamp);
-          } else if (msg.type === "Q" && (msg.bp || msg.ap)) {
-            console.log(`[FMP WS] Quote: ${symbol} bid=${msg.bp} ask=${msg.ap}`);
-            onQuote(symbol, msg.bp || 0, msg.ap || 0, timestamp);
-          }
-          return;
-        }
-
-        // Handle errors
-        if (msg.error || msg.status === "error") {
-          console.error("[FMP WS] Error:", JSON.stringify(msg));
-          if (!authenticated) {
-            reject(new Error(`FMP auth failed: ${msg.error || msg.message}`));
-          }
-        }
-
-      } catch (e) {
-        console.error("[FMP WS] Parse error:", e, "Raw:", event.data?.toString().substring(0, 100));
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error("[FMP WS] WebSocket error:", error);
-      reject(error);
-    };
-
-    ws.onclose = (event) => {
-      console.log(`[FMP WS] Closed: code=${event.code}, reason=${event.reason}`);
-    };
-
-    // Timeout for authentication
-    setTimeout(() => {
-      if (!authenticated) {
-        console.log("[FMP WS] Auth timeout, resolving anyway...");
-        resolve(ws);
-      }
-    }, 5000);
-  });
-}
-
 export async function GET(request: NextRequest) {
   const encoder = new TextEncoder();
   const accept = request.headers.get("accept");
@@ -323,13 +214,11 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // SSE stream with FMP WebSocket
-  let stockWs: WebSocket | null = null;
+  // SSE stream with REST polling (5-second intervals for real-time updates)
   let isAborted = false;
 
-  // Price state
-  let stockPrices: Record<string, any> = {};
-  let cryptoPrices: Record<string, { price: number; change24h: number }> = {};
+  // Price state for tracking changes
+  let lastStockPrices: Record<string, number> = {};
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -346,8 +235,10 @@ export async function GET(request: NextRequest) {
       // Send initial full data
       try {
         const initialData = await fetchAllPrices();
-        stockPrices = initialData.stocks;
-        cryptoPrices = initialData.crypto;
+        // Store initial prices for change detection
+        for (const [symbol, data] of Object.entries(initialData.stocks)) {
+          lastStockPrices[symbol] = (data as any).price || 0;
+        }
         sendEvent(initialData);
         console.log("[Stream] Sent initial data");
       } catch (error) {
@@ -355,109 +246,41 @@ export async function GET(request: NextRequest) {
         sendEvent({ error: "Failed to fetch initial prices" });
       }
 
-      // Track WebSocket status
-      let wsConnected = false;
-
-      // Connect to FMP WebSocket for real-time stock updates
-      if (FMP_API_KEY) {
+      // 5-second polling for real-time stock prices
+      const stockPollInterval = setInterval(async () => {
+        if (isAborted) return;
         try {
-          stockWs = await createFMPWebSocket(
-            STOCK_TICKERS,
-            // On trade
-            (symbol, price, timestamp) => {
-              if (stockPrices[symbol]) {
-                const prevClose = stockPrices[symbol].prevClose || stockPrices[symbol].price;
-                const change24h = prevClose > 0 ? ((price - prevClose) / prevClose) * 100 : 0;
-                stockPrices[symbol] = {
-                  ...stockPrices[symbol],
-                  price,
-                  change24h,
-                  lastTrade: timestamp,
-                };
+          const newStockPrices = await fetchFMPStockQuotes();
+          const timestamp = new Date().toISOString();
 
-                sendEvent({
-                  type: "trade",
-                  symbol,
-                  price,
-                  change24h,
-                  timestamp,
-                  assetType: "stock",
-                });
-              }
-            },
-            // On quote
-            (symbol, bid, ask, timestamp) => {
-              if (stockPrices[symbol] && (bid > 0 || ask > 0)) {
-                const midPrice = bid > 0 && ask > 0 ? (bid + ask) / 2 : (bid || ask);
-                const prevClose = stockPrices[symbol].prevClose || stockPrices[symbol].price;
-                const change24h = prevClose > 0 ? ((midPrice - prevClose) / prevClose) * 100 : 0;
+          // Send individual trade events for changed prices
+          for (const [symbol, data] of Object.entries(newStockPrices)) {
+            const newPrice = (data as any).price || 0;
+            const lastPrice = lastStockPrices[symbol] || 0;
 
-                stockPrices[symbol] = {
-                  ...stockPrices[symbol],
-                  price: midPrice,
-                  bid,
-                  ask,
-                  change24h,
-                  lastQuote: timestamp,
-                };
-
-                sendEvent({
-                  type: "quote",
-                  symbol,
-                  price: midPrice,
-                  bid,
-                  ask,
-                  change24h,
-                  timestamp,
-                  assetType: "stock",
-                });
-              }
-            }
-          );
-          wsConnected = true;
-          console.log("[Stream] FMP WebSocket connected");
-        } catch (e: any) {
-          console.error("[Stream] FMP WebSocket failed:", e?.message || e);
-        }
-      }
-
-      // Fallback polling if WebSocket failed
-      let pollInterval: NodeJS.Timeout | null = null;
-      if (!wsConnected) {
-        console.log("[Stream] Using polling fallback");
-        let tickCount = 0;
-        pollInterval = setInterval(async () => {
-          if (isAborted) return;
-          tickCount++;
-          try {
-            if (tickCount % 3 === 0) {
-              // Full update every 15 seconds
-              const data = await fetchAllPrices();
-              stockPrices = data.stocks;
-              cryptoPrices = data.crypto;
-              sendEvent(data);
-            } else {
-              // Crypto-only update
-              const crypto = await fetchCryptoPrices();
-              cryptoPrices = crypto;
+            // Only send update if price actually changed
+            if (newPrice !== lastPrice && newPrice > 0) {
+              lastStockPrices[symbol] = newPrice;
               sendEvent({
-                crypto,
-                timestamp: new Date().toISOString(),
-                partialUpdate: true,
+                type: "trade",
+                symbol,
+                price: newPrice,
+                change24h: (data as any).change24h || 0,
+                timestamp,
+                assetType: "stock",
               });
             }
-          } catch (e) {
-            console.error("Poll error:", e);
           }
-        }, 5000);
-      }
+        } catch (e) {
+          console.error("Stock poll error:", e);
+        }
+      }, 5000);
 
-      // Periodic crypto refresh (every 30 seconds)
+      // Crypto refresh every 30 seconds (CoinGecko rate limit)
       const cryptoInterval = setInterval(async () => {
         if (isAborted) return;
         try {
           const crypto = await fetchCryptoPrices();
-          cryptoPrices = crypto;
           sendEvent({
             crypto,
             timestamp: new Date().toISOString(),
@@ -468,20 +291,11 @@ export async function GET(request: NextRequest) {
         }
       }, 30000);
 
-      // Periodic full refresh for market caps (every 60 seconds)
+      // Full data refresh every 60 seconds (includes market caps)
       const fullRefreshInterval = setInterval(async () => {
         if (isAborted) return;
         try {
           const data = await fetchAllPrices();
-          // Merge with real-time prices if WS active
-          if (wsConnected) {
-            for (const [symbol, rtData] of Object.entries(stockPrices)) {
-              if (data.stocks[symbol] && (rtData.lastTrade || rtData.lastQuote)) {
-                data.stocks[symbol].price = rtData.price;
-                data.stocks[symbol].change24h = rtData.change24h;
-              }
-            }
-          }
           sendEvent({ ...data, fullRefresh: true });
         } catch (e) {
           console.error("Full refresh error:", e);
@@ -491,13 +305,9 @@ export async function GET(request: NextRequest) {
       // Handle client disconnect
       request.signal.addEventListener("abort", () => {
         isAborted = true;
+        clearInterval(stockPollInterval);
         clearInterval(cryptoInterval);
         clearInterval(fullRefreshInterval);
-        if (pollInterval) clearInterval(pollInterval);
-        if (stockWs) {
-          stockWs.close();
-          stockWs = null;
-        }
         try {
           controller.close();
         } catch (e) {
