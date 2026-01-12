@@ -62,11 +62,35 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 17722, sharesOutstanding: 340_000_000, holdingsPerShare: 0.0000521, source: "Q4 2024" },
 ];
 
+// Metaplanet (3350.T) - Japan's first Bitcoin treasury company
+// Data from TSE filings and press releases
+const METAPLANET_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-04-23", holdings: 97.85, sharesOutstanding: 17_600_000, holdingsPerShare: 0.00000556, source: "Initial BTC purchase" },
+  { date: "2024-05-13", holdings: 141.07, sharesOutstanding: 18_200_000, holdingsPerShare: 0.00000775, source: "Press release" },
+  { date: "2024-06-11", holdings: 161.27, sharesOutstanding: 19_500_000, holdingsPerShare: 0.00000827, source: "Press release" },
+  { date: "2024-07-16", holdings: 245.99, sharesOutstanding: 24_000_000, holdingsPerShare: 0.00001025, source: "Press release" },
+  { date: "2024-08-13", holdings: 360.37, sharesOutstanding: 28_500_000, holdingsPerShare: 0.00001265, source: "Press release" },
+  { date: "2024-09-10", holdings: 398.83, sharesOutstanding: 32_000_000, holdingsPerShare: 0.00001246, source: "Press release" },
+  { date: "2024-10-11", holdings: 530.71, sharesOutstanding: 36_000_000, holdingsPerShare: 0.00001474, source: "Press release" },
+  { date: "2024-11-18", holdings: 1142.29, sharesOutstanding: 42_000_000, holdingsPerShare: 0.00002720, source: "Press release" },
+  { date: "2024-12-23", holdings: 1762.00, sharesOutstanding: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release" },
+];
+
+// Semler Scientific (SMLR) - Medical device company turned BTC treasury
+const SMLR_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-05-28", holdings: 581, sharesOutstanding: 6_900_000, holdingsPerShare: 0.0000842, source: "Initial purchase 8-K" },
+  { date: "2024-06-17", holdings: 828, sharesOutstanding: 6_900_000, holdingsPerShare: 0.0001200, source: "8-K filing" },
+  { date: "2024-09-30", holdings: 1058, sharesOutstanding: 7_100_000, holdingsPerShare: 0.0001490, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 2084, sharesOutstanding: 7_300_000, holdingsPerShare: 0.0002855, source: "Q4 2024 estimate" },
+];
+
 // Map of all companies with historical data
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   MSTR: { ticker: "MSTR", asset: "BTC", history: MSTR_HISTORY },
   MARA: { ticker: "MARA", asset: "BTC", history: MARA_HISTORY },
   RIOT: { ticker: "RIOT", asset: "BTC", history: RIOT_HISTORY },
+  "3350.T": { ticker: "3350.T", asset: "BTC", history: METAPLANET_HISTORY },
+  SMLR: { ticker: "SMLR", asset: "BTC", history: SMLR_HISTORY },
 };
 
 // Get history for a specific company
