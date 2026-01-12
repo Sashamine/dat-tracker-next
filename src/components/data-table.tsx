@@ -385,8 +385,15 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
                     {formatLargeNumber(company.marketCap)}
                   </TableCell>
-                  <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
-                    {formatLargeNumber(company.holdingsValue)}
+                  <TableCell className="text-right">
+                    <div className="flex flex-col items-end">
+                      <span className="font-mono font-medium text-gray-900 dark:text-gray-100">
+                        {formatLargeNumber(company.holdingsValue)}
+                      </span>
+                      <span className="text-xs text-gray-500 font-mono">
+                        {formatNumber(company.holdings)} {company.asset}
+                      </span>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

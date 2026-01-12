@@ -343,13 +343,10 @@ export default function CompanyPage() {
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">Holdings</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {formatTokenAmount(company.holdings, company.asset)}
-            </p>
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Treasury Value (NAV)</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatLargeNumber(nav)}
+            </p>
+            <p className="text-sm text-gray-500 font-mono">
+              {formatTokenAmount(company.holdings, company.asset)}
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
