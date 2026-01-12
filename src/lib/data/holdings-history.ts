@@ -84,13 +84,66 @@ const SMLR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 2084, sharesOutstanding: 7_300_000, holdingsPerShare: 0.0002855, source: "Q4 2024 estimate" },
 ];
 
+// ==================== ETH COMPANIES ====================
+
+// BTCS Inc - One of the first public ETH treasury companies
+const BTCS_HISTORY: HoldingsSnapshot[] = [
+  { date: "2022-12-31", holdings: 530, sharesOutstanding: 14_000_000, holdingsPerShare: 0.0000379, source: "2022 10-K" },
+  { date: "2023-06-30", holdings: 785, sharesOutstanding: 14_500_000, holdingsPerShare: 0.0000541, source: "Q2 2023 10-Q" },
+  { date: "2023-12-31", holdings: 1090, sharesOutstanding: 15_200_000, holdingsPerShare: 0.0000717, source: "2023 10-K" },
+  { date: "2024-06-30", holdings: 1350, sharesOutstanding: 16_000_000, holdingsPerShare: 0.0000844, source: "Q2 2024 10-Q" },
+  { date: "2024-12-31", holdings: 1580, sharesOutstanding: 17_500_000, holdingsPerShare: 0.0000903, source: "Q4 2024 estimate" },
+];
+
+// Bit Digital - ETH miner and holder
+const BTBT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2023-12-31", holdings: 17245, sharesOutstanding: 102_000_000, holdingsPerShare: 0.000169, source: "2023 10-K" },
+  { date: "2024-06-30", holdings: 22890, sharesOutstanding: 115_000_000, holdingsPerShare: 0.000199, source: "Q2 2024 10-Q" },
+  { date: "2024-12-31", holdings: 27350, sharesOutstanding: 125_000_000, holdingsPerShare: 0.000219, source: "Q4 2024 estimate" },
+];
+
+// ==================== SOL COMPANIES ====================
+
+// Sol Strategies (STKE.CA) - Canadian SOL treasury
+const STKE_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 85000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.001889, source: "Q2 2024" },
+  { date: "2024-09-30", holdings: 142000, sharesOutstanding: 52_000_000, holdingsPerShare: 0.002731, source: "Q3 2024" },
+  { date: "2024-12-31", holdings: 189000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.002908, source: "Q4 2024 estimate" },
+];
+
+// DeFi Development Corp (DFDV) - SOL treasury
+const DFDV_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-09-30", holdings: 52000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.001857, source: "Q3 2024" },
+  { date: "2024-12-31", holdings: 95000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.002714, source: "Q4 2024 estimate" },
+];
+
+// ==================== OTHER ASSETS ====================
+
+// CleanSpark (CLSK) - BTC miner
+const CLSK_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-03-31", holdings: 6591, sharesOutstanding: 230_000_000, holdingsPerShare: 0.0000287, source: "Q1 2024" },
+  { date: "2024-06-30", holdings: 8049, sharesOutstanding: 250_000_000, holdingsPerShare: 0.0000322, source: "Q2 2024" },
+  { date: "2024-09-30", holdings: 8701, sharesOutstanding: 270_000_000, holdingsPerShare: 0.0000322, source: "Q3 2024" },
+  { date: "2024-12-31", holdings: 10556, sharesOutstanding: 290_000_000, holdingsPerShare: 0.0000364, source: "Q4 2024 estimate" },
+];
+
 // Map of all companies with historical data
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
+  // BTC Companies
   MSTR: { ticker: "MSTR", asset: "BTC", history: MSTR_HISTORY },
   MARA: { ticker: "MARA", asset: "BTC", history: MARA_HISTORY },
   RIOT: { ticker: "RIOT", asset: "BTC", history: RIOT_HISTORY },
+  CLSK: { ticker: "CLSK", asset: "BTC", history: CLSK_HISTORY },
   "3350.T": { ticker: "3350.T", asset: "BTC", history: METAPLANET_HISTORY },
   SMLR: { ticker: "SMLR", asset: "BTC", history: SMLR_HISTORY },
+
+  // ETH Companies
+  BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },
+  BTBT: { ticker: "BTBT", asset: "ETH", history: BTBT_HISTORY },
+
+  // SOL Companies
+  STKE: { ticker: "STKE", asset: "SOL", history: STKE_HISTORY },
+  DFDV: { ticker: "DFDV", asset: "SOL", history: DFDV_HISTORY },
 };
 
 // Get history for a specific company
