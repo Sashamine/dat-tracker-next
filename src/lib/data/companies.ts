@@ -9,7 +9,7 @@ export const ethCompanies: Company[] = [
     asset: "ETH",
     tier: 1,
     holdings: 4_144_000,
-    holdingsLastUpdated: "2026-01-06",
+    holdingsLastUpdated: "2026-01-10",
     holdingsSource: "press release",
     datStartDate: "2025-07-01",
     stakingPct: 0.85,
