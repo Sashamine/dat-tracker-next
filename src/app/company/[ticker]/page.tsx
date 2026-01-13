@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { getCompanyByTicker } from "@/lib/data/companies";
+import { useCompany } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeCompanyWithOverrides } from "@/lib/hooks/use-company-overrides";
 import {
@@ -34,6 +34,7 @@ import {
 } from "@/lib/calculations";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
+import { getCompanyIntel } from "@/lib/data/company-intel";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -56,14 +57,16 @@ const tierColors: Record<number, string> = {
 export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
-  const baseCompany = getCompanyByTicker(ticker);
   const { data: prices } = usePricesStream();
   const { overrides } = useCompanyOverrides();
 
+  // Fetch company from database API
+  const { data: companyData, isLoading: isLoadingCompany } = useCompany(ticker);
+
   // Merge with overrides from Google Sheets
   const company = useMemo(
-    () => baseCompany ? mergeCompanyWithOverrides(baseCompany, overrides) : null,
-    [baseCompany, overrides]
+    () => companyData?.company ? mergeCompanyWithOverrides(companyData.company, overrides) : null,
+    [companyData, overrides]
   );
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
@@ -75,6 +78,17 @@ export default function CompanyPage() {
     // Reset to default interval for the new range
     setInterval(DEFAULT_INTERVAL[newRange]);
   };
+
+  if (isLoadingCompany) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading company data...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!company) {
     return (
@@ -125,6 +139,9 @@ export default function CompanyPage() {
 
   // Phase determination
   const phase = determineDATPhase(navDiscount, false, null);
+
+  // Company intel (press releases, strategy summary, etc.)
+  const intel = useMemo(() => getCompanyIntel(ticker), [ticker]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -410,25 +427,99 @@ export default function CompanyPage() {
           </div>
         </div>
 
-        {/* Strategy & Notes */}
-        {(company.strategy || company.notes) && (
+        {/* Strategy Summary (from intel or fallback to company data) */}
+        {(intel?.strategySummary || company.strategy || company.notes) && (
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
-            {company.strategy && (
-              <div className="mb-4">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">
-                  Strategy
-                </h3>
-                <p className="text-gray-900 dark:text-gray-100">{company.strategy}</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              Strategy & Overview
+            </h3>
+            {intel?.strategySummary ? (
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
+            ) : (
+              <>
+                {company.strategy && (
+                  <p className="text-gray-700 dark:text-gray-300 mb-2">{company.strategy}</p>
+                )}
+                {company.notes && (
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">{company.notes}</p>
+                )}
+              </>
+            )}
+            {/* Key Backers */}
+            {intel?.keyBackers && intel.keyBackers.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-2">
+                  Key Backers
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {intel.keyBackers.map((backer, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded"
+                    >
+                      {backer}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
-            {company.notes && (
-              <div>
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">
-                  Notes
-                </h3>
-                <p className="text-gray-900 dark:text-gray-100">{company.notes}</p>
+          </div>
+        )}
+
+        {/* Recent Developments */}
+        {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              Recent Developments
+            </h3>
+            <ul className="space-y-2">
+              {intel.recentDevelopments.map((dev, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                  <span className="text-indigo-500 mt-1">•</span>
+                  <span>{dev}</span>
+                </li>
+              ))}
+            </ul>
+            {intel.outlook2026 && (
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-2">
+                  2026 Outlook
+                </h4>
+                <p className="text-gray-700 dark:text-gray-300">{intel.outlook2026}</p>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Press Releases */}
+        {intel?.pressReleases && intel.pressReleases.length > 0 && (
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Recent Press Releases
+              </h3>
+              <span className="text-xs text-gray-500">
+                Last researched: {intel.lastResearched}
+              </span>
+            </div>
+            <div className="space-y-3">
+              {intel.pressReleases.slice(0, 8).map((pr, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-start gap-4 p-3 bg-white dark:bg-gray-800 rounded-lg"
+                >
+                  <div className="flex-shrink-0 text-sm text-gray-500 font-mono w-24">
+                    {pr.date}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">{pr.title}</p>
+                    {pr.summary && (
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{pr.summary}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </main>

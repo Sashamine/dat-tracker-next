@@ -1,0 +1,1093 @@
+// Company intelligence: press releases, strategy summaries, and recent developments
+// Last updated: January 13, 2026
+
+export interface PressRelease {
+  date: string; // YYYY-MM-DD
+  title: string;
+  summary?: string;
+  url?: string;
+}
+
+export interface CompanyIntel {
+  ticker: string;
+  pressReleases: PressRelease[];
+  strategySummary: string;
+  recentDevelopments: string[];
+  keyBackers?: string[];
+  outlook2026?: string;
+  lastResearched: string; // YYYY-MM-DD
+}
+
+// =============================================================================
+// BTC TREASURY COMPANIES
+// =============================================================================
+
+const MSTR_INTEL: CompanyIntel = {
+  ticker: "MSTR",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-12", title: "Purchased 13,627 BTC for $1.25B", summary: "Largest purchase since July 2025, at $91,519/BTC average" },
+    { date: "2026-01-05", title: "Purchased 1,200+ BTC for $116M", summary: "Continued weekly accumulation" },
+    { date: "2025-12-29", title: "Acquired 1,229 BTC for $109M", summary: "Year-end accumulation" },
+    { date: "2025-12-01", title: "Established $1.44B USD Reserve", summary: "Reserve for dividends and interest payments on STRK/STRF preferred" },
+    { date: "2025-02-01", title: "Rebranded from MicroStrategy to Strategy", summary: "Corporate name change reflecting Bitcoin focus" },
+  ],
+  strategySummary: "Executing the '42/42 Plan' - targeting $84 billion in capital raises ($42B equity + $42B fixed-income securities) to accumulate Bitcoin. Self-describes as 'world's first and largest Bitcoin Treasury Company.' Achieved 22.8% BTC yield in 2025. USD Reserve increased to $2.19B by late December 2025. Issued STRK/STRF 8% perpetual preferred shares. Core thesis: Bitcoin credit company providing leveraged BTC exposure via convertible notes.",
+  recentDevelopments: [
+    "687,410 BTC holdings at ~$75,353 average cost ($51.8B total)",
+    "Maintained MSCI USA Index status despite digital asset holdings exceeding 50%",
+    "Q4 2025 reported $17.44B unrealized loss as BTC retreated from $126,000 peak",
+    "Stock trading near 1x Bitcoin NAV after 50%+ decline in late 2025",
+  ],
+  keyBackers: ["Michael Saylor (Executive Chairman)"],
+  outlook2026: "Continuing aggressive BTC accumulation via 42/42 plan. Focus on preferred share issuance and convertible note strategy.",
+};
+
+const METAPLANET_INTEL: CompanyIntel = {
+  ticker: "3350.T",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-30", title: "Holdings lifted to 35,102 BTC", summary: "Treasury strategy delivered double-digit yield" },
+    { date: "2025-07-28", title: "Purchased 780 BTC", summary: "Holdings increased to 17,132 BTC" },
+    { date: "2025-06-01", title: "Secured $100M BTC-collateralized loan", summary: "For further accumulation" },
+    { date: "2025-05-01", title: "$500M credit line for share buybacks", summary: "Leveraging BTC holdings" },
+  ],
+  strategySummary: "Japan's Bitcoin treasury leader, now Asia's largest corporate BTC holder. Originally aimed for 10,000 BTC by end of 2025 and 21,000 by 2026 - exceeded both targets significantly. Leverages weak yen for structural financing advantage: borrow cheap yen, acquire BTC, repay in depreciating currency ('yen carry trade'). Core business combines hotel management with Bitcoin Treasury operations.",
+  recentDevelopments: [
+    "4th largest corporate Bitcoin treasury globally",
+    "Pioneering carry trade dynamic benefiting from Japan's monetary policy",
+    "Zero-interest bonds strategy for BTC acquisition",
+    "Reports 'BTC Yield' metric similar to MSTR",
+  ],
+  keyBackers: ["Simon Gerovich (CEO)"],
+  outlook2026: "Targeting 100K BTC. Continuing to exploit yen weakness for accumulation advantage.",
+};
+
+const XXI_INTEL: CompanyIntel = {
+  ticker: "XXI",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-09", title: "Began trading on NYSE under ticker XXI", summary: "Over 43,500 BTC in holdings at debut" },
+    { date: "2025-12-09", title: "Shares dropped 20-25% on first trading day", summary: "Despite rising BTC price" },
+    { date: "2025-04-23", title: "Announced merger with Cantor Equity Partners SPAC", summary: "Transaction valued at $3.6B pro-forma" },
+  ],
+  strategySummary: "Majority-owned by Tether and Bitfinex with significant SoftBank minority stake. Led by Jack Mallers (Strike founder). Plans to build Bitcoin-focused businesses including brokerage, exchange, credit, and lending services. Positioned as direct competitor to Strategy (MSTR). Entered market as instant 3rd largest public corporate BTC holder.",
+  recentDevelopments: [
+    "43,500+ BTC at NYSE debut",
+    "Went public via SPAC merger with Cantor Equity Partners",
+    "JPMorgan closed Jack Mallers' personal accounts around IPO time",
+    "Trading near PIPE pricing of ~$10 after volatile debut",
+  ],
+  keyBackers: ["Jack Mallers (CEO)", "Tether", "Bitfinex", "SoftBank", "Cantor Fitzgerald"],
+  outlook2026: "Building out Bitcoin-native financial services. Competing directly with MSTR for institutional BTC treasury leadership.",
+};
+
+const CEPO_INTEL: CompanyIntel = {
+  ticker: "CEPO",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-07-17", title: "SPAC merger announced with Cantor Equity Partners I", summary: "To go public as BSTR on Nasdaq" },
+    { date: "2025-07-16", title: "CEPO surged 25% on deal announcement", summary: "Market enthusiasm for Adam Back's company" },
+    { date: "2025-08-16", title: "Set to challenge MARA in BTC holdings", summary: "$2.1B treasury play" },
+  ],
+  strategySummary: "Led by Dr. Adam Back (inventor of Hashcash, referenced in Bitcoin white paper) and Sean Bill (CIO). Raising up to $1.5B via PIPE ($400M equity, $750M convertible notes, $350M preferred stock). Goal: debut with 30,000+ BTC, grow beyond 50,000 BTC. Would immediately become 4th largest public Bitcoin holder. 25,000 BTC contributed from Adam Back's personal holdings.",
+  recentDevelopments: [
+    "30,021 BTC holdings (~$2.7B value)",
+    "Nasdaq listing pending as 'BSTR'",
+    "Adam Back: 'Bitcoin was created as sound money and BSTR is being created to bring that same integrity to modern capital markets'",
+    "Poised to potentially overtake MARA as second-largest corporate BTC holder",
+  ],
+  keyBackers: ["Dr. Adam Back (CEO, Blockstream founder)", "Sean Bill (CIO)"],
+  outlook2026: "Complete Nasdaq listing as BSTR. Target 50,000+ BTC holdings.",
+};
+
+const MARA_INTEL: CompanyIntel = {
+  ticker: "MARA",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-10-03", title: "September production: 218 blocks (5% increase)", summary: "Continued operational improvement" },
+    { date: "2025-08-01", title: "Acquired 64% stake in Exaion (EDF subsidiary)", summary: "Expanding into low-carbon energy" },
+    { date: "2025-07-01", title: "Surpassed 50,000 BTC holdings", summary: "Produced 703 BTC in July" },
+    { date: "2025-06-01", title: "Mid-year outlook: targeting 75 EH/s by EOY", summary: "40% hashrate growth target" },
+    { date: "2025-05-01", title: "Record month: 282 blocks (38% increase)", summary: "950 BTC produced" },
+    { date: "2025-04-01", title: "Completed 50 MW Ohio expansion", summary: "100 MW total at facility" },
+  ],
+  strategySummary: "HODL miner strategy - keeps all mined BTC rather than selling. 1.7 GW of captive capacity (1.1 GW operational). Growth pipeline exceeding 3 GW of low-cost power opportunities. Completed $950M offering of 0.00% Convertible Senior Notes due 2032. Texas wind farm fully deployed, on track for Q4 full operational status. 2nd largest publicly traded Bitcoin holder globally.",
+  recentDevelopments: [
+    "52,000+ BTC holdings (~$5B in liquid assets)",
+    "Acquired stake in Exaion, subsidiary of EDF (one of world's largest low-carbon energy producers)",
+    "Most BTC produced since April 2024 halving event in May 2025",
+    "Targeting 75 EH/s hashrate",
+  ],
+  keyBackers: ["Fred Thiel (CEO)"],
+  outlook2026: "Continue HODL strategy. Expand to 75 EH/s. Leverage Exaion partnership for low-carbon mining.",
+};
+
+const RIOT_INTEL: CompanyIntel = {
+  ticker: "RIOT",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-06", title: "Announced $200M in BTC sales (Nov-Dec 2025)", summary: "Funding AI data center expansion" },
+    { date: "2025-12-01", title: "Sold 1,818 BTC for $161.6M", summary: "Largest monthly liquidation" },
+    { date: "2025-11-01", title: "Sold 383 BTC for $37M", summary: "Strategic shift to selling production" },
+    { date: "2025-09-26", title: "JPMorgan/Citi upgraded stock on AI pivot", summary: "45% upside forecast through 2026" },
+  ],
+  strategySummary: "Strategic shift began April 2025: now selling majority of monthly BTC production to fund AI data center expansion. Corsicana facility targeting 112 MW by Q1 2027 for AI/HPC colocation. Deployed hashrate increased from 36.6 EH/s to 38.5 EH/s. Moving to quarterly Bitcoin production updates in 2026. $500M stock offering launched.",
+  recentDevelopments: [
+    "18,005 BTC holdings (down from 19,000+ in early 2025)",
+    "JPMorgan forecast 45% upside through 2026, expecting 600 MW colocation deal",
+    "Citi upgraded to buy with $24 price target",
+    "Hashprice near 5-year lows (~$37/PH/s) eroding margins industry-wide",
+  ],
+  keyBackers: ["Jason Les (CEO)"],
+  outlook2026: "AI/HPC pivot accelerating. Quarterly BTC production updates. Target 600 MW colocation deal.",
+};
+
+const CLSK_INTEL: CompanyIntel = {
+  ticker: "CLSK",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-06", title: "December 2025 update: mined 622 BTC", summary: "Continued strong production" },
+    { date: "2025-11-01", title: "Closed $1.15B zero-coupon convertible notes", summary: "Major financing milestone" },
+    { date: "2025-10-01", title: "Initiated AI/HPC strategy", summary: "Hired Jeffrey Thomas; acquired 271 acres near Houston" },
+    { date: "2025-09-01", title: "50 EH/s hashrate achieved", summary: "First publicly traded miner to reach milestone with self-operated centers" },
+  ],
+  strategySummary: "First publicly traded BTC miner to reach 30 EH/s (Oct 2024) and 50 EH/s (June 2025) with fully self-operated data centers. Expanded contracted power to 1.45 GW. AI data center development: acquired land near Houston with 285 MW long-term power agreements. Partnership with Submer for next-gen compute infrastructure. Acquired GRIID Infrastructure (TVA-powered Tennessee pipeline).",
+  recentDevelopments: [
+    "13,099 BTC holdings - mined 7,746 BTC in 2025 (10%+ YoY growth)",
+    "Demand response capability: powered down 11 Tennessee sites within 10 minutes during TVA emergency",
+    "$1.15B zero-coupon convertible notes closed",
+    "Seeking Alpha 'Strong Buy' rating; trading at 63% discount to peers",
+  ],
+  keyBackers: ["Zach Bradford (CEO)"],
+  outlook2026: "AI/HPC diversification. Leverage TVA relationship. Target 60+ EH/s.",
+};
+
+const ASST_INTEL: CompanyIntel = {
+  ticker: "ASST",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-09-01", title: "Completed merger with Asset Entities", summary: "Became Strive, Inc." },
+    { date: "2025-05-27", title: "Secured $750M PIPE funding", summary: "For Bitcoin purchases" },
+    { date: "2025-12-01", title: "Announced acquisition of Semler Scientific", summary: "All-stock deal to combine BTC treasuries" },
+  ],
+  strategySummary: "Founded in 2022 by Vivek Ramaswamy and Anson Frericks as 'anti-woke' asset manager. First publicly traded asset management firm to adopt Bitcoin treasury strategy. $750M raise (potentially $1.5B with warrants) for Bitcoin acquisition. Strategy intends to acquire Bitcoin at significant discount to market value. Over $2B AUM across 13 ETFs, CITs, and direct indexing platform. SATA 12.25% perpetual preferred issued. No debt - perpetual preferred only.",
+  recentDevelopments: [
+    "~10,900 BTC holdings (~$1.26B)",
+    "CEO Matt Cole: firm aims to outperform Bitcoin regardless of price direction",
+    "Vivek Ramaswamy expected to run for Ohio governor in 2026",
+    "Stock surging on elevated retail interest",
+  ],
+  keyBackers: ["Vivek Ramaswamy (Co-Founder)", "Matt Cole (CEO)", "Anson Frericks"],
+  outlook2026: "Complete Semler merger. Combined entity to be major BTC treasury force.",
+};
+
+const SMLR_INTEL: CompanyIntel = {
+  ticker: "SMLR",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-08-04", title: "Q2 results: $195.4M BTC purchases, 31.3% BTC yield YTD", summary: "Strong treasury performance" },
+    { date: "2025-07-01", title: "Appointed Joe Burnett as Director of Bitcoin Strategy", summary: "Key hire for treasury operations" },
+    { date: "2025-02-04", title: "Acquired 871 BTC", summary: "Continued accumulation" },
+    { date: "2025-12-01", title: "Announced merger with Strive", summary: "All-stock Bitcoin treasury transaction" },
+  ],
+  strategySummary: "Targets: 10,000 BTC by end 2025, 42,000 by end 2026, 105,000 by end 2027. Second U.S. public company (after MicroStrategy) to adopt Bitcoin as primary treasury reserve. Core business: Medical devices and software for peripheral arterial disease detection. Q2 2025: $110.4M unrealized gains, 31.3% BTC yield.",
+  recentDevelopments: [
+    "5,021 BTC holdings (~$455M)",
+    "Benchmark initiated coverage with Buy rating and $101 price target",
+    "Joe Burnett: 'The trend to adopt Bitcoin as part of corporate treasury is clearly accelerating'",
+    "Merging with Strive Asset Management",
+  ],
+  keyBackers: ["Eric Semler (Chairman)", "Joe Burnett (Director of Bitcoin Strategy)"],
+  outlook2026: "Complete Strive merger. Target 42,000 BTC by end of year.",
+};
+
+const KULR_INTEL: CompanyIntel = {
+  ticker: "KULR",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-24", title: "Counter-UAS Directed Energy Battery System prototype completed", summary: "Defense tech milestone" },
+    { date: "2025-11-18", title: "Q3 2025 earnings: Bitcoin holdings ~$120M", summary: "Treasury growth" },
+    { date: "2025-05-20", title: "Expanded holdings to 800 BTC", summary: "220.2% BTC yield reported" },
+    { date: "2025-01-01", title: "Purchased 213.42 BTC", summary: "Initial 2025 accumulation" },
+  ],
+  strategySummary: "Board committed to allocating up to 90% of surplus cash to Bitcoin (December 2024). Uses combination of surplus cash, Coinbase credit facility, and ATM equity program. New hosting partnership with Soluna Holdings for 3.3 MW Bitcoin mining in Kentucky. Core business: Thermal management and battery safety (NASA/aerospace origins). Reports 'BTC Yield' metric.",
+  recentDevelopments: [
+    "1,021 BTC holdings (~$101-120M)",
+    "291.2% BTC Yield YTD",
+    "$6.7M grant from Texas Space Commission for space exploration tech",
+    "Collaboration with NASA Johnson Space Center and South 8 Technologies",
+    "Counter-UAS battery system entering production in 2026",
+  ],
+  keyBackers: ["Michael Mo (CEO)", "NASA", "Texas Space Commission"],
+  outlook2026: "Counter-UAS production. Continued BTC accumulation. Space tech partnerships.",
+};
+
+const ALTBG_INTEL: CompanyIntel = {
+  ticker: "ALTBG",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-07-21", title: "Confirmed 1,955 BTC holdings", summary: "1,373% BTC Yield YTD" },
+    { date: "2025-06-11", title: "Shareholders approved EUR 10B+ financing capacity", summary: "Massive expansion authorization" },
+    { date: "2025-05-12", title: "Adam Back subscribed EUR 12.1M BTC-denominated convertible bond", summary: "Blockstream founder backing" },
+    { date: "2025-05-09", title: "EUR 9.9M capital increase at 61.7% premium", summary: "Strong investor demand" },
+    { date: "2025-03-01", title: "Issued EUR 48.6M convertible bonds; purchased 580 BTC", summary: "Accelerated accumulation" },
+  ],
+  strategySummary: "Europe's first Bitcoin Treasury Company (Euronext Growth Paris). Long-term targets: 21,000-42,000 BTC by 2029; 170,000-260,000 BTC by 2033 (~1% of Bitcoin supply). Subsidiaries in Data Intelligence, AI, and decentralized tech consulting. Positioned as 'French MicroStrategy.'",
+  recentDevelopments: [
+    "1,955 BTC holdings (~EUR 177M at EUR 90,526/BTC average)",
+    "Aiming to raise EUR 10 billion+ to accelerate Bitcoin Treasury strategy",
+    "Predicts major French banks will enter Bitcoin in late 2025/early 2026",
+  ],
+  keyBackers: ["Adam Back (Blockstream)", "Fulgur Ventures", "UTXO Management", "TOBAM"],
+  outlook2026: "EUR 10B+ raise. Target 5,000+ BTC. French institutional adoption catalyst.",
+};
+
+const H100ST_INTEL: CompanyIntel = {
+  ticker: "H100.ST",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-01", title: "Acquisition of Future Holdings AG (Swiss BTC treasury)", summary: "First expansion outside Nordics" },
+    { date: "2025-09-01", title: "Holdings reached ~1,005 BTC", summary: "Continued accumulation" },
+    { date: "2025-06-11", title: "Raised $10.5M from Adam Back, UTXO Management", summary: "Key investor support" },
+    { date: "2025-05-01", title: "First public BTC treasury in Sweden", summary: "Purchased 4.39 BTC to start" },
+  ],
+  strategySummary: "Swedish health-tech company pivoted to Bitcoin Treasury strategy. Leading Bitcoin Treasury Company in the Nordics. Mission: maximize Bitcoin exposure per share via innovative financial instruments. June 2025 raise: SEK 69.65M shares + SEK 31.35M zero-interest convertible loans.",
+  recentDevelopments: [
+    "1,046 BTC holdings (~$108M at cost)",
+    "Largest Bitcoin treasury in the Nordics",
+    "Stock surged ~400% within first month of Bitcoin strategy adoption",
+    "Future Holdings AG co-founded by Adam Back, Richard Byworth, Sebastien Hess (November 2025)",
+  ],
+  keyBackers: ["Adam Back (investor)", "UTXO Management", "Richard Byworth"],
+  outlook2026: "Complete Future Holdings AG acquisition. Nordic expansion.",
+};
+
+const NAKA_INTEL: CompanyIntel = {
+  ticker: "NAKA",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-01", title: "Shares trading at ~$0.45; down 99% from high", summary: "Severe stock decline" },
+    { date: "2025-08-01", title: "Merger with KindlyMD closed", summary: "Completed business combination" },
+    { date: "2025-05-12", title: "Announced merger with KindlyMD; raised $710M", summary: "$510M PIPE + $200M convertible notes" },
+  ],
+  strategySummary: "Founded by David Bailey (BTC Inc., Bitcoin Magazine founder). Vision: first publicly traded conglomerate of Bitcoin companies. Plans to bring Bitcoin Magazine, Bitcoin Conference, and 210k Capital hedge fund under Nakamoto Holdings. PIPE at $1.12 per share; $200M senior secured convertible notes maturing 2028.",
+  recentDevelopments: [
+    "5,398 BTC holdings (ranks 19th among public firms)",
+    "Received Nasdaq compliance notice; deadline June 8, 2026 to achieve $1+ closing price",
+    "Stock dropped 98%+ from $25 peak in May 2025",
+    "David Bailey named among CoinDesk's Most Influential 2025",
+  ],
+  keyBackers: ["David Bailey (Founder, BTC Inc.)"],
+  outlook2026: "Must regain Nasdaq compliance by June 8, 2026. Restructuring likely needed.",
+};
+
+const DJT_INTEL: CompanyIntel = {
+  ticker: "DJT",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-31", title: "Announced digital token distribution to shareholders", summary: "One token per whole share" },
+    { date: "2025-10-01", title: "Unveiled Truth Predict platform with Crypto.com", summary: "Prediction markets expansion" },
+    { date: "2025-08-01", title: "Partnership: Treasury for Cronos (Crypto.com's token)", summary: "Strategic crypto alliance" },
+    { date: "2025-06-05", title: "Filed SEC registration for Truth Social Bitcoin ETF", summary: "ETF product development" },
+    { date: "2025-05-30", title: "Closed $2.5B Bitcoin treasury deal", summary: "$1.44B stock + $1B convertible notes" },
+  ],
+  strategySummary: "Operates Truth Social, Truth+, and Truth.Fi. $2B in BTC, plus $300M allocated to options strategy for BTC-related securities. Crypto.com as exclusive Bitcoin custodian, prime execution agent, and liquidity provider. Planning Truth Social Bitcoin ETF.",
+  recentDevelopments: [
+    "~$2B in Bitcoin and BTC-related securities (as of July 2025)",
+    "Part of ~$3B total liquid assets",
+    "Each shareholder to receive one digital token per whole share of DJT",
+    "Partnership with Crypto.com expanding into prediction markets",
+    "Stock volatile; down ~33% from July highs",
+  ],
+  keyBackers: ["Devin Nunes (CEO)", "Crypto.com"],
+  outlook2026: "Truth Social Bitcoin ETF launch. Token distribution to shareholders.",
+};
+
+const BOYAA_INTEL: CompanyIntel = {
+  ticker: "0434.HK",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-08-01", title: "Added 290 BTC for ~$32-33 million", summary: "Continued accumulation" },
+    { date: "2024-11-01", title: "Converted ETH holdings to 2,083 BTC", summary: "Strategic shift to BTC-only" },
+    { date: "2024-01-26", title: "Acquired initial 1,100 BTC", summary: "Treasury strategy launch" },
+  ],
+  strategySummary: "Leading online gaming company (digital card and board games). One of the largest public Bitcoin holders among Hong Kong-listed companies. Views Bitcoin as resilient store of value and hedge against macroeconomic uncertainties. Pioneer in integrating digital assets into corporate treasury in Hong Kong. Converted all ETH holdings to Bitcoin.",
+  recentDevelopments: [
+    "4,091 BTC holdings (~$376M) at $183.66M total cost basis",
+    "Converted Ethereum holdings to Bitcoin as part of Bitcoin-centric treasury strategy",
+    "One of the first Hong Kong-listed companies to adopt significant Bitcoin treasury position",
+    "'MicroStrategy of Asia' positioning",
+  ],
+  keyBackers: ["Zhang Wei (Chairman)"],
+  outlook2026: "Continued BTC accumulation. Hong Kong crypto hub positioning.",
+};
+
+const NXTT_INTEL: CompanyIntel = {
+  ticker: "NXTT",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-09-16", title: "Executed 200-for-1 reverse stock split", summary: "Share consolidation" },
+    { date: "2025-05-09", title: "Stock surged 661% on Bitcoin investment news", summary: "Market enthusiasm" },
+    { date: "2024-03-01", title: "Rebranded from WeTrade to Next Technology", summary: "Corporate pivot" },
+  ],
+  strategySummary: "Dual-track strategy: AI-enabled software development services + Bitcoin accumulation. Operates in Asia-Pacific region providing AI-enabled SaaS solutions. May sell, collateralize, or utilize Bitcoin holdings as circumstances warrant. Views Bitcoin as long-term inflation hedge. Described as 'technology company built on dual-engine strategy of AI plus digital assets.'",
+  recentDevelopments: [
+    "5,833 BTC holdings (~$526.7M)",
+    "Critics note company functions primarily as Bitcoin holding vehicle despite AI-SaaS marketing",
+    "Substantial shareholder dilution from share/warrant issuances",
+    "Shenzhen-based operations",
+  ],
+  keyBackers: [],
+  outlook2026: "AI-SaaS development alongside BTC treasury management.",
+};
+
+const ABTC_INTEL: CompanyIntel = {
+  ticker: "ABTC",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-14", title: "Q3 profit: $3.47M (vs $576K loss YoY)", summary: "Turnaround to profitability" },
+    { date: "2025-09-03", title: "Began trading on Nasdaq under ABTC", summary: "$5B+ market cap at debut" },
+    { date: "2025-08-28", title: "Announced September trading target", summary: "Pre-IPO update" },
+    { date: "2025-05-12", title: "Announced going public via Gryphon Digital Mining merger", summary: "SPAC transaction" },
+    { date: "2025-03-01", title: "Founded by Eric Trump, Donald Trump Jr., and Hut 8", summary: "Joint venture launch" },
+  ],
+  strategySummary: "Joint venture: Eric Trump + Donald Trump Jr. + Hut 8 (80% ownership). Hut 8 contributed vast majority of Bitcoin mining ASICs. Operates 60,000+ ASIC miners as of May 2025. Contracted to purchase additional 17,280 Bitmain machines. Eric Trump serves as co-founder and Chief Strategy Officer. Pure-play Bitcoin miner focused on HODL strategy.",
+  recentDevelopments: [
+    "4,004 BTC holdings (~$415M) - 25th largest BTC-holding company",
+    "Stock surged 60% to $13+ on debut before settling to ~$9.50",
+    "Hut 8 jumped 12%, Gryphon Digital Mining soared 200%+ on merger news",
+    "Q3 2025 marked turnaround to profitability with $64.2M revenue (5x YoY)",
+  ],
+  keyBackers: ["Eric Trump (Co-Founder, Chief Strategy Officer)", "Donald Trump Jr. (Co-Founder)", "Hut 8"],
+  outlook2026: "Scale mining operations. Continue HODL strategy.",
+};
+
+// =============================================================================
+// ETH TREASURY COMPANIES
+// =============================================================================
+
+const BMNR_INTEL: CompanyIntel = {
+  ticker: "BMNR",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-12", title: "ETH holdings reach 4.168M tokens, $14.0B total", summary: "Continued aggressive accumulation" },
+    { date: "2026-01-02", title: "Chairman's message on authorized share increase vote", summary: "January 15 shareholder meeting" },
+    { date: "2025-12-28", title: "ETH holdings reach 4.11M tokens, $13.2B total", summary: "Year-end milestone" },
+    { date: "2025-12-08", title: "Added $435M of ETH to treasury", summary: "Major single purchase" },
+    { date: "2025-11-24", title: "Added nearly 70K ETH in one week", summary: "Now holding 3% of ETH supply" },
+    { date: "2025-06-30", title: "Initial $250M private placement announced", summary: "Treasury strategy launch" },
+  ],
+  strategySummary: "World's largest ETH treasury (3.45% of total supply), targeting 5% of ETH supply. Transitioned from immersion-cooled Bitcoin mining to aggressive ETH accumulation. MAVAN (Made in America Validator Network): Proprietary staking solution launching early 2026. Projected staking income: $360-480M annually once fully operational. Trading among top 50 most-traded US stocks (~$980M avg daily volume).",
+  recentDevelopments: [
+    "4.168M ETH holdings (~$14.0B total crypto + cash + moonshots)",
+    "Represents 3.45% of total ETH supply",
+    "Annual Stockholders Meeting: January 15, 2026 at Wynn Las Vegas",
+    "Voting on authorized share increase from 500M to 50B shares",
+  ],
+  keyBackers: ["Tom Lee (Chairman, Fundstrat)", "ARK (Cathie Wood)", "MOZAYYX", "Founders Fund", "Bill Miller III", "Pantera", "Kraken", "DCG", "Galaxy Digital"],
+  outlook2026: "MAVAN validator launch Q1. Target 5% ETH supply. $360-480M annual staking income.",
+};
+
+const SBET_INTEL: CompanyIntel = {
+  ticker: "SBET",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-15", title: "Joseph Chalom appointed sole CEO", summary: "Former BlackRock exec takes helm" },
+    { date: "2025-10-21", title: "Added $75M in ETH, holdings exceed $3.5B", summary: "Resumed purchases" },
+    { date: "2025-10-20", title: "Executive appointments from BlackRock, Wall Street, crypto giants", summary: "Major team expansion" },
+    { date: "2025-08-31", title: "ETH holdings rise to 837,230", summary: "Treasury growth" },
+    { date: "2025-07-25", title: "Joseph Chalom (BlackRock) joins as Co-CEO", summary: "Key hire" },
+    { date: "2025-06-02", title: "ETH treasury business launched", summary: "Strategy pivot" },
+  ],
+  strategySummary: "Pivoted to ETH treasury strategy in May 2025. Raised $2.6 billion in capital since launch. Q3 2025: Revenue up 1,100% YoY to $10.8M; Net income $104.3M. Joe Lubin (Ethereum co-founder) as Chairman. Institutional ownership increased from low single digits to >30%. Stock experienced 2,600% spike then 86% correction; now trades at ~0.9x ETH holdings value.",
+  recentDevelopments: [
+    "863,424 ETH holdings (~$2.66B)",
+    "#2 ETH treasury globally",
+    "Key team: Matthew Sheffield (ex-FalconX, Bridgewater) CIO, Mandy Campbell (ex-Bain Capital Crypto) CMO, Michael Camarda (ex-Consensys, J.P. Morgan) CDO",
+  ],
+  keyBackers: ["Joseph Chalom (CEO, ex-BlackRock)", "Joseph Lubin (Chairman, Ethereum co-founder)"],
+  outlook2026: "Institutional buildout. Target consistent premium to NAV.",
+};
+
+const ETHM_INTEL: CompanyIntel = {
+  ticker: "ETHM",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-09-16", title: "Form S-4 confidential submission to SEC", summary: "SPAC merger filing" },
+    { date: "2025-08-27", title: "Ticker symbol changed from DYNX to ETHM", summary: "Reflecting ETH focus" },
+    { date: "2025-07-21", title: "$1.5B+ backing announced for Nasdaq listing", summary: "Major capital commitment" },
+    { date: "2025-07-01", title: "SPAC merger announced with Dynamix", summary: "$1.6B transaction" },
+  ],
+  strategySummary: "$1.6B gross proceeds expected from transaction. Three core strategies: Alpha generation through staking/DeFi, Ethereum ecosystem catalysis, infrastructure solutions. Andrew Keys (Ethereum pioneer) contributed ~$645M / 169,984 ETH. Additional 150,000 ETH ($654M) invested by Blockchains Founder Jeffrey Berns. Will become largest public Ether generation company at launch.",
+  recentDevelopments: [
+    "400,000+ ETH expected at listing",
+    "$800M+ common stock financing from institutional investors",
+    "Up to $170M from Dynamix trust account",
+    "Expected close: Q4 2025 (may have closed)",
+  ],
+  keyBackers: ["Andrew Keys (Chairman)", "David Merin (CEO)", "Jeffrey Berns (Blockchains)", "Roundtable Partners/10T Holdings", "Archetype", "Blockchain.com", "Cyber Fund", "Electric Capital", "Kraken", "Pantera Capital"],
+  outlook2026: "Complete SPAC merger. Launch yield generation and DeFi strategies.",
+};
+
+const BTBT_INTEL: CompanyIntel = {
+  ticker: "BTBT",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-06", title: "December 2025 ETH treasury and staking metrics", summary: "89% staked, 3.5% yield" },
+    { date: "2025-11-01", title: "Q3 FY2025 financial results", summary: "Treasury performance update" },
+    { date: "2025-10-31", title: "Holdings reached 153,547 ETH (~$590.5M)", summary: "Continued growth" },
+    { date: "2025-07-18", title: "Expanded to ~120,000 ETH", summary: "Reinforcing treasury strategy" },
+    { date: "2025-07-07", title: "Completed transition to Ethereum treasury; sold 280 BTC", summary: "Full pivot from BTC to ETH" },
+  ],
+  strategySummary: "Full pivot from BTC to ETH completed July 2025. Sold approximately 280 BTC and converted to ETH. Raised ~$172M in public offering to fund ETH purchases. Operates one of largest institutional Ethereum staking infrastructures globally. Holds majority stake in WhiteFiber (Nasdaq: WYFI) - AI infrastructure/HPC solutions.",
+  recentDevelopments: [
+    "155,227 ETH holdings (~$460.5M at $2,967/ETH)",
+    "89% staked (~138,263 ETH)",
+    "December staking rewards: ~389.6 ETH (3.5% annualized yield)",
+    "CEO Sam Tabar: 'Ethereum as foundational to the next phase of digital financial infrastructure'",
+  ],
+  keyBackers: ["Sam Tabar (CEO)"],
+  outlook2026: "AI infrastructure expansion via WhiteFiber. Maximize staking yield.",
+};
+
+const BTCS_INTEL: CompanyIntel = {
+  ticker: "BTCS",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-07", title: "2026 Shareholder Letter - record $16M revenue, 70,500+ ETH", summary: "290% revenue increase vs 2024" },
+    { date: "2025-06-20", title: "1,000 ETH purchase via AAVE DeFi lending (no dilution)", summary: "Innovative treasury approach" },
+    { date: "2025-06-02", title: "1,000 ETH purchase, holdings reach ~13,500 ETH", summary: "Continued accumulation" },
+    { date: "2025-05-14", title: "$57.8M convertible note facility with ATW Partners", summary: "Financing secured" },
+  ],
+  strategySummary: "Not just a treasury company - operates revenue-generating infrastructure. Builder+: MEV-optimized block building using advanced algorithms. Selects and sequences transactions from public mempool and private order flow. Maximizes gas fee revenue and block rewards for validators. Unique approach: Used AAVE DeFi lending to acquire ETH without shareholder dilution.",
+  recentDevelopments: [
+    "70,500+ ETH holdings",
+    "2025 Revenue: ~$16 million (290% increase vs 2024)",
+    "2026 focus: Enhance Ethereum-centric cryptocurrency revenue infrastructure",
+    "Expand Imperium business and ecosystem partnerships",
+  ],
+  keyBackers: [],
+  outlook2026: "Builder+ expansion. Diversified revenue-generating operations.",
+};
+
+const GAME_INTEL: CompanyIntel = {
+  ticker: "GAME",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-01", title: "Q3 2025 results - $81.5M DAT + cash, no debt, 49.4% margin", summary: "Strong financial position" },
+    { date: "2025-10-01", title: "Treasury program expanded to $250M; new $10M NFT yield strategy", summary: "Expanded mandate" },
+    { date: "2025-08-01", title: "Purchased 2,717 ETH for ~$10M, total exceeds 15,630 ETH", summary: "Continued accumulation" },
+    { date: "2025-08-01", title: "Launched Dialectic yield strategy", summary: "Yield optimization" },
+    { date: "2025-07-01", title: "Initial $5M ETH purchase (~1,818 ETH)", summary: "Treasury strategy launch" },
+  ],
+  strategySummary: "Gaming company with ETH treasury. Yield Strategy Partner: Dialectic's Medici platform using ML models and automated optimization. Target yields: 8-14% (vs 3-4% standard staking). Q3 2025: Unrealized gain of $6.9M on ETH holdings. Buyback program: Net income from ETH yield funds stock buybacks below $1.50/share.",
+  recentDevelopments: [
+    "15,600 ETH holdings (~$48.2M)",
+    "Treasury authorization expanded from $100M to $250M",
+    "CEO Justin Kenna: 'We're not just holding Ethereum, we're putting it to work in a proprietary way with best-in-class partners'",
+  ],
+  keyBackers: ["Justin Kenna (CEO)", "Dialectic"],
+  outlook2026: "8-14% yield target via Dialectic. Stock buybacks from yield income.",
+};
+
+const FGNX_INTEL: CompanyIntel = {
+  ticker: "FGNX",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-20", title: "Sold ~11K ETH to fund share buyback", summary: "Stock down >95% from peak" },
+    { date: "2025-10-30", title: "Presented at ThinkEquity conference in NYC", summary: "Investor outreach" },
+    { date: "2025-10-02", title: "Tokenized Nasdaq shares on Ethereum via Securitize", summary: "First to tokenize on ETH" },
+    { date: "2025-08-11", title: "47,331 ETH purchase announced", summary: "Initial treasury build" },
+    { date: "2025-08-11", title: "Ticker changed to FGNX", summary: "Rebranding complete" },
+    { date: "2025-08-05", title: "$200M private placement closed", summary: "Treasury funding" },
+    { date: "2025-07-30", title: "Announced ETH strategy on Ethereum's 10th birthday", summary: "Strategy launch" },
+  ],
+  strategySummary: "Goal: Become largest corporate ETH holder; achieve 10% stake in Ethereum network. Filed $5 billion shelf registration. Tokenization pioneer: First to tokenize Nasdaq-listed shares on Ethereum. Strategy includes staking, restaking, tokenized RWAs, and stablecoin yield. Formerly Fundamental Global.",
+  recentDevelopments: [
+    "~36K ETH (after November sales) - initially acquired 47,331 ETH",
+    "Stock down >95% from 2025 peak",
+    "Had to sell ETH to fund buyback, signaling liquidity pressure",
+  ],
+  keyBackers: ["Kyle Cerminara (CEO)", "Maja Vujinovic (CEO of Digital Assets)", "Joe Moglia (ex-TD Ameritrade)", "Galaxy Digital", "Kraken", "Hivemind Capital", "Syncracy Capital", "DCG", "Kenetic"],
+  outlook2026: "Stabilize stock price. Resume accumulation. Tokenization expansion.",
+};
+
+// =============================================================================
+// SOL TREASURY COMPANIES
+// =============================================================================
+
+const FWDI_INTEL: CompanyIntel = {
+  ticker: "FWDI",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-18", title: "Tokenized FWDI shares launched on Solana via Superstate", summary: "First public equity usable as DeFi collateral" },
+    { date: "2025-12-02", title: "Shareholder update - 6.9M SOL treasury", summary: "Holdings milestone" },
+    { date: "2025-12-02", title: "fwdSOL liquid staking token launch with Sanctum", summary: "~1.73M fwdSOL representing 25% of holdings" },
+    { date: "2025-11-17", title: "Holdings rise to 6.9M SOL", summary: "Continued accumulation" },
+    { date: "2025-11-14", title: "Ticker change from FORD to FWDI", summary: "Corporate rebranding" },
+    { date: "2025-09-11", title: "$1.65B PIPE deal closed", summary: "Largest SOL-focused treasury raise ever" },
+    { date: "2025-09-07", title: "Initial $1.65B announcement", summary: "Galaxy, Jump, Multicoin led" },
+  ],
+  strategySummary: "World's largest publicly traded SOL holder. Key Products: fwdSOL (Liquid staking token via Sanctum partnership), PropAMM (Proprietary AMM backed by Galaxy with Jump Crypto infrastructure), Tokenized Shares (First public company equity usable as DeFi collateral via Superstate/Kamino). Staking Performance: 6.82%-7.01% gross APY, outperforming peer validators. Nearly all SOL holdings are staked.",
+  recentDevelopments: [
+    "6,921,342 SOL holdings (~$1.59B cost basis at $232.08/SOL average)",
+    "Net Asset Value: ~$832 million (more than next 3 largest SOL DATs combined)",
+    "First public company to have tokenized equity usable as DeFi collateral on Solana",
+    "Completed the largest Solana-focused treasury raise to date ($1.65B)",
+  ],
+  keyBackers: ["Galaxy Digital", "Jump Crypto", "Multicoin Capital"],
+  outlook2026: "PropAMM launch. Expand DeFi integrations. Target >7M SOL.",
+};
+
+const HSDT_INTEL: CompanyIntel = {
+  ticker: "HSDT",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-12", title: "Tokenizing shares through Superstate", summary: "Following FWDI precedent" },
+    { date: "2025-11-05", title: "Investor Update released", summary: "Treasury strategy progress" },
+    { date: "2025-10-23", title: "Staking agreements with Helius and Twinstake", summary: "Yield optimization" },
+    { date: "2025-10-20", title: "PIPE share unlock amid stock decline", summary: "Stock fell 60-70% from peak" },
+    { date: "2025-09-29", title: "Corporate name change to 'Solana Company'", summary: "Formerly Helius Medical" },
+    { date: "2025-09-18", title: "$508M PIPE closed", summary: "Major funding round" },
+    { date: "2025-09-15", title: "Initial $500M+ funding announcement", summary: "Pantera/Summer led" },
+  ],
+  strategySummary: "PIPE Potential: Up to $1.25B in gross proceeds. Staking Yield: ~7% (outperforming top-ten validator average of 6.7%). Letter of Intent with Solana Foundation including: conducting all on-chain activity solely on Solana, institutional partnership referrals, option to purchase SOL from Foundation at a discount. Approved $100M stock repurchase program.",
+  recentDevelopments: [
+    "~2,300,000 SOL holdings (~$327M value)",
+    "Q3 2025: $697K revenue (including $342K staking rewards), net loss of $352.8M",
+    "Stock experienced significant volatility - surged above $25 post-PIPE, then fell 60-70%",
+  ],
+  keyBackers: ["Joseph Chee (Executive Chairman, ex-UBS)", "Pantera Capital", "Summer Capital", "HashKey Capital", "Animoca Brands", "Dan Morehead (Strategic Advisor)", "Cosmo Jiang (Board Observer)"],
+  outlook2026: "Solana Foundation partnership execution. Stabilize stock price.",
+};
+
+const DFDV_INTEL: CompanyIntel = {
+  ticker: "DFDV",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-07", title: "2025 Year in Review - 853% return, top Nasdaq performer", summary: "Third-best stock on Nasdaq in 2025" },
+    { date: "2025-11-26", title: "Executive open-market stock purchases", summary: "Insider confidence" },
+    { date: "2025-09-04", title: "Surpassed 2M SOL holdings", summary: "Major milestone" },
+    { date: "2025-07-24", title: "Mayan partnership for cross-chain DFDVx", summary: "Cross-chain equity trading" },
+    { date: "2025-06-23", title: "First US-listed crypto treasury to tokenize stock on Solana", summary: "Via Kraken partnership" },
+    { date: "2025-06-06", title: "dfdvSOL listed on Drift Protocol", summary: "LST trading enabled" },
+    { date: "2025-05-06", title: "$11.2M SOL purchase, surpassed 400K tokens", summary: "Accelerated accumulation" },
+  ],
+  strategySummary: "First US public SOL treasury (launched April 2025). Key Metric: SOL Per Share (SPS) - currently 0.0793, targeting 1.0 SPS by December 2028. Key Products: dfdvSOL (Liquid staking token built with Sanctum, listed on Drift Protocol), DFDVx (Tokenized equity on Solana via Kraken, tradeable cross-chain via Mayan). Validator Business: Own validator infrastructure + community validators with BONK and WIF.",
+  recentDevelopments: [
+    "2,195,926 SOL holdings (~$300M)",
+    "Capital Raised: ~$378 million in 9 months",
+    "Top-performing crypto stock of 2025 with +853% return",
+    "First Digital Asset Treasury to introduce both LST (dfdvSOL) and tokenized equity (DFDVx)",
+    "Rang Nasdaq Closing Bell with Solana Foundation",
+  ],
+  keyBackers: ["Blake E. Janover (CCO & Director)"],
+  outlook2026: "Target 1.0 SPS by December 2028. Validator expansion.",
+};
+
+const UPXI_INTEL: CompanyIntel = {
+  ticker: "UPXI",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-07", title: "High-yield treasury strategy for 2026", summary: "Risk-adjusted optimization" },
+    { date: "2025-12-23", title: "Filed for up to $1B capital raise", summary: "Shelf registration" },
+    { date: "2025-09-30", title: "SOL Big Brain joins advisory committee", summary: "Solana ecosystem leader" },
+    { date: "2025-09-11", title: "129% increase in adjusted SOL per share", summary: "Since treasury launch" },
+    { date: "2025-08-12", title: "Arthur Hayes joins advisory committee", summary: "BitMEX co-founder" },
+  ],
+  strategySummary: "SOL treasury + consumer brands hybrid model. Staking Yield: ~8% (~$105,000/day in staking revenue). SOL Breakdown: ~53% in locked SOL (purchased at mid-teens discount). Adjusted SOL Per Share: 0.0197 (~$4.37), up 129% since treasury launch. Consumer Brands: Cure Mushrooms (medicinal products), Lucky Tail (pet care). $500M equity line of credit with Alliance Global Partners.",
+  recentDevelopments: [
+    "2,174,583 SOL holdings (as of Jan 5, 2026)",
+    "$1B shelf registration filed December 2025",
+    "Stock down ~52% from 52-week highs (was above $22 in April, now ~$2.13)",
+    "CEO Allan Marshall purchased 200,000 shares in December 2025",
+  ],
+  keyBackers: ["Arthur Hayes (BitMEX co-founder, CIO of Maelstrom)", "SOL Big Brain"],
+  outlook2026: "Implement risk-adjusted high-yield strategy. Consumer brands profitability.",
+};
+
+const STKE_INTEL: CompanyIntel = {
+  ticker: "STKE",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-08", title: "December 2025 Monthly Business Update", summary: "Validator and treasury metrics" },
+    { date: "2026-01-02", title: "$50M ATM program with Cantor Fitzgerald", summary: "New funding capacity" },
+    { date: "2025-12-31", title: "Credit facility restructuring with Tony Guoga", summary: "Balance sheet optimization" },
+    { date: "2025-11-17", title: "Selected as staking provider for VanEck Solana ETF", summary: "Major institutional mandate" },
+  ],
+  strategySummary: "Validator-first business model (DAT++ model). First publicly traded company to combine SOL treasury + validator operations. ISO 27001 and SOC 2 certified. 99.999% uptime. December revenue: ~925 SOL. Peak APY: 6.63% (vs network average 6.28%). Lane Validator: 22 months uninterrupted uptime (since Feb 2024). VanEck Solana ETF staking provider via Orangefin validator.",
+  recentDevelopments: [
+    "523,134 SOL treasury (~CAD 101.5M)",
+    "3,354,203 SOL Assets Under Delegation (~CAD 610M)",
+    "26,908 unique wallets served",
+    "6 institutional-grade validators (4 proprietary, 2 white-label)",
+    "FY2025 validator revenue: $5.4M",
+    "SOL Treasury grew from $21M to $126M (YoY through Sep 30, 2025)",
+  ],
+  keyBackers: ["Michael Hubbard (CEO)"],
+  outlook2026: "Validator scale and performance. Secure new institutional mandates from ETF issuers and asset managers.",
+};
+
+// =============================================================================
+// HYPE TREASURY COMPANIES
+// =============================================================================
+
+const PURR_INTEL: CompanyIntel = {
+  ticker: "PURR",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-08", title: "Announced $30 million stock repurchase program", summary: "Buyback authorization" },
+    { date: "2025-12-03", title: "Began trading on Nasdaq as PURR", summary: "Post-merger debut" },
+    { date: "2025-12-02", title: "Closed business combination with Sonnet BioTherapeutics", summary: "SPAC merger complete" },
+    { date: "2025-10-01", title: "Filed S-1 for $1 billion shelf registration", summary: "Capital raising capacity" },
+  ],
+  strategySummary: "HYPE digital asset treasury reserve company, maximizing shareholder value through accumulating HYPE tokens, staking, yield optimization, and active ecosystem engagement. Plans to stake 'substantially all of its HYPE holdings' or deploy in DeFi activities. Scheduled 1.2M HYPE unlock for core contributors on January 6, 2026, with monthly unlocks continuing.",
+  recentDevelopments: [
+    "~12.6M HYPE holdings",
+    "Bob Diamond (former Barclays CEO) serves as Chairman",
+    "Strategic backers: D1 Capital, Galaxy Digital, Pantera Capital, Republic Digital, 683 Capital, Atlas Merchant Capital, Paradigm Operations",
+  ],
+  keyBackers: ["Bob Diamond (Chairman, ex-Barclays CEO)", "David Schamis (CEO)", "D1 Capital", "Galaxy Digital", "Pantera Capital", "Republic Digital", "683 Capital", "Atlas Merchant Capital", "Paradigm"],
+  outlook2026: "Staking deployment. Hyperliquid ecosystem engagement. Token unlock management.",
+};
+
+const HYPD_INTEL: CompanyIntel = {
+  ticker: "HYPD",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-01", title: "Q3 2025 results with record net income of $6.6 million", summary: "Profitability milestone" },
+    { date: "2025-09-25", title: "Acquired additional 176,422 HYPE tokens", summary: "+$10M to treasury" },
+    { date: "2025-07-14", title: "Added $5 million in HYPE to treasury holdings", summary: "Continued accumulation" },
+    { date: "2025-07-03", title: "Eyenovia rebranded to Hyperion DeFi, ticker changed to HYPD", summary: "Corporate pivot complete" },
+  ],
+  strategySummary: "First U.S. publicly listed company building a long-term strategic HYPE treasury. Total holdings: 1,712,195 HYPE at average price of $38.25/token. Launched co-branded validator with Kinetiq for yield generation. Q4 2025 revenues projected $475,000-$515,000 (31-43% QoQ growth).",
+  recentDevelopments: [
+    "1,712,195 HYPE holdings (~$77.8M market value as of Sep 30, 2025)",
+    "Expects operating cash flow to turn positive in 2026",
+    "Kinetiq validator partnership for yield",
+  ],
+  keyBackers: ["Kinetiq (validator partner)"],
+  outlook2026: "Positive operating cash flow. Validator yield optimization.",
+};
+
+// =============================================================================
+// BNB TREASURY COMPANIES
+// =============================================================================
+
+const BNC_INTEL: CompanyIntel = {
+  ticker: "BNC",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-08-10", title: "Purchased 200,000 BNB, becoming largest corporate BNB holder globally", summary: "$160M purchase" },
+    { date: "2025-07-01", title: "Closed $500 million PIPE led by YZi Labs and 10X Capital", summary: "Major funding round" },
+    { date: "2026-01-01", title: "YZi Labs launched activist campaign/boardroom coup", summary: "Governance conflict ongoing" },
+  ],
+  strategySummary: "Adopted BNB as primary treasury reserve asset. Target 1% of BNB supply. Stock surged 600%+ in July 2025 but has since declined over 92%. Major conflict between YZi Labs (CZ's family office) and current management over treasury strategy execution and governance.",
+  recentDevelopments: [
+    "~515,000 BNB holdings (~$412M at $851/unit average cost)",
+    "YZi Labs challenging company's poison pill defense and board changes",
+    "David Namdar (Galaxy Digital co-founder) as CEO; Russell Read (former CalPERS CIO) as CIO",
+    "Stock down >92% from peak",
+  ],
+  keyBackers: ["YZi Labs (CZ family office)", "10X Capital", "David Namdar (CEO, Galaxy co-founder)", "Russell Read (CIO, ex-CalPERS)"],
+  outlook2026: "Resolve governance conflict with YZi Labs. Stabilize treasury operations.",
+};
+
+const NA_INTEL: CompanyIntel = {
+  ticker: "NA",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-26", title: "Launched 'NBNB Program' for RWA infrastructure", summary: "New initiative" },
+    { date: "2025-07-30", title: "Invested in CEA Industries (BNC)", summary: "Strategic BNB ecosystem investment" },
+    { date: "2025-07-22", title: "Expanded holdings to 120,000 BNB (~$90 million)", summary: "Continued accumulation" },
+    { date: "2025-07-04", title: "Bought $50 million BNB (74,315 BNB at $672.45 avg)", summary: "Initial purchase" },
+    { date: "2025-06-26", title: "Priced $50 million registered direct offering", summary: "Treasury funding" },
+    { date: "2025-06-24", title: "Announced $500 million convertible notes private placement", summary: "Major financing" },
+  ],
+  strategySummary: "Hong Kong-based Web3 infrastructure company targeting $1 billion BNB treasury allocation and up to 10% of BNB total supply. Total digital asset reserves (including BTC and BNB) reached approximately $160 million. NBNB Program for RWA infrastructure development.",
+  recentDevelopments: [
+    "120,000 BNB holdings (~$90M)",
+    "Target: $1B BNB treasury, 10% of supply",
+    "Invested in BNC (CEA Industries)",
+  ],
+  keyBackers: [],
+  outlook2026: "NBNB Program development. Target $1B BNB allocation.",
+};
+
+// =============================================================================
+// TAO TREASURY COMPANIES
+// =============================================================================
+
+const TAOX_INTEL: CompanyIntel = {
+  ticker: "TAOX",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-10-01", title: "Secured $11 million private financing from DCG, James Altucher", summary: "Key investor backing" },
+    { date: "2025-08-26", title: "Joseph Jacks (OSS Capital founder) joined as advisor", summary: "Bittensor leader added" },
+    { date: "2025-08-05", title: "Accumulated 42,111 TAO tokens", summary: "Treasury growth" },
+    { date: "2025-07-19", title: "Became largest publicly traded TAO holder with $10M purchase", summary: "29,899 TAO at $334 avg" },
+    { date: "2025-06-01", title: "Pivoted to TAO treasury strategy", summary: "Formerly Synaptogenix" },
+  ],
+  strategySummary: "First pure-play decentralized AI treasury company exclusively allocated to Bittensor (TAO). Generates revenue through staking while supporting the Bittensor ecosystem. James Altucher leads digital asset strategy as advisor. Holdings exceeded 54,000 TAO after October financing.",
+  recentDevelopments: [
+    "54,058 TAO holdings",
+    "Largest publicly traded TAO holder (as of July 2025, before xTAO surpassed)",
+    "Staking to root network earning ~10% annual yield",
+  ],
+  keyBackers: ["James Altucher (Advisor)", "DCG", "Joseph Jacks (OSS Capital)"],
+  outlook2026: "Expand TAO staking. Bittensor ecosystem development.",
+};
+
+const XTAIF_INTEL: CompanyIntel = {
+  ticker: "XTAIF",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-25", title: "Holdings reached 59,962 TAO - world's largest publicly traded holder", summary: "Surpassed TAOX" },
+    { date: "2025-11-01", title: "$7.3 million investment from Off the Chain Capital", summary: "Institutional backing" },
+    { date: "2025-09-01", title: "Partnered with BitGo for institutional custody", summary: "Security upgrade" },
+    { date: "2025-07-30", title: "Disclosed 41,538 TAO holdings", summary: "Initial disclosure" },
+    { date: "2025-07-22", title: "Listed on TSX Venture Exchange", summary: "Public market debut" },
+  ],
+  strategySummary: "Building Bittensor ecosystem infrastructure and making strategic investments. Staking TAO holdings to root network earning ~10% annual yield. BitGo institutional custody partnership. TSX Venture Exchange listed.",
+  recentDevelopments: [
+    "59,962 TAO holdings - world's largest publicly traded holder",
+    "Initial funding: $22.8 million from Digital Currency Group, Animoca Brands, Arca, Borderless Capital, FalconX",
+    "$7.3M from Off the Chain Capital (November 2025)",
+  ],
+  keyBackers: ["Karia Samaroo", "Digital Currency Group", "Animoca Brands", "Arca", "Borderless Capital", "FalconX", "Off the Chain Capital"],
+  outlook2026: "Maintain largest public TAO holder status. Ecosystem infrastructure development.",
+};
+
+const TWAV_INTEL: CompanyIntel = {
+  ticker: "TWAV",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-10", title: "Ticker changed from OBLG to TWAV", summary: "Trading under new symbol" },
+    { date: "2025-12-08", title: "Corporate name changed to TaoWeave, Inc.", summary: "Rebranding complete" },
+    { date: "2025-11-12", title: "Holdings of 21,943 TAO tokens", summary: "Treasury update" },
+    { date: "2025-08-14", title: "Q2 2025 results; $8M TAO treasury with 21,613 tokens staked", summary: "All tokens staked" },
+    { date: "2025-06-01", title: "Adopted TAO-exclusive treasury policy", summary: "Strategic pivot" },
+  ],
+  strategySummary: "First publicly traded company with TAO-exclusive treasury strategy. All tokens staked on Bittensor network using BitGo institutional custody. Debt-free with $3.7M cash + $6.6M in TAO (total $10.3M liquid assets as of Q3 2025). Formerly Oblong Inc.",
+  recentDevelopments: [
+    "21,943 TAO holdings (~$8M)",
+    "All tokens staked on Bittensor network",
+    "BitGo institutional custody",
+    "Debt-free balance sheet",
+  ],
+  keyBackers: ["BitGo (custody)"],
+  outlook2026: "Continue TAO-exclusive strategy. Maximize staking yield.",
+};
+
+// =============================================================================
+// OTHER ASSET TREASURY COMPANIES
+// =============================================================================
+
+const CWD_INTEL: CompanyIntel = {
+  ticker: "CWD",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-11", title: "Staked 75,000 LINK with Chainlink node operator", summary: "Yield generation started" },
+    { date: "2025-11-17", title: "Regained Nasdaq compliance", summary: "Stock price recovery" },
+    { date: "2025-10-16", title: "Additional $2M purchase; total 562,535 tokens (~$10.2M)", summary: "Continued accumulation" },
+    { date: "2025-09-25", title: "$4M additional purchase (183,421 tokens)", summary: "DCA strategy" },
+    { date: "2025-09-18", title: "Purchased $6.5M LINK (278,011 tokens at $23.38)", summary: "Major buy" },
+    { date: "2025-09-09", title: "Completed initial LINK purchase", summary: "Treasury launched" },
+    { date: "2025-08-28", title: "Established LINK token treasury strategy", summary: "Strategy announced" },
+  ],
+  strategySummary: "First Nasdaq-listed company with treasury policy centered on Chainlink (LINK). Real estate asset manager pivoting to LINK. 75,000 LINK staked with Chainlink node operator. DCA accumulation strategy.",
+  recentDevelopments: [
+    "562,535 LINK holdings (~$10.2M)",
+    "75,000 LINK staked (December 2025)",
+    "Chainlink partnered with US Department of Commerce",
+    "Bitwise and Grayscale filed for spot Chainlink ETFs",
+  ],
+  keyBackers: ["Chris Loeffler (CEO)"],
+  outlook2026: "Expand LINK staking. Benefit from potential LINK ETF approvals.",
+};
+
+const TRON_INTEL: CompanyIntel = {
+  ticker: "TRON",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-29", title: "Secured $18M strategic investment from Justin Sun via Black Anthem", summary: "Founder backing" },
+    { date: "2025-09-02", title: "$110M TRX-focused investment", summary: "Treasury expansion" },
+    { date: "2025-07-17", title: "Rebranded from SRM Entertainment; filed $1 billion shelf statement", summary: "Justin Sun rang Nasdaq bell" },
+  ],
+  strategySummary: "Largest public holder of TRX with over 677 million tokens (0.716% of total supply). Company pivoted from toy manufacturing to TRON blockchain treasury play with Justin Sun as advisor. Q2-Q3 2025 moved to net income; shareholders' equity exceeded $239M. JustLend staking for yield.",
+  recentDevelopments: [
+    "677,596,945 TRX holdings (~$193M)",
+    "0.716% of total TRX supply",
+    "$18M investment from Justin Sun (December 2025)",
+    "First US public company to hold its blockchain's native token",
+  ],
+  keyBackers: ["Justin Sun (Advisor)", "Richard Miller (CEO)"],
+  outlook2026: "Expand TRX staking via JustLend. Scale treasury operations.",
+};
+
+const XRPN_INTEL: CompanyIntel = {
+  ticker: "XRPN",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-10-20", title: "Announced public launch and SPAC merger with Armada Acquisition Corp II", summary: "Expected to trade as XRPN on Nasdaq" },
+    { date: "2025-10-01", title: "Accumulated 388+ million XRP tokens ($1B+)", summary: "Massive treasury" },
+  ],
+  strategySummary: "Building world's largest institutional XRP treasury with yield-generation strategies and DeFi deployment. Expected to close Q1 2026. Asheesh Birla (former Ripple senior executive) as CEO; David Schwartz (Ripple CTO) as strategic advisor. $200M from SBI Holdings; additional from Ripple, Rippleworks, Pantera Capital, Kraken, GSR. Chris Larsen invested 50M XRP.",
+  recentDevelopments: [
+    "388M+ XRP holdings ($1B+)",
+    "0.47% of XRP supply",
+    "SPAC merger with Armada Acquisition Corp II pending",
+    "Q1 2026 close expected",
+  ],
+  keyBackers: ["Asheesh Birla (CEO, ex-Ripple)", "David Schwartz (Strategic Advisor, Ripple CTO)", "Chris Larsen (50M XRP)", "SBI Holdings", "Ripple", "Pantera Capital", "Kraken", "GSR"],
+  outlook2026: "Complete SPAC merger. Begin trading on Nasdaq as XRPN.",
+};
+
+const CYPH_INTEL: CompanyIntel = {
+  ticker: "CYPH",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-31", title: "Holdings reached 290,062 ZEC (1.76% of supply)", summary: "After $28M purchase" },
+    { date: "2025-12-09", title: "Zooko Wilcox (Zcash creator) joined as Strategic Advisor", summary: "Key hire" },
+    { date: "2025-12-01", title: "Purchased additional $18M ZEC", summary: "Accelerated accumulation" },
+    { date: "2025-11-12", title: "Began trading as CYPH after rebranding from Leap Therapeutics", summary: "Ticker change" },
+    { date: "2025-10-01", title: "Closed $58.88M private placement led by Winklevoss Capital", summary: "Seed funding" },
+  ],
+  strategySummary: "Targeting 5% of Zcash total supply (~540K ZEC). Winklevoss describes ZEC as 'encrypted bitcoin' and 'digital cash.' Will McEvoy (Winklevoss Capital principal) as CIO and Board member. Formerly Leap Therapeutics.",
+  recentDevelopments: [
+    "290,062 ZEC holdings (~$152M)",
+    "1.76% of circulating ZEC supply",
+    "Zooko Wilcox (Zcash creator) as Strategic Advisor",
+    "Target: 5% of ZEC supply",
+  ],
+  keyBackers: ["Winklevoss Capital", "Cameron Winklevoss", "Tyler Winklevoss", "Zooko Wilcox (Strategic Advisor)", "Will McEvoy (CIO)"],
+  outlook2026: "Target 5% ZEC supply. Leverage Winklevoss/Zooko backing.",
+};
+
+const LITS_INTEL: CompanyIntel = {
+  ticker: "LITS",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-17", title: "Q1 FY2026 results; highlighted successful treasury strategy launch", summary: "First quarterly report" },
+    { date: "2025-10-13", title: "Celebrated Litecoin's 14th anniversary", summary: "Community engagement" },
+    { date: "2025-09-11", title: "Rebranded to Lite Strategy, ticker LITS", summary: "Formerly MEI Pharma" },
+    { date: "2025-08-05", title: "Acquired 929,548 LTC at $107.58 avg (~$100M)", summary: "First US public LTC treasury" },
+  ],
+  strategySummary: "First U.S.-listed public company with Litecoin as primary reserve asset. Partnership with GSR for treasury management. Charlie Lee (Litecoin creator) on Board. Joshua Riezman (GSR US Chief Strategy Officer) on board.",
+  recentDevelopments: [
+    "929,548 LTC holdings (~$100M at $107.58 average)",
+    "Charlie Lee (Litecoin creator) on Board",
+    "GSR as treasury manager",
+    "Justin File as CEO",
+  ],
+  keyBackers: ["Charlie Lee (Board, Litecoin creator)", "GSR", "Justin File (CEO)", "Joshua Riezman (Board, GSR)"],
+  outlook2026: "Expand LTC holdings. Leverage GSR treasury management.",
+};
+
+const LUXFF_INTEL: CompanyIntel = {
+  ticker: "LUXFF",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-08", title: "Update on private placement; first tranche closed December 9", summary: "$786,080 raised" },
+    { date: "2025-10-01", title: "Appointed Ieva Guoga to board and Dustin Zinger as Strategic Advisor", summary: "Team expansion" },
+    { date: "2025-08-28", title: "Filed CAD$100M shelf prospectus", summary: "Capital raising capacity" },
+    { date: "2025-06-01", title: "Charlie Lee and David Schwartz joined Advisory Board", summary: "Key advisors added" },
+  ],
+  strategySummary: "Targeting 1 million LTC by end of 2026. Deploying cbLTC into DeFi protocols for yield. Advancing Litecoin infrastructure including ZK-rollups and Layer 2 innovations. Canadian company.",
+  recentDevelopments: [
+    "20,084 LTC holdings",
+    "Target: 1 million LTC by 2026",
+    "CAD$100M shelf prospectus filed",
+    "Q2 2025 net loss of $197,000; $112,000 cash on hand",
+  ],
+  keyBackers: ["Charlie Lee (Advisory Board)", "David Schwartz (Advisory Board)", "Tomek Antoniak (CEO)"],
+  outlook2026: "Scale toward 1M LTC target. DeFi yield via cbLTC.",
+};
+
+const SUIG_INTEL: CompanyIntel = {
+  ticker: "SUIG",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-01", title: "Total holdings ~102 million tokens (~$403M)", summary: "Treasury update" },
+    { date: "2025-09-30", title: "Holdings exceeded 105 million SUI tokens", summary: "Major milestone" },
+    { date: "2025-08-26", title: "Rebranded to SUI Group Holdings, ticker changed to SUIG", summary: "Formerly Mill City Ventures" },
+    { date: "2025-08-01", title: "Closed $450M PIPE; pivoted to SUI treasury strategy", summary: "Strategic transformation" },
+  ],
+  strategySummary: "Only publicly traded company with official Sui Foundation partnership. Staking all SUI earning ~$26,000/day. Galaxy Asset Management serves as Asset Manager. Big Brain Holdings, Pantera Capital, Electric Capital, GSR, ParaFi, Borderless, FalconX as investors.",
+  recentDevelopments: [
+    "108,098,436 SUI holdings (~$403M)",
+    "~2.9% of SUI supply",
+    "Only company with Sui Foundation relationship",
+    "Q4 2025 earnings expected mid-March 2026",
+    "Sui Foundation Developer Summit February 10-12, 2026",
+  ],
+  keyBackers: ["Douglas Polinsky (CEO)", "Sui Foundation", "Galaxy Asset Management", "Big Brain Holdings", "Pantera Capital", "Electric Capital", "GSR", "ParaFi", "Borderless", "FalconX"],
+  outlook2026: "Sui Foundation Developer Summit. Expand Sui ecosystem presence.",
+};
+
+const ZONE_INTEL: CompanyIntel = {
+  ticker: "ZONE",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-11-13", title: "Q1 FY2026 results; 733.1M DOGE holdings", summary: "Treasury update" },
+    { date: "2025-10-07", title: "710M DOGE with $20M unrealized gains", summary: "Profit milestone" },
+    { date: "2025-09-16", title: "Holdings exceeded 600M DOGE", summary: "Rapid accumulation" },
+    { date: "2025-09-08", title: "Acquired 285M DOGE; targeting 1 billion in 30 days", summary: "Aggressive strategy" },
+    { date: "2025-09-02", title: "Announced $175M private placement for Official Dogecoin Treasury", summary: "Dogecoin Foundation partnership" },
+  ],
+  strategySummary: "Official Dogecoin Treasury sponsored by Dogecoin Foundation. Long-term goal: 5% of DOGE circulating supply. Partnership with Bitstamp USA/Robinhood for trading. NYSE American listed.",
+  recentDevelopments: [
+    "733M DOGE holdings (Q1 FY2026)",
+    "$20M+ unrealized gains",
+    "Official Dogecoin Treasury status",
+    "House of Doge partnership",
+  ],
+  keyBackers: ["Clayton Adams (CEO)", "Dogecoin Foundation", "House of Doge"],
+  outlook2026: "Target 1B DOGE. 5% of circulating supply goal.",
+};
+
+const TBH_INTEL: CompanyIntel = {
+  ticker: "TBH",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-12-18", title: "2025 shareholder letter; 730M DOGE treasury", summary: "Year-end update" },
+    { date: "2025-12-04", title: "Valuation report of ~$1.09 billion disclosed", summary: "Pre-merger valuation" },
+    { date: "2025-10-13", title: "House of Doge to list on Nasdaq through merger with Brag House", summary: "SPAC merger announced" },
+    { date: "2025-08-29", title: "Alex Spiro (Elon Musk's lawyer) announced as planned chairman", summary: "High-profile appointment" },
+  ],
+  strategySummary: "House of Doge is the official corporate arm of Dogecoin Foundation. 10-year asset management agreement with CleanCore (ZONE) managing 730M+ DOGE. Upon merger completion, HOD shareholders will own ~92.8% of combined company. Q1 2026 plans: rewards debit card, embeddable Dogecoin wallet, merchant tools.",
+  recentDevelopments: [
+    "730M DOGE under management",
+    "$1.09B valuation",
+    "Alex Spiro as planned Chairman",
+    "Nasdaq merger pending Q1 2026",
+  ],
+  keyBackers: ["Alex Spiro (Chairman, Elon Musk's lawyer)", "Marco Margiotta (CEO)", "Dogecoin Foundation"],
+  outlook2026: "Complete Nasdaq merger. Launch payments ecosystem (debit card, wallet, merchant tools).",
+};
+
+const BTOG_INTEL: CompanyIntel = {
+  ticker: "BTOG",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-09-30", title: "Partnered with BitGo for custody", summary: "Security upgrade" },
+    { date: "2025-08-29", title: "Received 180-day Nasdaq compliance extension", summary: "Stock price challenge" },
+    { date: "2025-08-11", title: "Holdings reached 70.5M DOGE at $0.2268 avg", summary: "Accumulation milestone" },
+    { date: "2025-07-21", title: "Initial purchase of 40.5M DOGE at $0.2466", summary: "Treasury launch" },
+    { date: "2025-07-17", title: "Secured $500M equity/debt facilities for DOGE treasury", summary: "Funding capacity" },
+  ],
+  strategySummary: "First publicly listed company on major US exchange with Dogecoin-focused treasury. Singapore-based company sees DOGE utility potential for micropayments reaching inflection point. BitGo custody partnership. $500M facilities available.",
+  recentDevelopments: [
+    "70.5M DOGE holdings at $0.2268 average",
+    "BitGo institutional custody",
+    "$500M equity/debt facilities secured",
+    "Nasdaq compliance extension received",
+  ],
+  keyBackers: ["Jinghai Jiang (CEO)", "BitGo (custody)"],
+  outlook2026: "Scale DOGE accumulation. Meet Nasdaq compliance requirements.",
+};
+
+const AVX_INTEL: CompanyIntel = {
+  ticker: "AVX",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2026-01-06", title: "Launched institutional-grade Avalanche treasury dashboard", summary: "Transparency tool" },
+    { date: "2025-11-20", title: "Authorized $40M stock buyback program", summary: "Shareholder return" },
+    { date: "2025-11-23", title: "Treasury holdings reach over 13.8M AVAX", summary: "After $110M purchase" },
+    { date: "2025-11-13", title: "Rebranded from AgriFORCE to AVAX One Technology; ticker AVX", summary: "Corporate pivot complete" },
+  ],
+  strategySummary: "First publicly traded Avalanche Treasury company. Building institutional gateway to onchain financial economy. Holdings: 13.8M+ AVAX with $35M+ cash available. Anthony Scaramucci heads advisory board. $40M stock buyback program authorized.",
+  recentDevelopments: [
+    "13,800,000 AVAX holdings (~$110M cost at $11.73 avg)",
+    "Institutional-grade treasury dashboard launched",
+    "$40M buyback authorized",
+    "Anthony Scaramucci advisory board",
+  ],
+  keyBackers: ["Anthony Scaramucci (Advisory Board)"],
+  outlook2026: "Scale AVAX treasury. Institutional product development.",
+};
+
+const IHLDF_INTEL: CompanyIntel = {
+  ticker: "IHLDF",
+  lastResearched: "2026-01-13",
+  pressReleases: [
+    { date: "2025-07-28", title: "Strategic update on HBAR treasury; management change", summary: "Melyssa Charlton appointed interim CEO" },
+  ],
+  strategySummary: "Digital asset treasury focused on long-term HBAR holding. Previously managed one of first institutional HBAR funds (IHO1) which completed in-kind distributions fall 2024. Jordan Fried (founding team member of Hedera) as Chairman. Views HBAR as high-quality asset with enterprise-grade performance, low transaction costs, carbon-negative operations, and growing adoption.",
+  recentDevelopments: [
+    "48+ million HBAR holdings via Immutable Asset Management LLC subsidiary",
+    "Jordan Fried (Hedera founding team) as Chairman",
+    "Melyssa Charlton as interim CEO (July 2025)",
+    "Owns NFT.com, HBAR Labs, MyHBARWallet",
+  ],
+  keyBackers: ["Jordan Fried (Chairman, Hedera founding team)", "Melyssa Charlton (interim CEO)"],
+  outlook2026: "Stabilize management. HBAR ecosystem development.",
+};
+
+// =============================================================================
+// EXPORT MAP
+// =============================================================================
+
+export const COMPANY_INTEL: Record<string, CompanyIntel> = {
+  // BTC
+  MSTR: MSTR_INTEL,
+  "3350.T": METAPLANET_INTEL,
+  XXI: XXI_INTEL,
+  CEPO: CEPO_INTEL,
+  MARA: MARA_INTEL,
+  RIOT: RIOT_INTEL,
+  CLSK: CLSK_INTEL,
+  ASST: ASST_INTEL,
+  SMLR: SMLR_INTEL,
+  KULR: KULR_INTEL,
+  ALTBG: ALTBG_INTEL,
+  "H100.ST": H100ST_INTEL,
+  NAKA: NAKA_INTEL,
+  DJT: DJT_INTEL,
+  "0434.HK": BOYAA_INTEL,
+  NXTT: NXTT_INTEL,
+  ABTC: ABTC_INTEL,
+  // ETH
+  BMNR: BMNR_INTEL,
+  SBET: SBET_INTEL,
+  ETHM: ETHM_INTEL,
+  BTBT: BTBT_INTEL,
+  BTCS: BTCS_INTEL,
+  GAME: GAME_INTEL,
+  FGNX: FGNX_INTEL,
+  // SOL
+  FWDI: FWDI_INTEL,
+  HSDT: HSDT_INTEL,
+  DFDV: DFDV_INTEL,
+  UPXI: UPXI_INTEL,
+  STKE: STKE_INTEL,
+  // HYPE
+  PURR: PURR_INTEL,
+  HYPD: HYPD_INTEL,
+  // BNB
+  BNC: BNC_INTEL,
+  NA: NA_INTEL,
+  // TAO
+  TAOX: TAOX_INTEL,
+  XTAIF: XTAIF_INTEL,
+  TWAV: TWAV_INTEL,
+  // Other
+  CWD: CWD_INTEL,
+  TRON: TRON_INTEL,
+  XRPN: XRPN_INTEL,
+  CYPH: CYPH_INTEL,
+  LITS: LITS_INTEL,
+  LUXFF: LUXFF_INTEL,
+  SUIG: SUIG_INTEL,
+  ZONE: ZONE_INTEL,
+  TBH: TBH_INTEL,
+  BTOG: BTOG_INTEL,
+  AVX: AVX_INTEL,
+  IHLDF: IHLDF_INTEL,
+};
+
+// Helper function to get intel for a company
+export function getCompanyIntel(ticker: string): CompanyIntel | null {
+  return COMPANY_INTEL[ticker.toUpperCase()] || COMPANY_INTEL[ticker] || null;
+}
