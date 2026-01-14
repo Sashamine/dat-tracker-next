@@ -76,6 +76,21 @@ export function CompanyMNAVChart({
       const exactMatch = cryptoPricesByDate.get(targetDate);
       if (exactMatch) return exactMatch;
 
+      // Check if target is within crypto data range
+      const targetTime = new Date(targetDate).getTime();
+      const firstCryptoTime = new Date(cryptoDates[0]).getTime();
+      const lastCryptoTime = new Date(cryptoDates[cryptoDates.length - 1]).getTime();
+
+      // If target is before first crypto date, use first crypto price
+      if (targetTime < firstCryptoTime) {
+        return cryptoPricesByDate.get(cryptoDates[0]) ?? null;
+      }
+
+      // If target is after last crypto date, use last crypto price
+      if (targetTime > lastCryptoTime) {
+        return cryptoPricesByDate.get(cryptoDates[cryptoDates.length - 1]) ?? null;
+      }
+
       // Binary search for closest date
       let left = 0;
       let right = cryptoDates.length - 1;
@@ -90,36 +105,33 @@ export function CompanyMNAVChart({
       }
 
       // Find the closest date (could be left or left-1)
-      let closestDate: string | null = null;
       if (left === 0) {
-        closestDate = cryptoDates[0];
+        return cryptoPricesByDate.get(cryptoDates[0]) ?? null;
       } else if (left >= cryptoDates.length) {
-        closestDate = cryptoDates[cryptoDates.length - 1];
+        return cryptoPricesByDate.get(cryptoDates[cryptoDates.length - 1]) ?? null;
       } else {
         const prevDate = cryptoDates[left - 1];
         const nextDate = cryptoDates[left];
-        const targetTime = new Date(targetDate).getTime();
         const prevTime = new Date(prevDate).getTime();
         const nextTime = new Date(nextDate).getTime();
 
-        // Choose the closer one (within 7 days tolerance)
+        // Choose the closer one (no strict tolerance - always return something)
         const prevDiff = Math.abs(targetTime - prevTime);
         const nextDiff = Math.abs(targetTime - nextTime);
-        const maxDiff = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
-        if (prevDiff <= nextDiff && prevDiff <= maxDiff) {
-          closestDate = prevDate;
-        } else if (nextDiff <= maxDiff) {
-          closestDate = nextDate;
-        }
+        return prevDiff <= nextDiff
+          ? cryptoPricesByDate.get(prevDate) ?? null
+          : cryptoPricesByDate.get(nextDate) ?? null;
       }
-
-      return closestDate ? cryptoPricesByDate.get(closestDate) ?? null : null;
     };
 
     // Calculate mNAV for each stock data point using anchored approach:
     // Historical mNAV = Current mNAV × (Historical Stock / Current Stock) × (Current Crypto / Historical Crypto)
     const result: { time: Time; value: number }[] = [];
+
+    // Get crypto date range to filter stock data
+    const firstCryptoDate = cryptoDates[0];
+    const lastCryptoDate = cryptoDates[cryptoDates.length - 1];
 
     for (const stockPoint of stockHistory) {
       // Extract date from stock time (could be Unix timestamp or YYYY-MM-DD)
@@ -135,6 +147,9 @@ export function CompanyMNAVChart({
         dateKey = stockPoint.time;
         chartTime = stockPoint.time as Time;
       }
+
+      // Skip stock data outside crypto data range
+      if (dateKey < firstCryptoDate || dateKey > lastCryptoDate) continue;
 
       // Find matching or closest crypto price
       const historicalCryptoPrice = findClosestCryptoPrice(dateKey);

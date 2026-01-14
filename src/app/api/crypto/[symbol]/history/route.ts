@@ -81,7 +81,9 @@ export async function GET(
     for (const p of prices) {
       byDate.set(p.time, p.price);
     }
-    const deduped = Array.from(byDate.entries()).map(([time, price]) => ({ time, price }));
+    const deduped = Array.from(byDate.entries())
+      .map(([time, price]) => ({ time, price }))
+      .sort((a, b) => a.time.localeCompare(b.time));
 
     cache.set(cacheKey, { data: deduped, timestamp: Date.now() });
     return NextResponse.json(deduped);
