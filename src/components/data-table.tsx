@@ -224,19 +224,26 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     </div>
   );
 
-  // Logo component - uses local files from /logos/TICKER.png
+  // Logo component - uses local files from /logos/TICKER.png or .svg
   const CompanyLogo = ({ ticker }: { ticker: string }) => {
-    const logoPath = `/logos/${ticker}.png`;
+    const pngPath = `/logos/${ticker}.png`;
+    const svgPath = `/logos/${ticker}.svg`;
 
     return (
       <div className="relative w-7 h-7">
         <FallbackLogo ticker={ticker} />
         <img
-          src={logoPath}
+          src={pngPath}
           alt={ticker}
           className="absolute inset-0 w-7 h-7 rounded-full object-cover"
           onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
+            // Try SVG if PNG fails
+            const img = e.target as HTMLImageElement;
+            if (img.src.endsWith('.png')) {
+              img.src = svgPath;
+            } else {
+              img.style.display = 'none';
+            }
           }}
         />
       </div>
