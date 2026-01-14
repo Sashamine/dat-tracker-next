@@ -42,6 +42,7 @@ export function OverviewSidebar({
 }: OverviewSidebarProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [showChart, setShowChart] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   if (!isExpanded) {
     return (
@@ -153,12 +154,46 @@ export function OverviewSidebar({
             </svg>
           </button>
           {showChart && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-2 -mx-2">
+            <div
+              className="bg-white dark:bg-gray-800 rounded-lg p-2 -mx-2 cursor-pointer hover:ring-2 hover:ring-indigo-500/50 transition-all"
+              onClick={() => setShowModal(true)}
+              title="Click to expand"
+            >
               <AggregateMNAVChart companies={companies} prices={prices} compact />
             </div>
           )}
         </div>
       </div>
+
+      {/* Full Chart Modal */}
+      {showModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Aggregate mNAV History
+              </h2>
+              <button
+                onClick={() => setShowModal(false)}
+                className="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4">
+              <AggregateMNAVChart companies={companies} prices={prices} />
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
