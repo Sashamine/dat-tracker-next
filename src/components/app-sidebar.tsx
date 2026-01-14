@@ -6,9 +6,12 @@ import { cn } from "@/lib/utils";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useFilters } from "@/lib/hooks/use-filters";
 
-// Asset categorization - same as Streamlit
-const YIELDING_ASSETS = ["ETH", "SOL", "BNB", "TAO", "LINK", "TRX", "SUI", "AVAX", "ADA", "HBAR"];
-const NON_YIELDING_ASSETS = ["BTC", "HYPE", "XRP", "ZEC", "LTC", "DOGE"];
+// All supported assets (sorted by typical market cap / relevance)
+const ALL_ASSETS = ["BTC", "ETH", "SOL", "XRP", "BNB", "DOGE", "ADA", "AVAX", "LINK", "SUI", "LTC", "HBAR", "TAO", "TRX", "ZEC", "HYPE"];
+
+// Legacy exports for backwards compatibility
+const YIELDING_ASSETS = ALL_ASSETS;
+const NON_YIELDING_ASSETS: string[] = [];
 
 // Crypto icon URLs from CoinGecko
 const CRYPTO_ICONS: Record<string, string> = {
@@ -100,50 +103,13 @@ export function AppSidebar({ className }: AppSidebarProps) {
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
-        {/* Yielding Assets */}
+        {/* Assets */}
         <div>
           <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-            Yielding Assets
+            Assets
           </h3>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mb-3">
-            Native staking yield benchmark
-          </p>
           <div className="space-y-1">
-            {YIELDING_ASSETS.map((asset) => {
-              const isActive = currentAsset === asset.toLowerCase() || currentAsset === asset;
-              return (
-                <Link
-                  key={asset}
-                  href={`/asset/${asset.toLowerCase()}`}
-                  className={cn(
-                    "flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-indigo-600 text-white"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  )}
-                >
-                  {CRYPTO_ICONS[asset] && (
-                    <img src={CRYPTO_ICONS[asset]} alt={asset} className="w-5 h-5 rounded-full" />
-                  )}
-                  <span>{asset}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        <hr className="border-gray-200 dark:border-gray-700" />
-
-        {/* Non-Yielding Assets */}
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-            Non-Yielding Assets
-          </h3>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mb-3">
-            Vol harvesting + speculation
-          </p>
-          <div className="space-y-1">
-            {NON_YIELDING_ASSETS.map((asset) => {
+            {ALL_ASSETS.map((asset) => {
               const isActive = currentAsset === asset.toLowerCase() || currentAsset === asset;
               return (
                 <Link
@@ -229,4 +195,4 @@ export function AppSidebar({ className }: AppSidebarProps) {
   );
 }
 
-export { CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS, STAKING_APYS };
+export { CRYPTO_ICONS, ALL_ASSETS, YIELDING_ASSETS, NON_YIELDING_ASSETS, STAKING_APYS };

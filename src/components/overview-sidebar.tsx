@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
+import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
 import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
 import { Company } from "@/lib/types";
 
@@ -42,9 +42,6 @@ export function OverviewSidebar({
 }: OverviewSidebarProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [showChart, setShowChart] = useState(true);
-
-  const yieldingStats = assetStats.filter((s) => YIELDING_ASSETS.includes(s.asset));
-  const nonYieldingStats = assetStats.filter((s) => NON_YIELDING_ASSETS.includes(s.asset));
 
   if (!isExpanded) {
     return (
@@ -103,56 +100,22 @@ export function OverviewSidebar({
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
-        {/* Yielding Assets */}
+        {/* Assets */}
         <div>
           <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-            <span className="text-green-500">+</span> Yielding
+            Assets
             <span className="ml-auto text-gray-400 font-normal">
-              {yieldingStats.reduce((sum, s) => sum + s.count, 0)}
+              {totalCompanies}
             </span>
           </h3>
           <div className="grid grid-cols-5 gap-1.5">
-            {YIELDING_ASSETS.map((asset) => {
+            {ALL_ASSETS.map((asset) => {
               const stats = assetStats.find((s) => s.asset === asset);
               return (
                 <Link
                   key={asset}
                   href={`/asset/${asset.toLowerCase()}`}
-                  className="flex flex-col items-center p-1.5 bg-white dark:bg-gray-800 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors group"
-                  title={`${asset}: ${stats?.count || 0} companies`}
-                >
-                  {CRYPTO_ICONS[asset] && (
-                    <img
-                      src={CRYPTO_ICONS[asset]}
-                      alt={asset}
-                      className="w-6 h-6 rounded-full group-hover:scale-110 transition-transform"
-                    />
-                  )}
-                  <span className="text-[10px] font-medium text-gray-600 dark:text-gray-400 mt-0.5">
-                    {stats?.count || 0}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Non-Yielding Assets */}
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-            <span className="text-blue-500">*</span> Non-Yielding
-            <span className="ml-auto text-gray-400 font-normal">
-              {nonYieldingStats.reduce((sum, s) => sum + s.count, 0)}
-            </span>
-          </h3>
-          <div className="grid grid-cols-5 gap-1.5">
-            {NON_YIELDING_ASSETS.map((asset) => {
-              const stats = assetStats.find((s) => s.asset === asset);
-              return (
-                <Link
-                  key={asset}
-                  href={`/asset/${asset.toLowerCase()}`}
-                  className="flex flex-col items-center p-1.5 bg-white dark:bg-gray-800 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors group"
+                  className="flex flex-col items-center p-1.5 bg-white dark:bg-gray-800 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors group"
                   title={`${asset}: ${stats?.count || 0} companies`}
                 >
                   {CRYPTO_ICONS[asset] && (

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
+import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
 
 interface MobileHeaderProps {
   title?: string;
@@ -85,35 +85,13 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                 </div>
               </div>
 
-              {/* Yielding Assets */}
+              {/* Assets */}
               <div>
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1">
-                  <span className="text-green-500">+</span> Yielding Assets
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                  Assets
                 </h3>
                 <div className="grid grid-cols-4 gap-2">
-                  {YIELDING_ASSETS.map((asset) => (
-                    <Link
-                      key={asset}
-                      href={`/asset/${asset.toLowerCase()}`}
-                      onClick={() => setMenuOpen(false)}
-                      className="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                    >
-                      {CRYPTO_ICONS[asset] && (
-                        <img src={CRYPTO_ICONS[asset]} alt={asset} className="w-8 h-8 rounded-full" />
-                      )}
-                      <span className="text-xs text-gray-600 dark:text-gray-400 mt-1">{asset}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Non-Yielding Assets */}
-              <div>
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1">
-                  <span className="text-blue-500">*</span> Non-Yielding Assets
-                </h3>
-                <div className="grid grid-cols-4 gap-2">
-                  {NON_YIELDING_ASSETS.map((asset) => (
+                  {ALL_ASSETS.map((asset) => (
                     <Link
                       key={asset}
                       href={`/asset/${asset.toLowerCase()}`}
