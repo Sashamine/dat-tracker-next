@@ -15,7 +15,9 @@ import {
   INTERVAL_LABELS,
 } from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
+import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
+import { CompanyFilings } from "@/components/company-filings";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
@@ -35,6 +37,7 @@ import {
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
 import { getCompanyIntel } from "@/lib/data/company-intel";
+import { MobileHeader } from "@/components/mobile-header";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -71,6 +74,9 @@ export default function CompanyPage() {
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
   const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange, interval);
+
+  // Company intel - must be called before any early returns (React hooks rule)
+  const intel = useMemo(() => getCompanyIntel(ticker), [ticker]);
 
   // Update interval when time range changes
   const handleTimeRangeChange = (newRange: TimeRange) => {
@@ -140,14 +146,15 @@ export default function CompanyPage() {
   // Phase determination
   const phase = determineDATPhase(navDiscount, false, null);
 
-  // Company intel (press releases, strategy summary, etc.)
-  const intel = useMemo(() => getCompanyIntel(ticker), [ticker]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
-      <main className="container mx-auto px-4 py-8">
-        {/* Breadcrumb */}
-        <div className="mb-6">
+      {/* Mobile Header */}
+      <MobileHeader title={company.ticker} showBack />
+
+      <main className="container mx-auto px-3 py-4 lg:px-4 lg:py-8">
+        {/* Breadcrumb - Desktop only */}
+        <div className="mb-6 hidden lg:block">
           <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
             ← Back to tracker
           </Link>
@@ -219,7 +226,7 @@ export default function CompanyPage() {
         </div>
 
         {/* Key Valuation Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -230,7 +237,7 @@ export default function CompanyPage() {
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">NAV/Share</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {navPerShare ? `$${navPerShare.toFixed(2)}` : "—"}
+              {navPerShare ? `${navPerShare.toFixed(2)}` : "—"}
             </p>
             <p className="text-xs text-gray-400">
               {navDiscount !== null && (
@@ -240,15 +247,37 @@ export default function CompanyPage() {
               )}
             </p>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Net Yield</p>
-            <p className={cn("text-2xl font-bold", netYieldPct > 0 ? "text-green-600" : "text-red-600")}>
-              {formatPercent(netYieldPct, true)}
-            </p>
-            <p className="text-xs text-gray-400">
-              vs {formatPercent(networkStakingApy)} benchmark
-            </p>
-          </div>
+          {company.stakingPct != null && company.stakingPct > 0 && (
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Staking Yield</p>
+              <p className="text-2xl font-bold text-green-600">
+                +{Math.round(company.holdings * company.stakingPct * companyStakingApy).toLocaleString()}
+              </p>
+              <p className="text-xs text-gray-400">
+                {company.asset}/yr ({(company.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
+              </p>
+            </div>
+          )}
+          {company.quarterlyBurnUsd != null && company.quarterlyBurnUsd > 0 && (
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Annual Burn</p>
+              <p className="text-2xl font-bold text-red-600">
+                {cryptoPrice > 0 ? `-${Math.round((company.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()}` : `${(company.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M`}
+              </p>
+              <p className="text-xs text-gray-400">
+                {cryptoPrice > 0 ? `${company.asset}/yr` : '/yr'} (${(company.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
+              </p>
+            </div>
+          )}
+          {(company.btcMinedAnnual != null && company.btcMinedAnnual > 0) && (
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
+              <p className="text-2xl font-bold text-orange-600">
+                +{company.btcMinedAnnual.toLocaleString()}
+              </p>
+              <p className="text-xs text-gray-400">BTC/yr</p>
+            </div>
+          )}
         </div>
 
         {/* Chart with Time Range Selector */}
@@ -315,6 +344,21 @@ export default function CompanyPage() {
             </div>
           )}
         </div>
+
+
+        {/* mNAV History Chart */}
+        {mNAV && stockPrice > 0 && cryptoPrice > 0 && (
+          <CompanyMNAVChart
+            ticker={company.ticker}
+            asset={company.asset}
+            currentMNAV={mNAV}
+            currentStockPrice={stockPrice}
+            currentCryptoPrice={cryptoPrice}
+            timeRange={timeRange}
+            interval={interval}
+            className="mb-8"
+          />
+        )}
 
         {/* Treasury & Holdings */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -408,88 +452,213 @@ export default function CompanyPage() {
           className="mb-8"
         />
 
-        {/* Phase Status */}
+        {/* Comprehensive Strategy & Overview Section */}
         <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Phase Status</h3>
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{phase.description}</span>
-          </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-            <div
-              className="bg-indigo-600 h-3 rounded-full transition-all duration-500"
-              style={{ width: `${phase.progress * 100}%` }}
-            />
-          </div>
-          <div className="flex justify-between mt-2 text-xs text-gray-500">
-            <span>Accumulation</span>
-            <span>Transition</span>
-            <span>Terminal</span>
-          </div>
-        </div>
-
-        {/* Strategy Summary (from intel or fallback to company data) */}
-        {(intel?.strategySummary || company.strategy || company.notes) && (
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               Strategy & Overview
             </h3>
-            {intel?.strategySummary ? (
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
-            ) : (
-              <>
-                {company.strategy && (
-                  <p className="text-gray-700 dark:text-gray-300 mb-2">{company.strategy}</p>
-                )}
-                {company.notes && (
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">{company.notes}</p>
-                )}
-              </>
-            )}
-            {/* Key Backers */}
-            {intel?.keyBackers && intel.keyBackers.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-2">
-                  Key Backers
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {intel.keyBackers.map((backer, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded"
-                    >
-                      {backer}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+            <div className="flex items-center gap-3">
+              {company.website && (
+                <a
+                  href={company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                  Website
+                </a>
+              )}
+              {company.twitter && (
+                <a
+                  href={`https://twitter.com/${company.twitter.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                  {company.twitter}
+                </a>
+              )}
+            </div>
           </div>
-        )}
 
-        {/* Recent Developments */}
-        {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              Recent Developments
-            </h3>
-            <ul className="space-y-2">
-              {intel.recentDevelopments.map((dev, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                  <span className="text-indigo-500 mt-1">•</span>
-                  <span>{dev}</span>
-                </li>
-              ))}
-            </ul>
-            {intel.outlook2026 && (
-              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-2">
-                  2026 Outlook
-                </h4>
-                <p className="text-gray-700 dark:text-gray-300">{intel.outlook2026}</p>
+          {/* Strategy Summary */}
+          {(intel?.strategySummary || company.strategy || company.notes) && (
+            <div className="mb-6">
+              {intel?.strategySummary ? (
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
+              ) : (
+                <>
+                  {company.strategy && (
+                    <p className="text-gray-700 dark:text-gray-300 mb-2">{company.strategy}</p>
+                  )}
+                  {company.notes && (
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{company.notes}</p>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Key Financial Metrics Grid */}
+          {(company.costBasisAvg || company.capitalRaisedAtm || company.capitalRaisedPipe ||
+            company.capitalRaisedConverts || company.stakingPct || company.leverageRatio ||
+            company.btcMinedAnnual || company.quarterlyBurnUsd || company.atmRemaining || company.leader) && (
+            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                Key Metrics
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {company.leader && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Leadership</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">{company.leader}</p>
+                  </div>
+                )}
+                {company.costBasisAvg && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Avg Cost Basis</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">
+                      ${company.costBasisAvg.toLocaleString()}
+                    </p>
+                  </div>
+                )}
+                {company.capitalRaisedAtm && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">ATM Raised</p>
+                    <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
+                      ${(company.capitalRaisedAtm / 1e9).toFixed(2)}B
+                    </p>
+                  </div>
+                )}
+                {company.capitalRaisedPipe && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">PIPE Raised</p>
+                    <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
+                      ${(company.capitalRaisedPipe / 1e9).toFixed(2)}B
+                    </p>
+                  </div>
+                )}
+                {company.capitalRaisedConverts && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Converts Raised</p>
+                    <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
+                      ${(company.capitalRaisedConverts / 1e9).toFixed(2)}B
+                    </p>
+                  </div>
+                )}
+                {company.atmRemaining != null && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">ATM Remaining</p>
+                    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">
+                      ${(company.atmRemaining / 1e9).toFixed(2)}B
+                    </p>
+                  </div>
+                )}
+                {company.stakingPct != null && company.stakingPct > 0 && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Staking Yield</p>
+                    <p className="text-sm font-semibold text-purple-600 dark:text-purple-400 mt-1">
+                      +{Math.round(company.holdings * company.stakingPct * companyStakingApy).toLocaleString()} {company.asset}/yr
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {(company.stakingPct * 100).toFixed(0)}% staked @ {(companyStakingApy * 100).toFixed(1)}% APY
+                    </p>
+                  </div>
+                )}
+                {company.leverageRatio && company.leverageRatio > 1 && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Leverage Ratio</p>
+                    <p className="text-sm font-semibold text-amber-600 dark:text-amber-400 mt-1">
+                      {company.leverageRatio.toFixed(2)}x
+                    </p>
+                  </div>
+                )}
+                {company.btcMinedAnnual && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Annual Mining</p>
+                    <p className="text-sm font-semibold text-orange-600 dark:text-orange-400 mt-1">
+                      {company.btcMinedAnnual.toLocaleString()} BTC
+                    </p>
+                  </div>
+                )}
+                {company.quarterlyBurnUsd && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Annual Burn</p>
+                    <p className="text-sm font-semibold text-red-600 dark:text-red-400 mt-1">
+                      {cryptoPrice > 0 ? `-${Math.round((company.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()} ${company.asset}/yr` : `${(company.quarterlyBurnUsd * 4 / 1e6).toFixed(1)}M/yr`}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      ${(company.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr
+                    </p>
+                  </div>
+                )}
+                {company.hasOptions && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">Options</p>
+                    <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mt-1">
+                      {company.optionsOi ? `${(company.optionsOi / 1e6).toFixed(1)}M OI` : 'Available'}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+
+          {/* Key Backers */}
+          {intel?.keyBackers && intel.keyBackers.length > 0 && (
+            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                Key Backers & Investors
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {intel.keyBackers.map((backer, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1.5 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full font-medium"
+                  >
+                    {backer}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Recent Developments */}
+          {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
+            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                Recent Developments
+              </h4>
+              <ul className="space-y-2">
+                {intel.recentDevelopments.map((dev, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                    <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-indigo-500" />
+                    <span>{dev}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* 2026 Outlook */}
+          {intel?.outlook2026 && (
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                2026 Outlook
+              </h4>
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-800">
+                <p className="text-gray-700 dark:text-gray-300 italic">{intel.outlook2026}</p>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Press Releases */}
         {intel?.pressReleases && intel.pressReleases.length > 0 && (
@@ -512,7 +681,21 @@ export default function CompanyPage() {
                     {pr.date}
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900 dark:text-gray-100">{pr.title}</p>
+                    {pr.url ? (
+                      <a
+                        href={pr.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                      >
+                        {pr.title}
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <p className="font-medium text-gray-900 dark:text-gray-100">{pr.title}</p>
+                    )}
                     {pr.summary && (
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{pr.summary}</p>
                     )}
@@ -522,6 +705,13 @@ export default function CompanyPage() {
             </div>
           </div>
         )}
+        {/* SEC / Regulatory Filings */}
+        <CompanyFilings
+          ticker={company.ticker}
+          companyName={company.name}
+          className="mb-8"
+        />
+
       </main>
     </div>
   );

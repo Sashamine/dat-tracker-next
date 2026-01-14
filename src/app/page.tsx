@@ -1,18 +1,20 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
+import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
-import { allCompanies } from "@/lib/data/companies";
+import { MobileHeader } from "@/components/mobile-header";
+import { useCompanies } from "@/lib/hooks/use-companies";
+import { Company } from "@/lib/types";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { calculateMNAV } from "@/lib/calculations";
 
 // Get unique assets and count companies
-function getAssetStats(companies: typeof allCompanies, prices: any) {
+function getAssetStats(companies: Company[], prices: any) {
   const assets = [...new Set(companies.map(c => c.asset))];
   return assets.map(asset => {
     const assetCompanies = companies.filter(c => c.asset === asset);
@@ -35,11 +37,14 @@ export default function Home() {
   const { data: prices, isConnected } = usePricesStream();
   const { overrides } = useCompanyOverrides();
 
-  // Merge base company data with Google Sheets overrides
-  const companies = useMemo(
-    () => mergeAllCompanies(allCompanies, overrides),
-    [overrides]
-  );
+  // Fetch companies from database API
+  const { data: companiesData, isLoading: isLoadingCompanies } = useCompanies();
+
+  // Merge database company data with Google Sheets overrides
+  const companies = useMemo(() => {
+    const baseCompanies = companiesData?.companies || [];
+    return mergeAllCompanies(baseCompanies, overrides);
+  }, [companiesData, overrides]);
 
   const assetStats = getAssetStats(companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
@@ -65,23 +70,26 @@ export default function Home() {
   }, [companies, prices]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 flex">
-      {/* Left Sidebar - Navigation */}
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
+      {/* Mobile Header */}
+      <MobileHeader title="DAT Tracker" />
+
+      {/* Left Sidebar - Navigation (Desktop only) */}
       <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
         <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
       </Suspense>
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64 lg:mr-72">
-        <div className="px-4 py-6 max-w-full">
-          {/* Header */}
-          <div className="mb-6 flex items-center justify-between">
+        <div className="px-3 py-4 lg:px-4 lg:py-6 max-w-full">
+          {/* Header - Desktop only */}
+          <div className="mb-4 lg:mb-6 hidden lg:flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 All DAT Companies
               </h1>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury
+                {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury`}
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -131,24 +139,48 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Mobile Stats Bar */}
+          <div className="lg:hidden mb-4 flex items-center justify-between text-sm">
+            <p className="text-gray-500 dark:text-gray-400">
+              {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B`}
+            </p>
+            <div className="flex items-center gap-2 text-xs">
+              {isConnected ? (
+                <span className="inline-flex items-center gap-1 text-green-600">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                  Live
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-yellow-500">
+                  <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
+                  Connecting
+                </span>
+              )}
+            </div>
+          </div>
+
           {/* Main Content */}
-          <div className="flex gap-4">
-            {/* Filter Sidebar */}
-            <Suspense fallback={<div className="w-56 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
-              <FilterSidebar />
+          <div className="flex flex-col lg:flex-row gap-4">
+            {/* Filter Sidebar - Desktop only */}
+            <Suspense fallback={<div className="hidden lg:block w-56 bg-gray-50 dark:bg-gray-900 rounded-lg p-4 animate-pulse h-96" />}>
+              <div className="hidden lg:block">
+                <FilterSidebar />
+              </div>
             </Suspense>
 
             {/* Data Table */}
-            <div className="flex-1 min-w-0">
-              <Suspense fallback={<div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />}>
+            <div className="flex-1 min-w-0 overflow-x-auto">
+              {isLoadingCompanies ? (
+                <div className="h-96 bg-gray-50 dark:bg-gray-900 rounded-lg animate-pulse" />
+              ) : (
                 <DataTable companies={companies} prices={prices ?? undefined} />
-              </Suspense>
+              )}
             </div>
           </div>
 
           {/* Footer */}
           <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>Real-time prices from Alpaca. Live streaming updates.</p>
+            <p>Real-time prices from Alpaca. Data from Railway PostgreSQL.</p>
           </footer>
         </div>
       </main>

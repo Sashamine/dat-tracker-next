@@ -14,6 +14,7 @@ import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
   calculateMNAV,
+  calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
 import { useFilters } from "@/lib/hooks/use-filters";
@@ -90,6 +91,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
   // Calculate metrics for each company
   const companiesWithMetrics = companies.map((company) => {
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
+    const cryptoChange = prices?.crypto[company.asset]?.change24h;
     const stockData = prices?.stocks[company.ticker];
     const marketCap = stockData?.marketCap || company.marketCap || 0;
     const stockPrice = stockData?.price;
@@ -99,6 +101,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const isAfterHours = stockData?.isAfterHours || false;
 
     const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
+    const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
 
     // Determine company type
     const companyType = company.isMiner ? "Miner" : "Treasury";
@@ -111,6 +114,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       stockChange,
       stockVolume,
       mNAV: mNAV || 0,
+      mNAVChange,
       companyType,
       isAfterHours,
     };
@@ -179,6 +183,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       case "mNAV":
         aVal = a.mNAV || 0;
         bVal = b.mNAV || 0;
+        break;
+      case "mNAVChange":
+        aVal = a.mNAVChange || 0;
+        bVal = b.mNAVChange || 0;
         break;
       case "marketCap":
         aVal = a.marketCap || 0;
@@ -263,6 +271,12 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("mNAVChange")}
+                >
+                  mNAV 24h {sortField === "mNAVChange" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("stockPrice")}
                 >
                   Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
@@ -321,6 +335,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     {formatMNAV(company.mNAV)}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm">
+                    <FlashingPercent value={company.mNAVChange} />
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
                     <span className="inline-flex items-center gap-1">

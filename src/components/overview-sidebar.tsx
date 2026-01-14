@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CRYPTO_ICONS, YIELDING_ASSETS, NON_YIELDING_ASSETS } from "@/components/app-sidebar";
-import { MNAVDistributionChart } from "@/components/mnav-distribution-chart";
+import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
 import { Company } from "@/lib/types";
 
 interface AssetStat {
@@ -41,7 +41,7 @@ export function OverviewSidebar({
   className,
 }: OverviewSidebarProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [showChart, setShowChart] = useState(false);
+  const [showChart, setShowChart] = useState(true);
 
   const yieldingStats = assetStats.filter((s) => YIELDING_ASSETS.includes(s.asset));
   const nonYieldingStats = assetStats.filter((s) => NON_YIELDING_ASSETS.includes(s.asset));
@@ -173,13 +173,13 @@ export function OverviewSidebar({
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
-        {/* mNAV Distribution - Collapsible */}
+        {/* mNAV History - Collapsible */}
         <div>
           <button
             onClick={() => setShowChart(!showChart)}
             className="w-full flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
           >
-            <span>mNAV Distribution</span>
+            <span>mNAV History</span>
             <svg
               className={cn("w-4 h-4 transition-transform", showChart && "rotate-180")}
               fill="none"
@@ -191,7 +191,7 @@ export function OverviewSidebar({
           </button>
           {showChart && (
             <div className="bg-white dark:bg-gray-800 rounded-lg p-2 -mx-2">
-              <MNAVDistributionChart companies={companies} prices={prices} compact />
+              <AggregateMNAVChart companies={companies} prices={prices} compact />
             </div>
           )}
         </div>

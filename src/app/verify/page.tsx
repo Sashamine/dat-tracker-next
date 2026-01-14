@@ -6,6 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { getCompaniesNeedingData, getDataCoverageSummary } from "@/lib/data/holdings-data-status";
+import { MobileHeader } from "@/components/mobile-header";
 
 interface VerificationData {
   summary: {
@@ -132,16 +133,19 @@ export default function VerifyPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
-      <main className="container mx-auto px-4 py-8">
-        {/* Breadcrumb */}
-        <div className="mb-6">
+      {/* Mobile Header */}
+      <MobileHeader title="Verify Holdings" showBack />
+
+      <main className="container mx-auto px-3 py-4 lg:px-4 lg:py-8">
+        {/* Breadcrumb - Desktop only */}
+        <div className="mb-6 hidden lg:block">
           <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
             ← Back to tracker
           </Link>
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
               Holdings Verification
@@ -159,7 +163,7 @@ export default function VerifyPage() {
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500">Total</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">

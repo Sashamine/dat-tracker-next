@@ -92,6 +92,26 @@ export function calculateMNAV(
   return marketCap / nav;
 }
 
+// Calculate mNAV 24h change percentage
+// Formula: mNAV_change = ((1 + stock_change) / (1 + crypto_change) - 1) * 100
+// If stock goes up more than crypto, mNAV increases. If crypto goes up more, mNAV decreases.
+export function calculateMNAVChange(
+  stockChange24h: number | undefined,
+  cryptoChange24h: number | undefined
+): number | null {
+  if (stockChange24h === undefined || cryptoChange24h === undefined) return null;
+
+  // Convert percentages to decimals
+  const stockFactor = 1 + stockChange24h / 100;
+  const cryptoFactor = 1 + cryptoChange24h / 100;
+
+  // Avoid division by zero or negative factors
+  if (cryptoFactor <= 0 || stockFactor <= 0) return null;
+
+  // Calculate mNAV change percentage
+  return (stockFactor / cryptoFactor - 1) * 100;
+}
+
 // Calculate NAV discount/premium
 // Negative = discount (stock below NAV), Positive = premium (stock above NAV)
 export function calculateNAVDiscount(
@@ -237,7 +257,7 @@ export const BMNR_BENCHMARK_VOLUME = 800_000_000; // $800M/day
 
 // Network staking APYs by asset
 export const NETWORK_STAKING_APY: Record<string, number> = {
-  ETH: 0.03,
+  ETH: 0.028,
   BTC: 0,
   SOL: 0.07,
   HYPE: 0,

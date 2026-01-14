@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getCompaniesByAsset, allCompanies } from "@/lib/data/companies";
+import { useAsset, useAssets } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +24,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
+import { MobileHeader } from "@/components/mobile-header";
 
 // Asset metadata
 const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: boolean }> = {
@@ -57,19 +58,33 @@ export default function AssetPage() {
   const params = useParams();
   const router = useRouter();
   const symbol = (params.symbol as string).toUpperCase();
-  const baseCompanies = getCompaniesByAsset(symbol);
   const { data: prices } = usePricesStream();
   const { overrides } = useCompanyOverrides();
   const [sortField, setSortField] = useState<string>("holdingsValue");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
+  // Fetch asset data from database API
+  const { data: assetData, isLoading: isLoadingAsset } = useAsset(symbol);
+  const { data: assetsData } = useAssets();
+
   // Merge with overrides from Google Sheets
   const companies = useMemo(
-    () => mergeAllCompanies(baseCompanies, overrides),
-    [baseCompanies, overrides]
+    () => mergeAllCompanies(assetData?.companies || [], overrides),
+    [assetData, overrides]
   );
 
   const assetInfo = ASSET_INFO[symbol];
+
+  if (isLoadingAsset) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading asset data...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!assetInfo || companies.length === 0) {
     return (
@@ -148,13 +163,16 @@ export default function AssetPage() {
   const avgMNAV = companiesWithMetrics.filter(c => c.mNAV).reduce((sum, c) => sum + (c.mNAV || 0), 0) / companiesWithMetrics.filter(c => c.mNAV).length || 0;
 
   // Get all unique assets for navigation
-  const allAssets = [...new Set(allCompanies.map(c => c.asset))];
+  const allAssets: string[] = assetsData?.assets?.map((a: { symbol: string }) => a.symbol) || [];
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
-      <main className="container mx-auto px-4 py-8">
-        {/* Breadcrumb */}
-        <div className="mb-6">
+      {/* Mobile Header */}
+      <MobileHeader title={`${symbol} Companies`} showBack />
+
+      <main className="container mx-auto px-3 py-4 lg:px-4 lg:py-8">
+        {/* Breadcrumb - Desktop only */}
+        <div className="mb-6 hidden lg:block">
           <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
             ← Back to tracker
           </Link>
@@ -228,7 +246,7 @@ export default function AssetPage() {
         </div>
 
         {/* Companies Table */}
-        <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+        <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="bg-gray-50 dark:bg-gray-900/50">
