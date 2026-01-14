@@ -88,18 +88,31 @@ export function AppSidebar({ className }: AppSidebarProps) {
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
-        {/* Overview Button */}
-        <Link
-          href="/"
-          className={cn(
-            "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-            isOverview
-              ? "bg-indigo-600 text-white"
-              : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-          )}
-        >
-          Overview
-        </Link>
+        {/* Navigation */}
+        <div className="space-y-1">
+          <Link
+            href="/"
+            className={cn(
+              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+              isOverview
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            )}
+          >
+            Overview
+          </Link>
+          <Link
+            href="/mnav"
+            className={cn(
+              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+              pathname === "/mnav"
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            )}
+          >
+            mNAV Charts
+          </Link>
+        </div>
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
