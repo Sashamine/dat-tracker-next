@@ -4,14 +4,25 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
+import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
+import { Company } from "@/lib/types";
+
+interface MNAVStats {
+  median: number;
+  average: number;
+  count: number;
+}
 
 interface MobileHeaderProps {
   title?: string;
   showBack?: boolean;
   className?: string;
+  companies?: Company[];
+  prices?: any;
+  mnavStats?: MNAVStats;
 }
 
-export function MobileHeader({ title = "DAT Tracker", showBack = false, className }: MobileHeaderProps) {
+export function MobileHeader({ title = "DAT Tracker", showBack = false, className, companies, prices, mnavStats }: MobileHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -84,6 +95,28 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                   </Link>
                 </div>
               </div>
+
+              {/* mNAV Stats & Chart */}
+              {companies && prices && mnavStats && (
+                <div>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                    mNAV Overview
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
+                      <p className="text-xs text-gray-500">Median mNAV</p>
+                      <p className="text-lg font-bold text-indigo-600">{mnavStats.median.toFixed(2)}x</p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
+                      <p className="text-xs text-gray-500">Average mNAV</p>
+                      <p className="text-lg font-bold text-purple-600">{mnavStats.average.toFixed(2)}x</p>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
+                    <AggregateMNAVChart companies={companies} prices={prices} compact />
+                  </div>
+                </div>
+              )}
 
               {/* Assets */}
               <div>

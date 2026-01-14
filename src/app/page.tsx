@@ -72,7 +72,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
       {/* Mobile Header */}
-      <MobileHeader title="DAT Tracker" />
+      <MobileHeader
+        title="DAT Tracker"
+        companies={companies}
+        prices={prices ?? undefined}
+        mnavStats={mnavStats}
+      />
 
       {/* Left Sidebar - Navigation (Desktop only) */}
       <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
