@@ -44,7 +44,12 @@ export async function GET(request: Request) {
         cf.options_oi,
         cf.market_cap,
         cf.leverage_ratio,
-        cf.btc_mined_annual
+        cf.btc_mined_annual,
+        cf.cash_reserves,
+        cf.other_investments,
+        c.pending_merger,
+        c.expected_holdings,
+        c.merger_expected_close
       FROM companies c
       LEFT JOIN assets a ON c.asset_id = a.id
       LEFT JOIN company_financials cf ON cf.company_id = c.id AND cf.end_date IS NULL
@@ -104,6 +109,11 @@ export async function GET(request: Request) {
       marketCap: c.market_cap ? parseFloat(c.market_cap) : undefined,
       leverageRatio: c.leverage_ratio ? parseFloat(c.leverage_ratio) : undefined,
       btcMinedAnnual: c.btc_mined_annual ? parseFloat(c.btc_mined_annual) : undefined,
+      cashReserves: c.cash_reserves ? parseFloat(c.cash_reserves) : undefined,
+      otherInvestments: c.other_investments ? parseFloat(c.other_investments) : undefined,
+      pendingMerger: c.pending_merger || false,
+      expectedHoldings: c.expected_holdings ? parseFloat(c.expected_holdings) : undefined,
+      mergerExpectedClose: c.merger_expected_close,
     }));
 
     return NextResponse.json({

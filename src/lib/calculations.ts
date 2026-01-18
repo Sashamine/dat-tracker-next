@@ -67,27 +67,37 @@
  */
 
 // Calculate Net Asset Value (treasury value)
-export function calculateNAV(holdings: number, assetPrice: number): number {
-  return holdings * assetPrice;
+// Includes crypto holdings + cash reserves + other investments
+export function calculateNAV(
+  holdings: number,
+  assetPrice: number,
+  cashReserves: number = 0,
+  otherInvestments: number = 0
+): number {
+  return (holdings * assetPrice) + cashReserves + otherInvestments;
 }
 
 // Calculate NAV per share
 export function calculateNAVPerShare(
   holdings: number,
   assetPrice: number,
-  sharesOutstanding: number
+  sharesOutstanding: number,
+  cashReserves: number = 0,
+  otherInvestments: number = 0
 ): number | null {
   if (!sharesOutstanding || sharesOutstanding <= 0) return null;
-  return calculateNAV(holdings, assetPrice) / sharesOutstanding;
+  return calculateNAV(holdings, assetPrice, cashReserves, otherInvestments) / sharesOutstanding;
 }
 
 // Calculate mNAV (Market Cap / NAV) - key valuation metric
 export function calculateMNAV(
   marketCap: number,
   holdings: number,
-  assetPrice: number
+  assetPrice: number,
+  cashReserves: number = 0,
+  otherInvestments: number = 0
 ): number | null {
-  const nav = calculateNAV(holdings, assetPrice);
+  const nav = calculateNAV(holdings, assetPrice, cashReserves, otherInvestments);
   if (!nav || nav <= 0) return null;
   return marketCap / nav;
 }

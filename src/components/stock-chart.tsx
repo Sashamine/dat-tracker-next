@@ -15,6 +15,10 @@ export function StockChart({ data }: StockChartProps) {
   useEffect(() => {
     if (!chartContainerRef.current || data.length === 0) return;
 
+    // Responsive height: smaller on mobile
+    const isMobile = window.innerWidth < 768;
+    const chartHeight = isMobile ? 280 : 400;
+
     // Create chart
     const chart = createChart(chartContainerRef.current, {
       layout: {
@@ -26,7 +30,7 @@ export function StockChart({ data }: StockChartProps) {
         horzLines: { color: "#1f2937" },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 400,
+      height: chartHeight,
       rightPriceScale: {
         borderColor: "#374151",
       },
@@ -73,8 +77,10 @@ export function StockChart({ data }: StockChartProps) {
     // Handle resize
     const handleResize = () => {
       if (chartContainerRef.current) {
+        const isMobile = window.innerWidth < 768;
         chart.applyOptions({
           width: chartContainerRef.current.clientWidth,
+          height: isMobile ? 280 : 400,
         });
       }
     };

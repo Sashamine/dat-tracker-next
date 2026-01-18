@@ -28,6 +28,8 @@
 4. Twitter (secondary)
 5. Aggregators (verification/fallback only)
 
+**IMPORTANT: Aggregators (BitcoinTreasuries.net, Bitbo) can be wrong. Never use them as primary sources. They are for cross-checking only. Always prefer SEC filings, company websites, or official press releases.**
+
 ## Common Tasks
 
 ### Deploy changes

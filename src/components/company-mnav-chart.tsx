@@ -199,6 +199,7 @@ export function CompanyMNAVChart({
       chartRef.current = null;
     }
 
+    const isMobile = window.innerWidth < 768;
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
@@ -209,7 +210,7 @@ export function CompanyMNAVChart({
         horzLines: { color: "rgba(156, 163, 175, 0.1)" },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 300,
+      height: isMobile ? 280 : 250,
       rightPriceScale: {
         borderVisible: false,
       },
@@ -248,7 +249,11 @@ export function CompanyMNAVChart({
     // Handle resize
     const handleResize = () => {
       if (chartContainerRef.current && chartRef.current) {
-        chartRef.current.applyOptions({ width: chartContainerRef.current.clientWidth });
+        const isMobileNow = window.innerWidth < 768;
+        chartRef.current.applyOptions({
+          width: chartContainerRef.current.clientWidth,
+          height: isMobileNow ? 280 : 250,
+        });
       }
     };
 

@@ -115,8 +115,8 @@ export default function AssetPage() {
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 
-    const holdingsValue = calculateNAV(company.holdings, cryptoPrice);
-    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
+    const holdingsValue = calculateNAV(company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
+    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
 
     return {
       ...company,

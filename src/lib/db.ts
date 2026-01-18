@@ -74,6 +74,8 @@ export interface DbCompanyFinancials {
   shares_outstanding: number | null;
   leverage_ratio: number | null;
   btc_mined_annual: number | null;
+  cash_reserves: number | null;
+  other_investments: number | null;
   effective_date: string;
 }
 

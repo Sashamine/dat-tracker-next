@@ -71,22 +71,50 @@ export async function GET(
     }
 
     const data = await response.json();
-    const prices: CryptoHistoryPoint[] = (data.prices || []).map(([timestamp, price]: [number, number]) => ({
-      time: new Date(timestamp).toISOString().split("T")[0],
-      price,
-    }));
+    const rawPrices = data.prices || [];
 
-    // Deduplicate by date (keep last price of each day)
-    const byDate = new Map<string, number>();
-    for (const p of prices) {
-      byDate.set(p.time, p.price);
+    let prices: CryptoHistoryPoint[];
+
+    if (days <= 1) {
+      // For 1d: keep hourly data (use Unix timestamp as string for intraday)
+      // Sample every 12th point (~hourly from 5-min data)
+      const sampled = rawPrices.filter((_: any, i: number) => i % 12 === 0 || i === rawPrices.length - 1);
+      prices = sampled.map(([timestamp, price]: [number, number]) => ({
+        time: String(Math.floor(timestamp / 1000)), // Unix timestamp in seconds
+        price,
+      }));
+    } else if (days <= 7) {
+      // For 7d: keep 4-hourly data
+      const sampled = rawPrices.filter((_: any, i: number) => i % 4 === 0 || i === rawPrices.length - 1);
+      prices = sampled.map(([timestamp, price]: [number, number]) => ({
+        time: String(Math.floor(timestamp / 1000)),
+        price,
+      }));
+    } else if (days <= 30) {
+      // For 1mo: keep ~6-hourly data (CoinGecko returns hourly for 1-90 days)
+      const sampled = rawPrices.filter((_: any, i: number) => i % 6 === 0 || i === rawPrices.length - 1);
+      prices = sampled.map(([timestamp, price]: [number, number]) => ({
+        time: String(Math.floor(timestamp / 1000)),
+        price,
+      }));
+    } else {
+      // For 1y and all: use daily data (YYYY-MM-DD format)
+      prices = rawPrices.map(([timestamp, price]: [number, number]) => ({
+        time: new Date(timestamp).toISOString().split("T")[0],
+        price,
+      }));
+      // Deduplicate by date (keep last price of each day)
+      const byDate = new Map<string, number>();
+      for (const p of prices) {
+        byDate.set(p.time, p.price);
+      }
+      prices = Array.from(byDate.entries())
+        .map(([time, price]) => ({ time, price }))
+        .sort((a, b) => a.time.localeCompare(b.time));
     }
-    const deduped = Array.from(byDate.entries())
-      .map(([time, price]) => ({ time, price }))
-      .sort((a, b) => a.time.localeCompare(b.time));
 
-    cache.set(cacheKey, { data: deduped, timestamp: Date.now() });
-    return NextResponse.json(deduped);
+    cache.set(cacheKey, { data: prices, timestamp: Date.now() });
+    return NextResponse.json(prices);
   } catch (error) {
     console.error("Error fetching crypto history:", error);
     return NextResponse.json([]);

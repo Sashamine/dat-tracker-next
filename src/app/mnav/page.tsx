@@ -53,14 +53,15 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
     staleTime: 5 * 60 * 1000,
   });
 
-  // Calculate current mNAV stats
+  // Calculate current mNAV stats (excluding pending merger SPACs)
   const currentStats = useMemo(() => {
     const mnavs = companies
+      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
         const marketCap = stockData?.marketCap || company.marketCap || 0;
-        return calculateMNAV(marketCap, company.holdings, cryptoPrice);
+        return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);
 
@@ -72,6 +73,9 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
     };
   }, [companies, prices]);
 
+  // Check if time format is Unix timestamp (intraday) or date string
+  const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
+
   // Calculate historical aggregate mNAV
   const historicalData = useMemo(() => {
     if (!btcHistory || btcHistory.length === 0 || !prices?.crypto?.BTC?.price) {
@@ -81,8 +85,8 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
     const currentBTCPrice = prices.crypto.BTC.price;
     const result: { time: Time; median: number; average: number }[] = [];
 
-    // Sample interval based on time range
-    const sampleInterval = timeRange === "1d" ? 1 : timeRange === "7d" ? 1 : timeRange === "1mo" ? 1 : 7;
+    // Sample interval based on time range (data is already sampled by API)
+    const sampleInterval = timeRange === "1y" || timeRange === "all" ? 7 : 1;
 
     for (let i = 0; i < btcHistory.length; i += sampleInterval) {
       const point = btcHistory[i];
@@ -96,24 +100,35 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
       const historicalAverage = currentStats.average / adjustedRatio;
 
       if (historicalMedian > 0 && historicalMedian < 10 && historicalAverage > 0 && historicalAverage < 10) {
+        // Convert time format: if it's all digits, it's a Unix timestamp
+        const timeValue = /^\d+$/.test(point.time) ? parseInt(point.time, 10) : point.time;
         result.push({
-          time: point.time as Time,
+          time: timeValue as Time,
           median: historicalMedian,
           average: historicalAverage,
         });
       }
     }
 
-    // Add current point
-    const today = new Date().toISOString().split("T")[0] as Time;
-    result.push({
-      time: today,
-      median: currentStats.median,
-      average: currentStats.average,
-    });
+    // Add current point with matching time format
+    if (isIntraday) {
+      const nowUnix = Math.floor(Date.now() / 1000);
+      result.push({
+        time: nowUnix as Time,
+        median: currentStats.median,
+        average: currentStats.average,
+      });
+    } else {
+      const today = new Date().toISOString().split("T")[0] as Time;
+      result.push({
+        time: today,
+        median: currentStats.median,
+        average: currentStats.average,
+      });
+    }
 
     return result;
-  }, [btcHistory, prices, currentStats, timeRange]);
+  }, [btcHistory, prices, currentStats, timeRange, isIntraday]);
 
   // Calculate change from start
   const change = useMemo(() => {
@@ -151,7 +166,8 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
       },
       timeScale: {
         borderVisible: false,
-        timeVisible: timeRange === "1d",
+        timeVisible: timeRange === "1d" || timeRange === "7d" || timeRange === "1mo",
+        secondsVisible: false,
       },
     });
 
@@ -269,14 +285,15 @@ export default function MNAVPage() {
     return mergeAllCompanies(baseCompanies, overrides);
   }, [companiesData, overrides]);
 
-  // Calculate current stats for the header
+  // Calculate current stats for the header (excluding pending merger SPACs)
   const currentStats = useMemo(() => {
     const mnavs = companies
+      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
         const marketCap = stockData?.marketCap || company.marketCap || 0;
-        return calculateMNAV(marketCap, company.holdings, cryptoPrice);
+        return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);
 

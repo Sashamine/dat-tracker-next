@@ -31,6 +31,7 @@ export function HoldingsPerShareChart({
   useEffect(() => {
     if (!chartContainerRef.current || !historyData || historyData.history.length < 2) return;
 
+    const isMobile = window.innerWidth < 768;
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
@@ -41,7 +42,7 @@ export function HoldingsPerShareChart({
         horzLines: { color: "rgba(156, 163, 175, 0.1)" },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 250,
+      height: isMobile ? 200 : 250,
       rightPriceScale: {
         borderVisible: false,
       },
@@ -84,7 +85,11 @@ export function HoldingsPerShareChart({
     // Handle resize
     const handleResize = () => {
       if (chartContainerRef.current) {
-        chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+        const isMobileNow = window.innerWidth < 768;
+        chart.applyOptions({
+          width: chartContainerRef.current.clientWidth,
+          height: isMobileNow ? 200 : 250,
+        });
       }
     };
 

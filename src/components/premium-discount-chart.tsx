@@ -48,7 +48,7 @@ export function PremiumDiscountChart({
         const marketCap = stockData?.marketCap || company.marketCap || 0;
         const holdingsValue = company.holdings * cryptoPrice;
 
-        const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice) || 0;
+        const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0) || 0;
         const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
 
         const fairValue = calculateFairValue(
@@ -223,7 +223,7 @@ export function MNAVScatterChart({
         const marketCap = stockData?.marketCap || company.marketCap || 0;
         const holdingsValue = company.holdings * cryptoPrice;
 
-        const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice) || 0;
+        const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0) || 0;
         const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
 
         const fairValue = calculateFairValue(
