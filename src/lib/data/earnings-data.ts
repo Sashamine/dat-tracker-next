@@ -300,7 +300,7 @@ export function getEarningsCalendar(options?: {
 const PERIOD_CONFIG = {
   "1W": { targetDays: 7, maxDataAge: 14 },    // Weekly: need data from last 2 weeks
   "1M": { targetDays: 30, maxDataAge: 45 },   // Monthly: need data from last 45 days
-  "3M": { targetDays: 90, maxDataAge: 120 },  // Quarterly: need data from last 4 months
+  "3M": { targetDays: 90, maxDataAge: 240 },  // Quarterly: need data from last 8 months (captures H1 reporters)
   "1Y": { targetDays: 365, maxDataAge: 400 }, // Yearly: need data from last ~13 months
 };
 
@@ -368,7 +368,7 @@ export function getTreasuryYieldLeaderboard(options?: {
       if (daysCovered < 14 || daysCovered > 45) continue; // 14-45 days for monthly
     }
     if (period === "3M") {
-      if (daysCovered < 45 || daysCovered > 120) continue; // 45-120 days for quarterly
+      if (daysCovered < 45 || daysCovered > 200) continue; // 45-200 days for quarterly (includes semi-annual reporters)
     }
 
     const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
