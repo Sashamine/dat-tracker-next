@@ -47,12 +47,16 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 446400, sharesOutstanding: 48_000_000, holdingsPerShare: 0.009300, source: "Q4 2024 estimates" },
 ];
 
-// Other companies with reported historical data can be added here
+// MARA Holdings - Largest US public miner
 const MARA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 17631, sharesOutstanding: 280_000_000, holdingsPerShare: 0.0000630, source: "Q1 2024" },
-  { date: "2024-06-30", holdings: 20818, sharesOutstanding: 295_000_000, holdingsPerShare: 0.0000706, source: "Q2 2024" },
-  { date: "2024-09-30", holdings: 26747, sharesOutstanding: 310_000_000, holdingsPerShare: 0.0000863, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 44394, sharesOutstanding: 350_000_000, holdingsPerShare: 0.0001268, source: "Q4 2024" },
+  { date: "2023-12-31", holdings: 15126, sharesOutstanding: 246_000_000, holdingsPerShare: 0.0000615, source: "FY 2023 10-K" },
+  { date: "2024-03-31", holdings: 17631, sharesOutstanding: 267_000_000, holdingsPerShare: 0.0000660, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 18488, sharesOutstanding: 277_000_000, holdingsPerShare: 0.0000667, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 26747, sharesOutstanding: 290_000_000, holdingsPerShare: 0.0000922, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 44893, sharesOutstanding: 311_840_000, holdingsPerShare: 0.0001440, source: "FY 2024 10-K" },
+  { date: "2025-03-31", holdings: 46376, sharesOutstanding: 344_098_000, holdingsPerShare: 0.0001348, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 49951, sharesOutstanding: 440_912_000, holdingsPerShare: 0.0001133, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 52850, sharesOutstanding: 470_126_000, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q" },
 ];
 
 const RIOT_HISTORY: HoldingsSnapshot[] = [
@@ -174,6 +178,49 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 10556, sharesOutstanding: 290_000_000, holdingsPerShare: 0.0000364, source: "Q4 2024 estimate" },
 ];
 
+// Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
+const HUT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2023-12-31", holdings: 9195, sharesOutstanding: 55_272_610, holdingsPerShare: 0.0001664, source: "Dec 2023 Report" },
+  { date: "2024-03-31", holdings: 9102, sharesOutstanding: 93_696_683, holdingsPerShare: 0.0000971, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 9102, sharesOutstanding: 90_192_842, holdingsPerShare: 0.0001009, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 9106, sharesOutstanding: 96_407_378, holdingsPerShare: 0.0000944, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 10171, sharesOutstanding: 100_000_000, holdingsPerShare: 0.0001017, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 10264, sharesOutstanding: 102_854_747, holdingsPerShare: 0.0000998, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 10667, sharesOutstanding: 104_220_084, holdingsPerShare: 0.0001024, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 13696, sharesOutstanding: 121_761_796, holdingsPerShare: 0.0001125, source: "Q3 2025 10-Q" },
+];
+
+// Core Scientific (CORZ) - Emerged from bankruptcy Jan 2024
+const CORZ_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-12-31", holdings: 256, sharesOutstanding: 292_606_000, holdingsPerShare: 0.00000087, source: "FY 2024 10-K" },
+  { date: "2025-03-31", holdings: 977, sharesOutstanding: 363_300_000, holdingsPerShare: 0.00000269, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 1612, sharesOutstanding: 305_400_000, holdingsPerShare: 0.00000528, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 2116, sharesOutstanding: 317_363_000, holdingsPerShare: 0.00000667, source: "Q3 2025 10-Q" },
+];
+
+// Bitdeer Technologies (BTDR) - Started treasury strategy Nov 2024
+const BTDR_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-12-31", holdings: 594, sharesOutstanding: 165_427_000, holdingsPerShare: 0.00000359, source: "FY 2024 Earnings" },
+  { date: "2025-03-31", holdings: 1156, sharesOutstanding: 228_561_000, holdingsPerShare: 0.00000506, source: "Q1 2025 Earnings" },
+  { date: "2025-06-30", holdings: 1502, sharesOutstanding: 193_970_000, holdingsPerShare: 0.00000774, source: "Q2 2025 Earnings" },
+  { date: "2025-09-30", holdings: 2029, sharesOutstanding: 230_814_000, holdingsPerShare: 0.00000879, source: "Q3 2025 Earnings" },
+];
+
+// Trump Media (DJT) - Started BTC treasury May 2025
+const DJT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-05-30", holdings: 0, sharesOutstanding: 220_700_000, holdingsPerShare: 0, source: "Treasury deal closed" },
+  { date: "2025-07-21", holdings: 19000, sharesOutstanding: 255_000_000, holdingsPerShare: 0.0000745, source: "Press reports ~$2B BTC" },
+  { date: "2025-12-22", holdings: 11542, sharesOutstanding: 278_000_000, holdingsPerShare: 0.0000415, source: "Bitcoin Magazine" },
+  { date: "2026-01-10", holdings: 15000, sharesOutstanding: 280_000_000, holdingsPerShare: 0.0000536, source: "The Block" },
+];
+
+// Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers
+const XXI_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-04-23", holdings: 42000, sharesOutstanding: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement" },
+  { date: "2025-07-29", holdings: 43500, sharesOutstanding: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update" },
+  { date: "2025-12-09", holdings: 43514, sharesOutstanding: 651_000_000, holdingsPerShare: 0.0000668, source: "NYSE listing 8-K" },
+];
+
 // Strive (ASST) - First publicly traded asset management BTC treasury
 // Data from press releases and SEC filings
 const ASST_HISTORY: HoldingsSnapshot[] = [
@@ -195,6 +242,11 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },
   "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
   ASST: { ticker: "ASST", asset: "BTC", history: ASST_HISTORY },
+  HUT: { ticker: "HUT", asset: "BTC", history: HUT_HISTORY },
+  CORZ: { ticker: "CORZ", asset: "BTC", history: CORZ_HISTORY },
+  BTDR: { ticker: "BTDR", asset: "BTC", history: BTDR_HISTORY },
+  DJT: { ticker: "DJT", asset: "BTC", history: DJT_HISTORY },
+  XXI: { ticker: "XXI", asset: "BTC", history: XXI_HISTORY },
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },
