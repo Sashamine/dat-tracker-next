@@ -26,6 +26,9 @@ const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: 
 // These are manually updated based on current shares outstanding × price
 // Common issues: FMP returns local currency as USD for non-US stocks, or wrong data entirely
 const MARKET_CAP_OVERRIDES: Record<string, number> = {
+  // Fully diluted market caps (matching company DB values for EV-based mNAV)
+  "MSTR": 55_522_000_000,  // $55.52B fully diluted (includes convertible debt conversion)
+  "SBET": 2_363_000_000,   // $2.36B fully diluted
   "BMNR": 12_800_000_000,  // ~425M shares × $30.12 (Jan 2026)
   "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
   "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
