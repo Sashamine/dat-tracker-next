@@ -62,11 +62,6 @@ function formatDate(dateStr: string | null): string {
   });
 }
 
-const priorityColors: Record<string, string> = {
-  high: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-  medium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
-  low: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400",
-};
 
 export default function VerifyPage() {
   const { data, isLoading, error, refetch } = useQuery({
@@ -177,15 +172,15 @@ export default function VerifyPage() {
           </div>
         )}
 
-        {/* Holdings Per Share Data Coverage */}
-        <div className="bg-white dark:bg-gray-900 border border-purple-200 dark:border-purple-800 rounded-lg p-6 mb-8">
+        {/* Holdings Per Share Historical Data */}
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-semibold text-purple-700 dark:text-purple-400">
-                Holdings/Share Historical Data
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Holdings/Share Charts
               </h2>
               <p className="text-sm text-gray-500">
-                {dataCoverage.withData} of {dataCoverage.total} companies have historical data ({dataCoverage.coveragePercent}%)
+                {dataCoverage.withData} companies have time-series data for historical charts
               </p>
             </div>
             <div className="flex gap-2">
@@ -193,54 +188,38 @@ export default function VerifyPage() {
                 <Badge
                   key={asset}
                   variant="outline"
-                  className={stats.withData === stats.total ? "border-green-500 text-green-600" : ""}
                 >
-                  {asset}: {stats.withData}/{stats.total}
+                  {asset}: {stats.withData}
                 </Badge>
               ))}
             </div>
           </div>
 
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            Historical holdings/share data enables trend charts on company pages. This data is compiled from quarterly SEC filings,
+            8-K announcements, and official press releases. Most newer treasury companies don&apos;t have enough history yet for meaningful charts.
+          </p>
+
           {companiesNeedingData.length > 0 && (
-            <div className="space-y-2">
-              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Companies Needing Data Collection ({companiesNeedingData.length})
-              </h3>
-              <div className="max-h-64 overflow-y-auto">
-                <table className="w-full text-sm">
-                  <thead className="sticky top-0 bg-white dark:bg-gray-900">
-                    <tr className="text-left text-gray-500 border-b border-gray-200 dark:border-gray-700">
-                      <th className="p-2">Ticker</th>
-                      <th className="p-2">Name</th>
-                      <th className="p-2">Asset</th>
-                      <th className="p-2">Priority</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {companiesNeedingData.slice(0, 10).map((company) => (
-                      <tr key={company.ticker} className="border-t border-gray-100 dark:border-gray-800">
-                        <td className="p-2">
-                          <Link href={`/company/${company.ticker}`} className="font-mono font-medium text-indigo-600 hover:underline">
-                            {company.ticker}
-                          </Link>
-                        </td>
-                        <td className="p-2 text-gray-600 dark:text-gray-400 truncate max-w-[180px]">
-                          {company.name}
-                        </td>
-                        <td className="p-2">
-                          <Badge variant="outline">{company.asset}</Badge>
-                        </td>
-                        <td className="p-2">
-                          <Badge className={priorityColors[company.priority]}>
-                            {company.priority}
-                          </Badge>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <details className="text-sm">
+              <summary className="cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                {companiesNeedingData.length} companies without historical data
+              </summary>
+              <div className="mt-3 max-h-48 overflow-y-auto">
+                <div className="flex flex-wrap gap-2">
+                  {companiesNeedingData.map((company) => (
+                    <Link
+                      key={company.ticker}
+                      href={`/company/${company.ticker}`}
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs text-gray-600 dark:text-gray-400 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    >
+                      <span className="font-mono">{company.ticker}</span>
+                      <span className="text-gray-400">({company.asset})</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            </details>
           )}
         </div>
 
