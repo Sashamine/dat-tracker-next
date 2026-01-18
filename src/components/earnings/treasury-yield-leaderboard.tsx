@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Table,
@@ -64,8 +65,8 @@ interface TreasuryYieldLeaderboardProps {
 }
 
 export function TreasuryYieldLeaderboard({
-  period,
-  quarter,
+  period: initialPeriod,
+  quarter: initialQuarter,
   asset,
   limit,
   onPeriodChange,
@@ -74,13 +75,26 @@ export function TreasuryYieldLeaderboard({
 }: TreasuryYieldLeaderboardProps) {
   const router = useRouter();
 
-  // Determine current view mode
-  const viewMode: ViewMode = quarter ? "quarterly" : (period || "1Y");
+  // Use local state so period changes take effect immediately
+  const [localPeriod, setLocalPeriod] = useState<YieldPeriod | undefined>(initialPeriod || "1Y");
+  const [localQuarter, setLocalQuarter] = useState<CalendarQuarter | undefined>(initialQuarter);
 
-  // Pass the period directly - the hook will handle defaults
+  // Sync with props when they change externally
+  useEffect(() => {
+    setLocalPeriod(initialPeriod || "1Y");
+  }, [initialPeriod]);
+
+  useEffect(() => {
+    setLocalQuarter(initialQuarter);
+  }, [initialQuarter]);
+
+  // Determine current view mode
+  const viewMode: ViewMode = localQuarter ? "quarterly" : (localPeriod || "1Y");
+
+  // Use local state for the hook - this ensures immediate updates
   const { data, isLoading, error } = useTreasuryYieldLeaderboard({
-    period: quarter ? undefined : period,
-    quarter,
+    period: localQuarter ? undefined : localPeriod,
+    quarter: localQuarter,
     asset,
   });
 
@@ -88,10 +102,14 @@ export function TreasuryYieldLeaderboard({
     if (mode === "quarterly") {
       // Switch to quarterly view with most recent quarter
       const defaultQuarter = data?.availableQuarters?.[0] || "Q4-2025";
+      setLocalQuarter(defaultQuarter as CalendarQuarter);
+      setLocalPeriod(undefined);
       onQuarterChange?.(defaultQuarter as CalendarQuarter);
       onPeriodChange?.(undefined as unknown as YieldPeriod);
     } else {
-      // Switch to period view
+      // Switch to period view - update local state first!
+      setLocalPeriod(mode);
+      setLocalQuarter(undefined);
       onPeriodChange?.(mode);
       onQuarterChange?.(undefined as unknown as CalendarQuarter);
     }
