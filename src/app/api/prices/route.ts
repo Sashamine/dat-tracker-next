@@ -32,7 +32,7 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
   // Fully diluted market caps (matching company DB values for EV-based mNAV)
   "MSTR": 55_522_000_000,  // $55.52B fully diluted (includes convertible debt conversion)
   "SBET": 2_363_000_000,   // $2.36B fully diluted
-  "BMNR": 12_800_000_000,  // ~425M shares × $30.12 (Jan 2026)
+  "BMNR": 14_170_000_000,  // ~430M shares × $31.20 (Jan 17, 2026)
   // BTC Miners with significant debt (Jan 2026)
   "HUT": 6_770_000_000,    // $6.77B - Hut 8 Mining (13,696 BTC reserve, $350M debt)
   "CORZ": 5_300_000_000,   // $5.3B - Core Scientific ($1.2B debt, emerged from bankruptcy)
