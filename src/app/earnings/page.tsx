@@ -77,6 +77,7 @@ export default function EarningsPage() {
           {/* Primary: Treasury Yield Leaderboard */}
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 lg:p-6">
             <TreasuryYieldLeaderboard
+              key={`${yieldPeriod || 'none'}-${selectedQuarter || 'none'}-${selectedAsset || 'all'}`}
               period={yieldPeriod}
               quarter={selectedQuarter}
               asset={selectedAsset}
