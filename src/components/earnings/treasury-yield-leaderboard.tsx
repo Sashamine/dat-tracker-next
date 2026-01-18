@@ -119,7 +119,7 @@ export function TreasuryYieldLeaderboard({
               <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Company</TableHead>
               <TableHead className="text-right">Yield</TableHead>
-              <TableHead className="text-right hidden sm:table-cell">Period</TableHead>
+              <TableHead className="text-right hidden sm:table-cell">Date Range</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -163,10 +163,12 @@ export function TreasuryYieldLeaderboard({
                 </TableCell>
                 <TableCell className="text-right hidden sm:table-cell">
                   <div className="text-xs text-gray-500">
-                    {item.daysCovered}d
+                    {new Date(item.startDate).toLocaleDateString("en-US", { month: "short", year: "2-digit" })}
+                    {" → "}
+                    {new Date(item.endDate).toLocaleDateString("en-US", { month: "short", year: "2-digit" })}
                   </div>
                   <div className="text-xs text-gray-400">
-                    {new Date(item.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    {item.daysCovered}d
                   </div>
                 </TableCell>
               </TableRow>
