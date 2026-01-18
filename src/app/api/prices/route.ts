@@ -15,8 +15,7 @@ const FMP_TICKER_MAP: Record<string, string> = {
 // Fallback prices for illiquid stocks not covered by data providers
 // These are stocks on minor exchanges (OTC, Euronext Growth, etc.)
 const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: string }> = {
-  // Major stocks that need guaranteed fully diluted market caps
-  "MSTR": { price: 350, marketCap: 55_522_000_000, note: "Strategy fully diluted" },
+  // Stocks that need guaranteed market caps (OTC/illiquid)
   "SBET": { price: 53, marketCap: 2_363_000_000, note: "SharpLink fully diluted" },
   "CEPO": { price: 10.50, marketCap: 3_500_000_000, note: "BSTR Holdings pre-merger SPAC ~$3.5B" },
   "XTAIF": { price: 0.75, marketCap: 20000000, note: "xTAO Inc OTC" },
@@ -29,8 +28,7 @@ const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: 
 // These are manually updated based on current shares outstanding × price
 // Common issues: FMP returns local currency as USD for non-US stocks, or wrong data entirely
 const MARKET_CAP_OVERRIDES: Record<string, number> = {
-  // Fully diluted market caps (matching company DB values for EV-based mNAV)
-  "MSTR": 55_522_000_000,  // $55.52B fully diluted (includes convertible debt conversion)
+  // Market cap overrides - use basic common shares MC, add preferred/debt separately in DB
   "SBET": 2_363_000_000,   // $2.36B fully diluted
   "BMNR": 14_170_000_000,  // ~430M shares × $31.20 (Jan 17, 2026)
   // BTC Miners with significant debt (Jan 2026)
