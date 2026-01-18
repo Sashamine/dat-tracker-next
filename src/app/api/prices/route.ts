@@ -15,6 +15,9 @@ const FMP_TICKER_MAP: Record<string, string> = {
 // Fallback prices for illiquid stocks not covered by data providers
 // These are stocks on minor exchanges (OTC, Euronext Growth, etc.)
 const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: string }> = {
+  // Major stocks that need guaranteed fully diluted market caps
+  "MSTR": { price: 350, marketCap: 55_522_000_000, note: "Strategy fully diluted" },
+  "SBET": { price: 53, marketCap: 2_363_000_000, note: "SharpLink fully diluted" },
   "CEPO": { price: 10.50, marketCap: 3_500_000_000, note: "BSTR Holdings pre-merger SPAC ~$3.5B" },
   "XTAIF": { price: 0.75, marketCap: 20000000, note: "xTAO Inc OTC" },
   "IHLDF": { price: 0.10, marketCap: 10000000, note: "Immutable Holdings OTC" },
