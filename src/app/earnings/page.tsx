@@ -7,7 +7,7 @@ import { EarningsCalendar } from "@/components/earnings/earnings-calendar";
 import { TreasuryYieldLeaderboard } from "@/components/earnings/treasury-yield-leaderboard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Asset } from "@/lib/types";
+import { Asset, YieldPeriod } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 // Asset filter options
@@ -16,7 +16,7 @@ const ASSET_OPTIONS: Asset[] = ["BTC", "ETH", "SOL", "HYPE", "TAO", "DOGE", "XRP
 export default function EarningsPage() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>(undefined);
   const [showUpcoming, setShowUpcoming] = useState(true);
-  const [yieldPeriod, setYieldPeriod] = useState<"QoQ" | "YTD" | "1Y">("1Y");
+  const [yieldPeriod, setYieldPeriod] = useState<YieldPeriod>("3M");
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
@@ -30,14 +30,14 @@ export default function EarningsPage() {
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
-        <div className="px-3 py-4 lg:px-6 lg:py-6 max-w-6xl mx-auto">
+        <div className="px-3 py-4 lg:px-6 lg:py-6 max-w-5xl mx-auto">
           {/* Header - Desktop only */}
           <div className="mb-6 hidden lg:block">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Earnings Calendar
+              Treasury Yield Leaderboard
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Track earnings dates and treasury yield performance
+              Which companies are growing holdings per share the fastest?
             </p>
           </div>
 
@@ -65,92 +65,20 @@ export default function EarningsPage() {
             </div>
           </div>
 
-          {/* Main Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column: Earnings Calendar */}
-            <div className="space-y-6">
-              {/* Upcoming Earnings */}
-              <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    {showUpcoming ? "Upcoming Earnings" : "Recent Results"}
-                  </h2>
-                  <div className="flex gap-2">
-                    <Button
-                      variant={showUpcoming ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setShowUpcoming(true)}
-                    >
-                      Upcoming
-                    </Button>
-                    <Button
-                      variant={!showUpcoming ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setShowUpcoming(false)}
-                    >
-                      Recent
-                    </Button>
-                  </div>
-                </div>
-                <EarningsCalendar
-                  days={90}
-                  asset={selectedAsset}
-                  upcoming={showUpcoming}
-                  limit={10}
-                />
-              </div>
-
-              {/* Quick Stats */}
-              <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-500 mb-3">This Week</h3>
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                      <EarningsCountBadge days={7} asset={selectedAsset} />
-                    </div>
-                    <div className="text-xs text-gray-500">Reporting</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-orange-600">
-                      <EarningsCountBadge days={1} asset={selectedAsset} />
-                    </div>
-                    <div className="text-xs text-gray-500">Today</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                      <EarningsCountBadge days={30} asset={selectedAsset} />
-                    </div>
-                    <div className="text-xs text-gray-500">This Month</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Treasury Yield Leaderboard */}
-            <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    Treasury Yield Leaderboard
-                  </h2>
-                  <p className="text-sm text-gray-500">
-                    Holdings per share growth
-                  </p>
-                </div>
-              </div>
-              <TreasuryYieldLeaderboard
-                period={yieldPeriod}
-                asset={selectedAsset}
-                limit={15}
-                onPeriodChange={setYieldPeriod}
-              />
-            </div>
+          {/* Primary: Treasury Yield Leaderboard */}
+          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 lg:p-6">
+            <TreasuryYieldLeaderboard
+              period={yieldPeriod}
+              asset={selectedAsset}
+              limit={20}
+              onPeriodChange={setYieldPeriod}
+            />
           </div>
 
           {/* Explanation Section */}
-          <div className="mt-8 bg-gray-50 dark:bg-gray-900/50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-              Understanding Treasury Yield
+          <div className="mt-6 bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4 lg:p-6">
+            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              What is Treasury Yield?
             </h3>
             <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
               <p>
@@ -159,21 +87,43 @@ export default function EarningsPage() {
               </p>
               <p>
                 <strong>Example:</strong> If a company held 0.001 BTC/share last quarter and now holds 0.0012 BTC/share,
-                that&apos;s a 20% quarterly yield - meaning shareholders effectively earned 20% more BTC exposure.
-              </p>
-              <p className="text-gray-500">
-                Data sources: SEC 10-Q/10-K filings, company press releases, investor presentations
+                that&apos;s a +20% yield - shareholders effectively own 20% more BTC exposure per share.
               </p>
             </div>
+          </div>
+
+          {/* Secondary: Earnings Calendar */}
+          <div className="mt-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                {showUpcoming ? "Upcoming Earnings" : "Recent Results"}
+              </h2>
+              <div className="flex gap-2">
+                <Button
+                  variant={showUpcoming ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setShowUpcoming(true)}
+                >
+                  Upcoming
+                </Button>
+                <Button
+                  variant={!showUpcoming ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setShowUpcoming(false)}
+                >
+                  Recent
+                </Button>
+              </div>
+            </div>
+            <EarningsCalendar
+              days={90}
+              asset={selectedAsset}
+              upcoming={showUpcoming}
+              limit={8}
+            />
           </div>
         </div>
       </main>
     </div>
   );
-}
-
-// Helper component to show earnings count
-function EarningsCountBadge({ days, asset }: { days: number; asset?: Asset }) {
-  // This would ideally fetch from API, but for now show placeholder
-  return <span>-</span>;
 }

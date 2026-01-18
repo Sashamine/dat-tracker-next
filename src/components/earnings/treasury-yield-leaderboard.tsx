@@ -12,7 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTreasuryYieldLeaderboard } from "@/lib/hooks/use-earnings";
-import { Asset } from "@/lib/types";
+import { Asset, YieldPeriod } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 // Asset colors (matching data-table.tsx)
@@ -35,11 +35,19 @@ const assetColors: Record<string, string> = {
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
+// Period labels for display
+const PERIOD_LABELS: Record<YieldPeriod, string> = {
+  "1W": "Weekly",
+  "1M": "Monthly",
+  "3M": "Quarterly",
+  "1Y": "Yearly",
+};
+
 interface TreasuryYieldLeaderboardProps {
-  period?: "QoQ" | "YTD" | "1Y";
+  period?: YieldPeriod;
   asset?: Asset;
   limit?: number;
-  onPeriodChange?: (period: "QoQ" | "YTD" | "1Y") => void;
+  onPeriodChange?: (period: YieldPeriod) => void;
   className?: string;
 }
 
@@ -89,7 +97,7 @@ export function TreasuryYieldLeaderboard({
       {/* Period selector */}
       {onPeriodChange && (
         <div className="flex gap-2 mb-4">
-          {(["QoQ", "YTD", "1Y"] as const).map((p) => (
+          {(["1W", "1M", "3M", "1Y"] as YieldPeriod[]).map((p) => (
             <Button
               key={p}
               variant={period === p ? "default" : "outline"}
@@ -97,7 +105,7 @@ export function TreasuryYieldLeaderboard({
               onClick={() => onPeriodChange(p)}
               className="text-xs"
             >
-              {p}
+              {PERIOD_LABELS[p]}
             </Button>
           ))}
         </div>
@@ -110,8 +118,8 @@ export function TreasuryYieldLeaderboard({
             <TableRow className="bg-gray-50 dark:bg-gray-800/50">
               <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Company</TableHead>
-              <TableHead className="text-right">Growth</TableHead>
-              <TableHead className="text-right hidden sm:table-cell">Annualized</TableHead>
+              <TableHead className="text-right">Yield</TableHead>
+              <TableHead className="text-right hidden sm:table-cell">Period</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -141,24 +149,25 @@ export function TreasuryYieldLeaderboard({
                 <TableCell className="text-right">
                   <span
                     className={cn(
-                      "font-medium",
+                      "font-semibold text-lg",
                       item.growthPct >= 0 ? "text-green-600" : "text-red-600"
                     )}
                   >
                     {item.growthPct >= 0 ? "+" : ""}
                     {item.growthPct.toFixed(1)}%
                   </span>
+                  <div className="text-xs text-gray-400">
+                    {item.annualizedGrowthPct >= 0 ? "+" : ""}
+                    {item.annualizedGrowthPct.toFixed(0)}% ann.
+                  </div>
                 </TableCell>
                 <TableCell className="text-right hidden sm:table-cell">
-                  <span
-                    className={cn(
-                      "text-sm",
-                      item.annualizedGrowthPct >= 0 ? "text-green-600" : "text-red-600"
-                    )}
-                  >
-                    {item.annualizedGrowthPct >= 0 ? "+" : ""}
-                    {item.annualizedGrowthPct.toFixed(1)}%
-                  </span>
+                  <div className="text-xs text-gray-500">
+                    {item.daysCovered}d
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    {new Date(item.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

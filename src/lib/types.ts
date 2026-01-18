@@ -158,14 +158,20 @@ export interface EarningsCalendarEntry {
   holdingsPerShareGrowth?: number;    // QoQ treasury yield %
 }
 
+export type YieldPeriod = "1W" | "1M" | "3M" | "1Y";
+
 export interface TreasuryYieldMetrics {
   ticker: string;
   companyName: string;
   asset: Asset;
-  period: "QoQ" | "YTD" | "1Y";
+  period: YieldPeriod;
   holdingsPerShareStart: number;
   holdingsPerShareEnd: number;
   growthPct: number;
   annualizedGrowthPct: number;
   rank?: number;
+  // Data freshness
+  startDate: string;
+  endDate: string;
+  daysCovered: number;
 }

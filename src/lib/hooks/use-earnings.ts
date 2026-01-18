@@ -1,6 +1,6 @@
 // Hook to fetch earnings data
 import { useQuery } from "@tanstack/react-query";
-import { EarningsCalendarEntry, TreasuryYieldMetrics, EarningsRecord, Asset } from "../types";
+import { EarningsCalendarEntry, TreasuryYieldMetrics, EarningsRecord, Asset, YieldPeriod } from "../types";
 
 interface EarningsCalendarResponse {
   entries: EarningsCalendarEntry[];
@@ -44,7 +44,7 @@ export function useEarningsCalendar(options?: {
 
 // Fetch treasury yield leaderboard
 export function useTreasuryYieldLeaderboard(options?: {
-  period?: "QoQ" | "YTD" | "1Y";
+  period?: YieldPeriod;
   asset?: Asset;
 }) {
   const { period = "1Y", asset } = options || {};

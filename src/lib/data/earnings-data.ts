@@ -296,13 +296,24 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
+// Period configuration: target days and max data age for inclusion
+const PERIOD_CONFIG = {
+  "1W": { targetDays: 7, maxDataAge: 14 },    // Weekly: need data from last 2 weeks
+  "1M": { targetDays: 30, maxDataAge: 45 },   // Monthly: need data from last 45 days
+  "3M": { targetDays: 90, maxDataAge: 120 },  // Quarterly: need data from last 4 months
+  "1Y": { targetDays: 365, maxDataAge: 400 }, // Yearly: need data from last ~13 months
+};
+
 // Get treasury yield leaderboard
 export function getTreasuryYieldLeaderboard(options?: {
-  period?: "QoQ" | "YTD" | "1Y";
+  period?: "1W" | "1M" | "3M" | "1Y";
   asset?: Asset;
 }): TreasuryYieldMetrics[] {
   const { period = "1Y", asset } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
+  const config = PERIOD_CONFIG[period];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
     if (data.history.length < 2) continue;
@@ -316,34 +327,47 @@ export function getTreasuryYieldLeaderboard(options?: {
 
     const history = data.history;
     const latest = history[history.length - 1];
-
-    let startSnapshot;
     const latestDate = new Date(latest.date);
 
-    if (period === "QoQ") {
-      // Find snapshot ~90 days ago
-      const targetDate = new Date(latestDate);
-      targetDate.setDate(targetDate.getDate() - 90);
-      startSnapshot = history.find((h) => new Date(h.date) <= targetDate) || history[0];
-    } else if (period === "YTD") {
-      // Find first snapshot of current year
-      const currentYear = latestDate.getFullYear();
-      startSnapshot = history.find((h) => new Date(h.date).getFullYear() === currentYear) || history[0];
-    } else {
-      // 1Y - find snapshot ~365 days ago
-      const targetDate = new Date(latestDate);
-      targetDate.setDate(targetDate.getDate() - 365);
-      startSnapshot = history.find((h) => new Date(h.date) <= targetDate) || history[0];
+    // Check if latest data is fresh enough for this period
+    const daysSinceLatest = Math.floor((today.getTime() - latestDate.getTime()) / (1000 * 60 * 60 * 24));
+    if (daysSinceLatest > config.maxDataAge) continue;
+
+    // Find the best starting snapshot for this period
+    const targetStartDate = new Date(latestDate);
+    targetStartDate.setDate(targetStartDate.getDate() - config.targetDays);
+
+    // Find snapshot closest to (but not after) the target start date
+    let startSnapshot = null;
+    for (let i = history.length - 2; i >= 0; i--) {
+      const snapshotDate = new Date(history[i].date);
+      if (snapshotDate <= targetStartDate) {
+        startSnapshot = history[i];
+        break;
+      }
     }
 
-    if (!startSnapshot || startSnapshot.holdingsPerShare <= 0) continue;
+    // If no snapshot before target, use the oldest available
+    if (!startSnapshot) {
+      startSnapshot = history[0];
+    }
+
+    // Skip if start and end are the same snapshot
+    if (startSnapshot.date === latest.date) continue;
+    if (startSnapshot.holdingsPerShare <= 0) continue;
+
+    const startDate = new Date(startSnapshot.date);
+    const endDate = new Date(latest.date);
+    const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    // For shorter periods, require minimum data span
+    if (period === "1W" && daysCovered < 3) continue;  // At least 3 days for weekly
+    if (period === "1M" && daysCovered < 14) continue; // At least 2 weeks for monthly
 
     const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
 
     // Calculate annualized
-    const startDate = new Date(startSnapshot.date);
-    const endDate = new Date(latest.date);
-    const yearsFraction = (endDate.getTime() - startDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000);
+    const yearsFraction = daysCovered / 365.25;
     const annualizedGrowthPct = yearsFraction > 0
       ? (Math.pow(latest.holdingsPerShare / startSnapshot.holdingsPerShare, 1 / yearsFraction) - 1) * 100
       : 0;
@@ -357,6 +381,9 @@ export function getTreasuryYieldLeaderboard(options?: {
       holdingsPerShareEnd: latest.holdingsPerShare,
       growthPct,
       annualizedGrowthPct,
+      startDate: startSnapshot.date,
+      endDate: latest.date,
+      daysCovered,
     });
   }
 
