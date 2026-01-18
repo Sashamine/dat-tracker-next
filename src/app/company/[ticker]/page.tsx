@@ -115,7 +115,7 @@ export default function CompanyPage() {
         const cryptoPrice = prices?.crypto[c.asset]?.price || 0;
         const stockData = prices?.stocks[c.ticker];
         const marketCap = stockData?.marketCap || c.marketCap || 0;
-        return calculateMNAV(marketCap, c.holdings, cryptoPrice, c.cashReserves || 0, c.otherInvestments || 0);
+        return calculateMNAV(marketCap, c.holdings, cryptoPrice, c.cashReserves || 0, c.otherInvestments || 0, c.totalDebt || 0, c.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 10);
 

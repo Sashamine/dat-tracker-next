@@ -106,7 +106,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const otherAssets = cashReserves + otherInvestments;
 
     // mNAV now includes other assets in NAV calculation
-    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, cashReserves, otherInvestments);
+    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, cashReserves, otherInvestments, company.totalDebt || 0, company.preferredEquity || 0);
     const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
 
     // Determine company type

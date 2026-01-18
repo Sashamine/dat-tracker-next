@@ -188,6 +188,8 @@ export const btcCompanies: Company[] = [
     optionsOi: 500_000,  // Deep options market
     marketCap: 50_000_000_000,  // ~$50B (Jan 2026)
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
+    totalDebt: 8_200_000_000,  // ~$8.2B in convertible debt (Q2 2025)
+    preferredEquity: 7_800_000_000,  // ~$7.8B in preferred stock (STRK/STRF/STRC/STRD)
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (Jan 2026 8-K)
     leader: "Michael Saylor (Executive Chairman)",
@@ -284,6 +286,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 124_000_000,  // ~$124M cash (Q2 2025)
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
+    totalDebt: 1_800_000_000,  // $1.8B in 0% convertible notes
     notes: "Largest US public miner. $1.8B in 0% converts.",
   },
   {
@@ -310,6 +313,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
     leader: "Jason Les (CEO)",
     strategy: "1 GW Corsicana facility. Mining + AI/HPC pivot.",
+    totalDebt: 794_000_000,  // $594M 0.75% converts + $200M BTC-backed credit
     notes: "$594M 0.75% converts + $200M BTC-backed credit.",
   },
   {
@@ -336,6 +340,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     leader: "Zach Bradford (CEO)",
     strategy: "Efficient US miner. 50 EH/s. DAM derivatives program.",
+    totalDebt: 1_150_000_000,  // $650M 0% converts + $400M BTC-backed credit + $100M facility
     notes: "$650M 0% converts. $400M BTC-backed credit.",
   },
   {
