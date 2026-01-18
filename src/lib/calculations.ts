@@ -89,19 +89,25 @@ export function calculateNAVPerShare(
   return calculateNAV(holdings, assetPrice, cashReserves, otherInvestments) / sharesOutstanding;
 }
 
-// Calculate mNAV (Market Cap / Crypto NAV) - key valuation metric
-// Industry standard: mNAV uses ONLY crypto holdings value, not cash/other assets
-// This matches external trackers (mstr-tracker, cryptoflashreport, etc.)
+// Calculate mNAV (Enterprise Value / Crypto NAV) - key valuation metric
+// Industry standard: EV = Market Cap + Debt + Preferred - Cash
+// This matches MSTR, SBET, Metaplanet official dashboards
 export function calculateMNAV(
   marketCap: number,
   holdings: number,
   assetPrice: number,
   cashReserves: number = 0,
-  otherInvestments: number = 0
+  otherInvestments: number = 0,
+  totalDebt: number = 0,
+  preferredEquity: number = 0
 ): number | null {
   const cryptoNav = holdings * assetPrice;  // Crypto-only NAV
   if (!cryptoNav || cryptoNav <= 0) return null;
-  return marketCap / cryptoNav;
+  
+  // Enterprise Value = Market Cap + Debt + Preferred Stock - Cash
+  const enterpriseValue = marketCap + totalDebt + preferredEquity - cashReserves;
+  
+  return enterpriseValue / cryptoNav;
 }
 
 // Calculate mNAV 24h change percentage

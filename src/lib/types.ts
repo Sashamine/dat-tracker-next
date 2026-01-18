@@ -65,6 +65,11 @@ export interface Company {
   cashReserves?: number;        // USD cash on balance sheet
   otherInvestments?: number;    // Equity stakes, other non-crypto assets (USD value)
 
+  // Debt (for EV-based mNAV calculation)
+  // EV = Market Cap + totalDebt + preferredEquity - cashReserves
+  totalDebt?: number;           // Total debt outstanding (converts, bonds, credit facilities)
+  preferredEquity?: number;     // Preferred stock notional value (MSTR-style STRK/STRF)
+
   // Leverage/optionality (for non-yielding assets)
   leverageRatio?: number; // > 1 means company uses debt/converts to amplify exposure
 

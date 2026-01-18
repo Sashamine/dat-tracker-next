@@ -70,7 +70,6 @@ export default function EarningsPage() {
             <TreasuryYieldLeaderboard
               period={yieldPeriod}
               asset={selectedAsset}
-              limit={20}
               onPeriodChange={setYieldPeriod}
             />
           </div>
