@@ -100,7 +100,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const holdingsValue = company.holdings * cryptoPrice;
     const isAfterHours = stockData?.isAfterHours || false;
 
-    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
+    // Other assets (cash + investments)
+    const cashReserves = company.cashReserves || 0;
+    const otherInvestments = company.otherInvestments || 0;
+    const otherAssets = cashReserves + otherInvestments;
+
+    // mNAV now includes other assets in NAV calculation
+    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, cashReserves, otherInvestments);
     const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
 
     // Determine company type
@@ -117,6 +123,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       mNAVChange,
       companyType,
       isAfterHours,
+      otherAssets,
     };
   });
 
@@ -169,8 +176,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
 
     switch (sortField) {
       case "holdingsValue":
-        aVal = a.holdingsValue || 0;
-        bVal = b.holdingsValue || 0;
+        // Fall back to holdings if prices haven't loaded yet (holdingsValue would be 0)
+        aVal = a.holdingsValue || a.holdings || 0;
+        bVal = b.holdingsValue || b.holdings || 0;
         break;
       case "stockPrice":
         aVal = a.stockPrice || 0;
@@ -195,6 +203,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       case "stockVolume":
         aVal = a.stockVolume || 0;
         bVal = b.stockVolume || 0;
+        break;
+      case "otherAssets":
+        aVal = a.otherAssets || 0;
+        bVal = b.otherAssets || 0;
         break;
       case "ticker":
         return sortDir === "desc"
@@ -250,14 +262,78 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     );
   };
 
+  // Mobile card component
+  const MobileCard = ({ company, index }: { company: typeof sortedCompanies[0]; index: number }) => (
+    <div
+      onClick={() => router.push(`/company/${company.ticker}`)}
+      className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 active:bg-gray-50 dark:active:bg-gray-800 transition-colors cursor-pointer"
+    >
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-400 font-medium w-6">{index + 1}</span>
+          <CompanyLogo ticker={company.ticker} />
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-gray-900 dark:text-gray-100">{company.ticker}</span>
+              <Badge variant="outline" className={cn("text-xs", assetColors[company.asset] || assetColors.ETH)}>
+                {company.asset}
+              </Badge>
+              {company.pendingMerger && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  Pending
+                </Badge>
+              )}
+            </div>
+            <p className="text-sm text-gray-500 truncate max-w-[200px]">{company.name}</p>
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
+            {company.stockPrice ? `$${company.stockPrice.toFixed(2)}` : "—"}
+          </div>
+          <div className={cn("text-sm font-medium",
+            company.stockChange && company.stockChange >= 0 ? "text-green-600" : "text-red-600"
+          )}>
+            {company.stockChange !== undefined ? `${company.stockChange >= 0 ? "+" : ""}${company.stockChange.toFixed(2)}%` : "—"}
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+        <div>
+          <p className="text-xs text-gray-500 uppercase">mNAV</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">
+            {company.pendingMerger ? "—" : formatMNAV(company.mNAV)}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase">Market Cap</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.marketCap)}</p>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase">Holdings</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+    <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden lg:border-0">
       {filteredCompanies.length === 0 ? (
         <div className="p-8 text-center text-gray-500">
           No companies match the current filters.
         </div>
       ) : (
-        <div className="overflow-x-auto">
+        <>
+          {/* Mobile Card View */}
+          <div className="lg:hidden space-y-3 p-3 bg-gray-50 dark:bg-gray-950">
+            {sortedCompanies.map((company, index) => (
+              <MobileCard key={company.id} company={company} index={index} />
+            ))}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="hidden lg:block overflow-x-auto border border-gray-200 dark:border-gray-800 rounded-lg">
           <Table>
             <TableHeader>
               <TableRow className="bg-gray-50 dark:bg-gray-900/50">
@@ -305,7 +381,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("holdingsValue")}
                 >
-                  Holdings {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
+                  Crypto {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("otherAssets")}
+                >
+                  Other {sortField === "otherAssets" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -324,8 +406,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-col">
-                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                      <span className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-gray-100">
                         {company.ticker}
+                        {company.pendingMerger && (
+                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
+                            Pending Merger
+                          </Badge>
+                        )}
                       </span>
                       <span className="text-sm text-gray-500 truncate max-w-[180px]">
                         {company.name}
@@ -341,10 +428,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right font-mono">
-                    {formatMNAV(company.mNAV)}
+                    {company.pendingMerger ? (
+                      <span className="text-gray-400" title="mNAV not available for pre-merger SPACs">—</span>
+                    ) : (
+                      formatMNAV(company.mNAV)
+                    )}
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm">
-                    <FlashingPercent value={company.mNAVChange} />
+                    {company.pendingMerger ? (
+                      <span className="text-gray-400">—</span>
+                    ) : (
+                      <FlashingPercent value={company.mNAVChange} />
+                    )}
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
                     <span className="inline-flex items-center gap-1">
@@ -369,24 +464,37 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     <FlashingLargeNumber value={company.marketCap} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex flex-col items-end">
-                      <div className="flex items-center gap-1.5">
-                        <FlashingLargeNumber
-                          value={company.holdingsValue}
-                          className="font-mono font-medium text-gray-900 dark:text-gray-100"
-                        />
-                        <StalenessCompact lastUpdated={company.holdingsLastUpdated} />
+                    {company.pendingMerger ? (
+                      <div className="flex flex-col items-end">
+                        <span className="text-gray-400 text-sm">TBD</span>
+                        <span className="text-xs text-amber-600 font-mono">
+                          ~{formatNumber(company.expectedHoldings || 0)} {company.asset} expected
+                        </span>
                       </div>
-                      <span className="text-xs text-gray-500 font-mono">
-                        {formatNumber(company.holdings)} {company.asset}
-                      </span>
-                    </div>
+                    ) : (
+                      <div className="flex flex-col items-end">
+                        <div className="flex items-center gap-1.5">
+                          <FlashingLargeNumber
+                            value={company.holdingsValue}
+                            className="font-mono font-medium text-gray-900 dark:text-gray-100"
+                          />
+                          <StalenessCompact lastUpdated={company.holdingsLastUpdated} sourceUrl={company.holdingsSourceUrl} />
+                        </div>
+                        <span className="text-xs text-gray-500 font-mono">
+                          {formatNumber(company.holdings)} {company.asset}
+                        </span>
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
+                    {company.otherAssets > 0 ? formatNumber(company.otherAssets) : "—"}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </div>
+          </div>
+        </>
       )}
       {filteredCompanies.length > 0 && (
         <div className="px-4 py-2 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-800 text-sm text-gray-500">

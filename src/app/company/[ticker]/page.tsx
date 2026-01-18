@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { Suspense, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useCompany } from "@/lib/hooks/use-companies";
+import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
-import { useCompanyOverrides, mergeCompanyWithOverrides } from "@/lib/hooks/use-company-overrides";
+import { useCompanyOverrides, mergeCompanyWithOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { AppSidebar } from "@/components/app-sidebar";
+import { OverviewSidebar } from "@/components/overview-sidebar";
+import { Company } from "@/lib/types";
 import {
   useStockHistory,
   TimeRange,
@@ -78,6 +81,53 @@ export default function CompanyPage() {
   // Company intel - must be called before any early returns (React hooks rule)
   const intel = useMemo(() => getCompanyIntel(ticker), [ticker]);
 
+  // Fetch all companies for sidebar stats (shared cache with main page)
+  const { data: companiesData } = useCompanies();
+  const allCompanies = useMemo(() => {
+    const baseCompanies = companiesData?.companies || [];
+    return mergeAllCompanies(baseCompanies, overrides);
+  }, [companiesData, overrides]);
+
+  // Calculate sidebar stats
+  const { assetStats, totalValue, mnavStats } = useMemo(() => {
+    const assets = [...new Set(allCompanies.map(c => c.asset))];
+    const assetStats = assets.map(asset => {
+      const assetCompanies = allCompanies.filter(c => c.asset === asset);
+      const price = prices?.crypto[asset]?.price || 0;
+      const totalHoldings = assetCompanies.reduce((sum, c) => sum + c.holdings, 0);
+      const totalValue = totalHoldings * price;
+      return { asset, count: assetCompanies.length, totalHoldings, totalValue, price };
+    }).sort((a, b) => b.totalValue - a.totalValue);
+
+    const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
+
+    // Calculate median helper
+    const median = (arr: number[]) => {
+      if (arr.length === 0) return 0;
+      const sorted = [...arr].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+    };
+
+    const mnavs = allCompanies
+      .filter((c) => !c.pendingMerger)
+      .map((c) => {
+        const cryptoPrice = prices?.crypto[c.asset]?.price || 0;
+        const stockData = prices?.stocks[c.ticker];
+        const marketCap = stockData?.marketCap || c.marketCap || 0;
+        return calculateMNAV(marketCap, c.holdings, cryptoPrice, c.cashReserves || 0, c.otherInvestments || 0);
+      })
+      .filter((m): m is number => m !== null && m > 0 && m < 10);
+
+    const mnavStats = {
+      median: mnavs.length > 0 ? median(mnavs) : 0,
+      average: mnavs.length > 0 ? mnavs.reduce((a, b) => a + b, 0) / mnavs.length : 0,
+      count: mnavs.length,
+    };
+
+    return { assetStats, totalValue, mnavStats };
+  }, [allCompanies, prices]);
+
   // Update interval when time range changes
   const handleTimeRangeChange = (newRange: TimeRange) => {
     setTimeRange(newRange);
@@ -122,11 +172,17 @@ export default function CompanyPage() {
   const stockChange = stockData?.change24h;
   const marketCap = stockData?.marketCap || company.marketCap || 0;
 
-  // Calculate metrics
-  const nav = calculateNAV(company.holdings, cryptoPrice);
-  const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice);
+  // Other assets (cash + investments)
+  const cashReserves = company.cashReserves || 0;
+  const otherInvestments = company.otherInvestments || 0;
+  const otherAssets = cashReserves + otherInvestments;
+  const cryptoHoldingsValue = company.holdings * cryptoPrice;
+
+  // Calculate metrics (including other assets in NAV)
+  const nav = calculateNAV(company.holdings, cryptoPrice, cashReserves, otherInvestments);
+  const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, cashReserves, otherInvestments);
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
-  const navPerShare = calculateNAVPerShare(company.holdings, cryptoPrice, sharesOutstanding);
+  const navPerShare = calculateNAVPerShare(company.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(company.holdings, sharesOutstanding);
 
@@ -148,11 +204,16 @@ export default function CompanyPage() {
 
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
       {/* Mobile Header */}
       <MobileHeader title={company.ticker} showBack />
 
-      <main className="container mx-auto px-3 py-4 lg:px-4 lg:py-8">
+      {/* Left Sidebar - Navigation (Desktop only) */}
+      <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
+        <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
+      </Suspense>
+
+      <main className="flex-1 lg:ml-64 lg:mr-72 px-3 py-4 lg:px-6 lg:py-8">
         {/* Breadcrumb - Desktop only */}
         <div className="mb-6 hidden lg:block">
           <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
@@ -173,6 +234,11 @@ export default function CompanyPage() {
               <Badge variant="outline" className={cn("font-medium", tierColors[company.tier])}>
                 T{company.tier}
               </Badge>
+              {company.pendingMerger && (
+                <Badge variant="outline" className="font-medium bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  Pending Merger
+                </Badge>
+              )}
             </div>
             <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{company.name}</p>
             {company.leader && (
@@ -225,14 +291,47 @@ export default function CompanyPage() {
           </div>
         </div>
 
+        {/* Pending Merger Banner */}
+        {company.pendingMerger && (
+          <div className="mb-8 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0">
+                <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-amber-800 dark:text-amber-300">Pre-Merger SPAC</h3>
+                <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
+                  This company is a SPAC that has not yet completed its business combination.
+                  Holdings data reflects expected post-merger values, not current holdings.
+                </p>
+                {company.expectedHoldings && (
+                  <p className="text-sm text-amber-700 dark:text-amber-400 mt-2">
+                    <strong>Expected Holdings:</strong> ~{company.expectedHoldings.toLocaleString()} {company.asset}
+                    {company.mergerExpectedClose && (
+                      <> (merger expected {new Date(company.mergerExpectedClose).toLocaleDateString()})</>
+                    )}
+                  </p>
+                )}
+                <p className="text-xs text-amber-600 dark:text-amber-500 mt-2">
+                  mNAV calculations are not shown for pre-merger SPACs.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Key Valuation Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {formatMNAV(mNAV)}
+              {company.pendingMerger ? "—" : formatMNAV(mNAV)}
             </p>
-            <p className="text-xs text-gray-400">Market Cap / NAV</p>
+            <p className="text-xs text-gray-400">
+              {company.pendingMerger ? "N/A for pre-merger" : "Market Cap / NAV"}
+            </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">NAV/Share</p>
@@ -279,6 +378,59 @@ export default function CompanyPage() {
             </div>
           )}
         </div>
+
+        {/* Asset Breakdown - only show if there are other assets */}
+        {(otherAssets > 0 || cryptoHoldingsValue > 0) && (
+          <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              Net Asset Value Breakdown
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  {company.asset} Holdings
+                </p>
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  {formatLargeNumber(cryptoHoldingsValue)}
+                </p>
+                <p className="text-xs text-gray-400">
+                  {formatTokenAmount(company.holdings, company.asset)}
+                </p>
+              </div>
+              {cashReserves > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    Cash Reserves
+                  </p>
+                  <p className="text-xl font-bold text-green-600">
+                    {formatLargeNumber(cashReserves)}
+                  </p>
+                  <p className="text-xs text-gray-400">USD</p>
+                </div>
+              )}
+              {otherInvestments > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    Other Investments
+                  </p>
+                  <p className="text-xl font-bold text-blue-600">
+                    {formatLargeNumber(otherInvestments)}
+                  </p>
+                  <p className="text-xs text-gray-400">Equity stakes, etc.</p>
+                </div>
+              )}
+              <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-3 border border-indigo-200 dark:border-indigo-700">
+                <p className="text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wide font-medium">
+                  Total NAV
+                </p>
+                <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+                  {formatLargeNumber(nav)}
+                </p>
+                <p className="text-xs text-indigo-500">All assets combined</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Chart with Time Range Selector */}
         <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -347,7 +499,7 @@ export default function CompanyPage() {
 
 
         {/* mNAV History Chart */}
-        {mNAV && stockPrice > 0 && cryptoPrice > 0 && (
+        {mNAV && stockPrice > 0 && cryptoPrice > 0 && !company.pendingMerger && (
           <CompanyMNAVChart
             ticker={company.ticker}
             asset={company.asset}
@@ -368,6 +520,7 @@ export default function CompanyPage() {
               <StalenessBadge
                 lastUpdated={company.holdingsLastUpdated}
                 source={company.holdingsSource}
+                sourceUrl={company.holdingsSourceUrl}
               />
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -713,6 +866,17 @@ export default function CompanyPage() {
         />
 
       </main>
+
+      {/* Right Sidebar - Overview (Desktop only) */}
+      <OverviewSidebar
+        assetStats={assetStats}
+        mnavStats={mnavStats}
+        totalCompanies={allCompanies.length}
+        totalValue={totalValue}
+        companies={allCompanies}
+        prices={prices ?? undefined}
+        className="hidden lg:block fixed right-0 top-0 h-full"
+      />
     </div>
   );
 }
