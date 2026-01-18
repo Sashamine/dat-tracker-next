@@ -89,7 +89,9 @@ export function calculateNAVPerShare(
   return calculateNAV(holdings, assetPrice, cashReserves, otherInvestments) / sharesOutstanding;
 }
 
-// Calculate mNAV (Market Cap / NAV) - key valuation metric
+// Calculate mNAV (Market Cap / Crypto NAV) - key valuation metric
+// Industry standard: mNAV uses ONLY crypto holdings value, not cash/other assets
+// This matches external trackers (mstr-tracker, cryptoflashreport, etc.)
 export function calculateMNAV(
   marketCap: number,
   holdings: number,
@@ -97,9 +99,9 @@ export function calculateMNAV(
   cashReserves: number = 0,
   otherInvestments: number = 0
 ): number | null {
-  const nav = calculateNAV(holdings, assetPrice, cashReserves, otherInvestments);
-  if (!nav || nav <= 0) return null;
-  return marketCap / nav;
+  const cryptoNav = holdings * assetPrice;  // Crypto-only NAV
+  if (!cryptoNav || cryptoNav <= 0) return null;
+  return marketCap / cryptoNav;
 }
 
 // Calculate mNAV 24h change percentage

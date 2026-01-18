@@ -47,6 +47,7 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtm: 2_000_000_000,
     avgDailyVolume: 300_000_000,
     hasOptions: true,
+    marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",
@@ -69,6 +70,7 @@ export const ethCompanies: Company[] = [
     quarterlyBurnUsd: 800_000,
     avgDailyVolume: 100_000_000,
     hasOptions: true,
+    marketCap: 1_500_000_000,  // ~$1.5B (Jan 2026)
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
     notes: "SPAC merger with Dynamix. 3rd largest ETH treasury.",
@@ -92,6 +94,7 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtm: 172_000_000,
     avgDailyVolume: 80_000_000,
     hasOptions: true,
+    marketCap: 760_000_000,  // ~$760M (Jan 2026)
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     leader: "Sam Tabar",
     strategy: "86% staked, fully exited BTC. Avg cost $3,045/ETH.",
@@ -114,6 +117,7 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtm: 60_000_000,
     avgDailyVolume: 15_000_000,
     hasOptions: true,
+    marketCap: 136_000_000,  // ~$136M (Jan 2026)
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
   },
   {
@@ -152,6 +156,7 @@ export const ethCompanies: Company[] = [
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 10_000_000,
+    marketCap: 110_000_000,  // ~$110M (Jan 2026)
     leader: "Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
     notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some Nov 2025.",
@@ -181,7 +186,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
-    marketCap: 45_000_000_000,
+    marketCap: 50_000_000_000,  // ~$50B (Jan 2026)
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (Jan 2026 8-K)
