@@ -69,7 +69,8 @@ export function useTreasuryYieldLeaderboard(options?: {
       if (!res.ok) throw new Error("Failed to fetch yield leaderboard");
       return res.json();
     },
-    staleTime: 30 * 1000, // 30 seconds - short cache to allow quick switching
+    staleTime: 0, // No cache - always fetch fresh data for period switches
+    refetchOnMount: 'always', // Force refetch when component mounts (key changes)
   });
 }
 
