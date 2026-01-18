@@ -54,11 +54,13 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
 };
 const FMP_ONLY_STOCKS = [
   "MSTR",      // Strategy - use FMP for price since Alpaca not working on Vercel
-  "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
+  "ALTBG.PA",  // The Blockchain Group (Euronext Paris) - FMP ticker
+  "ALTBG",     // The Blockchain Group - display ticker (not valid on Alpaca)
   "LUXFF",     // Luxxfolio (OTC)
   "NA",        // Nano Labs
   "3350.T",    // Metaplanet (Tokyo)
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
+  "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
   ];
 
