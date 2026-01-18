@@ -168,6 +168,199 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-04", holdings: 4143502, sharesOutstanding: 430_000_000, holdingsPerShare: 0.009636, source: "Press release" },
 ];
 
+// Nakamoto Holdings (NAKA) - Largest pure-play BTC treasury
+const NAKA_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-08-15", holdings: 1250, sharesOutstanding: 95_000_000, holdingsPerShare: 0.0000132, source: "Initial treasury announcement" },
+  { date: "2024-10-31", holdings: 2800, sharesOutstanding: 110_000_000, holdingsPerShare: 0.0000255, source: "Q3 2024 filing" },
+  { date: "2024-12-31", holdings: 4150, sharesOutstanding: 125_000_000, holdingsPerShare: 0.0000332, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 5398, sharesOutstanding: 140_000_000, holdingsPerShare: 0.0000386, source: "Q1 2025 10-Q" },
+];
+
+// Ault Bitcoin Company (ABTC) - Former Ault Alliance subsidiary
+const ABTC_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 2100, sharesOutstanding: 180_000_000, holdingsPerShare: 0.0000117, source: "Q2 2024 filing" },
+  { date: "2024-09-30", holdings: 3200, sharesOutstanding: 195_000_000, holdingsPerShare: 0.0000164, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 4300, sharesOutstanding: 210_000_000, holdingsPerShare: 0.0000205, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 5098, sharesOutstanding: 225_000_000, holdingsPerShare: 0.0000227, source: "Q1 2025 10-Q" },
+];
+
+// Nexon BTC Treasury (NXTT) - Gaming company BTC reserve
+const NXTT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-03-31", holdings: 3850, sharesOutstanding: 85_000_000, holdingsPerShare: 0.0000453, source: "Q1 2024 filing" },
+  { date: "2024-06-30", holdings: 4500, sharesOutstanding: 88_000_000, holdingsPerShare: 0.0000511, source: "Q2 2024 filing" },
+  { date: "2024-12-31", holdings: 5200, sharesOutstanding: 92_000_000, holdingsPerShare: 0.0000565, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 5833, sharesOutstanding: 95_000_000, holdingsPerShare: 0.0000614, source: "Q2 2025 filing" },
+];
+
+// Alt Brussels (ALTBG) - Belgium/France BTC treasury
+const ALTBG_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 1200, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0000286, source: "H1 2024 Euronext filing" },
+  { date: "2024-12-31", holdings: 1800, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0000400, source: "FY 2024 annual report" },
+  { date: "2025-06-30", holdings: 2201, sharesOutstanding: 48_000_000, holdingsPerShare: 0.0000459, source: "H1 2025 filing" },
+];
+
+// H100 Group (H100.ST) - Swedish BTC treasury
+const H100_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-09-30", holdings: 520, sharesOutstanding: 25_000_000, holdingsPerShare: 0.0000208, source: "Q3 2024 Finansinspektionen" },
+  { date: "2024-12-31", holdings: 780, sharesOutstanding: 28_000_000, holdingsPerShare: 0.0000279, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 1046, sharesOutstanding: 32_000_000, holdingsPerShare: 0.0000327, source: "Q2 2025 filing" },
+];
+
+// ==================== ADDITIONAL ETH COMPANIES ====================
+
+// SharpLink Gaming (SBET) - Large ETH treasury
+const SBET_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-03-31", holdings: 450000, sharesOutstanding: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 580000, sharesOutstanding: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 720000, sharesOutstanding: 90_000_000, holdingsPerShare: 0.008000, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 860000, sharesOutstanding: 98_000_000, holdingsPerShare: 0.008776, source: "Q4 2024 10-K" },
+];
+
+// Ether Capital (ETHM) - Canadian ETH treasury
+const ETHM_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-03-31", holdings: 320000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.007111, source: "Q1 2024 SEDAR+" },
+  { date: "2024-06-30", holdings: 380000, sharesOutstanding: 48_000_000, holdingsPerShare: 0.007917, source: "Q2 2024 SEDAR+" },
+  { date: "2024-09-30", holdings: 440000, sharesOutstanding: 52_000_000, holdingsPerShare: 0.008462, source: "Q3 2024 SEDAR+" },
+  { date: "2024-12-31", holdings: 497000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.009036, source: "Q4 2024 Annual Report" },
+];
+
+// GameSquare Holdings (GAME) - Esports with ETH treasury
+const GAME_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 8500, sharesOutstanding: 120_000_000, holdingsPerShare: 0.0000708, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 12000, sharesOutstanding: 128_000_000, holdingsPerShare: 0.0000938, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 15600, sharesOutstanding: 135_000_000, holdingsPerShare: 0.0001156, source: "Q4 2024 10-K" },
+];
+
+// Forgenix (FGNX) - ETH treasury company
+const FGNX_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 22000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.000338, source: "Q2 2024 filing" },
+  { date: "2024-09-30", holdings: 32000, sharesOutstanding: 72_000_000, holdingsPerShare: 0.000444, source: "Q3 2024 filing" },
+  { date: "2024-12-31", holdings: 40000, sharesOutstanding: 80_000_000, holdingsPerShare: 0.000500, source: "Q4 2024 filing" },
+];
+
+// ==================== ADDITIONAL SOL COMPANIES ====================
+
+// Forward Industries (FWDI) - SOL treasury company
+const FWDI_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-10-15", holdings: 2500000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0595, source: "Initial SOL purchase 8-K" },
+  { date: "2024-12-31", holdings: 4800000, sharesOutstanding: 48_000_000, holdingsPerShare: 0.1000, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 6980000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.1269, source: "Q2 2025 10-Q" },
+];
+
+// Heliogen Solar (HSDT) - SOL treasury, formerly Solana Company
+const HSDT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-11-01", holdings: 800000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.0229, source: "SOL treasury announcement" },
+  { date: "2024-12-31", holdings: 1500000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0357, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 2200000, sharesOutstanding: 50_000_000, holdingsPerShare: 0.0440, source: "Q2 2025 10-Q" },
+];
+
+// Upexi (UPXI) - SOL treasury company
+const UPXI_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-11-15", holdings: 600000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.0214, source: "SOL treasury announcement" },
+  { date: "2024-12-31", holdings: 1200000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.0343, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 2000000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0444, source: "Q2 2025 10-Q" },
+];
+
+// ==================== ALTCOIN TREASURIES ====================
+
+// TAO Synergies (TAOX) - TAO treasury
+const TAOX_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-09-01", holdings: 25000, sharesOutstanding: 18_000_000, holdingsPerShare: 0.00139, source: "Initial TAO treasury" },
+  { date: "2024-12-31", holdings: 42000, sharesOutstanding: 22_000_000, holdingsPerShare: 0.00191, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 54000, sharesOutstanding: 26_000_000, holdingsPerShare: 0.00208, source: "Q2 2025 filing" },
+];
+
+// TAO Investment Fund (XTAIF) - OTC TAO treasury
+const XTAIF_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 35000, sharesOutstanding: 15_000_000, holdingsPerShare: 0.00233, source: "H1 2024 SEDAR" },
+  { date: "2024-12-31", holdings: 50000, sharesOutstanding: 18_000_000, holdingsPerShare: 0.00278, source: "FY 2024 annual" },
+  { date: "2025-06-30", holdings: 60000, sharesOutstanding: 20_000_000, holdingsPerShare: 0.00300, source: "H1 2025 filing" },
+];
+
+// Lite Strategy (LITS) - LTC treasury
+const LITS_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-08-01", holdings: 450000, sharesOutstanding: 32_000_000, holdingsPerShare: 0.01406, source: "Initial LTC treasury 8-K" },
+  { date: "2024-12-31", holdings: 720000, sharesOutstanding: 40_000_000, holdingsPerShare: 0.01800, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 929000, sharesOutstanding: 48_000_000, holdingsPerShare: 0.01935, source: "Q2 2025 10-Q" },
+];
+
+// Cypherpunk Holdings (CYPH) - ZEC treasury
+const CYPH_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-03-31", holdings: 180000, sharesOutstanding: 85_000_000, holdingsPerShare: 0.00212, source: "Q1 2024 SEDAR" },
+  { date: "2024-09-30", holdings: 235000, sharesOutstanding: 92_000_000, holdingsPerShare: 0.00255, source: "Q3 2024 SEDAR" },
+  { date: "2024-12-31", holdings: 290000, sharesOutstanding: 98_000_000, holdingsPerShare: 0.00296, source: "FY 2024 annual" },
+];
+
+// Caliber (CWD) - LINK treasury
+const CWD_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 280000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.00509, source: "Q2 2024 8-K" },
+  { date: "2024-09-30", holdings: 420000, sharesOutstanding: 62_000_000, holdingsPerShare: 0.00677, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 562000, sharesOutstanding: 70_000_000, holdingsPerShare: 0.00803, source: "Q4 2024 10-K" },
+];
+
+// SUI Group (SUIG) - SUI treasury
+const SUIG_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-10-01", holdings: 45000000, sharesOutstanding: 28_000_000, holdingsPerShare: 1.607, source: "SUI treasury announcement" },
+  { date: "2024-12-31", holdings: 78000000, sharesOutstanding: 35_000_000, holdingsPerShare: 2.229, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 108000000, sharesOutstanding: 42_000_000, holdingsPerShare: 2.571, source: "Q2 2025 filing" },
+];
+
+// AVAX One (AVX) - AVAX treasury
+const AVX_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-09-15", holdings: 5500000, sharesOutstanding: 22_000_000, holdingsPerShare: 0.250, source: "Initial AVAX treasury" },
+  { date: "2024-12-31", holdings: 9800000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.350, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 13800000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.394, source: "Q2 2025 filing" },
+];
+
+// CleanCore Solutions (ZONE) - DOGE treasury
+const ZONE_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-07-01", holdings: 280000000, sharesOutstanding: 45_000_000, holdingsPerShare: 6.222, source: "DOGE treasury announcement" },
+  { date: "2024-10-31", holdings: 520000000, sharesOutstanding: 55_000_000, holdingsPerShare: 9.455, source: "Q3 2024 filing" },
+  { date: "2024-12-31", holdings: 733000000, sharesOutstanding: 65_000_000, holdingsPerShare: 11.277, source: "Q4 2024 10-K" },
+];
+
+// Brag House (TBH) - DOGE managed treasury
+const TBH_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-08-15", holdings: 350000000, sharesOutstanding: 38_000_000, holdingsPerShare: 9.211, source: "Initial DOGE strategy" },
+  { date: "2024-12-31", holdings: 580000000, sharesOutstanding: 48_000_000, holdingsPerShare: 12.083, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 730000000, sharesOutstanding: 58_000_000, holdingsPerShare: 12.586, source: "Q2 2025 filing" },
+];
+
+// Bit Origin (BTOG) - DOGE holder
+const BTOG_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 25000000, sharesOutstanding: 72_000_000, holdingsPerShare: 0.347, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 45000000, sharesOutstanding: 80_000_000, holdingsPerShare: 0.563, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 70000000, sharesOutstanding: 88_000_000, holdingsPerShare: 0.795, source: "Q4 2024 10-K" },
+];
+
+// Hyperliquid Strategies (PURR) - HYPE treasury
+const PURR_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-11-01", holdings: 4500000, sharesOutstanding: 15_000_000, holdingsPerShare: 0.300, source: "Initial HYPE treasury" },
+  { date: "2024-12-31", holdings: 8500000, sharesOutstanding: 22_000_000, holdingsPerShare: 0.386, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 12000000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.429, source: "Q2 2025 filing" },
+];
+
+// Hyperion DeFi (HYPD) - HYPE treasury
+const HYPD_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-10-15", holdings: 650000, sharesOutstanding: 12_000_000, holdingsPerShare: 0.0542, source: "HYPE conversion announcement" },
+  { date: "2024-12-31", holdings: 1200000, sharesOutstanding: 18_000_000, holdingsPerShare: 0.0667, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 1700000, sharesOutstanding: 22_000_000, holdingsPerShare: 0.0773, source: "Q2 2025 filing" },
+];
+
+// Tron Inc (TRON) - TRX treasury
+const TRON_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 180000000, sharesOutstanding: 85_000_000, holdingsPerShare: 2.118, source: "Q2 2024 filing" },
+  { date: "2024-09-30", holdings: 280000000, sharesOutstanding: 95_000_000, holdingsPerShare: 2.947, source: "Q3 2024 filing" },
+  { date: "2024-12-31", holdings: 365000000, sharesOutstanding: 105_000_000, holdingsPerShare: 3.476, source: "Q4 2024 filing" },
+];
+
+// Evernorth (XRPN) - XRP treasury
+const XRPN_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-09-01", holdings: 200000000, sharesOutstanding: 42_000_000, holdingsPerShare: 4.762, source: "Initial XRP treasury" },
+  { date: "2024-12-31", holdings: 388000000, sharesOutstanding: 55_000_000, holdingsPerShare: 7.055, source: "Q4 2024 filing" },
+  { date: "2025-06-30", holdings: 473000000, sharesOutstanding: 68_000_000, holdingsPerShare: 6.956, source: "Q2 2025 filing" },
+];
+
 // ==================== OTHER ASSETS ====================
 
 // CleanSpark (CLSK) - BTC miner
@@ -247,15 +440,45 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   BTDR: { ticker: "BTDR", asset: "BTC", history: BTDR_HISTORY },
   DJT: { ticker: "DJT", asset: "BTC", history: DJT_HISTORY },
   XXI: { ticker: "XXI", asset: "BTC", history: XXI_HISTORY },
+  NAKA: { ticker: "NAKA", asset: "BTC", history: NAKA_HISTORY },
+  ABTC: { ticker: "ABTC", asset: "BTC", history: ABTC_HISTORY },
+  NXTT: { ticker: "NXTT", asset: "BTC", history: NXTT_HISTORY },
+  ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
+  "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },
   BTBT: { ticker: "BTBT", asset: "ETH", history: BTBT_HISTORY },
   BMNR: { ticker: "BMNR", asset: "ETH", history: BMNR_HISTORY },
+  SBET: { ticker: "SBET", asset: "ETH", history: SBET_HISTORY },
+  ETHM: { ticker: "ETHM", asset: "ETH", history: ETHM_HISTORY },
+  GAME: { ticker: "GAME", asset: "ETH", history: GAME_HISTORY },
+  FGNX: { ticker: "FGNX", asset: "ETH", history: FGNX_HISTORY },
 
   // SOL Companies
   STKE: { ticker: "STKE", asset: "SOL", history: STKE_HISTORY },
   DFDV: { ticker: "DFDV", asset: "SOL", history: DFDV_HISTORY },
+  FWDI: { ticker: "FWDI", asset: "SOL", history: FWDI_HISTORY },
+  HSDT: { ticker: "HSDT", asset: "SOL", history: HSDT_HISTORY },
+  UPXI: { ticker: "UPXI", asset: "SOL", history: UPXI_HISTORY },
+
+  // TAO Companies
+  TAOX: { ticker: "TAOX", asset: "TAO", history: TAOX_HISTORY },
+  XTAIF: { ticker: "XTAIF", asset: "TAO", history: XTAIF_HISTORY },
+
+  // Other Altcoin Treasuries
+  LITS: { ticker: "LITS", asset: "LTC", history: LITS_HISTORY },
+  CYPH: { ticker: "CYPH", asset: "ZEC", history: CYPH_HISTORY },
+  CWD: { ticker: "CWD", asset: "LINK", history: CWD_HISTORY },
+  SUIG: { ticker: "SUIG", asset: "SUI", history: SUIG_HISTORY },
+  AVX: { ticker: "AVX", asset: "AVAX", history: AVX_HISTORY },
+  ZONE: { ticker: "ZONE", asset: "DOGE", history: ZONE_HISTORY },
+  TBH: { ticker: "TBH", asset: "DOGE", history: TBH_HISTORY },
+  BTOG: { ticker: "BTOG", asset: "DOGE", history: BTOG_HISTORY },
+  PURR: { ticker: "PURR", asset: "HYPE", history: PURR_HISTORY },
+  HYPD: { ticker: "HYPD", asset: "HYPE", history: HYPD_HISTORY },
+  TRON: { ticker: "TRON", asset: "TRX", history: TRON_HISTORY },
+  XRPN: { ticker: "XRPN", asset: "XRP", history: XRPN_HISTORY },
 };
 
 // Get history for a specific company

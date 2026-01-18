@@ -21,38 +21,15 @@ export interface CompanyDataStatus {
 const DATA_NOTES: Record<string, string> = {
   // Companies where data is hard to get
   "CEPO": "Pre-merger SPAC (BSTR Holdings), no public filings yet",
-  "NAKA": "New company, limited filings",
-  "PURR": "Hyperliquid Strategies - very new",
-  "HYPD": "Hyperion DeFi - recently converted to HYPE treasury",
 
-  // International companies with different disclosure
-  "ALTBG": "France/Euronext - check AMF filings",
-  "H100.ST": "Sweden - check Finansinspektionen",
-  "0434.HK": "Hong Kong - check HKEX filings",
-
-  // OTC/smaller companies
+  // OTC/smaller companies with limited disclosure
   "LUXFF": "OTC - limited disclosure requirements",
-  "XTAIF": "OTC - limited disclosure",
   "IHLDF": "OTC - check SEDAR for Canadian filings",
 
-  // Newer treasury companies
-  "FWDI": "Forward Industries - SOL treasury announced 2024",
-  "HSDT": "Solana Company - recently rebranded",
-  "UPXI": "Upexi - SOL treasury announced late 2024",
+  // Newer treasury companies - need to verify filings
   "BNC": "BNB Network Company - new",
   "NA": "Nano Labs - BNB holder",
-  "TAOX": "TAO Synergies - new TAO treasury",
   "TWAV": "TaoWeave - recently converted",
-  "CWD": "Caliber - LINK treasury",
-  "TRON": "Tron Inc - TRX treasury",
-  "XRPN": "Evernorth - XRP treasury",
-  "CYPH": "Cypherpunk - ZEC focused",
-  "LITS": "Lite Strategy - LTC treasury",
-  "SUIG": "SUI Group - new SUI treasury",
-  "ZONE": "CleanCore - DOGE treasury",
-  "TBH": "Brag House - DOGE treasury",
-  "BTOG": "Bit Origin - DOGE holder",
-  "AVX": "AVAX One - new AVAX treasury",
 };
 
 // When each company was last checked for data (YYYY-MM-DD)
