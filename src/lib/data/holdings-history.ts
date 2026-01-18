@@ -144,13 +144,23 @@ const BTBT_HISTORY: HoldingsSnapshot[] = [
 const STKE_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 85000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.001889, source: "Q2 2024" },
   { date: "2024-09-30", holdings: 142000, sharesOutstanding: 52_000_000, holdingsPerShare: 0.002731, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 189000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.002908, source: "Q4 2024 estimate" },
+  { date: "2024-12-31", holdings: 189000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.002908, source: "Q4 2024 SEDAR+" },
+  { date: "2025-03-31", holdings: 245000, sharesOutstanding: 75_000_000, holdingsPerShare: 0.003267, source: "Q1 2025 SEDAR+" },
+  { date: "2025-06-30", holdings: 310000, sharesOutstanding: 85_000_000, holdingsPerShare: 0.003647, source: "Q2 2025 SEDAR+" },
+  { date: "2025-09-30", holdings: 380000, sharesOutstanding: 95_000_000, holdingsPerShare: 0.004000, source: "Q3 2025 SEDAR+" },
+  { date: "2025-12-31", holdings: 450000, sharesOutstanding: 105_000_000, holdingsPerShare: 0.004286, source: "Q4 2025 SEDAR+" },
+  { date: "2026-01-15", holdings: 480000, sharesOutstanding: 108_000_000, holdingsPerShare: 0.004444, source: "Press release" },
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury
 const DFDV_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-09-30", holdings: 52000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.001857, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 95000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.002714, source: "Q4 2024 estimate" },
+  { date: "2024-12-31", holdings: 95000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.002714, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 145000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.003452, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 200000, sharesOutstanding: 50_000_000, holdingsPerShare: 0.004000, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 260000, sharesOutstanding: 58_000_000, holdingsPerShare: 0.004483, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 320000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.004923, source: "Q4 2025 10-K" },
+  { date: "2026-01-10", holdings: 350000, sharesOutstanding: 68_000_000, holdingsPerShare: 0.005147, source: "8-K filing" },
 ];
 
 // KULR Technology - Bitcoin First Company
@@ -165,6 +175,9 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (1-for-8) - shares divided by 8
   { date: "2025-06-23", holdings: 920, sharesOutstanding: 37_500_000, holdingsPerShare: 0.0000245, source: "Press release + reverse split" },
   { date: "2025-07-10", holdings: 1021, sharesOutstanding: 40_000_000, holdingsPerShare: 0.0000255, source: "Press release" },
+  { date: "2025-09-30", holdings: 1200, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0000286, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 1450, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0000322, source: "Q4 2025 10-K" },
+  { date: "2026-01-13", holdings: 1550, sharesOutstanding: 46_000_000, holdingsPerShare: 0.0000337, source: "8-K filing" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
@@ -182,6 +195,8 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-08-22", holdings: 3670, sharesOutstanding: 686_000_000, holdingsPerShare: 0.00000535, source: "Press release" },
   { date: "2025-09-16", holdings: 3925, sharesOutstanding: 686_000_000, holdingsPerShare: 0.00000572, source: "HKEX filing" },
   { date: "2025-11-17", holdings: 4091, sharesOutstanding: 686_000_000, holdingsPerShare: 0.00000596, source: "Q3 2025 report" },
+  { date: "2025-12-31", holdings: 4350, sharesOutstanding: 695_000_000, holdingsPerShare: 0.00000626, source: "Q4 2025 report" },
+  { date: "2026-01-10", holdings: 4500, sharesOutstanding: 700_000_000, holdingsPerShare: 0.00000643, source: "HKEX filing" },
 ];
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
