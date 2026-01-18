@@ -1386,32 +1386,32 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
-// Period lengths in days
-const PERIOD_DAYS: Record<string, number> = {
-  "1W": 7,
-  "1M": 30,
-  "3M": 90,
-  "1Y": 365,
+// Period configuration: target days and acceptable range
+const PERIOD_CONFIG: Record<string, { days: number; minDays: number; maxDays: number }> = {
+  "1W": { days: 7, minDays: 5, maxDays: 21 },      // Weekly: 5-21 days
+  "1M": { days: 30, minDays: 20, maxDays: 60 },    // Monthly: 20-60 days
+  "3M": { days: 90, minDays: 60, maxDays: 120 },   // Quarterly: 60-120 days
+  "1Y": { days: 365, minDays: 180, maxDays: 450 }, // Yearly: 180-450 days
 };
 
 // Get treasury yield leaderboard
-// Simple logic: measure yield over the actual calendar period (e.g., last 7 days)
-// If we have quarterly data, normalize it to the period length
-// If no recent data, company won't appear (N/A)
+// Strict logic: only show companies with data that reasonably covers the period
+// Growth is calculated over the ACTUAL data span shown, not normalized
 export function getTreasuryYieldLeaderboard(options?: {
   period?: "1W" | "1M" | "3M" | "1Y";
   asset?: Asset;
 }): TreasuryYieldMetrics[] {
   const { period = "1Y", asset } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
-  const days = PERIOD_DAYS[period];
+  const config = PERIOD_CONFIG[period];
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // The period we're measuring (e.g., Jan 11-18 for weekly on Jan 18)
+  // Period boundaries - we want data from within this window
+  const periodEnd = today;
   const periodStart = new Date(today);
-  periodStart.setDate(periodStart.getDate() - days);
+  periodStart.setDate(periodStart.getDate() - config.days);
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
     if (data.history.length < 2) continue;
@@ -1422,44 +1422,49 @@ export function getTreasuryYieldLeaderboard(options?: {
     if (asset && company.asset !== asset) continue;
 
     const history = data.history;
+
+    // Find the most recent data point (must be recent - within the period or close to it)
     const latest = history[history.length - 1];
     const latestDate = new Date(latest.date);
-
-    // Latest data must be within the period to say anything about it
-    // e.g., for weekly, we need data from the last 7 days
     const daysSinceLatest = Math.floor((today.getTime() - latestDate.getTime()) / (1000 * 60 * 60 * 24));
-    if (daysSinceLatest > days) continue;
 
-    // Find a data point at or before the period start
+    // Latest data must be within the period window (allow some slack)
+    if (daysSinceLatest > config.days + 7) continue;
+
+    // Find the best "start" data point for this period
+    // We want the closest point to periodStart (either just before or just after)
     let startSnapshot = null;
-    for (let i = history.length - 1; i >= 0; i--) {
-      const snapshotDate = new Date(history[i].date);
-      if (snapshotDate <= periodStart) {
-        startSnapshot = history[i];
-        break;
+    let bestStartDiff = Infinity;
+
+    for (const snapshot of history) {
+      if (snapshot.date === latest.date) continue;
+      const snapshotDate = new Date(snapshot.date);
+      const diffFromPeriodStart = Math.abs(snapshotDate.getTime() - periodStart.getTime());
+
+      // Must be before the latest snapshot
+      if (snapshotDate >= latestDate) continue;
+
+      if (diffFromPeriodStart < bestStartDiff) {
+        bestStartDiff = diffFromPeriodStart;
+        startSnapshot = snapshot;
       }
     }
 
-    // Must have data before the period to measure change
     if (!startSnapshot) continue;
     if (startSnapshot.holdingsPerShare <= 0) continue;
-    if (startSnapshot.date === latest.date) continue;
 
     const startDate = new Date(startSnapshot.date);
     const endDate = latestDate;
     const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    if (daysCovered <= 0) continue;
+    // Enforce data span must be within acceptable range for this period
+    if (daysCovered < config.minDays || daysCovered > config.maxDays) continue;
 
-    // Calculate actual growth over the data span
-    const totalGrowth = (latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1;
+    // Calculate actual growth over the data span (NOT normalized)
+    const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
 
-    // Normalize to the period length
-    // e.g., if we have 90 days of data showing 10% growth, weekly = (10%/90)*7 = 0.78%
-    const dailyRate = totalGrowth / daysCovered;
-    const normalizedGrowthPct = dailyRate * days * 100;
-
-    // Annualized growth
+    // Annualized growth for comparison
+    const dailyRate = growthPct / 100 / daysCovered;
     const annualizedGrowthPct = dailyRate * 365 * 100;
 
     metrics.push({
@@ -1469,7 +1474,7 @@ export function getTreasuryYieldLeaderboard(options?: {
       period,
       holdingsPerShareStart: startSnapshot.holdingsPerShare,
       holdingsPerShareEnd: latest.holdingsPerShare,
-      growthPct: normalizedGrowthPct,
+      growthPct,
       annualizedGrowthPct,
       startDate: startSnapshot.date,
       endDate: latest.date,
