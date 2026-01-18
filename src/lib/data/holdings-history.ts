@@ -174,6 +174,15 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 10556, sharesOutstanding: 290_000_000, holdingsPerShare: 0.0000364, source: "Q4 2024 estimate" },
 ];
 
+// Strive (ASST) - First publicly traded asset management BTC treasury
+// Data from press releases and SEC filings
+const ASST_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-09-12", holdings: 5886, sharesOutstanding: 28_000_000, holdingsPerShare: 0.0002102, source: "Initial BTC treasury announcement" },
+  { date: "2025-11-15", holdings: 7525, sharesOutstanding: 30_000_000, holdingsPerShare: 0.0002508, source: "SATA preferred offering" },
+  { date: "2025-12-31", holdings: 7627, sharesOutstanding: 31_000_000, holdingsPerShare: 0.0002460, source: "Preliminary year-end" },
+  { date: "2026-01-16", holdings: 12798, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0002844, source: "Post-Semler merger 8-K" },
+];
+
 // Map of all companies with historical data
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   // BTC Companies
@@ -185,6 +194,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   SMLR: { ticker: "SMLR", asset: "BTC", history: SMLR_HISTORY },
   KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },
   "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
+  ASST: { ticker: "ASST", asset: "BTC", history: ASST_HISTORY },
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },

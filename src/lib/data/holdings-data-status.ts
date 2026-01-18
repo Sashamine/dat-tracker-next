@@ -22,7 +22,6 @@ const DATA_NOTES: Record<string, string> = {
   // Companies where data is hard to get
   "XXI": "Pre-merger SPAC, no historical holdings yet",
   "CEPO": "Pre-merger SPAC (BSTR Holdings), no public filings yet",
-  "ASST": "Strive - newly formed BTC treasury",
   "NAKA": "New company, limited filings",
   "DJT": "Trump Media - recently announced BTC strategy",
   "PURR": "Hyperliquid Strategies - very new",
