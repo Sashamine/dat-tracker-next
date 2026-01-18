@@ -24,7 +24,10 @@ export default function EarningsPage() {
 
   const handleQuarterChange = (quarter: CalendarQuarter) => {
     setSelectedQuarter(quarter);
-    setYieldPeriod(undefined);
+    // Only reset period when actually selecting a quarter
+    if (quarter) {
+      setYieldPeriod(undefined);
+    }
   };
 
   return (
