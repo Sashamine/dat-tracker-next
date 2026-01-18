@@ -77,8 +77,9 @@ export function TreasuryYieldLeaderboard({
   // Determine current view mode
   const viewMode: ViewMode = quarter ? "quarterly" : (period || "1Y");
 
+  // Pass the period directly - the hook will handle defaults
   const { data, isLoading, error } = useTreasuryYieldLeaderboard({
-    period: quarter ? undefined : (period || "1Y"),
+    period: quarter ? undefined : period,
     quarter,
     asset,
   });
