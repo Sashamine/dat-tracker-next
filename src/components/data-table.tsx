@@ -93,7 +93,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
     const cryptoChange = prices?.crypto[company.asset]?.change24h;
     const stockData = prices?.stocks[company.ticker];
-    const marketCap = stockData?.marketCap || company.marketCap || 0;
+    // Prefer company.marketCap from DB (fully diluted) over Alpaca basic shares marketCap
+    const marketCap = company.marketCap || stockData?.marketCap || 0;
     const stockPrice = stockData?.price;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
