@@ -53,7 +53,7 @@ export function useTreasuryYieldLeaderboard(options?: {
   const { period, quarter, asset } = options || {};
 
   return useQuery<YieldLeaderboardResponse>({
-    queryKey: ["yield-leaderboard", period, quarter, asset],
+    queryKey: ["yield-leaderboard", period || "1Y", quarter || null, asset || null],
     queryFn: async () => {
       const params = new URLSearchParams();
       if (quarter) {
@@ -69,7 +69,7 @@ export function useTreasuryYieldLeaderboard(options?: {
       if (!res.ok) throw new Error("Failed to fetch yield leaderboard");
       return res.json();
     },
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 30 * 1000, // 30 seconds - short cache to allow quick switching
   });
 }
 
