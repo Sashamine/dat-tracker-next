@@ -50,6 +50,14 @@ const PERIOD_LABELS: Record<YieldPeriod, string> = {
   "1Y": "Yearly",
 };
 
+// Short period suffixes for yield display
+const PERIOD_SUFFIX: Record<YieldPeriod, string> = {
+  "1W": "/wk",
+  "1M": "/mo",
+  "3M": "/qtr",
+  "1Y": "/yr",
+};
+
 // View mode: either a period or "quarterly" for quarter selection
 type ViewMode = YieldPeriod | "quarterly";
 
@@ -215,7 +223,7 @@ export function TreasuryYieldLeaderboard({
               <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Company</TableHead>
               <TableHead className="text-right">Yield</TableHead>
-              <TableHead className="text-right hidden sm:table-cell">Date Range</TableHead>
+              <TableHead className="text-right hidden sm:table-cell">Data Period</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -251,6 +259,11 @@ export function TreasuryYieldLeaderboard({
                   >
                     {item.growthPct >= 0 ? "+" : ""}
                     {item.growthPct.toFixed(1)}%
+                    {effectivePeriod && (
+                      <span className="text-sm font-normal text-gray-400">
+                        {PERIOD_SUFFIX[effectivePeriod]}
+                      </span>
+                    )}
                   </span>
                   <div className="text-xs text-gray-400">
                     {item.annualizedGrowthPct >= 0 ? "+" : ""}
