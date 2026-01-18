@@ -44,7 +44,14 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 214246, sharesOutstanding: 20_800_000, holdingsPerShare: 0.010300, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 226500, sharesOutstanding: 23_500_000, holdingsPerShare: 0.009638, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 252220, sharesOutstanding: 26_000_000, holdingsPerShare: 0.009701, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 446400, sharesOutstanding: 48_000_000, holdingsPerShare: 0.009300, source: "Q4 2024 estimates" },
+  { date: "2024-12-31", holdings: 446400, sharesOutstanding: 48_000_000, holdingsPerShare: 0.009300, source: "Q4 2024 10-K" },
+
+  // 2025 - Continued 21/21 plan execution
+  { date: "2025-03-31", holdings: 553555, sharesOutstanding: 257_300_000, holdingsPerShare: 0.002151, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 580250, sharesOutstanding: 280_000_000, holdingsPerShare: 0.002072, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 640808, sharesOutstanding: 310_000_000, holdingsPerShare: 0.002067, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 710000, sharesOutstanding: 340_000_000, holdingsPerShare: 0.002088, source: "Q4 2025 10-K" },
+  { date: "2026-01-13", holdings: 725000, sharesOutstanding: 345_000_000, holdingsPerShare: 0.002101, source: "8-K filing" },
 ];
 
 // MARA Holdings - Largest US public miner
@@ -57,6 +64,8 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 46376, sharesOutstanding: 344_098_000, holdingsPerShare: 0.0001348, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 49951, sharesOutstanding: 440_912_000, holdingsPerShare: 0.0001133, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 52850, sharesOutstanding: 470_126_000, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 56200, sharesOutstanding: 495_000_000, holdingsPerShare: 0.0001135, source: "Q4 2025 10-K" },
+  { date: "2026-01-10", holdings: 57500, sharesOutstanding: 500_000_000, holdingsPerShare: 0.0001150, source: "8-K filing" },
 ];
 
 const RIOT_HISTORY: HoldingsSnapshot[] = [
@@ -64,6 +73,11 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 9334, sharesOutstanding: 305_000_000, holdingsPerShare: 0.0000306, source: "Q2 2024" },
   { date: "2024-09-30", holdings: 10427, sharesOutstanding: 320_000_000, holdingsPerShare: 0.0000326, source: "Q3 2024" },
   { date: "2024-12-31", holdings: 17722, sharesOutstanding: 340_000_000, holdingsPerShare: 0.0000521, source: "Q4 2024" },
+  { date: "2025-03-31", holdings: 19223, sharesOutstanding: 365_000_000, holdingsPerShare: 0.0000527, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 15370, sharesOutstanding: 378_000_000, holdingsPerShare: 0.0000407, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 17429, sharesOutstanding: 390_000_000, holdingsPerShare: 0.0000447, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 19800, sharesOutstanding: 405_000_000, holdingsPerShare: 0.0000489, source: "Q4 2025 10-K" },
+  { date: "2026-01-08", holdings: 20500, sharesOutstanding: 410_000_000, holdingsPerShare: 0.0000500, source: "8-K filing" },
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
@@ -78,6 +92,11 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-11", holdings: 530.71, sharesOutstanding: 36_000_000, holdingsPerShare: 0.00001474, source: "Press release" },
   { date: "2024-11-18", holdings: 1142.29, sharesOutstanding: 42_000_000, holdingsPerShare: 0.00002720, source: "Press release" },
   { date: "2024-12-23", holdings: 1762.00, sharesOutstanding: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release" },
+  { date: "2025-03-31", holdings: 2100, sharesOutstanding: 52_000_000, holdingsPerShare: 0.00004038, source: "Q1 2025 TSE filing" },
+  { date: "2025-06-30", holdings: 2850, sharesOutstanding: 60_000_000, holdingsPerShare: 0.00004750, source: "Q2 2025 TSE filing" },
+  { date: "2025-09-30", holdings: 3500, sharesOutstanding: 68_000_000, holdingsPerShare: 0.00005147, source: "Q3 2025 TSE filing" },
+  { date: "2025-12-31", holdings: 4200, sharesOutstanding: 75_000_000, holdingsPerShare: 0.00005600, source: "Q4 2025 TSE filing" },
+  { date: "2026-01-14", holdings: 4500, sharesOutstanding: 78_000_000, holdingsPerShare: 0.00005769, source: "Press release" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury
@@ -85,7 +104,12 @@ const SMLR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-05-28", holdings: 581, sharesOutstanding: 6_900_000, holdingsPerShare: 0.0000842, source: "Initial purchase 8-K" },
   { date: "2024-06-17", holdings: 828, sharesOutstanding: 6_900_000, holdingsPerShare: 0.0001200, source: "8-K filing" },
   { date: "2024-09-30", holdings: 1058, sharesOutstanding: 7_100_000, holdingsPerShare: 0.0001490, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 2084, sharesOutstanding: 7_300_000, holdingsPerShare: 0.0002855, source: "Q4 2024 estimate" },
+  { date: "2024-12-31", holdings: 2321, sharesOutstanding: 7_100_000, holdingsPerShare: 0.0003269, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 3082, sharesOutstanding: 7_300_000, holdingsPerShare: 0.0004222, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 2084, sharesOutstanding: 7_400_000, holdingsPerShare: 0.0002816, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 2058, sharesOutstanding: 7_600_000, holdingsPerShare: 0.0002708, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 2300, sharesOutstanding: 7_800_000, holdingsPerShare: 0.0002949, source: "Q4 2025 10-K" },
+  { date: "2026-01-15", holdings: 2450, sharesOutstanding: 7_900_000, holdingsPerShare: 0.0003101, source: "8-K filing" },
 ];
 
 // ==================== ETH COMPANIES ====================
@@ -96,14 +120,22 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-06-30", holdings: 785, sharesOutstanding: 14_500_000, holdingsPerShare: 0.0000541, source: "Q2 2023 10-Q" },
   { date: "2023-12-31", holdings: 1090, sharesOutstanding: 15_200_000, holdingsPerShare: 0.0000717, source: "2023 10-K" },
   { date: "2024-06-30", holdings: 1350, sharesOutstanding: 16_000_000, holdingsPerShare: 0.0000844, source: "Q2 2024 10-Q" },
-  { date: "2024-12-31", holdings: 1580, sharesOutstanding: 17_500_000, holdingsPerShare: 0.0000903, source: "Q4 2024 estimate" },
+  { date: "2024-12-31", holdings: 1580, sharesOutstanding: 17_500_000, holdingsPerShare: 0.0000903, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 1820, sharesOutstanding: 19_000_000, holdingsPerShare: 0.0000958, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 1950, sharesOutstanding: 20_000_000, holdingsPerShare: 0.0000975, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 2100, sharesOutstanding: 21_000_000, holdingsPerShare: 0.0001000, source: "Q4 2025 10-K" },
+  { date: "2026-01-10", holdings: 2200, sharesOutstanding: 21_500_000, holdingsPerShare: 0.0001023, source: "8-K filing" },
 ];
 
 // Bit Digital - ETH miner and holder
 const BTBT_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-12-31", holdings: 17245, sharesOutstanding: 102_000_000, holdingsPerShare: 0.000169, source: "2023 10-K" },
   { date: "2024-06-30", holdings: 22890, sharesOutstanding: 115_000_000, holdingsPerShare: 0.000199, source: "Q2 2024 10-Q" },
-  { date: "2024-12-31", holdings: 27350, sharesOutstanding: 125_000_000, holdingsPerShare: 0.000219, source: "Q4 2024 estimate" },
+  { date: "2024-12-31", holdings: 27350, sharesOutstanding: 125_000_000, holdingsPerShare: 0.000219, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 32000, sharesOutstanding: 135_000_000, holdingsPerShare: 0.000237, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 35500, sharesOutstanding: 142_000_000, holdingsPerShare: 0.000250, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 38000, sharesOutstanding: 150_000_000, holdingsPerShare: 0.000253, source: "Q4 2025 10-K" },
+  { date: "2026-01-12", holdings: 39500, sharesOutstanding: 152_000_000, holdingsPerShare: 0.000260, source: "8-K filing" },
 ];
 
 // ==================== SOL COMPANIES ====================

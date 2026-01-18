@@ -95,6 +95,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const stockData = prices?.stocks[company.ticker];
     // Prefer company.marketCap from DB (fully diluted) over Alpaca basic shares marketCap
     const marketCap = company.marketCap || stockData?.marketCap || 0;
+    // Debug SBET
+    if (company.ticker === 'SBET') { console.log('SBET Debug:', { companyMC: company.marketCap, stockMC: stockData?.marketCap, finalMC: marketCap }); }
     const stockPrice = stockData?.price;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
