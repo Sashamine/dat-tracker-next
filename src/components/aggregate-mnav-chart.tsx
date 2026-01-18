@@ -59,14 +59,15 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
     staleTime: 30 * 60 * 1000,
   });
 
-  // Calculate current mNAV stats
+  // Calculate current mNAV stats (excluding pending merger SPACs)
   const currentStats = useMemo(() => {
     const mnavs = companies
+      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
         const marketCap = stockData?.marketCap || company.marketCap || 0;
-        return calculateMNAV(marketCap, company.holdings, cryptoPrice);
+        return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);
 
@@ -148,6 +149,7 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
       chartRef.current = null;
     }
 
+    const isMobile = window.innerWidth < 768;
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
@@ -158,7 +160,7 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
         horzLines: { color: "rgba(156, 163, 175, 0.1)" },
       },
       width: chartContainerRef.current.clientWidth,
-      height: compact ? 120 : 200,
+      height: compact ? 120 : (isMobile ? 280 : 250),
       rightPriceScale: {
         borderVisible: false,
       },
@@ -212,7 +214,11 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
 
     const handleResize = () => {
       if (chartContainerRef.current && chartRef.current) {
-        chartRef.current.applyOptions({ width: chartContainerRef.current.clientWidth });
+        const isMobileNow = window.innerWidth < 768;
+        chartRef.current.applyOptions({
+          width: chartContainerRef.current.clientWidth,
+          height: compact ? 120 : (isMobileNow ? 280 : 250),
+        });
       }
     };
 
