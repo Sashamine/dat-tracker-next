@@ -60,7 +60,7 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = stockData?.marketCap || company.marketCap || 0;
+        const marketCap = company.marketCap || stockData?.marketCap || 0;
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);
@@ -292,7 +292,7 @@ export default function MNAVPage() {
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = stockData?.marketCap || company.marketCap || 0;
+        const marketCap = company.marketCap || stockData?.marketCap || 0;
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);

@@ -111,7 +111,7 @@ export default function AssetPage() {
   // Calculate metrics for each company
   const companiesWithMetrics = companies.map((company) => {
     const stockData = prices?.stocks[company.ticker];
-    const marketCap = stockData?.marketCap || company.marketCap || 0;
+    const marketCap = company.marketCap || stockData?.marketCap || 0;
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 

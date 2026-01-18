@@ -170,7 +170,7 @@ export default function CompanyPage() {
   const stockData = prices?.stocks[company.ticker];
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
-  const marketCap = stockData?.marketCap || company.marketCap || 0;
+  const marketCap = company.marketCap || stockData?.marketCap || 0;
 
   // Other assets (cash + investments)
   const cashReserves = company.cashReserves || 0;

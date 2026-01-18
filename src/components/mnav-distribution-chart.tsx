@@ -35,7 +35,7 @@ export function MNAVDistributionChart({ companies, prices, compact = false }: MN
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = stockData?.marketCap || company.marketCap || 0;
+        const marketCap = company.marketCap || stockData?.marketCap || 0;
         const mnav = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
         return { ticker: company.ticker, mnav };
       })

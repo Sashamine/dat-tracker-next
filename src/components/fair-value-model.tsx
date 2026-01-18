@@ -264,7 +264,7 @@ export function FairValueModel({ companies, prices, assetFilter }: FairValueMode
   const results = filteredCompanies.map((company) => {
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
     const stockData = prices?.stocks[company.ticker];
-    const marketCap = stockData?.marketCap || company.marketCap || 0;
+    const marketCap = company.marketCap || stockData?.marketCap || 0;
     const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
 
     const fv = calculateFairValueWithParams(
