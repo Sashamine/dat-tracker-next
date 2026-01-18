@@ -33,6 +33,10 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "MSTR": 55_522_000_000,  // $55.52B fully diluted (includes convertible debt conversion)
   "SBET": 2_363_000_000,   // $2.36B fully diluted
   "BMNR": 12_800_000_000,  // ~425M shares × $30.12 (Jan 2026)
+  // BTC Miners with significant debt (Jan 2026)
+  "HUT": 6_770_000_000,    // $6.77B - Hut 8 Mining (13,696 BTC reserve, $350M debt)
+  "CORZ": 5_300_000_000,   // $5.3B - Core Scientific ($1.2B debt, emerged from bankruptcy)
+  "BTDR": 2_300_000_000,   // $2.3B - Bitdeer ($730M convertible notes)
   "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
   "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
   "XXI": 4_000_000_000,    // 21 Capital - FMP data inconsistent, ~$4B SPAC merger valuation
