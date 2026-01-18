@@ -47,6 +47,8 @@ export async function GET(request: Request) {
         cf.btc_mined_annual,
         cf.cash_reserves,
         cf.other_investments,
+        cf.total_debt,
+        cf.preferred_equity,
         c.pending_merger,
         c.expected_holdings,
         c.merger_expected_close
@@ -111,6 +113,8 @@ export async function GET(request: Request) {
       btcMinedAnnual: c.btc_mined_annual ? parseFloat(c.btc_mined_annual) : undefined,
       cashReserves: c.cash_reserves ? parseFloat(c.cash_reserves) : undefined,
       otherInvestments: c.other_investments ? parseFloat(c.other_investments) : undefined,
+      totalDebt: c.total_debt ? parseFloat(c.total_debt) : undefined,
+      preferredEquity: c.preferred_equity ? parseFloat(c.preferred_equity) : undefined,
       pendingMerger: c.pending_merger || false,
       expectedHoldings: c.expected_holdings ? parseFloat(c.expected_holdings) : undefined,
       mergerExpectedClose: c.merger_expected_close,
