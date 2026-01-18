@@ -1386,13 +1386,12 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
-// Period configuration: target days and acceptable range
-// These represent "short/medium/long-term" buckets, not strict calendar periods
+// Period configuration: strict boundaries matching actual periods
 const PERIOD_CONFIG: Record<string, { days: number; minDays: number; maxDays: number }> = {
-  "1W": { days: 7, minDays: 5, maxDays: 30 },       // Short-term: 5-30 days
-  "1M": { days: 30, minDays: 25, maxDays: 95 },     // Medium-term: 25-95 days (allows quarterly data)
-  "3M": { days: 90, minDays: 60, maxDays: 180 },    // Quarterly: 60-180 days
-  "1Y": { days: 365, minDays: 180, maxDays: 500 },  // Long-term: 180-500 days
+  "1W": { days: 7, minDays: 5, maxDays: 14 },       // Weekly: 5-14 days
+  "1M": { days: 30, minDays: 20, maxDays: 45 },     // Monthly: 20-45 days
+  "3M": { days: 90, minDays: 60, maxDays: 120 },    // Quarterly: 60-120 days
+  "1Y": { days: 365, minDays: 300, maxDays: 400 },  // Yearly: 300-400 days
 };
 
 // Get treasury yield leaderboard
