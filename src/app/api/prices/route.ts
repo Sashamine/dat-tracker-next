@@ -215,7 +215,7 @@ export async function GET() {
       timestamp: new Date().toISOString(),
       marketOpen,
       extendedHours,
-      _version: "v2-with-fallbacks",
+
     };
 
     priceCache = { data: result, timestamp: Date.now() };
