@@ -53,6 +53,7 @@ const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "AVX": 130_000_000,      // AVAX One Technology - actual ~$130M
 };
 const FMP_ONLY_STOCKS = [
+  "MSTR",      // Strategy - use FMP for price since Alpaca not working on Vercel
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris)
   "LUXFF",     // Luxxfolio (OTC)
   "NA",        // Nano Labs

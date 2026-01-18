@@ -52,16 +52,20 @@ export function useTreasuryYieldLeaderboard(options?: {
 }) {
   const { period, quarter, asset } = options || {};
 
+  // Determine the effective period for the query
+  const effectivePeriod = quarter ? undefined : (period || "1Y");
+
+  // Build a unique query key that changes when parameters change
+  const queryKey = ["yield-leaderboard", effectivePeriod ?? "quarter", quarter ?? "none", asset ?? "all"] as const;
+
   return useQuery<YieldLeaderboardResponse>({
-    queryKey: ["yield-leaderboard", period || "1Y", quarter || null, asset || null],
+    queryKey,
     queryFn: async () => {
       const params = new URLSearchParams();
       if (quarter) {
         params.set("quarter", quarter);
-      } else if (period) {
-        params.set("period", period);
       } else {
-        params.set("period", "1Y");
+        params.set("period", effectivePeriod || "1Y");
       }
       if (asset) params.set("asset", asset);
 
@@ -69,8 +73,10 @@ export function useTreasuryYieldLeaderboard(options?: {
       if (!res.ok) throw new Error("Failed to fetch yield leaderboard");
       return res.json();
     },
-    staleTime: 0, // No cache - always fetch fresh data for period switches
-    refetchOnMount: 'always', // Force refetch when component mounts (key changes)
+    staleTime: 0,
+    gcTime: 0, // Don't keep old data in cache (was cacheTime in v4)
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
   });
 }
 
