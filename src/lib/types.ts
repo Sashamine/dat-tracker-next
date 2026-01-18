@@ -165,11 +165,14 @@ export interface EarningsCalendarEntry {
 
 export type YieldPeriod = "1W" | "1M" | "3M" | "1Y";
 
+// Calendar quarter format: "Q1-2025", "Q2-2025", etc.
+export type CalendarQuarter = `Q${1 | 2 | 3 | 4}-${number}`;
+
 export interface TreasuryYieldMetrics {
   ticker: string;
   companyName: string;
   asset: Asset;
-  period: YieldPeriod;
+  period: YieldPeriod | CalendarQuarter;
   holdingsPerShareStart: number;
   holdingsPerShareEnd: number;
   growthPct: number;

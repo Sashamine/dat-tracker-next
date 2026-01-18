@@ -11,8 +11,15 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useTreasuryYieldLeaderboard } from "@/lib/hooks/use-earnings";
-import { Asset, YieldPeriod } from "@/lib/types";
+import { Asset, YieldPeriod, CalendarQuarter } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 // Asset colors (matching data-table.tsx)
@@ -43,23 +50,51 @@ const PERIOD_LABELS: Record<YieldPeriod, string> = {
   "1Y": "Yearly",
 };
 
+// View mode: either a period or "quarterly" for quarter selection
+type ViewMode = YieldPeriod | "quarterly";
+
 interface TreasuryYieldLeaderboardProps {
   period?: YieldPeriod;
+  quarter?: CalendarQuarter;
   asset?: Asset;
   limit?: number;
   onPeriodChange?: (period: YieldPeriod) => void;
+  onQuarterChange?: (quarter: CalendarQuarter) => void;
   className?: string;
 }
 
 export function TreasuryYieldLeaderboard({
-  period = "1Y",
+  period,
+  quarter,
   asset,
   limit,
   onPeriodChange,
+  onQuarterChange,
   className,
 }: TreasuryYieldLeaderboardProps) {
   const router = useRouter();
-  const { data, isLoading, error } = useTreasuryYieldLeaderboard({ period, asset });
+
+  // Determine current view mode
+  const viewMode: ViewMode = quarter ? "quarterly" : (period || "1Y");
+
+  const { data, isLoading, error } = useTreasuryYieldLeaderboard({
+    period: quarter ? undefined : (period || "1Y"),
+    quarter,
+    asset,
+  });
+
+  const handleViewModeChange = (mode: ViewMode) => {
+    if (mode === "quarterly") {
+      // Switch to quarterly view with most recent quarter
+      const defaultQuarter = data?.availableQuarters?.[0] || "Q4-2025";
+      onQuarterChange?.(defaultQuarter as CalendarQuarter);
+      onPeriodChange?.(undefined as unknown as YieldPeriod);
+    } else {
+      // Switch to period view
+      onPeriodChange?.(mode);
+      onQuarterChange?.(undefined as unknown as CalendarQuarter);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -83,31 +118,88 @@ export function TreasuryYieldLeaderboard({
   }
 
   const leaderboard = limit ? data?.leaderboard.slice(0, limit) : data?.leaderboard;
+  const availableQuarters = data?.availableQuarters || [];
 
   if (!leaderboard || leaderboard.length === 0) {
     return (
-      <div className={cn("text-center py-8 text-gray-500", className)}>
-        No yield data available
+      <div className={className}>
+        {/* View mode selector */}
+        {(onPeriodChange || onQuarterChange) && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {(["1W", "1M", "quarterly", "1Y"] as ViewMode[]).map((mode) => (
+              <Button
+                key={mode}
+                variant={viewMode === mode ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleViewModeChange(mode)}
+                className="text-xs"
+              >
+                {mode === "quarterly" ? "Quarterly" : PERIOD_LABELS[mode as YieldPeriod]}
+              </Button>
+            ))}
+
+            {/* Quarter selector dropdown */}
+            {viewMode === "quarterly" && availableQuarters.length > 0 && (
+              <Select
+                value={quarter}
+                onValueChange={(val) => onQuarterChange?.(val as CalendarQuarter)}
+              >
+                <SelectTrigger className="w-[120px] h-8 text-xs">
+                  <SelectValue placeholder="Select quarter" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableQuarters.map((q) => (
+                    <SelectItem key={q} value={q} className="text-xs">
+                      {q.replace("-", " ")}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        )}
+        <div className="text-center py-8 text-gray-500">
+          No yield data available for this period
+        </div>
       </div>
     );
   }
 
   return (
     <div className={className}>
-      {/* Period selector */}
-      {onPeriodChange && (
-        <div className="flex gap-2 mb-4">
-          {(["1W", "1M", "3M", "1Y"] as YieldPeriod[]).map((p) => (
+      {/* View mode selector */}
+      {(onPeriodChange || onQuarterChange) && (
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          {(["1W", "1M", "quarterly", "1Y"] as ViewMode[]).map((mode) => (
             <Button
-              key={p}
-              variant={period === p ? "default" : "outline"}
+              key={mode}
+              variant={viewMode === mode ? "default" : "outline"}
               size="sm"
-              onClick={() => onPeriodChange(p)}
+              onClick={() => handleViewModeChange(mode)}
               className="text-xs"
             >
-              {PERIOD_LABELS[p]}
+              {mode === "quarterly" ? "Quarterly" : PERIOD_LABELS[mode as YieldPeriod]}
             </Button>
           ))}
+
+          {/* Quarter selector dropdown */}
+          {viewMode === "quarterly" && availableQuarters.length > 0 && (
+            <Select
+              value={quarter}
+              onValueChange={(val) => onQuarterChange?.(val as CalendarQuarter)}
+            >
+              <SelectTrigger className="w-[120px] h-8 text-xs">
+                <SelectValue placeholder="Select quarter" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableQuarters.map((q) => (
+                  <SelectItem key={q} value={q} className="text-xs">
+                    {q.replace("-", " ")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         </div>
       )}
 

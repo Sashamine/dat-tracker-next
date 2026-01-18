@@ -6,9 +6,7 @@ import { MobileHeader } from "@/components/mobile-header";
 import { EarningsCalendar } from "@/components/earnings/earnings-calendar";
 import { TreasuryYieldLeaderboard } from "@/components/earnings/treasury-yield-leaderboard";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Asset, YieldPeriod } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { Asset, YieldPeriod, CalendarQuarter } from "@/lib/types";
 
 // Asset filter options
 const ASSET_OPTIONS: Asset[] = ["BTC", "ETH", "SOL", "HYPE", "TAO", "DOGE", "XRP"];
@@ -16,7 +14,18 @@ const ASSET_OPTIONS: Asset[] = ["BTC", "ETH", "SOL", "HYPE", "TAO", "DOGE", "XRP
 export default function EarningsPage() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>(undefined);
   const [showUpcoming, setShowUpcoming] = useState(true);
-  const [yieldPeriod, setYieldPeriod] = useState<YieldPeriod>("3M");
+  const [yieldPeriod, setYieldPeriod] = useState<YieldPeriod | undefined>("1Y");
+  const [selectedQuarter, setSelectedQuarter] = useState<CalendarQuarter | undefined>(undefined);
+
+  const handlePeriodChange = (period: YieldPeriod) => {
+    setYieldPeriod(period);
+    setSelectedQuarter(undefined);
+  };
+
+  const handleQuarterChange = (quarter: CalendarQuarter) => {
+    setSelectedQuarter(quarter);
+    setYieldPeriod(undefined);
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
@@ -69,8 +78,10 @@ export default function EarningsPage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 lg:p-6">
             <TreasuryYieldLeaderboard
               period={yieldPeriod}
+              quarter={selectedQuarter}
               asset={selectedAsset}
-              onPeriodChange={setYieldPeriod}
+              onPeriodChange={handlePeriodChange}
+              onQuarterChange={handleQuarterChange}
             />
           </div>
 

@@ -1,6 +1,6 @@
 // Hook to fetch earnings data
 import { useQuery } from "@tanstack/react-query";
-import { EarningsCalendarEntry, TreasuryYieldMetrics, EarningsRecord, Asset, YieldPeriod } from "../types";
+import { EarningsCalendarEntry, TreasuryYieldMetrics, EarningsRecord, Asset, YieldPeriod, CalendarQuarter } from "../types";
 
 interface EarningsCalendarResponse {
   entries: EarningsCalendarEntry[];
@@ -9,7 +9,9 @@ interface EarningsCalendarResponse {
 
 interface YieldLeaderboardResponse {
   leaderboard: TreasuryYieldMetrics[];
-  period: string;
+  period?: YieldPeriod;
+  quarter?: CalendarQuarter;
+  availableQuarters: CalendarQuarter[];
   count: number;
 }
 
@@ -45,15 +47,22 @@ export function useEarningsCalendar(options?: {
 // Fetch treasury yield leaderboard
 export function useTreasuryYieldLeaderboard(options?: {
   period?: YieldPeriod;
+  quarter?: CalendarQuarter;
   asset?: Asset;
 }) {
-  const { period = "1Y", asset } = options || {};
+  const { period, quarter, asset } = options || {};
 
   return useQuery<YieldLeaderboardResponse>({
-    queryKey: ["yield-leaderboard", period, asset],
+    queryKey: ["yield-leaderboard", period, quarter, asset],
     queryFn: async () => {
       const params = new URLSearchParams();
-      params.set("period", period);
+      if (quarter) {
+        params.set("quarter", quarter);
+      } else if (period) {
+        params.set("period", period);
+      } else {
+        params.set("period", "1Y");
+      }
       if (asset) params.set("asset", asset);
 
       const res = await fetch(`/api/earnings/yield-leaderboard?${params}`);
