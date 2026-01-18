@@ -161,7 +161,7 @@ export async function GET() {
     // Parallel fetch - CoinGecko now handles all crypto including HYPE
     const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
       getBinancePrices(),
-      getStockSnapshots(alpacaStockTickers).catch(() => ({})),
+      getStockSnapshots(alpacaStockTickers).catch(e => { console.error("Alpaca error:", e.message); return {}; }),
       fetchFMPStocks(FMP_ONLY_STOCKS),
       fetchMarketCaps(),
     ]);
