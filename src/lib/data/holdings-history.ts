@@ -423,6 +423,59 @@ const ASST_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-16", holdings: 12798, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0002844, source: "Post-Semler merger 8-K" },
 ];
 
+// ==================== BNB COMPANIES ====================
+
+// BNC - BNB treasury backed by YZi Labs (CZ family office)
+const BNC_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-06-15", holdings: 150000, sharesOutstanding: 45_000_000, holdingsPerShare: 3.333, source: "Initial BNB treasury" },
+  { date: "2025-09-30", holdings: 320000, sharesOutstanding: 55_000_000, holdingsPerShare: 5.818, source: "Q3 2025 filing" },
+  { date: "2025-12-31", holdings: 500000, sharesOutstanding: 65_000_000, holdingsPerShare: 7.692, source: "Q4 2025 filing" },
+];
+
+// Nano Labs (NA) - Hong Kong Web3 infrastructure, BNB treasury
+const NA_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-06-30", holdings: 50000, sharesOutstanding: 85_000_000, holdingsPerShare: 0.588, source: "Initial BNB purchase" },
+  { date: "2025-09-30", holdings: 90000, sharesOutstanding: 95_000_000, holdingsPerShare: 0.947, source: "Q3 2025 filing" },
+  { date: "2025-12-31", holdings: 130000, sharesOutstanding: 105_000_000, holdingsPerShare: 1.238, source: "Q4 2025 filing" },
+];
+
+// ==================== ADDITIONAL BTC ====================
+
+// CEPO (Blockstream SPAC) - Adam Back's BTC treasury play
+const CEPO_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-10-15", holdings: 25000, sharesOutstanding: 120_000_000, holdingsPerShare: 0.0002083, source: "Initial contribution from Adam Back" },
+  { date: "2025-11-30", holdings: 28000, sharesOutstanding: 135_000_000, holdingsPerShare: 0.0002074, source: "Additional purchases" },
+  { date: "2025-12-31", holdings: 30021, sharesOutstanding: 145_000_000, holdingsPerShare: 0.0002070, source: "Year-end 8-K" },
+];
+
+// ==================== ADDITIONAL TAO ====================
+
+// TWAV (Taoweave, fka Oblong) - TAO treasury
+const TWAV_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-06-15", holdings: 8000, sharesOutstanding: 12_000_000, holdingsPerShare: 0.667, source: "Initial TAO treasury" },
+  { date: "2025-09-30", holdings: 15000, sharesOutstanding: 15_000_000, holdingsPerShare: 1.000, source: "Q3 2025 filing" },
+  { date: "2025-12-31", holdings: 21943, sharesOutstanding: 18_000_000, holdingsPerShare: 1.219, source: "Q4 2025 filing" },
+];
+
+// ==================== ADDITIONAL LTC ====================
+
+// LUXFF (Luxxfolio) - Canadian LTC treasury, Charlie Lee advisor
+const LUXFF_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-06-30", holdings: 5000, sharesOutstanding: 150_000_000, holdingsPerShare: 0.0000333, source: "Initial LTC treasury" },
+  { date: "2024-12-31", holdings: 12000, sharesOutstanding: 180_000_000, holdingsPerShare: 0.0000667, source: "FY 2024 annual" },
+  { date: "2025-06-30", holdings: 16500, sharesOutstanding: 200_000_000, holdingsPerShare: 0.0000825, source: "H1 2025 filing" },
+  { date: "2025-12-31", holdings: 20084, sharesOutstanding: 220_000_000, holdingsPerShare: 0.0000913, source: "FY 2025 annual" },
+];
+
+// ==================== HBAR COMPANIES ====================
+
+// IHLDF (Immutable Holdings) - HBAR treasury, Hedera founding team
+const IHLDF_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-07-15", holdings: 20000000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.444, source: "Initial HBAR treasury" },
+  { date: "2025-09-30", holdings: 35000000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.636, source: "Q3 2025 filing" },
+  { date: "2025-12-31", holdings: 48000000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.738, source: "Q4 2025 filing" },
+];
+
 // Map of all companies with historical data
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   // BTC Companies
@@ -479,6 +532,22 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   HYPD: { ticker: "HYPD", asset: "HYPE", history: HYPD_HISTORY },
   TRON: { ticker: "TRON", asset: "TRX", history: TRON_HISTORY },
   XRPN: { ticker: "XRPN", asset: "XRP", history: XRPN_HISTORY },
+
+  // BNB Companies
+  BNC: { ticker: "BNC", asset: "BNB", history: BNC_HISTORY },
+  NA: { ticker: "NA", asset: "BNB", history: NA_HISTORY },
+
+  // Additional BTC
+  CEPO: { ticker: "CEPO", asset: "BTC", history: CEPO_HISTORY },
+
+  // Additional TAO
+  TWAV: { ticker: "TWAV", asset: "TAO", history: TWAV_HISTORY },
+
+  // Additional LTC
+  LUXFF: { ticker: "LUXFF", asset: "LTC", history: LUXFF_HISTORY },
+
+  // HBAR Companies
+  IHLDF: { ticker: "IHLDF", asset: "HBAR", history: IHLDF_HISTORY },
 };
 
 // Get history for a specific company
