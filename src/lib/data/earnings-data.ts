@@ -360,9 +360,16 @@ export function getTreasuryYieldLeaderboard(options?: {
     const endDate = new Date(latest.date);
     const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    // For shorter periods, require minimum data span
-    if (period === "1W" && daysCovered < 3) continue;  // At least 3 days for weekly
-    if (period === "1M" && daysCovered < 14) continue; // At least 2 weeks for monthly
+    // For shorter periods, require appropriate data span (not too short, not too long)
+    if (period === "1W") {
+      if (daysCovered < 3 || daysCovered > 14) continue;  // 3-14 days for weekly
+    }
+    if (period === "1M") {
+      if (daysCovered < 14 || daysCovered > 45) continue; // 14-45 days for monthly
+    }
+    if (period === "3M") {
+      if (daysCovered < 45 || daysCovered > 120) continue; // 45-120 days for quarterly
+    }
 
     const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
 
