@@ -55,28 +55,23 @@ export function useTreasuryYieldLeaderboard(options?: {
   // Determine the effective period for the query
   const effectivePeriod = quarter ? undefined : (period || "1Y");
 
-  // Build a unique query key that changes when parameters change
-  const queryKey = ["yield-leaderboard", effectivePeriod ?? "quarter", quarter ?? "none", asset ?? "all"] as const;
+  // Build query parameters string to use as part of the key
+  const queryParams = quarter
+    ? `quarter=${quarter}`
+    : `period=${effectivePeriod || "1Y"}`;
+  const assetParam = asset ? `&asset=${asset}` : "";
+  const fullParams = queryParams + assetParam;
 
   return useQuery<YieldLeaderboardResponse>({
-    queryKey,
+    // Use the full params string as key to ensure uniqueness
+    queryKey: ["yield-leaderboard", fullParams],
     queryFn: async () => {
-      const params = new URLSearchParams();
-      if (quarter) {
-        params.set("quarter", quarter);
-      } else {
-        params.set("period", effectivePeriod || "1Y");
-      }
-      if (asset) params.set("asset", asset);
-
-      const res = await fetch(`/api/earnings/yield-leaderboard?${params}`);
+      const res = await fetch(`/api/earnings/yield-leaderboard?${fullParams}`);
       if (!res.ok) throw new Error("Failed to fetch yield leaderboard");
       return res.json();
     },
     staleTime: 0,
-    gcTime: 0, // Don't keep old data in cache (was cacheTime in v4)
-    refetchOnMount: true,
-    refetchOnWindowFocus: false,
+    gcTime: 0,
   });
 }
 
