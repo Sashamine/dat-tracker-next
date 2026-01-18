@@ -115,3 +115,57 @@ export interface CompanyMetrics {
   mNav?: number;
   holdingsValue?: number;
 }
+
+// Earnings data types
+export type EarningsTime = "BMO" | "AMC" | "TNS" | null; // Before Market Open, After Market Close, Time Not Specified
+export type EarningsStatus = "upcoming" | "confirmed" | "reported";
+export type EarningsSource = "sec-filing" | "press-release" | "investor-presentation" | "manual";
+
+export interface EarningsRecord {
+  ticker: string;
+  fiscalYear: number;
+  fiscalQuarter: 1 | 2 | 3 | 4;
+  earningsDate: string;                    // ISO date
+  earningsTime: EarningsTime;
+
+  // Financials (USD)
+  epsActual?: number;
+  epsEstimate?: number;
+  revenueActual?: number;
+  revenueEstimate?: number;
+  netIncome?: number;
+
+  // Treasury snapshot at quarter end
+  holdingsAtQuarterEnd?: number;
+  sharesAtQuarterEnd?: number;
+  holdingsPerShare?: number;
+
+  // Metadata
+  source: EarningsSource;
+  sourceUrl?: string;
+  status: EarningsStatus;
+}
+
+export interface EarningsCalendarEntry {
+  ticker: string;
+  companyName: string;
+  asset: Asset;
+  earningsDate: string;
+  earningsTime: EarningsTime;
+  status: EarningsStatus;
+  daysUntil: number;                  // Negative if past
+  epsSurprisePct?: number;            // (actual - estimate) / |estimate| * 100
+  holdingsPerShareGrowth?: number;    // QoQ treasury yield %
+}
+
+export interface TreasuryYieldMetrics {
+  ticker: string;
+  companyName: string;
+  asset: Asset;
+  period: "QoQ" | "YTD" | "1Y";
+  holdingsPerShareStart: number;
+  holdingsPerShareEnd: number;
+  growthPct: number;
+  annualizedGrowthPct: number;
+  rank?: number;
+}
