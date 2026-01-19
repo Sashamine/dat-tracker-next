@@ -37,7 +37,6 @@ Some companies publish real-time holdings:
 - `bitcointreasuries.net` - Most comprehensive
 - `bitbo.io/treasuries/` - Good for non-US companies
 - `theblock.co/treasuries/` - Real-time tracking
-- `coingecko.com/treasuries/` - Historical data
 
 **Use aggregators for:**
 - Non-US companies without SEC filings (3350.T, 0434.HK, ALTBG, H100.ST)

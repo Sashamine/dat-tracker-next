@@ -69,23 +69,29 @@ export function mergeCompanyWithOverrides(
   // Get static company data for fields not in database (like holdingsSourceUrl)
   const staticCompany = getCompanyByTicker(company.ticker);
 
+  // Merge static financial data for mNAV calculation (database may not have these)
+  const mergedFinancials = {
+    totalDebt: company.totalDebt ?? staticCompany?.totalDebt,
+    preferredEquity: company.preferredEquity ?? staticCompany?.preferredEquity,
+    cashReserves: company.cashReserves ?? staticCompany?.cashReserves,
+    otherInvestments: company.otherInvestments ?? staticCompany?.otherInvestments,
+    holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
+    sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
+  };
+
   if (!override) {
     return {
       ...company,
+      ...mergedFinancials,
       sharesOutstandingFD: sharesOutstandingFD ?? company.sharesOutstandingFD,
-      // Pull holdingsSourceUrl from static data if not in database response
-      holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
-      sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
     };
   }
 
   return {
     ...company,
+    ...mergedFinancials,
     // Diluted shares from holdings history (SEC filings)
     sharesOutstandingFD: sharesOutstandingFD ?? company.sharesOutstandingFD,
-    // Pull holdingsSourceUrl from static data if not in database response
-    holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
-    sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
     // Holdings: ALWAYS use companies.ts (single source of truth)
     // Google Sheet holdings data was stale and causing incorrect mNAV calculations
     // holdings: override.holdings ?? company.holdings,

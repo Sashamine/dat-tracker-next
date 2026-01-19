@@ -13,7 +13,6 @@ import {
   MonitoringRun,
   SocialSource,
 } from './types';
-import { checkBTCTreasuriesDiscrepancies } from './sources/btc-treasuries';
 import { checkSECFilingsForUpdates, checkSECFilingsEnhanced } from './sources/sec-edgar';
 import { checkTwitterForUpdates, createGrokConfig } from './sources/twitter';
 import { checkIRPages } from './sources/ir-pages';
@@ -323,33 +322,7 @@ export async function runMonitoringAgent(
       allResults.push(...aggResults);
     }
 
-    // 6. Check BTC Treasuries API (aggregator - for discrepancy detection)
-    if (config.sources.includes('btc_treasuries')) {
-      sourcesChecked++;
-      console.log('[Monitoring] Checking BTC Treasuries for discrepancies...');
-      const btcCompanies = companies.filter(c => c.asset === 'BTC');
-
-      if (btcCompanies.length > 0) {
-        // Only use for discrepancy detection, not as primary source
-        const discrepancies = await checkBTCTreasuriesDiscrepancies(btcCompanies);
-        for (const disc of discrepancies.filter(d => d.discrepancyPct > 5)) {
-          if (discord) {
-            await discord.sendDiscrepancyWarning({
-              companyName: disc.companyName,
-              ticker: disc.ticker,
-              asset: 'BTC',
-              ourHoldings: disc.ourHoldings,
-              externalHoldings: disc.externalHoldings,
-              externalSource: disc.externalSource,
-              discrepancyPct: disc.discrepancyPct,
-            });
-            notificationsSent++;
-          }
-        }
-      }
-    }
-
-    // 7. Process all results
+    // 6. Process all results
     for (const result of allResults) {
       const company = companies.find(c => c.id === result.companyId);
       if (!company) continue;

@@ -390,7 +390,6 @@ function formatSourceType(sourceType: string): string {
     sec_10k: 'SEC 10-K Filing',
     twitter: 'Twitter/X',
     ir_page: 'IR Page',
-    btc_treasuries: 'bitcointreasuries.net',
     press_release: 'Press Release',
   };
   return labels[sourceType] || sourceType;

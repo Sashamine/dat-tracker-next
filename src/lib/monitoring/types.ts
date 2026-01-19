@@ -100,16 +100,6 @@ export interface SourceCheckResult {
   error?: string;
 }
 
-export interface BTCTreasuriesEntry {
-  symbol: string;
-  name: string;
-  total_btc: number;
-  btc_change_24h?: number;
-  btc_change_7d?: number;
-  entry_price?: number;
-  current_value?: number;
-}
-
 export interface SECFilingResult {
   ticker: string;
   cik: string;
@@ -171,7 +161,6 @@ export const MONITORING_SOURCES = [
   'twitter',                 // Twitter/X via Grok API
   // Aggregators (verification/fallback only)
   'aggregators',             // Aggregators (Bitbo, BitcoinTreasuries.net)
-  'btc_treasuries',          // bitcointreasuries.net API (discrepancy detection)
 ] as const;
 
 export type MonitoringSource = typeof MONITORING_SOURCES[number];

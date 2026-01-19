@@ -83,7 +83,6 @@ const SOURCE_CONFIGS: Record<string, DataSource> = {
     autoApproveThreshold: 1.0,  // Never auto-approve
     maxAutoApproveChangePct: 0,
   },
-  btc_treasuries: { trustLevel: 'community', autoApproveThreshold: 1.0, maxAutoApproveChangePct: 0 },
   aggregator_bitbo: { trustLevel: 'community', autoApproveThreshold: 1.0, maxAutoApproveChangePct: 0 },
   aggregator_btctreasuries: { trustLevel: 'community', autoApproveThreshold: 1.0, maxAutoApproveChangePct: 0 },
 
@@ -159,7 +158,7 @@ export function evaluateAutoApproval(
   }
 
   // Rule 4: Aggregators (Bitbo, BitcoinTreasuries.net) - NEVER auto-approve, flag for review
-  if (update.sourceType === 'aggregator' || update.sourceType === 'btc_treasuries' ||
+  if (update.sourceType === 'aggregator' ||
       update.sourceType === 'aggregator_bitbo' || update.sourceType === 'aggregator_btctreasuries') {
     return {
       shouldAutoApprove: false,

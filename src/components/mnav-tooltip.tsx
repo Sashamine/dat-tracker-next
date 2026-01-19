@@ -62,9 +62,11 @@ export function MNAVTooltip({
   officialDashboard,
   secFilingsUrl,
 }: MNAVTooltipProps) {
-  // Calculate EV and NAV for display
+  // Calculate EV and NAV for display (matches Strategy's methodology)
+  // EV = Market Cap + Debt + Preferred - Cash
+  // NAV = Crypto value only (NOT including cash)
   const ev = marketCap + totalDebt + preferredEquity - cashReserves;
-  const nav = holdingsValue + otherInvestments + cashReserves;
+  const nav = holdingsValue;  // Crypto-only NAV
 
   // Determine which links to show and their labels
   const sourceUrl = secFilingsUrl || holdingsSourceUrl;
@@ -137,31 +139,15 @@ export function MNAVTooltip({
               </div>
             </div>
 
-            {/* NAV breakdown */}
+            {/* NAV breakdown - crypto only (matches Strategy methodology) */}
             <div>
               <div className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">
-                Net Asset Value
+                {asset} Reserve (NAV)
               </div>
               <div className="space-y-0.5 text-gray-300">
                 <div className="flex justify-between">
-                  <span>{asset} ({holdings.toLocaleString()})</span>
+                  <span>{holdings.toLocaleString()} {asset}</span>
                   <span className="font-mono">{formatCompact(holdingsValue)}</span>
-                </div>
-                {cashReserves > 0 && (
-                  <div className="flex justify-between">
-                    <span>+ Cash</span>
-                    <span className="font-mono">{formatCompact(cashReserves)}</span>
-                  </div>
-                )}
-                {otherInvestments > 0 && (
-                  <div className="flex justify-between">
-                    <span>+ Other</span>
-                    <span className="font-mono">{formatCompact(otherInvestments)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between font-medium border-t border-gray-700 pt-0.5">
-                  <span>= NAV</span>
-                  <span className="font-mono">{formatCompact(nav)}</span>
                 </div>
               </div>
             </div>
