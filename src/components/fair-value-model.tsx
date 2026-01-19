@@ -10,6 +10,7 @@ import {
   formatPercent,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -264,7 +265,7 @@ export function FairValueModel({ companies, prices, assetFilter }: FairValueMode
   const results = filteredCompanies.map((company) => {
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
     const stockData = prices?.stocks[company.ticker];
-    const marketCap = company.marketCap || stockData?.marketCap || 0;
+    const { marketCap } = getMarketCap(company, stockData);
     const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
 
     const fv = calculateFairValueWithParams(

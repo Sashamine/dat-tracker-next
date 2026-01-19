@@ -6,6 +6,7 @@ import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight
 import { cn } from "@/lib/utils";
 import { Company } from "@/lib/types";
 import { calculateMNAV } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 
 interface AggregateData {
   time: Time;
@@ -66,7 +67,7 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = company.marketCap || stockData?.marketCap || 0;
+        const { marketCap } = getMarketCap(company, stockData);
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);
