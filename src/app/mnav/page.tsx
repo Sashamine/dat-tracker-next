@@ -15,16 +15,28 @@ import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/e
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 
-interface CryptoHistoryPoint {
-  time: string;
-  price: number;
+
+
+// Fetch mNAV history from API
+interface MNAVHistoryResponse {
+  current: {
+    timestamp: string;
+    median: number;
+    average: number;
+    btcPrice: number;
+  } | null;
+  history: {
+    timestamp: string;
+    median: number;
+    average: number;
+    btcPrice: number;
+  }[];
+  historyCount: number;
 }
 
-
-// Fetch BTC history for a given time range
-async function fetchBTCHistory(range: TimeRange): Promise<CryptoHistoryPoint[]> {
-  const response = await fetch(`/api/crypto/btc/history?range=${range}`);
-  if (!response.ok) return [];
+async function fetchMNAVHistory(): Promise<MNAVHistoryResponse> {
+  const response = await fetch("/api/mnav-history");
+  if (!response.ok) return { current: null, history: [], historyCount: 0 };
   return response.json();
 }
 
@@ -41,70 +53,56 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
-  // Fetch BTC history for the selected time range
-  const { data: btcHistory, isLoading } = useQuery({
-    queryKey: ["btcHistory", timeRange],
-    queryFn: () => fetchBTCHistory(timeRange),
+  // Fetch real mNAV history from API
+  const { data: mnavHistoryData, isLoading } = useQuery({
+    queryKey: ["mnavHistory"],
+    queryFn: fetchMNAVHistory,
     staleTime: 5 * 60 * 1000,
+    refetchInterval: 60 * 1000, // Refresh every minute
   });
 
   // Use stats from parent (single source of truth)
   const currentStats = mnavStats;
 
-  // Check if time format is Unix timestamp (intraday) or date string
-  const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
-
-  // Calculate historical aggregate mNAV
+  // Filter history data by time range and format for chart
   const historicalData = useMemo(() => {
-    if (!btcHistory || btcHistory.length === 0 || !currentBTCPrice) {
+    if (!mnavHistoryData?.history || mnavHistoryData.history.length === 0) {
       return [];
     }
-    const result: { time: Time; median: number; average: number }[] = [];
 
-    // Sample interval based on time range (data is already sampled by API)
-    const sampleInterval = timeRange === "1y" || timeRange === "all" ? 7 : 1;
+    const now = Date.now();
+    const rangeMs: Record<TimeRange, number> = {
+      "1d": 24 * 60 * 60 * 1000,
+      "7d": 7 * 24 * 60 * 60 * 1000,
+      "1mo": 30 * 24 * 60 * 60 * 1000,
+      "1y": 365 * 24 * 60 * 60 * 1000,
+      "all": Infinity,
+    };
 
-    for (let i = 0; i < btcHistory.length; i += sampleInterval) {
-      const point = btcHistory[i];
-      const historicalBTCPrice = point.price;
+    const cutoff = now - rangeMs[timeRange];
 
-      const priceRatio = currentBTCPrice / historicalBTCPrice;
-      const dampening = 0.5;
-      const adjustedRatio = 1 + (priceRatio - 1) * dampening;
+    // Filter and map the history data
+    const filtered = mnavHistoryData.history
+      .filter(point => new Date(point.timestamp).getTime() >= cutoff)
+      .map(point => ({
+        time: Math.floor(new Date(point.timestamp).getTime() / 1000) as Time,
+        median: point.median,
+        average: point.average,
+      }))
+      .filter(point => point.median > 0 && point.median < 10 && point.average > 0 && point.average < 10);
 
-      const historicalMedian = currentStats.median / adjustedRatio;
-      const historicalAverage = currentStats.average / adjustedRatio;
-
-      if (historicalMedian > 0 && historicalMedian < 10 && historicalAverage > 0 && historicalAverage < 10) {
-        // Convert time format: if it's all digits, it's a Unix timestamp
-        const timeValue = /^\d+$/.test(point.time) ? parseInt(point.time, 10) : point.time;
-        result.push({
-          time: timeValue as Time,
-          median: historicalMedian,
-          average: historicalAverage,
-        });
-      }
-    }
-
-    // Add current point with matching time format
-    if (isIntraday) {
-      const nowUnix = Math.floor(Date.now() / 1000);
-      result.push({
-        time: nowUnix as Time,
-        median: currentStats.median,
-        average: currentStats.average,
-      });
-    } else {
-      const today = new Date().toISOString().split("T")[0] as Time;
-      result.push({
-        time: today,
+    // Add current point from live stats
+    if (filtered.length > 0 || currentStats.median > 0) {
+      const nowUnix = Math.floor(Date.now() / 1000) as Time;
+      filtered.push({
+        time: nowUnix,
         median: currentStats.median,
         average: currentStats.average,
       });
     }
 
-    return result;
-  }, [btcHistory, currentBTCPrice, currentStats, timeRange, isIntraday]);
+    return filtered;
+  }, [mnavHistoryData, timeRange, currentStats]);
 
   // Calculate change from start
   const change = useMemo(() => {
