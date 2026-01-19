@@ -6,7 +6,7 @@ import { MobileHeader } from "@/components/mobile-header";
 import { EarningsCalendar } from "@/components/earnings/earnings-calendar";
 import { TreasuryYieldLeaderboard } from "@/components/earnings/treasury-yield-leaderboard";
 import { Button } from "@/components/ui/button";
-import { Asset, YieldPeriod, CalendarQuarter } from "@/lib/types";
+import { Asset, CalendarQuarter } from "@/lib/types";
 
 // Asset filter options
 const ASSET_OPTIONS: Asset[] = ["BTC", "ETH", "SOL", "HYPE", "TAO", "DOGE", "XRP"];
@@ -14,24 +14,7 @@ const ASSET_OPTIONS: Asset[] = ["BTC", "ETH", "SOL", "HYPE", "TAO", "DOGE", "XRP
 export default function EarningsPage() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>(undefined);
   const [showUpcoming, setShowUpcoming] = useState(true);
-  const [yieldPeriod, setYieldPeriod] = useState<YieldPeriod | undefined>("1Y");
   const [selectedQuarter, setSelectedQuarter] = useState<CalendarQuarter | undefined>(undefined);
-
-  const handlePeriodChange = (period: YieldPeriod) => {
-    setYieldPeriod(period);
-    // Only reset quarter when actually selecting a period
-    if (period) {
-      setSelectedQuarter(undefined);
-    }
-  };
-
-  const handleQuarterChange = (quarter: CalendarQuarter) => {
-    setSelectedQuarter(quarter);
-    // Only reset period when actually selecting a quarter
-    if (quarter) {
-      setYieldPeriod(undefined);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
@@ -83,12 +66,10 @@ export default function EarningsPage() {
           {/* Primary: Treasury Yield Leaderboard */}
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 lg:p-6">
             <TreasuryYieldLeaderboard
-              key={`${yieldPeriod || 'none'}-${selectedQuarter || 'none'}-${selectedAsset || 'all'}`}
-              period={yieldPeriod}
+              key={`${selectedQuarter || 'default'}-${selectedAsset || 'all'}`}
               quarter={selectedQuarter}
               asset={selectedAsset}
-              onPeriodChange={handlePeriodChange}
-              onQuarterChange={handleQuarterChange}
+              onQuarterChange={setSelectedQuarter}
             />
           </div>
 

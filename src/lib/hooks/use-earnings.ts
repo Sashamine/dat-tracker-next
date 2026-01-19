@@ -44,29 +44,26 @@ export function useEarningsCalendar(options?: {
   });
 }
 
-// Fetch treasury yield leaderboard
+// Fetch treasury yield leaderboard (quarterly-based)
 export function useTreasuryYieldLeaderboard(options?: {
-  period?: YieldPeriod;
   quarter?: CalendarQuarter;
   asset?: Asset;
 }) {
-  const { period, quarter, asset } = options || {};
+  const { quarter, asset } = options || {};
 
-  // Determine the effective period for the query
-  const effectivePeriod = quarter ? undefined : (period || "1Y");
-
-  // Build query parameters string to use as part of the key
-  const queryParams = quarter
-    ? `quarter=${quarter}`
-    : `period=${effectivePeriod || "1Y"}`;
-  const assetParam = asset ? `&asset=${asset}` : "";
-  const fullParams = queryParams + assetParam;
+  // Build query parameters - always quarterly now
+  const params = new URLSearchParams();
+  if (quarter) params.set("quarter", quarter);
+  if (asset) params.set("asset", asset);
+  const fullParams = params.toString();
 
   return useQuery<YieldLeaderboardResponse>({
-    // Use the full params string as key to ensure uniqueness
     queryKey: ["yield-leaderboard", fullParams],
     queryFn: async () => {
-      const res = await fetch(`/api/earnings/yield-leaderboard?${fullParams}`);
+      const url = fullParams
+        ? `/api/earnings/yield-leaderboard?${fullParams}`
+        : `/api/earnings/yield-leaderboard`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch yield leaderboard");
       return res.json();
     },
