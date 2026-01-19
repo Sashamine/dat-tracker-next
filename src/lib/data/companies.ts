@@ -216,11 +216,12 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
-    marketCap: 3_500_000_000,
-    totalDebt: 255_000_000,  // ~$25M bonds + $230M BTC-backed credit facility draw
+    marketCap: 4_280_000_000,  // ~$4.28B (Jan 2026, from metaplanet.jp/analytics)
+    totalDebt: 280_000_000,  // ~$280M bonds + BTC-backed credit facility
+    cashReserves: 50_000_000,  // Estimated cash position
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 100K BTC by 2026.",
-    notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield.",
+    notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield. mNAV ~1.33.",
     leverageRatio: 1.3,
   },
   {
@@ -676,9 +677,11 @@ export const solCompanies: Company[] = [
     capitalRaisedAtm: 200_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
+    marketCap: 240_000_000,  // ~$240M (Jan 2026)
+    cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
-    notes: "$5B ELOC. Validator operations.",
+    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token.",
   },
   {
     id: "upxi",
