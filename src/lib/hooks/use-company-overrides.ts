@@ -82,6 +82,8 @@ export function mergeCompanyWithOverrides(
     // pendingMerger: static data takes precedence (undefined = not pending)
     // If not explicitly set in static data, use database value
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
+    // lowLiquidity: flag for thinly traded stocks
+    lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,
   };
 
   if (!override) {

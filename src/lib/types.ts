@@ -88,6 +88,9 @@ export interface Company {
   pendingMerger?: boolean;        // True if this is a pre-merger SPAC
   expectedHoldings?: number;      // Expected holdings after merger closes
   mergerExpectedClose?: string;   // Expected merger close date (ISO date)
+
+  // Trading status flags
+  lowLiquidity?: boolean;         // True for thinly traded OTC/international stocks
 }
 
 // Live price data

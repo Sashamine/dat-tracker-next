@@ -861,6 +861,7 @@ export const taoCompanies: Company[] = [
     stakingApy: 0.10,
     quarterlyBurnUsd: 400_000,
     capitalRaisedPipe: 30_100_000,
+    lowLiquidity: true,  // Canadian OTC - limited data feed coverage
     leader: "Karia Samaroo",
     strategy: "Validator operations and TAO treasury accumulation",
     notes: "TSX Venture Exchange. World's largest public TAO holder.",

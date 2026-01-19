@@ -308,6 +308,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   Pending
                 </Badge>
               )}
+              {company.lowLiquidity && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-gray-500/10 text-gray-500 border-gray-500/30">
+                  Low Liq
+                </Badge>
+              )}
             </div>
             <p className="text-sm text-gray-500 truncate max-w-[200px]">{company.name}</p>
           </div>
@@ -454,6 +459,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         {company.pendingMerger && (
                           <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
                             Pending Merger
+                          </Badge>
+                        )}
+                        {company.lowLiquidity && (
+                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-gray-500/10 text-gray-500 border-gray-500/30">
+                            Low Liquidity
                           </Badge>
                         )}
                       </span>
