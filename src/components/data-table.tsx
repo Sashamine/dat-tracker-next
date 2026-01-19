@@ -17,6 +17,7 @@ import {
   calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
@@ -94,11 +95,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const cryptoChange = prices?.crypto[company.asset]?.change24h;
     const stockData = prices?.stocks[company.ticker];
     const stockPrice = stockData?.price;
-    // Calculate market cap dynamically: FD shares × live price (preferred)
-    // Fall back to API market cap, then static stored value
-    const marketCap = (company.sharesOutstandingFD && stockPrice)
-      ? company.sharesOutstandingFD * stockPrice
-      : (stockData?.marketCap || company.marketCap || 0);
+    // Use centralized market cap utility (handles currency, fallbacks)
+    const marketCapResult = getMarketCap(company, stockData);
+    const marketCap = marketCapResult.marketCap;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
     const holdingsValue = company.holdings * cryptoPrice;

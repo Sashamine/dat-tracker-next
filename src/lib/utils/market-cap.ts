@@ -1,0 +1,216 @@
+/**
+ * Centralized Market Cap Utility
+ * ==============================
+ *
+ * Single source of truth for market cap calculations.
+ *
+ * DESIGN PRINCIPLES:
+ * 1. API market cap is preferred (already in USD, handles currency conversion)
+ * 2. Never calculate shares × price for non-USD stocks (currency bug)
+ * 3. Dilution adjustments only when we have verified data
+ * 4. Clear fallback chain with logging
+ *
+ * KNOWN ISSUES THIS SOLVES:
+ * - Metaplanet (3350.T): JPY price × shares = wrong "USD" market cap
+ * - SBET: Incorrect diluted share count led to wrong mNAV
+ */
+
+import { Company } from "@/lib/types";
+import { COMPANY_SOURCES, CompanyDataSources } from "@/lib/data/company-sources";
+
+// Tickers that have non-USD stock prices
+// These should NEVER use shares × price calculation
+const NON_USD_TICKERS = new Set([
+  "3350.T",    // Metaplanet - JPY (Tokyo Stock Exchange)
+  "0434.HK",   // Boyaa Interactive - HKD (Hong Kong)
+  "H100.ST",   // Hashdex - SEK (Stockholm)
+  "ALTBG",     // Cathedra Bitcoin - CAD (TSX Venture)
+]);
+
+// Currency codes for logging/display
+const TICKER_CURRENCIES: Record<string, string> = {
+  "3350.T": "JPY",
+  "0434.HK": "HKD",
+  "H100.ST": "SEK",
+  "ALTBG": "CAD",
+};
+
+export interface StockPriceData {
+  price: number;
+  marketCap: number;  // Already in USD from API
+  change24h?: number;
+  volume?: number;
+}
+
+export interface MarketCapResult {
+  marketCap: number;
+  source: MarketCapSource;
+  currency: string;
+  dilutionApplied: boolean;
+  dilutionFactor?: number;
+  warning?: string;
+}
+
+export type MarketCapSource =
+  | "api"           // From stock API (preferred)
+  | "calculated"    // shares × price (USD stocks only)
+  | "static"        // From company.marketCap
+  | "none";         // No data available
+
+/**
+ * Get market cap for a company using the correct source.
+ *
+ * Priority:
+ * 1. API market cap (already in USD) - PREFERRED
+ * 2. Static company.marketCap (fallback)
+ * 3. Zero (last resort)
+ *
+ * NOTE: We intentionally do NOT calculate shares × price because:
+ * - Non-USD stocks have price in local currency
+ * - Diluted share counts are often inaccurate
+ * - API already handles this correctly
+ */
+export function getMarketCap(
+  company: Company,
+  stockData?: StockPriceData | null
+): MarketCapResult {
+  const ticker = company.ticker;
+  const isNonUsd = NON_USD_TICKERS.has(ticker);
+  const currency = TICKER_CURRENCIES[ticker] || "USD";
+
+  // 1. API market cap is the gold standard
+  if (stockData?.marketCap && stockData.marketCap > 0) {
+    return {
+      marketCap: stockData.marketCap,
+      source: "api",
+      currency: "USD",  // API always returns USD
+      dilutionApplied: false,
+    };
+  }
+
+  // 2. Static market cap from company data
+  if (company.marketCap && company.marketCap > 0) {
+    return {
+      marketCap: company.marketCap,
+      source: "static",
+      currency: "USD",
+      dilutionApplied: false,
+      warning: "Using static market cap - may be stale",
+    };
+  }
+
+  // 3. No market cap available
+  return {
+    marketCap: 0,
+    source: "none",
+    currency,
+    dilutionApplied: false,
+    warning: `No market cap data available for ${ticker}`,
+  };
+}
+
+/**
+ * Apply dilution adjustment to market cap.
+ * Only use this when we have VERIFIED dilution data from company filings.
+ *
+ * @param basicMarketCap - Market cap based on basic shares
+ * @param dilutionFactor - Ratio of diluted to basic shares (e.g., 1.2 = 20% dilution)
+ */
+export function applyDilutionFactor(
+  basicMarketCap: number,
+  dilutionFactor: number
+): number {
+  if (dilutionFactor <= 0 || dilutionFactor > 3) {
+    // Sanity check - dilution factor should be between 1.0 and ~2.0 typically
+    console.warn(`Invalid dilution factor: ${dilutionFactor}`);
+    return basicMarketCap;
+  }
+  return basicMarketCap * dilutionFactor;
+}
+
+/**
+ * Get dilution factor for a company from company-sources.
+ * Returns undefined if not available/applicable.
+ */
+export function getDilutionFactor(ticker: string): number | undefined {
+  const sources = COMPANY_SOURCES[ticker.toUpperCase()];
+  if (!sources) return undefined;
+
+  // For now, we only apply dilution when explicitly configured
+  // Future: Add dilutionFactor to CompanyDataSources
+  return undefined;
+}
+
+/**
+ * Check if a ticker uses non-USD currency.
+ * Useful for UI warnings.
+ */
+export function isNonUsdTicker(ticker: string): boolean {
+  return NON_USD_TICKERS.has(ticker);
+}
+
+/**
+ * Get currency code for a ticker.
+ */
+export function getTickerCurrency(ticker: string): string {
+  return TICKER_CURRENCIES[ticker] || "USD";
+}
+
+/**
+ * Verification helper: Compare calculated mNAV against official dashboard.
+ * Returns discrepancy percentage.
+ */
+export function verifyMnavAgainstOfficial(
+  calculatedMnav: number,
+  officialMnav: number
+): { discrepancy: number; isAcceptable: boolean } {
+  if (officialMnav <= 0) {
+    return { discrepancy: 0, isAcceptable: true };
+  }
+
+  const discrepancy = Math.abs(calculatedMnav - officialMnav) / officialMnav;
+  // Accept up to 5% discrepancy (timing differences, rounding)
+  const isAcceptable = discrepancy <= 0.05;
+
+  return { discrepancy, isAcceptable };
+}
+
+// ============================================================================
+// EXPECTED VALUES FOR VERIFICATION
+// ============================================================================
+
+/**
+ * Known mNAV values from official sources for verification.
+ * Updated manually when checking dashboards.
+ */
+export const EXPECTED_MNAV: Record<string, { value: number; source: string; date: string }> = {
+  SBET: { value: 0.82, source: "sharplink.com/eth-dashboard", date: "2026-01-18" },
+  "3350.T": { value: 1.0, source: "metaplanet.jp/bitcoin (approximate)", date: "2026-01-18" },
+  // Add more as we verify
+};
+
+/**
+ * Verify all companies with expected mNAV values.
+ * Returns array of discrepancies.
+ */
+export function verifyAllMnavValues(
+  calculateMnavFn: (ticker: string) => number | null
+): Array<{ ticker: string; calculated: number; expected: number; discrepancy: number; ok: boolean }> {
+  const results: Array<{ ticker: string; calculated: number; expected: number; discrepancy: number; ok: boolean }> = [];
+
+  for (const [ticker, expected] of Object.entries(EXPECTED_MNAV)) {
+    const calculated = calculateMnavFn(ticker);
+    if (calculated !== null) {
+      const { discrepancy, isAcceptable } = verifyMnavAgainstOfficial(calculated, expected.value);
+      results.push({
+        ticker,
+        calculated,
+        expected: expected.value,
+        discrepancy,
+        ok: isAcceptable,
+      });
+    }
+  }
+
+  return results;
+}
