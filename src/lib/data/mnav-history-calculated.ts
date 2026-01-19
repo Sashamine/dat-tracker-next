@@ -1,5 +1,5 @@
 // Auto-generated historical mNAV data
-// Generated: 2026-01-19T17:04:35.116Z
+// Generated: 2026-01-19T17:49:22.116Z
 // DO NOT EDIT - regenerate with: npx tsx scripts/generate-mnav-history.ts
 
 export interface HistoricalMNAVCompany {
@@ -387,6 +387,32 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 1009800034,
         "enterpriseValue": 1009800034,
         "cryptoNav": 148500000
+      }
+    ]
+  },
+  {
+    "date": "2024-11-21",
+    "median": 1.788225213619256,
+    "average": 1.788225213619256,
+    "count": 2,
+    "btcPrice": 98000,
+    "ethPrice": 3350,
+    "companies": [
+      {
+        "ticker": "MSTR",
+        "asset": "BTC",
+        "mnav": 3.212,
+        "marketCap": 104242597046,
+        "enterpriseValue": 104242597046,
+        "cryptoNav": 32457600000
+      },
+      {
+        "ticker": "NAKA",
+        "asset": "BTC",
+        "mnav": 0.365,
+        "marketCap": 100100003,
+        "enterpriseValue": 100100003,
+        "cryptoNav": 274400000
       }
     ]
   },

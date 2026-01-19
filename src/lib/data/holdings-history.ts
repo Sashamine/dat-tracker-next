@@ -48,6 +48,7 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 214246, sharesOutstanding: 185_560_000, holdingsPerShare: 0.001155, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 226500, sharesOutstanding: 178_610_000, holdingsPerShare: 0.001268, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 252220, sharesOutstanding: 197_270_000, holdingsPerShare: 0.001278, source: "Q3 2024 10-Q" },
+  { date: "2024-11-18", holdings: 331200, sharesOutstanding: 220_000_000, holdingsPerShare: 0.001505, source: "8-K Nov 2024 - mNAV peak ~3.4x" },
   { date: "2024-12-31", holdings: 446400, sharesOutstanding: 257_640_000, holdingsPerShare: 0.001733, source: "Q4 2024 10-K" },
 
   // 2025 - Continued 21/21 plan execution (SEC EDGAR diluted shares)
