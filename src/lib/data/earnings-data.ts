@@ -1386,12 +1386,12 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
-// Target days for each period
-const PERIOD_DAYS: Record<string, number> = {
-  "1W": 7,
-  "1M": 30,
-  "3M": 90,
-  "1Y": 365,
+// Target days for each period, with max allowed span (2x target)
+const PERIOD_CONFIG: Record<string, { target: number; max: number }> = {
+  "1W": { target: 7, max: 14 },
+  "1M": { target: 30, max: 60 },
+  "3M": { target: 90, max: 180 },
+  "1Y": { target: 365, max: 730 },
 };
 
 // Get treasury yield leaderboard
@@ -1402,14 +1402,14 @@ export function getTreasuryYieldLeaderboard(options?: {
 }): TreasuryYieldMetrics[] {
   const { period = "1Y", asset } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
-  const targetDays = PERIOD_DAYS[period];
+  const config = PERIOD_CONFIG[period];
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   // Target start date (e.g., 7 days ago for weekly)
   const targetStart = new Date(today);
-  targetStart.setDate(targetStart.getDate() - targetDays);
+  targetStart.setDate(targetStart.getDate() - config.target);
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
     if (data.history.length < 2) continue;
@@ -1454,7 +1454,8 @@ export function getTreasuryYieldLeaderboard(options?: {
     const endDate = latestDate;
     const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    if (daysCovered <= 0) continue;
+    // Data span must be reasonable for this period (not more than 2x target)
+    if (daysCovered <= 0 || daysCovered > config.max) continue;
 
     // Calculate actual growth over the data span
     const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
