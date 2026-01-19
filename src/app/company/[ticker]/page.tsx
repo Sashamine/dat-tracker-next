@@ -176,7 +176,9 @@ export default function CompanyPage() {
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
   const { marketCap } = getMarketCap(displayCompany, stockData);
-  const { marketCap: marketCapForMnav } = getMarketCapForMnav(displayCompany, stockData);
+  const marketCapForMnavResult = getMarketCapForMnav(displayCompany, stockData);
+  const marketCapForMnav = marketCapForMnavResult.marketCap;
+  const usesCustomShares = marketCapForMnavResult.source === "calculated";
 
   // Other assets (cash + investments)
   const cashReserves = displayCompany.cashReserves || 0;
@@ -190,20 +192,8 @@ export default function CompanyPage() {
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
 
-  // Debug: Log which data source is being used
-  console.log(`[Company Page Debug] ${ticker}:`, {
-    usingCompanyFromAllCompanies: !!companyFromAllCompanies,
-    allCompaniesLength: allCompanies.length,
-    holdings: displayCompany.holdings,
-    cashReserves: displayCompany.cashReserves,
-    totalDebt: displayCompany.totalDebt,
-    preferredEquity: displayCompany.preferredEquity,
-    sharesForMnav: displayCompany.sharesForMnav,
-    marketCapForMnav,
-    cryptoPrice,
-    calculatedMNAV: mNAV,
-  });
-  const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
+  // Use marketCapForMnav for share calculations to match mNAV methodology
+  const sharesOutstanding = marketCapForMnav && stockPrice ? marketCapForMnav / stockPrice : 0;
   const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(displayCompany.holdings, sharesOutstanding);
@@ -563,8 +553,13 @@ export default function CompanyPage() {
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {formatLargeNumber(marketCap)}
+              {formatLargeNumber(marketCapForMnav)}
             </p>
+            {usesCustomShares && displayCompany.sharesForMnav && (
+              <p className="text-xs text-gray-400">
+                {(displayCompany.sharesForMnav / 1_000_000).toFixed(0)}M diluted shares
+              </p>
+            )}
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset}/Share</p>
