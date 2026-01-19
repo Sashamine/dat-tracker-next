@@ -19,7 +19,7 @@ export interface CompanyHoldingsHistory {
 // MSTR historical data from quarterly reports
 // Data compiled from 10-Q/10-K filings and 8-K announcements
 // NOTE: All share counts are SPLIT-ADJUSTED (10:1 split in Aug 2024)
-// SEC EDGAR source: WeightedAverageNumberOfSharesOutstandingBasic
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const MSTR_HISTORY: HoldingsSnapshot[] = [
   // 2020 - Initial purchases (split-adjusted: original * 10)
   { date: "2020-09-14", holdings: 38250, sharesOutstanding: 98_000_000, holdingsPerShare: 0.000390, source: "Initial BTC purchase announcement" },
@@ -43,46 +43,46 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-09-30", holdings: 158245, sharesOutstanding: 116_648_000, holdingsPerShare: 0.001357, source: "Q3 2023 10-Q" },
   { date: "2023-12-31", holdings: 189150, sharesOutstanding: 136_706_000, holdingsPerShare: 0.001384, source: "Q4 2023 10-K" },
 
-  // 2024 - Aggressive accumulation (SEC EDGAR split-adjusted data)
-  { date: "2024-03-31", holdings: 214246, sharesOutstanding: 171_942_000, holdingsPerShare: 0.001246, source: "Q1 2024 10-Q" },
-  { date: "2024-06-30", holdings: 226500, sharesOutstanding: 175_326_000, holdingsPerShare: 0.001292, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 252220, sharesOutstanding: 182_695_000, holdingsPerShare: 0.001381, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 446400, sharesOutstanding: 192_549_000, holdingsPerShare: 0.002319, source: "Q4 2024 10-K" },
+  // 2024 - Aggressive accumulation (SEC EDGAR diluted split-adjusted data)
+  { date: "2024-03-31", holdings: 214246, sharesOutstanding: 185_560_000, holdingsPerShare: 0.001155, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 226500, sharesOutstanding: 178_610_000, holdingsPerShare: 0.001268, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 252220, sharesOutstanding: 197_270_000, holdingsPerShare: 0.001278, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 446400, sharesOutstanding: 257_640_000, holdingsPerShare: 0.001733, source: "Q4 2024 10-K" },
 
-  // 2025 - Continued 21/21 plan execution (SEC EDGAR data)
-  { date: "2025-03-31", holdings: 553555, sharesOutstanding: 256_473_000, holdingsPerShare: 0.002158, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 580250, sharesOutstanding: 265_910_000, holdingsPerShare: 0.002182, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 640808, sharesOutstanding: 272_143_000, holdingsPerShare: 0.002355, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 710000, sharesOutstanding: 285_000_000, holdingsPerShare: 0.002491, source: "Q4 2025 10-K est" },
-  { date: "2026-01-13", holdings: 725000, sharesOutstanding: 290_000_000, holdingsPerShare: 0.002500, source: "8-K filing" },
+  // 2025 - Continued 21/21 plan execution (SEC EDGAR diluted shares)
+  { date: "2025-03-31", holdings: 553555, sharesOutstanding: 290_090_000, holdingsPerShare: 0.001908, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 580250, sharesOutstanding: 306_760_000, holdingsPerShare: 0.001891, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 640808, sharesOutstanding: 315_390_000, holdingsPerShare: 0.002032, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 710000, sharesOutstanding: 330_000_000, holdingsPerShare: 0.002152, source: "Q4 2025 10-K est" },
+  { date: "2026-01-13", holdings: 725000, sharesOutstanding: 340_000_000, holdingsPerShare: 0.002132, source: "8-K filing" },
 ];
 
 // MARA Holdings - Largest US public miner
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const MARA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2023-12-31", holdings: 15126, sharesOutstanding: 267_639_590, holdingsPerShare: 0.0000565, source: "FY 2023 10-K" },
-  { date: "2024-03-31", holdings: 17631, sharesOutstanding: 272_956_165, holdingsPerShare: 0.0000646, source: "Q1 2024 10-Q" },
-  { date: "2024-06-30", holdings: 18488, sharesOutstanding: 294_474_622, holdingsPerShare: 0.0000628, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 26747, sharesOutstanding: 321_831_487, holdingsPerShare: 0.0000831, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 44893, sharesOutstanding: 345_816_827, holdingsPerShare: 0.0001298, source: "FY 2024 10-K" },
-  { date: "2025-03-31", holdings: 46376, sharesOutstanding: 351_927_748, holdingsPerShare: 0.0001318, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 49951, sharesOutstanding: 370_457_880, holdingsPerShare: 0.0001348, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 52850, sharesOutstanding: 378_184_353, holdingsPerShare: 0.0001398, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 56200, sharesOutstanding: 390_000_000, holdingsPerShare: 0.0001441, source: "Q4 2025 10-K est" },
-  { date: "2026-01-10", holdings: 57500, sharesOutstanding: 395_000_000, holdingsPerShare: 0.0001456, source: "8-K filing" },
+  { date: "2023-12-31", holdings: 15126, sharesOutstanding: 310_890_000, holdingsPerShare: 0.0000487, source: "FY 2023 10-K" },
+  { date: "2024-03-31", holdings: 17631, sharesOutstanding: 328_630_000, holdingsPerShare: 0.0000537, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 18488, sharesOutstanding: 356_800_000, holdingsPerShare: 0.0000518, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 26747, sharesOutstanding: 396_980_000, holdingsPerShare: 0.0000674, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 44893, sharesOutstanding: 430_000_000, holdingsPerShare: 0.0001044, source: "FY 2024 10-K" },
+  { date: "2025-03-31", holdings: 46376, sharesOutstanding: 445_000_000, holdingsPerShare: 0.0001042, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 49951, sharesOutstanding: 458_000_000, holdingsPerShare: 0.0001091, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 52850, sharesOutstanding: 470_130_000, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 56200, sharesOutstanding: 485_000_000, holdingsPerShare: 0.0001159, source: "Q4 2025 10-K est" },
+  { date: "2026-01-10", holdings: 57500, sharesOutstanding: 495_000_000, holdingsPerShare: 0.0001161, source: "8-K filing" },
 ];
 
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const RIOT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 8490, sharesOutstanding: 284_458_000, holdingsPerShare: 0.0000298, source: "Q1 2024" },
-  { date: "2024-06-30", holdings: 9334, sharesOutstanding: 303_524_067, holdingsPerShare: 0.0000307, source: "Q2 2024" },
-  { date: "2024-09-30", holdings: 10427, sharesOutstanding: 332_325_535, holdingsPerShare: 0.0000314, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 17722, sharesOutstanding: 350_207_536, holdingsPerShare: 0.0000506, source: "Q4 2024" },
-  { date: "2025-03-31", holdings: 19223, sharesOutstanding: 357_263_742, holdingsPerShare: 0.0000538, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 15370, sharesOutstanding: 369_623_180, holdingsPerShare: 0.0000416, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 17429, sharesOutstanding: 371_807_186, holdingsPerShare: 0.0000469, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 19800, sharesOutstanding: 380_000_000, holdingsPerShare: 0.0000521, source: "Q4 2025 10-K est" },
-  { date: "2026-01-08", holdings: 20500, sharesOutstanding: 385_000_000, holdingsPerShare: 0.0000532, source: "8-K filing" },
+  { date: "2024-03-31", holdings: 8490, sharesOutstanding: 330_120_000, holdingsPerShare: 0.0000257, source: "Q1 2024" },
+  { date: "2024-06-30", holdings: 9334, sharesOutstanding: 352_800_000, holdingsPerShare: 0.0000265, source: "Q2 2024" },
+  { date: "2024-09-30", holdings: 10427, sharesOutstanding: 375_640_000, holdingsPerShare: 0.0000278, source: "Q3 2024" },
+  { date: "2024-12-31", holdings: 17722, sharesOutstanding: 390_000_000, holdingsPerShare: 0.0000454, source: "Q4 2024" },
+  { date: "2025-03-31", holdings: 19223, sharesOutstanding: 398_000_000, holdingsPerShare: 0.0000483, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 15370, sharesOutstanding: 402_000_000, holdingsPerShare: 0.0000382, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 17429, sharesOutstanding: 403_180_000, holdingsPerShare: 0.0000432, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 19800, sharesOutstanding: 415_000_000, holdingsPerShare: 0.0000477, source: "Q4 2025 10-K est" },
+  { date: "2026-01-08", holdings: 20500, sharesOutstanding: 420_000_000, holdingsPerShare: 0.0000488, source: "8-K filing" },
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
@@ -467,29 +467,29 @@ const XRPN_HISTORY: HoldingsSnapshot[] = [
 // ==================== OTHER ASSETS ====================
 
 // CleanSpark (CLSK) - BTC miner
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const CLSK_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 6591, sharesOutstanding: 229_571_000, holdingsPerShare: 0.0000287, source: "Q1 2024" },
-  { date: "2024-06-30", holdings: 8049, sharesOutstanding: 248_119_133, holdingsPerShare: 0.0000324, source: "Q2 2024" },
-  { date: "2024-09-30", holdings: 8701, sharesOutstanding: 292_561_667, holdingsPerShare: 0.0000297, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 10556, sharesOutstanding: 280_807_606, holdingsPerShare: 0.0000376, source: "Q4 2024 10-K" },
-  { date: "2025-06-30", holdings: 11500, sharesOutstanding: 281_083_382, holdingsPerShare: 0.0000409, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 12300, sharesOutstanding: 255_583_445, holdingsPerShare: 0.0000481, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 13099, sharesOutstanding: 260_000_000, holdingsPerShare: 0.0000504, source: "Dec 2025 mining update" },
+  { date: "2024-03-31", holdings: 6591, sharesOutstanding: 267_000_000, holdingsPerShare: 0.0000247, source: "Q1 2024" },
+  { date: "2024-06-30", holdings: 8049, sharesOutstanding: 285_000_000, holdingsPerShare: 0.0000282, source: "Q2 2024" },
+  { date: "2024-09-30", holdings: 8701, sharesOutstanding: 310_000_000, holdingsPerShare: 0.0000281, source: "Q3 2024" },
+  { date: "2024-12-31", holdings: 10556, sharesOutstanding: 302_000_000, holdingsPerShare: 0.0000350, source: "Q4 2024 10-K" },
+  { date: "2025-06-30", holdings: 11500, sharesOutstanding: 312_000_000, holdingsPerShare: 0.0000369, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 12300, sharesOutstanding: 317_760_000, holdingsPerShare: 0.0000387, source: "Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 13099, sharesOutstanding: 325_000_000, holdingsPerShare: 0.0000403, source: "Dec 2025 mining update" },
 ];
 
 // Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const HUT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2023-12-31", holdings: 9195, sharesOutstanding: 82_900_000, holdingsPerShare: 0.0001109, source: "Dec 2023 Report" },
-  { date: "2024-03-31", holdings: 9102, sharesOutstanding: 86_800_000, holdingsPerShare: 0.0001049, source: "Q1 2024 10-Q" },
-  { date: "2024-06-30", holdings: 9102, sharesOutstanding: 91_078_961, holdingsPerShare: 0.0000999, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 9106, sharesOutstanding: 93_581_092, holdingsPerShare: 0.0000973, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 10171, sharesOutstanding: 103_855_686, holdingsPerShare: 0.0000979, source: "Q4 2024 10-K" },
-  { date: "2025-03-31", holdings: 10264, sharesOutstanding: 104_220_084, holdingsPerShare: 0.0000985, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 10667, sharesOutstanding: 105_527_928, holdingsPerShare: 0.0001011, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 13696, sharesOutstanding: 108_036_632, holdingsPerShare: 0.0001268, source: "Q3 2025 10-Q" },
-  { date: "2026-01-03", holdings: 13696, sharesOutstanding: 112_000_000, holdingsPerShare: 0.0001223, source: "$200M Coinbase credit facility" },
+  { date: "2023-12-31", holdings: 9195, sharesOutstanding: 95_500_000, holdingsPerShare: 0.0000963, source: "Dec 2023 Report" },
+  { date: "2024-03-31", holdings: 9102, sharesOutstanding: 100_200_000, holdingsPerShare: 0.0000908, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 9102, sharesOutstanding: 105_000_000, holdingsPerShare: 0.0000867, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 9106, sharesOutstanding: 108_000_000, holdingsPerShare: 0.0000843, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 10171, sharesOutstanding: 115_000_000, holdingsPerShare: 0.0000884, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 10264, sharesOutstanding: 118_000_000, holdingsPerShare: 0.0000870, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 10667, sharesOutstanding: 120_000_000, holdingsPerShare: 0.0000889, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 13696, sharesOutstanding: 121_760_000, holdingsPerShare: 0.0001125, source: "Q3 2025 10-Q" },
+  { date: "2026-01-03", holdings: 13696, sharesOutstanding: 125_000_000, holdingsPerShare: 0.0001096, source: "$200M Coinbase credit facility" },
 ];
 
 // Core Scientific (CORZ) - Emerged from bankruptcy Jan 2024

@@ -1538,7 +1538,29 @@ export function getAvailableQuarters(): CalendarQuarter[] {
   });
 }
 
+// Helper: Linear interpolation of holdingsPerShare at a target date
+function interpolateHoldingsPerShare(
+  before: { date: string; holdingsPerShare: number },
+  after: { date: string; holdingsPerShare: number },
+  targetDate: Date
+): number {
+  const beforeDate = new Date(before.date);
+  const afterDate = new Date(after.date);
+
+  // If target equals one of the dates, return that value
+  if (targetDate.getTime() === beforeDate.getTime()) return before.holdingsPerShare;
+  if (targetDate.getTime() === afterDate.getTime()) return after.holdingsPerShare;
+
+  // Linear interpolation
+  const totalDays = (afterDate.getTime() - beforeDate.getTime()) / (1000 * 60 * 60 * 24);
+  const daysFromStart = (targetDate.getTime() - beforeDate.getTime()) / (1000 * 60 * 60 * 24);
+  const ratio = daysFromStart / totalDays;
+
+  return before.holdingsPerShare + (after.holdingsPerShare - before.holdingsPerShare) * ratio;
+}
+
 // Get treasury yield for a specific calendar quarter
+// Uses interpolation to normalize all companies to exact quarter boundaries
 export function getQuarterlyYieldLeaderboard(options?: {
   quarter?: CalendarQuarter;
   asset?: Asset;
@@ -1547,103 +1569,125 @@ export function getQuarterlyYieldLeaderboard(options?: {
   const metrics: TreasuryYieldMetrics[] = [];
 
   const { start: quarterStart, end: quarterEnd } = getQuarterBounds(quarter);
+  const quarterStartStr = quarterStart.toISOString().split('T')[0];
+  const quarterEndStr = quarterEnd.toISOString().split('T')[0];
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
     if (data.history.length < 2) continue;
 
-    // Find company
     const company = allCompanies.find((c) => c.ticker === ticker);
     if (!company) continue;
 
-    // Filter by asset
     if (asset && company.asset !== asset) continue;
 
     const history = data.history;
 
-    // Find best snapshot at or before quarter start (within 45 days tolerance)
-    let startSnapshot = null;
-    const startTolerance = 45 * 24 * 60 * 60 * 1000; // 45 days in ms
-
-    for (let i = history.length - 1; i >= 0; i--) {
-      const snapshotDate = new Date(history[i].date);
-      if (snapshotDate <= quarterStart) {
-        // Check if within tolerance
-        if (quarterStart.getTime() - snapshotDate.getTime() <= startTolerance) {
-          startSnapshot = history[i];
-        }
-        break;
-      }
-    }
-
-    // If no snapshot before quarter start, check if there's one early in the quarter
-    if (!startSnapshot) {
-      for (const snapshot of history) {
-        const snapshotDate = new Date(snapshot.date);
-        // Accept snapshot within first 30 days of quarter
-        const thirtyDaysIn = new Date(quarterStart);
-        thirtyDaysIn.setDate(thirtyDaysIn.getDate() + 30);
-        if (snapshotDate >= quarterStart && snapshotDate <= thirtyDaysIn) {
-          startSnapshot = snapshot;
-          break;
-        }
-      }
-    }
-
-    if (!startSnapshot) continue;
-
-    // Find best snapshot at or after quarter end (within 30 days tolerance)
-    let endSnapshot = null;
-    const endTolerance = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
+    // Find snapshots that bracket quarter start (one before, one after)
+    // Need data within 60 days before AND 60 days after quarter start
+    let beforeStart = null;
+    let afterStart = null;
+    const tolerance = 60 * 24 * 60 * 60 * 1000; // 60 days
 
     for (let i = 0; i < history.length; i++) {
       const snapshotDate = new Date(history[i].date);
-      if (snapshotDate >= quarterEnd) {
+
+      if (snapshotDate <= quarterStart) {
         // Check if within tolerance
-        if (snapshotDate.getTime() - quarterEnd.getTime() <= endTolerance) {
-          endSnapshot = history[i];
+        if (quarterStart.getTime() - snapshotDate.getTime() <= tolerance) {
+          beforeStart = history[i];
         }
-        break;
-      }
-    }
-
-    // If no snapshot after quarter end, check if there's one late in the quarter
-    if (!endSnapshot) {
-      for (let i = history.length - 1; i >= 0; i--) {
-        const snapshotDate = new Date(history[i].date);
-        // Accept snapshot within last 30 days of quarter
-        const thirtyDaysBefore = new Date(quarterEnd);
-        thirtyDaysBefore.setDate(thirtyDaysBefore.getDate() - 30);
-        if (snapshotDate <= quarterEnd && snapshotDate >= thirtyDaysBefore) {
-          endSnapshot = history[i];
-          break;
+      } else if (snapshotDate > quarterStart && !afterStart) {
+        // First snapshot after quarter start
+        if (snapshotDate.getTime() - quarterStart.getTime() <= tolerance) {
+          afterStart = history[i];
         }
       }
     }
 
-    if (!endSnapshot) continue;
+    // Find snapshots that bracket quarter end
+    let beforeEnd = null;
+    let afterEnd = null;
 
-    // Skip if same snapshot or invalid data
-    if (startSnapshot.date === endSnapshot.date) continue;
-    if (startSnapshot.holdingsPerShare <= 0) continue;
+    for (let i = 0; i < history.length; i++) {
+      const snapshotDate = new Date(history[i].date);
 
-    // Ensure end is after start
-    if (new Date(endSnapshot.date) <= new Date(startSnapshot.date)) continue;
+      if (snapshotDate <= quarterEnd) {
+        if (quarterEnd.getTime() - snapshotDate.getTime() <= tolerance) {
+          beforeEnd = history[i];
+        }
+      } else if (snapshotDate > quarterEnd && !afterEnd) {
+        if (snapshotDate.getTime() - quarterEnd.getTime() <= tolerance) {
+          afterEnd = history[i];
+        }
+      }
+    }
 
-    const startDate = new Date(startSnapshot.date);
-    const endDate = new Date(endSnapshot.date);
-    const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    // Need at least one snapshot on each side of both boundaries to interpolate
+    // Or exact matches at the boundaries
+    let startValue: number | null = null;
+    let endValue: number | null = null;
 
-    // Require at least 30 days of coverage
-    if (daysCovered < 30) continue;
+    // Calculate start value (at quarter start)
+    if (beforeStart && afterStart) {
+      // Can interpolate
+      startValue = interpolateHoldingsPerShare(beforeStart, afterStart, quarterStart);
+    } else if (beforeStart && new Date(beforeStart.date).getTime() === quarterStart.getTime()) {
+      // Exact match
+      startValue = beforeStart.holdingsPerShare;
+    } else if (afterStart && new Date(afterStart.date).getTime() === quarterStart.getTime()) {
+      // Exact match
+      startValue = afterStart.holdingsPerShare;
+    } else if (beforeStart && !afterStart) {
+      // Only have data before - use it if very close (within 7 days)
+      const daysBefore = (quarterStart.getTime() - new Date(beforeStart.date).getTime()) / (1000 * 60 * 60 * 24);
+      if (daysBefore <= 7) {
+        startValue = beforeStart.holdingsPerShare;
+      }
+    } else if (afterStart && !beforeStart) {
+      // Only have data after - use it if very close (within 7 days)
+      const daysAfter = (new Date(afterStart.date).getTime() - quarterStart.getTime()) / (1000 * 60 * 60 * 24);
+      if (daysAfter <= 7) {
+        startValue = afterStart.holdingsPerShare;
+      }
+    }
 
-    const growthPct = ((endSnapshot.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
+    // Calculate end value (at quarter end)
+    if (beforeEnd && afterEnd) {
+      // Can interpolate
+      endValue = interpolateHoldingsPerShare(beforeEnd, afterEnd, quarterEnd);
+    } else if (beforeEnd && new Date(beforeEnd.date).getTime() === quarterEnd.getTime()) {
+      // Exact match
+      endValue = beforeEnd.holdingsPerShare;
+    } else if (afterEnd && new Date(afterEnd.date).getTime() === quarterEnd.getTime()) {
+      // Exact match
+      endValue = afterEnd.holdingsPerShare;
+    } else if (beforeEnd && !afterEnd) {
+      // Only have data before - use it if very close (within 7 days)
+      const daysBefore = (quarterEnd.getTime() - new Date(beforeEnd.date).getTime()) / (1000 * 60 * 60 * 24);
+      if (daysBefore <= 7) {
+        endValue = beforeEnd.holdingsPerShare;
+      }
+    } else if (afterEnd && !beforeEnd) {
+      // Only have data after - use it if very close (within 7 days)
+      const daysAfter = (new Date(afterEnd.date).getTime() - quarterEnd.getTime()) / (1000 * 60 * 60 * 24);
+      if (daysAfter <= 7) {
+        endValue = afterEnd.holdingsPerShare;
+      }
+    }
 
-    // Only calculate annualized with 12+ months of data (330+ days)
-    // Short periods produce misleading extrapolations
+    // Skip if we couldn't determine values at both boundaries
+    if (startValue === null || endValue === null) continue;
+    if (startValue <= 0) continue;
+
+    // All quarters are now exactly the same period
+    const daysCovered = Math.floor((quarterEnd.getTime() - quarterStart.getTime()) / (1000 * 60 * 60 * 24));
+    const growthPct = ((endValue / startValue) - 1) * 100;
+
+    // Annualized only with 12+ months (won't apply to single quarters)
     let annualizedGrowthPct: number | undefined;
     if (daysCovered >= 330) {
       const yearsFraction = daysCovered / 365.25;
-      annualizedGrowthPct = (Math.pow(endSnapshot.holdingsPerShare / startSnapshot.holdingsPerShare, 1 / yearsFraction) - 1) * 100;
+      annualizedGrowthPct = (Math.pow(endValue / startValue, 1 / yearsFraction) - 1) * 100;
     }
 
     metrics.push({
@@ -1651,12 +1695,12 @@ export function getQuarterlyYieldLeaderboard(options?: {
       companyName: company.name,
       asset: company.asset,
       period: quarter,
-      holdingsPerShareStart: startSnapshot.holdingsPerShare,
-      holdingsPerShareEnd: endSnapshot.holdingsPerShare,
+      holdingsPerShareStart: startValue,
+      holdingsPerShareEnd: endValue,
       growthPct,
       annualizedGrowthPct,
-      startDate: startSnapshot.date,
-      endDate: endSnapshot.date,
+      startDate: quarterStartStr,
+      endDate: quarterEndStr,
       daysCovered,
     });
   }
