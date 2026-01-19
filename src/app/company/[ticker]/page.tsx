@@ -40,7 +40,9 @@ import {
 import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
+import { Citation } from "@/components/citation";
 import { getCompanyIntel } from "@/lib/data/company-intel";
+import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
 
 // Asset colors
@@ -528,9 +530,17 @@ export default function CompanyPage() {
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatLargeNumber(nav)}
             </p>
-            <p className="text-sm text-gray-500 font-mono">
-              {formatTokenAmount(company.holdings, company.asset)}
-            </p>
+            <Citation
+              sourceType={company.holdingsSource}
+              sourceUrl={company.holdingsSourceUrl}
+              sourceDate={company.holdingsLastUpdated}
+              methodology={COMPANY_SOURCES[company.ticker]?.sharesNotes}
+              notes={COMPANY_SOURCES[company.ticker]?.notes}
+            >
+              <span className="text-sm text-gray-500 font-mono">
+                {formatTokenAmount(company.holdings, company.asset)}
+              </span>
+            </Citation>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
