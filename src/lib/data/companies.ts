@@ -20,6 +20,7 @@ export const ethCompanies: Company[] = [
     capitalRaisedPipe: 615_000_000,
     avgDailyVolume: 800_000_000,
     hasOptions: true,
+    sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
     cashReserves: 915_000_000,  // $915M cash (Jan 2026)
     otherInvestments: 25_000_000,  // $25M Eightco Holdings stake
     leader: "Tom Lee (Fundstrat)",
@@ -240,7 +241,8 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 10_000_000,
     avgDailyVolume: 150_000_000,
     hasOptions: true,
-    marketCap: 4_000_000_000,
+    marketCap: 3_200_000_000,  // ~$3.2B per Yahoo Finance (Jan 2026)
+    sharesForMnav: 346_548_153,  // 346.5M shares (Jan 2026 8-K)
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services.",
     notes: "Tether/SoftBank/Cantor backed. 3rd largest public holder.",
@@ -287,6 +289,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     marketCap: 3_600_000_000,
+    sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
     cashReserves: 124_000_000,  // ~$124M cash (Q2 2025)
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
@@ -314,6 +317,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 350_000_000,
     hasOptions: true,
     marketCap: 5_220_000_000,
+    sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
     leader: "Jason Les (CEO)",
     strategy: "1 GW Corsicana facility. Mining + AI/HPC pivot.",
@@ -341,6 +345,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 250_000_000,
     hasOptions: true,
     marketCap: 3_040_000_000,
+    sharesForMnav: 329_000_000,  // 329M diluted shares (Q3 2025)
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     leader: "Zach Bradford (CEO)",
     strategy: "Efficient US miner. 50 EH/s. DAM derivatives program.",
@@ -558,6 +563,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     marketCap: 7_600_000_000,  // ~$7.6B (Jan 2026)
+    sharesForMnav: 108_000_000,  // 108M diluted shares (Q3 2025)
     totalDebt: 490_000_000,  // ~$490M (EV $8.09B - Market Cap $7.6B)
     cashReserves: 35_000_000,  // ~$35M cash
     leader: "Asher Genoot (CEO)",

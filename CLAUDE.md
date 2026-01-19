@@ -64,3 +64,36 @@ When calculating mNAV, verify against official dashboards when available.
 - No staleness colors in UI - just show dates
 - Source URLs are important - add them for new companies
 - Check company-sources.ts for official dashboards before web searching
+
+## When Data is Wrong
+When user reports incorrect data, DON'T just patch it. Instead:
+1. Explain WHY the data was wrong (stale API? manual entry error? wrong source?)
+2. Explain HOW to systemically fix it (add sharesForMnav? better data source? automated monitoring?)
+3. Or explain why we CAN'T fix it systemically and manual patches are necessary
+
+Only patch after explaining the root cause and systemic solution (or lack thereof).
+
+## mNAV Calculation Architecture
+
+### Market Cap Calculation
+- `sharesForMnav` × Stock Price = Market Cap (when share count is known)
+- Falls back to API market cap if no sharesForMnav
+- API market caps (FMP) can be stale - use MARKET_CAP_OVERRIDES to fix
+
+### mNAV Formula
+```
+Enterprise Value = Market Cap + Total Debt + Preferred Equity - Cash
+Crypto NAV = Holdings × Crypto Price (crypto only, not other assets)
+mNAV = Enterprise Value / Crypto NAV
+```
+
+`sharesForMnav` is ONLY for market cap. Balance sheet items (debt, cash, preferred) are separate inputs.
+
+## Future Work / TODO
+
+### High Priority
+- [ ] **Auto-track dilution from 8-Ks**: Parse SEC 8-K filings for share issuance events (ATM, PIPE, converts). Auto-update `sharesForMnav` when dilution detected, or flag for manual review. This would make market caps always accurate without manual overrides.
+
+### Medium Priority
+- [ ] Scrape official IR dashboards (MSTR, SBET, Metaplanet) for market cap verification
+- [ ] Add discrepancy monitoring: cron job comparing our market caps vs Yahoo Finance, flag >10% differences

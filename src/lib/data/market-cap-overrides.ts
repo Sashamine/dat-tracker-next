@@ -36,7 +36,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "0434.HK": 315_000_000,     // $315M - Boyaa Interactive (Hong Kong, HKD)
 
   // === SPACs and Pre-merger Companies ===
-  "XXI": 4_000_000_000,       // $4B - 21 Capital (SPAC merger valuation)
+  "XXI": 3_200_000_000,       // $3.2B - 21 Capital (per Yahoo Finance, Jan 2026)
   "CEPO": 3_500_000_000,      // $3.5B - BSTR Holdings (pre-merger SPAC)
   "XRPN": 1_000_000_000,      // $1B - Evernorth Holdings (SPAC merger)
   "ETHM": 230_000_000,        // $230M - Ether Machine (pending SPAC merger with Dynamix)
