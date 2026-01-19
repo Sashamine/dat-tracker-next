@@ -143,7 +143,14 @@ export function calculateMNAVChange(
 
   // mNAV change: only α portion of EV moves with stock price
   // mNAV_new / mNAV_old = (1 + α × stock_change) / (1 + crypto_change)
-  return ((1 + alpha * stockChangeDec) / (1 + cryptoChangeDec) - 1) * 100;
+  const result = ((1 + alpha * stockChangeDec) / (1 + cryptoChangeDec) - 1) * 100;
+
+  // Debug: log MSTR calculation (remove after debugging)
+  if (marketCap > 50_000_000_000) {
+    console.log(`[mNAV Change Debug] MC=${(marketCap/1e9).toFixed(1)}B, Debt=${(totalDebt/1e9).toFixed(1)}B, Pref=${(preferredEquity/1e9).toFixed(1)}B, Cash=${(cashReserves/1e6).toFixed(0)}M, EV=${(ev/1e9).toFixed(1)}B, α=${alpha.toFixed(3)}, stock=${stockChange24h?.toFixed(2)}%, crypto=${cryptoChange24h?.toFixed(2)}%, result=${result.toFixed(2)}%`);
+  }
+
+  return result;
 }
 
 // Calculate NAV discount/premium
