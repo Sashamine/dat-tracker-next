@@ -62,12 +62,15 @@ export function MNAVTooltip({
   officialDashboard,
   secFilingsUrl,
 }: MNAVTooltipProps) {
-  // Determine best source link (priority: official dashboard > holdings source > SEC)
-  const sourceUrl = officialDashboard || holdingsSourceUrl || secFilingsUrl;
-  const sourceLabel = officialDashboard ? "Official Dashboard" : holdingsSourceUrl ? "Holdings Source" : secFilingsUrl ? "SEC Filings" : null;
   // Calculate EV and NAV for display
   const ev = marketCap + totalDebt + preferredEquity - cashReserves;
   const nav = holdingsValue + otherInvestments + cashReserves;
+
+  // Determine which links to show
+  const hasSecFilings = secFilingsUrl || holdingsSourceUrl;
+  const hasDashboard = officialDashboard;
+  const secUrl = secFilingsUrl || holdingsSourceUrl;
+  const hasAnySource = hasSecFilings || hasDashboard;
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -166,17 +169,34 @@ export function MNAVTooltip({
               </div>
             )}
 
-            {/* Source link */}
-            {sourceUrl && (
-              <a
-                href={sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="block text-[11px] text-blue-400 hover:text-blue-300 border-t border-gray-700 pt-2 mt-2"
-              >
-                {sourceLabel} →
-              </a>
+            {/* Source links */}
+            {hasAnySource && (
+              <div className="border-t border-gray-700 pt-2 mt-2 space-y-1">
+                {hasSecFilings && (
+                  <a
+                    href={secUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex justify-between items-center text-[11px] text-blue-400 hover:text-blue-300"
+                  >
+                    <span>SEC Filings</span>
+                    <span className="text-gray-500">verification →</span>
+                  </a>
+                )}
+                {hasDashboard && (
+                  <a
+                    href={officialDashboard}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex justify-between items-center text-[11px] text-blue-400 hover:text-blue-300"
+                  >
+                    <span>Live Dashboard</span>
+                    <span className="text-gray-500">real-time →</span>
+                  </a>
+                )}
+              </div>
             )}
           </div>
         </TooltipContent>
