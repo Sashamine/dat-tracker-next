@@ -159,7 +159,7 @@ export function OverviewSidebar({
               onClick={() => setShowModal(true)}
               title="Click to expand"
             >
-              <AggregateMNAVChart companies={companies} prices={prices} compact />
+              <AggregateMNAVChart companies={companies} prices={prices} mnavStats={mnavStats} compact />
             </div>
           )}
         </div>
@@ -189,7 +189,7 @@ export function OverviewSidebar({
               </button>
             </div>
             <div className="p-4">
-              <AggregateMNAVChart companies={companies} prices={prices} />
+              <AggregateMNAVChart companies={companies} prices={prices} mnavStats={mnavStats} />
             </div>
           </div>
         </div>

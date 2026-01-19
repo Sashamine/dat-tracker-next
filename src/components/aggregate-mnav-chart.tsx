@@ -30,6 +30,7 @@ interface AggregateMNAVChartProps {
     crypto: Record<string, { price: number }>;
     stocks: Record<string, { price: number; marketCap: number }>;
   };
+  mnavStats?: { median: number; average: number }; // Optional - use shared stats when provided
   compact?: boolean;
   className?: string;
 }
@@ -49,7 +50,7 @@ function median(arr: number[]): number {
   return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
-export function AggregateMNAVChart({ companies, prices, compact = false, className }: AggregateMNAVChartProps) {
+export function AggregateMNAVChart({ companies, prices, mnavStats, compact = false, className }: AggregateMNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
@@ -60,17 +61,24 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
     staleTime: 30 * 60 * 1000,
   });
 
-  // Calculate current mNAV stats (excluding pending merger SPACs)
+  // Use provided mnavStats (from useMNAVStats hook) or calculate fallback
+  // This ensures consistency with the shared hook's filtering (mnav < 10)
   const currentStats = useMemo(() => {
+    // If mnavStats provided from parent (via useMNAVStats hook), use it
+    if (mnavStats && mnavStats.median > 0) {
+      return mnavStats;
+    }
+
+    // Fallback calculation with same filter as useMNAVStats (< 10)
     const mnavs = companies
-      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
+      .filter((company) => !company.pendingMerger)
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
         const { marketCap } = getMarketCap(company, stockData);
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
-      .filter((m): m is number => m !== null && m > 0 && m < 20);
+      .filter((m): m is number => m !== null && m > 0 && m < 10); // Consistent with useMNAVStats
 
     if (mnavs.length === 0) return { median: 0, average: 0 };
 
@@ -78,7 +86,7 @@ export function AggregateMNAVChart({ companies, prices, compact = false, classNa
       median: median(mnavs),
       average: mnavs.reduce((a, b) => a + b, 0) / mnavs.length,
     };
-  }, [companies, prices]);
+  }, [companies, prices, mnavStats]);
 
   // Calculate historical aggregate mNAV using BTC as a proxy for all crypto
   // This is an approximation: we assume mNAV scales inversely with crypto price

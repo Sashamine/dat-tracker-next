@@ -53,6 +53,7 @@ export interface Company {
   atmRemaining?: number;
   marketCap?: number;  // Legacy static value - prefer sharesOutstandingFD × price
   sharesOutstandingFD?: number;  // Fully diluted shares (includes converts, warrants, options)
+  sharesForMnav?: number;  // Share count for mNAV calculation (matches company's methodology)
   leader?: string;
   strategy?: string;
   notes?: string;

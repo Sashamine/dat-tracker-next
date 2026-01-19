@@ -120,7 +120,7 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                     </div>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
-                    <AggregateMNAVChart companies={companies} prices={prices} compact />
+                    <AggregateMNAVChart companies={companies} prices={prices} mnavStats={mnavStats} compact />
                   </div>
                 </div>
               )}
