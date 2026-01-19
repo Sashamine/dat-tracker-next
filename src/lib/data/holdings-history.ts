@@ -531,12 +531,20 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-02", holdings: 43514, sharesOutstanding: 346_548_153, holdingsPerShare: 0.0001256, source: "Shares outstanding update" },
 ];
 
-// Strive (ASST) - First publicly traded asset management BTC treasury
-// Data from press releases and SEC filings
+// Strive Asset (ASST) - First publicly traded asset management BTC treasury
+// Includes pre-merger Semler Scientific (SMLR) data - merged Jan 2026
+// SEC EDGAR source: EntityCommonStockSharesOutstanding
 const ASST_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-09-12", holdings: 5886, sharesOutstanding: 28_000_000, holdingsPerShare: 0.0002102, source: "Initial BTC treasury announcement" },
-  { date: "2025-11-15", holdings: 7525, sharesOutstanding: 30_000_000, holdingsPerShare: 0.0002508, source: "SATA preferred offering" },
-  { date: "2025-12-31", holdings: 7627, sharesOutstanding: 31_000_000, holdingsPerShare: 0.0002460, source: "Preliminary year-end" },
+  // Pre-merger Semler Scientific data (SMLR -> ASST)
+  { date: "2024-05-28", holdings: 581, sharesOutstanding: 7_068_024, holdingsPerShare: 0.0000822, source: "SMLR: Initial purchase 8-K" },
+  { date: "2024-06-17", holdings: 828, sharesOutstanding: 7_133_788, holdingsPerShare: 0.0001161, source: "SMLR: 8-K filing" },
+  { date: "2024-09-30", holdings: 1058, sharesOutstanding: 7_266_242, holdingsPerShare: 0.0001456, source: "SMLR: Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 2321, sharesOutstanding: 9_596_486, holdingsPerShare: 0.0002419, source: "SMLR: Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 3082, sharesOutstanding: 11_151_572, holdingsPerShare: 0.0002764, source: "SMLR: Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 2084, sharesOutstanding: 14_804_693, holdingsPerShare: 0.0001408, source: "SMLR: Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 2058, sharesOutstanding: 15_159_895, holdingsPerShare: 0.0001357, source: "SMLR: Q3 2025 10-Q" },
+  { date: "2025-12-31", holdings: 2300, sharesOutstanding: 16_000_000, holdingsPerShare: 0.0001438, source: "SMLR: Q4 2025 10-K est" },
+  // Post-merger Strive + Semler combined
   { date: "2026-01-16", holdings: 12798, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0002844, source: "Post-Semler merger 8-K" },
 ];
 
@@ -602,7 +610,6 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   RIOT: { ticker: "RIOT", asset: "BTC", history: RIOT_HISTORY },
   CLSK: { ticker: "CLSK", asset: "BTC", history: CLSK_HISTORY },
   "3350.T": { ticker: "3350.T", asset: "BTC", history: METAPLANET_HISTORY },
-  SMLR: { ticker: "SMLR", asset: "BTC", history: SMLR_HISTORY },
   KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },
   "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
   ASST: { ticker: "ASST", asset: "BTC", history: ASST_HISTORY },
