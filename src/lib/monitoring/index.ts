@@ -19,7 +19,8 @@ import { checkTwitterForUpdates, createGrokConfig } from './sources/twitter';
 import { checkIRPages } from './sources/ir-pages';
 import { checkHoldingsPages } from './sources/holdings-pages';
 import { checkAggregatorsForUpdates, getAggregatorOnlyCompanies } from './sources/aggregators';
-import { getSECMonitoredCompanies, getCompanySource } from './sources/company-sources';
+import { getSECMonitoredCompanies, getCompanySource, getInternationalExchangeCompanies } from './sources/company-sources';
+import { checkInternationalExchanges } from './sources/international-exchanges';
 import { extractHoldingsFromText, createLLMConfigFromEnv, validateExtraction } from './parsers/llm-extractor';
 import { evaluateAutoApproval, checkForDuplicates, getApprovalSummary } from './workflow/approval';
 import {
@@ -263,6 +264,21 @@ export async function runMonitoringAgent(
       if (usCompanies.length > 0) {
         const secResults = await checkSECFilingsForUpdates(usCompanies, sinceDate);
         allResults.push(...secResults);
+      }
+    }
+
+    // 1b. Check International Exchanges (CSE for Canada, HKEX for Hong Kong) - official filings
+    if (config.sources.includes('international_exchanges') || config.sources.includes('sec_edgar')) {
+      sourcesChecked++;
+      console.log('[Monitoring] Checking international exchanges (CSE, HKEX)...');
+      const intlCompanies = companies.filter(c => {
+        const source = getCompanySource(c.ticker);
+        return source?.exchange && source?.exchangeCode;
+      });
+
+      if (intlCompanies.length > 0) {
+        const intlResults = await checkInternationalExchanges(intlCompanies, sinceDate);
+        allResults.push(...intlResults);
       }
     }
 

@@ -163,14 +163,15 @@ export interface ApprovalDecision {
 // Valid monitoring sources (ordered by trust level)
 export const MONITORING_SOURCES = [
   // Primary sources (official/verified)
-  'sec_edgar',         // SEC EDGAR filings (8-K, 10-Q, 10-K) - highest trust
-  'holdings_pages',    // Direct holdings trackers (KULR tracker, Metaplanet, etc.)
-  'ir_pages',          // Company IR pages (press releases)
+  'sec_edgar',               // SEC EDGAR filings (8-K, 10-Q, 10-K) - highest trust
+  'international_exchanges', // CSE (Canada), HKEX (Hong Kong) - official exchange filings
+  'holdings_pages',          // Direct holdings trackers (KULR tracker, Metaplanet, etc.)
+  'ir_pages',                // Company IR pages (press releases)
   // Secondary sources
-  'twitter',           // Twitter/X via Grok API
+  'twitter',                 // Twitter/X via Grok API
   // Aggregators (verification/fallback only)
-  'aggregators',       // Aggregators (Bitbo, BitcoinTreasuries.net)
-  'btc_treasuries',    // bitcointreasuries.net API (discrepancy detection)
+  'aggregators',             // Aggregators (Bitbo, BitcoinTreasuries.net)
+  'btc_treasuries',          // bitcointreasuries.net API (discrepancy detection)
 ] as const;
 
 export type MonitoringSource = typeof MONITORING_SOURCES[number];

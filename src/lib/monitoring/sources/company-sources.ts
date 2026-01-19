@@ -8,7 +8,7 @@
 export interface CompanySource {
   ticker: string;
   name: string;
-  asset: 'BTC' | 'ETH' | 'SOL' | 'HYPE' | 'DOGE' | 'OTHER';
+  asset: 'BTC' | 'ETH' | 'SOL' | 'HYPE' | 'DOGE' | 'TAO' | 'OTHER';
 
   // SEC EDGAR (US companies)
   secCik?: string;
@@ -18,6 +18,10 @@ export interface CompanySource {
     // File name patterns for 10-Q/10-K
     tenQ?: RegExp[];
   };
+
+  // International exchanges
+  exchange?: 'CSE' | 'TSX-V' | 'HKEX' | 'TSE' | 'Euronext' | 'Nasdaq Nordic';
+  exchangeCode?: string; // Exchange-specific company identifier
 
   // Company IR page
   irPageUrl?: string;
@@ -331,15 +335,48 @@ export const COMPANY_SOURCES: CompanySource[] = [
     ticker: '0434.HK',
     name: 'Boyaa Interactive',
     asset: 'BTC',
-    // Hong Kong Stock Exchange - no SEC filings
+    // Hong Kong Stock Exchange - automated via HKEX monitoring
+    exchange: 'HKEX',
+    exchangeCode: '00434',
+    irPageUrl: 'https://www.boyaa.com.hk/en/investor.html',
     twitterHandles: ['@BoyaaInt'],
     aggregators: {
       bitcoinTreasuries: 'boyaa-interactive-international',
       bitbo: 'boyaa',
       theBlock: '0434.hk',
     },
-    trustLevel: 'aggregator',
-    extractionHints: 'Hong Kong gaming company. Announces acquisitions via HKEX filings.',
+    trustLevel: 'official',  // HKEX filings are official
+    extractionHints: 'Hong Kong gaming company. Announces acquisitions via HKEX filings. English filings mandatory.',
+  },
+  // ========== CANADIAN COMPANIES (CSE/TSX-V) ==========
+  {
+    ticker: 'STKE',
+    name: 'Sol Strategies',
+    asset: 'SOL',
+    // Canadian Securities Exchange - automated via CSE API
+    exchange: 'CSE',
+    exchangeCode: '000020977',  // CSE company ID
+    irPageUrl: 'https://solstrategies.io/investors/',
+    twitterHandles: ['@SolStrategies'],
+    aggregators: {
+      theBlock: 'stke',
+    },
+    trustLevel: 'official',  // CSE/SEDAR filings are official
+    extractionHints: 'Canadian company. SOL validator operations. 3.7M SOL delegated. Check SEDAR filings.',
+  },
+  {
+    ticker: 'XTAIF',
+    name: 'xTAO Inc',
+    asset: 'TAO',
+    // TSX Venture Exchange - uses SEDAR+
+    exchange: 'TSX-V',
+    irPageUrl: 'https://www.xtaoinc.com/',
+    twitterHandles: ['@xTAOinc'],
+    aggregators: {
+      theBlock: 'xtaif',
+    },
+    trustLevel: 'verified',  // TSX-V, need to monitor IR page
+    extractionHints: 'Canadian company on TSX Venture. World\'s largest public TAO holder. Validator operations.',
   },
   {
     ticker: 'ALTBG',
@@ -396,4 +433,32 @@ export function getAggregatorOnlyCompanies(): CompanySource[] {
  */
 export function getDirectHoldingsCompanies(): CompanySource[] {
   return COMPANY_SOURCES.filter(c => c.holdingsPageUrl);
+}
+
+/**
+ * Get companies monitored via international exchanges
+ */
+export function getInternationalExchangeCompanies(): CompanySource[] {
+  return COMPANY_SOURCES.filter(c => c.exchange && c.exchangeCode);
+}
+
+/**
+ * Get companies by exchange
+ */
+export function getCompaniesByExchange(exchange: CompanySource['exchange']): CompanySource[] {
+  return COMPANY_SOURCES.filter(c => c.exchange === exchange);
+}
+
+/**
+ * Get CSE-monitored companies (Canada)
+ */
+export function getCSEMonitoredCompanies(): CompanySource[] {
+  return COMPANY_SOURCES.filter(c => c.exchange === 'CSE');
+}
+
+/**
+ * Get HKEX-monitored companies (Hong Kong)
+ */
+export function getHKEXMonitoredCompanies(): CompanySource[] {
+  return COMPANY_SOURCES.filter(c => c.exchange === 'HKEX');
 }
