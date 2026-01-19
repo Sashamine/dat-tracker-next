@@ -188,6 +188,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     marketCap: 50_000_000_000,  // ~$50B (Jan 2026)
+    sharesForMnav: 325_000_000,  // Strategy's "Assumed Diluted Shares" methodology (all converts, options, RSUs)
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     totalDebt: 8_200_000_000,  // ~$8.2B in convertible debt (Q2 2025)
     preferredEquity: 7_800_000_000,  // ~$7.8B in preferred stock (STRK/STRF/STRC/STRD)
