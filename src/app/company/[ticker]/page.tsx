@@ -37,6 +37,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
 import { getCompanyIntel } from "@/lib/data/company-intel";
@@ -114,7 +115,7 @@ export default function CompanyPage() {
       .map((c) => {
         const cryptoPrice = prices?.crypto[c.asset]?.price || 0;
         const stockData = prices?.stocks[c.ticker];
-        const marketCap = c.marketCap || stockData?.marketCap || 0;
+        const { marketCap } = getMarketCap(c, stockData);
         return calculateMNAV(marketCap, c.holdings, cryptoPrice, c.cashReserves || 0, c.otherInvestments || 0, c.totalDebt || 0, c.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 10);
@@ -170,7 +171,7 @@ export default function CompanyPage() {
   const stockData = prices?.stocks[company.ticker];
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
-  const marketCap = company.marketCap || stockData?.marketCap || 0;
+  const { marketCap } = getMarketCap(company, stockData);
 
   // Other assets (cash + investments)
   const cashReserves = company.cashReserves || 0;

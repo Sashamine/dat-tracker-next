@@ -8,6 +8,7 @@ import { useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { calculateMNAV } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 import { cn } from "@/lib/utils";
 import { Company, Asset } from "@/lib/types";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
@@ -62,7 +63,7 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = company.marketCap || stockData?.marketCap || 0;
+        const { marketCap } = getMarketCap(company, stockData);
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);
@@ -294,7 +295,7 @@ export default function MNAVPage() {
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = company.marketCap || stockData?.marketCap || 0;
+        const { marketCap } = getMarketCap(company, stockData);
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 20);

@@ -16,6 +16,7 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { calculateMNAV } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 
 // Get unique assets and count companies
 function getAssetStats(companies: Company[], prices: any) {
@@ -76,7 +77,7 @@ function HomeContent() {
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const marketCap = company.marketCap || stockData?.marketCap || 0;
+        const { marketCap } = getMarketCap(company, stockData);
         return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
       })
       .filter((mnav): mnav is number => mnav !== null && mnav > 0 && mnav < 10);

@@ -24,6 +24,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
+import { getMarketCap } from "@/lib/utils/market-cap";
 import { MobileHeader } from "@/components/mobile-header";
 
 // Asset metadata
@@ -111,7 +112,7 @@ export default function AssetPage() {
   // Calculate metrics for each company
   const companiesWithMetrics = companies.map((company) => {
     const stockData = prices?.stocks[company.ticker];
-    const marketCap = company.marketCap || stockData?.marketCap || 0;
+    const { marketCap } = getMarketCap(company, stockData);
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 
