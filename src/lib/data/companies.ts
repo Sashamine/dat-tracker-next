@@ -71,7 +71,7 @@ export const ethCompanies: Company[] = [
     quarterlyBurnUsd: 800_000,
     avgDailyVolume: 100_000_000,
     hasOptions: true,
-    marketCap: 1_500_000_000,  // ~$1.5B (Jan 2026)
+    marketCap: 230_000_000,  // ~$230M (Jan 2026)
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
     notes: "SPAC merger with Dynamix. 3rd largest ETH treasury.",
@@ -557,8 +557,9 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 45_000_000,
     avgDailyVolume: 150_000_000,
     hasOptions: true,
-    marketCap: 2_100_000_000,
-    cashReserves: 100_000_000,
+    marketCap: 7_600_000_000,  // ~$7.6B (Jan 2026)
+    totalDebt: 490_000_000,  // ~$490M (EV $8.09B - Market Cap $7.6B)
+    cashReserves: 35_000_000,  // ~$35M cash
     leader: "Asher Genoot (CEO)",
     strategy: "HODL miner with diversified revenue streams (hosting, HPC).",
     notes: "Merged with US Bitcoin Corp in 2023. Operates in US and Canada.",
@@ -582,6 +583,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 4_500_000_000,
+    totalDebt: 1_000_000_000,  // ~$1B convertible notes (2029 + 2031)
     cashReserves: 200_000_000,
     leader: "Adam Sullivan (CEO)",
     strategy: "Largest US miner by hashrate. AI/HPC pivot with CoreWeave deal.",
@@ -605,6 +607,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 2_800_000_000,
+    totalDebt: 1_100_000_000,  // ~$1.1B convertible notes (2029 + 2031 series)
     cashReserves: 150_000_000,
     leader: "Jihan Wu (Co-Founder)",
     strategy: "Vertically integrated - develops own ASIC chips (SEALMINER).",
