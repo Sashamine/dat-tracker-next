@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getBinancePrices } from "@/lib/binance";
 import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
+import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
 
 // FMP for market caps and OTC stocks
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
@@ -10,47 +11,6 @@ const FMP_API_KEY = process.env.FMP_API_KEY || "";
 const FMP_TICKER_MAP: Record<string, string> = {
   "ALTBG.PA": "ALTBG",   // Euronext Paris
   "HOGPF": "H100.ST",    // H100 Group OTC ticker -> display as H100.ST
-};
-
-// Fallback prices for illiquid stocks not covered by data providers
-// These are stocks on minor exchanges (OTC, Euronext Growth, etc.)
-const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number; note: string }> = {
-  // Stocks that need guaranteed market caps (OTC/illiquid)
-  "SBET": { price: 53, marketCap: 2_363_000_000, note: "SharpLink fully diluted" },
-  "CEPO": { price: 10.50, marketCap: 3_500_000_000, note: "BSTR Holdings pre-merger SPAC ~$3.5B" },
-  "XTAIF": { price: 0.75, marketCap: 20000000, note: "xTAO Inc OTC" },
-  "IHLDF": { price: 0.10, marketCap: 10000000, note: "Immutable Holdings OTC" },
-  "ALTBG": { price: 0.50, marketCap: 200000000, note: "The Blockchain Group" },
-  "H100.ST": { price: 0.10, marketCap: 150000000, note: "H100 Group" },
-};
-
-// Market cap overrides for stocks with incorrect FMP data
-// These are manually updated based on current shares outstanding × price
-// Common issues: FMP returns local currency as USD for non-US stocks, or wrong data entirely
-const MARKET_CAP_OVERRIDES: Record<string, number> = {
-  // Market cap overrides - use basic common shares MC, add preferred/debt separately in DB
-  "SBET": 2_363_000_000,   // $2.36B fully diluted
-  "BMNR": 14_170_000_000,  // ~430M shares × $31.20 (Jan 17, 2026)
-  // BTC Miners with significant debt (Jan 2026)
-  "HUT": 6_770_000_000,    // $6.77B - Hut 8 Mining (13,696 BTC reserve, $350M debt)
-  "CORZ": 5_300_000_000,   // $5.3B - Core Scientific ($1.2B debt, emerged from bankruptcy)
-  "BTDR": 2_300_000_000,   // $2.3B - Bitdeer ($730M convertible notes)
-  "3350.T": 3_500_000_000, // Metaplanet - FMP returns JPY as USD (422B JPY = ~2.8B USD)
-  "0434.HK": 315_000_000,  // Boyaa Interactive - FMP returns HKD as USD (2.46B HKD = ~315M USD)
-  "XXI": 4_000_000_000,    // 21 Capital - FMP data inconsistent, ~$4B SPAC merger valuation
-  "CEPO": 3_500_000_000,   // BSTR Holdings - ~$3.5B pre-merger SPAC valuation
-  "FWDI": 1_600_000_000,   // Forward Industries SOL treasury - ~$1.6B PIPE raise
-  "NXTT": 600_000_000,     // NextTech (WeTrade) - ~$600M market cap
-  "BNC": 500_000_000,      // Banyan BNB treasury - ~$500M PIPE raise
-  "CWD": 15_000_000,       // Calamos LINK treasury - smaller ~$15M
-  // High-mNAV stocks with incorrect FMP data (Jan 2026)
-  "SUIG": 150_000_000,     // SUI Group Holdings - actual ~$150M
-  "XRPN": 1_000_000_000,   // Evernorth Holdings - $1B SPAC merger
-  "CYPH": 65_000_000,      // Cypherpunk Technologies - actual ~$65M
-  "LITS": 55_000_000,      // Lite Strategy - actual ~$55M
-  "NA": 81_000_000,        // Nano Labs - actual ~$81M
-  "FGNX": 110_000_000,     // FG Nexus - actual ~$110M
-  "AVX": 130_000_000,      // AVAX One Technology - actual ~$130M
 };
 const FMP_ONLY_STOCKS = [
   "MSTR",      // Strategy - use FMP for price since Alpaca not working on Vercel

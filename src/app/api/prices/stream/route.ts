@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { STOCK_TICKERS } from "@/lib/alpaca";
+import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
 
 // Use Edge Runtime for streaming support
 export const runtime = "edge";
@@ -32,43 +33,6 @@ const COINGECKO_IDS: Record<string, string> = {
 // Cache for CoinGecko
 let geckoCache: { data: Record<string, { price: number; change24h: number }>; timestamp: number } | null = null;
 const GECKO_CACHE_TTL = 30 * 1000; // 30 seconds
-
-// Market cap overrides for stocks with incorrect data
-// IMPORTANT: Keep in sync with /api/prices/route.ts
-const MARKET_CAP_OVERRIDES: Record<string, number> = {
-  "SBET": 2_363_000_000,    // $2.36B - SharpLink
-  "BMNR": 12_800_000_000,
-  "3350.T": 3_500_000_000,
-  "0434.HK": 315_000_000,
-  "XXI": 4_000_000_000,
-  "CEPO": 3_500_000_000,
-  "FWDI": 1_600_000_000,
-  "NXTT": 600_000_000,
-  "BNC": 500_000_000,
-  "CWD": 15_000_000,
-  "SUIG": 150_000_000,
-  "XRPN": 1_000_000_000,
-  "CYPH": 65_000_000,
-  "LITS": 55_000_000,
-  "NA": 81_000_000,
-  "FGNX": 110_000_000,
-  "AVX": 130_000_000,
-};
-
-// Fallback prices for illiquid/international stocks (FMP may not have data)
-const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number }> = {
-  // BTC International
-  "3350.T": { price: 7500, marketCap: 3_500_000_000 },     // Metaplanet (JPY ~7500)
-  "0434.HK": { price: 1.50, marketCap: 500_000_000 },      // Boyaa Interactive (HKD)
-  "ALTBG": { price: 0.50, marketCap: 200_000_000 },        // Blockchain Group (EUR)
-  "H100.ST": { price: 0.10, marketCap: 150_000_000 },      // H100 Group (SEK)
-  // OTC/Illiquid
-  "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
-  "XTAIF": { price: 0.75, marketCap: 20_000_000 },
-  "IHLDF": { price: 0.10, marketCap: 10_000_000 },
-  "LUXFF": { price: 0.05, marketCap: 3_860_000 },          // Luxxfolio (OTC)
-  "NA": { price: 1.50, marketCap: 81_000_000 },            // Nano Labs
-};
 
 // Check if US stock market is open
 function isMarketOpen(): boolean {
