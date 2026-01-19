@@ -9,7 +9,9 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { calculateMNAV } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
-import { Company } from "@/lib/types";
+import { Company, Asset } from "@/lib/types";
+import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
+import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/earnings-data";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 
@@ -306,6 +308,106 @@ export default function MNAVPage() {
     };
   }, [companies, prices]);
 
+  // Calculate holdings statistics
+  const holdingsStats = useMemo(() => {
+    const byAsset: Record<string, { total: number; companies: { ticker: string; holdings: number }[] }> = {};
+
+    companies.forEach((company) => {
+      if (company.holdings > 0) {
+        if (!byAsset[company.asset]) {
+          byAsset[company.asset] = { total: 0, companies: [] };
+        }
+        byAsset[company.asset].total += company.holdings;
+        byAsset[company.asset].companies.push({ ticker: company.ticker, holdings: company.holdings });
+      }
+    });
+
+    // Sort each asset's companies by holdings descending
+    Object.values(byAsset).forEach((assetData) => {
+      assetData.companies.sort((a, b) => b.holdings - a.holdings);
+    });
+
+    // Calculate concentration (top 5 as % of total) for each asset
+    const concentration: Record<string, number> = {};
+    Object.keys(byAsset).forEach((asset) => {
+      const { total, companies: assetCompanies } = byAsset[asset];
+      if (total > 0) {
+        const top5Holdings = assetCompanies.slice(0, 5).reduce((sum, c) => sum + c.holdings, 0);
+        concentration[asset] = (top5Holdings / total) * 100;
+      } else {
+        concentration[asset] = 0;
+      }
+    });
+
+    // Get sorted list of assets by total holdings
+    const sortedAssets = Object.keys(byAsset).sort((a, b) => byAsset[b].total - byAsset[a].total);
+
+    return { byAsset, concentration, sortedAssets };
+  }, [companies]);
+
+  // Calculate company counts by asset
+  const companyCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    companies.forEach((company) => {
+      counts[company.asset] = (counts[company.asset] || 0) + 1;
+    });
+    return counts;
+  }, [companies]);
+
+  // Calculate quarterly yield statistics
+  const yieldStats = useMemo(() => {
+    const quarters = getAvailableQuarters();
+    const currentQuarter = quarters[0];
+    const leaderboard = getQuarterlyYieldLeaderboard({ quarter: currentQuarter });
+
+    if (leaderboard.length === 0) {
+      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null };
+    }
+
+    const yields = leaderboard.map((m) => m.growthPct);
+    const positiveCount = yields.filter((y) => y > 0).length;
+    const sortedYields = [...yields].sort((a, b) => a - b);
+    const mid = Math.floor(sortedYields.length / 2);
+    const medianYield = sortedYields.length % 2 ? sortedYields[mid] : (sortedYields[mid - 1] + sortedYields[mid]) / 2;
+    const avgYield = yields.reduce((a, b) => a + b, 0) / yields.length;
+
+    return {
+      median: medianYield,
+      average: avgYield,
+      positiveCount,
+      totalCount: leaderboard.length,
+      quarter: currentQuarter,
+      best: leaderboard[0],
+      worst: leaderboard[leaderboard.length - 1],
+    };
+  }, []);
+
+  // Calculate dilution statistics
+  const dilutionStats = useMemo(() => {
+    const dilutionRates: { ticker: string; rate: number }[] = [];
+
+    Object.entries(HOLDINGS_HISTORY).forEach(([ticker, data]) => {
+      const history = data.history;
+      if (history.length < 2) return;
+
+      // Get last two data points to calculate recent dilution
+      const recent = history[history.length - 1];
+      const previous = history[history.length - 2];
+
+      if (previous.sharesOutstanding > 0) {
+        const dilutionRate = ((recent.sharesOutstanding - previous.sharesOutstanding) / previous.sharesOutstanding) * 100;
+        dilutionRates.push({ ticker, rate: dilutionRate });
+      }
+    });
+
+    const avgDilution = dilutionRates.length > 0
+      ? dilutionRates.reduce((sum, d) => sum + d.rate, 0) / dilutionRates.length
+      : 0;
+    const highDilution = dilutionRates.filter((d) => d.rate > 10);
+
+    return { avgDilution, highDilution, total: dilutionRates.length };
+  }, []);
+
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
     { value: "1d", label: "24H" },
     { value: "7d", label: "7D" },
@@ -317,7 +419,7 @@ export default function MNAVPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-950">
-        <MobileHeader title="mNAV Charts" showBack />
+        <MobileHeader title="Sector Statistics" showBack />
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
         </div>
@@ -327,18 +429,116 @@ export default function MNAVPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
-      <MobileHeader title="mNAV Charts" showBack />
+      <MobileHeader title="Sector Statistics" showBack />
 
       <main className="px-4 py-6 lg:px-8 lg:py-8 max-w-7xl mx-auto">
-        {/* Current Stats Header */}
+        {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            Aggregate mNAV
+            Sector Statistics
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm lg:text-base">
-            Market-wide valuation trends across {currentStats.count} DAT companies
+            Aggregate metrics across {companies.length} DAT companies
           </p>
-          <div className="flex gap-4 mt-4">
+        </div>
+
+        {/* Holdings Statistics */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Total Holdings</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+            {holdingsStats.sortedAssets.slice(0, 5).map((asset) => (
+              <div key={asset} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{asset}</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  {holdingsStats.byAsset[asset].total.toLocaleString()}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {companyCounts[asset] || 0} companies
+                </p>
+                {holdingsStats.concentration[asset] > 0 && (
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                    Top 5: {holdingsStats.concentration[asset].toFixed(0)}%
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Quarterly Yield Statistics */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            Treasury Yield ({yieldStats.quarter})
+          </h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Median Yield</p>
+              <p className={cn("text-xl font-bold", yieldStats.median >= 0 ? "text-green-600" : "text-red-600")}>
+                {yieldStats.median >= 0 ? "+" : ""}{yieldStats.median.toFixed(1)}%
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Average Yield</p>
+              <p className={cn("text-xl font-bold", yieldStats.average >= 0 ? "text-green-600" : "text-red-600")}>
+                {yieldStats.average >= 0 ? "+" : ""}{yieldStats.average.toFixed(1)}%
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Positive Yield</p>
+              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                {yieldStats.positiveCount}/{yieldStats.totalCount}
+              </p>
+              <p className="text-xs text-gray-500">
+                {yieldStats.totalCount > 0 ? ((yieldStats.positiveCount / yieldStats.totalCount) * 100).toFixed(0) : 0}% of companies
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best / Worst</p>
+              {yieldStats.best && yieldStats.worst && (
+                <div className="text-sm">
+                  <p className="text-green-600 font-medium">{yieldStats.best.ticker} +{yieldStats.best.growthPct.toFixed(0)}%</p>
+                  <p className="text-red-600 font-medium">{yieldStats.worst.ticker} {yieldStats.worst.growthPct.toFixed(0)}%</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Dilution Statistics */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Share Dilution</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg Dilution Rate</p>
+              <p className={cn("text-xl font-bold", dilutionStats.avgDilution > 5 ? "text-red-600" : "text-gray-900 dark:text-gray-100")}>
+                {dilutionStats.avgDilution >= 0 ? "+" : ""}{dilutionStats.avgDilution.toFixed(1)}%
+              </p>
+              <p className="text-xs text-gray-500">per filing period</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">High Dilution ({">"}10%)</p>
+              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                {dilutionStats.highDilution.length}
+              </p>
+              <p className="text-xs text-gray-500">companies</p>
+            </div>
+            {dilutionStats.highDilution.length > 0 && (
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 col-span-2 lg:col-span-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">High Dilution List</p>
+                <div className="text-sm text-red-600 space-y-0.5">
+                  {dilutionStats.highDilution.slice(0, 5).map((d) => (
+                    <p key={d.ticker}>{d.ticker}: +{d.rate.toFixed(0)}%</p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* mNAV Statistics */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">mNAV Valuation</h2>
+          <div className="flex gap-4">
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
               <p className="text-xs lg:text-sm text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Median</p>
               <p className="text-2xl lg:text-3xl font-bold text-indigo-600">{currentStats.median.toFixed(2)}x</p>
@@ -350,7 +550,8 @@ export default function MNAVPage() {
           </div>
         </div>
 
-        {/* Charts - Side by side on desktop, stacked on mobile */}
+        {/* mNAV Charts */}
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">mNAV History</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Chart 1 */}
           <div>
