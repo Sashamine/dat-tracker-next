@@ -184,7 +184,15 @@ export default function CompanyPage() {
 
   // Calculate metrics (including other assets in NAV)
   const nav = calculateNAV(company.holdings, cryptoPrice, cashReserves, otherInvestments);
-  const mNAV = calculateMNAV(marketCapForMnav, company.holdings, cryptoPrice, cashReserves, otherInvestments);
+  const mNAV = calculateMNAV(
+    marketCapForMnav,
+    company.holdings,
+    cryptoPrice,
+    cashReserves,
+    otherInvestments,
+    company.totalDebt || 0,
+    company.preferredEquity || 0
+  );
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
   const navPerShare = calculateNAVPerShare(company.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
