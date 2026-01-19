@@ -8,7 +8,8 @@
  */
 
 import { NextResponse } from 'next/server';
-import { pollXXIHoldings, getXXIHoldings } from '@/lib/monitoring/sources/realtime/xxi-mempool';
+import { getXXIHoldings } from '@/lib/monitoring/sources/realtime/xxi-mempool';
+import { getKULRHoldings } from '@/lib/monitoring/sources/realtime/kulr-tracker';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // 1 minute max
@@ -76,9 +77,39 @@ export async function GET(request: Request) {
       }
     }
 
+    // Poll KULR Tracker
+    if (!sourceFilter || sourceFilter === 'kulr') {
+      console.log('[Realtime Cron] Polling KULR Tracker...');
+      try {
+        const kulrResult = await getKULRHoldings();
+        if (kulrResult) {
+          results.push({
+            source: 'tracker',
+            ticker: 'KULR',
+            success: true,
+            holdings: kulrResult.holdings,
+            changed: true,
+          });
+        } else {
+          results.push({
+            source: 'tracker',
+            ticker: 'KULR',
+            success: false,
+            error: 'Failed to fetch holdings',
+          });
+        }
+      } catch (error) {
+        results.push({
+          source: 'tracker',
+          ticker: 'KULR',
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        });
+      }
+    }
+
     // TODO: Add Arkham polling when API key is available
     // TODO: Add STKE validator polling
-    // TODO: Add KULR tracker polling
     // TODO: Add Metaplanet analytics polling
 
     const duration = Date.now() - startTime;

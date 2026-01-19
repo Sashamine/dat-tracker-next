@@ -163,6 +163,12 @@ SELECT id, 'mempool', 'xxi', 'https://xxi.mempool.space/api/v1/wallet/xxi', 300
 FROM companies WHERE ticker = 'XXI'
 ON CONFLICT (company_id, source_type) DO NOTHING;
 
+-- KULR - Bitcoin Treasury Tracker (independent tracker parsing SEC filings)
+INSERT INTO realtime_sources (company_id, source_type, source_id, source_url, poll_interval_seconds)
+SELECT id, 'tracker', 'kulrbitcointracker', 'https://kulrbitcointracker.com/api/holdings', 3600
+FROM companies WHERE ticker = 'KULR'
+ON CONFLICT (company_id, source_type) DO NOTHING;
+
 -- Add placeholder for Arkham sources (to be activated when API key obtained)
 -- MSTR
 INSERT INTO realtime_sources (company_id, source_type, source_id, source_url, poll_interval_seconds, is_active)
