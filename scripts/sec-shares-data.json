@@ -1,0 +1,3862 @@
+[
+  {
+    "ticker": "MSTR",
+    "cik": "0001050446",
+    "entityName": "STRATEGY INC",
+    "sharesData": [
+      {
+        "date": "2023-03-31",
+        "shares": 11834000,
+        "form": "10-Q",
+        "filed": "2024-05-01",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-06-30",
+        "shares": 11739000,
+        "form": "10-Q",
+        "filed": "2024-08-06",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-09-30",
+        "shares": 116648000,
+        "form": "10-Q",
+        "filed": "2024-10-31",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-12-31",
+        "shares": 136706000,
+        "form": "10-K",
+        "filed": "2025-02-18",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-03-31",
+        "shares": 171942000,
+        "form": "10-Q",
+        "filed": "2025-05-05",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-06-30",
+        "shares": 175326000,
+        "form": "10-Q",
+        "filed": "2025-08-05",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-09-30",
+        "shares": 182695000,
+        "form": "10-Q",
+        "filed": "2025-11-03",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-31",
+        "shares": 192549000,
+        "form": "10-K",
+        "filed": "2025-02-18",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-03-31",
+        "shares": 256473000,
+        "form": "10-Q",
+        "filed": "2025-05-05",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-06-30",
+        "shares": 265910000,
+        "form": "10-Q",
+        "filed": "2025-08-05",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-09-30",
+        "shares": 272143000,
+        "form": "10-Q",
+        "filed": "2025-11-03",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "WeightedAverageNumberOfSharesOutstandingBasic"
+  },
+  {
+    "ticker": "MARA",
+    "cik": "0001507605",
+    "entityName": "MARA HOLDINGS, INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-13",
+        "shares": 167247030,
+        "form": "10-K",
+        "filed": "2023-03-16",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-04-28",
+        "shares": 167247030,
+        "form": "10-K/A",
+        "filed": "2023-04-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-09",
+        "shares": 167399935,
+        "form": "10-Q",
+        "filed": "2023-05-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-04",
+        "shares": 174266313,
+        "form": "10-Q",
+        "filed": "2023-08-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-06",
+        "shares": 222625063,
+        "form": "10-Q",
+        "filed": "2023-11-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-02-21",
+        "shares": 267639590,
+        "form": "10-K",
+        "filed": "2024-02-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-03",
+        "shares": 272956165,
+        "form": "10-Q",
+        "filed": "2024-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-05-23",
+        "shares": 282787365,
+        "form": "10-K/A",
+        "filed": "2024-05-24",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-07-25",
+        "shares": 294474622,
+        "form": "10-Q",
+        "filed": "2024-08-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-05",
+        "shares": 321831487,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-02-21",
+        "shares": 345816827,
+        "form": "10-K",
+        "filed": "2025-03-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-30",
+        "shares": 351927748,
+        "form": "10-Q",
+        "filed": "2025-05-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-07-22",
+        "shares": 370457880,
+        "form": "10-Q",
+        "filed": "2025-07-29",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-10-28",
+        "shares": 378184353,
+        "form": "10-Q",
+        "filed": "2025-11-04",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "RIOT",
+    "cik": "0001167419",
+    "entityName": "Riot Platforms,\u00a0Inc.",
+    "sharesData": [
+      {
+        "date": "2023-03-01",
+        "shares": 166979322,
+        "form": "10-K",
+        "filed": "2023-03-02",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-08",
+        "shares": 175078000,
+        "form": "10-Q",
+        "filed": "2023-05-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-07",
+        "shares": 185305831,
+        "form": "10-Q",
+        "filed": "2023-08-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-06",
+        "shares": 206515415,
+        "form": "10-Q",
+        "filed": "2023-11-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-02-20",
+        "shares": 253538213,
+        "form": "10-K",
+        "filed": "2024-02-23",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-04-29",
+        "shares": 288784946,
+        "form": "10-Q",
+        "filed": "2024-05-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-07-29",
+        "shares": 303524067,
+        "form": "10-Q",
+        "filed": "2024-07-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-10-28",
+        "shares": 332325535,
+        "form": "10-Q",
+        "filed": "2024-11-04",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-02-20",
+        "shares": 350207536,
+        "form": "10-K",
+        "filed": "2025-02-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-28",
+        "shares": 357263742,
+        "form": "10-Q",
+        "filed": "2025-05-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-07-29",
+        "shares": 369623180,
+        "form": "10-Q",
+        "filed": "2025-07-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-10-29",
+        "shares": 371807186,
+        "form": "10-Q",
+        "filed": "2025-10-30",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "CLSK",
+    "cik": "0000827876",
+    "entityName": "CleanSpark, Inc.",
+    "sharesData": [
+      {
+        "date": "2023-02-09",
+        "shares": 77992916,
+        "form": "10-Q",
+        "filed": "2023-02-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-05-10",
+        "shares": 112687174,
+        "form": "10-Q",
+        "filed": "2023-05-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-08-09",
+        "shares": 152643328,
+        "form": "10-Q",
+        "filed": "2023-08-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-12-01",
+        "shares": 184749641,
+        "form": "10-K",
+        "filed": "2023-12-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-02-08",
+        "shares": 198064754,
+        "form": "10-Q",
+        "filed": "2024-02-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-05-08",
+        "shares": 227870260,
+        "form": "10-Q",
+        "filed": "2024-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-08-09",
+        "shares": 248119133,
+        "form": "10-Q",
+        "filed": "2024-08-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-03",
+        "shares": 292561667,
+        "form": "10-K",
+        "filed": "2024-12-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-02-04",
+        "shares": 280807606,
+        "form": "10-Q",
+        "filed": "2025-02-06",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-05-06",
+        "shares": 280943856,
+        "form": "10-Q",
+        "filed": "2025-05-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-08-01",
+        "shares": 281083382,
+        "form": "10-Q",
+        "filed": "2025-08-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-11-19",
+        "shares": 255583445,
+        "form": "10-K",
+        "filed": "2025-11-25",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "FY"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "HUT",
+    "cik": "0001964789",
+    "entityName": "Hut 8 Corp.",
+    "sharesData": [
+      {
+        "date": "2023-12-18",
+        "shares": 88962964,
+        "form": "10-Q",
+        "filed": "2023-12-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-05-14",
+        "shares": 90392009,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-12",
+        "shares": 91078961,
+        "form": "10-Q",
+        "filed": "2024-08-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-12",
+        "shares": 93581092,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-02-28",
+        "shares": 103855686,
+        "form": "10-K",
+        "filed": "2025-03-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-07",
+        "shares": 104220084,
+        "form": "10-Q",
+        "filed": "2025-05-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-06",
+        "shares": 105527928,
+        "form": "10-Q",
+        "filed": "2025-08-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-03",
+        "shares": 108036632,
+        "form": "10-Q",
+        "filed": "2025-11-04",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "CORZ",
+    "cik": "0001839341",
+    "entityName": "Core Scientific, Inc./tx",
+    "sharesData": [
+      {
+        "date": "2023-03-28",
+        "shares": 373799959,
+        "form": "10-K",
+        "filed": "2023-04-04",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-05",
+        "shares": 376566674,
+        "form": "10-Q",
+        "filed": "2023-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-07-31",
+        "shares": 382610007,
+        "form": "10-Q/A",
+        "filed": "2023-09-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-10-30",
+        "shares": 386021602,
+        "form": "10-Q",
+        "filed": "2023-11-06",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-07",
+        "shares": 177596074,
+        "form": "10-K",
+        "filed": "2024-03-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-03",
+        "shares": 177783480,
+        "form": "10-Q",
+        "filed": "2024-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-02",
+        "shares": 258223230,
+        "form": "10-Q",
+        "filed": "2024-08-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-10-31",
+        "shares": 279253024,
+        "form": "10-Q",
+        "filed": "2024-11-06",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-02-20",
+        "shares": 294122589,
+        "form": "10-K",
+        "filed": "2025-02-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-02",
+        "shares": 297821835,
+        "form": "10-Q",
+        "filed": "2025-05-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-05",
+        "shares": 305408442,
+        "form": "10-Q",
+        "filed": "2025-08-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-10-20",
+        "shares": 310061300,
+        "form": "10-Q",
+        "filed": "2025-10-24",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "BTDR",
+    "cik": "0001899123",
+    "entityName": "BITDEER TECHNOLOGIES GROUP",
+    "sharesData": [],
+    "sourceField": null
+  },
+  {
+    "ticker": "KULR",
+    "cik": "0001662684",
+    "entityName": "KULR TECHNOLOGY GROUP, INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-27",
+        "shares": 116230123,
+        "form": "10-K",
+        "filed": "2023-03-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-12",
+        "shares": 118322603,
+        "form": "10-Q",
+        "filed": "2023-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-15",
+        "shares": 118782666,
+        "form": "10-Q",
+        "filed": "2023-08-16",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-10",
+        "shares": 127884674,
+        "form": "10-Q",
+        "filed": "2023-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-04-09",
+        "shares": 172869307,
+        "form": "10-K",
+        "filed": "2024-04-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-13",
+        "shares": 182677224,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-09",
+        "shares": 192989619,
+        "form": "10-Q",
+        "filed": "2024-08-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-12",
+        "shares": 214227808,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-27",
+        "shares": 284389637,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 298466335,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-12",
+        "shares": 41108543,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-14",
+        "shares": 45674420,
+        "form": "10-Q",
+        "filed": "2025-11-18",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "DJT",
+    "cik": "0001849635",
+    "entityName": "Trump Media & Technology Group Corp.",
+    "sharesData": [
+      {
+        "date": "2024-03-29",
+        "shares": 136700583,
+        "form": "10-K/A",
+        "filed": "2024-04-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-20",
+        "shares": 176700583,
+        "form": "10-Q",
+        "filed": "2024-05-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-07",
+        "shares": 194715772,
+        "form": "10-Q",
+        "filed": "2024-08-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-10-29",
+        "shares": 216924448,
+        "form": "10-Q",
+        "filed": "2024-11-05",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-02-12",
+        "shares": 220065365,
+        "form": "10-K",
+        "filed": "2025-02-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-08",
+        "shares": 220624508,
+        "form": "10-Q",
+        "filed": "2025-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-07-31",
+        "shares": 277067396,
+        "form": "10-Q",
+        "filed": "2025-08-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-05",
+        "shares": 279997636,
+        "form": "10-Q",
+        "filed": "2025-11-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "SMLR",
+    "cik": "0001554859",
+    "entityName": "SEMLER SCIENTIFIC, INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-16",
+        "shares": 6844512,
+        "form": "10-K",
+        "filed": "2023-03-23",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-05",
+        "shares": 6851498,
+        "form": "10-Q",
+        "filed": "2023-05-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-07",
+        "shares": 6855956,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-07",
+        "shares": 6873196,
+        "form": "10-Q",
+        "filed": "2023-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-01",
+        "shares": 7031083,
+        "form": "10-K",
+        "filed": "2024-03-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-03",
+        "shares": 7065835,
+        "form": "10-Q",
+        "filed": "2024-05-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-01",
+        "shares": 7133788,
+        "form": "10-Q",
+        "filed": "2024-08-06",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-10-31",
+        "shares": 7266242,
+        "form": "10-Q",
+        "filed": "2024-11-05",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-02-21",
+        "shares": 9596486,
+        "form": "10-K",
+        "filed": "2025-02-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-09",
+        "shares": 11151572,
+        "form": "10-Q",
+        "filed": "2025-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-07-31",
+        "shares": 14804693,
+        "form": "10-Q",
+        "filed": "2025-08-04",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-07",
+        "shares": 15159895,
+        "form": "10-Q",
+        "filed": "2025-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "BTCS",
+    "cik": "0001436229",
+    "entityName": "BTCS Inc.",
+    "sharesData": [
+      {
+        "date": "2023-03-28",
+        "shares": 13766321,
+        "form": "10-K/A",
+        "filed": "2023-04-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-09",
+        "shares": 13830303,
+        "form": "10-Q",
+        "filed": "2023-05-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-09",
+        "shares": 14333292,
+        "form": "10-Q",
+        "filed": "2023-08-11",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-07",
+        "shares": 14373186,
+        "form": "10-Q",
+        "filed": "2023-11-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-19",
+        "shares": 15691209,
+        "form": "10-K",
+        "filed": "2024-03-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-10",
+        "shares": 15705415,
+        "form": "10-Q",
+        "filed": "2024-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-16",
+        "shares": 16174923,
+        "form": "10-Q",
+        "filed": "2024-08-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-12",
+        "shares": 17025282,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-17",
+        "shares": 20087981,
+        "form": "10-K",
+        "filed": "2025-03-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-13",
+        "shares": 21095390,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-12",
+        "shares": 48052778,
+        "form": "10-Q",
+        "filed": "2025-08-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-10",
+        "shares": 46838532,
+        "form": "10-Q",
+        "filed": "2025-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "BTBT",
+    "cik": "0001710350",
+    "entityName": "BIT DIGITAL, INC.",
+    "sharesData": [
+      {
+        "date": "2025-03-07",
+        "shares": 182435019,
+        "form": "10-K",
+        "filed": "2025-03-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-12",
+        "shares": 207780871,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-13",
+        "shares": 321432722,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-10",
+        "shares": 323674831,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "DFDV",
+    "cik": "0001805526",
+    "entityName": "DeFi DEVELOPMENT CORP",
+    "sharesData": [
+      {
+        "date": "2023-09-01",
+        "shares": 9995073,
+        "form": "10-Q",
+        "filed": "2023-09-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-14",
+        "shares": 9995073,
+        "form": "10-Q",
+        "filed": "2023-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-28",
+        "shares": 11064576,
+        "form": "10-K",
+        "filed": "2024-03-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-14",
+        "shares": 11064576,
+        "form": "10-Q",
+        "filed": "2024-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-13",
+        "shares": 11182223,
+        "form": "10-Q",
+        "filed": "2024-08-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-07",
+        "shares": 11299582,
+        "form": "10-Q",
+        "filed": "2024-11-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-16",
+        "shares": 2066711,
+        "form": "10-K/A",
+        "filed": "2025-05-16",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-03-27",
+        "shares": 1428464,
+        "form": "10-K",
+        "filed": "2025-03-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-14",
+        "shares": 2066711,
+        "form": "10-Q",
+        "filed": "2025-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-14",
+        "shares": 21045049,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-19",
+        "shares": 31401212,
+        "form": "10-Q",
+        "filed": "2025-11-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "BMNR",
+    "cik": "0001829311",
+    "entityName": "BITMINE IMMERSION TECHNOLOGIES, INC.",
+    "sharesData": [
+      {
+        "date": "2023-01-05",
+        "shares": 48778344,
+        "form": "10-Q/A",
+        "filed": "2023-02-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-04-13",
+        "shares": 48848767,
+        "form": "10-Q",
+        "filed": "2023-04-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-07-14",
+        "shares": 49444222,
+        "form": "10-Q",
+        "filed": "2023-07-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-12-13",
+        "shares": 49665649,
+        "form": "10-K",
+        "filed": "2023-12-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-01-12",
+        "shares": 49748705,
+        "form": "10-Q",
+        "filed": "2024-01-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-04-15",
+        "shares": 49821698,
+        "form": "10-Q",
+        "filed": "2024-04-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-07-10",
+        "shares": 49912607,
+        "form": "10-Q",
+        "filed": "2024-07-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-06",
+        "shares": 39667607,
+        "form": "10-K/A",
+        "filed": "2025-04-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-01-10",
+        "shares": 39667607,
+        "form": "10-Q",
+        "filed": "2025-01-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-04-11",
+        "shares": 39667607,
+        "form": "10-Q",
+        "filed": "2025-04-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-07-01",
+        "shares": 6162804,
+        "form": "10-Q/A",
+        "filed": "2025-07-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-11-20",
+        "shares": 384067823,
+        "form": "10-K",
+        "filed": "2025-11-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "FY"
+      },
+      {
+        "date": "2026-01-12",
+        "shares": 454862451,
+        "form": "10-Q",
+        "filed": "2026-01-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2026,
+        "fp": "Q1"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "NAKA",
+    "cik": "0001946573",
+    "entityName": "KINDLY MD, INC.",
+    "sharesData": [
+      {
+        "date": "2024-06-24",
+        "shares": 5939516,
+        "form": "10-Q",
+        "filed": "2024-06-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-09",
+        "shares": 5947169,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-08",
+        "shares": 5977476,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-27",
+        "shares": 6029648,
+        "form": "10-K/A",
+        "filed": "2025-04-17",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-08",
+        "shares": 6022148,
+        "form": "10-Q",
+        "filed": "2025-05-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-04",
+        "shares": 7606339,
+        "form": "10-Q",
+        "filed": "2025-08-05",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-14",
+        "shares": 439850889,
+        "form": "10-Q",
+        "filed": "2025-11-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "ABTC",
+    "cik": "0001755953",
+    "entityName": "American Bitcoin Corp.",
+    "sharesData": [
+      {
+        "date": "2023-03-10",
+        "shares": 5767073,
+        "form": "10-K",
+        "filed": "2023-03-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-04-28",
+        "shares": 5767782,
+        "form": "10-K/A",
+        "filed": "2023-05-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-12",
+        "shares": 5767815,
+        "form": "10-Q",
+        "filed": "2023-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-11",
+        "shares": 7802018,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-14",
+        "shares": 10252018,
+        "form": "10-Q",
+        "filed": "2023-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-29",
+        "shares": 38800340,
+        "form": "10-K",
+        "filed": "2024-04-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-13",
+        "shares": 39272199,
+        "form": "10-Q",
+        "filed": "2024-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-14",
+        "shares": 40427698,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-13",
+        "shares": 51104906,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-31",
+        "shares": 69982876,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 72557715,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-14",
+        "shares": 82802406,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "NXTT",
+    "cik": "0001784970",
+    "entityName": "NEXT TECHNOLOGY HOLDING INC.",
+    "sharesData": [
+      {
+        "date": "2023-07-14",
+        "shares": 1054530,
+        "form": "10-K",
+        "filed": "2023-07-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-08-11",
+        "shares": 1054530,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-21",
+        "shares": 1054530,
+        "form": "10-Q",
+        "filed": "2023-08-22",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-20",
+        "shares": 2625130,
+        "form": "10-Q",
+        "filed": "2023-11-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-04-01",
+        "shares": 2625130,
+        "form": "10-Q/A",
+        "filed": "2024-04-02",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-06-21",
+        "shares": 2625130,
+        "form": "10-K/A",
+        "filed": "2024-09-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-08-21",
+        "shares": 6976410,
+        "form": "10-Q",
+        "filed": "2024-08-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-09-12",
+        "shares": 6976410,
+        "form": "10-Q/A",
+        "filed": "2024-09-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-09-20",
+        "shares": 6976410,
+        "form": "10-Q/A",
+        "filed": "2024-09-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-15",
+        "shares": 6976410,
+        "form": "10-Q",
+        "filed": "2024-11-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-09",
+        "shares": 6976410,
+        "form": "10-Q/A",
+        "filed": "2024-12-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-12",
+        "shares": 6976410,
+        "form": "10-Q/A",
+        "filed": "2024-12-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-12-23",
+        "shares": 6976410,
+        "form": "10-Q/A",
+        "filed": "2024-12-23",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-27",
+        "shares": 436265135,
+        "form": "10-K",
+        "filed": "2025-03-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-09",
+        "shares": 436265135,
+        "form": "10-Q",
+        "filed": "2025-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-08",
+        "shares": 456265135,
+        "form": "10-Q",
+        "filed": "2025-08-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-10-08",
+        "shares": 2865730,
+        "form": "10-Q",
+        "filed": "2025-10-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "SBET",
+    "cik": "0001981535",
+    "entityName": "SHARPLINK GAMING, INC.",
+    "sharesData": [
+      {
+        "date": "2024-03-29",
+        "shares": 3286608,
+        "form": "10-K",
+        "filed": "2024-03-29",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-17",
+        "shares": 3361608,
+        "form": "10-Q",
+        "filed": "2024-05-17",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-14",
+        "shares": 3510350,
+        "form": "10-Q",
+        "filed": "2024-08-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-14",
+        "shares": 3585350,
+        "form": "10-Q",
+        "filed": "2024-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-14",
+        "shares": 6903056,
+        "form": "10-K/A",
+        "filed": "2025-03-17",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 659684,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-14",
+        "shares": 168866724,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-12",
+        "shares": 196693191,
+        "form": "10-Q",
+        "filed": "2025-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "ETHM",
+    "cik": "0002028699",
+    "entityName": "Dynamix Corporation",
+    "sharesData": [],
+    "sourceField": null
+  },
+  {
+    "ticker": "GAME",
+    "cik": "0001714562",
+    "entityName": "GameSquare Holdings, Inc.",
+    "sharesData": [
+      {
+        "date": "2024-04-12",
+        "shares": 30316256,
+        "form": "10-K",
+        "filed": "2024-04-16",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-04-29",
+        "shares": 30316256,
+        "form": "10-K/A",
+        "filed": "2024-04-30",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-17",
+        "shares": 30362552,
+        "form": "10-Q",
+        "filed": "2024-05-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-12",
+        "shares": 31193243,
+        "form": "10-Q",
+        "filed": "2024-08-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-14",
+        "shares": 32635995,
+        "form": "10-Q",
+        "filed": "2024-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-04-06",
+        "shares": 38913565,
+        "form": "10-K",
+        "filed": "2025-04-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-29",
+        "shares": 38913565,
+        "form": "10-K/A",
+        "filed": "2025-04-30",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-14",
+        "shares": 38913565,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-12",
+        "shares": 98998596,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-11",
+        "shares": 98380767,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "FGNX",
+    "cik": "0001591890",
+    "entityName": "FG Nexus Inc.",
+    "sharesData": [
+      {
+        "date": "2023-03-24",
+        "shares": 9437659,
+        "form": "10-K",
+        "filed": "2023-03-24",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-12",
+        "shares": 9438739,
+        "form": "10-Q",
+        "filed": "2023-05-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-10",
+        "shares": 10303739,
+        "form": "10-Q",
+        "filed": "2023-08-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-09",
+        "shares": 10558930,
+        "form": "10-Q",
+        "filed": "2023-11-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-14",
+        "shares": 28369066,
+        "form": "10-K",
+        "filed": "2024-03-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-13",
+        "shares": 28369066,
+        "form": "10-Q",
+        "filed": "2024-05-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-09",
+        "shares": 28566164,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-08",
+        "shares": 1264226,
+        "form": "10-Q",
+        "filed": "2024-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-24",
+        "shares": 1271619,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-21",
+        "shares": 1272320,
+        "form": "10-K/A",
+        "filed": "2025-04-30",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-05",
+        "shares": 1272320,
+        "form": "10-Q",
+        "filed": "2025-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-01",
+        "shares": 1328554,
+        "form": "10-Q",
+        "filed": "2025-08-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-12",
+        "shares": 39574350,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "FWDI",
+    "cik": "0000038264",
+    "entityName": "Forward Industries, Inc.",
+    "sharesData": [
+      {
+        "date": "2023-01-31",
+        "shares": 10061185,
+        "form": "10-Q",
+        "filed": "2023-02-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-04-30",
+        "shares": 10061185,
+        "form": "10-Q",
+        "filed": "2023-05-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-07-31",
+        "shares": 10061185,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-12-08",
+        "shares": 10061185,
+        "form": "10-K",
+        "filed": "2023-12-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-01-31",
+        "shares": 10061185,
+        "form": "10-Q",
+        "filed": "2024-02-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-04-30",
+        "shares": 10061185,
+        "form": "10-Q",
+        "filed": "2024-05-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-07-31",
+        "shares": 1101069,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-06",
+        "shares": 1101069,
+        "form": "10-K/A",
+        "filed": "2025-01-17",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-01-31",
+        "shares": 1101069,
+        "form": "10-Q",
+        "filed": "2025-02-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-04-30",
+        "shares": 1101069,
+        "form": "10-Q",
+        "filed": "2025-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-08-12",
+        "shares": 1718181,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-12-05",
+        "shares": 86459465,
+        "form": "10-K",
+        "filed": "2025-12-11",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "FY"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "HSDT",
+    "cik": "0001610853",
+    "entityName": "SOLANA COMPANY",
+    "sharesData": [
+      {
+        "date": "2023-03-06",
+        "shares": 28211362,
+        "form": "10-K",
+        "filed": "2023-03-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-03",
+        "shares": 28215394,
+        "form": "10-Q",
+        "filed": "2023-05-11",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-03",
+        "shares": 28298446,
+        "form": "10-Q",
+        "filed": "2023-08-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-03",
+        "shares": 708247,
+        "form": "10-Q",
+        "filed": "2023-11-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-21",
+        "shares": 887295,
+        "form": "10-K",
+        "filed": "2024-03-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-09",
+        "shares": 2529863,
+        "form": "10-Q",
+        "filed": "2024-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-07",
+        "shares": 3576196,
+        "form": "10-Q",
+        "filed": "2024-08-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-07",
+        "shares": 3728172,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-18",
+        "shares": 6126778,
+        "form": "10-K",
+        "filed": "2025-03-25",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-28",
+        "shares": 7920928,
+        "form": "10-Q",
+        "filed": "2025-05-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-08",
+        "shares": 1077257,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-17",
+        "shares": 41301400,
+        "form": "10-Q",
+        "filed": "2025-11-18",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "UPXI",
+    "cik": "0001775194",
+    "entityName": "UPEXI, INC.",
+    "sharesData": [
+      {
+        "date": "2023-02-13",
+        "shares": 17960748,
+        "form": "10-Q",
+        "filed": "2023-02-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-05-12",
+        "shares": 18094748,
+        "form": "10-Q/A",
+        "filed": "2023-05-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-10-02",
+        "shares": 20397779,
+        "form": "10-K",
+        "filed": "2023-10-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-11-17",
+        "shares": 20306870,
+        "form": "10-Q",
+        "filed": "2023-11-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-02-13",
+        "shares": 20889384,
+        "form": "10-Q",
+        "filed": "2024-02-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-07-05",
+        "shares": 20889384,
+        "form": "10-Q",
+        "filed": "2024-07-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-16",
+        "shares": 1040924,
+        "form": "10-K/A",
+        "filed": "2025-04-22",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-12-19",
+        "shares": 1040924,
+        "form": "10-Q",
+        "filed": "2024-12-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-02-14",
+        "shares": 1320924,
+        "form": "10-Q",
+        "filed": "2025-02-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-05-14",
+        "shares": 37253373,
+        "form": "10-Q",
+        "filed": "2025-05-16",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-09-23",
+        "shares": 58888756,
+        "form": "10-K",
+        "filed": "2025-09-24",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-11-12",
+        "shares": 59918609,
+        "form": "10-Q",
+        "filed": "2025-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2026,
+        "fp": "Q1"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "TAOX",
+    "cik": "0001571934",
+    "entityName": "TAO Synergies Inc.",
+    "sharesData": [
+      {
+        "date": "2023-03-15",
+        "shares": 7355371,
+        "form": "10-K",
+        "filed": "2023-03-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-10",
+        "shares": 7359871,
+        "form": "10-Q",
+        "filed": "2023-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-10",
+        "shares": 10164529,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-10",
+        "shares": 20390833,
+        "form": "10-Q",
+        "filed": "2023-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-25",
+        "shares": 27133349,
+        "form": "10-K",
+        "filed": "2024-04-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-13",
+        "shares": 1233230,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-13",
+        "shares": 1314309,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-12",
+        "shares": 1355613,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-27",
+        "shares": 1389815,
+        "form": "10-K",
+        "filed": "2025-03-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-14",
+        "shares": 1389815,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-12",
+        "shares": 3487147,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-11",
+        "shares": 7128912,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "LITS",
+    "cik": "0001262104",
+    "entityName": "Lite Strategy, Inc.",
+    "sharesData": [
+      {
+        "date": "2023-02-06",
+        "shares": 133260865,
+        "form": "10-Q",
+        "filed": "2023-02-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-05-08",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2023-05-11",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-09-15",
+        "shares": 6662857,
+        "form": "10-K/A",
+        "filed": "2023-10-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-10-31",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2023-11-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-02-09",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2024-02-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-05-06",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2024-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-09-13",
+        "shares": 6662857,
+        "form": "10-K",
+        "filed": "2024-09-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-11-08",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-02-07",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2025-02-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-05-02",
+        "shares": 6662857,
+        "form": "10-Q",
+        "filed": "2025-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-09-23",
+        "shares": 35655155,
+        "form": "10-K",
+        "filed": "2025-09-26",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-11-08",
+        "shares": 36785397,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "CYPH",
+    "cik": "0001509745",
+    "entityName": "LEAP THERAPEUTICS, INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-20",
+        "shares": 118750386,
+        "form": "10-K",
+        "filed": "2023-03-24",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-10",
+        "shares": 119410992,
+        "form": "10-Q",
+        "filed": "2023-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-09",
+        "shares": 25565414,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-09",
+        "shares": 25565414,
+        "form": "10-Q",
+        "filed": "2023-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-13",
+        "shares": 25600137,
+        "form": "10-K",
+        "filed": "2024-03-18",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-09",
+        "shares": 38264464,
+        "form": "10-Q",
+        "filed": "2024-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-08",
+        "shares": 38264464,
+        "form": "10-Q",
+        "filed": "2024-08-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-08",
+        "shares": 38317897,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-20",
+        "shares": 41257602,
+        "form": "10-K",
+        "filed": "2025-03-26",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-09",
+        "shares": 41439529,
+        "form": "10-Q",
+        "filed": "2025-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-11",
+        "shares": 41439529,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-10",
+        "shares": 56651840,
+        "form": "10-Q",
+        "filed": "2025-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "CWD",
+    "cik": "0001627282",
+    "entityName": "CALIBERCOS INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-31",
+        "shares": 18182000,
+        "form": "10-Q",
+        "filed": "2024-05-10",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-06-30",
+        "shares": 18901000,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-09-30",
+        "shares": 19688000,
+        "form": "10-Q",
+        "filed": "2024-11-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-12-31",
+        "shares": 20087000,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-03-31",
+        "shares": 1077000,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-06-30",
+        "shares": 1084000,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-09-30",
+        "shares": 1092000,
+        "form": "10-Q",
+        "filed": "2025-11-13",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-31",
+        "shares": 21986000,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-03-31",
+        "shares": 1146000,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-06-30",
+        "shares": 1212000,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-09-30",
+        "shares": 1685000,
+        "form": "10-Q",
+        "filed": "2025-11-13",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "WeightedAverageNumberOfSharesOutstandingBasic"
+  },
+  {
+    "ticker": "SUIG",
+    "cik": "0001425355",
+    "entityName": "SUI GROUP HOLDINGS LIMITED",
+    "sharesData": [
+      {
+        "date": "2023-03-31",
+        "shares": 6185255,
+        "form": "10-K/A",
+        "filed": "2023-05-22",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-15",
+        "shares": 6185255,
+        "form": "10-Q",
+        "filed": "2023-05-22",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-15",
+        "shares": 6185255,
+        "form": "10-Q",
+        "filed": "2023-08-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-15",
+        "shares": 6385255,
+        "form": "10-Q",
+        "filed": "2023-11-17",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-31",
+        "shares": 6385255,
+        "form": "10-K",
+        "filed": "2024-04-02",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-15",
+        "shares": 6385255,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-15",
+        "shares": 6385255,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-15",
+        "shares": 6385255,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-31",
+        "shares": 6385255,
+        "form": "10-K",
+        "filed": "2025-03-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-07",
+        "shares": 6062773,
+        "form": "10-K/A",
+        "filed": "2025-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 6062773,
+        "form": "10-Q",
+        "filed": "2025-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-14",
+        "shares": 82110648,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-13",
+        "shares": 83068868,
+        "form": "10-Q",
+        "filed": "2025-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "AVX",
+    "cik": "0001826397",
+    "entityName": "AVAX ONE TECHNOLOGY LTD.",
+    "sharesData": [
+      {
+        "date": "2023-03-13",
+        "shares": 18156154,
+        "form": "10-K",
+        "filed": "2023-03-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-09",
+        "shares": 18520875,
+        "form": "10-Q",
+        "filed": "2023-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-03",
+        "shares": 38142774,
+        "form": "10-Q",
+        "filed": "2023-08-04",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-02",
+        "shares": 1413511,
+        "form": "10-Q",
+        "filed": "2023-11-02",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-04-01",
+        "shares": 22573938,
+        "form": "10-K",
+        "filed": "2024-04-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-15",
+        "shares": 26036516,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-13",
+        "shares": 92343334,
+        "form": "10-Q",
+        "filed": "2024-08-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-19",
+        "shares": 155029573,
+        "form": "10-Q",
+        "filed": "2024-11-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-04-07",
+        "shares": 1740064,
+        "form": "10-K/A",
+        "filed": "2025-04-29",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 2865646,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-14",
+        "shares": 1309598,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-14",
+        "shares": 93112148,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "ZONE",
+    "cik": "0001956741",
+    "entityName": "CleanCore Solutions, Inc.",
+    "sharesData": [
+      {
+        "date": "2024-06-07",
+        "shares": 7955919,
+        "form": "10-Q",
+        "filed": "2024-06-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-09-19",
+        "shares": 7965919,
+        "form": "10-K",
+        "filed": "2024-09-20",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-11-12",
+        "shares": 8244251,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-02-12",
+        "shares": 8369749,
+        "form": "10-Q",
+        "filed": "2025-02-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-05-13",
+        "shares": 8480037,
+        "form": "10-Q",
+        "filed": "2025-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-08-21",
+        "shares": 11175846,
+        "form": "10-K",
+        "filed": "2025-08-22",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-11-10",
+        "shares": 201309022,
+        "form": "10-Q",
+        "filed": "2025-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2026,
+        "fp": "Q1"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "TBH",
+    "cik": "0001903595",
+    "entityName": "BRAG HOUSE HOLDINGS, INC.",
+    "sharesData": [
+      {
+        "date": "2025-05-06",
+        "shares": 10822588,
+        "form": "10-K",
+        "filed": "2025-05-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-07-17",
+        "shares": 10822588,
+        "form": "10-Q",
+        "filed": "2025-07-18",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-14",
+        "shares": 10822588,
+        "form": "10-Q",
+        "filed": "2025-08-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-12",
+        "shares": 19799090,
+        "form": "10-Q",
+        "filed": "2025-11-17",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "BTOG",
+    "cik": "0001735556",
+    "entityName": "Bit Origin Ltd",
+    "sharesData": [],
+    "sourceField": null
+  },
+  {
+    "ticker": "PURR",
+    "cik": "0002078856",
+    "entityName": "Hyperliquid Strategies Inc",
+    "sharesData": [
+      {
+        "date": "2025-12-05",
+        "shares": 127025563,
+        "form": "10-Q",
+        "filed": "2025-12-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "HYPD",
+    "cik": "0001682639",
+    "entityName": "HYPERION DEFI,\u00a0INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-28",
+        "shares": 37991746,
+        "form": "10-K",
+        "filed": "2023-03-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-04-27",
+        "shares": 37992965,
+        "form": "10-K/A",
+        "filed": "2023-05-01",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-10",
+        "shares": 38002965,
+        "form": "10-Q",
+        "filed": "2023-05-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-08",
+        "shares": 0,
+        "form": "10-Q",
+        "filed": "2023-08-11",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-09",
+        "shares": 44122225,
+        "form": "10-Q",
+        "filed": "2023-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-15",
+        "shares": 47386349,
+        "form": "10-K",
+        "filed": "2024-03-18",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-04-16",
+        "shares": 50957869,
+        "form": "10-K/A",
+        "filed": "2024-04-26",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-10",
+        "shares": 53870762,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-09",
+        "shares": 64059440,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-08",
+        "shares": 86441611,
+        "form": "10-Q",
+        "filed": "2024-11-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-04-11",
+        "shares": 2830546,
+        "form": "10-K",
+        "filed": "2025-04-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-23",
+        "shares": 2830546,
+        "form": "10-K/A",
+        "filed": "2025-04-30",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 2882808,
+        "form": "10-Q",
+        "filed": "2025-05-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-11",
+        "shares": 5694659,
+        "form": "10-Q",
+        "filed": "2025-08-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-10",
+        "shares": 8097659,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "TRON",
+    "cik": "0001956744",
+    "entityName": "TRON INC.",
+    "sharesData": [
+      {
+        "date": "2023-09-29",
+        "shares": 9450000,
+        "form": "10-Q",
+        "filed": "2023-10-03",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-08",
+        "shares": 9765500,
+        "form": "10-Q",
+        "filed": "2023-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-29",
+        "shares": 10165500,
+        "form": "10-K/A",
+        "filed": "2024-12-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-07",
+        "shares": 10165500,
+        "form": "10-Q",
+        "filed": "2024-05-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-05",
+        "shares": 10415500,
+        "form": "10-Q",
+        "filed": "2024-08-12",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-12",
+        "shares": 13876477,
+        "form": "10-Q",
+        "filed": "2024-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-25",
+        "shares": 17243610,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-04-30",
+        "shares": 17243610,
+        "form": "10-Q",
+        "filed": "2025-05-09",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-07",
+        "shares": 33468011,
+        "form": "10-Q",
+        "filed": "2025-08-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-05",
+        "shares": 257115400,
+        "form": "10-Q",
+        "filed": "2025-11-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "XRPN",
+    "cik": "0002044009",
+    "entityName": "Armada Acquisition Corp. II",
+    "sharesData": [],
+    "sourceField": null
+  },
+  {
+    "ticker": "XXI",
+    "cik": "0002070457",
+    "entityName": "Twenty One Capital, Inc.",
+    "sharesData": [
+      {
+        "date": "2025-09-30",
+        "shares": 1,
+        "form": "10-Q",
+        "filed": "2025-12-19",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "WeightedAverageNumberOfSharesOutstandingBasic"
+  },
+  {
+    "ticker": "ASST",
+    "cik": "0001920406",
+    "entityName": "STRIVE, INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-31",
+        "shares": 12464256,
+        "form": "10-Q",
+        "filed": "2024-05-15",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-06-30",
+        "shares": 2618380,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-09-30",
+        "shares": 2663477,
+        "form": "10-Q",
+        "filed": "2024-11-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2023-12-31",
+        "shares": 2663477,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-03-31",
+        "shares": 2834882,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-06-30",
+        "shares": 2897504,
+        "form": "10-Q",
+        "filed": "2025-08-05",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-09-30",
+        "shares": 2200848,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-12-31",
+        "shares": 3788525,
+        "form": "10-K",
+        "filed": "2025-03-31",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-03-31",
+        "shares": 13155432,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-06-30",
+        "shares": 14380325,
+        "form": "10-Q",
+        "filed": "2025-08-05",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-09-11",
+        "shares": 2299243,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-09-30",
+        "shares": 872349183,
+        "form": "10-Q",
+        "filed": "2025-11-14",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "WeightedAverageNumberOfSharesOutstandingBasic"
+  },
+  {
+    "ticker": "BNC",
+    "cik": "0001482541",
+    "entityName": "CEA INDUSTRIES INC.",
+    "sharesData": [
+      {
+        "date": "2023-03-28",
+        "shares": 8076372,
+        "form": "10-K",
+        "filed": "2023-03-28",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-15",
+        "shares": 8076372,
+        "form": "10-Q",
+        "filed": "2023-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-14",
+        "shares": 8076372,
+        "form": "10-Q",
+        "filed": "2023-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-14",
+        "shares": 8076372,
+        "form": "10-Q",
+        "filed": "2023-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-29",
+        "shares": 8212737,
+        "form": "10-K",
+        "filed": "2024-03-29",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-14",
+        "shares": 8212737,
+        "form": "10-Q",
+        "filed": "2024-05-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-14",
+        "shares": 791580,
+        "form": "10-Q",
+        "filed": "2024-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-14",
+        "shares": 791580,
+        "form": "10-Q",
+        "filed": "2024-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-27",
+        "shares": 802346,
+        "form": "10-K",
+        "filed": "2025-03-27",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-15",
+        "shares": 802346,
+        "form": "10-Q",
+        "filed": "2025-05-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-09-18",
+        "shares": 43083082,
+        "form": "10-Q",
+        "filed": "2025-09-22",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2026,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-12-12",
+        "shares": 44062938,
+        "form": "10-Q",
+        "filed": "2025-12-15",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2026,
+        "fp": "Q2"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  },
+  {
+    "ticker": "CEPO",
+    "cik": "0002027708",
+    "entityName": "CANTOR EQUITY PARTNERS I, INC.",
+    "sharesData": [
+      {
+        "date": "2023-12-31",
+        "shares": 5000000,
+        "form": "10-K",
+        "filed": "2025-03-28",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-12-31",
+        "shares": 5000000,
+        "form": "10-K",
+        "filed": "2025-03-28",
+        "source": "WeightedAverageNumberOfSharesOutstandingBasic",
+        "fy": 2024,
+        "fp": "FY"
+      }
+    ],
+    "sourceField": "WeightedAverageNumberOfSharesOutstandingBasic"
+  },
+  {
+    "ticker": "TWAV",
+    "cik": "0000746210",
+    "entityName": "Oblong, Inc.",
+    "sharesData": [
+      {
+        "date": "2023-03-15",
+        "shares": 2063308,
+        "form": "10-K",
+        "filed": "2023-03-21",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2022,
+        "fp": "FY"
+      },
+      {
+        "date": "2023-05-09",
+        "shares": 2580370,
+        "form": "10-Q",
+        "filed": "2023-05-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q1"
+      },
+      {
+        "date": "2023-08-09",
+        "shares": 2929109,
+        "form": "10-Q",
+        "filed": "2023-08-10",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q2"
+      },
+      {
+        "date": "2023-11-13",
+        "shares": 14947922,
+        "form": "10-Q",
+        "filed": "2023-11-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "Q3"
+      },
+      {
+        "date": "2024-03-08",
+        "shares": 16684571,
+        "form": "10-K",
+        "filed": "2024-03-19",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2023,
+        "fp": "FY"
+      },
+      {
+        "date": "2024-05-03",
+        "shares": 20286675,
+        "form": "10-Q",
+        "filed": "2024-05-08",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q1"
+      },
+      {
+        "date": "2024-08-06",
+        "shares": 28242418,
+        "form": "10-Q",
+        "filed": "2024-08-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q2"
+      },
+      {
+        "date": "2024-11-05",
+        "shares": 1144926,
+        "form": "10-Q",
+        "filed": "2024-11-07",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "Q3"
+      },
+      {
+        "date": "2025-03-14",
+        "shares": 1154926,
+        "form": "10-K",
+        "filed": "2025-03-18",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2024,
+        "fp": "FY"
+      },
+      {
+        "date": "2025-05-12",
+        "shares": 1324970,
+        "form": "10-Q",
+        "filed": "2025-05-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q1"
+      },
+      {
+        "date": "2025-08-12",
+        "shares": 2350307,
+        "form": "10-Q",
+        "filed": "2025-08-14",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q2"
+      },
+      {
+        "date": "2025-11-10",
+        "shares": 3207210,
+        "form": "10-Q",
+        "filed": "2025-11-13",
+        "source": "EntityCommonStockSharesOutstanding",
+        "fy": 2025,
+        "fp": "Q3"
+      }
+    ],
+    "sourceField": "EntityCommonStockSharesOutstanding"
+  }
+]
