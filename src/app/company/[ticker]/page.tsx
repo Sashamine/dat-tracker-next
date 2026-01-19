@@ -350,7 +350,7 @@ export default function CompanyPage() {
             </p>
             <p className="text-xs text-gray-400">
               {navDiscount !== null && (
-                <span className={navDiscount < 0 ? "text-green-600" : "text-red-600"}>
+                <span className={navDiscount >= 0 ? "text-green-600" : "text-red-600"}>
                   {formatPercent(navDiscount, true)} {navDiscount < 0 ? "discount" : "premium"}
                 </span>
               )}
