@@ -17,7 +17,7 @@ import {
   calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
@@ -98,6 +98,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     // Use centralized market cap utility (handles currency, fallbacks)
     const marketCapResult = getMarketCap(company, stockData);
     const marketCap = marketCapResult.marketCap;
+    // Use company's methodology for mNAV (may differ from display market cap)
+    const marketCapForMnavResult = getMarketCapForMnav(company, stockData);
+    const marketCapForMnav = marketCapForMnavResult.marketCap;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
     const holdingsValue = company.holdings * cryptoPrice;
@@ -108,8 +111,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const otherInvestments = company.otherInvestments || 0;
     const otherAssets = cashReserves + otherInvestments;
 
-    // mNAV now includes other assets in NAV calculation
-    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, cashReserves, otherInvestments, company.totalDebt || 0, company.preferredEquity || 0);
+    // mNAV uses company's methodology for market cap (matches their dashboards)
+    const mNAV = calculateMNAV(marketCapForMnav, company.holdings, cryptoPrice, cashReserves, otherInvestments, company.totalDebt || 0, company.preferredEquity || 0);
     const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
 
     // Determine company type

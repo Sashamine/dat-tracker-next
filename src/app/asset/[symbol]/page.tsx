@@ -24,7 +24,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
 import { MobileHeader } from "@/components/mobile-header";
 
 // Asset metadata
@@ -113,11 +113,12 @@ export default function AssetPage() {
   const companiesWithMetrics = companies.map((company) => {
     const stockData = prices?.stocks[company.ticker];
     const { marketCap } = getMarketCap(company, stockData);
+    const { marketCap: marketCapForMnav } = getMarketCapForMnav(company, stockData);
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 
     const holdingsValue = calculateNAV(company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
-    const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
+    const mNAV = calculateMNAV(marketCapForMnav, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
 
     return {
       ...company,

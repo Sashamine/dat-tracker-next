@@ -110,6 +110,35 @@ export function getMarketCap(
 }
 
 /**
+ * Get market cap specifically for mNAV calculation.
+ *
+ * This function respects each company's methodology:
+ * - If company has sharesForMnav, use stockPrice × sharesForMnav
+ * - Otherwise fall back to regular getMarketCap logic
+ *
+ * This ensures our mNAV matches what companies report on their dashboards.
+ */
+export function getMarketCapForMnav(
+  company: Company,
+  stockData?: StockPriceData | null
+): MarketCapResult {
+  // If company has explicit share count for mNAV and we have a stock price
+  if (company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0) {
+    const calculatedMarketCap = stockData.price * company.sharesForMnav;
+    return {
+      marketCap: calculatedMarketCap,
+      source: "calculated",
+      currency: "USD",
+      dilutionApplied: false,
+      // Note: This is intentionally using company's share count methodology
+    };
+  }
+
+  // Fall back to regular market cap logic
+  return getMarketCap(company, stockData);
+}
+
+/**
  * Apply dilution adjustment to market cap.
  * Only use this when we have VERIFIED dilution data from company filings.
  *

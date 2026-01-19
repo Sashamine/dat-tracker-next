@@ -37,7 +37,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
 import { getCompanyIntel } from "@/lib/data/company-intel";
@@ -115,7 +115,7 @@ export default function CompanyPage() {
       .map((c) => {
         const cryptoPrice = prices?.crypto[c.asset]?.price || 0;
         const stockData = prices?.stocks[c.ticker];
-        const { marketCap } = getMarketCap(c, stockData);
+        const { marketCap } = getMarketCapForMnav(c, stockData);
         return calculateMNAV(marketCap, c.holdings, cryptoPrice, c.cashReserves || 0, c.otherInvestments || 0, c.totalDebt || 0, c.preferredEquity || 0);
       })
       .filter((m): m is number => m !== null && m > 0 && m < 10);
@@ -172,6 +172,7 @@ export default function CompanyPage() {
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
   const { marketCap } = getMarketCap(company, stockData);
+  const { marketCap: marketCapForMnav } = getMarketCapForMnav(company, stockData);
 
   // Other assets (cash + investments)
   const cashReserves = company.cashReserves || 0;
@@ -181,7 +182,7 @@ export default function CompanyPage() {
 
   // Calculate metrics (including other assets in NAV)
   const nav = calculateNAV(company.holdings, cryptoPrice, cashReserves, otherInvestments);
-  const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, cashReserves, otherInvestments);
+  const mNAV = calculateMNAV(marketCapForMnav, company.holdings, cryptoPrice, cashReserves, otherInvestments);
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
   const navPerShare = calculateNAVPerShare(company.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Company } from "@/lib/types";
 import { calculateMNAV } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnav } from "@/lib/utils/market-cap";
 
 export interface MNAVStats {
   median: number;
@@ -40,7 +40,7 @@ export function useMNAVStats(
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
+        const { marketCap } = getMarketCapForMnav(company, stockData);
         return calculateMNAV(
           marketCap,
           company.holdings,

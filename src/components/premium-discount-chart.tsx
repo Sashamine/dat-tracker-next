@@ -9,7 +9,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnav } from "@/lib/utils/market-cap";
 import { Company } from "@/lib/types";
 
 interface PriceData {
@@ -46,7 +46,7 @@ export function PremiumDiscountChart({
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
+        const { marketCap } = getMarketCapForMnav(company, stockData);
         const holdingsValue = company.holdings * cryptoPrice;
 
         const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0) || 0;
@@ -221,7 +221,7 @@ export function MNAVScatterChart({
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
+        const { marketCap } = getMarketCapForMnav(company, stockData);
         const holdingsValue = company.holdings * cryptoPrice;
 
         const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0) || 0;

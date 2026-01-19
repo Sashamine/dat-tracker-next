@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Company } from "@/lib/types";
 import { calculateMNAV } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnav } from "@/lib/utils/market-cap";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -36,7 +36,7 @@ export function MNAVDistributionChart({ companies, prices, compact = false }: MN
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
+        const { marketCap } = getMarketCapForMnav(company, stockData);
         const mnav = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
         return { ticker: company.ticker, mnav };
       })

@@ -48,6 +48,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 300_000_000,
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
+    sharesForMnav: 196_690_000,  // 196.69M basic shares (matches SBET dashboard methodology)
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",

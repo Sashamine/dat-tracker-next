@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { allCompanies } from "@/lib/data/companies";
 import { calculateMNAV } from "@/lib/calculations";
+import { getMarketCapForMnav, StockPriceData } from "@/lib/utils/market-cap";
 
 // In-memory storage for mNAV history snapshots
 // Note: This will reset on cold starts. For production, use Vercel KV or a database.
@@ -105,7 +106,12 @@ async function calculateMNAVStats(): Promise<MNAVSnapshot | null> {
   for (const company of allCompanies) {
     const cryptoPrice = cryptoPrices[company.asset] || 0;
     const stock = stockData[company.ticker];
-    const marketCap = company.marketCap || stock?.marketCap || 0;
+    // Use getMarketCapForMnav for consistency with frontend
+    const stockPriceData: StockPriceData | null = stock ? {
+      price: stock.price || 0,
+      marketCap: stock.marketCap || 0,
+    } : null;
+    const { marketCap } = getMarketCapForMnav(company, stockPriceData);
 
     if (cryptoPrice > 0 && marketCap > 0) {
       const mnav = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
