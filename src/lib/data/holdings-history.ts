@@ -1,5 +1,6 @@
 // Historical holdings per share data for companies that report it
 // Sources: Company quarterly reports, 8-K filings, press releases
+// Last updated: 2026-01-18 - Added Q3 2025 data for 45 companies
 
 export interface HoldingsSnapshot {
   date: string; // YYYY-MM-DD
