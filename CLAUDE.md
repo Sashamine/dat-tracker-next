@@ -42,7 +42,25 @@ git add . && git commit -m "message" && git push
 npx tsc --noEmit
 ```
 
+## Company Data Sources
+
+**IMPORTANT: Check `src/lib/data/company-sources.ts` first!**
+
+This file contains official dashboards, SEC CIKs, and data methodology for each company:
+- **SBET**: https://www.sharplink.com/eth-dashboard (updates mNAV daily)
+- **MSTR**: https://www.strategy.com/bitcoin
+- **Metaplanet**: https://metaplanet.jp/bitcoin (updates daily)
+- **Blockworks**: https://blockworks.com/analytics/{TICKER} (mNAV charts)
+
+When calculating mNAV, verify against official dashboards when available.
+
+### Shares Outstanding
+- Use `diluted` shares when available (WeightedAverageNumberOfDilutedSharesOutstanding from SEC)
+- Some companies (SBET) only publish basic shares - note this in company-sources.ts
+- Always document the source and methodology in holdings-history.ts comments
+
 ## Don't Forget
 - Always push to deploy - no localhost testing
 - No staleness colors in UI - just show dates
 - Source URLs are important - add them for new companies
+- Check company-sources.ts for official dashboards before web searching

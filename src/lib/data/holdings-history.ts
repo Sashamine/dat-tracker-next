@@ -273,8 +273,8 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 
 // SharpLink Gaming (SBET) - Largest ETH treasury
 // Note: 1:12 reverse split on May 6, 2025
-// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// Q3 2025: Net income $104.3M / $0.62 diluted EPS = ~168M diluted shares
+// Using BASIC shares (EntityCommonStockSharesOutstanding) - matches reported mNAV (~0.83 on Nov 28, 2025)
+// Fully diluted count (warrants, options, RSUs) not publicly available
 const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 450000, sharesOutstanding: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 580000, sharesOutstanding: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q" },
@@ -282,8 +282,8 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 860000, sharesOutstanding: 98_000_000, holdingsPerShare: 0.008776, source: "Q4 2024 10-K" },
   // Post reverse split (1:12 on May 6, 2025)
   { date: "2025-06-30", holdings: 520000, sharesOutstanding: 145_000_000, holdingsPerShare: 0.003586, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 861251, sharesOutstanding: 168_000_000, holdingsPerShare: 0.005126, source: "Q3 2025 10-Q" },
-  { date: "2026-01-10", holdings: 863424, sharesOutstanding: 197_000_000, holdingsPerShare: 0.004383, source: "8-K filing" },
+  { date: "2025-09-30", holdings: 861251, sharesOutstanding: 180_000_000, holdingsPerShare: 0.004785, source: "Q3 2025 10-Q" },
+  { date: "2026-01-10", holdings: 863424, sharesOutstanding: 196_690_000, holdingsPerShare: 0.004390, source: "SEC filing (basic shares)" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury
