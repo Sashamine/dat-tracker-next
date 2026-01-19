@@ -92,11 +92,10 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-11", holdings: 530.71, sharesOutstanding: 36_000_000, holdingsPerShare: 0.00001474, source: "Press release" },
   { date: "2024-11-18", holdings: 1142.29, sharesOutstanding: 42_000_000, holdingsPerShare: 0.00002720, source: "Press release" },
   { date: "2024-12-23", holdings: 1762.00, sharesOutstanding: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release" },
-  { date: "2025-03-31", holdings: 2100, sharesOutstanding: 52_000_000, holdingsPerShare: 0.00004038, source: "Q1 2025 TSE filing" },
-  { date: "2025-06-30", holdings: 2850, sharesOutstanding: 60_000_000, holdingsPerShare: 0.00004750, source: "Q2 2025 TSE filing" },
-  { date: "2025-09-30", holdings: 3500, sharesOutstanding: 68_000_000, holdingsPerShare: 0.00005147, source: "Q3 2025 TSE filing" },
-  { date: "2025-12-31", holdings: 4200, sharesOutstanding: 75_000_000, holdingsPerShare: 0.00005600, source: "Q4 2025 TSE filing" },
-  { date: "2026-01-14", holdings: 4500, sharesOutstanding: 78_000_000, holdingsPerShare: 0.00005769, source: "Press release" },
+  { date: "2025-03-31", holdings: 4206, sharesOutstanding: 310_000_000, holdingsPerShare: 0.00001357, source: "Q1 2025 TSE filing" },
+  { date: "2025-06-30", holdings: 12850, sharesOutstanding: 420_000_000, holdingsPerShare: 0.00003060, source: "Q2 2025 TSE filing" },
+  { date: "2025-09-30", holdings: 22500, sharesOutstanding: 520_000_000, holdingsPerShare: 0.00004327, source: "Q3 2025 TSE filing" },
+  { date: "2025-12-30", holdings: 35102, sharesOutstanding: 650_000_000, holdingsPerShare: 0.00005400, source: "Press release" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury
@@ -147,20 +146,18 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 189000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.002908, source: "Q4 2024 SEDAR+" },
   { date: "2025-03-31", holdings: 245000, sharesOutstanding: 75_000_000, holdingsPerShare: 0.003267, source: "Q1 2025 SEDAR+" },
   { date: "2025-06-30", holdings: 310000, sharesOutstanding: 85_000_000, holdingsPerShare: 0.003647, source: "Q2 2025 SEDAR+" },
-  { date: "2025-09-30", holdings: 380000, sharesOutstanding: 95_000_000, holdingsPerShare: 0.004000, source: "Q3 2025 SEDAR+" },
-  { date: "2025-12-31", holdings: 450000, sharesOutstanding: 105_000_000, holdingsPerShare: 0.004286, source: "Q4 2025 SEDAR+" },
-  { date: "2026-01-15", holdings: 480000, sharesOutstanding: 108_000_000, holdingsPerShare: 0.004444, source: "Press release" },
+  { date: "2025-09-30", holdings: 435159, sharesOutstanding: 115_000_000, holdingsPerShare: 0.003784, source: "FY 2025 annual" },
+  { date: "2026-01-06", holdings: 523134, sharesOutstanding: 135_000_000, holdingsPerShare: 0.003875, source: "Dec 2025 monthly update" },
 ];
 
-// DeFi Development Corp (DFDV) - SOL treasury
+// DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
 const DFDV_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-30", holdings: 52000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.001857, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 95000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.002714, source: "Q4 2024 10-K" },
-  { date: "2025-03-31", holdings: 145000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.003452, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 200000, sharesOutstanding: 50_000_000, holdingsPerShare: 0.004000, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 260000, sharesOutstanding: 58_000_000, holdingsPerShare: 0.004483, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 320000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.004923, source: "Q4 2025 10-K" },
-  { date: "2026-01-10", holdings: 350000, sharesOutstanding: 68_000_000, holdingsPerShare: 0.005147, source: "8-K filing" },
+  { date: "2025-04-15", holdings: 150000, sharesOutstanding: 15_000_000, holdingsPerShare: 0.01000, source: "Initial SOL treasury" },
+  { date: "2025-06-30", holdings: 735692, sharesOutstanding: 18_000_000, holdingsPerShare: 0.04087, source: "Q2 2025" },
+  { date: "2025-08-05", holdings: 2000518, sharesOutstanding: 25_000_000, holdingsPerShare: 0.08002, source: "2M SOL milestone" },
+  { date: "2025-09-30", holdings: 2018419, sharesOutstanding: 28_000_000, holdingsPerShare: 0.07209, source: "Q3 2025" },
+  { date: "2025-12-31", holdings: 2106000, sharesOutstanding: 30_000_000, holdingsPerShare: 0.07020, source: "Q4 2025 preliminary" },
+  { date: "2026-01-01", holdings: 2221329, sharesOutstanding: 30_000_000, holdingsPerShare: 0.07404, source: "Year in review" },
 ];
 
 // KULR Technology - Bitcoin First Company
@@ -215,20 +212,25 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-04", holdings: 4143502, sharesOutstanding: 430_000_000, holdingsPerShare: 0.009636, source: "Press release" },
 ];
 
-// Nakamoto Holdings (NAKA) - Largest pure-play BTC treasury
+// Nakamoto Holdings (NAKA) - Merged with KindlyMD
 const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-08-15", holdings: 1250, sharesOutstanding: 95_000_000, holdingsPerShare: 0.0000132, source: "Initial treasury announcement" },
   { date: "2024-10-31", holdings: 2800, sharesOutstanding: 110_000_000, holdingsPerShare: 0.0000255, source: "Q3 2024 filing" },
   { date: "2024-12-31", holdings: 4150, sharesOutstanding: 125_000_000, holdingsPerShare: 0.0000332, source: "Q4 2024 10-K" },
   { date: "2025-03-31", holdings: 5398, sharesOutstanding: 140_000_000, holdingsPerShare: 0.0000386, source: "Q1 2025 10-Q" },
+  { date: "2025-08-14", holdings: 21, sharesOutstanding: 150_000_000, holdingsPerShare: 0.0000001, source: "Pre-merger" },
+  { date: "2025-08-19", holdings: 5765, sharesOutstanding: 450_000_000, holdingsPerShare: 0.0000128, source: "Post-merger 8-K" },
+  { date: "2025-11-12", holdings: 5398, sharesOutstanding: 500_000_000, holdingsPerShare: 0.0000108, source: "Q3 2025 10-Q" },
 ];
 
-// Ault Bitcoin Company (ABTC) - Former Ault Alliance subsidiary
+// American Bitcoin Corp (ABTC) - Hut 8 subsidiary, formerly tied to Eric Trump's American Data Centers
 const ABTC_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 2100, sharesOutstanding: 180_000_000, holdingsPerShare: 0.0000117, source: "Q2 2024 filing" },
   { date: "2024-09-30", holdings: 3200, sharesOutstanding: 195_000_000, holdingsPerShare: 0.0000164, source: "Q3 2024 10-Q" },
   { date: "2024-12-31", holdings: 4300, sharesOutstanding: 210_000_000, holdingsPerShare: 0.0000205, source: "Q4 2024 10-K" },
   { date: "2025-03-31", holdings: 5098, sharesOutstanding: 225_000_000, holdingsPerShare: 0.0000227, source: "Q1 2025 10-Q" },
+  { date: "2025-10-24", holdings: 3865, sharesOutstanding: 850_000_000, holdingsPerShare: 0.0000045, source: "Press release" },
+  { date: "2025-12-14", holdings: 5098, sharesOutstanding: 920_000_000, holdingsPerShare: 0.0000055, source: "Top 20 announcement" },
 ];
 
 // Nexon BTC Treasury (NXTT) - Gaming company BTC reserve
@@ -255,12 +257,17 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== ADDITIONAL ETH COMPANIES ====================
 
-// SharpLink Gaming (SBET) - Large ETH treasury
+// SharpLink Gaming (SBET) - Largest ETH treasury
 const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 450000, sharesOutstanding: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 580000, sharesOutstanding: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 720000, sharesOutstanding: 90_000_000, holdingsPerShare: 0.008000, source: "Q3 2024 10-Q" },
   { date: "2024-12-31", holdings: 860000, sharesOutstanding: 98_000_000, holdingsPerShare: 0.008776, source: "Q4 2024 10-K" },
+  { date: "2025-06-13", holdings: 176271, sharesOutstanding: 120_000_000, holdingsPerShare: 0.001469, source: "Largest ETH holder announcement" },
+  { date: "2025-08-03", holdings: 521939, sharesOutstanding: 180_000_000, holdingsPerShare: 0.002900, source: "Press release" },
+  { date: "2025-08-31", holdings: 837230, sharesOutstanding: 250_000_000, holdingsPerShare: 0.003349, source: "Press release" },
+  { date: "2025-10-19", holdings: 859853, sharesOutstanding: 280_000_000, holdingsPerShare: 0.003071, source: "Press release" },
+  { date: "2025-11-09", holdings: 861251, sharesOutstanding: 290_000_000, holdingsPerShare: 0.002970, source: "Q3 2025 results" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury
@@ -276,22 +283,30 @@ const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 8500, sharesOutstanding: 120_000_000, holdingsPerShare: 0.0000708, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 12000, sharesOutstanding: 128_000_000, holdingsPerShare: 0.0000938, source: "Q3 2024 10-Q" },
   { date: "2024-12-31", holdings: 15600, sharesOutstanding: 135_000_000, holdingsPerShare: 0.0001156, source: "Q4 2024 10-K" },
+  { date: "2025-07-10", holdings: 1819, sharesOutstanding: 140_000_000, holdingsPerShare: 0.0000130, source: "Initial $5M ETH purchase" },
+  { date: "2025-08-13", holdings: 15630, sharesOutstanding: 155_000_000, holdingsPerShare: 0.0001008, source: "Press release" },
+  { date: "2026-01-15", holdings: 15600, sharesOutstanding: 160_000_000, holdingsPerShare: 0.0000975, source: "The Block" },
 ];
 
-// Forgenix (FGNX) - ETH treasury company
+// FG Nexus (FGNX) - ETH treasury company (formerly Forgenix/Fundamental Global)
 const FGNX_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 22000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.000338, source: "Q2 2024 filing" },
   { date: "2024-09-30", holdings: 32000, sharesOutstanding: 72_000_000, holdingsPerShare: 0.000444, source: "Q3 2024 filing" },
   { date: "2024-12-31", holdings: 40000, sharesOutstanding: 80_000_000, holdingsPerShare: 0.000500, source: "Q4 2024 filing" },
+  { date: "2025-09-18", holdings: 49715, sharesOutstanding: 85_000_000, holdingsPerShare: 0.000585, source: "Press release" },
+  { date: "2025-09-28", holdings: 50770, sharesOutstanding: 88_000_000, holdingsPerShare: 0.000577, source: "Press release" },
+  { date: "2025-12-17", holdings: 40088, sharesOutstanding: 90_000_000, holdingsPerShare: 0.000445, source: "Buyback update" },
+  { date: "2026-01-15", holdings: 48442, sharesOutstanding: 92_000_000, holdingsPerShare: 0.000527, source: "The Block" },
 ];
 
 // ==================== ADDITIONAL SOL COMPANIES ====================
 
-// Forward Industries (FWDI) - SOL treasury company
+// Forward Industries (FWDI) - World's leading SOL treasury, launched Sept 2025
 const FWDI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-10-15", holdings: 2500000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0595, source: "Initial SOL purchase 8-K" },
-  { date: "2024-12-31", holdings: 4800000, sharesOutstanding: 48_000_000, holdingsPerShare: 0.1000, source: "Q4 2024 10-K" },
-  { date: "2025-06-30", holdings: 6980000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.1269, source: "Q2 2025 10-Q" },
+  { date: "2025-09-11", holdings: 6834506, sharesOutstanding: 35_000_000, holdingsPerShare: 0.19527, source: "Initial $1.65B PIPE close" },
+  { date: "2025-11-15", holdings: 6900000, sharesOutstanding: 38_000_000, holdingsPerShare: 0.18158, source: "Press release" },
+  { date: "2025-12-01", holdings: 6921342, sharesOutstanding: 40_000_000, holdingsPerShare: 0.17303, source: "Shareholder update" },
+  { date: "2026-01-15", holdings: 6980000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.16619, source: "Press release" },
 ];
 
 // Heliogen Solar (HSDT) - SOL treasury, formerly Solana Company
@@ -301,11 +316,14 @@ const HSDT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 2200000, sharesOutstanding: 50_000_000, holdingsPerShare: 0.0440, source: "Q2 2025 10-Q" },
 ];
 
-// Upexi (UPXI) - SOL treasury company
+// Upexi (UPXI) - SOL treasury company, launched April 2025
 const UPXI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-11-15", holdings: 600000, sharesOutstanding: 28_000_000, holdingsPerShare: 0.0214, source: "SOL treasury announcement" },
-  { date: "2024-12-31", holdings: 1200000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.0343, source: "Q4 2024 10-K" },
-  { date: "2025-06-30", holdings: 2000000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0444, source: "Q2 2025 10-Q" },
+  { date: "2025-04-15", holdings: 596714, sharesOutstanding: 22_000_000, holdingsPerShare: 0.02712, source: "Initial $100M SOL purchase" },
+  { date: "2025-06-30", holdings: 735692, sharesOutstanding: 25_000_000, holdingsPerShare: 0.02943, source: "Q2 2025" },
+  { date: "2025-07-31", holdings: 1900000, sharesOutstanding: 32_000_000, holdingsPerShare: 0.05938, source: "Press release" },
+  { date: "2025-08-05", holdings: 2000518, sharesOutstanding: 35_000_000, holdingsPerShare: 0.05716, source: "2M SOL milestone" },
+  { date: "2025-09-10", holdings: 2018419, sharesOutstanding: 38_000_000, holdingsPerShare: 0.05312, source: "Press release" },
+  { date: "2025-12-31", holdings: 2106000, sharesOutstanding: 42_000_000, holdingsPerShare: 0.05014, source: "Q4 2025" },
 ];
 
 // ==================== ALTCOIN TREASURIES ====================
@@ -331,18 +349,23 @@ const LITS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 929000, sharesOutstanding: 48_000_000, holdingsPerShare: 0.01935, source: "Q2 2025 10-Q" },
 ];
 
-// Cypherpunk Holdings (CYPH) - ZEC treasury
+// Cypherpunk Holdings (CYPH) - ZEC treasury, Winklevoss-backed
 const CYPH_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 180000, sharesOutstanding: 85_000_000, holdingsPerShare: 0.00212, source: "Q1 2024 SEDAR" },
   { date: "2024-09-30", holdings: 235000, sharesOutstanding: 92_000_000, holdingsPerShare: 0.00255, source: "Q3 2024 SEDAR" },
   { date: "2024-12-31", holdings: 290000, sharesOutstanding: 98_000_000, holdingsPerShare: 0.00296, source: "FY 2024 annual" },
+  { date: "2025-11-19", holdings: 233645, sharesOutstanding: 110_000_000, holdingsPerShare: 0.00212, source: "$18M ZEC purchase" },
+  { date: "2025-12-30", holdings: 290063, sharesOutstanding: 125_000_000, holdingsPerShare: 0.00232, source: "$29M ZEC purchase" },
 ];
 
-// Caliber (CWD) - LINK treasury
+// Caliber (CWD) - LINK treasury, first Nasdaq company with LINK policy
 const CWD_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 280000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.00509, source: "Q2 2024 8-K" },
-  { date: "2024-09-30", holdings: 420000, sharesOutstanding: 62_000_000, holdingsPerShare: 0.00677, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 562000, sharesOutstanding: 70_000_000, holdingsPerShare: 0.00803, source: "Q4 2024 10-K" },
+  { date: "2025-08-28", holdings: 0, sharesOutstanding: 18_000_000, holdingsPerShare: 0, source: "LINK treasury policy adopted" },
+  { date: "2025-09-09", holdings: 0, sharesOutstanding: 18_000_000, holdingsPerShare: 0, source: "Initial purchase announced" },
+  { date: "2025-09-18", holdings: 278011, sharesOutstanding: 20_000_000, holdingsPerShare: 0.01390, source: "$6.5M LINK purchase" },
+  { date: "2025-09-25", holdings: 467632, sharesOutstanding: 22_000_000, holdingsPerShare: 0.02126, source: "$10M milestone" },
+  { date: "2025-10-16", holdings: 562535, sharesOutstanding: 24_000_000, holdingsPerShare: 0.02344, source: "$2M additional purchase" },
+  { date: "2025-12-11", holdings: 562535, sharesOutstanding: 25_000_000, holdingsPerShare: 0.02250, source: "75K LINK staked" },
 ];
 
 // SUI Group (SUIG) - SUI treasury
@@ -359,11 +382,15 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 13800000, sharesOutstanding: 35_000_000, holdingsPerShare: 0.394, source: "Q2 2025 filing" },
 ];
 
-// CleanCore Solutions (ZONE) - DOGE treasury
+// CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation
 const ZONE_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-07-01", holdings: 280000000, sharesOutstanding: 45_000_000, holdingsPerShare: 6.222, source: "DOGE treasury announcement" },
-  { date: "2024-10-31", holdings: 520000000, sharesOutstanding: 55_000_000, holdingsPerShare: 9.455, source: "Q3 2024 filing" },
-  { date: "2024-12-31", holdings: 733000000, sharesOutstanding: 65_000_000, holdingsPerShare: 11.277, source: "Q4 2024 10-K" },
+  { date: "2025-09-08", holdings: 285420000, sharesOutstanding: 35_000_000, holdingsPerShare: 8.155, source: "Treasury launch" },
+  { date: "2025-09-11", holdings: 500000000, sharesOutstanding: 42_000_000, holdingsPerShare: 11.905, source: "500M DOGE milestone" },
+  { date: "2025-09-16", holdings: 600000000, sharesOutstanding: 48_000_000, holdingsPerShare: 12.500, source: "Press release" },
+  { date: "2025-09-30", holdings: 703617752, sharesOutstanding: 52_000_000, holdingsPerShare: 13.531, source: "Q1 FY2026 10-Q" },
+  { date: "2025-10-06", holdings: 710000000, sharesOutstanding: 55_000_000, holdingsPerShare: 12.909, source: "Press release" },
+  { date: "2025-10-13", holdings: 730000000, sharesOutstanding: 58_000_000, holdingsPerShare: 12.586, source: "Press release" },
+  { date: "2025-11-12", holdings: 733100000, sharesOutstanding: 60_000_000, holdingsPerShare: 12.218, source: "Q1 FY2026 results" },
 ];
 
 // Brag House (TBH) - DOGE managed treasury
@@ -373,11 +400,10 @@ const TBH_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 730000000, sharesOutstanding: 58_000_000, holdingsPerShare: 12.586, source: "Q2 2025 filing" },
 ];
 
-// Bit Origin (BTOG) - DOGE holder
+// Bit Origin (BTOG) - DOGE treasury, Singapore-based
 const BTOG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 25000000, sharesOutstanding: 72_000_000, holdingsPerShare: 0.347, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 45000000, sharesOutstanding: 80_000_000, holdingsPerShare: 0.563, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 70000000, sharesOutstanding: 88_000_000, holdingsPerShare: 0.795, source: "Q4 2024 10-K" },
+  { date: "2025-07-21", holdings: 40543745, sharesOutstanding: 58_000_000, holdingsPerShare: 0.699, source: "Initial DOGE purchase" },
+  { date: "2025-08-11", holdings: 70543745, sharesOutstanding: 78_000_000, holdingsPerShare: 0.904, source: "Private placement" },
 ];
 
 // Hyperliquid Strategies (PURR) - HYPE treasury
@@ -394,11 +420,10 @@ const HYPD_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 1700000, sharesOutstanding: 22_000_000, holdingsPerShare: 0.0773, source: "Q2 2025 filing" },
 ];
 
-// Tron Inc (TRON) - TRX treasury
+// Tron Inc (TRON) - TRX treasury, formerly SRM Entertainment
 const TRON_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 180000000, sharesOutstanding: 85_000_000, holdingsPerShare: 2.118, source: "Q2 2024 filing" },
-  { date: "2024-09-30", holdings: 280000000, sharesOutstanding: 95_000_000, holdingsPerShare: 2.947, source: "Q3 2024 filing" },
-  { date: "2024-12-31", holdings: 365000000, sharesOutstanding: 105_000_000, holdingsPerShare: 3.476, source: "Q4 2024 filing" },
+  { date: "2025-06-15", holdings: 365096845, sharesOutstanding: 65_000_000, holdingsPerShare: 5.617, source: "Initial TRX treasury" },
+  { date: "2025-09-02", holdings: 677596945, sharesOutstanding: 85_000_000, holdingsPerShare: 7.972, source: "$110M expansion" },
 ];
 
 // Evernorth (XRPN) - XRP treasury
@@ -416,6 +441,7 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 8049, sharesOutstanding: 250_000_000, holdingsPerShare: 0.0000322, source: "Q2 2024" },
   { date: "2024-09-30", holdings: 8701, sharesOutstanding: 270_000_000, holdingsPerShare: 0.0000322, source: "Q3 2024" },
   { date: "2024-12-31", holdings: 10556, sharesOutstanding: 290_000_000, holdingsPerShare: 0.0000364, source: "Q4 2024 estimate" },
+  { date: "2025-12-31", holdings: 13099, sharesOutstanding: 320_000_000, holdingsPerShare: 0.0000409, source: "Dec 2025 mining update" },
 ];
 
 // Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
@@ -428,6 +454,7 @@ const HUT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 10264, sharesOutstanding: 102_854_747, holdingsPerShare: 0.0000998, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 10667, sharesOutstanding: 104_220_084, holdingsPerShare: 0.0001024, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 13696, sharesOutstanding: 121_761_796, holdingsPerShare: 0.0001125, source: "Q3 2025 10-Q" },
+  { date: "2026-01-03", holdings: 13696, sharesOutstanding: 125_000_000, holdingsPerShare: 0.0001096, source: "$200M Coinbase credit facility" },
 ];
 
 // Core Scientific (CORZ) - Emerged from bankruptcy Jan 2024
@@ -444,6 +471,8 @@ const BTDR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 1156, sharesOutstanding: 228_561_000, holdingsPerShare: 0.00000506, source: "Q1 2025 Earnings" },
   { date: "2025-06-30", holdings: 1502, sharesOutstanding: 193_970_000, holdingsPerShare: 0.00000774, source: "Q2 2025 Earnings" },
   { date: "2025-09-30", holdings: 2029, sharesOutstanding: 230_814_000, holdingsPerShare: 0.00000879, source: "Q3 2025 Earnings" },
+  { date: "2025-12-31", holdings: 2179, sharesOutstanding: 245_000_000, holdingsPerShare: 0.00000889, source: "Dec 2025 production update" },
+  { date: "2026-01-10", holdings: 1901, sharesOutstanding: 250_000_000, holdingsPerShare: 0.00000760, source: "Weekly holdings update" },
 ];
 
 // Trump Media (DJT) - Started BTC treasury May 2025
@@ -454,11 +483,12 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-10", holdings: 15000, sharesOutstanding: 280_000_000, holdingsPerShare: 0.0000536, source: "The Block" },
 ];
 
-// Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers
+// Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder
 const XXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-23", holdings: 42000, sharesOutstanding: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement" },
   { date: "2025-07-29", holdings: 43500, sharesOutstanding: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update" },
   { date: "2025-12-09", holdings: 43514, sharesOutstanding: 651_000_000, holdingsPerShare: 0.0000668, source: "NYSE listing 8-K" },
+  { date: "2026-01-02", holdings: 43514, sharesOutstanding: 346_548_153, holdingsPerShare: 0.0001256, source: "Shares outstanding update" },
 ];
 
 // Strive (ASST) - First publicly traded asset management BTC treasury
