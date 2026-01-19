@@ -5,21 +5,24 @@
  * Single source of truth for market cap calculations.
  *
  * DESIGN PRINCIPLES:
- * 1. API market cap is preferred (already in USD, handles currency conversion)
- * 2. Never calculate shares × price for non-USD stocks (currency bug)
- * 3. Dilution adjustments only when we have verified data
- * 4. Clear fallback chain with logging
+ * 1. sharesForMnav × price is preferred (real-time, accurate)
+ * 2. Non-USD stocks: convert price to USD via forex API before calculation
+ * 3. API market cap is fallback (can be stale)
+ * 4. Dilution adjustments only when we have verified data
  *
- * KNOWN ISSUES THIS SOLVES:
- * - Metaplanet (3350.T): JPY price × shares = wrong "USD" market cap
- * - SBET: Incorrect diluted share count led to wrong mNAV
+ * CURRENCY HANDLING:
+ * - 3350.T (Metaplanet): JPY → USD conversion
+ * - 0434.HK (Boyaa): HKD → USD conversion
+ * - H100.ST (Hashdex): SEK → USD conversion
+ * - ALTBG (Cathedra): CAD → USD conversion
  */
 
 import { Company } from "@/lib/types";
 import { COMPANY_SOURCES, CompanyDataSources } from "@/lib/data/company-sources";
+import { convertToUSD, convertToUSDSync } from "@/lib/utils/currency";
 
 // Tickers that have non-USD stock prices
-// These should NEVER use shares × price calculation
+// These require currency conversion before shares × price calculation
 const NON_USD_TICKERS = new Set([
   "3350.T",    // Metaplanet - JPY (Tokyo Stock Exchange)
   "0434.HK",   // Boyaa Interactive - HKD (Hong Kong)
@@ -114,32 +117,70 @@ export function getMarketCap(
  *
  * This function respects each company's methodology:
  * - If company has sharesForMnav, use stockPrice × sharesForMnav
+ * - For non-USD stocks, convert price to USD first via forex API
  * - Otherwise fall back to regular getMarketCap logic
  *
  * This ensures our mNAV matches what companies report on their dashboards.
  */
-export function getMarketCapForMnav(
+export async function getMarketCapForMnav(
   company: Company,
   stockData?: StockPriceData | null
-): MarketCapResult {
+): Promise<MarketCapResult> {
   const ticker = company.ticker;
   const isNonUsd = NON_USD_TICKERS.has(ticker);
+  const currency = TICKER_CURRENCIES[ticker] || "USD";
 
-  // For non-USD stocks, DON'T use sharesForMnav × price (price is in local currency)
-  // Fall back to API market cap which is already USD-converted
-  if (isNonUsd) {
-    return getMarketCap(company, stockData);
-  }
-
-  // If company has explicit share count (USD only) for mNAV and we have a stock price
+  // If company has explicit share count for mNAV and we have a stock price
   if (company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0) {
-    const calculatedMarketCap = stockData.price * company.sharesForMnav;
+    let priceInUsd = stockData.price;
+
+    // For non-USD stocks, convert price to USD
+    if (isNonUsd) {
+      priceInUsd = await convertToUSD(stockData.price, currency);
+    }
+
+    const calculatedMarketCap = priceInUsd * company.sharesForMnav;
     return {
       marketCap: calculatedMarketCap,
       source: "calculated",
       currency: "USD",
       dilutionApplied: false,
       // Note: This is intentionally using company's share count methodology
+    };
+  }
+
+  // Fall back to regular market cap logic (API market cap)
+  return getMarketCap(company, stockData);
+}
+
+/**
+ * Synchronous version of getMarketCapForMnav for client components.
+ * Uses fallback exchange rates for non-USD stocks.
+ * Slightly less accurate but works in useMemo/useEffect contexts.
+ */
+export function getMarketCapForMnavSync(
+  company: Company,
+  stockData?: StockPriceData | null
+): MarketCapResult {
+  const ticker = company.ticker;
+  const isNonUsd = NON_USD_TICKERS.has(ticker);
+  const currency = TICKER_CURRENCIES[ticker] || "USD";
+
+  // If company has explicit share count for mNAV and we have a stock price
+  if (company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0) {
+    let priceInUsd = stockData.price;
+
+    // For non-USD stocks, convert price to USD using fallback rates
+    if (isNonUsd) {
+      priceInUsd = convertToUSDSync(stockData.price, currency);
+    }
+
+    const calculatedMarketCap = priceInUsd * company.sharesForMnav;
+    return {
+      marketCap: calculatedMarketCap,
+      source: "calculated",
+      currency: "USD",
+      dilutionApplied: false,
     };
   }
 

@@ -111,7 +111,7 @@ async function calculateMNAVStats(): Promise<MNAVSnapshot | null> {
       price: stock.price || 0,
       marketCap: stock.marketCap || 0,
     } : null;
-    const { marketCap } = getMarketCapForMnav(company, stockPriceData);
+    const { marketCap } = await getMarketCapForMnav(company, stockPriceData);
 
     if (cryptoPrice > 0 && marketCap > 0) {
       const mnav = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
