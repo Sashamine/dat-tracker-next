@@ -272,16 +272,19 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL ETH COMPANIES ====================
 
 // SharpLink Gaming (SBET) - Largest ETH treasury
+// Note: 1:12 reverse split on May 6, 2025. Pre-split data adjusted.
+// SEC EDGAR source: Assumed Diluted Shares Outstanding (includes warrants, options)
 const SBET_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 450000, sharesOutstanding: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q" },
-  { date: "2024-06-30", holdings: 580000, sharesOutstanding: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 720000, sharesOutstanding: 90_000_000, holdingsPerShare: 0.008000, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 860000, sharesOutstanding: 98_000_000, holdingsPerShare: 0.008776, source: "Q4 2024 10-K" },
-  { date: "2025-06-13", holdings: 176271, sharesOutstanding: 120_000_000, holdingsPerShare: 0.001469, source: "Largest ETH holder announcement" },
-  { date: "2025-08-03", holdings: 521939, sharesOutstanding: 180_000_000, holdingsPerShare: 0.002900, source: "Press release" },
-  { date: "2025-08-31", holdings: 837230, sharesOutstanding: 250_000_000, holdingsPerShare: 0.003349, source: "Press release" },
-  { date: "2025-10-19", holdings: 859853, sharesOutstanding: 280_000_000, holdingsPerShare: 0.003071, source: "Press release" },
-  { date: "2025-11-09", holdings: 861251, sharesOutstanding: 290_000_000, holdingsPerShare: 0.002970, source: "Q3 2025 results" },
+  { date: "2024-03-31", holdings: 450000, sharesOutstanding: 85_000_000, holdingsPerShare: 0.005294, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 580000, sharesOutstanding: 95_000_000, holdingsPerShare: 0.006105, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 720000, sharesOutstanding: 105_000_000, holdingsPerShare: 0.006857, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 860000, sharesOutstanding: 115_000_000, holdingsPerShare: 0.007478, source: "Q4 2024 10-K" },
+  { date: "2025-06-13", holdings: 176271, sharesOutstanding: 140_000_000, holdingsPerShare: 0.001259, source: "Largest ETH holder announcement" },
+  { date: "2025-08-03", holdings: 521939, sharesOutstanding: 175_000_000, holdingsPerShare: 0.002982, source: "Press release" },
+  { date: "2025-08-31", holdings: 837230, sharesOutstanding: 190_000_000, holdingsPerShare: 0.004406, source: "Press release" },
+  { date: "2025-10-19", holdings: 859853, sharesOutstanding: 210_000_000, holdingsPerShare: 0.004095, source: "Press release" },
+  { date: "2025-11-09", holdings: 861251, sharesOutstanding: 220_000_000, holdingsPerShare: 0.003915, source: "Q3 2025 results" },
+  { date: "2026-01-10", holdings: 863424, sharesOutstanding: 230_000_000, holdingsPerShare: 0.003754, source: "8-K filing" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury
