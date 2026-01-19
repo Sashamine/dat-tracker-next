@@ -1638,15 +1638,15 @@ export function getQuarterlyYieldLeaderboard(options?: {
       // Exact match
       startValue = afterStart.holdingsPerShare;
     } else if (beforeStart && !afterStart) {
-      // Only have data before - use it if very close (within 7 days)
+      // Only have data before - use it if reasonably close (within 30 days)
       const daysBefore = (quarterStart.getTime() - new Date(beforeStart.date).getTime()) / (1000 * 60 * 60 * 24);
-      if (daysBefore <= 7) {
+      if (daysBefore <= 30) {
         startValue = beforeStart.holdingsPerShare;
       }
     } else if (afterStart && !beforeStart) {
-      // Only have data after - use it if very close (within 7 days)
+      // Only have data after - use it if reasonably close (within 30 days)
       const daysAfter = (new Date(afterStart.date).getTime() - quarterStart.getTime()) / (1000 * 60 * 60 * 24);
-      if (daysAfter <= 7) {
+      if (daysAfter <= 30) {
         startValue = afterStart.holdingsPerShare;
       }
     }
@@ -1662,15 +1662,15 @@ export function getQuarterlyYieldLeaderboard(options?: {
       // Exact match
       endValue = afterEnd.holdingsPerShare;
     } else if (beforeEnd && !afterEnd) {
-      // Only have data before - use it if very close (within 7 days)
+      // Only have data before - use it if reasonably close (within 30 days)
       const daysBefore = (quarterEnd.getTime() - new Date(beforeEnd.date).getTime()) / (1000 * 60 * 60 * 24);
-      if (daysBefore <= 7) {
+      if (daysBefore <= 30) {
         endValue = beforeEnd.holdingsPerShare;
       }
     } else if (afterEnd && !beforeEnd) {
-      // Only have data after - use it if very close (within 7 days)
+      // Only have data after - use it if reasonably close (within 30 days)
       const daysAfter = (new Date(afterEnd.date).getTime() - quarterEnd.getTime()) / (1000 * 60 * 60 * 24);
-      if (daysAfter <= 7) {
+      if (daysAfter <= 30) {
         endValue = afterEnd.holdingsPerShare;
       }
     }
