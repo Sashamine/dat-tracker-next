@@ -34,7 +34,9 @@ let geckoCache: { data: Record<string, { price: number; change24h: number }>; ti
 const GECKO_CACHE_TTL = 30 * 1000; // 30 seconds
 
 // Market cap overrides for stocks with incorrect data
+// IMPORTANT: Keep in sync with /api/prices/route.ts
 const MARKET_CAP_OVERRIDES: Record<string, number> = {
+  "SBET": 2_363_000_000,    // $2.36B - SharpLink
   "BMNR": 12_800_000_000,
   "3350.T": 3_500_000_000,
   "0434.HK": 315_000_000,
