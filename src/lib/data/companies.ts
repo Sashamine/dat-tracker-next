@@ -73,6 +73,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 100_000_000,
     hasOptions: true,
     marketCap: 230_000_000,  // ~$230M (Jan 2026)
+    sharesForMnav: 60_000_000,  // From holdings-history.ts
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
@@ -98,6 +99,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
+    sharesForMnav: 335_000_000,  // From holdings-history.ts
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     leader: "Sam Tabar",
     strategy: "86% staked, fully exited BTC. Avg cost $3,045/ETH.",
@@ -121,6 +123,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
+    sharesForMnav: 49_000_000,  // From holdings-history.ts
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
   },
   {
@@ -138,6 +141,7 @@ export const ethCompanies: Company[] = [
     stakingMethod: "Dialectic Medici platform",
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedAtm: 30_000_000,
+    sharesForMnav: 160_000_000,  // From holdings-history.ts
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
     strategy: "$250M ETH treasury. 7.84% yield via Dialectic platform.",
@@ -160,6 +164,7 @@ export const ethCompanies: Company[] = [
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 110_000_000,  // ~$110M (Jan 2026)
+    sharesForMnav: 92_000_000,  // From holdings-history.ts
     leader: "Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
     notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some Nov 2025.",
@@ -190,6 +195,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     marketCap: 55_500_000_000,  // ~$55.5B per strategy.com (~320M shares, Jan 2026)
+    sharesForMnav: 340_000_000,  // From holdings-history.ts
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     totalDebt: 8_244_000_000,  // $8.244B per strategy.com (Jan 2026)
     preferredEquity: 8_064_000_000,  // $8.064B per strategy.com (Jan 2026)
@@ -218,6 +224,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
     marketCap: 4_280_000_000,  // ~$4.28B (Jan 2026, from metaplanet.jp/analytics)
+    sharesForMnav: 650_000_000,  // From holdings-history.ts
     totalDebt: 280_000_000,  // ~$280M bonds + BTC-backed credit facility
     cashReserves: 50_000_000,  // Estimated cash position
     leader: "Simon Gerovich (CEO)",
@@ -264,6 +271,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 3_500_000_000,
+    sharesForMnav: 145_000_000,  // From holdings-history.ts
     leader: "Adam Back (CEO)",
     strategy: "Hashcash inventor's BTC treasury play. Target 50K+ BTC.",
     notes: "Blockstream founder. 25K BTC from Adam Back personally. Trading as CEPO until merger closes.",
@@ -370,6 +378,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 100_000_000,  // Increased post-merger
     hasOptions: true,
     marketCap: 850_000_000,  // ~$850M per Yahoo Finance (Jan 2026)
+    sharesForMnav: 45_000_000,  // From holdings-history.ts
     cashReserves: 77_780_000,  // Combined cash
     preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
@@ -393,6 +402,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     marketCap: 600_000_000,
+    sharesForMnav: 49_000_000,  // From holdings-history.ts
     cashReserves: 20_000_000,  // ~$20M cash (Q3 2025)
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
@@ -414,6 +424,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
+    sharesForMnav: 50_000_000,  // From holdings-history.ts
     strategy: "French BTC treasury company. EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent.",
   },
@@ -433,6 +444,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 5_000_000,
     marketCap: 150_000_000,
+    sharesForMnav: 35_000_000,  // From holdings-history.ts
     leader: "Adam Back (investor)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
     notes: "Stockholm listed. ISK-eligible for Swedish investors. SEK 265M financing.",
@@ -454,6 +466,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     hasOptions: true,
     marketCap: 1_500_000_000,
+    sharesForMnav: 500_000_000,  // From holdings-history.ts
     totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
     leader: "David Bailey (CEO, Bitcoin Magazine)",
     strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies.",
@@ -477,6 +490,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 6_400_000_000,
+    sharesForMnav: 288_000_000,  // From holdings-history.ts
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
@@ -498,6 +512,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 500_000_000,
+    sharesForMnav: 700_000_000,  // From holdings-history.ts
     leader: "Zhang Wei (Chairman)",
     strategy: "Hong Kong's largest BTC treasury. Converted ETH to BTC.",
     notes: "MicroStrategy of Asia. Board games company. Top 15 global corporate holder.",
@@ -518,6 +533,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 15_000_000,
     marketCap: 600_000_000,
+    sharesForMnav: 98_000_000,  // From holdings-history.ts
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
     notes: "Formerly WeTrade Group. Shenzhen-based. $526M BTC holdings.",
   },
@@ -540,6 +556,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     marketCap: 800_000_000,
+    sharesForMnav: 920_000_000,  // From holdings-history.ts
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
     notes: "22nd largest BTC treasury. Surpassed GameStop in holdings.",
@@ -589,6 +606,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 4_500_000_000,
+    sharesForMnav: 356_000_000,  // From holdings-history.ts
     totalDebt: 1_000_000_000,  // ~$1B convertible notes (2029 + 2031)
     cashReserves: 200_000_000,
     leader: "Adam Sullivan (CEO)",
@@ -613,6 +631,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 2_800_000_000,
+    sharesForMnav: 225_000_000,  // From holdings-history.ts
     totalDebt: 1_100_000_000,  // ~$1.1B convertible notes (2029 + 2031 series)
     cashReserves: 150_000_000,
     leader: "Jihan Wu (Co-Founder)",
@@ -639,6 +658,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.07,
     quarterlyBurnUsd: 3_400_000,
     capitalRaisedPipe: 1_650_000_000,
+    sharesForMnav: 42_000_000,  // From holdings-history.ts
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
@@ -662,6 +682,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.065,
     quarterlyBurnUsd: 12_000_000,
     capitalRaisedPipe: 500_000_000,
+    sharesForMnav: 58_000_000,  // From holdings-history.ts
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
@@ -687,6 +708,7 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 240_000_000,  // ~$240M (Jan 2026)
+    sharesForMnav: 30_000_000,  // From holdings-history.ts
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
@@ -708,6 +730,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
     capitalRaisedAtm: 100_000_000,
+    sharesForMnav: 62_000_000,  // From holdings-history.ts
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 120_000_000,
     hasOptions: true,
@@ -731,6 +754,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.065,
     quarterlyBurnUsd: 1_200_000,
     capitalRaisedAtm: 50_000_000,
+    sharesForMnav: 135_000_000,  // From holdings-history.ts
     avgDailyVolume: 50_000_000,
     leader: "Canadian company",
     strategy: "Validator operations, VanEck staking provider",
@@ -756,6 +780,7 @@ export const hypeCompanies: Company[] = [
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
+    sharesForMnav: 32_000_000,  // From holdings-history.ts
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger.",
     notes: "$888M combined assets. $30M buyback.",
@@ -776,6 +801,7 @@ export const hypeCompanies: Company[] = [
     stakingApy: 0.05,
     quarterlyBurnUsd: 1_500_000,
     capitalRaisedPipe: 50_000_000,
+    sharesForMnav: 25_000_000,  // From holdings-history.ts
     leader: "First US public HYPE treasury",
     strategy: "Validator node via Kinetiq.",
     notes: "Rebranded from Eyenovia Jul 2025.",
@@ -800,6 +826,7 @@ export const bnbCompanies: Company[] = [
     stakingApy: 0.03,
     quarterlyBurnUsd: 3_000_000,
     capitalRaisedPipe: 500_000_000,
+    sharesForMnav: 65_000_000,  // From holdings-history.ts
     leader: "YZi Labs (CZ family office) backed",
     strategy: "Target 1% of BNB supply.",
     notes: "YZi Labs owns 7%.",
@@ -846,6 +873,7 @@ export const taoCompanies: Company[] = [
     stakingApy: 0.10,
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 11_000_000,
+    sharesForMnav: 28_000_000,  // From holdings-history.ts
     leader: "James Altucher (advisor)",
     strategy: "First pure-play Bittensor treasury company",
     notes: "Formerly Synaptogenix. DCG is investor.",
@@ -866,6 +894,7 @@ export const taoCompanies: Company[] = [
     stakingApy: 0.10,
     quarterlyBurnUsd: 400_000,
     capitalRaisedPipe: 30_100_000,
+    sharesForMnav: 21_000_000,  // From holdings-history.ts
     lowLiquidity: true,  // Canadian OTC - limited data feed coverage
     leader: "Karia Samaroo",
     strategy: "Validator operations and TAO treasury accumulation",
@@ -887,6 +916,7 @@ export const taoCompanies: Company[] = [
     stakingApy: 0.10,
     quarterlyBurnUsd: 150_000,
     capitalRaisedAtm: 7_500_000,
+    sharesForMnav: 18_000_000,  // From holdings-history.ts
     strategy: "Decentralized AI treasury strategy via TAO accumulation",
     notes: "Nasdaq: TWAV (changed from OBLG Dec 2025).",
   },
@@ -910,6 +940,7 @@ export const linkCompanies: Company[] = [
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
+    sharesForMnav: 25_000_000,  // From holdings-history.ts
     leader: "Chris Loeffler (CEO)",
     strategy: "First Nasdaq LINK treasury. DCA accumulation + staking.",
     notes: "Real estate asset manager pivoting to LINK. 75K LINK staked.",
@@ -936,6 +967,7 @@ export const trxCompanies: Company[] = [
     capitalRaisedPipe: 310_000_000,
     avgDailyVolume: 50_000_000,
     marketCap: 578_620_000,
+    sharesForMnav: 85_000_000,  // From holdings-history.ts
     leader: "Richard Miller (CEO)",
     strategy: "TRX treasury via JustLend staking, Justin Sun backing",
     notes: "First US public company to hold its blockchain's native token.",
@@ -959,6 +991,7 @@ export const xrpCompanies: Company[] = [
     quarterlyBurnUsd: 0,
     capitalRaisedPipe: 1_000_000_000,
     marketCap: 1_000_000_000,
+    sharesForMnav: 75_000_000,  // From holdings-history.ts
     leader: "Asheesh Birla (CEO, ex-Ripple)",
     strategy: "Institutional-scale XRP adoption, SPAC merger Q1 2026",
     notes: "Pre-IPO. 0.47% of XRP supply. SBI, Ripple, Pantera backed.",
@@ -985,6 +1018,7 @@ export const zecCompanies: Company[] = [
     capitalRaisedPipe: 58_880_000,
     avgDailyVolume: 10_000_000,
     marketCap: 65_720_000,
+    sharesForMnav: 125_000_000,  // From holdings-history.ts
     leader: "Douglas Onsi (CEO)",
     strategy: "Target 5% of ZEC supply (~540K ZEC). Winklevoss backed.",
     notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply.",
@@ -1010,6 +1044,7 @@ export const ltcCompanies: Company[] = [
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
     marketCap: 65_000_000,
+    sharesForMnav: 35_655_155,  // From holdings-history.ts
     leader: "Justin File (CEO)",
     strategy: "First US-listed LTC treasury. GSR as treasury manager.",
     notes: "Formerly MEI Pharma. Charlie Lee on board.",
@@ -1033,6 +1068,7 @@ export const ltcCompanies: Company[] = [
     capitalRaisedPipe: 2_500_000,
     avgDailyVolume: 500_000,
     marketCap: 3_860_000,
+    sharesForMnav: 220_000_000,  // From holdings-history.ts
     leader: "Tomek Antoniak (CEO)",
     strategy: "Target 1M LTC by 2026. Validator operations.",
     notes: "Canadian. Charlie Lee + David Schwartz on advisory.",
@@ -1060,6 +1096,7 @@ export const suiCompanies: Company[] = [
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 160_000_000,
+    sharesForMnav: 48_000_000,  // From holdings-history.ts
     leader: "Douglas Polinsky (CEO)",
     strategy: "Only public company with Sui Foundation relationship",
     notes: "Formerly Mill City Ventures. ~2.9% of SUI supply.",
@@ -1084,6 +1121,7 @@ export const dogeCompanies: Company[] = [
     capitalRaisedPipe: 175_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 150_000_000,
+    sharesForMnav: 60_000_000,  // From holdings-history.ts
     leader: "Clayton Adams (CEO)",
     strategy: "Target 1B DOGE. House of Doge as treasury manager.",
     notes: "NYSE listed. $20M+ unrealized gains.",
@@ -1104,6 +1142,7 @@ export const dogeCompanies: Company[] = [
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 5_000_000,
     marketCap: 200_000_000,
+    sharesForMnav: 62_000_000,  // From holdings-history.ts
     leader: "Alex Spiro (Chairman, Elon Musk's lawyer)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
     notes: "Nasdaq merger pending Q1 2026. Largest institutional DOGE manager.",
@@ -1124,6 +1163,7 @@ export const dogeCompanies: Company[] = [
     capitalRaisedAtm: 500_000_000,
     avgDailyVolume: 3_000_000,
     marketCap: 50_000_000,
+    sharesForMnav: 78_000_000,  // From holdings-history.ts
     leader: "Bo Zhao (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
     notes: "Nasdaq listed. Crypto mining + infrastructure.",
@@ -1151,6 +1191,7 @@ export const avaxCompanies: Company[] = [
     capitalRaisedPipe: 110_000_000,
     avgDailyVolume: 15_000_000,
     marketCap: 193_000_000,
+    sharesForMnav: 40_000_000,  // From holdings-history.ts
     strategy: "Regulated AVAX exposure for US capital markets.",
     notes: "Nasdaq listed. $40M share repurchase program.",
   },
@@ -1180,6 +1221,7 @@ export const hbarCompanies: Company[] = [
     capitalRaisedPipe: 5_000_000,
     avgDailyVolume: 1_000_000,
     marketCap: 10_000_000,
+    sharesForMnav: 65_000_000,  // From holdings-history.ts
     leader: "Jordan Fried (CEO, Hedera founding team)",
     strategy: "HBAR treasury via Immutable Asset Management subsidiary.",
     notes: "OTC. Owns NFT.com, HBAR Labs, MyHBARWallet.",
