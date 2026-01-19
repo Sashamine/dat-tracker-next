@@ -40,6 +40,18 @@ async function fetchMNAVHistory(): Promise<MNAVHistoryResponse> {
   return response.json();
 }
 
+// Fetch BTC history for estimation fallback
+interface CryptoHistoryPoint {
+  time: string;
+  price: number;
+}
+
+async function fetchBTCHistory(range: TimeRange): Promise<CryptoHistoryPoint[]> {
+  const response = await fetch(`/api/crypto/btc/history?range=${range}`);
+  if (!response.ok) return [];
+  return response.json();
+}
+
 interface MNAVChartProps {
   mnavStats: { median: number; average: number };
   currentBTCPrice: number;
@@ -54,18 +66,27 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
   const chartRef = useRef<IChartApi | null>(null);
 
   // Fetch real mNAV history from API
-  const { data: mnavHistoryData, isLoading } = useQuery({
+  const { data: mnavHistoryData, isLoading: isLoadingMNAV } = useQuery({
     queryKey: ["mnavHistory"],
     queryFn: fetchMNAVHistory,
     staleTime: 5 * 60 * 1000,
-    refetchInterval: 60 * 1000, // Refresh every minute
+    refetchInterval: 60 * 1000,
   });
+
+  // Fetch BTC history for estimation fallback
+  const { data: btcHistory, isLoading: isLoadingBTC } = useQuery({
+    queryKey: ["btcHistory", timeRange],
+    queryFn: () => fetchBTCHistory(timeRange),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const isLoading = isLoadingMNAV || isLoadingBTC;
 
   // Use stats from parent (single source of truth)
   const currentStats = mnavStats;
 
-  // Filter history data by time range and format for chart
-  const historicalData = useMemo(() => {
+  // Determine if we have enough real data for the selected time range
+  const realDataForRange = useMemo(() => {
     if (!mnavHistoryData?.history || mnavHistoryData.history.length === 0) {
       return [];
     }
@@ -81,8 +102,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
 
     const cutoff = now - rangeMs[timeRange];
 
-    // Filter and map the history data
-    const filtered = mnavHistoryData.history
+    return mnavHistoryData.history
       .filter(point => new Date(point.timestamp).getTime() >= cutoff)
       .map(point => ({
         time: Math.floor(new Date(point.timestamp).getTime() / 1000) as Time,
@@ -90,19 +110,77 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
         average: point.average,
       }))
       .filter(point => point.median > 0 && point.median < 10 && point.average > 0 && point.average < 10);
+  }, [mnavHistoryData, timeRange]);
 
-    // Add current point from live stats
-    if (filtered.length > 0 || currentStats.median > 0) {
+  // Use real data if we have enough points (5+), otherwise fall back to estimation
+  const MIN_REAL_DATA_POINTS = 5;
+  const useRealData = realDataForRange.length >= MIN_REAL_DATA_POINTS;
+
+  // Generate historical data - real or estimated
+  const historicalData = useMemo(() => {
+    // If we have enough real data, use it
+    if (useRealData) {
+      const result = [...realDataForRange];
+      // Add current point from live stats
       const nowUnix = Math.floor(Date.now() / 1000) as Time;
-      filtered.push({
+      result.push({
         time: nowUnix,
+        median: currentStats.median,
+        average: currentStats.average,
+      });
+      return result;
+    }
+
+    // Fall back to estimation from BTC price changes
+    if (!btcHistory || btcHistory.length === 0 || !currentBTCPrice) {
+      return [];
+    }
+
+    const result: { time: Time; median: number; average: number }[] = [];
+    const sampleInterval = timeRange === "1y" || timeRange === "all" ? 7 : 1;
+
+    for (let i = 0; i < btcHistory.length; i += sampleInterval) {
+      const point = btcHistory[i];
+      const historicalBTCPrice = point.price;
+
+      // Estimate historical mNAV based on BTC price ratio with dampening
+      const priceRatio = currentBTCPrice / historicalBTCPrice;
+      const dampening = 0.5;
+      const adjustedRatio = 1 + (priceRatio - 1) * dampening;
+
+      const historicalMedian = currentStats.median / adjustedRatio;
+      const historicalAverage = currentStats.average / adjustedRatio;
+
+      if (historicalMedian > 0 && historicalMedian < 10 && historicalAverage > 0 && historicalAverage < 10) {
+        const timeValue = /^\d+$/.test(point.time) ? parseInt(point.time, 10) : point.time;
+        result.push({
+          time: timeValue as Time,
+          median: historicalMedian,
+          average: historicalAverage,
+        });
+      }
+    }
+
+    // Add current point
+    const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
+    if (isIntraday) {
+      const nowUnix = Math.floor(Date.now() / 1000) as Time;
+      result.push({
+        time: nowUnix,
+        median: currentStats.median,
+        average: currentStats.average,
+      });
+    } else {
+      const today = new Date().toISOString().split("T")[0] as Time;
+      result.push({
+        time: today,
         median: currentStats.median,
         average: currentStats.average,
       });
     }
 
-    return filtered;
-  }, [mnavHistoryData, timeRange, currentStats]);
+    return result;
+  }, [useRealData, realDataForRange, btcHistory, currentBTCPrice, currentStats, timeRange]);
 
   // Calculate change from start
   const change = useMemo(() => {
@@ -214,8 +292,17 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+          <p className="text-xs text-gray-400">
+            {useRealData ? (
+              <span className="text-green-500">Live data ({realDataForRange.length} snapshots)</span>
+            ) : (
+              <span className="text-amber-500">Estimated from BTC price</span>
+            )}
+          </p>
+        </div>
         <div className="flex gap-3 text-sm">
           {showMedian && (
             <div className="flex items-center gap-1">
