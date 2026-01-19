@@ -34,7 +34,7 @@ export const STOCK_TICKERS = [
   // ETH
   "BMNR", "SBET", "ETHM", "BTBT", "BTCS", "GAME", "FGNX",
   // BTC - US
-  "MSTR", "XXI", "CEPO", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "ABTC",
+  "MSTR", "XXI", "CEPO", "MARA", "RIOT", "CLSK", "HUT", "CORZ", "BTDR", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "ABTC",
   // BTC - International
   "3350.T",    // Metaplanet (Japan)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
