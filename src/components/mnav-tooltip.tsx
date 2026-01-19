@@ -66,11 +66,23 @@ export function MNAVTooltip({
   const ev = marketCap + totalDebt + preferredEquity - cashReserves;
   const nav = holdingsValue + otherInvestments + cashReserves;
 
-  // Determine which links to show
-  const hasSecFilings = secFilingsUrl || holdingsSourceUrl;
+  // Determine which links to show and their labels
+  const sourceUrl = secFilingsUrl || holdingsSourceUrl;
   const hasDashboard = officialDashboard;
-  const secUrl = secFilingsUrl || holdingsSourceUrl;
-  const hasAnySource = hasSecFilings || hasDashboard;
+  const hasSource = !!sourceUrl;
+  const hasAnySource = hasSource || hasDashboard;
+
+  // Determine smart label for source URL
+  const getSourceLabel = (url: string | undefined): { label: string; desc: string } => {
+    if (!url) return { label: "Source", desc: "data" };
+    if (url.includes("sec.gov")) return { label: "SEC Filings", desc: "verification" };
+    if (url.includes("hkex")) return { label: "HKEX Filings", desc: "verification" };
+    if (url.includes("globenewswire") || url.includes("prnewswire")) return { label: "Press Release", desc: "announcement" };
+    if (url.includes("ir.") || url.includes("/investor")) return { label: "Investor Relations", desc: "official" };
+    return { label: "Data Source", desc: "verification" };
+  };
+
+  const sourceInfo = getSourceLabel(sourceUrl);
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -172,16 +184,16 @@ export function MNAVTooltip({
             {/* Source links */}
             {hasAnySource && (
               <div className="border-t border-gray-700 pt-2 mt-2 space-y-1">
-                {hasSecFilings && (
+                {hasSource && (
                   <a
-                    href={secUrl}
+                    href={sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     className="flex justify-between items-center text-[11px] text-blue-400 hover:text-blue-300"
                   >
-                    <span>SEC Filings</span>
-                    <span className="text-gray-500">verification →</span>
+                    <span>{sourceInfo.label}</span>
+                    <span className="text-gray-500">{sourceInfo.desc} →</span>
                   </a>
                 )}
                 {hasDashboard && (

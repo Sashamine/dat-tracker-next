@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Company } from "@/lib/types";
 import { CompanyOverride } from "@/app/api/company-overrides/route";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
+import { getCompanyByTicker } from "@/lib/data/companies";
 
 interface OverridesResponse {
   overrides: Record<string, CompanyOverride>;
@@ -65,11 +66,16 @@ export function mergeCompanyWithOverrides(
   const override = overrides[company.ticker];
   // Get diluted shares from holdings history (for accurate market cap calculation)
   const sharesOutstandingFD = getLatestDilutedShares(company.ticker);
+  // Get static company data for fields not in database (like holdingsSourceUrl)
+  const staticCompany = getCompanyByTicker(company.ticker);
 
   if (!override) {
     return {
       ...company,
       sharesOutstandingFD: sharesOutstandingFD ?? company.sharesOutstandingFD,
+      // Pull holdingsSourceUrl from static data if not in database response
+      holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
+      sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
     };
   }
 
@@ -77,6 +83,9 @@ export function mergeCompanyWithOverrides(
     ...company,
     // Diluted shares from holdings history (SEC filings)
     sharesOutstandingFD: sharesOutstandingFD ?? company.sharesOutstandingFD,
+    // Pull holdingsSourceUrl from static data if not in database response
+    holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
+    sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
     // Holdings: ALWAYS use companies.ts (single source of truth)
     // Google Sheet holdings data was stale and causing incorrect mNAV calculations
     // holdings: override.holdings ?? company.holdings,
