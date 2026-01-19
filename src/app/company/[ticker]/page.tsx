@@ -429,14 +429,36 @@ export default function CompanyPage() {
                   <p className="text-xs text-gray-400">Equity stakes, etc.</p>
                 </div>
               )}
+              {totalDebt > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-red-200 dark:border-red-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    Total Debt
+                  </p>
+                  <p className="text-xl font-bold text-red-600">
+                    -{formatLargeNumber(totalDebt)}
+                  </p>
+                  <p className="text-xs text-gray-400">Convertibles & loans</p>
+                </div>
+              )}
+              {preferredEquity > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-red-200 dark:border-red-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    Preferred Equity
+                  </p>
+                  <p className="text-xl font-bold text-red-600">
+                    -{formatLargeNumber(preferredEquity)}
+                  </p>
+                  <p className="text-xs text-gray-400">Senior to common</p>
+                </div>
+              )}
               <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-3 border border-indigo-200 dark:border-indigo-700">
                 <p className="text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wide font-medium">
-                  Total NAV
+                  Equity NAV
                 </p>
                 <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-                  {formatLargeNumber(nav)}
+                  {formatLargeNumber(nav - totalDebt - preferredEquity)}
                 </p>
-                <p className="text-xs text-indigo-500">All assets combined</p>
+                <p className="text-xs text-indigo-500">Net of liabilities</p>
               </div>
             </div>
           </div>
