@@ -26,6 +26,11 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "CORZ": 5_300_000_000,      // $5.3B - Core Scientific ($1.2B debt, emerged from bankruptcy)
   "BTDR": 2_300_000_000,      // $2.3B - Bitdeer ($730M convertible notes)
 
+  // === BTC Treasury Companies (FMP returns stale/incorrect data) ===
+  "DJT": 6_400_000_000,       // $6.4B - Trump Media (15K BTC, $1B zero-coupon converts)
+  "NAKA": 1_500_000_000,      // $1.5B - Nakamoto Holdings (5K BTC, $410M convertible debt)
+  "ASST": 2_700_000_000,      // $2.7B - Asset Entities (12.8K BTC, $200M preferred equity)
+
   // === Non-USD Stocks (FMP returns local currency as USD) ===
   "3350.T": 3_500_000_000,    // $3.5B - Metaplanet (Japan, JPY)
   "0434.HK": 315_000_000,     // $315M - Boyaa Interactive (Hong Kong, HKD)
