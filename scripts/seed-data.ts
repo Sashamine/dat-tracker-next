@@ -123,8 +123,9 @@ async function seedData() {
               atm_remaining, avg_issuance_premium,
               avg_daily_volume, has_options, options_oi,
               market_cap, leverage_ratio,
-              btc_mined_annual, btc_acquired_ytd
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+              btc_mined_annual, btc_acquired_ytd,
+              total_debt, preferred_equity, cash_reserves, other_investments, shares_outstanding
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
           `, [
             companyDbId,
             today,
@@ -145,7 +146,12 @@ async function seedData() {
             company.marketCap || null,
             company.leverageRatio || null,
             company.btcMinedAnnual || null,
-            company.btcAcquired2025 || null
+            company.btcAcquired2025 || null,
+            company.totalDebt || null,
+            company.preferredEquity || null,
+            company.cashReserves || null,
+            company.otherInvestments || null,
+            company.sharesOutstanding || null
           ]);
           financialsCount++;
         }

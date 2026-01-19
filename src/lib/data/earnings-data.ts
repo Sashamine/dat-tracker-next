@@ -1386,12 +1386,12 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
-// Period configuration: strict boundaries matching actual periods
+// Period configuration: exact periods
 const PERIOD_CONFIG: Record<string, { days: number; minDays: number; maxDays: number }> = {
-  "1W": { days: 7, minDays: 5, maxDays: 14 },       // Weekly: 5-14 days
-  "1M": { days: 30, minDays: 20, maxDays: 45 },     // Monthly: 20-45 days
-  "3M": { days: 90, minDays: 60, maxDays: 120 },    // Quarterly: 60-120 days
-  "1Y": { days: 365, minDays: 300, maxDays: 400 },  // Yearly: 300-400 days
+  "1W": { days: 7, minDays: 7, maxDays: 7 },
+  "1M": { days: 30, minDays: 30, maxDays: 30 },
+  "3M": { days: 90, minDays: 90, maxDays: 90 },
+  "1Y": { days: 365, minDays: 365, maxDays: 365 },
 };
 
 // Get treasury yield leaderboard
