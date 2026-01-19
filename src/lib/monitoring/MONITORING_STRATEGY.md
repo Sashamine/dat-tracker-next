@@ -33,7 +33,31 @@ Some companies publish real-time holdings:
 - `metaplanet.jp/en/analytics` - Metaplanet
 - `h100.group` - H100 Group
 
-### Tier 4: Aggregators (Verify before approve)
+### Tier 4: Early Signal Sources (Pre-filing alerts)
+
+These sources detect acquisitions BEFORE official SEC filings:
+
+#### Twitter/X Early Signals
+Priority accounts monitored for acquisition announcements:
+- **Executives**: @saylor (Michael Saylor announces MSTR purchases)
+- **Company accounts**: @Strategy, @MARAHoldings, @RiotPlatforms, @CleanSpark_Inc
+- **News/Analysts**: @BitcoinMagazine, @DocumentingBTC, @BTCArchive
+
+**Signal type**: `twitter_announcement`
+**Use case**: CEO tweets acquisition → Alert sent → Watch for SEC 8-K within 1-3 days
+
+#### Arkham Intelligence (On-chain)
+Monitors known company wallet addresses for BTC movements:
+- Scrapes `intel.arkm.com/explorer/entity/{company}`
+- Detects holdings changes >1%
+- Public data, no API key required (yet)
+
+**Signal type**: `arkham_alert`
+**Use case**: Large BTC inflow to MSTR wallet → Alert sent → Watch for SEC 8-K
+
+**Early signals are NOT auto-approved** - they generate "awaiting confirmation" alerts.
+
+### Tier 5: Aggregators (Verification/fallback only)
 - `bitcointreasuries.net` - Most comprehensive
 - `bitbo.io/treasuries/` - Good for non-US companies
 - `theblock.co/treasuries/` - Real-time tracking
@@ -43,9 +67,7 @@ Some companies publish real-time holdings:
 - Cross-verification of SEC-extracted data
 - Fallback when primary sources unavailable
 
-### Tier 5: Twitter/X (Require manual approval)
-- Company official accounts for announcements
-- High noise, requires LLM filtering
+**Note**: CoinGecko removed - data was unreliable/stale.
 
 ## Monitoring Flow
 
@@ -54,54 +76,52 @@ Some companies publish real-time holdings:
 │                    Hourly Cron Trigger                       │
 └─────────────────────────────────────────────────────────────┘
                               │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│              For each company in COMPANY_SOURCES             │
-└─────────────────────────────────────────────────────────────┘
-                              │
-          ┌───────────────────┼───────────────────┐
-          ▼                   ▼                   ▼
-    ┌──────────┐       ┌──────────┐       ┌──────────┐
-    │ Has SEC  │       │ Has IR   │       │ Has      │
-    │ CIK?     │       │ Page?    │       │ Holdings │
-    │          │       │          │       │ Page?    │
-    └────┬─────┘       └────┬─────┘       └────┬─────┘
-         │                  │                  │
-         ▼                  ▼                  ▼
-    ┌──────────┐       ┌──────────┐       ┌──────────┐
-    │ Check    │       │ Scrape   │       │ Fetch    │
-    │ SEC      │       │ Press    │       │ Direct   │
-    │ Filings  │       │ Releases │       │ Holdings │
-    └────┬─────┘       └────┬─────┘       └────┬─────┘
-         │                  │                  │
-         └───────────────────┼───────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│              LLM Holdings Extraction (Claude)                │
-│  - Parse text for holdings numbers                          │
-│  - Extract as-of date                                        │
-│  - Return confidence score                                   │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Approval Logic                            │
-│  - SEC filing + confidence > 0.8 → Auto-approve             │
-│  - IR page + confidence > 0.9 → Auto-approve                │
-│  - Holdings page → Auto-approve                              │
-│  - Aggregator → Verify against existing, then approve       │
-│  - Change > 20% → Require manual review                     │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Database Update & Notifications                 │
-│  - Insert holdings_snapshot                                  │
-│  - Trigger updates companies.current_holdings               │
-│  - Send Discord notification                                 │
-└─────────────────────────────────────────────────────────────┘
+        ┌─────────────────────┴─────────────────────┐
+        ▼                                           ▼
+┌───────────────────┐                    ┌───────────────────┐
+│  EARLY SIGNALS    │                    │  PRIMARY SOURCES  │
+│  (Pre-filing)     │                    │  (Official data)  │
+└─────────┬─────────┘                    └─────────┬─────────┘
+          │                                        │
+    ┌─────┴─────┐                           ┌──────┴──────┐
+    ▼           ▼                           ▼             ▼
+┌───────┐  ┌────────┐                 ┌──────────┐  ┌──────────┐
+│Twitter│  │Arkham  │                 │SEC EDGAR │  │IR Pages  │
+│Signals│  │On-Chain│                 │Filings   │  │Holdings  │
+└───┬───┘  └───┬────┘                 └────┬─────┘  └────┬─────┘
+    │          │                           │             │
+    └────┬─────┘                           └──────┬──────┘
+         │                                        │
+         ▼                                        ▼
+┌─────────────────────┐              ┌─────────────────────────┐
+│ "Early Signal"      │              │ LLM Holdings Extraction │
+│ Discord Alert       │              │ + Approval Logic        │
+│ (Cyan embed)        │              │                         │
+│                     │              │ SEC + high confidence   │
+│ "Awaiting official  │              │    → Auto-approve       │
+│  confirmation"      │              │ Low confidence/change   │
+└─────────────────────┘              │    → Manual review      │
+                                     └───────────┬─────────────┘
+                                                 │
+                                                 ▼
+                                     ┌─────────────────────────┐
+                                     │ Holdings Update Alert   │
+                                     │ (Green/Purple embed)    │
+                                     │                         │
+                                     │ Update database if      │
+                                     │ auto-approved           │
+                                     └─────────────────────────┘
 ```
+
+### Alert Types
+
+| Alert Type | Color | Meaning |
+|------------|-------|---------|
+| Early Signal | Cyan | Unconfirmed - Twitter/on-chain detected, awaiting SEC filing |
+| Holdings Update (auto) | Green | Confirmed - SEC filing verified, data updated |
+| Holdings Update (pending) | Purple | Needs review - Lower confidence or large change |
+| Discrepancy | Orange | Mismatch between our data and aggregator |
+| Error | Red | System error during monitoring |
 
 ## Non-US Company Handling
 

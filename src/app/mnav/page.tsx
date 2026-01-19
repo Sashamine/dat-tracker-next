@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { MobileHeader } from "@/components/mobile-header";
 import { useCompanies } from "@/lib/hooks/use-companies";
@@ -9,49 +8,11 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { cn } from "@/lib/utils";
-import { Company } from "@/lib/types";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
-
-
-
-// Fetch mNAV history from API
-interface MNAVHistoryResponse {
-  current: {
-    timestamp: string;
-    median: number;
-    average: number;
-    btcPrice: number;
-  } | null;
-  history: {
-    timestamp: string;
-    median: number;
-    average: number;
-    btcPrice: number;
-  }[];
-  historyCount: number;
-}
-
-async function fetchMNAVHistory(): Promise<MNAVHistoryResponse> {
-  const response = await fetch("/api/mnav-history");
-  if (!response.ok) return { current: null, history: [], historyCount: 0 };
-  return response.json();
-}
-
-// Fetch BTC history for estimation fallback
-interface CryptoHistoryPoint {
-  time: string;
-  price: number;
-}
-
-async function fetchBTCHistory(range: TimeRange): Promise<CryptoHistoryPoint[]> {
-  const response = await fetch(`/api/crypto/btc/history?range=${range}`);
-  if (!response.ok) return [];
-  return response.json();
-}
 
 interface MNAVChartProps {
   mnavStats: { median: number; average: number };
@@ -66,154 +27,45 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
-  // Fetch real mNAV history from API
-  const { data: mnavHistoryData, isLoading: isLoadingMNAV } = useQuery({
-    queryKey: ["mnavHistory"],
-    queryFn: fetchMNAVHistory,
-    staleTime: 5 * 60 * 1000,
-    refetchInterval: 60 * 1000,
-  });
+  // Always use mnavStats from props for consistency with the rest of the page
+  const currentStats = mnavStats;
 
-  // Fetch BTC history for estimation fallback
-  const { data: btcHistory, isLoading: isLoadingBTC } = useQuery({
-    queryKey: ["btcHistory", timeRange],
-    queryFn: () => fetchBTCHistory(timeRange),
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const isLoading = isLoadingMNAV || isLoadingBTC;
-
-  // Use API's current values when available for consistency with historical data
-  // Fall back to parent stats (from useMNAVStats hook) when API data isn't ready
-  const currentStats = useMemo(() => {
-    if (mnavHistoryData?.current && mnavHistoryData.current.median > 0) {
-      return {
-        median: mnavHistoryData.current.median,
-        average: mnavHistoryData.current.average,
-      };
-    }
-    return mnavStats;
-  }, [mnavHistoryData, mnavStats]);
-
-  // Determine if we have enough real data for the selected time range
-  const realDataForRange = useMemo(() => {
-    if (!mnavHistoryData?.history || mnavHistoryData.history.length === 0) {
-      return [];
-    }
-
+  // Generate historical data from pre-calculated MNAV_HISTORY
+  const historicalData = useMemo(() => {
     const now = Date.now();
     const rangeMs: Record<TimeRange, number> = {
       "1d": 24 * 60 * 60 * 1000,
       "7d": 7 * 24 * 60 * 60 * 1000,
       "1mo": 30 * 24 * 60 * 60 * 1000,
       "1y": 365 * 24 * 60 * 60 * 1000,
-      "all": Infinity,
+      "all": 10 * 365 * 24 * 60 * 60 * 1000, // 10 years
     };
 
-    const cutoff = now - rangeMs[timeRange];
-
-    return mnavHistoryData.history
-      .filter(point => new Date(point.timestamp).getTime() >= cutoff)
-      .map(point => ({
-        time: Math.floor(new Date(point.timestamp).getTime() / 1000) as Time,
-        median: point.median,
-        average: point.average,
-      }))
-      .filter(point => point.median > 0 && point.median < 10 && point.average > 0 && point.average < 10);
-  }, [mnavHistoryData, timeRange]);
-
-  // Use real data if we have enough points (5+), otherwise fall back to estimation
-  const MIN_REAL_DATA_POINTS = 5;
-  const useRealData = realDataForRange.length >= MIN_REAL_DATA_POINTS;
-
-  // Generate historical data - use pre-calculated data for long ranges
-  const historicalData = useMemo(() => {
-    // For longer time ranges (1y, all), use pre-calculated MNAV_HISTORY
-    if (timeRange === "1y" || timeRange === "all") {
-      const now = Date.now();
-      const cutoffDate = timeRange === "1y"
-        ? new Date(now - 365 * 24 * 60 * 60 * 1000)
-        : new Date("2023-01-01"); // All time starts from 2023
-
-      const result: { time: Time; median: number; average: number }[] = [];
-
-      // Add historical snapshots from pre-calculated data
-      for (const snapshot of MNAV_HISTORY) {
-        const snapshotDate = new Date(snapshot.date);
-        if (snapshotDate >= cutoffDate) {
-          result.push({
-            time: snapshot.date as Time,
-            median: snapshot.median,
-            average: snapshot.average,
-          });
-        }
-      }
-
-      // Add current point
-      const today = new Date().toISOString().split("T")[0] as Time;
-      result.push({
-        time: today,
-        median: currentStats.median,
-        average: currentStats.average,
-      });
-
-      return result;
-    }
-
-    // For shorter ranges, use real-time API data if available
-    if (useRealData) {
-      const result = [...realDataForRange];
-      // Add current point from live stats
-      const nowUnix = Math.floor(Date.now() / 1000) as Time;
-      result.push({
-        time: nowUnix,
-        median: currentStats.median,
-        average: currentStats.average,
-      });
-      return result;
-    }
-
-    // Fall back to estimation from BTC price changes
-    // Use API's BTC price for consistency when available
-    const btcPriceForEstimation = mnavHistoryData?.current?.btcPrice || currentBTCPrice;
-    if (!btcHistory || btcHistory.length === 0 || !btcPriceForEstimation) {
-      return [];
-    }
-
+    const cutoffDate = new Date(now - rangeMs[timeRange]);
     const result: { time: Time; median: number; average: number }[] = [];
 
-    for (let i = 0; i < btcHistory.length; i++) {
-      const point = btcHistory[i];
-      const historicalBTCPrice = point.price;
-
-      // Estimate historical mNAV based on BTC price ratio with dampening
-      const priceRatio = btcPriceForEstimation / historicalBTCPrice;
-      const dampening = 0.5;
-      const adjustedRatio = 1 + (priceRatio - 1) * dampening;
-
-      const historicalMedian = currentStats.median / adjustedRatio;
-      const historicalAverage = currentStats.average / adjustedRatio;
-
-      if (historicalMedian > 0 && historicalMedian < 10 && historicalAverage > 0 && historicalAverage < 10) {
-        const timeValue = /^\d+$/.test(point.time) ? parseInt(point.time, 10) : point.time;
+    // Add historical snapshots from pre-calculated data
+    for (const snapshot of MNAV_HISTORY) {
+      const snapshotDate = new Date(snapshot.date);
+      if (snapshotDate >= cutoffDate) {
         result.push({
-          time: timeValue as Time,
-          median: historicalMedian,
-          average: historicalAverage,
+          time: snapshot.date as Time,
+          median: snapshot.median,
+          average: snapshot.average,
         });
       }
     }
 
     // Add current point
-    const nowUnix = Math.floor(Date.now() / 1000) as Time;
+    const today = new Date().toISOString().split("T")[0] as Time;
     result.push({
-      time: nowUnix,
+      time: today,
       median: currentStats.median,
       average: currentStats.average,
     });
 
     return result;
-  }, [useRealData, realDataForRange, btcHistory, currentBTCPrice, currentStats, timeRange, mnavHistoryData]);
+  }, [currentStats, timeRange]);
 
   // Calculate change from start
   const change = useMemo(() => {
@@ -313,30 +165,13 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
     };
   }, [historicalData, showMedian, showAverage, timeRange]);
 
-  if (isLoading) {
-    return (
-      <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{title}</h3>
-        <div className="h-[250px] flex items-center justify-center text-gray-500">
-          Loading...
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
       <div className="flex items-center justify-between mb-2">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <p className="text-xs text-gray-400">
-            {timeRange === "1y" || timeRange === "all" ? (
-              <span className="text-green-500">Calculated quarterly data ({MNAV_HISTORY.length} snapshots)</span>
-            ) : useRealData ? (
-              <span className="text-green-500">Live data ({realDataForRange.length} snapshots)</span>
-            ) : (
-              <span className="text-amber-500">Estimated from BTC price</span>
-            )}
+            <span className="text-green-500">Quarterly data ({historicalData.length - 1} historical + current)</span>
           </p>
         </div>
         <div className="flex gap-3 text-sm">
@@ -370,8 +205,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
 }
 
 export default function MNAVPage() {
-  const [timeRange1, setTimeRange1] = useState<TimeRange>("7d");
-  const [timeRange2, setTimeRange2] = useState<TimeRange>("1y");
+  const [timeRange1, setTimeRange1] = useState<TimeRange>("1y");
 
   const { data: prices } = usePricesStream();
   const { overrides } = useCompanyOverrides();
@@ -627,61 +461,30 @@ export default function MNAVPage() {
           </div>
         </div>
 
-        {/* mNAV Charts */}
+        {/* mNAV Chart */}
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">mNAV History</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {/* Chart 1 */}
-          <div>
-            <div className="flex gap-1 mb-3">
-              {timeRangeOptions.map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => setTimeRange1(value)}
-                  className={cn(
-                    "px-3 py-1.5 text-sm rounded-lg transition-colors",
-                    timeRange1 === value
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  )}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <MNAVChart
-              mnavStats={mnavStats}
-              currentBTCPrice={prices?.crypto?.BTC?.price || 0}
-              timeRange={timeRange1}
-              title={`mNAV History (${timeRangeOptions.find(t => t.value === timeRange1)?.label})`}
-            />
-          </div>
-
-          {/* Chart 2 */}
-          <div>
-            <div className="flex gap-1 mb-3">
-              {timeRangeOptions.map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => setTimeRange2(value)}
-                  className={cn(
-                    "px-3 py-1.5 text-sm rounded-lg transition-colors",
-                    timeRange2 === value
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  )}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <MNAVChart
-              mnavStats={mnavStats}
-              currentBTCPrice={prices?.crypto?.BTC?.price || 0}
-              timeRange={timeRange2}
-              title={`mNAV History (${timeRangeOptions.find(t => t.value === timeRange2)?.label})`}
-            />
-          </div>
+        <div className="flex gap-1 mb-3">
+          {timeRangeOptions.map(({ value, label }) => (
+            <button
+              key={value}
+              onClick={() => setTimeRange1(value)}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-lg transition-colors",
+                timeRange1 === value
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              )}
+            >
+              {label}
+            </button>
+          ))}
         </div>
+        <MNAVChart
+          mnavStats={mnavStats}
+          currentBTCPrice={prices?.crypto?.BTC?.price || 0}
+          timeRange={timeRange1}
+          title="mNAV History"
+        />
 
         {/* Legend */}
         <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">

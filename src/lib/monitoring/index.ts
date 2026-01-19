@@ -12,12 +12,14 @@ import {
   PendingUpdate,
   MonitoringRun,
   SocialSource,
+  EarlySignal,
 } from './types';
 import { checkSECFilingsForUpdates, checkSECFilingsEnhanced } from './sources/sec-edgar';
-import { checkTwitterForUpdates, createGrokConfig } from './sources/twitter';
+import { checkTwitterForUpdates, checkTwitterForEarlySignals, createGrokConfig } from './sources/twitter';
 import { checkIRPages } from './sources/ir-pages';
 import { checkHoldingsPages } from './sources/holdings-pages';
 import { checkAggregatorsForUpdates, getAggregatorOnlyCompanies } from './sources/aggregators';
+import { checkArkhamForChanges } from './sources/arkham';
 import { getSECMonitoredCompanies, getCompanySource, getInternationalExchangeCompanies } from './sources/company-sources';
 import { checkInternationalExchanges } from './sources/international-exchanges';
 import { extractHoldingsFromText, createLLMConfigFromEnv, validateExtraction } from './parsers/llm-extractor';
@@ -297,24 +299,81 @@ export async function runMonitoringAgent(
       allResults.push(...irResults);
     }
 
-    // === SECONDARY SOURCES ===
+    // === EARLY SIGNAL SOURCES (Pre-filing alerts) ===
 
-    // 4. Check Twitter (if Grok is configured and we have social sources)
-    if (config.sources.includes('twitter') && grokConfig && socialSources.length > 0) {
+    // 4. Check Twitter for early signals (acquisition announcements)
+    if (config.sources.includes('twitter') && grokConfig) {
       sourcesChecked++;
-      console.log('[Monitoring] Checking Twitter...');
-      const twitterResults = await checkTwitterForUpdates(
-        companies,
-        socialSources,
-        sinceDate,
-        grokConfig
-      );
-      allResults.push(...twitterResults);
+      console.log('[Monitoring] Checking Twitter for early signals...');
+
+      // Check priority accounts for acquisition announcements
+      const twitterSignals = await checkTwitterForEarlySignals(companies, sinceDate, grokConfig);
+
+      for (const signal of twitterSignals) {
+        const company = companies.find(c => c.id === signal.companyId);
+        if (!company) continue;
+
+        // Send early signal notification
+        if (discord) {
+          await discord.sendEarlySignal({
+            companyName: company.name,
+            ticker: signal.ticker,
+            asset: signal.asset,
+            signalType: signal.signalType,
+            description: signal.description,
+            estimatedChange: signal.estimatedChange,
+            currentHoldings: company.holdings,
+            sourceUrl: signal.sourceUrl,
+            sourceText: signal.sourceText,
+          });
+          notificationsSent++;
+        }
+      }
+
+      // Also check traditional Twitter sources for holdings updates
+      if (socialSources.length > 0) {
+        const twitterResults = await checkTwitterForUpdates(
+          companies,
+          socialSources,
+          sinceDate,
+          grokConfig
+        );
+        allResults.push(...twitterResults);
+      }
+    }
+
+    // 5. Check Arkham for on-chain signals
+    if (config.sources.includes('arkham')) {
+      sourcesChecked++;
+      console.log('[Monitoring] Checking Arkham Intelligence for on-chain signals...');
+
+      const arkhamSignals = await checkArkhamForChanges(companies);
+
+      for (const signal of arkhamSignals) {
+        const company = companies.find(c => c.id === signal.companyId);
+        if (!company) continue;
+
+        // Send early signal notification
+        if (discord) {
+          await discord.sendEarlySignal({
+            companyName: company.name,
+            ticker: signal.ticker,
+            asset: signal.asset,
+            signalType: signal.signalType,
+            description: signal.description,
+            estimatedChange: signal.estimatedChange,
+            currentHoldings: company.holdings,
+            sourceUrl: signal.sourceUrl,
+            sourceText: signal.sourceText,
+          });
+          notificationsSent++;
+        }
+      }
     }
 
     // === AGGREGATORS (Verification/Fallback only) ===
 
-    // 5. Check Aggregators (Bitbo, BitcoinTreasuries.net)
+    // 7. Check Aggregators (Bitbo, BitcoinTreasuries.net)
     if (config.sources.includes('aggregators')) {
       sourcesChecked++;
       console.log('[Monitoring] Checking aggregators (Bitbo, BitcoinTreasuries.net)...');
@@ -322,7 +381,7 @@ export async function runMonitoringAgent(
       allResults.push(...aggResults);
     }
 
-    // 6. Process all results
+    // 8. Process all results
     for (const result of allResults) {
       const company = companies.find(c => c.id === result.companyId);
       if (!company) continue;

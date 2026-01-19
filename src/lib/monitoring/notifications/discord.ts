@@ -381,6 +381,104 @@ export function buildErrorEmbed(params: {
 }
 
 /**
+ * Build embed for early signal alert (pre-filing notification)
+ */
+export function buildEarlySignalEmbed(params: {
+  companyName: string;
+  ticker: string;
+  asset: string;
+  signalType: 'twitter_announcement' | 'onchain_movement' | 'arkham_alert';
+  description: string;
+  estimatedChange?: number;
+  currentHoldings: number;
+  sourceUrl?: string;
+  sourceText?: string;
+}): DiscordEmbed {
+  const {
+    companyName,
+    ticker,
+    asset,
+    signalType,
+    description,
+    estimatedChange,
+    currentHoldings,
+    sourceUrl,
+    sourceText,
+  } = params;
+
+  const emoji = ASSET_EMOJIS[asset] || '🪙';
+
+  // Signal type icons
+  const signalIcons: Record<string, string> = {
+    twitter_announcement: '🐦',
+    onchain_movement: '⛓️',
+    arkham_alert: '🔍',
+  };
+  const signalIcon = signalIcons[signalType] || '📡';
+
+  const signalLabels: Record<string, string> = {
+    twitter_announcement: 'Twitter Announcement',
+    onchain_movement: 'On-Chain Movement',
+    arkham_alert: 'Arkham Alert',
+  };
+
+  const fields: Array<{ name: string; value: string; inline?: boolean }> = [
+    {
+      name: 'Signal Type',
+      value: `${signalIcon} ${signalLabels[signalType] || signalType}`,
+      inline: true,
+    },
+    {
+      name: 'Current Holdings',
+      value: `${emoji} ${formatNumber(currentHoldings)} ${asset}`,
+      inline: true,
+    },
+  ];
+
+  if (estimatedChange) {
+    const changeEmoji = estimatedChange >= 0 ? '📈' : '📉';
+    fields.push({
+      name: 'Est. Change',
+      value: `${changeEmoji} ${estimatedChange >= 0 ? '+' : ''}${formatNumber(estimatedChange)} ${asset}`,
+      inline: true,
+    });
+  }
+
+  if (sourceUrl) {
+    fields.push({
+      name: 'Source',
+      value: `[View Source](${sourceUrl})`,
+      inline: true,
+    });
+  }
+
+  if (sourceText) {
+    fields.push({
+      name: 'Details',
+      value: sourceText.length > 300 ? sourceText.substring(0, 297) + '...' : sourceText,
+      inline: false,
+    });
+  }
+
+  fields.push({
+    name: 'Status',
+    value: '⏳ Awaiting official confirmation (SEC filing)',
+    inline: false,
+  });
+
+  return {
+    title: `${signalIcon} Early Signal: ${ticker}`,
+    description: `**${companyName}** - ${description}`,
+    color: 0x00d4ff, // Cyan color for early signals
+    fields,
+    timestamp: new Date().toISOString(),
+    footer: {
+      text: 'DAT Tracker - Early Signal (Unconfirmed)',
+    },
+  };
+}
+
+/**
  * Format source type for display
  */
 function formatSourceType(sourceType: string): string {
@@ -427,6 +525,11 @@ export class DiscordNotificationService {
 
   async sendError(params: Parameters<typeof buildErrorEmbed>[0]) {
     const embed = buildErrorEmbed(params);
+    return sendDiscordWebhook(this.webhookUrl, { embeds: [embed] });
+  }
+
+  async sendEarlySignal(params: Parameters<typeof buildEarlySignalEmbed>[0]) {
+    const embed = buildEarlySignalEmbed(params);
     return sendDiscordWebhook(this.webhookUrl, { embeds: [embed] });
   }
 

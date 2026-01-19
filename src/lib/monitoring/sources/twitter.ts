@@ -1,9 +1,13 @@
 /**
  * Twitter/X Monitor
  * Uses Grok API to monitor Twitter accounts for holdings announcements
+ *
+ * Supports two modes:
+ * 1. Early Signal Detection - Announcements that precede official filings
+ * 2. Holdings Update Detection - Traditional extraction for pending updates
  */
 
-import { SocialSource, TwitterMonitorResult, SourceCheckResult } from '../types';
+import { SocialSource, TwitterMonitorResult, SourceCheckResult, EarlySignal } from '../types';
 
 interface GrokConfig {
   apiKey: string;
@@ -279,4 +283,179 @@ export function createGrokConfig(): GrokConfig | null {
   }
 
   return { apiKey, apiUrl };
+}
+
+// ============================================================
+// EARLY SIGNAL DETECTION
+// ============================================================
+
+// Priority Twitter accounts to monitor for early signals
+// These accounts frequently announce acquisitions before SEC filings
+export const PRIORITY_TWITTER_ACCOUNTS: Array<{
+  handle: string;
+  companyTicker?: string; // If associated with a specific company
+  type: 'executive' | 'company' | 'analyst' | 'news';
+  description: string;
+}> = [
+  // Company executives known for tweeting acquisitions
+  { handle: 'saylor', companyTicker: 'MSTR', type: 'executive', description: 'Michael Saylor - Strategy/MicroStrategy' },
+  { handle: 'michael_saylor', companyTicker: 'MSTR', type: 'executive', description: 'Michael Saylor (alt)' },
+
+  // Company official accounts
+  { handle: 'Strategy', companyTicker: 'MSTR', type: 'company', description: 'Strategy (MicroStrategy) Official' },
+  { handle: 'MARAHoldings', companyTicker: 'MARA', type: 'company', description: 'MARA Holdings Official' },
+  { handle: 'RiotPlatforms', companyTicker: 'RIOT', type: 'company', description: 'Riot Platforms Official' },
+  { handle: 'CleanSpark_Inc', companyTicker: 'CLSK', type: 'company', description: 'CleanSpark Official' },
+  { handle: 'Aboromir_Rhett', companyTicker: 'BITM', type: 'executive', description: 'Bitmine CEO' },
+
+  // Analysts and news sources that break BTC treasury news
+  { handle: 'BitcoinMagazine', type: 'news', description: 'Bitcoin Magazine' },
+  { handle: 'DocumentingBTC', type: 'analyst', description: 'Documenting Bitcoin' },
+  { handle: 'BTCArchive', type: 'analyst', description: 'BTC Archive' },
+];
+
+// Keywords that indicate an acquisition announcement (not just general holdings discussion)
+const ACQUISITION_KEYWORDS = [
+  'acquired',
+  'purchased',
+  'bought',
+  'added',
+  'accumulated',
+  'just bought',
+  'now hold',
+  'increased',
+  'new purchase',
+  'acquisition',
+];
+
+// Pattern to extract BTC amounts from tweets
+const BTC_AMOUNT_PATTERNS = [
+  /(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(?:btc|bitcoin)/i,
+  /(?:acquired|purchased|bought|added)\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(?:btc|bitcoin)?/i,
+  /\$(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(?:million|M)\s*(?:worth\s+of\s+)?(?:btc|bitcoin)/i,
+];
+
+/**
+ * Check priority Twitter accounts for early signals
+ * This is separate from the regular holdings monitoring - it specifically
+ * looks for acquisition announcements that precede official filings
+ */
+export async function checkTwitterForEarlySignals(
+  companies: Array<{
+    id: number;
+    ticker: string;
+    name: string;
+    asset: string;
+    holdings: number;
+  }>,
+  sinceDate: Date,
+  config: GrokConfig
+): Promise<EarlySignal[]> {
+  const signals: EarlySignal[] = [];
+
+  // Create ticker -> company lookup
+  const companyByTicker = new Map(companies.map(c => [c.ticker, c]));
+
+  for (const account of PRIORITY_TWITTER_ACCOUNTS) {
+    try {
+      const handle = account.handle.replace('@', '');
+      const sinceStr = sinceDate.toISOString().split('T')[0];
+
+      // Search for acquisition-related tweets
+      const query = `from:${handle} (${ACQUISITION_KEYWORDS.slice(0, 5).join(' OR ')}) (bitcoin OR btc) since:${sinceStr}`;
+
+      console.log(`[Twitter Early Signal] Checking @${handle}...`);
+      const tweets = await searchTwitterWithGrok(query, config);
+
+      for (const tweet of tweets) {
+        if (!tweet.content) continue;
+
+        const lowerContent = tweet.content.toLowerCase();
+
+        // Must contain acquisition keywords
+        const hasAcquisitionKeyword = ACQUISITION_KEYWORDS.some(kw =>
+          lowerContent.includes(kw.toLowerCase())
+        );
+        if (!hasAcquisitionKeyword) continue;
+
+        // Try to extract BTC amount
+        let estimatedChange: number | undefined;
+        for (const pattern of BTC_AMOUNT_PATTERNS) {
+          const match = tweet.content.match(pattern);
+          if (match) {
+            const amount = parseFloat(match[1].replace(/,/g, ''));
+            if (!isNaN(amount) && amount > 0) {
+              // Handle "million" suffix
+              if (lowerContent.includes('million') || lowerContent.includes(' m ')) {
+                // This is likely a USD amount, estimate BTC (rough: $100k per BTC)
+                estimatedChange = Math.round(amount * 1_000_000 / 100_000);
+              } else {
+                estimatedChange = amount;
+              }
+              break;
+            }
+          }
+        }
+
+        // Determine which company this relates to
+        let company = account.companyTicker ? companyByTicker.get(account.companyTicker) : undefined;
+
+        // If no direct company association, try to find company mention in tweet
+        if (!company) {
+          for (const [ticker, c] of companyByTicker) {
+            if (
+              lowerContent.includes(ticker.toLowerCase()) ||
+              lowerContent.includes(c.name.toLowerCase()) ||
+              lowerContent.includes(`$${ticker.toLowerCase()}`)
+            ) {
+              company = c;
+              break;
+            }
+          }
+        }
+
+        // Skip if we can't associate with a tracked company
+        if (!company) continue;
+
+        // Only create signal for BTC companies
+        if (company.asset !== 'BTC') continue;
+
+        signals.push({
+          companyId: company.id,
+          ticker: company.ticker,
+          asset: company.asset,
+          signalType: 'twitter_announcement',
+          description: `@${handle} announced potential BTC acquisition`,
+          estimatedChange,
+          sourceUrl: `https://twitter.com/${handle}/status/${tweet.id || 'unknown'}`,
+          sourceText: tweet.content.length > 500
+            ? tweet.content.substring(0, 497) + '...'
+            : tweet.content,
+          sourceDate: tweet.posted_at ? new Date(tweet.posted_at) : new Date(),
+          status: 'pending_confirmation',
+          createdAt: new Date(),
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 day expiry
+        });
+      }
+
+      // Rate limiting between accounts
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (error) {
+      console.error(`[Twitter Early Signal] Error checking @${account.handle}:`, error);
+    }
+  }
+
+  return signals;
+}
+
+/**
+ * Add a priority Twitter account to monitor
+ */
+export function addPriorityTwitterAccount(
+  handle: string,
+  companyTicker: string | undefined,
+  type: 'executive' | 'company' | 'analyst' | 'news',
+  description: string
+): void {
+  PRIORITY_TWITTER_ACCOUNTS.push({ handle, companyTicker, type, description });
 }

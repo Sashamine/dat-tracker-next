@@ -67,7 +67,7 @@ export interface MonitoringRun {
 
 export interface Notification {
   id: number;
-  notificationType: 'holdings_update' | 'stale_data' | 'discrepancy' | 'error' | 'run_summary';
+  notificationType: 'holdings_update' | 'stale_data' | 'discrepancy' | 'error' | 'run_summary' | 'early_signal';
   companyId?: number;
   pendingUpdateId?: number;
   monitoringRunId?: number;
@@ -98,6 +98,33 @@ export interface SourceCheckResult {
   sourceDate?: Date;
   trustLevel: SourceTrustLevel;
   error?: string;
+}
+
+// Early signal types - for pre-filing alerts (Twitter, on-chain)
+export type EarlySignalType = 'twitter_announcement' | 'onchain_movement' | 'arkham_alert';
+
+export interface EarlySignal {
+  id?: number;
+  companyId: number;
+  ticker: string;
+  asset: string;
+  signalType: EarlySignalType;
+  // What was detected
+  description: string;
+  estimatedHoldings?: number; // If we can estimate from the signal
+  estimatedChange?: number;   // Estimated change in holdings
+  // Source info
+  sourceUrl?: string;
+  sourceText?: string;
+  sourceDate: Date;
+  // For on-chain signals
+  walletAddress?: string;
+  transactionHash?: string;
+  // Status
+  status: 'pending_confirmation' | 'confirmed' | 'false_positive' | 'expired';
+  confirmedByFilingId?: number; // Link to the SEC filing that confirmed this
+  createdAt: Date;
+  expiresAt?: Date; // Auto-expire if no confirmation within X days
 }
 
 export interface SECFilingResult {
@@ -157,8 +184,9 @@ export const MONITORING_SOURCES = [
   'international_exchanges', // CSE (Canada), HKEX (Hong Kong) - official exchange filings
   'holdings_pages',          // Direct holdings trackers (KULR tracker, Metaplanet, etc.)
   'ir_pages',                // Company IR pages (press releases)
-  // Secondary sources
-  'twitter',                 // Twitter/X via Grok API
+  // Early signal sources (pre-filing alerts)
+  'twitter',                 // Twitter/X via Grok API - announcements before filings
+  'arkham',                  // Arkham Intelligence - on-chain wallet monitoring
   // Aggregators (verification/fallback only)
   'aggregators',             // Aggregators (Bitbo, BitcoinTreasuries.net)
 ] as const;
