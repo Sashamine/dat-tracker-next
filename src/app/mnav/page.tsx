@@ -30,13 +30,14 @@ async function fetchBTCHistory(range: TimeRange): Promise<CryptoHistoryPoint[]> 
 
 interface MNAVChartProps {
   mnavStats: { median: number; average: number };
+  currentBTCPrice: number;
   timeRange: TimeRange;
   title: string;
   showMedian?: boolean;
   showAverage?: boolean;
 }
 
-function MNAVChart({ mnavStats, timeRange, title, showMedian = true, showAverage = true }: MNAVChartProps) {
+function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = true, showAverage = true }: MNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
@@ -55,11 +56,9 @@ function MNAVChart({ mnavStats, timeRange, title, showMedian = true, showAverage
 
   // Calculate historical aggregate mNAV
   const historicalData = useMemo(() => {
-    if (!btcHistory || btcHistory.length === 0 || !prices?.crypto?.BTC?.price) {
+    if (!btcHistory || btcHistory.length === 0 || !currentBTCPrice) {
       return [];
     }
-
-    const currentBTCPrice = prices.crypto.BTC.price;
     const result: { time: Time; median: number; average: number }[] = [];
 
     // Sample interval based on time range (data is already sampled by API)
@@ -105,7 +104,7 @@ function MNAVChart({ mnavStats, timeRange, title, showMedian = true, showAverage
     }
 
     return result;
-  }, [btcHistory, prices, currentStats, timeRange, isIntraday]);
+  }, [btcHistory, currentBTCPrice, currentStats, timeRange, isIntraday]);
 
   // Calculate change from start
   const change = useMemo(() => {
@@ -262,26 +261,8 @@ export default function MNAVPage() {
     return mergeAllCompanies(baseCompanies, overrides);
   }, [companiesData, overrides]);
 
-  // Calculate current stats for the header (excluding pending merger SPACs)
-  const currentStats = useMemo(() => {
-    const mnavs = companies
-      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
-      .map((company) => {
-        const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
-        const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
-        return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
-      })
-      .filter((m): m is number => m !== null && m > 0 && m < 20);
-
-    if (mnavs.length === 0) return { median: 0, average: 0, count: 0 };
-
-    return {
-      median: median(mnavs),
-      average: mnavs.reduce((a, b) => a + b, 0) / mnavs.length,
-      count: mnavs.length,
-    };
-  }, [companies, prices]);
+  // Use shared mNAV stats hook - single source of truth
+  const mnavStats = useMNAVStats(companies, prices);
 
   // Calculate holdings statistics
   const holdingsStats = useMemo(() => {
@@ -516,11 +497,11 @@ export default function MNAVPage() {
           <div className="flex gap-4">
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
               <p className="text-xs lg:text-sm text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Median</p>
-              <p className="text-2xl lg:text-3xl font-bold text-indigo-600">{currentStats.median.toFixed(2)}x</p>
+              <p className="text-2xl lg:text-3xl font-bold text-indigo-600">{mnavStats.median.toFixed(2)}x</p>
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
               <p className="text-xs lg:text-sm text-purple-600 dark:text-purple-400 uppercase tracking-wide">Average</p>
-              <p className="text-2xl lg:text-3xl font-bold text-purple-600">{currentStats.average.toFixed(2)}x</p>
+              <p className="text-2xl lg:text-3xl font-bold text-purple-600">{mnavStats.average.toFixed(2)}x</p>
             </div>
           </div>
         </div>
@@ -547,8 +528,8 @@ export default function MNAVPage() {
               ))}
             </div>
             <MNAVChart
-              companies={companies}
-              prices={prices}
+              mnavStats={mnavStats}
+              currentBTCPrice={prices?.crypto?.BTC?.price || 0}
               timeRange={timeRange1}
               title={`mNAV History (${timeRangeOptions.find(t => t.value === timeRange1)?.label})`}
             />
@@ -573,8 +554,8 @@ export default function MNAVPage() {
               ))}
             </div>
             <MNAVChart
-              companies={companies}
-              prices={prices}
+              mnavStats={mnavStats}
+              currentBTCPrice={prices?.crypto?.BTC?.price || 0}
               timeRange={timeRange2}
               title={`mNAV History (${timeRangeOptions.find(t => t.value === timeRange2)?.label})`}
             />
