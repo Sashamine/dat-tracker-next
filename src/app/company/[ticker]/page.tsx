@@ -144,7 +144,12 @@ export default function CompanyPage() {
     );
   }
 
-  if (!company) {
+  // Prefer company from allCompanies (same source as main page) for consistency
+  // Fall back to separately fetched company if not found
+  const companyFromAllCompanies = allCompanies.find(c => c.ticker === ticker);
+  const displayCompany = companyFromAllCompanies || company;
+
+  if (!displayCompany) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
@@ -162,42 +167,41 @@ export default function CompanyPage() {
     );
   }
 
-  // Get prices
-  const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
-  const cryptoChange = prices?.crypto[company.asset]?.change24h;
-  const stockData = prices?.stocks[company.ticker];
+  // Use displayCompany (from allCompanies) for all calculations - same source as main page
+  const cryptoPrice = prices?.crypto[displayCompany.asset]?.price || 0;
+  const cryptoChange = prices?.crypto[displayCompany.asset]?.change24h;
+  const stockData = prices?.stocks[displayCompany.ticker];
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
-  const { marketCap } = getMarketCap(company, stockData);
-  const { marketCap: marketCapForMnav } = getMarketCapForMnav(company, stockData);
+  const { marketCap } = getMarketCap(displayCompany, stockData);
+  const { marketCap: marketCapForMnav } = getMarketCapForMnav(displayCompany, stockData);
 
   // Other assets (cash + investments)
-  const cashReserves = company.cashReserves || 0;
-  const otherInvestments = company.otherInvestments || 0;
+  const cashReserves = displayCompany.cashReserves || 0;
+  const otherInvestments = displayCompany.otherInvestments || 0;
   const otherAssets = cashReserves + otherInvestments;
-  const cryptoHoldingsValue = company.holdings * cryptoPrice;
+  const cryptoHoldingsValue = displayCompany.holdings * cryptoPrice;
 
   // Calculate metrics (including other assets in NAV)
-  const nav = calculateNAV(company.holdings, cryptoPrice, cashReserves, otherInvestments);
+  const nav = calculateNAV(displayCompany.holdings, cryptoPrice, cashReserves, otherInvestments);
 
-  // Get mNAV from allCompanies (same source as overview page) for consistency
-  const companyFromAllCompanies = allCompanies.find(c => c.ticker === ticker);
-  const mNAV = companyFromAllCompanies ? getCompanyMNAV(companyFromAllCompanies, prices) : null;
+  // mNAV uses shared function with displayCompany (same source as main page)
+  const mNAV = getCompanyMNAV(displayCompany, prices);
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
-  const navPerShare = calculateNAVPerShare(company.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
+  const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
-  const holdingsPerShare = calculateHoldingsPerShare(company.holdings, sharesOutstanding);
+  const holdingsPerShare = calculateHoldingsPerShare(displayCompany.holdings, sharesOutstanding);
 
   // Network staking APY
-  const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
-  const companyStakingApy = company.stakingApy || networkStakingApy;
+  const networkStakingApy = NETWORK_STAKING_APY[displayCompany.asset] || 0;
+  const companyStakingApy = displayCompany.stakingApy || networkStakingApy;
 
   // Net yield calculation
   const { netYieldPct } = calculateNetYield(
-    company.holdings,
-    company.stakingPct || 0,
+    displayCompany.holdings,
+    displayCompany.stakingPct || 0,
     companyStakingApy,
-    company.quarterlyBurnUsd || 0,
+    displayCompany.quarterlyBurnUsd || 0,
     cryptoPrice
   );
 
@@ -208,7 +212,7 @@ export default function CompanyPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
       {/* Mobile Header */}
-      <MobileHeader title={company.ticker} showBack />
+      <MobileHeader title={displayCompany.ticker} showBack />
 
       {/* Left Sidebar - Navigation (Desktop only) */}
       <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
@@ -228,29 +232,29 @@ export default function CompanyPage() {
           <div>
             <div className="flex items-center gap-3">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                {company.ticker}
+                {displayCompany.ticker}
               </h1>
-              <Badge variant="outline" className={cn("font-medium", assetColors[company.asset] || assetColors.ETH)}>
-                {company.asset}
+              <Badge variant="outline" className={cn("font-medium", assetColors[displayCompany.asset] || assetColors.ETH)}>
+                {displayCompany.asset}
               </Badge>
-              <Badge variant="outline" className={cn("font-medium", tierColors[company.tier])}>
-                T{company.tier}
+              <Badge variant="outline" className={cn("font-medium", tierColors[displayCompany.tier])}>
+                T{displayCompany.tier}
               </Badge>
-              {company.pendingMerger && (
+              {displayCompany.pendingMerger && (
                 <Badge variant="outline" className="font-medium bg-amber-500/10 text-amber-600 border-amber-500/30">
                   Pending Merger
                 </Badge>
               )}
             </div>
-            <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{company.name}</p>
-            {company.leader && (
-              <p className="mt-1 text-sm text-gray-500">Led by {company.leader}</p>
+            <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{displayCompany.name}</p>
+            {displayCompany.leader && (
+              <p className="mt-1 text-sm text-gray-500">Led by {displayCompany.leader}</p>
             )}
             {/* Links - Website, Twitter, Tokenized Stock */}
             <div className="mt-3 flex flex-wrap gap-2">
-              {company.website && (
+              {displayCompany.website && (
                 <a
-                  href={company.website}
+                  href={displayCompany.website}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -259,9 +263,9 @@ export default function CompanyPage() {
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
               )}
-              {company.twitter && (
+              {displayCompany.twitter && (
                 <a
-                  href={company.twitter}
+                  href={displayCompany.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -270,18 +274,18 @@ export default function CompanyPage() {
                   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
               )}
-              {company.tokenizedAddress && (
+              {displayCompany.tokenizedAddress && (
                 <a
-                  href={`https://solscan.io/token/${company.tokenizedAddress}`}
+                  href={`https://solscan.io/token/${displayCompany.tokenizedAddress}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors"
                 >
-                  <span>Tokenized ({company.tokenizedChain})</span>
+                  <span>Tokenized ({displayCompany.tokenizedChain})</span>
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
               )}
-              {company.isMiner && (
+              {displayCompany.isMiner && (
                 <span className="inline-flex items-center px-3 py-1 text-sm bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">
                   Miner
                 </span>
@@ -294,7 +298,7 @@ export default function CompanyPage() {
         </div>
 
         {/* Pending Merger Banner */}
-        {company.pendingMerger && (
+        {displayCompany.pendingMerger && (
           <div className="mb-8 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0">
@@ -308,11 +312,11 @@ export default function CompanyPage() {
                   This company is a SPAC that has not yet completed its business combination.
                   Holdings data reflects expected post-merger values, not current holdings.
                 </p>
-                {company.expectedHoldings && (
+                {displayCompany.expectedHoldings && (
                   <p className="text-sm text-amber-700 dark:text-amber-400 mt-2">
-                    <strong>Expected Holdings:</strong> ~{company.expectedHoldings.toLocaleString()} {company.asset}
-                    {company.mergerExpectedClose && (
-                      <> (merger expected {new Date(company.mergerExpectedClose).toLocaleDateString()})</>
+                    <strong>Expected Holdings:</strong> ~{displayCompany.expectedHoldings.toLocaleString()} {displayCompany.asset}
+                    {displayCompany.mergerExpectedClose && (
+                      <> (merger expected {new Date(displayCompany.mergerExpectedClose).toLocaleDateString()})</>
                     )}
                   </p>
                 )}
@@ -329,10 +333,10 @@ export default function CompanyPage() {
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {company.pendingMerger ? "—" : formatMNAV(mNAV)}
+              {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
             </p>
             <p className="text-xs text-gray-400">
-              {company.pendingMerger ? "N/A for pre-merger" : "Market Cap / NAV"}
+              {displayCompany.pendingMerger ? "N/A for pre-merger" : "Market Cap / NAV"}
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -348,33 +352,33 @@ export default function CompanyPage() {
               )}
             </p>
           </div>
-          {company.stakingPct != null && company.stakingPct > 0 && (
+          {displayCompany.stakingPct != null && displayCompany.stakingPct > 0 && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Staking Yield</p>
               <p className="text-2xl font-bold text-green-600">
-                +{Math.round(company.holdings * company.stakingPct * companyStakingApy).toLocaleString()}
+                +{Math.round(displayCompany.holdings * displayCompany.stakingPct * companyStakingApy).toLocaleString()}
               </p>
               <p className="text-xs text-gray-400">
-                {company.asset}/yr ({(company.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
+                {displayCompany.asset}/yr ({(displayCompany.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
               </p>
             </div>
           )}
-          {company.quarterlyBurnUsd != null && company.quarterlyBurnUsd > 0 && (
+          {displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0 && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Burn</p>
               <p className="text-2xl font-bold text-red-600">
-                {cryptoPrice > 0 ? `-${Math.round((company.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()}` : `${(company.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M`}
+                {cryptoPrice > 0 ? `-${Math.round((displayCompany.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()}` : `${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M`}
               </p>
               <p className="text-xs text-gray-400">
-                {cryptoPrice > 0 ? `${company.asset}/yr` : '/yr'} (${(company.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
+                {cryptoPrice > 0 ? `${displayCompany.asset}/yr` : '/yr'} (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
               </p>
             </div>
           )}
-          {(company.btcMinedAnnual != null && company.btcMinedAnnual > 0) && (
+          {(displayCompany.btcMinedAnnual != null && displayCompany.btcMinedAnnual > 0) && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
               <p className="text-2xl font-bold text-orange-600">
-                +{company.btcMinedAnnual.toLocaleString()}
+                +{displayCompany.btcMinedAnnual.toLocaleString()}
               </p>
               <p className="text-xs text-gray-400">BTC/yr</p>
             </div>
@@ -390,13 +394,13 @@ export default function CompanyPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                  {company.asset} Holdings
+                  {displayCompany.asset} Holdings
                 </p>
                 <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
                 </p>
                 <p className="text-xs text-gray-400">
-                  {formatTokenAmount(company.holdings, company.asset)}
+                  {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
                 </p>
               </div>
               {cashReserves > 0 && (
@@ -501,10 +505,10 @@ export default function CompanyPage() {
 
 
         {/* mNAV History Chart */}
-        {mNAV && stockPrice > 0 && cryptoPrice > 0 && !company.pendingMerger && (
+        {mNAV && stockPrice > 0 && cryptoPrice > 0 && !displayCompany.pendingMerger && (
           <CompanyMNAVChart
-            ticker={company.ticker}
-            asset={company.asset}
+            ticker={displayCompany.ticker}
+            asset={displayCompany.asset}
             currentMNAV={mNAV}
             currentStockPrice={stockPrice}
             currentCryptoPrice={cryptoPrice}
@@ -520,23 +524,23 @@ export default function CompanyPage() {
             <div className="flex items-center justify-between mb-1">
               <p className="text-sm text-gray-500 dark:text-gray-400">Holdings</p>
               <StalenessBadge
-                lastUpdated={company.holdingsLastUpdated}
-                source={company.holdingsSource}
-                sourceUrl={company.holdingsSourceUrl}
+                lastUpdated={displayCompany.holdingsLastUpdated}
+                source={displayCompany.holdingsSource}
+                sourceUrl={displayCompany.holdingsSourceUrl}
               />
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatLargeNumber(nav)}
             </p>
             <Citation
-              sourceType={company.holdingsSource}
-              sourceUrl={company.holdingsSourceUrl}
-              sourceDate={company.holdingsLastUpdated}
-              methodology={COMPANY_SOURCES[company.ticker]?.sharesNotes}
-              notes={COMPANY_SOURCES[company.ticker]?.notes}
+              sourceType={displayCompany.holdingsSource}
+              sourceUrl={displayCompany.holdingsSourceUrl}
+              sourceDate={displayCompany.holdingsLastUpdated}
+              methodology={COMPANY_SOURCES[displayCompany.ticker]?.sharesNotes}
+              notes={COMPANY_SOURCES[displayCompany.ticker]?.notes}
             >
               <span className="text-sm text-gray-500 font-mono">
-                {formatTokenAmount(company.holdings, company.asset)}
+                {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
               </span>
             </Citation>
           </div>
@@ -547,7 +551,7 @@ export default function CompanyPage() {
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">{company.asset}/Share</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset}/Share</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {holdingsPerShare ? holdingsPerShare.toFixed(6) : "—"}
             </p>
@@ -556,46 +560,46 @@ export default function CompanyPage() {
 
         {/* Yield & Operations */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {company.stakingPct !== undefined && (
+          {displayCompany.stakingPct !== undefined && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Staking</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                {formatPercent(company.stakingPct)}
+                {formatPercent(displayCompany.stakingPct)}
               </p>
-              {company.stakingMethod && (
-                <p className="text-xs text-gray-500">{company.stakingMethod}</p>
+              {displayCompany.stakingMethod && (
+                <p className="text-xs text-gray-500">{displayCompany.stakingMethod}</p>
               )}
             </div>
           )}
-          {company.quarterlyBurnUsd !== undefined && (
+          {displayCompany.quarterlyBurnUsd !== undefined && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Quarterly Burn</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                {formatLargeNumber(company.quarterlyBurnUsd)}
+                {formatLargeNumber(displayCompany.quarterlyBurnUsd)}
               </p>
             </div>
           )}
-          {company.costBasisAvg && (
+          {displayCompany.costBasisAvg && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Avg Cost Basis</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                ${company.costBasisAvg.toLocaleString()}
+                ${displayCompany.costBasisAvg.toLocaleString()}
               </p>
               <p className="text-xs text-gray-500">
-                {cryptoPrice > company.costBasisAvg ? (
+                {cryptoPrice > displayCompany.costBasisAvg ? (
                   <span className="text-green-600">
-                    +{formatPercent((cryptoPrice - company.costBasisAvg) / company.costBasisAvg)} gain
+                    +{formatPercent((cryptoPrice - displayCompany.costBasisAvg) / displayCompany.costBasisAvg)} gain
                   </span>
                 ) : (
                   <span className="text-red-600">
-                    {formatPercent((cryptoPrice - company.costBasisAvg) / company.costBasisAvg)} loss
+                    {formatPercent((cryptoPrice - displayCompany.costBasisAvg) / displayCompany.costBasisAvg)} loss
                   </span>
                 )}
               </p>
             </div>
           )}
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">{company.asset} Price</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset} Price</p>
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
               ${cryptoPrice.toLocaleString()}
             </p>
@@ -609,8 +613,8 @@ export default function CompanyPage() {
 
         {/* Holdings Per Share Growth Chart */}
         <HoldingsPerShareChart
-          ticker={company.ticker}
-          asset={company.asset}
+          ticker={displayCompany.ticker}
+          asset={displayCompany.asset}
           currentHoldingsPerShare={holdingsPerShare}
           className="mb-8"
         />
@@ -622,9 +626,9 @@ export default function CompanyPage() {
               Strategy & Overview
             </h3>
             <div className="flex items-center gap-3">
-              {company.website && (
+              {displayCompany.website && (
                 <a
-                  href={company.website}
+                  href={displayCompany.website}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
@@ -635,9 +639,9 @@ export default function CompanyPage() {
                   Website
                 </a>
               )}
-              {company.twitter && (
+              {displayCompany.twitter && (
                 <a
-                  href={`https://twitter.com/${company.twitter.replace('@', '')}`}
+                  href={`https://twitter.com/${displayCompany.twitter.replace('@', '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
@@ -645,24 +649,24 @@ export default function CompanyPage() {
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
-                  {company.twitter}
+                  {displayCompany.twitter}
                 </a>
               )}
             </div>
           </div>
 
           {/* Strategy Summary */}
-          {(intel?.strategySummary || company.strategy || company.notes) && (
+          {(intel?.strategySummary || displayCompany.strategy || displayCompany.notes) && (
             <div className="mb-6">
               {intel?.strategySummary ? (
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
               ) : (
                 <>
-                  {company.strategy && (
-                    <p className="text-gray-700 dark:text-gray-300 mb-2">{company.strategy}</p>
+                  {displayCompany.strategy && (
+                    <p className="text-gray-700 dark:text-gray-300 mb-2">{displayCompany.strategy}</p>
                   )}
-                  {company.notes && (
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">{company.notes}</p>
+                  {displayCompany.notes && (
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{displayCompany.notes}</p>
                   )}
                 </>
               )}
@@ -670,103 +674,103 @@ export default function CompanyPage() {
           )}
 
           {/* Key Financial Metrics Grid */}
-          {(company.costBasisAvg || company.capitalRaisedAtm || company.capitalRaisedPipe ||
-            company.capitalRaisedConverts || company.stakingPct || company.leverageRatio ||
-            company.btcMinedAnnual || company.quarterlyBurnUsd || company.atmRemaining || company.leader) && (
+          {(displayCompany.costBasisAvg || displayCompany.capitalRaisedAtm || displayCompany.capitalRaisedPipe ||
+            displayCompany.capitalRaisedConverts || displayCompany.stakingPct || displayCompany.leverageRatio ||
+            displayCompany.btcMinedAnnual || displayCompany.quarterlyBurnUsd || displayCompany.atmRemaining || displayCompany.leader) && (
             <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
               <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
                 Key Metrics
               </h4>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {company.leader && (
+                {displayCompany.leader && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Leadership</p>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">{company.leader}</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">{displayCompany.leader}</p>
                   </div>
                 )}
-                {company.costBasisAvg && (
+                {displayCompany.costBasisAvg && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Avg Cost Basis</p>
                     <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">
-                      ${company.costBasisAvg.toLocaleString()}
+                      ${displayCompany.costBasisAvg.toLocaleString()}
                     </p>
                   </div>
                 )}
-                {company.capitalRaisedAtm && (
+                {displayCompany.capitalRaisedAtm && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">ATM Raised</p>
                     <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
-                      ${(company.capitalRaisedAtm / 1e9).toFixed(2)}B
+                      ${(displayCompany.capitalRaisedAtm / 1e9).toFixed(2)}B
                     </p>
                   </div>
                 )}
-                {company.capitalRaisedPipe && (
+                {displayCompany.capitalRaisedPipe && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">PIPE Raised</p>
                     <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
-                      ${(company.capitalRaisedPipe / 1e9).toFixed(2)}B
+                      ${(displayCompany.capitalRaisedPipe / 1e9).toFixed(2)}B
                     </p>
                   </div>
                 )}
-                {company.capitalRaisedConverts && (
+                {displayCompany.capitalRaisedConverts && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Converts Raised</p>
                     <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
-                      ${(company.capitalRaisedConverts / 1e9).toFixed(2)}B
+                      ${(displayCompany.capitalRaisedConverts / 1e9).toFixed(2)}B
                     </p>
                   </div>
                 )}
-                {company.atmRemaining != null && (
+                {displayCompany.atmRemaining != null && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">ATM Remaining</p>
                     <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">
-                      ${(company.atmRemaining / 1e9).toFixed(2)}B
+                      ${(displayCompany.atmRemaining / 1e9).toFixed(2)}B
                     </p>
                   </div>
                 )}
-                {company.stakingPct != null && company.stakingPct > 0 && (
+                {displayCompany.stakingPct != null && displayCompany.stakingPct > 0 && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Staking Yield</p>
                     <p className="text-sm font-semibold text-purple-600 dark:text-purple-400 mt-1">
-                      +{Math.round(company.holdings * company.stakingPct * companyStakingApy).toLocaleString()} {company.asset}/yr
+                      +{Math.round(displayCompany.holdings * displayCompany.stakingPct * companyStakingApy).toLocaleString()} {displayCompany.asset}/yr
                     </p>
                     <p className="text-xs text-gray-500 mt-0.5">
-                      {(company.stakingPct * 100).toFixed(0)}% staked @ {(companyStakingApy * 100).toFixed(1)}% APY
+                      {(displayCompany.stakingPct * 100).toFixed(0)}% staked @ {(companyStakingApy * 100).toFixed(1)}% APY
                     </p>
                   </div>
                 )}
-                {company.leverageRatio && company.leverageRatio > 1 && (
+                {displayCompany.leverageRatio && displayCompany.leverageRatio > 1 && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Leverage Ratio</p>
                     <p className="text-sm font-semibold text-amber-600 dark:text-amber-400 mt-1">
-                      {company.leverageRatio.toFixed(2)}x
+                      {displayCompany.leverageRatio.toFixed(2)}x
                     </p>
                   </div>
                 )}
-                {company.btcMinedAnnual && (
+                {displayCompany.btcMinedAnnual && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Annual Mining</p>
                     <p className="text-sm font-semibold text-orange-600 dark:text-orange-400 mt-1">
-                      {company.btcMinedAnnual.toLocaleString()} BTC
+                      {displayCompany.btcMinedAnnual.toLocaleString()} BTC
                     </p>
                   </div>
                 )}
-                {company.quarterlyBurnUsd && (
+                {displayCompany.quarterlyBurnUsd && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Annual Burn</p>
                     <p className="text-sm font-semibold text-red-600 dark:text-red-400 mt-1">
-                      {cryptoPrice > 0 ? `-${Math.round((company.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()} ${company.asset}/yr` : `${(company.quarterlyBurnUsd * 4 / 1e6).toFixed(1)}M/yr`}
+                      {cryptoPrice > 0 ? `-${Math.round((displayCompany.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()} ${displayCompany.asset}/yr` : `${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(1)}M/yr`}
                     </p>
                     <p className="text-xs text-gray-500 mt-0.5">
-                      ${(company.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr
+                      ${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr
                     </p>
                   </div>
                 )}
-                {company.hasOptions && (
+                {displayCompany.hasOptions && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Options</p>
                     <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mt-1">
-                      {company.optionsOi ? `${(company.optionsOi / 1e6).toFixed(1)}M OI` : 'Available'}
+                      {displayCompany.optionsOi ? `${(displayCompany.optionsOi / 1e6).toFixed(1)}M OI` : 'Available'}
                     </p>
                   </div>
                 )}
@@ -870,8 +874,8 @@ export default function CompanyPage() {
         )}
         {/* SEC / Regulatory Filings */}
         <CompanyFilings
-          ticker={company.ticker}
-          companyName={company.name}
+          ticker={displayCompany.ticker}
+          companyName={displayCompany.name}
           className="mb-8"
         />
 

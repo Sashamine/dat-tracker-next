@@ -79,6 +79,9 @@ export function mergeCompanyWithOverrides(
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
     sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
+    // pendingMerger: static data takes precedence (undefined = not pending)
+    // If not explicitly set in static data, use database value
+    pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
   };
 
   if (!override) {
