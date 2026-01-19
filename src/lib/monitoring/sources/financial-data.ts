@@ -48,10 +48,11 @@ interface FMPQuote {
 }
 
 const FMP_API_KEY = process.env.FMP_API_KEY;
-const FMP_BASE_URL = 'https://financialmodelingprep.com/api/v3';
+// Use the new stable API endpoint (legacy /api/v3/ deprecated as of Aug 2025)
+const FMP_STABLE_URL = 'https://financialmodelingprep.com/stable';
 
 /**
- * Fetch balance sheet data from FMP API
+ * Fetch balance sheet data from FMP API (stable endpoint)
  */
 async function fetchFMPBalanceSheet(ticker: string): Promise<FMPBalanceSheet | null> {
   if (!FMP_API_KEY) {
@@ -60,8 +61,8 @@ async function fetchFMPBalanceSheet(ticker: string): Promise<FMPBalanceSheet | n
   }
 
   try {
-    // Try quarterly first (more recent)
-    const url = `${FMP_BASE_URL}/balance-sheet-statement/${ticker}?period=quarter&limit=1&apikey=${FMP_API_KEY}`;
+    // Try quarterly first (more recent) - using stable API format
+    const url = `${FMP_STABLE_URL}/balance-sheet-statement?symbol=${ticker}&period=quarter&limit=1&apikey=${FMP_API_KEY}`;
 
     const response = await fetch(url, {
       headers: { 'Accept': 'application/json' },
@@ -77,7 +78,7 @@ async function fetchFMPBalanceSheet(ticker: string): Promise<FMPBalanceSheet | n
 
     if (!Array.isArray(data) || data.length === 0) {
       // Try annual if quarterly not available
-      const annualUrl = `${FMP_BASE_URL}/balance-sheet-statement/${ticker}?period=annual&limit=1&apikey=${FMP_API_KEY}`;
+      const annualUrl = `${FMP_STABLE_URL}/balance-sheet-statement?symbol=${ticker}&period=annual&limit=1&apikey=${FMP_API_KEY}`;
       const annualResponse = await fetch(annualUrl, { cache: 'no-store' });
 
       if (!annualResponse.ok) return null;
@@ -100,7 +101,7 @@ async function fetchFMPQuote(ticker: string): Promise<FMPQuote | null> {
   if (!FMP_API_KEY) return null;
 
   try {
-    const url = `${FMP_BASE_URL}/quote/${ticker}?apikey=${FMP_API_KEY}`;
+    const url = `${FMP_STABLE_URL}/quote?symbol=${ticker}&apikey=${FMP_API_KEY}`;
 
     const response = await fetch(url, {
       headers: { 'Accept': 'application/json' },
