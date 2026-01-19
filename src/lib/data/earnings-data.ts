@@ -1386,32 +1386,30 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
-// Period configuration: exact periods
-const PERIOD_CONFIG: Record<string, { days: number; minDays: number; maxDays: number }> = {
-  "1W": { days: 7, minDays: 7, maxDays: 7 },
-  "1M": { days: 30, minDays: 30, maxDays: 30 },
-  "3M": { days: 90, minDays: 90, maxDays: 90 },
-  "1Y": { days: 365, minDays: 365, maxDays: 365 },
+// Target days for each period
+const PERIOD_DAYS: Record<string, number> = {
+  "1W": 7,
+  "1M": 30,
+  "3M": 90,
+  "1Y": 365,
 };
 
 // Get treasury yield leaderboard
-// Strict logic: only show companies with data that reasonably covers the period
-// Growth is calculated over the ACTUAL data span shown, not normalized
+// Find data points that best approximate each period and calculate growth
 export function getTreasuryYieldLeaderboard(options?: {
   period?: "1W" | "1M" | "3M" | "1Y";
   asset?: Asset;
 }): TreasuryYieldMetrics[] {
   const { period = "1Y", asset } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
-  const config = PERIOD_CONFIG[period];
+  const targetDays = PERIOD_DAYS[period];
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Period boundaries - we want data from within this window
-  const periodEnd = today;
-  const periodStart = new Date(today);
-  periodStart.setDate(periodStart.getDate() - config.days);
+  // Target start date (e.g., 7 days ago for weekly)
+  const targetStart = new Date(today);
+  targetStart.setDate(targetStart.getDate() - targetDays);
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
     if (data.history.length < 2) continue;
@@ -1423,29 +1421,28 @@ export function getTreasuryYieldLeaderboard(options?: {
 
     const history = data.history;
 
-    // Find the most recent data point (must be recent - within the period or close to it)
+    // Find the most recent data point
     const latest = history[history.length - 1];
     const latestDate = new Date(latest.date);
+
+    // Latest data must be somewhat recent (within 30 days)
     const daysSinceLatest = Math.floor((today.getTime() - latestDate.getTime()) / (1000 * 60 * 60 * 24));
+    if (daysSinceLatest > 30) continue;
 
-    // Latest data must be within the period window (allow some slack)
-    if (daysSinceLatest > config.days + 7) continue;
-
-    // Find the best "start" data point for this period
-    // We want the closest point to periodStart (either just before or just after)
+    // Find the data point closest to our target start date
     let startSnapshot = null;
     let bestStartDiff = Infinity;
 
     for (const snapshot of history) {
       if (snapshot.date === latest.date) continue;
       const snapshotDate = new Date(snapshot.date);
-      const diffFromPeriodStart = Math.abs(snapshotDate.getTime() - periodStart.getTime());
 
       // Must be before the latest snapshot
       if (snapshotDate >= latestDate) continue;
 
-      if (diffFromPeriodStart < bestStartDiff) {
-        bestStartDiff = diffFromPeriodStart;
+      const diffFromTarget = Math.abs(snapshotDate.getTime() - targetStart.getTime());
+      if (diffFromTarget < bestStartDiff) {
+        bestStartDiff = diffFromTarget;
         startSnapshot = snapshot;
       }
     }
@@ -1457,10 +1454,9 @@ export function getTreasuryYieldLeaderboard(options?: {
     const endDate = latestDate;
     const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    // Enforce data span must be within acceptable range for this period
-    if (daysCovered < config.minDays || daysCovered > config.maxDays) continue;
+    if (daysCovered <= 0) continue;
 
-    // Calculate actual growth over the data span (NOT normalized)
+    // Calculate actual growth over the data span
     const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
 
     // Annualized growth for comparison
