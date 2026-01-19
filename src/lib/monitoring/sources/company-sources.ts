@@ -35,7 +35,6 @@ export interface CompanySource {
     bitcoinTreasuries?: string; // slug on bitcointreasuries.net
     bitbo?: string; // slug on bitbo.io
     theBlock?: string; // slug on theblock.co/treasuries
-    coingecko?: string; // slug on coingecko.com/treasuries
   };
 
   // Twitter/X handles for announcement monitoring
@@ -175,7 +174,6 @@ export const COMPANY_SOURCES: CompanySource[] = [
       bitcoinTreasuries: 'bitdeer-technologies-group',
       bitbo: 'bitdeer',
       theBlock: 'btdr',
-      coingecko: 'bitdeer-technologies-group',
     },
     trustLevel: 'official',
     extractionHints: 'Check for BTC acquisition announcements',
@@ -243,7 +241,6 @@ export const COMPANY_SOURCES: CompanySource[] = [
       bitcoinTreasuries: 'next-technology-holding-inc',
       bitbo: 'next-technology-holdings',
       theBlock: 'nxtt',
-      coingecko: 'next-technology-holding',
     },
     trustLevel: 'official',
     extractionHints: 'China-based, Nasdaq-listed. Filed $500M shelf for BTC purchases.',
@@ -326,7 +323,6 @@ export const COMPANY_SOURCES: CompanySource[] = [
       bitcoinTreasuries: 'metaplanet',
       bitbo: 'metaplanet',
       theBlock: '3350.t',
-      coingecko: 'metaplanet',
     },
     trustLevel: 'official',
     extractionHints: 'Japan\'s largest BTC holder. Has analytics page with live holdings.',

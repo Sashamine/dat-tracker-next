@@ -13,7 +13,7 @@ export type HoldingsSource =
   | "regulatory-filing"  // Non-US regulatory filings
   | "press-release"      // Official company announcement
   | "company-website"    // IR page or official site
-  | "aggregator"         // CoinGecko, bitbo.io, etc.
+  | "aggregator"         // bitbo.io, bitcointreasuries.net, etc.
   | "manual";            // Manual entry (needs verification)
 
 // Company type
