@@ -122,7 +122,16 @@ export function getMarketCapForMnav(
   company: Company,
   stockData?: StockPriceData | null
 ): MarketCapResult {
-  // If company has explicit share count for mNAV and we have a stock price
+  const ticker = company.ticker;
+  const isNonUsd = NON_USD_TICKERS.has(ticker);
+
+  // For non-USD stocks, DON'T use sharesForMnav × price (price is in local currency)
+  // Fall back to API market cap which is already USD-converted
+  if (isNonUsd) {
+    return getMarketCap(company, stockData);
+  }
+
+  // If company has explicit share count (USD only) for mNAV and we have a stock price
   if (company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0) {
     const calculatedMarketCap = stockData.price * company.sharesForMnav;
     return {
