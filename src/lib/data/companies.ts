@@ -216,6 +216,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
     marketCap: 3_500_000_000,
+    totalDebt: 255_000_000,  // ~$25M bonds + $230M BTC-backed credit facility draw
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 100K BTC by 2026.",
     notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield.",
@@ -363,6 +364,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 2_700_000_000,  // Post-merger market cap
     cashReserves: 77_780_000,  // Combined cash
+    preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
     strategy: "First asset mgmt BTC treasury. No debt - perpetual preferred only. Plans to monetize Semler healthcare ops.",
     notes: "Acquired Semler Scientific Jan 2026. SATA 12.25% perpetual preferred. 11th largest corporate BTC holder.",
@@ -445,6 +447,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     hasOptions: true,
     marketCap: 1_500_000_000,
+    totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
     leader: "David Bailey (CEO, Bitcoin Magazine)",
     strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies.",
     notes: "$710M raised via PIPE + converts. Merged with KindlyMD. Anchorage custody.",
