@@ -13,11 +13,11 @@ import { Badge } from "@/components/ui/badge";
 import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
-  calculateMNAV,
   calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
 import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
@@ -113,8 +113,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const otherInvestments = company.otherInvestments || 0;
     const otherAssets = cashReserves + otherInvestments;
 
-    // mNAV uses company's methodology for market cap (matches their dashboards)
-    const mNAV = calculateMNAV(marketCapForMnav, company.holdings, cryptoPrice, cashReserves, otherInvestments, company.totalDebt || 0, company.preferredEquity || 0);
+    // mNAV uses shared calculation for consistency across all pages
+    const mNAV = getCompanyMNAV(company, prices);
     const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
 
     // Determine company type

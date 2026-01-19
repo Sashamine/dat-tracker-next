@@ -3,13 +3,13 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import {
-  calculateMNAV,
   calculateFairValue,
   formatPercent,
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { Company } from "@/lib/types";
 
 interface PriceData {
@@ -49,7 +49,7 @@ export function PremiumDiscountChart({
         const { marketCap } = getMarketCapForMnav(company, stockData);
         const holdingsValue = company.holdings * cryptoPrice;
 
-        const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0) || 0;
+        const mNAV = getCompanyMNAV(company, prices) || 0;
         const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
 
         const fairValue = calculateFairValue(
@@ -224,7 +224,7 @@ export function MNAVScatterChart({
         const { marketCap } = getMarketCapForMnav(company, stockData);
         const holdingsValue = company.holdings * cryptoPrice;
 
-        const mNAV = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0) || 0;
+        const mNAV = getCompanyMNAV(company, prices) || 0;
         const networkStakingApy = NETWORK_STAKING_APY[company.asset] || 0;
 
         const fairValue = calculateFairValue(
