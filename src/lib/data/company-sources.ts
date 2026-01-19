@@ -32,7 +32,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   MSTR: {
     ticker: "MSTR",
     name: "Strategy (MicroStrategy)",
-    officialDashboard: "https://www.strategy.com/bitcoin",
+    officialDashboard: "https://www.strategy.com/purchases",
     investorRelations: "https://www.strategy.com/investor-relations",
     secCik: "1050446",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",
@@ -50,7 +50,6 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   MARA: {
     ticker: "MARA",
     name: "MARA Holdings (Marathon Digital)",
-    officialDashboard: "https://ir.mara.com/",
     investorRelations: "https://ir.mara.com/",
     secCik: "1507605",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605",
@@ -83,7 +82,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   CLSK: {
     ticker: "CLSK",
     name: "CleanSpark",
-    investorRelations: "https://ir.cleanspark.com/",
+    investorRelations: "https://investors.cleanspark.com/",
     secCik: "827876",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876",
     exchange: "NASDAQ",
@@ -115,7 +114,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   CORZ: {
     ticker: "CORZ",
     name: "Core Scientific",
-    investorRelations: "https://corescientific.com/investors",
+    investorRelations: "https://investors.corescientific.com/",
     secCik: "1839341",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001839341",
     exchange: "NASDAQ",
@@ -145,8 +144,8 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   "3350.T": {
     ticker: "3350.T",
     name: "Metaplanet",
-    officialDashboard: "https://metaplanet.jp/bitcoin",
-    investorRelations: "https://metaplanet.jp/ir",
+    officialDashboard: "https://metaplanet.jp/en/analytics",
+    investorRelations: "https://metaplanet.jp/en/shareholders/investor-relations",
     exchange: "TSE",
     sharesSource: "basic",
     sharesNotes: "TSE filings. Japan's first Bitcoin treasury company.",
@@ -159,7 +158,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   KULR: {
     ticker: "KULR",
     name: "KULR Technology",
-    investorRelations: "https://ir.kulrtechnology.com/",
+    investorRelations: "https://kulr.ai/investors/",
     secCik: "1662684",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001662684",
     exchange: "NYSE",
@@ -194,7 +193,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   BMNR: {
     ticker: "BMNR",
     name: "Bitmine Immersion",
-    investorRelations: "https://bitmine.com/investors",
+    investorRelations: "https://www.bitminetech.io/investor-relations",
     secCik: "1866816",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001866816",
     exchange: "NASDAQ",
@@ -211,7 +210,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   DFDV: {
     ticker: "DFDV",
     name: "DeFi Development Corp",
-    investorRelations: "https://defidev.com/investors",
+    investorRelations: "https://defidevcorp.com/investor",
     exchange: "NASDAQ",
     sharesSource: "basic",
     sharesNotes: "Using basic shares from SEC filings.",
