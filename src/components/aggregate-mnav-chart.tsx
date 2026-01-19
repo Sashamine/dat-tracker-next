@@ -1,27 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { Company } from "@/lib/types";
 import { calculateMNAV } from "@/lib/calculations";
 import { getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 interface AggregateData {
   time: Time;
   median: number;
   average: number;
-}
-
-interface CryptoHistoryPoint {
-  time: string;
-  price: number;
-}
-
-interface StockHistoryPoint {
-  time: string;
-  close: number;
 }
 
 interface AggregateMNAVChartProps {
@@ -35,13 +25,6 @@ interface AggregateMNAVChartProps {
   className?: string;
 }
 
-// Fetch BTC history as the main reference for crypto price changes
-async function fetchBTCHistory(): Promise<CryptoHistoryPoint[]> {
-  const response = await fetch("/api/crypto/btc/history?range=1y");
-  if (!response.ok) return [];
-  return response.json();
-}
-
 // Calculate median of array
 function median(arr: number[]): number {
   if (arr.length === 0) return 0;
@@ -53,13 +36,6 @@ function median(arr: number[]): number {
 export function AggregateMNAVChart({ companies, prices, mnavStats, compact = false, className }: AggregateMNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-
-  // Fetch BTC history for price ratio calculations
-  const { data: btcHistory } = useQuery({
-    queryKey: ["btcHistory", "1y"],
-    queryFn: fetchBTCHistory,
-    staleTime: 30 * 60 * 1000,
-  });
 
   // Use provided mnavStats (from useMNAVStats hook) or calculate fallback
   // This ensures consistency with the shared hook's filtering (mnav < 10)
@@ -88,41 +64,22 @@ export function AggregateMNAVChart({ companies, prices, mnavStats, compact = fal
     };
   }, [companies, prices, mnavStats]);
 
-  // Calculate historical aggregate mNAV using BTC as a proxy for all crypto
-  // This is an approximation: we assume mNAV scales inversely with crypto price
+  // Use pre-calculated historical mNAV data for 1Y view
   const historicalData = useMemo(() => {
-    if (!btcHistory || btcHistory.length === 0 || !prices?.crypto?.BTC?.price) {
-      return [];
-    }
+    // Get data from the last year
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-    const currentBTCPrice = prices.crypto.BTC.price;
     const result: AggregateData[] = [];
 
-    // Sample every 7th point to reduce noise (weekly)
-    for (let i = 0; i < btcHistory.length; i += 7) {
-      const point = btcHistory[i];
-      const historicalBTCPrice = point.price;
-
-      // Price ratio: how much has BTC moved since this historical point
-      const priceRatio = currentBTCPrice / historicalBTCPrice;
-
-      // Approximate historical mNAV:
-      // If crypto price was lower, mNAV would have been higher (and vice versa)
-      // mNAV = MarketCap / (Holdings * CryptoPrice)
-      // Assuming market cap scaled roughly with crypto, mNAV stays relatively stable
-      // But we apply a dampening factor since stock prices don't move 1:1 with crypto
-      const dampening = 0.5; // Stock prices move ~50% as much as crypto
-      const adjustedRatio = 1 + (priceRatio - 1) * dampening;
-
-      const historicalMedian = currentStats.median / adjustedRatio;
-      const historicalAverage = currentStats.average / adjustedRatio;
-
-      // Filter outliers
-      if (historicalMedian > 0 && historicalMedian < 10 && historicalAverage > 0 && historicalAverage < 10) {
+    // Add historical snapshots from pre-calculated data
+    for (const snapshot of MNAV_HISTORY) {
+      const snapshotDate = new Date(snapshot.date);
+      if (snapshotDate >= oneYearAgo) {
         result.push({
-          time: point.time as Time,
-          median: historicalMedian,
-          average: historicalAverage,
+          time: snapshot.date as Time,
+          median: snapshot.median,
+          average: snapshot.average,
         });
       }
     }
@@ -136,7 +93,7 @@ export function AggregateMNAVChart({ companies, prices, mnavStats, compact = fal
     });
 
     return result;
-  }, [btcHistory, prices, currentStats]);
+  }, [currentStats]);
 
   // Calculate change from start
   const change = useMemo(() => {

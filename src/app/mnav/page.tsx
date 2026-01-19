@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { Company } from "@/lib/types";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/earnings-data";
+import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 
@@ -125,9 +126,41 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
   const MIN_REAL_DATA_POINTS = 5;
   const useRealData = realDataForRange.length >= MIN_REAL_DATA_POINTS;
 
-  // Generate historical data - real or estimated
+  // Generate historical data - use pre-calculated data for long ranges
   const historicalData = useMemo(() => {
-    // If we have enough real data, use it
+    // For longer time ranges (1y, all), use pre-calculated MNAV_HISTORY
+    if (timeRange === "1y" || timeRange === "all") {
+      const now = Date.now();
+      const cutoffDate = timeRange === "1y"
+        ? new Date(now - 365 * 24 * 60 * 60 * 1000)
+        : new Date("2023-01-01"); // All time starts from 2023
+
+      const result: { time: Time; median: number; average: number }[] = [];
+
+      // Add historical snapshots from pre-calculated data
+      for (const snapshot of MNAV_HISTORY) {
+        const snapshotDate = new Date(snapshot.date);
+        if (snapshotDate >= cutoffDate) {
+          result.push({
+            time: snapshot.date as Time,
+            median: snapshot.median,
+            average: snapshot.average,
+          });
+        }
+      }
+
+      // Add current point
+      const today = new Date().toISOString().split("T")[0] as Time;
+      result.push({
+        time: today,
+        median: currentStats.median,
+        average: currentStats.average,
+      });
+
+      return result;
+    }
+
+    // For shorter ranges, use real-time API data if available
     if (useRealData) {
       const result = [...realDataForRange];
       // Add current point from live stats
@@ -148,9 +181,8 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
     }
 
     const result: { time: Time; median: number; average: number }[] = [];
-    const sampleInterval = timeRange === "1y" || timeRange === "all" ? 7 : 1;
 
-    for (let i = 0; i < btcHistory.length; i += sampleInterval) {
+    for (let i = 0; i < btcHistory.length; i++) {
       const point = btcHistory[i];
       const historicalBTCPrice = point.price;
 
@@ -173,22 +205,12 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
     }
 
     // Add current point
-    const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
-    if (isIntraday) {
-      const nowUnix = Math.floor(Date.now() / 1000) as Time;
-      result.push({
-        time: nowUnix,
-        median: currentStats.median,
-        average: currentStats.average,
-      });
-    } else {
-      const today = new Date().toISOString().split("T")[0] as Time;
-      result.push({
-        time: today,
-        median: currentStats.median,
-        average: currentStats.average,
-      });
-    }
+    const nowUnix = Math.floor(Date.now() / 1000) as Time;
+    result.push({
+      time: nowUnix,
+      median: currentStats.median,
+      average: currentStats.average,
+    });
 
     return result;
   }, [useRealData, realDataForRange, btcHistory, currentBTCPrice, currentStats, timeRange, mnavHistoryData]);
@@ -308,7 +330,9 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <p className="text-xs text-gray-400">
-            {useRealData ? (
+            {timeRange === "1y" || timeRange === "all" ? (
+              <span className="text-green-500">Calculated quarterly data ({MNAV_HISTORY.length} snapshots)</span>
+            ) : useRealData ? (
               <span className="text-green-500">Live data ({realDataForRange.length} snapshots)</span>
             ) : (
               <span className="text-amber-500">Estimated from BTC price</span>
