@@ -51,7 +51,8 @@ export interface Company {
   hasOptions?: boolean;
   optionsOi?: number;
   atmRemaining?: number;
-  marketCap?: number;
+  marketCap?: number;  // Legacy static value - prefer sharesOutstandingFD × price
+  sharesOutstandingFD?: number;  // Fully diluted shares (includes converts, warrants, options)
   leader?: string;
   strategy?: string;
   notes?: string;
