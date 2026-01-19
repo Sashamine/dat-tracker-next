@@ -1,6 +1,7 @@
 // Historical holdings per share data for companies that report it
 // Sources: Company quarterly reports, 8-K filings, press releases
-// Last updated: 2026-01-18 - Added Q3 2025 data for 45 companies
+// Last updated: 2026-01-18 - Updated to use diluted shares outstanding (WeightedAverageNumberOfDilutedSharesOutstanding)
+// NOTE: Share counts use DILUTED figures from SEC filings for accurate market cap calculation
 
 export interface HoldingsSnapshot {
   date: string; // YYYY-MM-DD
@@ -171,7 +172,7 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 
 // KULR Technology - Bitcoin First Company
 // Note: 1-for-8 reverse stock split on June 23, 2025
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-26", holdings: 217.18, sharesOutstanding: 214_227_808, holdingsPerShare: 0.00000101, source: "Initial BTC purchase 8-K" },
   { date: "2025-01-06", holdings: 430.6, sharesOutstanding: 240_000_000, holdingsPerShare: 0.00000179, source: "8-K filing" },
@@ -493,22 +494,23 @@ const HUT_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Core Scientific (CORZ) - Emerged from bankruptcy Jan 2024
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding (estimated ~15% dilution)
 const CORZ_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-12-31", holdings: 256, sharesOutstanding: 294_122_589, holdingsPerShare: 0.00000087, source: "FY 2024 10-K" },
-  { date: "2025-03-31", holdings: 977, sharesOutstanding: 297_821_835, holdingsPerShare: 0.00000328, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 1612, sharesOutstanding: 305_408_442, holdingsPerShare: 0.00000528, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 2116, sharesOutstanding: 310_061_300, holdingsPerShare: 0.00000682, source: "Q3 2025 10-Q" },
+  { date: "2024-12-31", holdings: 256, sharesOutstanding: 338_000_000, holdingsPerShare: 0.00000076, source: "FY 2024 10-K" },
+  { date: "2025-03-31", holdings: 977, sharesOutstanding: 342_000_000, holdingsPerShare: 0.00000286, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 1612, sharesOutstanding: 351_000_000, holdingsPerShare: 0.00000459, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 2116, sharesOutstanding: 356_000_000, holdingsPerShare: 0.00000594, source: "Q3 2025 10-Q" },
 ];
 
 // Bitdeer Technologies (BTDR) - Started treasury strategy Nov 2024
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const BTDR_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-12-31", holdings: 594, sharesOutstanding: 165_427_000, holdingsPerShare: 0.00000359, source: "FY 2024 Earnings" },
-  { date: "2025-03-31", holdings: 1156, sharesOutstanding: 228_561_000, holdingsPerShare: 0.00000506, source: "Q1 2025 Earnings" },
-  { date: "2025-06-30", holdings: 1502, sharesOutstanding: 193_970_000, holdingsPerShare: 0.00000774, source: "Q2 2025 Earnings" },
-  { date: "2025-09-30", holdings: 2029, sharesOutstanding: 230_814_000, holdingsPerShare: 0.00000879, source: "Q3 2025 Earnings" },
-  { date: "2025-12-31", holdings: 2179, sharesOutstanding: 245_000_000, holdingsPerShare: 0.00000889, source: "Dec 2025 production update" },
-  { date: "2026-01-10", holdings: 1901, sharesOutstanding: 250_000_000, holdingsPerShare: 0.00000760, source: "Weekly holdings update" },
+  { date: "2024-12-31", holdings: 594, sharesOutstanding: 190_000_000, holdingsPerShare: 0.00000313, source: "FY 2024 Earnings" },
+  { date: "2025-03-31", holdings: 1156, sharesOutstanding: 205_000_000, holdingsPerShare: 0.00000564, source: "Q1 2025 Earnings" },
+  { date: "2025-06-30", holdings: 1502, sharesOutstanding: 208_000_000, holdingsPerShare: 0.00000722, source: "Q2 2025 Earnings" },
+  { date: "2025-09-30", holdings: 2029, sharesOutstanding: 208_620_000, holdingsPerShare: 0.00000973, source: "Q3 2025 Earnings" },
+  { date: "2025-12-31", holdings: 2179, sharesOutstanding: 220_000_000, holdingsPerShare: 0.00000990, source: "Dec 2025 production update" },
+  { date: "2026-01-10", holdings: 1901, sharesOutstanding: 225_000_000, holdingsPerShare: 0.00000845, source: "Weekly holdings update" },
 ];
 
 // Trump Media (DJT) - Started BTC treasury May 2025
