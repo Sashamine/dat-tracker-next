@@ -467,6 +467,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 6_400_000_000,
+    totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
     notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts.",
@@ -804,6 +805,7 @@ export const bnbCompanies: Company[] = [
     stakingApy: 0.03,
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
+    totalDebt: 500_000_000,  // $500M convertible notes
     leader: "Hong Kong Web3 infrastructure",
     strategy: "BNB treasury via convertible notes",
     notes: "$500M convertible notes Jun 2025.",
