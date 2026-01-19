@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
-import { useStockHistory, TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
-
-interface CryptoHistoryPoint {
-  time: string;
-  price: number;
-}
+import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
+import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 interface CompanyMNAVChartProps {
   ticker: string;
@@ -22,12 +17,6 @@ interface CompanyMNAVChartProps {
   className?: string;
 }
 
-async function fetchCryptoHistory(symbol: string, range: TimeRange): Promise<CryptoHistoryPoint[]> {
-  const response = await fetch(`/api/crypto/${symbol}/history?range=${range}`);
-  if (!response.ok) return [];
-  return response.json();
-}
-
 export function CompanyMNAVChart({
   ticker,
   asset,
@@ -38,155 +27,72 @@ export function CompanyMNAVChart({
   interval,
   className,
 }: CompanyMNAVChartProps) {
+  // Silence unused variable warnings - these props are kept for API compatibility
+  void asset;
+  void currentStockPrice;
+  void currentCryptoPrice;
+  void interval;
+
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
-  // Fetch stock history
-  const { data: stockHistory, isLoading: stockLoading } = useStockHistory(ticker, timeRange, interval);
-
-  // Fetch crypto history
-  const { data: cryptoHistory, isLoading: cryptoLoading } = useQuery({
-    queryKey: ["cryptoHistory", asset, timeRange],
-    queryFn: () => fetchCryptoHistory(asset, timeRange),
-    staleTime: 5 * 60 * 1000,
-  });
-
-  // Calculate mNAV history by anchoring to current mNAV and using price ratios
-  // This avoids issues with historical shares outstanding changes
+  // Get mNAV history from pre-calculated data
   const mnavHistory = useMemo(() => {
-    if (!stockHistory || !cryptoHistory || stockHistory.length === 0 || cryptoHistory.length === 0) {
-      return [];
-    }
-    if (!currentMNAV || !currentStockPrice || !currentCryptoPrice) {
-      return [];
-    }
-
-    // Create a map of crypto prices by date and a sorted list of dates
-    const cryptoPricesByDate = new Map<string, number>();
-    const cryptoDates: string[] = [];
-    for (const point of cryptoHistory) {
-      cryptoPricesByDate.set(point.time, point.price);
-      cryptoDates.push(point.time);
-    }
-    cryptoDates.sort();
-
-    // Helper function to find the closest crypto price for a given date
-    const findClosestCryptoPrice = (targetDate: string): number | null => {
-      // Try exact match first
-      const exactMatch = cryptoPricesByDate.get(targetDate);
-      if (exactMatch) return exactMatch;
-
-      // Check if target is within crypto data range
-      const targetTime = new Date(targetDate).getTime();
-      const firstCryptoTime = new Date(cryptoDates[0]).getTime();
-      const lastCryptoTime = new Date(cryptoDates[cryptoDates.length - 1]).getTime();
-
-      // If target is before first crypto date, use first crypto price
-      if (targetTime < firstCryptoTime) {
-        return cryptoPricesByDate.get(cryptoDates[0]) ?? null;
-      }
-
-      // If target is after last crypto date, use last crypto price
-      if (targetTime > lastCryptoTime) {
-        return cryptoPricesByDate.get(cryptoDates[cryptoDates.length - 1]) ?? null;
-      }
-
-      // Binary search for closest date
-      let left = 0;
-      let right = cryptoDates.length - 1;
-
-      while (left < right) {
-        const mid = Math.floor((left + right) / 2);
-        if (cryptoDates[mid] < targetDate) {
-          left = mid + 1;
-        } else {
-          right = mid;
-        }
-      }
-
-      // Find the closest date (could be left or left-1)
-      if (left === 0) {
-        return cryptoPricesByDate.get(cryptoDates[0]) ?? null;
-      } else if (left >= cryptoDates.length) {
-        return cryptoPricesByDate.get(cryptoDates[cryptoDates.length - 1]) ?? null;
-      } else {
-        const prevDate = cryptoDates[left - 1];
-        const nextDate = cryptoDates[left];
-        const prevTime = new Date(prevDate).getTime();
-        const nextTime = new Date(nextDate).getTime();
-
-        // Choose the closer one (no strict tolerance - always return something)
-        const prevDiff = Math.abs(targetTime - prevTime);
-        const nextDiff = Math.abs(targetTime - nextTime);
-
-        return prevDiff <= nextDiff
-          ? cryptoPricesByDate.get(prevDate) ?? null
-          : cryptoPricesByDate.get(nextDate) ?? null;
-      }
-    };
-
-    // Calculate mNAV for each stock data point using anchored approach:
-    // Historical mNAV = Current mNAV × (Historical Stock / Current Stock) × (Current Crypto / Historical Crypto)
     const result: { time: Time; value: number }[] = [];
 
-    // Get crypto date range to filter stock data
-    const firstCryptoDate = cryptoDates[0];
-    const lastCryptoDate = cryptoDates[cryptoDates.length - 1];
+    // Filter time range
+    const now = new Date();
+    let startDate: Date;
 
-    for (const stockPoint of stockHistory) {
-      // Extract date from stock time (could be Unix timestamp or YYYY-MM-DD)
-      const isUnixTimestamp = /^\d+$/.test(stockPoint.time);
-      let dateKey: string;
-      let chartTime: Time;
+    switch (timeRange) {
+      case "1d":
+      case "7d":
+        // For short ranges, just show current mNAV (no historical data at this granularity)
+        if (currentMNAV) {
+          const today = now.toISOString().split('T')[0] as Time;
+          return [{ time: today, value: currentMNAV }];
+        }
+        return [];
+      case "1mo":
+        startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        break;
+      case "1y":
+        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        break;
+      case "all":
+      default:
+        startDate = new Date("2020-01-01");
+        break;
+    }
 
-      if (isUnixTimestamp) {
-        const date = new Date(parseInt(stockPoint.time, 10) * 1000);
-        dateKey = date.toISOString().split("T")[0];
-        chartTime = parseInt(stockPoint.time, 10) as Time;
-      } else {
-        dateKey = stockPoint.time;
-        chartTime = stockPoint.time as Time;
-      }
+    // Extract this company's mNAV from each historical snapshot
+    for (const snapshot of MNAV_HISTORY) {
+      const snapshotDate = new Date(snapshot.date);
+      if (snapshotDate < startDate) continue;
 
-      // Skip stock data outside crypto data range
-      if (dateKey < firstCryptoDate || dateKey > lastCryptoDate) continue;
-
-      // Find matching or closest crypto price
-      const historicalCryptoPrice = findClosestCryptoPrice(dateKey);
-      if (!historicalCryptoPrice) continue;
-
-      const historicalStockPrice = stockPoint.close;
-
-      // Anchored mNAV calculation:
-      // mNAV(t) = currentMNAV × (stockPrice(t) / currentStockPrice) × (currentCryptoPrice / cryptoPrice(t))
-      const stockRatio = historicalStockPrice / currentStockPrice;
-      const cryptoRatio = currentCryptoPrice / historicalCryptoPrice;
-      const mnavValue = currentMNAV * stockRatio * cryptoRatio;
-
-      if (mnavValue > 0 && mnavValue < 100) { // Filter outliers
-        result.push({ time: chartTime, value: mnavValue });
+      const companyData = snapshot.companies.find(c => c.ticker === ticker);
+      if (companyData) {
+        result.push({
+          time: snapshot.date as Time,
+          value: companyData.mnav,
+        });
       }
     }
 
-    // Add the current real-time point so the chart ends at exact current mNAV
-    if (result.length > 0 && currentMNAV !== null) {
+    // Add current mNAV as the latest point
+    if (currentMNAV && result.length > 0) {
+      const today = now.toISOString().split('T')[0] as Time;
+      // Only add if different from last point's date
       const lastPoint = result[result.length - 1];
-      // Use same time format as existing data
-      const lastTimeIsUnix = typeof lastPoint.time === 'number';
-      if (lastTimeIsUnix) {
-        const now = Math.floor(Date.now() / 1000) as Time;
-        result.push({ time: now, value: currentMNAV });
-      } else {
-        // Use today's date in YYYY-MM-DD format
-        const today = new Date().toISOString().split('T')[0] as Time;
+      if (lastPoint.time !== today) {
         result.push({ time: today, value: currentMNAV });
       }
     }
 
     return result;
-  }, [stockHistory, cryptoHistory, currentMNAV, currentStockPrice, currentCryptoPrice]);
+  }, [ticker, timeRange, currentMNAV]);
 
-  const isLoading = stockLoading || cryptoLoading;
+  const isLoading = false;
   const hasData = mnavHistory.length > 0;
 
   // Initialize and update chart when data is available
