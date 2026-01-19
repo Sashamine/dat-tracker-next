@@ -94,6 +94,11 @@ export function CompanyMNAVChart({
   const isLoading = false;
   const hasData = mnavHistory.length > 0;
 
+  // Debug: log to console
+  useEffect(() => {
+    console.log('[CompanyMNAVChart] ticker:', ticker, 'timeRange:', timeRange, 'currentMNAV:', currentMNAV, 'historyLength:', mnavHistory.length);
+  }, [ticker, timeRange, currentMNAV, mnavHistory.length]);
+
   // Initialize and update chart when data is available
   useEffect(() => {
     if (!chartContainerRef.current || !hasData) return;
