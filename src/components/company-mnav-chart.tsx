@@ -42,17 +42,15 @@ export function CompanyMNAVChart({
     const now = new Date();
     const today = now.toISOString().split('T')[0];
 
-    // For short ranges (1d, 7d), just show current mNAV
-    if (timeRange === "1d" || timeRange === "7d") {
-      if (currentMNAV) {
-        return [{ time: today as Time, value: currentMNAV }];
-      }
-      return [];
-    }
-
-    // Calculate start date for filtering
+    // Calculate start date for filtering based on time range
     let startDate: Date;
     switch (timeRange) {
+      case "1d":
+        startDate = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
+        break;
+      case "7d":
+        startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        break;
       case "1mo":
         startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
         break;
@@ -60,6 +58,8 @@ export function CompanyMNAVChart({
         startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
         break;
       case "all":
+        startDate = new Date("2020-01-01");
+        break;
       default:
         startDate = new Date("2020-01-01");
         break;
@@ -96,8 +96,8 @@ export function CompanyMNAVChart({
 
   // Debug: log to console
   useEffect(() => {
-    console.log('[CompanyMNAVChart] ticker:', ticker, 'timeRange:', timeRange, 'currentMNAV:', currentMNAV, 'historyLength:', mnavHistory.length);
-  }, [ticker, timeRange, currentMNAV, mnavHistory.length]);
+    console.log('[CompanyMNAVChart] ticker:', ticker, 'timeRange:', timeRange, 'currentMNAV:', currentMNAV, 'historyLength:', mnavHistory.length, 'data:', mnavHistory);
+  }, [ticker, timeRange, currentMNAV, mnavHistory]);
 
   // Initialize and update chart when data is available
   useEffect(() => {
