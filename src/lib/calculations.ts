@@ -1,6 +1,6 @@
 /**
- * DAT Fair Value Model
- * ====================
+ * DAT Fair Value Model (v2)
+ * =========================
  *
  * This module calculates fair value premiums for Digital Asset Treasury (DAT) companies.
  *
