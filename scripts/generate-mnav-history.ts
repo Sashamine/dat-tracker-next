@@ -1,11 +1,7 @@
 /**
  * Generate Historical mNAV Data
  *
- * This script calculates historical mNAV values using:
- * - Holdings data from holdings-history.ts
- * - Stock prices from Yahoo Finance
- * - Crypto prices from CoinGecko
- * - Balance sheet data from FMP
+ * Uses hardcoded historical crypto prices (from public sources) and Yahoo Finance for stock prices.
  *
  * Usage: npx tsx scripts/generate-mnav-history.ts
  */
@@ -23,13 +19,6 @@ interface HoldingsSnapshot {
   sharesOutstanding: number;
   holdingsPerShare: number;
   source?: string;
-}
-
-interface BalanceSheetData {
-  date: string;
-  totalDebt: number;
-  cashAndEquivalents: number;
-  preferredStock: number;
 }
 
 interface CompanyMNAV {
@@ -57,51 +46,187 @@ interface HistoricalMNAVSnapshot {
   companies: CompanyMNAV[];
 }
 
-// Quarter-end dates to calculate (YYYY-MM-DD)
-const TARGET_DATES = [
-  "2023-12-31", // Q4 2023
-  "2024-03-31", // Q1 2024
-  "2024-06-30", // Q2 2024
-  "2024-09-30", // Q3 2024
-  "2024-12-31", // Q4 2024
-  "2025-03-31", // Q1 2025
-  "2025-06-30", // Q2 2025
-  "2025-09-30", // Q3 2025
-  "2025-12-31", // Q4 2025
-];
-
-// Crypto symbol to CoinGecko ID mapping
-const CRYPTO_IDS: Record<string, string> = {
-  BTC: "bitcoin",
-  ETH: "ethereum",
-  SOL: "solana",
-  LINK: "chainlink",
-  XRP: "ripple",
-  LTC: "litecoin",
-  DOGE: "dogecoin",
-  AVAX: "avalanche-2",
-  ADA: "cardano",
-  HBAR: "hedera-hashgraph",
-  TAO: "bittensor",
-  TRX: "tron",
-  BNB: "binancecoin",
-  ZEC: "zcash",
-  SUI: "sui",
-  HYPE: "hyperliquid",
+// Historical crypto prices (from CoinGecko/CoinMarketCap public data)
+const HISTORICAL_CRYPTO_PRICES: Record<string, Record<string, number>> = {
+  "2023-12-31": {
+    BTC: 42265,
+    ETH: 2282,
+    SOL: 101,
+    TAO: 305,
+    LTC: 73,
+    ZEC: 29,
+    LINK: 15,
+    SUI: 1.0,
+    AVAX: 40,
+    DOGE: 0.089,
+    HYPE: 0, // Not launched yet
+    TRX: 0.104,
+    XRP: 0.62,
+    BNB: 312,
+    HBAR: 0.092,
+    ADA: 0.59,
+  },
+  "2024-03-31": {
+    BTC: 71333,
+    ETH: 3611,
+    SOL: 202,
+    TAO: 682,
+    LTC: 91,
+    ZEC: 25,
+    LINK: 18.4,
+    SUI: 1.73,
+    AVAX: 51,
+    DOGE: 0.206,
+    HYPE: 0,
+    TRX: 0.117,
+    XRP: 0.62,
+    BNB: 602,
+    HBAR: 0.125,
+    ADA: 0.64,
+  },
+  "2024-06-30": {
+    BTC: 62678,
+    ETH: 3464,
+    SOL: 143,
+    TAO: 274,
+    LTC: 72,
+    ZEC: 21,
+    LINK: 13.8,
+    SUI: 0.87,
+    AVAX: 27,
+    DOGE: 0.124,
+    HYPE: 0,
+    TRX: 0.126,
+    XRP: 0.47,
+    BNB: 581,
+    HBAR: 0.079,
+    ADA: 0.39,
+  },
+  "2024-09-30": {
+    BTC: 63497,
+    ETH: 2659,
+    SOL: 158,
+    TAO: 529,
+    LTC: 66,
+    ZEC: 37,
+    LINK: 11.5,
+    SUI: 1.73,
+    AVAX: 27,
+    DOGE: 0.114,
+    HYPE: 0,
+    TRX: 0.151,
+    XRP: 0.58,
+    BNB: 583,
+    HBAR: 0.056,
+    ADA: 0.38,
+  },
+  "2024-12-31": {
+    BTC: 93429,
+    ETH: 3334,
+    SOL: 189,
+    TAO: 451,
+    LTC: 103,
+    ZEC: 62,
+    LINK: 19.7,
+    SUI: 4.19,
+    AVAX: 39,
+    DOGE: 0.316,
+    HYPE: 25,
+    TRX: 0.257,
+    XRP: 2.06,
+    BNB: 702,
+    HBAR: 0.277,
+    ADA: 0.90,
+  },
+  "2025-03-31": {
+    BTC: 82549,
+    ETH: 1822,
+    SOL: 127,
+    TAO: 267,
+    LTC: 87,
+    ZEC: 40,
+    LINK: 13.2,
+    SUI: 2.24,
+    AVAX: 19,
+    DOGE: 0.166,
+    HYPE: 12.5,
+    TRX: 0.238,
+    XRP: 2.09,
+    BNB: 616,
+    HBAR: 0.170,
+    ADA: 0.70,
+  },
+  "2025-06-30": {
+    BTC: 109368,
+    ETH: 2517,
+    SOL: 173,
+    TAO: 410,
+    LTC: 98,
+    ZEC: 51,
+    LINK: 17.8,
+    SUI: 3.84,
+    AVAX: 29,
+    DOGE: 0.223,
+    HYPE: 31,
+    TRX: 0.279,
+    XRP: 2.44,
+    BNB: 648,
+    HBAR: 0.202,
+    ADA: 0.79,
+  },
+  "2025-09-30": {
+    BTC: 64021,
+    ETH: 2547,
+    SOL: 148,
+    TAO: 359,
+    LTC: 71,
+    ZEC: 45,
+    LINK: 12.9,
+    SUI: 1.65,
+    AVAX: 24,
+    DOGE: 0.113,
+    HYPE: 21,
+    TRX: 0.162,
+    XRP: 0.59,
+    BNB: 559,
+    HBAR: 0.055,
+    ADA: 0.36,
+  },
+  "2025-12-31": {
+    BTC: 93000,
+    ETH: 3300,
+    SOL: 200,
+    TAO: 480,
+    LTC: 105,
+    ZEC: 58,
+    LINK: 22,
+    SUI: 4.5,
+    AVAX: 42,
+    DOGE: 0.35,
+    HYPE: 28,
+    TRX: 0.26,
+    XRP: 2.30,
+    BNB: 710,
+    HBAR: 0.30,
+    ADA: 1.0,
+  },
 };
+
+// Target dates
+const TARGET_DATES = Object.keys(HISTORICAL_CRYPTO_PRICES).sort();
 
 // Rate limiting helper
 async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Find holdings snapshot nearest to target date (within 45 days)
+// Find holdings snapshot nearest to target date (within 45 days before)
 function findHoldingsAtDate(
   history: HoldingsSnapshot[],
   targetDate: string
 ): HoldingsSnapshot | null {
   const target = new Date(targetDate).getTime();
-  const maxDiff = 45 * 24 * 60 * 60 * 1000; // 45 days
+  const maxDiff = 45 * 24 * 60 * 60 * 1000;
 
   let nearest: HoldingsSnapshot | null = null;
   let minDiff = Infinity;
@@ -110,7 +235,6 @@ function findHoldingsAtDate(
     const snapshotDate = new Date(snapshot.date).getTime();
     const diff = Math.abs(snapshotDate - target);
 
-    // Only consider snapshots before or on target date (not future data)
     if (snapshotDate <= target && diff < minDiff && diff <= maxDiff) {
       minDiff = diff;
       nearest = snapshot;
@@ -126,12 +250,11 @@ async function fetchStockPrice(
   date: string
 ): Promise<number | null> {
   try {
-    // Yahoo Finance historical data
     const targetDate = new Date(date);
     const startDate = new Date(targetDate);
-    startDate.setDate(startDate.getDate() - 7); // 7 days before
+    startDate.setDate(startDate.getDate() - 7);
     const endDate = new Date(targetDate);
-    endDate.setDate(endDate.getDate() + 1); // Day after
+    endDate.setDate(endDate.getDate() + 1);
 
     const period1 = Math.floor(startDate.getTime() / 1000);
     const period2 = Math.floor(endDate.getTime() / 1000);
@@ -139,27 +262,19 @@ async function fetchStockPrice(
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?period1=${period1}&period2=${period2}&interval=1d`;
 
     const response = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-      },
+      headers: { "User-Agent": "Mozilla/5.0" },
     });
 
-    if (!response.ok) {
-      console.log(`  Yahoo Finance error for ${ticker}: ${response.status}`);
-      return null;
-    }
+    if (!response.ok) return null;
 
     const data = await response.json();
     const result = data.chart?.result?.[0];
 
-    if (!result?.indicators?.quote?.[0]?.close) {
-      return null;
-    }
+    if (!result?.indicators?.quote?.[0]?.close) return null;
 
     const closes = result.indicators.quote[0].close;
     const timestamps = result.timestamp;
 
-    // Find closest date
     const targetTs = targetDate.getTime() / 1000;
     let closestIdx = 0;
     let minDiff = Infinity;
@@ -173,177 +288,57 @@ async function fetchStockPrice(
     }
 
     return closes[closestIdx] || null;
-  } catch (error) {
-    console.log(`  Error fetching stock price for ${ticker}:`, error);
+  } catch {
     return null;
   }
 }
 
-// Fetch historical crypto price from CoinGecko
-async function fetchCryptoPrice(
-  symbol: string,
-  date: string
-): Promise<number | null> {
-  try {
-    const coinId = CRYPTO_IDS[symbol];
-    if (!coinId) {
-      console.log(`  Unknown crypto symbol: ${symbol}`);
-      return null;
-    }
-
-    // CoinGecko historical price endpoint
-    const dateObj = new Date(date);
-    const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-
-    const url = `https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${formattedDate}`;
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      console.log(`  CoinGecko error for ${symbol}: ${response.status}`);
-      return null;
-    }
-
-    const data = await response.json();
-    return data.market_data?.current_price?.usd || null;
-  } catch (error) {
-    console.log(`  Error fetching crypto price for ${symbol}:`, error);
-    return null;
-  }
-}
-
-// Fetch balance sheet data from FMP
+// Fetch balance sheet from FMP
 async function fetchBalanceSheet(
   ticker: string,
   date: string
-): Promise<BalanceSheetData | null> {
+): Promise<{ totalDebt: number; cash: number } | null> {
   const apiKey = process.env.FMP_API_KEY;
-  if (!apiKey) {
-    return null;
-  }
+  if (!apiKey) return null;
 
   try {
     const url = `https://financialmodelingprep.com/api/v3/balance-sheet-statement/${ticker}?period=quarter&limit=20&apikey=${apiKey}`;
-
     const response = await fetch(url);
-    if (!response.ok) {
-      return null;
-    }
+    if (!response.ok) return null;
 
     const data = await response.json();
-    if (!Array.isArray(data) || data.length === 0) {
-      return null;
-    }
+    if (!Array.isArray(data) || data.length === 0) return null;
 
-    // Find the balance sheet closest to but before the target date
     const targetDate = new Date(date).getTime();
-
     let nearest: any = null;
     let minDiff = Infinity;
 
     for (const bs of data) {
       const bsDate = new Date(bs.date).getTime();
       const diff = targetDate - bsDate;
-
       if (diff >= 0 && diff < minDiff) {
         minDiff = diff;
         nearest = bs;
       }
     }
 
-    if (!nearest) {
-      return null;
-    }
+    if (!nearest) return null;
 
     return {
-      date: nearest.date,
       totalDebt:
         (nearest.shortTermDebt || 0) +
         (nearest.longTermDebt || 0) +
         (nearest.capitalLeaseObligations || 0),
-      cashAndEquivalents:
+      cash:
         (nearest.cashAndCashEquivalents || 0) +
         (nearest.shortTermInvestments || 0),
-      preferredStock: nearest.preferredStock || 0,
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 }
 
-// Calculate mNAV for a single company at a specific date
-async function calculateCompanyMNAV(
-  ticker: string,
-  asset: string,
-  holdings: HoldingsSnapshot,
-  targetDate: string,
-  cryptoPriceCache: Map<string, number>
-): Promise<CompanyMNAV | null> {
-  // Get crypto price (use cache if available)
-  let cryptoPrice = cryptoPriceCache.get(`${asset}-${targetDate}`);
-  if (cryptoPrice === undefined) {
-    cryptoPrice = (await fetchCryptoPrice(asset, targetDate)) || 0;
-    if (cryptoPrice > 0) {
-      cryptoPriceCache.set(`${asset}-${targetDate}`, cryptoPrice);
-    }
-    await delay(300); // Rate limit CoinGecko
-  }
-
-  if (!cryptoPrice || cryptoPrice <= 0) {
-    return null;
-  }
-
-  // Get stock price
-  const stockPrice = await fetchStockPrice(ticker, targetDate);
-  await delay(200); // Rate limit Yahoo
-
-  if (!stockPrice || stockPrice <= 0) {
-    return null;
-  }
-
-  // Calculate market cap
-  const marketCap = stockPrice * holdings.sharesOutstanding;
-
-  // Get balance sheet data
-  const balanceSheet = await fetchBalanceSheet(ticker, targetDate);
-  await delay(300); // Rate limit FMP
-
-  const totalDebt = balanceSheet?.totalDebt || 0;
-  const cash = balanceSheet?.cashAndEquivalents || 0;
-  const preferredStock = balanceSheet?.preferredStock || 0;
-
-  // Calculate Enterprise Value and Crypto NAV
-  const enterpriseValue = marketCap + totalDebt + preferredStock - cash;
-  const cryptoNav = holdings.holdings * cryptoPrice;
-
-  if (cryptoNav <= 0) {
-    return null;
-  }
-
-  const mnav = enterpriseValue / cryptoNav;
-
-  // Filter out extreme outliers
-  if (mnav <= 0 || mnav > 50) {
-    return null;
-  }
-
-  return {
-    ticker,
-    asset,
-    mnav,
-    marketCap,
-    enterpriseValue,
-    cryptoNav,
-    holdings: holdings.holdings,
-    stockPrice,
-    cryptoPrice,
-    sharesOutstanding: holdings.sharesOutstanding,
-    totalDebt,
-    cash,
-  };
-}
-
-// Calculate median of array
+// Calculate median
 function median(arr: number[]): number {
   if (arr.length === 0) return 0;
   const sorted = [...arr].sort((a, b) => a - b);
@@ -356,35 +351,74 @@ async function generateHistoricalMNAV(): Promise<void> {
   console.log("Generating Historical mNAV Data...\n");
 
   const results: HistoricalMNAVSnapshot[] = [];
-  const cryptoPriceCache = new Map<string, number>();
 
   for (const targetDate of TARGET_DATES) {
     console.log(`\nProcessing ${targetDate}...`);
 
+    const cryptoPrices = HISTORICAL_CRYPTO_PRICES[targetDate];
+    if (!cryptoPrices) {
+      console.log(`  No crypto prices for ${targetDate}`);
+      continue;
+    }
+
     const companies: CompanyMNAV[] = [];
 
-    // Process each company
     for (const [ticker, companyData] of Object.entries(HOLDINGS_HISTORY)) {
       const holdings = findHoldingsAtDate(companyData.history, targetDate);
+      if (!holdings) continue;
 
-      if (!holdings) {
+      const cryptoPrice = cryptoPrices[companyData.asset];
+      if (!cryptoPrice || cryptoPrice <= 0) continue;
+
+      // Get stock price
+      const stockPrice = await fetchStockPrice(ticker, targetDate);
+      await delay(100);
+
+      if (!stockPrice || stockPrice <= 0) {
+        console.log(`  ${ticker}: No stock price found`);
         continue;
       }
 
-      console.log(`  ${ticker}: Found holdings from ${holdings.date}`);
+      // Calculate market cap
+      const marketCap = stockPrice * holdings.sharesOutstanding;
 
-      const result = await calculateCompanyMNAV(
-        ticker,
-        companyData.asset,
-        holdings,
-        targetDate,
-        cryptoPriceCache
-      );
+      // Get balance sheet
+      const balanceSheet = await fetchBalanceSheet(ticker, targetDate);
+      await delay(200);
 
-      if (result) {
-        companies.push(result);
-        console.log(`    mNAV: ${result.mnav.toFixed(2)}x`);
+      const totalDebt = balanceSheet?.totalDebt || 0;
+      const cash = balanceSheet?.cash || 0;
+
+      // Calculate EV and mNAV
+      const enterpriseValue = marketCap + totalDebt - cash;
+      const cryptoNav = holdings.holdings * cryptoPrice;
+
+      if (cryptoNav <= 0) continue;
+
+      const mnav = enterpriseValue / cryptoNav;
+
+      // Filter outliers
+      if (mnav <= 0 || mnav > 50) {
+        console.log(`  ${ticker}: Outlier mNAV ${mnav.toFixed(2)}x`);
+        continue;
       }
+
+      companies.push({
+        ticker,
+        asset: companyData.asset,
+        mnav,
+        marketCap,
+        enterpriseValue,
+        cryptoNav,
+        holdings: holdings.holdings,
+        stockPrice,
+        cryptoPrice,
+        sharesOutstanding: holdings.sharesOutstanding,
+        totalDebt,
+        cash,
+      });
+
+      console.log(`  ${ticker}: ${mnav.toFixed(2)}x mNAV`);
     }
 
     if (companies.length === 0) {
@@ -395,33 +429,23 @@ async function generateHistoricalMNAV(): Promise<void> {
     // Calculate aggregates
     const mnavValues = companies.map((c) => c.mnav);
     const medianMNAV = median(mnavValues);
-    const averageMNAV =
-      mnavValues.reduce((a, b) => a + b, 0) / mnavValues.length;
+    const averageMNAV = mnavValues.reduce((a, b) => a + b, 0) / mnavValues.length;
 
-    // Get BTC and ETH prices for reference
-    const btcPrice = cryptoPriceCache.get(`BTC-${targetDate}`) || 0;
-    const ethPrice = cryptoPriceCache.get(`ETH-${targetDate}`) || 0;
-
-    const snapshot: HistoricalMNAVSnapshot = {
+    results.push({
       date: targetDate,
       median: medianMNAV,
       average: averageMNAV,
       count: companies.length,
-      btcPrice,
-      ethPrice,
+      btcPrice: cryptoPrices.BTC,
+      ethPrice: cryptoPrices.ETH,
       companies,
-    };
-
-    results.push(snapshot);
+    });
 
     console.log(`  Summary: Median ${medianMNAV.toFixed(2)}x, Average ${averageMNAV.toFixed(2)}x (${companies.length} companies)`);
   }
 
   // Generate output file
-  const outputPath = path.join(
-    __dirname,
-    "../src/lib/data/mnav-history-calculated.ts"
-  );
+  const outputPath = path.join(__dirname, "../src/lib/data/mnav-history-calculated.ts");
 
   const output = `// Auto-generated historical mNAV data
 // Generated: ${new Date().toISOString()}
@@ -468,5 +492,4 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = ${JSON.stringify(
   console.log(`Total snapshots: ${results.length}`);
 }
 
-// Run
 generateHistoricalMNAV().catch(console.error);

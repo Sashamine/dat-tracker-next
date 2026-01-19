@@ -69,12 +69,14 @@ export function mergeCompanyWithOverrides(
   // Get static company data for fields not in database (like holdingsSourceUrl)
   const staticCompany = getCompanyByTicker(company.ticker);
 
-  // Merge static financial data for mNAV calculation (database may not have these)
+  // Merge static financial data for mNAV calculation
+  // PREFER static data for capital structure (database often has stale values)
+  // These fields change frequently and static companies.ts is more up-to-date
   const mergedFinancials = {
-    totalDebt: company.totalDebt ?? staticCompany?.totalDebt,
-    preferredEquity: company.preferredEquity ?? staticCompany?.preferredEquity,
-    cashReserves: company.cashReserves ?? staticCompany?.cashReserves,
-    otherInvestments: company.otherInvestments ?? staticCompany?.otherInvestments,
+    totalDebt: staticCompany?.totalDebt ?? company.totalDebt,
+    preferredEquity: staticCompany?.preferredEquity ?? company.preferredEquity,
+    cashReserves: staticCompany?.cashReserves ?? company.cashReserves,
+    otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
     sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
   };
