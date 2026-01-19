@@ -14,6 +14,9 @@
  */
 
 export const MARKET_CAP_OVERRIDES: Record<string, number> = {
+  // === Major DAT Companies (use company-reported share counts) ===
+  "MSTR": 55_500_000_000,     // $55.5B - Strategy (~320M shares per strategy.com, Jan 2026)
+
   // === ETH Treasury Companies ===
   "SBET": 2_363_000_000,      // $2.36B - SharpLink Gaming (fully diluted)
   "BMNR": 14_170_000_000,     // $14.17B - Bitmine (~430M shares × $31.20, Jan 2026)

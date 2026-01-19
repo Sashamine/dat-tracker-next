@@ -188,11 +188,10 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
-    marketCap: 50_000_000_000,  // ~$50B (Jan 2026)
-    sharesForMnav: 325_000_000,  // Strategy's "Assumed Diluted Shares" methodology (all converts, options, RSUs)
+    marketCap: 55_500_000_000,  // ~$55.5B per strategy.com (~320M shares, Jan 2026)
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
-    totalDebt: 8_200_000_000,  // ~$8.2B in convertible debt (Q2 2025)
-    preferredEquity: 7_800_000_000,  // ~$7.8B in preferred stock (STRK/STRF/STRC/STRD)
+    totalDebt: 8_244_000_000,  // $8.244B per strategy.com (Jan 2026)
+    preferredEquity: 8_064_000_000,  // $8.064B per strategy.com (Jan 2026)
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (Jan 2026 8-K)
     leader: "Michael Saylor (Executive Chairman)",
