@@ -31,6 +31,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "XXI": 4_000_000_000,       // $4B - 21 Capital (SPAC merger valuation)
   "CEPO": 3_500_000_000,      // $3.5B - BSTR Holdings (pre-merger SPAC)
   "XRPN": 1_000_000_000,      // $1B - Evernorth Holdings (SPAC merger)
+  "ETHM": 230_000_000,        // $230M - Ether Machine (pending SPAC merger with Dynamix)
 
   // === SOL/Other Treasury Companies ===
   "FWDI": 1_600_000_000,      // $1.6B - Forward Industries (SOL treasury, PIPE raise)
@@ -57,6 +58,9 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   "0434.HK": { price: 1.50, marketCap: 500_000_000 },      // Boyaa Interactive (HKD)
   "ALTBG": { price: 0.50, marketCap: 200_000_000 },        // Blockchain Group (EUR)
   "H100.ST": { price: 0.10, marketCap: 150_000_000 },      // H100 Group (SEK)
+
+  // SPACs/Pre-merger (limited data availability)
+  "ETHM": { price: 10.00, marketCap: 230_000_000 },        // Ether Machine (pending SPAC merger)
 
   // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
