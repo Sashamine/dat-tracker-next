@@ -1638,11 +1638,13 @@ export function getQuarterlyYieldLeaderboard(options?: {
 
     const growthPct = ((endSnapshot.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
 
-    // Calculate annualized
-    const yearsFraction = daysCovered / 365.25;
-    const annualizedGrowthPct = yearsFraction > 0
-      ? (Math.pow(endSnapshot.holdingsPerShare / startSnapshot.holdingsPerShare, 1 / yearsFraction) - 1) * 100
-      : 0;
+    // Only calculate annualized with 12+ months of data (330+ days)
+    // Short periods produce misleading extrapolations
+    let annualizedGrowthPct: number | undefined;
+    if (daysCovered >= 330) {
+      const yearsFraction = daysCovered / 365.25;
+      annualizedGrowthPct = (Math.pow(endSnapshot.holdingsPerShare / startSnapshot.holdingsPerShare, 1 / yearsFraction) - 1) * 100;
+    }
 
     metrics.push({
       ticker,

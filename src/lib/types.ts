@@ -177,7 +177,7 @@ export interface TreasuryYieldMetrics {
   holdingsPerShareStart: number;
   holdingsPerShareEnd: number;
   growthPct: number;
-  annualizedGrowthPct: number;
+  annualizedGrowthPct?: number;  // Only populated with 12+ months of data
   rank?: number;
   // Data freshness
   startDate: string;

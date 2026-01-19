@@ -173,10 +173,12 @@ export function TreasuryYieldLeaderboard({
                       {item.growthPct >= 0 ? "+" : ""}
                       {item.growthPct.toFixed(1)}%
                     </span>
-                    <div className="text-xs text-gray-400">
-                      {item.annualizedGrowthPct >= 0 ? "+" : ""}
-                      {item.annualizedGrowthPct.toFixed(0)}% ann.
-                    </div>
+                    {item.annualizedGrowthPct !== undefined && (
+                      <div className="text-xs text-gray-400">
+                        {item.annualizedGrowthPct >= 0 ? "+" : ""}
+                        {item.annualizedGrowthPct.toFixed(0)}% ann.
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell className="text-right hidden sm:table-cell">
                     <div className="text-xs text-gray-500">
