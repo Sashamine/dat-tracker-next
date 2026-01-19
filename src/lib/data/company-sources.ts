@@ -32,7 +32,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   MSTR: {
     ticker: "MSTR",
     name: "Strategy (MicroStrategy)",
-    officialDashboard: "https://www.strategy.com/purchases",
+    // Note: strategy.com has bot protection, using SEC as primary link
     investorRelations: "https://www.strategy.com/investor-relations",
     secCik: "1050446",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",
