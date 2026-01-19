@@ -39,20 +39,20 @@ export function CompanyMNAVChart({
   // Get mNAV history from pre-calculated data
   const mnavHistory = useMemo(() => {
     const result: { time: Time; value: number }[] = [];
-
-    // Filter time range
     const now = new Date();
-    let startDate: Date;
+    const today = now.toISOString().split('T')[0];
 
+    // For short ranges (1d, 7d), just show current mNAV
+    if (timeRange === "1d" || timeRange === "7d") {
+      if (currentMNAV) {
+        return [{ time: today as Time, value: currentMNAV }];
+      }
+      return [];
+    }
+
+    // Calculate start date for filtering
+    let startDate: Date;
     switch (timeRange) {
-      case "1d":
-      case "7d":
-        // For short ranges, just show current mNAV (no historical data at this granularity)
-        if (currentMNAV) {
-          const today = now.toISOString().split('T')[0] as Time;
-          return [{ time: today, value: currentMNAV }];
-        }
-        return [];
       case "1mo":
         startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
         break;
@@ -79,13 +79,12 @@ export function CompanyMNAVChart({
       }
     }
 
-    // Add current mNAV as the latest point
-    if (currentMNAV && result.length > 0) {
-      const today = now.toISOString().split('T')[0] as Time;
-      // Only add if different from last point's date
+    // Always add current mNAV as the latest point if available
+    if (currentMNAV) {
+      // Only add if we don't already have a point for today
       const lastPoint = result[result.length - 1];
-      if (lastPoint.time !== today) {
-        result.push({ time: today, value: currentMNAV });
+      if (!lastPoint || lastPoint.time !== today) {
+        result.push({ time: today as Time, value: currentMNAV });
       }
     }
 
