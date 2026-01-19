@@ -72,7 +72,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 100_000_000,
     hasOptions: true,
     marketCap: 230_000_000,  // ~$230M (Jan 2026)
-    pendingMerger: false,    // Show mNAV (merger closed)
+    pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
     notes: "SPAC merger with Dynamix. 3rd largest ETH treasury.",
