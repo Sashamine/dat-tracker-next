@@ -82,8 +82,17 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
 
   const isLoading = isLoadingMNAV || isLoadingBTC;
 
-  // Use stats from parent (single source of truth)
-  const currentStats = mnavStats;
+  // Use API's current values when available for consistency with historical data
+  // Fall back to parent stats (from useMNAVStats hook) when API data isn't ready
+  const currentStats = useMemo(() => {
+    if (mnavHistoryData?.current && mnavHistoryData.current.median > 0) {
+      return {
+        median: mnavHistoryData.current.median,
+        average: mnavHistoryData.current.average,
+      };
+    }
+    return mnavStats;
+  }, [mnavHistoryData, mnavStats]);
 
   // Determine if we have enough real data for the selected time range
   const realDataForRange = useMemo(() => {
@@ -132,7 +141,9 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
     }
 
     // Fall back to estimation from BTC price changes
-    if (!btcHistory || btcHistory.length === 0 || !currentBTCPrice) {
+    // Use API's BTC price for consistency when available
+    const btcPriceForEstimation = mnavHistoryData?.current?.btcPrice || currentBTCPrice;
+    if (!btcHistory || btcHistory.length === 0 || !btcPriceForEstimation) {
       return [];
     }
 
@@ -144,7 +155,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
       const historicalBTCPrice = point.price;
 
       // Estimate historical mNAV based on BTC price ratio with dampening
-      const priceRatio = currentBTCPrice / historicalBTCPrice;
+      const priceRatio = btcPriceForEstimation / historicalBTCPrice;
       const dampening = 0.5;
       const adjustedRatio = 1 + (priceRatio - 1) * dampening;
 
@@ -180,7 +191,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
     }
 
     return result;
-  }, [useRealData, realDataForRange, btcHistory, currentBTCPrice, currentStats, timeRange]);
+  }, [useRealData, realDataForRange, btcHistory, currentBTCPrice, currentStats, timeRange, mnavHistoryData]);
 
   // Calculate change from start
   const change = useMemo(() => {
