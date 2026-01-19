@@ -1,6 +1,6 @@
 /**
- * Market Cap Overrides - Single Source of Truth
- * ==============================================
+ * Market Cap Overrides - Single Source of Truth (v2)
+ * ===================================================
  *
  * FMP (Financial Modeling Prep) sometimes returns incorrect market caps:
  * - Non-USD stocks: Returns local currency as if it were USD
