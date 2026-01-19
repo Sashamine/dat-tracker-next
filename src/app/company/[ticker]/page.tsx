@@ -389,18 +389,66 @@ export default function CompanyPage() {
           )}
         </div>
 
-        {/* Asset Breakdown - only show if there are other assets */}
+        {/* Equity Value - Balance Sheet Summary */}
         {(otherAssets > 0 || cryptoHoldingsValue > 0) && (
           <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              Net Asset Value Breakdown
+              Equity Value (What Shareholders Own)
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            {/* Lead with Equity NAV */}
+            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700 mb-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Equity NAV</p>
+                  <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+                    {formatLargeNumber(nav - totalDebt - preferredEquity)}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
+                  <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
+                    {formatLargeNumber(marketCap)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Equation breakdown */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 mb-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">How it's calculated</p>
+              <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
+                <span className="text-gray-400"> {displayCompany.asset}</span>
+                {cashReserves > 0 && (
+                  <>
+                    <span className="text-green-600"> + {formatLargeNumber(cashReserves)}</span>
+                    <span className="text-gray-400"> cash</span>
+                  </>
+                )}
+                {totalDebt > 0 && (
+                  <>
+                    <span className="text-red-600"> − {formatLargeNumber(totalDebt)}</span>
+                    <span className="text-gray-400"> debt</span>
+                  </>
+                )}
+                {preferredEquity > 0 && (
+                  <>
+                    <span className="text-red-600"> − {formatLargeNumber(preferredEquity)}</span>
+                    <span className="text-gray-400"> preferred</span>
+                  </>
+                )}
+                <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(nav - totalDebt - preferredEquity)}</span>
+              </p>
+            </div>
+
+            {/* Detailed grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                   {displayCompany.asset} Holdings
                 </p>
-                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
                 </p>
                 <p className="text-xs text-gray-400">
@@ -412,21 +460,10 @@ export default function CompanyPage() {
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                     Cash Reserves
                   </p>
-                  <p className="text-xl font-bold text-green-600">
-                    {formatLargeNumber(cashReserves)}
+                  <p className="text-lg font-bold text-green-600">
+                    +{formatLargeNumber(cashReserves)}
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
-                </div>
-              )}
-              {otherInvestments > 0 && (
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    Other Investments
-                  </p>
-                  <p className="text-xl font-bold text-blue-600">
-                    {formatLargeNumber(otherInvestments)}
-                  </p>
-                  <p className="text-xs text-gray-400">Equity stakes, etc.</p>
                 </div>
               )}
               {totalDebt > 0 && (
@@ -434,8 +471,8 @@ export default function CompanyPage() {
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                     Total Debt
                   </p>
-                  <p className="text-xl font-bold text-red-600">
-                    -{formatLargeNumber(totalDebt)}
+                  <p className="text-lg font-bold text-red-600">
+                    −{formatLargeNumber(totalDebt)}
                   </p>
                   <p className="text-xs text-gray-400">Convertibles & loans</p>
                 </div>
@@ -445,21 +482,12 @@ export default function CompanyPage() {
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                     Preferred Equity
                   </p>
-                  <p className="text-xl font-bold text-red-600">
-                    -{formatLargeNumber(preferredEquity)}
+                  <p className="text-lg font-bold text-red-600">
+                    −{formatLargeNumber(preferredEquity)}
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>
               )}
-              <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-3 border border-indigo-200 dark:border-indigo-700">
-                <p className="text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wide font-medium">
-                  Equity NAV
-                </p>
-                <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-                  {formatLargeNumber(nav - totalDebt - preferredEquity)}
-                </p>
-                <p className="text-xs text-indigo-500">Net of liabilities</p>
-              </div>
             </div>
           </div>
         )}
