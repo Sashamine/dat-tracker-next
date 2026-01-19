@@ -22,6 +22,7 @@ import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
 import { MNAVTooltip } from "@/components/mnav-tooltip";
+import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -326,6 +327,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 holdings={company.holdings}
                 usesCustomShares={company.usesCustomShares}
                 sharesForMnav={company.sharesForMnav}
+                holdingsSourceUrl={company.holdingsSourceUrl}
+                officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
               />
             )}
           </p>
@@ -469,6 +473,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         holdings={company.holdings}
                         usesCustomShares={company.usesCustomShares}
                         sharesForMnav={company.sharesForMnav}
+                        holdingsSourceUrl={company.holdingsSourceUrl}
+                        officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                        secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                       />
                     )}
                   </TableCell>

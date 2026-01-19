@@ -24,6 +24,10 @@ interface MNAVTooltipProps {
   // Whether market cap was calculated from sharesForMnav
   usesCustomShares?: boolean;
   sharesForMnav?: number;
+  // Source links
+  holdingsSourceUrl?: string;
+  officialDashboard?: string;
+  secFilingsUrl?: string;
 }
 
 function formatCompact(num: number): string {
@@ -54,7 +58,13 @@ export function MNAVTooltip({
   holdings,
   usesCustomShares,
   sharesForMnav,
+  holdingsSourceUrl,
+  officialDashboard,
+  secFilingsUrl,
 }: MNAVTooltipProps) {
+  // Determine best source link (priority: official dashboard > holdings source > SEC)
+  const sourceUrl = officialDashboard || holdingsSourceUrl || secFilingsUrl;
+  const sourceLabel = officialDashboard ? "Official Dashboard" : holdingsSourceUrl ? "Holdings Source" : secFilingsUrl ? "SEC Filings" : null;
   // Calculate EV and NAV for display
   const ev = marketCap + totalDebt + preferredEquity - cashReserves;
   const nav = holdingsValue + otherInvestments + cashReserves;
@@ -154,6 +164,19 @@ export function MNAVTooltip({
               <div className="text-[10px] text-gray-500 border-t border-gray-700 pt-1">
                 Market cap uses {(sharesForMnav / 1_000_000).toFixed(1)}M shares (company methodology)
               </div>
+            )}
+
+            {/* Source link */}
+            {sourceUrl && (
+              <a
+                href={sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="block text-[11px] text-blue-400 hover:text-blue-300 border-t border-gray-700 pt-2 mt-2"
+              >
+                {sourceLabel} →
+              </a>
             )}
           </div>
         </TooltipContent>
