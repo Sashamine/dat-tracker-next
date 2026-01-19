@@ -187,6 +187,19 @@ export default function CompanyPage() {
 
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
+
+  // Debug: Log which data source is being used
+  console.log(`[Company Page Debug] ${ticker}:`, {
+    usingCompanyFromAllCompanies: !!companyFromAllCompanies,
+    holdings: displayCompany.holdings,
+    cashReserves: displayCompany.cashReserves,
+    totalDebt: displayCompany.totalDebt,
+    preferredEquity: displayCompany.preferredEquity,
+    sharesForMnav: displayCompany.sharesForMnav,
+    marketCapForMnav,
+    cryptoPrice,
+    calculatedMNAV: mNAV,
+  });
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
   const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);

@@ -117,6 +117,20 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const mNAV = getCompanyMNAV(company, prices);
     const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
 
+    // Debug: Log MSTR data for comparison
+    if (company.ticker === "MSTR") {
+      console.log(`[Data Table Debug] MSTR:`, {
+        holdings: company.holdings,
+        cashReserves: company.cashReserves,
+        totalDebt: company.totalDebt,
+        preferredEquity: company.preferredEquity,
+        sharesForMnav: company.sharesForMnav,
+        marketCapForMnav,
+        cryptoPrice,
+        calculatedMNAV: mNAV,
+      });
+    }
+
     // Determine company type
     const companyType = company.isMiner ? "Miner" : "Treasury";
 
