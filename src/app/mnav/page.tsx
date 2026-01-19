@@ -7,10 +7,9 @@ import { MobileHeader } from "@/components/mobile-header";
 import { useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
-import { calculateMNAV } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { cn } from "@/lib/utils";
-import { Company, Asset } from "@/lib/types";
+import { Company } from "@/lib/types";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/earnings-data";
 
@@ -21,13 +20,6 @@ interface CryptoHistoryPoint {
   price: number;
 }
 
-// Calculate median of array
-function median(arr: number[]): number {
-  if (arr.length === 0) return 0;
-  const sorted = [...arr].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-}
 
 // Fetch BTC history for a given time range
 async function fetchBTCHistory(range: TimeRange): Promise<CryptoHistoryPoint[]> {
@@ -37,15 +29,14 @@ async function fetchBTCHistory(range: TimeRange): Promise<CryptoHistoryPoint[]> 
 }
 
 interface MNAVChartProps {
-  companies: Company[];
-  prices: any;
+  mnavStats: { median: number; average: number };
   timeRange: TimeRange;
   title: string;
   showMedian?: boolean;
   showAverage?: boolean;
 }
 
-function MNAVChart({ companies, prices, timeRange, title, showMedian = true, showAverage = true }: MNAVChartProps) {
+function MNAVChart({ mnavStats, timeRange, title, showMedian = true, showAverage = true }: MNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
@@ -56,25 +47,8 @@ function MNAVChart({ companies, prices, timeRange, title, showMedian = true, sho
     staleTime: 5 * 60 * 1000,
   });
 
-  // Calculate current mNAV stats (excluding pending merger SPACs)
-  const currentStats = useMemo(() => {
-    const mnavs = companies
-      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
-      .map((company) => {
-        const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
-        const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
-        return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
-      })
-      .filter((m): m is number => m !== null && m > 0 && m < 20);
-
-    if (mnavs.length === 0) return { median: 0, average: 0 };
-
-    return {
-      median: median(mnavs),
-      average: mnavs.reduce((a, b) => a + b, 0) / mnavs.length,
-    };
-  }, [companies, prices]);
+  // Use stats from parent (single source of truth)
+  const currentStats = mnavStats;
 
   // Check if time format is Unix timestamp (intraday) or date string
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";

@@ -15,8 +15,7 @@ import { Company } from "@/lib/types";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
 import { useFilters } from "@/lib/hooks/use-filters";
-import { calculateMNAV } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 
 // Get unique assets and count companies
 function getAssetStats(companies: Company[], prices: any) {
@@ -30,13 +29,6 @@ function getAssetStats(companies: Company[], prices: any) {
   }).sort((a, b) => b.totalValue - a.totalValue);
 }
 
-// Calculate median of an array
-function median(arr: number[]): number {
-  if (arr.length === 0) return 0;
-  const sorted = [...arr].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-}
 
 function HomeContent() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -70,25 +62,8 @@ function HomeContent() {
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
   const totalCompanies = companies.length;
 
-  // Calculate mNAV stats for all companies (excluding pending merger SPACs)
-  const mnavStats = useMemo(() => {
-    const mnavs = companies
-      .filter((company) => !company.pendingMerger) // Exclude pre-merger SPACs
-      .map((company) => {
-        const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
-        const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCap(company, stockData);
-        return calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
-      })
-      .filter((mnav): mnav is number => mnav !== null && mnav > 0 && mnav < 10);
-
-    if (mnavs.length === 0) return { median: 0, average: 0, count: 0, mnavs: [] };
-
-    const avg = mnavs.reduce((sum, m) => sum + m, 0) / mnavs.length;
-    const med = median(mnavs);
-
-    return { median: med, average: avg, count: mnavs.length, mnavs };
-  }, [companies, prices]);
+  // Use shared mNAV stats hook - single source of truth
+  const mnavStats = useMNAVStats(companies, prices);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
