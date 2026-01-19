@@ -18,13 +18,13 @@ import {
 import { cn } from "@/lib/utils";
 import {
   calculateNAV,
-  calculateMNAV,
   formatLargeNumber,
   formatTokenAmount,
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getMarketCap } from "@/lib/utils/market-cap";
+import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { MobileHeader } from "@/components/mobile-header";
 
 // Asset metadata
@@ -113,12 +113,11 @@ export default function AssetPage() {
   const companiesWithMetrics = companies.map((company) => {
     const stockData = prices?.stocks[company.ticker];
     const { marketCap } = getMarketCap(company, stockData);
-    const { marketCap: marketCapForMnav } = getMarketCapForMnav(company, stockData);
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 
     const holdingsValue = calculateNAV(company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
-    const mNAV = calculateMNAV(marketCapForMnav, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
+    const mNAV = getCompanyMNAV(company, prices);
 
     return {
       ...company,

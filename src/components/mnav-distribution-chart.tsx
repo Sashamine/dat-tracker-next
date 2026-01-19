@@ -2,8 +2,7 @@
 
 import { useMemo } from "react";
 import { Company } from "@/lib/types";
-import { calculateMNAV } from "@/lib/calculations";
-import { getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -31,17 +30,14 @@ const BUCKETS = [
 
 export function MNAVDistributionChart({ companies, prices, compact = false }: MNAVDistributionChartProps) {
   const { bucketCounts, median, average, totalCount } = useMemo(() => {
-    // Calculate mNAV for each company
+    // Calculate mNAV for each company using shared function
     const mnavs = companies
       .map((company) => {
-        const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
-        const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCapForMnav(company, stockData);
-        const mnav = calculateMNAV(marketCap, company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0, company.totalDebt || 0, company.preferredEquity || 0);
+        const mnav = getCompanyMNAV(company, prices);
         return { ticker: company.ticker, mnav };
       })
       .filter((item): item is { ticker: string; mnav: number } =>
-        item.mnav !== null && item.mnav > 0 && item.mnav < 10
+        item.mnav !== null
       );
 
     // Count companies in each bucket
