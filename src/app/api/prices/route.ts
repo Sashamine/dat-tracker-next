@@ -23,6 +23,7 @@ const FMP_ONLY_STOCKS = [
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
+  "XTAIF",     // xTAO Inc (Canadian OTC - TSX Venture)
   ];
 
 // Cache for prices (2 second TTL)
