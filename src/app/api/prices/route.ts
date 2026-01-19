@@ -14,6 +14,7 @@ const FMP_TICKER_MAP: Record<string, string> = {
 };
 const FMP_ONLY_STOCKS = [
   "MSTR",      // Strategy - use FMP for price since Alpaca not working on Vercel
+  "ETHM",      // Ether Machine - Alpaca not returning data
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris) - FMP ticker
   "ALTBG",     // The Blockchain Group - display ticker (not valid on Alpaca)
   "LUXFF",     // Luxxfolio (OTC)
