@@ -16,7 +16,7 @@ import {
   calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
-import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getMarketCap } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
@@ -100,9 +100,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     // Use centralized market cap utility (handles currency, fallbacks)
     const marketCapResult = getMarketCap(company, stockData);
     const marketCap = marketCapResult.marketCap;
-    // Use company's methodology for mNAV (may differ from display market cap)
-    const marketCapForMnavResult = getMarketCapForMnav(company, stockData);
-    const marketCapForMnav = marketCapForMnavResult.marketCap;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
     const holdingsValue = company.holdings * cryptoPrice;
@@ -124,7 +121,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       ...company,
       holdingsValue,
       marketCap,
-      marketCapForMnav,
       stockPrice,
       stockChange,
       stockVolume,
@@ -133,8 +129,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       companyType,
       isAfterHours,
       otherAssets,
-      // For mNAV tooltip
-      usesCustomShares: marketCapForMnavResult.source === "calculated",
     };
   });
 
@@ -321,7 +315,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
             {company.pendingMerger ? "—" : (
               <MNAVTooltip
                 mNAV={company.mNAV}
-                marketCap={company.marketCapForMnav}
+                marketCap={company.marketCap}
                 holdingsValue={company.holdingsValue}
                 totalDebt={company.totalDebt}
                 preferredEquity={company.preferredEquity}
@@ -330,8 +324,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 ticker={company.ticker}
                 asset={company.asset}
                 holdings={company.holdings}
-                usesCustomShares={company.usesCustomShares}
-                sharesForMnav={company.sharesForMnav}
                 holdingsSourceUrl={company.holdingsSourceUrl}
                 officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
@@ -472,7 +464,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     ) : (
                       <MNAVTooltip
                         mNAV={company.mNAV}
-                        marketCap={company.marketCapForMnav}
+                        marketCap={company.marketCap}
                         holdingsValue={company.holdingsValue}
                         totalDebt={company.totalDebt}
                         preferredEquity={company.preferredEquity}
@@ -481,8 +473,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         ticker={company.ticker}
                         asset={company.asset}
                         holdings={company.holdings}
-                        usesCustomShares={company.usesCustomShares}
-                        sharesForMnav={company.sharesForMnav}
                         holdingsSourceUrl={company.holdingsSourceUrl}
                         officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                         secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}

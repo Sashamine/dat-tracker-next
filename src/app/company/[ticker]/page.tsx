@@ -36,7 +36,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getMarketCap } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
@@ -176,9 +176,6 @@ export default function CompanyPage() {
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
   const { marketCap } = getMarketCap(displayCompany, stockData);
-  const marketCapForMnavResult = getMarketCapForMnav(displayCompany, stockData);
-  const marketCapForMnav = marketCapForMnavResult.marketCap;
-  const usesCustomShares = marketCapForMnavResult.source === "calculated";
 
   // Other assets (cash + investments)
   const cashReserves = displayCompany.cashReserves || 0;
@@ -192,8 +189,7 @@ export default function CompanyPage() {
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
 
-  // Use marketCapForMnav for share calculations to match mNAV methodology
-  const sharesOutstanding = marketCapForMnav && stockPrice ? marketCapForMnav / stockPrice : 0;
+  const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
   const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(displayCompany.holdings, sharesOutstanding);
@@ -553,13 +549,8 @@ export default function CompanyPage() {
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {formatLargeNumber(marketCapForMnav)}
+              {formatLargeNumber(marketCap)}
             </p>
-            {usesCustomShares && displayCompany.sharesForMnav && (
-              <p className="text-xs text-gray-400">
-                {(displayCompany.sharesForMnav / 1_000_000).toFixed(0)}M diluted shares
-              </p>
-            )}
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset}/Share</p>
