@@ -576,7 +576,7 @@ export default function CompanyPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <div className="flex items-center justify-between mb-1">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Holdings</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset} Holdings</p>
               <StalenessBadge
                 lastUpdated={displayCompany.holdingsLastUpdated}
                 source={displayCompany.holdingsSource}
@@ -584,7 +584,7 @@ export default function CompanyPage() {
               />
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {formatLargeNumber(nav)}
+              {formatLargeNumber(cryptoHoldingsValue)}
             </p>
             <Citation
               sourceType={displayCompany.holdingsSource}
