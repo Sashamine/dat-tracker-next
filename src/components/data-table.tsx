@@ -21,6 +21,7 @@ import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
+import { MNAVTooltip } from "@/components/mnav-tooltip";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -122,6 +123,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       ...company,
       holdingsValue,
       marketCap,
+      marketCapForMnav,
       stockPrice,
       stockChange,
       stockVolume,
@@ -130,6 +132,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       companyType,
       isAfterHours,
       otherAssets,
+      // For mNAV tooltip
+      usesCustomShares: marketCapForMnavResult.source === "calculated",
     };
   });
 
@@ -308,7 +312,22 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
         <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">
-            {company.pendingMerger ? "—" : formatMNAV(company.mNAV)}
+            {company.pendingMerger ? "—" : (
+              <MNAVTooltip
+                mNAV={company.mNAV}
+                marketCap={company.marketCapForMnav}
+                holdingsValue={company.holdingsValue}
+                totalDebt={company.totalDebt}
+                preferredEquity={company.preferredEquity}
+                cashReserves={company.cashReserves}
+                otherInvestments={company.otherInvestments}
+                ticker={company.ticker}
+                asset={company.asset}
+                holdings={company.holdings}
+                usesCustomShares={company.usesCustomShares}
+                sharesForMnav={company.sharesForMnav}
+              />
+            )}
           </p>
         </div>
         <div>
@@ -437,7 +456,20 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     {company.pendingMerger ? (
                       <span className="text-gray-400" title="mNAV not available for pre-merger SPACs">—</span>
                     ) : (
-                      formatMNAV(company.mNAV)
+                      <MNAVTooltip
+                        mNAV={company.mNAV}
+                        marketCap={company.marketCapForMnav}
+                        holdingsValue={company.holdingsValue}
+                        totalDebt={company.totalDebt}
+                        preferredEquity={company.preferredEquity}
+                        cashReserves={company.cashReserves}
+                        otherInvestments={company.otherInvestments}
+                        ticker={company.ticker}
+                        asset={company.asset}
+                        holdings={company.holdings}
+                        usesCustomShares={company.usesCustomShares}
+                        sharesForMnav={company.sharesForMnav}
+                      />
                     )}
                   </TableCell>
                   <TableCell className="text-right font-mono text-sm">
