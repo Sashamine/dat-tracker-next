@@ -25,7 +25,6 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
   calculateNAV,
-  calculateMNAV,
   calculateNAVPerShare,
   calculateNAVDiscount,
   calculateHoldingsPerShare,
@@ -38,6 +37,7 @@ import {
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { getMarketCap, getMarketCapForMnav } from "@/lib/utils/market-cap";
+import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
 import { Citation } from "@/components/citation";
@@ -112,15 +112,10 @@ export default function CompanyPage() {
       return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
     };
 
+    // Use getCompanyMNAV for consistency with overview page
     const mnavs = allCompanies
-      .filter((c) => !c.pendingMerger)
-      .map((c) => {
-        const cryptoPrice = prices?.crypto[c.asset]?.price || 0;
-        const stockData = prices?.stocks[c.ticker];
-        const { marketCap } = getMarketCapForMnav(c, stockData);
-        return calculateMNAV(marketCap, c.holdings, cryptoPrice, c.cashReserves || 0, c.otherInvestments || 0, c.totalDebt || 0, c.preferredEquity || 0);
-      })
-      .filter((m): m is number => m !== null && m > 0 && m < 10);
+      .map((c) => getCompanyMNAV(c, prices))
+      .filter((m): m is number => m !== null);
 
     const mnavStats = {
       median: mnavs.length > 0 ? median(mnavs) : 0,
@@ -184,15 +179,10 @@ export default function CompanyPage() {
 
   // Calculate metrics (including other assets in NAV)
   const nav = calculateNAV(company.holdings, cryptoPrice, cashReserves, otherInvestments);
-  const mNAV = calculateMNAV(
-    marketCapForMnav,
-    company.holdings,
-    cryptoPrice,
-    cashReserves,
-    otherInvestments,
-    company.totalDebt || 0,
-    company.preferredEquity || 0
-  );
+
+  // Get mNAV from allCompanies (same source as overview page) for consistency
+  const companyFromAllCompanies = allCompanies.find(c => c.ticker === ticker);
+  const mNAV = companyFromAllCompanies ? getCompanyMNAV(companyFromAllCompanies, prices) : null;
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
   const navPerShare = calculateNAVPerShare(company.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
