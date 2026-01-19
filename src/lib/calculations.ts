@@ -116,23 +116,34 @@ export function calculateMNAV(
 }
 
 // Calculate mNAV 24h change percentage
-// Formula: mNAV_change = ((1 + stock_change) / (1 + crypto_change) - 1) * 100
-// If stock goes up more than crypto, mNAV increases. If crypto goes up more, mNAV decreases.
+// Since mNAV = EV / Crypto NAV, and EV = Market Cap + Debt + Preferred - Cash,
+// only Market Cap changes with stock price (debt/preferred/cash are constant).
+// Formula: mNAV_change = (1 + α × stock_change) / (1 + crypto_change) - 1
+// Where α = Market Cap / EV (the fraction of EV that moves with stock price)
 export function calculateMNAVChange(
   stockChange24h: number | undefined,
-  cryptoChange24h: number | undefined
+  cryptoChange24h: number | undefined,
+  marketCap: number = 0,
+  totalDebt: number = 0,
+  preferredEquity: number = 0,
+  cashReserves: number = 0
 ): number | null {
   if (stockChange24h === undefined || cryptoChange24h === undefined) return null;
 
   // Convert percentages to decimals
-  const stockFactor = 1 + stockChange24h / 100;
-  const cryptoFactor = 1 + cryptoChange24h / 100;
+  const stockChangeDec = stockChange24h / 100;
+  const cryptoChangeDec = cryptoChange24h / 100;
 
-  // Avoid division by zero or negative factors
-  if (cryptoFactor <= 0 || stockFactor <= 0) return null;
+  // Calculate EV and the market cap fraction (α)
+  const ev = marketCap + totalDebt + preferredEquity - cashReserves;
+  const alpha = ev > 0 ? marketCap / ev : 1; // Default to 1 if no EV data (legacy behavior)
 
-  // Calculate mNAV change percentage
-  return (stockFactor / cryptoFactor - 1) * 100;
+  // Avoid division by zero
+  if (1 + cryptoChangeDec <= 0) return null;
+
+  // mNAV change: only α portion of EV moves with stock price
+  // mNAV_new / mNAV_old = (1 + α × stock_change) / (1 + crypto_change)
+  return ((1 + alpha * stockChangeDec) / (1 + cryptoChangeDec) - 1) * 100;
 }
 
 // Calculate NAV discount/premium

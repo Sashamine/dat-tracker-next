@@ -109,10 +109,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const cashReserves = company.cashReserves || 0;
     const otherInvestments = company.otherInvestments || 0;
     const otherAssets = cashReserves + otherInvestments;
+    const totalDebt = company.totalDebt || 0;
+    const preferredEquity = company.preferredEquity || 0;
 
     // mNAV uses shared calculation for consistency across all pages
     const mNAV = getCompanyMNAV(company, prices);
-    const mNAVChange = calculateMNAVChange(stockChange, cryptoChange);
+    // mNAV change accounts for EV-based calculation (debt/preferred don't move with stock price)
+    const mNAVChange = calculateMNAVChange(stockChange, cryptoChange, marketCap, totalDebt, preferredEquity, cashReserves);
 
     // Determine company type
     const companyType = company.isMiner ? "Miner" : "Treasury";
