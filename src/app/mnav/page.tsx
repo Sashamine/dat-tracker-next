@@ -223,19 +223,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
       },
     });
 
-    if (showMedian) {
-      const medianSeries = chart.addSeries(LineSeries, {
-        color: "#6366f1",
-        lineWidth: 2,
-        title: "Median",
-        priceFormat: {
-          type: "custom",
-          formatter: (price: number) => price.toFixed(2) + "x",
-        },
-      });
-      medianSeries.setData(historicalData.map(d => ({ time: d.time, value: d.median })));
-    }
-
+    // Add Average first so Median appears on top in legend
     if (showAverage) {
       const averageSeries = chart.addSeries(LineSeries, {
         color: "#a855f7",
@@ -247,6 +235,19 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
         },
       });
       averageSeries.setData(historicalData.map(d => ({ time: d.time, value: d.average })));
+    }
+
+    if (showMedian) {
+      const medianSeries = chart.addSeries(LineSeries, {
+        color: "#6366f1",
+        lineWidth: 2,
+        title: "Median",
+        priceFormat: {
+          type: "custom",
+          formatter: (price: number) => price.toFixed(2) + "x",
+        },
+      });
+      medianSeries.setData(historicalData.map(d => ({ time: d.time, value: d.median })));
     }
 
     // Fair value line at 1.0x
