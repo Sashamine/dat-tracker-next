@@ -85,7 +85,8 @@ export default function CompanyPage() {
   const intel = useMemo(() => getCompanyIntel(ticker), [ticker]);
 
   // Fetch all companies for sidebar stats (shared cache with main page)
-  const { data: companiesData } = useCompanies();
+  // This is the SAME data source as the main page, ensuring mNAV consistency
+  const { data: companiesData, isLoading: isLoadingCompanies } = useCompanies();
   const allCompanies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
     return mergeAllCompanies(baseCompanies, overrides);
@@ -133,7 +134,8 @@ export default function CompanyPage() {
     setInterval(DEFAULT_INTERVAL[newRange]);
   };
 
-  if (isLoadingCompany) {
+  // Wait for BOTH data sources to load to ensure consistency with main page
+  if (isLoadingCompany || isLoadingCompanies) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
@@ -191,6 +193,7 @@ export default function CompanyPage() {
   // Debug: Log which data source is being used
   console.log(`[Company Page Debug] ${ticker}:`, {
     usingCompanyFromAllCompanies: !!companyFromAllCompanies,
+    allCompaniesLength: allCompanies.length,
     holdings: displayCompany.holdings,
     cashReserves: displayCompany.cashReserves,
     totalDebt: displayCompany.totalDebt,
