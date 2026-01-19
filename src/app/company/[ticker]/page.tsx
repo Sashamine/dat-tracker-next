@@ -190,7 +190,9 @@ export default function CompanyPage() {
   const mNAV = getCompanyMNAV(displayCompany, prices);
 
   const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
-  const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments);
+  const totalDebt = displayCompany.totalDebt || 0;
+  const preferredEquity = displayCompany.preferredEquity || 0;
+  const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(displayCompany.holdings, sharesOutstanding);
 

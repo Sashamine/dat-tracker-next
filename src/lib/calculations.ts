@@ -77,16 +77,21 @@ export function calculateNAV(
   return (holdings * assetPrice) + cashReserves + otherInvestments;
 }
 
-// Calculate NAV per share
+// Calculate NAV per share (equity value per share, net of liabilities)
+// This should be consistent with mNAV: if mNAV > 1, stock trades above NAV per share
 export function calculateNAVPerShare(
   holdings: number,
   assetPrice: number,
   sharesOutstanding: number,
   cashReserves: number = 0,
-  otherInvestments: number = 0
+  otherInvestments: number = 0,
+  totalDebt: number = 0,
+  preferredEquity: number = 0
 ): number | null {
   if (!sharesOutstanding || sharesOutstanding <= 0) return null;
-  return calculateNAV(holdings, assetPrice, cashReserves, otherInvestments) / sharesOutstanding;
+  const grossNav = calculateNAV(holdings, assetPrice, cashReserves, otherInvestments);
+  const equityNav = grossNav - totalDebt - preferredEquity;
+  return equityNav / sharesOutstanding;
 }
 
 // Calculate mNAV (Enterprise Value / Crypto NAV) - key valuation metric
