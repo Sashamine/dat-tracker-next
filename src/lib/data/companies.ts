@@ -364,7 +364,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 15_000_000,  // Combined burn
     avgDailyVolume: 100_000_000,  // Increased post-merger
     hasOptions: true,
-    marketCap: 2_700_000_000,  // Post-merger market cap
+    marketCap: 800_000_000,  // ~$800M (815M shares × ~$0.95, Jan 2026)
     cashReserves: 77_780_000,  // Combined cash
     preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
