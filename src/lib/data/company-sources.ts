@@ -32,7 +32,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   MSTR: {
     ticker: "MSTR",
     name: "Strategy (MicroStrategy)",
-    officialDashboard: "https://www.strategy.com/purchases",
+    officialDashboard: "https://www.strategy.com",
     investorRelations: "https://www.strategy.com/investor-relations",
     secCik: "1050446",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",
@@ -210,6 +210,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   DFDV: {
     ticker: "DFDV",
     name: "DeFi Development Corp",
+    officialDashboard: "https://defidevcorp.com/dashboard",
     investorRelations: "https://defidevcorp.com/investor",
     exchange: "NASDAQ",
     sharesSource: "basic",
