@@ -546,10 +546,10 @@ export const btcCompanies: Company[] = [
     ticker: "ABTC",
     asset: "BTC",
     tier: 1,
-    holdings: 4_000,
-    holdingsLastUpdated: "2026-01-10",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=8-K",
+    holdings: 5_427,  // Jan 2, 2026 - company announcement
+    holdingsLastUpdated: "2026-01-02",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.abtc.com/content/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings",
     datStartDate: "2025-06-01",
     costBasisAvg: 85_000,
     isMiner: true,
@@ -561,7 +561,7 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 920_000_000,  // From holdings-history.ts
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
-    notes: "22nd largest BTC treasury. Surpassed GameStop in holdings.",
+    notes: "19th largest BTC treasury. 80% owned by Hut 8 (HUT). 105% BTC yield since Nasdaq debut.",
   },
   {
     id: "hut",
@@ -569,10 +569,10 @@ export const btcCompanies: Company[] = [
     ticker: "HUT",
     asset: "BTC",
     tier: 1,
-    holdings: 13_696,  // SEC 8-K Nov 4, 2025
-    holdingsLastUpdated: "2025-11-04",
+    holdings: 10_278,  // Standalone (excludes ABTC subsidiary) - Q3 2025
+    holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001964789&type=8-K&dateb=&owner=include&count=40",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001964789&type=10-Q",
     datStartDate: "2024-01-01",
     secCik: "0001964789",
     costBasisAvg: 24_000,
@@ -587,7 +587,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 35_000_000,  // ~$35M cash
     leader: "Asher Genoot (CEO)",
     strategy: "HODL miner with diversified revenue streams (hosting, HPC).",
-    notes: "Merged with US Bitcoin Corp in 2023. Operates in US and Canada.",
+    notes: "Standalone holdings (ABTC listed separately). Owns 80% of ABTC. Merged with US Bitcoin Corp 2023.",
   },
   {
     id: "corz",
