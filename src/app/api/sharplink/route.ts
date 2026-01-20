@@ -20,6 +20,7 @@ interface SharpLinkApiResponse {
   staking_rewards: Array<{ row_number: number; Date: string; 'Staking Rewards (ETH)': number }>;
   eth_concentration: Array<{ row_number: number; Date: string; 'ETH Concentration': number }>;
   mnav_data: Array<{ Date: string; mNAV: string; 'Enterprise Value': string; NAV: string }>;
+  fdmnav: Array<{ Date: string; 'Fully Diluted mNAV': string; 'Enterprise Value': string; 'Market Cap': string }>;
 }
 
 interface SharpLinkResponse {
@@ -80,7 +81,7 @@ export async function GET() {
   const latestNav = data.eth_nav[data.eth_nav.length - 1];
   const latestStaking = data.staking_rewards[data.staking_rewards.length - 1];
   const latestConcentration = data.eth_concentration[data.eth_concentration.length - 1];
-  const latestMnav = data.mnav_data?.[0];
+  const latestFdMnav = data.fdmnav?.[0];  // Use fully diluted mNAV
 
   const response: SharpLinkResponse = {
     ticker: 'SBET',
@@ -88,7 +89,7 @@ export async function GET() {
     ethNav: latestNav?.['ETH NAV'] || 0,
     stakingRewards: latestStaking?.['Staking Rewards (ETH)'] || 0,
     ethConcentration: latestConcentration?.['ETH Concentration'] || 0,
-    mNAV: latestMnav?.mNAV || 'N/A',
+    mNAV: latestFdMnav?.['Fully Diluted mNAV'] || 'N/A',  // Fully diluted mNAV
     lastUpdated: latestHoldings.Date,
     source: 'sharplink-dashboard',
   };

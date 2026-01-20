@@ -10,24 +10,23 @@ import { MNAV_COMPANY_SLUGS } from '@/lib/monitoring/sources/mnav-api';
 let batchCache: { data: Record<string, MnavCompanyData>; timestamp: number } | null = null;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+// Actual mNAV.com API response structure
 interface MnavApiResponse {
-  company: {
-    name: string;
-    ticker: string;
-    currency: string;
-  };
   latest: {
     btcHeld: number;
     btcPrice: number;
     sharePrice: number;
-    marketCap: number;
-    enterpriseValue: number;
-    mnav: number;
-    fdShares: number;
-    debt: number;
-    cash: number;
+    issuedShares: number;
+    fullyDilutedShares: number;
+    totalCash: number;
+    totalDebt: number;
+    totalPreferredStock: number;
   };
-  preparedAt: string;
+  metadata: {
+    preparedAt: string;
+    companyName: string;
+    stockSymbol: string;
+  };
 }
 
 interface MnavCompanyData {
@@ -36,9 +35,7 @@ interface MnavCompanyData {
   debt: number;
   cash: number;
   fdShares: number;
-  mnav: number;
-  marketCap: number;
-  enterpriseValue: number;
+  preferredEquity: number;
   lastUpdated: string;
 }
 
@@ -81,13 +78,11 @@ export async function GET() {
       results[ticker] = {
         ticker,
         holdings: data.latest.btcHeld,
-        debt: data.latest.debt,
-        cash: data.latest.cash,
-        fdShares: data.latest.fdShares,
-        mnav: data.latest.mnav,
-        marketCap: data.latest.marketCap,
-        enterpriseValue: data.latest.enterpriseValue,
-        lastUpdated: data.preparedAt,
+        debt: data.latest.totalDebt || 0,
+        cash: data.latest.totalCash || 0,
+        fdShares: data.latest.fullyDilutedShares || data.latest.issuedShares,
+        preferredEquity: data.latest.totalPreferredStock || 0,
+        lastUpdated: data.metadata?.preparedAt || new Date().toISOString(),
       };
     }
     // Small delay between requests to be polite

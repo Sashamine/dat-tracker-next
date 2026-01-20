@@ -21,9 +21,7 @@ interface MnavCompanyData {
   debt: number;
   cash: number;
   fdShares: number;
-  mnav: number;
-  marketCap: number;
-  enterpriseValue: number;
+  preferredEquity: number;
   lastUpdated: string;
 }
 
@@ -54,7 +52,7 @@ interface LiveCompanyData {
   debt?: number;
   cash?: number;
   fdShares?: number;
-  mnav?: number;
+  preferredEquity?: number;
   ethNav?: number;
   stakingRewards?: number;
   lastUpdated: string;
@@ -130,7 +128,7 @@ export function useCompanyOverrides() {
         debt: data.debt,
         cash: data.cash,
         fdShares: data.fdShares,
-        mnav: data.mnav,
+        preferredEquity: data.preferredEquity,
         lastUpdated: data.lastUpdated,
         source: 'mnav.com',
       };
@@ -190,15 +188,15 @@ export function mergeCompanyWithOverrides(
 
   // Merge financial data for mNAV calculation
   // Priority: Live API data (most current) > static data > database
-  // - mNAV.com provides debt, cash, holdings for BTC treasury companies
+  // - mNAV.com provides debt, cash, holdings, preferredEquity for BTC treasury companies
   // - SharpLink provides holdings for SBET
   const mergedFinancials = {
     // Use live holdings if available (both mNAV.com and SharpLink provide this)
     holdings: liveData?.holdings ?? company.holdings,
     // Use live debt from mNAV.com if available, else static, else database
     totalDebt: liveData?.debt ?? staticCompany?.totalDebt ?? company.totalDebt,
-    // Preferred equity not in live APIs, use static/database
-    preferredEquity: staticCompany?.preferredEquity ?? company.preferredEquity,
+    // Use live preferred equity from mNAV.com if available, else static, else database
+    preferredEquity: liveData?.preferredEquity ?? staticCompany?.preferredEquity ?? company.preferredEquity,
     // Use live cash from mNAV.com if available, else static, else database
     cashReserves: liveData?.cash ?? staticCompany?.cashReserves ?? company.cashReserves,
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
