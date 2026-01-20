@@ -64,34 +64,47 @@ export type MarketCapSource =
  * Get market cap for a company using the correct source.
  *
  * Priority:
- * 1. API market cap (already in USD) - PREFERRED
- * 2. Static company.marketCap (fallback)
- * 3. Zero (last resort)
+ * 1. For non-USD stocks with sharesForMnav: calculate from shares × price × forex
+ * 2. API market cap (if reliable/overridden)
+ * 3. Static company.marketCap (fallback)
+ * 4. Zero (last resort)
  *
- * NOTE: We intentionally do NOT calculate shares × price because:
- * - Non-USD stocks have price in local currency
- * - Diluted share counts are often inaccurate
- * - API already handles this correctly
+ * @param company - Company data
+ * @param stockData - Stock price data from API
+ * @param forexRates - Optional live forex rates (required for accurate non-USD calculation)
  */
 export function getMarketCap(
   company: Company,
-  stockData?: StockPriceData | null
+  stockData?: StockPriceData | null,
+  forexRates?: Record<string, number>
 ): MarketCapResult {
   const ticker = company.ticker;
   const isNonUsd = NON_USD_TICKERS.has(ticker);
   const currency = TICKER_CURRENCIES[ticker] || "USD";
 
-  // 1. API market cap is the gold standard
-  if (stockData?.marketCap && stockData.marketCap > 0) {
+  // 1. For non-USD stocks, calculate from shares × price × forex (most accurate)
+  if (isNonUsd && company.sharesForMnav && stockData?.price && stockData.price > 0) {
+    const priceInUsd = convertToUSDSync(stockData.price, currency, forexRates);
+    const calculatedMarketCap = priceInUsd * company.sharesForMnav;
     return {
-      marketCap: stockData.marketCap,
-      source: "api",
-      currency: "USD",  // API always returns USD
+      marketCap: calculatedMarketCap,
+      source: "calculated",
+      currency: "USD",
       dilutionApplied: false,
     };
   }
 
-  // 2. Static market cap from company data
+  // 2. API market cap (use if available - includes our overrides)
+  if (stockData?.marketCap && stockData.marketCap > 0) {
+    return {
+      marketCap: stockData.marketCap,
+      source: "api",
+      currency: "USD",
+      dilutionApplied: false,
+    };
+  }
+
+  // 3. Static market cap from company data
   if (company.marketCap && company.marketCap > 0) {
     return {
       marketCap: company.marketCap,
@@ -102,7 +115,7 @@ export function getMarketCap(
     };
   }
 
-  // 3. No market cap available
+  // 4. No market cap available
   return {
     marketCap: 0,
     source: "none",
@@ -155,12 +168,16 @@ export async function getMarketCapForMnav(
 
 /**
  * Synchronous version of getMarketCapForMnav for client components.
- * Uses fallback exchange rates for non-USD stocks.
- * Slightly less accurate but works in useMemo/useEffect contexts.
+ * Uses live forex rates if provided, otherwise falls back to static rates.
+ *
+ * @param company - Company data
+ * @param stockData - Stock price data
+ * @param forexRates - Optional live forex rates from API (preferred)
  */
 export function getMarketCapForMnavSync(
   company: Company,
-  stockData?: StockPriceData | null
+  stockData?: StockPriceData | null,
+  forexRates?: Record<string, number>
 ): MarketCapResult {
   const ticker = company.ticker;
   const isNonUsd = NON_USD_TICKERS.has(ticker);
@@ -170,9 +187,9 @@ export function getMarketCapForMnavSync(
   if (company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0) {
     let priceInUsd = stockData.price;
 
-    // For non-USD stocks, convert price to USD using fallback rates
+    // For non-USD stocks, convert price to USD using live rates if available
     if (isNonUsd) {
-      priceInUsd = convertToUSDSync(stockData.price, currency);
+      priceInUsd = convertToUSDSync(stockData.price, currency, forexRates);
     }
 
     const calculatedMarketCap = priceInUsd * company.sharesForMnav;

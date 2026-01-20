@@ -16,9 +16,13 @@ interface StockPrice {
   regularPrice?: number;
 }
 
+// Forex rates (e.g., JPY: 156 means 1 USD = 156 JPY)
+export type ForexRates = Record<string, number>;
+
 interface PricesData {
   crypto: Record<string, CryptoPrice>;
   stocks: Record<string, StockPrice>;
+  forex: ForexRates;  // Live forex rates from FMP
   timestamp: string;
   marketOpen?: boolean;
 }

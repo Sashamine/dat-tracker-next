@@ -33,15 +33,24 @@ export const FALLBACK_RATES: Record<string, number> = {
 };
 
 /**
- * Synchronous currency conversion using fallback rates.
+ * Synchronous currency conversion using provided rates or fallback.
  * Use this in client components where async isn't practical.
+ *
+ * @param price - Price in local currency
+ * @param currency - Currency code (JPY, HKD, etc.)
+ * @param liveRates - Optional live rates from API (preferred over fallback)
  */
-export function convertToUSDSync(price: number, currency: string): number {
+export function convertToUSDSync(
+  price: number,
+  currency: string,
+  liveRates?: Record<string, number>
+): number {
   if (currency === "USD" || !currency) {
     return price;
   }
 
-  const rate = FALLBACK_RATES[currency];
+  // Prefer live rates if provided, otherwise use fallback
+  const rate = liveRates?.[currency] ?? FALLBACK_RATES[currency];
   if (!rate || rate <= 0) {
     return price;
   }

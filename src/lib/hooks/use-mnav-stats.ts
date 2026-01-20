@@ -15,6 +15,7 @@ export interface MNAVStats {
 export type PricesData = {
   crypto: Record<string, { price: number }>;
   stocks: Record<string, any>;
+  forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
 } | null | undefined;
 
 // Calculate median of array
@@ -38,8 +39,8 @@ export function getCompanyMNAV(
 
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
-  // Use real market cap from API, not company's self-reported methodology
-  const { marketCap } = getMarketCap(company, stockData);
+  // Use live forex rates for non-USD stocks (e.g., Metaplanet)
+  const { marketCap } = getMarketCap(company, stockData, prices.forex);
 
   const mnav = calculateMNAV(
     marketCap,

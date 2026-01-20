@@ -2,9 +2,17 @@ import { NextResponse } from "next/server";
 import { getBinancePrices } from "@/lib/binance";
 import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
 import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
+import { FALLBACK_RATES } from "@/lib/utils/currency";
 
-// FMP for market caps and OTC stocks
+// FMP for market caps, OTC stocks, and forex
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
+
+// Forex pairs we need (FMP format)
+const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
+
+// Cache for forex rates (5 minute TTL - forex doesn't move that fast)
+let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
+const FOREX_CACHE_TTL = 5 * 60 * 1000;
 
 // Stocks not on major exchanges (OTC/international) - use FMP
 // Map: FMP ticker -> display ticker (for tickers with different formats)
@@ -40,6 +48,55 @@ const RESPONSE_HEADERS = {
   "Pragma": "no-cache",
   "Expires": "0",
 };
+
+// Fetch forex rates from FMP (cached)
+async function fetchForexRates(): Promise<Record<string, number>> {
+  if (forexCache && Date.now() - forexCache.timestamp < FOREX_CACHE_TTL) {
+    return forexCache.data;
+  }
+
+  if (!FMP_API_KEY) {
+    console.warn("[Forex] FMP_API_KEY not configured, using fallback rates");
+    return FALLBACK_RATES;
+  }
+
+  try {
+    const pairList = FOREX_PAIRS.join(",");
+    const url = `https://financialmodelingprep.com/api/v3/quote/${pairList}?apikey=${FMP_API_KEY}`;
+    console.log("[Forex] Fetching rates from FMP...");
+
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+      console.error(`[Forex] FMP API error: ${response.status}`);
+      return forexCache?.data || FALLBACK_RATES;
+    }
+
+    const data = await response.json();
+
+    // Convert from FMP format (USDJPY=156) to our format (JPY=156)
+    const rates: Record<string, number> = { ...FALLBACK_RATES };
+
+    if (Array.isArray(data)) {
+      for (const quote of data) {
+        if (quote?.symbol && quote?.price > 0) {
+          // Extract currency from pair (USDJPY -> JPY)
+          const currency = quote.symbol.replace("USD", "");
+          rates[currency] = quote.price;
+        }
+      }
+      console.log("[Forex] Fetched rates:", rates);
+    } else {
+      console.error("[Forex] FMP returned non-array:", data);
+    }
+
+    forexCache = { data: rates, timestamp: Date.now() };
+    return rates;
+  } catch (error) {
+    console.error("[Forex] Error fetching rates:", error);
+    return forexCache?.data || FALLBACK_RATES;
+  }
+}
 
 // Fetch market caps from FMP (cached)
 async function fetchMarketCaps(): Promise<Record<string, number>> {
@@ -123,11 +180,12 @@ export async function GET() {
     const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
     // Parallel fetch - CoinGecko now handles all crypto including HYPE
-    const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps] = await Promise.all([
+    const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps, forexRates] = await Promise.all([
       getBinancePrices(),
       getStockSnapshots(alpacaStockTickers).catch(e => { console.error("Alpaca error:", e.message); return {}; }),
       fetchFMPStocks(FMP_ONLY_STOCKS),
       fetchMarketCaps(),
+      fetchForexRates(),
     ]);
 
     // Format stock prices
@@ -179,10 +237,10 @@ export async function GET() {
     const result = {
       crypto: cryptoPrices,
       stocks: stockPrices,
+      forex: forexRates,  // Live forex rates from FMP
       timestamp: new Date().toISOString(),
       marketOpen,
       extendedHours,
-
     };
 
     priceCache = { data: result, timestamp: Date.now() };

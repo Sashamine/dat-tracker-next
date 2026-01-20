@@ -15,6 +15,7 @@ import { Company } from "@/lib/types";
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
   stocks: Record<string, { price: number; change24h: number; volume: number; marketCap: number }>;
+  forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
 }
 
 interface PremiumDiscountChartProps {
@@ -46,7 +47,7 @@ export function PremiumDiscountChart({
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCapForMnavSync(company, stockData);
+        const { marketCap } = getMarketCapForMnavSync(company, stockData, prices?.forex);
         const holdingsValue = company.holdings * cryptoPrice;
 
         const mNAV = getCompanyMNAV(company, prices) || 0;
@@ -221,7 +222,7 @@ export function MNAVScatterChart({
       .map((company) => {
         const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
         const stockData = prices?.stocks[company.ticker];
-        const { marketCap } = getMarketCapForMnavSync(company, stockData);
+        const { marketCap } = getMarketCapForMnavSync(company, stockData, prices?.forex);
         const holdingsValue = company.holdings * cryptoPrice;
 
         const mNAV = getCompanyMNAV(company, prices) || 0;
