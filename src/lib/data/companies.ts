@@ -564,7 +564,7 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 920_000_000,  // From holdings-history.ts
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
-    notes: "19th largest BTC treasury. 80% owned by Hut 8 (HUT). 105% BTC yield since Nasdaq debut.",
+    notes: "80% owned by Hut 8 (HUT). ⚠️ No SEC 10-Q/10-K filings - holdings unverified by regulatory filings.",
   },
   {
     id: "hut",
