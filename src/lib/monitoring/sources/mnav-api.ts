@@ -28,7 +28,7 @@ export const MNAV_COMPANY_SLUGS: Record<string, string> = {
   'SMLR': 'semler',
   'KULR': 'kulr',
   'DJT': 'trump-media',
-  'XXI': 'xxi',
+  // 'XXI': 'xxi', // Disabled: mNAV.com tracks only Class A shares (346.5M), missing Class B (304.8M). Use static data (651M total).
   'NAKA': 'nakamoto',
   // International (data in local currency - handled separately)
   '3350.T': 'metaplanet',
