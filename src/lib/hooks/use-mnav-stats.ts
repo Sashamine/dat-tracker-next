@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Company } from "@/lib/types";
 import { calculateMNAV } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 
 export interface MNAVStats {
   median: number;
@@ -49,8 +49,8 @@ export function getCompanyMNAV(
 
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
-  // Use live forex rates for non-USD stocks (e.g., Metaplanet)
-  const { marketCap } = getMarketCap(company, stockData, prices.forex);
+  // Use sharesForMnav × price for accurate FD market cap (not API market cap)
+  const { marketCap } = getMarketCapForMnavSync(company, stockData, prices.forex);
 
   const mnav = calculateMNAV(
     marketCap,
