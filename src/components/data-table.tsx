@@ -348,7 +348,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 holdingsSourceUrl={company.holdingsSourceUrl}
                 officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                officialDashboardMnav={COMPANY_SOURCES[company.ticker]?.officialMnav}
                 officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
                 officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
               />
@@ -516,7 +515,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         holdingsSourceUrl={company.holdingsSourceUrl}
                         officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                         secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                        officialDashboardMnav={COMPANY_SOURCES[company.ticker]?.officialMnav}
                         officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
                         officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
                       />

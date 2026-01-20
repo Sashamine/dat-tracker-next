@@ -8,9 +8,7 @@ export interface CompanyDataSources {
   // Official company resources
   officialDashboard?: string;  // Company's own holdings/NAV tracker
   officialDashboardName?: string;  // Display name for the dashboard (e.g., "strategy.com")
-  officialMnav?: number;  // Official mNAV from company dashboard (for comparison note)
-  officialMnavMethod?: "issued" | "diluted";  // What share count they use
-  officialMnavNote?: string;  // Custom explanation for methodology difference (overrides default)
+  officialMnavNote?: string;  // Methodology difference note (e.g., "issued shares" or "no cash adjustment")
   investorRelations?: string;
   // SEC/regulatory filings
   secCik?: string;  // SEC Central Index Key
@@ -38,8 +36,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     name: "Strategy (MicroStrategy)",
     officialDashboard: "https://www.strategy.com",
     officialDashboardName: "strategy.com",
-    officialMnav: 1.07,  // Uses issued shares (330M), not FD shares
-    officialMnavMethod: "issued",
+    officialMnavNote: "issued shares (not fully diluted)",
     investorRelations: "https://www.strategy.com/investor-relations",
     secCik: "1050446",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",
@@ -219,8 +216,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     name: "DeFi Development Corp",
     officialDashboard: "https://defidevcorp.com/dashboard",
     officialDashboardName: "defidevcorp.com",
-    officialMnav: 0.72,  // Their formula: Market Cap / SOL NAV (no cash subtraction)
-    officialMnavNote: "Market Cap / NAV (no EV adjustment)",  // They don't subtract cash
+    officialMnavNote: "Market Cap / NAV (no cash adjustment)",
     investorRelations: "https://defidevcorp.com/investor",
     exchange: "NASDAQ",
     sharesSource: "basic",
