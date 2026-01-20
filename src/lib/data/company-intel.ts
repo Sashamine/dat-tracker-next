@@ -273,10 +273,10 @@ const NAKA_INTEL: CompanyIntel = {
   ],
   strategySummary: "Founded by David Bailey (BTC Inc., Bitcoin Magazine founder). Vision: first publicly traded conglomerate of Bitcoin companies. Plans to bring Bitcoin Magazine, Bitcoin Conference, and 210k Capital hedge fund under Nakamoto Holdings. PIPE at $1.12/share; $200M senior secured convertible notes maturing 2028. Goal: acquire 1M BTC ('one Nakamoto').",
   recentDevelopments: [
-    "5,765 BTC holdings (~$507M at current prices)",
+    "5,398 BTC holdings (~$484M) - sold 367 BTC in Nov 2025",
     "Share buyback authorized Dec 2025 - stock trading below NAV",
     "Nasdaq compliance deadline June 8, 2026 (must achieve $1+ price)",
-    "mNAV fell to ~0.75 - market cap below BTC holdings value",
+    "mNAV ~0.84x - market cap below BTC holdings value",
   ],
   keyBackers: ["David Bailey (Founder, BTC Inc.)"],
   outlook2026: "Must regain Nasdaq compliance by June 2026. Share buyback may help. $5B ATM shelf available for future BTC purchases.",
