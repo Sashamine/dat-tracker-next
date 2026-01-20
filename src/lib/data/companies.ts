@@ -251,9 +251,11 @@ export const btcCompanies: Company[] = [
     marketCap: 6_120_000_000,  // ~$6.1B (651M shares × $9.40, Jan 2026)
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
     sharesForMnav: 651_390_912,  // Total shares (both classes)
+    totalDebt: 486_500_000,  // $486.5M 1% convertible senior secured notes due 2030
+    cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services.",
-    notes: "Tether/SoftBank/Cantor backed. 3rd largest public holder. DUAL-CLASS structure.",
+    notes: "Tether/SoftBank/Cantor backed. 3rd largest public holder. DUAL-CLASS structure. $486.5M converts secured by 16,116 BTC.",
   },
   {
     id: "cepo",  // BSTR Holdings pre-merger
