@@ -7,6 +7,9 @@ export interface CompanyDataSources {
   name: string;
   // Official company resources
   officialDashboard?: string;  // Company's own holdings/NAV tracker
+  officialDashboardName?: string;  // Display name for the dashboard (e.g., "strategy.com")
+  officialMnav?: number;  // Official mNAV from company dashboard (for comparison note)
+  officialMnavMethod?: "issued" | "diluted";  // What share count they use
   investorRelations?: string;
   // SEC/regulatory filings
   secCik?: string;  // SEC Central Index Key
@@ -33,6 +36,9 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     ticker: "MSTR",
     name: "Strategy (MicroStrategy)",
     officialDashboard: "https://www.strategy.com",
+    officialDashboardName: "strategy.com",
+    officialMnav: 1.07,  // Uses issued shares (330M), not FD shares
+    officialMnavMethod: "issued",
     investorRelations: "https://www.strategy.com/investor-relations",
     secCik: "1050446",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",

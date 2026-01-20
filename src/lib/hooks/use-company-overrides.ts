@@ -222,7 +222,8 @@ export function mergeCompanyWithOverrides(
     cashReserves: liveData?.cash ?? staticCompany?.cashReserves ?? company.cashReserves,
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
-    sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
+    // Use mNAV.com FD shares for market cap (most honest about dilution)
+    sharesForMnav: liveData?.fdShares ?? company.sharesForMnav ?? staticCompany?.sharesForMnav,
     // pendingMerger: static data takes precedence (undefined = not pending)
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     // lowLiquidity: flag for thinly traded stocks

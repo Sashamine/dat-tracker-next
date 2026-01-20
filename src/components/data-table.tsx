@@ -128,6 +128,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       stockPrice,
       stockChange,
       stockVolume,
+      cryptoPrice,
       mNAV: mNAV || 0,
       mNAVChange,
       companyType,
@@ -340,9 +341,15 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 ticker={company.ticker}
                 asset={company.asset}
                 holdings={company.holdings}
+                sharesForMnav={company.sharesForMnav}
+                stockPrice={company.stockPrice}
+                cryptoPrice={company.cryptoPrice}
+                hasLiveData={company.hasLiveBalanceSheet}
                 holdingsSourceUrl={company.holdingsSourceUrl}
                 officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                officialDashboardMnav={COMPANY_SOURCES[company.ticker]?.officialMnav}
+                officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
               />
             )}
           </p>
@@ -501,9 +508,15 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         ticker={company.ticker}
                         asset={company.asset}
                         holdings={company.holdings}
+                        sharesForMnav={company.sharesForMnav}
+                        stockPrice={company.stockPrice}
+                        cryptoPrice={company.cryptoPrice}
+                        hasLiveData={company.hasLiveBalanceSheet}
                         holdingsSourceUrl={company.holdingsSourceUrl}
                         officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                         secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                        officialDashboardMnav={COMPANY_SOURCES[company.ticker]?.officialMnav}
+                        officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
                       />
                     )}
                   </TableCell>

@@ -21,13 +21,19 @@ interface MNAVTooltipProps {
   ticker: string;
   asset: string;
   holdings: number;
-  // Whether market cap was calculated from sharesForMnav
-  usesCustomShares?: boolean;
+  // Share count and price for market cap breakdown
   sharesForMnav?: number;
+  stockPrice?: number;
+  cryptoPrice?: number;
+  // Official dashboard comparison
+  officialDashboardMnav?: number;  // e.g., 1.07 from strategy.com
+  officialDashboardName?: string;  // e.g., "strategy.com"
   // Source links
   holdingsSourceUrl?: string;
   officialDashboard?: string;
   secFilingsUrl?: string;
+  // Data source indicator
+  hasLiveData?: boolean;
 }
 
 function formatCompact(num: number): string {
@@ -56,11 +62,15 @@ export function MNAVTooltip({
   ticker,
   asset,
   holdings,
-  usesCustomShares,
   sharesForMnav,
+  stockPrice,
+  cryptoPrice,
+  officialDashboardMnav,
+  officialDashboardName,
   holdingsSourceUrl,
   officialDashboard,
   secFilingsUrl,
+  hasLiveData,
 }: MNAVTooltipProps) {
   // Calculate EV and NAV for display (matches Strategy's methodology)
   // EV = Market Cap + Debt + Preferred - Cash
@@ -104,6 +114,26 @@ export function MNAVTooltip({
               {ticker} mNAV Calculation
             </div>
 
+            {/* Market Cap breakdown */}
+            <div>
+              <div className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">
+                Market Cap {sharesForMnav ? "(FD shares)" : ""}
+              </div>
+              <div className="space-y-0.5 text-gray-300">
+                {sharesForMnav && stockPrice ? (
+                  <div className="flex justify-between text-[10px] text-gray-400">
+                    <span>{(sharesForMnav / 1_000_000).toFixed(1)}M × ${stockPrice.toFixed(2)}</span>
+                    <span className="font-mono">{formatCompact(marketCap)}</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between">
+                    <span>Market Cap</span>
+                    <span className="font-mono">{formatCompact(marketCap)}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Enterprise Value breakdown */}
             <div>
               <div className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">
@@ -139,16 +169,23 @@ export function MNAVTooltip({
               </div>
             </div>
 
-            {/* NAV breakdown - crypto only (matches Strategy methodology) */}
+            {/* NAV breakdown - crypto only */}
             <div>
               <div className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">
-                {asset} Reserve (NAV)
+                {asset} NAV
               </div>
               <div className="space-y-0.5 text-gray-300">
-                <div className="flex justify-between">
-                  <span>{holdings.toLocaleString()} {asset}</span>
-                  <span className="font-mono">{formatCompact(holdingsValue)}</span>
-                </div>
+                {cryptoPrice ? (
+                  <div className="flex justify-between text-[10px] text-gray-400">
+                    <span>{holdings.toLocaleString()} × ${cryptoPrice.toLocaleString()}</span>
+                    <span className="font-mono">{formatCompact(holdingsValue)}</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between">
+                    <span>{holdings.toLocaleString()} {asset}</span>
+                    <span className="font-mono">{formatCompact(holdingsValue)}</span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -160,10 +197,17 @@ export function MNAVTooltip({
               </div>
             </div>
 
-            {/* Methodology note */}
-            {usesCustomShares && sharesForMnav && (
-              <div className="text-[10px] text-gray-500 border-t border-gray-700 pt-1">
-                Market cap uses {(sharesForMnav / 1_000_000).toFixed(1)}M shares (company methodology)
+            {/* Official dashboard comparison */}
+            {officialDashboardMnav && officialDashboardName && Math.abs(mNAV - officialDashboardMnav) > 0.02 && (
+              <div className="text-[10px] text-amber-400/80 border-t border-gray-700 pt-1">
+                Note: {officialDashboardName} shows {officialDashboardMnav.toFixed(2)}x (using issued shares)
+              </div>
+            )}
+
+            {/* Data source indicator */}
+            {hasLiveData && (
+              <div className="text-[10px] text-green-400/70 pt-1">
+                ● Live data from mNAV.com
               </div>
             )}
 
