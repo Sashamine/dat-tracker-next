@@ -122,7 +122,12 @@ export function useCompanyOverrides() {
 
   // Non-USD tickers from mNAV.com - skip these as their data is in local currency
   // which would break our USD-based mNAV calculations
-  const NON_USD_TICKERS = ['3350.T']; // Metaplanet (JPY)
+  const NON_USD_TICKERS = [
+    '3350.T',   // Metaplanet (JPY)
+    '0434.HK',  // Boyaa (HKD)
+    'H100.ST',  // H100 Group (SEK)
+    'NXTT',     // Next Technology (JPY)
+  ];
 
   // Add mNAV.com data (BTC companies) - only USD-denominated companies
   if (mnavQuery.data?.data) {

@@ -12,21 +12,29 @@
 import { SourceCheckResult } from '../types';
 
 // Map our tickers to mNAV.com slugs
+// mNAV.com provides live balance sheet data (debt, cash, preferred equity, shares)
 export const MNAV_COMPANY_SLUGS: Record<string, string> = {
-  // BTC companies
-  'NAKA': 'nakamoto',
-  '3350.T': 'metaplanet',
-  'KULR': 'kulr',
-  'ASST': 'strive',        // Strive (merged with Semler)
-  'XXI': 'xxi',
-  '0434.HK': 'boyaa',
+  // Major US companies
+  'MSTR': 'strategy',
+  'MARA': 'mara',
+  'RIOT': 'riot',
   'CLSK': 'cleanspark',
-  'BTDR': 'bitdeer',
-  'DJT': 'trump-media',
   'CORZ': 'core-scientific',
+  'BTDR': 'bitdeer',
+  'HUT': 'hut-8',
+  'BITF': 'bitfarms',
+  'CIFR': 'cipher',
+  'BTBT': 'bit-digital',
+  'SMLR': 'semler',
+  'KULR': 'kulr',
+  'DJT': 'trump-media',
+  'XXI': 'xxi',
+  'NAKA': 'nakamoto',
+  // International (data in local currency - handled separately)
+  '3350.T': 'metaplanet',
+  '0434.HK': 'boyaa',
   'H100.ST': 'h100',
   'NXTT': 'next-technology',
-  'RIOT': 'riot',
 };
 
 interface MnavApiResponse {
