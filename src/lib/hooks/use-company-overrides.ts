@@ -14,7 +14,7 @@ interface OverridesResponse {
   timestamp: string;
 }
 
-// mNAV.com live balance sheet data
+// Live API data structures
 interface MnavCompanyData {
   ticker: string;
   holdings: number;
@@ -35,6 +35,32 @@ interface MnavBatchResponse {
   timestamp: string;
 }
 
+// SharpLink API data (SBET)
+interface SharpLinkData {
+  ticker: 'SBET';
+  holdings: number;
+  ethNav: number;
+  stakingRewards: number;
+  avgPrice: number;
+  ethConcentration: number;
+  lastUpdated: string;
+  source: 'sharplink-dashboard';
+}
+
+// Unified live data structure
+interface LiveCompanyData {
+  ticker: string;
+  holdings?: number;
+  debt?: number;
+  cash?: number;
+  fdShares?: number;
+  mnav?: number;
+  ethNav?: number;
+  stakingRewards?: number;
+  lastUpdated: string;
+  source: 'mnav.com' | 'sharplink-dashboard';
+}
+
 async function fetchOverrides(): Promise<OverridesResponse> {
   const response = await fetch("/api/company-overrides");
   if (!response.ok) {
@@ -53,9 +79,20 @@ async function fetchMnavData(): Promise<MnavBatchResponse | null> {
   }
 }
 
+async function fetchSharpLinkData(): Promise<SharpLinkData | null> {
+  try {
+    const response = await fetch("/api/sharplink");
+    if (!response.ok) return null;
+    return response.json();
+  } catch {
+    return null;
+  }
+}
+
 /**
- * Hook to fetch company data overrides from Google Sheets and live balance sheet data from mNAV.com.
- * Returns the overrides, live balance sheet data, and functions to merge them with base company data.
+ * Hook to fetch company data overrides from Google Sheets and live data from APIs.
+ * - mNAV.com: BTC treasury companies (debt, cash, holdings)
+ * - SharpLink: SBET ETH holdings and NAV
  */
 export function useCompanyOverrides() {
   const overridesQuery = useQuery({
@@ -65,7 +102,7 @@ export function useCompanyOverrides() {
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
 
-  // Fetch live balance sheet data from mNAV.com API
+  // Fetch live balance sheet data from mNAV.com API (BTC companies)
   const mnavQuery = useQuery({
     queryKey: ["mnav-live-data"],
     queryFn: fetchMnavData,
@@ -73,9 +110,48 @@ export function useCompanyOverrides() {
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
 
+  // Fetch live data from SharpLink API (SBET)
+  const sharpLinkQuery = useQuery({
+    queryKey: ["sharplink-live-data"],
+    queryFn: fetchSharpLinkData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+  });
+
+  // Combine mNAV.com and SharpLink data into unified structure
+  const liveBalanceSheet: Record<string, LiveCompanyData> = {};
+
+  // Add mNAV.com data (BTC companies)
+  if (mnavQuery.data?.data) {
+    for (const [ticker, data] of Object.entries(mnavQuery.data.data)) {
+      liveBalanceSheet[ticker] = {
+        ticker,
+        holdings: data.holdings,
+        debt: data.debt,
+        cash: data.cash,
+        fdShares: data.fdShares,
+        mnav: data.mnav,
+        lastUpdated: data.lastUpdated,
+        source: 'mnav.com',
+      };
+    }
+  }
+
+  // Add SharpLink data (SBET)
+  if (sharpLinkQuery.data) {
+    liveBalanceSheet['SBET'] = {
+      ticker: 'SBET',
+      holdings: sharpLinkQuery.data.holdings,
+      ethNav: sharpLinkQuery.data.ethNav,
+      stakingRewards: sharpLinkQuery.data.stakingRewards,
+      lastUpdated: sharpLinkQuery.data.lastUpdated,
+      source: 'sharplink-dashboard',
+    };
+  }
+
   return {
     overrides: overridesQuery.data?.overrides || {},
-    liveBalanceSheet: mnavQuery.data?.data || {},
+    liveBalanceSheet,
     isLoading: overridesQuery.isLoading,
     error: overridesQuery.error,
     dataUpdatedAt: overridesQuery.dataUpdatedAt,
@@ -96,14 +172,14 @@ function getLatestDilutedShares(ticker: string): number | undefined {
 }
 
 /**
- * Merge base company data with overrides from Google Sheets and live mNAV.com balance sheet data.
- * Priority: mNAV.com live data > static data > database
- * Also populates sharesOutstandingFD from holdings history for accurate market cap.
+ * Merge base company data with overrides from Google Sheets and live API data.
+ * Priority: Live API data > static data > database
+ * Sources: mNAV.com (BTC companies), SharpLink (SBET)
  */
 export function mergeCompanyWithOverrides(
   company: Company,
   overrides: Record<string, CompanyOverride>,
-  liveBalanceSheet: Record<string, MnavCompanyData> = {}
+  liveBalanceSheet: Record<string, LiveCompanyData> = {}
 ): Company {
   const override = overrides[company.ticker];
   const liveData = liveBalanceSheet[company.ticker];
@@ -113,12 +189,15 @@ export function mergeCompanyWithOverrides(
   const staticCompany = getCompanyByTicker(company.ticker);
 
   // Merge financial data for mNAV calculation
-  // Priority: mNAV.com live data (most current) > static data > database
-  // mNAV.com provides debt and cash for 13 BTC treasury companies
+  // Priority: Live API data (most current) > static data > database
+  // - mNAV.com provides debt, cash, holdings for BTC treasury companies
+  // - SharpLink provides holdings for SBET
   const mergedFinancials = {
+    // Use live holdings if available (both mNAV.com and SharpLink provide this)
+    holdings: liveData?.holdings ?? company.holdings,
     // Use live debt from mNAV.com if available, else static, else database
     totalDebt: liveData?.debt ?? staticCompany?.totalDebt ?? company.totalDebt,
-    // Preferred equity not in mNAV.com API, use static/database
+    // Preferred equity not in live APIs, use static/database
     preferredEquity: staticCompany?.preferredEquity ?? company.preferredEquity,
     // Use live cash from mNAV.com if available, else static, else database
     cashReserves: liveData?.cash ?? staticCompany?.cashReserves ?? company.cashReserves,
@@ -129,7 +208,7 @@ export function mergeCompanyWithOverrides(
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     // lowLiquidity: flag for thinly traded stocks
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,
-    // Track if this company has live balance sheet data from mNAV.com
+    // Track if this company has live data from API
     hasLiveBalanceSheet: !!liveData,
   };
 
@@ -162,12 +241,12 @@ export function mergeCompanyWithOverrides(
 }
 
 /**
- * Merge all companies with their overrides and live balance sheet data.
+ * Merge all companies with their overrides and live API data.
  */
 export function mergeAllCompanies(
   companies: Company[],
   overrides: Record<string, CompanyOverride>,
-  liveBalanceSheet: Record<string, MnavCompanyData> = {}
+  liveBalanceSheet: Record<string, LiveCompanyData> = {}
 ): Company[] {
   return companies.map((company) => mergeCompanyWithOverrides(company, overrides, liveBalanceSheet));
 }
