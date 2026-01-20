@@ -18,6 +18,7 @@ import { checkSECFilingsForUpdates, checkSECFilingsEnhanced } from './sources/se
 import { checkTwitterForUpdates, checkTwitterForEarlySignals, createGrokConfig } from './sources/twitter';
 import { checkIRPages } from './sources/ir-pages';
 import { checkHoldingsPages } from './sources/holdings-pages';
+import { checkMnavApi, getMnavMonitoredCompanies } from './sources/mnav-api';
 import { checkAggregatorsForUpdates, getAggregatorOnlyCompanies } from './sources/aggregators';
 import { checkArkhamForChanges } from './sources/arkham';
 import { getSECMonitoredCompanies, getCompanySource, getInternationalExchangeCompanies } from './sources/company-sources';
@@ -289,6 +290,14 @@ export async function runMonitoringAgent(
       console.log('[Monitoring] Checking holdings pages...');
       const holdingsResults = await checkHoldingsPages(companies);
       allResults.push(...holdingsResults);
+    }
+
+    // 2b. Check mNAV.com API (provides data for many treasury companies)
+    if (config.sources.includes('holdings_pages') || config.sources.includes('mnav_api')) {
+      sourcesChecked++;
+      console.log('[Monitoring] Checking mNAV.com API...');
+      const mnavResults = await checkMnavApi(companies);
+      allResults.push(...mnavResults);
     }
 
     // 3. Check IR Pages (company investor relations pages) - official announcements

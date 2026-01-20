@@ -98,6 +98,8 @@ export interface SourceCheckResult {
   sourceDate?: Date;
   trustLevel: SourceTrustLevel;
   error?: string;
+  // Optional metadata for source-specific data (e.g., mNAV API returns mNAV, marketCap, etc.)
+  metadata?: Record<string, unknown>;
 }
 
 // Early signal types - for pre-filing alerts (Twitter, on-chain)
@@ -190,6 +192,7 @@ export const MONITORING_SOURCES = [
   'sec_edgar',               // SEC EDGAR filings (8-K, 10-Q, 10-K) - highest trust
   'international_exchanges', // CSE (Canada), HKEX (Hong Kong) - official exchange filings
   'holdings_pages',          // Direct holdings trackers (KULR tracker, Metaplanet, etc.)
+  'mnav_api',                // mNAV.com API - real-time holdings for mid-tier treasury companies
   'ir_pages',                // Company IR pages (press releases)
   // Early signal sources (pre-filing alerts)
   'twitter',                 // Twitter/X via Grok API - announcements before filings
