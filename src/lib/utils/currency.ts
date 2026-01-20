@@ -23,12 +23,13 @@ let rateCache: { rates: Record<string, number>; timestamp: number } | null = nul
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 // Fallback rates if API fails (updated periodically)
+// IMPORTANT: Update these when rates shift significantly
 export const FALLBACK_RATES: Record<string, number> = {
-  JPY: 150.0,   // 1 USD = 150 JPY (Jan 2026 approximate)
+  JPY: 156.0,   // 1 USD = 156 JPY (Jan 2026 - yen has weakened)
   HKD: 7.8,     // 1 USD = 7.8 HKD (pegged)
   SEK: 10.5,    // 1 USD = 10.5 SEK (approximate)
-  CAD: 1.35,    // 1 USD = 1.35 CAD (approximate)
-  EUR: 0.92,    // 1 USD = 0.92 EUR (approximate)
+  CAD: 1.44,    // 1 USD = 1.44 CAD (Jan 2026)
+  EUR: 0.96,    // 1 USD = 0.96 EUR (Jan 2026)
 };
 
 /**
