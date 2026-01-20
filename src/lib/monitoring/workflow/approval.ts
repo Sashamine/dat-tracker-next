@@ -289,3 +289,51 @@ export function getApprovalSummary(decision: ApprovalDecision): string {
   const level = decision.requiredReviewLevel === 'senior' ? '⚠️ Senior' : '👀 Standard';
   return `${level} review required: ${decision.reason}`;
 }
+
+/**
+ * Share mismatch detection result
+ */
+export interface ShareMismatchResult {
+  hasMismatch: boolean;
+  currentShares: number;
+  extractedShares: number;
+  classAShares?: number | null;
+  classBShares?: number | null;
+  confidence: number;
+}
+
+/**
+ * Detect if extracted shares don't match current shares
+ * Returns mismatch details if shares differ, regardless of magnitude
+ */
+export function detectShareMismatch(
+  extractedShares: number | null,
+  currentShares: number | null | undefined,
+  classAShares?: number | null,
+  classBShares?: number | null,
+  confidence: number = 0
+): ShareMismatchResult | null {
+  // Skip if no extracted shares or low confidence
+  if (extractedShares === null || confidence < 0.7) {
+    return null;
+  }
+
+  // Skip if no current shares to compare against
+  if (currentShares === null || currentShares === undefined || currentShares === 0) {
+    return null;
+  }
+
+  // Any mismatch should be flagged (no threshold - just not equal)
+  if (extractedShares !== currentShares) {
+    return {
+      hasMismatch: true,
+      currentShares,
+      extractedShares,
+      classAShares,
+      classBShares,
+      confidence,
+    };
+  }
+
+  return null;
+}

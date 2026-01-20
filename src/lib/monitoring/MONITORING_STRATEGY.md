@@ -27,11 +27,12 @@
 
 ### Tier 3: Company Holdings Pages (Auto-approve)
 Some companies publish real-time holdings:
-- `xxi.money` - Twenty One Capital
 - `kulrbitcointracker.com` - KULR
 - `nakamoto.com` - Nakamoto Holdings
 - `metaplanet.jp/en/analytics` - Metaplanet
 - `h100.group` - H100 Group
+
+Note: XXI (Twenty One Capital) does NOT have a public holdings page. Use SEC filings and on-chain verification (xxi.mempool.space).
 
 ### Tier 4: Early Signal Sources (Pre-filing alerts)
 
@@ -131,7 +132,7 @@ Monitors known company wallet addresses for BTC movements:
 | 0434.HK (Boyaa) | Hong Kong | HKEX announcements | bitbo.io |
 | ALTBG | Euronext Paris | Euronext filings | theblock.co |
 | H100.ST | Nasdaq Stockholm | h100.group | bitcointreasuries.net |
-| XXI | NYSE (new) | xxi.money | on-chain verification |
+| XXI | NYSE | SEC EDGAR filings | on-chain (xxi.mempool.space) |
 
 ## LLM Extraction Prompts
 

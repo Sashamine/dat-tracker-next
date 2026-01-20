@@ -527,13 +527,15 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder
-// Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers
+// DUAL-CLASS: Class A (346.5M non-voting) + Class B (304.8M voting) = 651.4M total shares
+// For mNAV, use TOTAL shares (both classes have economic rights)
 const XXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-23", holdings: 42000, sharesOutstanding: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement" },
   { date: "2025-07-29", holdings: 43500, sharesOutstanding: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update" },
   { date: "2025-09-30", holdings: 43510, sharesOutstanding: 600_000_000, holdingsPerShare: 0.0000725, source: "Q3 2025 10-Q" },
   { date: "2025-12-09", holdings: 43514, sharesOutstanding: 651_000_000, holdingsPerShare: 0.0000668, source: "NYSE listing 8-K" },
-  { date: "2026-01-02", holdings: 43514, sharesOutstanding: 346_548_153, holdingsPerShare: 0.0001256, source: "Shares outstanding update" },
+  // Jan 2026: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
+  { date: "2026-01-02", holdings: 43514, sharesOutstanding: 651_390_912, holdingsPerShare: 0.0000668, source: "SEC 8-K (Class A + Class B)" },
 ];
 
 // Strive Asset (ASST) - First publicly traded asset management BTC treasury

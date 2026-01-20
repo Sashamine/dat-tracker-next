@@ -156,6 +156,9 @@ export interface TwitterMonitorResult {
 export interface ExtractionResult {
   holdings: number | null;
   sharesOutstanding: number | null;
+  // Dual-class share breakdown (for companies like XXI with Class A + Class B)
+  classAShares: number | null;
+  classBShares: number | null;
   costBasis: number | null;
   confidence: number;
   reasoning: string;
@@ -168,6 +171,10 @@ export interface ExtractionContext {
   ticker: string;
   asset: string;
   currentHoldings: number;
+  // For share extraction
+  currentSharesOutstanding?: number;
+  isDualClass?: boolean;
+  shareClasses?: string[]; // e.g., ['Class A', 'Class B']
 }
 
 // Approval decision

@@ -92,8 +92,15 @@ mNAV = Enterprise Value / Crypto NAV
 ## Future Work / TODO
 
 ### High Priority
-- [ ] **Auto-track dilution from 8-Ks**: Parse SEC 8-K filings for share issuance events (ATM, PIPE, converts). Auto-update `sharesForMnav` when dilution detected, or flag for manual review. This would make market caps always accurate without manual overrides.
+- [x] **Auto-track shares from SEC filings**: LLM extractor now parses shares outstanding from 8-K/10-Q/10-K filings. Supports dual-class companies (Class A + Class B). Any share mismatch is flagged for review via Discord alert.
 
 ### Medium Priority
 - [ ] Scrape official IR dashboards (MSTR, SBET, Metaplanet) for market cap verification
 - [ ] Add discrepancy monitoring: cron job comparing our market caps vs Yahoo Finance, flag >10% differences
+
+### Dual-Class Companies
+Companies with multiple share classes (like XXI) require special handling:
+- `isDualClass: true` in company-sources.ts
+- `shareClasses: ['Class A', 'Class B']` for LLM extraction hints
+- `sharesForMnav` should be TOTAL shares (sum of all classes)
+- LLM extractor asks for each class separately, then sums for total

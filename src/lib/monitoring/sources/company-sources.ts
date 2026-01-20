@@ -19,6 +19,10 @@ export interface CompanySource {
     tenQ?: RegExp[];
   };
 
+  // Share structure (for mNAV calculations)
+  isDualClass?: boolean; // True if company has multiple share classes
+  shareClasses?: string[]; // e.g., ['Class A', 'Class B'] - for LLM extraction hints
+
   // International exchanges
   exchange?: 'CSE' | 'TSX-V' | 'HKEX' | 'TSE' | 'Euronext' | 'Nasdaq Nordic';
   exchangeCode?: string; // Exchange-specific company identifier
@@ -295,13 +299,17 @@ export const COMPANY_SOURCES: CompanySource[] = [
     extractionHints: 'Led by Adam Back. ~30,000 BTC from Blockstream contribution.',
   },
 
-  // ========== NON-US COMPANIES (NO SEC) ==========
+  // ========== DUAL-CLASS COMPANIES ==========
   {
     ticker: 'XXI',
     name: 'Twenty One Capital',
     asset: 'BTC',
-    // Now US-listed on NYSE, may file with SEC
-    holdingsPageUrl: 'https://xxi.money/',
+    secCik: '0002019757', // NYSE listed Dec 2025
+    secFilingPatterns: {
+      eightK: [/ex99|ex-99|press|release/i],
+    },
+    isDualClass: true,
+    shareClasses: ['Class A', 'Class B'], // Class A (346.5M non-voting) + Class B (304.8M voting)
     // On-chain verification available
     twitterHandles: ['@twentyonecap'],
     aggregators: {
@@ -309,7 +317,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
       theBlock: 'cep', // Uses CEP slug
     },
     trustLevel: 'official',
-    extractionHints: 'Backed by Tether/Bitfinex. On-chain proof at xxi.mempool.space.',
+    extractionHints: 'DUAL-CLASS: Must sum Class A + Class B shares. Backed by Tether/SoftBank/Bitfinex. On-chain proof at xxi.mempool.space.',
   },
   {
     ticker: '3350.T',

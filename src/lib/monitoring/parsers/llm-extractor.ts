@@ -23,14 +23,45 @@ const DEFAULT_MODELS: Record<LLMProvider, string> = {
  * Build the extraction prompt
  */
 function buildExtractionPrompt(text: string, context: ExtractionContext): string {
+  // Build share extraction instructions based on whether company is dual-class
+  let shareInstructions = '';
+  if (context.isDualClass && context.shareClasses && context.shareClasses.length > 0) {
+    const classNames = context.shareClasses.join(' and ');
+    shareInstructions = `
+IMPORTANT - DUAL-CLASS SHARES:
+This company has multiple share classes (${classNames}). You MUST extract BOTH:
+- ${context.shareClasses[0]} shares outstanding
+- ${context.shareClasses[1] || 'Other class'} shares outstanding
+- Calculate total shares = sum of all classes
+
+Look for phrases like:
+- "X shares of Class A common stock"
+- "X shares of Class B common stock"
+- "Class A shares outstanding: X"
+- "Non-voting shares: X" (often Class A)
+- "Voting shares: X" (often Class B)`;
+  } else {
+    shareInstructions = `
+For shares outstanding, look for:
+- "shares outstanding"
+- "common stock outstanding"
+- "shares of common stock"`;
+  }
+
+  const currentSharesInfo = context.currentSharesOutstanding
+    ? `Current known shares outstanding: ${context.currentSharesOutstanding.toLocaleString()}`
+    : '';
+
   return `You are analyzing a financial document or announcement for ${context.companyName} (${context.ticker}).
 
 This company holds ${context.asset} as a treasury asset. Their current known holdings are ${context.currentHoldings.toLocaleString()} ${context.asset}.
+${currentSharesInfo}
 
 Extract the following information from the text below. Be very careful to distinguish between:
 - TOTAL holdings (what we want)
 - NEW acquisitions/purchases (not what we want - unless you can calculate total from this)
 - Historical holdings (from a previous period)
+${shareInstructions}
 
 Only extract values you are confident about based on the text. Do NOT make up numbers.
 
@@ -42,7 +73,9 @@ ${text.substring(0, 8000)}
 Respond in valid JSON format only, with no markdown formatting:
 {
   "holdings": <number or null if not found>,
-  "sharesOutstanding": <number or null if not found>,
+  "sharesOutstanding": <TOTAL number or null if not found>,
+  "classAShares": <number or null - for dual-class companies only>,
+  "classBShares": <number or null - for dual-class companies only>,
   "costBasis": <number or null if not found>,
   "extractedDate": "<YYYY-MM-DD or null if not found>",
   "confidence": <0.0 to 1.0>,
@@ -53,6 +86,7 @@ Respond in valid JSON format only, with no markdown formatting:
 Important guidelines:
 - Set holdings to null if you cannot determine the TOTAL holdings
 - If the text only mentions a purchase amount but not total holdings, set holdings to null
+- For dual-class companies: sharesOutstanding should be the SUM of all share classes
 - Confidence should reflect how certain you are about the holdings value
 - Lower confidence if the text is ambiguous or if numbers could refer to different things
 - Include brief reasoning explaining your extraction logic`;
@@ -147,9 +181,20 @@ function parseExtractionResponse(content: string): ExtractionResult {
 
     const parsed = JSON.parse(jsonStr);
 
+    // For dual-class companies, calculate total if not provided but classes are
+    let totalShares = parsed.sharesOutstanding ?? null;
+    const classA = parsed.classAShares ?? null;
+    const classB = parsed.classBShares ?? null;
+
+    if (totalShares === null && classA !== null && classB !== null) {
+      totalShares = classA + classB;
+    }
+
     return {
       holdings: parsed.holdings ?? null,
-      sharesOutstanding: parsed.sharesOutstanding ?? null,
+      sharesOutstanding: totalShares,
+      classAShares: classA,
+      classBShares: classB,
       costBasis: parsed.costBasis ?? null,
       confidence: typeof parsed.confidence === 'number' ? parsed.confidence : 0.5,
       reasoning: parsed.reasoning || 'No reasoning provided',
@@ -161,6 +206,8 @@ function parseExtractionResponse(content: string): ExtractionResult {
     return {
       holdings: null,
       sharesOutstanding: null,
+      classAShares: null,
+      classBShares: null,
       costBasis: null,
       confidence: 0,
       reasoning: `Failed to parse response: ${error instanceof Error ? error.message : String(error)}`,
@@ -182,6 +229,8 @@ export async function extractHoldingsFromText(
     return {
       holdings: null,
       sharesOutstanding: null,
+      classAShares: null,
+      classBShares: null,
       costBasis: null,
       confidence: 0,
       reasoning: 'Text too short for extraction',
@@ -207,6 +256,8 @@ export async function extractHoldingsFromText(
     return {
       holdings: null,
       sharesOutstanding: null,
+      classAShares: null,
+      classBShares: null,
       costBasis: null,
       confidence: 0,
       reasoning: `Extraction failed: ${error instanceof Error ? error.message : String(error)}`,

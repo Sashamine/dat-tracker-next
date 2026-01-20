@@ -479,6 +479,96 @@ export function buildEarlySignalEmbed(params: {
 }
 
 /**
+ * Build embed for share mismatch alert
+ * Triggered when extracted shares don't match current sharesForMnav
+ */
+export function buildShareMismatchEmbed(params: {
+  companyName: string;
+  ticker: string;
+  currentShares: number;
+  extractedShares: number;
+  classAShares?: number | null;
+  classBShares?: number | null;
+  isDualClass: boolean;
+  sourceType: string;
+  sourceUrl?: string;
+  confidence: number;
+}): DiscordEmbed {
+  const {
+    companyName,
+    ticker,
+    currentShares,
+    extractedShares,
+    classAShares,
+    classBShares,
+    isDualClass,
+    sourceType,
+    sourceUrl,
+    confidence,
+  } = params;
+
+  const difference = extractedShares - currentShares;
+  const diffPct = currentShares > 0 ? (difference / currentShares) * 100 : 0;
+  const isIncrease = difference >= 0;
+
+  const fields: Array<{ name: string; value: string; inline?: boolean }> = [
+    {
+      name: 'Current (System)',
+      value: formatNumber(currentShares) + ' shares',
+      inline: true,
+    },
+    {
+      name: 'Extracted (Filing)',
+      value: formatNumber(extractedShares) + ' shares',
+      inline: true,
+    },
+    {
+      name: 'Difference',
+      value: `${isIncrease ? '+' : ''}${formatNumber(difference)} (${isIncrease ? '+' : ''}${diffPct.toFixed(1)}%)`,
+      inline: true,
+    },
+  ];
+
+  // For dual-class companies, show the breakdown
+  if (isDualClass && (classAShares != null || classBShares != null)) {
+    fields.push({
+      name: 'Share Breakdown',
+      value: `Class A: ${classAShares != null ? formatNumber(classAShares) : 'N/A'}\nClass B: ${classBShares != null ? formatNumber(classBShares) : 'N/A'}`,
+      inline: false,
+    });
+  }
+
+  fields.push(
+    {
+      name: 'Source',
+      value: sourceUrl ? `[${formatSourceType(sourceType)}](${sourceUrl})` : formatSourceType(sourceType),
+      inline: true,
+    },
+    {
+      name: 'Confidence',
+      value: `${(confidence * 100).toFixed(0)}%`,
+      inline: true,
+    },
+    {
+      name: 'Action Required',
+      value: '⚠️ Review and update `sharesForMnav` if extraction is correct',
+      inline: false,
+    }
+  );
+
+  return {
+    title: `📊 Share Count Mismatch: ${ticker}`,
+    description: `**${companyName}** - Shares outstanding in filing doesn't match system data`,
+    color: EMBED_COLORS.discrepancy,
+    fields,
+    timestamp: new Date().toISOString(),
+    footer: {
+      text: isDualClass ? 'DAT Tracker - Dual-Class Company' : 'DAT Tracker Monitoring',
+    },
+  };
+}
+
+/**
  * Format source type for display
  */
 function formatSourceType(sourceType: string): string {
@@ -530,6 +620,11 @@ export class DiscordNotificationService {
 
   async sendEarlySignal(params: Parameters<typeof buildEarlySignalEmbed>[0]) {
     const embed = buildEarlySignalEmbed(params);
+    return sendDiscordWebhook(this.webhookUrl, { embeds: [embed] });
+  }
+
+  async sendShareMismatch(params: Parameters<typeof buildShareMismatchEmbed>[0]) {
+    const embed = buildShareMismatchEmbed(params);
     return sendDiscordWebhook(this.webhookUrl, { embeds: [embed] });
   }
 
