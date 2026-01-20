@@ -409,6 +409,24 @@ export const COMPANY_SOURCES: CompanySource[] = [
     trustLevel: 'aggregator',
     extractionHints: 'Sweden\'s first BTC treasury company. Nordic leader.',
   },
+
+  // ========== SOL TREASURY COMPANIES ==========
+  {
+    ticker: 'FWDI',
+    name: 'Forward Industries (Solana Treasury)',
+    asset: 'SOL',
+    secCik: '0000038264',
+    secFilingPatterns: {
+      eightK: [/ex99|ex-99|press|release/i],
+    },
+    irPageUrl: 'https://www.forwardindustries.com/investor-relations',
+    twitterHandles: ['@ForwardInd'],
+    aggregators: {
+      theBlock: 'fwdi',
+    },
+    trustLevel: 'official',
+    extractionHints: 'Solana treasury company. ~7M SOL holdings. Staking via Superstate. Look for "holds X SOL" or "Solana holdings" in press releases. Raised $1.65B PIPE Jan 2026.',
+  },
 ];
 
 /**
