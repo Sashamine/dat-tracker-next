@@ -1,5 +1,5 @@
 // Company intelligence: press releases, strategy summaries, and recent developments
-// Last updated: January 13, 2026
+// Last updated: January 20, 2026
 
 export interface PressRelease {
   date: string; // YYYY-MM-DD
