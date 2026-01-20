@@ -284,7 +284,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-gray-900 dark:text-gray-100">{company.ticker}</span>
-              {company.notes && company.notes.includes("No SEC") && (
+              {company.notes && company.notes.toLowerCase().includes("no sec") && (
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -450,7 +450,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     <div className="flex flex-col">
                       <span className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-gray-100">
                         {company.ticker}
-                        {company.notes && company.notes.includes("No SEC") && (
+                        {company.notes && company.notes.toLowerCase().includes("no sec") && (
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger asChild>
