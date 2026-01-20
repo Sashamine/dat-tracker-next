@@ -55,6 +55,7 @@ interface LiveCompanyData {
   preferredEquity?: number;
   ethNav?: number;
   stakingRewards?: number;
+  officialMnav?: number;  // Official FD mNAV from source (e.g., SharpLink 0.81x)
   lastUpdated: string;
   source: 'mnav.com' | 'sharplink-dashboard';
 }
@@ -119,9 +120,17 @@ export function useCompanyOverrides() {
   // Combine mNAV.com and SharpLink data into unified structure
   const liveBalanceSheet: Record<string, LiveCompanyData> = {};
 
-  // Add mNAV.com data (BTC companies)
+  // Non-USD tickers from mNAV.com - skip these as their data is in local currency
+  // which would break our USD-based mNAV calculations
+  const NON_USD_TICKERS = ['3350.T']; // Metaplanet (JPY)
+
+  // Add mNAV.com data (BTC companies) - only USD-denominated companies
   if (mnavQuery.data?.data) {
     for (const [ticker, data] of Object.entries(mnavQuery.data.data)) {
+      // Skip non-USD companies to avoid currency mismatch in calculations
+      if (NON_USD_TICKERS.includes(ticker)) {
+        continue;
+      }
       liveBalanceSheet[ticker] = {
         ticker,
         holdings: data.holdings,
@@ -137,11 +146,18 @@ export function useCompanyOverrides() {
 
   // Add SharpLink data (SBET)
   if (sharpLinkQuery.data) {
+    // Parse official FD mNAV (e.g., "0.81x" -> 0.81)
+    const officialMnavStr = sharpLinkQuery.data.mNAV;
+    const officialMnav = officialMnavStr && officialMnavStr !== 'N/A'
+      ? parseFloat(officialMnavStr.replace('x', ''))
+      : undefined;
+
     liveBalanceSheet['SBET'] = {
       ticker: 'SBET',
       holdings: sharpLinkQuery.data.holdings,
       ethNav: sharpLinkQuery.data.ethNav,
       stakingRewards: sharpLinkQuery.data.stakingRewards,
+      officialMnav,  // Use SharpLink's official FD mNAV instead of calculating our own
       lastUpdated: sharpLinkQuery.data.lastUpdated,
       source: 'sharplink-dashboard',
     };
@@ -187,12 +203,15 @@ export function mergeCompanyWithOverrides(
   const staticCompany = getCompanyByTicker(company.ticker);
 
   // Merge financial data for mNAV calculation
-  // Priority: Live API data (most current) > static data > database
-  // - mNAV.com provides debt, cash, holdings, preferredEquity for BTC treasury companies
-  // - SharpLink provides holdings for SBET
+  // Priority for BALANCE SHEET items: Live API data > static data > database
+  // Priority for HOLDINGS: Static data (companies.ts) is the source of truth
+  // - mNAV.com provides debt, cash, preferredEquity for BTC treasury companies
+  // - SharpLink provides ETH data for SBET
+  // Note: We do NOT override holdings with live data - static holdings are manually
+  // verified and more reliable than API holdings which can lag or be incorrect
   const mergedFinancials = {
-    // Use live holdings if available (both mNAV.com and SharpLink provide this)
-    holdings: liveData?.holdings ?? company.holdings,
+    // HOLDINGS: Keep static data as source of truth (do NOT use live data)
+    holdings: company.holdings,
     // Use live debt from mNAV.com if available, else static, else database
     totalDebt: liveData?.debt ?? staticCompany?.totalDebt ?? company.totalDebt,
     // Use live preferred equity from mNAV.com if available, else static, else database
@@ -208,6 +227,8 @@ export function mergeCompanyWithOverrides(
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,
     // Track if this company has live data from API
     hasLiveBalanceSheet: !!liveData,
+    // Official mNAV from source (e.g., SharpLink's FD mNAV) - use instead of calculating
+    officialMnav: liveData?.officialMnav,
   };
 
   if (!override) {

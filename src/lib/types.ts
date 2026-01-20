@@ -94,6 +94,10 @@ export interface Company {
 
   // Data source flags
   hasLiveBalanceSheet?: boolean;  // True if balance sheet data comes from live mNAV.com API
+
+  // Official mNAV from source (e.g., SharpLink's FD mNAV)
+  // When set, use this instead of calculating mNAV
+  officialMnav?: number;
 }
 
 // Live price data

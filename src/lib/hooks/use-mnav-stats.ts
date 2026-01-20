@@ -30,12 +30,22 @@ function median(arr: number[]): number {
  * Calculate mNAV for a single company.
  * This is the single source of truth for mNAV calculation.
  * Used by both individual company pages and aggregate stats.
+ *
+ * Priority:
+ * 1. officialMnav - From official company dashboard (e.g., SharpLink's FD mNAV)
+ * 2. Calculated - Using our EV/CryptoNAV formula
  */
 export function getCompanyMNAV(
   company: Company,
   prices: PricesData
 ): number | null {
   if (!prices || company.pendingMerger) return null;
+
+  // Use official mNAV from company dashboard if available (e.g., SBET from SharpLink)
+  // This ensures we match the company's published FD mNAV methodology
+  if (company.officialMnav && company.officialMnav > 0) {
+    return company.officialMnav;
+  }
 
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
