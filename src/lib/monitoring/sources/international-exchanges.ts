@@ -4,7 +4,7 @@
  * Supports:
  * - CSE (Canadian Securities Exchange) - Sol Strategies (STKE)
  * - HKEX (Hong Kong Stock Exchange) - Boyaa Interactive (0434.HK)
- * - TSE (Tokyo Stock Exchange) - Metaplanet (3350.T) via IR page
+ * - TSE (Tokyo Stock Exchange) - Metaplanet (3350.T) via analytics page
  */
 
 import { SourceCheckResult } from '../types';
@@ -364,6 +364,180 @@ export async function checkHKEXFilings(
 
 
 // ============================================================
+// TSE (Tokyo Stock Exchange) - Metaplanet
+// ============================================================
+
+// TSE tickers with analytics pages
+const TSE_ANALYTICS_URLS: Record<string, string> = {
+  '3350.T': 'https://metaplanet.jp/en/analytics',  // Metaplanet
+};
+
+// Expected values for validation (updated when we verify data)
+interface ExpectedMetrics {
+  sharesOutstanding: number;
+  totalDebt: number;
+  cashReserves: number;
+  holdings: number;
+}
+
+const TSE_EXPECTED_METRICS: Record<string, ExpectedMetrics> = {
+  '3350.T': {
+    sharesOutstanding: 1_142_274_340,  // Nov 2025 filing
+    totalDebt: 280_000_000,            // From analytics page
+    cashReserves: 20_000_000,          // Q3 2025 balance sheet
+    holdings: 35_102,                   // BTC holdings
+  },
+};
+
+interface MetaplanetAnalyticsData {
+  btcPrice?: number;
+  sharePrice?: number;
+  sharesOutstanding?: number;
+  btcHoldings?: number;
+  btcNav?: number;
+  debtOutstanding?: number;
+  enterpriseValue?: number;
+  mNav?: number;
+}
+
+/**
+ * Fetch Metaplanet analytics page and extract key metrics
+ */
+async function fetchMetaplanetAnalytics(url: string): Promise<MetaplanetAnalyticsData | null> {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'DAT-Tracker/1.0',
+        'Accept': 'text/html',
+      },
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      console.error(`[TSE] Failed to fetch ${url}: ${response.status}`);
+      return null;
+    }
+
+    const html = await response.text();
+    const data: MetaplanetAnalyticsData = {};
+
+    // Extract metrics using regex patterns
+    // These match the page structure observed in accessibility snapshots
+
+    // BTC Holdings: ₿XX,XXX
+    const holdingsMatch = html.match(/₿([0-9,]+)/);
+    if (holdingsMatch) {
+      data.btcHoldings = parseInt(holdingsMatch[1].replace(/,/g, ''));
+    }
+
+    // Debt Outstanding: $XXX.XXM
+    const debtMatch = html.match(/\$([0-9.]+)M[^>]*>[^>]*>Debt Outstanding/i) ||
+                      html.match(/\$([0-9.]+)M[\s\S]*?Debt Outstanding/i);
+    if (debtMatch) {
+      data.debtOutstanding = parseFloat(debtMatch[1]) * 1_000_000;
+    }
+
+    // mNAV: X.XX (often in quotes in the HTML)
+    const mnavMatch = html.match(/"([0-9.]+)"[^>]*>[^>]*>mNAV/i) ||
+                      html.match(/([0-9.]+)[^>]*>mNAV/i);
+    if (mnavMatch) {
+      data.mNav = parseFloat(mnavMatch[1]);
+    }
+
+    // Shares Outstanding: X.XXB
+    const sharesMatch = html.match(/([0-9.]+)B[^>]*>[^>]*>Shares Outstanding/i);
+    if (sharesMatch) {
+      data.sharesOutstanding = parseFloat(sharesMatch[1]) * 1_000_000_000;
+    }
+
+    // Enterprise Value: $X.XXB
+    const evMatch = html.match(/\$([0-9.]+)B[^>]*>[^>]*>Enterprise Value/i);
+    if (evMatch) {
+      data.enterpriseValue = parseFloat(evMatch[1]) * 1_000_000_000;
+    }
+
+    return data;
+  } catch (error) {
+    console.error(`[TSE] Error fetching analytics from ${url}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Check TSE companies for data discrepancies
+ */
+export async function checkTSEAnalytics(
+  companies: Array<{
+    id: number;
+    ticker: string;
+    name: string;
+    asset: string;
+    holdings: number;
+  }>
+): Promise<SourceCheckResult[]> {
+  const results: SourceCheckResult[] = [];
+
+  for (const company of companies) {
+    const analyticsUrl = TSE_ANALYTICS_URLS[company.ticker];
+    const expected = TSE_EXPECTED_METRICS[company.ticker];
+    if (!analyticsUrl || !expected) continue;
+
+    console.log(`[TSE] Checking ${company.ticker}...`);
+
+    const data = await fetchMetaplanetAnalytics(analyticsUrl);
+    if (!data) continue;
+
+    const discrepancies: string[] = [];
+
+    // Check holdings
+    if (data.btcHoldings && Math.abs(data.btcHoldings - company.holdings) > 100) {
+      discrepancies.push(`Holdings: ours=${company.holdings}, theirs=${data.btcHoldings}`);
+    }
+
+    // Check debt (10% tolerance)
+    if (data.debtOutstanding) {
+      const debtDiff = Math.abs(data.debtOutstanding - expected.totalDebt) / expected.totalDebt;
+      if (debtDiff > 0.10) {
+        discrepancies.push(`Debt: ours=$${(expected.totalDebt / 1e6).toFixed(0)}M, theirs=$${(data.debtOutstanding / 1e6).toFixed(0)}M`);
+      }
+    }
+
+    // Check shares (5% tolerance)
+    if (data.sharesOutstanding) {
+      const sharesDiff = Math.abs(data.sharesOutstanding - expected.sharesOutstanding) / expected.sharesOutstanding;
+      if (sharesDiff > 0.05) {
+        discrepancies.push(`Shares: ours=${(expected.sharesOutstanding / 1e9).toFixed(3)}B, theirs=${(data.sharesOutstanding / 1e9).toFixed(3)}B`);
+      }
+    }
+
+    if (discrepancies.length > 0) {
+      console.log(`[TSE] Found discrepancies for ${company.ticker}:`, discrepancies);
+
+      results.push({
+        sourceType: 'tse_analytics',
+        companyId: company.id,
+        ticker: company.ticker,
+        asset: company.asset,
+        detectedHoldings: data.btcHoldings,
+        confidence: 0.95,
+        sourceUrl: analyticsUrl,
+        sourceText: `Data discrepancy detected: ${discrepancies.join('; ')}`,
+        sourceDate: new Date(),
+        trustLevel: 'official',
+      });
+    } else {
+      console.log(`[TSE] ${company.ticker} data verified OK`);
+    }
+
+    // Rate limit
+    await new Promise(r => setTimeout(r, 500));
+  }
+
+  return results;
+}
+
+
+// ============================================================
 // Shared Utilities
 // ============================================================
 
@@ -433,6 +607,7 @@ export async function checkInternationalExchanges(
   // Split companies by exchange
   const cseCompanies = companies.filter(c => CSE_COMPANY_IDS[c.ticker]);
   const hkexCompanies = companies.filter(c => HKEX_STOCK_CODES[c.ticker]);
+  const tseCompanies = companies.filter(c => TSE_ANALYTICS_URLS[c.ticker]);
 
   // Check CSE (Canada)
   if (cseCompanies.length > 0) {
@@ -446,6 +621,12 @@ export async function checkInternationalExchanges(
     results.push(...hkexResults);
   }
 
+  // Check TSE (Japan) - analytics page verification
+  if (tseCompanies.length > 0) {
+    const tseResults = await checkTSEAnalytics(tseCompanies);
+    results.push(...tseResults);
+  }
+
   return results;
 }
 
@@ -456,5 +637,6 @@ export function getInternationalMonitoredCompanies(): string[] {
   return [
     ...Object.keys(CSE_COMPANY_IDS),
     ...Object.keys(HKEX_STOCK_CODES),
+    ...Object.keys(TSE_ANALYTICS_URLS),
   ];
 }

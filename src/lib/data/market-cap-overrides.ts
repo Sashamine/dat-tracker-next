@@ -32,7 +32,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "ASST": 850_000_000,        // $850M - Strive (per Yahoo Finance, FMP returns stale $665M)
 
   // === Non-USD Stocks (FMP returns local currency as USD) ===
-  "3350.T": 3_500_000_000,    // $3.5B - Metaplanet (Japan, JPY)
+  // 3350.T: Removed - now using sharesForMnav (1.142B) × converted price
   "0434.HK": 315_000_000,     // $315M - Boyaa Interactive (Hong Kong, HKD)
 
   // === SPACs and Pre-merger Companies ===
@@ -62,7 +62,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
  */
 export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number }> = {
   // International (price in local currency for display, marketCap in USD)
-  "3350.T": { price: 7500, marketCap: 3_500_000_000 },     // Metaplanet (JPY)
+  "3350.T": { price: 548, marketCap: 4_040_000_000 },      // Metaplanet (JPY) - 1.142B shares × 548 JPY ÷ 155
   "0434.HK": { price: 1.50, marketCap: 500_000_000 },      // Boyaa Interactive (HKD)
   "ALTBG": { price: 0.50, marketCap: 200_000_000 },        // Blockchain Group (EUR)
   "H100.ST": { price: 0.10, marketCap: 150_000_000 },      // H100 Group (SEK)

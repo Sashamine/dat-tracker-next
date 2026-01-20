@@ -224,12 +224,12 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
     marketCap: 4_280_000_000,  // ~$4.28B (Jan 2026, from metaplanet.jp/analytics)
-    sharesForMnav: 650_000_000,  // From holdings-history.ts
-    totalDebt: 280_000_000,  // ~$280M bonds + BTC-backed credit facility
-    cashReserves: 50_000_000,  // Estimated cash position
+    sharesForMnav: 1_142_274_340,  // Official: Nov 20, 2025 filing (xj-storage.jp) - post Sept 2025 $1.4B offering
+    totalDebt: 280_000_000,  // $280M per metaplanet.jp/analytics (Jan 2026)
+    cashReserves: 20_000_000,  // ~$20M per Q3 2025 balance sheet (¥2.77B total cash + ST investments)
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 100K BTC by 2026.",
-    notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield. mNAV ~1.33.",
+    notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield.",
     leverageRatio: 1.3,
   },
   {
