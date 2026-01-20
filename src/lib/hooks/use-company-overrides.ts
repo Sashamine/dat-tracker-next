@@ -14,6 +14,27 @@ interface OverridesResponse {
   timestamp: string;
 }
 
+// mNAV.com live balance sheet data
+interface MnavCompanyData {
+  ticker: string;
+  holdings: number;
+  debt: number;
+  cash: number;
+  fdShares: number;
+  mnav: number;
+  marketCap: number;
+  enterpriseValue: number;
+  lastUpdated: string;
+}
+
+interface MnavBatchResponse {
+  data: Record<string, MnavCompanyData>;
+  count: number;
+  supported: string[];
+  cached: boolean;
+  timestamp: string;
+}
+
 async function fetchOverrides(): Promise<OverridesResponse> {
   const response = await fetch("/api/company-overrides");
   if (!response.ok) {
@@ -22,23 +43,43 @@ async function fetchOverrides(): Promise<OverridesResponse> {
   return response.json();
 }
 
+async function fetchMnavData(): Promise<MnavBatchResponse | null> {
+  try {
+    const response = await fetch("/api/mnav");
+    if (!response.ok) return null;
+    return response.json();
+  } catch {
+    return null;
+  }
+}
+
 /**
- * Hook to fetch company data overrides from Google Sheets.
- * Returns the overrides and a function to merge them with base company data.
+ * Hook to fetch company data overrides from Google Sheets and live balance sheet data from mNAV.com.
+ * Returns the overrides, live balance sheet data, and functions to merge them with base company data.
  */
 export function useCompanyOverrides() {
-  const query = useQuery({
+  const overridesQuery = useQuery({
     queryKey: ["company-overrides"],
     queryFn: fetchOverrides,
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
 
+  // Fetch live balance sheet data from mNAV.com API
+  const mnavQuery = useQuery({
+    queryKey: ["mnav-live-data"],
+    queryFn: fetchMnavData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+  });
+
   return {
-    overrides: query.data?.overrides || {},
-    isLoading: query.isLoading,
-    error: query.error,
-    dataUpdatedAt: query.dataUpdatedAt,
+    overrides: overridesQuery.data?.overrides || {},
+    liveBalanceSheet: mnavQuery.data?.data || {},
+    isLoading: overridesQuery.isLoading,
+    error: overridesQuery.error,
+    dataUpdatedAt: overridesQuery.dataUpdatedAt,
+    mnavLastUpdated: mnavQuery.data?.timestamp,
   };
 }
 
@@ -55,35 +96,41 @@ function getLatestDilutedShares(ticker: string): number | undefined {
 }
 
 /**
- * Merge base company data with overrides from Google Sheets.
- * Override values take precedence over base values.
+ * Merge base company data with overrides from Google Sheets and live mNAV.com balance sheet data.
+ * Priority: mNAV.com live data > static data > database
  * Also populates sharesOutstandingFD from holdings history for accurate market cap.
  */
 export function mergeCompanyWithOverrides(
   company: Company,
-  overrides: Record<string, CompanyOverride>
+  overrides: Record<string, CompanyOverride>,
+  liveBalanceSheet: Record<string, MnavCompanyData> = {}
 ): Company {
   const override = overrides[company.ticker];
+  const liveData = liveBalanceSheet[company.ticker];
   // Get diluted shares from holdings history (for accurate market cap calculation)
   const sharesOutstandingFD = getLatestDilutedShares(company.ticker);
   // Get static company data for fields not in database (like holdingsSourceUrl)
   const staticCompany = getCompanyByTicker(company.ticker);
 
-  // Merge static financial data for mNAV calculation
-  // PREFER static data for capital structure (database often has stale values)
-  // These fields change frequently and static companies.ts is more up-to-date
+  // Merge financial data for mNAV calculation
+  // Priority: mNAV.com live data (most current) > static data > database
+  // mNAV.com provides debt and cash for 13 BTC treasury companies
   const mergedFinancials = {
-    totalDebt: staticCompany?.totalDebt ?? company.totalDebt,
+    // Use live debt from mNAV.com if available, else static, else database
+    totalDebt: liveData?.debt ?? staticCompany?.totalDebt ?? company.totalDebt,
+    // Preferred equity not in mNAV.com API, use static/database
     preferredEquity: staticCompany?.preferredEquity ?? company.preferredEquity,
-    cashReserves: staticCompany?.cashReserves ?? company.cashReserves,
+    // Use live cash from mNAV.com if available, else static, else database
+    cashReserves: liveData?.cash ?? staticCompany?.cashReserves ?? company.cashReserves,
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
     sharesForMnav: company.sharesForMnav ?? staticCompany?.sharesForMnav,
     // pendingMerger: static data takes precedence (undefined = not pending)
-    // If not explicitly set in static data, use database value
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     // lowLiquidity: flag for thinly traded stocks
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,
+    // Track if this company has live balance sheet data from mNAV.com
+    hasLiveBalanceSheet: !!liveData,
   };
 
   if (!override) {
@@ -115,11 +162,12 @@ export function mergeCompanyWithOverrides(
 }
 
 /**
- * Merge all companies with their overrides.
+ * Merge all companies with their overrides and live balance sheet data.
  */
 export function mergeAllCompanies(
   companies: Company[],
-  overrides: Record<string, CompanyOverride>
+  overrides: Record<string, CompanyOverride>,
+  liveBalanceSheet: Record<string, MnavCompanyData> = {}
 ): Company[] {
-  return companies.map((company) => mergeCompanyWithOverrides(company, overrides));
+  return companies.map((company) => mergeCompanyWithOverrides(company, overrides, liveBalanceSheet));
 }

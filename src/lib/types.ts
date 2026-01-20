@@ -91,6 +91,9 @@ export interface Company {
 
   // Trading status flags
   lowLiquidity?: boolean;         // True for thinly traded OTC/international stocks
+
+  // Data source flags
+  hasLiveBalanceSheet?: boolean;  // True if balance sheet data comes from live mNAV.com API
 }
 
 // Live price data

@@ -60,7 +60,7 @@ export default function AssetPage() {
   const router = useRouter();
   const symbol = (params.symbol as string).toUpperCase();
   const { data: prices } = usePricesStream();
-  const { overrides } = useCompanyOverrides();
+  const { overrides, liveBalanceSheet } = useCompanyOverrides();
   const [sortField, setSortField] = useState<string>("holdingsValue");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
@@ -68,10 +68,10 @@ export default function AssetPage() {
   const { data: assetData, isLoading: isLoadingAsset } = useAsset(symbol);
   const { data: assetsData } = useAssets();
 
-  // Merge with overrides from Google Sheets
+  // Merge with overrides from Google Sheets and live balance sheet data
   const companies = useMemo(
-    () => mergeAllCompanies(assetData?.companies || [], overrides),
-    [assetData, overrides]
+    () => mergeAllCompanies(assetData?.companies || [], overrides, liveBalanceSheet),
+    [assetData, overrides, liveBalanceSheet]
   );
 
   const assetInfo = ASSET_INFO[symbol];

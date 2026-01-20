@@ -33,7 +33,7 @@ function getAssetStats(companies: Company[], prices: any) {
 function HomeContent() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { data: prices, isConnected } = usePricesStream();
-  const { overrides } = useCompanyOverrides();
+  const { overrides, liveBalanceSheet } = useCompanyOverrides();
   const { assets, companyTypes, minMarketCap, maxMarketCap, minMNAV, maxMNAV, search } = useFilters();
 
   // Calculate active filter count for mobile button
@@ -52,11 +52,11 @@ function HomeContent() {
     await refetchCompanies();
   };
 
-  // Merge database company data with Google Sheets overrides
+  // Merge database company data with Google Sheets overrides and live balance sheet data
   const companies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
-    return mergeAllCompanies(baseCompanies, overrides);
-  }, [companiesData, overrides]);
+    return mergeAllCompanies(baseCompanies, overrides, liveBalanceSheet);
+  }, [companiesData, overrides, liveBalanceSheet]);
 
   const assetStats = getAssetStats(companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
