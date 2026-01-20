@@ -584,7 +584,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 45_000_000,
     avgDailyVolume: 150_000_000,
     hasOptions: true,
-    marketCap: 7_600_000_000,  // ~$7.6B (Jan 2026)
+    marketCap: 6_770_000_000,  // ~$6.77B (Jan 2026)
     sharesForMnav: 108_000_000,  // 108M diluted shares (Q3 2025)
     totalDebt: 490_000_000,  // ~$490M (EV $8.09B - Market Cap $7.6B)
     cashReserves: 35_000_000,  // ~$35M cash
