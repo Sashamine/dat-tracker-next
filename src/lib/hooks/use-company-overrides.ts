@@ -41,8 +41,8 @@ interface SharpLinkData {
   holdings: number;
   ethNav: number;
   stakingRewards: number;
-  avgPrice: number;
   ethConcentration: number;
+  mNAV: string;
   lastUpdated: string;
   source: 'sharplink-dashboard';
 }
