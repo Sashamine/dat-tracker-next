@@ -425,7 +425,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
       theBlock: 'fwdi',
     },
     trustLevel: 'official',
-    extractionHints: 'Solana treasury company. ~7M SOL holdings. Staking via Superstate. Look for "holds X SOL" or "Solana holdings" in press releases. Raised $1.65B PIPE Jan 2026.',
+    extractionHints: 'Solana treasury company. ~7M SOL holdings. Staking via Superstate. Look for "holds X SOL" or "Solana holdings" in press releases. IMPORTANT: Track staking rewards - they earn ~6.7% APY and accumulate SOL over time. Look for "staking rewards" or "accumulated X SOL from staking".',
   },
 ];
 
