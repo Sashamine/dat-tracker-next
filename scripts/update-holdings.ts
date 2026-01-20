@@ -19,6 +19,13 @@ interface HoldingsUpdate {
 // Updates to apply
 const updates: HoldingsUpdate[] = [
   {
+    ticker: 'FWDI',
+    holdings: 6979967,
+    holdingsLastUpdated: '2026-01-15',
+    holdingsSource: 'press-release',
+    notes: 'Raised $1.65B PIPE. Debt free. 133K+ SOL staking rewards since Sept 2025. First equity on Solana via Superstate.',
+  },
+  {
     ticker: 'XRPN',
     holdings: 473276430,
     holdingsLastUpdated: '2026-01-10',
