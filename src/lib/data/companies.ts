@@ -276,6 +276,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     pendingMerger: true,  // SPAC merger not yet closed - no mNAV
+    expectedHoldings: 30_021,  // Confirmed BTC from Adam Back + investors
     leader: "Adam Back (CEO)",
     strategy: "Hashcash inventor's BTC treasury play. Target 50K+ BTC.",
     notes: "SPAC merger pending (expected Q1 2026). 25K BTC from Adam Back + 5K from investors. Will trade as BSTR post-merger.",
