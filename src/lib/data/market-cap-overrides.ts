@@ -32,7 +32,8 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "ASST": 850_000_000,        // $850M - Strive (per Yahoo Finance, FMP returns stale $665M)
 
   // === Non-USD Stocks (FMP returns local currency as USD) ===
-  // 3350.T: Removed - now using sharesForMnav (1.142B) × converted price
+  // Note: FMP returns JPY/HKD prices as if they were USD - must override market cap
+  "3350.T": 4_000_000_000,    // ~$4.0B - Metaplanet (1.142B shares × ¥540 ÷ 155)
   "0434.HK": 315_000_000,     // $315M - Boyaa Interactive (Hong Kong, HKD)
 
   // === SPACs and Pre-merger Companies ===
