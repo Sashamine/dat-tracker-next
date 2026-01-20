@@ -334,12 +334,12 @@ const NXTT_INTEL: CompanyIntel = {
   strategySummary: "Dual-track strategy: AI-enabled software development services + Bitcoin accumulation. Operates in Asia-Pacific region providing AI-enabled SaaS solutions. May sell, collateralize, or utilize Bitcoin holdings as circumstances warrant. Views Bitcoin as long-term inflation hedge. Described as 'technology company built on dual-engine strategy of AI plus digital assets.'",
   recentDevelopments: [
     "5,833 BTC holdings (~$526.7M)",
-    "Critics note company functions primarily as Bitcoin holding vehicle despite AI-SaaS marketing",
-    "Substantial shareholder dilution from share/warrant issuances",
+    "PENDING: MOU with Global Nexgen (Nov 2025) to buy up to 10,000 BTC at $84K/BTC - would nearly triple holdings",
+    "$500M shelf registration for continued BTC acquisitions",
     "Shenzhen-based operations",
   ],
   keyBackers: [],
-  outlook2026: "AI-SaaS development alongside BTC treasury management.",
+  outlook2026: "Global Nexgen deal could add up to 10K BTC. Continued accumulation via $500M shelf.",
 };
 
 const ABTC_INTEL: CompanyIntel = {
