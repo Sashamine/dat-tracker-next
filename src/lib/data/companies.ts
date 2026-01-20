@@ -540,7 +540,7 @@ export const btcCompanies: Company[] = [
     marketCap: 600_000_000,
     sharesForMnav: 98_000_000,  // From holdings-history.ts
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
-    notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC. MOU with Global Nexgen (Nov 2025) for up to 10K BTC at $84K.",
+    notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. Pending: MOU with Global Nexgen (Nov 2025) to buy up to 10,000 BTC at $84K/BTC within 1 year - would nearly triple holdings.",
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   {

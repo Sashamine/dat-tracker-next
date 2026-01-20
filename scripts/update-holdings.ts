@@ -23,7 +23,7 @@ const updates: HoldingsUpdate[] = [
     holdings: 5833,
     holdingsLastUpdated: '2025-06-30',
     holdingsSource: 'sec-filing',
-    notes: 'Shenzhen-based AI software co. $500M shelf for BTC. MOU with Global Nexgen (Nov 2025) for up to 10K BTC at $84K - pending.',
+    notes: 'Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. Pending: MOU with Global Nexgen (Nov 2025) to buy up to 10,000 BTC at $84K/BTC within 1 year - would nearly triple holdings.',
   },
   {
     ticker: 'FWDI',
