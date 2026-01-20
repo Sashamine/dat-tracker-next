@@ -522,8 +522,7 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-30", holdings: 0, sharesOutstanding: 220_624_508, holdingsPerShare: 0, source: "Treasury deal closed" },
   { date: "2025-07-21", holdings: 19000, sharesOutstanding: 277_067_396, holdingsPerShare: 0.0000686, source: "Press reports ~$2B BTC" },
   { date: "2025-09-30", holdings: 15000, sharesOutstanding: 279_997_636, holdingsPerShare: 0.0000536, source: "Q3 2025 10-Q" },
-  { date: "2025-12-22", holdings: 11542, sharesOutstanding: 285_000_000, holdingsPerShare: 0.0000405, source: "Bitcoin Magazine" },
-  { date: "2026-01-10", holdings: 15000, sharesOutstanding: 288_000_000, holdingsPerShare: 0.0000521, source: "The Block" },
+  { date: "2025-12-22", holdings: 11542, sharesOutstanding: 285_000_000, holdingsPerShare: 0.0000405, source: "Lookonchain on-chain analytics" },
 ];
 
 // Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder
