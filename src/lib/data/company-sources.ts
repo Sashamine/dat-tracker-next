@@ -10,6 +10,7 @@ export interface CompanyDataSources {
   officialDashboardName?: string;  // Display name for the dashboard (e.g., "strategy.com")
   officialMnav?: number;  // Official mNAV from company dashboard (for comparison note)
   officialMnavMethod?: "issued" | "diluted";  // What share count they use
+  officialMnavNote?: string;  // Custom explanation for methodology difference (overrides default)
   investorRelations?: string;
   // SEC/regulatory filings
   secCik?: string;  // SEC Central Index Key
@@ -217,6 +218,9 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     ticker: "DFDV",
     name: "DeFi Development Corp",
     officialDashboard: "https://defidevcorp.com/dashboard",
+    officialDashboardName: "defidevcorp.com",
+    officialMnav: 0.72,  // Their formula: Market Cap / SOL NAV (no cash subtraction)
+    officialMnavNote: "Market Cap / NAV (no EV adjustment)",  // They don't subtract cash
     investorRelations: "https://defidevcorp.com/investor",
     exchange: "NASDAQ",
     sharesSource: "basic",
@@ -224,7 +228,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     reportsHoldingsFrequency: "on_purchase",
     reportsMnavDaily: false,
     notes: "SOL treasury company. Launched April 2025.",
-    lastVerified: "2026-01-18",
+    lastVerified: "2026-01-20",
   },
 
   UPXI: {

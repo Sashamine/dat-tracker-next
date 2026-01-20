@@ -350,6 +350,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                 officialDashboardMnav={COMPANY_SOURCES[company.ticker]?.officialMnav}
                 officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
               />
             )}
           </p>
@@ -517,6 +518,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                         officialDashboardMnav={COMPANY_SOURCES[company.ticker]?.officialMnav}
                         officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                        officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
                       />
                     )}
                   </TableCell>

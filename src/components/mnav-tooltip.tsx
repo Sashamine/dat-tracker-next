@@ -28,6 +28,7 @@ interface MNAVTooltipProps {
   // Official dashboard comparison
   officialDashboardMnav?: number;  // e.g., 1.07 from strategy.com
   officialDashboardName?: string;  // e.g., "strategy.com"
+  officialMnavNote?: string;  // Custom note explaining methodology difference
   // Source links
   holdingsSourceUrl?: string;
   officialDashboard?: string;
@@ -67,6 +68,7 @@ export function MNAVTooltip({
   cryptoPrice,
   officialDashboardMnav,
   officialDashboardName,
+  officialMnavNote,
   holdingsSourceUrl,
   officialDashboard,
   secFilingsUrl,
@@ -200,7 +202,7 @@ export function MNAVTooltip({
             {/* Official dashboard comparison */}
             {officialDashboardMnav && officialDashboardName && Math.abs(mNAV - officialDashboardMnav) > 0.02 && (
               <div className="text-[10px] text-amber-400/80 border-t border-gray-700 pt-1">
-                Note: {officialDashboardName} shows {officialDashboardMnav.toFixed(2)}x (using issued shares)
+                Note: {officialDashboardName} shows {officialDashboardMnav.toFixed(2)}x ({officialMnavNote || "using issued shares"})
               </div>
             )}
 
