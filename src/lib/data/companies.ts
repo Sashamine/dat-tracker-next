@@ -273,11 +273,10 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 80_000_000,
     hasOptions: true,
-    marketCap: 3_500_000_000,
-    sharesForMnav: 145_000_000,  // From holdings-history.ts
+    pendingMerger: true,  // SPAC merger not yet closed - no mNAV
     leader: "Adam Back (CEO)",
     strategy: "Hashcash inventor's BTC treasury play. Target 50K+ BTC.",
-    notes: "Blockstream founder. 25K BTC from Adam Back personally. Trading as CEPO until merger closes.",
+    notes: "SPAC merger pending (expected Q1 2026). 25K BTC from Adam Back + 5K from investors. Will trade as BSTR post-merger.",
   },
   {
     id: "mara",
