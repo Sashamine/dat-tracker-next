@@ -23,6 +23,7 @@ import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
 import { MNAVTooltip } from "@/components/mnav-tooltip";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -283,6 +284,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-gray-900 dark:text-gray-100">{company.ticker}</span>
+              {company.notes && company.notes.includes("No SEC") && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-amber-500 cursor-help">⚠️</span>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs">
+                      <p className="text-sm">{company.notes}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
               <Badge variant="outline" className={cn("text-xs", assetColors[company.asset] || assetColors.ETH)}>
                 {company.asset}
               </Badge>
@@ -437,6 +450,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     <div className="flex flex-col">
                       <span className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-gray-100">
                         {company.ticker}
+                        {company.notes && company.notes.includes("No SEC") && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <span className="text-amber-500 cursor-help">⚠️</span>
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-xs">
+                                <p className="text-sm">{company.notes}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
                         {company.pendingMerger && (
                           <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
                             Pending Merger

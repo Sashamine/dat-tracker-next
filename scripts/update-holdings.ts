@@ -19,6 +19,13 @@ interface HoldingsUpdate {
 // Updates to apply
 const updates: HoldingsUpdate[] = [
   {
+    ticker: 'NAKA',
+    holdings: 5765,
+    holdingsLastUpdated: '2025-08-19',
+    holdingsSource: 'press-release',
+    notes: '$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC (one Nakamoto). Share buyback authorized Dec 2025 as mNAV < 1.',
+  },
+  {
     ticker: 'NXTT',
     holdings: 5833,
     holdingsLastUpdated: '2025-06-30',

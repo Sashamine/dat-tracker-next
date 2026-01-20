@@ -265,21 +265,21 @@ const H100ST_INTEL: CompanyIntel = {
 
 const NAKA_INTEL: CompanyIntel = {
   ticker: "NAKA",
-  lastResearched: "2026-01-13",
+  lastResearched: "2026-01-20",
   pressReleases: [
-    { date: "2025-12-01", title: "Shares trading at ~$0.45; down 99% from high", summary: "Severe stock decline", url: "https://nakamotoholdings.com/news" },
-    { date: "2025-08-01", title: "Merger with KindlyMD closed", summary: "Completed business combination", url: "https://nakamotoholdings.com/news" },
-    { date: "2025-05-12", title: "Announced merger with KindlyMD; raised $710M", summary: "$510M PIPE + $200M convertible notes", url: "https://nakamotoholdings.com/news" },
+    { date: "2025-12-15", title: "Board authorizes share buyback program", summary: "Repurchases as mNAV < 1", url: "https://nakamoto.com/update" },
+    { date: "2025-08-19", title: "Acquired 5,744 BTC for $679M", summary: "First purchase post-merger at $118K avg", url: "https://nakamoto.com/update/kindlymd-acquires-5-744-btc-to-expand-nakamoto-bitcoin-treasury" },
+    { date: "2025-08-01", title: "Merger with KindlyMD closed", summary: "Completed business combination", url: "https://nakamoto.com/update/kindlymd-completes-merger-with-nakamoto-to-establish-bitcoin-treasury" },
   ],
-  strategySummary: "Founded by David Bailey (BTC Inc., Bitcoin Magazine founder). Vision: first publicly traded conglomerate of Bitcoin companies. Plans to bring Bitcoin Magazine, Bitcoin Conference, and 210k Capital hedge fund under Nakamoto Holdings. PIPE at $1.12 per share; $200M senior secured convertible notes maturing 2028.",
+  strategySummary: "Founded by David Bailey (BTC Inc., Bitcoin Magazine founder). Vision: first publicly traded conglomerate of Bitcoin companies. Plans to bring Bitcoin Magazine, Bitcoin Conference, and 210k Capital hedge fund under Nakamoto Holdings. PIPE at $1.12/share; $200M senior secured convertible notes maturing 2028. Goal: acquire 1M BTC ('one Nakamoto').",
   recentDevelopments: [
-    "5,398 BTC holdings (ranks 19th among public firms)",
-    "Received Nasdaq compliance notice; deadline June 8, 2026 to achieve $1+ closing price",
-    "Stock dropped 98%+ from $25 peak in May 2025",
-    "David Bailey named among CoinDesk's Most Influential 2025",
+    "5,765 BTC holdings (~$507M at current prices)",
+    "Share buyback authorized Dec 2025 - stock trading below NAV",
+    "Nasdaq compliance deadline June 8, 2026 (must achieve $1+ price)",
+    "mNAV fell to ~0.75 - market cap below BTC holdings value",
   ],
   keyBackers: ["David Bailey (Founder, BTC Inc.)"],
-  outlook2026: "Must regain Nasdaq compliance by June 8, 2026. Restructuring likely needed.",
+  outlook2026: "Must regain Nasdaq compliance by June 2026. Share buyback may help. $5B ATM shelf available for future BTC purchases.",
 };
 
 const DJT_INTEL: CompanyIntel = {
