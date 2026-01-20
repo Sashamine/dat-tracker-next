@@ -577,3 +577,4 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     </div>
   );
 }
+
