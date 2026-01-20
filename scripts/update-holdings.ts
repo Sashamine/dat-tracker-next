@@ -19,6 +19,15 @@ interface HoldingsUpdate {
 // Updates to apply
 const updates: HoldingsUpdate[] = [
   {
+    ticker: 'XRPN',
+    holdings: 473276430,
+    holdingsLastUpdated: '2026-01-10',
+    holdingsSource: 'press-release',
+    notes: 'SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed.',
+    pendingMerger: true,
+    expectedHoldings: 473276430,
+  },
+  {
     ticker: 'HUT',
     holdings: 10278,  // Standalone (excludes ABTC subsidiary)
     holdingsLastUpdated: '2025-09-30',
