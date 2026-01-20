@@ -43,7 +43,8 @@ export async function GET(
         cf.other_investments,
         c.pending_merger,
         c.expected_holdings,
-        c.merger_expected_close
+        c.merger_expected_close,
+        c.notes
       FROM companies c
       LEFT JOIN company_financials cf ON cf.company_id = c.id AND cf.end_date IS NULL
       WHERE c.asset_id = $1 AND c.is_active = true
@@ -67,6 +68,7 @@ export async function GET(
       pendingMerger: c.pending_merger || false,
       expectedHoldings: c.expected_holdings ? parseFloat(c.expected_holdings) : null,
       mergerExpectedClose: c.merger_expected_close,
+      notes: c.notes,
     }));
 
     const totalHoldings = formattedCompanies.reduce((sum, c) => sum + c.holdings, 0);
