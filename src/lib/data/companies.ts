@@ -331,9 +331,9 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
     leader: "Jason Les (CEO)",
-    strategy: "1 GW Corsicana facility. Mining + AI/HPC pivot.",
+    strategy: "HODL miner + treasury. Converts fund BTC buys. 1 GW Corsicana.",
     totalDebt: 794_000_000,  // $594M 0.75% converts + $200M BTC-backed credit
-    notes: "$594M 0.75% converts + $200M BTC-backed credit.",
+    notes: "Adopted DAT playbook Dec 2024. $594M converts used for $510M BTC purchase. 3rd largest corporate holder.",
   },
   {
     id: "clsk",
