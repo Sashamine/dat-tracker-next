@@ -19,6 +19,7 @@ import { checkTwitterForUpdates, checkTwitterForEarlySignals, createGrokConfig }
 import { checkIRPages } from './sources/ir-pages';
 import { checkHoldingsPages } from './sources/holdings-pages';
 import { checkMnavApi, getMnavMonitoredCompanies } from './sources/mnav-api';
+import { checkSharpLinkApi } from './sources/sharplink-api';
 import { checkAggregatorsForUpdates, getAggregatorOnlyCompanies } from './sources/aggregators';
 import { checkArkhamForChanges } from './sources/arkham';
 import { getSECMonitoredCompanies, getCompanySource, getInternationalExchangeCompanies } from './sources/company-sources';
@@ -298,6 +299,14 @@ export async function runMonitoringAgent(
       console.log('[Monitoring] Checking mNAV.com API...');
       const mnavResults = await checkMnavApi(companies);
       allResults.push(...mnavResults);
+    }
+
+    // 2c. Check SharpLink API (SBET ETH holdings - official company API)
+    if (config.sources.includes('holdings_pages') || config.sources.includes('sharplink_api')) {
+      sourcesChecked++;
+      console.log('[Monitoring] Checking SharpLink API (SBET)...');
+      const sharpLinkResults = await checkSharpLinkApi(companies);
+      allResults.push(...sharpLinkResults);
     }
 
     // 3. Check IR Pages (company investor relations pages) - official announcements

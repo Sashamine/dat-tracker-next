@@ -193,6 +193,7 @@ export const MONITORING_SOURCES = [
   'international_exchanges', // CSE (Canada), HKEX (Hong Kong) - official exchange filings
   'holdings_pages',          // Direct holdings trackers (KULR tracker, Metaplanet, etc.)
   'mnav_api',                // mNAV.com API - real-time holdings for mid-tier treasury companies
+  'sharplink_api',           // SharpLink dashboard API - SBET ETH holdings (official)
   'ir_pages',                // Company IR pages (press releases)
   // Early signal sources (pre-filing alerts)
   'twitter',                 // Twitter/X via Grok API - announcements before filings
