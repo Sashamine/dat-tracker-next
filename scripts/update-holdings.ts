@@ -19,6 +19,13 @@ interface HoldingsUpdate {
 // Updates to apply
 const updates: HoldingsUpdate[] = [
   {
+    ticker: 'NXTT',
+    holdings: 5833,
+    holdingsLastUpdated: '2025-06-30',
+    holdingsSource: 'sec-filing',
+    notes: 'Shenzhen-based AI software co. $500M shelf for BTC. MOU with Global Nexgen (Nov 2025) for up to 10K BTC at $84K - pending.',
+  },
+  {
     ticker: 'FWDI',
     holdings: 6979967,
     holdingsLastUpdated: '2026-01-15',

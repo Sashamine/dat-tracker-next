@@ -529,9 +529,9 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     holdings: 5_833,
-    holdingsLastUpdated: "2025-09-30",
+    holdingsLastUpdated: "2025-06-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001831978&type=8-K",
     datStartDate: "2024-06-01",
     costBasisAvg: 65_000,
     isMiner: false,
@@ -540,7 +540,7 @@ export const btcCompanies: Company[] = [
     marketCap: 600_000_000,
     sharesForMnav: 98_000_000,  // From holdings-history.ts
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
-    notes: "Formerly WeTrade Group. Shenzhen-based. $526M BTC holdings.",
+    notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC. MOU with Global Nexgen (Nov 2025) for up to 10K BTC at $84K.",
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   {

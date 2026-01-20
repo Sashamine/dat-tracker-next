@@ -239,15 +239,17 @@ export const COMPANY_SOURCES: CompanySource[] = [
     asset: 'BTC',
     secCik: '0001831978',
     secFilingPatterns: {
-      eightK: [/ex99|ex-99|press|release/i],
+      eightK: [/ex99|ex-99|press|release|425/i], // 425 for merger/acquisition communications
     },
+    irPageUrl: 'https://www.nexttechnology.io/',
+    twitterHandles: ['@NextTechHolding'],
     aggregators: {
       bitcoinTreasuries: 'next-technology-holding-inc',
       bitbo: 'next-technology-holdings',
       theBlock: 'nxtt',
     },
     trustLevel: 'official',
-    extractionHints: 'China-based, Nasdaq-listed. Filed $500M shelf for BTC purchases.',
+    extractionHints: 'Shenzhen-based, Nasdaq-listed. $500M shelf for BTC purchases. WATCH: MOU with Global Nexgen (Nov 2025) for up to 10,000 BTC at $84K/BTC - monitor for deal closure. Look for "acquired X bitcoin" or "total bitcoin holdings of X".',
   },
   {
     ticker: 'NAKA',
