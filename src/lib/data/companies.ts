@@ -485,7 +485,7 @@ export const btcCompanies: Company[] = [
     tier: 1,
     holdings: 11_542,
     holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec_10q",
+    holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://ir.tmtgcorp.com/financials/sec-filings/",
     datStartDate: "2025-05-01",
     costBasisAvg: 100_000,
