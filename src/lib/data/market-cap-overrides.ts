@@ -27,7 +27,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "BTDR": 2_300_000_000,      // $2.3B - Bitdeer ($730M convertible notes)
 
   // === BTC Treasury Companies (FMP returns stale/incorrect data) ===
-  "DJT": 6_400_000_000,       // $6.4B - Trump Media (15K BTC, $1B zero-coupon converts)
+  "DJT": 3_900_000_000,       // $3.9B - Trump Media (Jan 2026, per Yahoo/Nasdaq)
   "NAKA": 1_500_000_000,      // $1.5B - Nakamoto Holdings (5K BTC, $410M convertible debt)
   "ASST": 850_000_000,        // $850M - Strive (per Yahoo Finance, FMP returns stale $665M)
 
