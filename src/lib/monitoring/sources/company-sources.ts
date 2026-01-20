@@ -255,7 +255,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
     ticker: 'NAKA',
     name: 'Nakamoto Holdings (KindlyMD)',
     asset: 'BTC',
-    secCik: '0001977303',
+    secCik: '0001946573',  // KindlyMD (post-merger entity)
     secFilingPatterns: {
       eightK: [/ex99|ex-99|press|release/i],
     },

@@ -22,7 +22,7 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "CORZ": "0001878848",
   "BTDR": "0001899123",
   "KULR": "0001662684",
-  "NAKA": "0001977303",
+  "NAKA": "0001946573",  // KindlyMD (post-merger)
   "DJT": "0001849635",
   "XXI": "0002019757",
   "CEPO": "0002019757",
