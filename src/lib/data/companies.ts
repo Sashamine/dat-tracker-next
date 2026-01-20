@@ -257,7 +257,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services.",
-    notes: "Tether/SoftBank/Cantor backed. 3rd largest public holder. DUAL-CLASS structure. $486.5M converts secured by 16,116 BTC.",
+    notes: "Tether/SoftBank/Mallers venture. No SEC 10-Q/10-K filings yet - holdings unverified by regulatory filings.",
   },
   {
     id: "cepo",  // BSTR Holdings pre-merger
@@ -641,7 +641,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 150_000_000,
     leader: "Jihan Wu (Co-Founder)",
     strategy: "Vertically integrated - develops own ASIC chips (SEALMINER).",
-    notes: "Bitmain co-founder. Self-mining + cloud mining services.",
+    notes: "Cayman Islands company. Files 6-K (foreign issuer) - no SEC 10-Q/10-K to verify holdings.",
   },
 ];
 

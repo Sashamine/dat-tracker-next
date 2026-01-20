@@ -17,7 +17,7 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "MSTR": "0001050446",
   "MARA": "0001507605",
   "RIOT": "0001167419",
-  "CLSK": "0001515671",
+  "CLSK": "0000827876",
   "HUT": "0001964789",
   "CORZ": "0001878848",
   "BTDR": "0001899123",
