@@ -984,22 +984,22 @@ export const xrpCompanies: Company[] = [
   {
     id: "xrpn",
     name: "Evernorth Holdings",
-    ticker: "XRPN",
+    ticker: "XRPN",  // Trading as Armada Acquisition Corp. II until merger closes
     asset: "XRP",
     tier: 1,
     holdings: 473_276_430,
     holdingsLastUpdated: "2026-01-10",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.evernorth-holdings.com/",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
     datStartDate: "2025-11-01",
-    costBasisAvg: 1.93,
+    costBasisAvg: 2.00,  // ~$2.00-2.44 avg across purchases
     quarterlyBurnUsd: 0,
     capitalRaisedPipe: 1_000_000_000,
-    marketCap: 1_000_000_000,
-    sharesForMnav: 75_000_000,  // From holdings-history.ts
+    pendingMerger: true,  // SPAC merger with Armada Acquisition Corp. II
+    expectedHoldings: 473_276_430,
     leader: "Asheesh Birla (CEO, ex-Ripple)",
-    strategy: "Institutional-scale XRP adoption, SPAC merger Q1 2026",
-    notes: "Pre-IPO. 0.47% of XRP supply. SBI, Ripple, Pantera backed.",
+    strategy: "Institutional-scale XRP adoption via SPAC. Yield through XRP loans/market making.",
+    notes: "SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed.",
   },
   // WKSP (Worksport) removed - Auto tech company, not beta to XRP
 ];
