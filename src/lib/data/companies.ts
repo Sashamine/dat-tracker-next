@@ -1,5 +1,7 @@
 import { Company } from "../types";
 
+// Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
+
 // ETH DAT Companies
 export const ethCompanies: Company[] = [
   {
