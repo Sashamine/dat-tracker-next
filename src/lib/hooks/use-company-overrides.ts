@@ -208,15 +208,12 @@ export function mergeCompanyWithOverrides(
   const staticCompany = getCompanyByTicker(company.ticker);
 
   // Merge financial data for mNAV calculation
-  // Priority for BALANCE SHEET items: Live API data > static data > database
-  // Priority for HOLDINGS: Static data (companies.ts) is the source of truth
-  // - mNAV.com provides debt, cash, preferredEquity for BTC treasury companies
-  // - SharpLink provides ETH data for SBET
-  // Note: We do NOT override holdings with live data - static holdings are manually
-  // verified and more reliable than API holdings which can lag or be incorrect
+  // Priority: Live API data (mNAV.com) > static data > database
+  // mNAV.com provides: holdings, debt, cash, preferredEquity for BTC treasury companies
+  // SharpLink provides: ETH holdings for SBET
   const mergedFinancials = {
-    // HOLDINGS: Keep static data as source of truth (do NOT use live data)
-    holdings: company.holdings,
+    // Use mNAV.com holdings when available (they update quickly after SEC filings)
+    holdings: liveData?.holdings ?? company.holdings,
     // Use live debt from mNAV.com if available, else static, else database
     totalDebt: liveData?.debt ?? staticCompany?.totalDebt ?? company.totalDebt,
     // Use live preferred equity from mNAV.com if available, else static, else database
@@ -249,9 +246,6 @@ export function mergeCompanyWithOverrides(
     ...mergedFinancials,
     // Diluted shares from holdings history (SEC filings)
     sharesOutstandingFD: sharesOutstandingFD ?? company.sharesOutstandingFD,
-    // Holdings: ALWAYS use companies.ts (single source of truth)
-    // Google Sheet holdings data was stale and causing incorrect mNAV calculations
-    // holdings: override.holdings ?? company.holdings,
     // Override other numeric fields if present
     quarterlyBurnUsd: override.quarterlyBurnUsd ?? company.quarterlyBurnUsd,
     stakingPct: override.stakingPct ?? company.stakingPct,
