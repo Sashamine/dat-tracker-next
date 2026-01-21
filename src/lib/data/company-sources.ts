@@ -241,18 +241,39 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-18",
   },
 
+  // ==================== LTC COMPANIES ====================
+
+  LITS: {
+    ticker: "LITS",
+    name: "Lite Strategy",
+    officialDashboard: "https://www.litestrategy.com/dashboard/",
+    officialDashboardName: "litestrategy.com",
+    officialMnavNote: "Market Cap / NAV (shows mNAV on dashboard)",
+    investorRelations: "https://investor.litestrategy.com/",
+    exchange: "NASDAQ",
+    sharesSource: "basic",
+    sharesNotes: "Formerly MEI Pharma. Rebranded Sep 2025.",
+    reportsHoldingsFrequency: "on_purchase",
+    reportsMnavDaily: true,
+    notes: "First US-listed LTC treasury. Charlie Lee on board. GSR as treasury manager.",
+    lastVerified: "2026-01-21",
+  },
+
   // ==================== OTHER ====================
 
   XXI: {
     ticker: "XXI",
     name: "Twenty One Capital",
+    officialDashboard: "https://xxi.mempool.space",
+    officialDashboardName: "xxi.mempool.space",
+    officialMnavNote: "On-chain proof via mempool.space wallet tracker",
     exchange: "NYSE",
     sharesSource: "basic",
     sharesNotes: "Newly public. Tether/SoftBank/Mallers backed.",
-    reportsHoldingsFrequency: "quarterly",
-    reportsMnavDaily: false,
-    notes: "3rd largest public BTC holder. Jack Mallers CEO.",
-    lastVerified: "2026-01-18",
+    reportsHoldingsFrequency: "on_purchase",
+    reportsMnavDaily: true,
+    notes: "3rd largest public BTC holder. Jack Mallers CEO. On-chain BTC proof via mempool.space.",
+    lastVerified: "2026-01-21",
   },
 
   DJT: {

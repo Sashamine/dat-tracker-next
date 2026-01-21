@@ -1,5 +1,30 @@
 # DAT Tracker - Claude Context
 
+## IMPORTANT: Check ROADMAP.md First!
+
+**Before starting any data architecture work, read `ROADMAP.md`** for:
+- Current phase and status
+- What's been completed
+- What's in progress
+- Open questions and decisions made
+
+This prevents us from re-discussing solved problems or losing track of progress.
+
+### ENFORCE THE PROCESS
+
+**If the user tries to skip ahead or jump phases, PUSH BACK.**
+
+Say something like:
+> "Hold on - we're still in Phase X. ROADMAP.md shows we haven't finished [specific incomplete task]. Let's complete that first, or explicitly decide to skip it and document why."
+
+This applies even if the user insists. The user has explicitly requested this enforcement because they tend to get carried away by complexity. Completing phases properly prevents rework.
+
+**Exceptions:**
+- Urgent bugs/fixes unrelated to the roadmap
+- User explicitly says "I know we're skipping, add it to decisions log"
+
+---
+
 ## Deployment
 
 **This project deploys to Vercel.** Changes must be committed and pushed to see them live.

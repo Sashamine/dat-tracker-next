@@ -182,10 +182,10 @@ export const btcCompanies: Company[] = [
     ticker: "MSTR",
     asset: "BTC",
     tier: 1,
-    holdings: 687_410,  // SEC 8-K Jan 12, 2026
-    holdingsLastUpdated: "2026-01-12",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K&dateb=&owner=include&count=40",
+    holdings: 709_715,  // strategy.com + mNAV.com Jan 21, 2026
+    holdingsLastUpdated: "2026-01-21",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://www.strategy.com/",
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
@@ -196,16 +196,16 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
-    marketCap: 55_500_000_000,  // ~$55.5B per strategy.com (~320M shares, Jan 2026)
-    sharesForMnav: 340_000_000,  // From holdings-history.ts
+    marketCap: 57_400_000_000,  // ~$57.4B ($158.33 × 362.6M shares, Jan 2026)
+    sharesForMnav: 362_606_000,  // mNAV.com fully diluted shares Jan 21, 2026
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
-    totalDebt: 8_244_000_000,  // $8.244B per strategy.com (Jan 2026)
-    preferredEquity: 8_064_000_000,  // $8.064B per strategy.com (Jan 2026)
+    totalDebt: 10_000_000_000,  // $10B per strategy.com API (Jan 2026)
+    preferredEquity: 13_000_000_000,  // $13B per strategy.com API (Jan 2026)
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
-    cashReserves: 2_250_000_000,  // $2.25B USD reserves (Jan 2026 8-K)
+    cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
-    notes: "687K BTC @ $75K avg. STRK/STRF 8% perpetual preferred. Bitcoin credit company thesis.",
+    notes: "709K BTC @ $75K avg. STRK/STRF 8% perpetual preferred. Bitcoin credit company thesis.",
     leverageRatio: 1.5, // ~$21B debt provides leveraged BTC exposure via converts
   },
   {
@@ -303,11 +303,11 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 3_600_000_000,
     sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
-    cashReserves: 124_000_000,  // ~$124M cash (Q2 2025)
+    cashReserves: 826_000_000,  // $826M per mNAV.com Jan 2026
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
-    totalDebt: 1_800_000_000,  // $1.8B in 0% convertible notes
-    notes: "Largest US public miner. $1.8B in 0% converts.",
+    totalDebt: 3_640_000_000,  // $3.64B per mNAV.com Jan 2026
+    notes: "Largest US public miner. $3.6B in convertible notes.",
   },
   {
     id: "riot",

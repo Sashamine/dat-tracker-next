@@ -166,6 +166,10 @@ export interface ExtractionResult {
   reasoning: string;
   extractedDate: string | null;
   rawNumbers: string[];
+  // Transaction-based extraction (when total isn't explicitly stated)
+  transactionType: 'purchase' | 'sale' | null;
+  transactionAmount: number | null;
+  holdingsExplicitlyStated: boolean;
 }
 
 export interface ExtractionContext {

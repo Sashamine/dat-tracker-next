@@ -15,7 +15,7 @@ interface LLMConfig {
 
 // Default models per provider
 const DEFAULT_MODELS: Record<LLMProvider, string> = {
-  anthropic: 'claude-3-5-sonnet-20241022',
+  anthropic: 'claude-sonnet-4-20250514',
   grok: 'grok-beta',
 };
 
@@ -57,10 +57,12 @@ For shares outstanding, look for:
 This company holds ${context.asset} as a treasury asset. Their current known holdings are ${context.currentHoldings.toLocaleString()} ${context.asset}.
 ${currentSharesInfo}
 
-Extract the following information from the text below. Be very careful to distinguish between:
-- TOTAL holdings (what we want)
-- NEW acquisitions/purchases (not what we want - unless you can calculate total from this)
-- Historical holdings (from a previous period)
+Extract the following information from the text below:
+
+1. TOTAL HOLDINGS: Look for explicit statements of total/current holdings
+2. TRANSACTIONS: If no total is stated, look for purchases or sales that we can use to calculate the new total
+   - For a PURCHASE: new total = current (${context.currentHoldings.toLocaleString()}) + purchase amount
+   - For a SALE: new total = current (${context.currentHoldings.toLocaleString()}) - sale amount
 ${shareInstructions}
 
 Only extract values you are confident about based on the text. Do NOT make up numbers.
@@ -72,23 +74,27 @@ ${text.substring(0, 8000)}
 
 Respond in valid JSON format only, with no markdown formatting:
 {
-  "holdings": <number or null if not found>,
+  "holdings": <TOTAL number after any transactions, or null if cannot determine>,
+  "transactionType": <"purchase" | "sale" | null if no transaction mentioned>,
+  "transactionAmount": <number of ${context.asset} bought or sold, or null>,
+  "holdingsExplicitlyStated": <true if total holdings was directly stated in text, false if calculated from transaction>,
   "sharesOutstanding": <TOTAL number or null if not found>,
   "classAShares": <number or null - for dual-class companies only>,
   "classBShares": <number or null - for dual-class companies only>,
   "costBasis": <number or null if not found>,
   "extractedDate": "<YYYY-MM-DD or null if not found>",
   "confidence": <0.0 to 1.0>,
-  "reasoning": "<brief explanation of how you extracted these values, or why you couldn't>",
+  "reasoning": "<brief explanation of how you extracted/calculated these values>",
   "rawNumbers": ["<list of all relevant numbers found in text>"]
 }
 
 Important guidelines:
-- Set holdings to null if you cannot determine the TOTAL holdings
-- If the text only mentions a purchase amount but not total holdings, set holdings to null
+- If total holdings is explicitly stated, use that directly
+- If only a transaction is mentioned, CALCULATE the new total: current ${context.currentHoldings.toLocaleString()} +/- transaction
+- Set holdings to null ONLY if you cannot determine total AND cannot identify a clear transaction
 - For dual-class companies: sharesOutstanding should be the SUM of all share classes
 - Confidence should reflect how certain you are about the holdings value
-- Lower confidence if the text is ambiguous or if numbers could refer to different things
+- Lower confidence for calculated values vs explicitly stated values
 - Include brief reasoning explaining your extraction logic`;
 }
 
@@ -200,6 +206,9 @@ function parseExtractionResponse(content: string): ExtractionResult {
       reasoning: parsed.reasoning || 'No reasoning provided',
       extractedDate: parsed.extractedDate || null,
       rawNumbers: Array.isArray(parsed.rawNumbers) ? parsed.rawNumbers : [],
+      transactionType: parsed.transactionType ?? null,
+      transactionAmount: parsed.transactionAmount ?? null,
+      holdingsExplicitlyStated: parsed.holdingsExplicitlyStated ?? true,
     };
   } catch (error) {
     console.error('Failed to parse LLM response:', content);
@@ -213,6 +222,9 @@ function parseExtractionResponse(content: string): ExtractionResult {
       reasoning: `Failed to parse response: ${error instanceof Error ? error.message : String(error)}`,
       extractedDate: null,
       rawNumbers: [],
+      transactionType: null,
+      transactionAmount: null,
+      holdingsExplicitlyStated: false,
     };
   }
 }
@@ -236,6 +248,9 @@ export async function extractHoldingsFromText(
       reasoning: 'Text too short for extraction',
       extractedDate: null,
       rawNumbers: [],
+      transactionType: null,
+      transactionAmount: null,
+      holdingsExplicitlyStated: false,
     };
   }
 
@@ -263,6 +278,9 @@ export async function extractHoldingsFromText(
       reasoning: `Extraction failed: ${error instanceof Error ? error.message : String(error)}`,
       extractedDate: null,
       rawNumbers: [],
+      transactionType: null,
+      transactionAmount: null,
+      holdingsExplicitlyStated: false,
     };
   }
 }

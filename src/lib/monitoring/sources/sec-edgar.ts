@@ -114,7 +114,7 @@ async function fetchSECSubmissions(cik: string): Promise<SECCompanyData | null> 
 
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'DAT-Tracker contact@example.com',
+        'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)',
         'Accept': 'application/json',
       },
       cache: 'no-store',
@@ -148,7 +148,7 @@ async function fetchFilingContent(documentUrl: string): Promise<string | null> {
   try {
     const response = await fetch(documentUrl, {
       headers: {
-        'User-Agent': 'DAT-Tracker contact@example.com',
+        'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)',
         'Accept': 'text/html,application/xhtml+xml,text/plain',
       },
       cache: 'no-store',
@@ -362,7 +362,7 @@ async function fetchFilingIndex(cik: string, accessionNumber: string): Promise<F
     const url = `https://www.sec.gov/Archives/edgar/data/${cikNum}/${accNum}/index.json`;
 
     const response = await fetch(url, {
-      headers: { 'User-Agent': 'DAT-Tracker contact@example.com' },
+      headers: { 'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)' },
     });
 
     if (!response.ok) return null;
@@ -383,6 +383,8 @@ const DEFAULT_8K_PATTERNS = [
   /shareholder|letter/i,    // Shareholder letters (MARA)
   /announce|earnings/i,     // Earnings announcements
   /update/i,                // Production updates
+  /^\w+-\d{8}\.htm$/i,      // Primary document: ticker-YYYYMMDD.htm (MSTR, etc.)
+  /^d\d+d\w+\.htm$/i,       // Alternative: d123456dex991.htm format
 ];
 
 /**
@@ -404,7 +406,13 @@ export async function searchFilingDocuments(
   if (!indexData?.directory?.item) return null;
 
   // Determine patterns to use
-  const patterns = companySource?.secFilingPatterns?.eightK || DEFAULT_8K_PATTERNS;
+  // Always include primary document patterns, plus company-specific if defined
+  const basePatterns = [
+    /^\w+-\d{8}\.htm$/i,      // Primary document: ticker-YYYYMMDD.htm (MSTR, etc.)
+    /^d\d+d\w+\.htm$/i,       // Alternative: d123456dex991.htm format
+  ];
+  const companyPatterns = companySource?.secFilingPatterns?.eightK || DEFAULT_8K_PATTERNS;
+  const patterns = [...new Set([...basePatterns, ...companyPatterns])];
 
   // Find matching documents
   const matchingDocs = indexData.directory.item.filter(item => {
@@ -423,7 +431,7 @@ export async function searchFilingDocuments(
 
     try {
       const response = await fetch(documentUrl, {
-        headers: { 'User-Agent': 'DAT-Tracker contact@example.com' },
+        headers: { 'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)' },
       });
 
       if (!response.ok) continue;

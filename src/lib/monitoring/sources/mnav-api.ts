@@ -25,7 +25,7 @@ export const MNAV_COMPANY_SLUGS: Record<string, string> = {
   'BITF': 'bitfarms',
   'CIFR': 'cipher',
   'BTBT': 'bit-digital',
-  'SMLR': 'semler',
+  // 'SMLR': 'semler', // Removed - acquired by ASST (Strive) Jan 2026
   'KULR': 'kulr',
   'DJT': 'trump-media',
   // 'XXI': 'xxi', // Disabled: mNAV.com tracks only Class A shares (346.5M), missing Class B (304.8M). Use static data (651M total).
