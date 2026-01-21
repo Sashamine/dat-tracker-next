@@ -12,60 +12,61 @@ import { SECFilingResult, SourceCheckResult } from '../types';
 import { getCompanySource, getSECMonitoredCompanies, type CompanySource } from './company-sources';
 
 // Map tickers to SEC CIK numbers (legacy - use company-sources.ts instead)
+// CIKs verified against SEC EDGAR on 2026-01-21
 export const TICKER_TO_CIK: Record<string, string> = {
   // BTC
-  "MSTR": "0001050446",
-  "MARA": "0001507605",
-  "RIOT": "0001167419",
-  "CLSK": "0000827876",
-  "HUT": "0001964789",
-  "CORZ": "0001878848",
-  "BTDR": "0001899123",
-  "KULR": "0001662684",
-  "NAKA": "0001946573",  // KindlyMD (post-merger)
-  "DJT": "0001849635",
-  "XXI": "0002019757",
-  "CEPO": "0002019757",
+  "MSTR": "0001050446",  // Strategy (fka MicroStrategy)
+  "MARA": "0001507605",  // MARA Holdings
+  "RIOT": "0001167419",  // Riot Platforms
+  "CLSK": "0000827876",  // CleanSpark
+  "HUT": "0001964789",   // Hut 8
+  "CORZ": "0001839341",  // Core Scientific
+  "BTDR": "0001899123",  // Bitdeer
+  "KULR": "0001662684",  // KULR Technology
+  "NAKA": "0001946573",  // Nakamoto (KindlyMD post-merger)
+  "DJT": "0001849635",   // Trump Media
+  "XXI": "0001865602",   // Twenty One Capital (Cantor Equity Partners)
+  "CEPO": "0001865602",  // Same as XXI
   "ASST": "0001920406",  // Strive (acquired Semler Jan 2026)
-  "NXTT": "0001831978",
-  "ABTC": "0002068580",
+  "NXTT": "0001784970",  // Next Technology Holding
+  "ABTC": "0002068580",  // American Bitcoin
   // ETH
-  "BMNR": "0001829311",
-  "SBET": "0001869198",
-  "ETHM": "0002028699",
-  "BTBT": "0001799290",
-  "BTCS": "0001510079",
-  "GAME": "0001825079",
-  "FGNX": "0001437925",
+  "BMNR": "0001829311",  // Bitmine Immersion
+  "SBET": "0001981535",  // SharpLink Gaming
+  "ETHM": "0002080334",  // The Ether Machine (Dynamix merger)
+  "BTBT": "0001710350",  // Bit Digital
+  "BTCS": "0001436229",  // BTCS Inc
+  "GAME": "0001714562",  // GameSquare Holdings
+  "FGNX": "0001591890",  // FG Nexus (fka Fundamental Global)
   // SOL
-  "FWDI": "0000038264",
-  "HSDT": "0001580063",
-  "DFDV": "0001652044",
-  "UPXI": "0001777319",
+  "FWDI": "0000038264",  // Forward Industries
+  "HSDT": "0001610853",  // Helius (neurotech, now SOL treasury)
+  "DFDV": "0001805526",  // DeFi Development Corp
+  "UPXI": "0001775194",  // Upexi
   // HYPE
-  "PURR": "0002078856",
-  "HYPD": "0001437107",
+  "PURR": "0002078856",  // Hyperliquid Strategies
+  "HYPD": "0001682639",  // Hyperion DeFi (fka Eyenovia)
   // BNB
-  "NA": "0001847577",
+  "NA": "0001872302",    // Nano Labs
   // TAO
-  "TAOX": "0001539029",
-  "TWAV": "0001319927",
+  "TAOX": "0001571934",  // TAO Synergies (fka Synaptogenix)
+  "TWAV": "0000746210",  // TaoWeave (fka Oblong)
   // LINK
-  "CWD": "0001724670",
+  "CWD": "0001627282",   // CaliberCos
   // TRX
-  "TRON": "0001956744",
+  "TRON": "0001956744",  // TRON
   // LTC
-  "LITS": "0001411460",
+  "LITS": "0001262104",  // Lite Strategy (fka MEI Pharma)
   // SUI
-  "SUIG": "0001066923",
+  "SUIG": "0001425355",  // Sui Group Holdings (fka Mill City Ventures)
   // DOGE
-  "ZONE": "0001814329",
-  "TBH": "0001903595",
-  "BTOG": "0001833498",
+  "ZONE": "0001956741",  // CleanCore Solutions
+  "TBH": "0001903595",   // TBH
+  "BTOG": "0001735556",  // Bit Origin
   // AVAX
-  "AVX": "0001845123",
+  "AVX": "0001826397",   // AVAX One Technology (fka AgriFORCE)
   // HBAR (OTC)
-  "IHLDF": "0001905459",
+  "IHLDF": "0001905459", // IHLDF
 };
 
 // Crypto-related keywords by asset

@@ -230,8 +230,8 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   UPXI: {
     ticker: "UPXI",
     name: "Upexi",
-    secCik: "1622879",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001622879",
+    secCik: "1775194",
+    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194",
     exchange: "NASDAQ",
     sharesSource: "basic",
     sharesNotes: "Using EntityCommonStockSharesOutstanding from SEC filings.",

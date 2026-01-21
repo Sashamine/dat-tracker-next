@@ -13,33 +13,34 @@
 import { FetchResult, Fetcher, FetchField } from './types';
 
 // Map tickers to SEC CIK numbers
+// CIKs verified against SEC EDGAR on 2026-01-21
 const TICKER_TO_CIK: Record<string, string> = {
   // BTC
-  'MSTR': '0001050446',
-  'MARA': '0001507605',
-  'RIOT': '0001167419',
-  'CLSK': '0000827876',
-  'HUT': '0001964789',
-  'CORZ': '0001878848',
-  'BTDR': '0001899123',
-  'KULR': '0001662684',
-  'NAKA': '0001946573',
-  'DJT': '0001849635',
-  'XXI': '0002019757',
-  'ASST': '0001920406',
-  'NXTT': '0001831978',
-  'ABTC': '0002068580',
+  'MSTR': '0001050446',  // Strategy (fka MicroStrategy)
+  'MARA': '0001507605',  // MARA Holdings
+  'RIOT': '0001167419',  // Riot Platforms
+  'CLSK': '0000827876',  // CleanSpark
+  'HUT': '0001964789',   // Hut 8
+  'CORZ': '0001839341',  // Core Scientific
+  'BTDR': '0001899123',  // Bitdeer
+  'KULR': '0001662684',  // KULR Technology
+  'NAKA': '0001946573',  // Nakamoto (KindlyMD post-merger)
+  'DJT': '0001849635',   // Trump Media
+  'XXI': '0001865602',   // Twenty One Capital (Cantor Equity Partners)
+  'ASST': '0001920406',  // Strive
+  'NXTT': '0001784970',  // Next Technology Holding
+  'ABTC': '0002068580',  // American Bitcoin
   // ETH
-  'BMNR': '0001829311',
-  'SBET': '0001869198',
-  'ETHM': '0002028699',
-  'BTBT': '0001799290',
-  'BTCS': '0001510079',
-  'GAME': '0001825079',
+  'BMNR': '0001829311',  // Bitmine Immersion
+  'SBET': '0001981535',  // SharpLink Gaming
+  'ETHM': '0002080334',  // The Ether Machine (Dynamix merger)
+  'BTBT': '0001710350',  // Bit Digital
+  'BTCS': '0001436229',  // BTCS Inc
+  'GAME': '0001714562',  // GameSquare Holdings
   // SOL
-  'FWDI': '0000038264',
-  'HSDT': '0001580063',
-  'DFDV': '0001652044',
+  'FWDI': '0000038264',  // Forward Industries
+  'HSDT': '0001610853',  // Helius
+  'DFDV': '0001805526',  // DeFi Development Corp
 };
 
 interface XBRLEntry {
