@@ -2,7 +2,7 @@
 
 > **Last Updated**: 2026-01-21
 > **Current Phase**: 4 - Alert System
-> **Status**: Phase 3 cron jobs complete, 112 tests passing
+> **Status**: Phase 3 cron jobs complete, 160 tests passing (6 skipped - known int'l gaps)
 
 ---
 
@@ -10,16 +10,25 @@
 
 **Phase 3 COMPLETE** - Cron jobs configured in Vercel.
 
+**Bug Fix (2026-01-21):** BMNR had wrong CIK (0001866292) - should be 0001829311. Fixed in all 3 files. Updated holdings to 4,203,036 ETH. Added coverage test to catch similar gaps.
+
 **Cron Schedule (vercel.json):**
 - `/api/cron/monitoring` - hourly at :00 (existing monitoring system)
 - `/api/cron/sec-update` - hourly at :30 (SEC 8-K auto-update to companies.ts)
 - `/api/cron/comparison` - twice daily at 9am/12pm ET (comparison engine discrepancies)
 
-**Test Coverage (112 tests):**
+**Test Coverage (160 tests + 6 skipped):**
 - Fetchers: mNAV (15), Strategy (12), SharpLink (12), SEC XBRL (17) = 56 tests
 - LLM Extractor: 20 tests
 - SEC Auto-Update Adapter: 17 tests
 - Comparison Engine: 19 tests
+- Coverage verification: 48+ tests (verifies every company has monitoring source)
+
+**Known Coverage Gaps (international companies):**
+- XRPN, CYPH, LUXFF (Canadian)
+- ALTBG (German)
+- 0434.HK (Hong Kong)
+- BNC (needs CIK lookup)
 
 **Next:**
 - Phase 4: Email alerts for discrepancies

@@ -30,7 +30,7 @@ const TICKER_TO_CIK: Record<string, string> = {
   'NXTT': '0001831978',
   'ABTC': '0002068580',
   // ETH
-  'BMNR': '0001866292',
+  'BMNR': '0001829311',
   'SBET': '0001869198',
   'ETHM': '0002028699',
   'BTBT': '0001799290',
