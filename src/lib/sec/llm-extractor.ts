@@ -3,7 +3,7 @@
  * Uses Claude or Grok to extract holdings numbers from text
  */
 
-import { ExtractionResult, ExtractionContext } from '../types';
+import { ExtractionResult, ExtractionContext } from './types';
 
 export type LLMProvider = 'anthropic' | 'grok';
 

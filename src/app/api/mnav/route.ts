@@ -4,7 +4,28 @@
  */
 
 import { NextResponse } from 'next/server';
-import { MNAV_COMPANY_SLUGS } from '@/lib/monitoring/sources/mnav-api';
+import { getSupportedTickers } from '@/lib/fetchers/mnav';
+
+// Map tickers to mNAV.com slugs (duplicated from fetchers/mnav.ts for API use)
+const MNAV_COMPANY_SLUGS: Record<string, string> = {
+  'MSTR': 'strategy',
+  'MARA': 'mara',
+  'RIOT': 'riot',
+  'CLSK': 'cleanspark',
+  'CORZ': 'core-scientific',
+  'BTDR': 'bitdeer',
+  'HUT': 'hut-8',
+  'BITF': 'bitfarms',
+  'CIFR': 'cipher',
+  'BTBT': 'bit-digital',
+  'KULR': 'kulr',
+  'DJT': 'trump-media',
+  'NAKA': 'nakamoto',
+  '3350.T': 'metaplanet',
+  '0434.HK': 'boyaa',
+  'H100.ST': 'h100',
+  'NXTT': 'next-technology',
+};
 
 // Cache for batch data (5 minutes)
 let batchCache: { data: Record<string, MnavCompanyData>; timestamp: number } | null = null;

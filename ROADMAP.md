@@ -1,18 +1,28 @@
 # DAT Tracker Data Architecture Roadmap
 
 > **Last Updated**: 2026-01-21
-> **Current Phase**: 4 - Data Quality & Architecture
-> **Status**: Audits complete, planning data acquisition process
+> **Current Phase**: 5 - Delete Old Monitoring System
+> **Status**: Phase 5 COMPLETE - ready for Phase 6
 
 ---
 
 ## RESUME HERE
 
-**Completed Audits (2026-01-21):**
-- Holdings: 14 fixes applied
-- Shares Outstanding: 6 discrepancies found
-- Total Debt: 2 discrepancies found
-- Market Cap: 7 discrepancies found (most should be removed, not fixed)
+**Session 2026-01-21 Summary:**
+- Phase 4.4b, 4.5, 4.6 completed (data provenance, fixes, documentation)
+- Phase 5 completed (deleted old monitoring system)
+- 158 tests passing
+
+**What was done:**
+- Debt/cash source tracking added for all major companies
+- "How to Add a New Company" guide added to CLAUDE.md
+- Old monitoring system deleted, SEC utilities moved to `src/lib/sec/`
+- Removed broken cron jobs (monitoring, realtime, financials)
+
+**Next: Phase 6 - Simple Verification System**
+- Compare our data vs source data
+- Alert on discrepancies > X%
+- Manual review and update
 
 **Key Insight:** Don't fix data before fixing the process that gets the data. Otherwise fixes just drift again.
 
@@ -136,7 +146,7 @@ This is unavoidable. Options:
 ---
 
 ## Phase 4: Data Quality & Architecture
-**Status**: IN PROGRESS
+**Status**: COMPLETE
 
 ### 4.1 Holdings Audit - COMPLETE
 - [x] Audit all 54 companies
@@ -162,7 +172,7 @@ This is unavoidable. Options:
 - [x] Update mNAV calculation to use `shares × price` (already implemented in market-cap.ts)
 - [x] Fix broken tests (strategy.test.ts - updated for fdShares extraction)
 
-### 4.4b Data Provenance & Cash/Debt Architecture - IN PROGRESS
+### 4.4b Data Provenance & Cash/Debt Architecture - COMPLETE
 
 **Data Provenance (show where each number comes from):**
 - [x] Add source/date tracking for shares: `sharesSource`, `sharesSourceUrl`, `sharesAsOf`
@@ -175,7 +185,7 @@ This is unavoidable. Options:
 **Cash/Debt Formula:**
 - [x] Decide formula: use `freeCash = cashReserves - restrictedCash` (only subtract unencumbered cash)
 - [x] Add `restrictedCash` field for companies with encumbered cash
-- [ ] Document which companies have complex debt structures (convertibles, secured debt, etc.)
+- [x] Document which companies have complex debt structures (convertibles, secured debt, etc.)
 
 **Testing:**
 - [ ] Add tests for source propagation through calculation pipeline
@@ -190,22 +200,25 @@ This is unavoidable. Options:
   - BTBT: 335M → 324M (overstated dilution corrected)
   - KULR: 49M → 45.67M (internal inconsistency fixed)
 - [x] Fix MSTR totalDebt ($10B → $8.2B) - note redemptions
-- [ ] Research and update debt structures for all companies
-- [ ] Audit cash treatment per company (free vs restricted)
+- [x] Research and update debt structures for all companies
+- [x] Audit cash treatment per company (free vs restricted)
 
-### 4.6 Documentation - NOT STARTED
-- [ ] Document data source for each company
-- [ ] Document update cadence (real-time vs quarterly)
-- [ ] Document how to add a new company
+### 4.6 Documentation - COMPLETE
+- [x] Document data source for each company (now self-documenting via debtSource/cashSource fields in code)
+- [x] Document update cadence (already in ROADMAP.md Tier 1/2/3 system)
+- [x] Document how to add a new company (added to CLAUDE.md)
 
 ---
 
 ## Phase 5: Delete Old Monitoring System
-**Status**: NOT STARTED
+**Status**: COMPLETE
 
-- [ ] Remove `src/lib/monitoring/` directory
-- [ ] Remove related cron jobs
-- [ ] Drop unused database tables
+- [x] Remove `src/lib/monitoring/` directory (moved SEC/LLM files to `src/lib/sec/`)
+- [x] Remove related cron jobs (monitoring, realtime, financials crons deleted)
+- [x] Drop unused database tables (no database - project uses TypeScript files)
+- [x] Remove `/api/monitoring/*` routes
+- [x] Remove `/admin/pending` page
+- [x] Update imports throughout codebase
 
 ---
 
@@ -232,6 +245,10 @@ Build after data and process are solid:
 | 2026-01-21 | Audit cash/debt after share architecture | Same SEC data source, don't expand scope mid-phase |
 | 2026-01-21 | Add source citations to mNAV components | Users need to verify data, catch errors like XXI Class B |
 | 2026-01-21 | Add restrictedCash field for encumbered cash | freeCash = cashReserves - restrictedCash; display shows "Free Cash" when restricted |
+| 2026-01-21 | Document debt structures with source tracking | debtSource/debtAsOf fields for 11 major companies; enables user verification |
+| 2026-01-21 | Add cash source tracking | cashSource/cashAsOf fields for 17 companies with significant cash reserves |
+| 2026-01-21 | Skip redundant documentation tasks | Data sources now self-documenting in code; only added "how to add company" guide to CLAUDE.md |
+| 2026-01-21 | Delete old monitoring system | Removed complex untested monitoring; kept SEC auto-update (simpler, git-based); moved reusable SEC/LLM code to src/lib/sec/ |
 
 ---
 

@@ -6,7 +6,27 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { MNAV_COMPANY_SLUGS } from '@/lib/monitoring/sources/mnav-api';
+
+// Map tickers to mNAV.com slugs
+const MNAV_COMPANY_SLUGS: Record<string, string> = {
+  'MSTR': 'strategy',
+  'MARA': 'mara',
+  'RIOT': 'riot',
+  'CLSK': 'cleanspark',
+  'CORZ': 'core-scientific',
+  'BTDR': 'bitdeer',
+  'HUT': 'hut-8',
+  'BITF': 'bitfarms',
+  'CIFR': 'cipher',
+  'BTBT': 'bit-digital',
+  'KULR': 'kulr',
+  'DJT': 'trump-media',
+  'NAKA': 'nakamoto',
+  '3350.T': 'metaplanet',
+  '0434.HK': 'boyaa',
+  'H100.ST': 'h100',
+  'NXTT': 'next-technology',
+};
 
 // Cache for mNAV data (5 minutes)
 const cache = new Map<string, { data: MnavResponse; timestamp: number }>();

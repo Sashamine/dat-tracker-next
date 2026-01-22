@@ -16,19 +16,19 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 
-// Reuse existing SEC EDGAR code
+// SEC EDGAR utilities
 import {
   searchFilingDocuments,
   TICKER_TO_CIK,
-} from '../monitoring/sources/sec-edgar';
+} from '../sec/sec-edgar';
 
-// Reuse existing LLM extractor
+// LLM extractor for parsing SEC filings
 import {
   extractHoldingsFromText,
   validateExtraction,
   createLLMConfigFromEnv,
   type LLMProvider,
-} from '../monitoring/parsers/llm-extractor';
+} from '../sec/llm-extractor';
 
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';

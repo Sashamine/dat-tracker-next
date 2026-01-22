@@ -12,7 +12,7 @@ import * as childProcess from 'child_process';
 // Mock modules before importing the module under test
 vi.mock('fs');
 vi.mock('child_process');
-vi.mock('../monitoring/sources/sec-edgar', () => ({
+vi.mock('../sec/sec-edgar', () => ({
   searchFilingDocuments: vi.fn(),
   TICKER_TO_CIK: {
     'MSTR': '0001050446',
@@ -20,7 +20,7 @@ vi.mock('../monitoring/sources/sec-edgar', () => ({
     'TEST': '0000000001',
   },
 }));
-vi.mock('../monitoring/parsers/llm-extractor', () => ({
+vi.mock('../sec/llm-extractor', () => ({
   extractHoldingsFromText: vi.fn(),
   validateExtraction: vi.fn(),
   createLLMConfigFromEnv: vi.fn(),
@@ -28,8 +28,8 @@ vi.mock('../monitoring/parsers/llm-extractor', () => ({
 
 // Now import the module under test and mocked modules
 import { checkTickerForSecUpdate, runSecAutoUpdate } from './index';
-import { searchFilingDocuments, TICKER_TO_CIK } from '../monitoring/sources/sec-edgar';
-import { extractHoldingsFromText, validateExtraction, createLLMConfigFromEnv } from '../monitoring/parsers/llm-extractor';
+import { searchFilingDocuments, TICKER_TO_CIK } from '../sec/sec-edgar';
+import { extractHoldingsFromText, validateExtraction, createLLMConfigFromEnv } from '../sec/llm-extractor';
 
 // Mock fetch
 let mockFetch: ReturnType<typeof vi.fn>;

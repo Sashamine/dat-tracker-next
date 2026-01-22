@@ -13,7 +13,7 @@ import {
   validateExtraction,
   createLLMConfigFromEnv,
 } from './llm-extractor';
-import type { ExtractionContext, ExtractionResult } from '../types';
+import type { ExtractionContext, ExtractionResult } from './types';
 
 // Mock fetch will be created fresh in each test
 let mockFetch: ReturnType<typeof vi.fn>;

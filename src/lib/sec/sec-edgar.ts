@@ -8,7 +8,7 @@
  * - Balance sheets report in thousands (e.g., "$5,247,000" = $5.247B)
  */
 
-import { SECFilingResult, SourceCheckResult } from '../types';
+import { SECFilingResult, SourceCheckResult } from './types';
 import { getCompanySource, getSECMonitoredCompanies, type CompanySource } from './company-sources';
 
 // Map tickers to SEC CIK numbers (legacy - use company-sources.ts instead)

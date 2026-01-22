@@ -10,8 +10,10 @@ import { describe, it, expect } from 'vitest';
 import { allCompanies } from './companies';
 import { getSupportedTickers as getMnavTickers } from '../fetchers/mnav';
 import { getSupportedTickers as getSecXbrlTickers } from '../fetchers/sec-xbrl';
-import { TICKER_TO_CIK } from '../monitoring/sources/sec-edgar';
-import { getIRPageCompanies } from '../monitoring/sources/ir-pages';
+import { TICKER_TO_CIK } from '../sec/sec-edgar';
+
+// IR Pages monitoring was removed - companies are now tracked via SEC filings
+const getIRPageCompanies = (): string[] => [];
 
 // Dashboard fetchers that exist (hardcoded list of dedicated fetchers)
 const DASHBOARD_FETCHER_TICKERS = [
@@ -33,6 +35,8 @@ const KNOWN_COVERAGE_GAPS = [
   'ALTBG',  // German (Börse Stuttgart) - no SEC filings
   '0434.HK', // Hong Kong - no SEC filings (covered by mNAV but ticker mismatch)
   'BNC',    // BNB Network Company - needs SEC CIK lookup
+  'STKE',   // Canadian (TSX Venture) - no SEC filings
+  'XTAIF',  // Canadian (TSX Venture) - no SEC filings
 ];
 
 describe('Source Coverage', () => {
