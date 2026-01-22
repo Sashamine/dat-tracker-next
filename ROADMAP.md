@@ -301,6 +301,13 @@ Our data needs provenance so the verification system can check it.
 - [ ] Add sourceType field: `"sec-8k" | "sec-10q" | "company-website" | "press-release" | "estimate"`
 - [ ] For estimates: add methodology and confidence fields
 
+**Tests for 7a:**
+- [ ] Test: All holdings-history entries have `source` field
+- [ ] Test: All companies.ts entries have `holdingsSourceUrl` (or explicit `null` for estimates)
+- [ ] Test: `sourceType` is valid enum when present
+- [ ] Test: Estimates have `methodology` field
+- [ ] Test: sourceUrls are valid URL format
+
 ### Phase 7b: Automated Source Verification
 **Status**: NOT STARTED
 
@@ -322,6 +329,14 @@ Enhance comparison engine to verify sources, not just compare numbers.
 | No sourceUrl on our data | ⚠️ Flag - unverified |
 | External source is wrong (like GAME/mNAV) | ✅ Yes - our value correct |
 
+**Tests for 7b:**
+- [ ] Test: Source fetch returns expected value → verification passes
+- [ ] Test: Source fetch returns different value → flags "source drift"
+- [ ] Test: Source URL 404 → flags "source invalid"
+- [ ] Test: No sourceUrl → flags "unverified"
+- [ ] Test: Known bad external source (e.g., GAME/mNAV) → our value confirmed
+- [ ] Integration test: Full verification pipeline with mock sources
+
 ### Phase 7c: Confidence Scoring
 **Status**: NOT STARTED
 
@@ -341,6 +356,15 @@ Determine when to auto-resolve vs flag for manual review.
 - Flag for review: MEDIUM or LOW confidence
 - Block changes: No source verification possible
 
+**Tests for 7c:**
+- [ ] Test: Source verifies + external agrees → HIGH confidence
+- [ ] Test: Source verifies + known bad external → HIGH confidence
+- [ ] Test: Source verifies + external disagrees → MEDIUM confidence
+- [ ] Test: Source invalid → LOW confidence
+- [ ] Test: Estimate without methodology → LOW confidence
+- [ ] Test: HIGH confidence → auto-resolve action taken
+- [ ] Test: LOW confidence → flagged for manual review
+
 ### Phase 7d: Manual Review Process
 **Status**: COMPLETE (documented in CLAUDE.md)
 
@@ -352,7 +376,7 @@ For LOW confidence cases, manual review follows the adversarial process:
 4. Which is correct? (weigh evidence)
 5. Is this verifiable data or an estimate? (methodology if estimate)
 
-**Already tested (2026-01-22):**
+**Already tested manually (2026-01-22):**
 | Company | Discrepancy | Finding | Result |
 |---------|-------------|---------|--------|
 | MSTR | 725K vs 709K | Our value had no source | Fixed to verified 8-K values |
@@ -360,6 +384,11 @@ For LOW confidence cases, manual review follows the adversarial process:
 | GAME | 98M vs mNAV 447M | mNAV was wrong | Our value correct |
 | Metaplanet | Share structure | Complex preferred | Documented provenance |
 | MARA | 378M vs 495M | Previous fix was wrong | Corrected with methodology |
+
+**Tests for 7d:**
+- [ ] Test: LOW confidence discrepancy → flagged in Discord with review instructions
+- [ ] Test: Review outcome recorded (which value was correct, why)
+- [ ] Document: Success rate of manual reviews (our value correct vs wrong)
 
 ### Phase 7e: Estimates and UI Provenance
 **Status**: PENDING
@@ -383,6 +412,13 @@ For data that can't be directly verified (shares between quarters):
 - [ ] Show methodology on hover/click
 - [ ] Show confidence level and range
 - [ ] Different styling for verified vs estimated data
+
+**Tests for 7e:**
+- [ ] Test: Estimate entries have required fields (methodology, confidence, confidenceRange)
+- [ ] Test: UI renders estimate indicator for sourceType="estimate"
+- [ ] Test: UI shows methodology in tooltip/popover
+- [ ] Test: UI shows confidence range when present
+- [ ] Test: Verified data renders differently from estimated data
 
 ### Infrastructure
 - [ ] Add DISCORD_WEBHOOK_URL to Vercel production
