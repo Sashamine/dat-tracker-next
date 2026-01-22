@@ -332,8 +332,12 @@ Once the adversarial process is implemented, use it to fix data:
   - Used mNAV.com fullyDilutedShares (aggregator, not TSE primary)
   - Documented stock split history, issued vs FD distinction
   - Confidence: MEDIUM (preferred currently underwater at ¥510 vs ¥1,000 conversion)
-- [ ] GAME: Verify 98M share count
-- [ ] RIOT: Verify current share count
+- [x] GAME: Verified 98M shares correct (SEC 10-Q Q3 2025)
+  - mNAV.com has WRONG data for this ticker (shows BTC company with 447M shares)
+  - Added warning comment to holdings-history.ts
+- [x] RIOT: Fixed 371M → 402M shares, 20.5K → 18K BTC holdings
+  - Shares: 371M was basic (cover page), 402M is diluted (implied from Q3 EPS)
+  - Holdings: RIOT sold 1,818 BTC in Dec 2025
 - [ ] Review remaining 66 discrepancies from Phase 6
 
 **Infrastructure**:
