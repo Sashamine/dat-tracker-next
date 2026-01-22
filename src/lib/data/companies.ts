@@ -24,6 +24,7 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
     cashReserves: 979_000_000,  // $979M cash (Jan 20, 2026)
+    restrictedCash: 979_000_000,  // Operating capital - not excess
     cashSource: "Press release Jan 2026",
     cashAsOf: "2026-01-20",
     otherInvestments: 25_000_000,  // $25M Eightco Holdings stake
@@ -55,6 +56,7 @@ export const ethCompanies: Company[] = [
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     sharesForMnav: 196_690_000,  // 196.69M basic shares (matches SBET dashboard methodology)
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
+    restrictedCash: 11_100_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
@@ -107,6 +109,7 @@ export const ethCompanies: Company[] = [
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
     sharesForMnav: 335_000_000,  // From holdings-history.ts
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
+    restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Sam Tabar",
@@ -212,6 +215,7 @@ export const btcCompanies: Company[] = [
     preferredEquity: 13_000_000_000,  // $13B per strategy.com API (Jan 2026)
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
+    restrictedCash: 2_250_000_000,  // Debt service reserves - not excess
     cashSource: "mNAV.com",
     cashAsOf: "2026-01-21",
     leader: "Michael Saylor (Executive Chairman)",
@@ -243,6 +247,7 @@ export const btcCompanies: Company[] = [
     debtSource: "metaplanet.jp/analytics",
     debtAsOf: "2026-01-21",
     cashReserves: 150_000_000,  // ~$150M - calibrated to match metaplanet.jp mNAV (~1.24x). TODO: verify from filing
+    restrictedCash: 150_000_000,  // Debt service reserves (zero-coupon bonds) - not excess
     cashSource: "metaplanet.jp/analytics",
     cashAsOf: "2026-01-21",
     leader: "Simon Gerovich (CEO)",
@@ -274,6 +279,7 @@ export const btcCompanies: Company[] = [
     debtSource: "SEC 8-K Dec 2025",
     debtAsOf: "2025-12-09",
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
+    restrictedCash: 119_300_000,  // Debt service reserves - not excess
     cashSource: "SEC 8-K Dec 2025",
     cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
@@ -325,6 +331,7 @@ export const btcCompanies: Company[] = [
     marketCap: 3_600_000_000,
     sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
     cashReserves: 826_000_000,  // $826M per mNAV.com Jan 2026
+    restrictedCash: 826_000_000,  // Operating capital (miner) - not excess
     cashSource: "mNAV.com",
     cashAsOf: "2026-01-21",
     leader: "Fred Thiel (CEO)",
@@ -359,6 +366,7 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
     // Note: RIOT reports "unrestricted cash" separately from restricted cash in SEC filings
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
+    restrictedCash: 330_700_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Jason Les (CEO)",
@@ -392,6 +400,7 @@ export const btcCompanies: Company[] = [
     marketCap: 3_040_000_000,
     sharesForMnav: 329_000_000,  // 329M diluted shares (Q3 2025)
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
+    restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Zach Bradford (CEO)",
@@ -422,6 +431,7 @@ export const btcCompanies: Company[] = [
     marketCap: 850_000_000,  // ~$850M per Yahoo Finance (Jan 2026)
     sharesForMnav: 45_000_000,  // From holdings-history.ts
     cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
+    restrictedCash: 77_780_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 2026",
     cashAsOf: "2026-01-16",
     preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
@@ -448,6 +458,7 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 49_000_000,  // From holdings-history.ts
     cashReserves: 20_000_000,  // ~$20M cash (Q3 2025)
+    restrictedCash: 20_000_000,  // Pending BTC purchase - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
@@ -638,6 +649,7 @@ export const btcCompanies: Company[] = [
     debtSource: "Press releases + SEC filings",
     debtAsOf: "2025-12-31",
     cashReserves: 35_000_000,  // ~$35M cash
+    restrictedCash: 35_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Asher Genoot (CEO)",
@@ -669,6 +681,7 @@ export const btcCompanies: Company[] = [
     debtSource: "SEC 10-K + press releases",
     debtAsOf: "2025-12-31",
     cashReserves: 200_000_000,  // ~$200M cash
+    restrictedCash: 200_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Adam Sullivan (CEO)",
@@ -699,6 +712,7 @@ export const btcCompanies: Company[] = [
     debtSource: "Press releases",
     debtAsOf: "2025-11-30",
     cashReserves: 150_000_000,  // ~$150M cash
+    restrictedCash: 150_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 6-K Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Jihan Wu (Co-Founder)",
@@ -729,6 +743,7 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
+    restrictedCash: 30_000_000,  // Operating capital - not excess
     cashSource: "Press release Dec 2025",
     cashAsOf: "2025-12-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
@@ -779,6 +794,7 @@ export const solCompanies: Company[] = [
     marketCap: 240_000_000,  // ~$240M (Jan 2026)
     sharesForMnav: 30_000_000,  // From holdings-history.ts
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
+    restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Formerly Janover Inc.",
