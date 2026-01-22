@@ -12,6 +12,7 @@
  */
 
 import { allCompanies } from '../data/companies';
+import { getLatestDilutedShares, getLatestHoldings } from '../data/holdings-history';
 import { fetchers, FetchResult, FetchError } from '../fetchers';
 import { query } from '../db';
 
@@ -40,30 +41,38 @@ export interface ComparisonResult {
 }
 
 /**
- * Load our current values from companies.ts
- * Maps Company fields to comparison fields
+ * Load our current values from holdings-history.ts (primary) and companies.ts (fallback)
+ *
+ * Priority mirrors what the frontend uses (via use-company-overrides.ts):
+ * - Holdings: holdings-history.ts > companies.ts
+ * - Shares: holdings-history.ts > companies.ts (sharesForMnav)
+ * - Debt/Cash/Preferred: companies.ts (no history tracking yet)
  */
 export function loadOurValues(): OurValue[] {
   const values: OurValue[] = [];
 
   for (const company of allCompanies) {
-    // Holdings (always present)
+    // Holdings: prefer holdings-history.ts, fallback to companies.ts
+    const holdingsFromHistory = getLatestHoldings(company.ticker);
+    const holdings = holdingsFromHistory ?? company.holdings;
     values.push({
       ticker: company.ticker,
       field: 'holdings',
-      value: company.holdings,
+      value: holdings,
     });
 
-    // Shares outstanding (for mNAV calculation)
-    if (company.sharesForMnav !== undefined) {
+    // Shares outstanding: prefer holdings-history.ts, fallback to companies.ts sharesForMnav
+    const sharesFromHistory = getLatestDilutedShares(company.ticker);
+    const shares = sharesFromHistory ?? company.sharesForMnav;
+    if (shares !== undefined) {
       values.push({
         ticker: company.ticker,
         field: 'shares_outstanding',
-        value: company.sharesForMnav,
+        value: shares,
       });
     }
 
-    // Debt
+    // Debt (from companies.ts - no history tracking yet)
     if (company.totalDebt !== undefined) {
       values.push({
         ticker: company.ticker,
@@ -72,7 +81,7 @@ export function loadOurValues(): OurValue[] {
       });
     }
 
-    // Cash
+    // Cash (from companies.ts - no history tracking yet)
     if (company.cashReserves !== undefined) {
       values.push({
         ticker: company.ticker,
@@ -81,7 +90,7 @@ export function loadOurValues(): OurValue[] {
       });
     }
 
-    // Preferred equity
+    // Preferred equity (from companies.ts - no history tracking yet)
     if (company.preferredEquity !== undefined) {
       values.push({
         ticker: company.ticker,

@@ -38,6 +38,13 @@ vi.mock('../data/companies', () => ({
   ],
 }));
 
+// Mock holdings-history to NOT return values (so we use companies.ts fallback)
+// This keeps the existing test assertions working
+vi.mock('../data/holdings-history', () => ({
+  getLatestDilutedShares: vi.fn().mockReturnValue(undefined),
+  getLatestHoldings: vi.fn().mockReturnValue(undefined),
+}));
+
 vi.mock('../fetchers', () => ({
   fetchers: {},
 }));

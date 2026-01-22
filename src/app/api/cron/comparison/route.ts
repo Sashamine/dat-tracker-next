@@ -13,6 +13,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { runComparison, type ComparisonResult } from '@/lib/comparison/engine';
+import { sendDiscrepancySummary, sendDiscordAlert } from '@/lib/discord';
 
 // Verify cron secret for scheduled runs
 function verifyCronSecret(request: NextRequest): boolean {
@@ -72,11 +73,28 @@ export async function GET(request: NextRequest) {
 
     console.log(`[Comparison Cron] Complete in ${duration}ms: ${result.discrepancies.length} discrepancies (${bySeverity.major.length} major, ${bySeverity.moderate.length} moderate, ${bySeverity.minor.length} minor)`);
 
-    // TODO: Send email digest with discrepancies
-    // This will be added in Phase 4 (Alert System)
-    // For now, log a reminder
-    if (result.discrepancies.length > 0 && !dryRun) {
-      console.log('[Comparison Cron] TODO: Send email digest with discrepancies');
+    // Send Discord notification with discrepancy summary
+    if (!dryRun) {
+      try {
+        if (result.discrepancies.length > 0) {
+          await sendDiscrepancySummary(result.discrepancies, duration);
+        } else {
+          // Optionally notify on successful runs with no discrepancies
+          // Disabled by default to reduce noise
+          // await sendDiscordAlert('Data Verification Complete', 'No discrepancies found.', 'info');
+        }
+
+        // Alert on errors
+        if (result.errors.length > 0) {
+          await sendDiscordAlert(
+            'Verification Errors',
+            `${result.errors.length} error(s) during verification:\n${result.errors.map(e => `- ${e.source}: ${e.error}`).join('\n')}`,
+            'warning'
+          );
+        }
+      } catch (notifyError) {
+        console.error('[Comparison Cron] Failed to send Discord notification:', notifyError);
+      }
     }
 
     return NextResponse.json({

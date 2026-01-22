@@ -14,6 +14,7 @@ import { xxiMempoolFetcher, getSupportedTickers as getXxiTickers } from './dashb
 import { metaplanetFetcher, getSupportedTickers as getMetaplanetTickers } from './dashboards/metaplanet';
 import { litestrategyFetcher, getSupportedTickers as getLitestrategyTickers } from './dashboards/litestrategy';
 import { secXbrlFetcher, getSupportedTickers as getSecXbrlTickers } from './sec-xbrl';
+import { yahooFinanceFetcher, getSupportedTickers as getYahooTickers } from './yahoo-finance';
 
 export * from './types';
 
@@ -29,6 +30,7 @@ export const fetchers: Record<string, Fetcher> = {
   'metaplanet-dashboard': metaplanetFetcher,
   'litestrategy-dashboard': litestrategyFetcher,
   'sec-xbrl': secXbrlFetcher,
+  'yahoo-finance': yahooFinanceFetcher,
 };
 
 /**
@@ -66,6 +68,8 @@ export function getTickersForFetcher(fetcherName: string): string[] {
       return getLitestrategyTickers();
     case 'sec-xbrl':
       return getSecXbrlTickers();
+    case 'yahoo-finance':
+      return getYahooTickers();
     default:
       return [];
   }

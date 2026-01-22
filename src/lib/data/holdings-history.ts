@@ -695,6 +695,27 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
   return HOLDINGS_HISTORY[ticker.toUpperCase()] || null;
 }
 
+/**
+ * Get the latest diluted shares outstanding from holdings history.
+ * This is the primary source for share counts used in mNAV calculations.
+ */
+export function getLatestDilutedShares(ticker: string): number | undefined {
+  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  if (!history || history.history.length === 0) return undefined;
+  const latest = history.history[history.history.length - 1];
+  return latest.sharesOutstandingDiluted;
+}
+
+/**
+ * Get the latest holdings from holdings history.
+ */
+export function getLatestHoldings(ticker: string): number | undefined {
+  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  if (!history || history.history.length === 0) return undefined;
+  const latest = history.history[history.history.length - 1];
+  return latest.holdings;
+}
+
 // Calculate growth metrics
 export function calculateHoldingsGrowth(history: HoldingsSnapshot[]): {
   totalGrowth: number; // % growth from first to last
