@@ -72,27 +72,29 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 44893, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.0001044, source: "FY 2024 10-K" },
   { date: "2025-03-31", holdings: 46376, sharesOutstandingDiluted: 445_000_000, holdingsPerShare: 0.0001042, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 49951, sharesOutstandingDiluted: 458_000_000, holdingsPerShare: 0.0001091, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 470_130_000, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 56200, sharesOutstandingDiluted: 485_000_000, holdingsPerShare: 0.0001159, source: "Q4 2025 10-K est" },
-  { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 495_000_000, holdingsPerShare: 0.0001161, source: "8-K filing" },
+  // Note: SEC 10-Q Q3 2025 shows WeightedAverageNumberOfDilutedSharesOutstanding = 378,601,057
+  // Previous entries had inflated estimates; corrected based on SEC filing
+  { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 378_601_057, holdingsPerShare: 0.0001396, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
+  { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 378_601_057, holdingsPerShare: 0.0001519, source: "8-K filing", sharesSource: "SEC 10-Q Q3 2025 (latest)" },
 ];
 
 // RIOT Platforms - SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// Note: Previous diluted share counts were overstated; corrected to ~350M per Q3 2025 10-Q
+// Note: SEC 10-Q Q3 2025 shows 371,116,270 diluted shares
 const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 8490, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.0000303, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 9334, sharesOutstandingDiluted: 295_000_000, holdingsPerShare: 0.0000316, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 10427, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.0000336, source: "Q3 2024 10-Q" },
   { date: "2024-12-31", holdings: 17722, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.0000545, source: "Q4 2024 10-K" },
   { date: "2025-03-31", holdings: 19223, sharesOutstandingDiluted: 335_000_000, holdingsPerShare: 0.0000574, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 15370, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.0000449, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 17429, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000498, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
-  { date: "2025-12-31", holdings: 19800, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000566, source: "Q4 2025 10-K est" },
-  { date: "2026-01-08", holdings: 20500, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000586, source: "8-K filing" },
+  { date: "2025-06-30", holdings: 15370, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000439, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 17429, sharesOutstandingDiluted: 371_116_270, holdingsPerShare: 0.0000470, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
+  { date: "2026-01-08", holdings: 20500, sharesOutstandingDiluted: 371_116_270, holdingsPerShare: 0.0000552, source: "8-K filing", sharesSource: "SEC 10-Q Q3 2025 (latest)" },
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
 // Data from TSE filings and press releases
+// Note: mNAV.com shows 1.43B shares including preferred stock convertible to common
+// The company has issued significant preferred shares that dilute common shareholders
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 17_600_000, holdingsPerShare: 0.00000556, source: "Initial BTC purchase" },
   { date: "2024-05-13", holdings: 141.07, sharesOutstandingDiluted: 18_200_000, holdingsPerShare: 0.00000775, source: "Press release" },
@@ -105,8 +107,9 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release" },
   { date: "2025-03-31", holdings: 4206, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.00001357, source: "Q1 2025 TSE filing" },
   { date: "2025-06-30", holdings: 12850, sharesOutstandingDiluted: 420_000_000, holdingsPerShare: 0.00003060, source: "Q2 2025 TSE filing" },
-  { date: "2025-09-30", holdings: 22500, sharesOutstandingDiluted: 520_000_000, holdingsPerShare: 0.00004327, source: "Q3 2025 TSE filing" },
-  { date: "2025-12-30", holdings: 35102, sharesOutstandingDiluted: 650_000_000, holdingsPerShare: 0.00005400, source: "Press release" },
+  { date: "2025-09-30", holdings: 22500, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.00002647, source: "Q3 2025 TSE filing" },
+  // Updated to mNAV.com's fully diluted share count (includes all preferred conversions)
+  { date: "2026-01-22", holdings: 35102, sharesOutstandingDiluted: 1_434_392_925, holdingsPerShare: 0.00002447, source: "Press release", sharesSource: "mNAV.com FD shares (includes preferred)" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury
@@ -304,13 +307,15 @@ const ETHM_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // GameSquare Holdings (GAME) - Esports with ETH treasury
+// Note: SEC 10-Q Q3 2025 shows WeightedAverageNumberOfDilutedSharesOutstanding = 98,380,767
+// Previous entries had significantly inflated share counts; corrected based on SEC filing
 const GAME_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 8500, sharesOutstandingDiluted: 120_000_000, holdingsPerShare: 0.0000708, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 12000, sharesOutstandingDiluted: 128_000_000, holdingsPerShare: 0.0000938, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 15600, sharesOutstandingDiluted: 135_000_000, holdingsPerShare: 0.0001156, source: "Q4 2024 10-K" },
-  { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.0000130, source: "Initial $5M ETH purchase" },
-  { date: "2025-08-13", holdings: 15630, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.0001008, source: "Press release" },
-  { date: "2026-01-15", holdings: 15600, sharesOutstandingDiluted: 160_000_000, holdingsPerShare: 0.0000975, source: "The Block" },
+  { date: "2024-06-30", holdings: 8500, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.0001000, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 12000, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.0001333, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 15600, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.0001696, source: "Q4 2024 10-K" },
+  { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000191, source: "Initial $5M ETH purchase" },
+  { date: "2025-09-30", holdings: 15630, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0001589, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
+  { date: "2026-01-15", holdings: 15600, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0001586, source: "The Block", sharesSource: "SEC 10-Q Q3 2025 (latest)" },
 ];
 
 // FG Nexus (FGNX) - ETH treasury company (formerly Forgenix/Fundamental Global)
