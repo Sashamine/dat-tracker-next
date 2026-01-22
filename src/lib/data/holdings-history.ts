@@ -97,8 +97,26 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
 // Data from TSE filings and press releases
-// Note: mNAV.com shows 1.43B shares including preferred stock convertible to common
-// The company has issued significant preferred shares that dilute common shareholders
+//
+// STOCK SPLIT HISTORY:
+// - July 30, 2024: 1-for-10 reverse split (shares ÷10)
+// - March 28, 2025: 10-for-1 forward split (shares ×10)
+// All historical numbers below are split-adjusted.
+//
+// SHARE STRUCTURE (Jan 2026):
+// - Issued (common): 1,140,974,340 (1.14B) - tradeable shares
+// - Fully Diluted:   1,434,392,925 (1.43B) - includes convertible preferred
+// - Difference:      ~294M from preferred stock (Class B "MERCURY" etc.)
+//
+// PREFERRED STOCK:
+// - Class B "MERCURY" (Dec 2025): 23.61M shares, ¥1,000 conversion price
+// - Currently underwater (stock ¥510 vs conversion ¥1,000)
+// - Total preferred: ¥86.58B per mNAV.com
+//
+// For mNAV calculation, we use Fully Diluted (1.43B) because:
+// - Preferred shareholders have economic claim on BTC value
+// - Conservative approach assumes worst-case dilution
+// - Consistent with mNAV.com methodology
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 17_600_000, holdingsPerShare: 0.00000556, source: "Initial BTC purchase" },
   { date: "2024-05-13", holdings: 141.07, sharesOutstandingDiluted: 18_200_000, holdingsPerShare: 0.00000775, source: "Press release" },
@@ -112,8 +130,9 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 4206, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.00001357, source: "Q1 2025 TSE filing" },
   { date: "2025-06-30", holdings: 12850, sharesOutstandingDiluted: 420_000_000, holdingsPerShare: 0.00003060, source: "Q2 2025 TSE filing" },
   { date: "2025-09-30", holdings: 22500, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.00002647, source: "Q3 2025 TSE filing" },
-  // Updated to mNAV.com's fully diluted share count (includes all preferred conversions)
-  { date: "2026-01-22", holdings: 35102, sharesOutstandingDiluted: 1_434_392_925, holdingsPerShare: 0.00002447, source: "Press release", sharesSource: "mNAV.com FD shares (includes preferred)" },
+  // Fully Diluted from mNAV.com (issued=1.14B + ~294M convertible preferred)
+  // Confidence: MEDIUM | Issued: 1.14B | FD: 1.43B | Audit: 2026-01-22
+  { date: "2026-01-22", holdings: 35102, sharesOutstandingDiluted: 1_434_392_925, holdingsPerShare: 0.00002447, source: "Press release", sharesSource: "mNAV.com fullyDilutedShares (includes preferred)" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury

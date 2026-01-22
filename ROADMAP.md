@@ -328,7 +328,10 @@ Once the adversarial process is implemented, use it to fix data:
   - Audit: Inline comments in holdings-history.ts (audit file pending)
 
 **Pending fixes (require adversarial review)**:
-- [ ] Metaplanet: Verify 1.43B share count (includes preferred conversions)
+- [x] Metaplanet: Verified 1.43B (1.14B issued + 294M convertible preferred)
+  - Used mNAV.com fullyDilutedShares (aggregator, not TSE primary)
+  - Documented stock split history, issued vs FD distinction
+  - Confidence: MEDIUM (preferred currently underwater at ¥510 vs ¥1,000 conversion)
 - [ ] GAME: Verify 98M share count
 - [ ] RIOT: Verify current share count
 - [ ] Review remaining 66 discrepancies from Phase 6
