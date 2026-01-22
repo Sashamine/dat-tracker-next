@@ -59,7 +59,8 @@ export function getCompanyMNAV(
     company.cashReserves || 0,
     company.otherInvestments || 0,
     company.totalDebt || 0,
-    company.preferredEquity || 0
+    company.preferredEquity || 0,
+    company.restrictedCash || 0
   );
 
   // Return null for invalid mNAV (same filtering as stats)

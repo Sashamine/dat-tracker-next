@@ -24,6 +24,8 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
     cashReserves: 979_000_000,  // $979M cash (Jan 20, 2026)
+    cashSource: "Press release Jan 2026",
+    cashAsOf: "2026-01-20",
     otherInvestments: 25_000_000,  // $25M Eightco Holdings stake
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking, MAVAN validators Q1 2026",
@@ -53,6 +55,8 @@ export const ethCompanies: Company[] = [
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     sharesForMnav: 196_690_000,  // 196.69M basic shares (matches SBET dashboard methodology)
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",
     strategy: "Staking, Linea partnership, tokenized equity via Superstate",
@@ -103,6 +107,8 @@ export const ethCompanies: Company[] = [
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
     sharesForMnav: 335_000_000,  // From holdings-history.ts
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Sam Tabar",
     strategy: "86% staked, fully exited BTC. Avg cost $3,045/ETH.",
     notes: "Staking yield ~2.93% annualized. mNAV $3.84/share.",
@@ -199,10 +205,15 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 362_606_000,  // mNAV.com fully diluted shares Jan 21, 2026
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
+    // Debt: ~$7.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032), down from $10B after redemptions
     totalDebt: 8_200_000_000,  // $8.2B after note redemptions (Q4 2025)
+    debtSource: "SEC 10-Q Q4 2025",
+    debtAsOf: "2025-12-31",
     preferredEquity: 13_000_000_000,  // $13B per strategy.com API (Jan 2026)
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
+    cashSource: "mNAV.com",
+    cashAsOf: "2026-01-21",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
     notes: "709K BTC @ $75K avg. STRK/STRF 8% perpetual preferred. Bitcoin credit company thesis.",
@@ -227,8 +238,13 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
     sharesForMnav: 1_142_274_340,  // Official: Nov 20, 2025 filing (xj-storage.jp) - post Sept 2025 $1.4B offering
+    // Debt: Zero-coupon yen-denominated bonds (~¥44B, ~$280M) - no interest payments, principal at maturity
     totalDebt: 280_000_000,  // $280M per metaplanet.jp/analytics (Jan 2026)
+    debtSource: "metaplanet.jp/analytics",
+    debtAsOf: "2026-01-21",
     cashReserves: 150_000_000,  // ~$150M - calibrated to match metaplanet.jp mNAV (~1.24x). TODO: verify from filing
+    cashSource: "metaplanet.jp/analytics",
+    cashAsOf: "2026-01-21",
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 100K BTC by 2026.",
     notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield.",
@@ -253,11 +269,16 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
     sharesForMnav: 651_390_912,  // Total shares (both classes)
-    totalDebt: 486_500_000,  // $486.5M 1% convertible senior secured notes due 2030
+    // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC (~3:1 ratio)
+    totalDebt: 486_500_000,
+    debtSource: "SEC 8-K Dec 2025",
+    debtAsOf: "2025-12-09",
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
+    cashSource: "SEC 8-K Dec 2025",
+    cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services.",
-    notes: "Tether/SoftBank/Mallers venture. No SEC 10-Q/10-K filings yet - holdings unverified by regulatory filings.",
+    notes: "Tether/SoftBank/Mallers. Secured converts at 33% LTV. 3rd largest corporate BTC holder.",
   },
   {
     id: "cepo",  // BSTR Holdings pre-merger
@@ -304,10 +325,15 @@ export const btcCompanies: Company[] = [
     marketCap: 3_600_000_000,
     sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
     cashReserves: 826_000_000,  // $826M per mNAV.com Jan 2026
+    cashSource: "mNAV.com",
+    cashAsOf: "2026-01-21",
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
+    // Debt: $1B 0% converts due 2030 (Nov 2024) + $950M 0% converts due 2032 (Jul 2025) + earlier 1% notes
     totalDebt: 3_640_000_000,  // $3.64B per mNAV.com Jan 2026
-    notes: "Largest US public miner. $3.6B in convertible notes.",
+    debtSource: "mNAV.com",
+    debtAsOf: "2026-01-21",
+    notes: "Largest US public miner. $1.95B in 0% convertible notes (2030 + 2032 series).",
   },
   {
     id: "riot",
@@ -331,10 +357,16 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 5_220_000_000,
     sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
+    // Note: RIOT reports "unrestricted cash" separately from restricted cash in SEC filings
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Jason Les (CEO)",
     strategy: "HODL miner + treasury. Converts fund BTC buys. 1 GW Corsicana.",
-    totalDebt: 794_000_000,  // $594M 0.75% converts + $200M BTC-backed credit
+    // Debt: $594M 0.75% convertible notes due 2030 (Dec 2024) + $200M Coinbase BTC-backed credit facility
+    totalDebt: 794_000_000,
+    debtSource: "SEC 10-Q + press releases",
+    debtAsOf: "2025-12-31",
     notes: "Adopted DAT playbook Dec 2024. $594M converts used for $510M BTC purchase. 3rd largest corporate holder.",
   },
   {
@@ -360,10 +392,15 @@ export const btcCompanies: Company[] = [
     marketCap: 3_040_000_000,
     sharesForMnav: 329_000_000,  // 329M diluted shares (Q3 2025)
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Zach Bradford (CEO)",
     strategy: "Efficient US miner. 50 EH/s. DAM derivatives program.",
-    totalDebt: 1_150_000_000,  // $650M 0% converts + $400M BTC-backed credit + $100M facility
-    notes: "$650M 0% converts. $400M BTC-backed credit.",
+    // Debt: $1.15B 0% convertible notes due 2032 (Nov 2025) + $400M BTC-backed credit (Two Prime, largely undrawn)
+    totalDebt: 1_150_000_000,
+    debtSource: "Press release Nov 2025",
+    debtAsOf: "2025-11-11",
+    notes: "$1.15B 0% converts (Nov 2025). $400M BTC-backed credit capacity (largely undrawn).",
   },
   {
     id: "asst",
@@ -384,7 +421,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 850_000_000,  // ~$850M per Yahoo Finance (Jan 2026)
     sharesForMnav: 45_000_000,  // From holdings-history.ts
-    cashReserves: 77_780_000,  // Combined cash
+    cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
+    cashSource: "SEC 8-K Jan 2026",
+    cashAsOf: "2026-01-16",
     preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
     strategy: "First asset mgmt BTC treasury. No debt - perpetual preferred only. Plans to monetize Semler healthcare ops.",
@@ -409,6 +448,8 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 49_000_000,  // From holdings-history.ts
     cashReserves: 20_000_000,  // ~$20M cash (Q3 2025)
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
     notes: "NASA supplier. 291% BTC Yield YTD. ATM + Coinbase credit facility.",
@@ -472,7 +513,10 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 500_000_000,  // From holdings-history.ts
+    // Debt: $200M Yorkville convertible notes + $210M Kraken BTC-backed credit facility (Dec 2025)
     totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
+    debtSource: "Press releases",
+    debtAsOf: "2025-12-31",
     leader: "David Bailey (CEO, Bitcoin Magazine)",
     strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies.",
     notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). Share buyback authorized Dec 2025 as mNAV < 1.",
@@ -496,7 +540,10 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 288_000_000,  // From holdings-history.ts
+    // Debt: $1B 0% convertible senior secured notes due 2030, part of $2.5B private placement (May 2025)
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
+    debtSource: "SEC 8-K May 2025",
+    debtAsOf: "2025-05-29",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
     notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts.",
@@ -586,11 +633,16 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 6_770_000_000,  // ~$6.77B (Jan 2026)
     sharesForMnav: 108_000_000,  // 108M diluted shares (Q3 2025)
-    totalDebt: 490_000_000,  // ~$490M (EV $8.09B - Market Cap $7.6B)
+    // Debt: $265M BTC-backed credit facilities (Coinbase + Two Prime at ~8.2% WACC) + Coatue convertible note
+    totalDebt: 490_000_000,  // ~$490M total
+    debtSource: "Press releases + SEC filings",
+    debtAsOf: "2025-12-31",
     cashReserves: 35_000_000,  // ~$35M cash
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Asher Genoot (CEO)",
     strategy: "HODL miner with diversified revenue streams (hosting, HPC).",
-    notes: "Standalone holdings (ABTC listed separately). Owns 80% of ABTC. Merged with US Bitcoin Corp 2023.",
+    notes: "Standalone holdings (ABTC listed separately). Owns 80% of ABTC. $265M BTC-backed credit capacity.",
   },
   {
     id: "corz",
@@ -612,11 +664,16 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 356_000_000,  // From holdings-history.ts
-    totalDebt: 1_000_000_000,  // ~$1B convertible notes (2029 + 2031)
-    cashReserves: 200_000_000,
+    // Debt: $460M 3% converts due 2029 (Aug 2024) + $625M 0% converts due 2031 (Dec 2024)
+    totalDebt: 1_085_000_000,  // $1.085B total convertible notes
+    debtSource: "SEC 10-K + press releases",
+    debtAsOf: "2025-12-31",
+    cashReserves: 200_000_000,  // ~$200M cash
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Adam Sullivan (CEO)",
     strategy: "Largest US miner by hashrate. AI/HPC pivot with CoreWeave deal.",
-    notes: "Emerged from bankruptcy Jan 2024. 200MW AI hosting deal with CoreWeave.",
+    notes: "Emerged from bankruptcy Jan 2024. $1.085B in converts. 200MW AI deal with CoreWeave.",
   },
   {
     id: "btdr",
@@ -637,11 +694,16 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 225_000_000,  // From holdings-history.ts
-    totalDebt: 1_100_000_000,  // ~$1.1B convertible notes (2029 + 2031 series)
-    cashReserves: 150_000_000,
+    // Debt: $330M 4.875% converts due 2031 (Jun 2025) + $400M 4% converts due 2031 (Nov 2025)
+    totalDebt: 730_000_000,  // ~$730M total (earlier 5.25% notes partially repurchased)
+    debtSource: "Press releases",
+    debtAsOf: "2025-11-30",
+    cashReserves: 150_000_000,  // ~$150M cash
+    cashSource: "SEC 6-K Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Jihan Wu (Co-Founder)",
     strategy: "Vertically integrated - develops own ASIC chips (SEALMINER).",
-    notes: "Cayman Islands company. Files 6-K (foreign issuer) - no SEC 10-Q/10-K to verify holdings.",
+    notes: "Cayman Islands (6-K filer). $730M in 4-5% converts. Self-manufacturers SEALMINER ASICs.",
   },
 ];
 
@@ -667,6 +729,8 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
+    cashSource: "Press release Dec 2025",
+    cashAsOf: "2025-12-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
     notes: "Raised $1.65B PIPE. Debt free. 133K+ SOL staking rewards since Sept 2025. First equity on Solana via Superstate.",
@@ -715,6 +779,8 @@ export const solCompanies: Company[] = [
     marketCap: 240_000_000,  // ~$240M (Jan 2026)
     sharesForMnav: 30_000_000,  // From holdings-history.ts
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
     notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token.",

@@ -95,7 +95,8 @@ export function calculateNAVPerShare(
 }
 
 // Calculate mNAV (Enterprise Value / Crypto NAV) - key valuation metric
-// Industry standard: EV = Market Cap + Debt + Preferred - Cash
+// Industry standard: EV = Market Cap + Debt + Preferred - Free Cash
+// Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
 // This matches MSTR, SBET, Metaplanet official dashboards
 export function calculateMNAV(
   marketCap: number,
@@ -104,14 +105,18 @@ export function calculateMNAV(
   cashReserves: number = 0,
   otherInvestments: number = 0,
   totalDebt: number = 0,
-  preferredEquity: number = 0
+  preferredEquity: number = 0,
+  restrictedCash: number = 0
 ): number | null {
   const cryptoNav = holdings * assetPrice;  // Crypto-only NAV
   if (!cryptoNav || cryptoNav <= 0) return null;
-  
-  // Enterprise Value = Market Cap + Debt + Preferred Stock - Cash
-  const enterpriseValue = marketCap + totalDebt + preferredEquity - cashReserves;
-  
+
+  // Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
+  const freeCash = cashReserves - restrictedCash;
+
+  // Enterprise Value = Market Cap + Debt + Preferred Stock - Free Cash
+  const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
+
   return enterpriseValue / cryptoNav;
 }
 

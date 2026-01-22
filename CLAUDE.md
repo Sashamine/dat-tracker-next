@@ -107,12 +107,106 @@ Only patch after explaining the root cause and systemic solution (or lack thereo
 
 ### mNAV Formula
 ```
-Enterprise Value = Market Cap + Total Debt + Preferred Equity - Cash
+Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
+Enterprise Value = Market Cap + Total Debt + Preferred Equity - Free Cash
 Crypto NAV = Holdings × Crypto Price (crypto only, not other assets)
 mNAV = Enterprise Value / Crypto NAV
 ```
 
-`sharesForMnav` is ONLY for market cap. Balance sheet items (debt, cash, preferred) are separate inputs.
+`sharesForMnav` is ONLY for market cap. Balance sheet items (debt, cash, preferred, restrictedCash) are separate inputs.
+
+## How to Add a New Company
+
+### Step 1: Add to companies.ts
+
+Add the company to the appropriate asset array (btcCompanies, ethCompanies, etc.):
+
+```typescript
+{
+  id: "ticker-lowercase",      // Unique ID, usually lowercase ticker
+  name: "Company Name",
+  ticker: "TICK",
+  asset: "BTC",                // BTC, ETH, SOL, etc.
+  tier: 1,                     // 1 = primary, 2 = secondary
+  holdings: 1000,              // Current crypto holdings
+  holdingsLastUpdated: "2026-01-21",
+  holdingsSource: "sec-filing", // sec-filing, company-website, press-release
+  holdingsSourceUrl: "https://...",
+  datStartDate: "2025-01-01",  // When they started DAT strategy
+
+  // Optional but recommended for mNAV:
+  sharesForMnav: 100_000_000,  // Diluted shares for market cap calc
+  totalDebt: 500_000_000,      // Total debt in USD
+  debtSource: "SEC 10-Q Q3 2025",
+  debtAsOf: "2025-09-30",
+  cashReserves: 50_000_000,    // Cash in USD
+  cashSource: "SEC 10-Q Q3 2025",
+  cashAsOf: "2025-09-30",
+
+  // Optional metadata:
+  website: "https://...",
+  twitter: "https://twitter.com/...",
+  secCik: "0001234567",        // For SEC EDGAR lookups
+  isMiner: false,              // true for BTC miners
+  leader: "CEO Name",
+  strategy: "Brief strategy description",
+  notes: "Additional context",
+}
+```
+
+### Step 2: Add to holdings-history.ts
+
+Add historical holdings data for the company:
+
+```typescript
+"TICK": [
+  {
+    date: "2025-01-15",
+    holdings: 500,
+    sharesOutstandingDiluted: 100_000_000,
+    holdingsPerShare: 0.000005,
+    source: "SEC 8-K",
+    sharesSource: "SEC 10-Q Q4 2024",
+  },
+  {
+    date: "2025-06-30",
+    holdings: 1000,
+    sharesOutstandingDiluted: 100_000_000,
+    holdingsPerShare: 0.00001,
+    source: "SEC 8-K",
+    sharesSource: "SEC 10-Q Q2 2025",
+  },
+],
+```
+
+### Step 3: Determine Data Sources
+
+**For US companies:**
+1. Get SEC CIK from https://www.sec.gov/cgi-bin/browse-edgar?company=COMPANY&CIK=&type=&owner=include&count=40&action=getcompany
+2. Check for official holdings dashboard (like strategy.com, kulrbitcointracker.com)
+3. Use SEC 10-Q for shares outstanding (WeightedAverageNumberOfDilutedSharesOutstanding)
+
+**For foreign companies:**
+1. Check local exchange filings
+2. May need marketCap override if no US price feed
+
+### Step 4: Verify mNAV Calculation
+
+After adding, verify the mNAV looks reasonable:
+- Compare to mNAV.com if available
+- Check that market cap × shares ≈ expected market cap
+- Verify debt/cash numbers against latest filing
+
+### Checklist
+- [ ] Added to correct asset array in companies.ts
+- [ ] Holdings and source URL are accurate
+- [ ] sharesForMnav set (for mNAV calculation)
+- [ ] totalDebt/cashReserves set with source tracking (if material)
+- [ ] Added to holdings-history.ts with at least one entry
+- [ ] TypeScript compiles (`npx tsc --noEmit`)
+- [ ] Tests pass (`npm test`)
+
+---
 
 ## Future Work / TODO
 
