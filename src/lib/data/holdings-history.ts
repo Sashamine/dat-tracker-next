@@ -58,8 +58,11 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 553555, sharesOutstandingDiluted: 290_090_000, holdingsPerShare: 0.001908, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 580250, sharesOutstandingDiluted: 306_760_000, holdingsPerShare: 0.001891, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 640808, sharesOutstandingDiluted: 315_390_000, holdingsPerShare: 0.002032, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 710000, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.002152, source: "Q4 2025 10-K est" },
-  { date: "2026-01-13", holdings: 725000, sharesOutstandingDiluted: 340_000_000, holdingsPerShare: 0.002132, source: "8-K filing" },
+  // 2026 - Weekly 8-K filings (holdings verified via bitbo.io/treasuries/microstrategy which cites SEC 8-K)
+  // Adversarial review 2026-01-22: Previous entries (710K, 725K) had no supporting 8-K. Corrected to verified values.
+  { date: "2025-12-31", holdings: 672500, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.002038, source: "Back-calc from Jan 5 8-K (673,783 - 1,283 Jan purchases + 3 Dec purchases)" },
+  { date: "2026-01-12", holdings: 687410, sharesOutstandingDiluted: 345_000_000, holdingsPerShare: 0.001993, source: "SEC 8-K Jan 12 (via bitbo.io)", sharesSource: "ESTIMATE: ATM dilution" },
+  { date: "2026-01-20", holdings: 709715, sharesOutstandingDiluted: 362_606_000, holdingsPerShare: 0.001958, source: "SEC 8-K Jan 20 (via bitbo.io)", sharesSource: "mNAV.com fullyDilutedShares" },
 ];
 
 // MARA Holdings - Largest US public miner
