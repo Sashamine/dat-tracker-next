@@ -302,6 +302,9 @@ export function mergeCompanyWithOverrides(
     preferredEquity: liveData?.preferredEquity ?? staticCompany?.preferredEquity ?? company.preferredEquity,
     // Use live cash from mNAV.com if available, else static, else database
     cashReserves: liveData?.cash ?? staticCompany?.cashReserves ?? company.cashReserves,
+    // For DAT companies, cash is not "excess" - it's committed to debt service, operations, or future crypto
+    // restrictedCash = cashReserves means freeCash = 0, so cash doesn't reduce EV
+    restrictedCash: staticCompany?.restrictedCash ?? company.restrictedCash,
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
     // Priority: Live API (mNAV.com) > holdings-history.ts (SEC filings) > static companies.ts
