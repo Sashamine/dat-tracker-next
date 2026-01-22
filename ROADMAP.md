@@ -1,198 +1,215 @@
 # DAT Tracker Data Architecture Roadmap
 
 > **Last Updated**: 2026-01-21
-> **Current Phase**: 4 - Alert System
-> **Status**: Phase 3 cron jobs complete, 160 tests passing (6 skipped - known int'l gaps)
+> **Current Phase**: 4 - Data Quality & Architecture
+> **Status**: Audits complete, planning data acquisition process
 
 ---
 
 ## RESUME HERE
 
-**Phase 3 COMPLETE** - Cron jobs configured in Vercel.
+**Completed Audits (2026-01-21):**
+- Holdings: 14 fixes applied
+- Shares Outstanding: 6 discrepancies found
+- Total Debt: 2 discrepancies found
+- Market Cap: 7 discrepancies found (most should be removed, not fixed)
 
-**Bug Fix (2026-01-21):** BMNR had wrong CIK (0001866292) - should be 0001829311. Fixed in all 3 files. Updated holdings to 4,203,036 ETH. Added coverage test to catch similar gaps.
+**Key Insight:** Don't fix data before fixing the process that gets the data. Otherwise fixes just drift again.
 
-**Cron Schedule (vercel.json):**
-- `/api/cron/monitoring` - hourly at :00 (existing monitoring system)
-- `/api/cron/sec-update` - hourly at :30 (SEC 8-K auto-update to companies.ts)
-- `/api/cron/comparison` - twice daily at 9am/12pm ET (comparison engine discrepancies)
+**The Problem with Share Counts:**
+- **PIPE/Merger dilution** → Disclosed in 8-K ✅
+- **ATM dilution** → NOT in 8-K, only in quarterly 10-Q/10-K ❌
+- This means share counts can drift between quarters even if we watch 8-Ks
 
-**Test Coverage (160 tests + 6 skipped):**
-- Fetchers: mNAV (15), Strategy (12), SharpLink (12), SEC XBRL (17) = 56 tests
-- LLM Extractor: 20 tests
-- SEC Auto-Update Adapter: 17 tests
-- Comparison Engine: 19 tests
-- Coverage verification: 48+ tests (verifies every company has monitoring source)
+**Solution: Hybrid Approach**
+1. **Companies with dashboards** → Use real-time dashboard data
+2. **Companies without dashboards** → Accept quarterly lag from 10-Q/10-K
+3. **Be transparent** → Show data source and freshness for each company
 
-**Known Coverage Gaps (international companies):**
-- XRPN, CYPH, LUXFF (Canadian)
-- ALTBG (German)
-- 0434.HK (Hong Kong)
-- BNC (needs CIK lookup)
-
-**Next:**
-- Phase 4: Email alerts for discrepancies
-- Phase 5: Review UI for pending discrepancies
-
----
-
-## The Problem
-
-Our data lives in too many places with no clear hierarchy:
-- TypeScript files (companies.ts, holdings-history.ts, etc.)
-- PostgreSQL database
-- Google Sheets overrides
-- Live APIs (mNAV.com, SharpLink)
-
-Result: Same field can have different values depending on which source is checked.
-
-## The Goal
-
-**Current state** lives in TypeScript files (companies.ts):
-- Edited manually (by Claude or human)
-- SEC filings auto-update (exception)
-- Version controlled in git
-- Changes are reviewable via diffs
-
-**Historical data** lives in PostgreSQL:
-- Snapshots for charts
-- Discrepancy records
-- Audit trail
-- Populated by automated fetchers
-
-**Comparison engine** compares sources and flags discrepancies:
-- SEC: Hourly check → auto-update → immediate notification
-- Other sources: Twice daily (9am, 12pm) → flag discrepancy → email digest → human review
+**Next Steps:**
+1. Identify which companies have real-time share data (dashboards)
+2. Build/verify fetchers for those dashboards
+3. For the rest, establish quarterly update process from 10-Q
+4. Then apply fixes using the correct process
+5. Build verification to catch drift
 
 ---
 
-## Phase 0: Planning
-**Status**: COMPLETE
+## Data Acquisition Strategy
 
-- [x] Map all 50 companies and their available data sources
-- [x] Identify companies with official dashboards (18 found)
-- [x] Identify third-party trackers (TAO Treasuries, XRP Insights, etc.)
-- [x] Document current system architecture
-- [x] Decide where current vs historical data lives
-- [x] Decide fetch frequency
-- [x] Decide alert mechanism
-- [x] Decide on review UI
-- [x] Define database schema for historical/discrepancy tables
-- [x] Define comparison engine logic (see src/lib/comparison/COMPARISON_ENGINE.md)
-- [x] Get sign-off on plan before coding
+### Share Counts - Hybrid Approach
 
----
+**Tier 1: Real-time dashboards with shares**
+| Company | Dashboard | Shares? | Holdings? |
+|---------|-----------|---------|-----------|
+| MSTR | strategy.com | ✅ fdShares in API | ✅ |
 
-## Phase 1: Database Schema
-**Status**: COMPLETE
+**Tier 1b: Dashboards with holdings only (no shares)**
+| Company | Dashboard | Shares? | Holdings? |
+|---------|-----------|---------|-----------|
+| SBET | sharplink.com/eth-dashboard | ❌ | ✅ |
+| Metaplanet | metaplanet.jp/analytics | ❌ | ✅ |
+| DFDV | defidevcorp.com | ❌ | ✅ |
+| LITS | litestrategy.com | ❌ | ✅ |
 
-Goal: Create tables for historical data and discrepancies.
+**Note**: mNAV.com provides shares for 15 companies but is a secondary source (missed XXI Class B shares).
 
-- [x] Design snapshots table (already exists: holdings_snapshots, 91 rows)
-- [x] Design discrepancies table
-- [x] Design fetch_results table
-- [x] Run migration (006-discrepancies.sql)
-- [x] Backfill: holdings_snapshots has 91 rows of historical data; fetch_results populated by comparison engine
+**Tier 2: SEC quarterly (accept lag)**
+- All other US companies
+- Update shares after each 10-Q/10-K filing
+- Show "as of Q3 2025" on company page
 
----
+#### Quarterly Update Process (Tier 2 companies)
 
-## Phase 2: Source Fetchers
-**Status**: COMPLETE (6 dashboard fetchers + mNAV aggregator + SEC 8-K auto-update)
+1. **When to update**: After each 10-Q (Q1, Q2, Q3) or 10-K (annual) filing
+2. **Where to find shares**: Look for "WeightedAverageNumberOfDilutedSharesOutstanding" in filing
+3. **How to update**:
+   - Update `holdings-history.ts` with new share count, date, and SEC filing URL
+   - The system derives `sharesForMnav` from holdings-history.ts
+4. **What to display**: Show "as of Q3 2025" or similar on company page
+5. **Dual-class companies**: Sum all share classes (Class A + Class B = total)
 
-Goal: Build modules that can fetch data from each source type.
+**Tier 3: Foreign companies**
+- 3350.T, 0434.HK, H100.ST, ALTBG
+- Use exchange filings or company announcements
+- May have different disclosure schedules
 
-### Official Dashboards (6 dedicated fetchers built)
-- [x] strategy.com (MSTR) - src/lib/fetchers/dashboards/strategy.ts
-- [x] sharplink.com (SBET) - src/lib/fetchers/dashboards/sharplink.ts
-- [x] defidevcorp.com (DFDV) - src/lib/fetchers/dashboards/defidevcorp.ts
-- [x] xxi.mempool.space (XXI) - src/lib/fetchers/dashboards/xxi-mempool.ts (on-chain proof)
-- [x] metaplanet.jp (3350.T) - src/lib/fetchers/dashboards/metaplanet.ts (HTML parse)
-- [x] litestrategy.com (LITS) - src/lib/fetchers/dashboards/litestrategy.ts (HTML parse)
-- [~] FWDI - no dashboard API found (use SEC)
-- [~] ASST - treasury.strive.com redirects to third-party tracker (use SEC)
-- [~] NAKA - covered by mNAV fetcher (no separate dashboard)
-- [~] H100.ST - covered by mNAV fetcher (treasury.h100.group is third-party StrategyTracker)
-- [~] HSDT - no dashboard API (use SEC)
-- [~] UPXI - no dashboard API (use SEC)
+### The ATM Gap
 
-### Aggregators
-- [x] mNAV.com API - src/lib/fetchers/mnav.ts
-- [ ] BitcoinTreasuries.net
+When a company uses ATM to fund BTC purchases:
+1. **8-K filed** → "We bought X BTC" ✅
+2. **Shares sold** → NOT disclosed until 10-Q ❌
 
-### SEC EDGAR
-- [x] XBRL API fetcher (balance sheet: debt, cash, preferred, shares) - src/lib/fetchers/sec-xbrl.ts
-- [x] 8-K parser (holdings announcements) - src/lib/sec-auto-update/index.ts
-- [x] Auto-update flow (git commit/push) - integrated in sec-auto-update adapter
+This is unavoidable. Options:
+- **Estimate**: If they bought $100M BTC at $10/share, ~10M new shares
+- **Wait**: Accept that shares are stale until 10-Q
+- **Dashboard**: Some companies (MSTR) publish real-time
 
----
+**Decision:** Use dashboards where available, accept quarterly lag otherwise, be transparent about freshness.
 
-## Phase 2.5: Testing Infrastructure
-**Status**: COMPLETE (95 tests passing)
+### Market Cap - Calculate, Don't Override
 
-Goal: Comprehensive test coverage for all implemented features.
+**For US stocks:** `marketCap = sharesForMnav × liveStockPrice`
+- Remove all hardcoded overrides
+- Requires accurate share count (see above)
+- Requires reliable price API (FMP)
 
-### Setup
-- [x] Vitest configuration (vitest.config.ts)
-- [x] Test setup file (src/test/setup.ts)
-- [x] npm test scripts (test, test:run, test:coverage)
-
-### Fetcher Tests
-- [x] mNAV fetcher (src/lib/fetchers/mnav.test.ts) - 15 tests
-- [x] Strategy.com fetcher (src/lib/fetchers/dashboards/strategy.test.ts) - 12 tests
-- [x] SharpLink fetcher (src/lib/fetchers/dashboards/sharplink.test.ts) - 12 tests
-- [x] SEC XBRL fetcher (src/lib/fetchers/sec-xbrl.test.ts) - 17 tests
-
-### Core Logic Tests
-- [x] LLM extractor (src/lib/monitoring/parsers/llm-extractor.test.ts) - 20 tests
-- [x] SEC auto-update adapter (src/lib/sec-auto-update/index.test.ts) - 17 tests
-- [x] Comparison engine (src/lib/comparison/engine.test.ts) - 19 tests
-
-### Integration Tests
-- [ ] End-to-end fetch → compare flow (deferred - unit tests sufficient for now)
-- [ ] SEC filing detection → extraction → update (deferred)
+**For foreign stocks only:** Keep override with reason
+- 3350.T (Tokyo - need JPY conversion)
+- 0434.HK (Hong Kong - need HKD conversion)
+- H100.ST (Stockholm - need SEK conversion)
+- ALTBG (Paris - need EUR conversion)
 
 ---
 
-## Phase 3: Comparison Engine
-**Status**: COMPLETE
+## Discrepancies Found (for reference)
 
-- [x] Implement comparison logic (engine.ts)
-- [x] Load our values from companies.ts
-- [x] Compare against fetched values
-- [x] Record in fetch_results table
-- [x] Create discrepancy records when values differ
-- [x] Fix strategy.com fetcher API field access
-- [x] Cron jobs:
-  - [x] `/api/cron/sec-update` - hourly SEC 8-K auto-update
-  - [x] `/api/cron/comparison` - twice daily comparison (9am, 12pm ET)
+### Shares Outstanding
+
+| Ticker | Current | Correct | Root Cause |
+|--------|---------|---------|------------|
+| PURR | 32M | 127M | Sonnet merger (Dec 2025) |
+| FWDI | 42M | 85M | $1.65B PIPE (Sep 2025) |
+| RIOT | 403M | 350M | Overstated dilution |
+| DJT | 288M | 278M | Drift |
+| BTBT | 335M | 324M | Drift |
+| KULR | 49M | 45.67M | Internal inconsistency |
+
+### Total Debt
+
+| Ticker | Current | Correct | Root Cause |
+|--------|---------|---------|------------|
+| MSTR | $10B | $8.2B | Note redemptions |
+
+### Market Cap (remove, don't fix)
+
+| Ticker | Current | Action |
+|--------|---------|--------|
+| NAKA | $1.5B | Remove override, calculate |
+| KULR | $600M | Remove override, calculate |
+| DJT | $6.4B | Remove override, calculate |
+| MSTR | $57.4B | Remove override, calculate |
+| XXI | $6.12B | Remove override, calculate |
+| CORZ | $4.5B | Remove override, calculate |
+| BTDR | $2.8B | Remove override, calculate |
 
 ---
 
-## Phase 4: Alert System
+## Phase 4: Data Quality & Architecture
+**Status**: IN PROGRESS
+
+### 4.1 Holdings Audit - COMPLETE
+- [x] Audit all 54 companies
+- [x] Fix 14 major discrepancies
+
+### 4.2 mNAV Inputs Audit - COMPLETE
+- [x] Audit sharesForMnav (6 discrepancies)
+- [x] Audit totalDebt (1 discrepancy)
+- [x] Audit marketCap overrides (7 to remove)
+- [x] Root cause analysis
+
+### 4.3 Establish Data Acquisition Process - COMPLETE
+- [x] Identify companies with real-time share dashboards (only MSTR has shares)
+- [x] Update strategy.com fetcher to extract fdShares
+- [x] Document quarterly update process for non-dashboard companies
+- [x] Decide: estimate ATM dilution or accept lag? → Accept lag, be transparent
+
+### 4.4 Share Architecture - COMPLETE
+- [x] Add `sharesOutstandingBasic` and `sharesOutstandingDiluted` to holdings-history.ts
+- [x] Add `sharesAsOf` date and `sharesSource` fields
+- [x] Derive `sharesForMnav` from holdings-history.ts (single source of truth)
+- [x] Remove marketCap overrides for US stocks (7 removed: MSTR, XXI, KULR, NAKA, DJT, CORZ, BTDR)
+- [x] Update mNAV calculation to use `shares × price` (already implemented in market-cap.ts)
+- [x] Fix broken tests (strategy.test.ts - updated for fdShares extraction)
+
+### 4.4b Data Provenance & Cash/Debt Architecture - NOT STARTED
+
+**Data Provenance (show where each number comes from):**
+- [ ] Add source/date tracking for shares: `sharesSource`, `sharesSourceUrl`, `sharesAsOf`
+- [ ] Add source/date tracking for debt: `debtSource`, `debtSourceUrl`, `debtAsOf`
+- [ ] Add source/date tracking for cash: `cashSource`, `cashSourceUrl`, `cashAsOf`
+- [ ] Add source/date tracking for preferred: `preferredSource`, `preferredSourceUrl`, `preferredAsOf`
+- [ ] Propagate sources through calculation pipeline (use-company-overrides.ts, market-cap.ts)
+- [ ] Update mNAV tooltip to show component sources with links
+
+**Cash/Debt Formula:**
+- [ ] Decide formula: use `netDebt` (debt - cash) vs current approach
+- [ ] Add `restrictedCash` field if needed for companies with encumbered cash
+- [ ] Document which companies have complex debt structures (convertibles, secured debt, etc.)
+
+**Testing:**
+- [ ] Add tests for source propagation through calculation pipeline
+- [ ] Ensure all tests pass before completing phase
+
+### 4.5 Apply Fixes Using New Process - NOT STARTED
+- [ ] Update share counts using dashboard data or latest 10-Q
+- [ ] Research and update debt structures for all companies
+- [ ] Fix MSTR totalDebt ($10B → $8.2B)
+- [ ] Audit cash treatment per company (free vs restricted)
+
+### 4.6 Documentation - NOT STARTED
+- [ ] Document data source for each company
+- [ ] Document update cadence (real-time vs quarterly)
+- [ ] Document how to add a new company
+
+---
+
+## Phase 5: Delete Old Monitoring System
 **Status**: NOT STARTED
 
-- [ ] Email service integration
-- [ ] Immediate notification for SEC updates
-- [ ] Batched digest for discrepancies (9am, 12pm)
+- [ ] Remove `src/lib/monitoring/` directory
+- [ ] Remove related cron jobs
+- [ ] Drop unused database tables
 
 ---
 
-## Phase 5: Review UI
+## Phase 6: Simple Verification System
 **Status**: NOT STARTED
 
-- [ ] List pending discrepancies
-- [ ] Show all sources and their values
-- [ ] Approve/reject buttons
-- [ ] Log resolution
-
----
-
-## Phase 6: Historical Data & Charts
-**Status**: NOT STARTED
-
-- [ ] Backfill historical holdings
-- [ ] Backfill historical mNAV
-- [ ] Charts using verified data
+Build after data and process are solid:
+- [ ] Compare our data vs source data
+- [ ] Alert on discrepancies > X%
+- [ ] Manual review and update
 
 ---
 
@@ -200,40 +217,20 @@ Goal: Comprehensive test coverage for all implemented features.
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| 2026-01-20 | Flag ALL discrepancies | Cant know whats noise vs signal without investigating |
-| 2026-01-20 | 18 companies have official dashboards | Systematic search completed |
-| 2026-01-20 | mNAV.com is just another aggregator | They made mistakes (XXI Class B shares) |
-| 2026-01-20 | TypeScript for current state, DB for history | Simpler, no async bugs, git reviewable |
-| 2026-01-21 | No staleness scoring | Just show source + date, users judge |
-| 2026-01-21 | Email digest (9am, 12pm) not Discord | Discord too noisy, email easier to review |
-| 2026-01-21 | Build simple review UI | Reduces manual work |
-| 2026-01-21 | Source config in company-sources.ts | One place per company |
-| 2026-01-21 | One file per fetcher source type | Independent, easy to test/fix |
-| 2026-01-21 | Start with holdings only | Validate before expanding |
-| 2026-01-21 | SEC filings auto-update | SEC is authoritative, auto-update + notify |
-| 2026-01-21 | Hourly SEC, twice-daily others (9am, 12pm) | Faster for trusted source, 12pm still actionable |
+| 2026-01-21 | Hybrid approach for shares | Dashboards where available, quarterly 10-Q otherwise |
+| 2026-01-21 | Accept ATM lag | Can't know ATM dilution until 10-Q, be transparent |
+| 2026-01-21 | Calculate market cap, don't override | Static overrides go stale immediately |
+| 2026-01-21 | Fix process before fixing data | Otherwise fixes just drift again |
+| 2026-01-21 | Track basic AND diluted shares | Display both, use diluted for mNAV |
+| 2026-01-21 | Delete old monitoring system | Untested, complex, doesn't work |
+| 2026-01-21 | Audit cash/debt after share architecture | Same SEC data source, don't expand scope mid-phase |
+| 2026-01-21 | Add source citations to mNAV components | Users need to verify data, catch errors like XXI Class B |
 
 ---
 
-## Tradeoffs Accepted
+## Completed Phases
 
-| Decision | What We Gain | What We Give Up |
-|----------|--------------|-----------------|
-| TypeScript for current state | Simplicity, git history | Manual updates (except SEC) |
-| SEC auto-update | Less manual work | Some automation complexity |
-| Twice daily (not real-time) | Simpler | Could miss intraday (acceptable) |
-| Simple review UI | Easier review | Dev time to build |
-
-**Running tally:**
-- Manual work: LOW (SEC auto-updates)
-- Automation: MEDIUM (SEC auto-updates, fetchers, comparison)
-- Complexity: MEDIUM (git ops, simple UI)
-
----
-
-## Source Coverage Reference
-
-- 18 companies with official dashboards
-- 4 asset-specific third-party trackers
-- 41 US companies with SEC EDGAR
-- 15 BTC companies covered by mNAV.com
+### Phase 0-3: Planning, Schema, Fetchers, Comparison
+- All complete, see git history
+- 160 tests passing
+- Fetchers built for: mNAV, Strategy, SharpLink, SEC XBRL, Metaplanet, LiteStrategy

@@ -129,11 +129,12 @@ describe('strategyFetcher', () => {
 
       const results = await strategyFetcher.fetch(['MSTR']);
 
-      // Should have holdings, debt, and preferred_equity
-      expect(results).toHaveLength(3);
+      // Should have holdings, debt, preferred_equity, and shares_outstanding
+      expect(results).toHaveLength(4);
       expect(results.map(r => r.field)).toContain('holdings');
       expect(results.map(r => r.field)).toContain('debt');
       expect(results.map(r => r.field)).toContain('preferred_equity');
+      expect(results.map(r => r.field)).toContain('shares_outstanding');
     });
   });
 
@@ -185,8 +186,10 @@ describe('strategyFetcher', () => {
 
       const results = await strategyFetcher.fetch(['MSTR']);
 
-      // No holdings since bitcoinKpis failed
-      expect(results).toHaveLength(0);
+      // No holdings/debt/preferred since bitcoinKpis failed, but shares from mstrKpiData
+      expect(results).toHaveLength(1);
+      expect(results[0].field).toBe('shares_outstanding');
+      expect(results[0].value).toBe(330000000);
     });
 
     it('should handle malformed btcHoldings string', async () => {
@@ -228,7 +231,9 @@ describe('strategyFetcher', () => {
 
       const results = await strategyFetcher.fetch(['MSTR']);
 
-      expect(results).toHaveLength(0);
+      // No holdings/debt/preferred since results object missing, but shares from mstrKpiData
+      expect(results).toHaveLength(1);
+      expect(results[0].field).toBe('shares_outstanding');
     });
   });
 

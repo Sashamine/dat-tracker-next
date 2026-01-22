@@ -113,10 +113,10 @@ export const ethCompanies: Company[] = [
     ticker: "BTCS",
     asset: "ETH",
     tier: 2,
-    holdings: 70_000,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1436229&type=8-K",
+    holdings: 70_500,  // Dec 31, 2025 shareholder letter
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.btcs.com/news-media/2026-shareholder-letter/",
     datStartDate: "2024-01-01",
     stakingPct: 0.75,
     stakingMethod: "Builder+ validators",
@@ -155,10 +155,10 @@ export const ethCompanies: Company[] = [
     ticker: "FGNX",
     asset: "ETH",
     tier: 1,
-    holdings: 40_005,  // Updated Jan 2026 - sold 10,922 ETH in Nov 2025
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1591890&type=8-K",
+    holdings: 37_594,  // Jan 20, 2026 press release - sold more for buybacks
+    holdingsLastUpdated: "2026-01-20",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html",
     datStartDate: "2025-07-30",
     stakingPct: 0.80,
     stakingMethod: "Native staking",
@@ -196,7 +196,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
-    marketCap: 57_400_000_000,  // ~$57.4B ($158.33 × 362.6M shares, Jan 2026)
+    // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 362_606_000,  // mNAV.com fully diluted shares Jan 21, 2026
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     totalDebt: 10_000_000_000,  // $10B per strategy.com API (Jan 2026)
@@ -250,7 +250,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 10_000_000,
     avgDailyVolume: 150_000_000,
     hasOptions: true,
-    marketCap: 6_120_000_000,  // ~$6.1B (651M shares × $9.40, Jan 2026)
+    // marketCap calculated from sharesForMnav × price (removed static override)
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
     sharesForMnav: 651_390_912,  // Total shares (both classes)
     totalDebt: 486_500_000,  // $486.5M 1% convertible senior secured notes due 2030
@@ -315,10 +315,10 @@ export const btcCompanies: Company[] = [
     ticker: "RIOT",
     asset: "BTC",
     tier: 1,
-    holdings: 19_287,  // SEC 8-K Oct 30, 2025
-    holdingsLastUpdated: "2025-10-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001167419&type=8-K&dateb=&owner=include&count=40",
+    holdings: 18_005,  // Jan 7, 2026 - sold 1,818 BTC in Dec 2025
+    holdingsLastUpdated: "2026-01-07",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.riotplatforms.com/riot-announces-december-2025-production-and-operations-updates/",
     datStartDate: "2024-01-01",
     website: "https://riotplatforms.com",
     twitter: "https://twitter.com/RiotPlatforms",
@@ -406,7 +406,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 4_000_000,
     avgDailyVolume: 30_000_000,
     hasOptions: true,
-    marketCap: 600_000_000,
+    // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 49_000_000,  // From holdings-history.ts
     cashReserves: 20_000_000,  // ~$20M cash (Q3 2025)
     leader: "Michael Mo (CEO)",
@@ -419,10 +419,10 @@ export const btcCompanies: Company[] = [
     ticker: "ALTBG",
     asset: "BTC",
     tier: 2,
-    holdings: 1_653,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 2_201,  // Jan 2026 - was 1,653
+    holdingsLastUpdated: "2026-01-21",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.theblockchain-group.com/investor/share/",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/altbg.pa",
     datStartDate: "2024-12-01",
     costBasisAvg: 85_000,
     isMiner: false,
@@ -439,10 +439,10 @@ export const btcCompanies: Company[] = [
     ticker: "H100.ST",
     asset: "BTC",
     tier: 2,
-    holdings: 958,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 1_046,  // Jan 2026 - was 958
+    holdingsLastUpdated: "2026-01-21",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.h100.group/investor-relations/corporate-governance",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/h100.ngm",
     datStartDate: "2025-01-01",
     costBasisAvg: 90_000,
     isMiner: false,
@@ -470,7 +470,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 8_000_000,
     avgDailyVolume: 50_000_000,
     hasOptions: true,
-    marketCap: 1_500_000_000,
+    // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 500_000_000,  // From holdings-history.ts
     totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
     leader: "David Bailey (CEO, Bitcoin Magazine)",
@@ -483,10 +483,10 @@ export const btcCompanies: Company[] = [
     ticker: "DJT",
     asset: "BTC",
     tier: 1,
-    holdings: 11_542,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://ir.tmtgcorp.com/financials/sec-filings/",
+    holdings: 15_000,  // Jan 2026 - was 11,542
+    holdingsLastUpdated: "2026-01-21",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/djt",
     datStartDate: "2025-05-01",
     costBasisAvg: 100_000,
     isMiner: false,
@@ -494,7 +494,7 @@ export const btcCompanies: Company[] = [
     capitalRaisedPipe: 2_500_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
-    marketCap: 6_400_000_000,
+    // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 288_000_000,  // From holdings-history.ts
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     leader: "Devin Nunes (CEO)",
@@ -507,10 +507,10 @@ export const btcCompanies: Company[] = [
     ticker: "0434.HK",
     asset: "BTC",
     tier: 1,
-    holdings: 3_351,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 4_091,  // Nov 2025 - was 3,351
+    holdingsLastUpdated: "2025-11-30",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.hkexnews.hk/listedco/listconews/SEHK/2024/0129/2024012900251.pdf",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/0434.hk",
     datStartDate: "2024-01-26",
     costBasisAvg: 58_628,
     isMiner: false,
@@ -610,7 +610,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 80_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
-    marketCap: 4_500_000_000,
+    // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 356_000_000,  // From holdings-history.ts
     totalDebt: 1_000_000_000,  // ~$1B convertible notes (2029 + 2031)
     cashReserves: 200_000_000,
@@ -624,10 +624,10 @@ export const btcCompanies: Company[] = [
     ticker: "BTDR",
     asset: "BTC",
     tier: 1,
-    holdings: 2_470,
+    holdings: 1_901,  // Jan 2026 - was 2,470 (sold BTC for operations)
     holdingsLastUpdated: "2026-01-17",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://ir.bitdeer.com/news-releases",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/btdr",
     datStartDate: "2024-01-01",
     costBasisAvg: 40_000,
     isMiner: true,
@@ -635,7 +635,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 50_000_000,
     avgDailyVolume: 80_000_000,
     hasOptions: true,
-    marketCap: 2_800_000_000,
+    // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 225_000_000,  // From holdings-history.ts
     totalDebt: 1_100_000_000,  // ~$1.1B convertible notes (2029 + 2031 series)
     cashReserves: 150_000_000,
@@ -725,10 +725,10 @@ export const solCompanies: Company[] = [
     ticker: "UPXI",
     asset: "SOL",
     tier: 1,
-    holdings: 2_106_989,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
+    holdings: 2_174_583,  // Jan 5, 2026 - was 2,106,989
+    holdingsLastUpdated: "2026-01-05",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
     datStartDate: "2025-04-01",
     costBasisAvg: 157.66,
     stakingPct: 0.95,
@@ -796,10 +796,10 @@ export const hypeCompanies: Company[] = [
     ticker: "HYPD",
     asset: "HYPE",
     tier: 2,
-    holdings: 1_712_195,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 1_427_178,  // Jan 2026 - corrected from 1.7M
+    holdingsLastUpdated: "2026-01-21",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://ir.hyperiondefi.com/",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/hypd",
     datStartDate: "2025-07-01",
     costBasisAvg: 38.25,
     stakingPct: 0.90,
@@ -911,8 +911,8 @@ export const taoCompanies: Company[] = [
     ticker: "TWAV",
     asset: "TAO",
     tier: 2,
-    holdings: 21_943,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 24_382,  // Dec 10, 2025 - was 21,943
+    holdingsLastUpdated: "2025-12-10",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.taoweave.ai/",
     datStartDate: "2025-06-01",
@@ -960,10 +960,10 @@ export const trxCompanies: Company[] = [
     ticker: "TRON",
     asset: "TRX",
     tier: 1,
-    holdings: 677_596_945,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/",
+    holdings: 365_096_845,  // Fixed 2026-01-21 - was 677M (wrong by 312M)
+    holdingsLastUpdated: "2026-01-21",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.theblock.co/treasuries/tron",
     datStartDate: "2025-07-01",
     costBasisAvg: 0.28,
     stakingPct: 0.81,
@@ -1158,10 +1158,10 @@ export const dogeCompanies: Company[] = [
     ticker: "BTOG",
     asset: "DOGE",
     tier: 2,
-    holdings: 40_500_000,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 70_543_745,  // Aug 2025 - was 40.5M (missed PIPE)
+    holdingsLastUpdated: "2025-08-11",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/",
+    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
     datStartDate: "2025-07-01",
     costBasisAvg: 0.25,
     quarterlyBurnUsd: 2_000_000,

@@ -305,8 +305,8 @@ export default function MNAVPage() {
       const recent = history[history.length - 1];
       const previous = history[history.length - 2];
 
-      if (previous.sharesOutstanding > 0) {
-        const dilutionRate = ((recent.sharesOutstanding - previous.sharesOutstanding) / previous.sharesOutstanding) * 100;
+      if (previous.sharesOutstandingDiluted > 0) {
+        const dilutionRate = ((recent.sharesOutstandingDiluted - previous.sharesOutstandingDiluted) / previous.sharesOutstandingDiluted) * 100;
         dilutionRates.push({ ticker, rate: dilutionRate });
       }
     });

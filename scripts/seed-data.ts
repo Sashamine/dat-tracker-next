@@ -209,7 +209,7 @@ async function seedData() {
         `, [
           companyDbId,
           snapshot.holdings,
-          snapshot.sharesOutstanding,
+          snapshot.sharesOutstandingDiluted,
           snapshot.holdingsPerShare,
           sourceType,
           snapshot.source || null,

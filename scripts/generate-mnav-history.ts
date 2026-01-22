@@ -10,16 +10,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Import holdings history
-import { HOLDINGS_HISTORY } from "../src/lib/data/holdings-history";
-
-// Types
-interface HoldingsSnapshot {
-  date: string;
-  holdings: number;
-  sharesOutstanding: number;
-  holdingsPerShare: number;
-  source?: string;
-}
+import { HOLDINGS_HISTORY, HoldingsSnapshot } from "../src/lib/data/holdings-history";
 
 interface CompanyMNAV {
   ticker: string;
@@ -399,7 +390,7 @@ async function generateHistoricalMNAV(): Promise<void> {
       }
 
       // Calculate market cap
-      const marketCap = stockPrice * holdings.sharesOutstanding;
+      const marketCap = stockPrice * holdings.sharesOutstandingDiluted;
 
       // Get balance sheet
       const balanceSheet = await fetchBalanceSheet(ticker, targetDate);
@@ -432,7 +423,7 @@ async function generateHistoricalMNAV(): Promise<void> {
         holdings: holdings.holdings,
         stockPrice,
         cryptoPrice,
-        sharesOutstanding: holdings.sharesOutstanding,
+        sharesOutstanding: holdings.sharesOutstandingDiluted,
         totalDebt,
         cash,
       });

@@ -157,6 +157,25 @@ export const strategyFetcher: Fetcher = {
       });
     }
 
+    // Fully Diluted Shares - from mstrKpiData endpoint
+    if (mstrKpis?.fdShares) {
+      const shares = parseNumber(mstrKpis.fdShares);
+      if (shares !== null) {
+        results.push({
+          ticker: 'MSTR',
+          field: 'shares_outstanding',
+          value: shares,
+          source: {
+            name: 'strategy.com',
+            url: 'https://www.strategy.com/',
+            date: today,
+          },
+          fetchedAt,
+          raw: { fdShares: mstrKpis.fdShares, note: 'Fully diluted shares' },
+        });
+      }
+    }
+
     console.log(`[strategy.com] Got ${results.length} data points for MSTR`);
     return results;
   }

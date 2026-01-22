@@ -187,7 +187,7 @@ function getLatestDilutedShares(ticker: string): number | undefined {
   if (!history || history.history.length === 0) return undefined;
   // Get the most recent entry (last in array)
   const latest = history.history[history.history.length - 1];
-  return latest.sharesOutstanding;
+  return latest.sharesOutstandingDiluted;
 }
 
 /**
@@ -222,8 +222,8 @@ export function mergeCompanyWithOverrides(
     cashReserves: liveData?.cash ?? staticCompany?.cashReserves ?? company.cashReserves,
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
-    // Use mNAV.com FD shares for market cap (most honest about dilution)
-    sharesForMnav: liveData?.fdShares ?? company.sharesForMnav ?? staticCompany?.sharesForMnav,
+    // Priority: Live API (mNAV.com) > holdings-history.ts (SEC filings) > static companies.ts
+    sharesForMnav: liveData?.fdShares ?? sharesOutstandingFD ?? company.sharesForMnav ?? staticCompany?.sharesForMnav,
     // pendingMerger: static data takes precedence (undefined = not pending)
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     // lowLiquidity: flag for thinly traded stocks
