@@ -16,7 +16,7 @@ import {
   calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
@@ -28,6 +28,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
   stocks: Record<string, { price: number; change24h: number; volume: number; marketCap: number; isAfterHours?: boolean }>;
+  forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
   marketOpen?: boolean;
 }
 
@@ -98,8 +99,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const cryptoChange = prices?.crypto[company.asset]?.change24h;
     const stockData = prices?.stocks[company.ticker];
     const stockPrice = stockData?.price;
-    // Use centralized market cap utility (handles currency, fallbacks)
-    const marketCapResult = getMarketCap(company, stockData);
+    // Use same market cap that's used for mNAV calculation (shares × price)
+    // This ensures tooltip EV matches the actual mNAV calculation
+    const marketCapResult = getMarketCapForMnavSync(company, stockData, prices?.forex);
     const marketCap = marketCapResult.marketCap;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
