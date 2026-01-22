@@ -179,15 +179,33 @@ export function useCompanyOverrides() {
 }
 
 /**
+ * Get the latest diluted shares outstanding from holdings history with source info.
+ * Uses WeightedAverageNumberOfDilutedSharesOutstanding from SEC filings.
+ */
+function getLatestSharesWithSource(ticker: string): {
+  value: number;
+  asOf: string;
+  source: string;
+  sourceUrl?: string;
+} | undefined {
+  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  if (!history || history.history.length === 0) return undefined;
+  const latest = history.history[history.history.length - 1];
+  return {
+    value: latest.sharesOutstandingDiluted,
+    asOf: latest.date,
+    source: latest.sharesSource || latest.source || 'holdings-history.ts',
+    sourceUrl: undefined, // TODO: Add sharesSourceUrl to holdings-history entries
+  };
+}
+
+/**
  * Get the latest diluted shares outstanding from holdings history.
  * Uses WeightedAverageNumberOfDilutedSharesOutstanding from SEC filings.
  */
 function getLatestDilutedShares(ticker: string): number | undefined {
-  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
-  if (!history || history.history.length === 0) return undefined;
-  // Get the most recent entry (last in array)
-  const latest = history.history[history.history.length - 1];
-  return latest.sharesOutstandingDiluted;
+  const sharesInfo = getLatestSharesWithSource(ticker);
+  return sharesInfo?.value;
 }
 
 /**
@@ -202,10 +220,74 @@ export function mergeCompanyWithOverrides(
 ): Company {
   const override = overrides[company.ticker];
   const liveData = liveBalanceSheet[company.ticker];
-  // Get diluted shares from holdings history (for accurate market cap calculation)
-  const sharesOutstandingFD = getLatestDilutedShares(company.ticker);
+  // Get diluted shares from holdings history with source info
+  const sharesFromHistory = getLatestSharesWithSource(company.ticker);
+  const sharesOutstandingFD = sharesFromHistory?.value;
   // Get static company data for fields not in database (like holdingsSourceUrl)
   const staticCompany = getCompanyByTicker(company.ticker);
+
+  // Determine source for each mNAV component
+  const today = new Date().toISOString().split('T')[0];
+
+  // Shares source tracking
+  let sharesSource: string | undefined;
+  let sharesAsOf: string | undefined;
+  let sharesSourceUrl: string | undefined;
+  if (liveData?.fdShares) {
+    sharesSource = liveData.source === 'mnav.com' ? 'mNAV.com' : liveData.source;
+    sharesAsOf = liveData.lastUpdated?.split('T')[0] || today;
+    sharesSourceUrl = liveData.source === 'mnav.com' ? 'https://mnav.com' : undefined;
+  } else if (sharesFromHistory) {
+    sharesSource = sharesFromHistory.source;
+    sharesAsOf = sharesFromHistory.asOf;
+    sharesSourceUrl = sharesFromHistory.sourceUrl;
+  } else if (staticCompany?.sharesForMnav) {
+    sharesSource = staticCompany.sharesSource || 'companies.ts';
+    sharesAsOf = staticCompany.sharesAsOf;
+    sharesSourceUrl = staticCompany.sharesSourceUrl;
+  }
+
+  // Debt source tracking
+  let debtSource: string | undefined;
+  let debtAsOf: string | undefined;
+  let debtSourceUrl: string | undefined;
+  if (liveData?.debt !== undefined) {
+    debtSource = liveData.source === 'mnav.com' ? 'mNAV.com' : liveData.source;
+    debtAsOf = liveData.lastUpdated?.split('T')[0] || today;
+    debtSourceUrl = liveData.source === 'mnav.com' ? 'https://mnav.com' : undefined;
+  } else if (staticCompany?.totalDebt) {
+    debtSource = staticCompany.debtSource || 'companies.ts';
+    debtAsOf = staticCompany.debtAsOf;
+    debtSourceUrl = staticCompany.debtSourceUrl;
+  }
+
+  // Cash source tracking
+  let cashSource: string | undefined;
+  let cashAsOf: string | undefined;
+  let cashSourceUrl: string | undefined;
+  if (liveData?.cash !== undefined) {
+    cashSource = liveData.source === 'mnav.com' ? 'mNAV.com' : liveData.source;
+    cashAsOf = liveData.lastUpdated?.split('T')[0] || today;
+    cashSourceUrl = liveData.source === 'mnav.com' ? 'https://mnav.com' : undefined;
+  } else if (staticCompany?.cashReserves) {
+    cashSource = staticCompany.cashSource || 'companies.ts';
+    cashAsOf = staticCompany.cashAsOf;
+    cashSourceUrl = staticCompany.cashSourceUrl;
+  }
+
+  // Preferred equity source tracking
+  let preferredSource: string | undefined;
+  let preferredAsOf: string | undefined;
+  let preferredSourceUrl: string | undefined;
+  if (liveData?.preferredEquity !== undefined) {
+    preferredSource = liveData.source === 'mnav.com' ? 'mNAV.com' : liveData.source;
+    preferredAsOf = liveData.lastUpdated?.split('T')[0] || today;
+    preferredSourceUrl = liveData.source === 'mnav.com' ? 'https://mnav.com' : undefined;
+  } else if (staticCompany?.preferredEquity) {
+    preferredSource = staticCompany.preferredSource || 'companies.ts';
+    preferredAsOf = staticCompany.preferredAsOf;
+    preferredSourceUrl = staticCompany.preferredSourceUrl;
+  }
 
   // Merge financial data for mNAV calculation
   // Priority: Live API data (mNAV.com) > static data > database
@@ -224,6 +306,19 @@ export function mergeCompanyWithOverrides(
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
     // Priority: Live API (mNAV.com) > holdings-history.ts (SEC filings) > static companies.ts
     sharesForMnav: liveData?.fdShares ?? sharesOutstandingFD ?? company.sharesForMnav ?? staticCompany?.sharesForMnav,
+    // Source tracking for mNAV transparency
+    sharesSource,
+    sharesAsOf,
+    sharesSourceUrl,
+    debtSource,
+    debtAsOf,
+    debtSourceUrl,
+    cashSource,
+    cashAsOf,
+    cashSourceUrl,
+    preferredSource,
+    preferredAsOf,
+    preferredSourceUrl,
     // pendingMerger: static data takes precedence (undefined = not pending)
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     // lowLiquidity: flag for thinly traded stocks

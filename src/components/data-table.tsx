@@ -337,6 +337,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 totalDebt={company.totalDebt}
                 preferredEquity={company.preferredEquity}
                 cashReserves={company.cashReserves}
+                restrictedCash={company.restrictedCash}
                 otherInvestments={company.otherInvestments}
                 ticker={company.ticker}
                 asset={company.asset}
@@ -350,6 +351,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                 officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
                 officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                sharesSource={company.sharesSource}
+                sharesAsOf={company.sharesAsOf}
+                sharesSourceUrl={company.sharesSourceUrl}
+                debtSource={company.debtSource}
+                debtAsOf={company.debtAsOf}
+                debtSourceUrl={company.debtSourceUrl}
+                cashSource={company.cashSource}
+                cashAsOf={company.cashAsOf}
+                cashSourceUrl={company.cashSourceUrl}
+                preferredSource={company.preferredSource}
+                preferredAsOf={company.preferredAsOf}
+                preferredSourceUrl={company.preferredSourceUrl}
               />
             )}
           </p>
@@ -504,6 +517,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         totalDebt={company.totalDebt}
                         preferredEquity={company.preferredEquity}
                         cashReserves={company.cashReserves}
+                        restrictedCash={company.restrictedCash}
                         otherInvestments={company.otherInvestments}
                         ticker={company.ticker}
                         asset={company.asset}
@@ -517,6 +531,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                         officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
                         officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                        sharesSource={company.sharesSource}
+                        sharesAsOf={company.sharesAsOf}
+                        sharesSourceUrl={company.sharesSourceUrl}
+                        debtSource={company.debtSource}
+                        debtAsOf={company.debtAsOf}
+                        debtSourceUrl={company.debtSourceUrl}
+                        cashSource={company.cashSource}
+                        cashAsOf={company.cashAsOf}
+                        cashSourceUrl={company.cashSourceUrl}
+                        preferredSource={company.preferredSource}
+                        preferredAsOf={company.preferredAsOf}
+                        preferredSourceUrl={company.preferredSourceUrl}
                       />
                     )}
                   </TableCell>

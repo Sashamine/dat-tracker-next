@@ -65,10 +65,12 @@ export interface Company {
 
   // Non-crypto assets (for full NAV calculation)
   cashReserves?: number;        // USD cash on balance sheet
+  restrictedCash?: number;      // Cash that can't be freely used (encumbered by debt, covenants, etc.)
   otherInvestments?: number;    // Equity stakes, other non-crypto assets (USD value)
 
   // Debt (for EV-based mNAV calculation)
-  // EV = Market Cap + totalDebt + preferredEquity - cashReserves
+  // EV = Market Cap + totalDebt + preferredEquity - freeCash
+  // where freeCash = cashReserves - restrictedCash
   totalDebt?: number;           // Total debt outstanding (converts, bonds, credit facilities)
   preferredEquity?: number;     // Preferred stock notional value (MSTR-style STRK/STRF)
 
@@ -79,6 +81,26 @@ export interface Company {
   holdingsLastUpdated?: string; // ISO date when holdings were last verified
   holdingsSource?: HoldingsSource; // Where the holdings data came from
   holdingsSourceUrl?: string; // Direct link to the source (SEC filing, press release, etc.)
+
+  // Shares tracking (for mNAV calculation transparency)
+  sharesAsOf?: string; // ISO date of share count
+  sharesSource?: string; // e.g., "Q3 2025 10-Q", "mNAV.com", "strategy.com"
+  sharesSourceUrl?: string; // Link to SEC filing or dashboard
+
+  // Debt tracking
+  debtAsOf?: string; // ISO date of debt data
+  debtSource?: string; // e.g., "Q3 2025 10-Q", "strategy.com"
+  debtSourceUrl?: string;
+
+  // Cash tracking
+  cashAsOf?: string; // ISO date of cash data
+  cashSource?: string;
+  cashSourceUrl?: string;
+
+  // Preferred equity tracking
+  preferredAsOf?: string;
+  preferredSource?: string;
+  preferredSourceUrl?: string;
 
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
@@ -98,6 +120,31 @@ export interface Company {
   // Official mNAV from source (e.g., SharpLink's FD mNAV)
   // When set, use this instead of calculating mNAV
   officialMnav?: number;
+}
+
+// Source metadata for mNAV component transparency
+export interface SourceMetadata {
+  value: number;
+  source: string; // e.g., "mNAV.com", "strategy.com", "Q3 2025 10-Q"
+  sourceUrl?: string; // Link to verify
+  asOf: string; // ISO date
+}
+
+// mNAV calculation with full source attribution
+export interface MnavCalculation {
+  mnav: number;
+  components: {
+    holdings: SourceMetadata;
+    shares: SourceMetadata;
+    marketCap: SourceMetadata & { calculated?: boolean }; // calculated = shares × price
+    debt?: SourceMetadata;
+    cash?: SourceMetadata;
+    preferred?: SourceMetadata;
+    cryptoPrice: SourceMetadata;
+    stockPrice: SourceMetadata;
+  };
+  enterpriseValue: number;
+  cryptoNav: number;
 }
 
 // Live price data

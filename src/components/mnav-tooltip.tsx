@@ -16,6 +16,7 @@ interface MNAVTooltipProps {
   totalDebt?: number;
   preferredEquity?: number;
   cashReserves?: number;
+  restrictedCash?: number; // Cash that can't be freely used
   otherInvestments?: number;
   // Metadata
   ticker: string;
@@ -34,6 +35,19 @@ interface MNAVTooltipProps {
   secFilingsUrl?: string;
   // Data source indicator
   hasLiveData?: boolean;
+  // Source tracking for each component
+  sharesSource?: string;
+  sharesAsOf?: string;
+  sharesSourceUrl?: string;
+  debtSource?: string;
+  debtAsOf?: string;
+  debtSourceUrl?: string;
+  cashSource?: string;
+  cashAsOf?: string;
+  cashSourceUrl?: string;
+  preferredSource?: string;
+  preferredAsOf?: string;
+  preferredSourceUrl?: string;
 }
 
 function formatCompact(num: number): string {
@@ -43,12 +57,36 @@ function formatCompact(num: number): string {
   return `$${num.toFixed(0)}`;
 }
 
+// Format source citation as compact inline text
+function SourceCite({ source, asOf, sourceUrl }: { source?: string; asOf?: string; sourceUrl?: string }) {
+  if (!source) return null;
+
+  const text = asOf ? `${source} (${asOf})` : source;
+
+  if (sourceUrl) {
+    return (
+      <a
+        href={sourceUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="text-[9px] text-blue-400/70 hover:text-blue-300 ml-1"
+      >
+        [{text}]
+      </a>
+    );
+  }
+
+  return <span className="text-[9px] text-gray-500 ml-1">[{text}]</span>;
+}
+
 /**
  * mNAV tooltip showing calculation breakdown
  *
  * Formula:
- * EV = Market Cap + Debt + Preferred - Cash
- * NAV = Holdings Value + Other Investments
+ * freeCash = cashReserves - restrictedCash
+ * EV = Market Cap + Debt + Preferred - freeCash
+ * NAV = Holdings Value (crypto only)
  * mNAV = EV / NAV
  */
 export function MNAVTooltip({
@@ -58,6 +96,7 @@ export function MNAVTooltip({
   totalDebt = 0,
   preferredEquity = 0,
   cashReserves = 0,
+  restrictedCash = 0,
   otherInvestments = 0,
   ticker,
   asset,
@@ -71,12 +110,27 @@ export function MNAVTooltip({
   officialDashboard,
   secFilingsUrl,
   hasLiveData,
+  sharesSource,
+  sharesAsOf,
+  sharesSourceUrl,
+  debtSource,
+  debtAsOf,
+  debtSourceUrl,
+  cashSource,
+  cashAsOf,
+  cashSourceUrl,
+  preferredSource,
+  preferredAsOf,
+  preferredSourceUrl,
 }: MNAVTooltipProps) {
   // Calculate EV and NAV for display (matches Strategy's methodology)
-  // EV = Market Cap + Debt + Preferred - Cash
+  // freeCash = cashReserves - restrictedCash (only subtract unencumbered cash)
+  // EV = Market Cap + Debt + Preferred - freeCash
   // NAV = Crypto value only (NOT including cash)
-  const ev = marketCap + totalDebt + preferredEquity - cashReserves;
+  const freeCash = cashReserves - restrictedCash;
+  const ev = marketCap + totalDebt + preferredEquity - freeCash;
   const nav = holdingsValue;  // Crypto-only NAV
+  const hasRestrictedCash = restrictedCash > 0;
 
   // Determine which links to show and their labels
   const sourceUrl = secFilingsUrl || holdingsSourceUrl;
@@ -121,8 +175,11 @@ export function MNAVTooltip({
               </div>
               <div className="space-y-0.5 text-gray-300">
                 {sharesForMnav && stockPrice ? (
-                  <div className="flex justify-between text-[10px] text-gray-400">
-                    <span>{(sharesForMnav / 1_000_000).toFixed(1)}M × ${stockPrice.toFixed(2)}</span>
+                  <div className="flex justify-between items-start text-[10px] text-gray-400">
+                    <span className="flex items-center flex-wrap">
+                      {(sharesForMnav / 1_000_000).toFixed(1)}M × ${stockPrice.toFixed(2)}
+                      <SourceCite source={sharesSource} asOf={sharesAsOf} sourceUrl={sharesSourceUrl} />
+                    </span>
                     <span className="font-mono">{formatCompact(marketCap)}</span>
                   </div>
                 ) : (
@@ -145,21 +202,35 @@ export function MNAVTooltip({
                   <span className="font-mono">{formatCompact(marketCap)}</span>
                 </div>
                 {totalDebt > 0 && (
-                  <div className="flex justify-between">
-                    <span>+ Debt</span>
+                  <div className="flex justify-between items-start">
+                    <span className="flex items-center flex-wrap">
+                      + Debt
+                      <SourceCite source={debtSource} asOf={debtAsOf} sourceUrl={debtSourceUrl} />
+                    </span>
                     <span className="font-mono text-red-400">{formatCompact(totalDebt)}</span>
                   </div>
                 )}
                 {preferredEquity > 0 && (
-                  <div className="flex justify-between">
-                    <span>+ Preferred</span>
+                  <div className="flex justify-between items-start">
+                    <span className="flex items-center flex-wrap">
+                      + Preferred
+                      <SourceCite source={preferredSource} asOf={preferredAsOf} sourceUrl={preferredSourceUrl} />
+                    </span>
                     <span className="font-mono text-red-400">{formatCompact(preferredEquity)}</span>
                   </div>
                 )}
-                {cashReserves > 0 && (
-                  <div className="flex justify-between">
-                    <span>- Cash</span>
-                    <span className="font-mono text-green-400">({formatCompact(cashReserves)})</span>
+                {freeCash > 0 && (
+                  <div className="flex justify-between items-start">
+                    <span className="flex items-center flex-wrap">
+                      - {hasRestrictedCash ? 'Free Cash' : 'Cash'}
+                      <SourceCite source={cashSource} asOf={cashAsOf} sourceUrl={cashSourceUrl} />
+                    </span>
+                    <span className="font-mono text-green-400">({formatCompact(freeCash)})</span>
+                  </div>
+                )}
+                {hasRestrictedCash && (
+                  <div className="flex justify-between items-start text-[10px] text-gray-500">
+                    <span className="italic">({formatCompact(restrictedCash)} restricted)</span>
                   </div>
                 )}
                 <div className="flex justify-between font-medium border-t border-gray-700 pt-0.5">

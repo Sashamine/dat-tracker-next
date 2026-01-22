@@ -162,24 +162,24 @@ This is unavoidable. Options:
 - [x] Update mNAV calculation to use `shares × price` (already implemented in market-cap.ts)
 - [x] Fix broken tests (strategy.test.ts - updated for fdShares extraction)
 
-### 4.4b Data Provenance & Cash/Debt Architecture - NOT STARTED
+### 4.4b Data Provenance & Cash/Debt Architecture - IN PROGRESS
 
 **Data Provenance (show where each number comes from):**
-- [ ] Add source/date tracking for shares: `sharesSource`, `sharesSourceUrl`, `sharesAsOf`
-- [ ] Add source/date tracking for debt: `debtSource`, `debtSourceUrl`, `debtAsOf`
-- [ ] Add source/date tracking for cash: `cashSource`, `cashSourceUrl`, `cashAsOf`
-- [ ] Add source/date tracking for preferred: `preferredSource`, `preferredSourceUrl`, `preferredAsOf`
-- [ ] Propagate sources through calculation pipeline (use-company-overrides.ts, market-cap.ts)
-- [ ] Update mNAV tooltip to show component sources with links
+- [x] Add source/date tracking for shares: `sharesSource`, `sharesSourceUrl`, `sharesAsOf`
+- [x] Add source/date tracking for debt: `debtSource`, `debtSourceUrl`, `debtAsOf`
+- [x] Add source/date tracking for cash: `cashSource`, `cashSourceUrl`, `cashAsOf`
+- [x] Add source/date tracking for preferred: `preferredSource`, `preferredSourceUrl`, `preferredAsOf`
+- [x] Propagate sources through calculation pipeline (use-company-overrides.ts)
+- [x] Update mNAV tooltip to show component sources with links
 
 **Cash/Debt Formula:**
-- [ ] Decide formula: use `netDebt` (debt - cash) vs current approach
-- [ ] Add `restrictedCash` field if needed for companies with encumbered cash
+- [x] Decide formula: use `freeCash = cashReserves - restrictedCash` (only subtract unencumbered cash)
+- [x] Add `restrictedCash` field for companies with encumbered cash
 - [ ] Document which companies have complex debt structures (convertibles, secured debt, etc.)
 
 **Testing:**
 - [ ] Add tests for source propagation through calculation pipeline
-- [ ] Ensure all tests pass before completing phase
+- [x] Ensure all tests pass (160 passing)
 
 ### 4.5 Apply Fixes Using New Process - NOT STARTED
 - [ ] Update share counts using dashboard data or latest 10-Q
@@ -225,6 +225,7 @@ Build after data and process are solid:
 | 2026-01-21 | Delete old monitoring system | Untested, complex, doesn't work |
 | 2026-01-21 | Audit cash/debt after share architecture | Same SEC data source, don't expand scope mid-phase |
 | 2026-01-21 | Add source citations to mNAV components | Users need to verify data, catch errors like XXI Class B |
+| 2026-01-21 | Add restrictedCash field for encumbered cash | freeCash = cashReserves - restrictedCash; display shows "Free Cash" when restricted |
 
 ---
 
