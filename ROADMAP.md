@@ -1,8 +1,8 @@
 # DAT Tracker Data Architecture Roadmap
 
 > **Last Updated**: 2026-01-22
-> **Current Phase**: 7b - Testing the Verification Process
-> **Status**: IN PROGRESS - testing adversarial verification on remaining discrepancies
+> **Current Phase**: 7a - Source Tracking
+> **Status**: IN PROGRESS - building integrated verification system
 
 ---
 
@@ -10,40 +10,51 @@
 
 **Session 2026-01-22:**
 
-### Key Insight: Verification vs Comparison
+### Key Decision: Verification Should Be One Coherent System
 
-The comparison engine (Phase 6) finds discrepancies but doesn't determine truth. It just says "these numbers differ."
+The comparison engine (Phase 6) only finds discrepancies. The adversarial process (CLAUDE.md) determines truth. These were separate - that's wrong.
 
-**Real verification requires:**
-1. Where did our value come from? (git history)
-2. Does the cited source actually say that? (read primary document)
-3. Where did the comparison value come from?
-4. Which is correct based on primary sources?
+**New architecture:**
+```
+Comparison Engine
+       ↓
+Verification System (integrated)
+    - Check our sourceUrl
+    - Verify source still valid
+    - Determine confidence
+       ↓
+  ┌────┴────┐
+  ↓         ↓
+HIGH conf  LOW conf
+  ↓         ↓
+Auto-resolve  Manual review (CLAUDE.md)
+```
 
-### What We Built
+### What Exists Now
 
-Added mandatory adversarial verification process to CLAUDE.md:
-- Must investigate BOTH existing value AND proposed replacement
-- Must read primary source documents (not news articles)
-- Must answer 5 questions before any data edit
-- Two data types: verifiable (need primary source) vs estimated (need methodology)
+- **Comparison engine**: Finds discrepancies ✅
+- **Manual review process**: Documented in CLAUDE.md ✅
+- **Source tracking**: Partial (some entries have sourceUrl, many don't)
+- **Automated verification**: NOT STARTED
+- **Confidence scoring**: NOT STARTED
 
-### Tests Run
+### Manual Review Tests (2026-01-22)
 
-| Company | Discrepancy | Process Found | Result |
-|---------|-------------|---------------|--------|
-| MARA | 378M vs 495M | Previous fix grabbed wrong SEC field | Fixed with methodology |
-| MSTR | 725K vs 709K | Our value had no supporting 8-K | Fixed to verified values |
-| RIOT | Shares + holdings | Multiple errors found | Fixed both |
-| GAME | 98M vs mNAV 447M | mNAV was wrong | Our value correct |
-| Metaplanet | Share structure | Complex preferred structure | Documented provenance |
+| Company | Finding | Result |
+|---------|---------|--------|
+| MSTR | 725K had no source | Fixed to verified 8-K values |
+| RIOT | Multiple errors | Fixed shares and BTC count |
+| GAME | mNAV was wrong | Our value correct |
+| Metaplanet | Complex structure | Documented provenance |
+| MARA | Previous fix was wrong | Corrected with methodology |
 
 ### Next Steps
 
-1. Continue testing process on remaining ~60 discrepancies
-2. Track success/failure rate
-3. Refine process based on learnings
-4. Build UI for estimate provenance (Phase 7c)
+1. **Phase 7a**: Audit source tracking - which entries have verifiable sourceUrls?
+2. **Phase 7b**: Add automated source verification to comparison engine
+3. **Phase 7c**: Add confidence scoring for auto-resolve vs manual review
+4. **Phase 7d**: Manual review is already documented (CLAUDE.md)
+5. **Phase 7e**: UI for estimates with provenance
 
 ---
 
@@ -244,74 +255,126 @@ This is incomplete verification. Phase 7 completes it.
 
 ---
 
-## Phase 7: Complete Verification System
+## Phase 7: Integrated Verification System
 **Status**: IN PROGRESS
 
 ### The Problem
 
-The comparison engine finds discrepancies but doesn't determine truth. When we tried to "fix" discrepancies:
+The comparison engine finds discrepancies but doesn't determine truth. Manual fixes are error-prone:
 - MARA: Grabbed wrong SEC field (basic instead of diluted) → 378M instead of 470M
 - MSTR: Entered 725K with no supporting 8-K → should have been 687K
 
-Both errors were made confidently by a single agent. The comparison engine couldn't catch them because it only compares numbers, it doesn't verify sources.
+### The Solution: Single Coherent Verification System
 
-### The Solution: Adversarial Verification
+Verification should be integrated into the comparison engine, not a separate manual process.
 
-Verification isn't just "do the numbers match?" It's:
-1. **Where did our value come from?** (check git history, find cited source)
-2. **Does the cited source actually say that?** (read the primary document)
-3. **Where did the comparison value come from?** (is it also verified?)
-4. **Which is correct?** (weigh evidence from primary sources)
+```
+Comparison Engine (finds discrepancy)
+         ↓
+Verification System (investigates)
+    - Check source of our value (sourceUrl field)
+    - Verify cited source is still valid (fetch and check)
+    - Check source of comparison value
+    - Determine confidence level
+         ↓
+   ┌─────┴─────┐
+   ↓           ↓
+High confidence   Low confidence
+   ↓              ↓
+Auto-resolve    Flag for manual review
+```
 
-This is now documented in CLAUDE.md as a mandatory process before any data edit.
+### Phase 7a: Source Tracking
+**Status**: PARTIAL
 
-### Phase 7a: Establish the Process
-**Status**: COMPLETE
+Our data needs provenance so the verification system can check it.
 
-- [x] Define adversarial verification process (CLAUDE.md)
-- [x] Define what "verified" means (primary source document, not news articles)
-- [x] Define two data types: verifiable (need primary source) vs estimated (need methodology)
-- [x] Document the 5 questions that must be answered before any edit
-- [x] Test on real cases: MARA, RIOT, GAME, Metaplanet, MSTR
+**Current state:**
+- [x] `holdingsSource` and `holdingsSourceUrl` exist in companies.ts
+- [x] `source` field exists in holdings-history.ts entries
+- [ ] Not all entries have verifiable source URLs
+- [ ] No machine-readable source type (SEC filing vs press release vs estimate)
 
-### Phase 7b: Test the Process
-**Status**: IN PROGRESS
+**Work needed:**
+- [ ] Audit: Which entries have verifiable sourceUrls?
+- [ ] Add sourceUrl to entries that are missing it
+- [ ] Add sourceType field: `"sec-8k" | "sec-10q" | "company-website" | "press-release" | "estimate"`
+- [ ] For estimates: add methodology and confidence fields
 
-The process exists but we need to verify it actually catches errors.
+### Phase 7b: Automated Source Verification
+**Status**: NOT STARTED
 
-**Testing approach:**
-- [ ] Run adversarial review on remaining ~60 discrepancies
-- [ ] Track: Did the process catch issues the comparison engine missed?
-- [ ] Track: Did the process prevent bad fixes?
-- [ ] Track: How often does "our value" turn out to be correct vs wrong?
+Enhance comparison engine to verify sources, not just compare numbers.
+
+**Work needed:**
+- [ ] When discrepancy found, fetch our sourceUrl
+- [ ] Check if the source still returns the value we have
+- [ ] If source changed or value differs, flag as "source drift"
+- [ ] If source URL is invalid/404, flag as "source invalid"
+- [ ] If no sourceUrl, flag as "unverified"
+
+**Verification checks:**
+| Check | Auto-resolvable? |
+|-------|------------------|
+| Our source confirms our value | ✅ Yes - our value correct |
+| Our source shows different value | ⚠️ Flag - source drift |
+| Our sourceUrl is 404/invalid | ⚠️ Flag - needs new source |
+| No sourceUrl on our data | ⚠️ Flag - unverified |
+| External source is wrong (like GAME/mNAV) | ✅ Yes - our value correct |
+
+### Phase 7c: Confidence Scoring
+**Status**: NOT STARTED
+
+Determine when to auto-resolve vs flag for manual review.
+
+**Confidence levels:**
+| Level | Criteria | Action |
+|-------|----------|--------|
+| HIGH | Our source verifies, external agrees | Auto-confirm |
+| HIGH | Our source verifies, external wrong (known bad source) | Auto-confirm, log external error |
+| MEDIUM | Our source verifies, external disagrees | Flag for review |
+| LOW | Our source invalid or missing | Flag for review |
+| LOW | Estimate without methodology | Flag for review |
+
+**Thresholds:**
+- Auto-confirm: HIGH confidence
+- Flag for review: MEDIUM or LOW confidence
+- Block changes: No source verification possible
+
+### Phase 7d: Manual Review Process
+**Status**: COMPLETE (documented in CLAUDE.md)
+
+For LOW confidence cases, manual review follows the adversarial process:
+
+1. Where did our value come from? (git history, cited source)
+2. Does the cited source actually say that? (read primary document)
+3. Where did the comparison value come from? (is it verified?)
+4. Which is correct? (weigh evidence)
+5. Is this verifiable data or an estimate? (methodology if estimate)
 
 **Already tested (2026-01-22):**
-| Company | Discrepancy | Process caught | Result |
-|---------|-------------|----------------|--------|
-| MSTR | 725K vs 709K | ✅ Our value had no source | Fixed to verified 8-K values |
-| RIOT | Shares + holdings | ✅ Found multiple errors | Fixed shares and BTC count |
-| GAME | 98M vs mNAV 447M | ✅ mNAV was wrong | Our value correct, flagged mNAV error |
-| Metaplanet | Share structure | ✅ Documented complexity | Added provenance for 1.43B FD |
-| MARA | 378M vs 495M | ✅ Previous fix was wrong | Corrected with methodology |
+| Company | Discrepancy | Finding | Result |
+|---------|-------------|---------|--------|
+| MSTR | 725K vs 709K | Our value had no source | Fixed to verified 8-K values |
+| RIOT | Shares + holdings | Multiple errors | Fixed shares and BTC count |
+| GAME | 98M vs mNAV 447M | mNAV was wrong | Our value correct |
+| Metaplanet | Share structure | Complex preferred | Documented provenance |
+| MARA | 378M vs 495M | Previous fix was wrong | Corrected with methodology |
 
-**Remaining to test:**
-- [ ] Work through remaining discrepancies using the process
-- [ ] Document success/failure rate
-- [ ] Refine process based on what we learn
-
-### Phase 7c: Estimates and Provenance
-**Status**: PENDING (after 7b)
+### Phase 7e: Estimates and UI Provenance
+**Status**: PENDING
 
 For data that can't be directly verified (shares between quarters):
 
-**Schema for estimates:**
+**Schema:**
 ```typescript
 {
   sharesOutstandingDiluted: 495_000_000,
-  sharesSource: "ESTIMATE: SEC Q3 diluted + ATM",
-  sharesMethodology: "sec-diluted-plus-atm",
-  sharesConfidence: "medium",
-  sharesConfidenceRange: { floor: 470_000_000, ceiling: 500_000_000 },
+  sourceType: "estimate",
+  sourceUrl: null,
+  methodology: "SEC Q3 diluted (470M) + ATM estimate (25M)",
+  confidence: "medium",
+  confidenceRange: { floor: 470_000_000, ceiling: 500_000_000 },
 }
 ```
 
@@ -319,7 +382,7 @@ For data that can't be directly verified (shares between quarters):
 - [ ] Indicate estimates (e.g., "~495M" or "495M (est)")
 - [ ] Show methodology on hover/click
 - [ ] Show confidence level and range
-- [ ] Link to source documentation
+- [ ] Different styling for verified vs estimated data
 
 ### Infrastructure
 - [ ] Add DISCORD_WEBHOOK_URL to Vercel production
@@ -354,6 +417,7 @@ For data that can't be directly verified (shares between quarters):
 | 2026-01-22 | Adversarial verification is part of verification, not change control | Comparison engine only finds differences; adversarial process determines truth by investigating sources |
 | 2026-01-22 | "Verified" means reading primary source document | News articles and web search results are claims, not verification; must read actual SEC filings or company pages |
 | 2026-01-22 | Must verify BOTH existing value AND proposed replacement | MSTR had 725K with no source; I almost replaced it with 687K from web search (also unverified) |
+| 2026-01-22 | Verification should be one coherent system | Comparison engine finds discrepancies; verification determines truth; manual review is fallback for low confidence - not a separate process |
 
 ---
 
