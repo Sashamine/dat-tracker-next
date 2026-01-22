@@ -1,28 +1,36 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-01-21
-> **Current Phase**: 5 - Delete Old Monitoring System
-> **Status**: Phase 5 COMPLETE - ready for Phase 6
+> **Last Updated**: 2026-01-22
+> **Current Phase**: 6 - Simple Verification System
+> **Status**: Phase 6 COMPLETE - verification system operational
 
 ---
 
 ## RESUME HERE
 
-**Session 2026-01-21 Summary:**
-- Phase 4.4b, 4.5, 4.6 completed (data provenance, fixes, documentation)
-- Phase 5 completed (deleted old monitoring system)
+**Session 2026-01-22 Summary:**
+- Phase 6 completed (Simple Verification System)
 - 158 tests passing
 
 **What was done:**
-- Debt/cash source tracking added for all major companies
-- "How to Add a New Company" guide added to CLAUDE.md
-- Old monitoring system deleted, SEC utilities moved to `src/lib/sec/`
-- Removed broken cron jobs (monitoring, realtime, financials)
+- Fixed comparison engine to use holdings-history.ts (same source as frontend)
+- Added Discord webhook notifications for discrepancy alerts
+- Added Yahoo Finance fetcher as second source for share validation
+- Ran verification and found 66 discrepancies (49 major, 7 moderate, 10 minor)
 
-**Next: Phase 6 - Simple Verification System**
-- Compare our data vs source data
-- Alert on discrepancies > X%
-- Manual review and update
+**Initial Verification Results (2026-01-22):**
+Key discrepancies identified:
+- **Metaplanet (3350.T)**: 650M shares vs 1.43B actual (120% error - missing preferred shares)
+- **MARA**: 495M shares vs 378-470M actual (23% error)
+- **GAME**: 160M shares vs 98M actual (38% error)
+- **H100.ST**: 35M shares vs 354M actual (913% error - likely currency units)
+- Many companies have stale debt/cash values
+
+**Next: Phase 7 - Fix Data Using Verification Results**
+- Use the 66 discrepancies to fix data systematically
+- Update holdings-history.ts with correct share counts
+- Add Discord webhook URL to production for alerts
+- Consider: Should foreign companies (3350.T, H100.ST) be excluded from mNAV.com comparisons due to currency?
 
 **Key Insight:** Don't fix data before fixing the process that gets the data. Otherwise fixes just drift again.
 
@@ -223,12 +231,28 @@ This is unavoidable. Options:
 ---
 
 ## Phase 6: Simple Verification System
+**Status**: COMPLETE
+
+- [x] Fix comparison engine to use holdings-history.ts (same source as frontend)
+- [x] Add Discord webhook notifications for discrepancy alerts
+- [x] Add Yahoo Finance fetcher as second source for share validation
+- [x] Cron runs twice daily (2pm and 5pm UTC) at `/api/cron/comparison`
+- [x] Manual trigger: `?manual=true&dryRun=true` for testing
+
+**Initial Results (2026-01-22):** 66 discrepancies found (49 major, 7 moderate, 10 minor)
+
+---
+
+## Phase 7: Fix Data Using Verification Results
 **Status**: NOT STARTED
 
-Build after data and process are solid:
-- [ ] Compare our data vs source data
-- [ ] Alert on discrepancies > X%
-- [ ] Manual review and update
+Use the verification results to systematically fix data:
+- [ ] Add DISCORD_WEBHOOK_URL to Vercel production environment
+- [ ] Fix Metaplanet shares (650M → 1.43B)
+- [ ] Fix MARA shares (495M → correct value from SEC)
+- [ ] Fix GAME shares (160M → 98M)
+- [ ] Decide: Exclude foreign companies from mNAV.com comparisons (currency mismatch)?
+- [ ] Review and fix remaining major discrepancies
 
 ---
 
@@ -249,6 +273,9 @@ Build after data and process are solid:
 | 2026-01-21 | Add cash source tracking | cashSource/cashAsOf fields for 17 companies with significant cash reserves |
 | 2026-01-21 | Skip redundant documentation tasks | Data sources now self-documenting in code; only added "how to add company" guide to CLAUDE.md |
 | 2026-01-21 | Delete old monitoring system | Removed complex untested monitoring; kept SEC auto-update (simpler, git-based); moved reusable SEC/LLM code to src/lib/sec/ |
+| 2026-01-22 | Fix comparison engine data source | Changed loadOurValues() to use holdings-history.ts (same as frontend) instead of stale companies.ts |
+| 2026-01-22 | Add Discord notifications | Send alerts when discrepancies > 5% found; summarize by severity |
+| 2026-01-22 | Add Yahoo Finance fetcher | Second source for share count validation beyond mNAV.com |
 
 ---
 
