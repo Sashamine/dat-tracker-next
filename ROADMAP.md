@@ -1,63 +1,49 @@
 # DAT Tracker Data Architecture Roadmap
 
 > **Last Updated**: 2026-01-22
-> **Current Phase**: 7a - Share Count Estimation Process
-> **Status**: IN PROGRESS - designing adversarial review system
+> **Current Phase**: 7b - Testing the Verification Process
+> **Status**: IN PROGRESS - testing adversarial verification on remaining discrepancies
 
 ---
 
 ## RESUME HERE
 
-**Session 2026-01-22 (continued):**
+**Session 2026-01-22:**
 
-**What happened:**
-1. Started Phase 7 to fix MARA share discrepancy
-2. Discovered the previous "fix" (378M) was WRONG - grabbed basic shares instead of diluted
-3. Traced the error: SEC has multiple fields, we grabbed the wrong one
-4. Realized: single-agent fixes are error-prone, need adversarial review
+### Key Insight: Verification vs Comparison
 
-**The MARA case study:**
-- Original estimate: 495M (actually reasonable)
-- "Fixed" to: 378M (WRONG - EntityCommonStockSharesOutstanding = basic)
-- Correct value: 470M (WeightedAverageNumberOfDilutedSharesOutstanding = diluted)
-- Current estimate: 495M (470M + 25M ATM) ← fixed with proper provenance
+The comparison engine (Phase 6) finds discrepancies but doesn't determine truth. It just says "these numbers differ."
 
-**Key insight:** A confident single agent grabbed the wrong SEC field. Adversarial review would have caught this via:
-- "Which exact SEC XBRL tag?" → Forces specificity
-- "Profit or loss quarter?" → Q3 2025 was profit, so diluted > basic
-- "Cross-reference mNAV.com?" → They show 470M, not 378M
+**Real verification requires:**
+1. Where did our value come from? (git history)
+2. Does the cited source actually say that? (read primary document)
+3. Where did the comparison value come from?
+4. Which is correct based on primary sources?
 
-**What we built:**
-- Drafted adversarial agent prompts (proposer, challenger, resolution)
-- Drafted audit file format with provenance
-- Ran manual adversarial review on MARA
-- Fixed MARA with proper documentation
+### What We Built
 
-**Next steps (Phase 7a):**
-- Implement adversarial agents as callable functions
-- Create audit/ directory structure
-- Define auto-approve vs human-review thresholds
+Added mandatory adversarial verification process to CLAUDE.md:
+- Must investigate BOTH existing value AND proposed replacement
+- Must read primary source documents (not news articles)
+- Must answer 5 questions before any data edit
+- Two data types: verifiable (need primary source) vs estimated (need methodology)
 
-**Then (Phase 7b):**
-- Run adversarial review on remaining discrepancies
-- Apply fixes with audit trail
+### Tests Run
 
-**The Problem with Share Counts:**
-- **PIPE/Merger dilution** → Disclosed in 8-K ✅
-- **ATM dilution** → NOT in 8-K, only in quarterly 10-Q/10-K ❌
-- This means share counts can drift between quarters even if we watch 8-Ks
+| Company | Discrepancy | Process Found | Result |
+|---------|-------------|---------------|--------|
+| MARA | 378M vs 495M | Previous fix grabbed wrong SEC field | Fixed with methodology |
+| MSTR | 725K vs 709K | Our value had no supporting 8-K | Fixed to verified values |
+| RIOT | Shares + holdings | Multiple errors found | Fixed both |
+| GAME | 98M vs mNAV 447M | mNAV was wrong | Our value correct |
+| Metaplanet | Share structure | Complex preferred structure | Documented provenance |
 
-**Solution: Hybrid Approach**
-1. **Companies with dashboards** → Use real-time dashboard data
-2. **Companies without dashboards** → Accept quarterly lag from 10-Q/10-K
-3. **Be transparent** → Show data source and freshness for each company
+### Next Steps
 
-**Next Steps:**
-1. Identify which companies have real-time share data (dashboards)
-2. Build/verify fetchers for those dashboards
-3. For the rest, establish quarterly update process from 10-Q
-4. Then apply fixes using the correct process
-5. Build verification to catch drift
+1. Continue testing process on remaining ~60 discrepancies
+2. Track success/failure rate
+3. Refine process based on learnings
+4. Build UI for estimate provenance (Phase 7c)
 
 ---
 
@@ -238,8 +224,8 @@ This is unavoidable. Options:
 
 ---
 
-## Phase 6: Simple Verification System
-**Status**: COMPLETE
+## Phase 6: Comparison Engine
+**Status**: COMPLETE (but incomplete verification)
 
 - [x] Fix comparison engine to use holdings-history.ts (same source as frontend)
 - [x] Add Discord webhook notifications for discrepancy alerts
@@ -249,59 +235,76 @@ This is unavoidable. Options:
 
 **Initial Results (2026-01-22):** 66 discrepancies found (49 major, 7 moderate, 10 minor)
 
+**Limitation discovered**: The comparison engine only tells us "these numbers differ." It doesn't:
+- Tell us which value is correct
+- Investigate where our value came from
+- Verify primary sources
+
+This is incomplete verification. Phase 7 completes it.
+
 ---
 
-## Phase 7a: Share Count Estimation Process
+## Phase 7: Complete Verification System
 **Status**: IN PROGRESS
 
-**Problem discovered**: We tried to "fix" MARA shares and grabbed the wrong SEC field (basic instead of diluted). A single agent confidently made the wrong fix. We need adversarial review to catch these errors.
+### The Problem
 
-**The challenge with ATM companies**:
-- SEC filings are quarterly (stale between filings)
-- ATM dilution happens continuously but isn't disclosed until 10-Q
-- Multiple SEC fields exist (basic vs diluted vs fully diluted)
-- Profit vs loss quarters affect which securities are included in diluted count
+The comparison engine finds discrepancies but doesn't determine truth. When we tried to "fix" discrepancies:
+- MARA: Grabbed wrong SEC field (basic instead of diluted) → 378M instead of 470M
+- MSTR: Entered 725K with no supporting 8-K → should have been 687K
 
-**Adversarial Review Process**:
-```
-Proposer Agent → Challenger Agent → Resolution → Audit File
-     ↓                  ↓                ↓            ↓
-  Proposes #      Challenges with    Adjudicates   Documents
-  with reasoning  specific prompts   disagreements  provenance
-```
+Both errors were made confidently by a single agent. The comparison engine couldn't catch them because it only compares numbers, it doesn't verify sources.
 
-**Tasks**:
-- [x] Draft adversarial agent prompts (proposer, challenger, resolution)
-- [x] Draft audit file format (audit/shares/YYYY-MM-DD-TICKER.md)
-- [x] Define challenge prompts:
-  - SEC field verification (basic vs diluted vs fully diluted)
-  - Profit/loss quarter check (antidilutive exclusions)
-  - ATM calculation audit (BTC × price ÷ stock price)
-  - External cross-reference (mNAV.com, FinanceCharts)
-  - Temporal consistency (shares shouldn't shrink)
-  - Edge case scan (splits, buybacks, conversions)
-  - Confidence calibration
-- [ ] Implement agents as callable functions
-- [ ] Create audit/ directory structure
-- [ ] Define thresholds:
-  - Auto-approve: agreement + high confidence + <5% change
-  - Flag for review: disagreement OR low confidence OR >10% change
-  - Block: factual error OR >25% change
-- [ ] Document which companies need ATM estimation:
-  - MSTR (21/21 plan - massive ATM)
-  - MARA (active BTC purchases via ATM)
-  - RIOT (similar)
-  - Others with active ATM programs
+### The Solution: Adversarial Verification
 
-**Data Provenance in UI**:
-When share count is an estimate (not direct from SEC filing), display must:
-- [ ] Indicate it's an estimate (e.g., "~495M" or "495M (est)")
-- [ ] Show methodology on hover/click (e.g., "SEC Q3 diluted + ATM estimate")
-- [ ] Show confidence level (high/medium/low)
-- [ ] Show confidence range when applicable (e.g., "470M - 500M")
-- [ ] Link to audit file or source documentation
+Verification isn't just "do the numbers match?" It's:
+1. **Where did our value come from?** (check git history, find cited source)
+2. **Does the cited source actually say that?** (read the primary document)
+3. **Where did the comparison value come from?** (is it also verified?)
+4. **Which is correct?** (weigh evidence from primary sources)
 
-**Schema for estimates** (in holdings-history.ts or new structure):
+This is now documented in CLAUDE.md as a mandatory process before any data edit.
+
+### Phase 7a: Establish the Process
+**Status**: COMPLETE
+
+- [x] Define adversarial verification process (CLAUDE.md)
+- [x] Define what "verified" means (primary source document, not news articles)
+- [x] Define two data types: verifiable (need primary source) vs estimated (need methodology)
+- [x] Document the 5 questions that must be answered before any edit
+- [x] Test on real cases: MARA, RIOT, GAME, Metaplanet, MSTR
+
+### Phase 7b: Test the Process
+**Status**: IN PROGRESS
+
+The process exists but we need to verify it actually catches errors.
+
+**Testing approach:**
+- [ ] Run adversarial review on remaining ~60 discrepancies
+- [ ] Track: Did the process catch issues the comparison engine missed?
+- [ ] Track: Did the process prevent bad fixes?
+- [ ] Track: How often does "our value" turn out to be correct vs wrong?
+
+**Already tested (2026-01-22):**
+| Company | Discrepancy | Process caught | Result |
+|---------|-------------|----------------|--------|
+| MSTR | 725K vs 709K | ✅ Our value had no source | Fixed to verified 8-K values |
+| RIOT | Shares + holdings | ✅ Found multiple errors | Fixed shares and BTC count |
+| GAME | 98M vs mNAV 447M | ✅ mNAV was wrong | Our value correct, flagged mNAV error |
+| Metaplanet | Share structure | ✅ Documented complexity | Added provenance for 1.43B FD |
+| MARA | 378M vs 495M | ✅ Previous fix was wrong | Corrected with methodology |
+
+**Remaining to test:**
+- [ ] Work through remaining discrepancies using the process
+- [ ] Document success/failure rate
+- [ ] Refine process based on what we learn
+
+### Phase 7c: Estimates and Provenance
+**Status**: PENDING (after 7b)
+
+For data that can't be directly verified (shares between quarters):
+
+**Schema for estimates:**
 ```typescript
 {
   sharesOutstandingDiluted: 495_000_000,
@@ -309,40 +312,18 @@ When share count is an estimate (not direct from SEC filing), display must:
   sharesMethodology: "sec-diluted-plus-atm",
   sharesConfidence: "medium",
   sharesConfidenceRange: { floor: 470_000_000, ceiling: 500_000_000 },
-  sharesAuditFile: "audit/shares/2026-01-22-MARA.md"  // optional
 }
 ```
 
-**Key Insight**: The adversarial process adds friction, but the MARA mistake (378M instead of 470M) cost credibility and debugging time. The friction is worth it.
+**UI requirements:**
+- [ ] Indicate estimates (e.g., "~495M" or "495M (est)")
+- [ ] Show methodology on hover/click
+- [ ] Show confidence level and range
+- [ ] Link to source documentation
 
----
-
-## Phase 7b: Apply Fixes Using Adversarial Process
-**Status**: BLOCKED by 7a
-
-Once the adversarial process is implemented, use it to fix data:
-
-**Already fixed (manual adversarial review 2026-01-22)**:
-- [x] MARA: 378M → 495M (470M SEC diluted + 25M ATM estimate)
-  - Root cause: Previous "fix" grabbed EntityCommonStockSharesOutstanding (basic) instead of WeightedAverageNumberOfDilutedSharesOutstanding (diluted)
-  - Audit: Inline comments in holdings-history.ts (audit file pending)
-
-**Pending fixes (require adversarial review)**:
-- [x] Metaplanet: Verified 1.43B (1.14B issued + 294M convertible preferred)
-  - Used mNAV.com fullyDilutedShares (aggregator, not TSE primary)
-  - Documented stock split history, issued vs FD distinction
-  - Confidence: MEDIUM (preferred currently underwater at ¥510 vs ¥1,000 conversion)
-- [x] GAME: Verified 98M shares correct (SEC 10-Q Q3 2025)
-  - mNAV.com has WRONG data for this ticker (shows BTC company with 447M shares)
-  - Added warning comment to holdings-history.ts
-- [x] RIOT: Fixed 371M → 402M shares, 20.5K → 18K BTC holdings
-  - Shares: 371M was basic (cover page), 402M is diluted (implied from Q3 EPS)
-  - Holdings: RIOT sold 1,818 BTC in Dec 2025
-- [ ] Review remaining 66 discrepancies from Phase 6
-
-**Infrastructure**:
-- [ ] Add DISCORD_WEBHOOK_URL to Vercel production environment
-- [ ] Decide: Exclude foreign companies from mNAV.com comparisons (currency mismatch)?
+### Infrastructure
+- [ ] Add DISCORD_WEBHOOK_URL to Vercel production
+- [ ] Decide: Exclude foreign companies from mNAV comparisons (currency mismatch)?
 
 ---
 
@@ -370,6 +351,9 @@ Once the adversarial process is implemented, use it to fix data:
 | 2026-01-22 | Split Phase 7 into 7a/7b | Must establish estimation process before applying fixes; "fix process before fixing data" |
 | 2026-01-22 | MARA: 470M diluted + 25M ATM = 495M | Previous "fix" to 378M was wrong (used basic not diluted); Q3 2025 was profit quarter |
 | 2026-01-22 | Show estimates with provenance in UI | When shares are estimated (not direct SEC), display must indicate estimate, methodology, confidence, and range |
+| 2026-01-22 | Adversarial verification is part of verification, not change control | Comparison engine only finds differences; adversarial process determines truth by investigating sources |
+| 2026-01-22 | "Verified" means reading primary source document | News articles and web search results are claims, not verification; must read actual SEC filings or company pages |
+| 2026-01-22 | Must verify BOTH existing value AND proposed replacement | MSTR had 725K with no source; I almost replaced it with 687K from web search (also unverified) |
 
 ---
 
