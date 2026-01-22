@@ -82,8 +82,16 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 495_000_000, holdingsPerShare: 0.0001162, source: "8-K filing", sharesSource: "ESTIMATE: SEC Q3 diluted + ATM" },
 ];
 
-// RIOT Platforms - SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// Note: SEC 10-Q Q3 2025 shows 371,116,270 diluted shares
+// RIOT Platforms - BTC Miner
+// SEC EDGAR CIK: 0001167419
+//
+// SHARE COUNT CORRECTION (Jan 2026):
+// Previous entries used 371M from SEC 10-Q cover page (basic shares)
+// Correct diluted shares: ~402M (implied from Q3 2025 EPS: $104.5M ÷ $0.26 = 402M)
+// Q3 2025 was a profit quarter, so diluted includes all convertible securities
+//
+// HOLDINGS NOTE: RIOT sold 1,818 BTC in Dec 2025, reducing holdings to 18,005 BTC
+// Source: Riot Dec 2025 Production Update (riotplatforms.com, Jan 7, 2026)
 const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 8490, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.0000303, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 9334, sharesOutstandingDiluted: 295_000_000, holdingsPerShare: 0.0000316, source: "Q2 2024 10-Q" },
@@ -91,8 +99,12 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 17722, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.0000545, source: "Q4 2024 10-K" },
   { date: "2025-03-31", holdings: 19223, sharesOutstandingDiluted: 335_000_000, holdingsPerShare: 0.0000574, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 15370, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000439, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 17429, sharesOutstandingDiluted: 371_116_270, holdingsPerShare: 0.0000470, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
-  { date: "2026-01-08", holdings: 20500, sharesOutstandingDiluted: 371_116_270, holdingsPerShare: 0.0000552, source: "8-K filing", sharesSource: "SEC 10-Q Q3 2025 (latest)" },
+  // Q3 2025: Diluted shares = 402M (from EPS: $104.5M net income ÷ $0.26 diluted EPS)
+  // Note: 371M on cover page is basic shares, not diluted
+  { date: "2025-09-30", holdings: 17429, sharesOutstandingDiluted: 402_000_000, holdingsPerShare: 0.0000434, source: "Q3 2025 10-Q", sharesSource: "Implied from Q3 EPS ($104.5M ÷ $0.26)" },
+  // Dec 2025: Sold 1,818 BTC → 18,005 BTC remaining
+  // Source: Riot Dec 2025 Production Update (riotplatforms.com)
+  { date: "2025-12-31", holdings: 18005, sharesOutstandingDiluted: 402_000_000, holdingsPerShare: 0.0000448, source: "Dec 2025 Production Update", sharesSource: "Q3 2025 diluted (latest)" },
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
