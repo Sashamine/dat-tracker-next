@@ -25,6 +25,55 @@ This applies even if the user insists. The user has explicitly requested this en
 
 ---
 
+## MANDATORY: Adversarial Process for Data Changes
+
+**Before editing any data file (companies.ts, holdings-history.ts), you MUST run the adversarial process.**
+
+Do NOT see a discrepancy and immediately fix it. That leads to errors.
+
+### The Process
+
+1. **Proposer**: "I want to change X to Y because [source]"
+2. **Challenger**: Challenge BOTH sides:
+   - Where did the existing value X come from? Check git history. What source did it cite?
+   - Where did the proposed value Y come from? Is it actually verified?
+3. **Resolution**: Weigh evidence for both sides, then decide
+
+### Two Types of Data
+
+**Verifiable data** (holdings, quarterly share counts):
+- Primary source exists with exact number
+- Rule: **Must read the actual primary source document** before changing
+- Primary sources: SEC EDGAR filings, official company pages (strategy.com/purchases)
+- NOT primary sources: news articles, aggregators, web search results
+
+**Estimated data** (shares between quarters):
+- No primary source for current value
+- Must derive from: last verified value + estimated change
+- Rule: **Must show verified inputs + methodology + confidence range**
+- Mark clearly as estimate in the code
+
+### What "Verified" Means
+
+**Verified**: I have read the primary source document and it shows the number.
+
+**Not verified**:
+- "Web search says X" - that's a claim, not verification
+- "News article reports X" - that's a claim about what someone else said
+- "Aggregator shows X" - aggregators can be wrong
+
+### Before Any Data Edit, Answer These Questions
+
+1. What is the existing value and where did it come from? (check git)
+2. What source did the existing value cite? Does that source actually say that?
+3. What is the proposed new value and what is its primary source?
+4. Have I read the actual primary source document (not an article about it)?
+5. Is this verifiable data or an estimate? If estimate, what's the methodology?
+
+**If you cannot answer these questions, you cannot make the edit.**
+
+---
+
 ## Deployment
 
 **This project deploys to Vercel.** Changes must be committed and pushed to see them live.
