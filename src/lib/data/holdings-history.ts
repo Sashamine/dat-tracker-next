@@ -77,17 +77,18 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 495_000_000, holdingsPerShare: 0.0001161, source: "8-K filing" },
 ];
 
-// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+// RIOT Platforms - SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+// Note: Previous diluted share counts were overstated; corrected to ~350M per Q3 2025 10-Q
 const RIOT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 8490, sharesOutstandingDiluted: 330_120_000, holdingsPerShare: 0.0000257, source: "Q1 2024" },
-  { date: "2024-06-30", holdings: 9334, sharesOutstandingDiluted: 352_800_000, holdingsPerShare: 0.0000265, source: "Q2 2024" },
-  { date: "2024-09-30", holdings: 10427, sharesOutstandingDiluted: 375_640_000, holdingsPerShare: 0.0000278, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 17722, sharesOutstandingDiluted: 390_000_000, holdingsPerShare: 0.0000454, source: "Q4 2024" },
-  { date: "2025-03-31", holdings: 19223, sharesOutstandingDiluted: 398_000_000, holdingsPerShare: 0.0000483, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 15370, sharesOutstandingDiluted: 402_000_000, holdingsPerShare: 0.0000382, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 17429, sharesOutstandingDiluted: 403_180_000, holdingsPerShare: 0.0000432, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 19800, sharesOutstandingDiluted: 415_000_000, holdingsPerShare: 0.0000477, source: "Q4 2025 10-K est" },
-  { date: "2026-01-08", holdings: 20500, sharesOutstandingDiluted: 420_000_000, holdingsPerShare: 0.0000488, source: "8-K filing" },
+  { date: "2024-03-31", holdings: 8490, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.0000303, source: "Q1 2024 10-Q" },
+  { date: "2024-06-30", holdings: 9334, sharesOutstandingDiluted: 295_000_000, holdingsPerShare: 0.0000316, source: "Q2 2024 10-Q" },
+  { date: "2024-09-30", holdings: 10427, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.0000336, source: "Q3 2024 10-Q" },
+  { date: "2024-12-31", holdings: 17722, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.0000545, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", holdings: 19223, sharesOutstandingDiluted: 335_000_000, holdingsPerShare: 0.0000574, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 15370, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.0000449, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 17429, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000498, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
+  { date: "2025-12-31", holdings: 19800, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000566, source: "Q4 2025 10-K est" },
+  { date: "2026-01-08", holdings: 20500, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.0000586, source: "8-K filing" },
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
@@ -140,15 +141,16 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
 
 // Bit Digital - ETH miner and holder
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
+// Corrected to 324M FD shares per Q3 2025 10-Q (was overstated)
 const BTBT_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-12-31", holdings: 17245, sharesOutstandingDiluted: 165_000_000, holdingsPerShare: 0.000105, source: "2023 10-K" },
   { date: "2024-06-30", holdings: 22890, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.000131, source: "Q2 2024 10-Q" },
   { date: "2024-12-31", holdings: 27350, sharesOutstandingDiluted: 182_435_019, holdingsPerShare: 0.000150, source: "Q4 2024 10-K" },
   { date: "2025-03-31", holdings: 30000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000144, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 32000, sharesOutstandingDiluted: 321_432_722, holdingsPerShare: 0.000100, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 35500, sharesOutstandingDiluted: 323_674_831, holdingsPerShare: 0.000110, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 38000, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.000115, source: "Q4 2025 10-K est" },
-  { date: "2026-01-12", holdings: 39500, sharesOutstandingDiluted: 335_000_000, holdingsPerShare: 0.000118, source: "8-K filing" },
+  { date: "2025-06-30", holdings: 32000, sharesOutstandingDiluted: 315_000_000, holdingsPerShare: 0.000102, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 35500, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000110, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
+  { date: "2025-12-31", holdings: 38000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000117, source: "Q4 2025 10-K est" },
+  { date: "2026-01-12", holdings: 39500, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000122, source: "8-K filing" },
 ];
 
 // ==================== SOL COMPANIES ====================
@@ -177,6 +179,7 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 // KULR Technology - Bitcoin First Company
 // Note: 1-for-8 reverse stock split on June 23, 2025
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+// Corrected to 45.67M FD shares per Q3 2025 10-Q (post-split adjusted)
 const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 214_227_808, holdingsPerShare: 0.00000101, source: "Initial BTC purchase 8-K" },
   { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 240_000_000, holdingsPerShare: 0.00000179, source: "8-K filing" },
@@ -187,9 +190,9 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (1-for-8) - SEC shows split-adjusted shares
   { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "Press release + reverse split" },
   { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "Press release" },
-  { date: "2025-09-30", holdings: 1200, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000263, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 1450, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000302, source: "Q4 2025 10-K est" },
-  { date: "2026-01-13", holdings: 1550, sharesOutstandingDiluted: 49_000_000, holdingsPerShare: 0.0000316, source: "8-K filing" },
+  { date: "2025-09-30", holdings: 1200, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000263, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
+  { date: "2025-12-31", holdings: 1450, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000317, source: "Q4 2025 10-K est" },
+  { date: "2026-01-13", holdings: 1550, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000339, source: "8-K filing" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
@@ -326,11 +329,12 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL SOL COMPANIES ====================
 
 // Forward Industries (FWDI) - World's leading SOL treasury, launched Sept 2025
+// Sep 2025: $1.65B PIPE resulted in significant dilution (85M FD shares)
 const FWDI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-09-11", holdings: 6834506, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 0.19527, source: "Initial $1.65B PIPE close" },
-  { date: "2025-11-15", holdings: 6900000, sharesOutstandingDiluted: 38_000_000, holdingsPerShare: 0.18158, source: "Press release" },
-  { date: "2025-12-01", holdings: 6921342, sharesOutstandingDiluted: 40_000_000, holdingsPerShare: 0.17303, source: "Shareholder update" },
-  { date: "2026-01-15", holdings: 6980000, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.16619, source: "Press release" },
+  { date: "2025-09-11", holdings: 6834506, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08041, source: "Initial $1.65B PIPE close", sharesSource: "PIPE 8-K" },
+  { date: "2025-11-15", holdings: 6900000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08118, source: "Press release" },
+  { date: "2025-12-01", holdings: 6921342, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08143, source: "Shareholder update" },
+  { date: "2026-01-15", holdings: 6980000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08212, source: "Press release" },
 ];
 
 // Heliogen Solar (HSDT) - SOL treasury, formerly Solana Company
@@ -442,11 +446,13 @@ const BTOG_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Hyperliquid Strategies (PURR) - HYPE treasury
+// Dec 2025: Sonnet merger added ~95M shares (32M -> 127M)
 const PURR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-11-01", holdings: 4500000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.300, source: "Initial HYPE treasury" },
   { date: "2024-12-31", holdings: 8500000, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.386, source: "Q4 2024 filing" },
   { date: "2025-06-30", holdings: 12000000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.429, source: "Q2 2025 filing" },
   { date: "2025-09-30", holdings: 15000000, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.469, source: "Q3 2025 10-Q" },
+  { date: "2025-12-15", holdings: 18000000, sharesOutstandingDiluted: 127_000_000, holdingsPerShare: 0.142, source: "Post-Sonnet merger 8-K", sharesSource: "Merger 8-K" },
 ];
 
 // Hyperion DeFi (HYPD) - HYPE treasury
@@ -521,10 +527,11 @@ const BTDR_HISTORY: HoldingsSnapshot[] = [
 
 // Trump Media (DJT) - Started BTC treasury May 2025
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
+// Corrected to 278M FD shares per Q3 2025 10-Q
 const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, source: "Treasury deal closed" },
-  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 277_067_396, holdingsPerShare: 0.0000686, source: "Press reports ~$2B BTC" },
-  { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.0000412, source: "Q3 2025 10-Q (SEC: 11,542.16 BTC)" },
+  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, source: "Press reports ~$2B BTC" },
+  { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 278_000_000, holdingsPerShare: 0.0000415, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
 ];
 
 // Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder

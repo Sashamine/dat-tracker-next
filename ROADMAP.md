@@ -181,10 +181,16 @@ This is unavoidable. Options:
 - [ ] Add tests for source propagation through calculation pipeline
 - [x] Ensure all tests pass (160 passing)
 
-### 4.5 Apply Fixes Using New Process - NOT STARTED
-- [ ] Update share counts using dashboard data or latest 10-Q
+### 4.5 Apply Fixes Using New Process - COMPLETE
+- [x] Update share counts using dashboard data or latest 10-Q
+  - PURR: 32M → 127M (Sonnet merger Dec 2025)
+  - FWDI: 42M → 85M ($1.65B PIPE Sep 2025)
+  - RIOT: 403M → 350M (overstated dilution corrected)
+  - DJT: 280M → 278M (minor drift)
+  - BTBT: 335M → 324M (overstated dilution corrected)
+  - KULR: 49M → 45.67M (internal inconsistency fixed)
+- [x] Fix MSTR totalDebt ($10B → $8.2B) - note redemptions
 - [ ] Research and update debt structures for all companies
-- [ ] Fix MSTR totalDebt ($10B → $8.2B)
 - [ ] Audit cash treatment per company (free vs restricted)
 
 ### 4.6 Documentation - NOT STARTED

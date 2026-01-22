@@ -199,7 +199,7 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 362_606_000,  // mNAV.com fully diluted shares Jan 21, 2026
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
-    totalDebt: 10_000_000_000,  // $10B per strategy.com API (Jan 2026)
+    totalDebt: 8_200_000_000,  // $8.2B after note redemptions (Q4 2025)
     preferredEquity: 13_000_000_000,  // $13B per strategy.com API (Jan 2026)
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
