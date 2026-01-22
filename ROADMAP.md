@@ -1,38 +1,46 @@
 # DAT Tracker Data Architecture Roadmap
 
 > **Last Updated**: 2026-01-22
-> **Current Phase**: 6 - Simple Verification System
-> **Status**: Phase 6 COMPLETE - verification system operational
+> **Current Phase**: 7a - Share Count Estimation Process
+> **Status**: IN PROGRESS - designing adversarial review system
 
 ---
 
 ## RESUME HERE
 
-**Session 2026-01-22 Summary:**
-- Phase 6 completed (Simple Verification System)
-- 158 tests passing
+**Session 2026-01-22 (continued):**
 
-**What was done:**
-- Fixed comparison engine to use holdings-history.ts (same source as frontend)
-- Added Discord webhook notifications for discrepancy alerts
-- Added Yahoo Finance fetcher as second source for share validation
-- Ran verification and found 66 discrepancies (49 major, 7 moderate, 10 minor)
+**What happened:**
+1. Started Phase 7 to fix MARA share discrepancy
+2. Discovered the previous "fix" (378M) was WRONG - grabbed basic shares instead of diluted
+3. Traced the error: SEC has multiple fields, we grabbed the wrong one
+4. Realized: single-agent fixes are error-prone, need adversarial review
 
-**Initial Verification Results (2026-01-22):**
-Key discrepancies identified:
-- **Metaplanet (3350.T)**: 650M shares vs 1.43B actual (120% error - missing preferred shares)
-- **MARA**: 495M shares vs 378-470M actual (23% error)
-- **GAME**: 160M shares vs 98M actual (38% error)
-- **H100.ST**: 35M shares vs 354M actual (913% error - likely currency units)
-- Many companies have stale debt/cash values
+**The MARA case study:**
+- Original estimate: 495M (actually reasonable)
+- "Fixed" to: 378M (WRONG - EntityCommonStockSharesOutstanding = basic)
+- Correct value: 470M (WeightedAverageNumberOfDilutedSharesOutstanding = diluted)
+- Current estimate: 495M (470M + 25M ATM) ← fixed with proper provenance
 
-**Next: Phase 7 - Fix Data Using Verification Results**
-- Use the 66 discrepancies to fix data systematically
-- Update holdings-history.ts with correct share counts
-- Add Discord webhook URL to production for alerts
-- Consider: Should foreign companies (3350.T, H100.ST) be excluded from mNAV.com comparisons due to currency?
+**Key insight:** A confident single agent grabbed the wrong SEC field. Adversarial review would have caught this via:
+- "Which exact SEC XBRL tag?" → Forces specificity
+- "Profit or loss quarter?" → Q3 2025 was profit, so diluted > basic
+- "Cross-reference mNAV.com?" → They show 470M, not 378M
 
-**Key Insight:** Don't fix data before fixing the process that gets the data. Otherwise fixes just drift again.
+**What we built:**
+- Drafted adversarial agent prompts (proposer, challenger, resolution)
+- Drafted audit file format with provenance
+- Ran manual adversarial review on MARA
+- Fixed MARA with proper documentation
+
+**Next steps (Phase 7a):**
+- Implement adversarial agents as callable functions
+- Create audit/ directory structure
+- Define auto-approve vs human-review thresholds
+
+**Then (Phase 7b):**
+- Run adversarial review on remaining discrepancies
+- Apply fixes with audit trail
 
 **The Problem with Share Counts:**
 - **PIPE/Merger dilution** → Disclosed in 8-K ✅
@@ -243,16 +251,91 @@ This is unavoidable. Options:
 
 ---
 
-## Phase 7: Fix Data Using Verification Results
-**Status**: NOT STARTED
+## Phase 7a: Share Count Estimation Process
+**Status**: IN PROGRESS
 
-Use the verification results to systematically fix data:
+**Problem discovered**: We tried to "fix" MARA shares and grabbed the wrong SEC field (basic instead of diluted). A single agent confidently made the wrong fix. We need adversarial review to catch these errors.
+
+**The challenge with ATM companies**:
+- SEC filings are quarterly (stale between filings)
+- ATM dilution happens continuously but isn't disclosed until 10-Q
+- Multiple SEC fields exist (basic vs diluted vs fully diluted)
+- Profit vs loss quarters affect which securities are included in diluted count
+
+**Adversarial Review Process**:
+```
+Proposer Agent → Challenger Agent → Resolution → Audit File
+     ↓                  ↓                ↓            ↓
+  Proposes #      Challenges with    Adjudicates   Documents
+  with reasoning  specific prompts   disagreements  provenance
+```
+
+**Tasks**:
+- [x] Draft adversarial agent prompts (proposer, challenger, resolution)
+- [x] Draft audit file format (audit/shares/YYYY-MM-DD-TICKER.md)
+- [x] Define challenge prompts:
+  - SEC field verification (basic vs diluted vs fully diluted)
+  - Profit/loss quarter check (antidilutive exclusions)
+  - ATM calculation audit (BTC × price ÷ stock price)
+  - External cross-reference (mNAV.com, FinanceCharts)
+  - Temporal consistency (shares shouldn't shrink)
+  - Edge case scan (splits, buybacks, conversions)
+  - Confidence calibration
+- [ ] Implement agents as callable functions
+- [ ] Create audit/ directory structure
+- [ ] Define thresholds:
+  - Auto-approve: agreement + high confidence + <5% change
+  - Flag for review: disagreement OR low confidence OR >10% change
+  - Block: factual error OR >25% change
+- [ ] Document which companies need ATM estimation:
+  - MSTR (21/21 plan - massive ATM)
+  - MARA (active BTC purchases via ATM)
+  - RIOT (similar)
+  - Others with active ATM programs
+
+**Data Provenance in UI**:
+When share count is an estimate (not direct from SEC filing), display must:
+- [ ] Indicate it's an estimate (e.g., "~495M" or "495M (est)")
+- [ ] Show methodology on hover/click (e.g., "SEC Q3 diluted + ATM estimate")
+- [ ] Show confidence level (high/medium/low)
+- [ ] Show confidence range when applicable (e.g., "470M - 500M")
+- [ ] Link to audit file or source documentation
+
+**Schema for estimates** (in holdings-history.ts or new structure):
+```typescript
+{
+  sharesOutstandingDiluted: 495_000_000,
+  sharesSource: "ESTIMATE: SEC Q3 diluted + ATM",
+  sharesMethodology: "sec-diluted-plus-atm",
+  sharesConfidence: "medium",
+  sharesConfidenceRange: { floor: 470_000_000, ceiling: 500_000_000 },
+  sharesAuditFile: "audit/shares/2026-01-22-MARA.md"  // optional
+}
+```
+
+**Key Insight**: The adversarial process adds friction, but the MARA mistake (378M instead of 470M) cost credibility and debugging time. The friction is worth it.
+
+---
+
+## Phase 7b: Apply Fixes Using Adversarial Process
+**Status**: BLOCKED by 7a
+
+Once the adversarial process is implemented, use it to fix data:
+
+**Already fixed (manual adversarial review 2026-01-22)**:
+- [x] MARA: 378M → 495M (470M SEC diluted + 25M ATM estimate)
+  - Root cause: Previous "fix" grabbed EntityCommonStockSharesOutstanding (basic) instead of WeightedAverageNumberOfDilutedSharesOutstanding (diluted)
+  - Audit: Inline comments in holdings-history.ts (audit file pending)
+
+**Pending fixes (require adversarial review)**:
+- [ ] Metaplanet: Verify 1.43B share count (includes preferred conversions)
+- [ ] GAME: Verify 98M share count
+- [ ] RIOT: Verify current share count
+- [ ] Review remaining 66 discrepancies from Phase 6
+
+**Infrastructure**:
 - [ ] Add DISCORD_WEBHOOK_URL to Vercel production environment
-- [ ] Fix Metaplanet shares (650M → 1.43B)
-- [ ] Fix MARA shares (495M → correct value from SEC)
-- [ ] Fix GAME shares (160M → 98M)
 - [ ] Decide: Exclude foreign companies from mNAV.com comparisons (currency mismatch)?
-- [ ] Review and fix remaining major discrepancies
 
 ---
 
@@ -276,6 +359,10 @@ Use the verification results to systematically fix data:
 | 2026-01-22 | Fix comparison engine data source | Changed loadOurValues() to use holdings-history.ts (same as frontend) instead of stale companies.ts |
 | 2026-01-22 | Add Discord notifications | Send alerts when discrepancies > 5% found; summarize by severity |
 | 2026-01-22 | Add Yahoo Finance fetcher | Second source for share count validation beyond mNAV.com |
+| 2026-01-22 | Adversarial review for share counts | Single-agent fixes are error-prone (MARA 378M mistake); need proposer→challenger→resolution flow |
+| 2026-01-22 | Split Phase 7 into 7a/7b | Must establish estimation process before applying fixes; "fix process before fixing data" |
+| 2026-01-22 | MARA: 470M diluted + 25M ATM = 495M | Previous "fix" to 378M was wrong (used basic not diluted); Q3 2025 was profit quarter |
+| 2026-01-22 | Show estimates with provenance in UI | When shares are estimated (not direct SEC), display must indicate estimate, methodology, confidence, and range |
 
 ---
 

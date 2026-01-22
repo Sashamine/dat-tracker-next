@@ -72,10 +72,14 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 44893, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.0001044, source: "FY 2024 10-K" },
   { date: "2025-03-31", holdings: 46376, sharesOutstandingDiluted: 445_000_000, holdingsPerShare: 0.0001042, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 49951, sharesOutstandingDiluted: 458_000_000, holdingsPerShare: 0.0001091, source: "Q2 2025 10-Q" },
-  // Note: SEC 10-Q Q3 2025 shows WeightedAverageNumberOfDilutedSharesOutstanding = 378,601,057
-  // Previous entries had inflated estimates; corrected based on SEC filing
-  { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 378_601_057, holdingsPerShare: 0.0001396, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
-  { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 378_601_057, holdingsPerShare: 0.0001519, source: "8-K filing", sharesSource: "SEC 10-Q Q3 2025 (latest)" },
+  // Q3 2025: SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding = 470,126,290
+  // Note: 378M on cover page is EntityCommonStockSharesOutstanding (basic), not diluted
+  // Q3 2025 was a profit quarter ($123M net income), so diluted includes convertibles
+  // Cross-referenced: mNAV.com fullyDilutedShares=470,100,000, FinanceCharts=470,126,290
+  { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 470_126_290, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q", sharesSource: "SEC WeightedAverageNumberOfDilutedSharesOutstanding" },
+  // ESTIMATE: 470M (Q3 diluted) + ~25M (ATM issuance for 4,650 BTC at ~$95K BTC / ~$18 stock)
+  // Confidence: MEDIUM | Range: 470M-500M | Audit: 2026-01-22-MARA.md
+  { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 495_000_000, holdingsPerShare: 0.0001162, source: "8-K filing", sharesSource: "ESTIMATE: SEC Q3 diluted + ATM" },
 ];
 
 // RIOT Platforms - SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
