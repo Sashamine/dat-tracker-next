@@ -329,9 +329,15 @@ const ETHM_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 590000, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 0.009833, source: "Q3 2025 SEDAR+" },
 ];
 
-// GameSquare Holdings (GAME) - Esports with ETH treasury
-// Note: SEC 10-Q Q3 2025 shows WeightedAverageNumberOfDilutedSharesOutstanding = 98,380,767
-// Previous entries had significantly inflated share counts; corrected based on SEC filing
+// GameSquare Holdings (GAME) - Esports/gaming company with ETH treasury
+// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+//
+// IMPORTANT: mNAV.com has WRONG data for this ticker (shows BTC company with 447M shares)
+// Do NOT use mNAV.com for GAME verification - ticker collision with different company
+//
+// Verified Q3 2025: 98,380,767 shares (SEC 10-Q, record date Sep 5, 2025)
+// Holdings: 15,600+ ETH (from The Block, company announcements)
+// Share buyback active: ~$5M authorized, reduces share count over time
 const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 8500, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.0001000, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 12000, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.0001333, source: "Q3 2024 10-Q" },
