@@ -51,32 +51,59 @@ export async function PATCH(request: NextRequest) {
     let sql: string;
     let params: any[];
 
+    // Set resolved_at if status is resolved or dismissed
+    const shouldSetResolvedAt = status === 'resolved' || status === 'dismissed';
+
     if (id) {
-      sql = `
-        UPDATE discrepancies
-        SET status = $1,
-            resolution_notes = $2,
-            resolved_by = $3,
-            resolved_at = CASE WHEN $1 IN ('resolved', 'dismissed') THEN NOW() ELSE NULL END
-        WHERE id = $4
-        RETURNING id
-      `;
+      sql = shouldSetResolvedAt
+        ? `
+          UPDATE discrepancies
+          SET status = $1,
+              resolution_notes = $2,
+              resolved_by = $3,
+              resolved_at = NOW()
+          WHERE id = $4
+          RETURNING id
+        `
+        : `
+          UPDATE discrepancies
+          SET status = $1,
+              resolution_notes = $2,
+              resolved_by = $3,
+              resolved_at = NULL
+          WHERE id = $4
+          RETURNING id
+        `;
       params = [status, resolution_notes || null, resolved_by || 'system', id];
     } else {
       // Update all pending discrepancies for this ticker+field
-      sql = `
-        UPDATE discrepancies d
-        SET status = $1,
-            resolution_notes = $2,
-            resolved_by = $3,
-            resolved_at = CASE WHEN $1 IN ('resolved', 'dismissed') THEN NOW() ELSE NULL END
-        FROM companies c
-        WHERE d.company_id = c.id
-          AND c.ticker = $4
-          AND d.field = $5
-          AND d.status = 'pending'
-        RETURNING d.id
-      `;
+      sql = shouldSetResolvedAt
+        ? `
+          UPDATE discrepancies d
+          SET status = $1,
+              resolution_notes = $2,
+              resolved_by = $3,
+              resolved_at = NOW()
+          FROM companies c
+          WHERE d.company_id = c.id
+            AND c.ticker = $4
+            AND d.field = $5
+            AND d.status = 'pending'
+          RETURNING d.id
+        `
+        : `
+          UPDATE discrepancies d
+          SET status = $1,
+              resolution_notes = $2,
+              resolved_by = $3,
+              resolved_at = NULL
+          FROM companies c
+          WHERE d.company_id = c.id
+            AND c.ticker = $4
+            AND d.field = $5
+            AND d.status = 'pending'
+          RETURNING d.id
+        `;
       params = [status, resolution_notes || null, resolved_by || 'system', ticker.toUpperCase(), field];
     }
 
