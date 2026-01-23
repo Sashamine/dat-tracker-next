@@ -311,7 +311,7 @@ const NXTT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 4500, sharesOutstandingDiluted: 88_000_000, holdingsPerShare: 0.0000511, source: "Q2 2024 filing" },
   { date: "2024-12-31", holdings: 5200, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.0000565, source: "Q4 2024 filing" },
   { date: "2025-06-30", holdings: 5833, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000614, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 6100, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.0000622, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 5833, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.0000595, source: "No new purchases since Mar 2025", sourceUrl: "https://bitbo.io/treasuries/next-technology-holdings/", sourceType: "aggregator" },
 ];
 
 // Alt Brussels (ALTBG) - Belgium/France BTC treasury
