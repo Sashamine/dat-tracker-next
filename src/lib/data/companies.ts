@@ -134,7 +134,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
-    sharesForMnav: 49_000_000,  // From holdings-history.ts
+    sharesForMnav: 47_100_000,  // SEC 10-Q Q3 2025 (Sep 30) - decreased from 47.85M due to buybacks
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
   },
   {
@@ -565,17 +565,17 @@ export const btcCompanies: Company[] = [
     ticker: "0434.HK",
     asset: "BTC",
     tier: 1,
-    holdings: 4_091,  // Nov 2025 - was 3,351
-    holdingsLastUpdated: "2025-11-30",
+    holdings: 4_091,  // Sep 2025 after HK$370M placement purchase
+    holdingsLastUpdated: "2025-09-18",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.theblock.co/treasuries/0434.hk",
+    holdingsSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf",
     datStartDate: "2024-01-26",
     costBasisAvg: 58_628,
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 500_000_000,
-    sharesForMnav: 686_350_000,  // companiesmarketcap.com Jan 2026
+    sharesForMnav: 729_120_000,  // Stock Analysis Jan 2026 (after Sep 2025 ~60M share placement)
     leader: "Zhang Wei (Chairman)",
     strategy: "Hong Kong's largest BTC treasury. Converted ETH to BTC.",
     notes: "MicroStrategy of Asia. Board games company. Top 15 global corporate holder.",
