@@ -243,10 +243,7 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-20", holdings: 800.3, sharesOutstandingDiluted: 298_466_335, holdingsPerShare: 0.00000268, source: "Press release" },
   // Post reverse split (1-for-8) - SEC shows split-adjusted shares
   { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "Press release + reverse split" },
-  { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "Press release" },
-  { date: "2025-09-30", holdings: 1200, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000263, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
-  { date: "2025-12-31", holdings: 1450, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000317, source: "Q4 2025 10-K est" },
-  { date: "2026-01-13", holdings: 1550, sharesOutstandingDiluted: 45_674_420, holdingsPerShare: 0.0000339, source: "8-K filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001662684&type=8-K", sourceType: "sec-filing" },
+  { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "GlobeNewswire press release", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/10/3113243/0/en/KULR-Expands-Bitcoin-Holdings-to-1-021-BTC-Reports-291-2-BTC-Yield.html", sourceType: "press-release" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
