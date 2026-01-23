@@ -675,18 +675,18 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 356_000_000,  // From holdings-history.ts
-    // Debt: $460M 3% converts due 2029 (Aug 2024) + $625M 0% converts due 2031 (Dec 2024)
-    totalDebt: 1_085_000_000,  // $1.085B total convertible notes
-    debtSource: "SEC 10-K + press releases",
-    debtAsOf: "2025-12-31",
-    cashReserves: 200_000_000,  // ~$200M cash
-    restrictedCash: 200_000_000,  // Operating capital (miner) - not excess
+    sharesForMnav: 308_381_000,  // SEC 10-Q Q3 2025 basic shares
+    // Debt: $460M 3% converts due 2029 (Aug 2024) + $625M 0% converts due 2031 (Dec 2024) + additional
+    totalDebt: 1_162_000_000,  // $1.162B per SEC 10-Q Q3 2025
+    debtSource: "SEC 10-Q Q3 2025",
+    debtAsOf: "2025-09-30",
+    cashReserves: 453_440_000,  // $453.4M per SEC 10-Q Q3 2025
+    restrictedCash: 453_440_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Adam Sullivan (CEO)",
     strategy: "Largest US miner by hashrate. AI/HPC pivot with CoreWeave deal.",
-    notes: "Emerged from bankruptcy Jan 2024. $1.085B in converts. 200MW AI deal with CoreWeave.",
+    notes: "Emerged from bankruptcy Jan 2024. $1.16B in converts. 200MW AI deal with CoreWeave.",
   },
   {
     id: "btdr",
