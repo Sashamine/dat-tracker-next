@@ -708,7 +708,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
     quarterlyBurnUsd: 3_400_000,
     capitalRaisedPipe: 1_650_000_000,
-    sharesForMnav: 42_000_000,  // From holdings-history.ts
+    sharesForMnav: 86_000_000,  // ~86M per SEC 10-K Sep 2025 (post $1.65B PIPE)
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
