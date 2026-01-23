@@ -550,7 +550,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 288_000_000,  // From holdings-history.ts
+    sharesForMnav: 279_997_636,  // SEC 10-Q Q3 2025 (Nov 5, 2025)
     // Debt: $1B 0% convertible senior secured notes due 2030, part of $2.5B private placement (May 2025)
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     debtSource: "SEC 8-K May 2025",
@@ -575,7 +575,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 500_000_000,
-    sharesForMnav: 700_000_000,  // From holdings-history.ts
+    sharesForMnav: 686_350_000,  // companiesmarketcap.com Jan 2026
     leader: "Zhang Wei (Chairman)",
     strategy: "Hong Kong's largest BTC treasury. Converted ETH to BTC.",
     notes: "MicroStrategy of Asia. Board games company. Top 15 global corporate holder.",

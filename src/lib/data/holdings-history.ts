@@ -593,11 +593,11 @@ const BTDR_HISTORY: HoldingsSnapshot[] = [
 
 // Trump Media (DJT) - Started BTC treasury May 2025
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
-// Corrected to 278M FD shares per Q3 2025 10-Q
+// 279,997,636 shares per SEC 10-Q Q3 2025 (filed Nov 5, 2025)
 const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, source: "Treasury deal closed" },
   { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, source: "Press reports ~$2B BTC" },
-  { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 278_000_000, holdingsPerShare: 0.0000415, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.0000412, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder
