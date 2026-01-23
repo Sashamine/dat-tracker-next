@@ -94,9 +94,25 @@ describe("Adversarial Review Types", () => {
 // Helper to create a valid mandatory checks object
 function createValidMandatoryChecks() {
   return {
+    dataFreshnessCheck: {
+      searchPerformed: true as const,
+      lastVerifiedFilingDate: "2025-12-15",
+      daysSinceLastFiling: 39, // ~5 weeks, not stale
+      isStale: false,
+      acquisitionRiskFactors: {
+        hasActiveAcquisitionStrategy: true,
+        hasPendingMOUs: false,
+        hasAvailableCapital: true,
+        hasRecentCapitalRaise: false,
+        historicalAcquisitionFrequency: "frequent" as const,
+      },
+      acquisitionRiskLevel: "medium" as const,
+      riskExplanation: "Active acquirer but data is fresh",
+      stalenessAcknowledged: false,
+    },
     pressReleaseCheck: {
       searchPerformed: true as const,
-      lastVerifiedFilingDate: "2025-09-30",
+      lastVerifiedFilingDate: "2025-12-15",
       searchDate: "2026-01-23",
       sourcesSearched: ["nasdaq.com/mstr/press-releases", "strategy.com"],
       pressReleasesFound: [],
@@ -152,6 +168,11 @@ function createValidMandatoryChecks() {
 // Helper to create valid challenger verification
 function createValidChallengerVerification() {
   return {
+    dataFreshnessCheck: {
+      verified: true,
+      riskAssessmentAccurate: true,
+      stalenessJustificationAccepted: true,
+    },
     pressReleaseCheck: {
       verified: true,
       searchWasThorough: true,
@@ -672,6 +693,22 @@ describe("Mandatory Check Validation", () => {
         exactQuote: "Test quote",
       },
       mandatoryChecks: {
+        dataFreshnessCheck: {
+          searchPerformed: true,
+          lastVerifiedFilingDate: "2025-09-30",
+          daysSinceLastFiling: 115,
+          isStale: true,
+          acquisitionRiskFactors: {
+            hasActiveAcquisitionStrategy: false,
+            hasPendingMOUs: false,
+            hasAvailableCapital: false,
+            hasRecentCapitalRaise: false,
+            historicalAcquisitionFrequency: "rare" as const,
+          },
+          acquisitionRiskLevel: "low" as const,
+          riskExplanation: "No acquisition signals",
+          stalenessAcknowledged: false,
+        },
         pressReleaseCheck: {
           searchPerformed: true,
           lastVerifiedFilingDate: "2025-09-30",
@@ -747,6 +784,22 @@ describe("Mandatory Check Validation", () => {
         exactQuote: "Test quote",
       },
       mandatoryChecks: {
+        dataFreshnessCheck: {
+          searchPerformed: true,
+          lastVerifiedFilingDate: "2025-09-30",
+          daysSinceLastFiling: 115,
+          isStale: true,
+          acquisitionRiskFactors: {
+            hasActiveAcquisitionStrategy: false,
+            hasPendingMOUs: false,
+            hasAvailableCapital: false,
+            hasRecentCapitalRaise: false,
+            historicalAcquisitionFrequency: "rare" as const,
+          },
+          acquisitionRiskLevel: "low" as const,
+          riskExplanation: "No acquisition signals",
+          stalenessAcknowledged: false,
+        },
         pressReleaseCheck: {
           searchPerformed: true,
           lastVerifiedFilingDate: "2025-09-30",

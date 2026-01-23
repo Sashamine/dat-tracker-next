@@ -64,6 +64,40 @@ export type DataField =
  */
 
 /**
+ * MANDATORY: Data Freshness Check
+ * Flags when verified data is stale and acquisition risk is high.
+ *
+ * Intuition: If the last verified filing is old (>90 days) AND the company
+ * has active acquisition signals, we should be MORE suspicious that something
+ * happened that isn't yet in our data - even if we found no press releases.
+ */
+export interface DataFreshnessCheck {
+  searchPerformed: true;
+
+  // How old is our data?
+  lastVerifiedFilingDate: string;
+  daysSinceLastFiling: number;
+  isStale: boolean; // true if > 90 days for active acquirers, > 180 days otherwise
+
+  // Acquisition risk factors - things that suggest purchases may have occurred
+  acquisitionRiskFactors: {
+    hasActiveAcquisitionStrategy: boolean; // Company states BTC/crypto acquisition as strategy
+    hasPendingMOUs: boolean; // Announced deals not yet closed
+    hasAvailableCapital: boolean; // Shelf registration, ATM, cash on hand
+    hasRecentCapitalRaise: boolean; // Raised money in last 90 days
+    historicalAcquisitionFrequency: "frequent" | "occasional" | "rare" | "unknown";
+  };
+
+  // Risk assessment
+  acquisitionRiskLevel: "high" | "medium" | "low";
+  riskExplanation: string;
+
+  // If stale + high risk, require explicit acknowledgment
+  stalenessAcknowledged: boolean;
+  stalenessJustification?: string; // Why we believe no acquisition occurred despite risk factors
+}
+
+/**
  * MANDATORY: Press Release Check
  * Must search for announcements since the last verified filing.
  */
@@ -284,6 +318,7 @@ export interface ProposerOutput {
    * ==========================================================================
    */
   mandatoryChecks: {
+    dataFreshnessCheck: DataFreshnessCheck;
     pressReleaseCheck: PressReleaseCheck;
     stockSplitCheck: StockSplitCheck;
     basicVsDilutedCheck: BasicVsDilutedCheck;
@@ -363,6 +398,14 @@ export interface ChallengerOutput {
    * ==========================================================================
    */
   mandatoryCheckVerification: {
+    dataFreshnessCheck: {
+      verified: boolean;
+      riskAssessmentAccurate: boolean;
+      additionalRiskFactors?: string[];
+      stalenessJustificationAccepted: boolean;
+      issues?: string[];
+    };
+
     pressReleaseCheck: {
       verified: boolean;
       searchWasThorough: boolean;
@@ -535,6 +578,20 @@ export function validateMandatoryChecks(output: ProposerOutput): string[] {
   const failures: string[] = [];
   const checks = output.mandatoryChecks;
 
+  // Data Freshness Check
+  if (!checks.dataFreshnessCheck?.searchPerformed) {
+    failures.push("dataFreshnessCheck: check not performed");
+  }
+  if (checks.dataFreshnessCheck?.isStale &&
+      checks.dataFreshnessCheck?.acquisitionRiskLevel === "high" &&
+      !checks.dataFreshnessCheck?.stalenessAcknowledged) {
+    failures.push("dataFreshnessCheck: stale data with high acquisition risk requires acknowledgment");
+  }
+  if (checks.dataFreshnessCheck?.stalenessAcknowledged &&
+      !checks.dataFreshnessCheck?.stalenessJustification) {
+    failures.push("dataFreshnessCheck: staleness acknowledged but no justification provided");
+  }
+
   // Press Release Check
   if (!checks.pressReleaseCheck?.searchPerformed) {
     failures.push("pressReleaseCheck: search not performed");
@@ -611,6 +668,7 @@ export function validateChallengerVerification(output: ChallengerOutput): string
 
   // Each check must be verified
   const checkNames = [
+    "dataFreshnessCheck",
     "pressReleaseCheck",
     "stockSplitCheck",
     "basicVsDilutedCheck",
