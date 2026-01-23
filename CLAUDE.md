@@ -72,6 +72,40 @@ Do NOT see a discrepancy and immediately fix it. That leads to errors.
 
 **If you cannot answer these questions, you cannot make the edit.**
 
+### MANDATORY: Data Freshness Check
+
+**Every time you see a date on a source, calculate days since that date.**
+
+**If the source is >90 days old, you MUST search for recent activity before using that value.**
+
+This applies even to SEC filings. A Q3 10-Q (Sep 30) viewed in late January is 4 months stale.
+
+#### The 3 Questions (Non-Negotiable)
+
+1. **How old is the source?**
+   - Calculate: today's date minus source date
+   - If >90 days → STOP. Do not update data yet.
+
+2. **Is there a newer source?**
+   - Q3 filing exists → Search for Q4 filing, 8-Ks, press releases since then
+   - Check company IR page for recent announcements
+   - Search: "[Company] [field] October November December [year]"
+
+3. **What could have changed?**
+   - Miners: equity offerings, debt paydowns/issuances, BTC sales
+   - Treasury companies: new purchases, capital raises, conversions
+   - All companies: stock splits, reverse splits, warrant exercises
+
+#### Why This Matters
+
+Example failure (CORZ, Jan 2026):
+- Discrepancy showed SEC 10-Q Q3 2025 as source
+- I updated to match SEC values without checking freshness
+- Q3 2025 = Sep 30, 2025 = **4 months stale**
+- Should have searched for Q4 activity before accepting those values
+
+**The trigger is automatic**: See a date → Calculate age → If >90 days → Search before proceeding.
+
 ---
 
 ## Deployment
