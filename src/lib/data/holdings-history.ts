@@ -360,16 +360,16 @@ const ETHM_HISTORY: HoldingsSnapshot[] = [
 // IMPORTANT: mNAV.com has WRONG data for this ticker (shows BTC company with 447M shares)
 // Do NOT use mNAV.com for GAME verification - ticker collision with different company
 //
-// Verified Q3 2025: 98,380,767 shares (SEC 10-Q, record date Sep 5, 2025)
+// Verified Q3 2025: 98,380,767 shares (SEC 10-Q Nov 14, 2025, as of Sep 30, 2025)
 // Holdings: 15,600+ ETH (from The Block, company announcements)
-// Share buyback active: ~$5M authorized, reduces share count over time
+// Share buyback active: ~$5M authorized, ~3.5M shares repurchased Oct 2025-Jan 2026
 const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 8500, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.0001000, source: "Q2 2024 10-Q" },
   { date: "2024-09-30", holdings: 12000, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.0001333, source: "Q3 2024 10-Q" },
   { date: "2024-12-31", holdings: 15600, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.0001696, source: "Q4 2024 10-K" },
   { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000191, source: "Initial $5M ETH purchase" },
   { date: "2025-09-30", holdings: 15630, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0001589, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
-  { date: "2026-01-15", holdings: 15600, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0001586, source: "The Block", sharesSource: "SEC 10-Q Q3 2025 (latest)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=8-K", sourceType: "aggregator" },
+  { date: "2026-01-23", holdings: 15600, sharesOutstandingDiluted: 94_845_193, holdingsPerShare: 0.0001645, source: "Company announcements", sharesSource: "SEC 10-Q Q3 2025 (98.4M) minus 3.5M buybacks (Oct-Jan 2026)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // FG Nexus (FGNX) - ETH treasury company (formerly Forgenix/Fundamental Global)

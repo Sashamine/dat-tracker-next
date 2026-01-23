@@ -152,7 +152,7 @@ export const ethCompanies: Company[] = [
     stakingMethod: "Dialectic Medici platform",
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedAtm: 30_000_000,
-    sharesForMnav: 160_000_000,  // From holdings-history.ts
+    sharesForMnav: 94_845_193,  // SEC 10-Q Nov 14, 2025 (98.4M as of Sep 30) minus ~3.5M buybacks (Oct-Jan 2026)
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
     strategy: "$250M ETH treasury. 7.84% yield via Dialectic platform.",
@@ -398,7 +398,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 250_000_000,
     hasOptions: true,
     marketCap: 3_040_000_000,
-    sharesForMnav: 255_580_000,  // 255.58M basic after Nov 2025 buyback (Stock Analysis Jan 2026)
+    sharesForMnav: 255_750_361,  // SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -523,7 +523,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 440_000_000,  // ~440M per Stock Analysis Jan 2026 (Yorkville converts redeemed Oct 2025)
+    sharesForMnav: 439_850_889,  // SEC 10-Q Nov 19, 2025 (as of Nov 14, 2025); Yorkville converts redeemed Oct 2025
     // Debt: $200M Yorkville convertible notes + $210M Kraken BTC-backed credit facility (Dec 2025)
     totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
     debtSource: "Press releases",
@@ -708,7 +708,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
     quarterlyBurnUsd: 3_400_000,
     capitalRaisedPipe: 1_650_000_000,
-    sharesForMnav: 86_000_000,  // ~86M per SEC 10-K Sep 2025 (post $1.65B PIPE)
+    sharesForMnav: 86_459_465,  // SEC 10-K Dec 11, 2025 (as of Sep 30, 2025, post $1.65B PIPE)
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
@@ -761,7 +761,7 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 240_000_000,  // ~$240M (Jan 2026)
-    sharesForMnav: 29_892_800,  // Per Q4 2025 business update (Jan 1, 2026)
+    sharesForMnav: 29_892_800,  // Company press release Jan 5, 2026 (Q4 business update); SEC 8-K Nov 13, 2025 showed 31.4M pre-buyback
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
