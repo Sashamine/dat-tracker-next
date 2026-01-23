@@ -24,7 +24,7 @@ const MNAV_COMPANY_SLUGS: Record<string, string> = {
   '3350.T': 'metaplanet',
   '0434.HK': 'boyaa',
   'H100.ST': 'h100',
-  'NXTT': 'next-technology',
+  // 'NXTT': 'next-technology', // Disabled: mNAV.com hasn't adjusted for 200:1 reverse split (Sep 2025)
 };
 
 // Cache for batch data (5 minutes)
