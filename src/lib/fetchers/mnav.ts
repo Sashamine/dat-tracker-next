@@ -28,7 +28,7 @@ const MNAV_SLUGS: Record<string, string> = {
   // 'XXI': 'xxi', // Disabled: mNAV.com tracks only Class A shares
   'NAKA': 'nakamoto',
   // International
-  '3350.T': 'metaplanet',
+  // '3350.T': 'metaplanet', // Disabled: mNAV.com displays JPY values as USD (debt shows ¥30B as $30B)
   '0434.HK': 'boyaa',
   'H100.ST': 'h100',
   // 'NXTT': 'next-technology', // Disabled: mNAV.com hasn't adjusted for 200:1 reverse split (Sep 2025)

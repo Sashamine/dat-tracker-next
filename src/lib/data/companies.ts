@@ -229,8 +229,8 @@ export const btcCompanies: Company[] = [
     ticker: "3350.T",
     asset: "BTC",
     tier: 1,
-    holdings: 35_102,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 35_102,  // Dec 30, 2025: purchased 4,279 BTC bringing total to 35,102
+    holdingsLastUpdated: "2025-12-30",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://metaplanet.jp/en/analytics",
     datStartDate: "2024-04-01",
