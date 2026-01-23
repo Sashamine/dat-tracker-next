@@ -748,8 +748,8 @@ export const solCompanies: Company[] = [
     ticker: "DFDV",
     asset: "SOL",
     tier: 1,
-    holdings: 2_221_329,  // Updated Jan 2026
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 2_221_329,  // Q4 2025 business update
+    holdingsLastUpdated: "2026-01-01",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1805526&type=8-K",
     datStartDate: "2025-04-01",
@@ -761,7 +761,7 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     marketCap: 240_000_000,  // ~$240M (Jan 2026)
-    sharesForMnav: 30_000_000,  // From holdings-history.ts
+    sharesForMnav: 29_892_800,  // Per Q4 2025 business update (Jan 1, 2026)
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
