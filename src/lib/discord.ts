@@ -135,7 +135,19 @@ type ConfidenceLevel = 'high' | 'medium' | 'low';
 type RecommendedAction = 'auto_confirm' | 'review_conflict' | 'review_unverified' | 'log_external_error';
 
 /**
- * Send a discrepancy summary report
+ * Get the base URL for links (Vercel deployment URL or fallback)
+ */
+function getBaseUrl(): string {
+  // In Vercel, VERCEL_URL is set to the deployment URL (without protocol)
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  // Fallback to production URL
+  return 'https://dat-tracker-next.vercel.app';
+}
+
+/**
+ * Send a discrepancy summary report (simplified - just counts + link)
  */
 export async function sendDiscrepancySummary(
   discrepancies: Array<{
@@ -168,142 +180,34 @@ export async function sendDiscrepancySummary(
     return true;
   }
 
-  // Group by severity
-  const major = discrepancies.filter(d => d.severity === 'major');
-  const moderate = discrepancies.filter(d => d.severity === 'moderate');
-  const minor = discrepancies.filter(d => d.severity === 'minor');
+  // Count by severity
+  const major = discrepancies.filter(d => d.severity === 'major').length;
+  const moderate = discrepancies.filter(d => d.severity === 'moderate').length;
+  const minor = discrepancies.filter(d => d.severity === 'minor').length;
 
-  // Determine overall severity for color
-  const overallSeverity = major.length > 0 ? 'error' : moderate.length > 0 ? 'warning' : 'info';
+  // Count needs review
+  const needsReview = discrepancies.filter(
+    d => d.confidence?.action === 'review_conflict' || d.confidence?.action === 'review_unverified'
+  ).length;
 
-  // Format fields for embed
-  const fields: Array<{ name: string; value: string; inline?: boolean }> = [];
+  // Determine color based on severity
+  const color = major > 0 ? COLORS.error : moderate > 0 ? COLORS.warning : COLORS.info;
 
-  // Summary stats
-  fields.push({
-    name: 'Summary',
-    value: [
-      `**Major**: ${major.length}`,
-      `**Moderate**: ${moderate.length}`,
-      `**Minor**: ${minor.length}`,
-    ].join('\n'),
-    inline: true,
-  });
-
-  fields.push({
-    name: 'Run Time',
-    value: `${(runDuration / 1000).toFixed(1)}s`,
-    inline: true,
-  });
-
-  // Phase 7c: Confidence summary
-  const highConfidence = discrepancies.filter(d => d.confidence?.level === 'high').length;
-  const mediumConfidence = discrepancies.filter(d => d.confidence?.level === 'medium').length;
-  const lowConfidence = discrepancies.filter(d => d.confidence?.level === 'low').length;
-  const autoConfirm = discrepancies.filter(d => d.confidence?.action === 'auto_confirm' || d.confidence?.action === 'log_external_error').length;
-  const needsReview = discrepancies.filter(d => d.confidence?.action === 'review_conflict' || d.confidence?.action === 'review_unverified').length;
-
-  fields.push({
-    name: 'Confidence',
-    value: [
-      `✓ High: ${highConfidence}`,
-      `⚠️ Medium: ${mediumConfidence}`,
-      `❌ Low: ${lowConfidence}`,
-    ].join('\n'),
-    inline: true,
-  });
-
-  fields.push({
-    name: 'Action Required',
-    value: [
-      `Auto-confirmed: ${autoConfirm}`,
-      `**Needs review: ${needsReview}**`,
-    ].join('\n'),
-    inline: true,
-  });
-
-  // Major discrepancies (show details with confidence)
-  if (major.length > 0) {
-    const majorDetails = major.slice(0, 5).map(d => {
-      const sourceName = Object.keys(d.sourceValues)[0];
-      const sourceValue = d.sourceValues[sourceName]?.value;
-      const confidenceInfo = d.confidence ? ` [${formatConfidenceLevel(d.confidence.level)}]` : '';
-      return `**${d.ticker}** ${d.field}: ours=${formatNumber(d.ourValue)} vs ${sourceName}=${formatNumber(sourceValue)} (${d.maxDeviationPct.toFixed(1)}%)${confidenceInfo}`;
-    }).join('\n');
-
-    fields.push({
-      name: `Major Discrepancies (>5%)`,
-      value: majorDetails + (major.length > 5 ? `\n...and ${major.length - 5} more` : ''),
-    });
-  }
-
-  // Moderate discrepancies (show brief)
-  if (moderate.length > 0) {
-    const moderateDetails = moderate.slice(0, 3).map(d =>
-      `${d.ticker} ${d.field}: ${d.maxDeviationPct.toFixed(1)}%`
-    ).join(', ');
-
-    fields.push({
-      name: `Moderate Discrepancies (1-5%)`,
-      value: moderateDetails + (moderate.length > 3 ? ` ...+${moderate.length - 3} more` : ''),
-    });
-  }
+  // Build simple summary
+  const reviewUrl = `${getBaseUrl()}/discrepancies`;
 
   const embed: DiscordEmbed = {
-    title: `Data Verification: ${discrepancies.length} Discrepanc${discrepancies.length === 1 ? 'y' : 'ies'} Found`,
-    color: COLORS[overallSeverity],
-    fields,
+    title: `${discrepancies.length} Discrepanc${discrepancies.length === 1 ? 'y' : 'ies'} Found`,
+    description: [
+      `**${major}** major · **${moderate}** moderate · **${minor}** minor`,
+      '',
+      needsReview > 0 ? `**${needsReview} need review**` : 'All auto-confirmed',
+      '',
+      `[View Details](${reviewUrl})`,
+    ].join('\n'),
+    color,
   };
 
   return sendDiscordEmbed(embed);
 }
 
-/**
- * Format large numbers for display
- */
-function formatNumber(num: number): string {
-  if (num >= 1_000_000_000) {
-    return `${(num / 1_000_000_000).toFixed(2)}B`;
-  } else if (num >= 1_000_000) {
-    return `${(num / 1_000_000).toFixed(2)}M`;
-  } else if (num >= 1_000) {
-    return `${(num / 1_000).toFixed(1)}K`;
-  }
-  return num.toFixed(0);
-}
-
-/**
- * Format verification status for display (Phase 7b)
- */
-function formatVerificationStatus(status: VerificationStatus): string {
-  switch (status) {
-    case 'verified':
-      return '✓ verified';
-    case 'source_drift':
-      return '⚠️ source drift';
-    case 'source_invalid':
-      return '❌ source invalid';
-    case 'source_available':
-      return '? source available';
-    case 'unverified':
-      return '? unverified';
-    default:
-      return status;
-  }
-}
-
-/**
- * Format confidence level for display (Phase 7c)
- */
-function formatConfidenceLevel(level: ConfidenceLevel): string {
-  switch (level) {
-    case 'high':
-      return '✓ HIGH';
-    case 'medium':
-      return '⚠️ MEDIUM';
-    case 'low':
-      return '❌ LOW';
-    default:
-      return level;
-  }
-}
