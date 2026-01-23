@@ -663,10 +663,10 @@ export const btcCompanies: Company[] = [
     ticker: "BTDR",
     asset: "BTC",
     tier: 1,
-    holdings: 1_901,  // Jan 2026 - was 2,470 (sold BTC for operations)
-    holdingsLastUpdated: "2026-01-17",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.theblock.co/treasuries/btdr",
+    holdings: 2_017,  // Dec 31, 2025 per SEC 6-K Jan 12, 2026
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://ir.bitdeer.com/news-releases/news-release-details/bitdeer-announces-december-2025-production-and-operations-update",
     datStartDate: "2024-01-01",
     costBasisAvg: 40_000,
     isMiner: true,
@@ -675,18 +675,18 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 225_000_000,  // From holdings-history.ts
-    // Debt: $330M 4.875% converts due 2031 (Jun 2025) + $400M 4% converts due 2031 (Nov 2025)
-    totalDebt: 730_000_000,  // ~$730M total (earlier 5.25% notes partially repurchased)
-    debtSource: "Press releases",
+    sharesForMnav: 236_820_000,  // Stock Analysis Jan 2026; post Nov 2025 equity offering (+10.66M) and ATM activity
+    // Debt: $330M 4.875% converts 2031 + $400M 4% converts 2031 + $160M remaining 5.25% 2029 notes
+    totalDebt: 890_000_000,  // ~$890M total ($200M of 5.25% notes repurchased Nov 2025)
+    debtSource: "SEC 6-K filings Nov 2025",
     debtAsOf: "2025-11-30",
-    cashReserves: 150_000_000,  // ~$150M cash
+    cashReserves: 150_000_000,  // ~$150M cash (conservative; Q3 showed $196M)
     restrictedCash: 150_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 6-K Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Jihan Wu (Co-Founder)",
     strategy: "Vertically integrated - develops own ASIC chips (SEALMINER).",
-    notes: "Cayman Islands (6-K filer). $730M in 4-5% converts. Self-manufacturers SEALMINER ASICs.",
+    notes: "Cayman Islands (6-K filer). $890M in 4-5% converts. Self-manufacturers SEALMINER ASICs.",
   },
 ];
 

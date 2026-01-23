@@ -569,13 +569,14 @@ const CORZ_HISTORY: HoldingsSnapshot[] = [
 
 // Bitdeer Technologies (BTDR) - Started treasury strategy Nov 2024
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+// Note: 6-K filer (Cayman Islands). Shares increased from Nov 2025 equity offering (+10.66M) + ATM activity
 const BTDR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 594, sharesOutstandingDiluted: 190_000_000, holdingsPerShare: 0.00000313, source: "FY 2024 Earnings" },
   { date: "2025-03-31", holdings: 1156, sharesOutstandingDiluted: 205_000_000, holdingsPerShare: 0.00000564, source: "Q1 2025 Earnings" },
   { date: "2025-06-30", holdings: 1502, sharesOutstandingDiluted: 208_000_000, holdingsPerShare: 0.00000722, source: "Q2 2025 Earnings" },
   { date: "2025-09-30", holdings: 2029, sharesOutstandingDiluted: 208_620_000, holdingsPerShare: 0.00000973, source: "Q3 2025 Earnings" },
-  { date: "2025-12-31", holdings: 2179, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.00000990, source: "Dec 2025 production update" },
-  { date: "2026-01-10", holdings: 1901, sharesOutstandingDiluted: 225_000_000, holdingsPerShare: 0.00000845, source: "Weekly holdings update", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001899123&type=8-K", sourceType: "sec-filing" },
+  { date: "2025-11-30", holdings: 2179, sharesOutstandingDiluted: 219_280_000, holdingsPerShare: 0.00000994, source: "SEC 6-K Dec 15, 2025", sharesSource: "Q3 + Nov equity offering 10.66M", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 2017, sharesOutstandingDiluted: 236_820_000, holdingsPerShare: 0.00000851, source: "SEC 6-K Jan 12, 2026", sharesSource: "Stock Analysis Jan 2026", sourceUrl: "https://ir.bitdeer.com/news-releases/news-release-details/bitdeer-announces-december-2025-production-and-operations-update", sourceType: "sec-filing" },
 ];
 
 // Trump Media (DJT) - Started BTC treasury May 2025
