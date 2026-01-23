@@ -152,7 +152,7 @@ export const ethCompanies: Company[] = [
     stakingMethod: "Dialectic Medici platform",
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedAtm: 30_000_000,
-    sharesForMnav: 94_845_193,  // SEC 10-Q Nov 14, 2025 (98.4M as of Sep 30) minus ~3.5M buybacks (Oct-Jan 2026)
+    sharesForMnav: 94_845_193,  // 98.4M (SEC 10-Q Sep 30) - 3.54M buybacks (PR Jan 2026: investors.gamesquare.com)
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
     strategy: "$250M ETH treasury. 7.84% yield via Dialectic platform.",
