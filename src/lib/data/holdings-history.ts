@@ -316,12 +316,12 @@ const ALTBG_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 2400, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.0000480, source: "Q3 2025 Euronext", sourceUrl: "https://live.euronext.com/en/product/equities/FR0011053636-ALXP", sourceType: "regulatory-filing" },
 ];
 
-// H100 Group (H100.ST) - Swedish BTC treasury
+// H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
 const H100_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-09-30", holdings: 520, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.0000208, source: "Q3 2024 Finansinspektionen" },
   { date: "2024-12-31", holdings: 780, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.0000279, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 1046, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.0000327, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 1200, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 0.0000343, source: "Q3 2025 Finansinspektionen", sourceUrl: "https://www.h100.group/investor-relations/shares", sourceType: "company-website" },
+  // Sep 2025: 1,046 BTC confirmed by interim report (May-Sep 2025) released Nov 20, 2025
+  { date: "2025-09-30", holdings: 1046, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.0000327, source: "Interim report May-Sep 2025", sourceUrl: "https://bitcointreasuries.net/public-companies/h100-group", sourceType: "aggregator" },
 ];
 
 // ==================== ADDITIONAL ETH COMPANIES ====================

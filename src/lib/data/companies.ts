@@ -491,10 +491,10 @@ export const btcCompanies: Company[] = [
     ticker: "H100.ST",
     asset: "BTC",
     tier: 2,
-    holdings: 1_046,  // Jan 2026 - was 958
-    holdingsLastUpdated: "2026-01-21",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.theblock.co/treasuries/h100.ngm",
+    holdings: 1_046,  // Interim report May-Sep 2025 (released Nov 20, 2025)
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/h100-group",
     datStartDate: "2025-01-01",
     costBasisAvg: 90_000,
     isMiner: false,
