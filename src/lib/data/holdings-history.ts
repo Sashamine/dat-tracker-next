@@ -549,6 +549,8 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 
 // Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+// NOTE: mNAV shows 14,460 BTC but Bitbo/TheBlock/BTreasuries all show 13,696.
+// mNAV may be incorrect here - flagged for review. Our value matches 3 other aggregators.
 const HUT_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-12-31", holdings: 9195, sharesOutstandingDiluted: 95_500_000, holdingsPerShare: 0.0000963, source: "Dec 2023 Report" },
   { date: "2024-03-31", holdings: 9102, sharesOutstandingDiluted: 100_200_000, holdingsPerShare: 0.0000908, source: "Q1 2024 10-Q" },
