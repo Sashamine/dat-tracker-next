@@ -756,22 +756,22 @@ export const solCompanies: Company[] = [
     ticker: "HSDT",
     asset: "SOL",
     tier: 1,
-    holdings: 2_800_000,  // Q3 2025
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1610853&type=8-K",
+    holdings: 2_300_000,  // Oct 29, 2025 press release - 2.3M SOL
+    holdingsLastUpdated: "2025-10-29",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://ir.heliusmedical.com/news-releases/news-release-details/solana-company-nasdaqhsdt-formerly-helius-continues-amassing-sol",
     datStartDate: "2025-05-01",
     costBasisAvg: 227.00,
     stakingPct: 0.95,
-    stakingApy: 0.065,
+    stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 12_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 40_299_228,  // SEC 10-Q Q3 2025 - post 1:50 reverse split (Jul 2025) + massive equity offerings
+    sharesForMnav: 84_130_257,  // Nov 4, 2025 investor update - includes pre-funded + penny warrants (exercisable at $0.0001)
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
     strategy: "SOL treasury via Anchorage Digital custody",
-    notes: "Partnered with Solana Foundation.",
+    notes: "Partnered with Solana Foundation. sharesForMnav includes pre-funded warrants.",
   },
   {
     id: "dfdv",
