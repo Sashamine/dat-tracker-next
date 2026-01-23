@@ -92,10 +92,9 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   // Note: 378M on cover page is EntityCommonStockSharesOutstanding (basic), not diluted
   // Q3 2025 was a profit quarter ($123M net income), so diluted includes convertibles
   // Cross-referenced: mNAV.com fullyDilutedShares=470,100,000, FinanceCharts=470,126,290
-  { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 470_126_290, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q", sharesSource: "SEC WeightedAverageNumberOfDilutedSharesOutstanding" },
-  // ESTIMATE: 470M (Q3 diluted) + ~25M (ATM issuance for 4,650 BTC at ~$95K BTC / ~$18 stock)
-  // Confidence: MEDIUM | Range: 470M-500M | Audit: 2026-01-22-MARA.md
-  { date: "2026-01-10", holdings: 57500, sharesOutstandingDiluted: 495_000_000, holdingsPerShare: 0.0001162, source: "8-K filing", sharesSource: "ESTIMATE: SEC Q3 diluted + ATM", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=8-K", sourceType: "sec-filing", methodology: "SEC Q3 diluted (470M) + ~25M ATM issuance for 4,650 BTC at ~$95K BTC / ~$18 stock", confidence: "medium", confidenceRange: { floor: 470_000_000, ceiling: 510_000_000 } },
+  // Q3 2025 earnings report: 53,250 BTC (mNAV uses this). SEC 10-Q digital assets show 52,850.
+  // Using earnings report value as it's more recent and cross-verified.
+  { date: "2025-09-30", holdings: 53250, sharesOutstandingDiluted: 470_126_290, holdingsPerShare: 0.0001133, source: "Q3 2025 earnings report", sharesSource: "SEC WeightedAverageNumberOfDilutedSharesOutstanding", sourceUrl: "https://ir.mara.com/news-events/press-releases/detail/1409/mara-announces-third-quarter-2025-results", sourceType: "press-release" },
 ];
 
 // RIOT Platforms - BTC Miner
