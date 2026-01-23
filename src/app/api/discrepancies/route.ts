@@ -28,6 +28,77 @@ interface DiscrepancyRow {
   created_date: string;
 }
 
+export async function PATCH(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, ticker, field, status, resolution_notes, resolved_by } = body;
+
+    // Allow updating by ID or by ticker+field combo
+    if (!id && !(ticker && field)) {
+      return NextResponse.json(
+        { success: false, error: 'Must provide id or (ticker + field)' },
+        { status: 400 }
+      );
+    }
+
+    if (!['pending', 'resolved', 'dismissed'].includes(status)) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid status. Must be pending, resolved, or dismissed' },
+        { status: 400 }
+      );
+    }
+
+    let sql: string;
+    let params: any[];
+
+    if (id) {
+      sql = `
+        UPDATE discrepancies
+        SET status = $1,
+            resolution_notes = $2,
+            resolved_by = $3,
+            resolved_at = CASE WHEN $1 IN ('resolved', 'dismissed') THEN NOW() ELSE NULL END
+        WHERE id = $4
+        RETURNING id
+      `;
+      params = [status, resolution_notes || null, resolved_by || 'system', id];
+    } else {
+      // Update all pending discrepancies for this ticker+field
+      sql = `
+        UPDATE discrepancies d
+        SET status = $1,
+            resolution_notes = $2,
+            resolved_by = $3,
+            resolved_at = CASE WHEN $1 IN ('resolved', 'dismissed') THEN NOW() ELSE NULL END
+        FROM companies c
+        WHERE d.company_id = c.id
+          AND c.ticker = $4
+          AND d.field = $5
+          AND d.status = 'pending'
+        RETURNING d.id
+      `;
+      params = [status, resolution_notes || null, resolved_by || 'system', ticker.toUpperCase(), field];
+    }
+
+    const result = await query<{ id: number }>(sql, params);
+
+    return NextResponse.json({
+      success: true,
+      updated: result.length,
+      ids: result.map(r => r.id),
+    });
+  } catch (error) {
+    console.error('[Discrepancies API] PATCH Error:', error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
