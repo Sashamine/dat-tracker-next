@@ -299,13 +299,17 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-14", holdings: 5098, sharesOutstandingDiluted: 920_000_000, holdingsPerShare: 0.0000055, source: "Top 20 announcement", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=8-K", sourceType: "sec-filing" },
 ];
 
-// Nexon BTC Treasury (NXTT) - Gaming company BTC reserve
+// Next Technology Holding (NXTT) - BTC treasury company
+// NOTE: 200-for-1 reverse stock split effective Sep 16, 2025
+// Pre-split: ~566M shares → Post-split: ~2.83M shares
+// All entries below are POST-SPLIT adjusted
 const NXTT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 3850, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.0000453, source: "Q1 2024 filing" },
-  { date: "2024-06-30", holdings: 4500, sharesOutstandingDiluted: 88_000_000, holdingsPerShare: 0.0000511, source: "Q2 2024 filing" },
-  { date: "2024-12-31", holdings: 5200, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.0000565, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 5833, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000614, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 5833, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.0000595, source: "No new purchases since Mar 2025", sourceUrl: "https://bitbo.io/treasuries/next-technology-holdings/", sourceType: "aggregator" },
+  { date: "2024-03-31", holdings: 3850, sharesOutstandingDiluted: 425_000, holdingsPerShare: 0.00906, source: "Q1 2024 filing (split-adjusted)" },
+  { date: "2024-06-30", holdings: 4500, sharesOutstandingDiluted: 440_000, holdingsPerShare: 0.01023, source: "Q2 2024 filing (split-adjusted)" },
+  { date: "2024-12-31", holdings: 5200, sharesOutstandingDiluted: 460_000, holdingsPerShare: 0.01130, source: "Q4 2024 filing (split-adjusted)" },
+  { date: "2025-06-30", holdings: 5833, sharesOutstandingDiluted: 475_000, holdingsPerShare: 0.01228, source: "Q2 2025 filing (split-adjusted)" },
+  // Post reverse split (200:1) - Sep 16, 2025
+  { date: "2025-09-30", holdings: 5833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 0.00204, source: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // Alt Brussels (ALTBG) - Belgium/France BTC treasury
