@@ -3,6 +3,9 @@
  *
  * These types define the structured output format for the
  * Proposer and Challenger agents in the dual-agent review process.
+ *
+ * IMPORTANT: Fields marked as MANDATORY CHECKS must be completed
+ * before the review can proceed. The system will reject incomplete outputs.
  */
 
 // Evidence tier classification
@@ -40,6 +43,9 @@ export type ChallengerDecision =
 // Confidence levels
 export type ConfidenceLevel = "high" | "medium" | "low";
 
+// Transaction/MOU status
+export type TransactionStatus = "pending" | "executed" | "cancelled" | "unknown";
+
 // Fields that can be changed
 export type DataField =
   | "holdings"
@@ -51,7 +57,206 @@ export type DataField =
   | "preferredEquity";
 
 /**
- * Proposer Output Schema
+ * =============================================================================
+ * MANDATORY CHECK TYPES
+ * These checks MUST be completed before a review can proceed.
+ * =============================================================================
+ */
+
+/**
+ * MANDATORY: Press Release Check
+ * Must search for announcements since the last verified filing.
+ */
+export interface PressReleaseCheck {
+  searchPerformed: true; // Must be true - enforces the check was done
+  lastVerifiedFilingDate: string; // e.g., "2025-09-30"
+  searchDate: string; // When this search was performed
+  sourcesSearched: string[]; // e.g., ["nasdaq.com/nxtt/press-releases", "company IR page"]
+
+  pressReleasesFound: Array<{
+    date: string;
+    title: string;
+    url?: string;
+    relevantToField: boolean;
+    summary: string;
+  }>;
+
+  // Any announced deals/MOUs that haven't closed yet
+  pendingTransactions: Array<{
+    description: string;
+    dateAnnounced: string;
+    expectedValue?: number;
+    status: TransactionStatus;
+    notes?: string;
+  }>;
+
+  // Conclusion: what date have we verified through?
+  verifiedThroughDate: string;
+
+  // Did we find anything that affects the proposed value?
+  impactsProposal: boolean;
+  impactDescription?: string;
+}
+
+/**
+ * MANDATORY: Stock Split Check
+ * Must verify no splits have occurred that would affect the value.
+ */
+export interface StockSplitCheck {
+  searchPerformed: true; // Must be true
+  searchDate: string;
+  sourcesSearched: string[]; // e.g., ["SEC 8-K filings", "company announcements"]
+
+  splitsFound: Array<{
+    date: string;
+    ratio: string; // e.g., "200:1 reverse", "4:1 forward"
+    effectiveDate: string;
+    source: string;
+    sourceUrl?: string;
+  }>;
+
+  // Is the proposed value adjusted for all splits?
+  valueIsAdjusted: boolean;
+  adjustmentNotes?: string;
+}
+
+/**
+ * MANDATORY: Basic vs Diluted Share Verification
+ * Required when field involves shares outstanding.
+ */
+export interface BasicVsDilutedCheck {
+  applicable: boolean; // false if field is not shares-related
+
+  // If applicable, these are required:
+  searchPerformed?: true;
+  valueType?: "basic" | "diluted" | "unknown";
+
+  // Evidence of which type
+  evidenceQuote?: string; // Exact quote from source showing basic/diluted
+  sourceLocation?: string; // Where in the document
+
+  // For diluted: what's included?
+  dilutedIncludes?: {
+    stockOptions: boolean;
+    convertibleNotes: boolean;
+    warrants: boolean;
+    other?: string;
+  };
+
+  // Verification
+  confirmedCorrectType: boolean;
+  notes?: string;
+}
+
+/**
+ * MANDATORY: Dual-Class Share Check
+ * Required when field involves shares outstanding.
+ */
+export interface DualClassCheck {
+  applicable: boolean; // false if not shares-related or company is single-class
+
+  // If applicable:
+  searchPerformed?: true;
+  isDualClass?: boolean;
+
+  shareClasses?: Array<{
+    className: string; // e.g., "Class A", "Class B"
+    sharesOutstanding: number;
+    votingRights?: string;
+    source: string;
+  }>;
+
+  // Did we sum all classes?
+  allClassesSummed?: boolean;
+  totalShares?: number;
+  notes?: string;
+}
+
+/**
+ * MANDATORY: Currency Verification
+ * Required for all companies, especially foreign ones.
+ */
+export interface CurrencyCheck {
+  searchPerformed: true;
+  companyDomicile: string; // e.g., "USA", "Japan", "Sweden"
+
+  reportingCurrency: string; // e.g., "USD", "JPY", "SEK"
+  valueInReportingCurrency: number;
+
+  // If conversion needed:
+  conversionRequired: boolean;
+  conversionRate?: number;
+  conversionDate?: string;
+  conversionSource?: string;
+  valueInUSD: number;
+
+  notes?: string;
+}
+
+/**
+ * MANDATORY: Source Date Comparison
+ * Ensures we're not replacing newer data with older data.
+ */
+export interface SourceDateCheck {
+  searchPerformed: true;
+
+  existingValueDate: string; // Date of our current value's source
+  proposedValueDate: string; // Date of the new source
+
+  proposedIsNewer: boolean;
+
+  // If proposed is older, must justify
+  olderValueJustification?: string; // e.g., "Existing value was from aggregator, proposed is from SEC"
+
+  notes?: string;
+}
+
+/**
+ * MANDATORY: Git Provenance Check
+ * Must trace where the existing value came from.
+ */
+export interface GitProvenanceCheck {
+  searchPerformed: true;
+
+  // Git history lookup
+  existingValueCommit?: string; // Commit hash where current value was set
+  existingValueCommitDate?: string;
+  existingValueCommitAuthor?: string;
+  existingValueCommitMessage?: string;
+
+  // Original source cited
+  originalSourceCited: string;
+  originalSourceUrl?: string;
+  originalSourceType?: SourceType;
+
+  // Is the original source still valid?
+  originalSourceStillValid: boolean;
+  invalidationReason?: string; // e.g., "Superseded by Q3 filing"
+
+  notes?: string;
+}
+
+/**
+ * MANDATORY: Pending Verification Status Check
+ * Check if current value has pendingVerification flag.
+ */
+export interface PendingVerificationCheck {
+  searchPerformed: true;
+
+  currentValueHasPendingFlag: boolean;
+
+  // If pending, has it been verified?
+  verificationStatus?: "verified" | "still_pending" | "contradicted";
+  verificationSource?: string;
+  verificationDate?: string;
+
+  notes?: string;
+}
+
+/**
+ * =============================================================================
+ * PROPOSER OUTPUT SCHEMA
+ * =============================================================================
  */
 export interface ProposerOutput {
   proposal: {
@@ -71,6 +276,22 @@ export interface ProposerOutput {
     exactQuote: string;
     documentSection?: string;
     methodology?: string;
+  };
+
+  /**
+   * ==========================================================================
+   * MANDATORY CHECKS - All must be completed
+   * ==========================================================================
+   */
+  mandatoryChecks: {
+    pressReleaseCheck: PressReleaseCheck;
+    stockSplitCheck: StockSplitCheck;
+    basicVsDilutedCheck: BasicVsDilutedCheck;
+    dualClassCheck: DualClassCheck;
+    currencyCheck: CurrencyCheck;
+    sourceDateCheck: SourceDateCheck;
+    gitProvenanceCheck: GitProvenanceCheck;
+    pendingVerificationCheck: PendingVerificationCheck;
   };
 
   // Only required for TIER 2 (press releases)
@@ -93,13 +314,6 @@ export interface ProposerOutput {
     reason: string;
   };
 
-  methodologyChecks: {
-    basicVsDiluted?: string;
-    stockSplit?: string;
-    shareClasses?: string;
-    currency?: string;
-  };
-
   risks: string[];
 
   recommendedAction: ProposerAction;
@@ -117,7 +331,9 @@ export interface ProposerOutput {
 }
 
 /**
- * Challenger Output Schema
+ * =============================================================================
+ * CHALLENGER OUTPUT SCHEMA
+ * =============================================================================
  */
 export interface ChallengerOutput {
   sourceVerification: {
@@ -140,27 +356,65 @@ export interface ChallengerOutput {
     reasoning: string;
   };
 
-  methodologyValidation: {
-    basicVsDiluted?: {
-      applicable: boolean;
-      verified?: boolean;
-      reason?: string;
+  /**
+   * ==========================================================================
+   * MANDATORY CHECK VERIFICATIONS
+   * Challenger must verify each of the Proposer's mandatory checks
+   * ==========================================================================
+   */
+  mandatoryCheckVerification: {
+    pressReleaseCheck: {
+      verified: boolean;
+      searchWasThorough: boolean;
+      missedAnnouncements: string[];
+      notes?: string;
     };
-    stockSplit?: {
-      checked: boolean;
-      recentSplits: boolean;
-      details?: string;
+
+    stockSplitCheck: {
+      verified: boolean;
+      splitHandledCorrectly: boolean;
+      issues?: string[];
     };
-    shareClasses?: {
-      applicable: boolean;
-      allClassesSummed?: boolean;
+
+    basicVsDilutedCheck: {
+      verified: boolean;
+      correctTypeUsed: boolean;
+      issues?: string[];
     };
-    currency?: {
-      checked: boolean;
-      isUSD: boolean;
-      conversionNeeded: boolean;
-      conversionCorrect?: boolean;
+
+    dualClassCheck: {
+      verified: boolean;
+      allClassesIncluded: boolean;
+      issues?: string[];
     };
+
+    currencyCheck: {
+      verified: boolean;
+      conversionCorrect: boolean;
+      issues?: string[];
+    };
+
+    sourceDateCheck: {
+      verified: boolean;
+      dateComparisonCorrect: boolean;
+      issues?: string[];
+    };
+
+    gitProvenanceCheck: {
+      verified: boolean;
+      provenanceAccurate: boolean;
+      issues?: string[];
+    };
+
+    pendingVerificationCheck: {
+      verified: boolean;
+      statusCorrect: boolean;
+      issues?: string[];
+    };
+
+    // Overall: did ALL mandatory checks pass?
+    allChecksPassed: boolean;
+    failedChecks: string[];
   };
 
   // Only for TIER 2 evidence
@@ -222,12 +476,17 @@ export interface ReviewLogEntry {
   proposerAction: ProposerAction;
   challengerDecision: ChallengerDecision;
   outcome: "applied" | "rejected" | "escalated" | "pending";
+  mandatoryChecksPassed: boolean;
+  failedChecks?: string[];
   notes?: string;
 }
 
 /**
- * Validation helpers
+ * =============================================================================
+ * VALIDATION FUNCTIONS
+ * =============================================================================
  */
+
 export function isValidEvidenceTier(tier: string): tier is EvidenceTier {
   return ["verified", "provisional", "unverified"].includes(tier);
 }
@@ -266,4 +525,108 @@ export function getTierFromSourceType(type: SourceType): EvidenceTier {
   if (isTier1Source(type)) return "verified";
   if (isTier2Source(type)) return "provisional";
   return "unverified";
+}
+
+/**
+ * Validates that all mandatory checks in ProposerOutput are complete.
+ * Returns an array of failed check names, or empty array if all pass.
+ */
+export function validateMandatoryChecks(output: ProposerOutput): string[] {
+  const failures: string[] = [];
+  const checks = output.mandatoryChecks;
+
+  // Press Release Check
+  if (!checks.pressReleaseCheck?.searchPerformed) {
+    failures.push("pressReleaseCheck: search not performed");
+  }
+  if (!checks.pressReleaseCheck?.sourcesSearched?.length) {
+    failures.push("pressReleaseCheck: no sources searched");
+  }
+  if (!checks.pressReleaseCheck?.verifiedThroughDate) {
+    failures.push("pressReleaseCheck: no verifiedThroughDate");
+  }
+
+  // Stock Split Check
+  if (!checks.stockSplitCheck?.searchPerformed) {
+    failures.push("stockSplitCheck: search not performed");
+  }
+
+  // Basic vs Diluted Check (only if shares field)
+  const isSharesField = output.proposal.field.includes("shares") ||
+                        output.proposal.field === "sharesOutstandingDiluted" ||
+                        output.proposal.field === "sharesOutstandingBasic";
+  if (isSharesField) {
+    if (checks.basicVsDilutedCheck?.applicable && !checks.basicVsDilutedCheck?.searchPerformed) {
+      failures.push("basicVsDilutedCheck: applicable but search not performed");
+    }
+    if (checks.basicVsDilutedCheck?.applicable && !checks.basicVsDilutedCheck?.confirmedCorrectType) {
+      failures.push("basicVsDilutedCheck: type not confirmed");
+    }
+  }
+
+  // Dual Class Check (only if shares field)
+  if (isSharesField) {
+    if (checks.dualClassCheck?.applicable && !checks.dualClassCheck?.searchPerformed) {
+      failures.push("dualClassCheck: applicable but search not performed");
+    }
+  }
+
+  // Currency Check
+  if (!checks.currencyCheck?.searchPerformed) {
+    failures.push("currencyCheck: search not performed");
+  }
+
+  // Source Date Check
+  if (!checks.sourceDateCheck?.searchPerformed) {
+    failures.push("sourceDateCheck: search not performed");
+  }
+  if (!checks.sourceDateCheck?.proposedIsNewer && !checks.sourceDateCheck?.olderValueJustification) {
+    failures.push("sourceDateCheck: proposed is older but no justification");
+  }
+
+  // Git Provenance Check
+  if (!checks.gitProvenanceCheck?.searchPerformed) {
+    failures.push("gitProvenanceCheck: search not performed");
+  }
+
+  // Pending Verification Check
+  if (!checks.pendingVerificationCheck?.searchPerformed) {
+    failures.push("pendingVerificationCheck: search not performed");
+  }
+
+  return failures;
+}
+
+/**
+ * Validates Challenger's verification of mandatory checks.
+ * Returns array of issues found.
+ */
+export function validateChallengerVerification(output: ChallengerOutput): string[] {
+  const issues: string[] = [];
+  const verification = output.mandatoryCheckVerification;
+
+  if (!verification.allChecksPassed && verification.failedChecks.length === 0) {
+    issues.push("allChecksPassed is false but no failedChecks listed");
+  }
+
+  // Each check must be verified
+  const checkNames = [
+    "pressReleaseCheck",
+    "stockSplitCheck",
+    "basicVsDilutedCheck",
+    "dualClassCheck",
+    "currencyCheck",
+    "sourceDateCheck",
+    "gitProvenanceCheck",
+    "pendingVerificationCheck",
+  ] as const;
+
+  for (const name of checkNames) {
+    const check = verification[name];
+    if (!check.verified) {
+      issues.push(`${name}: not verified by Challenger`);
+    }
+  }
+
+  return issues;
 }

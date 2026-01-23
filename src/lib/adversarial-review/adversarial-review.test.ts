@@ -6,6 +6,8 @@ import {
   isTier2Source,
   isTier3Source,
   getTierFromSourceType,
+  validateMandatoryChecks,
+  validateChallengerVerification,
   type ProposerOutput,
   type ChallengerOutput,
   type EvidenceTier,
@@ -89,6 +91,105 @@ describe("Adversarial Review Types", () => {
   });
 });
 
+// Helper to create a valid mandatory checks object
+function createValidMandatoryChecks() {
+  return {
+    pressReleaseCheck: {
+      searchPerformed: true as const,
+      lastVerifiedFilingDate: "2025-09-30",
+      searchDate: "2026-01-23",
+      sourcesSearched: ["nasdaq.com/mstr/press-releases", "strategy.com"],
+      pressReleasesFound: [],
+      pendingTransactions: [],
+      verifiedThroughDate: "2026-01-23",
+      impactsProposal: false,
+    },
+    stockSplitCheck: {
+      searchPerformed: true as const,
+      searchDate: "2026-01-23",
+      sourcesSearched: ["SEC 8-K filings"],
+      splitsFound: [],
+      valueIsAdjusted: true,
+    },
+    basicVsDilutedCheck: {
+      applicable: false,
+      confirmedCorrectType: false,
+    },
+    dualClassCheck: {
+      applicable: false,
+    },
+    currencyCheck: {
+      searchPerformed: true as const,
+      companyDomicile: "USA",
+      reportingCurrency: "USD",
+      valueInReportingCurrency: 471107,
+      conversionRequired: false,
+      valueInUSD: 471107,
+    },
+    sourceDateCheck: {
+      searchPerformed: true as const,
+      existingValueDate: "2025-12-15",
+      proposedValueDate: "2026-01-20",
+      proposedIsNewer: true,
+    },
+    gitProvenanceCheck: {
+      searchPerformed: true as const,
+      existingValueCommit: "abc1234",
+      existingValueCommitDate: "2025-12-16",
+      originalSourceCited: "SEC 8-K",
+      originalSourceUrl: "https://www.sec.gov/...",
+      originalSourceType: "sec-filing" as const,
+      originalSourceStillValid: false,
+      invalidationReason: "Superseded by new purchase",
+    },
+    pendingVerificationCheck: {
+      searchPerformed: true as const,
+      currentValueHasPendingFlag: false,
+    },
+  };
+}
+
+// Helper to create valid challenger verification
+function createValidChallengerVerification() {
+  return {
+    pressReleaseCheck: {
+      verified: true,
+      searchWasThorough: true,
+      missedAnnouncements: [],
+    },
+    stockSplitCheck: {
+      verified: true,
+      splitHandledCorrectly: true,
+    },
+    basicVsDilutedCheck: {
+      verified: true,
+      correctTypeUsed: true,
+    },
+    dualClassCheck: {
+      verified: true,
+      allClassesIncluded: true,
+    },
+    currencyCheck: {
+      verified: true,
+      conversionCorrect: true,
+    },
+    sourceDateCheck: {
+      verified: true,
+      dateComparisonCorrect: true,
+    },
+    gitProvenanceCheck: {
+      verified: true,
+      provenanceAccurate: true,
+    },
+    pendingVerificationCheck: {
+      verified: true,
+      statusCorrect: true,
+    },
+    allChecksPassed: true,
+    failedChecks: [],
+  };
+}
+
 describe("Proposer Output Validation", () => {
   const validVerifiedOutput: ProposerOutput = {
     proposal: {
@@ -109,6 +210,7 @@ describe("Proposer Output Validation", () => {
       documentSection: "Item 8.01",
       methodology: "Direct quote from SEC 8-K filing",
     },
+    mandatoryChecks: createValidMandatoryChecks(),
     existingValue: {
       value: 450000,
       source: "SEC 8-K",
@@ -117,12 +219,6 @@ describe("Proposer Output Validation", () => {
       wasVerified: true,
       status: "superseded",
       reason: "New purchase announced and filed with SEC",
-    },
-    methodologyChecks: {
-      basicVsDiluted: "N/A - holdings not shares",
-      stockSplit: "No recent splits",
-      shareClasses: "N/A",
-      currency: "BTC count - no conversion needed",
     },
     risks: [],
     recommendedAction: "approve_verified",
@@ -152,6 +248,26 @@ describe("Proposer Output Validation", () => {
       exactQuote:
         "KULR Technology announces purchase of 100 Bitcoin, bringing total holdings to 610 BTC",
     },
+    mandatoryChecks: {
+      ...createValidMandatoryChecks(),
+      pressReleaseCheck: {
+        searchPerformed: true as const,
+        lastVerifiedFilingDate: "2025-12-15",
+        searchDate: "2026-01-23",
+        sourcesSearched: ["ir.kulrtechnology.com", "nasdaq.com/kulr/press-releases"],
+        pressReleasesFound: [{
+          date: "2026-01-23",
+          title: "KULR announces 100 BTC purchase",
+          url: "https://ir.kulrtechnology.com/news/...",
+          relevantToField: true,
+          summary: "Company purchased 100 BTC bringing total to 610 BTC",
+        }],
+        pendingTransactions: [],
+        verifiedThroughDate: "2026-01-23",
+        impactsProposal: true,
+        impactDescription: "This press release is the source of the proposed change",
+      },
+    },
     legitimacyAssessment: {
       applicable: true,
       confidence: "high",
@@ -168,9 +284,6 @@ describe("Proposer Output Validation", () => {
       wasVerified: true,
       status: "superseded",
       reason: "New purchase announced",
-    },
-    methodologyChecks: {
-      currency: "USD - no conversion needed",
     },
     risks: [
       "Press release only - SEC 8-K not yet filed",
@@ -214,6 +327,27 @@ describe("Proposer Output Validation", () => {
       "2026-01-27"
     );
   });
+
+  it("should have all mandatory checks completed", () => {
+    const failures = validateMandatoryChecks(validVerifiedOutput);
+    expect(failures).toHaveLength(0);
+  });
+
+  it("should fail validation when mandatory check is missing", () => {
+    const invalidOutput: ProposerOutput = {
+      ...validVerifiedOutput,
+      mandatoryChecks: {
+        ...validVerifiedOutput.mandatoryChecks,
+        pressReleaseCheck: {
+          ...validVerifiedOutput.mandatoryChecks.pressReleaseCheck,
+          searchPerformed: false as unknown as true, // Force invalid state
+        },
+      },
+    };
+    const failures = validateMandatoryChecks(invalidOutput);
+    expect(failures.length).toBeGreaterThan(0);
+    expect(failures.some(f => f.includes("pressReleaseCheck"))).toBe(true);
+  });
 });
 
 describe("Challenger Output Validation", () => {
@@ -235,21 +369,7 @@ describe("Challenger Output Validation", () => {
       replacementJustified: true,
       reasoning: "New purchase filed with SEC supersedes previous total",
     },
-    methodologyValidation: {
-      basicVsDiluted: {
-        applicable: false,
-        reason: "Holdings field, not shares",
-      },
-      stockSplit: {
-        checked: true,
-        recentSplits: false,
-      },
-      currency: {
-        checked: true,
-        isUSD: false,
-        conversionNeeded: false,
-      },
-    },
+    mandatoryCheckVerification: createValidChallengerVerification(),
     knownPatternCheck: {
       patternsReviewed: ["MSTR 8-K requirement"],
       issuesFound: [],
@@ -281,13 +401,15 @@ describe("Challenger Output Validation", () => {
       reasoning:
         "Proposed value 378M is basic shares, not diluted. Diluted is 470M.",
     },
-    methodologyValidation: {
-      basicVsDiluted: {
-        applicable: true,
-        verified: false,
-        reason:
-          "Source shows 378M as 'basic' shares. Diluted shares are 470M. We use diluted.",
+    mandatoryCheckVerification: {
+      ...createValidChallengerVerification(),
+      basicVsDilutedCheck: {
+        verified: true,
+        correctTypeUsed: false,
+        issues: ["Proposed value is basic shares (378M), should be diluted (470M)"],
       },
+      allChecksPassed: false,
+      failedChecks: ["basicVsDilutedCheck"],
     },
     knownPatternCheck: {
       patternsReviewed: ["MARA basic/diluted confusion"],
@@ -321,7 +443,7 @@ describe("Challenger Output Validation", () => {
       replacementJustified: false,
       reasoning: "Both sources seem valid but show different values",
     },
-    methodologyValidation: {},
+    mandatoryCheckVerification: createValidChallengerVerification(),
     knownPatternCheck: {
       patternsReviewed: [],
       issuesFound: ["Conflicting TIER 1 sources"],
@@ -360,6 +482,28 @@ describe("Challenger Output Validation", () => {
     expect(escalateOutput.decision).toBe("ESCALATE");
     expect(escalateOutput.conflictingSources).toHaveLength(2);
     expect(escalateOutput.recommendation).toBeDefined();
+  });
+
+  it("should validate all mandatory check verifications are complete", () => {
+    const issues = validateChallengerVerification(approveVerifiedOutput);
+    expect(issues).toHaveLength(0);
+  });
+
+  it("should catch when mandatory check verification is missing", () => {
+    const invalidOutput: ChallengerOutput = {
+      ...approveVerifiedOutput,
+      mandatoryCheckVerification: {
+        ...approveVerifiedOutput.mandatoryCheckVerification,
+        pressReleaseCheck: {
+          verified: false,
+          searchWasThorough: false,
+          missedAnnouncements: [],
+        },
+      },
+    };
+    const issues = validateChallengerVerification(invalidOutput);
+    expect(issues.length).toBeGreaterThan(0);
+    expect(issues.some(i => i.includes("pressReleaseCheck"))).toBe(true);
   });
 });
 
@@ -507,5 +651,158 @@ describe("Provisional Entry Lifecycle", () => {
 
     // If difference > 0%, should create discrepancy alert
     expect(percentDiff).toBeGreaterThan(0);
+  });
+});
+
+describe("Mandatory Check Validation", () => {
+  it("should require press release check with sources", () => {
+    const output: ProposerOutput = {
+      proposal: {
+        ticker: "TEST",
+        field: "holdings",
+        currentValue: 100,
+        proposedValue: 200,
+        percentChange: 100,
+      },
+      evidence: {
+        tier: "verified",
+        sourceType: "sec-filing",
+        sourceUrl: "https://sec.gov/...",
+        sourceDate: "2026-01-23",
+        exactQuote: "Test quote",
+      },
+      mandatoryChecks: {
+        pressReleaseCheck: {
+          searchPerformed: true,
+          lastVerifiedFilingDate: "2025-09-30",
+          searchDate: "2026-01-23",
+          sourcesSearched: [], // Empty - should fail
+          pressReleasesFound: [],
+          pendingTransactions: [],
+          verifiedThroughDate: "2026-01-23",
+          impactsProposal: false,
+        },
+        stockSplitCheck: {
+          searchPerformed: true,
+          searchDate: "2026-01-23",
+          sourcesSearched: ["SEC"],
+          splitsFound: [],
+          valueIsAdjusted: true,
+        },
+        basicVsDilutedCheck: { applicable: false, confirmedCorrectType: false },
+        dualClassCheck: { applicable: false },
+        currencyCheck: {
+          searchPerformed: true,
+          companyDomicile: "USA",
+          reportingCurrency: "USD",
+          valueInReportingCurrency: 200,
+          conversionRequired: false,
+          valueInUSD: 200,
+        },
+        sourceDateCheck: {
+          searchPerformed: true,
+          existingValueDate: "2025-06-30",
+          proposedValueDate: "2026-01-23",
+          proposedIsNewer: true,
+        },
+        gitProvenanceCheck: {
+          searchPerformed: true,
+          originalSourceCited: "Previous SEC filing",
+          originalSourceStillValid: false,
+        },
+        pendingVerificationCheck: {
+          searchPerformed: true,
+          currentValueHasPendingFlag: false,
+        },
+      },
+      existingValue: {
+        value: 100,
+        source: "SEC",
+        wasVerified: true,
+        status: "superseded",
+        reason: "New filing",
+      },
+      risks: [],
+      recommendedAction: "approve_verified",
+    };
+
+    const failures = validateMandatoryChecks(output);
+    expect(failures).toContain("pressReleaseCheck: no sources searched");
+  });
+
+  it("should require justification when proposed value is older", () => {
+    const output: ProposerOutput = {
+      proposal: {
+        ticker: "TEST",
+        field: "holdings",
+        currentValue: 100,
+        proposedValue: 200,
+        percentChange: 100,
+      },
+      evidence: {
+        tier: "verified",
+        sourceType: "sec-filing",
+        sourceUrl: "https://sec.gov/...",
+        sourceDate: "2025-06-30", // Older than existing
+        exactQuote: "Test quote",
+      },
+      mandatoryChecks: {
+        pressReleaseCheck: {
+          searchPerformed: true,
+          lastVerifiedFilingDate: "2025-09-30",
+          searchDate: "2026-01-23",
+          sourcesSearched: ["SEC"],
+          pressReleasesFound: [],
+          pendingTransactions: [],
+          verifiedThroughDate: "2026-01-23",
+          impactsProposal: false,
+        },
+        stockSplitCheck: {
+          searchPerformed: true,
+          searchDate: "2026-01-23",
+          sourcesSearched: ["SEC"],
+          splitsFound: [],
+          valueIsAdjusted: true,
+        },
+        basicVsDilutedCheck: { applicable: false, confirmedCorrectType: false },
+        dualClassCheck: { applicable: false },
+        currencyCheck: {
+          searchPerformed: true,
+          companyDomicile: "USA",
+          reportingCurrency: "USD",
+          valueInReportingCurrency: 200,
+          conversionRequired: false,
+          valueInUSD: 200,
+        },
+        sourceDateCheck: {
+          searchPerformed: true,
+          existingValueDate: "2025-09-30",
+          proposedValueDate: "2025-06-30",
+          proposedIsNewer: false,
+          // Missing olderValueJustification - should fail
+        },
+        gitProvenanceCheck: {
+          searchPerformed: true,
+          originalSourceCited: "Previous SEC filing",
+          originalSourceStillValid: false,
+        },
+        pendingVerificationCheck: {
+          searchPerformed: true,
+          currentValueHasPendingFlag: false,
+        },
+      },
+      existingValue: {
+        value: 100,
+        source: "SEC",
+        wasVerified: true,
+        status: "superseded",
+        reason: "New filing",
+      },
+      risks: [],
+      recommendedAction: "approve_verified",
+    };
+
+    const failures = validateMandatoryChecks(output);
+    expect(failures).toContain("sourceDateCheck: proposed is older but no justification");
   });
 });
