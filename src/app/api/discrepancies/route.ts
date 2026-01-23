@@ -58,20 +58,20 @@ export async function PATCH(request: NextRequest) {
       sql = shouldSetResolvedAt
         ? `
           UPDATE discrepancies
-          SET status = $1,
-              resolution_notes = $2,
-              resolved_by = $3,
+          SET status = $1::text,
+              resolution_notes = $2::text,
+              resolved_by = $3::text,
               resolved_at = NOW()
-          WHERE id = $4
+          WHERE id = $4::integer
           RETURNING id
         `
         : `
           UPDATE discrepancies
-          SET status = $1,
-              resolution_notes = $2,
-              resolved_by = $3,
+          SET status = $1::text,
+              resolution_notes = $2::text,
+              resolved_by = $3::text,
               resolved_at = NULL
-          WHERE id = $4
+          WHERE id = $4::integer
           RETURNING id
         `;
       params = [status, resolution_notes || null, resolved_by || 'system', id];
@@ -80,27 +80,27 @@ export async function PATCH(request: NextRequest) {
       sql = shouldSetResolvedAt
         ? `
           UPDATE discrepancies d
-          SET status = $1,
-              resolution_notes = $2,
-              resolved_by = $3,
+          SET status = $1::text,
+              resolution_notes = $2::text,
+              resolved_by = $3::text,
               resolved_at = NOW()
           FROM companies c
           WHERE d.company_id = c.id
-            AND c.ticker = $4
-            AND d.field = $5
+            AND c.ticker = $4::text
+            AND d.field = $5::text
             AND d.status = 'pending'
           RETURNING d.id
         `
         : `
           UPDATE discrepancies d
-          SET status = $1,
-              resolution_notes = $2,
-              resolved_by = $3,
+          SET status = $1::text,
+              resolution_notes = $2::text,
+              resolved_by = $3::text,
               resolved_at = NULL
           FROM companies c
           WHERE d.company_id = c.id
-            AND c.ticker = $4
-            AND d.field = $5
+            AND c.ticker = $4::text
+            AND d.field = $5::text
             AND d.status = 'pending'
           RETURNING d.id
         `;
