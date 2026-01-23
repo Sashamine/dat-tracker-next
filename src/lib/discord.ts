@@ -124,6 +124,11 @@ export async function sendDiscordEmbed(embed: DiscordEmbed): Promise<boolean> {
 }
 
 /**
+ * Verification status from source-verifier (Phase 7b)
+ */
+type VerificationStatus = 'verified' | 'source_drift' | 'source_invalid' | 'source_available' | 'unverified';
+
+/**
  * Send a discrepancy summary report
  */
 export async function sendDiscrepancySummary(
@@ -134,6 +139,10 @@ export async function sendDiscrepancySummary(
     sourceValues: Record<string, { value: number; url: string }>;
     maxDeviationPct: number;
     severity: 'minor' | 'moderate' | 'major';
+    verification?: {
+      status: VerificationStatus;
+      sourceFetchedValue?: number;
+    };
   }>,
   runDuration: number
 ): Promise<boolean> {
@@ -176,12 +185,32 @@ export async function sendDiscrepancySummary(
     inline: true,
   });
 
-  // Major discrepancies (show details)
+  // Phase 7b: Verification summary
+  const verified = discrepancies.filter(d => d.verification?.status === 'verified').length;
+  const sourceDrift = discrepancies.filter(d => d.verification?.status === 'source_drift').length;
+  const sourceInvalid = discrepancies.filter(d => d.verification?.status === 'source_invalid').length;
+  const unverified = discrepancies.filter(d => !d.verification || d.verification.status === 'unverified' || d.verification.status === 'source_available').length;
+
+  if (verified > 0 || sourceDrift > 0 || sourceInvalid > 0) {
+    fields.push({
+      name: 'Source Verification',
+      value: [
+        verified > 0 ? `✓ Verified: ${verified}` : null,
+        sourceDrift > 0 ? `⚠️ Drift: ${sourceDrift}` : null,
+        sourceInvalid > 0 ? `❌ Invalid: ${sourceInvalid}` : null,
+        unverified > 0 ? `? Unverified: ${unverified}` : null,
+      ].filter(Boolean).join('\n'),
+      inline: true,
+    });
+  }
+
+  // Major discrepancies (show details with verification status)
   if (major.length > 0) {
     const majorDetails = major.slice(0, 5).map(d => {
       const sourceName = Object.keys(d.sourceValues)[0];
       const sourceValue = d.sourceValues[sourceName]?.value;
-      return `**${d.ticker}** ${d.field}: ours=${formatNumber(d.ourValue)} vs ${sourceName}=${formatNumber(sourceValue)} (${d.maxDeviationPct.toFixed(1)}%)`;
+      const verifyStatus = d.verification?.status ? ` [${formatVerificationStatus(d.verification.status)}]` : '';
+      return `**${d.ticker}** ${d.field}: ours=${formatNumber(d.ourValue)} vs ${sourceName}=${formatNumber(sourceValue)} (${d.maxDeviationPct.toFixed(1)}%)${verifyStatus}`;
     }).join('\n');
 
     fields.push({
@@ -223,4 +252,24 @@ function formatNumber(num: number): string {
     return `${(num / 1_000).toFixed(1)}K`;
   }
   return num.toFixed(0);
+}
+
+/**
+ * Format verification status for display (Phase 7b)
+ */
+function formatVerificationStatus(status: VerificationStatus): string {
+  switch (status) {
+    case 'verified':
+      return '✓ verified';
+    case 'source_drift':
+      return '⚠️ source drift';
+    case 'source_invalid':
+      return '❌ source invalid';
+    case 'source_available':
+      return '? source available';
+    case 'unverified':
+      return '? unverified';
+    default:
+      return status;
+  }
 }

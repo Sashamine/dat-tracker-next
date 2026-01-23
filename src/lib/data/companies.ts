@@ -589,7 +589,7 @@ export const btcCompanies: Company[] = [
     holdings: 5_833,
     holdingsLastUpdated: "2025-06-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001831978&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=8-K",
     datStartDate: "2024-06-01",
     costBasisAvg: 65_000,
     isMiner: false,

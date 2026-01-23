@@ -12,9 +12,11 @@
  */
 
 import { allCompanies } from '../data/companies';
-import { getLatestDilutedShares, getLatestHoldings } from '../data/holdings-history';
+import { getLatestDilutedShares, getLatestHoldings, getLatestSnapshot } from '../data/holdings-history';
 import { fetchers, FetchResult, FetchError } from '../fetchers';
 import { query } from '../db';
+import type { HoldingsSource } from '../types';
+import { verifySource, VerificationResult } from './source-verifier';
 
 // Types matching our schema
 export type ComparisonField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity';
@@ -24,6 +26,9 @@ export interface OurValue {
   companyId?: number;  // DB id, looked up during comparison
   field: ComparisonField;
   value: number;
+  // Source info for verification (Phase 7b)
+  sourceUrl?: string;
+  sourceType?: HoldingsSource;
 }
 
 export interface ComparisonResult {
@@ -38,6 +43,8 @@ export interface ComparisonResult {
   hasDiscrepancy: boolean;
   maxDeviationPct: number;
   severity: 'minor' | 'moderate' | 'major';
+  // Phase 7b: Source verification result
+  verification?: VerificationResult;
 }
 
 /**
@@ -52,6 +59,9 @@ export function loadOurValues(): OurValue[] {
   const values: OurValue[] = [];
 
   for (const company of allCompanies) {
+    // Get latest snapshot for source info (Phase 7b)
+    const snapshot = getLatestSnapshot(company.ticker);
+
     // Holdings: prefer holdings-history.ts, fallback to companies.ts
     const holdingsFromHistory = getLatestHoldings(company.ticker);
     const holdings = holdingsFromHistory ?? company.holdings;
@@ -59,6 +69,8 @@ export function loadOurValues(): OurValue[] {
       ticker: company.ticker,
       field: 'holdings',
       value: holdings,
+      sourceUrl: snapshot?.sourceUrl,
+      sourceType: snapshot?.sourceType,
     });
 
     // Shares outstanding: prefer holdings-history.ts, fallback to companies.ts sharesForMnav
@@ -69,6 +81,8 @@ export function loadOurValues(): OurValue[] {
         ticker: company.ticker,
         field: 'shares_outstanding',
         value: shares,
+        sourceUrl: snapshot?.sourceUrl,
+        sourceType: snapshot?.sourceType,
       });
     }
 
@@ -290,6 +304,16 @@ export async function runComparison(options?: {
     const comparison = compare(ourValue, sourcesForValue);
 
     if (comparison.hasDiscrepancy) {
+      // Phase 7b: Verify our source
+      const verification = await verifySource(
+        ourValue.ticker,
+        ourValue.field,
+        ourValue.value,
+        ourValue.sourceUrl,
+        ourValue.sourceType
+      );
+      comparison.verification = verification;
+
       discrepancies.push(comparison);
 
       // Record in database
@@ -311,7 +335,8 @@ export async function runComparison(options?: {
   if (discrepancies.length > 0) {
     console.log(`\n[Comparison] Discrepancies found:`);
     for (const d of discrepancies) {
-      console.log(`  ${d.ticker} ${d.field}: ours=${d.ourValue}, sources=${JSON.stringify(d.sourceValues)}, deviation=${d.maxDeviationPct.toFixed(2)}%`);
+      const verifyStatus = d.verification?.status || 'unknown';
+      console.log(`  ${d.ticker} ${d.field}: ours=${d.ourValue}, sources=${JSON.stringify(d.sourceValues)}, deviation=${d.maxDeviationPct.toFixed(2)}% [${verifyStatus}]`);
     }
   }
 

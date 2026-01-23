@@ -43,6 +43,7 @@ vi.mock('../data/companies', () => ({
 vi.mock('../data/holdings-history', () => ({
   getLatestDilutedShares: vi.fn().mockReturnValue(undefined),
   getLatestHoldings: vi.fn().mockReturnValue(undefined),
+  getLatestSnapshot: vi.fn().mockReturnValue(undefined),
 }));
 
 vi.mock('../fetchers', () => ({
@@ -51,6 +52,11 @@ vi.mock('../fetchers', () => ({
 
 vi.mock('../db', () => ({
   query: vi.fn(),
+}));
+
+// Mock source-verifier to skip verification in engine tests
+vi.mock('./source-verifier', () => ({
+  verifySource: vi.fn().mockResolvedValue({ status: 'unverified' }),
 }));
 
 // Now import after mocks are set up
