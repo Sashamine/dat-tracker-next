@@ -93,8 +93,8 @@ export const ethCompanies: Company[] = [
     ticker: "BTBT",
     asset: "ETH",
     tier: 1,
-    holdings: 154_000,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 155_227,  // Jan 7, 2026 - company announcement
+    holdingsLastUpdated: "2026-01-07",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1710350&type=8-K",
     datStartDate: "2025-01-01",
