@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { MobileHeader } from "@/components/mobile-header";
-import { ExternalLink, AlertTriangle, CheckCircle, XCircle, Clock } from "lucide-react";
+import { ExternalLink, AlertTriangle, CheckCircle, XCircle, Clock, ChevronDown, ChevronRight } from "lucide-react";
 
 interface Discrepancy {
   id: number;
@@ -37,10 +37,27 @@ interface Summary {
   };
 }
 
+interface CompanyGroup {
+  ticker: string;
+  companyName: string;
+  discrepancies: Discrepancy[];
+  majorCount: number;
+  moderateCount: number;
+  minorCount: number;
+  maxDeviation: number;
+  worstSeverity: "major" | "moderate" | "minor";
+}
+
 const SEVERITY_COLORS = {
   major: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
   moderate: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
   minor: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300",
+};
+
+const SEVERITY_BORDER_COLORS = {
+  major: "border-l-red-500",
+  moderate: "border-l-yellow-500",
+  minor: "border-l-gray-400",
 };
 
 const STATUS_COLORS = {
@@ -75,97 +92,131 @@ function formatDate(dateStr: string): string {
   });
 }
 
-function DiscrepancyCard({ discrepancy }: { discrepancy: Discrepancy }) {
+function FieldDiscrepancyRow({ discrepancy }: { discrepancy: Discrepancy }) {
   const StatusIcon = STATUS_ICONS[discrepancy.status];
   const sources = Object.entries(discrepancy.source_values);
 
   return (
-    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-      {/* Header */}
-      <div className="flex items-start justify-between mb-3">
+    <div className="py-3 border-b border-gray-100 dark:border-gray-800 last:border-b-0">
+      <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <Link
-            href={`/company/${discrepancy.ticker}`}
-            className="text-lg font-semibold text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400"
-          >
-            {discrepancy.ticker}
-          </Link>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {discrepancy.field.replace("_", " ")}
+          <span className="font-medium text-gray-900 dark:text-gray-100">
+            {discrepancy.field.replace(/_/g, " ")}
           </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS[discrepancy.severity]}`}>
+          <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS[discrepancy.severity]}`}>
             {discrepancy.severity}
           </span>
-          <span className={`px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1 ${STATUS_COLORS[discrepancy.status]}`}>
+          <span className={`px-1.5 py-0.5 rounded text-xs font-medium flex items-center gap-1 ${STATUS_COLORS[discrepancy.status]}`}>
             <StatusIcon className="w-3 h-3" />
             {discrepancy.status}
           </span>
         </div>
+        <span className={`text-sm font-mono ${
+          discrepancy.severity === "major" ? "text-red-600 dark:text-red-400" :
+          discrepancy.severity === "moderate" ? "text-yellow-600 dark:text-yellow-400" :
+          "text-gray-600 dark:text-gray-400"
+        }`}>
+          {discrepancy.max_deviation_pct.toFixed(1)}% off
+        </span>
       </div>
 
-      {/* Values comparison */}
-      <div className="space-y-2 mb-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-500 dark:text-gray-400">Our value:</span>
-          <span className="font-mono font-medium text-gray-900 dark:text-gray-100">
-            {formatNumber(discrepancy.our_value)}
-          </span>
+      <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+        <div className="flex items-center gap-2">
+          <span className="text-gray-500 dark:text-gray-400">Ours:</span>
+          <span className="font-mono text-gray-900 dark:text-gray-100">{formatNumber(discrepancy.our_value)}</span>
         </div>
-
         {sources.map(([sourceName, sourceData]) => (
-          <div key={sourceName} className="flex items-center justify-between text-sm">
-            <span className="text-gray-500 dark:text-gray-400 flex items-center gap-1">
-              {sourceName}:
-              {sourceData.url && (
-                <a
-                  href={sourceData.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
-            </span>
-            <span className="font-mono font-medium text-gray-900 dark:text-gray-100">
-              {formatNumber(sourceData.value)}
-            </span>
+          <div key={sourceName} className="flex items-center gap-2">
+            <span className="text-gray-500 dark:text-gray-400">{sourceName}:</span>
+            <span className="font-mono text-gray-900 dark:text-gray-100">{formatNumber(sourceData.value)}</span>
+            {sourceData.url && (
+              <a
+                href={sourceData.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            )}
           </div>
         ))}
-
-        <div className="flex items-center justify-between text-sm pt-1 border-t border-gray-100 dark:border-gray-800">
-          <span className="text-gray-500 dark:text-gray-400">Deviation:</span>
-          <span className={`font-mono font-medium ${
-            discrepancy.severity === "major" ? "text-red-600 dark:text-red-400" :
-            discrepancy.severity === "moderate" ? "text-yellow-600 dark:text-yellow-400" :
-            "text-gray-600 dark:text-gray-400"
-          }`}>
-            {discrepancy.max_deviation_pct.toFixed(2)}%
-          </span>
-        </div>
       </div>
 
-      {/* Resolution info (if resolved) */}
       {discrepancy.status === "resolved" && discrepancy.resolution_notes && (
-        <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Resolution:</p>
-          <p className="text-sm text-gray-700 dark:text-gray-300">{discrepancy.resolution_notes}</p>
-          {discrepancy.resolved_by && (
-            <p className="text-xs text-gray-400 mt-1">
-              by {discrepancy.resolved_by} on {discrepancy.resolved_at ? formatDate(discrepancy.resolved_at) : "N/A"}
-            </p>
-          )}
+        <div className="mt-2 text-sm text-gray-600 dark:text-gray-400 bg-green-50 dark:bg-green-900/20 rounded px-2 py-1">
+          <span className="font-medium">Resolution:</span> {discrepancy.resolution_notes}
         </div>
       )}
+    </div>
+  );
+}
 
-      {/* Footer */}
-      <div className="mt-3 pt-2 border-t border-gray-100 dark:border-gray-800">
-        <p className="text-xs text-gray-400">
-          Detected: {formatDate(discrepancy.created_at)}
-        </p>
-      </div>
+function CompanyCard({ group, defaultExpanded }: { group: CompanyGroup; defaultExpanded?: boolean }) {
+  const [expanded, setExpanded] = useState(defaultExpanded ?? group.worstSeverity === "major");
+
+  return (
+    <div className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden border-l-4 ${SEVERITY_BORDER_COLORS[group.worstSeverity]}`}>
+      {/* Company Header - Clickable */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          {expanded ? (
+            <ChevronDown className="w-5 h-5 text-gray-400" />
+          ) : (
+            <ChevronRight className="w-5 h-5 text-gray-400" />
+          )}
+          <Link
+            href={`/company/${group.ticker}`}
+            onClick={(e) => e.stopPropagation()}
+            className="text-lg font-semibold text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400"
+          >
+            {group.ticker}
+          </Link>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {group.companyName}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {group.majorCount > 0 && (
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS.major}`}>
+              {group.majorCount} major
+            </span>
+          )}
+          {group.moderateCount > 0 && (
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS.moderate}`}>
+              {group.moderateCount} mod
+            </span>
+          )}
+          {group.minorCount > 0 && (
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS.minor}`}>
+              {group.minorCount} minor
+            </span>
+          )}
+        </div>
+      </button>
+
+      {/* Expanded Content */}
+      {expanded && (
+        <div className="px-4 pb-4 border-t border-gray-100 dark:border-gray-800">
+          <div className="pt-3">
+            {group.discrepancies.map((d) => (
+              <FieldDiscrepancyRow key={d.id} discrepancy={d} />
+            ))}
+          </div>
+
+          {/* Investigation Prompt */}
+          <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">To investigate, run in Claude Code:</p>
+            <code className="block bg-gray-100 dark:bg-gray-800 rounded px-3 py-2 text-sm text-gray-800 dark:text-gray-200 font-mono">
+              /review-change {group.ticker}
+            </code>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -178,6 +229,51 @@ export default function DiscrepanciesPage() {
   const [statusFilter, setStatusFilter] = useState<string>("pending");
   const [severityFilter, setSeverityFilter] = useState<string>("");
   const [days, setDays] = useState<number>(7);
+
+  // Group discrepancies by company
+  const companyGroups = useMemo(() => {
+    const groups = new Map<string, CompanyGroup>();
+
+    for (const d of discrepancies) {
+      let group = groups.get(d.ticker);
+      if (!group) {
+        group = {
+          ticker: d.ticker,
+          companyName: d.company_name,
+          discrepancies: [],
+          majorCount: 0,
+          moderateCount: 0,
+          minorCount: 0,
+          maxDeviation: 0,
+          worstSeverity: "minor",
+        };
+        groups.set(d.ticker, group);
+      }
+
+      group.discrepancies.push(d);
+      group.maxDeviation = Math.max(group.maxDeviation, d.max_deviation_pct);
+
+      if (d.severity === "major") {
+        group.majorCount++;
+        group.worstSeverity = "major";
+      } else if (d.severity === "moderate") {
+        group.moderateCount++;
+        if (group.worstSeverity !== "major") {
+          group.worstSeverity = "moderate";
+        }
+      } else {
+        group.minorCount++;
+      }
+    }
+
+    // Sort: major companies first, then by max deviation
+    return Array.from(groups.values()).sort((a, b) => {
+      const severityOrder = { major: 0, moderate: 1, minor: 2 };
+      const severityDiff = severityOrder[a.worstSeverity] - severityOrder[b.worstSeverity];
+      if (severityDiff !== 0) return severityDiff;
+      return b.maxDeviation - a.maxDeviation;
+    });
+  }, [discrepancies]);
 
   useEffect(() => {
     async function fetchDiscrepancies() {
@@ -213,7 +309,7 @@ export default function DiscrepanciesPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <MobileHeader />
 
-      <main className="max-w-6xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
@@ -227,8 +323,7 @@ export default function DiscrepanciesPage() {
             Data Discrepancies
           </h1>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
-            Review discrepancies between our data and external sources.
-            Use Claude Code to investigate and resolve.
+            Review discrepancies between our data and external sources, grouped by company.
           </p>
         </div>
 
@@ -316,15 +411,18 @@ export default function DiscrepanciesPage() {
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
             <p className="text-red-800 dark:text-red-300">{error}</p>
           </div>
-        ) : discrepancies.length === 0 ? (
+        ) : companyGroups.length === 0 ? (
           <div className="text-center py-12 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
             <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
             <p className="text-gray-600 dark:text-gray-400">No discrepancies found for the selected filters.</p>
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {discrepancies.map((d) => (
-              <DiscrepancyCard key={d.id} discrepancy={d} />
+          <div className="space-y-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {companyGroups.length} {companyGroups.length === 1 ? "company" : "companies"} with discrepancies
+            </p>
+            {companyGroups.map((group) => (
+              <CompanyCard key={group.ticker} group={group} />
             ))}
           </div>
         )}
@@ -336,15 +434,14 @@ export default function DiscrepanciesPage() {
           </h2>
           <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 text-sm text-gray-600 dark:text-gray-400 space-y-2">
             <p><strong>1.</strong> Open Claude Code in the dat-tracker-next project</p>
-            <p><strong>2.</strong> Ask: "Investigate the [TICKER] [field] discrepancy"</p>
-            <p><strong>3.</strong> Claude will follow the adversarial process in CLAUDE.md:</p>
+            <p><strong>2.</strong> Run the review command: <code className="bg-gray-200 dark:bg-gray-800 px-1 rounded">/review-change TICKER FIELD VALUE</code></p>
+            <p><strong>3.</strong> The adversarial review process will:</p>
             <ul className="list-disc list-inside ml-4 space-y-1">
-              <li>Check where our value came from (git history, source URL)</li>
-              <li>Verify the cited source actually says that value</li>
-              <li>Check where the comparison value came from</li>
-              <li>Determine which is correct and why</li>
+              <li><strong>Proposer</strong>: Find and verify the primary source</li>
+              <li><strong>Challenger</strong>: Independently verify and check against known patterns</li>
+              <li>Render decision: APPROVE, REJECT, REQUEST_MORE_INFO, or ESCALATE</li>
             </ul>
-            <p><strong>4.</strong> Claude will either fix the data or explain why it's correct</p>
+            <p><strong>4.</strong> If approved, apply the change with <code className="bg-gray-200 dark:bg-gray-800 px-1 rounded">/apply-change</code></p>
           </div>
         </div>
       </main>

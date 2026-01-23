@@ -1,0 +1,12 @@
+{
+  "name": "adversarial-review",
+  "version": "1.0.0",
+  "description": "Dual-agent adversarial review system for data changes. Prevents errors by having a Proposer build a case and a Challenger independently verify it.",
+  "agents": [
+    "agents/proposer.md",
+    "agents/challenger.md"
+  ],
+  "commands": [
+    "commands/review-change.md"
+  ]
+}
