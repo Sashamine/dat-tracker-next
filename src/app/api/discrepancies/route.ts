@@ -88,23 +88,31 @@ export async function GET(request: NextRequest) {
 
     const rows = await query<DiscrepancyRow>(sql, params);
 
+    // Convert PostgreSQL DECIMAL strings to numbers
+    const discrepancies = rows.map((row) => ({
+      ...row,
+      our_value: parseFloat(row.our_value as unknown as string) || 0,
+      max_deviation_pct: parseFloat(row.max_deviation_pct as unknown as string) || 0,
+      resolved_value: row.resolved_value ? parseFloat(row.resolved_value as unknown as string) : null,
+    }));
+
     // Group by status for summary
     const summary = {
-      total: rows.length,
-      pending: rows.filter((r) => r.status === 'pending').length,
-      resolved: rows.filter((r) => r.status === 'resolved').length,
-      dismissed: rows.filter((r) => r.status === 'dismissed').length,
+      total: discrepancies.length,
+      pending: discrepancies.filter((r) => r.status === 'pending').length,
+      resolved: discrepancies.filter((r) => r.status === 'resolved').length,
+      dismissed: discrepancies.filter((r) => r.status === 'dismissed').length,
       bySeverity: {
-        major: rows.filter((r) => r.severity === 'major').length,
-        moderate: rows.filter((r) => r.severity === 'moderate').length,
-        minor: rows.filter((r) => r.severity === 'minor').length,
+        major: discrepancies.filter((r) => r.severity === 'major').length,
+        moderate: discrepancies.filter((r) => r.severity === 'moderate').length,
+        minor: discrepancies.filter((r) => r.severity === 'minor').length,
       },
     };
 
     return NextResponse.json({
       success: true,
       summary,
-      discrepancies: rows,
+      discrepancies,
     });
   } catch (error) {
     console.error('[Discrepancies API] Error:', error);
