@@ -46,6 +46,23 @@ export type ConfidenceLevel = "high" | "medium" | "low";
 // Transaction/MOU status
 export type TransactionStatus = "pending" | "executed" | "cancelled" | "unknown";
 
+// Discrepancy resolution action
+export type DiscrepancyAction = "resolved" | "dismissed";
+
+/**
+ * Discrepancy Resolution
+ * Closes the loop by updating the discrepancy status after review.
+ *
+ * - APPROVE decision → "resolved" (we updated our data to match)
+ * - REJECT decision (our data correct) → "dismissed" (aggregator was wrong)
+ */
+export interface DiscrepancyResolution {
+  ticker: string;
+  field: string; // Must match discrepancy_field enum: holdings, shares_outstanding, debt, cash, etc.
+  action: DiscrepancyAction;
+  notes: string;
+}
+
 // Fields that can be changed
 export type DataField =
   | "holdings"
@@ -504,6 +521,20 @@ export interface ChallengerOutput {
 
   dissent?: string | null;
   notes?: string;
+
+  /**
+   * ==========================================================================
+   * DISCREPANCY RESOLUTION
+   * Closes the loop by updating the discrepancy that triggered this review.
+   * ==========================================================================
+   *
+   * Required when decision is APPROVE or REJECT.
+   * - APPROVE → action: "resolved" (we're updating our data)
+   * - REJECT (our data correct) → action: "dismissed" (aggregator was wrong)
+   *
+   * Not required for REQUEST_MORE_INFO or ESCALATE (review is incomplete).
+   */
+  discrepancyResolution?: DiscrepancyResolution;
 }
 
 /**
@@ -683,6 +714,24 @@ export function validateChallengerVerification(output: ChallengerOutput): string
     const check = verification[name];
     if (!check.verified) {
       issues.push(`${name}: not verified by Challenger`);
+    }
+  }
+
+  // Validate discrepancy resolution for final decisions
+  if (output.decision === "APPROVE" || output.decision === "REJECT") {
+    if (!output.discrepancyResolution) {
+      issues.push("discrepancyResolution: required for APPROVE/REJECT decisions to close the loop");
+    } else {
+      // Validate resolution matches decision
+      if (output.decision === "APPROVE" && output.discrepancyResolution.action !== "resolved") {
+        issues.push("discrepancyResolution: APPROVE decision should have action='resolved'");
+      }
+      if (output.decision === "REJECT" && output.discrepancyResolution.action !== "dismissed") {
+        issues.push("discrepancyResolution: REJECT decision should have action='dismissed'");
+      }
+      if (!output.discrepancyResolution.notes) {
+        issues.push("discrepancyResolution: notes are required");
+      }
     }
   }
 

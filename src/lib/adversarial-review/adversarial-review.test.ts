@@ -401,6 +401,12 @@ describe("Challenger Output Validation", () => {
     conditions: [],
     confidence: "high",
     dissent: null,
+    discrepancyResolution: {
+      ticker: "MSTR",
+      field: "holdings",
+      action: "resolved",
+      notes: "Updated holdings to 471,107 BTC per SEC 8-K filing",
+    },
   };
 
   const rejectOutput: ChallengerOutput = {
@@ -445,6 +451,12 @@ describe("Challenger Output Validation", () => {
     evidenceNeeded:
       "Use the diluted share count (470M) from the same SEC filing",
     dissent: null,
+    discrepancyResolution: {
+      ticker: "MARA",
+      field: "shares_outstanding",
+      action: "dismissed",
+      notes: "Our value (470M diluted) is correct. mNAV.com showed basic shares (378M) which is incorrect for mNAV calculation.",
+    },
   };
 
   const escalateOutput: ChallengerOutput = {
@@ -525,6 +537,58 @@ describe("Challenger Output Validation", () => {
     const issues = validateChallengerVerification(invalidOutput);
     expect(issues.length).toBeGreaterThan(0);
     expect(issues.some(i => i.includes("pressReleaseCheck"))).toBe(true);
+  });
+
+  it("should require discrepancyResolution for APPROVE decisions", () => {
+    const outputWithoutResolution: ChallengerOutput = {
+      ...approveVerifiedOutput,
+      discrepancyResolution: undefined,
+    };
+    const issues = validateChallengerVerification(outputWithoutResolution);
+    expect(issues.some(i => i.includes("discrepancyResolution"))).toBe(true);
+  });
+
+  it("should require discrepancyResolution for REJECT decisions", () => {
+    const outputWithoutResolution: ChallengerOutput = {
+      ...rejectOutput,
+      discrepancyResolution: undefined,
+    };
+    const issues = validateChallengerVerification(outputWithoutResolution);
+    expect(issues.some(i => i.includes("discrepancyResolution"))).toBe(true);
+  });
+
+  it("should not require discrepancyResolution for ESCALATE decisions", () => {
+    const issues = validateChallengerVerification(escalateOutput);
+    // ESCALATE doesn't need discrepancyResolution since review is incomplete
+    expect(issues.some(i => i.includes("discrepancyResolution"))).toBe(false);
+  });
+
+  it("should validate APPROVE has action='resolved'", () => {
+    const wrongAction: ChallengerOutput = {
+      ...approveVerifiedOutput,
+      discrepancyResolution: {
+        ticker: "MSTR",
+        field: "holdings",
+        action: "dismissed", // Wrong - should be "resolved" for APPROVE
+        notes: "Test",
+      },
+    };
+    const issues = validateChallengerVerification(wrongAction);
+    expect(issues.some(i => i.includes("action='resolved'"))).toBe(true);
+  });
+
+  it("should validate REJECT has action='dismissed'", () => {
+    const wrongAction: ChallengerOutput = {
+      ...rejectOutput,
+      discrepancyResolution: {
+        ticker: "MARA",
+        field: "shares_outstanding",
+        action: "resolved", // Wrong - should be "dismissed" for REJECT
+        notes: "Test",
+      },
+    };
+    const issues = validateChallengerVerification(wrongAction);
+    expect(issues.some(i => i.includes("action='dismissed'"))).toBe(true);
   });
 });
 
