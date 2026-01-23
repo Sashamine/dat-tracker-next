@@ -500,11 +500,11 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 5_000_000,
-    marketCap: 150_000_000,
-    sharesForMnav: 35_000_000,  // From holdings-history.ts
+    marketCap: 65_000_000,  // ~SEK 677M / 10.4 USD/SEK (Jan 2026)
+    sharesForMnav: 335_250_000,  // 335.25M shares (stockanalysis.com Jan 2026) - massive 2025 dilution from directed issues
     leader: "Adam Back (investor)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
-    notes: "Stockholm listed. ISK-eligible for Swedish investors. SEK 265M financing.",
+    notes: "Stockholm listed. ISK-eligible. Adam Back invested SEK 492M. Acquiring Future Holdings.",
   },
   {
     id: "naka",
