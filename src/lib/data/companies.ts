@@ -428,8 +428,8 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 15_000_000,  // Combined burn
     avgDailyVolume: 100_000_000,  // Increased post-merger
     hasOptions: true,
-    marketCap: 850_000_000,  // ~$850M per Yahoo Finance (Jan 2026)
-    sharesForMnav: 45_000_000,  // From holdings-history.ts
+    marketCap: 1_110_000_000,  // ~$1.11B per Stock Analysis (Jan 2026)
+    sharesForMnav: 1_160_000_000,  // ~1.16B (Ramaswamy 9.8% = 113.9M shares → total)
     cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
     restrictedCash: 77_780_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 2026",
