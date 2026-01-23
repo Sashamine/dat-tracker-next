@@ -189,7 +189,7 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 1820, sharesOutstandingDiluted: 48_052_778, holdingsPerShare: 0.0000379, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 1950, sharesOutstandingDiluted: 46_838_532, holdingsPerShare: 0.0000416, source: "Q3 2025 10-Q" },
   { date: "2025-12-31", holdings: 2100, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000438, source: "Q4 2025 10-K est" },
-  { date: "2026-01-10", holdings: 2200, sharesOutstandingDiluted: 49_000_000, holdingsPerShare: 0.0000449, source: "8-K filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K", sourceType: "sec-filing" },
+  { date: "2026-01-10", holdings: 2200, sharesOutstandingDiluted: 47_100_000, holdingsPerShare: 0.0000467, source: "8-K filing", sharesSource: "SEC 10-Q Q3 2025 (decreased due to buybacks)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K", sourceType: "sec-filing" },
 ];
 
 // Bit Digital - ETH miner and holder
@@ -260,7 +260,7 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-02-28", holdings: 3350, sharesOutstandingDiluted: 664_000_000, holdingsPerShare: 0.00000505, source: "Press release" },
   { date: "2025-08-22", holdings: 3670, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000535, source: "Press release" },
   { date: "2025-09-16", holdings: 3925, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000572, source: "HKEX filing" },
-  { date: "2025-11-17", holdings: 4091, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000596, source: "Sep 2025 HK$370M placement complete", sourceUrl: "https://bitcointreasuries.net/entities/boyaa-interactive-international", sourceType: "aggregator" },
+  { date: "2025-11-17", holdings: 4091, sharesOutstandingDiluted: 729_120_000, holdingsPerShare: 0.00000561, source: "Q3 2025 results (Sep 2025 ~60M share placement)", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf", sourceType: "company-filing" },
 ];
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
@@ -277,6 +277,7 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-14", holdings: 3967210, sharesOutstandingDiluted: 410_000_000, holdingsPerShare: 0.009676, source: "Press release" },
   { date: "2025-12-28", holdings: 4110525, sharesOutstandingDiluted: 425_000_000, holdingsPerShare: 0.009672, source: "Press release" },
   { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, source: "Press release", sourceUrl: "https://bitmine.com/press-releases", sourceType: "press-release" },
+  { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, source: "Press release", sharesSource: "Jan 15 shareholder vote (454.9M)", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html", sourceType: "press-release" },
 ];
 
 // Nakamoto Holdings (NAKA) - Merged with KindlyMD
