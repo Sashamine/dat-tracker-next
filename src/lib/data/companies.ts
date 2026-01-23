@@ -523,7 +523,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 500_000_000,  // From holdings-history.ts
+    sharesForMnav: 440_000_000,  // ~440M per Stock Analysis Jan 2026 (Yorkville converts redeemed Oct 2025)
     // Debt: $200M Yorkville convertible notes + $210M Kraken BTC-backed credit facility (Dec 2025)
     totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
     debtSource: "Press releases",
