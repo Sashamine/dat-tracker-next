@@ -398,18 +398,18 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 250_000_000,
     hasOptions: true,
     marketCap: 3_040_000_000,
-    sharesForMnav: 329_000_000,  // 329M diluted shares (Q3 2025)
+    sharesForMnav: 332_740_000,  // 332.7M per mNAV.com Jan 2026
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Zach Bradford (CEO)",
     strategy: "Efficient US miner. 50 EH/s. DAM derivatives program.",
-    // Debt: $1.15B 0% convertible notes due 2032 (Nov 2025) + $400M BTC-backed credit (Two Prime, largely undrawn)
-    totalDebt: 1_150_000_000,
-    debtSource: "Press release Nov 2025",
-    debtAsOf: "2025-11-11",
-    notes: "$1.15B 0% converts (Nov 2025). $400M BTC-backed credit capacity (largely undrawn).",
+    // Debt: $550M 0% converts due 2030 (Dec 2024) + $1.15B 0% converts due 2032 (Nov 2025) = $1.7B total
+    totalDebt: 1_700_000_000,  // $550M (2030) + $1.15B (2032) convertible notes
+    debtSource: "SEC filings Dec 2024 + Nov 2025",
+    debtAsOf: "2025-11-13",
+    notes: "$1.7B total converts: $550M due 2030 + $1.15B due 2032. $400M BTC-backed credit (largely undrawn).",
   },
   {
     id: "asst",
