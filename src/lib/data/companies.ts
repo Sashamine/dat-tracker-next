@@ -456,14 +456,14 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 49_000_000,  // From holdings-history.ts
-    cashReserves: 20_000_000,  // ~$20M cash (Q3 2025)
-    restrictedCash: 20_000_000,  // Pending BTC purchase - not excess
+    sharesForMnav: 45_650_000,  // Stock Analysis Jan 2026; post reverse split (1:8 Jun 2025) + ATM activity
+    cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
+    restrictedCash: 20_600_000,  // Pending BTC purchase - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
-    notes: "NASA supplier. 291% BTC Yield YTD. ATM + Coinbase credit facility.",
+    notes: "NASA supplier. 291% BTC Yield YTD. ATM + Coinbase credit facility. $120M BTC treasury per Q3 earnings.",
   },
   {
     id: "altbg",

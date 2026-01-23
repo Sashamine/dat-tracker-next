@@ -232,7 +232,7 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 // KULR Technology - Bitcoin First Company
 // Note: 1-for-8 reverse stock split on June 23, 2025
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// Corrected to 45.67M FD shares per Q3 2025 10-Q (post-split adjusted)
+// Q3 2025 earnings: $120M BTC treasury, no new BTC count announced since July
 const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 214_227_808, holdingsPerShare: 0.00000101, source: "Initial BTC purchase 8-K" },
   { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 240_000_000, holdingsPerShare: 0.00000179, source: "8-K filing" },
@@ -243,6 +243,7 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (1-for-8) - SEC shows split-adjusted shares
   { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "Press release + reverse split" },
   { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "GlobeNewswire press release", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/10/3113243/0/en/KULR-Expands-Bitcoin-Holdings-to-1-021-BTC-Reports-291-2-BTC-Yield.html", sourceType: "press-release" },
+  { date: "2026-01-23", holdings: 1021, sharesOutstandingDiluted: 45_650_000, holdingsPerShare: 0.0000224, source: "No new purchases since Jul 2025", sharesSource: "Stock Analysis Jan 2026", sourceType: "aggregator" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
