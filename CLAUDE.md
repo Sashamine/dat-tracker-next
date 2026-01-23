@@ -62,6 +62,18 @@ Do NOT see a discrepancy and immediately fix it. That leads to errors.
 - "News article reports X" - that's a claim about what someone else said
 - "Aggregator shows X" - aggregators can be wrong
 
+### Derived Values Are Not Verified
+
+**If your number requires math, it's not verified.**
+
+Example: "Ramaswamy owns 113.9M shares at 9.8% stake → 1.16B total shares"
+
+This is a *derived* value. Even if the inputs are from SEC filings, the calculated output is not verified. A filing might state a different total due to rounding, timing, or share classes you missed.
+
+**Rule: Always search for a filing that states the number directly before accepting a derived value.**
+
+If a direct source exists (e.g., DEF 14C listing "1,049,527,531 Class A + 197,909,283 Class B"), use that instead of your calculation.
+
 ### Before Any Data Edit, Answer These Questions
 
 1. What is the existing value and where did it come from? (check git)

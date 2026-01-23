@@ -613,7 +613,7 @@ const ASST_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 2058, sharesOutstandingDiluted: 15_159_895, holdingsPerShare: 0.0001357, source: "SMLR: Q3 2025 10-Q" },
   { date: "2025-12-31", holdings: 2300, sharesOutstandingDiluted: 16_000_000, holdingsPerShare: 0.0001438, source: "SMLR: Q4 2025 10-K est" },
   // Post-merger Strive + Semler combined
-  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.0002844, source: "Post-Semler merger 8-K", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=8-K", sourceType: "sec-filing" },
+  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001026, source: "SEC DEF 14C: 1.05B Class A + 198M Class B", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
 ];
 
 // ==================== BNB COMPANIES ====================

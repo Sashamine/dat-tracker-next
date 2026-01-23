@@ -429,7 +429,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 100_000_000,  // Increased post-merger
     hasOptions: true,
     marketCap: 1_110_000_000,  // ~$1.11B per Stock Analysis (Jan 2026)
-    sharesForMnav: 1_160_000_000,  // ~1.16B (Ramaswamy 9.8% = 113.9M shares → total)
+    sharesForMnav: 1_247_436_814,  // SEC DEF 14C Jan 16, 2026: 1.05B Class A + 198M Class B
     cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
     restrictedCash: 77_780_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 2026",
