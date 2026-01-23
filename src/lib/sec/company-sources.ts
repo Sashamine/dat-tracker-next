@@ -128,24 +128,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
     trustLevel: 'official',
     extractionHints: 'Monthly mining updates with total BTC holdings. Look for "total of X bitcoin".',
   },
-  {
-    ticker: 'HUT',
-    name: 'Hut 8',
-    asset: 'BTC',
-    secCik: '0001964789',
-    secFilingPatterns: {
-      eightK: [/ex99|ex-99|press|release/i],
-    },
-    irPageUrl: 'https://hut8.com/investors/news/',
-    twitterHandles: ['@Haboringsmiining'],
-    aggregators: {
-      bitcoinTreasuries: 'hut-8-mining',
-      bitbo: 'hut-8',
-      theBlock: 'hut',
-    },
-    trustLevel: 'official',
-    extractionHints: 'Look for "Strategic Bitcoin reserve of X Bitcoin"',
-  },
+  // HUT removed - pivoted to AI/HPC infrastructure, not a DAT company
   {
     ticker: 'CORZ',
     name: 'Core Scientific',
@@ -267,23 +250,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
     trustLevel: 'official',
     extractionHints: 'Goal is 1M BTC ("one Nakamoto"). Check nakamoto.com for updates.',
   },
-  {
-    ticker: 'ABTC',
-    name: 'American Bitcoin',
-    asset: 'BTC',
-    secCik: '0002068580',
-    secFilingPatterns: {
-      eightK: [/ex99|ex-99|press|release/i],
-    },
-    holdingsPageUrl: 'https://www.abtc.com/',
-    twitterHandles: ['@americanbtc'],
-    aggregators: {
-      bitcoinTreasuries: 'american-bitcoin-corp',
-      theBlock: 'abtc',
-    },
-    trustLevel: 'official',
-    extractionHints: '80% owned by Hut 8. Check for "strategic reserve" updates.',
-  },
+  // ABTC removed - miner (80% owned by HUT), not a DAT company
   {
     ticker: 'CEPO',
     name: 'BSTR Holdings (Bitcoin Standard Treasury)',

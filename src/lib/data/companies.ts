@@ -601,61 +601,8 @@ export const btcCompanies: Company[] = [
     notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025.",
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
-  {
-    id: "abtc",
-    name: "American Bitcoin",
-    ticker: "ABTC",
-    asset: "BTC",
-    tier: 1,
-    holdings: 5_427,  // Jan 2, 2026 - company announcement
-    holdingsLastUpdated: "2026-01-02",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.abtc.com/content/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings",
-    datStartDate: "2025-06-01",
-    costBasisAvg: 85_000,
-    isMiner: true,
-    btcMinedAnnual: 2_000,
-    quarterlyBurnUsd: 15_000_000,
-    avgDailyVolume: 30_000_000,
-    hasOptions: true,
-    marketCap: 800_000_000,
-    sharesForMnav: 920_000_000,  // From holdings-history.ts
-    leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
-    strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
-    notes: "80% owned by Hut 8 (HUT). ⚠️ No SEC 10-Q/10-K filings - holdings unverified by regulatory filings.",
-  },
-  {
-    id: "hut",
-    name: "Hut 8",
-    ticker: "HUT",
-    asset: "BTC",
-    tier: 1,
-    holdings: 10_278,  // Standalone (excludes ABTC subsidiary) - Q3 2025
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001964789&type=10-Q",
-    datStartDate: "2024-01-01",
-    secCik: "0001964789",
-    costBasisAvg: 24_000,
-    isMiner: true,
-    btcMinedAnnual: 4_500,
-    quarterlyBurnUsd: 45_000_000,
-    avgDailyVolume: 150_000_000,
-    hasOptions: true,
-    marketCap: 6_770_000_000,  // ~$6.77B (Jan 2026)
-    sharesForMnav: 108_000_000,  // 108M diluted shares (Q3 2025)
-    // Debt: $265M BTC-backed credit facilities (Coinbase + Two Prime at ~8.2% WACC) + Coatue convertible note
-    totalDebt: 490_000_000,  // ~$490M total
-    debtSource: "Press releases + SEC filings",
-    debtAsOf: "2025-12-31",
-    cashReserves: 35_000_000,  // ~$35M cash
-    restrictedCash: 35_000_000,  // Operating capital (miner) - not excess
-    cashSource: "SEC 10-Q Q3 2025",
-    cashAsOf: "2025-09-30",
-    leader: "Asher Genoot (CEO)",
-    strategy: "HODL miner with diversified revenue streams (hosting, HPC).",
-    notes: "Standalone holdings (ABTC listed separately). Owns 80% of ABTC. $265M BTC-backed credit capacity.",
-  },
+  // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
+  // ABTC (American Bitcoin) removed - miner (80% owned by HUT), not a DAT company
   {
     id: "corz",
     name: "Core Scientific",

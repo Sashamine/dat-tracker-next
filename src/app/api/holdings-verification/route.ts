@@ -24,7 +24,7 @@ async function fetchRecentSECFilings(): Promise<any[]> {
       "ASST": "0001920406",
       "KULR": "0001662684",
       "DJT": "0001849635",
-      "HUT": "0001964789",
+      // "HUT" removed - pivoted to AI/HPC, not a DAT company
       "CORZ": "0001878848",
     };
 

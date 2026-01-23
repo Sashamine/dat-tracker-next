@@ -114,21 +114,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-18",
   },
 
-  HUT: {
-    ticker: "HUT",
-    name: "Hut 8 Corp",
-    investorRelations: "https://hut8.com/investors/",
-    secCik: "1964789",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001964789",
-    exchange: "NASDAQ",
-    blockworksUrl: "https://blockworks.com/analytics/HUT",
-    sharesSource: "diluted",
-    sharesNotes: "Uses WeightedAverageNumberOfDilutedSharesOutstanding from 10-Q.",
-    reportsHoldingsFrequency: "monthly",
-    reportsMnavDaily: false,
-    notes: "Merged with US Bitcoin Corp Nov 2023. Monthly reserve updates.",
-    lastVerified: "2026-01-18",
-  },
+  // HUT removed - pivoted to AI/HPC infrastructure, not a DAT company
 
   CORZ: {
     ticker: "CORZ",
@@ -452,18 +438,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-22",
   },
 
-  ABTC: {
-    ticker: "ABTC",
-    name: "American Bitcoin Corp",
-    secCik: "1755953",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953",
-    exchange: "NASDAQ",
-    sharesSource: "diluted",
-    reportsHoldingsFrequency: "quarterly",
-    reportsMnavDaily: false,
-    notes: "Hut 8 subsidiary. Merged with Gryphon Digital Mining.",
-    lastVerified: "2026-01-22",
-  },
+  // ABTC removed - miner (80% owned by HUT), not a DAT company
 
   ASST: {
     ticker: "ASST",

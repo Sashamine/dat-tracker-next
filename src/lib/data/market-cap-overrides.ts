@@ -22,7 +22,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "BMNR": 14_170_000_000,     // $14.17B - Bitmine (~430M shares × $31.20, Jan 2026)
 
   // === BTC Miners with significant debt ===
-  "HUT": 6_770_000_000,       // $6.77B - Hut 8 Mining (13,696 BTC reserve, $350M debt)
+  // "HUT" removed - pivoted to AI/HPC, not a DAT company
   "CORZ": 5_300_000_000,      // $5.3B - Core Scientific ($1.2B debt, emerged from bankruptcy)
   "BTDR": 2_300_000_000,      // $2.3B - Bitdeer ($730M convertible notes)
 

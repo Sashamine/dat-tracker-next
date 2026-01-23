@@ -289,15 +289,7 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-12", holdings: 5398, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000108, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },
 ];
 
-// American Bitcoin Corp (ABTC) - Hut 8 subsidiary, formerly tied to Eric Trump's American Data Centers
-const ABTC_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 2100, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.0000117, source: "Q2 2024 filing" },
-  { date: "2024-09-30", holdings: 3200, sharesOutstandingDiluted: 195_000_000, holdingsPerShare: 0.0000164, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 4300, sharesOutstandingDiluted: 210_000_000, holdingsPerShare: 0.0000205, source: "Q4 2024 10-K" },
-  { date: "2025-03-31", holdings: 5098, sharesOutstandingDiluted: 225_000_000, holdingsPerShare: 0.0000227, source: "Q1 2025 10-Q" },
-  { date: "2025-10-24", holdings: 3865, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.0000045, source: "Press release" },
-  { date: "2025-12-14", holdings: 5098, sharesOutstandingDiluted: 920_000_000, holdingsPerShare: 0.0000055, source: "Top 20 announcement", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=8-K", sourceType: "sec-filing" },
-];
+// ABTC (American Bitcoin) removed - miner (80% owned by HUT), not a DAT company
 
 // Next Technology Holding (NXTT) - BTC treasury company
 // NOTE: 200-for-1 reverse stock split effective Sep 16, 2025
@@ -557,19 +549,7 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 
 // Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// NOTE: mNAV shows 14,460 BTC but Bitbo/TheBlock/BTreasuries all show 13,696.
-// mNAV may be incorrect here - flagged for review. Our value matches 3 other aggregators.
-const HUT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2023-12-31", holdings: 9195, sharesOutstandingDiluted: 95_500_000, holdingsPerShare: 0.0000963, source: "Dec 2023 Report" },
-  { date: "2024-03-31", holdings: 9102, sharesOutstandingDiluted: 100_200_000, holdingsPerShare: 0.0000908, source: "Q1 2024 10-Q" },
-  { date: "2024-06-30", holdings: 9102, sharesOutstandingDiluted: 105_000_000, holdingsPerShare: 0.0000867, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 9106, sharesOutstandingDiluted: 108_000_000, holdingsPerShare: 0.0000843, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 10171, sharesOutstandingDiluted: 115_000_000, holdingsPerShare: 0.0000884, source: "Q4 2024 10-K" },
-  { date: "2025-03-31", holdings: 10264, sharesOutstandingDiluted: 118_000_000, holdingsPerShare: 0.0000870, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 10667, sharesOutstandingDiluted: 120_000_000, holdingsPerShare: 0.0000889, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 13696, sharesOutstandingDiluted: 121_760_000, holdingsPerShare: 0.0001125, source: "Q3 2025 10-Q" },
-  { date: "2026-01-03", holdings: 13696, sharesOutstandingDiluted: 125_000_000, holdingsPerShare: 0.0001096, source: "$200M Coinbase credit facility", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001964789&type=8-K", sourceType: "sec-filing" },
-];
+// HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
 
 // Core Scientific (CORZ) - Emerged from bankruptcy Jan 2024
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding (estimated ~15% dilution)
@@ -694,13 +674,13 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },
   "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
   ASST: { ticker: "ASST", asset: "BTC", history: ASST_HISTORY },
-  HUT: { ticker: "HUT", asset: "BTC", history: HUT_HISTORY },
+  // HUT removed - pivoted to AI/HPC infrastructure, not a DAT company
   CORZ: { ticker: "CORZ", asset: "BTC", history: CORZ_HISTORY },
   BTDR: { ticker: "BTDR", asset: "BTC", history: BTDR_HISTORY },
   DJT: { ticker: "DJT", asset: "BTC", history: DJT_HISTORY },
   XXI: { ticker: "XXI", asset: "BTC", history: XXI_HISTORY },
   NAKA: { ticker: "NAKA", asset: "BTC", history: NAKA_HISTORY },
-  ABTC: { ticker: "ABTC", asset: "BTC", history: ABTC_HISTORY },
+  // ABTC removed - miner (80% owned by HUT), not a DAT company
   NXTT: { ticker: "NXTT", asset: "BTC", history: NXTT_HISTORY },
   ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
   "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },

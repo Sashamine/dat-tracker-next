@@ -19,7 +19,7 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "MARA": "0001507605",  // MARA Holdings
   "RIOT": "0001167419",  // Riot Platforms
   "CLSK": "0000827876",  // CleanSpark
-  "HUT": "0001964789",   // Hut 8
+  // "HUT": "0001964789", // Removed - pivoted to AI/HPC, not a DAT company
   "CORZ": "0001839341",  // Core Scientific
   "BTDR": "0001899123",  // Bitdeer
   "KULR": "0001662684",  // KULR Technology
@@ -29,7 +29,7 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "CEPO": "0001865602",  // Same as XXI
   "ASST": "0001920406",  // Strive (acquired Semler Jan 2026)
   "NXTT": "0001784970",  // Next Technology Holding
-  "ABTC": "0002068580",  // American Bitcoin
+  // "ABTC": "0002068580", // Removed - miner (80% owned by HUT), not a DAT company
   // ETH
   "BMNR": "0001829311",  // Bitmine Immersion
   "SBET": "0001981535",  // SharpLink Gaming

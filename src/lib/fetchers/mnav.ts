@@ -18,7 +18,7 @@ const MNAV_SLUGS: Record<string, string> = {
   'CLSK': 'cleanspark',
   'CORZ': 'core-scientific',
   'BTDR': 'bitdeer',
-  'HUT': 'hut-8',
+  // 'HUT': 'hut-8', // Removed - pivoted to AI/HPC, not a DAT company
   'BITF': 'bitfarms',
   'CIFR': 'cipher',
   'BTBT': 'bit-digital',
