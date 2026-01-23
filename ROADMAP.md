@@ -1,8 +1,8 @@
 # DAT Tracker Data Architecture Roadmap
 
 > **Last Updated**: 2026-01-22
-> **Current Phase**: 7c - Confidence Scoring
-> **Status**: Phase 7a & 7b complete. Next: confidence scoring for auto-resolve
+> **Current Phase**: 7d - Manual Review Process
+> **Status**: Phase 7a, 7b & 7c complete. Next: automated flagging for manual review
 
 ---
 
@@ -351,9 +351,16 @@ Enhance comparison engine to verify sources, not just compare numbers.
 - [x] Test: Fetcher error handling
 
 ### Phase 7c: Confidence Scoring
-**Status**: NOT STARTED
+**Status**: COMPLETE
 
 Determine when to auto-resolve vs flag for manual review.
+
+**Completed (2026-01-22):**
+- [x] Created `confidence-scorer.ts` module with calculateConfidence function
+- [x] Integrated confidence scoring into comparison engine
+- [x] Updated Discord notifications with confidence levels and action counts
+- [x] Added known bad source tracking (mNAV.com for GAME holdings)
+- [x] 5% tolerance for "agreement" between our value and external sources
 
 **Confidence levels:**
 | Level | Criteria | Action |
@@ -364,19 +371,31 @@ Determine when to auto-resolve vs flag for manual review.
 | LOW | Our source invalid or missing | Flag for review |
 | LOW | Estimate without methodology | Flag for review |
 
+**Recommended actions:**
+| Action | Meaning |
+|--------|---------|
+| `auto_confirm` | Our value is correct, no action needed |
+| `log_external_error` | Our value correct, external source is wrong (logged) |
+| `review_conflict` | Sources disagree, needs manual review |
+| `review_unverified` | Our source is invalid/missing, needs review |
+
 **Thresholds:**
 - Auto-confirm: HIGH confidence
 - Flag for review: MEDIUM or LOW confidence
 - Block changes: No source verification possible
 
-**Tests for 7c:**
-- [ ] Test: Source verifies + external agrees → HIGH confidence
-- [ ] Test: Source verifies + known bad external → HIGH confidence
-- [ ] Test: Source verifies + external disagrees → MEDIUM confidence
-- [ ] Test: Source invalid → LOW confidence
-- [ ] Test: Estimate without methodology → LOW confidence
-- [ ] Test: HIGH confidence → auto-resolve action taken
-- [ ] Test: LOW confidence → flagged for manual review
+**Tests for 7c:** ✅ All passing (16 tests)
+- [x] Test: Source verifies + external agrees → HIGH confidence
+- [x] Test: Source verifies + known bad external → HIGH confidence (log_external_error)
+- [x] Test: Source verifies + external disagrees → MEDIUM confidence
+- [x] Test: Source invalid → LOW confidence
+- [x] Test: Source drift → LOW confidence
+- [x] Test: No sourceUrl → LOW confidence
+- [x] Test: Source available but external agrees → MEDIUM confidence
+- [x] Test: Source available but external disagrees → LOW confidence
+- [x] Test: Empty source values → HIGH confidence
+- [x] Test: Zero values → HIGH confidence
+- [x] Test: formatConfidenceResult formatting
 
 ### Phase 7d: Manual Review Process
 **Status**: COMPLETE (documented in CLAUDE.md)
@@ -504,5 +523,5 @@ Historical entries (2020-2025) currently lack sourceUrl. This doesn't block the 
 
 ### Phase 0-3: Planning, Schema, Fetchers, Comparison
 - All complete, see git history
-- 160 tests passing
+- 200 tests passing
 - Fetchers built for: mNAV, Strategy, SharpLink, SEC XBRL, Metaplanet, LiteStrategy

@@ -129,6 +129,12 @@ export async function sendDiscordEmbed(embed: DiscordEmbed): Promise<boolean> {
 type VerificationStatus = 'verified' | 'source_drift' | 'source_invalid' | 'source_available' | 'unverified';
 
 /**
+ * Confidence level from confidence-scorer (Phase 7c)
+ */
+type ConfidenceLevel = 'high' | 'medium' | 'low';
+type RecommendedAction = 'auto_confirm' | 'review_conflict' | 'review_unverified' | 'log_external_error';
+
+/**
  * Send a discrepancy summary report
  */
 export async function sendDiscrepancySummary(
@@ -142,6 +148,11 @@ export async function sendDiscrepancySummary(
     verification?: {
       status: VerificationStatus;
       sourceFetchedValue?: number;
+    };
+    confidence?: {
+      level: ConfidenceLevel;
+      action: RecommendedAction;
+      reason: string;
     };
   }>,
   runDuration: number
@@ -185,32 +196,39 @@ export async function sendDiscrepancySummary(
     inline: true,
   });
 
-  // Phase 7b: Verification summary
-  const verified = discrepancies.filter(d => d.verification?.status === 'verified').length;
-  const sourceDrift = discrepancies.filter(d => d.verification?.status === 'source_drift').length;
-  const sourceInvalid = discrepancies.filter(d => d.verification?.status === 'source_invalid').length;
-  const unverified = discrepancies.filter(d => !d.verification || d.verification.status === 'unverified' || d.verification.status === 'source_available').length;
+  // Phase 7c: Confidence summary
+  const highConfidence = discrepancies.filter(d => d.confidence?.level === 'high').length;
+  const mediumConfidence = discrepancies.filter(d => d.confidence?.level === 'medium').length;
+  const lowConfidence = discrepancies.filter(d => d.confidence?.level === 'low').length;
+  const autoConfirm = discrepancies.filter(d => d.confidence?.action === 'auto_confirm' || d.confidence?.action === 'log_external_error').length;
+  const needsReview = discrepancies.filter(d => d.confidence?.action === 'review_conflict' || d.confidence?.action === 'review_unverified').length;
 
-  if (verified > 0 || sourceDrift > 0 || sourceInvalid > 0) {
-    fields.push({
-      name: 'Source Verification',
-      value: [
-        verified > 0 ? `✓ Verified: ${verified}` : null,
-        sourceDrift > 0 ? `⚠️ Drift: ${sourceDrift}` : null,
-        sourceInvalid > 0 ? `❌ Invalid: ${sourceInvalid}` : null,
-        unverified > 0 ? `? Unverified: ${unverified}` : null,
-      ].filter(Boolean).join('\n'),
-      inline: true,
-    });
-  }
+  fields.push({
+    name: 'Confidence',
+    value: [
+      `✓ High: ${highConfidence}`,
+      `⚠️ Medium: ${mediumConfidence}`,
+      `❌ Low: ${lowConfidence}`,
+    ].join('\n'),
+    inline: true,
+  });
 
-  // Major discrepancies (show details with verification status)
+  fields.push({
+    name: 'Action Required',
+    value: [
+      `Auto-confirmed: ${autoConfirm}`,
+      `**Needs review: ${needsReview}**`,
+    ].join('\n'),
+    inline: true,
+  });
+
+  // Major discrepancies (show details with confidence)
   if (major.length > 0) {
     const majorDetails = major.slice(0, 5).map(d => {
       const sourceName = Object.keys(d.sourceValues)[0];
       const sourceValue = d.sourceValues[sourceName]?.value;
-      const verifyStatus = d.verification?.status ? ` [${formatVerificationStatus(d.verification.status)}]` : '';
-      return `**${d.ticker}** ${d.field}: ours=${formatNumber(d.ourValue)} vs ${sourceName}=${formatNumber(sourceValue)} (${d.maxDeviationPct.toFixed(1)}%)${verifyStatus}`;
+      const confidenceInfo = d.confidence ? ` [${formatConfidenceLevel(d.confidence.level)}]` : '';
+      return `**${d.ticker}** ${d.field}: ours=${formatNumber(d.ourValue)} vs ${sourceName}=${formatNumber(sourceValue)} (${d.maxDeviationPct.toFixed(1)}%)${confidenceInfo}`;
     }).join('\n');
 
     fields.push({
@@ -271,5 +289,21 @@ function formatVerificationStatus(status: VerificationStatus): string {
       return '? unverified';
     default:
       return status;
+  }
+}
+
+/**
+ * Format confidence level for display (Phase 7c)
+ */
+function formatConfidenceLevel(level: ConfidenceLevel): string {
+  switch (level) {
+    case 'high':
+      return '✓ HIGH';
+    case 'medium':
+      return '⚠️ MEDIUM';
+    case 'low':
+      return '❌ LOW';
+    default:
+      return level;
   }
 }

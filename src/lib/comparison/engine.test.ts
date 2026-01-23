@@ -59,6 +59,11 @@ vi.mock('./source-verifier', () => ({
   verifySource: vi.fn().mockResolvedValue({ status: 'unverified' }),
 }));
 
+// Mock confidence-scorer to skip scoring in engine tests
+vi.mock('./confidence-scorer', () => ({
+  calculateConfidence: vi.fn().mockReturnValue({ level: 'low', action: 'review_unverified', reason: 'mocked' }),
+}));
+
 // Now import after mocks are set up
 import { loadOurValues, runComparison, compareOne, type OurValue, type ComparisonResult } from './engine';
 import { fetchers } from '../fetchers';

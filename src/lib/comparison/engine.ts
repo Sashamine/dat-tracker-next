@@ -17,6 +17,7 @@ import { fetchers, FetchResult, FetchError } from '../fetchers';
 import { query } from '../db';
 import type { HoldingsSource } from '../types';
 import { verifySource, VerificationResult } from './source-verifier';
+import { calculateConfidence, ConfidenceResult } from './confidence-scorer';
 
 // Types matching our schema
 export type ComparisonField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity';
@@ -45,6 +46,8 @@ export interface ComparisonResult {
   severity: 'minor' | 'moderate' | 'major';
   // Phase 7b: Source verification result
   verification?: VerificationResult;
+  // Phase 7c: Confidence scoring
+  confidence?: ConfidenceResult;
 }
 
 /**
@@ -314,6 +317,16 @@ export async function runComparison(options?: {
       );
       comparison.verification = verification;
 
+      // Phase 7c: Calculate confidence level
+      const confidence = calculateConfidence(
+        verification,
+        ourValue.value,
+        comparison.sourceValues,
+        ourValue.ticker,
+        ourValue.field
+      );
+      comparison.confidence = confidence;
+
       discrepancies.push(comparison);
 
       // Record in database
@@ -336,7 +349,8 @@ export async function runComparison(options?: {
     console.log(`\n[Comparison] Discrepancies found:`);
     for (const d of discrepancies) {
       const verifyStatus = d.verification?.status || 'unknown';
-      console.log(`  ${d.ticker} ${d.field}: ours=${d.ourValue}, sources=${JSON.stringify(d.sourceValues)}, deviation=${d.maxDeviationPct.toFixed(2)}% [${verifyStatus}]`);
+      const confidenceLevel = d.confidence?.level || 'unknown';
+      console.log(`  ${d.ticker} ${d.field}: ours=${d.ourValue}, deviation=${d.maxDeviationPct.toFixed(2)}% [${verifyStatus}] [${confidenceLevel}]`);
     }
   }
 
