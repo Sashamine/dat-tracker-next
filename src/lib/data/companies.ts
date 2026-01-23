@@ -398,7 +398,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 250_000_000,
     hasOptions: true,
     marketCap: 3_040_000_000,
-    sharesForMnav: 332_740_000,  // 332.7M per mNAV.com Jan 2026
+    sharesForMnav: 255_580_000,  // 255.58M basic after Nov 2025 buyback (Stock Analysis Jan 2026)
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
