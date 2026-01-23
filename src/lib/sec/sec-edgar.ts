@@ -29,7 +29,7 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "CEPO": "0001865602",  // Same as XXI
   "ASST": "0001920406",  // Strive (acquired Semler Jan 2026)
   "NXTT": "0001784970",  // Next Technology Holding
-  // "ABTC": "0002068580", // Removed - miner (80% owned by HUT), not a DAT company
+  "ABTC": "0002068580",  // American Bitcoin (miner with HODL strategy)
   // ETH
   "BMNR": "0001829311",  // Bitmine Immersion
   "SBET": "0001981535",  // SharpLink Gaming

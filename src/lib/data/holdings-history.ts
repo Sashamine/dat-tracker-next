@@ -289,7 +289,14 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-12", holdings: 5398, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000108, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },
 ];
 
-// ABTC (American Bitcoin) removed - miner (80% owned by HUT), not a DAT company
+// American Bitcoin Corp (ABTC) - Pure-play miner with HODL strategy
+const ABTC_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-06-30", holdings: 2100, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.0000117, source: "Q2 2025 filing" },
+  { date: "2025-09-30", holdings: 3418, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.0000040, source: "Q3 2025 - Hut 8 10-Q" },
+  { date: "2025-10-24", holdings: 3865, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.0000045, source: "Press release" },
+  { date: "2025-12-14", holdings: 4363, sharesOutstandingDiluted: 900_000_000, holdingsPerShare: 0.0000048, source: "Dec purchase announcement" },
+  { date: "2026-01-02", holdings: 5427, sharesOutstandingDiluted: 920_000_000, holdingsPerShare: 0.0000059, source: "Top 20 announcement", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html", sourceType: "press-release" },
+];
 
 // Next Technology Holding (NXTT) - BTC treasury company
 // NOTE: 200-for-1 reverse stock split effective Sep 16, 2025
@@ -680,7 +687,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   DJT: { ticker: "DJT", asset: "BTC", history: DJT_HISTORY },
   XXI: { ticker: "XXI", asset: "BTC", history: XXI_HISTORY },
   NAKA: { ticker: "NAKA", asset: "BTC", history: NAKA_HISTORY },
-  // ABTC removed - miner (80% owned by HUT), not a DAT company
+  ABTC: { ticker: "ABTC", asset: "BTC", history: ABTC_HISTORY },
   NXTT: { ticker: "NXTT", asset: "BTC", history: NXTT_HISTORY },
   ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
   "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },

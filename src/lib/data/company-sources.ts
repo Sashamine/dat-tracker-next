@@ -438,7 +438,18 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-22",
   },
 
-  // ABTC removed - miner (80% owned by HUT), not a DAT company
+  ABTC: {
+    ticker: "ABTC",
+    name: "American Bitcoin Corp",
+    secCik: "2068580",
+    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002068580",
+    exchange: "NASDAQ",
+    sharesSource: "diluted",
+    reportsHoldingsFrequency: "monthly",
+    reportsMnavDaily: false,
+    notes: "Pure-play BTC miner with HODL strategy. 80% owned by Hut 8. Active accumulation.",
+    lastVerified: "2026-01-23",
+  },
 
   ASST: {
     ticker: "ASST",

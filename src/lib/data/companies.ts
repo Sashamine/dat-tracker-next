@@ -602,7 +602,29 @@ export const btcCompanies: Company[] = [
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
-  // ABTC (American Bitcoin) removed - miner (80% owned by HUT), not a DAT company
+  {
+    id: "abtc",
+    name: "American Bitcoin",
+    ticker: "ABTC",
+    asset: "BTC",
+    tier: 1,
+    holdings: 5_427,  // Jan 2, 2026 - company announcement
+    holdingsLastUpdated: "2026-01-02",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
+    datStartDate: "2025-06-01",
+    costBasisAvg: 85_000,
+    isMiner: true,
+    btcMinedAnnual: 2_000,
+    quarterlyBurnUsd: 15_000_000,
+    avgDailyVolume: 30_000_000,
+    hasOptions: true,
+    marketCap: 800_000_000,
+    sharesForMnav: 920_000_000,
+    leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
+    strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
+    notes: "80% owned by Hut 8. Active BTC accumulation - added 1,064 BTC in Dec 2025.",
+  },
   {
     id: "corz",
     name: "Core Scientific",

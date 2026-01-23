@@ -250,7 +250,23 @@ export const COMPANY_SOURCES: CompanySource[] = [
     trustLevel: 'official',
     extractionHints: 'Goal is 1M BTC ("one Nakamoto"). Check nakamoto.com for updates.',
   },
-  // ABTC removed - miner (80% owned by HUT), not a DAT company
+  {
+    ticker: 'ABTC',
+    name: 'American Bitcoin',
+    asset: 'BTC',
+    secCik: '0002068580',
+    secFilingPatterns: {
+      eightK: [/ex99|ex-99|press|release/i],
+    },
+    holdingsPageUrl: 'https://www.abtc.com/',
+    twitterHandles: ['@americanbtc'],
+    aggregators: {
+      bitcoinTreasuries: 'american-bitcoin-corp',
+      theBlock: 'abtc',
+    },
+    trustLevel: 'official',
+    extractionHints: 'Pure-play miner with HODL strategy. 80% owned by Hut 8. Check for "strategic reserve" updates.',
+  },
   {
     ticker: 'CEPO',
     name: 'BSTR Holdings (Bitcoin Standard Treasury)',
