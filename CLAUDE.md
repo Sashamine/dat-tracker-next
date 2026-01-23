@@ -74,11 +74,22 @@ Do NOT see a discrepancy and immediately fix it. That leads to errors.
 
 ### MANDATORY: Data Freshness Check
 
-**Every time you see a date on a source, calculate days since that date.**
+**When investigating a discrepancy, check if the source date is >90 days old.**
 
-**If the source is >90 days old, you MUST search for recent activity before using that value.**
+**If stale (>90 days), search for recent activity ONCE per company before updating any fields.**
 
-This applies even to SEC filings. A Q3 10-Q (Sep 30) viewed in late January is 4 months stale.
+This is a per-company check, not per-field. Once you've verified a company has no recent activity, you can update all its fields without re-checking.
+
+#### When This Applies
+
+**DO run freshness check when:**
+- Investigating a discrepancy with a stale source (>90 days old)
+- First time touching a company's data in this session
+
+**DON'T run freshness check when:**
+- Source is fresh (<90 days old)
+- You already verified this company earlier in the same session
+- Simply reading data without modifying it
 
 #### The 3 Questions (Non-Negotiable)
 
