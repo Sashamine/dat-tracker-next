@@ -260,7 +260,7 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-02-28", holdings: 3350, sharesOutstandingDiluted: 664_000_000, holdingsPerShare: 0.00000505, source: "Press release" },
   { date: "2025-08-22", holdings: 3670, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000535, source: "Press release" },
   { date: "2025-09-16", holdings: 3925, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000572, source: "HKEX filing" },
-  { date: "2025-11-17", holdings: 4091, sharesOutstandingDiluted: 729_120_000, holdingsPerShare: 0.00000561, source: "Q3 2025 results (Sep 2025 ~60M share placement)", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf", sourceType: "company-filing" },
+  { date: "2025-11-17", holdings: 4091, sharesOutstandingDiluted: 729_120_000, holdingsPerShare: 0.00000561, source: "Q3 2025 results (Sep 2025 ~60M share placement)", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf", sourceType: "regulatory-filing" },
 ];
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
