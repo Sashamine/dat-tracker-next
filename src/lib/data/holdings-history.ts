@@ -397,12 +397,16 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-15", holdings: 6980000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08212, source: "Press release", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=8-K", sourceType: "press-release" },
 ];
 
-// Heliogen Solar (HSDT) - SOL treasury, formerly Solana Company
+// Helius Medical / Solana Company (HSDT) - SOL treasury
+// NOTE: 1-for-50 reverse stock split effective July 1, 2025
+// Pre-split: ~33.8M shares → Post-split: ~676K, then grew via offerings
 const HSDT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-11-01", holdings: 800000, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 0.0229, source: "SOL treasury announcement" },
-  { date: "2024-12-31", holdings: 1500000, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.0357, source: "Q4 2024 10-K" },
-  { date: "2025-06-30", holdings: 2200000, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.0440, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 2800000, sharesOutstandingDiluted: 58_000_000, holdingsPerShare: 0.0483, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001610853&type=10-Q", sourceType: "sec-filing" },
+  // Pre-split entries (adjusted for 1:50 split)
+  { date: "2024-11-01", holdings: 800000, sharesOutstandingDiluted: 700_000, holdingsPerShare: 1.143, source: "SOL treasury announcement (split-adj)" },
+  { date: "2024-12-31", holdings: 1500000, sharesOutstandingDiluted: 840_000, holdingsPerShare: 1.786, source: "Q4 2024 10-K (split-adj)" },
+  // Post reverse split (July 1, 2025)
+  { date: "2025-06-30", holdings: 2200000, sharesOutstandingDiluted: 1_000_000, holdingsPerShare: 2.200, source: "Q2 2025 10-Q (split-adj)" },
+  { date: "2025-09-30", holdings: 2800000, sharesOutstandingDiluted: 10_724_112, holdingsPerShare: 0.261, source: "companiesmarketcap.com", sourceUrl: "https://companiesmarketcap.com/helius-medical-technologies/shares-outstanding/", sourceType: "aggregator" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025

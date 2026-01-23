@@ -756,7 +756,7 @@ export const solCompanies: Company[] = [
     ticker: "HSDT",
     asset: "SOL",
     tier: 1,
-    holdings: 2_200_000,
+    holdings: 2_800_000,  // Q3 2025
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1610853&type=8-K",
@@ -766,7 +766,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.065,
     quarterlyBurnUsd: 12_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 58_000_000,  // From holdings-history.ts
+    sharesForMnav: 10_724_112,  // Post 1:50 reverse split (Jul 2025) + offerings - companiesmarketcap Jan 2026
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
