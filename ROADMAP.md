@@ -2,7 +2,7 @@
 
 > **Last Updated**: 2026-01-22
 > **Current Phase**: 7d - Manual Review Process
-> **Status**: Phase 7a, 7b & 7c complete. Next: automated flagging for manual review
+> **Status**: Phase 7a, 7b, 7c complete. Discrepancies review page built. Phase 7d partially complete.
 
 ---
 
@@ -398,7 +398,20 @@ Determine when to auto-resolve vs flag for manual review.
 - [x] Test: formatConfidenceResult formatting
 
 ### Phase 7d: Manual Review Process
-**Status**: COMPLETE (documented in CLAUDE.md)
+**Status**: IN PROGRESS
+
+For LOW confidence cases, manual review follows the adversarial process.
+
+**Completed (2026-01-22):**
+- [x] Created `/api/discrepancies` endpoint to fetch from database
+- [x] Created `/discrepancies` review page with filters (status, severity, time range)
+- [x] Simplified Discord alerts to summary + link (no more walls of text)
+- [x] Flow: Discord alert → click link → review page → start Claude session to investigate
+
+**Remaining:**
+- [ ] Test end-to-end flow with real discrepancies
+- [ ] Add ability to mark discrepancies as resolved/dismissed from UI (optional)
+- [ ] Track review outcomes (which value was correct)
 
 For LOW confidence cases, manual review follows the adversarial process:
 
