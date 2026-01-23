@@ -33,9 +33,9 @@ export async function GET(request: NextRequest) {
     holdingsFromHistory,
     sharesFromHistory,
     sharesFromCompanies: company?.sharesForMnav,
-    // Which value the comparison engine would use
+    // Which value the comparison engine would use (companies.ts first for shares)
     comparisonEngineWouldUse: {
-      shares: sharesFromHistory ?? company?.sharesForMnav,
+      shares: company?.sharesForMnav ?? sharesFromHistory,
       holdings: holdingsFromHistory ?? company?.holdings,
     },
   });

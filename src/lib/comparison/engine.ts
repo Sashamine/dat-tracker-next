@@ -53,9 +53,9 @@ export interface ComparisonResult {
 /**
  * Load our current values from holdings-history.ts (primary) and companies.ts (fallback)
  *
- * Priority mirrors what the frontend uses (via use-company-overrides.ts):
- * - Holdings: holdings-history.ts > companies.ts
- * - Shares: holdings-history.ts > companies.ts (sharesForMnav)
+ * Priority for comparison engine:
+ * - Holdings: holdings-history.ts > companies.ts (history is more granular)
+ * - Shares: companies.ts (sharesForMnav) > holdings-history.ts (companies.ts is actively maintained)
  * - Debt/Cash/Preferred: companies.ts (no history tracking yet)
  */
 export function loadOurValues(): OurValue[] {
@@ -76,9 +76,9 @@ export function loadOurValues(): OurValue[] {
       sourceType: snapshot?.sourceType,
     });
 
-    // Shares outstanding: prefer holdings-history.ts, fallback to companies.ts sharesForMnav
+    // Shares outstanding: prefer companies.ts sharesForMnav (actively maintained), fallback to holdings-history.ts
     const sharesFromHistory = getLatestDilutedShares(company.ticker);
-    const shares = sharesFromHistory ?? company.sharesForMnav;
+    const shares = company.sharesForMnav ?? sharesFromHistory;
     if (shares !== undefined) {
       values.push({
         ticker: company.ticker,
