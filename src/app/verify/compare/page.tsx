@@ -201,69 +201,79 @@ function CompanyRow({
             </div>
           </div>
 
-          {/* Comparisons */}
-          {Object.keys(state.result.comparisons).length > 0 ? (
-            <div className="space-y-2">
-              <h4 className="text-xs font-medium text-gray-700">Comparisons</h4>
-              {Object.entries(state.result.comparisons).map(([field, comparison]) => (
-                <div key={field} className="bg-white rounded border border-gray-200 p-2">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-gray-900 capitalize text-xs">
-                      {field.replace("_", " ")}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      Ours: {formatValue(comparison.ourValue, field)}
-                      {comparison.ourDate && ` (${comparison.ourDate})`}
-                    </span>
-                  </div>
-                  <div className="space-y-1">
-                    {comparison.fetched.map((f, i) => {
-                      const severity = getDeviationSeverity(f.deviationPct || "0%");
-                      return (
-                        <div
-                          key={i}
-                          className="flex items-center gap-2 text-xs flex-wrap"
-                        >
-                          <a
-                            href={f.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            {f.source}
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                          <span className="text-gray-700">
-                            {formatValue(f.value, field)}
-                          </span>
-                          <span className="text-gray-400">
-                            ({f.date})
-                          </span>
-                          {f.deviationPct && (
-                            <span
-                              className={`px-1 py-0.5 rounded text-xs font-medium ${
-                                severity === "ok"
-                                  ? "bg-green-100 text-green-800"
-                                  : severity === "minor"
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : "bg-red-100 text-red-800"
-                              }`}
+          {/* Comparisons - only show fields with actual discrepancies */}
+          {(() => {
+            // Filter to only show comparisons with discrepancies (deviation >= 0.5%)
+            const discrepancies = Object.entries(state.result.comparisons).filter(
+              ([, comparison]) => comparison.fetched.some((f) => {
+                const severity = getDeviationSeverity(f.deviationPct || "0%");
+                return severity !== "ok";
+              })
+            );
+
+            return discrepancies.length > 0 ? (
+              <div className="space-y-2">
+                <h4 className="text-xs font-medium text-gray-700">Discrepancies</h4>
+                {discrepancies.map(([field, comparison]) => (
+                  <div key={field} className="bg-white rounded border border-gray-200 p-2">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium text-gray-900 capitalize text-xs">
+                        {field.replace("_", " ")}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        Ours: {formatValue(comparison.ourValue, field)}
+                        {comparison.ourDate && ` (${comparison.ourDate})`}
+                      </span>
+                    </div>
+                    <div className="space-y-1">
+                      {comparison.fetched
+                        .filter((f) => getDeviationSeverity(f.deviationPct || "0%") !== "ok")
+                        .map((f, i) => {
+                          const severity = getDeviationSeverity(f.deviationPct || "0%");
+                          return (
+                            <div
+                              key={i}
+                              className="flex items-center gap-2 text-xs flex-wrap"
                             >
-                              {f.deviationPct}
-                            </span>
-                          )}
-                        </div>
-                      );
-                    })}
+                              <a
+                                href={f.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline flex items-center gap-1"
+                              >
+                                {f.source}
+                                <ExternalLink className="w-3 h-3" />
+                              </a>
+                              <span className="text-gray-700">
+                                {formatValue(f.value, field)}
+                              </span>
+                              <span className="text-gray-400">
+                                ({f.date})
+                              </span>
+                              {f.deviationPct && (
+                                <span
+                                  className={`px-1 py-0.5 rounded text-xs font-medium ${
+                                    severity === "minor"
+                                      ? "bg-yellow-100 text-yellow-800"
+                                      : "bg-red-100 text-red-800"
+                                  }`}
+                                >
+                                  {f.deviationPct}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-xs text-green-700 bg-green-50 p-2 rounded">
-              No discrepancies found.
-            </div>
-          )}
+                ))}
+              </div>
+            ) : (
+              <div className="text-xs text-green-700 bg-green-50 p-2 rounded">
+                No discrepancies with newer data sources.
+              </div>
+            );
+          })()}
 
           {/* Sources Checked */}
           <div className="mt-3 pt-2 border-t border-gray-200">
