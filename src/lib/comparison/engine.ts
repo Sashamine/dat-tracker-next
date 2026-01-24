@@ -173,12 +173,72 @@ async function recordFetchResult(
 }
 
 /**
+ * Check if there's a recent dismissal for this company/field with the SAME disagreement
+ * Same disagreement = same source reporting the same (wrong) value
+ * If the source updates to a different value, that's a NEW discrepancy to review
+ */
+async function hasRecentDismissal(
+  companyId: number,
+  field: ComparisonField,
+  currentSourceValues: Record<string, { value: number; url: string; date: string }>
+): Promise<boolean> {
+  // Check for dismissals in the last 30 days
+  const rows = await query<{ id: number; source_values: string }>(
+    `SELECT id, source_values FROM discrepancies
+     WHERE company_id = $1
+       AND field = $2
+       AND status = 'dismissed'
+       AND created_at > NOW() - INTERVAL '30 days'
+     ORDER BY created_at DESC
+     LIMIT 1`,
+    [companyId, field]
+  );
+
+  if (rows.length === 0) return false;
+
+  // Check if the dismissed discrepancy had the same source VALUES (not just names)
+  try {
+    const dismissedSources = JSON.parse(rows[0].source_values);
+
+    // For each current source, check if it was dismissed with the SAME value
+    for (const [sourceName, sourceData] of Object.entries(currentSourceValues)) {
+      const dismissed = dismissedSources[sourceName];
+      if (dismissed) {
+        // Same source exists in dismissed record - check if value is the same
+        // Allow 0.1% tolerance for floating point
+        const dismissedValue = dismissed.value;
+        const currentValue = sourceData.value;
+        const tolerance = Math.abs(dismissedValue) * 0.001;
+
+        if (Math.abs(dismissedValue - currentValue) <= tolerance) {
+          // Same source, same value = same disagreement, skip it
+          return true;
+        }
+        // Source has updated to a different value = new discrepancy
+      }
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Record a discrepancy in the database
+ * Skips if there's a recent dismissal with the SAME disagreement (same source, same value)
  */
 async function recordDiscrepancy(
   companyId: number,
   comparison: ComparisonResult
 ): Promise<number | null> {
+  // Check for recent dismissal with same disagreement
+  const wasDismissed = await hasRecentDismissal(companyId, comparison.field, comparison.sourceValues);
+
+  if (wasDismissed) {
+    console.log(`[Comparison] Skipping ${comparison.ticker} ${comparison.field} - recently dismissed for same sources`);
+    return null;
+  }
+
   const rows = await query<{ id: number }>(
     `INSERT INTO discrepancies (
       company_id, field, our_value, source_values, severity, max_deviation_pct
