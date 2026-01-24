@@ -129,11 +129,22 @@ export function useCompanyOverrides() {
     'NXTT',     // Next Technology (JPY)
   ];
 
-  // Add mNAV.com data (BTC companies) - only USD-denominated companies
+  // mNAV.com only tracks BTC treasury companies - don't use their data for ETH/other assets
+  // Using their data for non-BTC companies causes incorrect holdings (e.g., BTBT shows 0 BTC instead of 155K ETH)
+  const BTC_TREASURY_TICKERS = new Set([
+    'MSTR', 'MARA', 'RIOT', 'CLSK', 'BTDR', 'SMLR', 'KULR', 'DJT', 'NAKA', 'ABTC',
+    'XXI', 'ASST', '3350.T', '0434.HK', 'ALTBG', 'H100.ST',
+  ]);
+
+  // Add mNAV.com data (BTC companies only) - skip non-USD and non-BTC companies
   if (mnavQuery.data?.data) {
     for (const [ticker, data] of Object.entries(mnavQuery.data.data)) {
       // Skip non-USD companies to avoid currency mismatch in calculations
       if (NON_USD_TICKERS.includes(ticker)) {
+        continue;
+      }
+      // Skip non-BTC companies - mNAV.com returns wrong data for ETH/SOL/etc companies
+      if (!BTC_TREASURY_TICKERS.has(ticker)) {
         continue;
       }
       liveBalanceSheet[ticker] = {
