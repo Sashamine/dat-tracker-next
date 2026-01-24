@@ -394,12 +394,13 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL SOL COMPANIES ====================
 
 // Forward Industries (FWDI) - World's leading SOL treasury, launched Sept 2025
-// Sep 2025: $1.65B PIPE resulted in significant dilution (85M FD shares)
+// Sep 2025: $1.65B PIPE resulted in significant dilution (~86M FD shares)
+// Debt-free after PIPE raise
 const FWDI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-11", holdings: 6834506, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08041, source: "Initial $1.65B PIPE close", sharesSource: "PIPE 8-K" },
   { date: "2025-11-15", holdings: 6900000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08118, source: "Press release" },
-  { date: "2025-12-01", holdings: 6921342, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08143, source: "Shareholder update" },
-  { date: "2026-01-15", holdings: 6980000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.08212, source: "Press release", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=8-K", sourceType: "press-release" },
+  { date: "2025-12-01", holdings: 6921342, sharesOutstandingDiluted: 86_459_465, holdingsPerShare: 0.08006, source: "Shareholder update", sharesSource: "SEC 10-K Dec 11, 2025" },
+  { date: "2026-01-15", holdings: 6979967, sharesOutstandingDiluted: 86_459_465, holdingsPerShare: 0.08073, source: "Press release", sharesSource: "SEC 10-K Dec 11, 2025" },
 ];
 
 // Helius Medical / Solana Company (HSDT) - SOL treasury
