@@ -183,7 +183,7 @@ async function hasRecentDismissal(
   currentSourceValues: Record<string, { value: number; url: string; date: string }>
 ): Promise<boolean> {
   // Check for dismissals in the last 30 days
-  const rows = await query<{ id: number; source_values: string }>(
+  const rows = await query<{ id: number; source_values: string | Record<string, unknown> }>(
     `SELECT id, source_values FROM discrepancies
      WHERE company_id = $1
        AND field = $2
@@ -198,7 +198,10 @@ async function hasRecentDismissal(
 
   // Check if the dismissed discrepancy had the same source VALUES (not just names)
   try {
-    const dismissedSources = JSON.parse(rows[0].source_values);
+    // JSONB is already parsed by pg driver - handle both cases
+    const dismissedSources = typeof rows[0].source_values === 'string'
+      ? JSON.parse(rows[0].source_values)
+      : rows[0].source_values;
 
     // For each current source, check if it was dismissed with the SAME value
     for (const [sourceName, sourceData] of Object.entries(currentSourceValues)) {
