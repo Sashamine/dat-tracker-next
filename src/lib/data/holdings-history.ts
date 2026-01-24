@@ -131,19 +131,19 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
 // All historical numbers below are split-adjusted.
 //
 // SHARE STRUCTURE (Jan 2026):
-// - Issued (common): 1,140,974,340 (1.14B) - tradeable shares
+// - Issued (common): 1,142,274,340 (1.14B) - tradeable shares (Nov 2025 filing)
 // - Fully Diluted:   1,434,392,925 (1.43B) - includes convertible preferred
 // - Difference:      ~294M from preferred stock (Class B "MERCURY" etc.)
 //
 // PREFERRED STOCK:
 // - Class B "MERCURY" (Dec 2025): 23.61M shares, ¥1,000 conversion price
 // - Currently underwater (stock ¥510 vs conversion ¥1,000)
-// - Total preferred: ¥86.58B per mNAV.com
+// - Total preferred: ¥86.58B - handled via preferredEquity in companies.ts, NOT share dilution
 //
-// For mNAV calculation, we use Fully Diluted (1.43B) because:
-// - Preferred shareholders have economic claim on BTC value
-// - Conservative approach assumes worst-case dilution
-// - Consistent with mNAV.com methodology
+// For mNAV calculation, we use COMMON SHARES (1.14B) because:
+// - metaplanet.jp shows ~1.26x mNAV using this methodology
+// - Preferred stock value is captured via preferredEquity field in EV calculation
+// - Double-counting (diluted shares + preferredEquity) would inflate mNAV incorrectly
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 17_600_000, holdingsPerShare: 0.00000556, source: "Initial BTC purchase" },
   { date: "2024-05-13", holdings: 141.07, sharesOutstandingDiluted: 18_200_000, holdingsPerShare: 0.00000775, source: "Press release" },
@@ -157,9 +157,9 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 4206, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.00001357, source: "Q1 2025 TSE filing" },
   { date: "2025-06-30", holdings: 12850, sharesOutstandingDiluted: 420_000_000, holdingsPerShare: 0.00003060, source: "Q2 2025 TSE filing" },
   { date: "2025-09-30", holdings: 22500, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.00002647, source: "Q3 2025 TSE filing" },
-  // Fully Diluted from mNAV.com (issued=1.14B + ~294M convertible preferred)
-  // Confidence: MEDIUM | Issued: 1.14B | FD: 1.43B | Audit: 2026-01-22
-  { date: "2026-01-22", holdings: 35102, sharesOutstandingDiluted: 1_434_392_925, holdingsPerShare: 0.00002447, source: "Press release", sharesSource: "mNAV.com fullyDilutedShares (includes preferred)", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "company-website" },
+  // Common shares from Nov 2025 filing (xj-storage.jp) - matches metaplanet.jp methodology
+  // Preferred equity handled separately via preferredEquity field in companies.ts
+  { date: "2026-01-22", holdings: 35102, sharesOutstandingDiluted: 1_142_274_340, holdingsPerShare: 0.00003073, source: "Press release", sharesSource: "Nov 2025 filing (common shares, matches metaplanet.jp)", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "company-website" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury
