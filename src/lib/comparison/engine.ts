@@ -21,6 +21,7 @@ import { calculateConfidence, ConfidenceResult } from './confidence-scorer';
 import { calculateMNAV } from '../calculations';
 import { getMarketCapForMnavSync } from '../utils/market-cap';
 import { FALLBACK_RATES } from '../utils/currency';
+import { getBinancePrices } from '../binance';
 
 // Companies with official mNAV dashboards - we compare our calculated mNAV against theirs
 const MNAV_DASHBOARD_TICKERS = new Set([
@@ -74,34 +75,72 @@ export interface ComparisonResult {
   confidence?: ConfidenceResult;
 }
 
+// FMP API key for stock prices and forex
+const FMP_API_KEY = process.env.FMP_API_KEY || '';
+
 /**
  * Fetch live prices for mNAV calculation.
- * This ensures our mNAV matches what the frontend displays.
+ * Uses direct API calls to avoid self-referential serverless function issues.
  */
 async function fetchLivePrices(): Promise<PriceData | null> {
   try {
-    // Use production URL for server-side fetch (works from Vercel functions)
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
-      || 'https://dat-tracker-next.vercel.app';
+    console.log('[Comparison] Fetching live prices directly...');
 
-    console.log(`[Comparison] Fetching prices from: ${baseUrl}/api/prices`);
-    const response = await fetch(`${baseUrl}/api/prices`, {
-      cache: 'no-store',
-      headers: { 'Accept': 'application/json' },
-    });
+    // 1. Get crypto prices from Binance
+    const crypto = await getBinancePrices();
+    console.log(`[Comparison] Got ${Object.keys(crypto).length} crypto prices`);
 
-    if (!response.ok) {
-      console.error(`[Comparison] Failed to fetch prices: ${response.status}`);
-      return null;
+    // 2. Get forex rates from FMP (just JPY for Metaplanet)
+    let forex: Record<string, number> = { ...FALLBACK_RATES };
+    if (FMP_API_KEY) {
+      try {
+        const forexResponse = await fetch(
+          `https://financialmodelingprep.com/api/v3/quote/USDJPY,USDHKD,USDSEK?apikey=${FMP_API_KEY}`,
+          { cache: 'no-store' }
+        );
+        if (forexResponse.ok) {
+          const forexData = await forexResponse.json();
+          if (Array.isArray(forexData)) {
+            for (const rate of forexData) {
+              if (rate.symbol === 'USDJPY') forex.JPY = rate.price;
+              if (rate.symbol === 'USDHKD') forex.HKD = rate.price;
+              if (rate.symbol === 'USDSEK') forex.SEK = rate.price;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('[Comparison] Forex fetch failed, using fallback rates');
+      }
+    }
+    console.log(`[Comparison] Forex rates: JPY=${forex.JPY}`);
+
+    // 3. Get stock prices from FMP (for non-USD stocks like 3350.T)
+    const stocks: Record<string, { price: number; marketCap: number }> = {};
+    if (FMP_API_KEY) {
+      const stockTickers = ['3350.T', 'MSTR']; // Tickers with mNAV dashboards
+      for (const ticker of stockTickers) {
+        try {
+          const stockResponse = await fetch(
+            `https://financialmodelingprep.com/api/v3/quote/${ticker}?apikey=${FMP_API_KEY}`,
+            { cache: 'no-store' }
+          );
+          if (stockResponse.ok) {
+            const stockData = await stockResponse.json();
+            if (Array.isArray(stockData) && stockData[0]) {
+              stocks[ticker] = {
+                price: stockData[0].price || 0,
+                marketCap: stockData[0].marketCap || 0,
+              };
+              console.log(`[Comparison] ${ticker}: price=${stockData[0].price}`);
+            }
+          }
+        } catch (e) {
+          console.warn(`[Comparison] Failed to fetch ${ticker} stock price`);
+        }
+      }
     }
 
-    const data = await response.json();
-    return {
-      crypto: data.crypto || {},
-      stocks: data.stocks || {},
-      forex: data.forex || FALLBACK_RATES,
-    };
+    return { crypto, stocks, forex };
   } catch (error) {
     console.error('[Comparison] Error fetching prices:', error);
     return null;
