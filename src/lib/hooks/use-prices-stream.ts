@@ -20,6 +20,7 @@ interface StockPrice {
 export interface PricesData {
   crypto: Record<string, CryptoPrice>;
   stocks: Record<string, StockPrice>;
+  forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
   timestamp: string;
   marketOpen?: boolean;
   extendedHours?: boolean;
@@ -29,6 +30,7 @@ export interface PricesData {
 interface FullUpdateMessage {
   crypto: Record<string, CryptoPrice>;
   stocks: Record<string, StockPrice>;
+  forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
   timestamp: string;
   marketOpen?: boolean;
   extendedHours?: boolean;
@@ -156,6 +158,7 @@ export function usePricesStream(): UsePricesStreamResult {
             setData({
               crypto: fullUpdate.crypto || {},
               stocks: fullUpdate.stocks || {},
+              forex: fullUpdate.forex,  // Include forex rates for non-USD conversions
               timestamp: fullUpdate.timestamp,
               marketOpen: fullUpdate.marketOpen,
               extendedHours: fullUpdate.extendedHours,

@@ -1,12 +1,20 @@
 import { NextRequest } from "next/server";
 import { STOCK_TICKERS } from "@/lib/alpaca";
 import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
+import { FALLBACK_RATES } from "@/lib/utils/currency";
 
 // Use Edge Runtime for streaming support
 export const runtime = "edge";
 
 // FMP API Key
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
+
+// Forex pairs we need (FMP format)
+const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
+
+// Cache for forex rates (5 minute TTL - forex doesn't move fast)
+let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
+const FOREX_CACHE_TTL = 5 * 60 * 1000;
 
 // Crypto - keep using CoinGecko
 const COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3";
@@ -97,6 +105,47 @@ async function fetchCryptoPrices(): Promise<Record<string, { price: number; chan
   }
 }
 
+// Fetch forex rates from FMP (cached)
+async function fetchForexRates(): Promise<Record<string, number>> {
+  if (forexCache && Date.now() - forexCache.timestamp < FOREX_CACHE_TTL) {
+    return forexCache.data;
+  }
+
+  if (!FMP_API_KEY) {
+    console.warn("[Forex] FMP_API_KEY not configured, using fallback rates");
+    return FALLBACK_RATES;
+  }
+
+  try {
+    const pairList = FOREX_PAIRS.join(",");
+    const url = `https://financialmodelingprep.com/api/v3/quote/${pairList}?apikey=${FMP_API_KEY}`;
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+      console.error(`[Forex] FMP API error: ${response.status}`);
+      return forexCache?.data || FALLBACK_RATES;
+    }
+
+    const data = await response.json();
+    const rates: Record<string, number> = { ...FALLBACK_RATES };
+
+    if (Array.isArray(data)) {
+      for (const quote of data) {
+        if (quote?.symbol && quote?.price > 0) {
+          const currency = quote.symbol.replace("USD", "");
+          rates[currency] = quote.price;
+        }
+      }
+    }
+
+    forexCache = { data: rates, timestamp: Date.now() };
+    return rates;
+  } catch (error) {
+    console.error("[Forex] Error fetching rates:", error);
+    return forexCache?.data || FALLBACK_RATES;
+  }
+}
+
 // Fetch stock quotes from FMP REST API (for initial data)
 // Note: Extended hours data requires legacy FMP subscription, so we only get regular market prices
 async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
@@ -149,14 +198,16 @@ async function fetchAllPrices() {
   const marketOpen = isMarketOpen();
   const extendedHours = isExtendedHours();
 
-  const [cryptoPrices, stockPrices] = await Promise.all([
+  const [cryptoPrices, stockPrices, forexRates] = await Promise.all([
     fetchCryptoPrices(),
     fetchFMPStockQuotes(),
+    fetchForexRates(),
   ]);
 
   return {
     crypto: cryptoPrices,
     stocks: stockPrices,
+    forex: forexRates,  // Live forex rates for non-USD stock conversions
     timestamp: new Date().toISOString(),
     marketOpen,
     extendedHours,

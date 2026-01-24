@@ -279,8 +279,8 @@ function CompanyRow({
           <div className="mt-3 pt-2 border-t border-gray-200">
             <div className="text-xs font-medium text-gray-600 mb-1">Sources Checked:</div>
             <div className="flex flex-wrap gap-1">
-              {state.result.sourcesQueried.map((source) => {
-                const hasError = state.result.errors?.[source];
+              {state.result?.sourcesQueried.map((source) => {
+                const hasError = state.result?.errors?.[source];
                 return (
                   <span
                     key={source}
@@ -296,9 +296,9 @@ function CompanyRow({
                 );
               })}
             </div>
-            {hasErrors && (
+            {hasErrors && state.result?.errors && (
               <div className="mt-1 text-xs text-red-600">
-                {Object.entries(state.result.errors!).map(([src, err]) => (
+                {Object.entries(state.result.errors).map(([src, err]) => (
                   <div key={src}>{src}: {err}</div>
                 ))}
               </div>
