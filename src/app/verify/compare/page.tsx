@@ -261,23 +261,38 @@ function CompanyRow({
             </div>
           ) : (
             <div className="text-xs text-green-700 bg-green-50 p-2 rounded">
-              No discrepancies with newer data sources.
+              No discrepancies found.
             </div>
           )}
 
-          {/* Errors */}
-          {hasErrors && (
-            <div className="mt-2 text-xs text-yellow-700 bg-yellow-50 p-2 rounded">
-              <span className="font-medium">Errors:</span>{" "}
-              {Object.entries(state.result.errors!).map(([src, err]) => (
-                <span key={src} className="ml-1">{src}: {err}</span>
-              ))}
+          {/* Sources Checked */}
+          <div className="mt-3 pt-2 border-t border-gray-200">
+            <div className="text-xs font-medium text-gray-600 mb-1">Sources Checked:</div>
+            <div className="flex flex-wrap gap-1">
+              {state.result.sourcesQueried.map((source) => {
+                const hasError = state.result.errors?.[source];
+                return (
+                  <span
+                    key={source}
+                    className={`px-1.5 py-0.5 rounded text-xs ${
+                      hasError
+                        ? "bg-red-100 text-red-700"
+                        : "bg-blue-100 text-blue-700"
+                    }`}
+                    title={hasError || "Checked successfully"}
+                  >
+                    {source}
+                  </span>
+                );
+              })}
             </div>
-          )}
-
-          {/* Sources */}
-          <div className="mt-2 text-xs text-gray-400">
-            Sources: {state.result.sourcesQueried.join(", ")}
+            {hasErrors && (
+              <div className="mt-1 text-xs text-red-600">
+                {Object.entries(state.result.errors!).map(([src, err]) => (
+                  <div key={src}>{src}: {err}</div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
