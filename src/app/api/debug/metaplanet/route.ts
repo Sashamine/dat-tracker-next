@@ -16,11 +16,12 @@ export async function GET() {
     const ourValues = loadOurValues(null);
     const ourMetaplanet = ourValues.filter(v => v.ticker === '3350.T');
 
-    // Fetch live prices
-    const pricesResponse = await fetch(
-      `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/prices`,
-      { cache: 'no-store' }
-    );
+    // Fetch live prices using the correct URL
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+      || 'https://dat-tracker-next.vercel.app';
+    console.log('[Debug] Fetching prices from:', `${baseUrl}/api/prices`);
+    const pricesResponse = await fetch(`${baseUrl}/api/prices`, { cache: 'no-store' });
     const pricesData = await pricesResponse.json();
 
     // Get our mNAV with live prices

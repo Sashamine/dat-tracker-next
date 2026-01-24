@@ -80,11 +80,12 @@ export interface ComparisonResult {
  */
 async function fetchLivePrices(): Promise<PriceData | null> {
   try {
-    // Use internal API URL for server-side fetch
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    // Use production URL for server-side fetch (works from Vercel functions)
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+      || 'https://dat-tracker-next.vercel.app';
 
+    console.log(`[Comparison] Fetching prices from: ${baseUrl}/api/prices`);
     const response = await fetch(`${baseUrl}/api/prices`, {
       cache: 'no-store',
       headers: { 'Accept': 'application/json' },
