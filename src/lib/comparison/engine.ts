@@ -18,9 +18,24 @@ import { query } from '../db';
 import type { HoldingsSource } from '../types';
 import { verifySource, VerificationResult } from './source-verifier';
 import { calculateConfidence, ConfidenceResult } from './confidence-scorer';
+import { calculateMNAV } from '../calculations';
+
+// Companies with official mNAV dashboards - we compare our calculated mNAV against theirs
+const MNAV_DASHBOARD_TICKERS = new Set([
+  '3350.T',   // Metaplanet - metaplanet.jp/analytics
+  'MSTR',     // Strategy - strategy.com
+  'SBET',     // SharpLink - sharplink.com/eth-dashboard
+  'DFDV',     // DeFi Dev - defidevcorp.com/dashboard
+]);
+
+// Reference BTC price for mNAV calculation (updated periodically)
+// This is approximate - exact value matters less than catching large discrepancies
+const REFERENCE_BTC_PRICE = 105_000; // $105,000 (Jan 2026)
+const REFERENCE_ETH_PRICE = 3_300;   // $3,300 (Jan 2026)
+const REFERENCE_SOL_PRICE = 210;     // $210 (Jan 2026)
 
 // Types matching our schema
-export type ComparisonField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity';
+export type ComparisonField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity' | 'mnav';
 
 export interface OurValue {
   ticker: string;
@@ -134,6 +149,34 @@ export function loadOurValues(): OurValue[] {
         // Preferred equity doesn't have its own date field, use debt date as proxy
         sourceDate: company.debtAsOf,
       });
+    }
+
+    // mNAV (calculated) - only for companies with official dashboards
+    if (MNAV_DASHBOARD_TICKERS.has(company.ticker) && company.marketCap && company.holdings) {
+      // Get reference price based on asset
+      let assetPrice = REFERENCE_BTC_PRICE;
+      if (company.asset === 'ETH') assetPrice = REFERENCE_ETH_PRICE;
+      if (company.asset === 'SOL') assetPrice = REFERENCE_SOL_PRICE;
+
+      const ourMnav = calculateMNAV(
+        company.marketCap,
+        company.holdings,
+        assetPrice,
+        company.cashReserves ?? 0,
+        0, // otherInvestments
+        company.totalDebt ?? 0,
+        company.preferredEquity ?? 0,
+        company.restrictedCash ?? 0
+      );
+
+      if (ourMnav !== null && ourMnav > 0) {
+        values.push({
+          ticker: company.ticker,
+          field: 'mnav',
+          value: ourMnav,
+          sourceDate: new Date().toISOString().split('T')[0], // Today
+        });
+      }
     }
   }
 

@@ -102,6 +102,10 @@ const XBRL_FIELD_MAPPINGS: Record<FetchField, { gaapFields: string[]; deiFields?
       'RedeemablePreferredStockCarryingAmount',
     ],
   },
+  mnav: {
+    // mNAV is calculated, not in SEC filings
+    gaapFields: [],
+  },
 };
 
 async function fetchCompanyFacts(cik: string): Promise<XBRLCompanyFacts | null> {

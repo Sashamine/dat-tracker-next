@@ -42,10 +42,19 @@ function parseBtcHoldings(html: string): number | null {
 
 /**
  * Parse mNAV from the HTML
+ * Looks for JSON data with mNAV value
  */
 function parseMnav(html: string): number | null {
-  // Look for mNAV value pattern - it's displayed as just a number like "1.26"
-  // near the text "mNAV"
+  // The page includes JSON data with the mNAV value
+  // Pattern: "value":1.2564770888675831 near mNAV context
+  const jsonPattern = /"label":"mNAV"[^}]*"value":([0-9]+\.[0-9]+)/i;
+  const jsonMatch = html.match(jsonPattern);
+
+  if (jsonMatch) {
+    return parseFloat(jsonMatch[1]);
+  }
+
+  // Fallback: Look for mNAV value pattern in text
   const mnavPattern = /mNAV[^0-9]*([0-9]+\.[0-9]+)/i;
   const match = html.match(mnavPattern);
 
@@ -126,10 +135,24 @@ export const metaplanetFetcher: Fetcher = {
       console.log('[metaplanet] Could not parse BTC holdings');
     }
 
-    // Parse mNAV (optional)
+    // Parse mNAV - this is the key validation metric
     const mnav = parseMnav(html);
     if (mnav !== null && mnav > 0) {
+      results.push({
+        ticker: '3350.T',
+        field: 'mnav',
+        value: mnav,
+        source: {
+          name: 'metaplanet.jp',
+          url: METAPLANET_ANALYTICS_URL,
+          date: sourceDate,
+        },
+        fetchedAt,
+        raw: { method: 'html-parse' },
+      });
       console.log(`[metaplanet] Found mNAV: ${mnav}`);
+    } else {
+      console.log('[metaplanet] Could not parse mNAV');
     }
 
     console.log(`[metaplanet] Got ${results.length} data points for Metaplanet`);

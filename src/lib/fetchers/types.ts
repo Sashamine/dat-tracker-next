@@ -5,7 +5,7 @@
  * Each fetcher returns FetchResult[] for comparison engine.
  */
 
-export type FetchField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity';
+export type FetchField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity' | 'mnav';
 
 /**
  * What a fetcher returns for each data point
