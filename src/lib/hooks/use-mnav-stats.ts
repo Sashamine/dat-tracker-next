@@ -34,10 +34,13 @@ function median(arr: number[]): number {
  * Priority:
  * 1. officialMnav - From official company dashboard (e.g., SharpLink's FD mNAV)
  * 2. Calculated - Using our EV/CryptoNAV formula
+ *
+ * @param filterOutliers - If true, returns null for mNAV >= 10 (for stats). Default false (show all).
  */
 export function getCompanyMNAV(
   company: Company,
-  prices: PricesData
+  prices: PricesData,
+  filterOutliers: boolean = false
 ): number | null {
   if (!prices || company.pendingMerger) return null;
 
@@ -76,14 +79,19 @@ export function getCompanyMNAV(
     company.restrictedCash || 0
   );
 
-  // Return null for invalid mNAV (same filtering as stats)
-  if (mnav === null || mnav <= 0 || mnav >= 10) return null;
+  // Return null for invalid mNAV
+  if (mnav === null || mnav <= 0) return null;
+
+  // Optionally filter outliers (mNAV >= 10) for stats calculations
+  if (filterOutliers && mnav >= 10) return null;
+
   return mnav;
 }
 
 /**
  * Single source of truth for mNAV statistics.
  * Uses getCompanyMNAV for each company to ensure consistency.
+ * Filters out outliers (mNAV >= 10) to avoid skewing median/average.
  */
 export function useMNAVStats(
   companies: Company[],
@@ -94,8 +102,9 @@ export function useMNAVStats(
       return { median: 0, average: 0, count: 0, mnavs: [] };
     }
 
+    // Filter outliers for stats (mNAV >= 10x companies like miners with small treasuries)
     const mnavs = companies
-      .map((company) => getCompanyMNAV(company, prices))
+      .map((company) => getCompanyMNAV(company, prices, true))
       .filter((mnav): mnav is number => mnav !== null);
 
     if (mnavs.length === 0) {
