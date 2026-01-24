@@ -411,10 +411,12 @@ function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
       maxDeviationPct = Math.max(maxDeviationPct, deviationPct);
     }
 
-    // Check if this external source is newer than our source
+    // Check if this external source is newer than or same as our source
+    // For live data (like mNAV), same-day data should be compared
     if (source.source.date && ourDate) {
       const sourceDate = new Date(source.source.date);
-      if (sourceDate > ourDate) {
+      // Use >= for same-day comparison (important for live data like mNAV)
+      if (sourceDate >= ourDate) {
         newerSourceFound = true;
         // Track the newest external source date
         if (!newerSourceDate || sourceDate > new Date(newerSourceDate)) {
