@@ -405,13 +405,15 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
 // Helius Medical / Solana Company (HSDT) - SOL treasury
 // NOTE: 1-for-50 reverse stock split effective July 1, 2025
 // Pre-split: ~33.8M shares → Post-split: ~676K, then grew via offerings
+// sharesOutstandingDiluted includes pre-funded warrants at $0.0001 (essentially shares)
 const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Pre-split entries (adjusted for 1:50 split)
   { date: "2024-11-01", holdings: 800000, sharesOutstandingDiluted: 700_000, holdingsPerShare: 1.143, source: "SOL treasury announcement (split-adj)" },
   { date: "2024-12-31", holdings: 1500000, sharesOutstandingDiluted: 840_000, holdingsPerShare: 1.786, source: "Q4 2024 10-K (split-adj)" },
   // Post reverse split (July 1, 2025)
   { date: "2025-06-30", holdings: 2200000, sharesOutstandingDiluted: 1_000_000, holdingsPerShare: 2.200, source: "Q2 2025 10-Q (split-adj)" },
-  { date: "2025-09-30", holdings: 2800000, sharesOutstandingDiluted: 10_724_112, holdingsPerShare: 0.261, source: "companiesmarketcap.com", sourceUrl: "https://companiesmarketcap.com/helius-medical-technologies/shares-outstanding/", sourceType: "aggregator" },
+  // Nov 2025: FD shares include pre-funded + penny warrants exercisable at $0.0001
+  { date: "2025-11-04", holdings: 2_300_000, sharesOutstandingDiluted: 84_130_257, holdingsPerShare: 0.02734, source: "Investor update", sharesSource: "Nov 4, 2025 investor update (incl. warrants)" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025
