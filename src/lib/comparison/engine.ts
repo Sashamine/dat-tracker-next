@@ -30,12 +30,15 @@ export interface OurValue {
   // Source info for verification (Phase 7b)
   sourceUrl?: string;
   sourceType?: HoldingsSource;
+  // Date-aware comparison (Phase 7d)
+  sourceDate?: string;  // YYYY-MM-DD - when our source data is from
 }
 
 export interface ComparisonResult {
   ticker: string;
   field: ComparisonField;
   ourValue: number;
+  ourSourceDate?: string;  // YYYY-MM-DD - when our data is from
   sourceValues: Record<string, {
     value: number;
     url: string;
@@ -44,6 +47,9 @@ export interface ComparisonResult {
   hasDiscrepancy: boolean;
   maxDeviationPct: number;
   severity: 'minor' | 'moderate' | 'major';
+  // Date-aware comparison (Phase 7d)
+  newerSourceFound: boolean;  // true if any external source is newer than ours
+  newerSourceDate?: string;   // date of the newest external source
   // Phase 7b: Source verification result
   verification?: VerificationResult;
   // Phase 7c: Confidence scoring
@@ -57,6 +63,10 @@ export interface ComparisonResult {
  * - Holdings: holdings-history.ts > companies.ts (history is more granular)
  * - Shares: companies.ts (sharesForMnav) > holdings-history.ts (companies.ts is actively maintained)
  * - Debt/Cash/Preferred: companies.ts (no history tracking yet)
+ *
+ * Date-aware comparison (Phase 7d):
+ * Each value includes a sourceDate so we can compare against external source dates.
+ * Only flag discrepancy if external source is NEWER than our source.
  */
 export function loadOurValues(): OurValue[] {
   const values: OurValue[] = [];
@@ -68,24 +78,30 @@ export function loadOurValues(): OurValue[] {
     // Holdings: prefer holdings-history.ts, fallback to companies.ts
     const holdingsFromHistory = getLatestHoldings(company.ticker);
     const holdings = holdingsFromHistory ?? company.holdings;
+    // Date: snapshot date > holdingsLastUpdated
+    const holdingsDate = snapshot?.date ?? company.holdingsLastUpdated;
     values.push({
       ticker: company.ticker,
       field: 'holdings',
       value: holdings,
       sourceUrl: snapshot?.sourceUrl,
       sourceType: snapshot?.sourceType,
+      sourceDate: holdingsDate,
     });
 
     // Shares outstanding: prefer companies.ts sharesForMnav (actively maintained), fallback to holdings-history.ts
     const sharesFromHistory = getLatestDilutedShares(company.ticker);
     const shares = company.sharesForMnav ?? sharesFromHistory;
     if (shares !== undefined) {
+      // Date: sharesAsOf from snapshot > snapshot date > holdingsLastUpdated
+      const sharesDate = snapshot?.sharesAsOf ?? snapshot?.date ?? company.holdingsLastUpdated;
       values.push({
         ticker: company.ticker,
         field: 'shares_outstanding',
         value: shares,
         sourceUrl: snapshot?.sourceUrl,
         sourceType: snapshot?.sourceType,
+        sourceDate: sharesDate,
       });
     }
 
@@ -95,6 +111,7 @@ export function loadOurValues(): OurValue[] {
         ticker: company.ticker,
         field: 'debt',
         value: company.totalDebt,
+        sourceDate: company.debtAsOf,
       });
     }
 
@@ -104,6 +121,7 @@ export function loadOurValues(): OurValue[] {
         ticker: company.ticker,
         field: 'cash',
         value: company.cashReserves,
+        sourceDate: company.cashAsOf,
       });
     }
 
@@ -113,6 +131,8 @@ export function loadOurValues(): OurValue[] {
         ticker: company.ticker,
         field: 'preferred_equity',
         value: company.preferredEquity,
+        // Preferred equity doesn't have its own date field, use debt date as proxy
+        sourceDate: company.debtAsOf,
       });
     }
   }
@@ -194,11 +214,20 @@ function calculateSeverity(deviationPct: number): 'minor' | 'moderate' | 'major'
 
 /**
  * Compare our value against fetched values from sources
+ *
+ * Date-aware comparison (Phase 7d):
+ * - Only flag discrepancy if external source is NEWER than our source
+ * - If our data is more recent, external sources showing older values is expected
  */
 function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
   const sourceValues: Record<string, { value: number; url: string; date: string }> = {};
   let maxDeviationPct = 0;
-  let hasDiscrepancy = false;
+  let hasValueDifference = false;
+  let newerSourceFound = false;
+  let newerSourceDate: string | undefined;
+
+  // Parse our source date for comparison
+  const ourDate = ourValue.sourceDate ? new Date(ourValue.sourceDate) : null;
 
   for (const source of sources) {
     sourceValues[source.source.name] = {
@@ -213,19 +242,47 @@ function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
       : Math.abs((source.value - ourValue.value) / ourValue.value * 100);
 
     if (deviationPct > 0) {
-      hasDiscrepancy = true;
+      hasValueDifference = true;
       maxDeviationPct = Math.max(maxDeviationPct, deviationPct);
     }
+
+    // Check if this external source is newer than our source
+    if (source.source.date && ourDate) {
+      const sourceDate = new Date(source.source.date);
+      if (sourceDate > ourDate) {
+        newerSourceFound = true;
+        // Track the newest external source date
+        if (!newerSourceDate || sourceDate > new Date(newerSourceDate)) {
+          newerSourceDate = source.source.date;
+        }
+      }
+    } else if (!ourDate) {
+      // If we don't have a source date, treat external sources as potentially newer
+      newerSourceFound = true;
+      if (source.source.date) {
+        if (!newerSourceDate || new Date(source.source.date) > new Date(newerSourceDate)) {
+          newerSourceDate = source.source.date;
+        }
+      }
+    }
   }
+
+  // Only flag as discrepancy if:
+  // 1. Values differ AND
+  // 2. External source is newer (or we have no date to compare)
+  const hasDiscrepancy = hasValueDifference && newerSourceFound;
 
   return {
     ticker: ourValue.ticker,
     field: ourValue.field,
     ourValue: ourValue.value,
+    ourSourceDate: ourValue.sourceDate,
     sourceValues,
     hasDiscrepancy,
     maxDeviationPct,
     severity: calculateSeverity(maxDeviationPct),
+    newerSourceFound,
+    newerSourceDate,
   };
 }
 
@@ -346,11 +403,13 @@ export async function runComparison(options?: {
   console.log(`  - Errors: ${errors.length}`);
 
   if (discrepancies.length > 0) {
-    console.log(`\n[Comparison] Discrepancies found:`);
+    console.log(`\n[Comparison] Discrepancies found (newer external sources):`);
     for (const d of discrepancies) {
       const verifyStatus = d.verification?.status || 'unknown';
       const confidenceLevel = d.confidence?.level || 'unknown';
-      console.log(`  ${d.ticker} ${d.field}: ours=${d.ourValue}, deviation=${d.maxDeviationPct.toFixed(2)}% [${verifyStatus}] [${confidenceLevel}]`);
+      const ourDateStr = d.ourSourceDate || 'unknown';
+      const extDateStr = d.newerSourceDate || 'unknown';
+      console.log(`  ${d.ticker} ${d.field}: ours=${d.ourValue} (${ourDateStr}), deviation=${d.maxDeviationPct.toFixed(2)}%, ext=${extDateStr} [${verifyStatus}] [${confidenceLevel}]`);
     }
   }
 
