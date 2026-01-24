@@ -1,15 +1,15 @@
 /**
- * Vitest Setup File
+ * Test Setup
  *
- * This runs before each test file. Use for:
- * - Global mocks
- * - Environment setup
- * - Test utilities
+ * Global setup for vitest tests.
  */
 
-import { vi } from 'vitest';
+// Mock fetch globally if not available
+if (typeof global.fetch === 'undefined') {
+  global.fetch = async () => {
+    throw new Error('fetch not mocked for this test');
+  };
+}
 
-// Note: NODE_ENV is typically set by the test runner, no need to set it here
-
-// Note: Individual tests should mock fetch using vi.stubGlobal('fetch', mockFn)
-// Do NOT set a global fetch mock here as it interferes with test-specific mocks
+// Set test environment
+(process.env as Record<string, string>).NODE_ENV = 'test';
