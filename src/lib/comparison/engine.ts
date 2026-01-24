@@ -447,14 +447,18 @@ export async function runComparison(options?: {
       );
       comparison.confidence = confidence;
 
-      discrepancies.push(comparison);
-
-      // Record in database
+      // Record in database - only add to output if actually stored (not already dismissed/resolved)
       if (!dryRun) {
         const companyId = await getCompanyId(ourValue.ticker);
         if (companyId) {
-          await recordDiscrepancy(companyId, comparison);
+          const wasStored = await recordDiscrepancy(companyId, comparison);
+          if (wasStored !== null) {
+            discrepancies.push(comparison);
+          }
         }
+      } else {
+        // In dry run mode, include all discrepancies
+        discrepancies.push(comparison);
       }
     }
   }
