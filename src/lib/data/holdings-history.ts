@@ -290,7 +290,8 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 5398, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.0000386, source: "Q1 2025 10-Q" },
   { date: "2025-08-14", holdings: 21, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000001, source: "Pre-merger" },
   { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 450_000_000, holdingsPerShare: 0.0000128, source: "Post-merger 8-K" },
-  { date: "2025-11-12", holdings: 5398, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000108, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },
+  // Nov 14, 2025: 439,850,889 shares + 71,704,975 pre-funded warrants = 511,555,864 fully diluted
+  { date: "2025-11-14", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, source: "SEC 10-Q Nov 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // American Bitcoin Corp (ABTC) - Pure-play miner with HODL strategy
