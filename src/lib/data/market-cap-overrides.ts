@@ -23,7 +23,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
 
   // === BTC Miners with significant debt ===
   // "HUT" removed - pivoted to AI/HPC, not a DAT company
-  "CORZ": 5_300_000_000,      // $5.3B - Core Scientific ($1.2B debt, emerged from bankruptcy)
+  // "CORZ" removed - pivoted to AI/HPC infrastructure, not a DAT company
   "BTDR": 2_300_000_000,      // $2.3B - Bitdeer ($730M convertible notes)
 
   // === BTC Treasury Companies (FMP returns stale/incorrect data) ===

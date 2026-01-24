@@ -625,38 +625,7 @@ export const btcCompanies: Company[] = [
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
     notes: "80% owned by Hut 8. Active BTC accumulation - added 1,064 BTC in Dec 2025.",
   },
-  {
-    id: "corz",
-    name: "Core Scientific",
-    ticker: "CORZ",
-    asset: "BTC",
-    tier: 1,
-    holdings: 2_116,
-    holdingsLastUpdated: "2026-01-17",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001878848&type=8-K&dateb=&owner=include&count=40",
-    datStartDate: "2024-01-01",
-    secCik: "0001878848",
-    costBasisAvg: 35_000,
-    isMiner: true,
-    btcMinedAnnual: 8_000,
-    quarterlyBurnUsd: 80_000_000,
-    avgDailyVolume: 200_000_000,
-    hasOptions: true,
-    // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 318_562_000,  // SEC 10-Q Q3 2025 weighted avg diluted
-    // Debt: $460M 3% converts due 2029 (Aug 2024) + $625M 0% converts due 2031 (Dec 2024) + additional
-    totalDebt: 1_162_000_000,  // $1.162B per SEC 10-Q Q3 2025
-    debtSource: "SEC 10-Q Q3 2025",
-    debtAsOf: "2025-09-30",
-    cashReserves: 453_440_000,  // $453.4M per SEC 10-Q Q3 2025
-    restrictedCash: 453_440_000,  // Operating capital (miner) - not excess
-    cashSource: "SEC 10-Q Q3 2025",
-    cashAsOf: "2025-09-30",
-    leader: "Adam Sullivan (CEO)",
-    strategy: "Largest US miner by hashrate. AI/HPC pivot with CoreWeave deal.",
-    notes: "Emerged from bankruptcy Jan 2024. $1.16B in converts. 200MW AI deal with CoreWeave.",
-  },
+  // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
   {
     id: "btdr",
     name: "Bitdeer Technologies",

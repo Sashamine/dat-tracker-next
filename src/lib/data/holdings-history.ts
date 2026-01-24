@@ -563,14 +563,7 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
 
-// Core Scientific (CORZ) - Emerged from bankruptcy Jan 2024
-// SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding (estimated ~15% dilution)
-const CORZ_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-12-31", holdings: 256, sharesOutstandingDiluted: 338_000_000, holdingsPerShare: 0.00000076, source: "FY 2024 10-K" },
-  { date: "2025-03-31", holdings: 977, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.00000286, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 1612, sharesOutstandingDiluted: 351_000_000, holdingsPerShare: 0.00000459, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 2116, sharesOutstandingDiluted: 318_562_000, holdingsPerShare: 0.00000664, source: "Q3 2025 10-Q", sharesSource: "Weighted avg diluted from Q3 earnings", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001839341&type=10-Q", sourceType: "sec-filing" },
-];
+// CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
 
 // Bitdeer Technologies (BTDR) - Started treasury strategy Nov 2024
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
@@ -688,7 +681,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
   ASST: { ticker: "ASST", asset: "BTC", history: ASST_HISTORY },
   // HUT removed - pivoted to AI/HPC infrastructure, not a DAT company
-  CORZ: { ticker: "CORZ", asset: "BTC", history: CORZ_HISTORY },
+  // CORZ removed - pivoted to AI/HPC infrastructure, not a DAT company
   BTDR: { ticker: "BTDR", asset: "BTC", history: BTDR_HISTORY },
   DJT: { ticker: "DJT", asset: "BTC", history: DJT_HISTORY },
   XXI: { ticker: "XXI", asset: "BTC", history: XXI_HISTORY },
