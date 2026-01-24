@@ -11,22 +11,20 @@ import { FetchResult, Fetcher } from '../types';
 const MNAV_API_URL = 'https://www.mnav.com/api/companies/the-blockchain-group/prepared-chart-data';
 const DASHBOARD_URL = 'https://cptlb.com/analytics/';
 
+// API response structure based on actual mNAV.com response
 interface MnavApiResponse {
-  settings: {
-    name: string;
-    ticker: string;
+  latest: {
     btcHeld: number;
     sharePrice: number;
-    sharesOutstandingIssued: number;
     fullyDilutedShares: number;
+    issuedShares: number;
     totalCash: number;
     totalDebt: number;
     totalPreferredStock: number;
-    currency: string;
-    companyLink: string;
-    trackerLink: string;
-    fiatBtcRate: number;
+    btcPrice: number;  // BTC price in local currency
     usdRate: number;
+    marketCap: number;
+    btcNav: number;
   };
   values: {
     sharePrice: [string, number][];
@@ -39,14 +37,15 @@ interface MnavApiResponse {
     totalPreferredStock: [string, number][];
     usdRate: [string, number][];
   };
-  btcCostTotalLocal: number;
-  btcCostTotalUsd: number;
-  btcInvestments: Array<{
+  metadata?: {
+    currency?: string;
+    name?: string;
+    ticker?: string;
+  };
+  btcTransactions?: Array<{
     date: string;
     btcDelta: number;
     btcTotal: number;
-    cashDelta: number | null;
-    cashCostBasis: number | null;
   }>;
 }
 
@@ -72,18 +71,24 @@ async function fetchMnavData(): Promise<MnavApiResponse | null> {
 }
 
 function calculateMnav(data: MnavApiResponse): number | null {
-  const { settings, btcCostTotalLocal } = data;
+  const { latest } = data;
+
+  if (!latest) {
+    console.log('[capital-b] No latest data in API response');
+    return null;
+  }
 
   // Get current values
-  const btcHeld = settings.btcHeld;
-  const sharePrice = settings.sharePrice;
-  const fullyDilutedShares = settings.fullyDilutedShares;
-  const totalDebt = settings.totalDebt || 0;
-  const totalCash = settings.totalCash || 0;
-  const totalPreferred = settings.totalPreferredStock || 0;
-  const btcPriceLocal = settings.fiatBtcRate; // BTC price in local currency (EUR)
+  const btcHeld = latest.btcHeld;
+  const sharePrice = latest.sharePrice;
+  const fullyDilutedShares = latest.fullyDilutedShares;
+  const totalDebt = latest.totalDebt || 0;
+  const totalCash = latest.totalCash || 0;
+  const totalPreferred = latest.totalPreferredStock || 0;
+  const btcPriceLocal = latest.btcPrice; // BTC price in local currency (EUR)
 
   if (!btcHeld || !sharePrice || !fullyDilutedShares || !btcPriceLocal) {
+    console.log('[capital-b] Missing required fields for mNAV calculation');
     return null;
   }
 
@@ -130,12 +135,12 @@ export const capitalBFetcher: Fetcher = {
         const latestDate = latestEntry[0];
         sourceDate = typeof latestDate === 'string' && latestDate.includes('T')
           ? latestDate.split('T')[0]
-          : latestDate;
+          : String(latestDate);
       }
     }
 
-    // BTC Holdings
-    const btcHeld = data.settings?.btcHeld;
+    // BTC Holdings from 'latest' object
+    const btcHeld = data.latest?.btcHeld;
     if (btcHeld && btcHeld > 0) {
       results.push({
         ticker: 'ALTBG',
@@ -148,9 +153,9 @@ export const capitalBFetcher: Fetcher = {
         },
         fetchedAt,
         raw: {
-          btcHeld: data.settings.btcHeld,
-          btcCostTotalLocal: data.btcCostTotalLocal,
-          btcCostTotalUsd: data.btcCostTotalUsd,
+          btcHeld: data.latest.btcHeld,
+          btcNav: data.latest.btcNav,
+          marketCap: data.latest.marketCap,
         },
       });
       console.log(`[capital-b] Found BTC holdings: ${btcHeld.toLocaleString()}`);
@@ -170,14 +175,14 @@ export const capitalBFetcher: Fetcher = {
         },
         fetchedAt,
         raw: {
-          settings: {
-            btcHeld: data.settings.btcHeld,
-            sharePrice: data.settings.sharePrice,
-            fullyDilutedShares: data.settings.fullyDilutedShares,
-            fiatBtcRate: data.settings.fiatBtcRate,
-            totalDebt: data.settings.totalDebt,
-            totalCash: data.settings.totalCash,
-            totalPreferredStock: data.settings.totalPreferredStock,
+          latest: {
+            btcHeld: data.latest.btcHeld,
+            sharePrice: data.latest.sharePrice,
+            fullyDilutedShares: data.latest.fullyDilutedShares,
+            btcPrice: data.latest.btcPrice,
+            totalDebt: data.latest.totalDebt,
+            totalCash: data.latest.totalCash,
+            totalPreferredStock: data.latest.totalPreferredStock,
           },
           calculatedMnav: mnav,
           note: 'mNAV = (MarketCap + Debt + Preferred - Cash) / (BTC * BTCPrice)',
