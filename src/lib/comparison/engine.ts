@@ -19,6 +19,8 @@ import type { HoldingsSource } from '../types';
 import { verifySource, VerificationResult } from './source-verifier';
 import { calculateConfidence, ConfidenceResult } from './confidence-scorer';
 import { calculateMNAV } from '../calculations';
+import { getMarketCapForMnavSync } from '../utils/market-cap';
+import { FALLBACK_RATES } from '../utils/currency';
 
 // Companies with official mNAV dashboards - we compare our calculated mNAV against theirs
 const MNAV_DASHBOARD_TICKERS = new Set([
@@ -28,11 +30,12 @@ const MNAV_DASHBOARD_TICKERS = new Set([
   'DFDV',     // DeFi Dev - defidevcorp.com/dashboard
 ]);
 
-// Reference BTC price for mNAV calculation (updated periodically)
-// This is approximate - exact value matters less than catching large discrepancies
-const REFERENCE_BTC_PRICE = 105_000; // $105,000 (Jan 2026)
-const REFERENCE_ETH_PRICE = 3_300;   // $3,300 (Jan 2026)
-const REFERENCE_SOL_PRICE = 210;     // $210 (Jan 2026)
+// Price data interface for mNAV calculation
+interface PriceData {
+  crypto: Record<string, { price: number }>;
+  stocks: Record<string, { price: number; marketCap: number }>;
+  forex: Record<string, number>;
+}
 
 // Types matching our schema
 export type ComparisonField = 'holdings' | 'shares_outstanding' | 'debt' | 'cash' | 'preferred_equity' | 'mnav';
@@ -72,6 +75,39 @@ export interface ComparisonResult {
 }
 
 /**
+ * Fetch live prices for mNAV calculation.
+ * This ensures our mNAV matches what the frontend displays.
+ */
+async function fetchLivePrices(): Promise<PriceData | null> {
+  try {
+    // Use internal API URL for server-side fetch
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
+    const response = await fetch(`${baseUrl}/api/prices`, {
+      cache: 'no-store',
+      headers: { 'Accept': 'application/json' },
+    });
+
+    if (!response.ok) {
+      console.error(`[Comparison] Failed to fetch prices: ${response.status}`);
+      return null;
+    }
+
+    const data = await response.json();
+    return {
+      crypto: data.crypto || {},
+      stocks: data.stocks || {},
+      forex: data.forex || FALLBACK_RATES,
+    };
+  } catch (error) {
+    console.error('[Comparison] Error fetching prices:', error);
+    return null;
+  }
+}
+
+/**
  * Load our current values from holdings-history.ts (primary) and companies.ts (fallback)
  *
  * Priority for comparison engine:
@@ -82,8 +118,10 @@ export interface ComparisonResult {
  * Date-aware comparison (Phase 7d):
  * Each value includes a sourceDate so we can compare against external source dates.
  * Only flag discrepancy if external source is NEWER than our source.
+ *
+ * @param prices - Optional live price data for accurate mNAV calculation
  */
-export function loadOurValues(): OurValue[] {
+export function loadOurValues(prices?: PriceData | null): OurValue[] {
   const values: OurValue[] = [];
 
   for (const company of allCompanies) {
@@ -152,16 +190,35 @@ export function loadOurValues(): OurValue[] {
     }
 
     // mNAV (calculated) - only for companies with official dashboards
-    if (MNAV_DASHBOARD_TICKERS.has(company.ticker) && company.marketCap && company.holdings) {
-      // Get reference price based on asset
-      let assetPrice = REFERENCE_BTC_PRICE;
-      if (company.asset === 'ETH') assetPrice = REFERENCE_ETH_PRICE;
-      if (company.asset === 'SOL') assetPrice = REFERENCE_SOL_PRICE;
+    // Must have holdings to calculate mNAV
+    if (MNAV_DASHBOARD_TICKERS.has(company.ticker) && company.holdings > 0) {
+      // Get crypto price (live if available, otherwise skip mNAV comparison)
+      const cryptoPrice = prices?.crypto[company.asset]?.price;
+      if (!cryptoPrice || cryptoPrice <= 0) {
+        console.log(`[Comparison] Skipping mNAV for ${company.ticker}: no crypto price`);
+        continue;
+      }
+
+      // Get stock data for market cap calculation
+      const stockData = prices?.stocks[company.ticker];
+
+      // Calculate market cap using the same method as frontend
+      // This uses sharesForMnav × stockPrice × forex (for non-USD stocks)
+      const { marketCap } = getMarketCapForMnavSync(
+        company,
+        stockData ? { price: stockData.price, marketCap: stockData.marketCap } : null,
+        prices?.forex
+      );
+
+      if (marketCap <= 0) {
+        console.log(`[Comparison] Skipping mNAV for ${company.ticker}: no market cap`);
+        continue;
+      }
 
       const ourMnav = calculateMNAV(
-        company.marketCap,
+        marketCap,
         company.holdings,
-        assetPrice,
+        cryptoPrice,
         company.cashReserves ?? 0,
         0, // otherInvestments
         company.totalDebt ?? 0,
@@ -169,13 +226,14 @@ export function loadOurValues(): OurValue[] {
         company.restrictedCash ?? 0
       );
 
-      if (ourMnav !== null && ourMnav > 0) {
+      if (ourMnav !== null && ourMnav > 0 && ourMnav < 10) {
         values.push({
           ticker: company.ticker,
           field: 'mnav',
           value: ourMnav,
           sourceDate: new Date().toISOString().split('T')[0], // Today
         });
+        console.log(`[Comparison] ${company.ticker} mNAV: ${ourMnav.toFixed(3)} (marketCap=$${(marketCap/1e9).toFixed(2)}B, ${company.asset}=$${cryptoPrice.toLocaleString()})`);
       }
     }
   }
@@ -406,8 +464,17 @@ export async function runComparison(options?: {
 }> {
   const { tickers, sources, dryRun = false } = options || {};
 
-  // 1. Load our values
-  let ourValues = loadOurValues();
+  // 1. Fetch live prices for accurate mNAV calculation
+  console.log('[Comparison] Fetching live prices for mNAV calculation...');
+  const prices = await fetchLivePrices();
+  if (prices) {
+    console.log(`[Comparison] Got prices: ${Object.keys(prices.crypto).length} crypto, ${Object.keys(prices.stocks).length} stocks`);
+  } else {
+    console.log('[Comparison] Warning: Could not fetch live prices, mNAV comparison may be inaccurate');
+  }
+
+  // 2. Load our values (with live prices for mNAV)
+  let ourValues = loadOurValues(prices);
   if (tickers) {
     ourValues = ourValues.filter(v => tickers.includes(v.ticker));
   }
