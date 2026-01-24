@@ -304,7 +304,8 @@ export default function AdversarialComparePage() {
         const response = await fetch("/api/db/companies");
         if (response.ok) {
           const data = await response.json();
-          setCompanies(data);
+          // API returns { companies: [...] }
+          setCompanies(data.companies || data);
         }
       } catch (err) {
         console.error("Failed to fetch companies:", err);
