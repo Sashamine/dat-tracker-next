@@ -107,7 +107,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
-    sharesForMnav: 335_000_000,  // From holdings-history.ts
+    sharesForMnav: 324_000_000,  // SEC 10-Q Q3 2025 (diluted)
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -775,7 +775,7 @@ export const hypeCompanies: Company[] = [
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
-    sharesForMnav: 32_000_000,  // From holdings-history.ts
+    sharesForMnav: 127_000_000,  // Post-Sonnet merger 8-K (Dec 2025)
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger.",
     notes: "$888M combined assets. $30M buyback.",

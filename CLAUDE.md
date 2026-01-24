@@ -131,6 +131,37 @@ Example failure (CORZ, Jan 2026):
 
 ---
 
+## MANDATORY: Keep companies.ts and holdings-history.ts in Sync
+
+**When updating share counts, you MUST update BOTH files.**
+
+### The Two Files
+
+1. **companies.ts** - `sharesForMnav` field (used for mNAV calculation)
+2. **holdings-history.ts** - `sharesOutstandingDiluted` in the latest entry (historical tracking)
+
+### The Rule
+
+**When updating shares for a company:**
+1. Update `sharesForMnav` in companies.ts with source citation
+2. Add a new entry to holdings-history.ts with matching `sharesOutstandingDiluted`
+3. Run the consistency test: `npx vitest run shares-consistency`
+
+### Why This Matters
+
+Example failure (CLSK, Jan 2026):
+- Updated companies.ts with new SEC DEF 14A share count (255M)
+- Forgot to update holdings-history.ts (still had 325M from Dec 2025)
+- Result: 27% discrepancy, incorrect holdingsPerShare calculations
+
+### The Validation Test
+
+Run `npx vitest run shares-consistency` to find all discrepancies.
+
+Any variance between `sharesForMnav` and the latest `sharesOutstandingDiluted` will be flagged.
+
+---
+
 ## Deployment
 
 **This project deploys to Vercel.** Changes must be committed and pushed to see them live.

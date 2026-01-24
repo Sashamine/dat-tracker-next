@@ -331,6 +331,8 @@ const H100_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 780, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.0000279, source: "Q4 2024 filing" },
   // Sep 2025: 1,046 BTC confirmed by interim report (May-Sep 2025) released Nov 20, 2025
   { date: "2025-09-30", holdings: 1046, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.0000327, source: "Interim report May-Sep 2025", sourceUrl: "https://bitcointreasuries.net/public-companies/h100-group", sourceType: "aggregator" },
+  // Jan 2026: Massive 2025 dilution from directed issues (10x share increase)
+  { date: "2026-01-15", holdings: 1046, sharesOutstandingDiluted: 335_250_000, holdingsPerShare: 0.00000312, source: "stockanalysis.com", sharesSource: "stockanalysis.com Jan 2026" },
 ];
 
 // ==================== ADDITIONAL ETH COMPANIES ====================
@@ -560,7 +562,8 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 10556, sharesOutstandingDiluted: 302_000_000, holdingsPerShare: 0.0000350, source: "Q4 2024 10-K" },
   { date: "2025-06-30", holdings: 11500, sharesOutstandingDiluted: 312_000_000, holdingsPerShare: 0.0000369, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 12300, sharesOutstandingDiluted: 317_760_000, holdingsPerShare: 0.0000387, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 13099, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.0000403, source: "Dec 2025 mining update", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876&type=8-K", sourceType: "sec-filing" },
+  // Jan 2026: Share count decreased due to buybacks and updated dilution calc from SEC DEF 14A
+  { date: "2026-01-22", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)" },
 ];
 
 // Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
