@@ -183,6 +183,18 @@ export function getMarketCapForMnavSync(
   const isNonUsd = NON_USD_TICKERS.has(ticker);
   const currency = TICKER_CURRENCIES[ticker] || "USD";
 
+  // Debug for Metaplanet
+  if (ticker === '3350.T') {
+    console.log('[MarketCap Debug] 3350.T input:', {
+      sharesForMnav: company.sharesForMnav,
+      stockDataPrice: stockData?.price,
+      stockDataMarketCap: stockData?.marketCap,
+      forexJPY: forexRates?.JPY,
+      isNonUsd,
+      currency,
+    });
+  }
+
   // If company has explicit share count for mNAV and we have a stock price
   if (company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0) {
     let priceInUsd = stockData.price;
@@ -193,6 +205,15 @@ export function getMarketCapForMnavSync(
     }
 
     const calculatedMarketCap = priceInUsd * company.sharesForMnav;
+
+    // Debug for Metaplanet
+    if (ticker === '3350.T') {
+      console.log('[MarketCap Debug] 3350.T calculated:', {
+        priceInUsd,
+        calculatedMarketCap,
+      });
+    }
+
     return {
       marketCap: calculatedMarketCap,
       source: "calculated",

@@ -50,7 +50,20 @@ export function getCompanyMNAV(
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
-  const { marketCap } = getMarketCapForMnavSync(company, stockData, prices.forex);
+  const { marketCap, source } = getMarketCapForMnavSync(company, stockData, prices.forex);
+
+  // Debug logging for Metaplanet
+  if (company.ticker === '3350.T') {
+    console.log('[mNAV Debug] 3350.T:', {
+      stockPrice: stockData?.price,
+      forexJPY: prices.forex?.JPY,
+      sharesForMnav: company.sharesForMnav,
+      calculatedMarketCap: marketCap,
+      marketCapSource: source,
+      cryptoPrice,
+      holdings: company.holdings,
+    });
+  }
 
   const mnav = calculateMNAV(
     marketCap,
