@@ -55,9 +55,9 @@ export function getCompanyMNAV(
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
   const { marketCap, source } = getMarketCapForMnavSync(company, stockData, prices.forex);
 
-  // Debug logging for Metaplanet
-  if (company.ticker === '3350.T') {
-    console.log('[mNAV Debug] 3350.T:', {
+  // Debug logging for Metaplanet and BTBT
+  if (company.ticker === '3350.T' || company.ticker === 'BTBT') {
+    console.log(`[mNAV Debug] ${company.ticker}:`, {
       stockPrice: stockData?.price,
       forexJPY: prices.forex?.JPY,
       sharesForMnav: company.sharesForMnav,
@@ -80,7 +80,8 @@ export function getCompanyMNAV(
   );
 
   // Return null for invalid mNAV
-  if (mnav === null || mnav <= 0) return null;
+  // Sanity check: reject values <= 0 or absurdly high (> 1000x indicates data error)
+  if (mnav === null || mnav <= 0 || mnav > 1000) return null;
 
   // Optionally filter outliers (mNAV >= 10) for stats calculations
   if (filterOutliers && mnav >= 10) return null;
