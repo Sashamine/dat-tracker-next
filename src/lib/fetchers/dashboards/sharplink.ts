@@ -17,10 +17,26 @@ interface HoldingsDataPoint {
   'Total ETH Holdings': number;
 }
 
+interface MnavDataPoint {
+  Date: string;
+  mNAV: string;  // "0.79x"
+  'Enterprise Value': string;
+  NAV: string;
+}
+
+interface FdMnavDataPoint {
+  Date: string;
+  'Fully Diluted mNAV': string;  // "0.81x"
+  'Enterprise Value': string;
+  'Market Cap': string;
+}
+
 interface Impact3Response {
   total_eth_holdings: HoldingsDataPoint[];
   staking_rewards?: Array<{ Date: string; 'Staking Rewards (ETH)': number }>;
   eth_nav?: Array<{ Date: string; 'ETH NAV': number }>;
+  mnav_data?: MnavDataPoint[];
+  fdmnav?: FdMnavDataPoint[];
 }
 
 async function fetchImpact3Data(): Promise<Impact3Response | null> {
@@ -91,6 +107,36 @@ export const sharplinkFetcher: Fetcher = {
         fetchedAt,
         raw: latest,
       });
+      console.log(`[sharplink] Found ETH holdings: ${ethHeld.toLocaleString()}`);
+    }
+
+    // mNAV (Fully Diluted) - prefer fully diluted over basic
+    const fdmnavData = data.fdmnav;
+    if (fdmnavData && fdmnavData.length > 0) {
+      const latestMnav = fdmnavData[fdmnavData.length - 1];
+      const mnavStr = latestMnav['Fully Diluted mNAV']?.replace('x', '');
+      const mnav = parseFloat(mnavStr);
+
+      if (!isNaN(mnav) && mnav > 0) {
+        // Parse mNAV date
+        const mnavDateStr = latestMnav.Date;
+        const mnavDate = new Date(mnavDateStr);
+        const mnavSourceDate = mnavDate.toISOString().split('T')[0];
+
+        results.push({
+          ticker: 'SBET',
+          field: 'mnav',
+          value: mnav,
+          source: {
+            name: 'sharplink.com',
+            url: 'https://www.sharplink.com/eth-dashboard',
+            date: mnavSourceDate,
+          },
+          fetchedAt,
+          raw: latestMnav,
+        });
+        console.log(`[sharplink] Found mNAV (Fully Diluted): ${mnav}x`);
+      }
     }
 
     console.log(`[sharplink] Got ${results.length} data points for SBET`);

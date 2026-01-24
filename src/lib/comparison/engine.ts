@@ -29,6 +29,10 @@ const MNAV_DASHBOARD_TICKERS = new Set([
   'MSTR',     // Strategy - strategy.com
   'SBET',     // SharpLink - sharplink.com/eth-dashboard
   'DFDV',     // DeFi Dev - defidevcorp.com/dashboard
+  'LITS',     // Lite Strategy - litestrategy.com/dashboard
+  'KULR',     // KULR Tech - kulrbitcointracker.com
+  'UPXI',     // Upexi - upexi.com
+  'ALTBG',    // Capital B - cptlb.com/analytics (NAV per share)
 ]);
 
 // Price data interface for mNAV calculation

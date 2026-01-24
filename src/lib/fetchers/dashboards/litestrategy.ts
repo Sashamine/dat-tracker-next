@@ -146,9 +146,21 @@ export const litestrategyFetcher: Fetcher = {
       console.log('[litestrategy] Could not parse LTC holdings');
     }
 
-    // Parse mNAV (optional, for logging)
+    // Parse mNAV
     const mnav = parseMnav(html);
     if (mnav !== null && mnav > 0) {
+      results.push({
+        ticker: 'LITS',
+        field: 'mnav',
+        value: mnav,
+        source: {
+          name: 'litestrategy.com',
+          url: LITESTRATEGY_DASHBOARD_URL,
+          date: sourceDate,
+        },
+        fetchedAt,
+        raw: { method: 'html-parse' },
+      });
       console.log(`[litestrategy] Found mNAV: ${mnav}x`);
     }
 

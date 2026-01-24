@@ -28,7 +28,7 @@ interface BitcoinKpisResponse {
 interface MstrKpiDataResponse {
   price: string;              // "158.52"
   marketCap: string;          // "52,338" (millions)
-  enterpriseValue: string;    // "66,692" (millions)
+  entVal: string;             // "66,692" (millions) - Enterprise Value
   volume: string;             // Trading volume
   fdShares: string;           // Fully diluted shares (if available)
   timestamp: string;
@@ -174,6 +174,27 @@ export const strategyFetcher: Fetcher = {
           raw: { fdShares: mstrKpis.fdShares, note: 'Fully diluted shares' },
         });
       }
+    }
+
+    // mNAV - calculated from Enterprise Value / BTC NAV
+    // Both values are in millions from the API
+    const entVal = parseNumber(mstrKpis?.entVal);
+    const btcNav = btcKpis?.results?.btcNavNumber;
+    if (entVal !== null && btcNav !== undefined && btcNav > 0) {
+      const mnav = entVal / btcNav;
+      results.push({
+        ticker: 'MSTR',
+        field: 'mnav',
+        value: mnav,
+        source: {
+          name: 'strategy.com',
+          url: 'https://www.strategy.com/',
+          date: today,
+        },
+        fetchedAt,
+        raw: { entVal, btcNav, note: 'mNAV = EV / BTC_NAV (both in millions)' },
+      });
+      console.log(`[strategy.com] Calculated mNAV: ${mnav.toFixed(3)}`);
     }
 
     console.log(`[strategy.com] Got ${results.length} data points for MSTR`);

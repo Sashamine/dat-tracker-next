@@ -13,6 +13,9 @@ import { defidevcorpFetcher, getSupportedTickers as getDefidevcorpTickers } from
 import { xxiMempoolFetcher, getSupportedTickers as getXxiTickers } from './dashboards/xxi-mempool';
 import { metaplanetFetcher, getSupportedTickers as getMetaplanetTickers } from './dashboards/metaplanet';
 import { litestrategyFetcher, getSupportedTickers as getLitestrategyTickers } from './dashboards/litestrategy';
+import { kulrFetcher, getSupportedTickers as getKulrTickers } from './dashboards/kulr';
+import { upexiFetcher, getSupportedTickers as getUpexiTickers } from './dashboards/upexi';
+import { capitalBFetcher, getSupportedTickers as getCapitalBTickers } from './dashboards/capital-b';
 import { secXbrlFetcher, getSupportedTickers as getSecXbrlTickers } from './sec-xbrl';
 import { yahooFinanceFetcher, getSupportedTickers as getYahooTickers } from './yahoo-finance';
 
@@ -29,6 +32,9 @@ export const fetchers: Record<string, Fetcher> = {
   'xxi-mempool': xxiMempoolFetcher,
   'metaplanet-dashboard': metaplanetFetcher,
   'litestrategy-dashboard': litestrategyFetcher,
+  'kulr-tracker': kulrFetcher,
+  'upexi-dashboard': upexiFetcher,
+  'capital-b-dashboard': capitalBFetcher,
   'sec-xbrl': secXbrlFetcher,
   'yahoo-finance': yahooFinanceFetcher,
 };
@@ -66,6 +72,12 @@ export function getTickersForFetcher(fetcherName: string): string[] {
       return getMetaplanetTickers();
     case 'litestrategy-dashboard':
       return getLitestrategyTickers();
+    case 'kulr-tracker':
+      return getKulrTickers();
+    case 'upexi-dashboard':
+      return getUpexiTickers();
+    case 'capital-b-dashboard':
+      return getCapitalBTickers();
     case 'sec-xbrl':
       return getSecXbrlTickers();
     case 'yahoo-finance':
