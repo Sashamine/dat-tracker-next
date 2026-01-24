@@ -123,10 +123,16 @@ export const capitalBFetcher: Fetcher = {
 
     // Find the most recent date from the btcHeld time series
     const btcHeldSeries = data.values?.btcHeld || [];
-    const latestDate = btcHeldSeries.length > 0
-      ? btcHeldSeries[btcHeldSeries.length - 1][0]
-      : new Date().toISOString().split('T')[0];
-    const sourceDate = latestDate.split('T')[0];
+    let sourceDate = new Date().toISOString().split('T')[0];
+    if (btcHeldSeries.length > 0) {
+      const latestEntry = btcHeldSeries[btcHeldSeries.length - 1];
+      if (latestEntry && latestEntry[0]) {
+        const latestDate = latestEntry[0];
+        sourceDate = typeof latestDate === 'string' && latestDate.includes('T')
+          ? latestDate.split('T')[0]
+          : latestDate;
+      }
+    }
 
     // BTC Holdings
     const btcHeld = data.settings?.btcHeld;
