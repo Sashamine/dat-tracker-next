@@ -112,7 +112,9 @@ export async function GET(request: NextRequest) {
         ticker: d.ticker,
         field: d.field,
         ourValue: d.ourValue,
+        ourSourceDate: d.ourSourceDate,  // When our data is from
         sourceValues: d.sourceValues,
+        newerSourceDate: d.newerSourceDate,  // Newest external source date
         maxDeviationPct: d.maxDeviationPct.toFixed(2) + '%',
         severity: d.severity,
       })),
