@@ -644,7 +644,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 308_381_000,  // SEC 10-Q Q3 2025 basic shares
+    sharesForMnav: 318_562_000,  // SEC 10-Q Q3 2025 weighted avg diluted
     // Debt: $460M 3% converts due 2029 (Aug 2024) + $625M 0% converts due 2031 (Dec 2024) + additional
     totalDebt: 1_162_000_000,  // $1.162B per SEC 10-Q Q3 2025
     debtSource: "SEC 10-Q Q3 2025",

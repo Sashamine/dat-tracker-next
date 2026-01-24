@@ -569,7 +569,7 @@ const CORZ_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 256, sharesOutstandingDiluted: 338_000_000, holdingsPerShare: 0.00000076, source: "FY 2024 10-K" },
   { date: "2025-03-31", holdings: 977, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.00000286, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 1612, sharesOutstandingDiluted: 351_000_000, holdingsPerShare: 0.00000459, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 2116, sharesOutstandingDiluted: 356_000_000, holdingsPerShare: 0.00000594, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001839341&type=10-Q", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 2116, sharesOutstandingDiluted: 318_562_000, holdingsPerShare: 0.00000664, source: "Q3 2025 10-Q", sharesSource: "Weighted avg diluted from Q3 earnings", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001839341&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // Bitdeer Technologies (BTDR) - Started treasury strategy Nov 2024
