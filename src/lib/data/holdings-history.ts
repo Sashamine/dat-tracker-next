@@ -232,7 +232,8 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 // KULR Technology - Bitcoin First Company
 // Note: 1-for-8 reverse stock split on June 23, 2025
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// Q3 2025 earnings: $120M BTC treasury, no new BTC count announced since July
+// Q3 2025 10-Q: 1,056.7 BTC + 70 BTC collateral, fair value $120.5M
+// ATM paused Dec 22, 2025 through Jun 30, 2026
 const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 214_227_808, holdingsPerShare: 0.00000101, source: "Initial BTC purchase 8-K" },
   { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 240_000_000, holdingsPerShare: 0.00000179, source: "8-K filing" },
@@ -243,7 +244,8 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (1-for-8) - SEC shows split-adjusted shares
   { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "Press release + reverse split" },
   { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "GlobeNewswire press release", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/10/3113243/0/en/KULR-Expands-Bitcoin-Holdings-to-1-021-BTC-Reports-291-2-BTC-Yield.html", sourceType: "press-release" },
-  { date: "2026-01-23", holdings: 1021, sharesOutstandingDiluted: 45_650_000, holdingsPerShare: 0.0000224, source: "No new purchases since Jul 2025", sharesSource: "Stock Analysis Jan 2026", sourceType: "aggregator" },
+  // Q3 2025: 10-Q shows 1,056.7 BTC held + 70 BTC as collateral = 1,127 total. Using 1,057 (excludes collateral).
+  { date: "2025-09-30", holdings: 1057, sharesOutstandingDiluted: 45_650_000, holdingsPerShare: 0.0000231, source: "SEC 10-Q Q3 2025", sharesSource: "Stock Analysis Jan 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm", sourceType: "sec-filing" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury

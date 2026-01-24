@@ -445,10 +445,10 @@ export const btcCompanies: Company[] = [
     ticker: "KULR",
     asset: "BTC",
     tier: 1,
-    holdings: 1_021,
-    holdingsLastUpdated: "2025-07-10",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/07/10/3113243/0/en/KULR-Expands-Bitcoin-Holdings-to-1-021-BTC-Reports-291-2-BTC-Yield.html",
+    holdings: 1_057,  // Q3 2025 10-Q: 1,056.7 BTC held + 70 BTC collateral
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     datStartDate: "2024-12-01",
     costBasisAvg: 97_000,
     isMiner: false,
@@ -463,7 +463,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
-    notes: "NASA supplier. 291% BTC Yield YTD. ATM + Coinbase credit facility. $120M BTC treasury per Q3 earnings.",
+    notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. $120M BTC treasury per Q3 2025.",
   },
   {
     id: "altbg",
