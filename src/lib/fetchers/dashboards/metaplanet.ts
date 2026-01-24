@@ -14,11 +14,11 @@ const METAPLANET_ANALYTICS_URL = 'https://metaplanet.jp/en/analytics';
 
 /**
  * Parse BTC holdings from the HTML
- * Looks for patterns like "₿35,102" followed by "BTC Holdings"
+ * Looks for patterns like "₿35,102" - the main holdings value
  */
 function parseBtcHoldings(html: string): number | null {
-  // The page has "₿35,102" as BTC Holdings
-  // We look for the pattern where BTC value appears before "BTC Holdings" text
+  // The page has multiple ₿ values (holdings, historical purchases, etc.)
+  // We need to find the main BTC Holdings which is a large number (thousands of BTC)
 
   // Method 1: Look for ₿ symbol followed by numbers
   const btcPattern = /₿([0-9,]+(?:\.[0-9]+)?)/g;
@@ -28,16 +28,23 @@ function parseBtcHoldings(html: string): number | null {
     return null;
   }
 
-  // The first occurrence is typically the main BTC Holdings value
-  // (shown prominently at the top of the analytics page)
-  const firstMatch = matches[0][1];
-  const value = parseFloat(firstMatch.replace(/,/g, ''));
+  // Parse all matches and find the largest value that looks like total holdings
+  // Main holdings is typically thousands of BTC (e.g., 35,102)
+  // Filter out small values like prices, individual purchases, or per-share values
+  const values = matches
+    .map(m => parseFloat(m[1].replace(/,/g, '')))
+    .filter(v => !isNaN(v) && v >= 1000); // Holdings should be at least 1000 BTC
 
-  if (isNaN(value)) {
-    return null;
+  if (values.length === 0) {
+    // Fallback to first match if no large values found
+    const firstMatch = matches[0][1];
+    const value = parseFloat(firstMatch.replace(/,/g, ''));
+    return isNaN(value) ? null : value;
   }
 
-  return value;
+  // Return the largest value (most likely the total holdings)
+  // Usually this appears multiple times on the page
+  return Math.max(...values);
 }
 
 /**
