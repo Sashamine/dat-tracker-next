@@ -90,12 +90,13 @@ async function fetchLivePrices(): Promise<PriceData | null> {
     const crypto = await getBinancePrices();
     console.log(`[Comparison] Got ${Object.keys(crypto).length} crypto prices`);
 
-    // 2. Get forex rates from FMP (just JPY for Metaplanet)
+    // 2. Get forex rates from FMP
     let forex: Record<string, number> = { ...FALLBACK_RATES };
     if (FMP_API_KEY) {
       try {
+        // Use stable/batch-quote endpoint (same as /api/prices)
         const forexResponse = await fetch(
-          `https://financialmodelingprep.com/api/v3/quote/USDJPY,USDHKD,USDSEK?apikey=${FMP_API_KEY}`,
+          `https://financialmodelingprep.com/stable/batch-quote?symbols=USDJPY,USDHKD,USDSEK&apikey=${FMP_API_KEY}`,
           { cache: 'no-store' }
         );
         if (forexResponse.ok) {
@@ -118,25 +119,28 @@ async function fetchLivePrices(): Promise<PriceData | null> {
     const stocks: Record<string, { price: number; marketCap: number }> = {};
     if (FMP_API_KEY) {
       const stockTickers = ['3350.T', 'MSTR']; // Tickers with mNAV dashboards
-      for (const ticker of stockTickers) {
-        try {
-          const stockResponse = await fetch(
-            `https://financialmodelingprep.com/api/v3/quote/${ticker}?apikey=${FMP_API_KEY}`,
-            { cache: 'no-store' }
-          );
-          if (stockResponse.ok) {
-            const stockData = await stockResponse.json();
-            if (Array.isArray(stockData) && stockData[0]) {
-              stocks[ticker] = {
-                price: stockData[0].price || 0,
-                marketCap: stockData[0].marketCap || 0,
-              };
-              console.log(`[Comparison] ${ticker}: price=${stockData[0].price}`);
+      try {
+        // Use stable/batch-quote endpoint (same as /api/prices)
+        const stockResponse = await fetch(
+          `https://financialmodelingprep.com/stable/batch-quote?symbols=${stockTickers.join(',')}&apikey=${FMP_API_KEY}`,
+          { cache: 'no-store' }
+        );
+        if (stockResponse.ok) {
+          const stockData = await stockResponse.json();
+          if (Array.isArray(stockData)) {
+            for (const stock of stockData) {
+              if (stock?.symbol) {
+                stocks[stock.symbol] = {
+                  price: stock.price || 0,
+                  marketCap: stock.marketCap || 0,
+                };
+                console.log(`[Comparison] ${stock.symbol}: price=${stock.price}`);
+              }
             }
           }
-        } catch (e) {
-          console.warn(`[Comparison] Failed to fetch ${ticker} stock price`);
         }
+      } catch (e) {
+        console.warn('[Comparison] Failed to fetch stock prices');
       }
     }
 
