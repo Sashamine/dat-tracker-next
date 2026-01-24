@@ -41,12 +41,28 @@ interface OurValues {
   holdingsDate?: string;
   sharesOutstanding?: number;
   sharesSource?: string;
+  sharesDate?: string;
   totalDebt?: number;
   debtSource?: string;
+  debtDate?: string;
   cashReserves?: number;
   cashSource?: string;
+  cashDate?: string;
   preferredEquity?: number;
+  preferredEquityDate?: string;
   calculatedMnav?: number;
+}
+
+// Helper to compare dates - returns true if fetched date is newer or equal to our date
+function isNewerOrEqual(fetchedDate: string, ourDate?: string): boolean {
+  if (!ourDate) return true; // If we don't have a date, show all fetched data
+  try {
+    const fetched = new Date(fetchedDate);
+    const ours = new Date(ourDate);
+    return fetched >= ours;
+  } catch {
+    return true; // If date parsing fails, show the data
+  }
 }
 
 async function fetchLivePrices() {
@@ -86,11 +102,15 @@ export async function GET(
     holdingsDate: snapshot?.date || company.holdingsLastUpdated,
     sharesOutstanding: company.sharesForMnav ?? sharesFromHistory,
     sharesSource: snapshot?.sharesSource,
+    sharesDate: snapshot?.date,
     totalDebt: company.totalDebt,
     debtSource: company.debtSource,
+    debtDate: company.debtAsOf,
     cashReserves: company.cashReserves,
     cashSource: company.cashSource,
+    cashDate: company.cashAsOf,
     preferredEquity: company.preferredEquity,
+    preferredEquityDate: company.debtAsOf, // Usually from same filing
   };
 
   // Calculate our mNAV if applicable
@@ -175,61 +195,84 @@ export async function GET(
     }>;
   }> = {};
 
-  // Holdings comparison
+  // Holdings comparison - only show fetched values newer than our date
   if (fetchedByField.holdings) {
-    comparisons.holdings = {
-      ourValue: ourValues.holdings,
-      ourSource: ourValues.holdingsSource,
-      ourDate: ourValues.holdingsDate,
-      fetched: fetchedByField.holdings.map(f => ({
-        source: f.source, value: f.value, url: f.url, date: f.date,
-        deviationPct: ourValues.holdings
-          ? ((f.value - ourValues.holdings) / ourValues.holdings * 100).toFixed(2) + '%'
-          : undefined,
-      })),
-    };
+    const relevantFetched = fetchedByField.holdings.filter(f =>
+      isNewerOrEqual(f.date, ourValues.holdingsDate)
+    );
+    if (relevantFetched.length > 0) {
+      comparisons.holdings = {
+        ourValue: ourValues.holdings,
+        ourSource: ourValues.holdingsSource,
+        ourDate: ourValues.holdingsDate,
+        fetched: relevantFetched.map(f => ({
+          source: f.source, value: f.value, url: f.url, date: f.date,
+          deviationPct: ourValues.holdings
+            ? ((f.value - ourValues.holdings) / ourValues.holdings * 100).toFixed(2) + '%'
+            : undefined,
+        })),
+      };
+    }
   }
 
-  // Shares comparison
+  // Shares comparison - only show fetched values newer than our date
   if (fetchedByField.shares_outstanding) {
-    comparisons.shares_outstanding = {
-      ourValue: ourValues.sharesOutstanding,
-      ourSource: ourValues.sharesSource,
-      fetched: fetchedByField.shares_outstanding.map(f => ({
-        source: f.source, value: f.value, url: f.url, date: f.date,
-        deviationPct: ourValues.sharesOutstanding
-          ? ((f.value - ourValues.sharesOutstanding) / ourValues.sharesOutstanding * 100).toFixed(2) + '%'
-          : undefined,
-      })),
-    };
+    const relevantFetched = fetchedByField.shares_outstanding.filter(f =>
+      isNewerOrEqual(f.date, ourValues.sharesDate)
+    );
+    if (relevantFetched.length > 0) {
+      comparisons.shares_outstanding = {
+        ourValue: ourValues.sharesOutstanding,
+        ourSource: ourValues.sharesSource,
+        ourDate: ourValues.sharesDate,
+        fetched: relevantFetched.map(f => ({
+          source: f.source, value: f.value, url: f.url, date: f.date,
+          deviationPct: ourValues.sharesOutstanding
+            ? ((f.value - ourValues.sharesOutstanding) / ourValues.sharesOutstanding * 100).toFixed(2) + '%'
+            : undefined,
+        })),
+      };
+    }
   }
 
-  // Debt comparison
+  // Debt comparison - only show fetched values newer than our date
   if (fetchedByField.debt) {
-    comparisons.debt = {
-      ourValue: ourValues.totalDebt,
-      ourSource: ourValues.debtSource,
-      fetched: fetchedByField.debt.map(f => ({
-        source: f.source, value: f.value, url: f.url, date: f.date,
-        deviationPct: ourValues.totalDebt
-          ? ((f.value - ourValues.totalDebt) / ourValues.totalDebt * 100).toFixed(2) + '%'
-          : undefined,
-      })),
-    };
+    const relevantFetched = fetchedByField.debt.filter(f =>
+      isNewerOrEqual(f.date, ourValues.debtDate)
+    );
+    if (relevantFetched.length > 0) {
+      comparisons.debt = {
+        ourValue: ourValues.totalDebt,
+        ourSource: ourValues.debtSource,
+        ourDate: ourValues.debtDate,
+        fetched: relevantFetched.map(f => ({
+          source: f.source, value: f.value, url: f.url, date: f.date,
+          deviationPct: ourValues.totalDebt
+            ? ((f.value - ourValues.totalDebt) / ourValues.totalDebt * 100).toFixed(2) + '%'
+            : undefined,
+        })),
+      };
+    }
   }
 
-  // Cash comparison
+  // Cash comparison - only show fetched values newer than our date
   if (fetchedByField.cash) {
-    comparisons.cash = {
-      ourValue: ourValues.cashReserves,
-      ourSource: ourValues.cashSource,
-      fetched: fetchedByField.cash.map(f => ({
-        source: f.source, value: f.value, url: f.url, date: f.date,
-        deviationPct: ourValues.cashReserves
-          ? ((f.value - ourValues.cashReserves) / ourValues.cashReserves * 100).toFixed(2) + '%'
-          : undefined,
-      })),
-    };
+    const relevantFetched = fetchedByField.cash.filter(f =>
+      isNewerOrEqual(f.date, ourValues.cashDate)
+    );
+    if (relevantFetched.length > 0) {
+      comparisons.cash = {
+        ourValue: ourValues.cashReserves,
+        ourSource: ourValues.cashSource,
+        ourDate: ourValues.cashDate,
+        fetched: relevantFetched.map(f => ({
+          source: f.source, value: f.value, url: f.url, date: f.date,
+          deviationPct: ourValues.cashReserves
+            ? ((f.value - ourValues.cashReserves) / ourValues.cashReserves * 100).toFixed(2) + '%'
+            : undefined,
+        })),
+      };
+    }
   }
 
   // mNAV comparison
