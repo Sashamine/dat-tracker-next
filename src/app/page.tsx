@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
@@ -43,6 +43,18 @@ function HomeContent() {
     (minMarketCap > 0 || maxMarketCap < Infinity ? 1 : 0) +
     (minMNAV > 0 || maxMNAV < Infinity ? 1 : 0) +
     (search.length > 0 ? 1 : 0);
+
+  // Debug: Log forex data when prices update
+  useEffect(() => {
+    if (prices) {
+      console.log('[Page Debug] Prices received:', {
+        hasForex: !!prices.forex,
+        forexJPY: prices.forex?.JPY,
+        metaplanetPrice: prices.stocks?.['3350.T']?.price,
+        metaplanetMarketCap: prices.stocks?.['3350.T']?.marketCap,
+      });
+    }
+  }, [prices]);
 
   // Fetch companies from database API
   const { data: companiesData, isLoading: isLoadingCompanies, refetch: refetchCompanies } = useCompanies();
@@ -196,6 +208,7 @@ function HomeContent() {
           {/* Footer */}
           <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             <p>Real-time prices from Alpaca. Data from Railway PostgreSQL.</p>
+            <p className="text-xs text-gray-400 mt-1">v2.1-forex</p>
           </footer>
         </div>
       </main>
