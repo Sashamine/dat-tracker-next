@@ -208,7 +208,7 @@ function HomeContent() {
           {/* Footer */}
           <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             <p>Real-time prices from Alpaca. Data from Railway PostgreSQL.</p>
-            <p className="text-xs text-gray-400 mt-1">v2.5-btbt-fix</p>
+            <p className="text-xs text-gray-400 mt-1">v2.6-btbt-holdings</p>
           </footer>
         </div>
       </main>
