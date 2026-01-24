@@ -173,7 +173,7 @@ async function recordFetchResult(
 }
 
 /**
- * Check if there's a recent dismissal for this company/field with the SAME disagreement
+ * Check if there's a recent dismissal/resolution for this company/field with the SAME disagreement
  * Same disagreement = same source reporting the same (wrong) value
  * If the source updates to a different value, that's a NEW discrepancy to review
  */
@@ -182,12 +182,12 @@ async function hasRecentDismissal(
   field: ComparisonField,
   currentSourceValues: Record<string, { value: number; url: string; date: string }>
 ): Promise<boolean> {
-  // Check for dismissals in the last 30 days
+  // Check for dismissals OR resolutions in the last 30 days
   const rows = await query<{ id: number; source_values: string | Record<string, unknown> }>(
     `SELECT id, source_values FROM discrepancies
      WHERE company_id = $1
        AND field = $2
-       AND status = 'dismissed'
+       AND status IN ('dismissed', 'resolved')
        AND created_at > NOW() - INTERVAL '30 days'
      ORDER BY created_at DESC
      LIMIT 1`,
@@ -228,17 +228,17 @@ async function hasRecentDismissal(
 
 /**
  * Record a discrepancy in the database
- * Skips if there's a recent dismissal with the SAME disagreement (same source, same value)
+ * Skips if there's a recent dismissal/resolution with the SAME disagreement (same source, same value)
  */
 async function recordDiscrepancy(
   companyId: number,
   comparison: ComparisonResult
 ): Promise<number | null> {
-  // Check for recent dismissal with same disagreement
+  // Check for recent dismissal/resolution with same disagreement
   const wasDismissed = await hasRecentDismissal(companyId, comparison.field, comparison.sourceValues);
 
   if (wasDismissed) {
-    console.log(`[Comparison] Skipping ${comparison.ticker} ${comparison.field} - recently dismissed for same sources`);
+    console.log(`[Comparison] Skipping ${comparison.ticker} ${comparison.field} - recently dismissed/resolved for same sources`);
     return null;
   }
 
