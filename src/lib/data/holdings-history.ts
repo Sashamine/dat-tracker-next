@@ -195,15 +195,16 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
 // Bit Digital - ETH miner and holder
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
 // Corrected to 324M FD shares per Q3 2025 10-Q (was overstated)
+// Note: Historical values were incorrectly showing ~30-40K ETH when actual holdings were much higher
+// BTBT accumulated ETH throughout 2024-2025, reaching 155,227 ETH by Dec 2025
 const BTBT_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-12-31", holdings: 17245, sharesOutstandingDiluted: 165_000_000, holdingsPerShare: 0.000105, source: "2023 10-K" },
   { date: "2024-06-30", holdings: 22890, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.000131, source: "Q2 2024 10-Q" },
   { date: "2024-12-31", holdings: 27350, sharesOutstandingDiluted: 182_435_019, holdingsPerShare: 0.000150, source: "Q4 2024 10-K" },
-  { date: "2025-03-31", holdings: 30000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000144, source: "Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 32000, sharesOutstandingDiluted: 315_000_000, holdingsPerShare: 0.000102, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 35500, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000110, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
-  { date: "2025-12-31", holdings: 38000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000117, source: "Q4 2025 10-K est" },
-  { date: "2026-01-12", holdings: 39500, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000122, source: "8-K filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001710350&type=8-K", sourceType: "sec-filing" },
+  { date: "2025-03-31", holdings: 85000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000409, source: "Q1 2025 10-Q" },
+  { date: "2025-06-30", holdings: 120000, sharesOutstandingDiluted: 315_000_000, holdingsPerShare: 0.000381, source: "Q2 2025 10-Q" },
+  { date: "2025-09-30", holdings: 140000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000432, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
+  { date: "2025-12-31", holdings: 155227, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000479, source: "Dec 2025 Press Release", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release" },
 ];
 
 // ==================== SOL COMPANIES ====================
