@@ -65,10 +65,60 @@ function isNewerOrEqual(fetchedDate: string, ourDate?: string): boolean {
   }
 }
 
-async function fetchLivePrices() {
+// FMP API Key for stock prices
+const FMP_API_KEY = process.env.FMP_API_KEY || "";
+
+async function fetchStockPrice(ticker: string): Promise<{ price: number; marketCap: number } | null> {
+  if (!FMP_API_KEY) return null;
+
   try {
-    const crypto = await getBinancePrices();
-    return { crypto, forex: FALLBACK_RATES };
+    const url = `https://financialmodelingprep.com/stable/batch-quote?symbols=${ticker}&apikey=${FMP_API_KEY}`;
+    const response = await fetch(url, { cache: "no-store" });
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length > 0 && data[0]?.price) {
+      return {
+        price: data[0].price,
+        marketCap: data[0].marketCap || 0,
+      };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchForexRates(): Promise<Record<string, number>> {
+  if (!FMP_API_KEY) return FALLBACK_RATES;
+
+  try {
+    const url = `https://financialmodelingprep.com/api/v3/quote/USDJPY,USDHKD,USDSEK,USDCAD?apikey=${FMP_API_KEY}`;
+    const response = await fetch(url, { cache: "no-store" });
+    const data = await response.json();
+
+    const rates: Record<string, number> = { ...FALLBACK_RATES };
+    if (Array.isArray(data)) {
+      for (const quote of data) {
+        if (quote?.symbol && quote?.price > 0) {
+          const currency = quote.symbol.replace("USD", "");
+          rates[currency] = quote.price;
+        }
+      }
+    }
+    return rates;
+  } catch {
+    return FALLBACK_RATES;
+  }
+}
+
+async function fetchLivePrices(ticker: string) {
+  try {
+    const [crypto, stockData, forex] = await Promise.all([
+      getBinancePrices(),
+      fetchStockPrice(ticker),
+      fetchForexRates(),
+    ]);
+    return { crypto, stockData, forex };
   } catch {
     return null;
   }
@@ -115,11 +165,12 @@ export async function GET(
 
   // Calculate our mNAV if applicable
   if (MNAV_DASHBOARD_TICKERS.has(upperTicker) && company.holdings > 0) {
-    const prices = await fetchLivePrices();
+    const prices = await fetchLivePrices(upperTicker);
     const cryptoPrice = prices?.crypto[company.asset]?.price;
 
     if (cryptoPrice && cryptoPrice > 0) {
-      const { marketCap } = getMarketCapForMnavSync(company, null, prices?.forex);
+      // Pass live stock data for accurate market cap calculation (shares × price × forex)
+      const { marketCap } = getMarketCapForMnavSync(company, prices?.stockData, prices?.forex);
 
       if (marketCap > 0) {
         ourValues.calculatedMnav = calculateMNAV(
