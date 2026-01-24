@@ -24,7 +24,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   // === BTC Miners with significant debt ===
   // "HUT" removed - pivoted to AI/HPC, not a DAT company
   // "CORZ" removed - pivoted to AI/HPC infrastructure, not a DAT company
-  "BTDR": 2_300_000_000,      // $2.3B - Bitdeer ($730M convertible notes)
+  // "BTDR" removed - primarily a miner/ASIC manufacturer, not a DAT company
 
   // === BTC Treasury Companies (FMP returns stale/incorrect data) ===
   "DJT": 3_900_000_000,       // $3.9B - Trump Media (Jan 2026, per Yahoo/Nasdaq)

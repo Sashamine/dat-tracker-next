@@ -626,37 +626,7 @@ export const btcCompanies: Company[] = [
     notes: "80% owned by Hut 8. Active BTC accumulation - added 1,064 BTC in Dec 2025.",
   },
   // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
-  {
-    id: "btdr",
-    name: "Bitdeer Technologies",
-    ticker: "BTDR",
-    asset: "BTC",
-    tier: 1,
-    holdings: 2_017,  // Dec 31, 2025 per SEC 6-K Jan 12, 2026
-    holdingsLastUpdated: "2025-12-31",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://ir.bitdeer.com/news-releases/news-release-details/bitdeer-announces-december-2025-production-and-operations-update",
-    datStartDate: "2024-01-01",
-    costBasisAvg: 40_000,
-    isMiner: true,
-    btcMinedAnnual: 3_000,
-    quarterlyBurnUsd: 50_000_000,
-    avgDailyVolume: 80_000_000,
-    hasOptions: true,
-    // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 236_820_000,  // Stock Analysis Jan 2026; post Nov 2025 equity offering (+10.66M) and ATM activity
-    // Debt: $330M 4.875% converts 2031 + $400M 4% converts 2031 + $160M remaining 5.25% 2029 notes
-    totalDebt: 890_000_000,  // ~$890M total ($200M of 5.25% notes repurchased Nov 2025)
-    debtSource: "SEC 6-K filings Nov 2025",
-    debtAsOf: "2025-11-30",
-    cashReserves: 150_000_000,  // ~$150M cash (conservative; Q3 showed $196M)
-    restrictedCash: 150_000_000,  // Operating capital (miner) - not excess
-    cashSource: "SEC 6-K Q3 2025",
-    cashAsOf: "2025-09-30",
-    leader: "Jihan Wu (Co-Founder)",
-    strategy: "Vertically integrated - develops own ASIC chips (SEALMINER).",
-    notes: "Cayman Islands (6-K filer). $890M in 4-5% converts. Self-manufacturers SEALMINER ASICs.",
-  },
+  // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company
 ];
 
 // SOL DAT Companies
