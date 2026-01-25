@@ -1,15 +1,19 @@
 /**
- * SEC 8-K Auto-Update Adapter
+ * SEC Auto-Update Adapter (Hybrid XBRL + LLM)
  *
- * Finds new 8-K filings, extracts holdings via LLM, and updates companies.ts directly.
- * This follows the ROADMAP architecture: TypeScript files as source of truth, git-reviewable changes.
+ * Combines two extraction methods for maximum reliability:
+ * 1. XBRL extraction (deterministic) - for 10-K/10-Q quarterly data
+ * 2. LLM extraction (probabilistic) - for 8-K event-driven updates
  *
  * Flow:
- * 1. Check SEC EDGAR for recent 8-K filings with crypto content
- * 2. Extract holdings from filing text using LLM
- * 3. Compare to current value in companies.ts
- * 4. If different and confident, update companies.ts
- * 5. Git commit with descriptive message
+ * 1. Try XBRL extraction first (structured data, 100% confidence)
+ * 2. Check for recent 8-K filings with crypto content
+ * 3. Extract holdings from 8-K text using LLM
+ * 4. Cross-validate XBRL vs LLM when both available
+ * 5. If different and confident, update companies.ts
+ * 6. Git commit with descriptive message
+ *
+ * Priority: XBRL > LLM (XBRL is deterministic, LLM can hallucinate)
  */
 
 import * as fs from 'fs';
@@ -22,13 +26,21 @@ import {
   TICKER_TO_CIK,
 } from '../sec/sec-edgar';
 
-// LLM extractor for parsing SEC filings
+// LLM extractor for parsing SEC filings (8-K text)
 import {
   extractHoldingsFromText,
   validateExtraction,
   createLLMConfigFromEnv,
   type LLMProvider,
 } from '../sec/llm-extractor';
+
+// XBRL extractor for structured data (10-K/10-Q)
+import {
+  extractXBRLData,
+  compareExtractions,
+  formatXBRLSummary,
+  type XBRLExtractionResult,
+} from '../sec/xbrl-extractor';
 
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';
@@ -44,6 +56,9 @@ export interface SecUpdateResult {
   reasoning?: string;
   error?: string;
   committed?: boolean;
+  // New: extraction method used
+  extractionMethod?: 'xbrl' | 'llm' | 'hybrid';
+  xbrlResult?: XBRLExtractionResult;
 }
 
 export interface SecUpdateConfig {
@@ -53,6 +68,9 @@ export interface SecUpdateConfig {
   autoCommit?: boolean;         // Commit changes automatically (default: true)
   minConfidence?: number;       // Minimum confidence to accept (default: 0.7)
   maxChangePct?: number;        // Max % change to auto-accept (default: 50)
+  // New: extraction mode
+  extractionMode?: 'xbrl_only' | 'llm_only' | 'hybrid';  // default: hybrid
+  skipXbrl?: boolean;           // Skip XBRL extraction (use LLM only)
 }
 
 /**
@@ -130,13 +148,13 @@ function updateCompaniesFile(
   newHoldings: number,
   filingDate: string,
   filingUrl: string,
-  dryRun: boolean
+  dryRun: boolean,
+  source: string = 'sec-filing'
 ): { success: boolean; previousHoldings?: number } {
   const filePath = path.join(process.cwd(), COMPANIES_FILE);
   const content = fs.readFileSync(filePath, 'utf-8');
 
   // Find the company entry by ticker
-  // Pattern: ticker: "XXXX", followed by holdings: NUMBER
   const tickerPattern = new RegExp(
     `(ticker:\\s*["']${ticker}["'][\\s\\S]*?)(holdings:\\s*)([\\d_,]+)(\\s*,)([\\s\\S]*?)(holdingsLastUpdated:\\s*["'])([^"']+)(["'])([\\s\\S]*?)(holdingsSource:\\s*["'])([^"']+)(["'])([\\s\\S]*?)(holdingsSourceUrl:\\s*["'])([^"']+)(["'])`,
     'i'
@@ -144,7 +162,6 @@ function updateCompaniesFile(
 
   const match = content.match(tickerPattern);
   if (!match) {
-    // Try simpler pattern for holdings only
     const simplePattern = new RegExp(
       `(ticker:\\s*["']${ticker}["'][\\s\\S]*?)(holdings:\\s*)([\\d_,]+)`,
       'i'
@@ -155,7 +172,6 @@ function updateCompaniesFile(
       return { success: false };
     }
 
-    // Extract previous holdings
     const previousHoldings = parseInt(simpleMatch[3].replace(/[_,]/g, ''));
 
     if (dryRun) {
@@ -163,7 +179,6 @@ function updateCompaniesFile(
       return { success: true, previousHoldings };
     }
 
-    // Update just the holdings value
     const newContent = content.replace(
       simplePattern,
       `$1$2${newHoldings.toLocaleString().replace(/,/g, '_')}`
@@ -173,23 +188,21 @@ function updateCompaniesFile(
     return { success: true, previousHoldings };
   }
 
-  // Extract previous holdings
   const previousHoldings = parseInt(match[3].replace(/[_,]/g, ''));
 
   if (dryRun) {
     console.log(`[DRY RUN] Would update ${ticker}:`);
     console.log(`  holdings: ${previousHoldings} → ${newHoldings}`);
     console.log(`  holdingsLastUpdated: ${match[7]} → ${filingDate}`);
-    console.log(`  holdingsSource: ${match[11]} → sec-filing`);
+    console.log(`  holdingsSource: ${match[11]} → ${source}`);
     console.log(`  holdingsSourceUrl: ${match[15]} → ${filingUrl}`);
     return { success: true, previousHoldings };
   }
 
-  // Build replacement with updated values
   const formattedHoldings = newHoldings.toLocaleString().replace(/,/g, '_');
   const newContent = content.replace(
     tickerPattern,
-    `$1$2${formattedHoldings}$4$5$6${filingDate}$8$9$10sec-filing$12$13$14${filingUrl}$16`
+    `$1$2${formattedHoldings}$4$5$6${filingDate}$8$9$10${source}$12$13$14${filingUrl}$16`
   );
 
   fs.writeFileSync(filePath, newContent);
@@ -199,15 +212,23 @@ function updateCompaniesFile(
 /**
  * Commit changes to git
  */
-function gitCommit(ticker: string, previousHoldings: number, newHoldings: number, filingDate: string): boolean {
+function gitCommit(
+  ticker: string,
+  previousHoldings: number,
+  newHoldings: number,
+  filingDate: string,
+  extractionMethod: 'xbrl' | 'llm' | 'hybrid' = 'llm'
+): boolean {
   try {
-    const message = `Update ${ticker} holdings from SEC 8-K filing
+    const methodLabel = extractionMethod === 'xbrl' ? 'XBRL' : extractionMethod === 'hybrid' ? 'XBRL+LLM' : 'LLM';
+    const message = `Update ${ticker} holdings from SEC filing (${methodLabel})
 
 Holdings: ${previousHoldings.toLocaleString()} → ${newHoldings.toLocaleString()}
 Filing date: ${filingDate}
-Source: SEC EDGAR 8-K
+Extraction method: ${methodLabel}
+Source: SEC EDGAR
 
-Auto-updated by SEC 8-K adapter.
+Auto-updated by SEC adapter.
 
 Co-Authored-By: Claude <noreply@anthropic.com>`;
 
@@ -222,9 +243,9 @@ Co-Authored-By: Claude <noreply@anthropic.com>`;
 }
 
 /**
- * Process a single company
+ * Process a single company using hybrid XBRL + LLM approach
  */
-async function processCompany(
+async function processCompanyHybrid(
   ticker: string,
   asset: string,
   currentHoldings: number,
@@ -235,108 +256,184 @@ async function processCompany(
     return { ticker, success: false, error: 'No CIK mapping found' };
   }
 
-  const llmConfig = createLLMConfigFromEnv();
-  if (!llmConfig) {
-    return { ticker, success: false, error: 'No LLM API key configured' };
-  }
-
   console.log(`[SEC Update] Checking ${ticker}...`);
 
+  let xbrlResult: XBRLExtractionResult | undefined;
+  let llmHoldings: number | null = null;
+  let llmConfidence: number = 0;
+  let llmReasoning: string | undefined;
+  let filing8K: { filingDate: string; documentUrl?: string; content?: string } | undefined;
+
   try {
-    // Find recent 8-K filings
-    const filings = await findRecent8KFilings(ticker, cik, asset, config.sinceDays || 7);
+    // STEP 1: Try XBRL extraction (deterministic)
+    if (config.extractionMode !== 'llm_only' && !config.skipXbrl) {
+      console.log(`[SEC Update] ${ticker}: Trying XBRL extraction...`);
+      xbrlResult = await extractXBRLData(ticker);
 
-    if (filings.length === 0) {
-      return { ticker, success: true, reasoning: 'No recent 8-K filings with crypto content' };
+      if (xbrlResult.success && xbrlResult.bitcoinHoldings !== undefined) {
+        console.log(formatXBRLSummary(xbrlResult));
+      } else if (!xbrlResult.success) {
+        console.log(`[SEC Update] ${ticker}: XBRL extraction failed - ${xbrlResult.error}`);
+      } else {
+        console.log(`[SEC Update] ${ticker}: No Bitcoin holdings found in XBRL data`);
+      }
     }
 
-    // Process the most recent filing
-    const filing = filings[0];
+    // STEP 2: Try LLM extraction from 8-K (for recent events)
+    if (config.extractionMode !== 'xbrl_only') {
+      const llmConfig = createLLMConfigFromEnv();
 
-    if (!filing.content) {
-      return { ticker, success: false, error: 'Filing found but no content extracted' };
+      if (llmConfig) {
+        console.log(`[SEC Update] ${ticker}: Checking for recent 8-K filings...`);
+        const filings = await findRecent8KFilings(ticker, cik, asset, config.sinceDays || 7);
+
+        if (filings.length > 0) {
+          filing8K = filings[0];
+
+          if (filing8K.content) {
+            const extraction = await extractHoldingsFromText(
+              filing8K.content,
+              { companyName: ticker, ticker, asset, currentHoldings },
+              llmConfig
+            );
+
+            if (extraction.holdings !== null) {
+              llmHoldings = extraction.holdings;
+              llmConfidence = extraction.confidence;
+              llmReasoning = extraction.reasoning;
+              console.log(`[SEC Update] ${ticker}: LLM extracted ${llmHoldings} (${(llmConfidence * 100).toFixed(0)}% confidence)`);
+            }
+          }
+        } else {
+          console.log(`[SEC Update] ${ticker}: No recent 8-K filings with crypto content`);
+        }
+      }
     }
 
-    // Extract holdings using LLM
-    const extraction = await extractHoldingsFromText(
-      filing.content,
-      {
-        companyName: ticker, // Will be enriched by caller if needed
-        ticker,
-        asset,
-        currentHoldings,
-      },
-      llmConfig
-    );
+    // STEP 3: Decide which value to use
+    let finalHoldings: number | null = null;
+    let extractionMethod: 'xbrl' | 'llm' | 'hybrid' = 'llm';
+    let finalConfidence: number = 0;
+    let finalReasoning: string = '';
+    let finalFilingDate: string | undefined;
+    let finalFilingUrl: string | undefined;
+    let source: string = 'sec-filing';
 
-    // Validate extraction
-    if (extraction.holdings === null) {
+    // Case 1: XBRL has Bitcoin holdings
+    if (xbrlResult?.success && xbrlResult.bitcoinHoldings !== undefined) {
+      if (llmHoldings !== null) {
+        const comparison = compareExtractions(xbrlResult, llmHoldings);
+
+        if (comparison.match) {
+          finalHoldings = xbrlResult.bitcoinHoldings;
+          extractionMethod = 'hybrid';
+          finalConfidence = 1.0;
+          finalReasoning = `XBRL and LLM agree (within ${comparison.discrepancyPct?.toFixed(1)}%)`;
+        } else if (comparison.recommendation === 'use_xbrl') {
+          finalHoldings = xbrlResult.bitcoinHoldings;
+          extractionMethod = 'xbrl';
+          finalConfidence = 1.0;
+          finalReasoning = `Using XBRL (LLM discrepancy: ${comparison.discrepancyPct?.toFixed(1)}%)`;
+        } else {
+          return {
+            ticker,
+            success: true,
+            previousHoldings: currentHoldings,
+            newHoldings: xbrlResult.bitcoinHoldings,
+            confidence: 0.5,
+            reasoning: `XBRL/LLM discrepancy ${comparison.discrepancyPct?.toFixed(1)}% - needs manual review`,
+            extractionMethod: 'hybrid',
+            xbrlResult,
+          };
+        }
+      } else {
+        finalHoldings = xbrlResult.bitcoinHoldings;
+        extractionMethod = 'xbrl';
+        finalConfidence = 1.0;
+        finalReasoning = 'Extracted from XBRL (structured data)';
+      }
+
+      finalFilingDate = xbrlResult.bitcoinHoldingsDate;
+      finalFilingUrl = xbrlResult.secUrl;
+      source = 'sec-xbrl';
+    }
+    // Case 2: Only LLM available
+    else if (llmHoldings !== null) {
+      finalHoldings = llmHoldings;
+      extractionMethod = 'llm';
+      finalConfidence = llmConfidence;
+      finalReasoning = llmReasoning || 'Extracted from 8-K text via LLM';
+      finalFilingDate = filing8K?.filingDate;
+      finalFilingUrl = filing8K?.documentUrl;
+      source = 'sec-filing';
+    }
+    // Case 3: Neither available
+    else {
       return {
         ticker,
         success: true,
-        reasoning: extraction.reasoning || 'LLM could not extract holdings from filing',
-        filingDate: filing.filingDate,
-        filingUrl: filing.documentUrl,
+        reasoning: 'No holdings data found in XBRL or recent 8-K filings',
+        extractionMethod: 'hybrid',
+        xbrlResult,
       };
     }
 
-    const validation = validateExtraction(extraction, {
-      companyName: ticker,
-      ticker,
-      asset,
-      currentHoldings,
-    });
-
-    // Check confidence threshold
-    const minConfidence = config.minConfidence || 0.7;
-    if (extraction.confidence < minConfidence) {
-      return {
-        ticker,
-        success: true,
-        newHoldings: extraction.holdings,
-        confidence: extraction.confidence,
-        reasoning: `Confidence ${(extraction.confidence * 100).toFixed(0)}% below threshold ${(minConfidence * 100).toFixed(0)}%`,
-        filingDate: filing.filingDate,
-        filingUrl: filing.documentUrl,
-      };
+    // STEP 4: Validate and apply update
+    if (extractionMethod === 'llm') {
+      const minConfidence = config.minConfidence || 0.7;
+      if (finalConfidence < minConfidence) {
+        return {
+          ticker,
+          success: true,
+          newHoldings: finalHoldings,
+          confidence: finalConfidence,
+          reasoning: `Confidence ${(finalConfidence * 100).toFixed(0)}% below threshold`,
+          filingDate: finalFilingDate,
+          filingUrl: finalFilingUrl,
+          extractionMethod,
+          xbrlResult,
+        };
+      }
     }
 
-    // Check for dramatic changes
-    const changePct = Math.abs((extraction.holdings - currentHoldings) / currentHoldings) * 100;
+    const changePct = Math.abs((finalHoldings - currentHoldings) / currentHoldings) * 100;
     const maxChangePct = config.maxChangePct || 50;
     if (changePct > maxChangePct) {
       return {
         ticker,
         success: true,
         previousHoldings: currentHoldings,
-        newHoldings: extraction.holdings,
-        confidence: extraction.confidence,
-        reasoning: `Change of ${changePct.toFixed(1)}% exceeds threshold ${maxChangePct}% - requires manual review`,
-        filingDate: filing.filingDate,
-        filingUrl: filing.documentUrl,
+        newHoldings: finalHoldings,
+        confidence: finalConfidence,
+        reasoning: `Change of ${changePct.toFixed(1)}% exceeds threshold - requires manual review`,
+        filingDate: finalFilingDate,
+        filingUrl: finalFilingUrl,
+        extractionMethod,
+        xbrlResult,
       };
     }
 
-    // No change needed
-    if (extraction.holdings === currentHoldings) {
+    if (finalHoldings === currentHoldings) {
       return {
         ticker,
         success: true,
         previousHoldings: currentHoldings,
-        newHoldings: extraction.holdings,
+        newHoldings: finalHoldings,
         reasoning: 'Holdings unchanged',
-        filingDate: filing.filingDate,
-        filingUrl: filing.documentUrl,
+        filingDate: finalFilingDate,
+        filingUrl: finalFilingUrl,
+        extractionMethod,
+        xbrlResult,
       };
     }
 
-    // Update companies.ts
     const updateResult = updateCompaniesFile(
       ticker,
-      extraction.holdings,
-      filing.filingDate,
-      filing.documentUrl || '',
-      config.dryRun || false
+      finalHoldings,
+      finalFilingDate || new Date().toISOString().split('T')[0],
+      finalFilingUrl || '',
+      config.dryRun || false,
+      source
     );
 
     if (!updateResult.success) {
@@ -344,20 +441,20 @@ async function processCompany(
         ticker,
         success: false,
         error: 'Failed to update companies.ts - ticker pattern not found',
-        newHoldings: extraction.holdings,
-        filingDate: filing.filingDate,
-        filingUrl: filing.documentUrl,
+        newHoldings: finalHoldings,
+        extractionMethod,
+        xbrlResult,
       };
     }
 
-    // Git commit
     let committed = false;
     if (!config.dryRun && config.autoCommit !== false) {
       committed = gitCommit(
         ticker,
         updateResult.previousHoldings || currentHoldings,
-        extraction.holdings,
-        filing.filingDate
+        finalHoldings,
+        finalFilingDate || new Date().toISOString().split('T')[0],
+        extractionMethod
       );
     }
 
@@ -365,12 +462,14 @@ async function processCompany(
       ticker,
       success: true,
       previousHoldings: updateResult.previousHoldings,
-      newHoldings: extraction.holdings,
-      confidence: extraction.confidence,
-      reasoning: extraction.reasoning,
-      filingDate: filing.filingDate,
-      filingUrl: filing.documentUrl,
+      newHoldings: finalHoldings,
+      confidence: finalConfidence,
+      reasoning: finalReasoning,
+      filingDate: finalFilingDate,
+      filingUrl: finalFilingUrl,
       committed,
+      extractionMethod,
+      xbrlResult,
     };
 
   } catch (error) {
@@ -378,6 +477,7 @@ async function processCompany(
       ticker,
       success: false,
       error: error instanceof Error ? error.message : String(error),
+      xbrlResult,
     };
   }
 }
@@ -386,11 +486,9 @@ async function processCompany(
  * Get company info from companies.ts
  */
 function getCompanyInfo(ticker: string): { asset: string; holdings: number } | null {
-  // Import dynamically to get current values
   const filePath = path.join(process.cwd(), COMPANIES_FILE);
   const content = fs.readFileSync(filePath, 'utf-8');
 
-  // Find ticker and extract asset and holdings
   const pattern = new RegExp(
     `ticker:\\s*["']${ticker}["'][\\s\\S]*?asset:\\s*["']([^"']+)["'][\\s\\S]*?holdings:\\s*([\\d_,]+)`,
     'i'
@@ -411,13 +509,13 @@ function getCompanyInfo(ticker: string): { asset: string; holdings: number } | n
 export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<SecUpdateResult[]> {
   const results: SecUpdateResult[] = [];
 
-  // Determine which tickers to check
   let tickers = config.tickers;
   if (!tickers || tickers.length === 0) {
     tickers = Object.keys(TICKER_TO_CIK);
   }
 
-  console.log(`[SEC Update] Checking ${tickers.length} companies for 8-K updates...`);
+  const modeLabel = config.extractionMode || 'hybrid';
+  console.log(`[SEC Update] Checking ${tickers.length} companies (mode: ${modeLabel})...`);
   if (config.dryRun) {
     console.log('[SEC Update] DRY RUN - no changes will be made');
   }
@@ -429,25 +527,28 @@ export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<Se
       continue;
     }
 
-    const result = await processCompany(ticker, companyInfo.asset, companyInfo.holdings, config);
+    const result = await processCompanyHybrid(ticker, companyInfo.asset, companyInfo.holdings, config);
     results.push(result);
 
-    // Log result
     if (result.newHoldings !== undefined && result.newHoldings !== result.previousHoldings) {
-      console.log(`[SEC Update] ${ticker}: ${result.previousHoldings?.toLocaleString()} → ${result.newHoldings.toLocaleString()} (${result.committed ? 'committed' : 'not committed'})`);
+      const method = result.extractionMethod || 'unknown';
+      console.log(`[SEC Update] ${ticker}: ${result.previousHoldings?.toLocaleString()} → ${result.newHoldings.toLocaleString()} (${method})`);
     } else if (result.error) {
       console.log(`[SEC Update] ${ticker}: Error - ${result.error}`);
     }
 
-    // Rate limit between companies
     await new Promise(r => setTimeout(r, 1000));
   }
 
-  // Summary
   const updated = results.filter(r => r.newHoldings !== undefined && r.newHoldings !== r.previousHoldings);
+  const xbrlUpdates = updated.filter(r => r.extractionMethod === 'xbrl' || r.extractionMethod === 'hybrid');
+  const llmUpdates = updated.filter(r => r.extractionMethod === 'llm');
   const errors = results.filter(r => r.error);
 
-  console.log(`\n[SEC Update] Complete: ${updated.length} updated, ${errors.length} errors, ${results.length - updated.length - errors.length} unchanged`);
+  console.log(`\n[SEC Update] Complete:`);
+  console.log(`  - Updated: ${updated.length} (${xbrlUpdates.length} XBRL, ${llmUpdates.length} LLM)`);
+  console.log(`  - Errors: ${errors.length}`);
+  console.log(`  - Unchanged: ${results.length - updated.length - errors.length}`);
 
   return results;
 }
@@ -464,5 +565,45 @@ export async function checkTickerForSecUpdate(
     return { ticker, success: false, error: 'Company not found in companies.ts' };
   }
 
-  return processCompany(ticker, companyInfo.asset, companyInfo.holdings, config);
+  return processCompanyHybrid(ticker, companyInfo.asset, companyInfo.holdings, config);
+}
+
+/**
+ * Extract XBRL data only (no LLM, no file updates)
+ */
+export async function extractXBRLOnly(ticker: string): Promise<XBRLExtractionResult> {
+  return extractXBRLData(ticker);
+}
+
+/**
+ * Run XBRL extraction for multiple tickers
+ */
+export async function runXBRLScan(tickers?: string[]): Promise<{
+  results: Map<string, XBRLExtractionResult>;
+  summary: { total: number; withBitcoin: number; withShares: number; withDebt: number; failed: number };
+}> {
+  const tickerList = tickers || Object.keys(TICKER_TO_CIK);
+  const results = new Map<string, XBRLExtractionResult>();
+
+  console.log(`[XBRL Scan] Scanning ${tickerList.length} companies...`);
+
+  let withBitcoin = 0, withShares = 0, withDebt = 0, failed = 0;
+
+  for (const ticker of tickerList) {
+    const result = await extractXBRLData(ticker);
+    results.set(ticker, result);
+
+    if (!result.success) failed++;
+    else {
+      if (result.bitcoinHoldings !== undefined) withBitcoin++;
+      if (result.sharesOutstanding !== undefined) withShares++;
+      if (result.totalDebt !== undefined) withDebt++;
+    }
+
+    await new Promise(r => setTimeout(r, 200));
+  }
+
+  console.log(`\n[XBRL Scan] Complete: ${withBitcoin} with Bitcoin, ${withShares} with shares, ${failed} failed`);
+
+  return { results, summary: { total: tickerList.length, withBitcoin, withShares, withDebt, failed } };
 }
