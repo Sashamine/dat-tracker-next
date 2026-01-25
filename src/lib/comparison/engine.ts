@@ -62,6 +62,8 @@ export interface ComparisonResult {
   field: ComparisonField;
   ourValue: number;
   ourSourceDate?: string;  // YYYY-MM-DD - when our data is from
+  ourSourceUrl?: string;   // URL we cite as source
+  ourSourceType?: HoldingsSource;  // Type of source (sec-8k, sec-10k, dashboard, etc.)
   sourceValues: Record<string, {
     value: number;
     url: string;
@@ -77,6 +79,8 @@ export interface ComparisonResult {
   verification?: VerificationResult;
   // Phase 7c: Confidence scoring
   confidence?: ConfidenceResult;
+  // Verification hint based on source type
+  verificationMethod?: 'xbrl' | 'fetcher' | 'manual';  // How this can be verified
 }
 
 // FMP API key for stock prices and forex
@@ -486,18 +490,81 @@ function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
   // 2. External source is newer (or we have no date to compare)
   const hasDiscrepancy = hasValueDifference && newerSourceFound;
 
+  // Determine verification method based on source type
+  const verificationMethod = getVerificationMethod(ourValue.sourceType, ourValue.sourceUrl);
+
   return {
     ticker: ourValue.ticker,
     field: ourValue.field,
     ourValue: ourValue.value,
     ourSourceDate: ourValue.sourceDate,
+    ourSourceUrl: ourValue.sourceUrl,
+    ourSourceType: ourValue.sourceType,
     sourceValues,
     hasDiscrepancy,
     maxDeviationPct,
     severity: calculateSeverity(maxDeviationPct),
     newerSourceFound,
     newerSourceDate,
+    verificationMethod,
   };
+}
+
+/**
+ * Determine how a value can be verified based on its source type and URL
+ *
+ * Returns:
+ * - 'xbrl': Can be verified via SEC XBRL API (10-K, 10-Q filings)
+ * - 'fetcher': Can be verified via automated fetcher (dashboards)
+ * - 'manual': Needs manual verification (8-K filings, press releases, etc.)
+ */
+function getVerificationMethod(
+  sourceType?: HoldingsSource,
+  sourceUrl?: string
+): 'xbrl' | 'fetcher' | 'manual' {
+  const url = sourceUrl?.toLowerCase() || '';
+
+  // Check URL for SEC filing type
+  if (url.includes('sec.gov')) {
+    // 8-K filings need manual verification (XBRL doesn't have holdings from 8-K)
+    if (url.includes('8-k') || url.includes('8k')) {
+      return 'manual';
+    }
+    // 10-K and 10-Q can be verified via XBRL
+    if (url.includes('10-k') || url.includes('10k') ||
+        url.includes('10-q') || url.includes('10q')) {
+      return 'xbrl';
+    }
+    // Generic SEC URL - assume it might have XBRL for balance sheet items
+    return 'xbrl';
+  }
+
+  // Dashboards with automated fetchers
+  if (url.includes('strategy.com') ||
+      url.includes('sharplink.com') ||
+      url.includes('metaplanet.jp') ||
+      url.includes('defidevcorp.com') ||
+      url.includes('litestrategy.com') ||
+      url.includes('mempool.space')) {
+    return 'fetcher';
+  }
+
+  // Company website/dashboard source type
+  if (sourceType === 'company-website') {
+    return 'fetcher';
+  }
+
+  // On-chain sources could have automated verification
+  if (sourceType === 'on-chain') {
+    return 'fetcher';
+  }
+
+  // Everything else needs manual verification:
+  // - Press releases
+  // - Aggregators (shouldn't be used as primary source anyway)
+  // - Manual entries
+  // - Unknown sources
+  return 'manual';
 }
 
 /**
