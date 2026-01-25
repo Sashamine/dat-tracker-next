@@ -164,12 +164,12 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
 
       lastContent = content;
 
-      // Try pattern-based extraction
-      const holdings = extractHoldingsFromContent(content, company.asset);
+      // Try pattern-based extraction (stricter for 10-Q/10-K to avoid financial data false positives)
+      const holdings = extractHoldingsFromContent(content, company.asset, true);
       if (holdings !== null) {
         extractedHoldings = holdings;
         usedFiling = filing;
-        extractionMethod = "pattern";
+        extractionMethod = "pattern (10-Q/10-K)";
         break;
       }
 
@@ -355,7 +355,8 @@ async function fetchFilingContent(url: string): Promise<string | null> {
 
 // Holdings extraction with pattern matching and smart table parsing
 // Falls back to LLM extraction if enabled and patterns fail
-function extractHoldingsFromContent(content: string, asset: string): number | null {
+// isQuarterlyReport = true for 10-Q/10-K (stricter matching to avoid false positives)
+function extractHoldingsFromContent(content: string, asset: string, isQuarterlyReport = false): number | null {
   // Define asset-specific keywords for smart table extraction
   const assetKeywords: Record<string, string[]> = {
     BTC: ["aggregate btc holdings", "bitcoin holdings", "btc holdings", "total bitcoin", "bitcoin treasury"],
@@ -496,21 +497,24 @@ function extractHoldingsFromContent(content: string, asset: string): number | nu
   }
 
   // Step 3: Try generic "digital asset" patterns (for new/unusual assets)
-  const genericPatterns = [
-    /(?:holds?|holding|treasury)\s+(?:approximately\s+)?(\d[\d,\.]*)\s*(?:million\s+)?(?:tokens?|coins?)/i,
-    /(?:token|coin)\s+(?:holdings?|treasury)[:\s]+(\d[\d,\.]*)/i,
-    /(?:acquired|purchased)\s+(?:an?\s+additional\s+)?(\d[\d,\.]*)\s*(?:million\s+)?(?:tokens?|coins?)/i,
-  ];
+  // Skip for 10-Q/10-K filings - too many false positives from financial data
+  if (!isQuarterlyReport) {
+    const genericPatterns = [
+      /(?:holds?|holding|treasury)\s+(?:approximately\s+)?(\d[\d,\.]*)\s*(?:million\s+)?(?:tokens?|coins?)/i,
+      /(?:token|coin)\s+(?:holdings?|treasury)[:\s]+(\d[\d,\.]*)/i,
+      /(?:acquired|purchased)\s+(?:an?\s+additional\s+)?(\d[\d,\.]*)\s*(?:million\s+)?(?:tokens?|coins?)/i,
+    ];
 
-  for (const pattern of genericPatterns) {
-    const match = content.match(pattern);
-    if (match && match[1]) {
-      let value = parseFloat(match[1].replace(/,/g, ""));
-      if (/million/i.test(match[0])) {
-        value *= 1_000_000;
-      }
-      if (!isNaN(value) && value >= minHoldings && value <= maxHoldings) {
-        return Math.round(value);
+    for (const pattern of genericPatterns) {
+      const match = content.match(pattern);
+      if (match && match[1]) {
+        let value = parseFloat(match[1].replace(/,/g, ""));
+        if (/million/i.test(match[0])) {
+          value *= 1_000_000;
+        }
+        if (!isNaN(value) && value >= minHoldings && value <= maxHoldings) {
+          return Math.round(value);
+        }
       }
     }
   }
