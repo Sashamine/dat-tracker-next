@@ -522,13 +522,10 @@ const BTOG_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Hyperliquid Strategies (PURR) - HYPE treasury
-// Dec 2025: Sonnet merger added ~95M shares (32M -> 127M)
+// Company formed via Sonnet BioTherapeutics + Rorschach I merger on Dec 2, 2025
+// HYPE holdings acquired from Rorschach I LLC in business combination
 const PURR_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-11-01", holdings: 4500000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.300, source: "Initial HYPE treasury" },
-  { date: "2024-12-31", holdings: 8500000, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.386, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 12000000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.429, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 15000000, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.469, source: "Q3 2025 10-Q" },
-  { date: "2025-12-15", holdings: 18000000, sharesOutstandingDiluted: 127_000_000, holdingsPerShare: 0.142, source: "Post-Sonnet merger 8-K", sharesSource: "Merger 8-K", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002078856", sourceType: "sec-filing" },
+  { date: "2025-12-02", holdings: 12_500_000, sharesOutstandingDiluted: 127_025_563, holdingsPerShare: 0.0984, source: "Business combination 8-K", sharesSource: "10-Q filed Dec 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm", sourceType: "sec-filing" },
 ];
 
 // Hyperion DeFi (HYPD) - HYPE treasury

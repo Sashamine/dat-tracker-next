@@ -768,17 +768,17 @@ export const hypeCompanies: Company[] = [
     ticker: "PURR",
     asset: "HYPE",
     tier: 1,
-    holdings: 12_600_000,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.hypestrat.xyz",
-    datStartDate: "2025-12-01",
+    holdings: 12_500_000,  // ~12.5M HYPE from business combination
+    holdingsLastUpdated: "2025-12-02",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm",
+    datStartDate: "2025-12-02",
     costBasisAvg: 46.27,
     stakingPct: 0.80,
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
-    sharesForMnav: 127_000_000,  // Post-Sonnet merger 8-K (Dec 2025)
+    sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger.",
     notes: "$888M combined assets. $30M buyback.",
