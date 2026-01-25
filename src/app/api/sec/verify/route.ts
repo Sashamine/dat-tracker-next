@@ -268,26 +268,40 @@ async function fetchFilingContent(url: string): Promise<string | null> {
 function extractHoldingsFromContent(content: string, asset: string): number | null {
   const assetPatterns: Record<string, RegExp[]> = {
     BTC: [
+      // MSTR format: "Aggregate BTC Holdings   709,715"
+      /aggregate\s+btc\s+holdings[:\s]+(\d[\d,]*)/i,
+      /btc\s+holdings[:\s]+(\d[\d,]*)/i,
+      // Standard formats
       /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:bitcoin|btc)/i,
       /(\d[\d,]*)\s+(?:bitcoin|btc)\s+(?:held|holdings|in\s+treasury)/i,
       /total\s+(?:bitcoin|btc)\s+(?:held|holdings)[:\s]+(\d[\d,]*)/i,
       /bitcoin\s+holdings[:\s]+(\d[\d,]*)/i,
+      // Treasury format
+      /(?:bitcoin|btc)\s+treasury[:\s]+(\d[\d,]*)/i,
+      /treasury\s+(?:holds?|contains?)[:\s]+(\d[\d,]*)\s+(?:bitcoin|btc)/i,
     ],
     ETH: [
+      // Aggregate format
+      /aggregate\s+eth(?:ereum)?\s+holdings[:\s]+(\d[\d,]*)/i,
+      /eth(?:ereum)?\s+holdings[:\s]+(\d[\d,]*)/i,
+      // Standard formats
       /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:ethereum|ether|eth)/i,
       /(\d[\d,]*)\s+(?:ethereum|ether|eth)\s+(?:held|holdings|in\s+treasury)/i,
       /total\s+(?:ethereum|eth)\s+(?:held|holdings)[:\s]+(\d[\d,]*)/i,
-      /(?:ethereum|eth)\s+holdings[:\s]+(\d[\d,]*)/i,
+      /(?:ethereum|eth)\s+treasury[:\s]+(\d[\d,]*)/i,
     ],
     SOL: [
+      /aggregate\s+sol(?:ana)?\s+holdings[:\s]+(\d[\d,]*)/i,
+      /sol(?:ana)?\s+holdings[:\s]+(\d[\d,]*)/i,
       /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:solana|sol)/i,
       /(\d[\d,]*)\s+(?:solana|sol)\s+(?:held|holdings|in\s+treasury)/i,
       /total\s+sol(?:ana)?\s+(?:held|holdings)[:\s]+(\d[\d,]*)/i,
     ],
     HYPE: [
+      /aggregate\s+hype\s+(?:token\s+)?holdings[:\s]+(\d[\d,]*)/i,
+      /hype\s+(?:token\s+)?holdings[:\s]+(\d[\d,]*)/i,
       /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:hype|hyperliquid)/i,
       /(\d[\d,]*)\s+(?:hype|hyperliquid)\s+(?:tokens?|held|holdings)/i,
-      /hype\s+(?:tokens?|holdings)[:\s]+(\d[\d,]*)/i,
     ],
   };
 
