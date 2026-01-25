@@ -616,11 +616,12 @@ const ASST_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== BNB COMPANIES ====================
 
-// BNC - BNB treasury backed by YZi Labs (CZ family office)
+// BNC (CEA Industries) - World's largest BNB treasury, backed by YZi Labs (CZ family office)
 const BNC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-15", holdings: 150000, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 3.333, source: "Initial BNB treasury" },
   { date: "2025-09-30", holdings: 320000, sharesOutstandingDiluted: 55_000_000, holdingsPerShare: 5.818, source: "Q3 2025 filing" },
-  { date: "2025-12-31", holdings: 500000, sharesOutstandingDiluted: 65_000_000, holdingsPerShare: 7.692, source: "Q4 2025 filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001482541&type=10-K", sourceType: "sec-filing" },
+  // Oct 2025: 502,441 BNB + 9,491 on exchanges = 512K total
+  { date: "2025-12-12", holdings: 512000, sharesOutstandingDiluted: 44_062_938, holdingsPerShare: 11.620, source: "FY Q2 2026 10-Q", sharesSource: "SEC 10-Q Dec 12, 2025" },
 ];
 
 // Nano Labs (NA) - Hong Kong Web3 infrastructure, BNB treasury

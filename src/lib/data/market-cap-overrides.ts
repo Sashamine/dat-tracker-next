@@ -46,7 +46,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   // === SOL/Other Treasury Companies ===
   // "FWDI" removed - has sharesForMnav, calculated market cap is more accurate
   // "NXTT" removed - has sharesForMnav, calculated market cap is more accurate (~$28M not $600M)
-  "BNC": 500_000_000,         // $500M - Banyan (BNB treasury, PIPE raise)
+  // "BNC" removed - has sharesForMnav, calculated market cap is more accurate (~$243M not $500M)
 
   // === Smaller/OTC Companies with incorrect FMP data ===
   "SUIG": 150_000_000,        // $150M - SUI Group Holdings

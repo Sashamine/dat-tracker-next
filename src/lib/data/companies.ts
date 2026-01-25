@@ -810,24 +810,29 @@ export const hypeCompanies: Company[] = [
 export const bnbCompanies: Company[] = [
   {
     id: "bnc",
-    name: "BNB Network Company",
+    name: "CEA Industries (BNC)",
     ticker: "BNC",
     asset: "BNB",
     tier: 1,
-    holdings: 500_000,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/",
+    holdings: 512_000,  // 502,441 + 9,491 on exchanges (Oct 31, 2025)
+    holdingsLastUpdated: "2025-10-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/12/15/3205902/0/en/CEA-Industries-BNC-Reports-FY-Q2-2026-Earnings-Results.html",
     datStartDate: "2025-06-01",
     costBasisAvg: 870.00,
     stakingPct: 0.50,
     stakingApy: 0.03,
     quarterlyBurnUsd: 3_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 65_000_000,  // From holdings-history.ts
-    leader: "YZi Labs (CZ family office) backed",
-    strategy: "Target 1% of BNB supply.",
-    notes: "YZi Labs owns 7%.",
+    sharesForMnav: 44_062_938,  // SEC 10-Q Dec 12, 2025
+    cashReserves: 77_500_000,  // $77.5M unencumbered cash (Oct 2025)
+    // restrictedCash: 0 - cash is free
+    cashSource: "FY Q2 2026 earnings",
+    cashAsOf: "2025-10-31",
+    // totalDebt: 0 - "minimal debt" per press release
+    leader: "David Namdar (CEO), YZi Labs backed",
+    strategy: "World's largest BNB treasury. Target 1% of BNB supply.",
+    notes: "$500M PIPE Aug 2025. $250M buyback authorized. YZi Labs owns 7%.",
   },
   // WINT (Windtree) removed - Biopharma company, not beta to BNB
   {
