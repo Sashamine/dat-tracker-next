@@ -4,7 +4,7 @@
 // GET /api/sec/verify (all companies with recent 8-Ks)
 
 import { NextResponse } from "next/server";
-import { getFilingsBySymbol, getFilingsByCik, filter8KFilings, getDateRange } from "@/lib/sec/fmp-sec-client";
+import { getFilingsBySymbol, getFilingsByCik, filter8KFilings, filterFinancialReports, getDateRange } from "@/lib/sec/fmp-sec-client";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { allCompanies } from "@/lib/data/companies";
 import { extractHoldingsFromText, createLLMConfigFromEnv } from "@/lib/sec/llm-extractor";
@@ -98,7 +98,7 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
     };
   }
 
-  // Get recent filings
+  // Get recent filings - first try 8-K (material events), then 10-Q/10-K (quarterly/annual)
   const { from, to } = getDateRange(days);
   let filings = await getFilingsBySymbol(ticker, from, to);
 
@@ -110,17 +110,6 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
   // Filter to 8-K only (most likely to have holdings updates)
   const eightKFilings = filter8KFilings(filings);
 
-  if (eightKFilings.length === 0) {
-    return {
-      ticker,
-      companyName: company.name,
-      asset: company.asset,
-      storedHoldings: company.holdings,
-      status: "no_filing",
-      details: `No 8-K filings found in last ${days} days`,
-    };
-  }
-
   // Try multiple 8-K filings until we find one with holdings data
   // (Not all 8-Ks contain holdings - some are just ATM updates)
   let extractedHoldings: number | null = null;
@@ -128,6 +117,7 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
   let lastError = "";
   let lastContent = "";
   let extractionMethod = "pattern";
+  let searchedFilingTypes = ["8-K"];
 
   for (const filing of eightKFilings.slice(0, 5)) { // Try up to 5 recent 8-Ks
     const content = await fetchFilingContent(filing.finalLink);
@@ -149,6 +139,54 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
     }
 
     lastError = `No ${company.asset} holdings found in filing`;
+  }
+
+  // Step 2: If no 8-K holdings found, try 10-Q/10-K with longer lookback (90 days)
+  if (extractedHoldings === null) {
+    const financialDays = Math.max(days, 90); // At least 90 days for quarterly reports
+    const { from: financialFrom, to: financialTo } = getDateRange(financialDays);
+
+    let financialFilings = await getFilingsBySymbol(ticker, financialFrom, financialTo);
+    if (financialFilings.length === 0) {
+      financialFilings = await getFilingsByCik(secCik, financialFrom, financialTo);
+    }
+
+    const quarterlyFilings = filterFinancialReports(financialFilings);
+    searchedFilingTypes.push("10-Q", "10-K");
+
+    for (const filing of quarterlyFilings.slice(0, 3)) { // Try up to 3 recent 10-Qs/10-Ks
+      const content = await fetchFilingContent(filing.finalLink);
+
+      if (!content) {
+        lastError = "Could not fetch filing content";
+        continue;
+      }
+
+      lastContent = content;
+
+      // Try pattern-based extraction
+      const holdings = extractHoldingsFromContent(content, company.asset);
+      if (holdings !== null) {
+        extractedHoldings = holdings;
+        usedFiling = filing;
+        extractionMethod = "pattern";
+        break;
+      }
+
+      lastError = `No ${company.asset} holdings found in 10-Q/10-K`;
+    }
+  }
+
+  // Check if we have any filing to report
+  if (!usedFiling && eightKFilings.length === 0) {
+    return {
+      ticker,
+      companyName: company.name,
+      asset: company.asset,
+      storedHoldings: company.holdings,
+      status: "no_filing",
+      details: `No SEC filings found in last ${days} days (8-K) or ${Math.max(days, 90)} days (10-Q/10-K)`,
+    };
   }
 
   // Step 2: If pattern extraction failed and LLM is enabled, try LLM extraction
@@ -185,18 +223,20 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
   }
 
   if (extractedHoldings === null) {
+    const filingInfo = usedFiling ? {
+      date: usedFiling.filingDate,
+      type: usedFiling.formType,
+      url: usedFiling.finalLink,
+    } : undefined;
+
     return {
       ticker,
       companyName: company.name,
       asset: company.asset,
       storedHoldings: company.holdings,
-      filing: {
-        date: usedFiling.filingDate,
-        type: usedFiling.formType,
-        url: usedFiling.finalLink,
-      },
+      filing: filingInfo,
       status: "extraction_failed",
-      details: `Could not extract ${company.asset} holdings from ${eightKFilings.length} 8-K filings (${lastError})`,
+      details: `Could not extract ${company.asset} holdings from filings (searched: ${searchedFilingTypes.join(", ")}). ${lastError}`,
     };
   }
 
