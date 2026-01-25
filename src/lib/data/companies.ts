@@ -524,10 +524,14 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 511_555_864,  // SEC 10-Q Nov 2025: 439.85M shares + 71.7M pre-funded warrants = 511.56M fully diluted
-    // Debt: $200M Yorkville convertible notes + $210M Kraken BTC-backed credit facility (Dec 2025)
-    totalDebt: 410_000_000,  // $200M Yorkville converts + $210M Kraken BTC-backed loan
-    debtSource: "Press releases",
+    // Debt: $210M Kraken BTC-backed loan only - Yorkville converts redeemed Oct 2025 via Two Prime, then refinanced Dec 2025
+    totalDebt: 210_000_000,  // Kraken loan Dec 2025 (replaced Two Prime which replaced Yorkville)
+    debtSource: "Kraken credit facility Dec 2025",
     debtAsOf: "2025-12-31",
+    cashReserves: 24_200_000,  // $24.2M per nakamoto.com/dashboard (mNAV.com)
+    // restrictedCash: 0 - cash is free, subtracted from EV
+    cashSource: "nakamoto.com/dashboard",
+    cashAsOf: "2026-01-24",
     leader: "David Bailey (CEO, Bitcoin Magazine)",
     strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies.",
     notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). Share buyback authorized Dec 2025 as mNAV < 1.",
