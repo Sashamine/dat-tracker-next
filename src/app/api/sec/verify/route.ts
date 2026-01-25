@@ -254,7 +254,14 @@ async function fetchFilingContent(url: string): Promise<string | null> {
       .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
       .replace(/<[^>]*>/g, " ")
       .replace(/&nbsp;/g, " ")
+      .replace(/&#160;/g, " ")
+      .replace(/&#8217;/g, "'")
+      .replace(/&#8220;/g, '"')
+      .replace(/&#8221;/g, '"')
       .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
       .replace(/\s+/g, " ")
       .trim();
   } catch (error) {
