@@ -7,6 +7,8 @@ import { NextResponse } from "next/server";
 import { getFilingsBySymbol, getFilingsByCik, filter8KFilings, getDateRange } from "@/lib/sec/fmp-sec-client";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { allCompanies } from "@/lib/data/companies";
+import { extractHoldingsFromText, createLLMConfigFromEnv } from "@/lib/sec/llm-extractor";
+import type { ExtractionContext } from "@/lib/sec/types";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -18,6 +20,7 @@ interface VerificationResult {
   companyName: string;
   asset: string;
   storedHoldings: number;
+  extractionMethod?: string;
   filing?: {
     date: string;
     type: string;
@@ -37,11 +40,12 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const ticker = searchParams.get("ticker");
   const days = parseInt(searchParams.get("days") || "14", 10);
+  const useLLM = searchParams.get("llm") === "true"; // Enable LLM fallback
 
   try {
     if (ticker) {
       // Verify single company
-      const result = await verifyCompany(ticker.toUpperCase(), days);
+      const result = await verifyCompany(ticker.toUpperCase(), days, useLLM);
       return NextResponse.json(result);
     } else {
       // Verify all companies with recent 8-K filings
@@ -66,7 +70,7 @@ export async function GET(request: Request) {
   }
 }
 
-async function verifyCompany(ticker: string, days: number): Promise<VerificationResult> {
+async function verifyCompany(ticker: string, days: number, useLLM = false): Promise<VerificationResult> {
   // Get company data
   const company = allCompanies.find(c => c.ticker.toUpperCase() === ticker);
   const sources = COMPANY_SOURCES[ticker];
@@ -122,6 +126,8 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
   let extractedHoldings: number | null = null;
   let usedFiling = eightKFilings[0];
   let lastError = "";
+  let lastContent = "";
+  let extractionMethod = "pattern";
 
   for (const filing of eightKFilings.slice(0, 5)) { // Try up to 5 recent 8-Ks
     const content = await fetchFilingContent(filing.finalLink);
@@ -131,15 +137,51 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
       continue;
     }
 
-    // Check if this filing has holdings data
+    lastContent = content;
+
+    // Step 1: Try pattern-based extraction (fast, free)
     const holdings = extractHoldingsFromContent(content, company.asset);
     if (holdings !== null) {
       extractedHoldings = holdings;
       usedFiling = filing;
+      extractionMethod = "pattern";
       break;
     }
 
     lastError = `No ${company.asset} holdings found in filing`;
+  }
+
+  // Step 2: If pattern extraction failed and LLM is enabled, try LLM extraction
+  if (extractedHoldings === null && useLLM && lastContent) {
+    const llmConfig = createLLMConfigFromEnv();
+    if (llmConfig) {
+      console.log(`[Verify] Pattern extraction failed for ${ticker}, trying LLM extraction...`);
+
+      const context: ExtractionContext = {
+        companyName: company.name,
+        ticker: company.ticker,
+        asset: company.asset,
+        currentHoldings: company.holdings,
+        currentSharesOutstanding: company.sharesForMnav,
+      };
+
+      try {
+        const llmResult = await extractHoldingsFromText(lastContent, context, llmConfig);
+        if (llmResult.holdings !== null && llmResult.confidence >= 0.6) {
+          extractedHoldings = llmResult.holdings;
+          extractionMethod = `llm (${llmResult.confidence.toFixed(2)} confidence)`;
+          lastError = llmResult.reasoning;
+        } else if (llmResult.holdings !== null) {
+          lastError = `LLM extraction low confidence: ${llmResult.reasoning}`;
+        } else {
+          lastError = `LLM extraction failed: ${llmResult.reasoning}`;
+        }
+      } catch (error) {
+        lastError = `LLM extraction error: ${error instanceof Error ? error.message : String(error)}`;
+      }
+    } else {
+      lastError += " (LLM not configured - set ANTHROPIC_API_KEY or GROK_API_KEY)";
+    }
   }
 
   if (extractedHoldings === null) {
@@ -169,6 +211,7 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
       companyName: company.name,
       asset: company.asset,
       storedHoldings: company.holdings,
+      extractionMethod,
       filing: {
         date: usedFiling.filingDate,
         type: usedFiling.formType,
@@ -185,6 +228,7 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
       companyName: company.name,
       asset: company.asset,
       storedHoldings: company.holdings,
+      extractionMethod,
       filing: {
         date: usedFiling.filingDate,
         type: usedFiling.formType,
@@ -269,22 +313,59 @@ async function fetchFilingContent(url: string): Promise<string | null> {
   }
 }
 
-// Simple pattern-based holdings extraction
-// For production, use the LLM extractor for better accuracy
+// Holdings extraction with pattern matching and smart table parsing
+// Falls back to LLM extraction if enabled and patterns fail
 function extractHoldingsFromContent(content: string, asset: string): number | null {
-  // Special handling for MSTR-style table format
-  // Look for "Aggregate BTC Holdings" and find the largest number after it
-  if (asset === "BTC") {
-    const aggregateMatch = content.match(/aggregate\s+btc\s+holdings/i);
-    if (aggregateMatch && aggregateMatch.index !== undefined) {
-      // Look at the next 800 characters after the keyword
-      const afterKeyword = content.slice(aggregateMatch.index, aggregateMatch.index + 800);
-      // Find all numbers that are 100,000+ (6+ digits when stripped of commas)
+  // Define asset-specific keywords for smart table extraction
+  const assetKeywords: Record<string, string[]> = {
+    BTC: ["aggregate btc holdings", "bitcoin holdings", "btc holdings", "total bitcoin", "bitcoin treasury"],
+    ETH: ["aggregate eth holdings", "ethereum holdings", "eth holdings", "total ethereum", "ether holdings"],
+    SOL: ["aggregate sol holdings", "solana holdings", "sol holdings", "total solana"],
+    HYPE: ["aggregate hype holdings", "hype token holdings", "hype holdings", "hyperliquid holdings", "hype tokens"],
+    DOGE: ["aggregate doge holdings", "dogecoin holdings", "doge holdings", "total dogecoin"],
+    TRX: ["aggregate trx holdings", "tron holdings", "trx holdings", "total tron"],
+    XRP: ["aggregate xrp holdings", "ripple holdings", "xrp holdings", "total xrp"],
+    LTC: ["aggregate ltc holdings", "litecoin holdings", "ltc holdings", "total litecoin"],
+    TAO: ["aggregate tao holdings", "bittensor holdings", "tao holdings", "total bittensor"],
+    BNB: ["aggregate bnb holdings", "binance coin holdings", "bnb holdings", "total bnb"],
+    SUI: ["aggregate sui holdings", "sui holdings", "total sui"],
+    AVAX: ["aggregate avax holdings", "avalanche holdings", "avax holdings", "total avalanche"],
+    HBAR: ["aggregate hbar holdings", "hedera holdings", "hbar holdings", "total hedera"],
+  };
+
+  // Define reasonable holdings ranges per asset (min, max)
+  const holdingsRanges: Record<string, [number, number]> = {
+    BTC: [100, 10_000_000],      // 100 to 10M BTC
+    ETH: [1000, 100_000_000],    // 1K to 100M ETH
+    SOL: [10000, 500_000_000],   // 10K to 500M SOL
+    HYPE: [100000, 100_000_000], // 100K to 100M HYPE
+    DOGE: [1_000_000, 100_000_000_000], // 1M to 100B DOGE
+    TRX: [1_000_000, 10_000_000_000],   // 1M to 10B TRX
+    XRP: [1_000_000, 10_000_000_000],   // 1M to 10B XRP
+    LTC: [1000, 10_000_000],     // 1K to 10M LTC
+    TAO: [100, 1_000_000],       // 100 to 1M TAO
+    BNB: [1000, 10_000_000],     // 1K to 10M BNB
+    SUI: [100000, 1_000_000_000], // 100K to 1B SUI
+    AVAX: [10000, 100_000_000],   // 10K to 100M AVAX
+    HBAR: [1_000_000, 100_000_000_000], // 1M to 100B HBAR
+  };
+
+  const keywords = assetKeywords[asset] || [];
+  const [minHoldings, maxHoldings] = holdingsRanges[asset] || [100, 10_000_000_000];
+
+  // Step 1: Try smart table extraction for any matching keyword
+  for (const keyword of keywords) {
+    const keywordRegex = new RegExp(keyword.replace(/\s+/g, "\\s+"), "i");
+    const keywordMatch = content.match(keywordRegex);
+    if (keywordMatch && keywordMatch.index !== undefined) {
+      // Look at the next 1000 characters after the keyword
+      const afterKeyword = content.slice(keywordMatch.index, keywordMatch.index + 1000);
+      // Find all numbers that could be holdings (not dollar amounts)
       const numbers: number[] = [];
-      const numberMatches = afterKeyword.matchAll(/(?<!\$\s?)(?<!\.\d)(\d{1,3}(?:,\d{3})+|\d{6,})(?!\.\d)/g);
+      const numberMatches = afterKeyword.matchAll(/(?<!\$\s?)(?<!\.\d)(\d{1,3}(?:,\d{3})+|\d{5,})(?!\.\d)/g);
       for (const m of numberMatches) {
         const val = parseInt(m[1].replace(/,/g, ""), 10);
-        if (val >= 100000 && val < 10000000) { // Reasonable BTC holdings range
+        if (val >= minHoldings && val <= maxHoldings) {
           numbers.push(val);
         }
       }
@@ -295,34 +376,33 @@ function extractHoldingsFromContent(content: string, asset: string): number | nu
     }
   }
 
+  // Step 2: Try explicit regex patterns
   const assetPatterns: Record<string, RegExp[]> = {
     BTC: [
-      // Direct format: "Aggregate BTC Holdings   709,715"
       /aggregate\s+btc\s+holdings[:\s]+(\d[\d,]*)/i,
       /btc\s+holdings[:\s]+(\d[\d,]*)/i,
-      // Standard formats
       /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:bitcoin|btc)/i,
       /(\d[\d,]*)\s+(?:bitcoin|btc)\s+(?:held|holdings|in\s+treasury)/i,
       /total\s+(?:bitcoin|btc)\s+(?:held|holdings)[:\s]+(\d[\d,]*)/i,
       /bitcoin\s+holdings[:\s]+(\d[\d,]*)/i,
-      // Treasury format
       /(?:bitcoin|btc)\s+treasury[:\s]+(\d[\d,]*)/i,
       /treasury\s+(?:holds?|contains?)[:\s]+(\d[\d,]*)\s+(?:bitcoin|btc)/i,
+      // Purchase announcements
+      /(?:acquired|purchased|bought)\s+(?:an\s+additional\s+)?(\d[\d,]*)\s+(?:bitcoin|btc)/i,
     ],
     ETH: [
-      // Aggregate format
       /aggregate\s+eth(?:ereum)?\s+holdings[:\s]+(\d[\d,]*)/i,
       /eth(?:ereum)?\s+holdings[:\s]+(\d[\d,]*)/i,
-      // Standard formats
-      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:ethereum|ether|eth)/i,
+      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:ethereum|ether|eth)\b/i,
       /(\d[\d,]*)\s+(?:ethereum|ether|eth)\s+(?:held|holdings|in\s+treasury)/i,
       /total\s+(?:ethereum|eth)\s+(?:held|holdings)[:\s]+(\d[\d,]*)/i,
       /(?:ethereum|eth)\s+treasury[:\s]+(\d[\d,]*)/i,
+      /(?:acquired|purchased|bought)\s+(?:an\s+additional\s+)?(\d[\d,]*)\s+(?:ethereum|eth)/i,
     ],
     SOL: [
       /aggregate\s+sol(?:ana)?\s+holdings[:\s]+(\d[\d,]*)/i,
       /sol(?:ana)?\s+holdings[:\s]+(\d[\d,]*)/i,
-      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:solana|sol)/i,
+      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:solana|sol)\b/i,
       /(\d[\d,]*)\s+(?:solana|sol)\s+(?:held|holdings|in\s+treasury)/i,
       /total\s+sol(?:ana)?\s+(?:held|holdings)[:\s]+(\d[\d,]*)/i,
     ],
@@ -331,6 +411,28 @@ function extractHoldingsFromContent(content: string, asset: string): number | nu
       /hype\s+(?:token\s+)?holdings[:\s]+(\d[\d,]*)/i,
       /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:hype|hyperliquid)/i,
       /(\d[\d,]*)\s+(?:hype|hyperliquid)\s+(?:tokens?|held|holdings)/i,
+      // HYPE-specific: look for "X HYPE tokens" or "X HYPE"
+      /(\d[\d,\.]*)\s*(?:million\s+)?hype\s+tokens?/i,
+      // Digital asset treasury mentions
+      /digital\s+assets?\s+(?:of|worth|valued\s+at)?\s*\$?(\d[\d,\.]*)\s*(?:million|billion)?/i,
+    ],
+    DOGE: [
+      /aggregate\s+doge(?:coin)?\s+holdings[:\s]+(\d[\d,]*)/i,
+      /doge(?:coin)?\s+holdings[:\s]+(\d[\d,]*)/i,
+      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:dogecoin|doge)/i,
+      /(\d[\d,]*)\s+(?:dogecoin|doge)\s+(?:held|holdings|in\s+treasury)/i,
+    ],
+    TRX: [
+      /aggregate\s+(?:trx|tron)\s+holdings[:\s]+(\d[\d,]*)/i,
+      /(?:trx|tron)\s+holdings[:\s]+(\d[\d,]*)/i,
+      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:tron|trx)/i,
+      /(\d[\d,]*)\s+(?:tron|trx)\s+(?:held|holdings|in\s+treasury)/i,
+    ],
+    XRP: [
+      /aggregate\s+xrp\s+holdings[:\s]+(\d[\d,]*)/i,
+      /xrp\s+holdings[:\s]+(\d[\d,]*)/i,
+      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:xrp|ripple)/i,
+      /(\d[\d,]*)\s+(?:xrp|ripple)\s+(?:held|holdings|in\s+treasury)/i,
     ],
   };
 
@@ -339,9 +441,33 @@ function extractHoldingsFromContent(content: string, asset: string): number | nu
   for (const pattern of patterns) {
     const match = content.match(pattern);
     if (match && match[1]) {
-      const value = parseInt(match[1].replace(/,/g, ""), 10);
-      if (!isNaN(value) && value > 0) {
-        return value;
+      let value = parseFloat(match[1].replace(/,/g, ""));
+      // Handle "million" multiplier
+      if (/million/i.test(match[0])) {
+        value *= 1_000_000;
+      }
+      if (!isNaN(value) && value >= minHoldings && value <= maxHoldings) {
+        return Math.round(value);
+      }
+    }
+  }
+
+  // Step 3: Try generic "digital asset" patterns (for new/unusual assets)
+  const genericPatterns = [
+    /(?:holds?|holding|treasury)\s+(?:approximately\s+)?(\d[\d,\.]*)\s*(?:million\s+)?(?:tokens?|coins?)/i,
+    /(?:token|coin)\s+(?:holdings?|treasury)[:\s]+(\d[\d,\.]*)/i,
+    /(?:acquired|purchased)\s+(?:an?\s+additional\s+)?(\d[\d,\.]*)\s*(?:million\s+)?(?:tokens?|coins?)/i,
+  ];
+
+  for (const pattern of genericPatterns) {
+    const match = content.match(pattern);
+    if (match && match[1]) {
+      let value = parseFloat(match[1].replace(/,/g, ""));
+      if (/million/i.test(match[0])) {
+        value *= 1_000_000;
+      }
+      if (!isNaN(value) && value >= minHoldings && value <= maxHoldings) {
+        return Math.round(value);
       }
     }
   }
