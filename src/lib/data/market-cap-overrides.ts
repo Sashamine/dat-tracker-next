@@ -44,7 +44,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "ETHM": 230_000_000,        // $230M - Ether Machine (pending SPAC merger with Dynamix)
 
   // === SOL/Other Treasury Companies ===
-  "FWDI": 1_600_000_000,      // $1.6B - Forward Industries (SOL treasury, PIPE raise)
+  // "FWDI" removed - has sharesForMnav, calculated market cap is more accurate
   "NXTT": 600_000_000,        // $600M - NextTech/WeTrade
   "BNC": 500_000_000,         // $500M - Banyan (BNB treasury, PIPE raise)
 
