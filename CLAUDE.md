@@ -1,5 +1,10 @@
 # DAT Tracker - Claude Context
 
+## Working Memory (Session State)
+@CLAUDE.local.md
+
+---
+
 ## IMPORTANT: Check ROADMAP.md First!
 
 **Before starting any data architecture work, read `ROADMAP.md`** for:
@@ -360,3 +365,36 @@ Companies with multiple share classes (like XXI) require special handling:
 - `shareClasses: ['Class A', 'Class B']` for LLM extraction hints
 - `sharesForMnav` should be TOTAL shares (sum of all classes)
 - LLM extractor asks for each class separately, then sums for total
+
+---
+
+## Working Memory Protocol
+
+**CLAUDE.local.md is the rolling context buffer.** Update it to maintain state across sessions.
+
+### When to Update
+
+1. **Session start**: Read the buffer, note any stale info
+2. **After completing a task**: Update "Open Tasks" and "Session Notes"
+3. **After making a decision**: Add to "Recent Decisions" with date
+4. **Before session end**: Update all sections with current state
+5. **When context gets long**: Summarize and refresh the buffer
+
+### What to Track
+
+| Section | Update Frequency |
+|---------|------------------|
+| Current Goal | When goal changes |
+| Assumptions | When discovering new constraints |
+| Open Tasks | After each task completion |
+| Recent Decisions | Immediately when decided |
+| Known Constraints | When hitting blockers |
+| Next Actions | After completing actions |
+| Session Notes | Throughout session |
+
+### Buffer Maintenance
+
+- Keep each section concise (3-5 bullet points max)
+- Move completed items to ROADMAP.md decisions log
+- Prune "Recent Decisions" older than 2 weeks
+- Update "Last updated" timestamp when writing
