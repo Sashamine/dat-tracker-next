@@ -32,7 +32,7 @@ interface VerificationResult {
     percentage: number;
     direction: "higher" | "lower";
   };
-  status: "verified" | "discrepancy" | "no_filing" | "extraction_failed" | "error";
+  status: "verified" | "discrepancy" | "needs_review" | "no_filing" | "extraction_failed" | "error";
   details?: string;
 }
 
@@ -55,6 +55,7 @@ export async function GET(request: Request) {
           total: results.length,
           verified: results.filter(r => r.status === "verified").length,
           discrepancies: results.filter(r => r.status === "discrepancy").length,
+          needsReview: results.filter(r => r.status === "needs_review").length,
           noFiling: results.filter(r => r.status === "no_filing").length,
           errors: results.filter(r => r.status === "error" || r.status === "extraction_failed").length,
         },
@@ -261,8 +262,30 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
       status: "verified",
       details: `Holdings match within 1% (${percentageDiff.toFixed(2)}% difference)`,
     };
+  } else if (Math.abs(percentageDiff) > 200) {
+    // Massive discrepancy (>200%) - likely a false positive, needs manual review
+    return {
+      ticker,
+      companyName: company.name,
+      asset: company.asset,
+      storedHoldings: company.holdings,
+      extractionMethod,
+      filing: {
+        date: usedFiling.filingDate,
+        type: usedFiling.formType,
+        url: usedFiling.finalLink,
+      },
+      extractedHoldings,
+      discrepancy: {
+        absolute: absoluteDiff,
+        percentage: percentageDiff,
+        direction: absoluteDiff > 0 ? "higher" : "lower",
+      },
+      status: "needs_review",
+      details: `Extracted ${extractedHoldings.toLocaleString()} ${company.asset} vs stored ${company.holdings.toLocaleString()} (${Math.abs(percentageDiff).toFixed(0)}% diff) - likely false positive, manual review needed`,
+    };
   } else {
-    // Discrepancy found
+    // Discrepancy found (1-200% difference) - plausible, may need update
     return {
       ticker,
       companyName: company.name,
