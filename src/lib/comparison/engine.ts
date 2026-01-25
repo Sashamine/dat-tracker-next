@@ -22,6 +22,7 @@ import { calculateMNAV } from '../calculations';
 import { getMarketCapForMnavSync } from '../utils/market-cap';
 import { FALLBACK_RATES } from '../utils/currency';
 import { getBinancePrices } from '../binance';
+import { getCompanySources } from '../data/company-sources';
 
 // Companies with official mNAV dashboards - we compare our calculated mNAV against theirs
 const MNAV_DASHBOARD_TICKERS = new Set([
@@ -490,8 +491,8 @@ function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
   // 2. External source is newer (or we have no date to compare)
   const hasDiscrepancy = hasValueDifference && newerSourceFound;
 
-  // Determine verification method based on source type
-  const verificationMethod = getVerificationMethod(ourValue.sourceType, ourValue.sourceUrl);
+  // Determine verification method based on source type and company metadata
+  const verificationMethod = getVerificationMethod(ourValue.ticker, ourValue.field, ourValue.sourceType, ourValue.sourceUrl);
 
   return {
     ticker: ourValue.ticker,
@@ -511,7 +512,7 @@ function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
 }
 
 /**
- * Determine how a value can be verified based on its source type and URL
+ * Determine how a value can be verified based on its source type, URL, and company metadata
  *
  * Returns:
  * - 'xbrl': Can be verified via SEC XBRL API (10-K, 10-Q filings)
@@ -519,6 +520,8 @@ function compare(ourValue: OurValue, sources: FetchResult[]): ComparisonResult {
  * - 'manual': Needs manual verification (8-K filings, press releases, etc.)
  */
 function getVerificationMethod(
+  ticker: string,
+  field: ComparisonField,
   sourceType?: HoldingsSource,
   sourceUrl?: string
 ): 'xbrl' | 'fetcher' | 'manual' {
@@ -557,6 +560,29 @@ function getVerificationMethod(
   // On-chain sources could have automated verification
   if (sourceType === 'on-chain') {
     return 'fetcher';
+  }
+
+  // If no source URL, derive from company metadata
+  const companySources = getCompanySources(ticker);
+  if (companySources) {
+    // Holdings can be verified via fetcher if company has a dashboard
+    if (field === 'holdings' && companySources.officialDashboard) {
+      return 'fetcher';
+    }
+    // mNAV can be verified via fetcher if company reports daily mNAV
+    if (field === 'mnav' && companySources.reportsMnavDaily) {
+      return 'fetcher';
+    }
+    // Balance sheet items (shares, debt, cash) can be verified via XBRL if company has SEC CIK
+    if (companySources.secCik && (field === 'shares_outstanding' || field === 'debt' || field === 'cash' || field === 'preferred_equity')) {
+      return 'xbrl';
+    }
+    // Holdings from SEC-registered companies can also try XBRL (some have Bitcoin in XBRL)
+    if (companySources.secCik && field === 'holdings') {
+      // Could try XBRL, but most holdings come from 8-K which isn't in XBRL
+      // Default to manual unless they have a dashboard
+      return companySources.officialDashboard ? 'fetcher' : 'manual';
+    }
   }
 
   // Everything else needs manual verification:
