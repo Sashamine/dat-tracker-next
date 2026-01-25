@@ -241,7 +241,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
-    sharesForMnav: 1_142_274_340,  // Official: Nov 20, 2025 filing (xj-storage.jp) - post Sept 2025 $1.4B offering
+    sharesForMnav: 1_118_664_340,  // 1.142B common - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
     // Debt: Zero-coupon yen-denominated bonds (~¥44B, ~$280M) - no interest payments, principal at maturity
     totalDebt: 280_000_000,  // $280M per metaplanet.jp/analytics (Jan 2026)
     debtSource: "metaplanet.jp/analytics",
