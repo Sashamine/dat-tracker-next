@@ -10,6 +10,15 @@
 // Types
 export * from './types';
 
+// Filing checker functions
+export {
+  checkCompanyFilings,
+  checkAllCompanyFilings,
+  getFilingReviewSummary,
+  getExpectedFields,
+  buildFilingUrl,
+} from './filing-checker';
+
 // Repository functions
 export {
   // Baselines
