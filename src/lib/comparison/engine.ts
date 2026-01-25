@@ -382,20 +382,12 @@ async function hasRecentDismissal(
 
 /**
  * Record a discrepancy in the database
- * Skips if there's a recent dismissal/resolution with the SAME disagreement (same source, same value)
+ * Note: Dismissal check is done earlier in runComparison, not here
  */
 async function recordDiscrepancy(
   companyId: number,
   comparison: ComparisonResult
 ): Promise<number | null> {
-  // Check for recent dismissal/resolution with same disagreement
-  const wasDismissed = await hasRecentDismissal(companyId, comparison.field, comparison.sourceValues);
-
-  if (wasDismissed) {
-    console.log(`[Comparison] Skipping ${comparison.ticker} ${comparison.field} - recently dismissed/resolved for same sources`);
-    return null;
-  }
-
   const rows = await query<{ id: number }>(
     `INSERT INTO discrepancies (
       company_id, field, our_value, source_values, severity, max_deviation_pct
@@ -700,17 +692,22 @@ export async function runComparison(options?: {
       );
       comparison.confidence = confidence;
 
-      // Record in database - only add to output if actually stored (not already dismissed/resolved)
-      if (!dryRun) {
-        const companyId = await getCompanyId(ourValue.ticker);
-        if (companyId) {
-          const wasStored = await recordDiscrepancy(companyId, comparison);
-          if (wasStored !== null) {
-            discrepancies.push(comparison);
-          }
+      // Check for recent dismissal/resolution - applies to both dry run and real runs
+      const companyId = await getCompanyId(ourValue.ticker);
+      if (companyId) {
+        const wasDismissed = await hasRecentDismissal(companyId, comparison.field, comparison.sourceValues);
+        if (wasDismissed) {
+          console.log(`[Comparison] Skipping ${comparison.ticker} ${comparison.field} - recently dismissed/resolved`);
+          continue;
         }
-      } else {
-        // In dry run mode, include all discrepancies
+
+        // Record in database only if not dry run
+        if (!dryRun) {
+          await recordDiscrepancy(companyId, comparison);
+        }
+        discrepancies.push(comparison);
+      } else if (dryRun) {
+        // In dry run, include even if no company ID (company might not be in DB yet)
         discrepancies.push(comparison);
       }
     }

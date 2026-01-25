@@ -51,7 +51,7 @@ vi.mock('../fetchers', () => ({
 }));
 
 vi.mock('../db', () => ({
-  query: vi.fn(),
+  query: vi.fn().mockResolvedValue([]),  // Default to empty array
 }));
 
 // Mock source-verifier to skip verification in engine tests
@@ -70,8 +70,12 @@ import { fetchers } from '../fetchers';
 import { query } from '../db';
 
 describe('Comparison Engine', () => {
+  const mockQuery = vi.mocked(query);
+
   beforeEach(() => {
     vi.clearAllMocks();
+    // Default: getCompanyId returns null (company not in DB), hasRecentDismissal returns empty
+    mockQuery.mockResolvedValue([]);
   });
 
   afterEach(() => {
@@ -472,8 +476,6 @@ describe('Comparison Engine', () => {
     });
 
     it('should not write to database in dry run mode', async () => {
-      const mockQuery = vi.mocked(query);
-
       const mockFetcher = {
         name: 'test',
         fetch: vi.fn().mockResolvedValue([
@@ -496,8 +498,12 @@ describe('Comparison Engine', () => {
         dryRun: true,
       });
 
-      // Should not have called query
-      expect(mockQuery).not.toHaveBeenCalled();
+      // Should call query for SELECT (getCompanyId, hasRecentDismissal) but NOT for INSERT
+      // Check that no INSERT queries were made
+      const insertCalls = mockQuery.mock.calls.filter(call =>
+        typeof call[0] === 'string' && call[0].includes('INSERT')
+      );
+      expect(insertCalls).toHaveLength(0);
     });
   });
 
