@@ -11,7 +11,7 @@
     },
     {
       "path": "/api/cron/filing-check",
-      "schedule": "0 22 * * *"
+      "schedule": "*/15 * * * *"
     }
   ]
 }
