@@ -113,6 +113,9 @@ export async function GET(request: NextRequest) {
         field: d.field,
         ourValue: d.ourValue,
         ourSourceDate: d.ourSourceDate,  // When our data is from
+        ourSourceUrl: d.ourSourceUrl,    // URL we cite as source
+        ourSourceType: d.ourSourceType,  // Type of source
+        verificationMethod: d.verificationMethod,  // How to verify: xbrl, fetcher, manual
         sourceValues: d.sourceValues,
         newerSourceDate: d.newerSourceDate,  // Newest external source date
         maxDeviationPct: d.maxDeviationPct.toFixed(2) + '%',
