@@ -16,6 +16,7 @@
 import type { ComparisonField } from './engine';
 import type { HoldingsSource } from '../types';
 import { fetchers } from '../fetchers';
+import { fetchBitcoinHoldings } from '../fetchers/sec-xbrl';
 
 export type VerificationStatus =
   | 'verified'           // Our source confirms our value
@@ -128,10 +129,33 @@ export async function verifySource(
   // If we have a fetcher for this source
   if (fetcherName && fetchers[fetcherName]) {
     try {
-      // Note: SEC XBRL doesn't have holdings data, only balance sheet items
-      // Skip SEC verification for holdings field
+      // SEC XBRL can now verify holdings via company-specific XBRL namespaces
       if (fetcherName === 'sec-xbrl' && field === 'holdings') {
-        // For holdings from SEC, just check URL availability
+        // Try to extract holdings from XBRL
+        const xbrlResult = await fetchBitcoinHoldings(ticker);
+
+        if (xbrlResult) {
+          // We found holdings in XBRL - compare values
+          if (valuesMatch(ourValue, xbrlResult.holdings)) {
+            return {
+              status: 'verified',
+              sourceUrl,
+              sourceType,
+              sourceFetchedValue: xbrlResult.holdings,
+            };
+          } else {
+            return {
+              status: 'source_drift',
+              sourceUrl,
+              sourceType,
+              sourceFetchedValue: xbrlResult.holdings,
+              error: `Our value ${ourValue} differs from XBRL value ${xbrlResult.holdings}`,
+            };
+          }
+        }
+
+        // No XBRL holdings found - fall back to URL availability check
+        // (holdings might be disclosed in 8-K text, not XBRL)
         const isReachable = await isUrlReachable(sourceUrl);
         if (!isReachable) {
           return {

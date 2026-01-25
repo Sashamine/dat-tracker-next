@@ -26,6 +26,24 @@ vi.mock('../sec/llm-extractor', () => ({
   createLLMConfigFromEnv: vi.fn(),
 }));
 
+// Mock XBRL extractor - return no holdings so tests fall back to LLM
+vi.mock('../sec/xbrl-extractor', () => ({
+  extractXBRLData: vi.fn().mockResolvedValue({
+    ticker: 'MSTR',
+    cik: '0001050446',
+    success: true,
+    // No bitcoinHoldings - forces fallback to LLM
+  }),
+  compareExtractions: vi.fn().mockReturnValue({
+    match: false,
+    xbrlValue: undefined,
+    llmValue: null,
+    discrepancyPct: null,
+    recommendation: 'use_llm',
+  }),
+  formatXBRLSummary: vi.fn().mockReturnValue('[XBRL] MSTR: No Bitcoin holdings found'),
+}));
+
 // Now import the module under test and mocked modules
 import { checkTickerForSecUpdate, runSecAutoUpdate } from './index';
 import { searchFilingDocuments, TICKER_TO_CIK } from '../sec/sec-edgar';
@@ -110,13 +128,14 @@ describe('SEC Auto-Update Adapter', () => {
       expect(result.error).toContain('Company not found');
     });
 
-    it('should return error when no LLM API key configured', async () => {
+    it('should return success with no holdings when no LLM API key and no XBRL holdings', async () => {
+      // With hybrid mode, no LLM is OK if XBRL has no holdings - just returns "no data found"
       vi.mocked(createLLMConfigFromEnv).mockReturnValue(null);
 
       const result = await checkTickerForSecUpdate('MSTR');
 
-      expect(result.success).toBe(false);
-      expect(result.error).toBe('No LLM API key configured');
+      expect(result.success).toBe(true);
+      expect(result.reasoning).toContain('No holdings data found');
     });
 
     it('should return success with no changes when no 8-K filings found', async () => {
@@ -137,7 +156,8 @@ describe('SEC Auto-Update Adapter', () => {
       const result = await checkTickerForSecUpdate('MSTR', { sinceDays: 7 });
 
       expect(result.success).toBe(true);
-      expect(result.reasoning).toContain('No recent 8-K filings');
+      // Hybrid mode: no XBRL holdings + no 8-K filings = "No holdings data found"
+      expect(result.reasoning).toContain('No holdings data found');
     });
 
     it('should return success when 8-K found but no crypto content', async () => {
@@ -153,7 +173,8 @@ describe('SEC Auto-Update Adapter', () => {
       const result = await checkTickerForSecUpdate('MSTR', { sinceDays: 30 });
 
       expect(result.success).toBe(true);
-      expect(result.reasoning).toContain('No recent 8-K filings with crypto content');
+      // Hybrid mode: no XBRL holdings + no crypto content in 8-K = "No holdings data found"
+      expect(result.reasoning).toContain('No holdings data found');
     });
 
     it('should skip update when confidence below threshold', async () => {

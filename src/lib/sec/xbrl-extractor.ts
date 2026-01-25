@@ -11,6 +11,11 @@
  *
  * The LLM extractor remains the fallback for 8-K filings which often
  * don't have XBRL attachments.
+ *
+ * NOTE: This module shares XBRL extraction logic with src/lib/fetchers/sec-xbrl.ts
+ * - sec-xbrl.ts is used by the comparison/verification engine (returns FetchResult[])
+ * - This module is used by the SEC auto-update system (returns XBRLExtractionResult)
+ * Both use CIK mappings from sec-edgar.ts
  */
 
 import { TICKER_TO_CIK } from './sec-edgar';
