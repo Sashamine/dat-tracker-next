@@ -354,24 +354,27 @@ function extractHoldingsFromContent(content: string, asset: string): number | nu
   const [minHoldings, maxHoldings] = holdingsRanges[asset] || [100, 10_000_000_000];
 
   // Step 1: Try smart table extraction for any matching keyword
-  for (const keyword of keywords) {
-    const keywordRegex = new RegExp(keyword.replace(/\s+/g, "\\s+"), "i");
-    const keywordMatch = content.match(keywordRegex);
-    if (keywordMatch && keywordMatch.index !== undefined) {
-      // Look at the next 1000 characters after the keyword
-      const afterKeyword = content.slice(keywordMatch.index, keywordMatch.index + 1000);
-      // Find all numbers that could be holdings (not dollar amounts)
-      const numbers: number[] = [];
-      const numberMatches = afterKeyword.matchAll(/(?<!\$\s?)(?<!\.\d)(\d{1,3}(?:,\d{3})+|\d{5,})(?!\.\d)/g);
-      for (const m of numberMatches) {
-        const val = parseInt(m[1].replace(/,/g, ""), 10);
-        if (val >= minHoldings && val <= maxHoldings) {
-          numbers.push(val);
+  // Only use this for BTC (MSTR-style format) where it's proven to work
+  if (asset === "BTC") {
+    for (const keyword of keywords) {
+      const keywordRegex = new RegExp(keyword.replace(/\s+/g, "\\s+"), "i");
+      const keywordMatch = content.match(keywordRegex);
+      if (keywordMatch && keywordMatch.index !== undefined) {
+        // Look at the next 800 characters after the keyword
+        const afterKeyword = content.slice(keywordMatch.index, keywordMatch.index + 800);
+        // Find all numbers that could be holdings (not dollar amounts)
+        const numbers: number[] = [];
+        const numberMatches = afterKeyword.matchAll(/(?<!\$\s?)(?<!\.\d)(\d{1,3}(?:,\d{3})+|\d{5,})(?!\.\d)/g);
+        for (const m of numberMatches) {
+          const val = parseInt(m[1].replace(/,/g, ""), 10);
+          if (val >= minHoldings && val <= maxHoldings) {
+            numbers.push(val);
+          }
         }
-      }
-      // Return the largest number found (likely the total, not period acquisition)
-      if (numbers.length > 0) {
-        return Math.max(...numbers);
+        // Return the largest number found (likely the total, not period acquisition)
+        if (numbers.length > 0) {
+          return Math.max(...numbers);
+        }
       }
     }
   }
@@ -409,12 +412,12 @@ function extractHoldingsFromContent(content: string, asset: string): number | nu
     HYPE: [
       /aggregate\s+hype\s+(?:token\s+)?holdings[:\s]+(\d[\d,]*)/i,
       /hype\s+(?:token\s+)?holdings[:\s]+(\d[\d,]*)/i,
-      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:hype|hyperliquid)/i,
-      /(\d[\d,]*)\s+(?:hype|hyperliquid)\s+(?:tokens?|held|holdings)/i,
-      // HYPE-specific: look for "X HYPE tokens" or "X HYPE"
-      /(\d[\d,\.]*)\s*(?:million\s+)?hype\s+tokens?/i,
-      // Digital asset treasury mentions
-      /digital\s+assets?\s+(?:of|worth|valued\s+at)?\s*\$?(\d[\d,\.]*)\s*(?:million|billion)?/i,
+      /held?\s+(?:approximately\s+)?(\d[\d,]*)\s+(?:hype|hyperliquid)\s+tokens?/i,
+      /(\d[\d,]*)\s+(?:hype|hyperliquid)\s+(?:tokens?\s+)?(?:held|holdings|in\s+treasury)/i,
+      // HYPE-specific: look for "X HYPE tokens" with number directly before
+      /(\d[\d,\.]*)\s*(?:million\s+)?hype\s+tokens?(?:\s|$|,)/i,
+      // "holds X HYPE" or "holding X HYPE"
+      /(?:holds?|holding)\s+(\d[\d,\.]*)\s*(?:million\s+)?(?:hype|hyperliquid)/i,
     ],
     DOGE: [
       /aggregate\s+doge(?:coin)?\s+holdings[:\s]+(\d[\d,]*)/i,
