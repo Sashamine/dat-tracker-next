@@ -117,31 +117,30 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
     };
   }
 
-  // Get the most recent 8-K
-  const latestFiling = eightKFilings[0];
+  // Try multiple 8-K filings until we find one with holdings data
+  // (Not all 8-Ks contain holdings - some are just ATM updates)
+  let extractedHoldings: number | null = null;
+  let usedFiling = eightKFilings[0];
+  let lastError = "";
 
-  // Fetch filing content
-  const content = await fetchFilingContent(latestFiling.finalLink);
+  for (const filing of eightKFilings.slice(0, 5)) { // Try up to 5 recent 8-Ks
+    const content = await fetchFilingContent(filing.finalLink);
 
-  if (!content) {
-    return {
-      ticker,
-      companyName: company.name,
-      asset: company.asset,
-      storedHoldings: company.holdings,
-      filing: {
-        date: latestFiling.filingDate,
-        type: latestFiling.formType,
-        url: latestFiling.finalLink,
-      },
-      status: "extraction_failed",
-      details: "Could not fetch filing content",
-    };
+    if (!content) {
+      lastError = "Could not fetch filing content";
+      continue;
+    }
+
+    // Check if this filing has holdings data
+    const holdings = extractHoldingsFromContent(content, company.asset);
+    if (holdings !== null) {
+      extractedHoldings = holdings;
+      usedFiling = filing;
+      break;
+    }
+
+    lastError = `No ${company.asset} holdings found in filing`;
   }
-
-  // Extract holdings using simple pattern matching
-  // (For production, use the LLM extractor)
-  const extractedHoldings = extractHoldingsFromContent(content, company.asset);
 
   if (extractedHoldings === null) {
     return {
@@ -150,12 +149,12 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
       asset: company.asset,
       storedHoldings: company.holdings,
       filing: {
-        date: latestFiling.filingDate,
-        type: latestFiling.formType,
-        url: latestFiling.finalLink,
+        date: usedFiling.filingDate,
+        type: usedFiling.formType,
+        url: usedFiling.finalLink,
       },
       status: "extraction_failed",
-      details: `Could not extract ${company.asset} holdings from filing`,
+      details: `Could not extract ${company.asset} holdings from ${eightKFilings.length} 8-K filings (${lastError})`,
     };
   }
 
@@ -171,9 +170,9 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
       asset: company.asset,
       storedHoldings: company.holdings,
       filing: {
-        date: latestFiling.filingDate,
-        type: latestFiling.formType,
-        url: latestFiling.finalLink,
+        date: usedFiling.filingDate,
+        type: usedFiling.formType,
+        url: usedFiling.finalLink,
       },
       extractedHoldings,
       status: "verified",
@@ -187,9 +186,9 @@ async function verifyCompany(ticker: string, days: number): Promise<Verification
       asset: company.asset,
       storedHoldings: company.holdings,
       filing: {
-        date: latestFiling.filingDate,
-        type: latestFiling.formType,
-        url: latestFiling.finalLink,
+        date: usedFiling.filingDate,
+        type: usedFiling.formType,
+        url: usedFiling.finalLink,
       },
       extractedHoldings,
       discrepancy: {
@@ -273,9 +272,32 @@ async function fetchFilingContent(url: string): Promise<string | null> {
 // Simple pattern-based holdings extraction
 // For production, use the LLM extractor for better accuracy
 function extractHoldingsFromContent(content: string, asset: string): number | null {
+  // Special handling for MSTR-style table format
+  // Look for "Aggregate BTC Holdings" and find the largest number after it
+  if (asset === "BTC") {
+    const aggregateMatch = content.match(/aggregate\s+btc\s+holdings/i);
+    if (aggregateMatch && aggregateMatch.index !== undefined) {
+      // Look at the next 800 characters after the keyword
+      const afterKeyword = content.slice(aggregateMatch.index, aggregateMatch.index + 800);
+      // Find all numbers that are 100,000+ (6+ digits when stripped of commas)
+      const numbers: number[] = [];
+      const numberMatches = afterKeyword.matchAll(/(?<!\$\s?)(?<!\.\d)(\d{1,3}(?:,\d{3})+|\d{6,})(?!\.\d)/g);
+      for (const m of numberMatches) {
+        const val = parseInt(m[1].replace(/,/g, ""), 10);
+        if (val >= 100000 && val < 10000000) { // Reasonable BTC holdings range
+          numbers.push(val);
+        }
+      }
+      // Return the largest number found (likely the total, not period acquisition)
+      if (numbers.length > 0) {
+        return Math.max(...numbers);
+      }
+    }
+  }
+
   const assetPatterns: Record<string, RegExp[]> = {
     BTC: [
-      // MSTR format: "Aggregate BTC Holdings   709,715"
+      // Direct format: "Aggregate BTC Holdings   709,715"
       /aggregate\s+btc\s+holdings[:\s]+(\d[\d,]*)/i,
       /btc\s+holdings[:\s]+(\d[\d,]*)/i,
       // Standard formats
