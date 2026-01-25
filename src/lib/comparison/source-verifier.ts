@@ -34,18 +34,12 @@ export interface VerificationResult {
 }
 
 /**
- * Tolerance for value comparison (5% deviation is acceptable)
- */
-const VALUE_TOLERANCE_PCT = 5;
-
-/**
- * Check if two values are approximately equal (within tolerance)
+ * Check if two values match exactly
+ * NO TOLERANCE - any discrepancy triggers adversarial investigation
+ * Accepting drift leads to compounding errors over time
  */
 function valuesMatch(ourValue: number, fetchedValue: number): boolean {
-  if (ourValue === 0 && fetchedValue === 0) return true;
-  if (ourValue === 0) return false;
-  const deviationPct = Math.abs((fetchedValue - ourValue) / ourValue * 100);
-  return deviationPct <= VALUE_TOLERANCE_PCT;
+  return ourValue === fetchedValue;
 }
 
 /**

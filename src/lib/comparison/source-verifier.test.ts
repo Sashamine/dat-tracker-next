@@ -137,13 +137,14 @@ describe('Source Verifier', () => {
         expect(result.sourceFetchedValue).toBe(200000000);
       });
 
-      it('should return "verified" when SEC shares are within 5% tolerance', async () => {
+      it('should return "source_drift" when SEC shares differ at all (zero tolerance)', async () => {
+        // NO TOLERANCE - any discrepancy triggers adversarial investigation
         const secFetcher = fetchers['sec-xbrl'];
         vi.mocked(secFetcher.fetch).mockResolvedValue([
           {
             ticker: 'MSTR',
             field: 'shares_outstanding',
-            value: 195000000, // 2.5% lower than our 200M
+            value: 195000000, // 2.5% lower than our 200M - still triggers drift
             source: { name: 'SEC XBRL', url: 'https://sec.gov/...', date: '2026-01-01' },
             fetchedAt: new Date(),
           },
@@ -157,10 +158,12 @@ describe('Source Verifier', () => {
           'sec-filing'
         );
 
-        expect(result.status).toBe('verified');
+        // Zero tolerance: any difference = source_drift
+        expect(result.status).toBe('source_drift');
+        expect(result.sourceFetchedValue).toBe(195000000);
       });
 
-      it('should return "source_drift" when SEC shares differ by more than 5%', async () => {
+      it('should return "source_drift" when SEC shares differ significantly', async () => {
         const secFetcher = fetchers['sec-xbrl'];
         vi.mocked(secFetcher.fetch).mockResolvedValue([
           {
