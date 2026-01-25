@@ -315,6 +315,8 @@ const NXTT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 5833, sharesOutstandingDiluted: 475_000, holdingsPerShare: 0.01228, source: "Q2 2025 filing (split-adjusted)" },
   // Post reverse split (200:1) - Sep 16, 2025
   { date: "2025-09-30", holdings: 5833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 0.00204, source: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q", sourceType: "sec-filing" },
+  // Jan 2026: Additional equity issuances since Q3
+  { date: "2026-01-16", holdings: 5833, sharesOutstandingDiluted: 4_082_556, holdingsPerShare: 0.00143, source: "TipRanks/Morningstar", sharesSource: "Jan 2026 aggregator data" },
 ];
 
 // Alt Brussels (ALTBG) - Belgium/France BTC treasury
