@@ -548,9 +548,14 @@ const HYPD_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Tron Inc (TRON) - TRX treasury, formerly SRM Entertainment
+// SEC CIK: 1956744
+// NOTE: Previous "fix" from 677M to 365M was INCORRECT. The Sep 2025 warrant exercise added 312M TRX.
 const TRON_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-06-15", holdings: 365096845, sharesOutstandingDiluted: 65_000_000, holdingsPerShare: 5.617, source: "Initial TRX treasury" },
-  { date: "2025-09-02", holdings: 677596945, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 7.972, source: "$110M expansion", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956744", sourceType: "sec-filing" },
+  { date: "2025-06-15", holdings: 365_096_845, sharesOutstandingDiluted: 27_425_983, holdingsPerShare: 13.313, source: "Initial TRX treasury (pre-warrant)", sourceType: "press-release" },
+  { date: "2025-09-02", holdings: 677_596_945, sharesOutstandingDiluted: 257_115_400, holdingsPerShare: 2.636, source: "8-K: $110M warrant exercise added 312M TRX", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=8-K", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 677_596_945, sharesOutstandingDiluted: 257_115_400, holdingsPerShare: 2.636, source: "10-Q Q3 2025", sharesSource: "10-Q balance sheet", sourceType: "sec-filing" },
+  { date: "2025-12-29", holdings: 677_000_000, sharesOutstandingDiluted: 274_382_064, holdingsPerShare: 2.468, source: "8-K: $18M Justin Sun investment", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/", sourceType: "sec-filing" },
+  { date: "2026-01-23", holdings: 677_000_000, sharesOutstandingDiluted: 274_382_064, holdingsPerShare: 2.468, source: "8-K: Confirmed 677M+ TRX total", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/", sourceType: "sec-filing" },
 ];
 
 // Evernorth (XRPN) - XRP treasury

@@ -974,22 +974,25 @@ export const trxCompanies: Company[] = [
     ticker: "TRON",
     asset: "TRX",
     tier: 1,
-    holdings: 365_096_845,  // Fixed 2026-01-21 - was 677M (wrong by 312M)
-    holdingsLastUpdated: "2026-01-21",
+    holdings: 677_000_000,  // Jan 23, 2026 8-K: "more than 677 million TRX in total"
+    holdingsLastUpdated: "2026-01-23",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.theblock.co/treasuries/tron",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=8-K",
     datStartDate: "2025-07-01",
+    secCik: "1956744",
     costBasisAvg: 0.28,
     stakingPct: 0.81,
     stakingApy: 0.045,
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 310_000_000,
     avgDailyVolume: 50_000_000,
-    marketCap: 578_620_000,
-    sharesForMnav: 85_000_000,  // From holdings-history.ts
+    sharesForMnav: 274_382_064,  // Dec 29, 2025 8-K: after $18M Justin Sun investment
+    sharesSource: "SEC 8-K Dec 29, 2025",
+    sharesAsOf: "2025-12-29",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/0001493152-25-029225-index.html",
     leader: "Richard Miller (CEO)",
     strategy: "TRX treasury via JustLend staking, Justin Sun backing",
-    notes: "First US public company to hold its blockchain's native token.",
+    notes: "First US public company to hold its blockchain's native token. Formerly SRM Entertainment.",
   },
 ];
 
