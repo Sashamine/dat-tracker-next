@@ -1,6 +1,6 @@
 # Working Memory Buffer
 > Auto-updated during sessions. Re-read at session start.
-> Last updated: 2026-01-25
+> Last updated: 2026-01-26
 
 ## Current Goal
 Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more companies)
@@ -35,9 +35,9 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - ALTBG (Capital B): Use AMF API for French regulatory filings (ISIN FR0011053636)
 
 ## Next Actions
-1. **FGNX** - next company to verify
-2. Continue verifying individual companies
-3. Phase 8d: Populate dilutive instruments for all companies
+1. Continue Phase 7d: verify more companies
+2. Phase 8d: Populate dilutive instruments for all companies
+3. Phase 7e: UI for estimates with provenance
 
 ## Session Notes (2026-01-25)
 - Started with UPXI and BTCS verification (from prior session)
@@ -133,5 +133,26 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Company detail page: Added Leverage metric in Key Valuation Metrics section
 - High leverage (≥1.0x) shown in amber with warning: "mNAV elevated by debt"
 - This explains why NA has high mNAV (5x) - it's the $500M debt, not market premium
+- 274 tests pass, deployed to Vercel
+
+## Session Notes (2026-01-26)
+
+### FGNX Verification (from prior session)
+- sharesForMnav: 92M → 33.6M (per Jan 21, 2026 press release)
+- Added SEC CIK: 1591890
+- Rewrote holdings-history.ts with SEC-verified data
+- mNAV: 0.90x (10% discount to NAV)
+
+### CYPH Verification (Cypherpunk Technologies)
+- Discovered our data conflated TWO companies:
+  - Old: Canadian Cypherpunk Holdings (SEDAR filings)
+  - New: US Cypherpunk Technologies (SEC CIK 1509745, f/k/a Leap Therapeutics)
+- Holdings: 290,062 ZEC ✓ (Dec 30, 2025 8-K confirmed)
+- Cost basis: $334.41 ✓ (exact match)
+- **Fixed**: sharesForMnav 125M → 137.4M (basic 56.6M + pre-funded warrants 80.8M)
+- Pre-funded warrants included because they're essentially shares ($0.001 exercise)
+- Oct 2025 PIPE: $58.88M from Winklevoss Treasury Investments
+- Added SEC CIK: 1509745
+- Completely rewrote CYPH_HISTORY (old was fabricated Canadian data)
 - 274 tests pass, deployed to Vercel
 
