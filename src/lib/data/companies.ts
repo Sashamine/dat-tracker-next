@@ -1169,20 +1169,27 @@ export const dogeCompanies: Company[] = [
     ticker: "TBH",
     asset: "DOGE",
     tier: 1,
-    holdings: 730_000_000,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://investors.braghouse.com/",
-    datStartDate: "2025-08-01",
+    secCik: "1903595",
+    // IMPORTANT: TBH (Brag House) is a gaming company merging with House of Doge
+    // The 730M DOGE is held by House of Doge (private), NOT by TBH currently
+    // Post-merger: ~663M new shares to HOD + ~50M existing TBH = ~713M shares
+    holdings: 0,  // TBH has no DOGE - it's a gaming company pre-merger
+    holdingsLastUpdated: "2026-01-26",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595",
+    datStartDate: "2025-09-05",  // House of Doge treasury started Sep 5, 2025
+    pendingMerger: true,  // SPAC-style merger not yet closed
+    expectedHoldings: 730_000_000,  // HOD holds 730M DOGE per Dec 18, 2025 shareholder letter
+    mergerExpectedClose: "2026-Q1",
     costBasisAvg: 0.20,
     quarterlyBurnUsd: 1_000_000,
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 5_000_000,
-    marketCap: 200_000_000,
-    sharesForMnav: 62_000_000,  // From holdings-history.ts
-    leader: "Alex Spiro (Chairman, Elon Musk's lawyer)",
+    marketCap: 8_000_000,  // TBH pre-merger market cap ~$8M (10.8M shares × ~$0.75)
+    sharesForMnav: 10_800_000,  // TBH pre-merger shares (Nov 2025 10-Q)
+    leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
-    notes: "Nasdaq merger pending Q1 2026. Largest institutional DOGE manager.",
+    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1).",
   },
   {
     id: "btog",

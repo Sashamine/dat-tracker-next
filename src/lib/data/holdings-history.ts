@@ -525,12 +525,17 @@ const ZONE_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-12", holdings: 733100000, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 12.218, source: "Q1 FY2026 results", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956741", sourceType: "sec-filing" },
 ];
 
-// Brag House (TBH) - DOGE managed treasury
+// Brag House (TBH) - pending merger with House of Doge
+// IMPORTANT: TBH is a gaming company with NO DOGE holdings
+// House of Doge (private) holds 730M DOGE via CleanCore (ZONE) agreement
+// Merger announced Oct 12, 2025; expected close Q1 2026
+// Post-merger: ~663M shares to HOD + ~50M TBH = ~713M total shares
+// TBH IPO'd March 7, 2025 - prior "history" was fabricated
 const TBH_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-08-15", holdings: 350000000, sharesOutstandingDiluted: 38_000_000, holdingsPerShare: 9.211, source: "Initial DOGE strategy" },
-  { date: "2024-12-31", holdings: 580000000, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 12.083, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 730000000, sharesOutstandingDiluted: 58_000_000, holdingsPerShare: 12.586, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 780000000, sharesOutstandingDiluted: 62_000_000, holdingsPerShare: 12.581, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595", sourceType: "sec-filing" },
+  // TBH has no DOGE - these are TBH shares only for tracking purposes
+  { date: "2025-03-07", holdings: 0, sharesOutstandingDiluted: 8_000_000, holdingsPerShare: 0, source: "TBH IPO on Nasdaq", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595", sourceType: "sec-filing" },
+  { date: "2025-10-12", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "House of Doge merger announced - HOD has 730M DOGE", sourceUrl: "https://www.globenewswire.com/news-release/2025/10/13/3165515/0/en/House-of-Doge-the-Corporate-Arm-of-the-Dogecoin-Foundation-to-List-on-NASDAQ-Through-Merger-with-Brag-House-Holdings-Inc.html", sourceType: "press-release" },
+  { date: "2025-12-18", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "HOD shareholder letter confirms 730M DOGE treasury", sourceUrl: "https://www.globenewswire.com/news-release/2025/12/18/3207820/0/en/House-of-Doge-Issues-2025-Shareholder-Letter-Highlighting-Brag-House-NASDAQ-Merger-Treasury-Expansion-Diversified-Revenue-Strategy-and-Payments-Ecosystem-Development.html", sourceType: "press-release" },
 ];
 
 // Bit Origin (BTOG) - DOGE treasury, Singapore-based

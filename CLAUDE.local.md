@@ -164,3 +164,24 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Result: Both Market Cap display and mNAV now use the same calculated value
 - CYPH mNAV now correctly shows ~0.68x (discount to NAV, not premium)
 
+### TBH Verification (Brag House / House of Doge)
+- **Critical finding**: TBH data was completely wrong
+  - TBH is a gaming company that IPO'd March 2025 - has NO DOGE
+  - House of Doge (private company) holds 730M DOGE
+  - Merger announced Oct 12, 2025, expected close Q1 2026
+- **Holdings-history was fabricated**: showed 2024 DOGE holdings, but TBH didn't exist until 2025
+- SEC CIK: 1903595
+- Post-merger structure from fairness opinion:
+  - ~663M new shares to HOD equity holders
+  - ~50M existing TBH shares remain
+  - $1.09B valuation at $1.6434/share implied
+  - TBH shareholders get ~7.2%, HOD gets ~92.8%
+- **Fixed**:
+  - Added `pendingMerger: true`
+  - Set `holdings: 0` (TBH has no DOGE)
+  - Set `expectedHoldings: 730_000_000` (HOD's DOGE)
+  - Set `sharesForMnav: 10_800_000` (TBH pre-merger)
+  - Rewrote TBH_HISTORY with accurate timeline (IPO Mar 2025, merger announced Oct 2025)
+- Jan 6, 2026: TBH received Nasdaq compliance notice (stock <$1, 180 days to fix)
+- 274 tests pass
+
