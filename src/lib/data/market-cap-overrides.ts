@@ -54,7 +54,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "AVX": 130_000_000,         // $130M - AVAX One Technology
   "FGNX": 110_000_000,        // $110M - FG Nexus
   "NA": 81_000_000,           // $81M - Nano Labs
-  "CYPH": 65_000_000,         // $65M - Cypherpunk Technologies
+  "CYPH": 70_000_000,         // $70M - Cypherpunk Technologies (137M shares × ~$0.51)
   "LITS": 55_000_000,         // $55M - Lite Strategy
   "CWD": 15_000_000,          // $15M - Calamos (LINK treasury)
 };

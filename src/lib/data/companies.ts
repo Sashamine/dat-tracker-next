@@ -1032,21 +1032,21 @@ export const zecCompanies: Company[] = [
     ticker: "CYPH",
     asset: "ZEC",
     tier: 1,
-    holdings: 290_062,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://investors.leaptx.com/",
-    datStartDate: "2025-10-01",
-    costBasisAvg: 334.41,
+    holdings: 290_062,  // Dec 30, 2025 8-K: 290,062.67 ZEC
+    holdingsLastUpdated: "2025-12-30",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/0001104659-25-125039-index.html",
+    datStartDate: "2025-10-08",  // Oct 8, 2025 PIPE closing date
+    secCik: "1509745",
+    costBasisAvg: 334.41,  // Per Dec 30, 2025 8-K
     quarterlyBurnUsd: 3_100_000,
-    capitalRaisedAtm: 200_000_000,
-    capitalRaisedPipe: 58_880_000,
-    avgDailyVolume: 10_000_000,
-    marketCap: 65_720_000,
-    sharesForMnav: 125_000_000,  // From holdings-history.ts
+    capitalRaisedPipe: 58_880_000,  // Oct 2025 PIPE gross proceeds
+    sharesForMnav: 137_420_344,  // Basic (56.6M) + Pre-funded warrants (80.8M) per SEC filings
+    sharesSource: "SEC 10-Q Q3 2025 + 8-K Oct 9, 2025 (basic + pre-funded warrants)",
+    sharesAsOf: "2025-11-10",
     leader: "Douglas Onsi (CEO)",
     strategy: "Target 5% of ZEC supply (~540K ZEC). Winklevoss backed.",
-    notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply.",
+    notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply. ~72M common warrants outstanding at $0.5335.",
   },
   // RELI (Reliance Global) removed - InsurTech company, not beta to ZEC
 ];

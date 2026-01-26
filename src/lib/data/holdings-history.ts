@@ -464,15 +464,17 @@ const LITS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 929548, sharesOutstandingDiluted: 35_655_155, holdingsPerShare: 0.02607, source: "Q1 FY2026 10-Q", sourceUrl: "https://www.litestrategy.com/dashboard/", sourceType: "company-website" },
 ];
 
-// Cypherpunk Holdings (CYPH) - ZEC treasury, Winklevoss-backed (Canadian, SEDAR filings)
+// Cypherpunk Technologies (CYPH) - ZEC treasury, Winklevoss-backed
+// SEC CIK: 1509745 (formerly Leap Therapeutics, rebranded Nov 2025)
+// NOTE: Share count includes pre-funded warrants (80.7M) since they're essentially shares ($0.001 exercise)
 const CYPH_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 180000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.00212, source: "Q1 2024 SEDAR" },
-  { date: "2024-09-30", holdings: 235000, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.00255, source: "Q3 2024 SEDAR" },
-  { date: "2024-12-31", holdings: 290000, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.00296, source: "FY 2024 annual" },
-  { date: "2025-06-30", holdings: 220000, sharesOutstandingDiluted: 102_000_000, holdingsPerShare: 0.00216, source: "Q2 2025 SEDAR" },
-  { date: "2025-09-30", holdings: 225000, sharesOutstandingDiluted: 105_000_000, holdingsPerShare: 0.00214, source: "Q3 2025 SEDAR" },
-  { date: "2025-11-19", holdings: 233645, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.00212, source: "$18M ZEC purchase" },
-  { date: "2025-12-30", holdings: 290063, sharesOutstandingDiluted: 125_000_000, holdingsPerShare: 0.00232, source: "$29M ZEC purchase", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001509745", sourceType: "sec-filing" },
+  // Oct 8, 2025: $58.88M PIPE closed, ZEC treasury strategy announced
+  // Basic shares: 56.6M (41.4M pre-PIPE + 15.2M new), Pre-funded warrants: 80.7M
+  { date: "2025-10-08", holdings: 0, sharesOutstandingDiluted: 137_420_344, holdingsPerShare: 0, source: "8-K Oct 9, 2025 - PIPE closed", sharesSource: "SEC 8-K + 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/0001104659-25-098082-index.html", sourceType: "sec-filing" },
+  // Nov 19, 2025: First ZEC purchase disclosed - 233,644 ZEC for ~$18M
+  { date: "2025-11-19", holdings: 233_644, sharesOutstandingDiluted: 137_420_344, holdingsPerShare: 0.00170, source: "8-K Nov 20, 2025 - $18M ZEC purchase", sharesSource: "SEC 8-K + 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/0001104659-25-114435-index.html", sourceType: "sec-filing" },
+  // Dec 30, 2025: Additional $29M purchase - total 290,062.67 ZEC at $334.41 avg
+  { date: "2025-12-30", holdings: 290_062, sharesOutstandingDiluted: 137_420_344, holdingsPerShare: 0.00211, source: "8-K Dec 30, 2025 - $29M ZEC purchase", sharesSource: "SEC 8-K + 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/0001104659-25-125039-index.html", sourceType: "sec-filing" },
 ];
 
 // Caliber (CWD) - LINK treasury, first Nasdaq company with LINK policy
