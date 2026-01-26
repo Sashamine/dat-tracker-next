@@ -503,20 +503,22 @@ export const btcCompanies: Company[] = [
     ticker: "H100.ST",
     asset: "BTC",
     tier: 2,
-    holdings: 1_046,  // Interim report May-Sep 2025 (released Nov 20, 2025)
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/h100-group",
-    datStartDate: "2025-01-01",
+    holdings: 1_046,  // Jan 2, 2026 shareholder letter confirms 1,046 BTC
+    holdingsLastUpdated: "2026-01-02",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://www.h100.group/",  // Official website shows ₿1,046.66
+    datStartDate: "2025-05-22",  // First BTC purchase May 22, 2025
     costBasisAvg: 90_000,
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 5_000_000,
-    marketCap: 65_000_000,  // ~SEK 677M / 10.4 USD/SEK (Jan 2026)
-    sharesForMnav: 335_250_000,  // 335.25M shares (stockanalysis.com Jan 2026) - massive 2025 dilution from directed issues
-    leader: "Adam Back (investor)",
+    marketCap: 62_000_000,  // SEK 645M / 10.4 = $62M (Jan 23, 2026)
+    sharesForMnav: 335_250_237,  // Official IR page: 335,250,237 shares
+    sharesSource: "H100 IR shares page",
+    sharesAsOf: "2026-01-23",
+    leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
-    notes: "Stockholm listed. ISK-eligible. Adam Back invested SEK 492M. Acquiring Future Holdings.",
+    notes: "NGM Nordic SME listed. ISK-eligible. Adam Back invested SEK 492M. Acquiring Future Holdings AG (Switzerland).",
   },
   {
     id: "naka",

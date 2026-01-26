@@ -332,13 +332,17 @@ const ALTBG_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
+// NOTE: BTC treasury strategy started May 22, 2025 - no BTC holdings before that date
+// Share count grew massively in 2025 through directed issues to fund BTC purchases (254M → 335M)
 const H100_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-30", holdings: 520, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.0000208, source: "Q3 2024 Finansinspektionen" },
-  { date: "2024-12-31", holdings: 780, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.0000279, source: "Q4 2024 filing" },
-  // Sep 2025: 1,046 BTC confirmed by interim report (May-Sep 2025) released Nov 20, 2025
-  { date: "2025-09-30", holdings: 1046, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.0000327, source: "Interim report May-Sep 2025", sourceUrl: "https://bitcointreasuries.net/public-companies/h100-group", sourceType: "aggregator" },
-  // Jan 2026: Massive 2025 dilution from directed issues (10x share increase)
-  { date: "2026-01-15", holdings: 1046, sharesOutstandingDiluted: 335_250_000, holdingsPerShare: 0.00000312, source: "stockanalysis.com", sharesSource: "stockanalysis.com Jan 2026" },
+  // May 2025: First BTC purchase - strategy initiated
+  { date: "2025-05-22", holdings: 4, sharesOutstandingDiluted: 254_000_000, holdingsPerShare: 0.0000000157, source: "Press release - first BTC purchase (4.39 BTC)", sharesSource: "H100 IR (pre-dilution)", sourceType: "press-release" },
+  // July 2025: Rapid accumulation via Adam Back convertible + directed issues
+  { date: "2025-07-15", holdings: 628, sharesOutstandingDiluted: 300_000_000, holdingsPerShare: 0.00000209, source: "Press release - 628.22 BTC total", sharesSource: "Estimated mid-dilution", sourceType: "press-release" },
+  // Sep 2025: Interim report (May-Sep 2025) released Nov 20, 2025
+  { date: "2025-09-30", holdings: 1046, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "Interim report May-Sep 2025", sourceUrl: "https://www.h100.group/investor-relations/financial-reports", sharesSource: "H100 IR shares page", sourceType: "company-website" },
+  // Jan 2026: Shareholder letter confirms holdings stable at 1,046 BTC
+  { date: "2026-01-02", holdings: 1046, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "Jan 2, 2026 shareholder letter", sourceUrl: "https://www.h100.group/", sharesSource: "H100 IR shares page", sourceType: "company-website" },
 ];
 
 // ==================== ADDITIONAL ETH COMPANIES ====================

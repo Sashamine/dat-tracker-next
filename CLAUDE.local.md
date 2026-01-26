@@ -156,3 +156,11 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Completely rewrote CYPH_HISTORY (old was fabricated Canadian data)
 - 274 tests pass, deployed to Vercel
 
+### Market Cap Display Fix
+- User noticed mNAV showed 1.11x but NAV/share showed 32% discount - inconsistent
+- Root cause: Company page used `getMarketCap()` (API data, $70M) for display
+  but mNAV calculation used `getMarketCapForMnavSync()` (shares × price, $114M)
+- **Fixed**: Company page now uses `getMarketCapForMnavSync()` for Market Cap display
+- Result: Both Market Cap display and mNAV now use the same calculated value
+- CYPH mNAV now correctly shows ~0.68x (discount to NAV, not premium)
+
