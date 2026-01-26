@@ -56,7 +56,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "NA": 81_000_000,           // $81M - Nano Labs
   // "CYPH" removed - has sharesForMnav (137.4M), calculated market cap is more accurate
   "LITS": 55_000_000,         // $55M - Lite Strategy
-  "CWD": 15_000_000,          // $15M - Calamos (LINK treasury)
+  // "CWD" removed - has sharesForMnav (6.9M), calculated market cap is more accurate
 };
 
 /**
