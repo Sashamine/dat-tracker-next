@@ -1148,20 +1148,27 @@ export const dogeCompanies: Company[] = [
     ticker: "ZONE",
     asset: "DOGE",
     tier: 1,
-    holdings: 710_000_000,
-    holdingsLastUpdated: "2025-09-30",
+    secCik: "1956741",
+    holdings: 733_100_000,  // Nov 12, 2025 press release (Q1 FY2026 results)
+    holdingsLastUpdated: "2025-11-12",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/",
+    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/11/13/3187485/0/en/CleanCore-Solutions-Reports-Fiscal-First-Quarter-2026-Financial-Results-and-Provides-Update-on-its-DOGE-Treasury-Strategy.html",
     datStartDate: "2025-09-05",
-    costBasisAvg: 0.25,
+    costBasisAvg: 0.23,  // $163.8M fair value / 703.6M DOGE at Sep 30
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 175_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 150_000_000,
-    sharesForMnav: 60_000_000,  // From holdings-history.ts
+    cashReserves: 12_900_000,  // Sep 30, 2025 10-Q
+    cashSource: "SEC 10-Q Q1 FY2026",
+    cashAsOf: "2025-09-30",
+    totalDebt: 0,  // Minimal liabilities per 10-Q
+    sharesForMnav: 73_600_000,  // Estimated from Dec 17, 2025 annual meeting votes
+    sharesSource: "Dec 17, 2025 8-K voting results (~73.6M votes cast)",
+    sharesAsOf: "2025-12-17",
     leader: "Clayton Adams (CEO)",
-    strategy: "Target 1B DOGE. House of Doge as treasury manager.",
-    notes: "NYSE listed. $20M+ unrealized gains.",
+    strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
+    notes: "NYSE American. Q1 FY2026: 703.6M DOGE at $163.8M fair value. Partnership with House of Doge, 21Shares, Robinhood.",
   },
   {
     id: "tbh",

@@ -185,3 +185,16 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Jan 6, 2026: TBH received Nasdaq compliance notice (stock <$1, 180 days to fix)
 - 274 tests pass
 
+### ZONE Verification (CleanCore Solutions)
+- SEC CIK: 1956741
+- **Updated holdings**: 710M → 733,100,000 DOGE (Nov 12, 2025 press release)
+- **Updated shares**: 60M → 73.6M (estimated from Dec 17, 2025 annual meeting votes)
+- Added cashReserves: $12.9M (Sep 30, 2025 10-Q)
+- Added secCik, proper source URLs
+- Historical verification:
+  - Sep 30, 2025 10-Q: 703,617,752 DOGE at $163.8M fair value
+  - Nov 12, 2025: 733.1M DOGE (Q1 FY2026 results)
+- ZONE is the "Official Dogecoin Treasury" - separate from TBH
+- ZONE holds DOGE directly; TBH/House of Doge is merging
+- 274 tests pass
+

@@ -522,7 +522,9 @@ const ZONE_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 703617752, sharesOutstandingDiluted: 52_000_000, holdingsPerShare: 13.531, source: "Q1 FY2026 10-Q" },
   { date: "2025-10-06", holdings: 710000000, sharesOutstandingDiluted: 55_000_000, holdingsPerShare: 12.909, source: "Press release" },
   { date: "2025-10-13", holdings: 730000000, sharesOutstandingDiluted: 58_000_000, holdingsPerShare: 12.586, source: "Press release" },
-  { date: "2025-11-12", holdings: 733100000, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 12.218, source: "Q1 FY2026 results", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956741", sourceType: "sec-filing" },
+  { date: "2025-11-12", holdings: 733100000, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 12.218, source: "Q1 FY2026 results", sourceUrl: "https://www.globenewswire.com/news-release/2025/11/13/3187485/0/en/CleanCore-Solutions-Reports-Fiscal-First-Quarter-2026-Financial-Results-and-Provides-Update-on-its-DOGE-Treasury-Strategy.html", sourceType: "press-release" },
+  // Dec 17, 2025 annual meeting: ~73.6M votes cast, implies share dilution since Nov
+  { date: "2025-12-17", holdings: 733100000, sharesOutstandingDiluted: 73_600_000, holdingsPerShare: 9.961, source: "Annual meeting 8-K voting results", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-123866-index.html", sourceType: "sec-filing" },
 ];
 
 // Brag House (TBH) - pending merger with House of Doge
