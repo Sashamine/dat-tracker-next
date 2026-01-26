@@ -243,11 +243,12 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 364_176_000,  // 362.6M (Jan 19) + 1.57M ATM (Jan 20-25) per SEC 8-K Jan 26
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
-    // Debt: ~$7.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032), down from $10B after redemptions
-    totalDebt: 8_200_000_000,  // $8.2B after note redemptions (Q4 2025)
-    debtSource: "SEC 10-Q Q4 2025",
-    debtAsOf: "2025-12-31",
-    preferredEquity: 13_000_000_000,  // $13B per strategy.com API (Jan 2026)
+    // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
+    totalDebt: 8_214_000_000,  // $8.214B per strategy.com/debt (Jan 26, 2026)
+    debtSource: "strategy.com/debt",
+    debtAsOf: "2026-01-26",
+    preferredEquity: 8_382_000_000,  // $8.382B per strategy.com/credit (Jan 26, 2026)
+    // Preferred breakdown: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
     restrictedCash: 2_250_000_000,  // Debt service reserves - not excess
@@ -255,7 +256,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2026-01-04",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
-    notes: "712K BTC @ $75K avg. STRK/STRF/STRC/STRD perpetual preferred. Bitcoin credit company thesis.",
+    notes: "712K BTC @ $75K avg. 5 perpetual preferred classes: STRF/STRC/STRE/STRK/STRD. Bitcoin credit company thesis.",
     leverageRatio: 1.5, // ~$21B debt provides leveraged BTC exposure via converts
   },
   {
