@@ -46,27 +46,27 @@ export interface InstrumentBreakdown {
  */
 export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // BTCS Inc - ETH treasury company
-  // Verified 2026-01-25 during company verification process
+  // Verified 2026-01-25 via adversarial process against SEC filings and btcs.com
   BTCS: [
     {
       type: "convertible",
       strikePrice: 5.85,
       potentialShares: 1_709_402,
-      source: "8-K Jul 2024",
+      source: "8-K May 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
-      expiration: "2029-07-15",
-      notes: "$10M convertible note",
+        "https://www.btcs.com/news-media/convertible-note/",
+      expiration: "2027-05-13",
+      notes: "$10M convertible note (ATW Partners facility, 194% premium)",
     },
     {
       type: "convertible",
       strikePrice: 13.0,
       potentialShares: 769_231,
-      source: "8-K Dec 2024",
+      source: "8-K Jul 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
-      expiration: "2029-12-15",
-      notes: "$10M convertible note",
+        "https://www.btcs.com/news-media/eth-holdings-update-july-21-2025/",
+      expiration: "2027-07-21",
+      notes: "$10M convertible note (ATW Partners, 198% premium)",
     },
     {
       type: "option",

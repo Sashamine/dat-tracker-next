@@ -131,7 +131,8 @@ describe("Dilutive Instruments", () => {
         expect(inst.strikePrice).toBeGreaterThan(0);
         expect(inst.potentialShares).toBeGreaterThan(0);
         expect(inst.source).toBeDefined();
-        expect(inst.sourceUrl).toContain("sec.gov");
+        // BTCS sources: sec.gov for options (10-Q), btcs.com for convertibles (official page)
+        expect(inst.sourceUrl).toMatch(/sec\.gov|btcs\.com/);
       }
     });
 
