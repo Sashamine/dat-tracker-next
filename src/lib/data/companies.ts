@@ -1079,9 +1079,9 @@ export const ltcCompanies: Company[] = [
     quarterlyBurnUsd: 3_600_000,
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 35_655_155,  // SEC 10-Q Q1 FY2026 (Sep 30, 2025)
-    sharesSource: "SEC 10-Q Q1 FY2026",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 36_769_677,  // DEF 14A Record Date Dec 15, 2025
+    sharesSource: "SEC DEF 14A Dec 30, 2025",
+    sharesAsOf: "2025-12-15",
     cashReserves: 10_113_000,  // $10.1M cash (SEC 10-Q Q1 FY2026)
     cashSource: "SEC 10-Q Q1 FY2026",
     cashAsOf: "2025-09-30",

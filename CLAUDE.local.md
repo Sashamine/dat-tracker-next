@@ -218,3 +218,15 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Notes: 3.35M SOL AuD, STKESOL LST launched Jan 20, 2026
 - 274 tests pass
 
+### LITS Verification (Lite Strategy)
+- SEC CIK: 1262104 (formerly MEI Pharma)
+- **Holdings verified**: 929,548 LTC ✓ (matches official dashboard at litestrategy.com/dashboard)
+- **Shares verified**: 35,655,155 ✓ (SEC 10-Q Q1 FY2026, Sep 30, 2025)
+- **mNAV fix**: 0.71x → 0.56x
+  - Root cause: Missing cash reserves in EV calculation
+  - Added cashReserves: $10.1M (SEC 10-Q Q1 FY2026)
+  - No interest-bearing debt (only $1.07M operating liabilities - not included in EV)
+- Dashboard shows 0.58x, our 0.56x is close (small price timing difference)
+- Updated source URL to official dashboard: litestrategy.com/dashboard
+- 274 tests pass, deployed to Vercel
+

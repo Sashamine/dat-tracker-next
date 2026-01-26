@@ -469,7 +469,9 @@ const LITS_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-08-01", holdings: 450000, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.01406, source: "Initial LTC treasury 8-K" },
   { date: "2024-12-31", holdings: 720000, sharesOutstandingDiluted: 33_500_000, holdingsPerShare: 0.02149, source: "Q4 2024 10-K" },
   // Q1 FY2026 (ended Sep 30, 2025): 929,548 LTC per 10-Q and dashboard
-  { date: "2025-09-30", holdings: 929548, sharesOutstandingDiluted: 35_655_155, holdingsPerShare: 0.02607, source: "Q1 FY2026 10-Q", sourceUrl: "https://www.litestrategy.com/dashboard/", sourceType: "company-website" },
+  { date: "2025-09-30", holdings: 929548, sharesOutstandingDiluted: 35_655_155, holdingsPerShare: 0.02607, source: "Q1 FY2026 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001262104&type=10-Q", sourceType: "sec-filing" },
+  // DEF 14A Record Date Dec 15, 2025: 36,769,677 shares (+1.1M since Sep 30)
+  { date: "2025-12-15", holdings: 929548, sharesOutstandingDiluted: 36_769_677, holdingsPerShare: 0.02528, source: "SEC DEF 14A Dec 30, 2025 - Record Date shares", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001262104&type=DEF%2014A", sourceType: "sec-filing" },
 ];
 
 // Cypherpunk Technologies (CYPH) - ZEC treasury, Winklevoss-backed
