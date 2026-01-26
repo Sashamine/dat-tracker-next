@@ -484,12 +484,15 @@ const CWD_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-11", holdings: 562535, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.02250, source: "75K LINK staked", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282", sourceType: "sec-filing" },
 ];
 
-// SUI Group (SUIG) - SUI treasury
+// SUI Group (SUIG) - SUI treasury (formerly Mill City Ventures)
+// NOTE: Jan 2026 8-K shows actual holdings of 108M SUI, correcting earlier estimates
 const SUIG_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-01", holdings: 45000000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 1.607, source: "SUI treasury announcement" },
   { date: "2024-12-31", holdings: 78000000, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 2.229, source: "Q4 2024 filing" },
   { date: "2025-06-30", holdings: 108000000, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 2.571, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 130000000, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 2.708, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 108098436, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 2.252, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355", sourceType: "sec-filing" },
+  // Jan 2026: Company reports 108,098,436 SUI and 80.9M "fully adjusted shares" (includes 7.8M buyback in Q4 2025)
+  { date: "2026-01-07", holdings: 108098436, sharesOutstandingDiluted: 80_900_000, holdingsPerShare: 1.336, source: "SEC 8-K Jan 8, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm", sourceType: "sec-filing" },
 ];
 
 // AVAX One (AVX) - AVAX treasury (formerly AgriFORCE, pivoted Nov 2025)

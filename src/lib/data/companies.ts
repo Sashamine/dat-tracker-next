@@ -1095,11 +1095,12 @@ export const suiCompanies: Company[] = [
     ticker: "SUIG",
     asset: "SUI",
     tier: 1,
-    holdings: 108_098_436,  // Updated Jan 2026
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://suig.io/investor-relations",
+    holdings: 108_098_436,  // Jan 7, 2026 8-K treasury update
+    holdingsLastUpdated: "2026-01-07",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
     datStartDate: "2025-08-01",
+    secCik: "1425355",
     costBasisAvg: 2.23,
     stakingPct: 1.0,
     stakingApy: 0.022,
@@ -1108,10 +1109,13 @@ export const suiCompanies: Company[] = [
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 160_000_000,
-    sharesForMnav: 48_000_000,  // From holdings-history.ts
+    sharesForMnav: 80_900_000,  // SEC 8-K Jan 8, 2026: "fully adjusted shares issued and outstanding as of January 7, 2026"
+    sharesAsOf: "2026-01-07",
+    sharesSource: "SEC 8-K Jan 8, 2026",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
     leader: "Douglas Polinsky (CEO)",
     strategy: "Only public company with Sui Foundation relationship",
-    notes: "Formerly Mill City Ventures. ~2.9% of SUI supply.",
+    notes: "Formerly Mill City Ventures. ~2.9% of SUI supply. Q4 2025: repurchased 7.8M shares.",
   },
 ];
 
