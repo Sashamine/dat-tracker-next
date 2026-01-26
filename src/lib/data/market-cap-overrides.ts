@@ -49,6 +49,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   // "BNC" removed - has sharesForMnav, calculated market cap is more accurate (~$243M not $500M)
 
   // === Smaller/OTC Companies with incorrect FMP data ===
+  "TRON": 434_000_000,        // $434M - Tron Inc (274M shares × ~$1.58, FMP stale pre-warrant)
   "SUIG": 150_000_000,        // $150M - SUI Group Holdings
   "AVX": 130_000_000,         // $130M - AVAX One Technology
   "FGNX": 110_000_000,        // $110M - FG Nexus
