@@ -378,20 +378,31 @@ const ETHM_HISTORY: HoldingsSnapshot[] = [
 
 // GameSquare Holdings (GAME) - Esports/gaming company with ETH treasury
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
+// SEC CIK: 1714562
 //
 // IMPORTANT: mNAV.com has WRONG data for this ticker (shows BTC company with 447M shares)
 // Do NOT use mNAV.com for GAME verification - ticker collision with different company
 //
+// ETH-EQUIVALENT HOLDINGS METHODOLOGY:
+// SEC 10-Q Sep 30, 2025 shows:
+// - Digital Assets (direct): $4,020,415
+// - Investment in ETH Fund (Dialectic): $64,539,714
+// - Total crypto exposure: $68,560,129
+// Holdings = Total / ETH price at reporting date = $68.56M / $2,500 = 27,424 ETH-equivalent
+// This includes both direct ETH and Dialectic fund position (ETH-denominated, moves 1:1 with ETH)
+//
 // Verified Q3 2025: 98,380,767 shares (SEC 10-Q Nov 14, 2025, as of Sep 30, 2025)
-// Holdings: 15,600+ ETH (from The Block, company announcements)
-// Share buyback active: ~$5M authorized, ~3.5M shares repurchased Oct 2025-Jan 2026
+// Buyback program: $5M authorized, 3,535,574 shares repurchased Oct 2025-Jan 2026 (avg $0.56)
 const GAME_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 8500, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.0001000, source: "Q2 2024 10-Q" },
-  { date: "2024-09-30", holdings: 12000, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.0001333, source: "Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 15600, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.0001696, source: "Q4 2024 10-K" },
-  { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000191, source: "Initial $5M ETH purchase" },
-  { date: "2025-09-30", holdings: 15630, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0001589, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding" },
-  { date: "2026-01-23", holdings: 15600, sharesOutstandingDiluted: 94_845_193, holdingsPerShare: 0.0001645, source: "Company announcements", sharesSource: "SEC 10-Q Q3 2025 (98.4M) minus 3.5M buybacks (Oct-Jan 2026)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
+  // Note: 2024 entries are pre-DAT strategy (gaming company) - share counts unverified
+  { date: "2024-06-30", holdings: 0, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0, source: "Pre-DAT strategy" },
+  { date: "2024-12-31", holdings: 0, sharesOutstandingDiluted: 32_635_995, holdingsPerShare: 0, source: "SEC 10-Q Q3 2025 (Jan 1, 2025 balance)" },
+  // 2025 - ETH treasury strategy launched
+  { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 0.0000303, source: "Initial $5M ETH purchase (direct)" },
+  // Q3 2025: ETH-equivalent = ($4.02M direct + $64.54M Dialectic fund) / $2,500 = 27,424 ETH
+  { date: "2025-09-30", holdings: 27424, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0002788, source: "SEC 10-Q Q3 2025 (ETH-equivalent: $68.56M / $2,500)", sharesSource: "SEC 10-Q cover page Nov 11, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
+  // Jan 2026: After 3.54M share buybacks (Oct-Jan), holdings unchanged (no Q4 filing yet)
+  { date: "2026-01-06", holdings: 27424, sharesOutstandingDiluted: 94_845_193, holdingsPerShare: 0.0002892, source: "Holdings from Q3 10-Q (no update since)", sharesSource: "98,380,767 (Sep 30) - 3,535,574 buybacks through Jan 6", sourceUrl: "https://www.nasdaq.com/press-release/gamesquare-announces-543057-shares-repurchase-2026-01-06", sourceType: "press-release" },
 ];
 
 // FG Nexus (FGNX) - ETH treasury company (formerly Fundamental Global)

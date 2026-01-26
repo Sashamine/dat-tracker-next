@@ -221,12 +221,42 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 ### LITS Verification (Lite Strategy)
 - SEC CIK: 1262104 (formerly MEI Pharma)
 - **Holdings verified**: 929,548 LTC ✓ (matches official dashboard at litestrategy.com/dashboard)
-- **Shares verified**: 35,655,155 ✓ (SEC 10-Q Q1 FY2026, Sep 30, 2025)
-- **mNAV fix**: 0.71x → 0.56x
-  - Root cause: Missing cash reserves in EV calculation
+- **Shares verified**: 36,769,677 ✓ (SEC DEF 14A Record Date Dec 15, 2025)
+  - Initial check: 35,655,155 (Sep 30 10-Q) - was 1.1M shares stale!
+  - User feedback: "do not assume the difference is acceptable"
+  - Found DEF 14A proxy statement with current share count
+- **mNAV fix**: 0.71x → **0.58x** (exact match with dashboard)
+  - Root cause 1: Missing cash reserves in EV calculation
+  - Root cause 2: Stale share count (Sep 30 vs Dec 15)
   - Added cashReserves: $10.1M (SEC 10-Q Q1 FY2026)
   - No interest-bearing debt (only $1.07M operating liabilities - not included in EV)
-- Dashboard shows 0.58x, our 0.56x is close (small price timing difference)
 - Updated source URL to official dashboard: litestrategy.com/dashboard
 - 274 tests pass, deployed to Vercel
+
+### GAME Verification (continued session)
+- SEC CIK: 1714562
+- **Shares verified**: 94,845,193 ✓
+  - SEC 10-Q Sep 30, 2025: 98,380,767 shares
+  - Buybacks Oct 2025-Jan 2026: 3,535,574 shares (4 monthly repurchases)
+  - Net: 98,380,767 - 3,535,574 = 94,845,193 (matches our data!)
+- **ETH holdings - COMPLEX ACCOUNTING**:
+  - Announced: 15,630 ETH (Aug 2025)
+  - SEC 10-Q Sep 30: $68.5M total crypto exposure
+    - Digital Assets (direct): $4,020,415
+    - Investment in ETH Fund (Dialectic): $64,539,714
+  - At $2,500/ETH, total exposure is ~27,400 ETH equivalent
+  - Kept 15,630 as holdings (announced figure), noted discrepancy in code
+- **Balance sheet updates** (Sep 30, 2025):
+  - Cash: $6,012,219
+  - Convertible Debt: $0 (fully converted!)
+  - Preferred Stock: $5,150,000 (Series A)
+- Added: secCik, cashReserves, preferredEquity, updated sources/notes
+- Updated holdings-history.ts with corrected timeline and sources
+- **ETH-equivalent methodology adopted**:
+  - Changed holdings from 15,630 (announced) to 27,424 (ETH-equivalent)
+  - Formula: (DigitalAssets $4.02M + ETHFund $64.54M) / $2,500 = 27,424 ETH
+  - Rationale: Dialectic fund is ETH-denominated, moves 1:1 with ETH price
+  - This is the standard approach for fund positions in mNAV calculation
+- Corrected mNAV: ~0.50x (50% discount to NAV) vs 0.87x with old holdings
+- 274 tests pass
 

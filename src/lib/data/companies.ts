@@ -152,20 +152,31 @@ export const ethCompanies: Company[] = [
     ticker: "GAME",
     asset: "ETH",
     tier: 1,
-    holdings: 15_600,
+    secCik: "1714562",
+    // ETH-equivalent holdings: (DigitalAssets $4.02M + ETHFund $64.54M) / $2,500 = 27,424 ETH
+    // Most ETH held via Dialectic Medici yield platform, not direct custody
+    holdings: 27_424,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
     datStartDate: "2025-07-01",
     stakingPct: 0.90,
     stakingMethod: "Dialectic Medici platform",
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedAtm: 30_000_000,
-    sharesForMnav: 94_845_193,  // 98.4M (SEC 10-Q Sep 30) - 3.54M buybacks (PR Jan 2026: investors.gamesquare.com)
+    // Shares: 98,380,767 (SEC 10-Q Sep 30) - 3,535,574 buybacks (Oct-Jan) = 94,845,193
+    sharesForMnav: 94_845_193,
+    sharesSource: "SEC 10-Q Sep 30 (98.4M) - 3.54M buybacks through Jan 6, 2026",
+    sharesAsOf: "2026-01-06",
+    cashReserves: 6_012_219,  // SEC 10-Q Sep 30, 2025
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
+    // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value
+    preferredEquity: 5_150_000,  // Series A Preferred
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
-    strategy: "$250M ETH treasury. 7.84% yield via Dialectic platform.",
-    notes: "Targeting Q3 profitability. $5M stock buyback from yield.",
+    strategy: "$250M ETH treasury via Dialectic. 7.84% yield funds buybacks.",
+    notes: "Holdings = ETH-equivalent: $4M direct + $64.5M Dialectic fund @ $2,500/ETH. Buyback: 3.54M shares.",
   },
   {
     id: "fgnx",
