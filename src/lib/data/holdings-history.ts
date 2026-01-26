@@ -728,19 +728,24 @@ const TWAV_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL LTC ====================
 
 // LUXFF (Luxxfolio) - Canadian LTC treasury, Charlie Lee advisor
-// CSE: LUXX | OTCQB: LUXFF | 1:10 reverse split Mar 21, 2025
-// NOTE: Prior share counts (150M-220M) were pre-split and never updated.
-// Post-split: ~8.7M shares, now ~27.1M after private placements.
+// CSE: LUXX | OTCQB: LUXFF | SEDAR+ Profile: 000044736
+// 1:10 reverse split Mar 21, 2025 | FY ends Aug 31
+// All share data verified from SEDAR+ audited filings (Dec 29, 2025 FY2025 annual)
 const LUXFF_HISTORY: HoldingsSnapshot[] = [
-  // Pre-split entries (converted to post-split equivalent for continuity)
-  { date: "2024-06-30", holdings: 5_000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.000333, source: "Initial LTC treasury (pre-split equivalent)" },
-  { date: "2024-12-31", holdings: 12_000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.000667, source: "FY 2024 annual (pre-split equivalent)" },
-  // Mar 21, 2025: 1:10 reverse split (87.3M → 8.7M shares)
-  { date: "2025-03-21", holdings: 12_000, sharesOutstandingDiluted: 8_700_000, holdingsPerShare: 0.001379, source: "1:10 reverse split", sharesSource: "CSE Bulletin 2025-0319", sourceUrl: "https://thecse.com/bulletin/2025-0319-consolidation-luxxfolio-holdings-inc-luxx/", sourceType: "regulatory-filing" },
-  // Jul 17, 2025: Corporate update - 20,084 LTC, 75,539 litoshis/share
-  { date: "2025-07-17", holdings: 20_084, sharesOutstandingDiluted: 26_600_000, holdingsPerShare: 0.000755, source: "Corporate update press release", sharesSource: "Calculated from 75,539 litoshis/share", sourceUrl: "https://www.luxxfolio.com/luxxfolio-provides-corporate-update-increase-in-litecoin-treasury/", sourceType: "press-release" },
-  // Jan 2026: CSE official listing shows 27.1M shares
-  { date: "2026-01-26", holdings: 20_084, sharesOutstandingDiluted: 27_113_164, holdingsPerShare: 0.000741, source: "CSE official listing", sharesSource: "CSE listing page", sourceUrl: "https://thecse.com/listings/luxxfolio-holdings-inc/", sourceType: "regulatory-filing" },
+  // FY2024 audited annual (no LTC yet, 8.67M shares pre-split equivalent)
+  { date: "2024-08-31", holdings: 0, sharesOutstandingDiluted: 8_671_794, holdingsPerShare: 0, source: "SEDAR+ FY2024 audited annual (no LTC yet)", sharesSource: "SEDAR+ Note 8", sourceType: "regulatory-filing" },
+  // Mar 21, 2025: 1:10 reverse split - same shares, 10x consolidation already reflected
+  { date: "2025-03-21", holdings: 0, sharesOutstandingDiluted: 8_671_797, holdingsPerShare: 0, source: "1:10 reverse split", sharesSource: "SEDAR+ FY2025 Note 8 (consolidation adjustment +3 shares)", sourceUrl: "https://thecse.com/bulletin/2025-0319-consolidation-luxxfolio-holdings-inc-luxx/", sourceType: "regulatory-filing" },
+  // Mar 25, 2025: Private placement - 7.76M shares @ $0.15 CAD
+  { date: "2025-03-25", holdings: 0, sharesOutstandingDiluted: 16_430_164, holdingsPerShare: 0, source: "Mar 2025 private placement (pre-LTC)", sharesSource: "SEDAR+ Note 8b: +7,758,367 shares", sourceType: "regulatory-filing" },
+  // May 31, 2025: Q3 FY2025 interim - 5,436 LTC, 16.59M shares (post 500K option exercise)
+  { date: "2025-05-31", holdings: 5_436, sharesOutstandingDiluted: 16_590_161, holdingsPerShare: 0.000328, source: "SEDAR+ Q3 FY2025 interim - Note 5 Digital Assets", sharesSource: "SEDAR+ Note 8: 16,590,161 shares", sourceType: "regulatory-filing" },
+  // Jul 14, 2025: Private placement - 10M units @ $0.25 CAD (1 share + 0.5 warrant)
+  { date: "2025-07-14", holdings: 20_226, sharesOutstandingDiluted: 26_590_161, holdingsPerShare: 0.000760, source: "Major LTC purchase + Jul private placement", sharesSource: "SEDAR+ Note 8b: +10,000,000 shares", sourceType: "regulatory-filing" },
+  // Aug 31, 2025: FY2025 audited annual - 20,226 LTC (Note 5), 26.93M shares (Note 8)
+  { date: "2025-08-31", holdings: 20_226, sharesOutstandingDiluted: 26_930_164, holdingsPerShare: 0.000751, source: "SEDAR+ FY2025 audited annual - Note 5: 20,226 LTC", sharesSource: "SEDAR+ FY2025 Note 8 (26,930,164 shares)", sourceUrl: "https://www.sedarplus.ca", sourceType: "regulatory-filing" },
+  // Dec 9, 2025: Private placement - 4.624M units @ $0.17 CAD (1 share + 1 warrant)
+  { date: "2025-12-09", holdings: 20_226, sharesOutstandingDiluted: 31_554_164, holdingsPerShare: 0.000641, source: "SEDAR+ FY2025 Note 12: Dec 9 placement", sharesSource: "SEDAR+ Note 12: +4,624,000 shares", sourceType: "regulatory-filing" },
 ];
 
 // ==================== HBAR COMPANIES ====================

@@ -251,6 +251,86 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "Strategic Advisor warrants (Gresham Worldwide LLC) at $1.33 strike",
     },
   ],
+
+  // LUXFF (Luxxfolio Holdings) - Canadian LTC treasury company
+  // CSE: LUXX | OTCQB: LUXFF | SEDAR+ Profile: 000044736
+  // All prices in USD (converted from CAD at ~0.71 USD/CAD)
+  // Verified 2026-01-26 via SEDAR+ FY2025 audited annual (Dec 29, 2025)
+  // ALL instruments are OUT of the money at current ~CAD $0.07 (~USD $0.05) stock price
+  LUXFF: [
+    // === Warrants from Jul 14, 2025 Private Placement (Note 8c) ===
+    {
+      type: "warrant",
+      strikePrice: 0.36, // CAD $0.50 × 0.71 = USD $0.355
+      potentialShares: 5_000_000,
+      source: "SEDAR+ FY2025 Note 8c",
+      sourceUrl: "https://www.sedarplus.ca",
+      expiration: "2027-07-14",
+      notes: "Jul 2025 placement: 10M units (1 share + 0.5 warrant) @ CAD $0.25. Warrants at CAD $0.50.",
+    },
+    // === Finder's Warrants from Mar 2025 Placement (Note 8d) ===
+    {
+      type: "warrant",
+      strikePrice: 0.11, // CAD $0.15 × 0.71 = USD $0.107 - LOWEST STRIKE
+      potentialShares: 406_119,
+      source: "SEDAR+ FY2025 Note 8d",
+      sourceUrl: "https://www.sedarplus.ca",
+      expiration: "2027-03-25",
+      notes: "Mar 2025 placement finder's warrants at CAD $0.15 - lowest strike but still OTM",
+    },
+    // === Finder's Warrants from Jul 2025 Placement (Note 8d) ===
+    {
+      type: "warrant",
+      strikePrice: 0.36, // CAD $0.50 × 0.71 = USD $0.355
+      potentialShares: 570_276,
+      source: "SEDAR+ FY2025 Note 8d",
+      sourceUrl: "https://www.sedarplus.ca",
+      expiration: "2027-07-14",
+      notes: "Jul 2025 placement finder's warrants at CAD $0.50",
+    },
+    // === Stock Options (Note 8d) ===
+    {
+      type: "option",
+      strikePrice: 0.21, // CAD $0.30 weighted avg × 0.71 = USD $0.213
+      potentialShares: 1_727_000,
+      source: "SEDAR+ FY2025 Note 8d",
+      sourceUrl: "https://www.sedarplus.ca",
+      notes: "Stock options outstanding Aug 31, 2025 (weighted avg CAD $0.30, range $0.25-$0.40)",
+    },
+    // === Subsequent Events - Oct 2025 Option Grants (Note 12) ===
+    {
+      type: "option",
+      strikePrice: 0.28, // CAD $0.40 × 0.71 = USD $0.284
+      potentialShares: 1_500_000,
+      source: "SEDAR+ FY2025 Note 12",
+      sourceUrl: "https://www.sedarplus.ca",
+      expiration: "2030-10-14",
+      notes: "Oct 2025: 500K to director (Oct 1) + 1M to consultants (Oct 14) at CAD $0.40",
+    },
+    // === Subsequent Events - Dec 9, 2025 Private Placement Warrants (Note 12) ===
+    {
+      type: "warrant",
+      strikePrice: 0.25, // CAD $0.35 × 0.71 = USD $0.249
+      potentialShares: 4_624_000,
+      source: "SEDAR+ FY2025 Note 12",
+      sourceUrl: "https://www.sedarplus.ca",
+      expiration: "2027-12-09",
+      notes: "Dec 9, 2025 placement: 4.624M units @ CAD $0.17 (1 share + 1 warrant). Warrants at CAD $0.35.",
+    },
+    // === Subsequent Events - Dec 9, 2025 Finder's Warrants (Note 12) ===
+    {
+      type: "warrant",
+      strikePrice: 0.25, // CAD $0.35 × 0.71 = USD $0.249
+      potentialShares: 313_796,
+      source: "SEDAR+ FY2025 Note 12",
+      sourceUrl: "https://www.sedarplus.ca",
+      expiration: "2027-12-09",
+      notes: "Dec 9, 2025 placement finder's warrants at CAD $0.35",
+    },
+  ],
+  // Total LUXFF dilutive instruments: 14,141,191 potential shares
+  // All OUT of the money at current ~USD $0.05 stock price
+  // Lowest strike: CAD $0.15 (USD $0.11) - still 2x+ current price
 };
 
 /**

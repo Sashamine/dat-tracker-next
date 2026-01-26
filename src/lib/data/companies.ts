@@ -1167,24 +1167,26 @@ export const ltcCompanies: Company[] = [
     ticker: "LUXFF",
     asset: "LTC",
     tier: 2,
-    holdings: 20_084,  // Jul 17, 2025 corporate update
-    holdingsLastUpdated: "2025-07-17",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.luxxfolio.com/luxxfolio-provides-corporate-update-increase-in-litecoin-treasury/",
+    holdings: 20_226,  // SEDAR+ FY2025 audited annual (Aug 31, 2025)
+    holdingsLastUpdated: "2025-08-31",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
     datStartDate: "2024-06-01",
     costBasisAvg: 80.00,
     stakingPct: 0.042,
     stakingApy: 0.03,
     quarterlyBurnUsd: 200_000,
     capitalRaisedAtm: 100_000_000,
-    capitalRaisedPipe: 2_500_000,
+    capitalRaisedPipe: 3_286_080,  // $2.5M Jul 2025 + $786K Dec 2025
     avgDailyVolume: 500_000,
-    sharesForMnav: 27_113_164,  // CSE official listing page (post 1:10 reverse split Mar 2025)
-    sharesAsOf: "2026-01-26",
-    sharesSource: "CSE official listing: thecse.com/listings/luxxfolio-holdings-inc/",
+    // SEDAR+ profile: 000044736 (for automated lookups)
+    // Dec 9, 2025: 26,930,164 (Aug 31) + 4,624,000 (Dec placement) = 31,554,164
+    sharesForMnav: 31_554_164,  // SEDAR+ FY2025 + Dec 9, 2025 private placement
+    sharesAsOf: "2025-12-09",
+    sharesSource: "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
     leader: "Tomek Antoniak (CEO)",
     strategy: "Target 1M LTC by 2026. Validator operations.",
-    notes: "Canadian (CSE: LUXX). Charlie Lee + David Schwartz on advisory. 1:10 reverse split Mar 21, 2025.",
+    notes: "Canadian (CSE: LUXX). Charlie Lee + David Schwartz on advisory. 1:10 reverse split Mar 21, 2025. All dilutive instruments (14.1M) OTM at current price.",
   },
 ];
 
