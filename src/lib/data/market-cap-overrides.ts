@@ -66,7 +66,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   // International (price in local currency for display, marketCap in USD)
   "3350.T": { price: 548, marketCap: 4_010_000_000 },      // Metaplanet (JPY) - 1.142B shares × 548 JPY ÷ 156
   "0434.HK": { price: 1.50, marketCap: 500_000_000 },      // Boyaa Interactive (HKD)
-  "ALTBG": { price: 0.50, marketCap: 200_000_000 },        // Blockchain Group (EUR)
+  "ALTBG": { price: 0.77, marketCap: 175_000_000 },        // Capital B / Blockchain Group (EUR, Euronext Paris)
   "H100.ST": { price: 0.10, marketCap: 150_000_000 },      // H100 Group (SEK)
 
   // SPACs/Pre-merger (limited data availability)
