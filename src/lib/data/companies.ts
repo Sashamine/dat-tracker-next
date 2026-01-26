@@ -1210,22 +1210,6 @@ export const avaxCompanies: Company[] = [
     secCik: "1826397",
     strategy: "Regulated AVAX exposure for US capital markets.",
     notes: "Nasdaq listed. $40M share repurchase program. Hivemind asset manager.",
-    dataWarnings: [
-      {
-        type: "share-change",
-        message: "S-3 shelf effective Jan 20 - can issue shares at any time",
-        filingDate: "2026-01-20",
-        filingUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1826397&type=S-3",
-        severity: "warning",
-      },
-      {
-        type: "share-change",
-        message: "6.1M pre-funded warrants outstanding (exercisable anytime)",
-        filingDate: "2025-11-05",
-        filingUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
-        severity: "info",
-      },
-    ],
   },
 ];
 
