@@ -28,7 +28,7 @@ const NON_USD_TICKERS = new Set([
   "3350.T",    // Metaplanet - JPY (Tokyo Stock Exchange)
   "0434.HK",   // Boyaa Interactive - HKD (Hong Kong)
   "H100.ST",   // Hashdex - SEK (Stockholm)
-  "ALTBG",     // Cathedra Bitcoin - CAD (TSX Venture)
+  "ALTBG",     // Capital B (The Blockchain Group) - EUR (Euronext Paris)
 ]);
 
 // Currency codes for logging/display
@@ -36,7 +36,7 @@ const TICKER_CURRENCIES: Record<string, string> = {
   "3350.T": "JPY",
   "0434.HK": "HKD",
   "H100.ST": "SEK",
-  "ALTBG": "CAD",
+  "ALTBG": "EUR",
 };
 
 export interface StockPriceData {
