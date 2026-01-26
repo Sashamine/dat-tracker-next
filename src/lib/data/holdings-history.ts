@@ -206,15 +206,19 @@ const BTBT_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== SOL COMPANIES ====================
 
-// Sol Strategies (STKE.CA) - Canadian SOL treasury
+// Sol Strategies (STKE) - Canadian SOL treasury, NASDAQ listed Sep 2025
+// NOTE: 1:8 reverse stock split effective Aug 5, 2025. Share counts below are POST-SPLIT equivalents.
+// SEC CIK: 1846839 (files 6-K, 40-F as foreign private issuer)
 const STKE_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 85000, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.001889, source: "Q2 2024" },
-  { date: "2024-09-30", holdings: 142000, sharesOutstandingDiluted: 52_000_000, holdingsPerShare: 0.002731, source: "Q3 2024" },
-  { date: "2024-12-31", holdings: 189000, sharesOutstandingDiluted: 65_000_000, holdingsPerShare: 0.002908, source: "Q4 2024 SEDAR+" },
-  { date: "2025-03-31", holdings: 245000, sharesOutstandingDiluted: 75_000_000, holdingsPerShare: 0.003267, source: "Q1 2025 SEDAR+" },
-  { date: "2025-06-30", holdings: 310000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.003647, source: "Q2 2025 SEDAR+" },
-  { date: "2025-09-30", holdings: 435159, sharesOutstandingDiluted: 115_000_000, holdingsPerShare: 0.003784, source: "FY 2025 annual" },
-  { date: "2026-01-06", holdings: 523134, sharesOutstandingDiluted: 135_000_000, holdingsPerShare: 0.003875, source: "Dec 2025 monthly update", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839", sourceType: "sec-filing" },
+  // Pre-split entries (shares shown as post-split equivalent for consistent SOL/share comparison)
+  { date: "2024-06-30", holdings: 85_000, sharesOutstandingDiluted: 5_625_000, holdingsPerShare: 0.01511, source: "Q2 2024 (pre-split: 45M shares)" },
+  { date: "2024-09-30", holdings: 142_000, sharesOutstandingDiluted: 6_500_000, holdingsPerShare: 0.02185, source: "Q3 2024 (pre-split: 52M shares)" },
+  { date: "2024-12-31", holdings: 189_000, sharesOutstandingDiluted: 8_125_000, holdingsPerShare: 0.02326, source: "Q4 2024 SEDAR+ (pre-split: 65M shares)" },
+  { date: "2025-03-31", holdings: 245_000, sharesOutstandingDiluted: 9_375_000, holdingsPerShare: 0.02613, source: "Q1 2025 SEDAR+ (pre-split: 75M shares)" },
+  { date: "2025-06-30", holdings: 310_000, sharesOutstandingDiluted: 10_625_000, holdingsPerShare: 0.02918, source: "Q2 2025 SEDAR+ (pre-split: 85M shares)" },
+  // Post 1:8 reverse split (Aug 5, 2025 for NASDAQ listing)
+  { date: "2025-09-30", holdings: 435_159, sharesOutstandingDiluted: 22_999_841, holdingsPerShare: 0.01892, source: "SEC 40-F FY2025 annual report", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839&type=40-F", sourceType: "sec-filing" },
+  { date: "2026-01-06", holdings: 523_134, sharesOutstandingDiluted: 25_300_567, holdingsPerShare: 0.02067, source: "Dec 2025 monthly update + Jan 7 credit facility conversion (2.3M shares)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update", sourceType: "company-website" },
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025

@@ -762,21 +762,23 @@ export const solCompanies: Company[] = [
     ticker: "STKE",
     asset: "SOL",
     tier: 2,
-    holdings: 526_637,
-    holdingsLastUpdated: "2025-09-30",
+    secCik: "1846839",
+    holdings: 523_134,  // 426,619 direct + 96,515 via jitoSOL (Dec 2025 monthly update)
+    holdingsLastUpdated: "2026-01-06",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://solstrategies.io/investor-relations/",
+    holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update",
     datStartDate: "2024-06-01",
     costBasisAvg: 130.00,
     stakingPct: 0.85,
     stakingApy: 0.065,
     quarterlyBurnUsd: 1_200_000,
     capitalRaisedAtm: 50_000_000,
-    sharesForMnav: 135_000_000,  // From holdings-history.ts
+    sharesForMnav: 25_300_567,  // Post 1:8 reverse split (Aug 2025): 22,999,841 (40-F) + 2,300,726 (Jan 7 credit facility)
+    sharesSource: "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
     avgDailyVolume: 50_000_000,
-    leader: "Canadian company",
-    strategy: "Validator operations, VanEck staking provider",
-    notes: "3.7M SOL delegated.",
+    leader: "Leah Wald (CEO)",
+    strategy: "Validator operations, VanEck staking provider, STKESOL LST",
+    notes: "3.35M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ listing.",
   },
 ];
 

@@ -204,5 +204,17 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
   - Placement Agent warrants: 5.25M shares at $1.33
   - All OUT of the money at ~$0.41 stock price (strikes $1.00-$1.33)
   - Will be included in diluted count if stock rises above strike prices
+
+### STKE Verification (continued session)
+- SEC CIK: 1846839 (Canadian foreign private issuer, files 6-K, 40-F)
+- **Critical error found**: 1:8 reverse stock split (Aug 5, 2025) was never applied
+- **Fixed sharesForMnav**: 135M → 25.3M (6x error!)
+  - 40-F FY2025: 22,999,841 shares as of Sep 30, 2025
+  - Jan 7, 2026: +2,300,726 shares from credit facility conversion
+- **Fixed holdings**: 526,637 → 523,134 SOL (Dec 2025 monthly update)
+  - 426,619 direct SOL + 96,515 via jitoSOL
+- Updated holdings-history.ts with post-split equivalent share counts
+- Updated leader: "Canadian company" → "Leah Wald (CEO)"
+- Notes: 3.35M SOL AuD, STKESOL LST launched Jan 20, 2026
 - 274 tests pass
 
