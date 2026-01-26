@@ -226,10 +226,10 @@ export const btcCompanies: Company[] = [
     ticker: "MSTR",
     asset: "BTC",
     tier: 1,
-    holdings: 709_715,  // strategy.com + mNAV.com Jan 21, 2026
-    holdingsLastUpdated: "2026-01-21",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.strategy.com/",
+    holdings: 712_647,  // SEC 8-K Jan 26, 2026 (+2,932 BTC Jan 20-25)
+    holdingsLastUpdated: "2026-01-26",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
@@ -241,7 +241,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 362_606_000,  // mNAV.com fully diluted shares Jan 21, 2026
+    sharesForMnav: 364_176_000,  // 362.6M (Jan 19) + 1.57M ATM (Jan 20-25) per SEC 8-K Jan 26
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     // Debt: ~$7.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032), down from $10B after redemptions
     totalDebt: 8_200_000_000,  // $8.2B after note redemptions (Q4 2025)
@@ -251,11 +251,11 @@ export const btcCompanies: Company[] = [
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
     cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
     restrictedCash: 2_250_000_000,  // Debt service reserves - not excess
-    cashSource: "mNAV.com",
-    cashAsOf: "2026-01-21",
+    cashSource: "SEC 8-K Jan 5, 2026 (USD Reserve)",
+    cashAsOf: "2026-01-04",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
-    notes: "709K BTC @ $75K avg. STRK/STRF 8% perpetual preferred. Bitcoin credit company thesis.",
+    notes: "712K BTC @ $75K avg. STRK/STRF/STRC/STRD perpetual preferred. Bitcoin credit company thesis.",
     leverageRatio: 1.5, // ~$21B debt provides leveraged BTC exposure via converts
   },
   {
