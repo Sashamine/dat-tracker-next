@@ -36,7 +36,7 @@ import {
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
@@ -175,7 +175,7 @@ export default function CompanyPage() {
   const stockData = prices?.stocks[displayCompany.ticker];
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
-  const { marketCap } = getMarketCap(displayCompany, stockData);
+  const { marketCap } = getMarketCapForMnavSync(displayCompany, stockData, prices?.forex);
 
   // Other assets (cash + investments)
   const cashReserves = displayCompany.cashReserves || 0;
