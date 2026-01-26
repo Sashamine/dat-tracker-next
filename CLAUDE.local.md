@@ -187,14 +187,17 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 
 ### ZONE Verification (CleanCore Solutions)
 - SEC CIK: 1956741
-- **Updated holdings**: 710M → 733,100,000 DOGE (Nov 12, 2025 press release)
-- **Updated shares**: 60M → 73.6M (estimated from Dec 17, 2025 annual meeting votes)
-- Added cashReserves: $12.9M (Sep 30, 2025 10-Q)
-- Added secCik, proper source URLs
-- Historical verification:
-  - Sep 30, 2025 10-Q: 703,617,752 DOGE at $163.8M fair value
-  - Nov 12, 2025: 733.1M DOGE (Q1 FY2026 results)
-- ZONE is the "Official Dogecoin Treasury" - separate from TBH
-- ZONE holds DOGE directly; TBH/House of Doge is merging
+- **Verified from 10-Q Q1 FY2026** (not press release):
+  - Sep 30, 2025: 703,617,752 DOGE at $163.8M fair value
+  - Sep 30, 2025: 186,598,270 shares (massive dilution from warrant exercises)
+  - Nov 10, 2025: 201,309,022 shares (10-Q cover page)
+- **Critical correction**: Prior share counts were fabricated (35M→60M)
+  - Actual dilution: 11.8M → 186.6M shares in Q1 FY2026
+  - 164M shares from warrant exercises alone
+- Holdings 733.1M from press release (Nov 12) - not SEC-verified
+- Added cashReserves: $12.9M
+- User challenged: "Was there an unregistered equity sale?" - good catch!
+  - Most dilution was registered (warrant exercises, ATM offering)
+  - Some debt-to-equity conversions may have been Item 3.02
 - 274 tests pass
 

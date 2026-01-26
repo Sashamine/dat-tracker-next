@@ -515,16 +515,18 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation
+// MASSIVE DILUTION in Sep 2025: 11.8M → 186.6M shares (warrant exercises + ATM)
+// Prior history entries had fabricated share counts; rewritten with SEC-verified data
 const ZONE_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-09-08", holdings: 285420000, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 8.155, source: "Treasury launch" },
-  { date: "2025-09-11", holdings: 500000000, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 11.905, source: "500M DOGE milestone" },
-  { date: "2025-09-16", holdings: 600000000, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 12.500, source: "Press release" },
-  { date: "2025-09-30", holdings: 703617752, sharesOutstandingDiluted: 52_000_000, holdingsPerShare: 13.531, source: "Q1 FY2026 10-Q" },
-  { date: "2025-10-06", holdings: 710000000, sharesOutstandingDiluted: 55_000_000, holdingsPerShare: 12.909, source: "Press release" },
-  { date: "2025-10-13", holdings: 730000000, sharesOutstandingDiluted: 58_000_000, holdingsPerShare: 12.586, source: "Press release" },
-  { date: "2025-11-12", holdings: 733100000, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 12.218, source: "Q1 FY2026 results", sourceUrl: "https://www.globenewswire.com/news-release/2025/11/13/3187485/0/en/CleanCore-Solutions-Reports-Fiscal-First-Quarter-2026-Financial-Results-and-Provides-Update-on-its-DOGE-Treasury-Strategy.html", sourceType: "press-release" },
-  // Dec 17, 2025 annual meeting: ~73.6M votes cast, implies share dilution since Nov
-  { date: "2025-12-17", holdings: 733100000, sharesOutstandingDiluted: 73_600_000, holdingsPerShare: 9.961, source: "Annual meeting 8-K voting results", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-123866-index.html", sourceType: "sec-filing" },
+  // Pre-treasury: ~11.8M shares (Class A + B) per 10-Q
+  { date: "2025-06-30", holdings: 0, sharesOutstandingDiluted: 11_837_022, holdingsPerShare: 0, source: "SEC 10-Q Q1 FY2026 - pre-treasury baseline", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-109642-index.html", sourceType: "sec-filing" },
+  // Sep 5, 2025: Treasury strategy launched, 175M pre-funded warrants issued
+  // Sep 2025: Rapid DOGE accumulation + warrant exercises (164M shares from warrants)
+  // Shares grew from 11.8M to 186.6M during Q1 FY2026
+  { date: "2025-09-30", holdings: 703_617_752, sharesOutstandingDiluted: 186_598_270, holdingsPerShare: 3.770, source: "SEC 10-Q Q1 FY2026 - digital assets $163.8M fair value", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-109642-index.html", sourceType: "sec-filing" },
+  // Nov 10, 2025: Additional share issuance (201.3M per 10-Q cover page)
+  // DOGE holdings from press release (733.1M as of Nov 12) - not SEC-verified
+  { date: "2025-11-10", holdings: 733_100_000, sharesOutstandingDiluted: 201_309_022, holdingsPerShare: 3.642, source: "10-Q cover page (shares); press release Nov 13 (DOGE)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-109642-index.html", sourceType: "sec-filing" },
 ];
 
 // Brag House (TBH) - pending merger with House of Doge

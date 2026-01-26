@@ -1163,9 +1163,9 @@ export const dogeCompanies: Company[] = [
     cashSource: "SEC 10-Q Q1 FY2026",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Minimal liabilities per 10-Q
-    sharesForMnav: 73_600_000,  // Estimated from Dec 17, 2025 annual meeting votes
-    sharesSource: "Dec 17, 2025 8-K voting results (~73.6M votes cast)",
-    sharesAsOf: "2025-12-17",
+    sharesForMnav: 201_309_022,  // SEC 10-Q Q1 FY2026 cover page (Nov 10, 2025)
+    sharesSource: "SEC 10-Q Q1 FY2026 cover page",
+    sharesAsOf: "2025-11-10",
     leader: "Clayton Adams (CEO)",
     strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
     notes: "NYSE American. Q1 FY2026: 703.6M DOGE at $163.8M fair value. Partnership with House of Doge, 21Shares, Robinhood.",
