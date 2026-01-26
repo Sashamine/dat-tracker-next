@@ -982,9 +982,9 @@ export const taoCompanies: Company[] = [
     stakingApy: 0.10,
     quarterlyBurnUsd: 400_000,
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
-    sharesForMnav: 37_831_285,  // 28,352,195 shares + 9,479,090 pre-funded warrants (auto-convert)
-    sharesAsOf: "2025-11-25",
-    sharesSource: "MD&A Jun 30, 2025 + Off the Chain warrants Nov 13, 2025",
+    sharesForMnav: 38_031_285,  // 28,552,195 shares + 9,479,090 pre-funded warrants (auto-convert)
+    sharesAsOf: "2025-09-30",
+    sharesSource: "SEDAR+ MD&A Sep 30, 2025 (page 11: shares, page 5: warrants)",
     lowLiquidity: true,  // Canadian OTC - limited data feed coverage
     leader: "Karia Samaroo",
     strategy: "Validator operations and TAO treasury accumulation",

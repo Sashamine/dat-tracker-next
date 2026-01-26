@@ -472,11 +472,14 @@ const TAOX_HISTORY: HoldingsSnapshot[] = [
 // Canadian company: files MD&A on SEDAR+. Pre-funded warrants included as they auto-convert.
 const XTAIF_HISTORY: HoldingsSnapshot[] = [
   // Jul 30, 2025: IPO holdings update - "world's largest publicly traded TAO holder"
-  // Shares: 28,352,195 per Jun 30, 2025 MD&A (excludes 1.87M options at $1.00 - out of money)
-  { date: "2025-07-30", holdings: 41_538, sharesOutstandingDiluted: 28_352_195, holdingsPerShare: 0.001465, source: "Press release - IPO holdings update", sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-becomes-largest-publicly-traded-holder-of-tao-821903608.html", sourceType: "press-release" },
-  // Nov 25, 2025: Post Off the Chain $7.3M investment (9,479,090 pre-funded warrants at $0.77)
-  // Shares: 28,352,195 + 9,479,090 warrants = 37,831,285
-  { date: "2025-11-25", holdings: 59_962, sharesOutstandingDiluted: 37_831_285, holdingsPerShare: 0.001585, source: "Press release - post Off the Chain investment", sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html", sourceType: "press-release" },
+  // Shares: 28,552,195 per SEDAR+ MD&A Sep 30, 2025 (excludes 1.87M options at $1.00 - out of money)
+  { date: "2025-07-30", holdings: 41_538, sharesOutstandingDiluted: 28_552_195, holdingsPerShare: 0.001456, source: "Press release - IPO holdings update", sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-becomes-largest-publicly-traded-holder-of-tao-821903608.html", sourceType: "press-release" },
+  // Sep 30, 2025: SEDAR+ MD&A Q2 FY2026 - verified basic shares and pre-funded warrants
+  // Basic: 28,552,195 shares + 9,479,090 pre-funded warrants = 38,031,285 total
+  // (excludes 1,870,000 options at $1.00 strike - out of money at ~$0.50 stock price)
+  { date: "2025-09-30", holdings: 42_051, sharesOutstandingDiluted: 38_031_285, holdingsPerShare: 0.001106, source: "SEDAR+ MD&A Sep 30, 2025", sourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=bce08f41b82e9bffee81e3870b8f8700acf68ad0268d0c3ff2b9eb0dea7e2e3c", sourceType: "regulatory-filing" },
+  // Nov 25, 2025: Holdings update (post Off the Chain $7.3M investment)
+  { date: "2025-11-25", holdings: 59_962, sharesOutstandingDiluted: 38_031_285, holdingsPerShare: 0.001577, source: "Press release - post Off the Chain investment", sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html", sourceType: "press-release" },
 ];
 
 // Lite Strategy (LITS) - LTC treasury
