@@ -850,20 +850,24 @@ export const bnbCompanies: Company[] = [
     ticker: "NA",
     asset: "BNB",
     tier: 2,
-    holdings: 130_000,  // Updated Jan 2026
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://ir.nano.cn/",
+    holdings: 130_000,  // Dec 31, 2025 6-K: "over 130,000 BNB"
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
     datStartDate: "2025-06-01",
+    secCik: "1872302",
     costBasisAvg: 600.00,
     stakingPct: 0.30,
     stakingApy: 0.03,
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
-    totalDebt: 500_000_000,  // $500M convertible notes
-    leader: "Hong Kong Web3 infrastructure",
-    strategy: "BNB treasury via convertible notes",
-    notes: "$500M convertible notes Jun 2025.",
+    totalDebt: 500_000_000,  // $500M convertible notes (360-day maturity, 0% interest)
+    sharesForMnav: 20_700_000,  // ~20.7M Class A shares (companiesmarketcap.com Jan 2026)
+    sharesSource: "companiesmarketcap.com",
+    sharesAsOf: "2026-01-01",
+    leader: "Jianping Kong (CEO)",
+    strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
+    notes: "Also holds 1,000 BTC (~$87M) as passive reserve (received via convertible deal). $25M buyback authorized.",
   },
 ];
 

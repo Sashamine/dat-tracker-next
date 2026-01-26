@@ -632,11 +632,14 @@ const BNC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-12", holdings: 512000, sharesOutstandingDiluted: 44_062_938, holdingsPerShare: 11.620, source: "FY Q2 2026 10-Q", sharesSource: "SEC 10-Q Dec 12, 2025" },
 ];
 
-// Nano Labs (NA) - Hong Kong Web3 infrastructure, BNB treasury
+// Nano Labs (NA) - Hong Kong Web3 infrastructure, BNB treasury (also holds 1,000 BTC passive)
+// Foreign issuer - files 6-K (not 8-K/10-Q) and 20-F (not 10-K)
+// TODO BACKFILL: Historical share counts need verification from 20-F filings. Current ~20.7M per companiesmarketcap.
+//   SEC CIK: 1872302 | Search: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K
 const NA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-06-30", holdings: 50000, sharesOutstandingDiluted: 85_000_000, holdingsPerShare: 0.588, source: "Initial BNB purchase" },
-  { date: "2025-09-30", holdings: 90000, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.947, source: "Q3 2025 filing" },
-  { date: "2025-12-31", holdings: 130000, sharesOutstandingDiluted: 105_000_000, holdingsPerShare: 1.238, source: "Q4 2025 filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001872302&type=10-K", sourceType: "sec-filing" },
+  { date: "2025-07-04", holdings: 74_315, sharesOutstandingDiluted: 17_000_000, holdingsPerShare: 4.371, source: "Initial $50M BNB purchase", sourceUrl: "https://www.coindesk.com/markets/2025/07/04/nano-labs-buys-50m-in-bnb-in-1b-plan-to-hold-up-to-10-of-supply", sourceType: "press-release" },
+  { date: "2025-07-28", holdings: 128_000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 7.111, source: "128K BNB milestone", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/28/3122289/0/en/Nano-Labs-Further-Increases-BNB-Holdings-to-128-000-Tokens-Expanding-Strategic-Reserve-to-Over-US-100-Million-and-Upgrading-BNB-Reserve-Strategy.html", sourceType: "press-release" },
+  { date: "2025-12-31", holdings: 130_000, sharesOutstandingDiluted: 20_700_000, holdingsPerShare: 6.280, source: "SEC 6-K Dec 31, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K", sourceType: "sec-filing" },
 ];
 
 // ==================== ADDITIONAL BTC ====================
