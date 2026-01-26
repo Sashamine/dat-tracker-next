@@ -1,12 +1,45 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-01-22
-> **Current Phase**: 7d - Manual Review Process
-> **Status**: Phase 7a, 7b, 7c complete. Discrepancies review page built. Phase 7d partially complete.
+> **Last Updated**: 2026-01-25
+> **Current Phase**: 8d - Populate Dilutive Instruments
+> **Status**: Phase 7a-7c complete. Phase 8a-8c complete. AMF API integrated for French companies.
 
 ---
 
 ## RESUME HERE
+
+**Session 2026-01-25:**
+
+### Dilutive Instruments Complete (Phase 8a-8c)
+
+Created `src/lib/data/dilutive-instruments.ts`:
+- Tracks convertibles, options, warrants with strike prices and provenance
+- `getEffectiveShares()` calculates dilution based on current stock price
+- Integrated into `market-cap.ts` for dynamic mNAV calculation
+- BTCS and UPXI instruments populated with SEC filing sources
+
+### AMF API Integration
+
+Created `src/lib/fetchers/amf.ts` for French regulatory filings:
+- API: `https://dilaamf.opendatasoft.com/api/v2/` (OpenDataSoft)
+- Query by ISIN (Capital B: FR0011053636)
+- Parses filing titles to extract BTC holdings
+- Returns filing date, holdings, PDF URL
+
+### ALTBG (Capital B) Data Fixed
+
+Major corrections from AMF + mNAV.com verification:
+- Holdings: 2,201 → 2,823 BTC (Nov 25, 2025 AMF filing)
+- Shares: 50M → 227M basic (mNAV.com Jan 2026)
+- Root cause: Sep 2025 EUR58M private placement caused ~4x dilution
+
+### Next Steps
+
+1. Phase 8d: Populate dilutive instruments for remaining ~52 companies
+2. ALTBG needs instruments added (~165M shares from convertibles)
+3. Continue company verification (user provides ticker)
+
+---
 
 **Session 2026-01-22:**
 
@@ -96,6 +129,14 @@ Auto-resolve  Manual review (CLAUDE.md)
 - 3350.T, 0434.HK, H100.ST, ALTBG
 - Use exchange filings or company announcements
 - May have different disclosure schedules
+
+**Foreign regulatory APIs:**
+| Country | Regulator | API | Companies |
+|---------|-----------|-----|-----------|
+| France | AMF | `dilaamf.opendatasoft.com` | ALTBG (Capital B) |
+| Japan | EDINET | TBD | 3350.T (Metaplanet) |
+| Hong Kong | HKEX | TBD | 0434.HK (Boyaa) |
+| Sweden | FI | TBD | H100.ST |
 
 ### The ATM Gap
 
@@ -467,7 +508,90 @@ For data that can't be directly verified (shares between quarters):
 
 ---
 
-## Future Work (Post-Phase 7)
+## Phase 8: Dilutive Instruments Tracking
+**Status**: IN PROGRESS (8a-8c complete, 8d in progress)
+
+### The Problem
+
+Share counts depend on whether dilutive instruments are "in the money":
+- BTCS: 47M basic, but options at $2.64 are in-the-money at $2.89 stock → should use 50M
+- UPXI: 59M basic, convertibles at $4.25/$2.39 are out-of-money at $2.12 stock → use 59M
+
+Currently we manually decide "use basic" or "use diluted" per company. This:
+- Doesn't track WHY we made that choice
+- Doesn't update when stock price crosses strike prices
+- Has no provenance for the instruments themselves
+
+### The Solution: Track Instruments, Calculate Dynamically
+
+Store dilutive instruments with full provenance. Calculate effective shares based on current price.
+
+**Data structure:** `src/lib/data/dilutive-instruments.ts`
+**Calculation:** `getEffectiveShares(ticker, basicShares, stockPrice)` returns basic, diluted, breakdown
+**Integration:** `market-cap.ts` calls `getEffectiveShares()` in mNAV calculation
+
+### Phase 8a: Data Structure
+**Status**: COMPLETE (2026-01-25)
+
+- [x] Create `dilutive-instruments.ts` with TypeScript interface
+- [x] `sharesForMnav` in companies.ts = BASIC shares (dilution calculated dynamically)
+- [x] Populate instruments for BTCS and UPXI with full provenance
+- [x] Add tests for data structure validation (10 tests)
+
+### Phase 8b: Calculation Function
+**Status**: COMPLETE (2026-01-25)
+
+- [x] Create `getEffectiveShares()` function
+- [x] Returns: basic shares, effective diluted, breakdown by instrument
+- [x] Each instrument shows: type, strike, shares, in/out of money status
+- [x] `formatEffectiveShares()` for display
+- [x] `getSharesProvenance()` for detailed provenance explanation
+
+### Phase 8c: Integration
+**Status**: COMPLETE (2026-01-25)
+
+- [x] Update mNAV calculation to use `getEffectiveShares()` in `getMarketCapForMnavSync()`
+- [x] Pass current stock price (USD) to calculation
+- [x] Fall back to basic shares if no instruments defined (graceful degradation)
+- [ ] Add provenance to mNAV tooltip (UI work - deferred)
+
+### Phase 8d: Populate All Companies
+**Status**: IN PROGRESS
+
+- [x] BTCS: 3 instruments (2 convertibles, 1 option) - verified 2026-01-25
+- [x] UPXI: 2 instruments (2 convertibles) - verified 2026-01-25
+- [ ] Remaining ~52 companies need instrument research
+- [ ] Each instrument needs: type, strike, shares, source, sourceUrl
+- [ ] Track expiration dates where available
+- [ ] Flag companies with complex structures (multiple tranches, variable conversion)
+
+**Companies with known significant dilution (priority):**
+- ALTBG: ~165M additional shares from convertibles (basic 227M → diluted 392M)
+- Others TBD during verification process
+
+### Phase 8e: Monitoring
+**Status**: NOT STARTED
+
+- [ ] Add check to filing-check cron: flag 8-Ks with "convertible", "warrant", "securities purchase"
+- [ ] When stock price crosses a strike price, log the change in effective shares
+- [ ] Optional: Discord alert when dilution status changes materially
+
+### The Provenance Story
+
+After this phase, we can answer:
+
+> "Why does BTCS show 50.3M shares?"
+
+> "Basic shares: 47,075,189 (10-Q Q3 2025)
+> + Options at $2.64: 3,223,012 (IN money at $2.89 stock)
+> - Convertible at $5.85: 1,709,402 (OUT of money)
+> - Convertible at $13.00: 769,231 (OUT of money)
+> = Effective diluted: 50,298,201
+> Sources: SEC 10-Q Q3 2025, 8-K Jul 2024, 8-K Dec 2024"
+
+---
+
+## Future Work (Post-Phase 8)
 
 ### Historical Data Backfill
 **Status**: NOT STARTED
@@ -529,6 +653,10 @@ Historical entries (2020-2025) currently lack sourceUrl. This doesn't block the 
 | 2026-01-22 | Must verify BOTH existing value AND proposed replacement | MSTR had 725K with no source; I almost replaced it with 687K from web search (also unverified) |
 | 2026-01-22 | Verification should be one coherent system | Comparison engine finds discrepancies; verification determines truth; manual review is fallback for low confidence - not a separate process |
 | 2026-01-22 | Focus sourceUrl on recent entries only | Historical entries (2020-2025) don't need sourceUrl for verification system; backfill later for historical chart accuracy |
+| 2026-01-25 | Track ALL dilutive instruments (no threshold) | User rejected "only track >5% dilution" - if we want to be authoritative, track everything |
+| 2026-01-25 | sharesForMnav = BASIC shares | Dilution calculated dynamically via dilutive-instruments.ts based on stock price vs strike price |
+| 2026-01-25 | AMF API for French regulatory filings | Created `src/lib/fetchers/amf.ts` for Capital B (ALTBG). Query by ISIN, parse holdings from filing titles. Primary source for French companies. |
+| 2026-01-25 | ALTBG data correction | Holdings: 2,201→2,823 BTC (AMF filing). Shares: 50M→227M basic (mNAV.com). Sep 2025 EUR58M private placement caused ~4x dilution. |
 
 ---
 

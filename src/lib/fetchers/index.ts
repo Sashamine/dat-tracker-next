@@ -18,6 +18,7 @@ import { upexiFetcher, getSupportedTickers as getUpexiTickers } from './dashboar
 import { capitalBFetcher, getSupportedTickers as getCapitalBTickers } from './dashboards/capital-b';
 import { secXbrlFetcher, getSupportedTickers as getSecXbrlTickers } from './sec-xbrl';
 import { yahooFinanceFetcher, getSupportedTickers as getYahooTickers } from './yahoo-finance';
+import { amfFetcher, getSupportedTickers as getAmfTickers } from './amf';
 
 export * from './types';
 
@@ -37,6 +38,7 @@ export const fetchers: Record<string, Fetcher> = {
   'capital-b-dashboard': capitalBFetcher,
   'sec-xbrl': secXbrlFetcher,
   'yahoo-finance': yahooFinanceFetcher,
+  'amf-france': amfFetcher,  // French regulatory filings (Capital B / ALTBG)
 };
 
 /**
@@ -82,6 +84,8 @@ export function getTickersForFetcher(fetcherName: string): string[] {
       return getSecXbrlTickers();
     case 'yahoo-finance':
       return getYahooTickers();
+    case 'amf-france':
+      return getAmfTickers();
     default:
       return [];
   }

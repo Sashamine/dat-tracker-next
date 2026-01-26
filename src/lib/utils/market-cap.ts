@@ -20,6 +20,7 @@
 import { Company } from "@/lib/types";
 import { COMPANY_SOURCES, CompanyDataSources } from "@/lib/data/company-sources";
 import { convertToUSD, convertToUSDSync } from "@/lib/utils/currency";
+import { getEffectiveShares, dilutiveInstruments } from "@/lib/data/dilutive-instruments";
 
 // Tickers that have non-USD stock prices
 // These require currency conversion before shares × price calculation
@@ -152,13 +153,22 @@ export async function getMarketCapForMnav(
       priceInUsd = await convertToUSD(stockData.price, currency);
     }
 
-    const calculatedMarketCap = priceInUsd * company.sharesForMnav;
+    // Check if company has dilutive instruments - if so, calculate effective shares
+    let effectiveShares = company.sharesForMnav;
+    let dilutionApplied = false;
+
+    if (dilutiveInstruments[ticker]) {
+      const result = getEffectiveShares(ticker, company.sharesForMnav, priceInUsd);
+      effectiveShares = result.diluted;
+      dilutionApplied = result.diluted !== result.basic;
+    }
+
+    const calculatedMarketCap = priceInUsd * effectiveShares;
     return {
       marketCap: calculatedMarketCap,
       source: "calculated",
       currency: "USD",
-      dilutionApplied: false,
-      // Note: This is intentionally using company's share count methodology
+      dilutionApplied,
     };
   }
 
@@ -204,7 +214,18 @@ export function getMarketCapForMnavSync(
       priceInUsd = convertToUSDSync(stockData.price, currency, forexRates);
     }
 
-    const calculatedMarketCap = priceInUsd * company.sharesForMnav;
+    // Check if company has dilutive instruments - if so, calculate effective shares
+    // based on current stock price (comparing USD price to USD strike prices)
+    let effectiveShares = company.sharesForMnav;
+    let dilutionApplied = false;
+
+    if (dilutiveInstruments[ticker]) {
+      const result = getEffectiveShares(ticker, company.sharesForMnav, priceInUsd);
+      effectiveShares = result.diluted;
+      dilutionApplied = result.diluted !== result.basic;
+    }
+
+    const calculatedMarketCap = priceInUsd * effectiveShares;
 
     // Debug for Metaplanet
     if (ticker === '3350.T') {
@@ -218,7 +239,7 @@ export function getMarketCapForMnavSync(
       marketCap: calculatedMarketCap,
       source: "calculated",
       currency: "USD",
-      dilutionApplied: false,
+      dilutionApplied,
     };
   }
 

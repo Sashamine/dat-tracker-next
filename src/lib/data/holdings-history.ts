@@ -180,16 +180,13 @@ const SMLR_HISTORY: HoldingsSnapshot[] = [
 
 // BTCS Inc - One of the first public ETH treasury companies
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
+// NOTE: Historical data before 2025 needs verification - BTCS dramatically scaled ETH holdings in 2025
+// Q3 2025 8-K: "ETH holdings increased to 70,322 ETH, up 380% from Q2 2025"
 const BTCS_HISTORY: HoldingsSnapshot[] = [
-  { date: "2022-12-31", holdings: 530, sharesOutstandingDiluted: 14_500_000, holdingsPerShare: 0.0000366, source: "2022 10-K" },
-  { date: "2023-06-30", holdings: 785, sharesOutstandingDiluted: 14_800_000, holdingsPerShare: 0.0000530, source: "Q2 2023 10-Q" },
-  { date: "2023-12-31", holdings: 1090, sharesOutstandingDiluted: 15_500_000, holdingsPerShare: 0.0000703, source: "2023 10-K" },
-  { date: "2024-06-30", holdings: 1350, sharesOutstandingDiluted: 16_174_923, holdingsPerShare: 0.0000835, source: "Q2 2024 10-Q" },
-  { date: "2024-12-31", holdings: 1580, sharesOutstandingDiluted: 20_087_981, holdingsPerShare: 0.0000787, source: "Q4 2024 10-K" },
-  { date: "2025-06-30", holdings: 1820, sharesOutstandingDiluted: 48_052_778, holdingsPerShare: 0.0000379, source: "Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 1950, sharesOutstandingDiluted: 46_838_532, holdingsPerShare: 0.0000416, source: "Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 2100, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000438, source: "Q4 2025 10-K est" },
-  { date: "2026-01-10", holdings: 2200, sharesOutstandingDiluted: 47_100_000, holdingsPerShare: 0.0000467, source: "8-K filing", sharesSource: "SEC 10-Q Q3 2025 (decreased due to buybacks)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 9_000, sharesOutstandingDiluted: 20_087_981, holdingsPerShare: 0.000448, source: "2024 10-K (estimated from YTD growth)" },
+  { date: "2025-06-30", holdings: 14_700, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.000668, source: "Q2 2025 (implied from Q3 380% growth)" },
+  { date: "2025-09-30", holdings: 70_322, sharesOutstandingDiluted: 50_298_201, holdingsPerShare: 0.001398, source: "Q3 2025 8-K (verified)", sharesSource: "10-Q diluted shares. Options at $2.64 in the money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 70_500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.001410, source: "8-K Jan 7, 2026 shareholder letter (verified)", sharesSource: "Est diluted. Convertibles at $5.85/$13 out of money, options at $2.64 in money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K", sourceType: "sec-filing" },
 ];
 
 // Bit Digital - ETH miner and holder
@@ -319,12 +316,19 @@ const NXTT_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-16", holdings: 5833, sharesOutstandingDiluted: 4_082_556, holdingsPerShare: 0.00143, source: "TipRanks/Morningstar", sharesSource: "Jan 2026 aggregator data" },
 ];
 
-// Alt Brussels (ALTBG) - Belgium/France BTC treasury
+// Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
+// Data from AMF (Autorité des marchés financiers) regulatory filings
+// API: https://dilaamf.opendatasoft.com/api/v2/ (ISIN: FR0011053636)
+// Note: Massive dilution in Sep 2025 from EUR58.1M private placement (Sep 16, 2025 AMF filing)
 const ALTBG_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 1200, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.0000286, source: "H1 2024 Euronext filing" },
   { date: "2024-12-31", holdings: 1800, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.0000400, source: "FY 2024 annual report" },
   { date: "2025-06-30", holdings: 2201, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000459, source: "H1 2025 filing" },
-  { date: "2025-09-30", holdings: 2400, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.0000480, source: "Q3 2025 Euronext", sourceUrl: "https://live.euronext.com/en/product/equities/FR0011053636-ALXP", sourceType: "regulatory-filing" },
+  // Sep 2025: EUR58.1M capital increase via private placement caused ~4x share dilution
+  { date: "2025-09-22", holdings: 2800, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000140, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076270_20250922.pdf", sourceType: "regulatory-filing" },
+  { date: "2025-09-29", holdings: 2812, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000141, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076388_20250929.pdf", sourceType: "regulatory-filing" },
+  { date: "2025-10-20", holdings: 2818, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.0000128, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/10/FCACT076738_20251020.pdf", sourceType: "regulatory-filing" },
+  { date: "2025-11-25", holdings: 2823, sharesOutstandingDiluted: 226_884_068, holdingsPerShare: 0.0000124, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf", sourceType: "regulatory-filing", sharesSource: "mNAV.com Jan 2026" },
 ];
 
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
@@ -428,8 +432,8 @@ const UPXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 735692, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.02627, source: "Q2 2025" },
   { date: "2025-07-31", holdings: 1900000, sharesOutstandingDiluted: 40_000_000, holdingsPerShare: 0.04750, source: "Press release" },
   { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.04446, source: "2M SOL milestone" },
-  { date: "2025-09-30", holdings: 2018419, sharesOutstandingDiluted: 58_888_756, holdingsPerShare: 0.03427, source: "Q3 2025 10-K" },
-  { date: "2025-12-31", holdings: 2106000, sharesOutstandingDiluted: 62_000_000, holdingsPerShare: 0.03397, source: "Q4 2025 est", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 2018419, sharesOutstandingDiluted: 58_888_756, holdingsPerShare: 0.03427, source: "Q3 2025 10-Q" },
+  { date: "2026-01-05", holdings: 2_174_583, sharesOutstandingDiluted: 59_000_000, holdingsPerShare: 0.03686, source: "8-K Jan 9, 2026", sharesSource: "10-Q Sep 2025 basic shares. Convertibles ($150M@$4.25, $36M@$2.39) out of money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194", sourceType: "sec-filing" },
 ];
 
 // ==================== ALTCOIN TREASURIES ====================

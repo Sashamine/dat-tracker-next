@@ -134,7 +134,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
-    sharesForMnav: 47_100_000,  // SEC 10-Q Q3 2025 (Sep 30) - decreased from 47.85M due to buybacks
+    sharesForMnav: 47_075_189,  // BASIC shares from 10-Q Q3 2025. Dilution (options, convertibles) calculated dynamically via dilutive-instruments.ts
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
   },
   {
@@ -471,19 +471,19 @@ export const btcCompanies: Company[] = [
     ticker: "ALTBG",
     asset: "BTC",
     tier: 2,
-    holdings: 2_201,  // Jan 2026 - was 1,653
-    holdingsLastUpdated: "2026-01-21",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.theblock.co/treasuries/altbg.pa",
+    holdings: 2_823,  // AMF filing Nov 25, 2025
+    holdingsLastUpdated: "2025-11-25",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf",
     datStartDate: "2024-12-01",
     costBasisAvg: 85_000,
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
-    sharesForMnav: 50_000_000,  // From holdings-history.ts
-    strategy: "French BTC treasury company. EUR300M ATM program.",
-    notes: "Euronext Paris listed. Europe's Strategy equivalent.",
+    sharesForMnav: 226_884_068,  // Basic shares per mNAV.com Jan 2026. Diluted: ~392M (via convertibles)
+    strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
+    notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
   },
   {
     id: "h100st",
@@ -728,7 +728,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
     capitalRaisedAtm: 100_000_000,
-    sharesForMnav: 62_000_000,  // From holdings-history.ts
+    sharesForMnav: 59_000_000,  // SEC 10-Q Sep 2025: 58.9M basic. Convertibles ($150M@$4.25, $36M@$2.39) OUT of money at ~$2.12
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 120_000_000,
     hasOptions: true,
