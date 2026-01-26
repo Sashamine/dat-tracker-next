@@ -867,7 +867,10 @@ export const bnbCompanies: Company[] = [
     sharesAsOf: "2026-01-01",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
-    notes: "Also holds 1,000 BTC (~$87M) as passive reserve (received via convertible deal). $25M buyback authorized.",
+    notes: "$25M buyback authorized.",
+    secondaryCryptoHoldings: [
+      { asset: "BTC", amount: 1_000, note: "passive hold from convertible deal" },
+    ],
   },
 ];
 

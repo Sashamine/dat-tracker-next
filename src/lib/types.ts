@@ -138,6 +138,17 @@ export interface Company {
 
   // Data warnings for pending filings/events that may affect accuracy
   dataWarnings?: DataWarning[];
+
+  // Secondary crypto holdings (for multi-asset treasury companies)
+  // These are added to Crypto NAV in mNAV calculation
+  secondaryCryptoHoldings?: SecondaryCryptoHolding[];
+}
+
+// Secondary crypto holding for multi-asset treasury companies
+export interface SecondaryCryptoHolding {
+  asset: Asset;
+  amount: number;
+  note?: string; // e.g., "passive hold from convertible deal"
 }
 
 // Source metadata for mNAV component transparency

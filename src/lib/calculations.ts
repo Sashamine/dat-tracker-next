@@ -106,9 +106,11 @@ export function calculateMNAV(
   otherInvestments: number = 0,
   totalDebt: number = 0,
   preferredEquity: number = 0,
-  restrictedCash: number = 0
+  restrictedCash: number = 0,
+  secondaryCryptoValue: number = 0  // USD value of secondary crypto holdings
 ): number | null {
-  const cryptoNav = holdings * assetPrice;  // Crypto-only NAV
+  // Total Crypto NAV = primary holdings + secondary holdings value
+  const cryptoNav = (holdings * assetPrice) + secondaryCryptoValue;
   if (!cryptoNav || cryptoNav <= 0) return null;
 
   // Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)

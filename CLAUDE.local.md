@@ -98,3 +98,18 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Company-reported mNAV: 0.64x (significantly below 1.0)
 - 274 tests pass, deployed to Vercel
 
+### NA (Nano Labs) Verification (continued session)
+- Found SEC CIK 1872302 (foreign issuer - files 6-K, 20-F)
+- Discovered multi-asset treasury: 130K BNB primary + 1,000 BTC passive
+- BNB is active focus ($1B target), BTC is passive hold from convertible deal
+- mNAV was calculating at 5.09x without BTC, should be ~2.89x with BTC included
+
+### Secondary Crypto Holdings Feature (continued session)
+- Implemented `secondaryCryptoHoldings` for multi-asset treasury companies
+- Added `SecondaryCryptoHolding` interface to types.ts (asset, amount, note)
+- Updated `calculateMNAV` in calculations.ts to accept `secondaryCryptoValue` parameter
+- Updated `getCompanyMNAV` in use-mnav-stats.ts to calculate secondary holdings value
+- Added `secondaryCryptoHoldings: [{ asset: "BTC", amount: 1_000 }]` to NA
+- NA's mNAV now correctly includes BTC in crypto NAV calculation
+- 274 tests pass, TypeScript compiles
+

@@ -68,6 +68,15 @@ export function getCompanyMNAV(
     });
   }
 
+  // Calculate secondary crypto holdings value (for multi-asset treasury companies)
+  let secondaryCryptoValue = 0;
+  if (company.secondaryCryptoHoldings && company.secondaryCryptoHoldings.length > 0) {
+    for (const holding of company.secondaryCryptoHoldings) {
+      const price = prices.crypto[holding.asset]?.price || 0;
+      secondaryCryptoValue += holding.amount * price;
+    }
+  }
+
   const mnav = calculateMNAV(
     marketCap,
     company.holdings,
@@ -76,7 +85,8 @@ export function getCompanyMNAV(
     company.otherInvestments || 0,
     company.totalDebt || 0,
     company.preferredEquity || 0,
-    company.restrictedCash || 0
+    company.restrictedCash || 0,
+    secondaryCryptoValue
   );
 
   // Return null for invalid mNAV
