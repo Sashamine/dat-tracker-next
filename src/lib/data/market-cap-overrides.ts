@@ -75,7 +75,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
 
   // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
-  "XTAIF": { price: 0.75, marketCap: 20_000_000 },
+  "XTAIF": { price: 1.11, marketCap: 42_000_000 },  // Updated Jan 26, 2026 (37.8M shares × $1.11)
   "IHLDF": { price: 0.10, marketCap: 10_000_000 },
   "LUXFF": { price: 0.05, marketCap: 3_860_000 },
   "NA": { price: 1.50, marketCap: 81_000_000 },
