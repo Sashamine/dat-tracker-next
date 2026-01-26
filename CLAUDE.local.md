@@ -113,3 +113,12 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - NA's mNAV now correctly includes BTC in crypto NAV calculation
 - 274 tests pass, TypeScript compiles
 
+### Leverage Ratio Feature (continued session)
+- Added Leverage Ratio = Debt / Crypto NAV to show capital structure impact
+- Data table: New "Leverage" column between mNAV 24h and Price (sortable)
+- Mobile card: Added Leverage to 4-column grid
+- Company detail page: Added Leverage metric in Key Valuation Metrics section
+- High leverage (≥1.0x) shown in amber with warning: "mNAV elevated by debt"
+- This explains why NA has high mNAV (5x) - it's the $500M debt, not market premium
+- 274 tests pass, deployed to Vercel
+

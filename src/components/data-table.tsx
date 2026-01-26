@@ -115,6 +115,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const totalDebt = company.totalDebt || 0;
     const preferredEquity = company.preferredEquity || 0;
 
+    // Calculate crypto NAV including secondary holdings
+    let cryptoNav = holdingsValue;
+    if (company.secondaryCryptoHoldings && prices) {
+      for (const holding of company.secondaryCryptoHoldings) {
+        const price = prices.crypto[holding.asset]?.price || 0;
+        cryptoNav += holding.amount * price;
+      }
+    }
+
+    // Leverage ratio = Total Debt / Crypto NAV
+    const leverageRatio = cryptoNav > 0 ? totalDebt / cryptoNav : 0;
+
     // mNAV uses shared calculation for consistency across all pages
     const mNAV = getCompanyMNAV(company, prices);
     // mNAV change accounts for EV-based calculation (debt/preferred don't move with stock price)
@@ -136,6 +148,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       companyType,
       isAfterHours,
       otherAssets,
+      leverageRatio,
     };
   });
 
@@ -219,6 +232,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       case "otherAssets":
         aVal = a.otherAssets || 0;
         bVal = b.otherAssets || 0;
+        break;
+      case "leverageRatio":
+        aVal = a.leverageRatio || 0;
+        bVal = b.leverageRatio || 0;
         break;
       case "ticker":
         return sortDir === "desc"
@@ -347,7 +364,7 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+      <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">
@@ -390,11 +407,20 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">Market Cap</p>
+          <p className="text-xs text-gray-500 uppercase">Leverage</p>
+          <p className={cn(
+            "font-semibold",
+            company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
+          )}>
+            {company.leverageRatio > 0 ? `${company.leverageRatio.toFixed(2)}x` : "—"}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase">Mkt Cap</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.marketCap)}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">Holdings</p>
+          <p className="text-xs text-gray-500 uppercase">Crypto</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
         </div>
       </div>
@@ -441,6 +467,12 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   onClick={() => handleSort("mNAVChange")}
                 >
                   mNAV 24h {sortField === "mNAVChange" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("leverageRatio")}
+                >
+                  Leverage {sortField === "leverageRatio" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
@@ -593,6 +625,29 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                       <span className="text-gray-400">—</span>
                     ) : (
                       <FlashingPercent value={company.mNAVChange} />
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm">
+                    {company.leverageRatio > 0 ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className={cn(
+                              company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
+                            )}>
+                              {company.leverageRatio.toFixed(2)}x
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-sm">Debt / Crypto NAV</p>
+                            {company.leverageRatio >= 1 && (
+                              <p className="text-xs text-amber-500">High leverage - mNAV elevated by debt structure</p>
+                            )}
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      <span className="text-gray-400">—</span>
                     )}
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">

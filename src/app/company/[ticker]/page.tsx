@@ -183,6 +183,18 @@ export default function CompanyPage() {
   const otherAssets = cashReserves + otherInvestments;
   const cryptoHoldingsValue = displayCompany.holdings * cryptoPrice;
 
+  // Calculate total crypto NAV including secondary holdings
+  let totalCryptoNav = cryptoHoldingsValue;
+  if (displayCompany.secondaryCryptoHoldings && prices) {
+    for (const holding of displayCompany.secondaryCryptoHoldings) {
+      const holdingPrice = prices.crypto[holding.asset]?.price || 0;
+      totalCryptoNav += holding.amount * holdingPrice;
+    }
+  }
+
+  // Leverage ratio = Total Debt / Crypto NAV
+  const debtToCryptoRatio = totalCryptoNav > 0 ? (displayCompany.totalDebt || 0) / totalCryptoNav : 0;
+
   // Calculate metrics (including other assets in NAV)
   const nav = calculateNAV(displayCompany.holdings, cryptoPrice, cashReserves, otherInvestments);
 
@@ -340,7 +352,25 @@ export default function CompanyPage() {
               {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
             </p>
             <p className="text-xs text-gray-400">
-              {displayCompany.pendingMerger ? "N/A for pre-merger" : "Market Cap / NAV"}
+              {displayCompany.pendingMerger ? "N/A for pre-merger" : "EV / Crypto NAV"}
+            </p>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400">Leverage</p>
+            <p className={cn(
+              "text-2xl font-bold",
+              debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
+            )}>
+              {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
+            </p>
+            <p className="text-xs text-gray-400">
+              {debtToCryptoRatio >= 1 ? (
+                <span className="text-amber-600">High - mNAV elevated by debt</span>
+              ) : debtToCryptoRatio > 0 ? (
+                "Debt / Crypto NAV"
+              ) : (
+                "No debt"
+              )}
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
