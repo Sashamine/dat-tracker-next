@@ -106,6 +106,8 @@ export async function GET(
       expectedHoldings: company.expectedHoldings,
       mergerExpectedClose: company.mergerExpectedClose,
       lowLiquidity: company.lowLiquidity,
+      secondaryCryptoHoldings: company.secondaryCryptoHoldings,
+      cryptoInvestments: company.cryptoInvestments,
     };
 
     return NextResponse.json({

@@ -69,6 +69,8 @@ export async function GET(request: Request) {
       expectedHoldings: c.expectedHoldings,
       mergerExpectedClose: c.mergerExpectedClose,
       lowLiquidity: c.lowLiquidity,
+      secondaryCryptoHoldings: c.secondaryCryptoHoldings,
+      cryptoInvestments: c.cryptoInvestments,
     }));
 
     return NextResponse.json({
