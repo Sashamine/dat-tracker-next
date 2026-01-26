@@ -492,12 +492,12 @@ const SUIG_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 130000000, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 2.708, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355", sourceType: "sec-filing" },
 ];
 
-// AVAX One (AVX) - AVAX treasury
+// AVAX One (AVX) - AVAX treasury (formerly AgriFORCE, pivoted Nov 2025)
+// NOTE: Pre-Nov 2025 data is from before AVAX pivot - company was agricultural tech
 const AVX_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-15", holdings: 5500000, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.250, source: "Initial AVAX treasury" },
-  { date: "2024-12-31", holdings: 9800000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.350, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 13800000, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 0.394, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 16500000, sharesOutstandingDiluted: 40_000_000, holdingsPerShare: 0.413, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826397", sourceType: "sec-filing" },
+  // Nov 5, 2025: PIPE closed, $219M raised ($145M cash + $73.7M in AVAX tokens)
+  // 86.7M new shares + 6.1M pre-funded warrants issued
+  { date: "2025-11-05", holdings: 13_800_000, sharesOutstandingDiluted: 93_112_148, holdingsPerShare: 0.148, source: "8-K PIPE closing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm", sourceType: "sec-filing" },
 ];
 
 // CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation

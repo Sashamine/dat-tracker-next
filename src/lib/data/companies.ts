@@ -1194,18 +1194,38 @@ export const avaxCompanies: Company[] = [
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://avax-one.com/",
-    datStartDate: "2025-10-01",
+    datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     costBasisAvg: 11.73,
     stakingPct: 0.80,
     stakingApy: 0.08,
     quarterlyBurnUsd: 1_000_000,
     capitalRaisedAtm: 40_000_000,
-    capitalRaisedPipe: 110_000_000,
+    capitalRaisedPipe: 219_000_000,  // $219M PIPE Nov 2025 ($145M cash + $73.7M AVAX)
     avgDailyVolume: 15_000_000,
     marketCap: 193_000_000,
-    sharesForMnav: 40_000_000,  // From holdings-history.ts
+    sharesForMnav: 93_112_148,  // 8-K Nov 6, 2025: shares after PIPE closing
+    sharesAsOf: "2025-11-05",
+    sharesSource: "SEC 8-K Nov 6, 2025",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
+    secCik: "1826397",
     strategy: "Regulated AVAX exposure for US capital markets.",
-    notes: "Nasdaq listed. $40M share repurchase program.",
+    notes: "Nasdaq listed. $40M share repurchase program. Hivemind asset manager.",
+    dataWarnings: [
+      {
+        type: "share-change",
+        message: "S-3 shelf effective Jan 20 - can issue shares at any time",
+        filingDate: "2026-01-20",
+        filingUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1826397&type=S-3",
+        severity: "warning",
+      },
+      {
+        type: "share-change",
+        message: "6.1M pre-funded warrants outstanding (exercisable anytime)",
+        filingDate: "2025-11-05",
+        filingUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
+        severity: "info",
+      },
+    ],
   },
 ];
 

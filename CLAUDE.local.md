@@ -63,3 +63,21 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Added historical entries to holdings-history.ts from AMF filings
 - 271 tests pass, TypeScript compiles
 
+### BTCS Adversarial Verification (continued session)
+- Ran full adversarial verification on BTCS data
+- Verified ETH holdings (70,500) against 8-K Jan 7, 2026 press release
+- Verified basic shares (47,075,189) against 10-Q Q3 2025 balance sheet
+- Verified diluted calculation (50,298,201) matches 10-Q
+- **Fixed**: Convertible note source dates were wrong by ~1 year
+  - $5.85 note: "8-K Jul 2024" → "8-K May 2025"
+  - $13.00 note: "8-K Dec 2024" → "8-K Jul 2025"
+  - Updated URLs to point to btcs.com official pages
+- Identified concern: 8-K Jan 5, 2026 shows Item 3.02 (unregistered equity sale)
+
+### Data Warnings Feature (continued session)
+- Added `DataWarning` type and `dataWarnings` field to Company interface
+- Types: equity-sale, share-change, debt-change, stale-data
+- Display: 📋 icon with tooltip in data table (desktop + mobile)
+- Added warning for BTCS about Jan 5 equity sale
+- 274 tests pass, deployed to Vercel
+
