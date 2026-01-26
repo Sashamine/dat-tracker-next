@@ -569,10 +569,16 @@ const TBH_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-18", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "HOD shareholder letter confirms 730M DOGE treasury", sourceUrl: "https://www.globenewswire.com/news-release/2025/12/18/3207820/0/en/House-of-Doge-Issues-2025-Shareholder-Letter-Highlighting-Brag-House-NASDAQ-Merger-Treasury-Expansion-Diversified-Revenue-Strategy-and-Payments-Ecosystem-Development.html", sourceType: "press-release" },
 ];
 
-// Bit Origin (BTOG) - DOGE treasury, Singapore-based
+// Bit Origin (BTOG) - DOGE treasury, Singapore-based (Cayman Islands incorporated)
+// SEC CIK: 1735556. Files 6-K/20-F (foreign private issuer).
+// 1:60 REVERSE SPLIT effective Jan 20, 2026. All share counts shown as post-split equivalents.
 const BTOG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-07-21", holdings: 40543745, sharesOutstandingDiluted: 58_000_000, holdingsPerShare: 0.699, source: "Initial DOGE purchase" },
-  { date: "2025-08-11", holdings: 70543745, sharesOutstandingDiluted: 78_000_000, holdingsPerShare: 0.904, source: "Private placement", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556", sourceType: "sec-filing" },
+  // Pre-split: 58M shares, post-split equivalent: 967K
+  { date: "2025-07-21", holdings: 40_543_745, sharesOutstandingDiluted: 967_000, holdingsPerShare: 41.93, source: "Initial DOGE purchase (shares: post-split equiv)" },
+  // Pre-split: 78M shares, post-split equivalent: 1.3M
+  { date: "2025-08-11", holdings: 70_543_745, sharesOutstandingDiluted: 1_300_000, holdingsPerShare: 54.26, source: "Private placement (shares: post-split equiv)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556", sourceType: "sec-filing" },
+  // Jan 20, 2026: 1:60 reverse split effective - 88.6M shares became 1.5M shares
+  { date: "2026-01-20", holdings: 70_543_745, sharesOutstandingDiluted: 1_500_000, holdingsPerShare: 47.03, source: "SEC 6-K - 1:60 reverse split", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/0001104659-26-005086-index.html", sourceType: "sec-filing" },
 ];
 
 // Hyperliquid Strategies (PURR) - HYPE treasury

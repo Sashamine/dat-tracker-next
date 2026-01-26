@@ -1282,11 +1282,16 @@ export const dogeCompanies: Company[] = [
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedAtm: 500_000_000,
     avgDailyVolume: 3_000_000,
-    marketCap: 50_000_000,
-    sharesForMnav: 78_000_000,  // From holdings-history.ts
-    leader: "Bo Zhao (CEO)",
+    sharesForMnav: 1_500_000,  // Post 1:60 reverse split Jan 20, 2026 (was 88.6M -> 1.5M)
+    sharesAsOf: "2026-01-20",
+    sharesSource: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
+    totalDebt: 16_338_506,  // $10M Series A-1 + $5M Series B-1 + $1.34M Series C-1 convertible notes
+    debtSource: "SEC 6-K Jan 20, 2026",
+    debtAsOf: "2026-01-20",
+    secCik: "1735556",
+    leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
-    notes: "Nasdaq listed. Crypto mining + infrastructure.",
+    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding.",
   },
 ];
 
