@@ -457,25 +457,31 @@ export const btcCompanies: Company[] = [
     ticker: "KULR",
     asset: "BTC",
     tier: 1,
-    holdings: 1_057,  // Q3 2025 10-Q: 1,056.7 BTC held + 70 BTC collateral
+    holdings: 1_057,  // Q3 2025 10-Q: Total BTC = $120.5M fair value (~987 held + 70 collateral)
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     datStartDate: "2024-12-01",
+    secCik: "1662684",
     costBasisAvg: 97_000,
     isMiner: false,
     quarterlyBurnUsd: 4_000_000,
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 45_650_000,  // Stock Analysis Jan 2026; post reverse split (1:8 Jun 2025) + ATM activity
+    sharesForMnav: 45_674_420,  // SEC 10-Q Q3 2025 (as of Nov 14, 2025)
+    sharesSource: "SEC 10-Q Q3 2025",
+    sharesAsOf: "2025-11-14",
+    totalDebt: 3_800_000,  // Coinbase credit facility loan - SEC 10-Q Q3 2025
+    debtSource: "SEC 10-Q Q3 2025",
+    debtAsOf: "2025-09-30",
     cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
-    restrictedCash: 20_600_000,  // Pending BTC purchase - not excess
+    restrictedCash: 20_600_000,  // Earmarked for BTC purchases per 90% policy - not excess cash
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
-    notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. $120M BTC treasury per Q3 2025.",
+    notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. 70 BTC pledged as collateral for Coinbase loan.",
   },
   {
     id: "altbg",
@@ -514,7 +520,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     marketCap: 62_000_000,  // SEK 645M / 10.4 = $62M (Jan 23, 2026)
     sharesForMnav: 335_250_237,  // Official IR page: 335,250,237 shares
-    sharesSource: "H100 IR shares page",
+    sharesSource: "h100.group/investor-relations/shares (official)",
     sharesAsOf: "2026-01-23",
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
