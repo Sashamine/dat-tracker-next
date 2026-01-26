@@ -728,12 +728,19 @@ const TWAV_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL LTC ====================
 
 // LUXFF (Luxxfolio) - Canadian LTC treasury, Charlie Lee advisor
+// CSE: LUXX | OTCQB: LUXFF | 1:10 reverse split Mar 21, 2025
+// NOTE: Prior share counts (150M-220M) were pre-split and never updated.
+// Post-split: ~8.7M shares, now ~27.1M after private placements.
 const LUXFF_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 5000, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000333, source: "Initial LTC treasury" },
-  { date: "2024-12-31", holdings: 12000, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.0000667, source: "FY 2024 annual" },
-  { date: "2025-06-30", holdings: 16500, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000825, source: "H1 2025 filing" },
-  { date: "2025-09-30", holdings: 18000, sharesOutstandingDiluted: 208_000_000, holdingsPerShare: 0.0000865, source: "Q3 2025 SEDAR" },
-  { date: "2025-12-31", holdings: 20084, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.0000913, source: "FY 2025 annual", sourceUrl: "https://thecse.com/listings/luxxfolio-holdings-inc/sedar-filings/", sourceType: "regulatory-filing" },
+  // Pre-split entries (converted to post-split equivalent for continuity)
+  { date: "2024-06-30", holdings: 5_000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.000333, source: "Initial LTC treasury (pre-split equivalent)" },
+  { date: "2024-12-31", holdings: 12_000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.000667, source: "FY 2024 annual (pre-split equivalent)" },
+  // Mar 21, 2025: 1:10 reverse split (87.3M → 8.7M shares)
+  { date: "2025-03-21", holdings: 12_000, sharesOutstandingDiluted: 8_700_000, holdingsPerShare: 0.001379, source: "1:10 reverse split", sharesSource: "CSE Bulletin 2025-0319", sourceUrl: "https://thecse.com/bulletin/2025-0319-consolidation-luxxfolio-holdings-inc-luxx/", sourceType: "regulatory-filing" },
+  // Jul 17, 2025: Corporate update - 20,084 LTC, 75,539 litoshis/share
+  { date: "2025-07-17", holdings: 20_084, sharesOutstandingDiluted: 26_600_000, holdingsPerShare: 0.000755, source: "Corporate update press release", sharesSource: "Calculated from 75,539 litoshis/share", sourceUrl: "https://www.luxxfolio.com/luxxfolio-provides-corporate-update-increase-in-litecoin-treasury/", sourceType: "press-release" },
+  // Jan 2026: CSE official listing shows 27.1M shares
+  { date: "2026-01-26", holdings: 20_084, sharesOutstandingDiluted: 27_113_164, holdingsPerShare: 0.000741, source: "CSE official listing", sharesSource: "CSE listing page", sourceUrl: "https://thecse.com/listings/luxxfolio-holdings-inc/", sourceType: "regulatory-filing" },
 ];
 
 // ==================== HBAR COMPANIES ====================
