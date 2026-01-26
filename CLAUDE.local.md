@@ -293,3 +293,25 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
   - Full tooltip: "694,290 Kinetiq stHYPE × 1.94x = 1,346,922 HYPE"
 - 274 tests pass, deployed to Vercel
 
+### LUXFF Verification - SEDAR+ Audit (completed)
+- **Company**: Luxxfolio Holdings Inc. (CSE: LUXX, OTCQB: LUXFF)
+- **SEDAR+ profile**: 000044736
+- **Primary source**: FY2025 audited annual financial statements (Aug 31, 2025)
+- **Key findings from SEDAR+ FY2025 audited annual**:
+  - Note 5 Digital Assets: 20,226 LTC (not 20,084 from press release)
+  - Note 8 Share Capital: 26,930,164 shares as of Aug 31, 2025
+  - Note 12 Subsequent Events: Dec 9, 2025 placement (+4,624,000 shares)
+  - Total shares: 31,554,164 (17% higher than prior 27.1M)
+- **Fixed sharesForMnav**: 27.1M → 31.55M
+- **Fixed holdings**: 20,084 → 20,226 LTC
+- **Added dilutive instruments** (14.1M total, all OUT of the money):
+  - 5.0M warrants @ $0.36 (Jul 2025 placement)
+  - 4.6M warrants @ $0.25 (Dec 2025 placement)
+  - 0.4M warrants @ $0.11 (Mar 2025 finder's - lowest strike)
+  - 0.6M warrants @ $0.36 (Jul 2025 finder's)
+  - 0.3M warrants @ $0.25 (Dec 2025 finder's)
+  - 1.7M options @ $0.21 weighted avg
+  - 1.5M options @ $0.28 (Oct 2025 grants)
+- Committed and pushed to Vercel
+- 274 tests pass
+
