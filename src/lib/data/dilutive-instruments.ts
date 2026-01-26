@@ -214,6 +214,43 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "OCA A-05 Tranche 1: TOBAM (€6.5M). Conversion at €3.6557/share.",
     },
   ],
+
+  // ZONE (CleanCore Solutions) - DOGE treasury company
+  // Verified 2026-01-26 via SEC 8-K Sep 5, 2025
+  // Most warrants already exercised in Q1 FY2026 (164M shares from warrant exercises)
+  // Remaining warrants are OUT of the money at ~$0.41 stock price
+  ZONE: [
+    {
+      type: "warrant",
+      strikePrice: 1.00,
+      potentialShares: 8_750_021,
+      source: "8-K Sep 5, 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956741&type=8-K",
+      expiration: "2030-09-03",
+      notes: "Strategic Advisor warrants (Gresham Worldwide LLC) at $1.00 strike",
+    },
+    {
+      type: "warrant",
+      strikePrice: 1.33,
+      potentialShares: 5_250_013,
+      source: "8-K Sep 5, 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956741&type=8-K",
+      expiration: "2027-09-03",
+      notes: "Placement Agent warrants (Maxim Group) at $1.33 strike",
+    },
+    {
+      type: "warrant",
+      strikePrice: 1.33,
+      potentialShares: 5_250_013,
+      source: "8-K Sep 5, 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956741&type=8-K",
+      expiration: "2030-09-03",
+      notes: "Strategic Advisor warrants (Gresham Worldwide LLC) at $1.33 strike",
+    },
+  ],
 };
 
 /**

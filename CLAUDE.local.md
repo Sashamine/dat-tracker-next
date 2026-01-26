@@ -199,5 +199,10 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - User challenged: "Was there an unregistered equity sale?" - good catch!
   - Most dilution was registered (warrant exercises, ATM offering)
   - Some debt-to-equity conversions may have been Item 3.02
+- Added ZONE to dilutive-instruments.ts:
+  - Strategic Advisor warrants: 8.75M shares at $1.00, 5.25M shares at $1.33
+  - Placement Agent warrants: 5.25M shares at $1.33
+  - All OUT of the money at ~$0.41 stock price (strikes $1.00-$1.33)
+  - Will be included in diluted count if stock rises above strike prices
 - 274 tests pass
 
