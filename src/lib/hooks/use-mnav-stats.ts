@@ -55,8 +55,8 @@ export function getCompanyMNAV(
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
   const { marketCap, source } = getMarketCapForMnavSync(company, stockData, prices.forex);
 
-  // Debug logging for Metaplanet and BTBT
-  if (company.ticker === '3350.T' || company.ticker === 'BTBT') {
+  // Debug logging for Metaplanet, BTBT, and KULR
+  if (company.ticker === '3350.T' || company.ticker === 'BTBT' || company.ticker === 'KULR') {
     console.log(`[mNAV Debug] ${company.ticker}:`, {
       stockPrice: stockData?.price,
       forexJPY: prices.forex?.JPY,
@@ -65,6 +65,10 @@ export function getCompanyMNAV(
       marketCapSource: source,
       cryptoPrice,
       holdings: company.holdings,
+      cashReserves: company.cashReserves,
+      restrictedCash: company.restrictedCash,
+      totalDebt: company.totalDebt,
+      freeCash: (company.cashReserves || 0) - (company.restrictedCash || 0),
     });
   }
 
@@ -88,6 +92,19 @@ export function getCompanyMNAV(
     company.restrictedCash || 0,
     secondaryCryptoValue
   );
+
+  // Debug: log calculated mNAV for KULR
+  if (company.ticker === 'KULR') {
+    const cryptoNav = company.holdings * cryptoPrice;
+    const freeCash = (company.cashReserves || 0) - (company.restrictedCash || 0);
+    const ev = marketCap + (company.totalDebt || 0) + (company.preferredEquity || 0) - freeCash;
+    console.log(`[mNAV Debug] ${company.ticker} calculation:`, {
+      cryptoNav,
+      ev,
+      mnav,
+      expectedMnav: ev / cryptoNav,
+    });
+  }
 
   // Return null for invalid mNAV
   // Sanity check: reject values <= 0 or absurdly high (> 1000x indicates data error)
