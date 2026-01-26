@@ -155,17 +155,23 @@ export interface SecondaryCryptoHolding {
   note?: string; // e.g., "passive hold from convertible deal"
 }
 
-// Indirect crypto exposure via funds or equity investments
-// Used when company owns crypto through a fund/ETF rather than direct custody
+// Indirect crypto exposure via funds, ETFs, or liquid staking tokens
+// Used when company owns crypto through a fund/ETF rather than direct custody,
+// or holds liquid staking tokens (LSTs) that represent staked crypto
 export interface CryptoInvestment {
-  name: string;                  // e.g., "Dialectic ETH Fund", "Grayscale ETHE"
-  type: "fund" | "equity" | "etf"; // fund = private fund, equity = stock in crypto co, etf = public ETF
+  name: string;                  // e.g., "Dialectic ETH Fund", "Grayscale ETHE", "stHYPE"
+  type: "fund" | "equity" | "etf" | "lst"; // lst = liquid staking token (stHYPE, stETH, jitoSOL, etc.)
   underlyingAsset: Asset;        // What crypto the investment tracks
   fairValue: number;             // USD fair value from balance sheet
   sourceDate: string;            // ISO date of the fair value (e.g., SEC filing date)
   source?: string;               // e.g., "SEC 10-Q Q3 2025"
   sourceUrl?: string;            // Link to filing
   note?: string;                 // Additional context
+
+  // LST-specific fields (only for type: "lst")
+  lstAmount?: number;            // Actual LST tokens held (e.g., 753,000 stHYPE)
+  exchangeRate?: number;         // LST to underlying ratio (e.g., 1.94 means 1 stHYPE = 1.94 HYPE)
+  underlyingAmount?: number;     // Amount of underlying asset represented (lstAmount × exchangeRate)
 }
 
 // Source metadata for mNAV component transparency

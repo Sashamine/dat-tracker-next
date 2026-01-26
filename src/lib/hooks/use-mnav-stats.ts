@@ -81,11 +81,19 @@ export function getCompanyMNAV(
     }
   }
 
-  // Add crypto investments fair value (fund/ETF positions already in USD)
-  // These are indirect crypto exposure that should be included in Crypto NAV
+  // Add crypto investments to Crypto NAV
+  // - For LSTs: use underlyingAmount × cryptoPrice (dynamic value based on current price)
+  // - For funds/ETFs: use fairValue (static value from SEC filing)
   if (company.cryptoInvestments && company.cryptoInvestments.length > 0) {
     for (const investment of company.cryptoInvestments) {
-      secondaryCryptoValue += investment.fairValue;
+      if (investment.type === "lst" && investment.underlyingAmount) {
+        // LST: calculate value using underlying amount × current crypto price
+        const price = prices.crypto[investment.underlyingAsset]?.price || 0;
+        secondaryCryptoValue += investment.underlyingAmount * price;
+      } else {
+        // Fund/ETF/equity: use fair value from balance sheet
+        secondaryCryptoValue += investment.fairValue;
+      }
     }
   }
 

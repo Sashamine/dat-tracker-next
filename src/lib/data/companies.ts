@@ -835,16 +835,16 @@ export const hypeCompanies: Company[] = [
     asset: "HYPE",
     tier: 2,
     secCik: "1682639",
-    // SEC 10-Q Sep 30, 2025: HYPE digital assets $37.95M + Digital intangible assets $35.02M = $72.97M
-    // Digital intangible assets = liquid staked HYPE (per cash flow statement)
-    // At $26/HYPE (Sep 30 price): $72.97M / $26 ≈ 2,806,538 HYPE total
-    holdings: 2_806_538,
+    // SEC 10-Q Sep 30, 2025: HYPE digital assets $37.95M = direct holdings only
+    // At $26/HYPE (Sep 30 price): $37.95M / $26 = 1,459,615 HYPE
+    // Liquid staked HYPE tracked separately in cryptoInvestments
+    holdings: 1_459_615,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
     datStartDate: "2025-07-01",
     costBasisAvg: 38.25,
-    stakingPct: 0.90,  // Most HYPE in liquid staking
+    stakingPct: 0,  // Direct holdings not staked (staked tracked in cryptoInvestments)
     stakingApy: 0.05,
     quarterlyBurnUsd: 1_500_000,
     capitalRaisedPipe: 50_000_000,
@@ -861,6 +861,26 @@ export const hypeCompanies: Company[] = [
     leader: "Hyunsu Jung (CEO)",
     strategy: "First US public HYPE treasury. Liquid staking via Kinetiq.",
     notes: "Rebranded from Eyenovia Jul 2025. 1-for-80 reverse split Jan 31, 2025.",
+    // Liquid staked HYPE via Kinetiq stHYPE
+    // SEC 10-Q Sep 30, 2025: "Digital intangible assets" $35.02M
+    // stHYPE trades at ~1.94x HYPE price due to accrued staking rewards
+    // $35.02M / ($26 × 1.94) = 694,290 stHYPE tokens
+    // At 1.94 exchange rate: 694,290 × 1.94 = 1,346,922 underlying HYPE
+    cryptoInvestments: [
+      {
+        name: "Kinetiq stHYPE",
+        type: "lst",
+        underlyingAsset: "HYPE",
+        fairValue: 35_020_000,  // SEC 10-Q Sep 30, 2025 "Digital intangible assets"
+        sourceDate: "2025-09-30",
+        source: "SEC 10-Q Q3 2025",
+        sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
+        note: "Liquid staked HYPE via Kinetiq protocol",
+        lstAmount: 694_290,     // stHYPE tokens held
+        exchangeRate: 1.94,     // 1 stHYPE = 1.94 HYPE (includes accrued rewards)
+        underlyingAmount: 1_346_922,  // HYPE equivalent (694,290 × 1.94)
+      },
+    ],
   },
 ];
 

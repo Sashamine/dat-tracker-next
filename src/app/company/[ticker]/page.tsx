@@ -192,11 +192,20 @@ export default function CompanyPage() {
     }
   }
 
-  // Crypto investments (fund/ETF positions) - already in USD fair value
+  // Crypto investments (fund/ETF/LST positions)
+  // - For LSTs: use underlyingAmount × cryptoPrice (dynamic value)
+  // - For funds/ETFs: use fairValue (static USD value from SEC filing)
   let cryptoInvestmentsValue = 0;
-  if (displayCompany.cryptoInvestments) {
+  if (displayCompany.cryptoInvestments && prices) {
     for (const investment of displayCompany.cryptoInvestments) {
-      cryptoInvestmentsValue += investment.fairValue;
+      if (investment.type === "lst" && investment.underlyingAmount) {
+        // LST: calculate value using underlying amount × current crypto price
+        const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
+        cryptoInvestmentsValue += investment.underlyingAmount * lstPrice;
+      } else {
+        // Fund/ETF/equity: use fair value from balance sheet
+        cryptoInvestmentsValue += investment.fairValue;
+      }
     }
     totalCryptoNav += cryptoInvestmentsValue;
   }
@@ -459,12 +468,19 @@ export default function CompanyPage() {
               <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
                 <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
                 <span className="text-gray-400"> {displayCompany.asset}</span>
-                {cryptoInvestmentsValue > 0 && (
-                  <>
-                    <span className="text-purple-600"> + {formatLargeNumber(cryptoInvestmentsValue)}</span>
-                    <span className="text-gray-400"> fund</span>
-                  </>
-                )}
+                {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
+                  // Calculate value for this investment
+                  const investmentValue = investment.type === "lst" && investment.underlyingAmount && prices
+                    ? investment.underlyingAmount * (prices.crypto[investment.underlyingAsset]?.price || 0)
+                    : investment.fairValue;
+                  const label = investment.type === "lst" ? "staked" : investment.type;
+                  return (
+                    <span key={idx}>
+                      <span className="text-purple-600"> + {formatLargeNumber(investmentValue)}</span>
+                      <span className="text-gray-400" title={investment.name}> {label}</span>
+                    </span>
+                  );
+                })}
                 {cashReserves > 0 && (
                   <>
                     <span className="text-green-600"> + {formatLargeNumber(cashReserves)}</span>
@@ -500,20 +516,44 @@ export default function CompanyPage() {
                   {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
                 </p>
               </div>
-              {/* Crypto fund/ETF investments */}
-              {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => (
-                <div key={idx} className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    {investment.underlyingAsset} ({investment.type})
-                  </p>
-                  <p className="text-lg font-bold text-purple-600">
-                    +{formatLargeNumber(investment.fairValue)}
-                  </p>
-                  <p className="text-xs text-gray-400 truncate" title={investment.name}>
-                    {investment.name}
-                  </p>
-                </div>
-              ))}
+              {/* Crypto fund/ETF/LST investments */}
+              {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
+                // Calculate current value for LSTs or use fairValue for funds
+                const currentValue = investment.type === "lst" && investment.underlyingAmount && prices
+                  ? investment.underlyingAmount * (prices.crypto[investment.underlyingAsset]?.price || 0)
+                  : investment.fairValue;
+
+                // Build tooltip for LSTs showing exchange rate calculation
+                const lstTooltip = investment.type === "lst" && investment.lstAmount && investment.exchangeRate
+                  ? `${investment.lstAmount.toLocaleString()} ${investment.name} × ${investment.exchangeRate}x = ${investment.underlyingAmount?.toLocaleString()} ${investment.underlyingAsset}`
+                  : investment.name;
+
+                return (
+                  <div key={idx} className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                      {investment.underlyingAsset} ({investment.type === "lst" ? "Staked" : investment.type})
+                    </p>
+                    <p className="text-lg font-bold text-purple-600">
+                      +{formatLargeNumber(currentValue)}
+                    </p>
+                    {investment.type === "lst" && investment.underlyingAmount ? (
+                      <p className="text-xs text-gray-400" title={lstTooltip}>
+                        {formatTokenAmount(investment.underlyingAmount, investment.underlyingAsset)} via {investment.name}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-gray-400 truncate" title={investment.name}>
+                        {investment.name}
+                      </p>
+                    )}
+                    {/* Exchange rate tooltip for LSTs */}
+                    {investment.type === "lst" && investment.lstAmount && investment.exchangeRate && (
+                      <p className="text-xs text-purple-400 mt-1" title={lstTooltip}>
+                        {investment.lstAmount.toLocaleString()} × {investment.exchangeRate}x rate
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
               {cashReserves > 0 && (
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
