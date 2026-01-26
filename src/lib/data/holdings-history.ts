@@ -486,6 +486,10 @@ const CWD_HISTORY: HoldingsSnapshot[] = [
 
 // SUI Group (SUIG) - SUI treasury (formerly Mill City Ventures)
 // NOTE: Jan 2026 8-K shows actual holdings of 108M SUI, correcting earlier estimates
+// TODO BACKFILL: Pre-Jan 2026 entries use basic shares (~48M). Jan 2026 8-K introduced "fully adjusted shares" (80.9M)
+//   which includes pre-funded warrants. To fix treasury yield discontinuity, need to find historical
+//   "fully adjusted shares" from prior 8-Ks/10-Qs and update sharesOutstandingDiluted for each entry.
+//   SEC CIK: 1425355 | Search: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1425355&type=8-K
 const SUIG_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-01", holdings: 45000000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 1.607, source: "SUI treasury announcement" },
   { date: "2024-12-31", holdings: 78000000, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 2.229, source: "Q4 2024 filing" },

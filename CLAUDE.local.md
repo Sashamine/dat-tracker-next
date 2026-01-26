@@ -81,3 +81,20 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Added warning for BTCS about Jan 5 equity sale
 - 274 tests pass, deployed to Vercel
 
+### AVX Verification (continued session)
+- Found SEC CIK 1826397 (formerly AgriFORCE)
+- Fixed sharesForMnav: 40M → 93.1M (Nov 2025 PIPE closed with 86.7M new shares + 6.1M warrants)
+- Added SEC source URLs, updated date to Nov 5, 2025
+- User clarified: S-3 shelves and warrants are standard finance, don't need warnings
+- Only warn for actual dilution events (8-K Item 3.02 unregistered equity sales)
+
+### SUIG Verification (continued session)
+- Found SEC CIK 1425355 (formerly Mill City Ventures)
+- Jan 8, 2026 8-K revealed major share count discrepancy
+- **Fixed**: sharesForMnav 48M → 80.9M (per "fully adjusted shares" in 8-K)
+- Holdings confirmed: 108,098,436 SUI
+- Also fixed Q3 2025 holdings in history (was 130M, should be 108M)
+- Company repurchased 7.8M shares in Q4 2025
+- Company-reported mNAV: 0.64x (significantly below 1.0)
+- 274 tests pass, deployed to Vercel
+
