@@ -1033,8 +1033,11 @@ export const linkCompanies: Company[] = [
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 25_000_000,  // From holdings-history.ts
-    leader: "Chris Loeffler (CEO)",
+    sharesForMnav: 6_905_000,  // 6.53M Class A + 0.37M Class B = 6.9M per SEC DEF 14A Jan 7, 2026
+    sharesAsOf: "2025-12-31",
+    sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
+    secCik: "1627282",
+    leader: "John C. Loeffler II (CEO)",
     strategy: "First Nasdaq LINK treasury. DCA accumulation + staking.",
     notes: "Real estate asset manager pivoting to LINK. 75K LINK staked.",
   },

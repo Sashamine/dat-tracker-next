@@ -509,13 +509,18 @@ const CYPH_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Caliber (CWD) - LINK treasury, first Nasdaq company with LINK policy
+// SEC CIK: 1627282 (CaliberCos Inc.)
+// NOTE: Prior share counts (18M-25M) were completely fabricated. SEC DEF 14A Jan 7, 2026 shows only ~6.9M total shares.
+// Holdings are from company announcements; share count verified via SEC DEF 14A (record date Dec 31, 2025).
 const CWD_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-08-28", holdings: 0, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0, source: "LINK treasury policy adopted" },
-  { date: "2025-09-09", holdings: 0, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0, source: "Initial purchase announced" },
-  { date: "2025-09-18", holdings: 278011, sharesOutstandingDiluted: 20_000_000, holdingsPerShare: 0.01390, source: "$6.5M LINK purchase" },
-  { date: "2025-09-25", holdings: 467632, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.02126, source: "$10M milestone" },
-  { date: "2025-10-16", holdings: 562535, sharesOutstandingDiluted: 24_000_000, holdingsPerShare: 0.02344, source: "$2M additional purchase" },
-  { date: "2025-12-11", holdings: 562535, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.02250, source: "75K LINK staked", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282", sourceType: "sec-filing" },
+  // 2025: LINK treasury strategy launched
+  { date: "2025-08-28", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "LINK treasury policy adopted" },
+  { date: "2025-09-09", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "Initial purchase announced" },
+  { date: "2025-09-18", holdings: 278_011, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.04026, source: "$6.5M LINK purchase" },
+  { date: "2025-09-25", holdings: 467_632, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.06773, source: "$10M milestone" },
+  { date: "2025-10-16", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "$2M additional purchase" },
+  // Dec 31, 2025: 6.53M Class A + 0.37M Class B = 6.9M shares per SEC DEF 14A
+  { date: "2025-12-31", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "SEC DEF 14A Jan 7, 2026", sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF", sourceType: "sec-filing" },
 ];
 
 // SUI Group (SUIG) - SUI treasury (formerly Mill City Ventures)
