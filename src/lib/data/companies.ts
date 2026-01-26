@@ -1069,20 +1069,26 @@ export const ltcCompanies: Company[] = [
     ticker: "LITS",
     asset: "LTC",
     tier: 1,
+    secCik: "1262104",
     holdings: 929_548,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://investor.litestrategy.com/",
+    holdingsSourceUrl: "https://www.litestrategy.com/dashboard/",
     datStartDate: "2025-07-01",
     costBasisAvg: 107.58,
     quarterlyBurnUsd: 3_600_000,
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
-    marketCap: 65_000_000,
-    sharesForMnav: 35_655_155,  // From holdings-history.ts
+    sharesForMnav: 35_655_155,  // SEC 10-Q Q1 FY2026 (Sep 30, 2025)
+    sharesSource: "SEC 10-Q Q1 FY2026",
+    sharesAsOf: "2025-09-30",
+    cashReserves: 10_113_000,  // $10.1M cash (SEC 10-Q Q1 FY2026)
+    cashSource: "SEC 10-Q Q1 FY2026",
+    cashAsOf: "2025-09-30",
+    // No interest-bearing debt per SEC 10-Q Q1 FY2026 (only $1.07M operating liabilities)
     leader: "Justin File (CEO)",
     strategy: "First US-listed LTC treasury. GSR as treasury manager.",
-    notes: "Formerly MEI Pharma. Charlie Lee on board.",
+    notes: "Formerly MEI Pharma. Charlie Lee on board. Dashboard: litestrategy.com/dashboard",
   },
   {
     id: "luxff",
