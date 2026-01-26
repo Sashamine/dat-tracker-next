@@ -412,7 +412,12 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
             "font-semibold",
             company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
           )}>
-            {company.leverageRatio > 0 ? `${company.leverageRatio.toFixed(2)}x` : "—"}
+            {company.leverageRatio > 0 ? (
+              <span className="inline-flex items-center gap-1">
+                {company.leverageRatio >= 1 && <span>⚠️</span>}
+                {company.leverageRatio.toFixed(2)}x
+              </span>
+            ) : "—"}
           </p>
         </div>
         <div>
@@ -633,8 +638,10 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <span className={cn(
+                              "inline-flex items-center gap-1",
                               company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
                             )}>
+                              {company.leverageRatio >= 1 && <span>⚠️</span>}
                               {company.leverageRatio.toFixed(2)}x
                             </span>
                           </TooltipTrigger>
