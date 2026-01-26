@@ -169,9 +169,10 @@ export interface CryptoInvestment {
   note?: string;                 // Additional context
 
   // LST-specific fields (only for type: "lst")
+  lstConfigId?: string;          // Reference to LST config ID (e.g., "khype", "ihype") for dynamic rate lookup
   lstAmount?: number;            // Actual LST tokens held (e.g., 753,000 stHYPE)
-  exchangeRate?: number;         // LST to underlying ratio (e.g., 1.94 means 1 stHYPE = 1.94 HYPE)
-  underlyingAmount?: number;     // Amount of underlying asset represented (lstAmount × exchangeRate)
+  exchangeRate?: number;         // Static fallback: LST to underlying ratio (used if dynamic rate unavailable)
+  underlyingAmount?: number;     // Static fallback: Amount of underlying asset (used if dynamic rate unavailable)
 }
 
 // Source metadata for mNAV component transparency

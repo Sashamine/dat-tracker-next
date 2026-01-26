@@ -16,6 +16,7 @@ export type PricesData = {
   crypto: Record<string, { price: number }>;
   stocks: Record<string, any>;
   forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
+  lst?: Record<string, { exchangeRate: number; provider: string; fetchedAt: string }>;  // LST exchange rates
 } | null | undefined;
 
 // Calculate median of array
@@ -82,12 +83,25 @@ export function getCompanyMNAV(
   }
 
   // Add crypto investments to Crypto NAV
-  // - For LSTs: use underlyingAmount × cryptoPrice (dynamic value based on current price)
+  // - For LSTs: use dynamic exchange rate × lstAmount × cryptoPrice
   // - For funds/ETFs: use fairValue (static value from SEC filing)
   if (company.cryptoInvestments && company.cryptoInvestments.length > 0) {
     for (const investment of company.cryptoInvestments) {
-      if (investment.type === "lst" && investment.underlyingAmount) {
-        // LST: calculate value using underlying amount × current crypto price
+      if (investment.type === "lst" && investment.lstAmount) {
+        // LST: calculate underlying amount using dynamic exchange rate if available
+        const price = prices.crypto[investment.underlyingAsset]?.price || 0;
+
+        // Try to get dynamic exchange rate from prices.lst
+        let exchangeRate = investment.exchangeRate || 1; // Static fallback
+        if (investment.lstConfigId && prices.lst?.[investment.lstConfigId]) {
+          exchangeRate = prices.lst[investment.lstConfigId].exchangeRate;
+        }
+
+        // Calculate: lstAmount × exchangeRate × cryptoPrice
+        const underlyingAmount = investment.lstAmount * exchangeRate;
+        secondaryCryptoValue += underlyingAmount * price;
+      } else if (investment.type === "lst" && investment.underlyingAmount) {
+        // LST with static underlyingAmount (legacy/fallback)
         const price = prices.crypto[investment.underlyingAsset]?.price || 0;
         secondaryCryptoValue += investment.underlyingAmount * price;
       } else {

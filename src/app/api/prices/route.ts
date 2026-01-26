@@ -3,6 +3,7 @@ import { getBinancePrices } from "@/lib/binance";
 import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
 import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
 import { FALLBACK_RATES } from "@/lib/utils/currency";
+import { getLSTExchangeRates, getSupportedLSTIds } from "@/lib/lst";
 
 // FMP for market caps, OTC stocks, and forex
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
@@ -180,13 +181,29 @@ export async function GET() {
     const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
     // Parallel fetch - CoinGecko now handles all crypto including HYPE
-    const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps, forexRates] = await Promise.all([
+    const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps, forexRates, lstRatesMap] = await Promise.all([
       getBinancePrices(),
       getStockSnapshots(alpacaStockTickers).catch(e => { console.error("Alpaca error:", e.message); return {}; }),
       fetchFMPStocks(FMP_ONLY_STOCKS),
       fetchMarketCaps(),
       fetchForexRates(),
+      getLSTExchangeRates(getSupportedLSTIds()).catch(e => {
+        console.error("[LST] Error fetching rates:", e.message);
+        return new Map();
+      }),
     ]);
+
+    // Convert LST rates Map to plain object for JSON serialization
+    const lstRates: Record<string, { exchangeRate: number; provider: string; fetchedAt: string }> = {};
+    if (lstRatesMap instanceof Map) {
+      for (const [id, result] of lstRatesMap) {
+        lstRates[id] = {
+          exchangeRate: result.exchangeRate,
+          provider: result.provider,
+          fetchedAt: result.fetchedAt.toISOString(),
+        };
+      }
+    }
 
     // Format stock prices
     const stockPrices: Record<string, any> = {};
@@ -238,6 +255,7 @@ export async function GET() {
       crypto: cryptoPrices,
       stocks: stockPrices,
       forex: forexRates,  // Live forex rates from FMP
+      lst: lstRates,      // LST exchange rates (e.g., kHYPE -> HYPE)
       timestamp: new Date().toISOString(),
       marketOpen,
       extendedHours,

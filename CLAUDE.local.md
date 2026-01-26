@@ -274,3 +274,22 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
   - Direct holdings labeled "(Direct)" when fund position exists
 - 274 tests pass
 
+### LST Support Feature (continued session)
+- User requested transparency for LST holdings with exchange rate display
+- **Extended CryptoInvestment type** to support liquid staking tokens:
+  - Added `"lst"` type option (for stHYPE, stETH, jitoSOL, etc.)
+  - New fields: `lstAmount`, `exchangeRate`, `underlyingAmount`
+  - 1 stHYPE = 1.94 HYPE (exchange rate includes accrued staking rewards)
+- **HYPD holdings split** for transparency:
+  - Direct holdings: 1,459,615 HYPE ($37.95M at SEC filing)
+  - stHYPE position: 694,290 tokens representing 1,346,922 underlying HYPE
+  - Total: 2,806,537 HYPE equivalent (unchanged)
+- **mNAV calculation updated** to handle LSTs:
+  - For LSTs: `underlyingAmount × cryptoPrice` (dynamic value)
+  - For funds/ETFs: `fairValue` (static SEC filing value)
+- **Company page UI** shows LST breakdown with tooltips:
+  - Equation shows "+ $XX.XM staked" (instead of "fund")
+  - Detailed grid shows: "694,290 × 1.94x rate" explaining exchange rate
+  - Full tooltip: "694,290 Kinetiq stHYPE × 1.94x = 1,346,922 HYPE"
+- 274 tests pass, deployed to Vercel
+

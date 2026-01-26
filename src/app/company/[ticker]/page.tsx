@@ -193,13 +193,25 @@ export default function CompanyPage() {
   }
 
   // Crypto investments (fund/ETF/LST positions)
-  // - For LSTs: use underlyingAmount × cryptoPrice (dynamic value)
+  // - For LSTs: use dynamic exchange rate × lstAmount × cryptoPrice
   // - For funds/ETFs: use fairValue (static USD value from SEC filing)
   let cryptoInvestmentsValue = 0;
   if (displayCompany.cryptoInvestments && prices) {
     for (const investment of displayCompany.cryptoInvestments) {
-      if (investment.type === "lst" && investment.underlyingAmount) {
-        // LST: calculate value using underlying amount × current crypto price
+      if (investment.type === "lst" && investment.lstAmount) {
+        // LST: calculate using dynamic exchange rate if available
+        const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
+
+        // Get dynamic exchange rate from prices.lst or fall back to static
+        let exchangeRate = investment.exchangeRate || 1;
+        if (investment.lstConfigId && (prices as any).lst?.[investment.lstConfigId]) {
+          exchangeRate = (prices as any).lst[investment.lstConfigId].exchangeRate;
+        }
+
+        const underlyingAmount = investment.lstAmount * exchangeRate;
+        cryptoInvestmentsValue += underlyingAmount * lstPrice;
+      } else if (investment.type === "lst" && investment.underlyingAmount) {
+        // LST with static underlyingAmount (legacy/fallback)
         const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
         cryptoInvestmentsValue += investment.underlyingAmount * lstPrice;
       } else {
@@ -469,10 +481,20 @@ export default function CompanyPage() {
                 <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
                 <span className="text-gray-400"> {displayCompany.asset}</span>
                 {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
+                  // Get dynamic exchange rate if available
+                  const lstData = investment.lstConfigId && (prices as any)?.lst?.[investment.lstConfigId];
+                  const exchangeRate = lstData?.exchangeRate || investment.exchangeRate || 1;
+
                   // Calculate value for this investment
-                  const investmentValue = investment.type === "lst" && investment.underlyingAmount && prices
-                    ? investment.underlyingAmount * (prices.crypto[investment.underlyingAsset]?.price || 0)
-                    : investment.fairValue;
+                  let investmentValue = investment.fairValue;
+                  if (investment.type === "lst" && investment.lstAmount && prices) {
+                    const underlyingAmount = investment.lstAmount * exchangeRate;
+                    const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
+                    investmentValue = underlyingAmount * lstPrice;
+                  } else if (investment.type === "lst" && investment.underlyingAmount && prices) {
+                    investmentValue = investment.underlyingAmount * (prices.crypto[investment.underlyingAsset]?.price || 0);
+                  }
+
                   const label = investment.type === "lst" ? "staked" : investment.type;
                   return (
                     <span key={idx}>
@@ -518,14 +540,27 @@ export default function CompanyPage() {
               </div>
               {/* Crypto fund/ETF/LST investments */}
               {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
+                // Get dynamic exchange rate if available, otherwise use static
+                const lstData = investment.lstConfigId && (prices as any)?.lst?.[investment.lstConfigId];
+                const dynamicRate = lstData?.exchangeRate;
+                const exchangeRate = dynamicRate || investment.exchangeRate || 1;
+                const isLiveRate = !!dynamicRate;
+
                 // Calculate current value for LSTs or use fairValue for funds
-                const currentValue = investment.type === "lst" && investment.underlyingAmount && prices
-                  ? investment.underlyingAmount * (prices.crypto[investment.underlyingAsset]?.price || 0)
-                  : investment.fairValue;
+                let currentValue = investment.fairValue;
+                let underlyingAmount = investment.underlyingAmount || 0;
+                if (investment.type === "lst" && investment.lstAmount && prices) {
+                  underlyingAmount = investment.lstAmount * exchangeRate;
+                  const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
+                  currentValue = underlyingAmount * lstPrice;
+                } else if (investment.type === "lst" && investment.underlyingAmount && prices) {
+                  const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
+                  currentValue = investment.underlyingAmount * lstPrice;
+                }
 
                 // Build tooltip for LSTs showing exchange rate calculation
-                const lstTooltip = investment.type === "lst" && investment.lstAmount && investment.exchangeRate
-                  ? `${investment.lstAmount.toLocaleString()} ${investment.name} × ${investment.exchangeRate}x = ${investment.underlyingAmount?.toLocaleString()} ${investment.underlyingAsset}`
+                const lstTooltip = investment.type === "lst" && investment.lstAmount
+                  ? `${investment.lstAmount.toLocaleString()} ${investment.name} × ${exchangeRate.toFixed(4)}x = ${underlyingAmount.toLocaleString()} ${investment.underlyingAsset}${isLiveRate ? ' (live rate)' : ' (static)'}`
                   : investment.name;
 
                 return (
@@ -536,19 +571,19 @@ export default function CompanyPage() {
                     <p className="text-lg font-bold text-purple-600">
                       +{formatLargeNumber(currentValue)}
                     </p>
-                    {investment.type === "lst" && investment.underlyingAmount ? (
+                    {investment.type === "lst" && underlyingAmount > 0 ? (
                       <p className="text-xs text-gray-400" title={lstTooltip}>
-                        {formatTokenAmount(investment.underlyingAmount, investment.underlyingAsset)} via {investment.name}
+                        {formatTokenAmount(underlyingAmount, investment.underlyingAsset)} via {investment.name}
                       </p>
                     ) : (
                       <p className="text-xs text-gray-400 truncate" title={investment.name}>
                         {investment.name}
                       </p>
                     )}
-                    {/* Exchange rate tooltip for LSTs */}
-                    {investment.type === "lst" && investment.lstAmount && investment.exchangeRate && (
-                      <p className="text-xs text-purple-400 mt-1" title={lstTooltip}>
-                        {investment.lstAmount.toLocaleString()} × {investment.exchangeRate}x rate
+                    {/* Exchange rate for LSTs - show if live or static */}
+                    {investment.type === "lst" && investment.lstAmount && (
+                      <p className={`text-xs mt-1 ${isLiveRate ? 'text-green-500' : 'text-purple-400'}`} title={lstTooltip}>
+                        {investment.lstAmount.toLocaleString()} × {exchangeRate.toFixed(2)}x {isLiveRate ? '(live)' : '(static)'}
                       </p>
                     )}
                   </div>

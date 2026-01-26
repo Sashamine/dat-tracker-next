@@ -861,24 +861,24 @@ export const hypeCompanies: Company[] = [
     leader: "Hyunsu Jung (CEO)",
     strategy: "First US public HYPE treasury. Liquid staking via Kinetiq.",
     notes: "Rebranded from Eyenovia Jul 2025. 1-for-80 reverse split Jan 31, 2025.",
-    // Liquid staked HYPE via Kinetiq stHYPE
+    // Liquid staked HYPE via Kinetiq iHYPE (institutional product)
     // SEC 10-Q Sep 30, 2025: "Digital intangible assets" $35.02M
-    // stHYPE trades at ~1.94x HYPE price due to accrued staking rewards
-    // $35.02M / ($26 × 1.94) = 694,290 stHYPE tokens
-    // At 1.94 exchange rate: 694,290 × 1.94 = 1,346,922 underlying HYPE
+    // Uses kHYPE exchange rate as proxy (same underlying yield mechanism)
+    // Exchange rate fetched dynamically from kHYPE contract
     cryptoInvestments: [
       {
-        name: "Kinetiq stHYPE",
+        name: "Kinetiq iHYPE",
         type: "lst",
         underlyingAsset: "HYPE",
         fairValue: 35_020_000,  // SEC 10-Q Sep 30, 2025 "Digital intangible assets"
         sourceDate: "2025-09-30",
         source: "SEC 10-Q Q3 2025",
         sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
-        note: "Liquid staked HYPE via Kinetiq protocol",
-        lstAmount: 694_290,     // stHYPE tokens held
-        exchangeRate: 1.94,     // 1 stHYPE = 1.94 HYPE (includes accrued rewards)
-        underlyingAmount: 1_346_922,  // HYPE equivalent (694,290 × 1.94)
+        note: "Institutional liquid staking via Kinetiq (HiHYPE wrapper)",
+        lstConfigId: "ihype",   // Links to LST config for dynamic rate lookup
+        lstAmount: 694_290,     // iHYPE tokens held (derived from SEC fair value / market price)
+        exchangeRate: 1.94,     // Static fallback if dynamic rate unavailable
+        underlyingAmount: 1_346_922,  // Static fallback (694,290 × 1.94)
       },
     ],
   },
