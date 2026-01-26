@@ -106,14 +106,38 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices converted to USD at ~1.04 EUR/USD.
-  // Source: AMF filings via Euronext press releases
+  // Source: Euronext press releases
   // Verified 2026-01-25
+  // Fully diluted: ~391.5M shares (per cptlb.com/analytics)
   ALTBG: [
+    // === OCA Tranche 1 (March 2025) - Largest dilution, lowest strike ===
+    {
+      type: "convertible",
+      strikePrice: 0.57, // €0.544 × 1.04
+      potentialShares: 89_367_393,
+      source: "Euronext Mar 2025 (OCA A-01 + B-01)",
+      sourceUrl:
+        "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
+      expiration: "2030-03-04",
+      notes: "OCA Tranche 1: Fulgur, Adam Back, UTXO, Chechin-Laurans, TOBAM (€48.6M total). Conversion at €0.544/share.",
+    },
+    // === BSA 2025-01 Warrants (April 2025) ===
+    {
+      type: "warrant",
+      strikePrice: 0.57, // €0.544 × 1.04
+      potentialShares: 13_340_636, // 93,384,449 warrants ÷ 7 = 1 share
+      source: "Euronext Apr 2025 (BSA 2025-01)",
+      sourceUrl:
+        "https://live.euronext.com/en/products/equities/company-news/2025-04-07-blockchain-group-announces-free-allocation-share",
+      expiration: "2026-04-10",
+      notes: "BSA 2025-01: Free warrants to shareholders. 7 BSA = 1 share at €0.544. ~93.4M warrants issued.",
+    },
+    // === OCA B-02 (May 2025) ===
     {
       type: "convertible",
       strikePrice: 0.74, // €0.707 × 1.04
-      potentialShares: 82_451_903, // 78,166,612 (Fulgur) + 4,285,291 (UTXO)
-      source: "AMF May 2025 (OCA B-02)",
+      potentialShares: 82_451_903, // Fulgur (78.2M) + UTXO (4.3M)
+      source: "Euronext May 2025 (OCA B-02 Fulgur/UTXO)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
       expiration: "2030-05-26",
@@ -121,9 +145,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
     {
       type: "convertible",
+      strikePrice: 0.74, // €0.707 × 1.04
+      potentialShares: 17_176_106,
+      source: "Euronext May 2025 (OCA B-02 Adam Back)",
+      sourceUrl:
+        "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
+      expiration: "2030-05-12",
+      notes: "OCA B-02: Adam Back (€12.1M). Conversion at €0.707/share.",
+    },
+    {
+      type: "convertible",
       strikePrice: 3.96, // €3.809 × 1.04
       potentialShares: 1_312_680,
-      source: "AMF May 2025 (OCA B-03 T1)",
+      source: "Euronext May 2025 (OCA B-03 T1)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
       expiration: "2030-05-25",
@@ -133,7 +167,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.15, // €4.9517 × 1.04
       potentialShares: 1_514_631,
-      source: "AMF May 2025 (OCA B-03 T2)",
+      source: "Euronext May 2025 (OCA B-03 T2)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
       expiration: "2030-05-25",
@@ -143,7 +177,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 6.49, // €6.24 × 1.04
       potentialShares: 961_538,
-      source: "AMF Jun 2025 (OCA A-03)",
+      source: "Euronext Jun 2025 (OCA A-03)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-06-12-blockchain-group-announces-equity-and-convertible-bond",
       expiration: "2030-06-10",
@@ -153,7 +187,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.38, // €5.174 × 1.04
       potentialShares: 966_370,
-      source: "AMF Jul 2025 (OCA A-04)",
+      source: "Euronext Jul 2025 (OCA A-04)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
       expiration: "2030-07-01",
@@ -163,7 +197,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.38, // €5.174 × 1.04
       potentialShares: 975_071,
-      source: "AMF Jul 2025 (OCA B-04)",
+      source: "Euronext Jul 2025 (OCA B-04)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
       expiration: "2030-07-01",
@@ -173,7 +207,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 3.80, // €3.6557 × 1.04
       potentialShares: 1_778_045,
-      source: "AMF Aug 2025 (OCA A-05 T1)",
+      source: "Euronext Aug 2025 (OCA A-05 T1)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
       expiration: "2030-08-01",

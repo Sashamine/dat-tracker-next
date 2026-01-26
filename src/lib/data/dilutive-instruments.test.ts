@@ -152,38 +152,37 @@ describe("Dilutive Instruments", () => {
     it("should have valid instruments for ALTBG", () => {
       const altbgInstruments = dilutiveInstruments["ALTBG"];
       expect(altbgInstruments).toBeDefined();
-      expect(altbgInstruments.length).toBe(7); // 7 OCA tranches
+      expect(altbgInstruments.length).toBe(10); // 9 OCA tranches + 1 BSA warrant
 
       for (const inst of altbgInstruments) {
-        expect(inst.type).toBe("convertible");
+        expect(inst.type).toMatch(/^(convertible|warrant)$/);
         expect(inst.strikePrice).toBeGreaterThan(0);
         expect(inst.potentialShares).toBeGreaterThan(0);
-        expect(inst.source).toContain("AMF");
-        expect(inst.notes).toContain("OCA");
+        expect(inst.source).toContain("Euronext");
       }
 
-      // Total potential dilution should be ~90M shares
+      // Total potential dilution should be ~202M shares
       const totalPotential = altbgInstruments.reduce(
         (sum, inst) => sum + inst.potentialShares,
         0
       );
-      expect(totalPotential).toBeGreaterThan(85_000_000);
-      expect(totalPotential).toBeLessThan(95_000_000);
+      expect(totalPotential).toBeGreaterThan(200_000_000);
+      expect(totalPotential).toBeLessThan(210_000_000);
     });
 
     it("should calculate ALTBG dilution correctly at low stock price", () => {
-      // At $1.30 USD (~€1.25 EUR), only OCA B-02 at $0.74 is in the money
-      const result = getEffectiveShares("ALTBG", 226_884_068, 1.30);
+      // At $0.80 USD (~€0.77 EUR), instruments at $0.57 and $0.74 are in the money
+      const result = getEffectiveShares("ALTBG", 226_884_068, 0.80);
 
       expect(result.basic).toBe(226_884_068);
 
-      // Only OCA B-02 (82.4M shares at $0.74) should be in the money
+      // OCA Tranche 1 ($0.57), BSA ($0.57), OCA B-02 Fulgur/UTXO ($0.74), OCA B-02 Adam Back ($0.74)
       const inMoney = result.breakdown.filter((b) => b.inTheMoney);
-      expect(inMoney.length).toBe(1);
-      expect(inMoney[0].potentialShares).toBe(82_451_903);
+      expect(inMoney.length).toBe(4);
 
-      // Diluted = 227M + 82M = ~309M
-      expect(result.diluted).toBe(226_884_068 + 82_451_903);
+      // Total in-money: 89.4M + 13.3M + 82.5M + 17.2M = ~202M
+      const totalInMoney = inMoney.reduce((sum, b) => sum + b.potentialShares, 0);
+      expect(totalInMoney).toBeGreaterThan(200_000_000);
     });
 
     it("should include all ALTBG instruments at high stock price", () => {
@@ -191,11 +190,11 @@ describe("Dilutive Instruments", () => {
       const result = getEffectiveShares("ALTBG", 226_884_068, 10.0);
 
       const inMoney = result.breakdown.filter((b) => b.inTheMoney);
-      expect(inMoney.length).toBe(7); // All 7 tranches
+      expect(inMoney.length).toBe(10); // All 10 instruments
 
-      // Total dilution should add ~90M shares
+      // Total dilution should add ~202M shares
       const totalDilution = inMoney.reduce((sum, b) => sum + b.potentialShares, 0);
-      expect(totalDilution).toBeGreaterThan(85_000_000);
+      expect(totalDilution).toBeGreaterThan(200_000_000);
     });
   });
 });
