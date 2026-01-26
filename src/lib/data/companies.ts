@@ -961,10 +961,13 @@ export const taoCompanies: Company[] = [
     stakingApy: 0.10,
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 11_000_000,
-    sharesForMnav: 28_000_000,  // From holdings-history.ts
-    leader: "James Altucher (advisor)",
+    sharesForMnav: 7_000_000,  // ~6.85M per SEC DEF 14A Oct 2025; Series E convertible ($8 strike) out of money
+    sharesAsOf: "2025-10-31",
+    sharesSource: "SEC DEF 14A Nov 17, 2025 (6,848,912 shares as of Oct 31)",
+    secCik: "1571934",
+    leader: "Joshua Silverman (Executive Chairman)",
     strategy: "First pure-play Bittensor treasury company",
-    notes: "Formerly Synaptogenix. DCG is investor.",
+    notes: "Formerly Synaptogenix. DCG is investor. Series E Preferred convertible at $8 (out of money at ~$4.80).",
   },
   {
     id: "xtaif",

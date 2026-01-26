@@ -460,12 +460,14 @@ const UPXI_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== ALTCOIN TREASURIES ====================
 
-// TAO Synergies (TAOX) - TAO treasury
+// TAO Synergies (TAOX) - TAO treasury (f/k/a Synaptogenix, rebranded Jun 2025)
+// SEC CIK: 1571934. Pivoted from pharma to TAO treasury in mid-2025.
+// NOTE: Prior history was fabricated with wrong share counts (18M-28M). Actual shares are ~7M.
 const TAOX_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-01", holdings: 25000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.00139, source: "Initial TAO treasury" },
-  { date: "2024-12-31", holdings: 42000, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.00191, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 54000, sharesOutstandingDiluted: 26_000_000, holdingsPerShare: 0.00208, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 62000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.00221, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001571934", sourceType: "sec-filing" },
+  // Jun 26, 2025: Rebranded from Synaptogenix to TAO Synergies, ticker SNPX -> TAOX
+  // Oct 2025: $11M PIPE - Series E Preferred + warrants (convertible at $8, out of money)
+  // Oct 31, 2025: 6,848,912 shares per SEC DEF 14A (excludes Series E preferred/warrants)
+  { date: "2025-10-31", holdings: 54_058, sharesOutstandingDiluted: 7_000_000, holdingsPerShare: 0.00772, source: "SEC DEF 14A Nov 17, 2025", sharesSource: "6,848,912 per DEF 14A + est. small increases", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/0001104659-25-113227-index.html", sourceType: "sec-filing" },
 ];
 
 // xTAO Inc (XTAIF) - TSX Venture TAO treasury (IPO'd July 2025)
