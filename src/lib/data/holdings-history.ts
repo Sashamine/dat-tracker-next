@@ -387,9 +387,11 @@ const ETHM_HISTORY: HoldingsSnapshot[] = [
 // SEC 10-Q Sep 30, 2025 shows:
 // - Digital Assets (direct): $4,020,415
 // - Investment in ETH Fund (Dialectic): $64,539,714
-// - Total crypto exposure: $68,560,129
-// Holdings = Total / ETH price at reporting date = $68.56M / $2,500 = 27,424 ETH-equivalent
-// This includes both direct ETH and Dialectic fund position (ETH-denominated, moves 1:1 with ETH)
+// DIRECT HOLDINGS ONLY - Fund position tracked separately in companies.ts via cryptoInvestments
+// SEC 10-Q Q3 2025 shows:
+// - Digital Assets (direct custody): $4,020,415
+// - Investment in ETH Fund (Dialectic): $64,539,714 (tracked via cryptoInvestments)
+// Direct holdings = $4,020,415 / $2,500 = 1,608 ETH
 //
 // Verified Q3 2025: 98,380,767 shares (SEC 10-Q Nov 14, 2025, as of Sep 30, 2025)
 // Buyback program: $5M authorized, 3,535,574 shares repurchased Oct 2025-Jan 2026 (avg $0.56)
@@ -399,10 +401,10 @@ const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 0, sharesOutstandingDiluted: 32_635_995, holdingsPerShare: 0, source: "SEC 10-Q Q3 2025 (Jan 1, 2025 balance)" },
   // 2025 - ETH treasury strategy launched
   { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 0.0000303, source: "Initial $5M ETH purchase (direct)" },
-  // Q3 2025: ETH-equivalent = ($4.02M direct + $64.54M Dialectic fund) / $2,500 = 27,424 ETH
-  { date: "2025-09-30", holdings: 27424, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0002788, source: "SEC 10-Q Q3 2025 (ETH-equivalent: $68.56M / $2,500)", sharesSource: "SEC 10-Q cover page Nov 11, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
+  // Q3 2025: Direct holdings only = $4.02M / $2,500 = 1,608 ETH (fund position tracked separately)
+  { date: "2025-09-30", holdings: 1608, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0000163, source: "SEC 10-Q Q3 2025 (direct holdings only)", sharesSource: "SEC 10-Q cover page Nov 11, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
   // Jan 2026: After 3.54M share buybacks (Oct-Jan), holdings unchanged (no Q4 filing yet)
-  { date: "2026-01-06", holdings: 27424, sharesOutstandingDiluted: 94_845_193, holdingsPerShare: 0.0002892, source: "Holdings from Q3 10-Q (no update since)", sharesSource: "98,380,767 (Sep 30) - 3,535,574 buybacks through Jan 6", sourceUrl: "https://www.nasdaq.com/press-release/gamesquare-announces-543057-shares-repurchase-2026-01-06", sourceType: "press-release" },
+  { date: "2026-01-06", holdings: 1608, sharesOutstandingDiluted: 94_845_193, holdingsPerShare: 0.0000170, source: "Holdings from Q3 10-Q (no update since)", sharesSource: "98,380,767 (Sep 30) - 3,535,574 buybacks through Jan 6", sourceUrl: "https://www.nasdaq.com/press-release/gamesquare-announces-543057-shares-repurchase-2026-01-06", sourceType: "press-release" },
 ];
 
 // FG Nexus (FGNX) - ETH treasury company (formerly Fundamental Global)

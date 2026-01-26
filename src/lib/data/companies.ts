@@ -153,15 +153,14 @@ export const ethCompanies: Company[] = [
     asset: "ETH",
     tier: 1,
     secCik: "1714562",
-    // ETH-equivalent holdings: (DigitalAssets $4.02M + ETHFund $64.54M) / $2,500 = 27,424 ETH
-    // Most ETH held via Dialectic Medici yield platform, not direct custody
-    holdings: 27_424,
+    // Direct ETH holdings only: $4,020,415 / $2,500 = 1,608 ETH (SEC 10-Q Sep 30, 2025)
+    // Most exposure is via Dialectic fund - tracked separately in cryptoInvestments
+    holdings: 1_608,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
     datStartDate: "2025-07-01",
-    stakingPct: 0.90,
-    stakingMethod: "Dialectic Medici platform",
+    stakingPct: 0,  // Direct holdings not staked - yield is via Dialectic fund
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedAtm: 30_000_000,
     // Shares: 98,380,767 (SEC 10-Q Sep 30) - 3,535,574 buybacks (Oct-Jan) = 94,845,193
@@ -176,7 +175,20 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
     strategy: "$250M ETH treasury via Dialectic. 7.84% yield funds buybacks.",
-    notes: "Holdings = ETH-equivalent: $4M direct + $64.5M Dialectic fund @ $2,500/ETH. Buyback: 3.54M shares.",
+    notes: "Most ETH exposure via Dialectic Medici fund, not direct custody. Buyback: 3.54M shares.",
+    // Indirect crypto exposure via fund investment
+    cryptoInvestments: [
+      {
+        name: "Dialectic Medici ETH Fund",
+        type: "fund",
+        underlyingAsset: "ETH",
+        fairValue: 64_539_714,  // SEC 10-Q Sep 30, 2025 - "Investment in ETH Fund"
+        sourceDate: "2025-09-30",
+        source: "SEC 10-Q Q3 2025",
+        sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+        note: "ETH yield fund via Dialectic platform - generates 7.84% yield for buybacks",
+      },
+    ],
   },
   {
     id: "fgnx",

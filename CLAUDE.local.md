@@ -252,11 +252,25 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
   - Preferred Stock: $5,150,000 (Series A)
 - Added: secCik, cashReserves, preferredEquity, updated sources/notes
 - Updated holdings-history.ts with corrected timeline and sources
-- **ETH-equivalent methodology adopted**:
+- **ETH-equivalent methodology adopted** (initial approach):
   - Changed holdings from 15,630 (announced) to 27,424 (ETH-equivalent)
   - Formula: (DigitalAssets $4.02M + ETHFund $64.54M) / $2,500 = 27,424 ETH
-  - Rationale: Dialectic fund is ETH-denominated, moves 1:1 with ETH price
-  - This is the standard approach for fund positions in mNAV calculation
-- Corrected mNAV: ~0.50x (50% discount to NAV) vs 0.87x with old holdings
+  - Corrected mNAV: ~0.50x (50% discount to NAV) vs 0.87x with old holdings
+- 274 tests pass
+
+### Crypto Investments Feature (continued session)
+- User requested: "We need to denote that the exposure is via equity somehow"
+- **Implemented `cryptoInvestments` field for indirect crypto exposure**:
+  - New `CryptoInvestment` interface in types.ts (name, type, underlyingAsset, fairValue, etc.)
+  - Added `cryptoInvestments` array to Company interface
+  - Types: "fund" (private fund), "equity" (stock in crypto co), "etf" (public ETF)
+- **GAME data updated** to separate direct vs fund holdings:
+  - Direct holdings: 1,608 ETH ($4.02M in custody)
+  - Dialectic fund: $64.54M (tracked via cryptoInvestments)
+- **mNAV calculation updated**: cryptoInvestments fairValue added to Crypto NAV
+- **Company page UI updated**:
+  - Equation breakdown shows "+ $64.5M fund" in purple
+  - Detailed grid shows fund card with name, type, and fair value
+  - Direct holdings labeled "(Direct)" when fund position exists
 - 274 tests pass
 

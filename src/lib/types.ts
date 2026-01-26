@@ -142,6 +142,10 @@ export interface Company {
   // Secondary crypto holdings (for multi-asset treasury companies)
   // These are added to Crypto NAV in mNAV calculation
   secondaryCryptoHoldings?: SecondaryCryptoHolding[];
+
+  // Indirect crypto exposure (funds, ETFs, equity in crypto companies)
+  // Fair value is added to Crypto NAV, but displayed separately in UI
+  cryptoInvestments?: CryptoInvestment[];
 }
 
 // Secondary crypto holding for multi-asset treasury companies
@@ -149,6 +153,19 @@ export interface SecondaryCryptoHolding {
   asset: Asset;
   amount: number;
   note?: string; // e.g., "passive hold from convertible deal"
+}
+
+// Indirect crypto exposure via funds or equity investments
+// Used when company owns crypto through a fund/ETF rather than direct custody
+export interface CryptoInvestment {
+  name: string;                  // e.g., "Dialectic ETH Fund", "Grayscale ETHE"
+  type: "fund" | "equity" | "etf"; // fund = private fund, equity = stock in crypto co, etf = public ETF
+  underlyingAsset: Asset;        // What crypto the investment tracks
+  fairValue: number;             // USD fair value from balance sheet
+  sourceDate: string;            // ISO date of the fair value (e.g., SEC filing date)
+  source?: string;               // e.g., "SEC 10-Q Q3 2025"
+  sourceUrl?: string;            // Link to filing
+  note?: string;                 // Additional context
 }
 
 // Source metadata for mNAV component transparency

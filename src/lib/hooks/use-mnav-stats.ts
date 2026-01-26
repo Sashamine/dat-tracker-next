@@ -81,6 +81,14 @@ export function getCompanyMNAV(
     }
   }
 
+  // Add crypto investments fair value (fund/ETF positions already in USD)
+  // These are indirect crypto exposure that should be included in Crypto NAV
+  if (company.cryptoInvestments && company.cryptoInvestments.length > 0) {
+    for (const investment of company.cryptoInvestments) {
+      secondaryCryptoValue += investment.fairValue;
+    }
+  }
+
   const mnav = calculateMNAV(
     marketCap,
     company.holdings,

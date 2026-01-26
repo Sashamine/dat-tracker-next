@@ -183,13 +183,22 @@ export default function CompanyPage() {
   const otherAssets = cashReserves + otherInvestments;
   const cryptoHoldingsValue = displayCompany.holdings * cryptoPrice;
 
-  // Calculate total crypto NAV including secondary holdings
+  // Calculate total crypto NAV including secondary holdings and crypto investments
   let totalCryptoNav = cryptoHoldingsValue;
   if (displayCompany.secondaryCryptoHoldings && prices) {
     for (const holding of displayCompany.secondaryCryptoHoldings) {
       const holdingPrice = prices.crypto[holding.asset]?.price || 0;
       totalCryptoNav += holding.amount * holdingPrice;
     }
+  }
+
+  // Crypto investments (fund/ETF positions) - already in USD fair value
+  let cryptoInvestmentsValue = 0;
+  if (displayCompany.cryptoInvestments) {
+    for (const investment of displayCompany.cryptoInvestments) {
+      cryptoInvestmentsValue += investment.fairValue;
+    }
+    totalCryptoNav += cryptoInvestmentsValue;
   }
 
   // Leverage ratio = Total Debt / Crypto NAV
@@ -432,7 +441,7 @@ export default function CompanyPage() {
                 <div>
                   <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Equity NAV</p>
                   <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                    {formatLargeNumber(nav - totalDebt - preferredEquity)}
+                    {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}
                   </p>
                 </div>
                 <div className="text-right">
@@ -450,6 +459,12 @@ export default function CompanyPage() {
               <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
                 <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
                 <span className="text-gray-400"> {displayCompany.asset}</span>
+                {cryptoInvestmentsValue > 0 && (
+                  <>
+                    <span className="text-purple-600"> + {formatLargeNumber(cryptoInvestmentsValue)}</span>
+                    <span className="text-gray-400"> fund</span>
+                  </>
+                )}
                 {cashReserves > 0 && (
                   <>
                     <span className="text-green-600"> + {formatLargeNumber(cashReserves)}</span>
@@ -468,7 +483,7 @@ export default function CompanyPage() {
                     <span className="text-gray-400"> preferred</span>
                   </>
                 )}
-                <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(nav - totalDebt - preferredEquity)}</span>
+                <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}</span>
               </p>
             </div>
 
@@ -476,7 +491,7 @@ export default function CompanyPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                  {displayCompany.asset} Holdings
+                  {displayCompany.asset} Holdings {cryptoInvestmentsValue > 0 && "(Direct)"}
                 </p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
@@ -485,6 +500,20 @@ export default function CompanyPage() {
                   {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
                 </p>
               </div>
+              {/* Crypto fund/ETF investments */}
+              {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => (
+                <div key={idx} className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-purple-200 dark:border-purple-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    {investment.underlyingAsset} ({investment.type})
+                  </p>
+                  <p className="text-lg font-bold text-purple-600">
+                    +{formatLargeNumber(investment.fairValue)}
+                  </p>
+                  <p className="text-xs text-gray-400 truncate" title={investment.name}>
+                    {investment.name}
+                  </p>
+                </div>
+              ))}
               {cashReserves > 0 && (
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
