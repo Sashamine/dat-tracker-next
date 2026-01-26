@@ -173,18 +173,21 @@ export const ethCompanies: Company[] = [
     ticker: "FGNX",
     asset: "ETH",
     tier: 1,
-    holdings: 37_594,  // Jan 20, 2026 press release - sold more for buybacks
-    holdingsLastUpdated: "2026-01-20",
+    holdings: 37_594,  // Jan 21, 2026 press release - sold more for buybacks
+    holdingsLastUpdated: "2026-01-21",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html",
     datStartDate: "2025-07-30",
+    secCik: "1591890",
     stakingPct: 0.80,
     stakingMethod: "Native staking",
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 110_000_000,  // ~$110M (Jan 2026)
-    sharesForMnav: 92_000_000,  // From holdings-history.ts
+    sharesForMnav: 33_600_000,  // Jan 21, 2026 press release (after 9.9M buybacks)
+    sharesSource: "Press release Jan 21, 2026",
+    sharesAsOf: "2026-01-20",
     leader: "Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
     notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some Nov 2025.",

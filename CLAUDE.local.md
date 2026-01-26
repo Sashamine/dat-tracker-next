@@ -35,9 +35,9 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - ALTBG (Capital B): Use AMF API for French regulatory filings (ISIN FR0011053636)
 
 ## Next Actions
-1. Continue verifying individual companies (user provides ticker)
-2. Add dilutive instruments for each company during verification
-3. Phase 8d: Populate instruments for all 54 companies
+1. **FGNX** - next company to verify
+2. Continue verifying individual companies
+3. Phase 8d: Populate dilutive instruments for all companies
 
 ## Session Notes (2026-01-25)
 - Started with UPXI and BTCS verification (from prior session)
@@ -112,6 +112,19 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Added `secondaryCryptoHoldings: [{ asset: "BTC", amount: 1_000 }]` to NA
 - NA's mNAV now correctly includes BTC in crypto NAV calculation
 - 274 tests pass, TypeScript compiles
+
+### TRON Verification (continued session)
+- SEC CIK: 1956744 (formerly SRM Entertainment)
+- **Fixed**: Holdings were incorrectly "fixed" from 677M → 365M TRX in prior session
+  - Sep 2025 $110M warrant exercise added 312M TRX (365M base + 312M = 677M)
+  - Jan 23, 2026 8-K confirms "more than 677 million TRX in total"
+- **Fixed**: sharesForMnav 85M → 274M (Dec 29, 2025 8-K after Justin Sun $18M investment)
+- **Fixed**: Market cap display inconsistency
+  - mNAV calculation used correct $433M (274M × $1.58)
+  - Display showed stale FMP data ($53M, pre-warrant share count)
+  - Added TRON to MARKET_CAP_OVERRIDES with $434M
+- mNAV = 2.16x (116% premium, no debt - clean balance sheet)
+- Q3 2025: Total liabilities only $4.8M vs $201M crypto NAV (0.02x leverage)
 
 ### Leverage Ratio Feature (continued session)
 - Added Leverage Ratio = Debt / Crypto NAV to show capital structure impact

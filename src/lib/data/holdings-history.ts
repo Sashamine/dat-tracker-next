@@ -386,17 +386,18 @@ const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-23", holdings: 15600, sharesOutstandingDiluted: 94_845_193, holdingsPerShare: 0.0001645, source: "Company announcements", sharesSource: "SEC 10-Q Q3 2025 (98.4M) minus 3.5M buybacks (Oct-Jan 2026)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
 ];
 
-// FG Nexus (FGNX) - ETH treasury company (formerly Forgenix/Fundamental Global)
-// FG Nexus (FGNX) - ETH treasury company
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// FG Nexus (FGNX) - ETH treasury company (formerly Fundamental Global)
+// SEC CIK: 1591890
+// Note: Company launched ETH treasury strategy in July 2025 (Private Placement)
+// Pre-July 2025 data is pre-treasury strategy era (minimal shares, different business)
 const FGNX_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 22000, sharesOutstandingDiluted: 65_000_000, holdingsPerShare: 0.000338, source: "Q2 2024 filing" },
-  { date: "2024-09-30", holdings: 32000, sharesOutstandingDiluted: 72_000_000, holdingsPerShare: 0.000444, source: "Q3 2024 filing" },
-  { date: "2024-12-31", holdings: 40000, sharesOutstandingDiluted: 80_000_000, holdingsPerShare: 0.000500, source: "Q4 2024 filing" },
-  { date: "2025-06-30", holdings: 45000, sharesOutstandingDiluted: 83_000_000, holdingsPerShare: 0.000542, source: "Q2 2025 10-Q" },
-  { date: "2025-09-28", holdings: 50770, sharesOutstandingDiluted: 88_000_000, holdingsPerShare: 0.000577, source: "Q3 2025 10-Q" },
-  { date: "2025-12-17", holdings: 40088, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.000445, source: "Buyback update" },
-  { date: "2026-01-15", holdings: 48442, sharesOutstandingDiluted: 92_000_000, holdingsPerShare: 0.000527, source: "The Block", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001591890&type=8-K", sourceType: "aggregator" },
+  // Pre-treasury strategy (Dec 2024: only 1.27M shares)
+  { date: "2024-12-31", holdings: 0, sharesOutstandingDiluted: 1_267_904, holdingsPerShare: 0, source: "10-K 2024", sharesSource: "10-Q Q3 2025 balance sheet", sourceType: "sec-filing" },
+  // Post Private Placement (Aug 2025) - ~40M pre-funded warrants converted
+  { date: "2025-09-30", holdings: 50_770, sharesOutstandingDiluted: 39_834_188, holdingsPerShare: 1.274, source: "10-Q Q3 2025", sharesSource: "10-Q cover page", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550", sourceType: "sec-filing" },
+  { date: "2025-11-12", holdings: 50_770, sharesOutstandingDiluted: 39_574_350, holdingsPerShare: 1.283, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page (Nov 12)", sourceType: "sec-filing" },
+  // Sold ETH for buybacks - repurchased 9.9M shares
+  { date: "2026-01-21", holdings: 37_594, sharesOutstandingDiluted: 33_600_000, holdingsPerShare: 1.119, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks)", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
 ];
 
 // ==================== ADDITIONAL SOL COMPANIES ====================
