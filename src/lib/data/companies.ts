@@ -973,20 +973,22 @@ export const taoCompanies: Company[] = [
     asset: "TAO",
     tier: 1,
     holdings: 59_962,
-    holdingsLastUpdated: "2025-09-30",
+    holdingsLastUpdated: "2025-11-25",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.newswire.ca/",
+    holdingsSourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
     datStartDate: "2025-07-22",
     costBasisAvg: 350.00,
     stakingPct: 1.00,
     stakingApy: 0.10,
     quarterlyBurnUsd: 400_000,
-    capitalRaisedPipe: 30_100_000,
-    sharesForMnav: 21_000_000,  // From holdings-history.ts
+    capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
+    sharesForMnav: 37_831_285,  // 28,352,195 shares + 9,479,090 pre-funded warrants (auto-convert)
+    sharesAsOf: "2025-11-25",
+    sharesSource: "MD&A Jun 30, 2025 + Off the Chain warrants Nov 13, 2025",
     lowLiquidity: true,  // Canadian OTC - limited data feed coverage
     leader: "Karia Samaroo",
     strategy: "Validator operations and TAO treasury accumulation",
-    notes: "TSX Venture Exchange. World's largest public TAO holder.",
+    notes: "TSX Venture Exchange (XTAO.U). World's largest public TAO holder. Off the Chain Capital is major investor.",
   },
   {
     id: "twav",

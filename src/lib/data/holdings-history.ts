@@ -468,12 +468,15 @@ const TAOX_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 62000, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.00221, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001571934", sourceType: "sec-filing" },
 ];
 
-// TAO Investment Fund (XTAIF) - OTC TAO treasury
+// xTAO Inc (XTAIF) - TSX Venture TAO treasury (IPO'd July 2025)
+// Canadian company: files MD&A on SEDAR+. Pre-funded warrants included as they auto-convert.
 const XTAIF_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 35000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.00233, source: "H1 2024 SEDAR" },
-  { date: "2024-12-31", holdings: 50000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.00278, source: "FY 2024 annual" },
-  { date: "2025-06-30", holdings: 60000, sharesOutstandingDiluted: 20_000_000, holdingsPerShare: 0.00300, source: "H1 2025 filing" },
-  { date: "2025-09-30", holdings: 65000, sharesOutstandingDiluted: 21_000_000, holdingsPerShare: 0.00310, source: "Q3 2025 filing", sourceUrl: "https://www.sedarplus.ca", sourceType: "regulatory-filing" },
+  // Jul 30, 2025: IPO holdings update - "world's largest publicly traded TAO holder"
+  // Shares: 28,352,195 per Jun 30, 2025 MD&A (excludes 1.87M options at $1.00 - out of money)
+  { date: "2025-07-30", holdings: 41_538, sharesOutstandingDiluted: 28_352_195, holdingsPerShare: 0.001465, source: "Press release - IPO holdings update", sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-becomes-largest-publicly-traded-holder-of-tao-821903608.html", sourceType: "press-release" },
+  // Nov 25, 2025: Post Off the Chain $7.3M investment (9,479,090 pre-funded warrants at $0.77)
+  // Shares: 28,352,195 + 9,479,090 warrants = 37,831,285
+  { date: "2025-11-25", holdings: 59_962, sharesOutstandingDiluted: 37_831_285, holdingsPerShare: 0.001585, source: "Press release - post Off the Chain investment", sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html", sourceType: "press-release" },
 ];
 
 // Lite Strategy (LITS) - LTC treasury
