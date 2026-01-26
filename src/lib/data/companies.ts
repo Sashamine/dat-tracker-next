@@ -136,6 +136,15 @@ export const ethCompanies: Company[] = [
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
     sharesForMnav: 47_075_189,  // BASIC shares from 10-Q Q3 2025. Dilution (options, convertibles) calculated dynamically via dilutive-instruments.ts
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
+    dataWarnings: [
+      {
+        type: "equity-sale",
+        message: "8-K Jan 5: Unregistered equity sale - share count may change",
+        filingDate: "2026-01-05",
+        filingUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
+        severity: "warning",
+      },
+    ],
   },
   {
     id: "game",

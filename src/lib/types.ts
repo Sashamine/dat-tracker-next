@@ -16,6 +16,21 @@ export type HoldingsSource =
   | "aggregator"         // bitbo.io, bitcointreasuries.net, etc.
   | "manual";            // Manual entry (needs verification)
 
+// Data warning types for tracking pending filings/events
+export type DataWarningType =
+  | "equity-sale"        // 8-K Item 3.02 - unregistered equity sale
+  | "share-change"       // Potential share count change (ATM, conversion, etc.)
+  | "debt-change"        // Potential debt change
+  | "stale-data";        // Data may be outdated
+
+export interface DataWarning {
+  type: DataWarningType;
+  message: string;        // Short description shown in UI
+  filingDate?: string;    // Date of SEC filing or event
+  filingUrl?: string;     // Link to SEC filing
+  severity: "info" | "warning";  // info = FYI, warning = may affect mNAV
+}
+
 // Company type
 export type CompanyType = "Treasury" | "Miner";
 
@@ -120,6 +135,9 @@ export interface Company {
   // Official mNAV from source (e.g., SharpLink's FD mNAV)
   // When set, use this instead of calculating mNAV
   officialMnav?: number;
+
+  // Data warnings for pending filings/events that may affect accuracy
+  dataWarnings?: DataWarning[];
 }
 
 // Source metadata for mNAV component transparency

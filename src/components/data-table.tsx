@@ -299,6 +299,26 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   </Tooltip>
                 </TooltipProvider>
               )}
+              {company.dataWarnings && company.dataWarnings.length > 0 && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-amber-500 cursor-help text-sm">📋</span>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs">
+                      {company.dataWarnings.map((w, i) => (
+                        <p key={i} className="text-sm">
+                          {w.filingUrl ? (
+                            <a href={w.filingUrl} target="_blank" rel="noopener noreferrer" className="underline" onClick={(e) => e.stopPropagation()}>
+                              {w.message}
+                            </a>
+                          ) : w.message}
+                        </p>
+                      ))}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
               <Badge variant="outline" className={cn("text-xs", assetColors[company.asset] || assetColors.ETH)}>
                 {company.asset}
               </Badge>
@@ -480,6 +500,26 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                               </TooltipTrigger>
                               <TooltipContent className="max-w-xs">
                                 <p className="text-sm">{company.notes}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
+                        {company.dataWarnings && company.dataWarnings.length > 0 && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <span className="text-amber-500 cursor-help text-sm">📋</span>
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-xs">
+                                {company.dataWarnings.map((w, i) => (
+                                  <p key={i} className="text-sm">
+                                    {w.filingUrl ? (
+                                      <a href={w.filingUrl} target="_blank" rel="noopener noreferrer" className="underline" onClick={(e) => e.stopPropagation()}>
+                                        {w.message}
+                                      </a>
+                                    ) : w.message}
+                                  </p>
+                                ))}
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
