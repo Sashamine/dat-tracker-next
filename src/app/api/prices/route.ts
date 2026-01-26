@@ -32,8 +32,13 @@ const FMP_ONLY_STOCKS = [
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
-  "XTAIF",     // xTAO Inc (Canadian OTC - TSX Venture)
   ];
+
+// Canadian stocks - use Yahoo Finance (FMP doesn't cover TSX Venture well)
+// Yahoo ticker format: XTAO-U.V for TSX Venture USD-quoted
+const YAHOO_TICKERS: Record<string, string> = {
+  "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD) - also trades as XTAO.V in CAD
+};
 
 // Cache for prices (2 second TTL)
 let priceCache: { data: any; timestamp: number } | null = null;
@@ -138,6 +143,55 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
   }
 }
 
+// Fetch Yahoo Finance stocks (for TSX Venture and other stocks FMP doesn't cover)
+async function fetchYahooStocks(tickerMap: Record<string, string>): Promise<Record<string, any>> {
+  const entries = Object.entries(tickerMap);
+  if (entries.length === 0) return {};
+
+  const result: Record<string, any> = {};
+
+  for (const [displayTicker, yahooTicker] of entries) {
+    try {
+      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${yahooTicker}?interval=1d&range=2d`;
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "Accept": "application/json",
+        },
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        console.log(`[Yahoo] ${displayTicker} (${yahooTicker}): HTTP ${response.status}`);
+        continue;
+      }
+
+      const data = await response.json();
+      const meta = data?.chart?.result?.[0]?.meta;
+      const indicators = data?.chart?.result?.[0]?.indicators?.quote?.[0];
+
+      if (meta?.regularMarketPrice) {
+        const currentPrice = meta.regularMarketPrice;
+        const prevClose = meta.chartPreviousClose || meta.previousClose || currentPrice;
+        const change24h = prevClose > 0 ? ((currentPrice - prevClose) / prevClose) * 100 : 0;
+
+        result[displayTicker] = {
+          price: currentPrice,
+          change24h,
+          volume: indicators?.volume?.[indicators.volume.length - 1] || 0,
+          marketCap: 0, // Yahoo doesn't return market cap in chart endpoint
+          source: "yahoo",
+        };
+        console.log(`[Yahoo] ${displayTicker}: $${currentPrice.toFixed(2)} (${change24h > 0 ? '+' : ''}${change24h.toFixed(2)}%)`);
+      }
+    } catch (error) {
+      console.error(`[Yahoo] Error fetching ${displayTicker}:`, error);
+    }
+  }
+
+  return result;
+}
+
 // Fetch FMP stocks (for OTC/international)
 async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
   if (tickers.length === 0 || !FMP_API_KEY) return {};
@@ -181,10 +235,11 @@ export async function GET() {
     const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
 
     // Parallel fetch - CoinGecko now handles all crypto including HYPE
-    const [cryptoPrices, stockSnapshots, fmpStocks, marketCaps, forexRates, lstRatesMap] = await Promise.all([
+    const [cryptoPrices, stockSnapshots, fmpStocks, yahooStocks, marketCaps, forexRates, lstRatesMap] = await Promise.all([
       getBinancePrices(),
       getStockSnapshots(alpacaStockTickers).catch(e => { console.error("Alpaca error:", e.message); return {}; }),
       fetchFMPStocks(FMP_ONLY_STOCKS),
+      fetchYahooStocks(YAHOO_TICKERS).catch(e => { console.error("Yahoo error:", e.message); return {}; }),
       fetchMarketCaps(),
       fetchForexRates(),
       getLSTExchangeRates(getSupportedLSTIds()).catch(e => {
@@ -234,6 +289,17 @@ export async function GET() {
         ...data,
         // Apply market cap override if available (fixes currency conversion issues)
         marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
+      };
+    }
+
+    // Merge Yahoo Finance stocks (for TSX Venture, etc.)
+    for (const [ticker, data] of Object.entries(yahooStocks)) {
+      // Calculate market cap from sharesForMnav if available in override
+      const fallback = FALLBACK_STOCKS[ticker];
+      stockPrices[ticker] = {
+        ...data,
+        // Use override or calculate from fallback based on new price
+        marketCap: MARKET_CAP_OVERRIDES[ticker] || (fallback ? (fallback.marketCap / fallback.price) * data.price : 0),
       };
     }
 
