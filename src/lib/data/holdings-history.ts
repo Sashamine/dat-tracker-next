@@ -713,10 +713,16 @@ const CEPO_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL TAO ====================
 
 // TWAV (Taoweave, fka Oblong) - TAO treasury
+// SEC CIK: 746210 | NOTE: Prior share counts (12M-18M) were completely fabricated.
+// Actual: ~1.1M shares Dec 2024 → ~3.2M Nov 2025 via warrant exercises
+// TAO holdings started Jun 2025 with $8M purchase per 10-Q
 const TWAV_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-06-15", holdings: 8000, sharesOutstandingDiluted: 12_000_000, holdingsPerShare: 0.667, source: "Initial TAO treasury" },
-  { date: "2025-09-30", holdings: 15000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 1.000, source: "Q3 2025 filing" },
-  { date: "2025-12-31", holdings: 21943, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 1.219, source: "Q4 2025 filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000746210", sourceType: "sec-filing" },
+  // Jun 2025: Private placement, TAO treasury strategy launched
+  { date: "2025-06-30", holdings: 0, sharesOutstandingDiluted: 1_594_953, holdingsPerShare: 0, source: "Pre-TAO purchase (10-Q)", sharesSource: "SEC 10-Q Q3 2025" },
+  // Sep 30, 2025: 10-Q shows $6.6M digital assets, 21,943 TAO (implied), 3.2M shares
+  { date: "2025-09-30", holdings: 21_943, sharesOutstandingDiluted: 3_207_210, holdingsPerShare: 6.84, source: "SEC 10-Q Q3 2025", sharesSource: "SEC 10-Q Q3 2025 (as of Nov 10)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-034612-index.html", sourceType: "sec-filing" },
+  // Dec 10, 2025: 8-K reports 24,382 TAO holdings
+  { date: "2025-12-10", holdings: 24_382, sharesOutstandingDiluted: 3_207_210, holdingsPerShare: 7.60, source: "SEC 8-K Dec 11, 2025", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html", sourceType: "sec-filing" },
 ];
 
 // ==================== ADDITIONAL LTC ====================

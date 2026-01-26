@@ -999,19 +999,26 @@ export const taoCompanies: Company[] = [
     ticker: "TWAV",
     asset: "TAO",
     tier: 2,
-    holdings: 24_382,  // Dec 10, 2025 - was 21,943
+    holdings: 24_382,  // Dec 10, 2025 8-K: "increased its TAO holdings to 24,382 tokens"
     holdingsLastUpdated: "2025-12-10",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.taoweave.ai/",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
     datStartDate: "2025-06-01",
     costBasisAvg: 384.00,
     stakingPct: 1.00,
     stakingApy: 0.10,
     quarterlyBurnUsd: 150_000,
     capitalRaisedAtm: 7_500_000,
-    sharesForMnav: 18_000_000,  // From holdings-history.ts
+    sharesForMnav: 3_207_210,  // SEC 10-Q Nov 13, 2025 (as of Nov 10, 2025)
+    sharesAsOf: "2025-11-10",
+    sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
+    secCik: "746210",
+    cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
+    leader: "Peter Holst (President & CEO)",
     strategy: "Decentralized AI treasury strategy via TAO accumulation",
-    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025).",
+    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo.",
   },
 ];
 
