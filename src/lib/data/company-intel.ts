@@ -1,5 +1,7 @@
 // Company intelligence: press releases, strategy summaries, and recent developments
-// Last updated: January 20, 2026
+// Last updated: January 26, 2026
+
+import { getMstrDevelopments } from "./mstr-developments";
 
 export interface PressRelease {
   date: string; // YYYY-MM-DD
@@ -33,14 +35,8 @@ const MSTR_INTEL: CompanyIntel = {
     { date: "2025-02-01", title: "Rebranded from MicroStrategy to Strategy", summary: "Corporate name change reflecting Bitcoin focus", url: "https://www.strategy.com/press/microstrategy-rebrands-to-strategy" },
   ],
   strategySummary: "The 'Bitcoin Treasury Company' - pioneered corporate BTC accumulation starting Aug 2020. Executing the '42/42 Plan' targeting $84B in capital ($42B equity + $42B fixed-income). Operates as a Bitcoin credit company: issues convertible notes at 0-2.25% to buy BTC, captures BTC appreciation minus low cost of capital. Has 5 perpetual preferred classes (STRK, STRF, STRD, STRC, STRE) at 8-10% yields for income investors. Reports 'BTC Yield' metric - BTC per share growth rate.",
-  recentDevelopments: [
-    "712,647 BTC (~$71B at $100K) - world's largest corporate Bitcoin treasury",
-    "Dec 2025: $650M convertible notes matured, likely converted to ~16.3M shares",
-    "Nasdaq-100 inclusion (Dec 2024) - first pure-play Bitcoin company in index",
-    "$10.5B convertible debt outstanding across 8 tranches (2027-2032 maturities)",
-    "5 preferred stock classes: STRK, STRF, STRD, STRC, STRE (8-10% dividends)",
-    "$46B ATM capacity announced Nov 2025 for continued accumulation",
-  ],
+  // recentDevelopments: Generated dynamically from mstr-developments.ts
+  recentDevelopments: [], // Placeholder - overridden in getCompanyIntel()
   keyBackers: [
     "Michael Saylor (Executive Chairman, founder of BTC treasury strategy)",
     "Phong Le (President & CEO since 2022)",
@@ -1112,5 +1108,17 @@ export const COMPANY_INTEL: Record<string, CompanyIntel> = {
 
 // Helper function to get intel for a company
 export function getCompanyIntel(ticker: string): CompanyIntel | null {
-  return COMPANY_INTEL[ticker.toUpperCase()] || COMPANY_INTEL[ticker] || null;
+  const intel = COMPANY_INTEL[ticker.toUpperCase()] || COMPANY_INTEL[ticker] || null;
+
+  if (!intel) return null;
+
+  // For MSTR, dynamically generate recentDevelopments from capital events
+  if (ticker.toUpperCase() === "MSTR") {
+    return {
+      ...intel,
+      recentDevelopments: getMstrDevelopments(6), // 6 months of milestones
+    };
+  }
+
+  return intel;
 }
