@@ -236,7 +236,7 @@ export const btcCompanies: Company[] = [
     secCik: "0001050446",  // SEC CIK for EDGAR lookups
     costBasisAvg: 75_353,  // Updated per Jan 12 8-K
     isMiner: false,
-    quarterlyBurnUsd: 15_000_000,
+    quarterlyBurnUsd: 15_204_000,  // SEC 10-Q Q3 2025: "Net cash used in operating activities" $45.6M / 3 quarters
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
