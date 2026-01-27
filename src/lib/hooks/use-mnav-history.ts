@@ -103,15 +103,28 @@ function calculateIntradayMnav(
   return cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
 }
 
+// Optimal intervals for each time range to maximize granularity
+// These match what CoinGecko and Yahoo Finance provide
+const OPTIMAL_INTERVALS: Record<TimeRange, ChartInterval> = {
+  "1d": "5m",   // 5-minute data for both
+  "7d": "1h",   // Hourly data for both
+  "1mo": "1h",  // Hourly data for both (Yahoo supports 1h for 1mo)
+  "1y": "1d",   // Daily data
+  "all": "1d",  // Daily data
+};
+
 // Fetch intraday mNAV data
 async function fetchIntradayMnav(
   range: TimeRange,
   interval: ChartInterval
 ): Promise<MnavDataPoint[]> {
+  // Use optimal interval for maximum granularity matching
+  const optimalInterval = OPTIMAL_INTERVALS[range] || interval;
+
   // Fetch BTC and MSTR prices in parallel
   const [btcRes, stockRes] = await Promise.all([
     fetch(`/api/crypto/BTC/history?range=${range}`),
-    fetch(`/api/stocks/MSTR/history?range=${range}&interval=${interval}`),
+    fetch(`/api/stocks/MSTR/history?range=${range}&interval=${optimalInterval}`),
   ]);
 
   if (!btcRes.ok || !stockRes.ok) {
@@ -125,11 +138,11 @@ async function fetchIntradayMnav(
     return [];
   }
 
-  // Interval in milliseconds for alignment
+  // Interval in milliseconds for alignment (use optimal interval)
   const intervalMs =
-    interval === "5m" ? 5 * 60 * 1000 :
-    interval === "15m" ? 15 * 60 * 1000 :
-    interval === "1h" ? 60 * 60 * 1000 :
+    optimalInterval === "5m" ? 5 * 60 * 1000 :
+    optimalInterval === "15m" ? 15 * 60 * 1000 :
+    optimalInterval === "1h" ? 60 * 60 * 1000 :
     24 * 60 * 60 * 1000;
 
   // Align timestamps and pair prices
