@@ -244,12 +244,6 @@ export default function CompanyEarningsPage() {
                       Quarter
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      EPS
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Revenue
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Holdings
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -262,13 +256,6 @@ export default function CompanyEarningsPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                   {earnings.map((earning, idx) => {
-                    const epsSurprise = earning.epsActual !== undefined && earning.epsEstimate !== undefined
-                      ? earning.epsActual - earning.epsEstimate
-                      : null;
-                    const revenueSurprise = earning.revenueActual !== undefined && earning.revenueEstimate !== undefined
-                      ? ((earning.revenueActual - earning.revenueEstimate) / earning.revenueEstimate) * 100
-                      : null;
-
                     // Calculate quarter-over-quarter growth in holdings per share
                     const prevEarning = idx < earnings.length - 1 ? earnings[idx + 1] : null;
                     const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
@@ -282,44 +269,6 @@ export default function CompanyEarningsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                           Q{earning.fiscalQuarter} {earning.fiscalYear}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right">
-                          {earning.epsActual !== undefined ? (
-                            <div className="space-y-0.5">
-                              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                ${earning.epsActual.toFixed(2)}
-                              </div>
-                              {epsSurprise !== null && (
-                                <div className={cn(
-                                  "text-xs",
-                                  epsSurprise >= 0 ? "text-green-600" : "text-red-600"
-                                )}>
-                                  {epsSurprise >= 0 ? "+" : ""}${epsSurprise.toFixed(2)}
-                                </div>
-                              )}
-                            </div>
-                          ) : (
-                            <span className="text-sm text-gray-400">—</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right">
-                          {earning.revenueActual !== undefined ? (
-                            <div className="space-y-0.5">
-                              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                ${formatLargeNumber(earning.revenueActual)}
-                              </div>
-                              {revenueSurprise !== null && (
-                                <div className={cn(
-                                  "text-xs",
-                                  revenueSurprise >= 0 ? "text-green-600" : "text-red-600"
-                                )}>
-                                  {revenueSurprise >= 0 ? "+" : ""}{revenueSurprise.toFixed(1)}%
-                                </div>
-                              )}
-                            </div>
-                          ) : (
-                            <span className="text-sm text-gray-400">—</span>
-                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
                           {earning.holdingsAtQuarterEnd !== undefined ? (
@@ -357,13 +306,6 @@ export default function CompanyEarningsPage() {
             {/* Mobile Cards */}
             <div className="lg:hidden divide-y divide-gray-200 dark:divide-gray-800">
               {earnings.map((earning, idx) => {
-                const epsSurprise = earning.epsActual !== undefined && earning.epsEstimate !== undefined
-                  ? earning.epsActual - earning.epsEstimate
-                  : null;
-                const revenueSurprise = earning.revenueActual !== undefined && earning.revenueEstimate !== undefined
-                  ? ((earning.revenueActual - earning.revenueEstimate) / earning.revenueEstimate) * 100
-                  : null;
-
                 // Calculate quarter-over-quarter growth in holdings per share
                 const prevEarning = idx < earnings.length - 1 ? earnings[idx + 1] : null;
                 const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
@@ -383,49 +325,7 @@ export default function CompanyEarningsPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-                      <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">EPS</div>
-                        {earning.epsActual !== undefined ? (
-                          <div>
-                            <div className="font-medium text-gray-900 dark:text-gray-100">
-                              ${earning.epsActual.toFixed(2)}
-                            </div>
-                            {epsSurprise !== null && (
-                              <div className={cn(
-                                "text-xs",
-                                epsSurprise >= 0 ? "text-green-600" : "text-red-600"
-                              )}>
-                                {epsSurprise >= 0 ? "+" : ""}${epsSurprise.toFixed(2)}
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <span className="text-gray-400">—</span>
-                        )}
-                      </div>
-
-                      <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Revenue</div>
-                        {earning.revenueActual !== undefined ? (
-                          <div>
-                            <div className="font-medium text-gray-900 dark:text-gray-100">
-                              ${formatLargeNumber(earning.revenueActual)}
-                            </div>
-                            {revenueSurprise !== null && (
-                              <div className={cn(
-                                "text-xs",
-                                revenueSurprise >= 0 ? "text-green-600" : "text-red-600"
-                              )}>
-                                {revenueSurprise >= 0 ? "+" : ""}{revenueSurprise.toFixed(1)}%
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <span className="text-gray-400">—</span>
-                        )}
-                      </div>
-
+                    <div className="grid grid-cols-3 gap-3 text-sm">
                       <div>
                         <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Holdings</div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">
