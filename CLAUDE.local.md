@@ -24,6 +24,7 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - [x] MSTR 8-K Capital Events: Inter-quarter events (mstr-capital-events.ts)
 - [x] MSTR ATM Sales Backfill: Weekly ATM data added to BTC events (Jun-Nov 2025)
 - [x] MSTR Verification Engine: Cross-check 8-K vs XBRL (mstr-verification.ts)
+- [x] MSTR Capital Structure Timeline: Point-in-time capital structure (mstr-capital-structure.ts)
 
 ## Recent Decisions
 - 2026-01-26: Verification approach: XBRL = source of truth, 8-K = point-in-time details, cross-check for discrepancies
@@ -411,4 +412,28 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - 7 new tests for quarterly aggregation and discrepancy detection
 - Committed as 1d5245f, pushed to Vercel
 - 281 tests pass (7 new)
+
+### MSTR Capital Structure Timeline (continued session)
+- User goal: "Build capital structure over time" - show debt, equity, BTC at any point
+- Created `src/lib/data/mstr-capital-structure.ts`:
+  - `getQuarterEndSnapshot(date)`: XBRL-verified capital structure at quarter-ends
+  - `getCapitalStructureAt(date)`: Capital structure at any date (derived if inter-quarter)
+  - `getCapitalStructureTimeline()`: All quarter-end snapshots for charting
+  - `getCapitalStructureSummary(start, end)`: Aggregates for date ranges
+- **Data tracked in CapitalStructureSnapshot**:
+  - Assets: btcHoldings (count), btcCostBasis (USD), cashAndEquivalents
+  - Liabilities: convertibleDebt, securedDebt, totalDebt
+  - Equity: preferredEquity, commonSharesOutstanding
+  - Derived: totalAssets, totalLiabilities, bookEquity
+  - Provenance: source (xbrl/derived), xbrlFiling, events applied
+- **Architecture**:
+  - Quarter-end dates → use XBRL directly (verified)
+  - Inter-quarter dates → prior XBRL + cumulative 8-K events (derived)
+- **Employee stock programs analysis**:
+  - ~$21M/quarter stock-based compensation expense
+  - At $400/share = ~200K shares/year from employee programs
+  - Immaterial (<2% of unexplained share growth)
+  - Decision: Ignore for tracking - captured in quarterly XBRL totals
+- 17 new tests, 298 total tests pass
+- Committed as bc21cf3, pushed to Vercel
 
