@@ -1,9 +1,9 @@
 # Working Memory Buffer
 > Auto-updated during sessions. Re-read at session start.
-> Last updated: 2026-01-26 (evening)
+> Last updated: 2026-01-27
 
 ## Current Goal
-Chart granularity improvements - COMPLETED
+mNAV methodology alignment with Strategy.com - COMPLETED
 
 ## Active Context
 - Project: dat-tracker-next (crypto treasury tracker)
@@ -27,6 +27,9 @@ Chart granularity improvements - COMPLETED
 - [x] MSTR Capital Structure Timeline: Point-in-time capital structure (mstr-capital-structure.ts)
 
 ## Recent Decisions
+- 2026-01-27: **Consistent dilution treatment**: When ITM converts are in diluted shares, subtract face value from debt (avoids double-counting)
+- 2026-01-27: MSTR sharesForMnav = 331.7M (basic shares, not 364M diluted) - matches Strategy.com methodology
+- 2026-01-27: Filter expired instruments from dilution calc (Dec 2020 convert matured, shares already in basic count)
 - 2026-01-26: Verification approach: XBRL = source of truth, 8-K = point-in-time details, cross-check for discrepancies
 - 2026-01-26: Debt discrepancies expected (XBRL=book value vs 8-K=face value)
 - 2026-01-26: Share discrepancies expected (ATM is only one source; conversions/options add more)
@@ -479,4 +482,75 @@ Chart granularity improvements - COMPLETED
   - Decision: Ignore for tracking - captured in quarterly XBRL totals
 - 17 new tests, 298 total tests pass
 - Committed as bc21cf3, pushed to Vercel
+
+## Session Notes (2026-01-27)
+
+### mNAV Discrepancy Investigation
+- User reported: Our mNAV (1.29x) vs Strategy.com (1.07x) - 20% difference
+- Root cause investigation via Playwright browser automation to Strategy.com
+
+### Strategy.com Methodology Discovery
+- Strategy.com uses **Basic Shares (331.7M)** for market cap, NOT diluted (364M)
+- Their "Assumed Diluted Shares Outstanding" (364M) is listed separately
+- Their diluted includes ALL potential shares regardless of strike price
+- Market Cap = 331.7M × $160.44 = $53.2B (verified)
+- mNAV = 1.07x
+
+### Double-Counting Analysis
+- **Issue identified**: We were using diluted shares (364M) AND then adding more ITM dilution
+- BUT convertibles are ALSO counted in totalDebt ($8.2B)
+- This counts ITM converts TWICE (once as equity via shares, once as debt)
+
+### Solution: Consistent Dilution Treatment (Option B)
+- When ITM convertibles are included in diluted share count (as equity):
+  - Add their shares to market cap ✓
+  - SUBTRACT their face value from debt to avoid double-counting ✓
+- This is price-responsive: converts flip between debt and equity based on moneyness
+- More defensible than Strategy.com's approach (which ignores moneyness)
+
+### Implementation
+1. Added `faceValue` field to `DilutiveInstrument` interface
+2. Added `inTheMoneyDebtValue` to `EffectiveSharesResult`
+3. `getEffectiveShares()` now returns ITM convertible face values
+4. `getMarketCapForMnavSync()` returns `inTheMoneyDebtValue`
+5. `getCompanyMNAV()` subtracts ITM convert face values from totalDebt
+
+### Face Values Added
+- **MSTR**: 7 active converts totaling $9.26B
+  - Feb 2021 $1.05B @ $143.25
+  - Mar 2024 $800M @ $118 + $603.75M @ $125
+  - Jun 2024 $800M @ $135
+  - Sep 2024 $1.01B @ $183.19 (OTM)
+  - Nov 2024 $3B @ $672.40 (OTM)
+  - Feb 2025 $2B @ $433.43 (OTM)
+- **BTCS**: 2 converts totaling $20M
+- **UPXI**: 2 converts totaling $186M
+- **ALTBG**: 9 OCAs totaling ~$160M (EUR converted to USD)
+
+### Bug Fix: Expired Instruments
+- Dec 2020 MSTR convert ($650M @ $39.80) matured Dec 15, 2025
+- Was still being counted as ITM (since $160 > $39.80)
+- But those 16.3M shares are ALREADY in basic share count!
+- Fix: `getEffectiveShares()` now filters out expired instruments
+
+### Expected mNAV at $160
+At $160.44 stock price:
+- Basic: 331.7M shares
+- ITM converts: +24.9M shares (Feb 2021, Mar 2024 ×2, Jun 2024)
+- ITM debt removed: -$3.25B (face value of 4 ITM tranches)
+- Diluted shares: 356.6M
+- Market cap: $57.2B
+- Adjusted debt: $8.2B - $3.25B = $4.96B
+- EV: $57.2B + $4.96B + $8.4B pref - $2.25B cash = $68.3B
+- BTC NAV: 712,647 × $88,644 = $63.2B
+- **mNAV: ~1.08x** (vs Strategy's 1.07x)
+
+### Commits
+- 39ffc1e: fix: use basic shares (331.7M) not diluted (364M) for MSTR market cap
+- d68cb22: fix: filter expired instruments from dilution calculation
+- 2373276: feat: consistent dilution treatment - subtract ITM convert debt from EV
+
+### Tests
+- 328 tests pass
+- TypeScript compiles
 

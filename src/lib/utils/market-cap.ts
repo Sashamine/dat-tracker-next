@@ -239,14 +239,33 @@ export function getMarketCapForMnavSync(
       effectiveShares = result.diluted;
       dilutionApplied = result.diluted !== result.basic;
       inTheMoneyDebtValue = result.inTheMoneyDebtValue;
+
+      // Debug for MSTR dilution calculation
+      if (ticker === 'MSTR') {
+        console.log('[MarketCap Debug] MSTR dilution:', {
+          basicShares: company.sharesForMnav,
+          stockPriceUSD: priceInUsd,
+          dilutedShares: result.diluted,
+          dilutionAdded: result.diluted - result.basic,
+          inTheMoneyDebtValue: result.inTheMoneyDebtValue,
+          breakdown: result.breakdown.map(b => ({
+            type: b.type,
+            strike: b.strikePrice,
+            shares: b.potentialShares,
+            faceValue: b.faceValue,
+            itm: b.inTheMoney,
+          })),
+        });
+      }
     }
 
     const calculatedMarketCap = priceInUsd * effectiveShares;
 
-    // Debug for Metaplanet
-    if (ticker === '3350.T') {
-      console.log('[MarketCap Debug] 3350.T calculated:', {
+    // Debug for Metaplanet and MSTR
+    if (ticker === '3350.T' || ticker === 'MSTR') {
+      console.log(`[MarketCap Debug] ${ticker} calculated:`, {
         priceInUsd,
+        effectiveShares,
         calculatedMarketCap,
       });
     }

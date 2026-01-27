@@ -62,8 +62,8 @@ export function getCompanyMNAV(
   // We treat them as equity (in share count), so remove from debt
   const adjustedDebt = Math.max(0, (company.totalDebt || 0) - inTheMoneyDebtValue);
 
-  // Debug logging for Metaplanet, BTBT, and KULR
-  if (company.ticker === '3350.T' || company.ticker === 'BTBT' || company.ticker === 'KULR') {
+  // Debug logging for Metaplanet, BTBT, KULR, and MSTR
+  if (company.ticker === '3350.T' || company.ticker === 'BTBT' || company.ticker === 'KULR' || company.ticker === 'MSTR') {
     console.log(`[mNAV Debug] ${company.ticker}:`, {
       stockPrice: stockData?.price,
       forexJPY: prices.forex?.JPY,
