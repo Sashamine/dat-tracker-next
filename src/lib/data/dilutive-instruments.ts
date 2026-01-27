@@ -446,6 +446,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 /**
  * Calculate effective diluted shares based on current stock price.
  *
+ * Filters out expired instruments - their shares are already in basicShares.
+ *
  * @param ticker - Company ticker symbol
  * @param basicShares - Basic shares outstanding
  * @param stockPrice - Current stock price in USD
@@ -457,8 +459,17 @@ export function getEffectiveShares(
   stockPrice: number
 ): EffectiveSharesResult {
   const instruments = dilutiveInstruments[ticker] || [];
+  const today = new Date().toISOString().split("T")[0];
 
-  const breakdown: InstrumentBreakdown[] = instruments.map((inst) => ({
+  // Filter out expired instruments - their shares already converted to basic
+  const activeInstruments = instruments.filter((inst) => {
+    if (inst.expiration && inst.expiration <= today) {
+      return false; // Expired - shares already in basic count
+    }
+    return true;
+  });
+
+  const breakdown: InstrumentBreakdown[] = activeInstruments.map((inst) => ({
     type: inst.type,
     strikePrice: inst.strikePrice,
     potentialShares: inst.potentialShares,
