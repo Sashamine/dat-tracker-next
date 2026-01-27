@@ -35,6 +35,12 @@ interface MNAVTooltipProps {
   secFilingsUrl?: string;
   // Data source indicator
   hasLiveData?: boolean;
+  // Dilution tracking (for companies with convertibles/warrants)
+  hasDilutiveInstruments?: boolean;
+  basicShares?: number;           // Basic shares before ITM dilution
+  dilutedShares?: number;         // Effective shares after ITM dilution
+  itmDilutionShares?: number;     // Shares added from ITM instruments
+  itmDebtAdjustment?: number;     // Debt removed for ITM converts (face value)
   // Source tracking for each component
   sharesSource?: string;
   sharesAsOf?: string;
@@ -110,6 +116,11 @@ export function MNAVTooltip({
   officialDashboard,
   secFilingsUrl,
   hasLiveData,
+  hasDilutiveInstruments,
+  basicShares,
+  dilutedShares,
+  itmDilutionShares,
+  itmDebtAdjustment,
   sharesSource,
   sharesAsOf,
   sharesSourceUrl,
@@ -171,10 +182,31 @@ export function MNAVTooltip({
             {/* Market Cap breakdown */}
             <div>
               <div className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">
-                Market Cap {sharesForMnav ? "(FD shares)" : ""}
+                Market Cap {hasDilutiveInstruments ? "(diluted)" : sharesForMnav ? "(FD shares)" : ""}
               </div>
               <div className="space-y-0.5 text-gray-300">
-                {sharesForMnav && stockPrice ? (
+                {hasDilutiveInstruments && basicShares && dilutedShares && stockPrice ? (
+                  // Show dilution breakdown for companies with convertibles/warrants
+                  <>
+                    <div className="flex justify-between items-start text-[10px] text-gray-400">
+                      <span>Basic shares</span>
+                      <span className="font-mono">{(basicShares / 1_000_000).toFixed(1)}M</span>
+                    </div>
+                    {itmDilutionShares && itmDilutionShares > 0 && (
+                      <div className="flex justify-between items-start text-[10px] text-amber-400/80">
+                        <span>+ ITM converts</span>
+                        <span className="font-mono">+{(itmDilutionShares / 1_000_000).toFixed(1)}M</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-start text-[10px] text-gray-300 border-t border-gray-700/50 pt-0.5">
+                      <span className="flex items-center flex-wrap">
+                        Diluted × ${stockPrice.toFixed(2)}
+                        <SourceCite source={sharesSource} asOf={sharesAsOf} sourceUrl={sharesSourceUrl} />
+                      </span>
+                      <span className="font-mono">{formatCompact(marketCap)}</span>
+                    </div>
+                  </>
+                ) : sharesForMnav && stockPrice ? (
                   <div className="flex justify-between items-start text-[10px] text-gray-400">
                     <span className="flex items-center flex-wrap">
                       {(sharesForMnav / 1_000_000).toFixed(1)}M × ${stockPrice.toFixed(2)}
@@ -202,13 +234,21 @@ export function MNAVTooltip({
                   <span className="font-mono">{formatCompact(marketCap)}</span>
                 </div>
                 {totalDebt > 0 && (
-                  <div className="flex justify-between items-start">
-                    <span className="flex items-center flex-wrap">
-                      + Debt
-                      <SourceCite source={debtSource} asOf={debtAsOf} sourceUrl={debtSourceUrl} />
-                    </span>
-                    <span className="font-mono text-red-400">{formatCompact(totalDebt)}</span>
-                  </div>
+                  <>
+                    <div className="flex justify-between items-start">
+                      <span className="flex items-center flex-wrap">
+                        + Debt
+                        <SourceCite source={debtSource} asOf={debtAsOf} sourceUrl={debtSourceUrl} />
+                      </span>
+                      <span className="font-mono text-red-400">{formatCompact(totalDebt + (itmDebtAdjustment || 0))}</span>
+                    </div>
+                    {itmDebtAdjustment && itmDebtAdjustment > 0 && (
+                      <div className="flex justify-between items-start text-[10px] text-green-400/80">
+                        <span className="italic">− ITM convert debt</span>
+                        <span className="font-mono">({formatCompact(itmDebtAdjustment)})</span>
+                      </div>
+                    )}
+                  </>
                 )}
                 {preferredEquity > 0 && (
                   <div className="flex justify-between items-start">
@@ -276,9 +316,14 @@ export function MNAVTooltip({
             )}
 
             {/* Data source indicator */}
-            {hasLiveData && (
+            {hasDilutiveInstruments && (
+              <div className="text-[10px] text-blue-400/70 pt-1">
+                ● Diluted shares calculated from SEC filings (ITM instruments only)
+              </div>
+            )}
+            {hasLiveData && !hasDilutiveInstruments && (
               <div className="text-[10px] text-green-400/70 pt-1">
-                ● Live data from mNAV.com
+                ● Live balance sheet data
               </div>
             )}
 

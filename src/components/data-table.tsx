@@ -18,6 +18,7 @@ import {
 } from "@/lib/calculations";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
+import { dilutiveInstruments, getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
 import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
@@ -292,7 +293,21 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
   };
 
   // Mobile card component
-  const MobileCard = ({ company, index }: { company: typeof sortedCompanies[0]; index: number }) => (
+  const MobileCard = ({ company, index }: { company: typeof sortedCompanies[0]; index: number }) => {
+    // Compute dilution info for companies with convertibles/warrants
+    const hasDilutiveInstruments = !!dilutiveInstruments[company.ticker];
+    let dilutionInfo: { basicShares?: number; dilutedShares?: number; itmDilutionShares?: number; itmDebtAdjustment?: number } = {};
+    if (hasDilutiveInstruments && company.sharesForMnav && company.stockPrice) {
+      const result = getEffectiveShares(company.ticker, company.sharesForMnav, company.stockPrice);
+      dilutionInfo = {
+        basicShares: result.basic,
+        dilutedShares: result.diluted,
+        itmDilutionShares: result.diluted - result.basic,
+        itmDebtAdjustment: result.inTheMoneyDebtValue,
+      };
+    }
+
+    return (
     <div
       onClick={() => router.push(`/company/${company.ticker}`)}
       className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 active:bg-gray-50 dark:active:bg-gray-800 transition-colors cursor-pointer"
@@ -385,6 +400,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                 stockPrice={company.stockPrice}
                 cryptoPrice={company.cryptoPrice}
                 hasLiveData={company.hasLiveBalanceSheet}
+                hasDilutiveInstruments={hasDilutiveInstruments}
+                basicShares={dilutionInfo.basicShares}
+                dilutedShares={dilutionInfo.dilutedShares}
+                itmDilutionShares={dilutionInfo.itmDilutionShares}
+                itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
                 holdingsSourceUrl={company.holdingsSourceUrl}
                 officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
@@ -430,7 +450,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
         </div>
       </div>
     </div>
-  );
+    );
+  };
 
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden lg:border-0">
@@ -513,7 +534,21 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedCompanies.map((company, index) => (
+              {sortedCompanies.map((company, index) => {
+                // Compute dilution info for companies with convertibles/warrants
+                const hasDilutiveInstruments = !!dilutiveInstruments[company.ticker];
+                let dilutionInfo: { basicShares?: number; dilutedShares?: number; itmDilutionShares?: number; itmDebtAdjustment?: number } = {};
+                if (hasDilutiveInstruments && company.sharesForMnav && company.stockPrice) {
+                  const result = getEffectiveShares(company.ticker, company.sharesForMnav, company.stockPrice);
+                  dilutionInfo = {
+                    basicShares: result.basic,
+                    dilutedShares: result.diluted,
+                    itmDilutionShares: result.diluted - result.basic,
+                    itmDebtAdjustment: result.inTheMoneyDebtValue,
+                  };
+                }
+
+                return (
                 <TableRow
                   key={company.id}
                   className="hover:bg-gray-50 dark:hover:bg-gray-900/30 cursor-pointer transition-colors"
@@ -605,6 +640,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         stockPrice={company.stockPrice}
                         cryptoPrice={company.cryptoPrice}
                         hasLiveData={company.hasLiveBalanceSheet}
+                        hasDilutiveInstruments={hasDilutiveInstruments}
+                        basicShares={dilutionInfo.basicShares}
+                        dilutedShares={dilutionInfo.dilutedShares}
+                        itmDilutionShares={dilutionInfo.itmDilutionShares}
+                        itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
                         holdingsSourceUrl={company.holdingsSourceUrl}
                         officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                         secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
@@ -706,7 +746,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                     {company.otherAssets > 0 ? formatNumber(company.otherAssets) : "—"}
                   </TableCell>
                 </TableRow>
-              ))}
+                );
+              })}
             </TableBody>
           </Table>
           </div>
