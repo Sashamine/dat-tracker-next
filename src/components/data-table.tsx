@@ -106,7 +106,8 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const marketCap = marketCapResult.marketCap;
     const stockChange = stockData?.change24h;
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
-    const holdingsValue = company.holdings * cryptoPrice;
+    // Pending merger companies don't actually have the holdings yet - use 0 for sorting
+    const holdingsValue = company.pendingMerger ? 0 : company.holdings * cryptoPrice;
     const isAfterHours = stockData?.isAfterHours || false;
 
     // Other assets (cash + investments)
@@ -253,12 +254,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     return sortDir === "desc" ? bVal - aVal : aVal - bVal;
   });
 
-  // Debug: Log first 3 sorted companies
-  console.log('[DataTable Debug] First 3 sorted:', sortedCompanies.slice(0, 3).map(c => ({
-    ticker: c.ticker,
-    holdingsValue: c.holdingsValue,
-    holdings: c.holdings,
-  })));
+  // Debug: Log first 10 sorted companies with values
+  if (sortedCompanies.length > 0) {
+    const debugData = sortedCompanies.slice(0, 10).map(c => `${c.ticker}:${Math.round((c.holdingsValue || 0) / 1e9)}B`);
+    console.log('[DataTable Debug] First 10 sorted:', debugData.join(', '));
+  }
 
   const handleSort = (field: string) => {
     if (sortField === field) {
