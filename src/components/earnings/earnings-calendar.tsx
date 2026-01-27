@@ -63,7 +63,7 @@ export function EarningsCalendar({
         <EarningsCard
           key={`${entry.ticker}-${entry.earningsDate}`}
           entry={entry}
-          onClick={() => router.push(`/company/${entry.ticker}`)}
+          onClick={() => router.push(`/company/${entry.ticker}/earnings`)}
         />
       ))}
     </div>

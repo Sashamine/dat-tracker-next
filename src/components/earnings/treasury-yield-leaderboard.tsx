@@ -144,7 +144,7 @@ export function TreasuryYieldLeaderboard({
                 <TableRow
                   key={item.ticker}
                   className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50"
-                  onClick={() => router.push(`/company/${item.ticker}`)}
+                  onClick={() => router.push(`/company/${item.ticker}/earnings`)}
                 >
                   <TableCell className="text-center font-medium text-gray-500">
                     {item.rank}
