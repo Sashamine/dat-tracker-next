@@ -196,6 +196,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     );
   }
 
+  // Debug sorting
+  console.log('[DataTable Debug] Sort state:', { sortField, sortDir, companiesCount: filteredCompanies.length });
+
   // Sort companies
   const sortedCompanies = [...filteredCompanies].sort((a, b) => {
     let aVal: number, bVal: number;
@@ -249,6 +252,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
 
     return sortDir === "desc" ? bVal - aVal : aVal - bVal;
   });
+
+  // Debug: Log first 3 sorted companies
+  console.log('[DataTable Debug] First 3 sorted:', sortedCompanies.slice(0, 3).map(c => ({
+    ticker: c.ticker,
+    holdingsValue: c.holdingsValue,
+    holdings: c.holdings,
+  })));
 
   const handleSort = (field: string) => {
     if (sortField === field) {
