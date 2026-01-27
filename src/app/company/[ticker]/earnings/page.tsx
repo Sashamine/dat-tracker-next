@@ -57,17 +57,36 @@ function getDaysUntil(dateStr: string): number {
 
 // Aggregate quarterly data into annual data
 function aggregateAnnualData(quarterlyData: EarningsRecord[]): EarningsRecord[] {
-  const annualMap = new Map<number, EarningsRecord>();
+  const yearMap = new Map<number, EarningsRecord[]>();
 
-  // Group by fiscal year, taking Q4 data for each year
+  // Group records by fiscal year
   quarterlyData.forEach((record) => {
-    if (record.fiscalQuarter === 4) {
-      annualMap.set(record.fiscalYear, record);
+    if (!yearMap.has(record.fiscalYear)) {
+      yearMap.set(record.fiscalYear, []);
+    }
+    yearMap.get(record.fiscalYear)!.push(record);
+  });
+
+  const annualData: EarningsRecord[] = [];
+
+  // For each year, select the best representative quarter
+  yearMap.forEach((records, year) => {
+    // Sort quarters by quarter number descending (Q4, Q3, Q2, Q1)
+    records.sort((a, b) => b.fiscalQuarter - a.fiscalQuarter);
+
+    // Find the latest quarter with actual holdings data
+    const representative = records.find(r => r.holdingsAtQuarterEnd !== undefined);
+
+    // If no quarter has holdings data, use Q4 (for upcoming year-end)
+    if (representative) {
+      annualData.push(representative);
+    } else if (records.find(r => r.fiscalQuarter === 4)) {
+      annualData.push(records.find(r => r.fiscalQuarter === 4)!);
     }
   });
 
-  // Convert to array and sort by year descending
-  return Array.from(annualMap.values()).sort((a, b) => b.fiscalYear - a.fiscalYear);
+  // Sort by year descending
+  return annualData.sort((a, b) => b.fiscalYear - a.fiscalYear);
 }
 
 export default function CompanyEarningsPage() {
@@ -318,7 +337,12 @@ export default function CompanyEarningsPage() {
                           {formatDate(earning.earningsDate)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                          {viewType === "quarterly" ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}` : earning.fiscalYear}
+                          {viewType === "quarterly"
+                            ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}`
+                            : earning.fiscalQuarter === 4
+                              ? earning.fiscalYear
+                              : `${earning.fiscalYear} (Q${earning.fiscalQuarter})`
+                          }
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
                           {earning.holdingsAtQuarterEnd !== undefined ? (
@@ -370,7 +394,12 @@ export default function CompanyEarningsPage() {
                           {formatDate(earning.earningsDate)}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          {viewType === "quarterly" ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}` : earning.fiscalYear}
+                          {viewType === "quarterly"
+                            ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}`
+                            : earning.fiscalQuarter === 4
+                              ? earning.fiscalYear
+                              : `${earning.fiscalYear} (Q${earning.fiscalQuarter})`
+                          }
                         </div>
                       </div>
                     </div>
