@@ -1513,7 +1513,15 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 531_900_000,
     btcAvgPrice: 106801,
     btcCumulative: 597325,
-    notes: "Q2 2025 close. Paid STRK and STRF dividends.",
+    // ATM sales (Jun 23-29, 2025)
+    atmMstrShares: 1_354_500,
+    atmMstrProceeds: 519_500_000,
+    atmPrefSales: [
+      { ticker: "STRK", shares: 276_071, proceeds: 28_900_000 },
+      { ticker: "STRF", shares: 284_225, proceeds: 29_700_000 },
+    ],
+    atmTotalProceeds: 578_100_000,
+    notes: "Q2 2025 close. Paid STRK and STRF dividends using MSTR ATM proceeds.",
   },
   {
     date: "2025-07-13",
@@ -1529,6 +1537,15 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 472_500_000,
     btcAvgPrice: 111827,
     btcCumulative: 601550,
+    // ATM sales (Jul 7-13, 2025)
+    atmMstrShares: 797_008,
+    atmMstrProceeds: 330_900_000,
+    atmPrefSales: [
+      { ticker: "STRK", shares: 573_976, proceeds: 71_100_000 },
+      { ticker: "STRF", shares: 444_005, proceeds: 55_300_000 },
+      { ticker: "STRD", shares: 158_278, proceeds: 15_000_000 },
+    ],
+    atmTotalProceeds: 472_300_000,
   },
   {
     date: "2025-07-20",
@@ -1544,6 +1561,15 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 739_800_000,
     btcAvgPrice: 118940,
     btcCumulative: 607770,
+    // ATM sales (Jul 14-20, 2025)
+    atmMstrShares: 1_636_373,
+    atmMstrProceeds: 736_400_000,
+    atmPrefSales: [
+      { ticker: "STRK", shares: 5_441, proceeds: 700_000 },
+      { ticker: "STRF", shares: 2_000, proceeds: 200_000 },
+      { ticker: "STRD", shares: 31_282, proceeds: 3_000_000 },
+    ],
+    atmTotalProceeds: 740_300_000,
   },
   {
     date: "2025-08-03",
@@ -1575,6 +1601,12 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 18_000_000,
     btcAvgPrice: 116401,
     btcCumulative: 628946,
+    // ATM sales (Aug 4-10, 2025) - STRF only
+    atmPrefSales: [
+      { ticker: "STRF", shares: 115_169, proceeds: 13_600_000 },
+    ],
+    atmTotalProceeds: 13_600_000,
+    notes: "Funded by STRF ATM + STRC Offering proceeds.",
   },
   {
     date: "2025-08-17",
@@ -1590,7 +1622,14 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 51_400_000,
     btcAvgPrice: 119666,
     btcCumulative: 629376,
-    notes: "Updated MSTR equity guidance: issue shares when mNAV < 2.5x",
+    // ATM sales (Aug 11-17, 2025) - preferred only, no MSTR common
+    atmPrefSales: [
+      { ticker: "STRK", shares: 179_687, proceeds: 19_300_000 },
+      { ticker: "STRF", shares: 162_670, proceeds: 19_000_000 },
+      { ticker: "STRD", shares: 140_789, proceeds: 12_100_000 },
+    ],
+    atmTotalProceeds: 50_400_000,
+    notes: "Updated MSTR equity guidance: issue shares when mNAV < 2.5x. Funded by preferred ATM only.",
   },
   {
     date: "2025-08-24",
@@ -1606,6 +1645,15 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 356_900_000,
     btcAvgPrice: 115829,
     btcCumulative: 632457,
+    // ATM sales (Aug 18-24, 2025)
+    atmMstrShares: 875_301,
+    atmMstrProceeds: 309_900_000,
+    atmPrefSales: [
+      { ticker: "STRK", shares: 210_100, proceeds: 20_400_000 },
+      { ticker: "STRF", shares: 237_336, proceeds: 26_600_000 },
+      { ticker: "STRD", shares: 944, proceeds: 100_000 },
+    ],
+    atmTotalProceeds: 357_000_000,
   },
   {
     date: "2025-09-07",
@@ -1621,6 +1669,14 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 217_400_000,
     btcAvgPrice: 111196,
     btcCumulative: 638460,
+    // ATM sales (Sep 2-7, 2025)
+    atmMstrShares: 591_606,
+    atmMstrProceeds: 200_500_000,
+    atmPrefSales: [
+      { ticker: "STRF", shares: 104_381, proceeds: 11_600_000 },
+      { ticker: "STRK", shares: 54_558, proceeds: 5_200_000 },
+    ],
+    atmTotalProceeds: 217_300_000,
   },
   {
     date: "2025-09-14",
@@ -1636,6 +1692,14 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 60_200_000,
     btcAvgPrice: 114562,
     btcCumulative: 638985,
+    // ATM sales (Sep 8-14, 2025) - preferred only, no MSTR common
+    atmPrefSales: [
+      { ticker: "STRF", shares: 302_503, proceeds: 34_000_000 },
+      { ticker: "STRK", shares: 181_228, proceeds: 17_300_000 },
+      { ticker: "STRD", shares: 208_175, proceeds: 16_900_000 },
+    ],
+    atmTotalProceeds: 68_200_000,
+    notes: "Funded entirely by preferred ATM sales. No MSTR common stock sold.",
   },
   {
     date: "2025-09-21",
@@ -1651,6 +1715,13 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 99_700_000,
     btcAvgPrice: 117344,
     btcCumulative: 639835,
+    // ATM sales (Sep 15-21, 2025) - MSTR + STRF
+    atmMstrShares: 227_401,
+    atmMstrProceeds: 80_600_000,
+    atmPrefSales: [
+      { ticker: "STRF", shares: 173_834, proceeds: 19_400_000 },
+    ],
+    atmTotalProceeds: 100_000_000,
   },
   {
     date: "2025-09-28",
@@ -1666,6 +1737,14 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 22_100_000,
     btcAvgPrice: 113048,
     btcCumulative: 640031,
+    // ATM sales (Sep 22-28, 2025) - MSTR + preferred
+    atmMstrShares: 347_352,
+    atmMstrProceeds: 116_400_000,
+    atmPrefSales: [
+      { ticker: "STRF", shares: 101_713, proceeds: 11_300_000 },
+      { ticker: "STRD", shares: 5_000, proceeds: 400_000 },
+    ],
+    atmTotalProceeds: 128_100_000,
     notes: "End of Q3 2025: 640,031 BTC",
   },
   {
@@ -1682,7 +1761,14 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 18_800_000,
     btcAvgPrice: 112051,
     btcCumulative: 640418,
-    notes: "Oct 6 week had no purchases (Oct 13-19 period)",
+    // ATM sales (Oct 13-19, 2025) - preferred only, no MSTR common
+    atmPrefSales: [
+      { ticker: "STRF", shares: 100_930, proceeds: 11_200_000 },
+      { ticker: "STRK", shares: 57_636, proceeds: 5_100_000 },
+      { ticker: "STRD", shares: 25_933, proceeds: 2_600_000 },
+    ],
+    atmTotalProceeds: 18_900_000,
+    notes: "Oct 6 week had no purchases (Oct 13-19 period). Funded by preferred ATM only.",
   },
   {
     date: "2025-10-26",
@@ -1698,6 +1784,14 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 43_400_000,
     btcAvgPrice: 111117,
     btcCumulative: 640808,
+    // ATM sales (Oct 20-26, 2025) - preferred only, no MSTR common
+    atmPrefSales: [
+      { ticker: "STRF", shares: 174_900, proceeds: 19_400_000 },
+      { ticker: "STRK", shares: 192_082, proceeds: 17_000_000 },
+      { ticker: "STRD", shares: 70_179, proceeds: 7_000_000 },
+    ],
+    atmTotalProceeds: 43_400_000,
+    notes: "Funded entirely by preferred ATM sales. No MSTR common stock sold.",
   },
   {
     date: "2025-11-02",
@@ -1713,6 +1807,16 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     btcPurchasePrice: 45_600_000,
     btcAvgPrice: 114771,
     btcCumulative: 641205,
+    // ATM sales (Oct 27 - Nov 2, 2025) - first MSTR common sales + preferred
+    atmMstrShares: 551_200,
+    atmMstrProceeds: 54_400_000,
+    atmPrefSales: [
+      { ticker: "STRF", shares: 75_665, proceeds: 8_400_000 },
+      { ticker: "STRK", shares: 49_813, proceeds: 4_400_000 },
+      { ticker: "STRD", shares: 22_976, proceeds: 2_300_000 },
+    ],
+    atmTotalProceeds: 69_500_000,
+    notes: "First week with MSTR common stock ATM sales in this period.",
   },
   {
     date: "2025-11-09",
