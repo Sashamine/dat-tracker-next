@@ -21,6 +21,7 @@ import { StockChart } from "@/components/stock-chart";
 import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { CompanyFilings } from "@/components/company-filings";
+import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
@@ -804,6 +805,13 @@ export default function CompanyPage() {
           ticker={displayCompany.ticker}
           asset={displayCompany.asset}
           currentHoldingsPerShare={holdingsPerShare}
+          className="mb-8"
+        />
+
+        {/* Scheduled Events (debt maturities, pending verifications) */}
+        <ScheduledEvents
+          ticker={displayCompany.ticker}
+          stockPrice={stockPrice}
           className="mb-8"
         />
 

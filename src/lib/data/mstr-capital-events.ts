@@ -20,6 +20,28 @@
  * - Cross-check against quarterly totals in mstr-sec-history.ts
  *
  * Coverage: Aug 2020 (first BTC) through present
+ *
+ * =============================================================================
+ * TODO: PENDING EVENTS (contractually due, awaiting SEC filing for verification)
+ * =============================================================================
+ *
+ * 1. Dec 2025 Notes Conversion (matured Dec 15, 2025)
+ *    - $650M @ 0.75% convertible notes matured
+ *    - Conversion price: ~$39.80/share (post-split)
+ *    - Expected: Full conversion to ~16.3M shares (MSTR was >$300)
+ *    - Source: Original indenture (0001193125-20-315971)
+ *    - Verify with: Q4 2025 10-Q (expected ~Feb 2026)
+ *    - Impact: Reduces convertible debt from ~$7.2B to ~$6.6B
+ *
+ * Future maturities to track:
+ * - Feb 2027: $1.05B @ 0% Notes due
+ * - Sep 2028: $1.01B @ 0.625% Notes due
+ * - Jun 2028: $500M @ 0% Notes due
+ * - Dec 2029: $3B @ 0% Notes due
+ * - Mar 2030: $800M @ 0.625% Notes due
+ * - Mar 2030: $2B @ 0% Notes due (2030B)
+ * - Mar 2031: $603.75M @ 0.875% Notes due
+ * - Jun 2032: $800M @ 2.25% Notes due
  */
 
 export type CapitalEventType =
@@ -56,6 +78,7 @@ export interface CapitalEvent {
   debtCoupon?: number; // Interest rate (e.g., 0.75 = 0.75%)
   debtMaturity?: string; // YYYY-MM-DD
   debtType?: "convertible" | "secured" | "term";
+  conversionPrice?: number; // Post-split conversion price per share (for convertibles)
 
   // Preferred events
   prefTicker?: string; // STRF, STRC, STRK, STRD, STRE
@@ -144,6 +167,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0.75,
     debtMaturity: "2025-12-15",
     debtType: "convertible",
+    conversionPrice: 39.8, // $398 pre-split / 10
     notes:
       "First debt financing for BTC acquisition. Conversion price ~$398 (pre-split)",
   },
@@ -212,6 +236,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0,
     debtMaturity: "2027-02-15",
     debtType: "convertible",
+    conversionPrice: 143.25, // $1,432.46 pre-split / 10
     notes: "Zero-coupon convertible issued at premium to fund BTC purchases",
   },
   {
@@ -722,6 +747,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0.625,
     debtMaturity: "2030-03-15",
     debtType: "convertible",
+    conversionPrice: 118.0, // $1,180 pre-split / 10
     notes: "First convertible of 2024",
   },
   {
@@ -754,6 +780,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0.875,
     debtMaturity: "2031-03-15",
     debtType: "convertible",
+    conversionPrice: 125.0, // $1,250 pre-split / 10
     notes: "Second convertible of Q1 2024",
   },
   {
@@ -787,6 +814,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 2.25,
     debtMaturity: "2032-06-15",
     debtType: "convertible",
+    conversionPrice: 135.0, // $1,350 pre-split / 10
     notes: "Third convertible of 2024",
   },
   {
@@ -850,6 +878,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0.625,
     debtMaturity: "2028-09-15",
     debtType: "convertible",
+    conversionPrice: 183.19, // Post-split price (issued Sep 2024)
     notes: "First post-split convertible",
   },
   {
@@ -929,6 +958,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0,
     debtMaturity: "2029-12-01",
     debtType: "convertible",
+    conversionPrice: 672.4, // Post-split price (issued Nov 2024)
     notes: "Largest single convertible issuance in history",
   },
   {
@@ -1102,6 +1132,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     debtCoupon: 0,
     debtMaturity: "2030-03-01",
     debtType: "convertible",
+    conversionPrice: 433.43, // 2.3072 shares per $1,000
     notes:
       "Zero coupon convertible. Conversion price ~$433.43/share (2.3072 shares per $1,000). Third convertible issuance.",
   },
