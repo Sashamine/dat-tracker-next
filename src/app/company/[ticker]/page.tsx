@@ -297,8 +297,9 @@ export default function CompanyPage() {
             {displayCompany.leader && (
               <p className="mt-1 text-sm text-gray-500">Led by {displayCompany.leader}</p>
             )}
-            {/* Links - Website, Twitter, Tokenized Stock */}
+            {/* Links - Earnings, Website, Twitter, Tokenized Stock */}
             <div className="mt-3 flex flex-wrap gap-2">
+              {/* Earnings page link */}
               <Link
                 href={`/company/${displayCompany.ticker}/earnings`}
                 className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors"
