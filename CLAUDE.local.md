@@ -1,6 +1,6 @@
 # Working Memory Buffer
 > Auto-updated during sessions. Re-read at session start.
-> Last updated: 2026-01-26
+> Last updated: 2026-01-26 (evening)
 
 ## Current Goal
 Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more companies)
@@ -22,8 +22,15 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - [ ] Phase 7e: UI for estimates with provenance
 - [x] MSTR SEC History: XBRL quarterly data (mstr-sec-history.ts)
 - [x] MSTR 8-K Capital Events: Inter-quarter events (mstr-capital-events.ts)
+- [x] MSTR ATM Sales Backfill: Weekly ATM data added to BTC events (Jun-Nov 2025)
+- [x] MSTR Verification Engine: Cross-check 8-K vs XBRL (mstr-verification.ts)
 
 ## Recent Decisions
+- 2026-01-26: Verification approach: XBRL = source of truth, 8-K = point-in-time details, cross-check for discrepancies
+- 2026-01-26: Debt discrepancies expected (XBRL=book value vs 8-K=face value)
+- 2026-01-26: Share discrepancies expected (ATM is only one source; conversions/options add more)
+- 2026-01-26: ATM sales data added to same events as BTC purchases (disclosed in same 8-K filing)
+- 2026-01-26: ATM data structure: atmMstrShares, atmMstrProceeds, atmPrefSales[], atmTotalProceeds
 - 2026-01-26: MSTR data split into two files: XBRL quarterly (mstr-sec-history.ts) + 8-K events (mstr-capital-events.ts)
 - 2026-01-26: 8-K events categorized by type: BTC, DEBT, PREF, ATM, DEBT_EVENT, CORP
 - 2026-01-25: Created dilutive-instruments.ts for dynamic share calculation
@@ -38,11 +45,15 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - For companies with dilutive instruments: sharesForMnav = basic shares (dilution is dynamic)
 - ALTBG (Capital B): Use AMF API for French regulatory filings (ISIN FR0011053636)
 - 8-K filings have NO XBRL - values require text parsing, cross-check against 10-Q totals
+- Weekly ATM disclosure format became standardized around Jun/Jul 2025
+- XBRL debt = book value (post-amortization), 8-K debt = face value (principal)
+- 8-K ATM shares undercount total share growth (missing: conversions, options, preferred)
 
 ## Next Actions
 1. Continue Phase 7d: verify more companies
 2. Phase 8d: Populate dilutive instruments for all companies
 3. Phase 7e: UI for estimates with provenance
+4. Consider building Scheduled Events UI using ATM/capital events data
 
 ## Session Notes (2026-01-25)
 - Started with UPXI and BTCS verification (from prior session)
@@ -349,4 +360,55 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
   - Item 1.01 + "Sales Agreement" = ATM programs
 - Helper functions: `getEventsByType()`, `getEventsInRange()`, `getDebtIssuedByDate()`
 - Committed as 7c72a75, pushed to Vercel
+
+### MSTR ATM Sales Backfill (continued session)
+- **Discovery**: Weekly 8-K filings contain BOTH BTC purchases AND ATM sales in same filing
+- We were capturing BTC but missing ATM data - now added to existing BTC events
+- **New ATM fields added to CapitalEvent interface**:
+  - `atmMstrShares`: Class A common shares sold
+  - `atmMstrProceeds`: Net proceeds from Class A sales ($)
+  - `atmPrefSales[]`: Array of preferred sales (ticker, shares, proceeds)
+  - `atmTotalProceeds`: Total ATM net proceeds ($)
+- **Backfilled 13 events (Jun-Nov 2025)**:
+  | Date | BTC | ATM Total | MSTR Shares | Preferred |
+  |------|-----|-----------|-------------|-----------|
+  | Jun 29 | 4,980 | $578M | 1.35M | STRK, STRF |
+  | Jul 13 | 4,225 | $472M | 797K | STRK, STRF, STRD |
+  | Jul 20 | 6,220 | $740M | 1.64M | STRK, STRF, STRD |
+  | Aug 10 | 155 | $14M | - | STRF only |
+  | Aug 17 | 430 | $50M | - | STRK, STRF, STRD |
+  | Aug 24 | 3,081 | $357M | 875K | STRK, STRF, STRD |
+  | Sep 7 | 1,955 | $217M | 592K | STRF, STRK |
+  | Sep 14 | 525 | $68M | - | STRF, STRK, STRD |
+  | Sep 21 | 850 | $100M | 227K | STRF |
+  | Sep 28 | 196 | $128M | 347K | STRF, STRD |
+  | Oct 19 | 168 | $19M | - | STRF, STRK, STRD |
+  | Oct 26 | 390 | $43M | - | STRF, STRK, STRD |
+  | Nov 2 | 397 | $70M | 551K | STRF, STRK, STRD |
+- **Key insights**:
+  - Early period (Jun-Jul): Heavy MSTR common stock ATM to fund BTC
+  - Mid period (Aug-Sep): Mixed funding from common + preferred ATM
+  - Later period (Oct-Nov): Primarily preferred stock ATM, minimal MSTR common
+- Earlier filings (May-early Jun 2025) don't have consistent weekly ATM disclosure format
+- Committed as 85444c7, pushed to Vercel
+- 274 tests pass
+
+### MSTR Verification Engine (continued session)
+- User approved verification architecture: XBRL as source of truth, cross-check 8-K against quarterly
+- Created `src/lib/data/mstr-verification.ts`:
+  - Cross-checks 8-K event sums against XBRL quarter-end changes
+  - Tracks: BTC purchases, ATM shares sold, debt issuances
+  - Status levels: pass (≤5%), warn (5-20%), fail (>20%), no-data
+- **Key findings from verification run**:
+  - BTC: Generally accurate (8-K captures all purchases)
+  - Shares: ATM alone doesn't explain full share growth (conversions, options, preferred also add shares)
+    - Q2 2025: XBRL +14.8M shares vs 8-K ATM 1.4M (gap = conversions/options)
+    - Q3 2025: XBRL +6.2M shares vs 8-K ATM 4.5M (smaller gap)
+  - Debt: Expected mismatch because XBRL=book value, 8-K=face value
+    - Book value includes amortization/accretion of debt discount
+    - Example: $1B face convertible shows ~$970M book value initially
+- **Documented known limitations** in verification engine header
+- 7 new tests for quarterly aggregation and discrepancy detection
+- Committed as 1d5245f, pushed to Vercel
+- 281 tests pass (7 new)
 
