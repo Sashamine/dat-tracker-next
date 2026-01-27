@@ -241,7 +241,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 331_748_000,  // Basic shares outstanding per strategy.com/shares (Jan 25, 2026). Diluted (364M) is wrong for market cap.
+    sharesForMnav: 331_748_000,  // Basic shares outstanding per strategy.com/shares (Jan 25, 2026). Diluted shares (364M) are wrong for market cap calculation.
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
     totalDebt: 8_214_000_000,  // $8.214B per strategy.com/debt (Jan 26, 2026)
