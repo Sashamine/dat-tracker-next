@@ -4,7 +4,7 @@ import { useEffect, useRef, useMemo, useState } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
-import { useMnavHistory, type MnavDataPoint } from "@/lib/hooks/use-mnav-history";
+import { useMnavHistory, type MnavDataPoint, type MnavCompanyData } from "@/lib/hooks/use-mnav-history";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 interface CompanyMNAVChartProps {
@@ -16,6 +16,8 @@ interface CompanyMNAVChartProps {
   timeRange: TimeRange;
   interval: ChartInterval;
   className?: string;
+  // Company data for intraday mNAV calculation (MSTR only)
+  companyData?: MnavCompanyData;
 }
 
 export function CompanyMNAVChart({
@@ -27,6 +29,7 @@ export function CompanyMNAVChart({
   timeRange,
   interval,
   className,
+  companyData,
 }: CompanyMNAVChartProps) {
   // Silence unused variable warnings - these props are kept for API compatibility
   void asset;
@@ -40,8 +43,8 @@ export function CompanyMNAVChart({
   const isMstr = ticker.toUpperCase() === "MSTR";
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
 
-  // Use the mNAV history hook for MSTR
-  const { data: mnavData, isLoading: isLoadingMnav } = useMnavHistory(ticker, timeRange, interval);
+  // Use the mNAV history hook for MSTR (pass company data for intraday calculation)
+  const { data: mnavData, isLoading: isLoadingMnav } = useMnavHistory(ticker, timeRange, interval, companyData);
 
   // Get mNAV history - use hook data for MSTR, pre-calculated for others
   const { mnavHistory, dataPoints } = useMemo(() => {

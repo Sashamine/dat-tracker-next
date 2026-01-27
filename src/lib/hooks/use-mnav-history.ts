@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { TimeRange, ChartInterval, DEFAULT_INTERVAL } from "./use-stock-history";
 import { MSTR_DAILY_MNAV, type DailyMnavSnapshot } from "@/lib/data/mstr-daily-mnav";
 import { getEffectiveSharesAt } from "@/lib/data/dilutive-instruments";
-import { getCapitalStructureAt } from "@/lib/data/mstr-capital-structure";
 
 interface MnavDataPoint {
   time: string; // Unix timestamp (seconds) for intraday, YYYY-MM-DD for daily
@@ -16,6 +15,16 @@ interface MnavDataPoint {
   dilutedShares?: number;
   totalDebt?: number;
   btcPerShare?: number;
+}
+
+// Company data needed for mNAV calculation (from companies.ts / merged data)
+export interface MnavCompanyData {
+  holdings: number;           // BTC holdings
+  sharesForMnav: number;      // Basic shares outstanding
+  totalDebt: number;          // Total debt in USD
+  preferredEquity: number;    // Preferred equity in USD
+  cashReserves: number;       // Cash in USD
+  restrictedCash: number;     // Restricted cash in USD
 }
 
 interface CryptoHistoryPoint {
@@ -72,33 +81,33 @@ function alignTimestamps(
   return result;
 }
 
-// Calculate mNAV from prices using SEC capital structure data
+// Calculate mNAV from prices using company data (same source as website)
 function calculateIntradayMnav(
   btcPrice: number,
   stockPrice: number,
+  company: MnavCompanyData,
   date: string
 ): number {
-  // Get capital structure from SEC data (XBRL + 8-K events)
-  const capital = getCapitalStructureAt(date);
-  if (!capital) return 0;
-
   // Get diluted shares based on current stock price
   // This includes ITM convertibles and returns inTheMoneyDebtValue for debt adjustment
   const effectiveShares = getEffectiveSharesAt(
     "MSTR",
-    capital.commonSharesOutstanding,
+    company.sharesForMnav,
     stockPrice,
     date
   );
 
   // Subtract ITM convertible face values from debt to avoid double-counting
   // ITM converts are counted as equity (in diluted shares), so remove from debt
-  const adjustedDebt = Math.max(0, capital.totalDebt - effectiveShares.inTheMoneyDebtValue);
+  const adjustedDebt = Math.max(0, company.totalDebt - effectiveShares.inTheMoneyDebtValue);
+
+  // Free cash = cash - restricted cash
+  const freeCash = company.cashReserves - company.restrictedCash;
 
   const marketCap = effectiveShares.diluted * stockPrice;
   const enterpriseValue =
-    marketCap + adjustedDebt + capital.preferredEquity - capital.cashAndEquivalents;
-  const cryptoNav = capital.btcHoldings * btcPrice;
+    marketCap + adjustedDebt + company.preferredEquity - freeCash;
+  const cryptoNav = company.holdings * btcPrice;
 
   return cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
 }
@@ -116,7 +125,8 @@ const OPTIMAL_INTERVALS: Record<TimeRange, ChartInterval> = {
 // Fetch intraday mNAV data
 async function fetchIntradayMnav(
   range: TimeRange,
-  interval: ChartInterval
+  interval: ChartInterval,
+  company: MnavCompanyData
 ): Promise<MnavDataPoint[]> {
   // Use optimal interval for maximum granularity matching
   const optimalInterval = OPTIMAL_INTERVALS[range] || interval;
@@ -148,13 +158,13 @@ async function fetchIntradayMnav(
   // Align timestamps and pair prices
   const aligned = alignTimestamps(btcData, stockData, intervalMs);
 
-  // Calculate mNAV for each point using SEC capital structure
+  // Calculate mNAV for each point using company data (same as website)
   const today = new Date().toISOString().split("T")[0];
   return aligned.map(({ time, btcPrice, stockPrice }) => ({
     time,
     btcPrice,
     stockPrice,
-    mnav: calculateIntradayMnav(btcPrice, stockPrice, today),
+    mnav: calculateIntradayMnav(btcPrice, stockPrice, company, today),
   }));
 }
 
@@ -191,7 +201,8 @@ function getDailyMnav(range: TimeRange): MnavDataPoint[] {
 export function useMnavHistory(
   ticker: string,
   range: TimeRange,
-  interval?: ChartInterval
+  interval?: ChartInterval,
+  companyData?: MnavCompanyData
 ) {
   const isMstr = ticker.toUpperCase() === "MSTR";
   const effectiveInterval = interval || DEFAULT_INTERVAL[range];
@@ -199,8 +210,11 @@ export function useMnavHistory(
   // Use intraday calculation for short ranges, pre-calculated for long ranges
   const useIntraday = isMstr && (range === "1d" || range === "7d" || range === "1mo");
 
+  // For intraday, we need company data to calculate mNAV
+  const hasCompanyData = !!companyData;
+
   return useQuery({
-    queryKey: ["mnavHistory", ticker, range, effectiveInterval, useIntraday],
+    queryKey: ["mnavHistory", ticker, range, effectiveInterval, useIntraday, companyData?.holdings],
     queryFn: async (): Promise<MnavDataPoint[]> => {
       if (!isMstr) {
         // For non-MSTR companies, return empty (no intraday mNAV support yet)
@@ -208,13 +222,17 @@ export function useMnavHistory(
       }
 
       if (useIntraday) {
-        return fetchIntradayMnav(range, effectiveInterval);
+        if (!companyData) {
+          console.warn("useMnavHistory: companyData required for intraday mNAV");
+          return [];
+        }
+        return fetchIntradayMnav(range, effectiveInterval, companyData);
       } else {
         return getDailyMnav(range);
       }
     },
     staleTime: useIntraday ? 60 * 1000 : 5 * 60 * 1000, // 1 min for intraday, 5 min for daily
-    enabled: isMstr,
+    enabled: isMstr && (!useIntraday || hasCompanyData),
   });
 }
 

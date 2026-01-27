@@ -704,6 +704,14 @@ export default function CompanyPage() {
             timeRange={timeRange}
             interval={interval}
             className="mb-8"
+            companyData={displayCompany.ticker === "MSTR" ? {
+              holdings: displayCompany.holdings,
+              sharesForMnav: displayCompany.sharesForMnav || 0,
+              totalDebt: displayCompany.totalDebt || 0,
+              preferredEquity: displayCompany.preferredEquity || 0,
+              cashReserves: displayCompany.cashReserves || 0,
+              restrictedCash: displayCompany.restrictedCash || 0,
+            } : undefined}
           />
         )}
 
