@@ -3,7 +3,7 @@
 > Last updated: 2026-01-26 (evening)
 
 ## Current Goal
-Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more companies)
+Chart granularity improvements - COMPLETED
 
 ## Active Context
 - Project: dat-tracker-next (crypto treasury tracker)
@@ -151,6 +151,49 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - High leverage (≥1.0x) shown in amber with warning: "mNAV elevated by debt"
 - This explains why NA has high mNAV (5x) - it's the $500M debt, not market premium
 - 274 tests pass, deployed to Vercel
+
+## Session Notes (2026-01-26 evening)
+
+### Daily mNAV History Implementation
+- User wanted granular mNAV chart (not just quarterly snapshots)
+- mNAV must use **fully diluted shares** (convertibles in-the-money)
+- Created `scripts/generate-daily-mnav.ts`:
+  - Reads BTC prices from MCP financial-datasets API output files
+  - Fetches MSTR prices from Yahoo Finance API
+  - Gets capital structure at each date via `getCapitalStructureAt()`
+  - Calculates dilution using `getEffectiveSharesAt()` for each date's stock price
+- Added MSTR convertibles to `dilutive-instruments.ts`:
+  - 8 tranches: Dec 2020 (matured), Feb 2021, Mar 2024 (2x), Jun 2024, Sep 2024, Nov 2024 $3B, Feb 2025 $2B
+  - Dec 2020 $650M @ $39.80 included for historical tracking (matured Dec 2025)
+- Added `getEffectiveSharesAt(ticker, basicShares, stockPrice, asOfDate)`:
+  - Filters instruments by issuedDate <= asOfDate AND expiration > asOfDate
+  - Returns diluted shares based on in-the-money status at that date
+- Generated 861 daily mNAV snapshots (Aug 2022 - Jan 2026)
+- Updated chart to use daily data with hover showing: BTC, diluted shares, dilution %, prices, btcPerShare
+
+### Chart Granularity Improvements - COMPLETED
+- **User request**: Maximize data granularity for all time ranges
+- **CoinGecko API granularity discovered**:
+  - 1 day from current time → 5-minute data
+  - 1-90 days → hourly data
+  - 90+ days → daily data
+- **Problem**: Crypto API was sampling down data unnecessarily
+  - 1d: CoinGecko returns 5-min, but code sampled to hourly
+  - 7d: CoinGecko returns hourly, but code sampled to 4-hourly
+  - 1mo: CoinGecko returns hourly, but code sampled to 6-hourly
+- **Fixes applied**:
+  1. `src/app/api/crypto/[symbol]/history/route.ts` - Return full granularity
+  2. `src/lib/hooks/use-mnav-history.ts` - Added optimal interval mapping
+  3. `src/lib/hooks/use-stock-history.ts` - Changed 1mo default from "1d" to "1h"
+  4. `src/app/api/stocks/[ticker]/history/route.ts` - Same interval change
+  5. `src/components/company-mnav-chart.tsx` - Fixed timestamp format for lightweight-charts
+- **Critical bug fixed**: mNAV chart crashed with "Invalid date string=1769523906"
+  - lightweight-charts expects Unix timestamps as NUMBER for intraday, STRING for daily
+  - Code was passing all timestamps as strings
+- **Commits**:
+  - 774099a: "feat: maximize chart data granularity"
+  - fd21fd2: "fix: convert Unix timestamps to numbers for lightweight-charts"
+- **Verified**: 24H view now shows "Live" badge, mNAV range 1.43x - 1.45x
 
 ## Session Notes (2026-01-26)
 
