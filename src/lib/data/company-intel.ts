@@ -24,23 +24,46 @@ export interface CompanyIntel {
 
 const MSTR_INTEL: CompanyIntel = {
   ticker: "MSTR",
-  lastResearched: "2026-01-13",
+  lastResearched: "2026-01-26",
   pressReleases: [
-    { date: "2026-01-12", title: "Purchased 13,627 BTC for $1.25B", summary: "Largest purchase since July 2025, at $91,519/BTC average", url: "https://www.strategy.com/press/strategy-acquires-13627-btc" },
-    { date: "2026-01-05", title: "Purchased 1,200+ BTC for $116M", summary: "Continued weekly accumulation", url: "https://www.strategy.com/press" },
-    { date: "2025-12-29", title: "Acquired 1,229 BTC for $109M", summary: "Year-end accumulation", url: "https://www.strategy.com/press" },
-    { date: "2025-12-01", title: "Established $1.44B USD Reserve", summary: "Reserve for dividends and interest payments on STRK/STRF preferred", url: "https://www.strategy.com/press" },
+    { date: "2026-01-19", title: "Purchased 22,305 BTC for $2.2B", summary: "Largest weekly purchase of 2026, funded by $1.8B ATM sales", url: "https://www.strategy.com/press" },
+    { date: "2026-01-12", title: "Purchased 13,627 BTC for $1.25B", summary: "At $91,519/BTC average", url: "https://www.strategy.com/press/strategy-acquires-13627-btc" },
+    { date: "2025-11-12", title: "$46B Omnibus ATM Program", summary: "Announced capacity for 2B Class A shares + preferred (STRK, STRF, STRD, STRC, STRE)", url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525243601/0001193125-25-243601-index.htm" },
+    { date: "2025-11-04", title: "STRE 10% Perpetual Preferred Launched", summary: "Fifth preferred class, completing preferred stock suite", url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525243577/0001193125-25-243577-index.htm" },
     { date: "2025-02-01", title: "Rebranded from MicroStrategy to Strategy", summary: "Corporate name change reflecting Bitcoin focus", url: "https://www.strategy.com/press/microstrategy-rebrands-to-strategy" },
   ],
-  strategySummary: "Executing the '42/42 Plan' - targeting $84 billion in capital raises ($42B equity + $42B fixed-income securities) to accumulate Bitcoin. Self-describes as 'world's first and largest Bitcoin Treasury Company.' Achieved 22.8% BTC yield in 2025. USD Reserve increased to $2.19B by late December 2025. Issued STRK/STRF 8% perpetual preferred shares. Core thesis: Bitcoin credit company providing leveraged BTC exposure via convertible notes.",
+  strategySummary: "The 'Bitcoin Treasury Company' - pioneered corporate BTC accumulation starting Aug 2020. Executing the '42/42 Plan' targeting $84B in capital ($42B equity + $42B fixed-income). Operates as a Bitcoin credit company: issues convertible notes at 0-2.25% to buy BTC, captures BTC appreciation minus low cost of capital. Has 5 perpetual preferred classes (STRK, STRF, STRD, STRC, STRE) at 8-10% yields for income investors. Reports 'BTC Yield' metric - BTC per share growth rate.",
   recentDevelopments: [
-    "687,410 BTC holdings at ~$75,353 average cost ($51.8B total)",
-    "Maintained MSCI USA Index status despite digital asset holdings exceeding 50%",
-    "Q4 2025 reported $17.44B unrealized loss as BTC retreated from $126,000 peak",
-    "Stock trading near 1x Bitcoin NAV after 50%+ decline in late 2025",
+    "712,647 BTC (~$71B at $100K) - world's largest corporate Bitcoin treasury",
+    "Dec 2025: $650M convertible notes matured, likely converted to ~16.3M shares",
+    "Nasdaq-100 inclusion (Dec 2024) - first pure-play Bitcoin company in index",
+    "$10.5B convertible debt outstanding across 8 tranches (2027-2032 maturities)",
+    "5 preferred stock classes: STRK, STRF, STRD, STRC, STRE (8-10% dividends)",
+    "$46B ATM capacity announced Nov 2025 for continued accumulation",
   ],
-  keyBackers: ["Michael Saylor (Executive Chairman)"],
-  outlook2026: "Continuing aggressive BTC accumulation via 42/42 plan. Focus on preferred share issuance and convertible note strategy.",
+  keyBackers: [
+    "Michael Saylor (Executive Chairman, founder of BTC treasury strategy)",
+    "Phong Le (President & CEO since 2022)",
+    "Andrew Kang (CFO)",
+    "Funded via public markets: convertibles, ATM equity, preferred stock",
+  ],
+  outlook2026: `
+**Debt Schedule:**
+- Feb 2027: $1.05B @ 0% convertible matures (conversion price ~$143)
+- Jun 2028: $500M secured term loan + $1.01B convertible
+- Dec 2029: $3B @ 0% convertible (largest tranche)
+- 2030-2032: $4.2B in convertibles maturing
+
+**Catalysts:**
+- S&P 500 inclusion possible if GAAP profitable (BTC fair value accounting helps)
+- 42/42 Plan ~20% deployed - $70B+ capacity remaining
+- Sub-$100K BTC enables aggressive accumulation at lower cost basis
+
+**Risks:**
+- BTC volatility directly impacts stock price and mNAV
+- Rising rates increase refinancing costs for maturing converts
+- Regulatory uncertainty around Bitcoin corporate holdings
+`.trim(),
 };
 
 const METAPLANET_INTEL: CompanyIntel = {
