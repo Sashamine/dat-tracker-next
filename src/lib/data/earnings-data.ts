@@ -4,6 +4,39 @@
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter } from "../types";
 import { allCompanies } from "./companies";
 import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
+import { getQuarterEndSnapshot } from "./mstr-capital-structure";
+
+/**
+ * Helper: Get MSTR data from capital structure timeline for a specific quarter
+ * Uses verified XBRL data from mstr-capital-structure.ts
+ */
+function getMSTRQuarterData(fiscalYear: number, fiscalQuarter: number): {
+  holdingsAtQuarterEnd?: number;
+  sharesAtQuarterEnd?: number;
+  holdingsPerShare?: number;
+} {
+  // Map fiscal year/quarter to period-end date (MSTR uses calendar year)
+  const quarterEndMonth = fiscalQuarter * 3; // Q1=3, Q2=6, Q3=9, Q4=12
+  const periodEnd = `${fiscalYear}-${String(quarterEndMonth).padStart(2, '0')}-${
+    quarterEndMonth === 3 ? '31' : quarterEndMonth === 6 ? '30' : quarterEndMonth === 9 ? '30' : '31'
+  }`;
+
+  const snapshot = getQuarterEndSnapshot(periodEnd);
+  if (!snapshot) {
+    // No data available for this quarter
+    return {};
+  }
+
+  const holdingsAtQuarterEnd = snapshot.btcHoldings;
+  const sharesAtQuarterEnd = snapshot.commonSharesOutstanding;
+  const holdingsPerShare = holdingsAtQuarterEnd / sharesAtQuarterEnd;
+
+  return {
+    holdingsAtQuarterEnd,
+    sharesAtQuarterEnd,
+    holdingsPerShare,
+  };
+}
 
 // Upcoming and recent earnings dates
 // Status: "upcoming" = scheduled, "confirmed" = date confirmed by company, "reported" = results released
@@ -37,9 +70,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 116_100_000,
     revenueEstimate: 122_660_000,
     netIncome: -340_200_000,
-    holdingsAtQuarterEnd: 640031,
-    sharesAtQuarterEnd: 267_468_000,
-    holdingsPerShare: 0.002393,
+    ...getMSTRQuarterData(2025, 3),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -56,9 +87,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 111_400_000,
     revenueEstimate: 119_300_000,
     netIncome: -102_600_000,
-    holdingsAtQuarterEnd: 597325,
-    sharesAtQuarterEnd: 261_318_000,
-    holdingsPerShare: 0.002286,
+    ...getMSTRQuarterData(2025, 2),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -75,9 +104,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 111_100_000,
     revenueEstimate: 117_000_000,
     netIncome: -4_217_000_000,
-    holdingsAtQuarterEnd: 528185,
-    sharesAtQuarterEnd: 246_537_000,
-    holdingsPerShare: 0.002142,
+    ...getMSTRQuarterData(2025, 1),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K",
     status: "reported",
@@ -94,9 +121,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 120_700_000,
     revenueEstimate: 123_000_000,
     netIncome: 36_200_000,
-    holdingsAtQuarterEnd: 446400,
-    sharesAtQuarterEnd: 226_138_000,
-    holdingsPerShare: 0.001974,
+    ...getMSTRQuarterData(2024, 4),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K",
     status: "reported",
@@ -113,9 +138,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 116_100_000,
     revenueEstimate: 122_660_000,
     netIncome: -340_200_000,
-    holdingsAtQuarterEnd: 252220,
-    sharesAtQuarterEnd: 183_000_000,
-    holdingsPerShare: 0.001378,
+    ...getMSTRQuarterData(2024, 3),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -132,9 +155,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 111_400_000,
     revenueEstimate: 119_300_000,
     netIncome: -102_600_000,
-    holdingsAtQuarterEnd: 226331,
-    sharesAtQuarterEnd: 171_030_000,
-    holdingsPerShare: 0.001323,
+    ...getMSTRQuarterData(2024, 2),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -151,9 +172,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 115_200_000,
     revenueEstimate: 121_700_000,
     netIncome: -53_100_000,
-    holdingsAtQuarterEnd: 214246,
-    sharesAtQuarterEnd: 156_830_000,
-    holdingsPerShare: 0.001366,
+    ...getMSTRQuarterData(2024, 1),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -165,9 +184,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 4,
     earningsDate: "2024-01-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 189150,
-    sharesAtQuarterEnd: 149_040_000,
-    holdingsPerShare: 0.001269,
+    ...getMSTRQuarterData(2023, 4),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -179,9 +196,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 3,
     earningsDate: "2023-10-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 158245,
-    sharesAtQuarterEnd: 125_430_000,
-    holdingsPerShare: 0.001262,
+    ...getMSTRQuarterData(2023, 3),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -193,9 +208,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 2,
     earningsDate: "2023-07-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 152333,
-    sharesAtQuarterEnd: 121_190_000,
-    holdingsPerShare: 0.001257,
+    ...getMSTRQuarterData(2023, 2),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -207,9 +220,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 1,
     earningsDate: "2023-04-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 138955,
-    sharesAtQuarterEnd: 109_950_000,
-    holdingsPerShare: 0.001264,
+    ...getMSTRQuarterData(2023, 1),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -221,9 +232,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 4,
     earningsDate: "2023-01-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 132500,
-    sharesAtQuarterEnd: 95_850_000,
-    holdingsPerShare: 0.001382,
+    ...getMSTRQuarterData(2022, 4),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -235,9 +244,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 3,
     earningsDate: "2022-10-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 130000,
-    sharesAtQuarterEnd: 93_540_000,
-    holdingsPerShare: 0.001390,
+    ...getMSTRQuarterData(2022, 3),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -249,9 +256,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 2,
     earningsDate: "2022-07-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 129699,
-    sharesAtQuarterEnd: 93_370_000,
-    holdingsPerShare: 0.001389,
+    ...getMSTRQuarterData(2022, 2),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -263,9 +268,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 1,
     earningsDate: "2022-04-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 125051,
-    sharesAtQuarterEnd: 93_340_000,
-    holdingsPerShare: 0.001340,
+    ...getMSTRQuarterData(2022, 1),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -277,9 +280,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 4,
     earningsDate: "2022-01-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 124391,
-    sharesAtQuarterEnd: 93_220_000,
-    holdingsPerShare: 0.001334,
+    ...getMSTRQuarterData(2021, 4),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -291,9 +292,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 3,
     earningsDate: "2021-10-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 114042,
-    sharesAtQuarterEnd: 83_940_000,
-    holdingsPerShare: 0.001359,
+    ...getMSTRQuarterData(2021, 3),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -305,9 +304,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 2,
     earningsDate: "2021-07-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 105084,
-    sharesAtQuarterEnd: 77_840_000,
-    holdingsPerShare: 0.001350,
+    ...getMSTRQuarterData(2021, 2),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -319,9 +316,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 1,
     earningsDate: "2021-04-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 91326,
-    sharesAtQuarterEnd: 77_820_000,
-    holdingsPerShare: 0.001174,
+    ...getMSTRQuarterData(2021, 1),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -333,9 +328,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 4,
     earningsDate: "2021-01-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 70470,
-    sharesAtQuarterEnd: 76_230_000,
-    holdingsPerShare: 0.000924,
+    ...getMSTRQuarterData(2020, 4),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
@@ -347,9 +340,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 3,
     earningsDate: "2020-10-30",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 38250,
-    sharesAtQuarterEnd: 72_530_000,
-    holdingsPerShare: 0.000527,
+    ...getMSTRQuarterData(2020, 3),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     status: "reported",
