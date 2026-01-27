@@ -132,8 +132,9 @@ export function useCompanyOverrides() {
 
   // mNAV.com only tracks BTC treasury companies - don't use their data for ETH/other assets
   // Using their data for non-BTC companies causes incorrect holdings (e.g., BTBT shows 0 BTC instead of 155K ETH)
+  // NOTE: MSTR excluded - we have comprehensive SEC XBRL data that is the gold standard
   const BTC_TREASURY_TICKERS = new Set([
-    'MSTR', 'MARA', 'RIOT', 'CLSK', 'SMLR', 'KULR', 'DJT', 'NAKA', 'ABTC',
+    'MARA', 'RIOT', 'CLSK', 'SMLR', 'KULR', 'DJT', 'NAKA', 'ABTC',
     'XXI', 'ASST', '3350.T', '0434.HK', 'ALTBG', 'H100.ST',
   ]);
 

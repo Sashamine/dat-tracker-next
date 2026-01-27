@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TimeRange, ChartInterval, DEFAULT_INTERVAL } from "./use-stock-history";
 import { MSTR_DAILY_MNAV, type DailyMnavSnapshot } from "@/lib/data/mstr-daily-mnav";
 import { getEffectiveSharesAt } from "@/lib/data/dilutive-instruments";
+import { getCapitalStructureAt } from "@/lib/data/mstr-capital-structure";
 
 interface MnavDataPoint {
   time: string; // Unix timestamp (seconds) for intraday, YYYY-MM-DD for daily
@@ -30,16 +31,6 @@ interface StockHistoryPoint {
   close: number;
   volume: number;
 }
-
-// Current MSTR capital structure (for intraday calculation)
-// These values don't change intraday - from latest SEC filing + 8-K events
-const MSTR_CURRENT_CAPITAL = {
-  btcHoldings: 471_107, // As of Jan 2026 weekly 8-K
-  basicShares: 295_025_000, // Q4 2025 estimated
-  totalDebt: 7_270_600_000, // From capital structure
-  preferredEquity: 1_615_000_000, // STRK + STRF + STRD + STRC + STRE
-  cashAndEquivalents: 38_400_000,
-};
 
 // Align intraday timestamps to nearest interval
 function alignTimestamps(
@@ -81,23 +72,32 @@ function alignTimestamps(
   return result;
 }
 
-// Calculate mNAV from prices and capital structure
+// Calculate mNAV from prices using SEC capital structure data
 function calculateIntradayMnav(
   btcPrice: number,
   stockPrice: number,
-  capital: typeof MSTR_CURRENT_CAPITAL
+  date: string
 ): number {
+  // Get capital structure from SEC data (XBRL + 8-K events)
+  const capital = getCapitalStructureAt(date);
+  if (!capital) return 0;
+
   // Get diluted shares based on current stock price
+  // This includes ITM convertibles and returns inTheMoneyDebtValue for debt adjustment
   const effectiveShares = getEffectiveSharesAt(
     "MSTR",
-    capital.basicShares,
+    capital.commonSharesOutstanding,
     stockPrice,
-    new Date().toISOString().split("T")[0]
+    date
   );
+
+  // Subtract ITM convertible face values from debt to avoid double-counting
+  // ITM converts are counted as equity (in diluted shares), so remove from debt
+  const adjustedDebt = Math.max(0, capital.totalDebt - effectiveShares.inTheMoneyDebtValue);
 
   const marketCap = effectiveShares.diluted * stockPrice;
   const enterpriseValue =
-    marketCap + capital.totalDebt + capital.preferredEquity - capital.cashAndEquivalents;
+    marketCap + adjustedDebt + capital.preferredEquity - capital.cashAndEquivalents;
   const cryptoNav = capital.btcHoldings * btcPrice;
 
   return cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
@@ -148,12 +148,13 @@ async function fetchIntradayMnav(
   // Align timestamps and pair prices
   const aligned = alignTimestamps(btcData, stockData, intervalMs);
 
-  // Calculate mNAV for each point
+  // Calculate mNAV for each point using SEC capital structure
+  const today = new Date().toISOString().split("T")[0];
   return aligned.map(({ time, btcPrice, stockPrice }) => ({
     time,
     btcPrice,
     stockPrice,
-    mnav: calculateIntradayMnav(btcPrice, stockPrice, MSTR_CURRENT_CAPITAL),
+    mnav: calculateIntradayMnav(btcPrice, stockPrice, today),
   }));
 }
 
