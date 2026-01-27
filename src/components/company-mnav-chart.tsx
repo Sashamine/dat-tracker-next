@@ -53,8 +53,11 @@ export function CompanyMNAVChart({
     if (isMstr && mnavData && mnavData.length > 0) {
       // Use data from hook (intraday or daily)
       for (const point of mnavData) {
+        // For intraday data, time is a Unix timestamp string - convert to number
+        // For daily data, time is YYYY-MM-DD string - keep as string
+        const isTimestamp = /^\d+$/.test(point.time);
         result.push({
-          time: point.time as Time,
+          time: (isTimestamp ? parseInt(point.time, 10) : point.time) as Time,
           value: point.mnav,
         });
         points.set(point.time, point);
