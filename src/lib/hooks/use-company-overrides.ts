@@ -5,6 +5,7 @@ import { Company } from "@/lib/types";
 import { CompanyOverride } from "@/app/api/company-overrides/route";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getCompanyByTicker } from "@/lib/data/companies";
+import { dilutiveInstruments } from "@/lib/data/dilutive-instruments";
 
 interface OverridesResponse {
   overrides: Record<string, CompanyOverride>;
@@ -241,10 +242,17 @@ export function mergeCompanyWithOverrides(
   const today = new Date().toISOString().split('T')[0];
 
   // Shares source tracking
+  // When dilutive instruments are defined, we use static basic shares (dilution calculated dynamically)
   let sharesSource: string | undefined;
   let sharesAsOf: string | undefined;
   let sharesSourceUrl: string | undefined;
-  if (liveData?.fdShares) {
+  const hasDilutiveInstruments = !!dilutiveInstruments[company.ticker];
+  if (hasDilutiveInstruments && staticCompany?.sharesForMnav) {
+    // Use static shares for companies with dilutive instruments
+    sharesSource = staticCompany.sharesSource || 'companies.ts (basic shares, dilution dynamic)';
+    sharesAsOf = staticCompany.sharesAsOf;
+    sharesSourceUrl = staticCompany.sharesSourceUrl;
+  } else if (liveData?.fdShares) {
     sharesSource = liveData.source === 'mnav.com' ? 'mNAV.com' : liveData.source;
     sharesAsOf = liveData.lastUpdated?.split('T')[0] || today;
     sharesSourceUrl = liveData.source === 'mnav.com' ? 'https://mnav.com' : undefined;
@@ -318,8 +326,12 @@ export function mergeCompanyWithOverrides(
     restrictedCash: staticCompany?.restrictedCash ?? company.restrictedCash,
     otherInvestments: staticCompany?.otherInvestments ?? company.otherInvestments,
     holdingsSourceUrl: company.holdingsSourceUrl ?? staticCompany?.holdingsSourceUrl,
-    // Priority: Live API (mNAV.com) > holdings-history.ts (SEC filings) > static companies.ts
-    sharesForMnav: liveData?.fdShares ?? sharesOutstandingFD ?? company.sharesForMnav ?? staticCompany?.sharesForMnav,
+    // Priority: Static (if dilutive instruments defined) > Live API > holdings-history.ts > static companies.ts
+    // When we have dilutive instruments, use static sharesForMnav (basic shares) and calculate dilution dynamically
+    // This avoids double-counting: API's fdShares includes all potential shares, but we track ITM status ourselves
+    sharesForMnav: dilutiveInstruments[company.ticker]
+      ? (staticCompany?.sharesForMnav ?? company.sharesForMnav)  // Use basic shares, dilution calculated in market-cap.ts
+      : (liveData?.fdShares ?? sharesOutstandingFD ?? company.sharesForMnav ?? staticCompany?.sharesForMnav),
     // Source tracking for mNAV transparency
     sharesSource,
     sharesAsOf,
