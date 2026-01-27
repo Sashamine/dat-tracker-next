@@ -255,6 +255,9 @@ export default function CompanyEarningsPage() {
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Per Share
                     </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      QoQ Growth
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
@@ -264,6 +267,12 @@ export default function CompanyEarningsPage() {
                       : null;
                     const revenueSurprise = earning.revenueActual !== undefined && earning.revenueEstimate !== undefined
                       ? ((earning.revenueActual - earning.revenueEstimate) / earning.revenueEstimate) * 100
+                      : null;
+
+                    // Calculate quarter-over-quarter growth in holdings per share
+                    const prevEarning = idx < earnings.length - 1 ? earnings[idx + 1] : null;
+                    const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
+                      ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
                       : null;
 
                     return (
@@ -326,6 +335,18 @@ export default function CompanyEarningsPage() {
                             <span className="text-gray-400">—</span>
                           )}
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                          {holdingsGrowth !== null ? (
+                            <span className={cn(
+                              "text-sm font-semibold",
+                              holdingsGrowth >= 0 ? "text-green-600" : "text-red-600"
+                            )}>
+                              {holdingsGrowth >= 0 ? "+" : ""}{holdingsGrowth.toFixed(1)}%
+                            </span>
+                          ) : (
+                            <span className="text-sm text-gray-400">—</span>
+                          )}
+                        </td>
                       </tr>
                     );
                   })}
@@ -343,6 +364,12 @@ export default function CompanyEarningsPage() {
                   ? ((earning.revenueActual - earning.revenueEstimate) / earning.revenueEstimate) * 100
                   : null;
 
+                // Calculate quarter-over-quarter growth in holdings per share
+                const prevEarning = idx < earnings.length - 1 ? earnings[idx + 1] : null;
+                const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
+                  ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
+                  : null;
+
                 return (
                   <div key={idx} className="p-4">
                     <div className="flex items-start justify-between mb-3">
@@ -356,7 +383,7 @@ export default function CompanyEarningsPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
                       <div>
                         <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">EPS</div>
                         {earning.epsActual !== undefined ? (
@@ -415,6 +442,22 @@ export default function CompanyEarningsPage() {
                         <div className="font-medium text-gray-900 dark:text-gray-100">
                           {earning.holdingsPerShare !== undefined ? (
                             earning.holdingsPerShare.toFixed(6)
+                          ) : (
+                            <span className="text-gray-400">—</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">QoQ Growth</div>
+                        <div className="font-medium">
+                          {holdingsGrowth !== null ? (
+                            <span className={cn(
+                              "font-semibold",
+                              holdingsGrowth >= 0 ? "text-green-600" : "text-red-600"
+                            )}>
+                              {holdingsGrowth >= 0 ? "+" : ""}{holdingsGrowth.toFixed(1)}%
+                            </span>
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}
