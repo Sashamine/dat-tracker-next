@@ -19,7 +19,8 @@ export interface DilutiveInstrument {
   potentialShares: number; // Number of shares if fully converted/exercised
   source: string; // e.g., "8-K Jul 2025", "10-Q Q3 2025"
   sourceUrl: string; // Link to SEC filing or primary source
-  expiration?: string; // ISO date when instrument expires (optional)
+  expiration?: string; // ISO date when instrument expires/matures (optional)
+  issuedDate?: string; // ISO date when instrument was issued (for historical tracking)
   notes?: string; // Additional context, e.g., "$150M convertible note"
 }
 
@@ -331,6 +332,115 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Total LUXFF dilutive instruments: 14,141,191 potential shares
   // All OUT of the money at current ~USD $0.05 stock price
   // Lowest strike: CAD $0.15 (USD $0.11) - still 2x+ current price
+
+  // MicroStrategy / Strategy Inc (MSTR) - BTC treasury company
+  // Convertible notes tracked for historical dilution analysis.
+  // All conversion prices are POST-SPLIT (10:1 split Aug 2024).
+  // Source: SEC 8-K filings for each indenture.
+  MSTR: [
+    // === Dec 2020 Convertible - $650M @ 0.75% (MATURED Dec 2025) ===
+    // Included for historical dilution tracking (was dilutive 2020-2025)
+    {
+      type: "convertible",
+      strikePrice: 39.8, // $398 pre-split / 10
+      potentialShares: 16_331_658, // $650M / $39.80
+      source: "8-K Dec 2020",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315453/0001193125-20-315453-index.htm",
+      issuedDate: "2020-12-11",
+      expiration: "2025-12-15", // MATURED - converted to shares
+      notes: "$650M @ 0.75% convertible notes due Dec 2025 (MATURED)",
+    },
+    // === Feb 2021 Convertible - $1.05B @ 0% ===
+    {
+      type: "convertible",
+      strikePrice: 143.25, // $1,432.46 pre-split / 10
+      potentialShares: 7_329_843, // $1.05B / $143.25
+      source: "8-K Feb 2021",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312521049984/0001193125-21-049984-index.htm",
+      issuedDate: "2021-02-17",
+      expiration: "2027-02-15",
+      notes: "$1.05B @ 0% convertible notes due Feb 2027",
+    },
+    // === Mar 2024 Convertible #1 - $800M @ 0.625% ===
+    {
+      type: "convertible",
+      strikePrice: 118.0, // $1,180 pre-split / 10
+      potentialShares: 6_779_661, // $800M / $118
+      source: "8-K Mar 2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524061544/0001193125-24-061544-index.htm",
+      issuedDate: "2024-03-08",
+      expiration: "2030-03-15",
+      notes: "$800M @ 0.625% convertible notes due Mar 2030",
+    },
+    // === Mar 2024 Convertible #2 - $603.75M @ 0.875% ===
+    {
+      type: "convertible",
+      strikePrice: 125.0, // $1,250 pre-split / 10
+      potentialShares: 4_830_000, // $603.75M / $125
+      source: "8-K Mar 2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064331/0001193125-24-064331-index.htm",
+      issuedDate: "2024-03-11",
+      expiration: "2031-03-15",
+      notes: "$603.75M @ 0.875% convertible notes due Mar 2031",
+    },
+    // === Jun 2024 Convertible - $800M @ 2.25% ===
+    {
+      type: "convertible",
+      strikePrice: 135.0, // $1,350 pre-split / 10
+      potentialShares: 5_925_926, // $800M / $135
+      source: "8-K Jun 2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524160936/0001193125-24-160936-index.htm",
+      issuedDate: "2024-06-13",
+      expiration: "2032-06-15",
+      notes: "$800M @ 2.25% convertible notes due Jun 2032",
+    },
+    // === Sep 2024 Convertible - $1.01B @ 0.625% (first post-split) ===
+    {
+      type: "convertible",
+      strikePrice: 183.19, // Post-split price
+      potentialShares: 5_513_403, // $1.01B / $183.19
+      source: "8-K Sep 2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524220296/0001193125-24-220296-index.htm",
+      issuedDate: "2024-09-16",
+      expiration: "2028-09-15",
+      notes: "$1.01B @ 0.625% convertible notes due Sep 2028 (first post-split)",
+    },
+    // === Nov 2024 Convertible - $3B @ 0% (largest single issuance) ===
+    {
+      type: "convertible",
+      strikePrice: 672.4, // Post-split price
+      potentialShares: 4_462_998, // $3B / $672.40
+      source: "8-K Nov 2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263336/0001193125-24-263336-index.htm",
+      issuedDate: "2024-11-20",
+      expiration: "2029-12-01",
+      notes: "$3B @ 0% convertible notes due Dec 2029 (largest single issuance)",
+    },
+    // === Feb 2025 Convertible - $2B @ 0% ===
+    {
+      type: "convertible",
+      strikePrice: 433.43, // 2.3072 shares per $1,000
+      potentialShares: 4_614_400, // 2.3072 × 2,000,000
+      source: "8-K Feb 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525030212/0001193125-25-030212-index.htm",
+      issuedDate: "2025-02-20",
+      expiration: "2030-03-01",
+      notes: "$2B @ 0% convertible notes due Mar 2030 (2030B Notes)",
+    },
+  ],
+  // Total MSTR convertible dilution: ~39.5M potential shares
+  // At current ~$320 stock price:
+  // - IN money: $118, $125, $135, $143.25, $183.19 → ~30.4M dilutive shares
+  // - OUT of money: $433.43, $672.40 → ~9.1M non-dilutive
+  // Note: Dec 2020 $650M notes matured Dec 15, 2025 and converted to ~16.3M shares
 };
 
 /**
@@ -349,6 +459,63 @@ export function getEffectiveShares(
   const instruments = dilutiveInstruments[ticker] || [];
 
   const breakdown: InstrumentBreakdown[] = instruments.map((inst) => ({
+    type: inst.type,
+    strikePrice: inst.strikePrice,
+    potentialShares: inst.potentialShares,
+    inTheMoney: stockPrice > inst.strikePrice,
+    source: inst.source,
+    notes: inst.notes,
+  }));
+
+  const inTheMoneyShares = breakdown
+    .filter((b) => b.inTheMoney)
+    .reduce((sum, b) => sum + b.potentialShares, 0);
+
+  return {
+    basic: basicShares,
+    diluted: basicShares + inTheMoneyShares,
+    breakdown,
+  };
+}
+
+/**
+ * Calculate effective diluted shares at a specific historical date.
+ *
+ * Only includes instruments that:
+ * 1. Were issued on or before the target date (issuedDate <= asOfDate)
+ * 2. Haven't expired/matured yet (expiration > asOfDate OR no expiration)
+ *
+ * Use this for historical mNAV calculations where dilution depends on
+ * which instruments existed at that point in time.
+ *
+ * @param ticker - Company ticker symbol
+ * @param basicShares - Basic shares outstanding at that date
+ * @param stockPrice - Stock price at that date in USD
+ * @param asOfDate - The historical date (YYYY-MM-DD format)
+ * @returns Effective shares result with breakdown
+ */
+export function getEffectiveSharesAt(
+  ticker: string,
+  basicShares: number,
+  stockPrice: number,
+  asOfDate: string
+): EffectiveSharesResult {
+  const instruments = dilutiveInstruments[ticker] || [];
+
+  // Filter to instruments that existed at asOfDate
+  const activeInstruments = instruments.filter((inst) => {
+    // Must have been issued by asOfDate (if issuedDate is tracked)
+    if (inst.issuedDate && inst.issuedDate > asOfDate) {
+      return false;
+    }
+    // Must not have expired/matured yet
+    if (inst.expiration && inst.expiration <= asOfDate) {
+      return false;
+    }
+    return true;
+  });
+
+  const breakdown: InstrumentBreakdown[] = activeInstruments.map((inst) => ({
     type: inst.type,
     strikePrice: inst.strikePrice,
     potentialShares: inst.potentialShares,

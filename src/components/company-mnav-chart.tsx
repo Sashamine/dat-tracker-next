@@ -5,7 +5,7 @@ import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight
 import { cn } from "@/lib/utils";
 import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
-import { MSTR_MNAV_HISTORY, type AuditedMNAVSnapshot } from "@/lib/data/mstr-mnav-history";
+import { MSTR_DAILY_MNAV, type DailyMnavSnapshot } from "@/lib/data/mstr-daily-mnav";
 
 interface CompanyMNAVChartProps {
   ticker: string;
@@ -36,15 +36,15 @@ export function CompanyMNAVChart({
 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const [selectedSnapshot, setSelectedSnapshot] = useState<AuditedMNAVSnapshot | null>(null);
+  const [selectedSnapshot, setSelectedSnapshot] = useState<DailyMnavSnapshot | null>(null);
 
   // Check if this is MSTR (use auditable data)
   const isMstr = ticker.toUpperCase() === "MSTR";
 
-  // Get mNAV history - use auditable data for MSTR, pre-calculated for others
-  const { mnavHistory, auditableSnapshots } = useMemo(() => {
+  // Get mNAV history - use daily data for MSTR, pre-calculated for others
+  const { mnavHistory, dailySnapshots } = useMemo(() => {
     const result: { time: Time; value: number }[] = [];
-    const snapshots: Map<string, AuditedMNAVSnapshot> = new Map();
+    const snapshots: Map<string, DailyMnavSnapshot> = new Map();
     const now = new Date();
     const today = now.toISOString().split('T')[0];
 
@@ -72,8 +72,8 @@ export function CompanyMNAVChart({
     }
 
     if (isMstr) {
-      // Use auditable MSTR data
-      for (const snapshot of MSTR_MNAV_HISTORY) {
+      // Use daily MSTR data for granular charting
+      for (const snapshot of MSTR_DAILY_MNAV) {
         const snapshotDate = new Date(snapshot.date);
         if (snapshotDate < startDate) continue;
 
@@ -108,7 +108,7 @@ export function CompanyMNAVChart({
       }
     }
 
-    return { mnavHistory: result, auditableSnapshots: snapshots };
+    return { mnavHistory: result, dailySnapshots: snapshots };
   }, [ticker, timeRange, currentMNAV, isMstr]);
 
   const isLoading = false;
@@ -169,12 +169,12 @@ export function CompanyMNAVChart({
     mnavSeries.setData(mnavHistory);
     chart.timeScale().fitContent();
 
-    // Add crosshair move handler for MSTR to show audit info
+    // Add crosshair move handler for MSTR to show daily snapshot info
     if (isMstr) {
       chart.subscribeCrosshairMove((param) => {
         if (param.time) {
           const dateStr = param.time as string;
-          const snapshot = auditableSnapshots.get(dateStr);
+          const snapshot = dailySnapshots.get(dateStr);
           setSelectedSnapshot(snapshot || null);
         } else {
           setSelectedSnapshot(null);
@@ -204,7 +204,7 @@ export function CompanyMNAVChart({
         chartRef.current = null;
       }
     };
-  }, [hasData, mnavHistory, isMstr, auditableSnapshots]);
+  }, [hasData, mnavHistory, isMstr, dailySnapshots]);
 
   // Calculate current and change stats
   const stats = useMemo(() => {
@@ -224,13 +224,13 @@ export function CompanyMNAVChart({
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             mNAV History
             {isMstr && (
-              <span className="ml-2 text-xs font-normal px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded">
-                Audited
+              <span className="ml-2 text-xs font-normal px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded">
+                Daily
               </span>
             )}
           </h2>
           <p className="text-sm text-gray-500">
-            Market Cap / Net Asset Value over time
+            {isMstr ? "Enterprise Value / Crypto NAV (fully diluted)" : "Market Cap / Net Asset Value over time"}
           </p>
         </div>
         {stats && (
@@ -262,7 +262,7 @@ export function CompanyMNAVChart({
         <>
           <div ref={chartContainerRef} className="w-full h-[300px]" />
 
-          {/* Audit info panel for MSTR - shows on hover */}
+          {/* Daily snapshot info panel for MSTR - shows on hover */}
           {isMstr && selectedSnapshot && (
             <div className="mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-xs">
               <div className="flex items-center justify-between mb-2">
@@ -271,44 +271,64 @@ export function CompanyMNAVChart({
                 </span>
                 <span className={cn(
                   "px-2 py-0.5 rounded text-xs font-medium",
-                  selectedSnapshot.confidence === "high"
+                  selectedSnapshot.capitalStructureSource === "xbrl"
                     ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
                     : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
                 )}>
-                  {selectedSnapshot.methodology.toUpperCase()} ({selectedSnapshot.confidence})
+                  {selectedSnapshot.capitalStructureSource.toUpperCase()}
                 </span>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-gray-600 dark:text-gray-400">
                 <div>
                   <span className="text-gray-500">BTC:</span>{" "}
-                  <span className="font-medium">{selectedSnapshot.btcHoldings.value.toLocaleString()}</span>
+                  <span className="font-medium">{selectedSnapshot.btcHoldings.toLocaleString()}</span>
                 </div>
                 <div>
                   <span className="text-gray-500">Shares:</span>{" "}
-                  <span className="font-medium">{(selectedSnapshot.sharesOutstanding.value / 1e6).toFixed(1)}M</span>
+                  <span className="font-medium">{(selectedSnapshot.dilutedShares / 1e6).toFixed(1)}M</span>
+                  {selectedSnapshot.dilutedShares > selectedSnapshot.basicShares && (
+                    <span className="text-orange-500 ml-1">
+                      (+{((selectedSnapshot.dilutedShares - selectedSnapshot.basicShares) / selectedSnapshot.basicShares * 100).toFixed(0)}%)
+                    </span>
+                  )}
                 </div>
                 <div>
                   <span className="text-gray-500">Debt:</span>{" "}
-                  <span className="font-medium">${(selectedSnapshot.totalDebt.value / 1e9).toFixed(1)}B</span>
+                  <span className="font-medium">${(selectedSnapshot.totalDebt / 1e9).toFixed(1)}B</span>
                 </div>
                 <div>
                   <span className="text-gray-500">mNAV:</span>{" "}
                   <span className="font-bold text-indigo-600 dark:text-indigo-400">{selectedSnapshot.mnav.toFixed(2)}x</span>
                 </div>
               </div>
-              <div className="mt-2 text-gray-500">
-                Source: {selectedSnapshot.btcHoldings.source}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-1 text-gray-600 dark:text-gray-400">
+                <div>
+                  <span className="text-gray-500">BTC Price:</span>{" "}
+                  <span className="font-medium">${selectedSnapshot.btcPrice.toLocaleString()}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Stock:</span>{" "}
+                  <span className="font-medium">${selectedSnapshot.stockPrice.toFixed(2)}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">BTC/Share:</span>{" "}
+                  <span className="font-medium text-amber-600 dark:text-amber-400">{selectedSnapshot.btcPerShare.toFixed(6)}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Crypto NAV:</span>{" "}
+                  <span className="font-medium">${(selectedSnapshot.cryptoNav / 1e9).toFixed(1)}B</span>
+                </div>
               </div>
             </div>
           )}
 
-          {/* Default audit attribution for MSTR when not hovering */}
+          {/* Default attribution for MSTR when not hovering */}
           {isMstr && !selectedSnapshot && (
             <div className="mt-2 text-xs text-gray-500 flex items-center gap-1">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>Data sourced from SEC XBRL filings + 8-K events. Hover for details.</span>
+              <span>Daily mNAV with fully diluted shares. Hover for details.</span>
             </div>
           )}
         </>
