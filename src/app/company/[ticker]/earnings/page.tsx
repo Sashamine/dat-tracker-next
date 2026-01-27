@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useCompany } from "@/lib/hooks/use-companies";
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { getCompanyEarnings, getNextEarnings } from "@/lib/data/earnings-data";
 import { formatLargeNumber, formatPercent } from "@/lib/calculations";
+import type { EarningsRecord } from "@/lib/types";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -54,13 +55,36 @@ function getDaysUntil(dateStr: string): number {
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 }
 
+// Aggregate quarterly data into annual data
+function aggregateAnnualData(quarterlyData: EarningsRecord[]): EarningsRecord[] {
+  const annualMap = new Map<number, EarningsRecord>();
+
+  // Group by fiscal year, taking Q4 data for each year
+  quarterlyData.forEach((record) => {
+    if (record.fiscalQuarter === 4) {
+      annualMap.set(record.fiscalYear, record);
+    }
+  });
+
+  // Convert to array and sort by year descending
+  return Array.from(annualMap.values()).sort((a, b) => b.fiscalYear - a.fiscalYear);
+}
+
 export default function CompanyEarningsPage() {
   const params = useParams();
   const ticker = params.ticker as string;
   const { data: companyData, isLoading } = useCompany(ticker);
+  const [viewType, setViewType] = useState<"quarterly" | "annual">("quarterly");
 
   const earnings = useMemo(() => getCompanyEarnings(ticker), [ticker]);
   const nextEarnings = useMemo(() => getNextEarnings(ticker), [ticker]);
+
+  const displayEarnings = useMemo(() => {
+    if (viewType === "annual") {
+      return aggregateAnnualData(earnings);
+    }
+    return earnings;
+  }, [earnings, viewType]);
 
   if (isLoading) {
     return (
@@ -226,10 +250,36 @@ export default function CompanyEarningsPage() {
 
           {/* Historical Earnings Table */}
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
-            <div className="px-4 lg:px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+            <div className="px-4 lg:px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Historical Results
               </h2>
+
+              {/* View Toggle */}
+              <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+                <button
+                  onClick={() => setViewType("quarterly")}
+                  className={cn(
+                    "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                    viewType === "quarterly"
+                      ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  )}
+                >
+                  Quarterly
+                </button>
+                <button
+                  onClick={() => setViewType("annual")}
+                  className={cn(
+                    "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                    viewType === "annual"
+                      ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  )}
+                >
+                  Annual
+                </button>
+              </div>
             </div>
 
             {/* Desktop Table */}
@@ -241,7 +291,7 @@ export default function CompanyEarningsPage() {
                       Date
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Quarter
+                      Period
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Holdings
@@ -250,14 +300,14 @@ export default function CompanyEarningsPage() {
                       Per Share
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      QoQ Growth
+                      {viewType === "quarterly" ? "QoQ" : "YoY"} Growth
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                  {earnings.map((earning, idx) => {
-                    // Calculate quarter-over-quarter growth in holdings per share
-                    const prevEarning = idx < earnings.length - 1 ? earnings[idx + 1] : null;
+                  {displayEarnings.map((earning, idx) => {
+                    // Calculate growth in holdings per share (QoQ for quarterly, YoY for annual)
+                    const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
                     const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
                       ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
                       : null;
@@ -268,7 +318,7 @@ export default function CompanyEarningsPage() {
                           {formatDate(earning.earningsDate)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                          Q{earning.fiscalQuarter} {earning.fiscalYear}
+                          {viewType === "quarterly" ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}` : earning.fiscalYear}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
                           {earning.holdingsAtQuarterEnd !== undefined ? (
@@ -305,9 +355,9 @@ export default function CompanyEarningsPage() {
 
             {/* Mobile Cards */}
             <div className="lg:hidden divide-y divide-gray-200 dark:divide-gray-800">
-              {earnings.map((earning, idx) => {
-                // Calculate quarter-over-quarter growth in holdings per share
-                const prevEarning = idx < earnings.length - 1 ? earnings[idx + 1] : null;
+              {displayEarnings.map((earning, idx) => {
+                // Calculate growth in holdings per share (QoQ for quarterly, YoY for annual)
+                const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
                 const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
                   ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
                   : null;
@@ -320,7 +370,7 @@ export default function CompanyEarningsPage() {
                           {formatDate(earning.earningsDate)}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          Q{earning.fiscalQuarter} {earning.fiscalYear}
+                          {viewType === "quarterly" ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}` : earning.fiscalYear}
                         </div>
                       </div>
                     </div>
@@ -349,7 +399,7 @@ export default function CompanyEarningsPage() {
                       </div>
 
                       <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">QoQ Growth</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{viewType === "quarterly" ? "QoQ" : "YoY"} Growth</div>
                         <div className="font-medium">
                           {holdingsGrowth !== null ? (
                             <span className={cn(
