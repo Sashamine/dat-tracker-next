@@ -22,6 +22,7 @@ import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { CompanyFilings } from "@/components/company-filings";
 import { ScheduledEvents } from "@/components/scheduled-events";
+import { CapitalStructureChart } from "@/components/capital-structure-chart";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
@@ -812,6 +813,12 @@ export default function CompanyPage() {
         <ScheduledEvents
           ticker={displayCompany.ticker}
           stockPrice={stockPrice}
+          className="mb-8"
+        />
+
+        {/* Capital Structure Timeline (MSTR only) */}
+        <CapitalStructureChart
+          ticker={displayCompany.ticker}
           className="mb-8"
         />
 
