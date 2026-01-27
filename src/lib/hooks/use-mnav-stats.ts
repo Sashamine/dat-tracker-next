@@ -54,7 +54,13 @@ export function getCompanyMNAV(
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
-  const { marketCap, source } = getMarketCapForMnavSync(company, stockData, prices.forex);
+  // Also get inTheMoneyDebtValue to avoid double-counting ITM convertibles
+  const { marketCap, source, inTheMoneyDebtValue } = getMarketCapForMnavSync(company, stockData, prices.forex);
+
+  // Adjust debt by subtracting in-the-money convertible face values
+  // This avoids double-counting: ITM converts are in diluted shares AND debt
+  // We treat them as equity (in share count), so remove from debt
+  const adjustedDebt = Math.max(0, (company.totalDebt || 0) - inTheMoneyDebtValue);
 
   // Debug logging for Metaplanet, BTBT, and KULR
   if (company.ticker === '3350.T' || company.ticker === 'BTBT' || company.ticker === 'KULR') {
@@ -69,6 +75,8 @@ export function getCompanyMNAV(
       cashReserves: company.cashReserves,
       restrictedCash: company.restrictedCash,
       totalDebt: company.totalDebt,
+      inTheMoneyDebtValue,
+      adjustedDebt,
       freeCash: (company.cashReserves || 0) - (company.restrictedCash || 0),
     });
   }
@@ -117,7 +125,7 @@ export function getCompanyMNAV(
     cryptoPrice,
     company.cashReserves || 0,
     company.otherInvestments || 0,
-    company.totalDebt || 0,
+    adjustedDebt,  // Use adjusted debt (totalDebt - ITM convertible face values)
     company.preferredEquity || 0,
     company.restrictedCash || 0,
     secondaryCryptoValue
@@ -127,7 +135,7 @@ export function getCompanyMNAV(
   if (company.ticker === 'KULR') {
     const cryptoNav = company.holdings * cryptoPrice;
     const freeCash = (company.cashReserves || 0) - (company.restrictedCash || 0);
-    const ev = marketCap + (company.totalDebt || 0) + (company.preferredEquity || 0) - freeCash;
+    const ev = marketCap + adjustedDebt + (company.preferredEquity || 0) - freeCash;
     console.log(`[mNAV Debug] ${company.ticker} calculation:`, {
       cryptoNav,
       ev,

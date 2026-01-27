@@ -17,6 +17,7 @@ export interface DilutiveInstrument {
   type: InstrumentType;
   strikePrice: number; // Conversion or exercise price in USD
   potentialShares: number; // Number of shares if fully converted/exercised
+  faceValue?: number; // Face/principal value in USD (for convertibles - used to adjust debt)
   source: string; // e.g., "8-K Jul 2025", "10-Q Q3 2025"
   sourceUrl: string; // Link to SEC filing or primary source
   expiration?: string; // ISO date when instrument expires/matures (optional)
@@ -27,6 +28,7 @@ export interface DilutiveInstrument {
 export interface EffectiveSharesResult {
   basic: number;
   diluted: number;
+  inTheMoneyDebtValue: number; // Face value of ITM convertibles (subtract from debt to avoid double-counting)
   breakdown: InstrumentBreakdown[];
 }
 
@@ -34,6 +36,7 @@ export interface InstrumentBreakdown {
   type: InstrumentType;
   strikePrice: number;
   potentialShares: number;
+  faceValue?: number; // For convertibles - principal amount
   inTheMoney: boolean;
   source: string;
   notes?: string;
@@ -53,6 +56,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.85,
       potentialShares: 1_709_402,
+      faceValue: 10_000_000,
       source: "8-K May 2025",
       sourceUrl:
         "https://www.btcs.com/news-media/convertible-note/",
@@ -63,6 +67,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 13.0,
       potentialShares: 769_231,
+      faceValue: 10_000_000,
       source: "8-K Jul 2025",
       sourceUrl:
         "https://www.btcs.com/news-media/eth-holdings-update-july-21-2025/",
@@ -87,6 +92,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 4.25,
       potentialShares: 35_294_118,
+      faceValue: 150_000_000,
       source: "8-K Jul 2025",
       sourceUrl:
         "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
@@ -97,6 +103,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 2.39,
       potentialShares: 15_062_761,
+      faceValue: 36_000_000,
       source: "8-K Jan 2026",
       sourceUrl:
         "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
@@ -106,7 +113,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
-  // Trades on Euronext Paris in EUR. Strike prices converted to USD at ~1.04 EUR/USD.
+  // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
   // Source: Euronext press releases
   // Verified 2026-01-25
   // Fully diluted: ~391.5M shares (per cptlb.com/analytics)
@@ -116,6 +123,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 0.57, // €0.544 × 1.04
       potentialShares: 89_367_393,
+      faceValue: 50_544_000, // €48.6M × 1.04
       source: "Euronext Mar 2025 (OCA A-01 + B-01)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -138,6 +146,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 0.74, // €0.707 × 1.04
       potentialShares: 82_451_903, // Fulgur (78.2M) + UTXO (4.3M)
+      faceValue: 60_632_000, // €58.3M × 1.04 (Fulgur €55.3M + UTXO €3M)
       source: "Euronext May 2025 (OCA B-02 Fulgur/UTXO)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -148,6 +157,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 0.74, // €0.707 × 1.04
       potentialShares: 17_176_106,
+      faceValue: 12_584_000, // €12.1M × 1.04
       source: "Euronext May 2025 (OCA B-02 Adam Back)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -158,6 +168,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 3.96, // €3.809 × 1.04
       potentialShares: 1_312_680,
+      faceValue: 5_200_000, // €5M × 1.04
       source: "Euronext May 2025 (OCA B-03 T1)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -168,6 +179,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.15, // €4.9517 × 1.04
       potentialShares: 1_514_631,
+      faceValue: 7_800_000, // €7.5M × 1.04
       source: "Euronext May 2025 (OCA B-03 T2)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -178,6 +190,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 6.49, // €6.24 × 1.04
       potentialShares: 961_538,
+      faceValue: 6_240_000, // €6M × 1.04
       source: "Euronext Jun 2025 (OCA A-03)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-06-12-blockchain-group-announces-equity-and-convertible-bond",
@@ -188,6 +201,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.38, // €5.174 × 1.04
       potentialShares: 966_370,
+      faceValue: 5_200_000, // €5M × 1.04
       source: "Euronext Jul 2025 (OCA A-04)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
@@ -198,6 +212,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 5.38, // €5.174 × 1.04
       potentialShares: 975_071,
+      faceValue: 5_200_000, // €5M × 1.04
       source: "Euronext Jul 2025 (OCA B-04)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
@@ -208,6 +223,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 3.80, // €3.6557 × 1.04
       potentialShares: 1_778_045,
+      faceValue: 6_760_000, // €6.5M × 1.04
       source: "Euronext Aug 2025 (OCA A-05 T1)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
@@ -337,6 +353,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Convertible notes tracked for historical dilution analysis.
   // All conversion prices are POST-SPLIT (10:1 split Aug 2024).
   // Source: SEC 8-K filings for each indenture.
+  // Face values used to adjust debt when converts are in-the-money (avoid double-counting in EV).
   MSTR: [
     // === Dec 2020 Convertible - $650M @ 0.75% (MATURED Dec 2025) ===
     // Included for historical dilution tracking (was dilutive 2020-2025)
@@ -344,6 +361,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 39.8, // $398 pre-split / 10
       potentialShares: 16_331_658, // $650M / $39.80
+      faceValue: 650_000_000,
       source: "8-K Dec 2020",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315453/0001193125-20-315453-index.htm",
@@ -356,6 +374,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 143.25, // $1,432.46 pre-split / 10
       potentialShares: 7_329_843, // $1.05B / $143.25
+      faceValue: 1_050_000_000,
       source: "8-K Feb 2021",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312521049984/0001193125-21-049984-index.htm",
@@ -368,18 +387,20 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 118.0, // $1,180 pre-split / 10
       potentialShares: 6_779_661, // $800M / $118
+      faceValue: 800_000_000,
       source: "8-K Mar 2024",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312524061544/0001193125-24-061544-index.htm",
       issuedDate: "2024-03-08",
       expiration: "2030-03-15",
-      notes: "$800M @ 0.625% convertible notes due Mar 2030",
+      notes: "$800M @ 0.625% convertible notes due Mar 2030 (2030A)",
     },
     // === Mar 2024 Convertible #2 - $603.75M @ 0.875% ===
     {
       type: "convertible",
       strikePrice: 125.0, // $1,250 pre-split / 10
       potentialShares: 4_830_000, // $603.75M / $125
+      faceValue: 603_750_000,
       source: "8-K Mar 2024",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064331/0001193125-24-064331-index.htm",
@@ -392,6 +413,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 135.0, // $1,350 pre-split / 10
       potentialShares: 5_925_926, // $800M / $135
+      faceValue: 800_000_000,
       source: "8-K Jun 2024",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312524160936/0001193125-24-160936-index.htm",
@@ -404,6 +426,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 183.19, // Post-split price
       potentialShares: 5_513_403, // $1.01B / $183.19
+      faceValue: 1_010_000_000,
       source: "8-K Sep 2024",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312524220296/0001193125-24-220296-index.htm",
@@ -416,6 +439,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 672.4, // Post-split price
       potentialShares: 4_462_998, // $3B / $672.40
+      faceValue: 3_000_000_000,
       source: "8-K Nov 2024",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263336/0001193125-24-263336-index.htm",
@@ -428,6 +452,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 433.43, // 2.3072 shares per $1,000
       potentialShares: 4_614_400, // 2.3072 × 2,000,000
+      faceValue: 2_000_000_000,
       source: "8-K Feb 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1050446/000119312525030212/0001193125-25-030212-index.htm",
@@ -447,11 +472,13 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
  * Calculate effective diluted shares based on current stock price.
  *
  * Filters out expired instruments - their shares are already in basicShares.
+ * Also calculates the face value of in-the-money convertibles, which should
+ * be subtracted from debt to avoid double-counting in EV calculation.
  *
  * @param ticker - Company ticker symbol
  * @param basicShares - Basic shares outstanding
  * @param stockPrice - Current stock price in USD
- * @returns Effective shares result with breakdown
+ * @returns Effective shares result with breakdown and ITM debt value
  */
 export function getEffectiveShares(
   ticker: string,
@@ -473,6 +500,7 @@ export function getEffectiveShares(
     type: inst.type,
     strikePrice: inst.strikePrice,
     potentialShares: inst.potentialShares,
+    faceValue: inst.faceValue,
     inTheMoney: stockPrice > inst.strikePrice,
     source: inst.source,
     notes: inst.notes,
@@ -482,9 +510,16 @@ export function getEffectiveShares(
     .filter((b) => b.inTheMoney)
     .reduce((sum, b) => sum + b.potentialShares, 0);
 
+  // Calculate face value of in-the-money CONVERTIBLES only
+  // This should be subtracted from debt to avoid double-counting
+  const inTheMoneyDebtValue = breakdown
+    .filter((b) => b.inTheMoney && b.type === "convertible" && b.faceValue)
+    .reduce((sum, b) => sum + (b.faceValue || 0), 0);
+
   return {
     basic: basicShares,
     diluted: basicShares + inTheMoneyShares,
+    inTheMoneyDebtValue,
     breakdown,
   };
 }
@@ -503,7 +538,7 @@ export function getEffectiveShares(
  * @param basicShares - Basic shares outstanding at that date
  * @param stockPrice - Stock price at that date in USD
  * @param asOfDate - The historical date (YYYY-MM-DD format)
- * @returns Effective shares result with breakdown
+ * @returns Effective shares result with breakdown and ITM debt value
  */
 export function getEffectiveSharesAt(
   ticker: string,
@@ -530,6 +565,7 @@ export function getEffectiveSharesAt(
     type: inst.type,
     strikePrice: inst.strikePrice,
     potentialShares: inst.potentialShares,
+    faceValue: inst.faceValue,
     inTheMoney: stockPrice > inst.strikePrice,
     source: inst.source,
     notes: inst.notes,
@@ -539,9 +575,15 @@ export function getEffectiveSharesAt(
     .filter((b) => b.inTheMoney)
     .reduce((sum, b) => sum + b.potentialShares, 0);
 
+  // Calculate face value of in-the-money CONVERTIBLES only
+  const inTheMoneyDebtValue = breakdown
+    .filter((b) => b.inTheMoney && b.type === "convertible" && b.faceValue)
+    .reduce((sum, b) => sum + (b.faceValue || 0), 0);
+
   return {
     basic: basicShares,
     diluted: basicShares + inTheMoneyShares,
+    inTheMoneyDebtValue,
     breakdown,
   };
 }

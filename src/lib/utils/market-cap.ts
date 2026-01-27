@@ -52,6 +52,7 @@ export interface MarketCapResult {
   currency: string;
   dilutionApplied: boolean;
   dilutionFactor?: number;
+  inTheMoneyDebtValue: number; // Face value of ITM converts - subtract from debt in EV calc
   warning?: string;
 }
 
@@ -92,6 +93,7 @@ export function getMarketCap(
       source: "calculated",
       currency: "USD",
       dilutionApplied: false,
+      inTheMoneyDebtValue: 0,
     };
   }
 
@@ -102,6 +104,7 @@ export function getMarketCap(
       source: "api",
       currency: "USD",
       dilutionApplied: false,
+      inTheMoneyDebtValue: 0,
     };
   }
 
@@ -112,6 +115,7 @@ export function getMarketCap(
       source: "static",
       currency: "USD",
       dilutionApplied: false,
+      inTheMoneyDebtValue: 0,
       warning: "Using static market cap - may be stale",
     };
   }
@@ -122,6 +126,7 @@ export function getMarketCap(
     source: "none",
     currency,
     dilutionApplied: false,
+    inTheMoneyDebtValue: 0,
     warning: `No market cap data available for ${ticker}`,
   };
 }
@@ -133,6 +138,9 @@ export function getMarketCap(
  * - If company has sharesForMnav, use stockPrice × sharesForMnav
  * - For non-USD stocks, convert price to USD first via forex API
  * - Otherwise fall back to regular getMarketCap logic
+ *
+ * Also returns inTheMoneyDebtValue which should be subtracted from totalDebt
+ * in the EV calculation to avoid double-counting in-the-money convertibles.
  *
  * This ensures our mNAV matches what companies report on their dashboards.
  */
@@ -156,11 +164,13 @@ export async function getMarketCapForMnav(
     // Check if company has dilutive instruments - if so, calculate effective shares
     let effectiveShares = company.sharesForMnav;
     let dilutionApplied = false;
+    let inTheMoneyDebtValue = 0;
 
     if (dilutiveInstruments[ticker]) {
       const result = getEffectiveShares(ticker, company.sharesForMnav, priceInUsd);
       effectiveShares = result.diluted;
       dilutionApplied = result.diluted !== result.basic;
+      inTheMoneyDebtValue = result.inTheMoneyDebtValue;
     }
 
     const calculatedMarketCap = priceInUsd * effectiveShares;
@@ -169,6 +179,7 @@ export async function getMarketCapForMnav(
       source: "calculated",
       currency: "USD",
       dilutionApplied,
+      inTheMoneyDebtValue,
     };
   }
 
@@ -179,6 +190,9 @@ export async function getMarketCapForMnav(
 /**
  * Synchronous version of getMarketCapForMnav for client components.
  * Uses live forex rates if provided, otherwise falls back to static rates.
+ *
+ * Also returns inTheMoneyDebtValue which should be subtracted from totalDebt
+ * in the EV calculation to avoid double-counting in-the-money convertibles.
  *
  * @param company - Company data
  * @param stockData - Stock price data
@@ -218,11 +232,13 @@ export function getMarketCapForMnavSync(
     // based on current stock price (comparing USD price to USD strike prices)
     let effectiveShares = company.sharesForMnav;
     let dilutionApplied = false;
+    let inTheMoneyDebtValue = 0;
 
     if (dilutiveInstruments[ticker]) {
       const result = getEffectiveShares(ticker, company.sharesForMnav, priceInUsd);
       effectiveShares = result.diluted;
       dilutionApplied = result.diluted !== result.basic;
+      inTheMoneyDebtValue = result.inTheMoneyDebtValue;
     }
 
     const calculatedMarketCap = priceInUsd * effectiveShares;
@@ -240,6 +256,7 @@ export function getMarketCapForMnavSync(
       source: "calculated",
       currency: "USD",
       dilutionApplied,
+      inTheMoneyDebtValue,
     };
   }
 
