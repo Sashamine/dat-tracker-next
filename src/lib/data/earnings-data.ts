@@ -11,14 +11,18 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== BTC COMPANIES ====================
 
   // ========== Strategy (MSTR) ==========
-  // Q4 2025 - Upcoming
+  // Q4 2025 - Upcoming earnings (prelim data from 8-K)
   {
     ticker: "MSTR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     earningsDate: "2026-02-04",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 712647, // Jan 25, 2026 8-K (latest in Q4)
+    sharesAtQuarterEnd: 277_936_548, // Q3 267.5M + Q4 ATM 10.5M shares (estimated from ATM sales)
+    holdingsPerShare: 0.002564, // Preliminary from 8-K filings; final 10-K due Feb 2026
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/0001193125-26-021726-index.htm",
     status: "upcoming",
   },
   // Q3 2025
