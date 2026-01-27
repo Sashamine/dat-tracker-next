@@ -200,9 +200,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
   // Check if crypto prices have loaded (at least one company has non-zero holdingsValue)
   const pricesLoaded = filteredCompanies.some(c => c.holdingsValue > 0);
 
-  // Debug sorting
-  console.log('[DataTable Debug] Sort state:', { sortField, sortDir, companiesCount: filteredCompanies.length, pricesLoaded });
-
   // Sort companies
   const sortedCompanies = [...filteredCompanies].sort((a, b) => {
     let aVal: number, bVal: number;
@@ -260,12 +257,6 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
 
     return sortDir === "desc" ? bVal - aVal : aVal - bVal;
   });
-
-  // Debug: Log first 10 sorted companies with values
-  if (sortedCompanies.length > 0) {
-    const debugData = sortedCompanies.slice(0, 10).map(c => `${c.ticker}:${Math.round((c.holdingsValue || 0) / 1e9)}B`);
-    console.log('[DataTable Debug] First 10 sorted:', debugData.join(', '));
-  }
 
   const handleSort = (field: string) => {
     if (sortField === field) {
