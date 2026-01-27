@@ -197,8 +197,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     );
   }
 
+  // Check if crypto prices have loaded (at least one company has non-zero holdingsValue)
+  const pricesLoaded = filteredCompanies.some(c => c.holdingsValue > 0);
+
   // Debug sorting
-  console.log('[DataTable Debug] Sort state:', { sortField, sortDir, companiesCount: filteredCompanies.length });
+  console.log('[DataTable Debug] Sort state:', { sortField, sortDir, companiesCount: filteredCompanies.length, pricesLoaded });
 
   // Sort companies
   const sortedCompanies = [...filteredCompanies].sort((a, b) => {
@@ -206,9 +209,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
 
     switch (sortField) {
       case "holdingsValue":
-        // Fall back to holdings if prices haven't loaded yet (holdingsValue would be 0)
-        aVal = a.holdingsValue || a.holdings || 0;
-        bVal = b.holdingsValue || b.holdings || 0;
+        // When prices haven't loaded, sort by ticker alphabetically for stability
+        // This prevents random reordering while waiting for price data
+        if (!pricesLoaded) {
+          return a.ticker.localeCompare(b.ticker);
+        }
+        aVal = a.holdingsValue || 0;
+        bVal = b.holdingsValue || 0;
         break;
       case "stockPrice":
         aVal = a.stockPrice || 0;
