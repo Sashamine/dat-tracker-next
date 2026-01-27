@@ -20,8 +20,12 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - [ ] Phase 8d: Populate dilutive instruments for remaining companies
 - [ ] Phase 7d: Continue manual review of individual companies
 - [ ] Phase 7e: UI for estimates with provenance
+- [x] MSTR SEC History: XBRL quarterly data (mstr-sec-history.ts)
+- [x] MSTR 8-K Capital Events: Inter-quarter events (mstr-capital-events.ts)
 
 ## Recent Decisions
+- 2026-01-26: MSTR data split into two files: XBRL quarterly (mstr-sec-history.ts) + 8-K events (mstr-capital-events.ts)
+- 2026-01-26: 8-K events categorized by type: BTC, DEBT, PREF, ATM, DEBT_EVENT, CORP
 - 2026-01-25: Created dilutive-instruments.ts for dynamic share calculation
 - 2026-01-25: Use diluted shares ONLY if instruments are "in the money"
 - 2026-01-25: companies.ts sharesForMnav = BASIC shares; dilution calculated dynamically
@@ -33,6 +37,7 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
 - Must update BOTH companies.ts and holdings-history.ts when changing shares
 - For companies with dilutive instruments: sharesForMnav = basic shares (dilution is dynamic)
 - ALTBG (Capital B): Use AMF API for French regulatory filings (ISIN FR0011053636)
+- 8-K filings have NO XBRL - values require text parsing, cross-check against 10-Q totals
 
 ## Next Actions
 1. Continue Phase 7d: verify more companies
@@ -314,4 +319,34 @@ Phase 8a - Dilutive Instruments Tracking (data structure complete, needs more co
   - 1.5M options @ $0.28 (Oct 2025 grants)
 - Committed and pushed to Vercel
 - 274 tests pass
+
+### MSTR SEC History - XBRL Data (prior session, committed this session)
+- Created `src/lib/data/mstr-sec-history.ts` with 21 XBRL-verified SEC filings
+- Coverage: Q3 2020 (first BTC purchase) through Q3 2025
+- Data includes: digitalAssets, cash, debt, preferredEquity, shares outstanding
+- Stock split handling: pre-Aug 2024 shares marked with `preSplit: true`
+- Committed as f7efab3
+
+### MSTR 8-K Capital Events (this session)
+- Created `src/lib/data/mstr-capital-events.ts` for inter-quarter events
+- **Event types tracked**:
+  - BTC - Bitcoin purchases (weekly "BTC Update" filings)
+  - DEBT - Convertible/secured note issuances
+  - PREF - Perpetual preferred stock (STRF, STRC, STRK, STRD, STRE)
+  - ATM - At-the-market program announcements
+  - DEBT_EVENT - Redemptions, conversions
+  - CORP - Stock split, name change
+- **28 capital events captured** with full SEC provenance:
+  - First BTC purchase (Aug 2020): 21,454 BTC for $250M
+  - All convertibles from $650M (Dec 2020) to $3B (Nov 2024)
+  - All preferred issuances (STRK, STRF, STRD, STRC, STRE)
+  - ATM programs: $21B (Oct 2024), $46B omnibus (Nov 2025)
+  - 10:1 stock split (Jul 2024), name change to Strategy (Jan 2025)
+- **8-K analysis methodology**:
+  - Item 8.01 + "BTC Update" = weekly BTC purchases
+  - Item 3.03 = Preferred stock issuances
+  - Item 1.01 + "Indenture" = Debt issuances
+  - Item 1.01 + "Sales Agreement" = ATM programs
+- Helper functions: `getEventsByType()`, `getEventsInRange()`, `getDebtIssuedByDate()`
+- Committed as 7c72a75, pushed to Vercel
 
