@@ -82,6 +82,7 @@ function readBtcPricesFromFiles(): Map<string, number> {
     "mcp-financial-datasets-get_historical_crypto_prices-1769490528779.txt", // 2024
     "mcp-financial-datasets-get_historical_crypto_prices-1769490549322.txt", // 2020-2023
     "mcp-financial-datasets-get_historical_crypto_prices-1769490556885.txt", // 2025
+    "mcp-financial-datasets-get_historical_crypto_prices-2026.txt", // 2026
   ];
 
   for (const file of files) {
@@ -336,7 +337,7 @@ async function main() {
 
   // Step 2: Fetch MSTR prices from Yahoo Finance
   console.log("Step 2: Fetching MSTR prices from Yahoo Finance...");
-  const mstrPrices = await fetchMstrPrices("2020-08-01", "2025-12-31");
+  const mstrPrices = await fetchMstrPrices("2020-08-01", "2026-12-31");
   console.log(`  Total MSTR prices: ${mstrPrices.size}\n`);
 
   // Step 3: Calculate daily mNAV for dates where we have both prices
