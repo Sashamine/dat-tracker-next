@@ -2,7 +2,7 @@
  * Generate Daily MSTR mNAV History
  *
  * Combines:
- * - Daily BTC prices (from MCP financial-datasets API)
+ * - Daily BTC prices (CryptoCompare API for 2020-2022, Financial Datasets API for 2022+)
  * - Daily MSTR stock prices (from Yahoo Finance)
  * - Capital structure at each date (from getCapitalStructureAt)
  * - Dilutive instruments (convertibles in-the-money at each stock price)
@@ -39,6 +39,56 @@ interface PriceData {
   low: number;
   volume: number;
   time: string;
+}
+
+// Fetch historical BTC prices from CryptoCompare API (free, no auth required)
+// Returns daily close prices
+async function fetchBtcPricesFromCryptoCompare(
+  startDate: string,
+  endDate: string
+): Promise<Map<string, number>> {
+  const prices = new Map<string, number>();
+
+  const startTime = new Date(startDate).getTime();
+  const endTime = new Date(endDate).getTime();
+
+  // CryptoCompare histoday returns up to 2000 days of data ending at toTs
+  // We need to work backwards from endDate
+  const url = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000&toTs=${Math.floor(endTime / 1000)}`;
+
+  console.log(`Fetching BTC prices from CryptoCompare (${startDate} to ${endDate})...`);
+
+  try {
+    const response = await fetch(url, {
+      headers: { "Accept": "application/json" },
+    });
+
+    if (!response.ok) {
+      console.error(`CryptoCompare API error: ${response.status} ${response.statusText}`);
+      return prices;
+    }
+
+    const data = await response.json();
+
+    if (data.Response === "Success" && data.Data?.Data) {
+      for (const item of data.Data.Data) {
+        const date = new Date(item.time * 1000).toISOString().split("T")[0];
+        const timestamp = new Date(date).getTime();
+
+        // Only include dates within our range
+        if (timestamp >= startTime && timestamp <= endTime) {
+          prices.set(date, Math.round(item.close));
+        }
+      }
+      console.log(`  Got ${prices.size} BTC prices from CryptoCompare`);
+    } else {
+      console.error(`  CryptoCompare error: ${data.Message || "Unknown error"}`);
+    }
+  } catch (error) {
+    console.error(`  Error fetching from CryptoCompare:`, error);
+  }
+
+  return prices;
 }
 
 interface DailyMnavSnapshot {
@@ -223,7 +273,7 @@ function generateOutputFile(snapshots: DailyMnavSnapshot[]): string {
  * Total entries: ${snapshots.length}
  *
  * Sources:
- * - BTC prices: Financial Datasets API
+ * - BTC prices: CryptoCompare API (2020-2022), Financial Datasets API (2022+)
  * - MSTR prices: Yahoo Finance (split-adjusted)
  * - Capital structure: SEC XBRL + 8-K events via getCapitalStructureAt()
  * - Dilution: Convertible notes via getEffectiveSharesAt()
@@ -325,13 +375,38 @@ export function getAvailableDates(): string[] {
 async function main() {
   console.log("=== Generating Daily MSTR mNAV History ===\n");
 
-  // Step 1: Read BTC prices from saved files
-  console.log("Step 1: Reading BTC prices from saved MCP tool outputs...");
-  const btcPrices = readBtcPricesFromFiles();
-  console.log(`  Total BTC prices: ${btcPrices.size}\n`);
+  // Step 1a: Read BTC prices from saved files (Aug 2022 onwards)
+  console.log("Step 1a: Reading BTC prices from saved MCP tool outputs...");
+  const btcPricesFromFiles = readBtcPricesFromFiles();
+  console.log(`  Total BTC prices from files: ${btcPricesFromFiles.size}\n`);
+
+  // Step 1b: Fetch BTC prices from CryptoCompare for 2020-2022 gap
+  // MSTR's first BTC purchase was Aug 11, 2020
+  console.log("Step 1b: Fetching BTC prices from CryptoCompare (2020-2022 gap)...");
+  const btcPricesFromCryptoCompare = await fetchBtcPricesFromCryptoCompare(
+    "2020-08-01",
+    "2022-08-31" // Overlap slightly to ensure coverage
+  );
+  console.log("");
+
+  // Step 1c: Merge BTC prices (CryptoCompare for early dates, MCP files for later)
+  console.log("Step 1c: Merging BTC price sources...");
+  const btcPrices = new Map<string, number>();
+
+  // Add CryptoCompare prices first (earlier dates)
+  for (const [date, price] of btcPricesFromCryptoCompare) {
+    btcPrices.set(date, price);
+  }
+
+  // Add/overwrite with MCP file prices (more authoritative for recent dates)
+  for (const [date, price] of btcPricesFromFiles) {
+    btcPrices.set(date, price);
+  }
+
+  console.log(`  Total merged BTC prices: ${btcPrices.size}\n`);
 
   if (btcPrices.size === 0) {
-    console.error("ERROR: No BTC prices found. Run the MCP tool first to fetch prices.");
+    console.error("ERROR: No BTC prices found from any source.");
     process.exit(1);
   }
 
