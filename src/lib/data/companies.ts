@@ -856,7 +856,7 @@ export const hypeCompanies: Company[] = [
     datStartDate: "2025-12-02",
     costBasisAvg: 46.27,
     stakingPct: 1.00,  // 100% staked via Anchorage
-    stakingApy: 0.024,  // ~$9.9M annual yield on $420M HYPE
+    stakingApy: 0.024,  // ~288K HYPE/year on 12M staked
     stakingMethod: "Anchorage Digital",
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
@@ -866,7 +866,7 @@ export const hypeCompanies: Company[] = [
     cashAsOf: "2025-12-05",
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger. 100% staked via Anchorage.",
-    notes: "$888M combined assets. $30M buyback. $9.9M projected annual staking yield.",
+    notes: "$888M combined assets. $30M buyback. ~288K HYPE projected annual staking yield.",
   },
   {
     id: "hypd",
