@@ -49,6 +49,39 @@ export interface InstrumentBreakdown {
  * Add instruments as they are discovered during company verification.
  */
 export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
+  // BMNR (Bitmine Immersion) - ETH treasury company
+  // Verified 2026-01-28 via SEC XBRL (CIK 0001829311)
+  BMNR: [
+    {
+      type: "warrant",
+      strikePrice: 10.0,
+      potentialShares: 129_375,
+      source: "10-K FY2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-K",
+      notes: "ClassOfWarrantOrRightOutstanding @ $10 exercise price",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.4,
+      potentialShares: 1_231_945,
+      source: "8-K Jul 2025 PIPE",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1829311/000168316825004494",
+      issuedDate: "2025-07-10",
+      notes: "Placement agent warrants (ThinkEquity) from $250M PIPE",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // RSUs vest at $0
+      potentialShares: 3_043_654,
+      source: "10-Q Q1 FY2026",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-Q",
+      notes: "RSUs/restricted stock (NonOptionEquityInstrumentsOutstanding)",
+    },
+  ],
+
   // BTCS Inc - ETH treasury company
   // Verified 2026-01-25 via adversarial process against SEC filings and btcs.com
   BTCS: [
