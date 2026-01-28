@@ -155,9 +155,10 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-11", holdings: 530.71, sharesOutstandingDiluted: 36_000_000, holdingsPerShare: 0.00001474, source: "Press release" },
   { date: "2024-11-18", holdings: 1142.29, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.00002720, source: "Press release" },
   { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release" },
-  { date: "2025-03-31", holdings: 4206, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.00001357, source: "Q1 2025 TSE filing" },
-  { date: "2025-06-30", holdings: 12850, sharesOutstandingDiluted: 420_000_000, holdingsPerShare: 0.00003060, source: "Q2 2025 TSE filing" },
-  { date: "2025-09-30", holdings: 22500, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.00002647, source: "Q3 2025 TSE filing" },
+  // Quarter-end holdings from metaplanet.jp/en/analytics purchase history
+  { date: "2025-03-31", holdings: 4046, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.00000809, source: "Q1 2025 (Mar 31 purchase)" },
+  { date: "2025-06-30", holdings: 13350, sharesOutstandingDiluted: 800_000_000, holdingsPerShare: 0.00001669, source: "Q2 2025 (Jun 30 purchase)" },
+  { date: "2025-09-30", holdings: 30823, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, source: "Q3 2025 (Sep 30 purchase)" },
   // Common shares minus OTM Mercury converts (¥1000 strike vs ¥540 stock price)
   // 1.142B common - 23.6M Mercury converts = 1.119B (matches metaplanet.jp mNAV methodology)
   { date: "2026-01-24", holdings: 35102, sharesOutstandingDiluted: 1_118_664_340, holdingsPerShare: 0.00003138, source: "Press release", sharesSource: "Common shares ex-OTM Mercury converts", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "company-website" },

@@ -1503,53 +1503,120 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Metaplanet (3350.T) ==========
   // Calendar year company - fiscal year ends December 31
-  // Note: Japanese companies often report ~45 days after quarter end
-  // Q4 FY2024 (Oct-Dec 2024) → Calendar Q4 2024 - Upcoming
+  // Japanese company - reports ~45 days after quarter end via TDnet
+  // BTC adoption started Apr 23, 2024
+  // Source: metaplanet.jp/en/analytics, metaplanet.jp/en/shareholders/disclosures
+  //
+  // Q4 FY2025 (Oct-Dec 2025) - Upcoming (~Feb 13, 2026)
+  {
+    ticker: "3350.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-13",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 35_102,  // Dec 30, 2025 purchase data
+    sharesAtQuarterEnd: 1_140_000_000,  // ~1.14B shares
+    holdingsPerShare: 0.0000308,  // 35102 / 1.14B
+    source: "press-release",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    status: "upcoming",
+  },
+  // Q3 FY2025 (Jul-Sep 2025) - Reported Nov 13, 2025
+  {
+    ticker: "3350.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-13",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 30_823,  // Sep 30, 2025 (from analytics)
+    sharesAtQuarterEnd: 1_100_000_000,  // ~1.1B shares at Q3
+    holdingsPerShare: 0.0000280,  // 30823 / 1.1B
+    source: "press-release",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    status: "reported",
+  },
+  // Q2 FY2025 (Apr-Jun 2025) - Reported Aug 13, 2025
+  {
+    ticker: "3350.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-13",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 13_350,  // Jun 30, 2025 (from analytics)
+    sharesAtQuarterEnd: 800_000_000,  // ~800M shares at Q2
+    holdingsPerShare: 0.0000167,  // 13350 / 800M
+    source: "press-release",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    status: "reported",
+  },
+  // Q1 FY2025 (Jan-Mar 2025) - Reported May 14, 2025
+  {
+    ticker: "3350.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-14",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 4_046,  // Mar 31, 2025 (from analytics)
+    sharesAtQuarterEnd: 500_000_000,  // ~500M shares at Q1
+    holdingsPerShare: 0.0000081,  // 4046 / 500M
+    source: "press-release",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    status: "reported",
+  },
+  // Q4 FY2024 (Oct-Dec 2024) - Reported ~Feb 2025
   {
     ticker: "3350.T",
     fiscalYear: 2024,
     fiscalQuarter: 4,
     calendarYear: 2024,
     calendarQuarter: 4,
-    earningsDate: "2026-02-14",
+    earningsDate: "2025-02-14",
     earningsTime: null,
+    holdingsAtQuarterEnd: 1_762,  // Dec 23, 2024 purchase (from analytics)
+    sharesAtQuarterEnd: 300_000_000,  // ~300M shares at Q4 2024
+    holdingsPerShare: 0.0000059,  // 1762 / 300M
     source: "press-release",
-    status: "upcoming",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    status: "reported",
   },
-  // Q3 FY2024 (Jul-Sep 2024) → Calendar Q3 2024
+  // Q3 FY2024 (Jul-Sep 2024) - Reported ~Nov 2024
   {
     ticker: "3350.T",
     fiscalYear: 2024,
     fiscalQuarter: 3,
     calendarYear: 2024,
     calendarQuarter: 3,
-    earningsDate: "2025-11-14",
+    earningsDate: "2024-11-14",
     earningsTime: null,
-    epsActual: 12.5,
-    revenueActual: 890_000_000,
-    netIncome: 540_000_000,
-    holdingsAtQuarterEnd: 1762,
-    sharesAtQuarterEnd: 37_000_000,
-    holdingsPerShare: 0.0000476,
+    holdingsAtQuarterEnd: 399,  // Sep 10, 2024 (from analytics: 398.83)
+    sharesAtQuarterEnd: 200_000_000,  // ~200M shares at Q3 2024
+    holdingsPerShare: 0.0000020,  // 399 / 200M
     source: "press-release",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
   },
-  // Q2 FY2024 (Apr-Jun 2024) → Calendar Q2 2024
+  // Q2 FY2024 (Apr-Jun 2024) - Reported ~Aug 2024 (first quarter with BTC)
   {
     ticker: "3350.T",
     fiscalYear: 2024,
     fiscalQuarter: 2,
     calendarYear: 2024,
     calendarQuarter: 2,
-    earningsDate: "2025-08-14",
+    earningsDate: "2024-08-14",
     earningsTime: null,
-    epsActual: 8.2,
-    revenueActual: 540_000_000,
-    netIncome: 280_000_000,
-    holdingsAtQuarterEnd: 530,
-    sharesAtQuarterEnd: 25_000_000,
-    holdingsPerShare: 0.0000212,
+    holdingsAtQuarterEnd: 141,  // Jun 10, 2024 (from analytics: 141.07)
+    sharesAtQuarterEnd: 150_000_000,  // ~150M shares at Q2 2024
+    holdingsPerShare: 0.0000009,  // 141 / 150M
     source: "press-release",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
   },
 
