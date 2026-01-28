@@ -42,6 +42,19 @@ import {
   type XBRLExtractionResult,
 } from '../sec/xbrl-extractor';
 
+// Monitoring & alerting
+import {
+  startExtractionRun,
+  getCurrentRunStats,
+  recordXbrlAttempt,
+  recordLlmAttempt,
+  recordLlmSkipped,
+  recordResult,
+  alertLlmConfigMissing,
+  alertRunSummary,
+  type ExtractionRunStats,
+} from '../monitoring/alerts';
+
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';
 
@@ -272,10 +285,13 @@ async function processCompanyHybrid(
 
       if (xbrlResult.success && xbrlResult.bitcoinHoldings !== undefined) {
         console.log(formatXBRLSummary(xbrlResult));
+        recordXbrlAttempt(true);
       } else if (!xbrlResult.success) {
         console.log(`[SEC Update] ${ticker}: XBRL extraction failed - ${xbrlResult.error}`);
+        recordXbrlAttempt(false, `${ticker}: ${xbrlResult.error}`);
       } else {
-        console.log(`[SEC Update] ${ticker}: No Bitcoin holdings found in XBRL data`);
+        console.log(`[SEC Update] ${ticker}: No crypto holdings found in XBRL data`);
+        recordXbrlAttempt(true);  // Successful extraction, just no holdings data
       }
     }
 
@@ -291,22 +307,36 @@ async function processCompanyHybrid(
           filing8K = filings[0];
 
           if (filing8K.content) {
-            const extraction = await extractHoldingsFromText(
-              filing8K.content,
-              { companyName: ticker, ticker, asset, currentHoldings },
-              llmConfig
-            );
+            try {
+              const extraction = await extractHoldingsFromText(
+                filing8K.content,
+                { companyName: ticker, ticker, asset, currentHoldings },
+                llmConfig
+              );
 
-            if (extraction.holdings !== null) {
-              llmHoldings = extraction.holdings;
-              llmConfidence = extraction.confidence;
-              llmReasoning = extraction.reasoning;
-              console.log(`[SEC Update] ${ticker}: LLM extracted ${llmHoldings} (${(llmConfidence * 100).toFixed(0)}% confidence)`);
+              if (extraction.holdings !== null) {
+                llmHoldings = extraction.holdings;
+                llmConfidence = extraction.confidence;
+                llmReasoning = extraction.reasoning;
+                console.log(`[SEC Update] ${ticker}: LLM extracted ${llmHoldings} (${(llmConfidence * 100).toFixed(0)}% confidence)`);
+                recordLlmAttempt(true);
+              } else {
+                recordLlmAttempt(false, `${ticker}: No holdings found in text`);
+              }
+            } catch (llmError) {
+              const errMsg = llmError instanceof Error ? llmError.message : String(llmError);
+              console.error(`[SEC Update] ${ticker}: LLM extraction failed - ${errMsg}`);
+              recordLlmAttempt(false, `${ticker}: ${errMsg}`);
             }
           }
         } else {
           console.log(`[SEC Update] ${ticker}: No recent 8-K filings with crypto content`);
         }
+      } else {
+        // LLM config missing - alert (once per process)
+        const provider = process.env.MONITORING_LLM_PROVIDER || 'anthropic';
+        recordLlmSkipped(`Missing ${provider} API key`);
+        await alertLlmConfigMissing(provider);
       }
     }
 
@@ -506,7 +536,12 @@ function getCompanyInfo(ticker: string): { asset: string; holdings: number } | n
 /**
  * Main function: Check SEC for updates and apply them
  */
-export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<SecUpdateResult[]> {
+export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<{
+  results: SecUpdateResult[];
+  stats: ExtractionRunStats;
+}> {
+  // Start monitoring
+  const stats = startExtractionRun();
   const results: SecUpdateResult[] = [];
 
   let tickers = config.tickers;
@@ -524,17 +559,27 @@ export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<Se
     const companyInfo = getCompanyInfo(ticker);
     if (!companyInfo) {
       results.push({ ticker, success: false, error: 'Company not found in companies.ts' });
+      recordResult('error', `${ticker}: Company not found in companies.ts`);
       continue;
     }
 
     const result = await processCompanyHybrid(ticker, companyInfo.asset, companyInfo.holdings, config);
     results.push(result);
 
-    if (result.newHoldings !== undefined && result.newHoldings !== result.previousHoldings) {
+    // Track result for monitoring
+    if (result.error) {
+      recordResult('error', `${ticker}: ${result.error}`);
+      console.log(`[SEC Update] ${ticker}: Error - ${result.error}`);
+    } else if (result.newHoldings !== undefined && result.newHoldings !== result.previousHoldings) {
+      if (result.committed) {
+        recordResult('updated');
+      } else {
+        recordResult('needsReview');
+      }
       const method = result.extractionMethod || 'unknown';
       console.log(`[SEC Update] ${ticker}: ${result.previousHoldings?.toLocaleString()} → ${result.newHoldings.toLocaleString()} (${method})`);
-    } else if (result.error) {
-      console.log(`[SEC Update] ${ticker}: Error - ${result.error}`);
+    } else {
+      recordResult('unchanged');
     }
 
     await new Promise(r => setTimeout(r, 1000));
@@ -550,7 +595,14 @@ export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<Se
   console.log(`  - Errors: ${errors.length}`);
   console.log(`  - Unchanged: ${results.length - updated.length - errors.length}`);
 
-  return results;
+  // Send monitoring summary (alerts if issues)
+  await alertRunSummary(stats, {
+    alertOnLlmSkip: true,
+    alertOnErrors: true,
+    alertOnSuccess: false,  // Only alert when there are issues
+  });
+
+  return { results, stats };
 }
 
 /**

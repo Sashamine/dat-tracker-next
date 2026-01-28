@@ -487,7 +487,7 @@ describe('SEC Auto-Update Adapter', () => {
       // No crypto content found
       vi.mocked(searchFilingDocuments).mockResolvedValue(null);
 
-      const results = await runSecAutoUpdate({
+      const { results } = await runSecAutoUpdate({
         tickers: ['MSTR', 'RIOT'],
         sinceDays: 30,
         dryRun: true,
@@ -513,7 +513,7 @@ describe('SEC Auto-Update Adapter', () => {
         }),
       } as Response);
 
-      const results = await runSecAutoUpdate({
+      const { results } = await runSecAutoUpdate({
         sinceDays: 7,
         dryRun: true,
       });

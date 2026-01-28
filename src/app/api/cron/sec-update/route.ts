@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     const startTime = Date.now();
 
-    const results = await runSecAutoUpdate({
+    const { results, stats } = await runSecAutoUpdate({
       tickers,
       dryRun,
       sinceDays,
@@ -71,8 +71,7 @@ export async function GET(request: NextRequest) {
 
     console.log(`[SEC Update Cron] Complete in ${duration}ms: ${updated.length} updated, ${needsReview.length} need review, ${errors.length} errors, ${unchanged.length} unchanged`);
 
-    // TODO: Send notifications for updates and errors
-    // This will be added in Phase 4 (Alert System)
+    // Alerting is now handled by the monitoring module in runSecAutoUpdate
 
     return NextResponse.json({
       success: true,
@@ -83,6 +82,11 @@ export async function GET(request: NextRequest) {
         needsReview: needsReview.length,
         errors: errors.length,
         unchanged: unchanged.length,
+        // Include monitoring stats
+        extraction: {
+          xbrl: { attempted: stats.xbrlAttempted, success: stats.xbrlSuccess, failed: stats.xbrlFailed },
+          llm: { attempted: stats.llmAttempted, success: stats.llmSuccess, failed: stats.llmFailed, skipped: stats.llmSkipped },
+        },
       },
       updated: updated.map(r => ({
         ticker: r.ticker,
