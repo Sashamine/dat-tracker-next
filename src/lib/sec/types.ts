@@ -164,7 +164,9 @@ export interface ExtractionResult {
   costBasis: number | null;
   confidence: number;
   reasoning: string;
-  extractedDate: string | null;
+  // The "as of" date for the holdings - used to determine which quarter this data belongs to
+  // Example: "as of December 31, 2025" → "2025-12-31" → Q4 2025
+  asOfDate: string | null;
   rawNumbers: string[];
   // Transaction-based extraction (when total isn't explicitly stated)
   transactionType: 'purchase' | 'sale' | null;

@@ -158,7 +158,7 @@ Respond in valid JSON format only, with no markdown formatting:
   "classAShares": <number or null - for dual-class companies only>,
   "classBShares": <number or null - for dual-class companies only>,
   "costBasis": <number or null if not found>,
-  "extractedDate": "<YYYY-MM-DD or null if not found>",
+  "asOfDate": "<YYYY-MM-DD - the date the holdings are effective as of>",
   "confidence": <0.0 to 1.0>,
   "reasoning": "<brief explanation of how you extracted/calculated these values>",
   "rawNumbers": ["<list of all relevant numbers found in text>"]
@@ -171,7 +171,17 @@ Important guidelines:
 - For dual-class companies: sharesOutstanding should be the SUM of all share classes
 - Confidence should reflect how certain you are about the holdings value
 - Lower confidence for calculated values vs explicitly stated values
-- Include brief reasoning explaining your extraction logic`;
+- Include brief reasoning explaining your extraction logic
+
+CRITICAL - asOfDate extraction:
+The asOfDate is the date the holdings number is valid as of. Look for:
+- "as of [date]" or "as at [date]"
+- "through [date]" or "ended [date]"
+- "December 2025 production" → use last day of month (2025-12-31)
+- "Q4 2025" → use quarter end (2025-12-31)
+- "January 26, 2026" or similar explicit dates
+- If a purchase happened on a specific date, that's the asOfDate
+Convert all dates to YYYY-MM-DD format. This is required for quarter assignment.`;
 }
 
 /**
@@ -280,7 +290,8 @@ function parseExtractionResponse(content: string): ExtractionResult {
       costBasis: parsed.costBasis ?? null,
       confidence: typeof parsed.confidence === 'number' ? parsed.confidence : 0.5,
       reasoning: parsed.reasoning || 'No reasoning provided',
-      extractedDate: parsed.extractedDate || null,
+      // Support both old field name (extractedDate) and new (asOfDate) for backwards compatibility
+      asOfDate: parsed.asOfDate || parsed.extractedDate || null,
       rawNumbers: Array.isArray(parsed.rawNumbers) ? parsed.rawNumbers : [],
       transactionType: parsed.transactionType ?? null,
       transactionAmount: parsed.transactionAmount ?? null,
@@ -296,7 +307,7 @@ function parseExtractionResponse(content: string): ExtractionResult {
       costBasis: null,
       confidence: 0,
       reasoning: `Failed to parse response: ${error instanceof Error ? error.message : String(error)}`,
-      extractedDate: null,
+      asOfDate: null,
       rawNumbers: [],
       transactionType: null,
       transactionAmount: null,
@@ -322,7 +333,7 @@ export async function extractHoldingsFromText(
       costBasis: null,
       confidence: 0,
       reasoning: 'Text too short for extraction',
-      extractedDate: null,
+      asOfDate: null,
       rawNumbers: [],
       transactionType: null,
       transactionAmount: null,
@@ -341,7 +352,7 @@ export async function extractHoldingsFromText(
       costBasis: null,
       confidence: 0,
       reasoning: 'Text does not appear to contain crypto holdings information',
-      extractedDate: null,
+      asOfDate: null,
       rawNumbers: [],
       transactionType: null,
       transactionAmount: null,
@@ -371,7 +382,7 @@ export async function extractHoldingsFromText(
       costBasis: null,
       confidence: 0,
       reasoning: `Extraction failed: ${error instanceof Error ? error.message : String(error)}`,
-      extractedDate: null,
+      asOfDate: null,
       rawNumbers: [],
       transactionType: null,
       transactionAmount: null,
