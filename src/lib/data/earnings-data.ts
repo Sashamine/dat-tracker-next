@@ -2102,7 +2102,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // FY 2025 Q4 (Jul-Sep 2025) = First quarter with SOL holdings
   // Verified 2026-01-28 via SEC XBRL
   //
-  // FY 2026 Q1 (Oct-Dec 2025) - Upcoming
+  // FY 2026 Q1 (Oct-Dec 2025) - Upcoming, Dec shareholder update available
   {
     ticker: "FWDI",
     fiscalYear: 2026,
@@ -2111,7 +2111,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-14",
     earningsTime: "AMC",
-    source: "sec-filing",
+    holdingsAtQuarterEnd: 6_921_342,  // Dec 1, 2025 shareholder update
+    sharesAtQuarterEnd: 112_505_114,  // 86.1M basic + 26.4M pre-funded warrants
+    holdingsPerShare: 0.0615,
+    source: "press-release",
+    sourceUrl: "https://www.forwardindustries.com/",
     status: "upcoming",
   },
   // FY 2025 Q4 (Jul-Sep 2025) - First SOL quarter
