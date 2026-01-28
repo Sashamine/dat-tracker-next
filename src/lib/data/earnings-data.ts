@@ -1686,6 +1686,77 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== SharpLink Gaming (SBET) ==========
+  // Calendar year company (fiscal = calendar)
+  // ETH treasury pivot: June 2025. Pre-pivot data not meaningful for DAT analysis.
+  // Q4 2025 - Upcoming
+  {
+    ticker: "SBET",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // Q3 2025 - First full quarter post-ETH pivot
+  {
+    ticker: "SBET",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14",
+    earningsTime: "AMC",
+    epsActual: 0.62,
+    revenueActual: 10_840_000,
+    netIncome: 104_270_000,  // Includes crypto mark-to-market gains
+    holdingsAtQuarterEnd: 837_230,  // Aug 31, 2025 holdings
+    sharesAtQuarterEnd: 167_000_000,
+    holdingsPerShare: 0.005014,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+    status: "reported",
+  },
+  // Q2 2025 - ETH pivot initiated June 2025
+  {
+    ticker: "SBET",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-12",
+    earningsTime: "AMC",
+    epsActual: -4.27,
+    revenueActual: 700_000,
+    netIncome: -103_420_000,  // Crypto mark-to-market losses
+    holdingsAtQuarterEnd: 450_000,  // Estimated mid-pivot
+    sharesAtQuarterEnd: 24_000_000,
+    holdingsPerShare: 0.01875,
+    source: "sec-filing",
+    status: "reported",
+  },
+  // Q1 2025 - Pre-ETH pivot
+  {
+    ticker: "SBET",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-12",
+    earningsTime: "AMC",
+    epsActual: -1.84,
+    revenueActual: 740_000,
+    netIncome: -970_000,
+    holdingsAtQuarterEnd: 0,  // Pre-ETH pivot
+    sharesAtQuarterEnd: 1_000_000,
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    status: "reported",
+  },
+
   // ========== Bit Digital (BTBT) ==========
   // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
