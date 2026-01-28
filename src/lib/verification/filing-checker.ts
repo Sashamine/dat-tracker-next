@@ -3,6 +3,9 @@
  *
  * Checks SEC EDGAR for new filings and marks companies as needing review.
  * Integrates with the verification state system to track what we've processed.
+ * 
+ * Uses 8-K Item Code filtering to prioritize crypto-relevant filings.
+ * See: src/lib/sec/item-filter.ts and specs/8k-item-codes.md
  */
 
 import { TICKER_TO_CIK } from '../sec/sec-edgar';
@@ -13,6 +16,13 @@ import {
   updateFilingCheckState,
   getFilingCheckState,
 } from './repository';
+import {
+  parseItemsString,
+  filterByItemCodes,
+  containsCryptoKeywords,
+  formatItemsForDisplay,
+  type ItemFilterResult,
+} from '../sec/item-filter';
 import type { ProcessedFiling, VerifiableField, ExtractedData } from './types';
 
 // Filing types we care about for verification
@@ -34,6 +44,8 @@ interface SECFiling {
   periodDate?: string;
   primaryDocument: string;
   description?: string;
+  items?: string[];  // 8-K item codes (e.g., ['7.01', '8.01'])
+  itemFilter?: ItemFilterResult;  // Result of item code filtering
 }
 
 interface FilingCheckResult {
@@ -46,8 +58,19 @@ interface FilingCheckResult {
 
 /**
  * Fetch recent filings from SEC EDGAR for a company
+ * Includes 8-K item code parsing and filtering
  */
-async function fetchRecentFilings(cik: string, limit: number = 50): Promise<SECFiling[]> {
+async function fetchRecentFilings(cik: string, limit: number = 50): Promise<{
+  filings: SECFiling[];
+  stats: {
+    total: number;
+    tier1: number;
+    tier2: number;
+    skipped: number;
+  };
+}> {
+  const stats = { total: 0, tier1: 0, tier2: 0, skipped: 0 };
+  
   try {
     const paddedCik = cik.padStart(10, '0');
     const url = `https://data.sec.gov/submissions/CIK${paddedCik}.json`;
@@ -62,12 +85,12 @@ async function fetchRecentFilings(cik: string, limit: number = 50): Promise<SECF
 
     if (!response.ok) {
       console.error(`SEC EDGAR API error for CIK ${cik}: ${response.status}`);
-      return [];
+      return { filings: [], stats };
     }
 
     const data = await response.json();
     const recent = data.filings?.recent;
-    if (!recent) return [];
+    if (!recent) return { filings: [], stats };
 
     const filings: SECFiling[] = [];
     const count = Math.min(recent.form?.length || 0, limit);
@@ -80,6 +103,31 @@ async function fetchRecentFilings(cik: string, limit: number = 50): Promise<SECF
         continue;
       }
 
+      stats.total++;
+
+      // Parse 8-K item codes
+      const items = formType.startsWith('8-K') 
+        ? parseItemsString(recent.items?.[i])
+        : undefined;
+
+      // Apply item code filtering for 8-K filings
+      let itemFilter: ItemFilterResult | undefined;
+      if (formType.startsWith('8-K') && items) {
+        itemFilter = filterByItemCodes(items);
+        
+        if (!itemFilter.shouldProcess) {
+          stats.skipped++;
+          console.log(`[Filing Check] Skipping 8-K (${recent.accessionNumber[i]}): ${itemFilter.reason}`);
+          continue;
+        }
+        
+        if (itemFilter.tier === 1) {
+          stats.tier1++;
+        } else {
+          stats.tier2++;
+        }
+      }
+
       filings.push({
         accessionNumber: recent.accessionNumber[i],
         formType,
@@ -87,13 +135,15 @@ async function fetchRecentFilings(cik: string, limit: number = 50): Promise<SECF
         periodDate: recent.reportDate?.[i],
         primaryDocument: recent.primaryDocument[i],
         description: recent.primaryDocDescription?.[i],
+        items,
+        itemFilter,
       });
     }
 
-    return filings;
+    return { filings, stats };
   } catch (error) {
     console.error(`Error fetching SEC submissions for CIK ${cik}:`, error);
-    return [];
+    return { filings: [], stats };
   }
 }
 
@@ -126,8 +176,12 @@ export async function checkCompanyFilings(ticker: string): Promise<FilingCheckRe
     };
   }
 
-  // Fetch recent filings from SEC
-  const filings = await fetchRecentFilings(cik);
+  // Fetch recent filings from SEC (with item code filtering)
+  const { filings, stats } = await fetchRecentFilings(cik);
+  
+  if (stats.skipped > 0) {
+    console.log(`[Filing Check] ${ticker}: Skipped ${stats.skipped} irrelevant 8-K(s), processing ${stats.tier1} Tier 1 + ${stats.tier2} Tier 2`);
+  }
 
   const newFilings: SECFiling[] = [];
   const processedFilings: ProcessedFiling[] = [];
@@ -139,6 +193,14 @@ export async function checkCompanyFilings(ticker: string): Promise<FilingCheckRe
     if (!alreadyProcessed) {
       newFilings.push(filing);
 
+      // Build notes with item context for 8-Ks
+      let skipNotes: string | undefined;
+      
+      if (filing.itemFilter?.requiresKeywordScan) {
+        // Tier 2 filings need keyword verification before full processing
+        skipNotes = `Tier 2 filing - items: ${filing.items?.join(', ')}. Needs keyword verification.`;
+      }
+
       // Record that we've seen this filing (but not yet extracted data)
       const processed = await recordProcessedFiling({
         ticker,
@@ -148,12 +210,26 @@ export async function checkCompanyFilings(ticker: string): Promise<FilingCheckRe
         periodDate: filing.periodDate,
         processedAt: new Date().toISOString(),
         processedBy: 'auto',
-        // No extracted data yet - needs processing
-        skippedReason: undefined,
-        skippedNotes: undefined,
+        skippedReason: undefined,  // Not skipped - just not yet extracted
+        skippedNotes: skipNotes,
       });
       processedFilings.push(processed);
     }
+  }
+
+  // Build detailed review reason
+  let reviewReason: string | undefined;
+  if (newFilings.length > 0) {
+    const tier1Count = newFilings.filter(f => f.itemFilter?.tier === 1).length;
+    const tier2Count = newFilings.filter(f => f.itemFilter?.tier === 2).length;
+    const otherCount = newFilings.filter(f => !f.itemFilter).length;
+    
+    const parts: string[] = [];
+    if (tier1Count > 0) parts.push(`${tier1Count} high-priority 8-K(s)`);
+    if (tier2Count > 0) parts.push(`${tier2Count} 8-K(s) need keyword check`);
+    if (otherCount > 0) parts.push(`${otherCount} 10-K/10-Q`);
+    
+    reviewReason = parts.join(', ') || `${newFilings.length} new filing(s)`;
   }
 
   // Update company filing check state
@@ -164,9 +240,7 @@ export async function checkCompanyFilings(ticker: string): Promise<FilingCheckRe
     latestFilingAccession: latestFiling?.accessionNumber,
     latestFilingDate: latestFiling?.filedDate,
     needsReview: newFilings.length > 0,
-    reviewReason: newFilings.length > 0
-      ? `${newFilings.length} new filing(s): ${newFilings.map(f => f.formType).join(', ')}`
-      : undefined,
+    reviewReason,
   });
 
   return {
@@ -189,6 +263,11 @@ export async function checkAllCompanyFilings(options?: {
   totalNewFilings: number;
   results: FilingCheckResult[];
   errors: string[];
+  itemFilterStats: {
+    tier1Processed: number;
+    tier2Processed: number;
+    skippedByFilter: number;
+  };
 }> {
   const { tickers, rateLimit = 200 } = options || {};
 
@@ -211,6 +290,13 @@ export async function checkAllCompanyFilings(options?: {
   const errors: string[] = [];
   let withNewFilings = 0;
   let totalNewFilings = 0;
+  
+  // Track item filter stats across all companies
+  const itemFilterStats = {
+    tier1Processed: 0,
+    tier2Processed: 0,
+    skippedByFilter: 0,
+  };
 
   for (const ticker of tickersToCheck) {
     try {
@@ -222,7 +308,31 @@ export async function checkAllCompanyFilings(options?: {
       } else if (result.newFilings.length > 0) {
         withNewFilings++;
         totalNewFilings += result.newFilings.length;
-        console.log(`[Filing Check] ${ticker}: ${result.newFilings.length} new filing(s)`);
+        
+        // Aggregate item filter stats from new filings
+        for (const filing of result.newFilings) {
+          if (filing.itemFilter?.tier === 1) {
+            itemFilterStats.tier1Processed++;
+          } else if (filing.itemFilter?.tier === 2) {
+            itemFilterStats.tier2Processed++;
+          }
+        }
+        
+        // Log with item context for 8-Ks
+        const tier1 = result.newFilings.filter(f => f.itemFilter?.tier === 1);
+        const tier2 = result.newFilings.filter(f => f.itemFilter?.tier === 2);
+        
+        if (tier1.length > 0 || tier2.length > 0) {
+          const itemSummary = tier1.length > 0 
+            ? `${tier1.length} Tier 1 (${tier1.map(f => f.items?.join(',') || '?').join('; ')})`
+            : '';
+          const tier2Summary = tier2.length > 0
+            ? `${tier2.length} Tier 2`
+            : '';
+          console.log(`[Filing Check] ${ticker}: ${[itemSummary, tier2Summary].filter(Boolean).join(', ')}`);
+        } else {
+          console.log(`[Filing Check] ${ticker}: ${result.newFilings.length} new filing(s)`);
+        }
       }
 
       // Rate limit to be polite to SEC EDGAR
@@ -235,6 +345,7 @@ export async function checkAllCompanyFilings(options?: {
   }
 
   console.log(`[Filing Check] Complete: ${tickersToCheck.length} checked, ${withNewFilings} with new filings, ${totalNewFilings} total new`);
+  console.log(`[Filing Check] Item filter stats: ${itemFilterStats.tier1Processed} Tier 1, ${itemFilterStats.tier2Processed} Tier 2 processed`);
 
   return {
     checked: tickersToCheck.length,
@@ -242,6 +353,7 @@ export async function checkAllCompanyFilings(options?: {
     totalNewFilings,
     results,
     errors,
+    itemFilterStats,
   };
 }
 

@@ -71,13 +71,25 @@ export async function GET(request: NextRequest) {
         const companiesWithFilings = result.results
           .filter(r => r.newFilings.length > 0)
           .map(r => {
-            const filingTypes = r.newFilings.map(f => f.formType).join(', ');
-            return `**${r.ticker}**: ${filingTypes}`;
+            // Include item codes for 8-Ks
+            const filingDetails = r.newFilings.map(f => {
+              if (f.formType.startsWith('8-K') && f.items && f.items.length > 0) {
+                const tier = f.itemFilter?.tier === 1 ? '🔴' : '🟡';
+                return `${f.formType} ${tier} [${f.items.join(',')}]`;
+              }
+              return f.formType;
+            });
+            return `**${r.ticker}**: ${filingDetails.join(', ')}`;
           });
+
+        const filterStats = result.itemFilterStats;
+        const statsLine = filterStats 
+          ? `\n\n_Item filtering: ${filterStats.tier1Processed} high-priority, ${filterStats.tier2Processed} need keyword check_`
+          : '';
 
         await sendDiscordAlert(
           'New SEC Filings Detected',
-          `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}\n\nRun /api/cron/filing-check?manual=true to see details.`,
+          `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}${statsLine}\n\nRun /api/cron/filing-check?manual=true to see details.`,
           'info'
         );
       } catch (notifyError) {
@@ -99,6 +111,7 @@ export async function GET(request: NextRequest) {
         totalNewFilings: result.totalNewFilings,
         companiesNeedingReview: needsReview.length,
         errors: result.errors.length,
+        itemFilterStats: result.itemFilterStats,
       },
       newFilings: result.results
         .filter(r => r.newFilings.length > 0)
@@ -110,6 +123,10 @@ export async function GET(request: NextRequest) {
             formType: f.formType,
             filedDate: f.filedDate,
             periodDate: f.periodDate,
+            // Include item codes and filter result for 8-Ks
+            items: f.items,
+            itemFilterTier: f.itemFilter?.tier,
+            itemFilterReason: f.itemFilter?.reason,
           })),
         })),
       needsReview: needsReview.map(c => ({
