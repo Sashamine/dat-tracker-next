@@ -68,7 +68,7 @@ const SHARES_CONCEPTS = [
   'us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding',
 ];
 
-// Specific concepts for basic vs diluted share detection
+// Specific concepts for basic vs diluted share detection (weighted average for EPS)
 const BASIC_SHARES_CONCEPTS = [
   'us-gaap:WeightedAverageNumberOfSharesOutstandingBasic',
   'dei:EntityCommonStockSharesOutstanding',
@@ -77,6 +77,12 @@ const BASIC_SHARES_CONCEPTS = [
 
 const DILUTED_SHARES_CONCEPTS = [
   'us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding',
+];
+
+// Point-in-time shares for mNAV calculation (balance sheet / cover page)
+const POINT_IN_TIME_SHARES_CONCEPTS = [
+  'us-gaap:CommonStockSharesOutstanding',      // Balance sheet
+  'dei:EntityCommonStockSharesOutstanding',    // Cover page
 ];
 
 const DEBT_CONCEPTS = [
@@ -542,6 +548,146 @@ export async function extractShareCountsBatch(
     results.set(ticker, result);
 
     // Rate limit to respect SEC's 10 requests/second guideline
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+
+  return results;
+}
+
+/**
+ * Point-in-time shares result for mNAV calculation
+ */
+export interface PointInTimeSharesResult {
+  ticker: string;
+  cik: string;
+  success: boolean;
+  sharesOutstanding: number | null;
+  asOfDate: string | null;
+  filingType: string | null;
+  accessionNumber: string | null;
+  secUrl: string | null;
+  concept: string | null;  // Which XBRL concept was used
+  isWeightedAverageFallback: boolean;  // True if we fell back to weighted avg
+  error?: string;
+}
+
+/**
+ * Extract point-in-time shares outstanding for mNAV calculation.
+ *
+ * Uses balance sheet / cover page concepts (CommonStockSharesOutstanding)
+ * rather than weighted average concepts used for EPS calculation.
+ *
+ * This gives the actual share count at period end, not averaged over the period.
+ *
+ * @param ticker - Company ticker symbol
+ * @returns Point-in-time shares result
+ */
+export async function extractPointInTimeShares(ticker: string): Promise<PointInTimeSharesResult> {
+  const cik = TICKER_TO_CIK[ticker.toUpperCase()];
+
+  if (!cik) {
+    return {
+      ticker,
+      cik: '',
+      success: false,
+      sharesOutstanding: null,
+      asOfDate: null,
+      filingType: null,
+      accessionNumber: null,
+      secUrl: null,
+      concept: null,
+      isWeightedAverageFallback: false,
+      error: `No CIK mapping found for ticker ${ticker}`,
+    };
+  }
+
+  const facts = await fetchCompanyFacts(cik);
+
+  if (!facts) {
+    return {
+      ticker,
+      cik,
+      success: false,
+      sharesOutstanding: null,
+      asOfDate: null,
+      filingType: null,
+      accessionNumber: null,
+      secUrl: null,
+      concept: null,
+      isWeightedAverageFallback: false,
+      error: 'No XBRL data available from SEC EDGAR',
+    };
+  }
+
+  const cikNum = cik.replace(/^0+/, '');
+  const secUrl = `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cikNum}&type=10&dateb=&owner=include&count=40`;
+
+  // Try each point-in-time concept in order of preference
+  for (const conceptName of POINT_IN_TIME_SHARES_CONCEPTS) {
+    const data = findMostRecentValue(facts.facts, [conceptName]);
+    if (data && data.value > 0) {
+      return {
+        ticker,
+        cik,
+        success: true,
+        sharesOutstanding: data.value,
+        asOfDate: data.date,
+        filingType: data.form,
+        accessionNumber: data.accn,
+        secUrl,
+        concept: conceptName,
+        isWeightedAverageFallback: false,
+      };
+    }
+  }
+
+  // Fallback to weighted average basic shares if no point-in-time available
+  // This is less accurate for companies with significant share issuances during the period
+  const weightedData = findMostRecentValue(facts.facts, BASIC_SHARES_CONCEPTS);
+  if (weightedData && weightedData.value > 0) {
+    return {
+      ticker,
+      cik,
+      success: true,
+      sharesOutstanding: weightedData.value,
+      asOfDate: weightedData.date,
+      filingType: weightedData.form,
+      accessionNumber: weightedData.accn,
+      secUrl,
+      concept: 'us-gaap:WeightedAverageNumberOfSharesOutstandingBasic',
+      isWeightedAverageFallback: true,  // Flag that this is a fallback
+    };
+  }
+
+  return {
+    ticker,
+    cik,
+    success: false,
+    sharesOutstanding: null,
+    asOfDate: null,
+    filingType: null,
+    accessionNumber: null,
+    secUrl: null,
+    concept: null,
+    isWeightedAverageFallback: false,
+    error: 'No share data found in XBRL',
+  };
+}
+
+/**
+ * Extract point-in-time shares for multiple tickers
+ */
+export async function extractPointInTimeSharesBatch(
+  tickers: string[],
+  delayMs: number = 200
+): Promise<Map<string, PointInTimeSharesResult>> {
+  const results = new Map<string, PointInTimeSharesResult>();
+
+  for (const ticker of tickers) {
+    const result = await extractPointInTimeShares(ticker);
+    results.set(ticker, result);
+
+    // Rate limit
     await new Promise(r => setTimeout(r, delayMs));
   }
 
