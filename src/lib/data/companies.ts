@@ -862,8 +862,10 @@ export const hypeCompanies: Company[] = [
     capitalRaisedPipe: 583_000_000,
     sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
     cashReserves: 300_000_000,  // $300M+ cash (Dec 2025)
+    restrictedCash: 300_000_000,  // No debt = cash not encumbered, don't subtract from EV
     cashSource: "Trefis Dec 5, 2025 analysis",
     cashAsOf: "2025-12-05",
+    totalDebt: 0,
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger. 100% staked via Anchorage.",
     notes: "$888M combined assets. $30M buyback. ~288K HYPE projected annual staking yield.",
