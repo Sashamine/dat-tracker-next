@@ -1698,7 +1698,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-03-15",
+    earningsDate: "2026-03-14",
     earningsTime: "AMC",
     source: "sec-filing",
     status: "upcoming",
@@ -1710,7 +1710,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-11-12",
+    earningsDate: "2025-11-11",
     earningsTime: "AMC",
     epsActual: 0.62,  // SEC XBRL EarningsPerShareDiluted (quarterly)
     revenueActual: 10_843_567,  // SEC XBRL Revenues (quarterly Jul-Sep)
@@ -1729,7 +1729,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-08-14",
+    earningsDate: "2025-08-13",
     earningsTime: "AMC",
     epsActual: -4.27,  // SEC XBRL EarningsPerShareBasic (quarterly Apr-Jun)
     revenueActual: 697_291,  // SEC XBRL RevenueFromContractWithCustomerExcludingAssessedTax (quarterly)
@@ -1748,7 +1748,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 1,
     calendarYear: 2025,
     calendarQuarter: 1,
-    earningsDate: "2025-05-15",
+    earningsDate: "2025-05-14",
     earningsTime: "AMC",
     epsActual: -1.84,  // SEC XBRL EarningsPerShareBasic (quarterly Jan-Mar)
     revenueActual: 741_731,  // SEC XBRL RevenueFromContractWithCustomerExcludingAssessedTax (quarterly)
