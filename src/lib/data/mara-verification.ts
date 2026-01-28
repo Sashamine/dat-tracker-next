@@ -263,7 +263,7 @@ export function printMaraVerificationSummary(): void {
     
     // Debt
     const debtIcon = r.debt.status === "pass" ? "✓" : r.debt.status === "warn" ? "⚠" : "?";
-    console.log(`  Debt: ${debtIcon} XBRL=$${((r.debt.xbrlDebt ?? 0) / 1e9).toFixed(2)}B, Structure=$${(r.debt.capitalStructureDebt / 1e9).toFixed(2)}B`);
+    console.log(`  Debt: ${debtIcon} XBRL=$${((r.debt.xbrlDebt ?? 0) / 1e9).toFixed(2)}B, Structure=$${((r.debt.capitalStructureDebt ?? 0) / 1e9).toFixed(2)}B`);
     if (r.debt.notes) console.log(`        ${r.debt.notes}`);
     
     console.log("");

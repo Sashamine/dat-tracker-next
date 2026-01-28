@@ -42,18 +42,18 @@ interface HoldingsHistoryEntry {
 
 // BMNR holdings history from holdings-history.ts (subset for verification)
 const BMNR_HOLDINGS_HISTORY: HoldingsHistoryEntry[] = [
-  { date: "2025-07-17", holdings: 300657, shares: 50_000_000, holdingsPerShare: 0.006013, source: "Press release" },
-  { date: "2025-08-10", holdings: 1150263, shares: 150_000_000, holdingsPerShare: 0.007668, source: "Press release" },
-  { date: "2025-08-17", holdings: 1523373, shares: 180_000_000, holdingsPerShare: 0.008463, source: "Press release" },
-  { date: "2025-08-24", holdings: 1713899, shares: 221_515_180, holdingsPerShare: 0.007738, source: "Press release" },
-  { date: "2025-09-07", holdings: 2069443, shares: 260_000_000, holdingsPerShare: 0.007959, source: "Press release" },
-  { date: "2025-11-09", holdings: 3505723, shares: 350_000_000, holdingsPerShare: 0.010016, source: "Press release" },
-  { date: "2025-11-20", holdings: 3559879, shares: 384_067_823, holdingsPerShare: 0.009269, source: "10-K filing" },
-  { date: "2025-11-30", holdings: 3726499, shares: 400_000_000, holdingsPerShare: 0.009316, source: "Press release" },
-  { date: "2025-12-14", holdings: 3967210, shares: 410_000_000, holdingsPerShare: 0.009676, source: "Press release" },
-  { date: "2025-12-28", holdings: 4110525, shares: 425_000_000, holdingsPerShare: 0.009672, source: "Press release" },
-  { date: "2026-01-04", holdings: 4143502, shares: 430_000_000, holdingsPerShare: 0.009636, source: "Press release" },
-  { date: "2026-01-20", holdings: 4203036, shares: 455_000_000, holdingsPerShare: 0.009237, source: "Press release" },
+  { date: "2025-07-17", holdings: 300657, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.006013, source: "Press release" },
+  { date: "2025-08-10", holdings: 1150263, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.007668, source: "Press release" },
+  { date: "2025-08-17", holdings: 1523373, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.008463, source: "Press release" },
+  { date: "2025-08-24", holdings: 1713899, sharesOutstandingDiluted: 221_515_180, holdingsPerShare: 0.007738, source: "Press release" },
+  { date: "2025-09-07", holdings: 2069443, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.007959, source: "Press release" },
+  { date: "2025-11-09", holdings: 3505723, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.010016, source: "Press release" },
+  { date: "2025-11-20", holdings: 3559879, sharesOutstandingDiluted: 384_067_823, holdingsPerShare: 0.009269, source: "10-K filing" },
+  { date: "2025-11-30", holdings: 3726499, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.009316, source: "Press release" },
+  { date: "2025-12-14", holdings: 3967210, sharesOutstandingDiluted: 410_000_000, holdingsPerShare: 0.009676, source: "Press release" },
+  { date: "2025-12-28", holdings: 4110525, sharesOutstandingDiluted: 425_000_000, holdingsPerShare: 0.009672, source: "Press release" },
+  { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, source: "Press release" },
+  { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, source: "Press release" },
 ];
 
 export interface BMNRQuarterVerification {
@@ -281,7 +281,7 @@ function verifyQuarter(filing: BMNRSecFiling): BMNRQuarterVerification {
 
   // Shares verification
   const xbrlShares = filing.commonSharesOutstanding;
-  const pressReleaseShares = pressRelease?.shares || null;
+  const pressReleaseShares = pressRelease?.sharesOutstandingDiluted || null;
 
   let sharesVerification: BMNRQuarterVerification["shares"];
   if (pressReleaseShares) {
@@ -294,14 +294,14 @@ function verifyQuarter(filing: BMNRSecFiling): BMNRQuarterVerification {
     sharesVerification = {
       xbrlShares,
       pressReleaseShares,
-      pressReleaseDate: pressRelease.date,
+      pressReleaseDate: pressRelease?.date || null,
       discrepancy,
       discrepancyPct,
       status: getStatus(discrepancyPct, 0.05, 0.15),
       verified: true,
       notes: isRoundNumber
         ? "Press release uses round number (likely estimated)"
-        : pressRelease.source === "10-K filing"
+        : pressRelease?.source === "10-K filing"
         ? "SEC-verified"
         : "Press release estimate",
     };
@@ -423,7 +423,7 @@ export function getUnverifiedDataPoints(report: BMNRVerificationReport): Array<{
   return BMNR_HOLDINGS_HISTORY.filter((h) => h.source !== "10-K filing").map((h) => ({
     date: h.date,
     holdings: h.holdings,
-    shares: h.shares,
+    shares: h.sharesOutstandingDiluted || 0,
     source: h.source,
   }));
 }
