@@ -849,20 +849,24 @@ export const hypeCompanies: Company[] = [
     secCik: "0002078856",
     asset: "HYPE",
     tier: 1,
-    holdings: 12_500_000,  // ~12.5M HYPE from business combination
-    holdingsLastUpdated: "2025-12-02",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm",
+    holdings: 12_000_000,  // 12M HYPE staked via Anchorage (Dec 4, 2025)
+    holdingsLastUpdated: "2025-12-04",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://cryptorank.io/news/feed/hyperliquid-strategies-hype-stake",
     datStartDate: "2025-12-02",
     costBasisAvg: 46.27,
-    stakingPct: 0.80,
-    stakingApy: 0.05,
+    stakingPct: 1.00,  // 100% staked via Anchorage
+    stakingApy: 0.024,  // ~$9.9M annual yield on $420M HYPE
+    stakingMethod: "Anchorage Digital",
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
     sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
+    cashReserves: 300_000_000,  // $300M+ cash (Dec 2025)
+    cashSource: "Trefis Dec 5, 2025 analysis",
+    cashAsOf: "2025-12-05",
     leader: "David Schamis (CEO), Bob Diamond (Board)",
-    strategy: "HYPE treasury via Sonnet merger.",
-    notes: "$888M combined assets. $30M buyback.",
+    strategy: "HYPE treasury via Sonnet merger. 100% staked via Anchorage.",
+    notes: "$888M combined assets. $30M buyback. $9.9M projected annual staking yield.",
   },
   {
     id: "hypd",

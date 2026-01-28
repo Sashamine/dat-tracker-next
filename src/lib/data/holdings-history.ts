@@ -622,8 +622,9 @@ const BTOG_HISTORY: HoldingsSnapshot[] = [
 // Hyperliquid Strategies (PURR) - HYPE treasury
 // Company formed via Sonnet BioTherapeutics + Rorschach I merger on Dec 2, 2025
 // HYPE holdings acquired from Rorschach I LLC in business combination
+// 100% staked via Anchorage Digital
 const PURR_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-12-02", holdings: 12_500_000, sharesOutstandingDiluted: 127_025_563, holdingsPerShare: 0.0984, source: "Business combination 8-K", sharesSource: "10-Q filed Dec 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm", sourceType: "sec-filing" },
+  { date: "2025-12-02", holdings: 12_000_000, sharesOutstandingDiluted: 127_025_563, holdingsPerShare: 0.0944, source: "Business combination 8-K (12M HYPE staked via Anchorage)", sharesSource: "10-Q filed Dec 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm", sourceType: "sec-filing" },
 ];
 
 // Hyperion DeFi (HYPD) - HYPE treasury
