@@ -30,6 +30,9 @@ export const ethCompanies: Company[] = [
     cashSource: "SEC 8-K Jan 26, 2026",
     cashAsOf: "2026-01-25",
     otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO)
+    totalDebt: 0,  // No debt financing - ETH purchases funded via equity (ATM + PIPE)
+    debtSource: "SEC 10-Q Q1 FY2026 - no convertibles, no credit facilities drawn",
+    debtAsOf: "2025-11-30",
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Also holds $219M in non-crypto investments (Beast Industries, OCTO) not reflected in mNAV.",
     notes: "Largest ETH treasury. 3.52% of ETH supply. $200M Beast Industries (MrBeast) + $19M Eightco (OCTO) equity investments.",
