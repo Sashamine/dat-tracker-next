@@ -17,6 +17,7 @@ import {
   type ExtractionResult 
 } from './content-extractor';
 import { fetchFilingWithCache } from './filing-cache';
+import { fetchWithRateLimit, waitForRateLimit, recordSuccess } from './rate-limiter';
 
 // Map tickers to SEC CIK numbers (legacy - use company-sources.ts instead)
 // CIKs verified against SEC EDGAR on 2026-01-21

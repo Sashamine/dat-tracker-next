@@ -20,6 +20,7 @@
 
 import { TICKER_TO_CIK } from './sec-edgar';
 import { getCompanySource } from './company-sources';
+import { fetchWithRateLimit } from './rate-limiter';
 
 // SEC EDGAR API base URL
 const SEC_API_BASE = 'https://data.sec.gov';
@@ -153,7 +154,7 @@ async function fetchCompanyFacts(cik: string): Promise<SECCompanyFacts | null> {
     const paddedCik = cik.replace(/^0+/, '').padStart(10, '0');
     const url = `${SEC_API_BASE}/api/xbrl/companyfacts/CIK${paddedCik}.json`;
 
-    const response = await fetch(url, {
+    const response = await fetchWithRateLimit(url, {
       headers: {
         'User-Agent': USER_AGENT,
         'Accept': 'application/json',

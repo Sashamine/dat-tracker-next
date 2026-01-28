@@ -12,6 +12,7 @@
  */
 
 import { query, queryOne } from '../db';
+import { fetchWithRateLimit } from './rate-limiter';
 
 // ============================================
 // TYPES
@@ -259,9 +260,9 @@ export async function fetchFilingWithCache(
   
   console.log(`[Filing Cache] MISS: ${metadata.documentName} for ${metadata.ticker}, fetching...`);
   
-  // Fetch from SEC
+  // Fetch from SEC with rate limiting
   try {
-    const response = await fetch(url, {
+    const response = await fetchWithRateLimit(url, {
       headers: {
         'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)',
         'Accept': 'text/html,application/xhtml+xml,text/plain',
