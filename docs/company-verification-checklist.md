@@ -50,10 +50,12 @@ Systematic verification process for DAT company data quality.
 - [x] **Notes updated**: Lists Beast Industries + OCTO
 - [x] **Staking info**: 85% staked, MAVAN validators
 
-### 9. Dilutive Instruments ⏳
-- [ ] **Warrants**: Need to check
-- [ ] **Convertible notes**: Need to check
-- [ ] **Options**: hasOptions = true (need details)
+### 9. Dilutive Instruments ✅
+- [x] **Warrants**: 129,375 @ $10 + 1,231,945 @ $5.40 (placement agent)
+- [x] **Convertible notes**: None
+- [x] **RSUs/Options**: 3,043,654 (NonOptionEquityInstrumentsOutstanding)
+- [x] **Total potential dilution**: ~4.4M shares
+- [x] **Added to dilutive-instruments.ts**: Yes
 
 ---
 
