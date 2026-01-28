@@ -1214,7 +1214,7 @@ export const ltcCompanies: Company[] = [
     sharesSource: "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
     leader: "Tomek Antoniak (CEO)",
     strategy: "Target 1M LTC by 2026. Validator operations.",
-    notes: "Canadian (CSE: LUXX). Charlie Lee + David Schwartz on advisory. 1:10 reverse split Mar 21, 2025. All dilutive instruments (14.1M) OTM at current price.",
+    notes: "Canadian (CSE: LUXX). Charlie Lee + David Schwartz on advisory. 1:10 reverse split Mar 21, 2025. All dilutive instruments (14.1M) OTM at current price. ⚠️ Canadian disclosure: No 8-K equivalent for routine treasury updates - holdings data from quarterly/annual SEDAR+ filings only (less frequent than US filers).",
   },
 ];
 
