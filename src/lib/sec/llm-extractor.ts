@@ -17,7 +17,7 @@ interface LLMConfig {
 // Default models per provider
 const DEFAULT_MODELS: Record<LLMProvider, string> = {
   anthropic: 'claude-3-5-sonnet-20241022',
-  grok: 'grok-2-latest',
+  grok: 'grok-2-1212',
 };
 
 /**
