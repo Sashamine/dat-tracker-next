@@ -1359,6 +1359,45 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== American Bitcoin (ABTC) ==========
+  // Calendar year company (fiscal = calendar)
+  // Merged with Gryphon Digital Mining Sep 3, 2025
+  // SEC CIK: 0001755953
+  // Verified 2026-01-28 via SEC XBRL
+  //
+  // Q4 2025 - Upcoming (use Nov 5 press release data)
+  {
+    ticker: "ABTC",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 4_004,  // Nov 5, 2025 PR (latest verified)
+    sharesAtQuarterEnd: 899_489_426,  // Q3 2025 10-Q diluted
+    holdingsPerShare: 0.0000045,
+    source: "press-release",
+    sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
+    status: "upcoming",
+  },
+  // Q3 2025 (Jul-Sep) - First quarter post-merger
+  {
+    ticker: "ABTC",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q XBRL
+    sharesAtQuarterEnd: 899_489_426,  // Diluted shares
+    holdingsPerShare: 0.0000038,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=10-Q",
+    status: "reported",
+  },
+
   // ========== Semler Scientific (SMLR) ==========
   // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming

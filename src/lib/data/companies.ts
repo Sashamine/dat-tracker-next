@@ -677,25 +677,25 @@ export const btcCompanies: Company[] = [
     id: "abtc",
     name: "American Bitcoin",
     ticker: "ABTC",
-    secCik: "0002068580",
+    secCik: "0001755953",  // Post-merger CIK (was Gryphon Digital Mining)
     asset: "BTC",
     tier: 1,
-    holdings: 5_427,  // Jan 2, 2026 - company announcement
-    holdingsLastUpdated: "2026-01-02",
+    holdings: 4_004,  // Nov 5, 2025 - verified PR Newswire
+    holdingsLastUpdated: "2025-11-05",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
-    datStartDate: "2025-06-01",
+    datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
     costBasisAvg: 85_000,
     isMiner: true,
     btcMinedAnnual: 2_000,
     quarterlyBurnUsd: 15_000_000,
     avgDailyVolume: 30_000_000,
     hasOptions: true,
-    marketCap: 800_000_000,
-    sharesForMnav: 920_000_000,
+    // Shares: 899,489,426 diluted per Q3 2025 10-Q
+    sharesForMnav: 899_489_426,
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
-    notes: "80% owned by Hut 8. Active BTC accumulation - added 1,064 BTC in Dec 2025.",
+    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: 432 satoshis/share (Nov 5).",
   },
   // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
   // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company

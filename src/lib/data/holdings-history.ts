@@ -305,12 +305,19 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // American Bitcoin Corp (ABTC) - Pure-play miner with HODL strategy
+// American Bitcoin (ABTC) - Pure-play BTC miner, 80% owned by Hut 8
+// Merged with Gryphon Digital Mining Sep 3, 2025 (exchange ratio ~14.5:1)
+// SEC CIK: 0001755953 (post-merger)
+// Q3 2025 10-Q filed Nov 14, 2025
+// Verified 2026-01-28 via SEC XBRL
 const ABTC_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-06-30", holdings: 2100, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.0000117, source: "Q2 2025 filing" },
-  { date: "2025-09-30", holdings: 3418, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.0000040, source: "Q3 2025 - Hut 8 10-Q" },
-  { date: "2025-10-24", holdings: 3865, sharesOutstandingDiluted: 850_000_000, holdingsPerShare: 0.0000045, source: "Press release" },
-  { date: "2025-12-14", holdings: 4363, sharesOutstandingDiluted: 900_000_000, holdingsPerShare: 0.0000048, source: "Dec purchase announcement" },
-  { date: "2026-01-02", holdings: 5427, sharesOutstandingDiluted: 920_000_000, holdingsPerShare: 0.0000059, source: "Top 20 announcement", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html", sourceType: "press-release" },
+  // Pre-merger data (Gryphon)
+  { date: "2025-06-30", holdings: 2_100, sharesOutstandingDiluted: 74_101_315, holdingsPerShare: 0.0000283, source: "Q2 2025 10-Q (pre-merger)", sourceType: "sec-filing" },
+  // Post-merger (Sep 3, 2025)
+  { date: "2025-09-30", holdings: 3_418, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000038, source: "SEC 10-Q Q3 2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=10-Q", sourceType: "sec-filing" },
+  { date: "2025-10-24", holdings: 3_865, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000043, source: "Press release", sourceType: "press-release" },
+  { date: "2025-11-05", holdings: 4_004, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000045, source: "PR Newswire Nov 5, 2025 (SPS: 432)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html", sourceType: "press-release" },
+  // TODO: Verify Dec 2025+ holdings - source needed
 ];
 
 // Next Technology Holding (NXTT) - BTC treasury company
