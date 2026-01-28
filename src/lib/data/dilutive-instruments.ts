@@ -83,41 +83,40 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // MARA Holdings - BTC miner with HODL strategy
-  // Verified 2026-01-28 via SEC XBRL (CIK 0001507605)
-  // Note: Multiple convertible tranches - need to verify full structure from 10-Q notes
+  // Verified 2026-01-28 via SEC 8-Ks + XBRL (CIK 0001507605)
   MARA: [
     {
       type: "convertible",
       strikePrice: 76.17,
-      potentialShares: 9_800_000, // ~$747M face / $76.17 = ~9.8M shares
+      potentialShares: 9_812_000, // $747.5M / $76.17 = 9.812M shares
       faceValue: 747_500_000,
       source: "8-K Nov 2021",
       sourceUrl:
         "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=8-K",
       expiration: "2026-11-15",
-      notes: "0% Convertible Senior Notes due 2026 (original issuance)",
+      notes: "0% Convertible Senior Notes due 2026",
     },
     {
       type: "convertible",
-      strikePrice: 25.91, // Estimated - needs verification from 10-Q
-      potentialShares: 39_000_000, // ~$1B / ~$25.91 = ~39M shares (estimated)
-      faceValue: 1_000_000_000,
-      source: "10-Q Q3 2025 (estimated)",
+      strikePrice: 20.26, // Verified from 8-K Jul 28, 2025
+      potentialShares: 46_890_000, // $950M / $20.2585 = 46.89M shares
+      faceValue: 950_000_000,
+      source: "8-K Jul 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
-      expiration: "2030-03-01",
-      notes: "0% Convertible Notes 2030 series - STRIKE PRICE NEEDS VERIFICATION",
+        "https://www.sec.gov/Archives/edgar/data/1507605/000095014225002027/eh250659491_8k.htm",
+      expiration: "2032-05-01",
+      notes: "0% Convertible Senior Notes due 2032 (49.3619 shares per $1,000)",
     },
     {
       type: "convertible",
-      strikePrice: 35.00, // Estimated - needs verification from 10-Q
-      potentialShares: 43_000_000, // ~$1.5B / ~$35 = ~43M shares (estimated)
-      faceValue: 1_500_000_000,
-      source: "10-Q Q3 2025 (estimated)",
+      strikePrice: 34.58, // Verified from 8-K Dec 4, 2024
+      potentialShares: 24_580_000, // $850M / $34.583 = 24.58M shares
+      faceValue: 850_000_000,
+      source: "8-K Dec 2024",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
-      expiration: "2032-03-01",
-      notes: "0% Convertible Notes 2031/2032 series - STRIKE PRICE NEEDS VERIFICATION",
+        "https://www.sec.gov/Archives/edgar/data/1507605/000149315224048704/form8-k.htm",
+      expiration: "2030-12-01",
+      notes: "0% Convertible Senior Notes due 2030 (28.9159 shares per $1,000)",
     },
     {
       type: "option",
