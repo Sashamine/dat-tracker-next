@@ -69,7 +69,12 @@ async function fetchMstrKpiData(): Promise<MstrKpiDataResponse | null> {
       return null;
     }
 
-    return await response.json();
+    const data = await response.json();
+    // API returns an array with one element
+    if (Array.isArray(data) && data.length > 0) {
+      return data[0];
+    }
+    return data;
   } catch (error) {
     console.error('[strategy.com] Error fetching mstrKpiData:', error);
     return null;
@@ -158,22 +163,48 @@ export const strategyFetcher: Fetcher = {
     }
 
     // Fully Diluted Shares - from mstrKpiData endpoint
+    // Primary: use fdShares if available
+    // Fallback: derive from marketCap / price
+    let sharesValue: number | null = null;
+    let sharesSource: 'fdShares' | 'derived' = 'fdShares';
+
     if (mstrKpis?.fdShares) {
-      const shares = parseNumber(mstrKpis.fdShares);
-      if (shares !== null) {
-        results.push({
-          ticker: 'MSTR',
-          field: 'shares_outstanding',
-          value: shares,
-          source: {
-            name: 'strategy.com',
-            url: 'https://www.strategy.com/',
-            date: today,
-          },
-          fetchedAt,
-          raw: { fdShares: mstrKpis.fdShares, note: 'Fully diluted shares' },
-        });
+      sharesValue = parseNumber(mstrKpis.fdShares);
+    }
+
+    // Fallback: derive from marketCap / price if fdShares is empty
+    if (sharesValue === null && mstrKpis?.marketCap && mstrKpis?.price) {
+      const marketCapMillions = parseNumber(mstrKpis.marketCap);
+      const price = parseNumber(mstrKpis.price);
+      if (marketCapMillions !== null && price !== null && price > 0) {
+        // marketCap is in millions, so: shares = (marketCap * 1M) / price
+        sharesValue = Math.round((marketCapMillions * 1_000_000) / price);
+        sharesSource = 'derived';
+        console.log(`[strategy.com] Derived shares from marketCap/price: ${sharesValue.toLocaleString()}`);
       }
+    }
+
+    if (sharesValue !== null) {
+      results.push({
+        ticker: 'MSTR',
+        field: 'shares_outstanding',
+        value: sharesValue,
+        source: {
+          name: 'strategy.com',
+          url: 'https://www.strategy.com/',
+          date: today,
+        },
+        fetchedAt,
+        raw: {
+          fdShares: mstrKpis?.fdShares || null,
+          marketCap: mstrKpis?.marketCap,
+          price: mstrKpis?.price,
+          derivedFrom: sharesSource,
+          note: sharesSource === 'derived'
+            ? 'Shares derived from marketCap / price (fdShares unavailable)'
+            : 'Fully diluted shares from API',
+        },
+      });
     }
 
     // mNAV - calculated from Enterprise Value / BTC NAV
