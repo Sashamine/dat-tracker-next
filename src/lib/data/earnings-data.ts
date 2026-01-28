@@ -1398,6 +1398,42 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== Nakamoto Inc. (NAKA) ==========
+  // Calendar year company (fiscal = calendar)
+  // Merged with KindlyMD Aug 2025, rebranded Jan 21, 2026
+  // CIK: 0001946573
+  // Q4 2025 - Upcoming
+  {
+    ticker: "NAKA",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",  // Estimated - 10-K due ~90 days after fiscal year end
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // Q3 2025 - SEC 8-K Nov 19, 2025
+  {
+    ticker: "NAKA",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-19",
+    earningsTime: "AMC",
+    epsActual: -0.42,
+    revenueActual: 388_209,  // Healthcare business only
+    netIncome: -86_035_808,  // Includes $59.8M non-cash Nakamoto acquisition loss, $22.1M unrealized loss on digital assets
+    holdingsAtQuarterEnd: 5_398,  // As of Nov 12, 2025 (per 8-K)
+    sharesAtQuarterEnd: 511_555_864,  // 439.85M shares + 71.7M pre-funded warrants
+    holdingsPerShare: 0.0000106,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+    status: "reported",
+  },
+
   // ========== Semler Scientific (SMLR) ==========
   // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
