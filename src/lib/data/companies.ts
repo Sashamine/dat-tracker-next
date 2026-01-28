@@ -572,16 +572,16 @@ export const btcCompanies: Company[] = [
   },
   {
     id: "naka",
-    name: "Nakamoto Holdings",
+    name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
     asset: "BTC",
     tier: 1,
     holdings: 5_398,
-    holdingsLastUpdated: "2025-11-19",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://nakamoto.com/update/kindlymd-acquires-5-744-btc-to-expand-nakamoto-bitcoin-treasury",
+    holdingsLastUpdated: "2025-11-12",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     datStartDate: "2025-05-12",
-    costBasisAvg: 76_553,  // Pre-merger purchases only (purchases-history.ts)
+    costBasisAvg: 118_205,  // SEC 8-K Nov 19, 2025: "weighted average price of $118,204.88"
     isMiner: false,
     quarterlyBurnUsd: 8_000_000,
     avgDailyVolume: 50_000_000,

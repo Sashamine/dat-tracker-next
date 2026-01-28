@@ -292,7 +292,9 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009325, source: "SEC 8-K Jan 26, 2026 (+40,302 ETH)", sharesSource: "455M diluted (unchanged from Jan 20)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm", sourceType: "sec-filing" },
 ];
 
-// Nakamoto Holdings (NAKA) - Merged with KindlyMD
+// Nakamoto Inc. (NAKA) - Rebranded from KindlyMD Jan 21, 2026
+// SEC CIK: 0001946573
+// Verified 2026-01-28 via SEC 8-K filings
 const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-08-15", holdings: 1250, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000132, source: "Initial treasury announcement" },
   { date: "2024-10-31", holdings: 2800, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.0000255, source: "Q3 2024 filing" },
