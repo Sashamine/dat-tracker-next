@@ -3,6 +3,12 @@
 ## Overview
 Systematic verification process for DAT company data quality.
 
+**Key files to check/update:**
+- `companies.ts` — holdings, CIK, debt, shares, metadata
+- `earnings-data.ts` — quarterly holdings, shares (diluted), HPS
+- `holdings-history.ts` — historical snapshots
+- `dilutive-instruments.ts` — converts, warrants, options
+
 ## Future Considerations
 - **LsETH / Liquid Staking Tokens**: Currently counted at "as-if redeemed" value (1:1 with ETH). Consider whether to apply haircut for protocol/counterparty risk, or track native vs staked separately. Relevant for SBET (~26% LsETH), potentially others.
 
@@ -268,9 +274,14 @@ Systematic verification process for DAT company data quality.
 - [ ] **Fiscal year end**: 
 - [ ] **Current quarter**: 
 
-### 5. Earnings Data Backfill
-| Quarter | Period End | Holdings | Shares | HPS | Source |
-|---------|------------|----------|--------|-----|--------|
+### 5. Earnings Data Verification & Backfill
+- [ ] **Verify existing quarters** match SEC XBRL data
+- [ ] **Backfill missing quarters** with holdings/shares/HPS
+- [ ] **Use diluted shares** for HPS calculations (standard)
+- [ ] **Fix any discrepancies** between earnings-data.ts and XBRL
+
+| Quarter | Period End | Holdings | Shares (diluted) | HPS | Source |
+|---------|------------|----------|------------------|-----|--------|
 | | | | | | |
 
 ### 6. Holdings Per Share Growth
