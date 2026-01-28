@@ -45,6 +45,7 @@ export const ethCompanies: Company[] = [
     datStartDate: "2025-05-01",
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkGaming",
+    secCik: "0001981535",
     tokenizedAddress: "SBETxQGMcKL7oPBqJgUm7gXmMFqLz4PnPuRGqDfvpump",
     tokenizedChain: "Solana",
     stakingPct: 0.95,
