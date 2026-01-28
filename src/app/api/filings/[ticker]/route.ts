@@ -70,7 +70,7 @@ const tickerToCIK: Record<string, string> = {
   "TAOX": "0001539029",
   "TWAV": "0001319927",
   // LINK
-  "CWD": "0001724670",
+  "CWD": "0001627282",  // CaliberCos Inc.
   // TRX
   "TRON": "0001956744", // Tron Inc
   // XRP - XRPN may be pre-IPO SPAC
