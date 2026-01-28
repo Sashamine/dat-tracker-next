@@ -64,7 +64,8 @@ export async function checkCompanyFilings(
 
 // Classify how relevant a filing type is for holdings/shares data
 function classifyFilingRelevance(formType: string): "high" | "medium" | "low" {
-  const highRelevance = ["8-K", "10-Q", "10-K"];
+  // Include foreign private issuer forms (40-F = annual, 6-K = interim, 20-F = annual)
+  const highRelevance = ["8-K", "10-Q", "10-K", "40-F", "6-K", "20-F"];
   const mediumRelevance = ["S-1", "S-3", "424B5", "DEF 14A", "DEF 14C"];
 
   if (highRelevance.includes(formType)) return "high";
@@ -78,6 +79,9 @@ function getFilingReason(formType: string): string {
     "8-K": "Material event - may contain holdings update, acquisitions, or corporate changes",
     "10-Q": "Quarterly report - contains shares outstanding, balance sheet, holdings",
     "10-K": "Annual report - contains full financial statements and share counts",
+    "40-F": "Foreign private issuer annual report - Canadian company financials and share counts",
+    "6-K": "Foreign private issuer interim report - may contain holdings updates, material events",
+    "20-F": "Foreign private issuer annual report - international company financials",
     "S-1": "Registration statement - new share offerings",
     "S-3": "Shelf registration - potential dilution",
     "424B5": "Prospectus supplement - share offering details",

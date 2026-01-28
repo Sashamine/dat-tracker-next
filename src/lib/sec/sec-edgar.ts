@@ -102,7 +102,8 @@ const ASSET_KEYWORDS: Record<string, string[]> = {
 };
 
 // Filing types we care about
-const RELEVANT_FILING_TYPES = ['8-K', '10-K', '10-Q', '6-K', '20-F'];
+// Includes foreign private issuer forms (6-K, 20-F, 40-F) for Canadian/international companies
+const RELEVANT_FILING_TYPES = ['8-K', '10-K', '10-Q', '6-K', '20-F', '40-F'];
 
 interface SECCompanyData {
   name: string;
