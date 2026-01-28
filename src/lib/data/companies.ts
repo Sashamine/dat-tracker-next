@@ -16,6 +16,7 @@ export const ethCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm",
     datStartDate: "2025-07-01",
+    costBasisAvg: 2_839,  // Calculated from purchase history (purchases-history.ts)
     stakingPct: 0.85,
     stakingMethod: "MAVAN validators",
     quarterlyBurnUsd: 2_500_000,
@@ -44,6 +45,7 @@ export const ethCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
     datStartDate: "2025-05-01",
+    costBasisAvg: 3_050,  // Calculated from purchase history (purchases-history.ts)
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkGaming",
     secCik: "0001981535",

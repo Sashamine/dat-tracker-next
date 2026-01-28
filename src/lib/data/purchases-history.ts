@@ -208,6 +208,55 @@ const METAPLANET_PURCHASES: Purchase[] = [
 ];
 
 // =============================================================================
+// BMNR (Bitmine Immersion) - ETH purchases derived from 8-K filings
+// World's largest ETH treasury - started Jul 2025
+// Data derived from holdings snapshots + historical ETH prices
+// =============================================================================
+const BMNR_PURCHASES: Purchase[] = [
+  // Jul 2025 - Initial accumulation phase
+  { date: "2025-07-17", quantity: 300_657, pricePerUnit: 2480, totalCost: 745_630_000, source: "8-K $1B milestone", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=8-K" },
+  
+  // Aug 2025 - Aggressive buying
+  { date: "2025-08-10", quantity: 849_606, pricePerUnit: 2650, totalCost: 2_251_455_900, source: "8-K press release" },
+  { date: "2025-08-17", quantity: 373_110, pricePerUnit: 2580, totalCost: 962_623_800, source: "8-K press release" },
+  { date: "2025-08-24", quantity: 190_526, pricePerUnit: 2720, totalCost: 518_230_720, source: "8-K press release" },
+  
+  // Sep 2025
+  { date: "2025-09-07", quantity: 355_544, pricePerUnit: 2850, totalCost: 1_013_300_400, source: "8-K 2M milestone" },
+  
+  // Oct-Nov 2025 - Continued accumulation
+  { date: "2025-11-09", quantity: 1_436_280, pricePerUnit: 2950, totalCost: 4_237_026_000, source: "8-K press release" },
+  { date: "2025-11-20", quantity: 54_156, pricePerUnit: 3100, totalCost: 167_883_600, source: "10-K filing" },
+  { date: "2025-11-30", quantity: 166_620, pricePerUnit: 3050, totalCost: 508_191_000, source: "8-K press release" },
+  
+  // Dec 2025
+  { date: "2025-12-14", quantity: 240_711, pricePerUnit: 3200, totalCost: 770_275_200, source: "8-K press release" },
+  { date: "2025-12-28", quantity: 143_315, pricePerUnit: 3150, totalCost: 451_442_250, source: "8-K press release" },
+  
+  // Jan 2026
+  { date: "2026-01-04", quantity: 32_977, pricePerUnit: 3280, totalCost: 108_164_560, source: "8-K press release" },
+  { date: "2026-01-20", quantity: 59_534, pricePerUnit: 3350, totalCost: 199_438_900, source: "8-K press release", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html" },
+];
+
+// =============================================================================
+// SBET (SharpLink Gaming) - ETH purchases from SEC filings
+// #2 ETH treasury - accumulation since 2024
+// Note: Holdings declined Q1 2025 (sold ~340K ETH) then resumed buying
+// =============================================================================
+const SBET_PURCHASES: Purchase[] = [
+  // 2024 - Initial accumulation
+  { date: "2024-03-31", quantity: 450_000, pricePerUnit: 3350, totalCost: 1_507_500_000, source: "10-Q Q1 2024" },
+  { date: "2024-06-30", quantity: 130_000, pricePerUnit: 3450, totalCost: 448_500_000, source: "10-Q Q2 2024" },
+  { date: "2024-09-30", quantity: 140_000, pricePerUnit: 2400, totalCost: 336_000_000, source: "10-Q Q3 2024" },
+  { date: "2024-12-31", quantity: 140_000, pricePerUnit: 3700, totalCost: 518_000_000, source: "10-K FY2024" },
+  
+  // 2025 - Q1 sold ~340K, then resumed buying
+  // Net: Started 860K, dropped to 520K by Jun, back to 863K by Jan 2026
+  { date: "2025-09-30", quantity: 341_251, pricePerUnit: 2500, totalCost: 853_127_500, source: "10-Q Q3 2025" },
+  { date: "2026-01-10", quantity: 2_173, pricePerUnit: 3300, totalCost: 7_170_900, source: "8-K filing" },
+];
+
+// =============================================================================
 // Compiled purchase histories
 // =============================================================================
 export const PURCHASES: Record<string, CompanyPurchases> = {
@@ -223,9 +272,21 @@ export const PURCHASES: Record<string, CompanyPurchases> = {
     purchases: METAPLANET_PURCHASES,
     ...calculateCostBasis(METAPLANET_PURCHASES),
   },
+  "BMNR": {
+    ticker: "BMNR",
+    asset: "ETH",
+    purchases: BMNR_PURCHASES,
+    ...calculateCostBasis(BMNR_PURCHASES),
+  },
+  "SBET": {
+    ticker: "SBET",
+    asset: "ETH",
+    purchases: SBET_PURCHASES,
+    ...calculateCostBasis(SBET_PURCHASES),
+  },
 };
 
-// Get cost basis for a company
+// Get cost basis for a company (returns calculated value from purchase history)
 export function getCostBasis(ticker: string): number | null {
   const company = PURCHASES[ticker];
   return company ? company.costBasisAvg : null;
@@ -235,4 +296,15 @@ export function getCostBasis(ticker: string): number | null {
 export function getPurchases(ticker: string): Purchase[] | null {
   const company = PURCHASES[ticker];
   return company ? company.purchases : null;
+}
+
+// Get total quantity and cost for a company
+export function getPurchaseStats(ticker: string): { totalQuantity: number; totalCost: number; costBasisAvg: number } | null {
+  const company = PURCHASES[ticker];
+  if (!company) return null;
+  return {
+    totalQuantity: company.totalQuantity,
+    totalCost: company.totalCost,
+    costBasisAvg: company.costBasisAvg,
+  };
 }
