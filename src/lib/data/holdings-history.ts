@@ -283,6 +283,7 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-28", holdings: 4110525, sharesOutstandingDiluted: 425_000_000, holdingsPerShare: 0.009672, source: "Press release" },
   { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, source: "Press release", sourceUrl: "https://bitmine.com/press-releases", sourceType: "press-release" },
   { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, source: "Press release", sharesSource: "Jan 15 shareholder vote (454.9M)", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html", sourceType: "press-release" },
+  { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009325, source: "SEC 8-K Jan 26, 2026 (+40,302 ETH)", sharesSource: "455M diluted (unchanged from Jan 20)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm", sourceType: "sec-filing" },
 ];
 
 // Nakamoto Holdings (NAKA) - Merged with KindlyMD
@@ -653,15 +654,20 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder
+// BTC Sources (per S-1 Jan 2026):
+//   - Tether/Bitfinex contribution: 31,500 BTC
+//   - PIPE investments: 10,500 BTC (Initial + Option + April In-Kind + Additional)
+//   - Additional purchases: ~1,514 BTC
+//   - Total: 43,514 BTC
 // DUAL-CLASS: Class A (346.5M non-voting) + Class B (304.8M voting) = 651.4M total shares
 // For mNAV, use TOTAL shares (both classes have economic rights)
 const XXI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-04-23", holdings: 42000, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement" },
+  { date: "2025-04-23", holdings: 42000, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement (31.5K Tether + 10.5K PIPE)" },
   { date: "2025-07-29", holdings: 43500, sharesOutstandingDiluted: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update" },
-  { date: "2025-09-30", holdings: 43510, sharesOutstandingDiluted: 600_000_000, holdingsPerShare: 0.0000725, source: "Q3 2025 10-Q" },
-  { date: "2025-12-09", holdings: 43514, sharesOutstandingDiluted: 651_000_000, holdingsPerShare: 0.0000668, source: "NYSE listing 8-K" },
+  { date: "2025-09-30", holdings: 10500, sharesOutstandingDiluted: 1, holdingsPerShare: 10500, source: "SEC 10-Q XBRL (pre-merger entity only)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=10-Q", sourceType: "sec-filing" },
+  { date: "2025-12-09", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "NYSE listing - merger closed", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm", sourceType: "sec-filing" },
   // Jan 2026: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
-  { date: "2026-01-02", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "SEC 8-K (Class A + Class B)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=8-K", sourceType: "sec-filing" },
+  { date: "2026-01-05", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "S-1 prospectus", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm", sourceType: "sec-filing" },
 ];
 
 // Strive Asset (ASST) - First publicly traded asset management BTC treasury
