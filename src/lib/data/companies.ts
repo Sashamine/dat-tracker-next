@@ -181,6 +181,7 @@ export const ethCompanies: Company[] = [
     sharesSource: "SEC 10-Q Sep 30 (98.4M) - 3.54M buybacks through Jan 6, 2026",
     sharesAsOf: "2026-01-06",
     cashReserves: 6_012_219,  // SEC 10-Q Sep 30, 2025
+    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value
@@ -596,7 +597,7 @@ export const btcCompanies: Company[] = [
     debtSource: "Kraken credit facility Dec 2025",
     debtAsOf: "2025-12-31",
     cashReserves: 24_185_083,  // SEC 10-Q Q3 2025 balance sheet
-    // restrictedCash: 0 - cash is free, subtracted from EV
+    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q",
     cashAsOf: "2025-09-30",
@@ -1058,6 +1059,7 @@ export const taoCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "746210",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
+    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     leader: "Peter Holst (President & CEO)",
@@ -1198,6 +1200,7 @@ export const ltcCompanies: Company[] = [
     sharesSource: "SEC DEF 14A Dec 30, 2025",
     sharesAsOf: "2025-12-15",
     cashReserves: 10_113_000,  // $10.1M cash (SEC 10-Q Q1 FY2026)
+    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q1 FY2026",
     cashAsOf: "2025-09-30",
     // No interest-bearing debt per SEC 10-Q Q1 FY2026 (only $1.07M operating liabilities)
@@ -1286,6 +1289,7 @@ export const dogeCompanies: Company[] = [
     avgDailyVolume: 10_000_000,
     marketCap: 150_000_000,
     cashReserves: 12_900_000,  // Sep 30, 2025 10-Q
+    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q1 FY2026",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Minimal liabilities per 10-Q
