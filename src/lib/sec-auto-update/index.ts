@@ -355,7 +355,14 @@ async function processCompanyHybrid(
             try {
               const extraction = await extractHoldingsFromText(
                 llmFiling.content,
-                { companyName: ticker, ticker, asset, currentHoldings },
+                {
+                  companyName: ticker,
+                  ticker,
+                  asset,
+                  currentHoldings,
+                  formType: llmFiling.formType,
+                  itemCodes: llmFiling.items,
+                },
                 llmConfig
               );
 

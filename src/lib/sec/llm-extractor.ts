@@ -52,7 +52,50 @@ For shares outstanding, look for:
     ? `Current known shares outstanding: ${context.currentSharesOutstanding.toLocaleString()}`
     : '';
 
+  // Build filing context based on form type and item codes
+  let filingContext = '';
+  if (context.formType || context.itemCodes?.length) {
+    const formDesc = context.formType ? `Form: ${context.formType}` : '';
+    
+    // Item code specific guidance
+    let itemGuidance = '';
+    if (context.itemCodes?.length) {
+      const items = context.itemCodes;
+      if (items.some(i => ['7.01', '8.01'].includes(i))) {
+        itemGuidance += '\n- This is likely a crypto holdings announcement. Focus on extracting total holdings.';
+      }
+      if (items.includes('3.02')) {
+        itemGuidance += '\n- This filing reports equity sales. Focus on share count changes and new shares outstanding.';
+      }
+      if (items.some(i => ['1.01', '2.03'].includes(i))) {
+        itemGuidance += '\n- This filing involves material agreements/debt. Look for convertible notes, credit facilities, and their terms.';
+      }
+      if (items.includes('2.01')) {
+        itemGuidance += '\n- This filing reports asset acquisition/disposition. Look for crypto purchases or sales.';
+      }
+      if (items.includes('2.02')) {
+        itemGuidance += '\n- This is a results announcement. Look for holdings updates in earnings context.';
+      }
+    }
+    
+    // Foreign filer guidance
+    if (context.formType === '40-F') {
+      itemGuidance += '\n- This is a Canadian company annual report (40-F). Look for shares outstanding in the financial statements section.';
+    } else if (context.formType === '6-K') {
+      itemGuidance += '\n- This is a foreign company interim report (6-K). May contain holdings updates or material events.';
+    }
+    
+    if (formDesc || itemGuidance) {
+      filingContext = `
+FILING CONTEXT:
+${formDesc}${context.itemCodes?.length ? ` | Items: ${context.itemCodes.join(', ')}` : ''}
+${itemGuidance}
+`;
+    }
+  }
+
   return `You are analyzing a financial document or announcement for ${context.companyName} (${context.ticker}).
+${filingContext}
 
 This company holds ${context.asset} as a treasury asset. Their current known holdings are ${context.currentHoldings.toLocaleString()} ${context.asset}.
 ${currentSharesInfo}

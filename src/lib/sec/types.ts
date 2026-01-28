@@ -181,6 +181,9 @@ export interface ExtractionContext {
   currentSharesOutstanding?: number;
   isDualClass?: boolean;
   shareClasses?: string[]; // e.g., ['Class A', 'Class B']
+  // Filing context for targeted extraction
+  formType?: string;        // '8-K', '40-F', '6-K', '10-Q', etc.
+  itemCodes?: string[];     // 8-K item codes: ['7.01', '8.01']
 }
 
 // Approval decision
