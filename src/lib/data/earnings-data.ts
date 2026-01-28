@@ -2028,7 +2028,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Bit Digital (BTBT) ==========
   // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Upcoming
+  // Q4 2025 - Upcoming (holdings from Jan 7, 2026 press release)
   {
     ticker: "BTBT",
     fiscalYear: 2025,
@@ -2037,7 +2037,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-12",
     earningsTime: "BMO",
-    source: "sec-filing",
+    holdings: 155_227,
+    sharesOutstandingDiluted: 323_792_059,
+    holdingsPerShare: 0.000479,
+    source: "press-release",
     status: "upcoming",
   },
   // Q3 2025
