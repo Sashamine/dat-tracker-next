@@ -356,6 +356,13 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 // Note: 1:12 reverse split on May 6, 2025
 // Using BASIC shares (EntityCommonStockSharesOutstanding) - matches reported mNAV (~0.83 on Nov 28, 2025)
 // Fully diluted count (warrants, options, RSUs) not publicly available
+//
+// ETH Holdings Breakdown (as of Dec 14, 2025 per 8-K filed Dec 17):
+//   - Native ETH: 639,241
+//   - LsETH (liquid staking, as-if redeemed): 224,183
+//   - Total: 863,424 ETH
+//   - Staking rewards earned: 9,241 ETH (3,350 native + 5,891 from LsETH)
+//   - ~100% of ETH is staked
 const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 450000, sharesOutstandingDiluted: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q" },
   { date: "2024-06-30", holdings: 580000, sharesOutstandingDiluted: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q" },
@@ -364,7 +371,8 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (1:12 on May 6, 2025)
   { date: "2025-06-30", holdings: 520000, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.003586, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 861251, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004785, source: "Q3 2025 10-Q" },
-  { date: "2026-01-10", holdings: 863424, sharesOutstandingDiluted: 196_690_000, holdingsPerShare: 0.004390, source: "SEC filing (basic shares)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=8-K", sourceType: "sec-filing" },
+  // Q4 2025: 8-K filed Dec 17, holdings as of Dec 14. Breakdown: 639,241 native + 224,183 LsETH
+  { date: "2025-12-14", holdings: 863424, sharesOutstandingDiluted: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm", sourceType: "sec-filing" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury

@@ -1691,7 +1691,15 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ETH treasury pivot: June 2025. Pre-pivot data not meaningful for DAT analysis.
   // Note: 1:12 reverse split May 5, 2025. Share counts post-split unless noted.
   // SEC XBRL CIK: 0001981535
-  // Q4 2025 - Upcoming
+  //
+  // ETH Holdings Breakdown (as of Dec 14, 2025 per 8-K filed Dec 17):
+  //   - Native ETH: 639,241
+  //   - LsETH (liquid staking, as-if redeemed): 224,183
+  //   - Total: 863,424 ETH
+  //   - Staking rewards earned since Jun 2: 9,241 ETH (3,350 native + 5,891 from LsETH)
+  //   - ~100% of ETH is staked for yield
+  //
+  // Q4 2025 - 10-K upcoming, but holdings available from 8-K
   {
     ticker: "SBET",
     fiscalYear: 2025,
@@ -1700,8 +1708,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-14",
     earningsTime: "AMC",
+    // Holdings from 8-K filed Dec 17, 2025 (as of Dec 14)
+    holdingsAtQuarterEnd: 863_424,  // 639,241 native ETH + 224,183 LsETH (as-if redeemed)
+    sharesAtQuarterEnd: 196_693_191,  // SEC XBRL EntityCommonStockSharesOutstanding at Nov 12 filing
+    holdingsPerShare: 0.004390,  // 863424 / 196693191
     source: "sec-filing",
-    status: "upcoming",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
+    status: "upcoming",  // Full financials (EPS, revenue) pending 10-K in March
   },
   // Q3 2025 - First full quarter post-ETH pivot (filed 2025-11-12)
   {
