@@ -320,6 +320,31 @@ export function extractRelevantContent(
   };
 }
 
+// Patterns that indicate SEC boilerplate sections to skip
+const BOILERPLATE_PATTERNS = [
+  /form\s*8-k/i,
+  /current\s*report\s*pursuant/i,
+  /securities\s*exchange\s*act\s*of\s*1934/i,
+  /commission\s*file\s*number/i,
+  /registrant.*charter/i,
+  /check\s*the\s*appropriate\s*box/i,
+  /emerging\s*growth\s*company/i,
+  /general\s*instruction/i,
+  /securities\s*registered\s*pursuant/i,
+];
+
+/**
+ * Check if text context is in a boilerplate section
+ */
+function isBoilerplateContext(text: string, start: number, end: number): boolean {
+  // Check a window around the match for boilerplate markers
+  const windowStart = Math.max(0, start - 500);
+  const windowEnd = Math.min(text.length, end + 200);
+  const window = text.substring(windowStart, windowEnd).toLowerCase();
+  
+  return BOILERPLATE_PATTERNS.some(pattern => pattern.test(window));
+}
+
 /**
  * Extract context around crypto keywords
  * Better than simple truncation - finds the most relevant parts
@@ -336,6 +361,12 @@ function extractKeywordContext(text: string, maxChars: number): string {
       const contextSize = 2000;
       const start = Math.max(0, index - contextSize / 2);
       const end = Math.min(text.length, index + keyword.length + contextSize / 2);
+      
+      // Skip if this looks like boilerplate
+      if (isBoilerplateContext(text, index, index + keyword.length)) {
+        index += keyword.length;
+        continue;
+      }
       
       // Score based on keyword importance
       let score = 1;
@@ -406,16 +437,26 @@ export function cleanHtmlText(html: string): string {
     .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
     // Remove HTML tags
     .replace(/<[^>]*>/g, ' ')
-    // Decode common entities
+    // Decode ALL HTML entities (numeric and named)
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)))
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
-    .replace(/&#39;/g, "'")
-    .replace(/&#34;/g, '"')
-    .replace(/&rsquo;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&rsquo;|&lsquo;/g, "'")
     .replace(/&ldquo;|&rdquo;/g, '"')
     .replace(/&mdash;/g, '—')
     .replace(/&ndash;/g, '–')
     .replace(/&bull;/g, '•')
+    .replace(/&hellip;/g, '...')
+    .replace(/&trade;/g, '™')
+    .replace(/&copy;/g, '©')
+    .replace(/&reg;/g, '®')
+    // Catch any remaining entities
+    .replace(/&[a-z]+;/gi, ' ')
     // Normalize whitespace
     .replace(/\s+/g, ' ')
     .replace(/\n\s*\n/g, '\n\n')
