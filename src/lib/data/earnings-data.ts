@@ -1304,15 +1304,58 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== ETH COMPANIES ====================
 
   // ========== Bitmine Immersion (BMNR) ==========
-  // Q4 2025 - Upcoming
+  // Fiscal year ends Sep 30. ETH treasury strategy launched Jul 2025.
+  // FY2026 Q2 (Jan-Mar 2026) - Upcoming
+  {
+    ticker: "BMNR",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    earningsDate: "2026-05-15",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // FY2026 Q1 (Oct-Dec 2025) - 10-Q filed Jan 13, 2026
+  {
+    ticker: "BMNR",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    earningsDate: "2026-01-13",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 4_203_036,
+    sharesAtQuarterEnd: 455_000_000,
+    holdingsPerShare: 0.009237,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-Q",
+    status: "reported",
+  },
+  // FY2025 Q4 / Annual (Jul-Sep 2025) - 10-K filed Nov 21, 2025
   {
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
-    earningsDate: "2026-02-28",
+    earningsDate: "2025-11-21",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 3_559_879,
+    sharesAtQuarterEnd: 384_067_823,
+    holdingsPerShare: 0.009269,
     source: "sec-filing",
-    status: "upcoming",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-K",
+    status: "reported",
+  },
+  // FY2025 Q3 (Apr-Jun 2025) - 10-Q filed Jul 2, 2025 - Pre-ETH strategy
+  {
+    ticker: "BMNR",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    earningsDate: "2025-07-02",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,
+    sharesAtQuarterEnd: 25_000_000,
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000168316825004889",
+    status: "reported",
   },
 
   // ========== BTCS Inc (BTCS) ==========
