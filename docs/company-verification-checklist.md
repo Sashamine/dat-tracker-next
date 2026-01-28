@@ -6,8 +6,15 @@ Systematic verification process for DAT company data quality.
 **Key files to check/update:**
 - `companies.ts` — holdings, CIK, debt, shares, metadata
 - `earnings-data.ts` — quarterly holdings, shares (diluted), HPS
-- `holdings-history.ts` — historical snapshots
+- `holdings-history.ts` — historical snapshots (keep in sync with earnings!)
 - `dilutive-instruments.ts` — converts, warrants, options
+
+**Earnings data rule**: Never leave current quarter empty. Use best available source:
+1. SEC 10-Q/10-K XBRL (preferred)
+2. 8-K filings with holdings updates
+3. Press releases / shareholder updates
+4. Production reports (miners)
+5. Company dashboards/IR pages
 
 ## Future Considerations
 - **LsETH / Liquid Staking Tokens**: Currently counted at "as-if redeemed" value (1:1 with ETH). Consider whether to apply haircut for protocol/counterparty risk, or track native vs staked separately. Relevant for SBET (~26% LsETH), potentially others.
@@ -278,19 +285,44 @@ Systematic verification process for DAT company data quality.
 - [ ] **Current quarter**: 
 
 ### 5. Earnings Data Verification & Backfill
-- [ ] **Verify existing quarters** match SEC XBRL data
-- [ ] **Backfill missing quarters** with holdings/shares/HPS
-- [ ] **Use diluted shares** for HPS calculations (standard)
-- [ ] **Fix any discrepancies** between earnings-data.ts and XBRL
-- [ ] **Current quarter**: Use 8-K data (status: "upcoming") if 10-Q not filed yet
 
-| Quarter | Period End | Holdings | Shares (diluted) | HPS | Source |
-|---------|------------|----------|------------------|-----|--------|
-| | | | | | |
+**A. Fiscal Year Mapping** (critical for non-calendar FY companies)
+- [ ] **Fiscal year end identified**: (e.g., Sep 30, Dec 31)
+- [ ] **FY→CY quarter mapping documented**: 
+  - Example: FY Q1 (Oct-Dec) = CY Q4, FY Q2 (Jan-Mar) = CY Q1, etc.
+
+**B. Historical Quarters (from SEC filings)**
+- [ ] **Verify existing quarters** match SEC XBRL data
+- [ ] **Backfill ALL available quarters** with holdings/shares/HPS
+- [ ] **Use diluted shares** for HPS calculations (standard methodology)
+- [ ] **Fix any discrepancies** between earnings-data.ts and XBRL
+- [ ] **Sources**: 10-K (annual), 10-Q (quarterly), with SEC XBRL as primary
+
+**C. Current Quarter (REQUIRED - don't leave empty)**
+- [ ] **10-Q filed?** If yes, use XBRL data
+- [ ] **If 10-Q not filed**, check for interim data:
+  - [ ] 8-K filings (Item 7.01/8.01 for holdings updates)
+  - [ ] Press releases / shareholder updates
+  - [ ] Production reports (for miners)
+  - [ ] Company IR website / dashboards
+- [ ] **Add to earnings-data.ts** with status: "upcoming" and source noted
+- [ ] **Add to holdings-history.ts** with date and source
+
+**D. Staking Yield Verification** (for staking assets: SOL, ETH, etc.)
+- [ ] **stakingPct** set in companies.ts (% of holdings staked)
+- [ ] **stakingApy** set in companies.ts (current APY)
+- [ ] **Holdings growth** matches expected staking yield:
+  - Formula: `holdings × APY × (months/12)` ≈ observed growth
+  - If growth significantly differs, investigate (purchases, sales, etc.)
+
+| Quarter | Fiscal Q | Period End | Holdings | Shares (diluted) | HPS | Source |
+|---------|----------|------------|----------|------------------|-----|--------|
+| CY Q_ | FY Q_ | | | | | |
 
 ### 6. Holdings Per Share Growth
 - [ ] **QoQ growth calculated**: 
 - [ ] **Trend**: (positive/negative/flat)
+- [ ] **Growth drivers identified**: (staking, purchases, dilution, etc.)
 
 ### 7. Non-Crypto Investments
 - [ ] **Other investments**: 
