@@ -55,6 +55,9 @@ import {
   type ExtractionRunStats,
 } from '../monitoring/alerts';
 
+// Extraction accuracy tracking
+import { recordExtractionComparison } from '../verification/extraction-accuracy';
+
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';
 
@@ -283,7 +286,7 @@ async function processCompanyHybrid(
   let llmHoldings: number | null = null;
   let llmConfidence: number = 0;
   let llmReasoning: string | undefined;
-  let filing8K: { filingDate: string; documentUrl?: string; content?: string } | undefined;
+  let filing8K: { accessionNumber: string; filingDate: string; items?: string[]; documentUrl?: string; content?: string } | undefined;
 
   try {
     // STEP 1: Try XBRL extraction (deterministic)
@@ -361,6 +364,23 @@ async function processCompanyHybrid(
     if (xbrlResult?.success && xbrlResult.bitcoinHoldings !== undefined) {
       if (llmHoldings !== null) {
         const comparison = compareExtractions(xbrlResult, llmHoldings);
+
+        // Record the comparison for accuracy tracking (when values differ)
+        if (!comparison.match && filing8K) {
+          try {
+            await recordExtractionComparison({
+              ticker,
+              accessionNumber: filing8K.accessionNumber || xbrlResult.accessionNumber || '',
+              filedDate: filing8K.filingDate || xbrlResult.filingDate || new Date().toISOString().split('T')[0],
+              xbrlValue: xbrlResult.bitcoinHoldings,
+              llmValue: llmHoldings,
+            });
+            console.log(`[SEC Update] ${ticker}: Recorded XBRL/LLM discrepancy for accuracy tracking`);
+          } catch (err) {
+            // Don't fail the extraction if accuracy tracking fails
+            console.error(`[SEC Update] ${ticker}: Failed to record comparison:`, err);
+          }
+        }
 
         if (comparison.match) {
           finalHoldings = xbrlResult.bitcoinHoldings;
