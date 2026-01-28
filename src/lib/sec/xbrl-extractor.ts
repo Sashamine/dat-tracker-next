@@ -19,6 +19,7 @@
  */
 
 import { TICKER_TO_CIK } from './sec-edgar';
+import { getCompanySource } from './company-sources';
 
 // SEC EDGAR API base URL
 const SEC_API_BASE = 'https://data.sec.gov';
@@ -26,26 +27,37 @@ const SEC_API_BASE = 'https://data.sec.gov';
 // User agent required by SEC
 const USER_AGENT = 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)';
 
-// Common XBRL concepts for crypto holdings
-// Companies use different concepts - we check all of them
-const BITCOIN_CONCEPTS = [
+// Default XBRL concepts for crypto holdings
+// Used when company doesn't have custom concepts configured
+const DEFAULT_BITCOIN_CONCEPTS = [
+  // Standard US-GAAP concepts
   'us-gaap:CryptoAssetHeld',
   'us-gaap:DigitalAssets',
   'us-gaap:CryptocurrencyHeldAtFairValue',
   'us-gaap:BitcoinHeld',
-  // Company-specific extensions (CLSK uses these)
-  'clsk:Bitcoin',
-  'clsk:BitcoinHoldings',
-  // MARA uses these
-  'mara:DigitalAssets',
-  'mara:BitcoinHoldings',
-  // RIOT uses these
-  'riot:DigitalAssets',
-  // Generic fallbacks
+  'us-gaap:DigitalAssetsFairValue',
+  // Generic fallbacks (check any namespace)
   'CryptoAsset',
   'DigitalAsset',
   'Bitcoin',
+  'BitcoinHoldings',
 ];
+
+/**
+ * Get XBRL concepts for a company's crypto holdings
+ * Uses company-specific concepts if configured, otherwise defaults
+ */
+function getBitcoinConcepts(ticker: string): string[] {
+  const source = getCompanySource(ticker);
+  if (source?.xbrlConcepts?.holdings && source.xbrlConcepts.holdings.length > 0) {
+    // Combine company-specific with defaults (company-specific first for priority)
+    return [...source.xbrlConcepts.holdings, ...DEFAULT_BITCOIN_CONCEPTS];
+  }
+  return DEFAULT_BITCOIN_CONCEPTS;
+}
+
+// Keep legacy constant for backwards compatibility
+const BITCOIN_CONCEPTS = DEFAULT_BITCOIN_CONCEPTS;
 
 const SHARES_CONCEPTS = [
   'dei:EntityCommonStockSharesOutstanding',
@@ -239,18 +251,25 @@ function extractBitcoinHoldings(
   facts: SECCompanyFacts['facts'],
   ticker: string
 ): { value: number; date: string; form: string; accn: string } | null {
-  // Add company-specific concepts to the search
+  // Get company-configured XBRL concepts (includes defaults)
+  const configuredConcepts = getBitcoinConcepts(ticker);
+  
+  // Also try dynamic ticker-based concepts as fallback
   const tickerLower = ticker.toLowerCase();
-  const companySpecificConcepts = [
+  const dynamicConcepts = [
     `${tickerLower}:Bitcoin`,
     `${tickerLower}:BitcoinHoldings`,
     `${tickerLower}:DigitalAssets`,
     `${tickerLower}:CryptoAssets`,
   ];
 
-  const allConcepts = [...companySpecificConcepts, ...BITCOIN_CONCEPTS];
+  // Combine all (configured first for priority)
+  const allConcepts = [...configuredConcepts, ...dynamicConcepts];
+  
+  // Deduplicate
+  const uniqueConcepts = [...new Set(allConcepts)];
 
-  return findMostRecentValue(facts, allConcepts);
+  return findMostRecentValue(facts, uniqueConcepts);
 }
 
 /**

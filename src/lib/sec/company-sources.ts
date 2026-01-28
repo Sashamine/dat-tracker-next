@@ -19,6 +19,17 @@ export interface CompanySource {
     tenQ?: RegExp[];
   };
 
+  // Custom XBRL concepts for this company
+  // Companies often use extension taxonomies with custom tags
+  xbrlConcepts?: {
+    // Crypto holdings concepts (e.g., 'mstr:BitcoinHoldings')
+    holdings?: string[];
+    // Shares outstanding concepts
+    shares?: string[];
+    // Other custom concepts
+    custom?: Record<string, string[]>;
+  };
+
   // Share structure (for mNAV calculations)
   isDualClass?: boolean; // True if company has multiple share classes
   shareClasses?: string[]; // e.g., ['Class A', 'Class B'] - for LLM extraction hints
@@ -61,6 +72,13 @@ export const COMPANY_SOURCES: CompanySource[] = [
     secFilingPatterns: {
       eightK: [/ex99|ex-99|press|release|shareholder|letter|announce/i],
     },
+    xbrlConcepts: {
+      holdings: [
+        'mstr:BitcoinHoldings',
+        'mstr:DigitalAssetsBitcoin',
+        'us-gaap:DigitalAssets',
+      ],
+    },
     irPageUrl: 'https://www.microstrategy.com/press',
     twitterHandles: ['@Strategy'],
     aggregators: {
@@ -81,6 +99,14 @@ export const COMPANY_SOURCES: CompanySource[] = [
       eightK: [/ex99|ex-99|press|release|shareholder|letter|announce|earnings/i],
       tenQ: [/mara-.*\.htm$/i],
     },
+    xbrlConcepts: {
+      holdings: [
+        'mara:DigitalAssets',
+        'mara:BitcoinHoldings',
+        'mara:DigitalAssetsBitcoin',
+        'us-gaap:DigitalAssets',
+      ],
+    },
     irPageUrl: 'https://ir.mara.com/news-events/press-releases',
     twitterHandles: ['@MAaboringscompany'],
     aggregators: {
@@ -99,6 +125,13 @@ export const COMPANY_SOURCES: CompanySource[] = [
     secFilingPatterns: {
       eightK: [/ex99|ex-99|press|release/i],
     },
+    xbrlConcepts: {
+      holdings: [
+        'riot:DigitalAssets',
+        'riot:BitcoinHeld',
+        'us-gaap:DigitalAssets',
+      ],
+    },
     irPageUrl: 'https://www.riotplatforms.com/news-media/press-releases',
     twitterHandles: ['@RiotPlatforms'],
     aggregators: {
@@ -116,6 +149,14 @@ export const COMPANY_SOURCES: CompanySource[] = [
     secCik: '0001834974',
     secFilingPatterns: {
       eightK: [/ex99|ex-99|press|release|update/i],
+    },
+    xbrlConcepts: {
+      holdings: [
+        'clsk:Bitcoin',
+        'clsk:BitcoinHoldings',
+        'clsk:DigitalAssets',
+        'us-gaap:DigitalAssets',
+      ],
     },
     irPageUrl: 'https://investors.cleanspark.com/news/news-details',
     irPressReleasePattern: /Bitcoin Mining Update/i,
