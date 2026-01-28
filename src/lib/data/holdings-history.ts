@@ -311,14 +311,13 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
 // Pre-split: ~566M shares → Post-split: ~2.83M shares
 // All entries below are POST-SPLIT adjusted
 const NXTT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 3850, sharesOutstandingDiluted: 425_000, holdingsPerShare: 0.00906, source: "Q1 2024 filing (split-adjusted)" },
-  { date: "2024-06-30", holdings: 4500, sharesOutstandingDiluted: 440_000, holdingsPerShare: 0.01023, source: "Q2 2024 filing (split-adjusted)" },
-  { date: "2024-12-31", holdings: 5200, sharesOutstandingDiluted: 460_000, holdingsPerShare: 0.01130, source: "Q4 2024 filing (split-adjusted)" },
-  { date: "2025-06-30", holdings: 5833, sharesOutstandingDiluted: 475_000, holdingsPerShare: 0.01228, source: "Q2 2025 filing (split-adjusted)" },
+  { date: "2024-03-31", holdings: 833, sharesOutstandingDiluted: 425_000, holdingsPerShare: 0.00196, source: "Q1 2024 filing (split-adjusted)" },
+  { date: "2024-06-30", holdings: 833, sharesOutstandingDiluted: 440_000, holdingsPerShare: 0.00189, source: "Q2 2024 filing (split-adjusted)" },
+  { date: "2024-09-30", holdings: 1000, sharesOutstandingDiluted: 456_000, holdingsPerShare: 0.00219, source: "Q3 2024 filing (split-adjusted)" },
+  { date: "2024-12-31", holdings: 1000, sharesOutstandingDiluted: 460_000, holdingsPerShare: 0.00217, source: "Q4 2024 filing (split-adjusted)" },
   // Post reverse split (200:1) - Sep 16, 2025
-  { date: "2025-09-30", holdings: 5833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 0.00204, source: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q", sourceType: "sec-filing" },
-  // Jan 2026: Additional equity issuances since Q3
-  { date: "2026-01-16", holdings: 5833, sharesOutstandingDiluted: 4_082_556, holdingsPerShare: 0.00143, source: "TipRanks/Morningstar", sharesSource: "Jan 2026 aggregator data" },
+  // NOTE: SEC XBRL shows $98.5M crypto fair value @ ~$97K/BTC = ~1,015 BTC
+  { date: "2025-09-30", holdings: 1015, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 0.000354, source: "SEC 10-Q Q3 2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)

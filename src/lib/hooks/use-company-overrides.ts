@@ -127,7 +127,7 @@ export function useCompanyOverrides() {
     '3350.T',   // Metaplanet (JPY)
     '0434.HK',  // Boyaa (HKD)
     'H100.ST',  // H100 Group (SEK)
-    'NXTT',     // Next Technology (JPY)
+    // NXTT removed - it's NASDAQ/USD, not JPY
   ];
 
   // mNAV.com only tracks BTC treasury companies - don't use their data for ETH/other assets
