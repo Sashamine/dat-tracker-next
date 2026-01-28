@@ -136,8 +136,8 @@ function CompanySourceCard({ ticker, sources }: { ticker: string; sources: Compa
 
 export default function SourcesPage() {
   const { data: companiesData } = useCompanies();
-  const { overrides, liveBalanceSheet } = useCompanyOverrides();
-  const allCompanies = mergeAllCompanies(companiesData?.companies || [], overrides, liveBalanceSheet);
+  const { overrides } = useCompanyOverrides();
+  const allCompanies = mergeAllCompanies(companiesData?.companies || [], overrides);
 
   // Get companies that have source documentation
   const companiesWithSources = allCompanies.filter(

@@ -208,13 +208,13 @@ export default function MNAVPage() {
   const [timeRange1, setTimeRange1] = useState<TimeRange>("1y");
 
   const { data: prices } = usePricesStream();
-  const { overrides, liveBalanceSheet } = useCompanyOverrides();
+  const { overrides } = useCompanyOverrides();
   const { data: companiesData, isLoading } = useCompanies();
 
   const companies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
-    return mergeAllCompanies(baseCompanies, overrides, liveBalanceSheet);
-  }, [companiesData, overrides, liveBalanceSheet]);
+    return mergeAllCompanies(baseCompanies, overrides);
+  }, [companiesData, overrides]);
 
   // Use shared mNAV stats hook - single source of truth
   const mnavStats = useMNAVStats(companies, prices);

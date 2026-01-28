@@ -68,15 +68,15 @@ export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
   const { data: prices } = usePricesStream();
-  const { overrides, liveBalanceSheet } = useCompanyOverrides();
+  const { overrides } = useCompanyOverrides();
 
   // Fetch company from database API
   const { data: companyData, isLoading: isLoadingCompany } = useCompany(ticker);
 
-  // Merge with overrides from Google Sheets and live balance sheet data
+  // Merge with overrides from Google Sheets
   const company = useMemo(
-    () => companyData?.company ? mergeCompanyWithOverrides(companyData.company, overrides, liveBalanceSheet) : null,
-    [companyData, overrides, liveBalanceSheet]
+    () => companyData?.company ? mergeCompanyWithOverrides(companyData.company, overrides) : null,
+    [companyData, overrides]
   );
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
@@ -90,8 +90,8 @@ export default function CompanyPage() {
   const { data: companiesData, isLoading: isLoadingCompanies } = useCompanies();
   const allCompanies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
-    return mergeAllCompanies(baseCompanies, overrides, liveBalanceSheet);
-  }, [companiesData, overrides, liveBalanceSheet]);
+    return mergeAllCompanies(baseCompanies, overrides);
+  }, [companiesData, overrides]);
 
   // Calculate sidebar stats
   const { assetStats, totalValue, mnavStats } = useMemo(() => {
