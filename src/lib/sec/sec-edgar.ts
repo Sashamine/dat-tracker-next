@@ -10,6 +10,12 @@
 
 import { SECFilingResult, SourceCheckResult } from './types';
 import { getCompanySource, getSECMonitoredCompanies, type CompanySource } from './company-sources';
+import { 
+  extractRelevantContent as smartExtractContent, 
+  classifyExhibits, 
+  cleanHtmlText,
+  type ExtractionResult 
+} from './content-extractor';
 
 // Map tickers to SEC CIK numbers (legacy - use company-sources.ts instead)
 // CIKs verified against SEC EDGAR on 2026-01-21
@@ -430,33 +436,50 @@ export async function searchFilingDocuments(
 
   const keywords = ASSET_KEYWORDS[asset] || ['digital asset', 'cryptocurrency'];
 
-  // Check each matching document for crypto mentions
-  for (const doc of matchingDocs.slice(0, 5)) {
-    const documentUrl = `https://www.sec.gov/Archives/edgar/data/${cikNum}/${accNum}/${doc.name}`;
+  // Classify exhibits for priority fetching
+  const baseUrl = `https://www.sec.gov/Archives/edgar/data/${cikNum}/${accNum}`;
+  const exhibits = classifyExhibits(indexData.directory.item, baseUrl);
+  
+  // Try priority exhibits first (press releases, shareholder letters)
+  const priorityExhibits = exhibits.filter(e => 
+    e.type === 'press_release' || e.type === 'shareholder_letter'
+  );
+  
+  // Combine priority exhibits with other matching docs
+  const docsToCheck = [
+    ...priorityExhibits.map(e => ({ name: e.name, url: e.url, isPriority: true })),
+    ...matchingDocs.slice(0, 5).map(d => ({ 
+      name: d.name, 
+      url: `${baseUrl}/${d.name}`,
+      isPriority: false 
+    })),
+  ];
+  
+  // Deduplicate by name
+  const seen = new Set<string>();
+  const uniqueDocs = docsToCheck.filter(d => {
+    if (seen.has(d.name)) return false;
+    seen.add(d.name);
+    return true;
+  });
 
+  // Check each document for crypto mentions
+  for (const doc of uniqueDocs.slice(0, 6)) {
     try {
-      const response = await fetch(documentUrl, {
+      const response = await fetch(doc.url, {
         headers: { 'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)' },
       });
 
       if (!response.ok) continue;
 
-      let content = await response.text();
-
-      // Clean HTML
-      content = content
-        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-        .replace(/<[^>]*>/g, ' ')
-        .replace(/&nbsp;/g, ' ')
-        .replace(/&amp;/g, '&')
-        .replace(/&#39;/g, "'")
-        .replace(/&#34;/g, '"')
-        .replace(/&rsquo;/g, "'")
-        .replace(/&ldquo;|&rdquo;/g, '"')
-        .replace(/\s+/g, ' ')
-        .trim();
-
+      const rawHtml = await response.text();
+      
+      // Use smart content extraction
+      const extraction = smartExtractContent(rawHtml, {
+        maxChars: 15000,  // Increased from 8000
+      });
+      
+      const content = extraction.combinedText;
       if (content.length < 500) continue;
 
       // Check for crypto mentions
@@ -464,7 +487,8 @@ export async function searchFilingDocuments(
       const hasCrypto = keywords.some(kw => lowerContent.includes(kw.toLowerCase()));
 
       if (hasCrypto) {
-        return { documentUrl, content };
+        console.log(`[SEC] Found crypto content in ${doc.name} (${extraction.method}, ${content.length} chars${extraction.truncated ? ', truncated' : ''})`);
+        return { documentUrl: doc.url, content };
       }
 
       // Rate limit

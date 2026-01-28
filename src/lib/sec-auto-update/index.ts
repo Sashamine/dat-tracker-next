@@ -113,7 +113,7 @@ async function findRecent8KFilings(
   cik: string,
   asset: string,
   sinceDays: number
-): Promise<Array<{ accessionNumber: string; filingDate: string; documentUrl?: string; content?: string }>> {
+): Promise<Array<{ accessionNumber: string; filingDate: string; items?: string[]; documentUrl?: string; content?: string }>> {
   const data = await fetchSECSubmissions(cik);
   if (!data?.filings?.recent) return [];
 
@@ -122,7 +122,7 @@ async function findRecent8KFilings(
   sinceDate.setDate(sinceDate.getDate() - sinceDays);
   const sinceDateStr = sinceDate.toISOString().split('T')[0];
 
-  const filings: Array<{ accessionNumber: string; filingDate: string; documentUrl?: string; content?: string }> = [];
+  const filings: Array<{ accessionNumber: string; filingDate: string; items?: string[]; documentUrl?: string; content?: string }> = [];
 
   const count = Math.min(recent.form.length, 50);
   for (let i = 0; i < count; i++) {
@@ -133,6 +133,10 @@ async function findRecent8KFilings(
     if (formType !== '8-K' || filingDate < sinceDateStr) continue;
 
     const accessionNumber = recent.accessionNumber[i];
+    
+    // Parse 8-K item codes (e.g., "7.01,8.01" -> ["7.01", "8.01"])
+    const itemsStr = recent.items?.[i] || '';
+    const items = itemsStr ? itemsStr.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
 
     // Search for crypto content in the filing
     const result = await searchFilingDocuments(ticker, cik, accessionNumber, asset);
@@ -141,6 +145,7 @@ async function findRecent8KFilings(
       filings.push({
         accessionNumber,
         filingDate,
+        items,
         documentUrl: result.documentUrl,
         content: result.content,
       });
