@@ -366,7 +366,7 @@ export const btcCompanies: Company[] = [
     ticker: "MARA",
     asset: "BTC",
     tier: 1,
-    holdings: 52_850,  // Sep 30, 2025 - SEC 10-Q Q3 2025
+    holdings: 53_250,  // Sep 30, 2025 - Q3 2025 earnings report (SEC 10-Q shows 52,850)
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
