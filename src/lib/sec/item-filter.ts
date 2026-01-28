@@ -259,6 +259,56 @@ export function containsCryptoKeywords(text: string): boolean {
 }
 
 /**
+ * Section header patterns for 6-K press releases (foreign private issuers)
+ * Since 6-K doesn't have item codes, we use section headers to guide extraction
+ */
+export const PRESS_RELEASE_SECTION_PATTERNS = {
+  // Holdings-related sections
+  holdings: [
+    'treasury', 'holdings update', 'digital asset', 'crypto asset',
+    'bitcoin holdings', 'btc holdings', 'eth holdings', 'sol holdings',
+    'balance sheet', 'asset update', 'portfolio update',
+  ],
+  // Share/equity-related sections
+  shares: [
+    'capital', 'financing', 'equity', 'share', 'stock',
+    'atm', 'at-the-market', 'offering', 'issuance',
+  ],
+  // Debt-related sections
+  debt: [
+    'debt', 'credit facility', 'loan', 'convertible', 'note',
+    'refinancing', 'restructuring',
+  ],
+  // Operational metrics
+  operations: [
+    'validator', 'mining', 'operations update', 'staking',
+    'hashrate', 'production', 'output',
+  ],
+  // General announcements
+  announcements: [
+    'corporate highlight', 'business update', 'management commentary',
+    'ceo comment', 'quarterly update', 'monthly update',
+  ],
+};
+
+/**
+ * Detect likely content type from press release text
+ * Returns array of likely content types based on section headers found
+ */
+export function detectPressReleaseSections(text: string): string[] {
+  const lowerText = text.toLowerCase();
+  const detected: string[] = [];
+  
+  for (const [sectionType, patterns] of Object.entries(PRESS_RELEASE_SECTION_PATTERNS)) {
+    if (patterns.some(p => lowerText.includes(p))) {
+      detected.push(sectionType);
+    }
+  }
+  
+  return detected;
+}
+
+/**
  * Get exhibit priority patterns for a given item type
  * Returns patterns to search for in exhibit filenames
  */

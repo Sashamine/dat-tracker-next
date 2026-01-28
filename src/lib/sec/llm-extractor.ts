@@ -78,11 +78,25 @@ For shares outstanding, look for:
       }
     }
     
-    // Foreign filer guidance
+    // Foreign filer guidance with section header patterns
     if (context.formType === '40-F') {
-      itemGuidance += '\n- This is a Canadian company annual report (40-F). Look for shares outstanding in the financial statements section.';
+      itemGuidance += `
+- This is a Canadian company annual report (40-F). Look for shares outstanding in the financial statements section.
+- Key sections to find: "Consolidated Balance Sheet", "Share Capital", "Stockholders Equity"`;
     } else if (context.formType === '6-K') {
-      itemGuidance += '\n- This is a foreign company interim report (6-K). May contain holdings updates or material events.';
+      itemGuidance += `
+- This is a foreign company interim report (6-K). May contain holdings updates or material events.
+- Look for these section headers to guide extraction:
+  * "Treasury" / "Holdings Update" / "Digital Asset Holdings" → crypto holdings numbers
+  * "Corporate Highlights" / "Business Update" → may contain acquisition announcements
+  * "Capital" / "Financing" / "Equity" → share count changes, ATM activity
+  * "Debt" / "Credit Facility" → debt restructuring, convertible notes
+  * "Validator" / "Mining" / "Operations" → operational metrics (staking, mining output)
+- Canadian companies often report in CAD - note the currency and conversion rates mentioned`;
+    } else if (context.formType === '20-F') {
+      itemGuidance += `
+- This is a foreign company annual report (20-F). Similar to 10-K.
+- Look for shares outstanding in "Item 9. The Offer and Listing" or financial statements.`;
     }
     
     if (formDesc || itemGuidance) {
