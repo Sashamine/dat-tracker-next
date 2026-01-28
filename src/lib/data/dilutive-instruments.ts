@@ -129,6 +129,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // Twenty One Capital (XXI) - BTC treasury (Tether/SoftBank/Mallers)
+  // Verified 2026-01-28 via SEC filings
+  // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC
+  XXI: [
+    {
+      type: "convertible",
+      strikePrice: 10.0,  // Estimated - need to verify from S-1/8-K
+      potentialShares: 48_650_000,  // $486.5M / $10 (estimated)
+      faceValue: 486_500_000,
+      source: "8-K Dec 2025 (merger)",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=8-K",
+      expiration: "2030-12-09",
+      notes: "1% Convertible Senior Secured Notes, collateralized by 16,116 BTC (~3:1 ratio). STRIKE PRICE NEEDS VERIFICATION.",
+    },
+  ],
+
   // BTCS Inc - ETH treasury company
   // Verified 2026-01-25 via adversarial process against SEC filings and btcs.com
   BTCS: [

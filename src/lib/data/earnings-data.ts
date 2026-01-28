@@ -1209,6 +1209,33 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== Twenty One Capital (XXI) ==========
+  // Went public Dec 9, 2025 via SPAC merger. Calendar year.
+  // Q1 2026 - Upcoming
+  {
+    ticker: "XXI",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    earningsDate: "2026-05-15",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // Q4 2025 (partial - Dec 9-31 only)
+  {
+    ticker: "XXI",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    earningsDate: "2026-03-15",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 43_514,  // Post-merger combined holdings
+    sharesAtQuarterEnd: 651_390_912,  // Class A + Class B
+    holdingsPerShare: 0.0000668,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=8-K",
+    status: "reported",
+  },
+
   // ========== DJT / Trump Media ==========
   // Q4 2025 - Upcoming
   {
