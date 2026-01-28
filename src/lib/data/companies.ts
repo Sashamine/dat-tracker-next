@@ -363,10 +363,10 @@ export const btcCompanies: Company[] = [
     ticker: "MARA",
     asset: "BTC",
     tier: 1,
-    holdings: 53_250,  // Q3 2025 earnings report
-    holdingsLastUpdated: "2025-11-04",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://ir.mara.com/news-events/press-releases/detail/1409/mara-announces-third-quarter-2025-results",
+    holdings: 52_850,  // Sep 30, 2025 - SEC 10-Q Q3 2025
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
     datStartDate: "2024-01-01",
     website: "https://mara.com",
     twitter: "https://twitter.com/MARAHoldings",
@@ -386,13 +386,12 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
-    // Debt: $350M line of credit (current) + convertible notes in Notes section
-    totalDebt: 350_000_000,  // SEC 10-Q Q3 2025: $350M line of credit (current portion)
+    // Debt: $350M line of credit + $1.95B convertible notes (0% 2030 + 2032 series)
+    totalDebt: 2_300_000_000,  // SEC 10-Q Q3 2025: $350M LOC + $1.95B converts
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
     debtAsOf: "2025-09-30",
-    // Note: Full convertible notes breakdown needs extraction from Notes to Financial Statements
-    notes: "Largest US public miner. $1.95B in 0% convertible notes (2030 + 2032 series).",
+    notes: "Largest US public miner. $350M credit facility + $1.95B in 0% convertible notes (2030 + 2032 series).",
   },
   {
     id: "riot",
