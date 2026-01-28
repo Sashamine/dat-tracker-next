@@ -1689,6 +1689,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ========== SharpLink Gaming (SBET) ==========
   // Calendar year company (fiscal = calendar)
   // ETH treasury pivot: June 2025. Pre-pivot data not meaningful for DAT analysis.
+  // Note: 1:12 reverse split May 5, 2025. Share counts post-split unless noted.
+  // SEC XBRL CIK: 0001981535
   // Q4 2025 - Upcoming
   {
     ticker: "SBET",
@@ -1701,59 +1703,61 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q3 2025 - First full quarter post-ETH pivot
+  // Q3 2025 - First full quarter post-ETH pivot (filed 2025-11-12)
   {
     ticker: "SBET",
     fiscalYear: 2025,
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-11-14",
+    earningsDate: "2025-11-12",
     earningsTime: "AMC",
-    epsActual: 0.62,
-    revenueActual: 10_840_000,
-    netIncome: 104_270_000,  // Includes crypto mark-to-market gains
-    holdingsAtQuarterEnd: 837_230,  // Aug 31, 2025 holdings
-    sharesAtQuarterEnd: 167_000_000,
-    holdingsPerShare: 0.005014,
+    epsActual: 0.62,  // SEC XBRL EarningsPerShareDiluted (quarterly)
+    revenueActual: 10_843_567,  // SEC XBRL Revenues (quarterly Jul-Sep)
+    netIncome: 104_270_205,  // SEC XBRL NetIncomeLoss (quarterly Jul-Sep) - includes crypto gains
+    holdingsAtQuarterEnd: 861_251,  // Sep 30, 2025 (holdings-history.ts)
+    sharesAtQuarterEnd: 192_193_183,  // SEC XBRL CommonStockSharesOutstanding at Sep 30
+    holdingsPerShare: 0.004481,  // 861251 / 192193183
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
     status: "reported",
   },
-  // Q2 2025 - ETH pivot initiated June 2025
+  // Q2 2025 - ETH pivot initiated June 2025 (filed 2025-08-14)
   {
     ticker: "SBET",
     fiscalYear: 2025,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-08-12",
+    earningsDate: "2025-08-14",
     earningsTime: "AMC",
-    epsActual: -4.27,
-    revenueActual: 700_000,
-    netIncome: -103_420_000,  // Crypto mark-to-market losses
-    holdingsAtQuarterEnd: 450_000,  // Estimated mid-pivot
-    sharesAtQuarterEnd: 24_000_000,
-    holdingsPerShare: 0.01875,
+    epsActual: -4.27,  // SEC XBRL EarningsPerShareBasic (quarterly Apr-Jun)
+    revenueActual: 697_291,  // SEC XBRL RevenueFromContractWithCustomerExcludingAssessedTax (quarterly)
+    netIncome: -103_422_727,  // SEC XBRL NetIncomeLoss (quarterly Apr-Jun) - crypto mark-to-market losses
+    holdingsAtQuarterEnd: 520_000,  // Jun 30, 2025 (holdings-history.ts)
+    sharesAtQuarterEnd: 66_154_792,  // SEC XBRL CommonStockSharesOutstanding at Jun 30
+    holdingsPerShare: 0.007860,  // 520000 / 66154792
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
     status: "reported",
   },
-  // Q1 2025 - Pre-ETH pivot
+  // Q1 2025 - Pre-ETH pivot (filed 2025-05-15)
   {
     ticker: "SBET",
     fiscalYear: 2025,
     fiscalQuarter: 1,
     calendarYear: 2025,
     calendarQuarter: 1,
-    earningsDate: "2025-05-12",
+    earningsDate: "2025-05-15",
     earningsTime: "AMC",
-    epsActual: -1.84,
-    revenueActual: 740_000,
-    netIncome: -970_000,
+    epsActual: -1.84,  // SEC XBRL EarningsPerShareBasic (quarterly Jan-Mar)
+    revenueActual: 741_731,  // SEC XBRL RevenueFromContractWithCustomerExcludingAssessedTax (quarterly)
+    netIncome: -974_901,  // SEC XBRL NetIncomeLoss (quarterly Jan-Mar)
     holdingsAtQuarterEnd: 0,  // Pre-ETH pivot
-    sharesAtQuarterEnd: 1_000_000,
+    sharesAtQuarterEnd: 575_255,  // SEC XBRL CommonStockSharesOutstanding at Mar 31
     holdingsPerShare: 0,
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
     status: "reported",
   },
 
