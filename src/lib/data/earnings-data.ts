@@ -1316,12 +1316,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // CY2025 Q4 (Oct-Dec 2025) - Dec 28 holdings update
+  // CY2025 Q4 (Oct-Dec 2025)
   {
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
-    earningsDate: "2026-01-13",  // 10-Q filed (covers Nov 30, close to Q4 end)
+    earningsDate: "2026-02-15",  // Expected ~45 days after Dec 31
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 4_110_525,  // Dec 28, 2025 press release
     sharesAtQuarterEnd: 425_000_000,
@@ -1335,7 +1335,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
-    earningsDate: "2025-11-21",  // 10-K filed (covers Aug 31)
+    earningsDate: "2025-11-09",  // ~40 days after Sep 30
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 2_069_443,  // Sep 7, 2025 (2M milestone)
     sharesAtQuarterEnd: 260_000_000,
@@ -1349,7 +1349,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 2,
-    earningsDate: "2025-07-02",
+    earningsDate: "2025-08-10",  // ~40 days after Jun 30
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,
     sharesAtQuarterEnd: 25_000_000,
