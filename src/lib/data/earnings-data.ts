@@ -2233,6 +2233,60 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K",
     status: "reported",
   },
+
+  // ==================== BNB COMPANIES ====================
+
+  // ========== CEA Industries (BNC) ==========
+  // Fiscal year ends April 30
+  // FY Q1 = May-Jul (CY Q3), FY Q2 = Aug-Oct (CY Q4), FY Q3 = Nov-Jan (CY Q1), FY Q4 = Feb-Apr (CY Q2)
+  // DAT strategy began June 2025 with $500M PIPE
+  // World's largest BNB treasury - target 1% of BNB supply
+  //
+  // FY Q3 2026 (Nov-Jan 2026) - Current quarter
+  {
+    ticker: "BNC",
+    fiscalYear: 2026,
+    fiscalQuarter: 3,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-03-15",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // FY Q2 2026 (Aug-Oct 2025) - Major accumulation quarter
+  {
+    ticker: "BNC",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2025-12-15",
+    earningsTime: "AMC",
+    epsActual: 5.36,
+    netIncome: 283_600_000,
+    holdingsAtQuarterEnd: 512_000,
+    sharesAtQuarterEnd: 44_062_938,
+    holdingsPerShare: 11.62,
+    source: "press-release",
+    sourceUrl: "https://www.globenewswire.com/news-release/2025/12/15/3205902/0/en/CEA-Industries-BNC-Reports-FY-Q2-2026-Earnings-Results.html",
+    status: "reported",
+  },
+  // FY Q1 2026 (May-Jul 2025) - Initial treasury setup
+  {
+    ticker: "BNC",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-09-15",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 150_000,
+    sharesAtQuarterEnd: 45_000_000,
+    holdingsPerShare: 3.333,
+    source: "sec-filing",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
