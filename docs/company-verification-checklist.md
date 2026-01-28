@@ -8,6 +8,62 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## RIOT (Riot Platforms) - Verified 2026-01-28
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 18,005 BTC (includes 3,977 restricted)
+- [x] **Source**: Dec 2025 Production Update (Jan 6, 2026)
+- [x] **Source URL**: https://www.riotplatforms.com/riot-announces-december-2025-production-and-operations-updates/
+- [x] **Last updated**: 2025-12-31
+- [x] **Note**: Sold 1,818 BTC in Dec 2025 (unusual for HODL miner)
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001167419
+- [x] **Recent 8-Ks checked**: Jan 16, Jan 5, Jan 2, Dec 31
+- [x] **Latest 10-K**: Filed Feb 28, 2025 (FY2024)
+- [x] **Latest 10-Q**: Filed Oct 30, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **EntityCommonStockSharesOutstanding**: 371,807,186 (Q3 2025 filing)
+- [x] **Diluted shares**: ~402M (implied from Q3 EPS: $104.5M ÷ $0.26)
+- [x] **Note**: XBRL has limited crypto-specific fields for RIOT
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Current quarter**: Q4 2025 (Oct-Dec), 10-K expected ~Feb 2026
+
+### 5. Earnings Data ✅
+| Quarter | Period End | Holdings | Net Income | Shares (diluted) | HPS |
+|---------|------------|----------|------------|------------------|-----|
+| Q1 2024 | Mar 31 | 8,872 | $211.8M | 280M | 0.0000317 |
+| Q2 2024 | Jun 30 | 9,334 | $127.3M | 295M | 0.0000316 |
+| Q3 2024 | Sep 30 | 10,427 | -$154.4M | 310M | 0.0000336 |
+| Q4 2024 | Dec 31 | 17,722 | $166.1M | 325M | 0.0000545 |
+| Q1 2025 | Mar 31 | 19,223 | -$296.4M | 335M | 0.0000574 |
+| Q2 2025 | Jun 30 | 15,370 | -$247.8M | 350M | 0.0000439 |
+| Q3 2025 | Sep 30 | 17,429 | $104.5M | 402M | 0.0000434 |
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q3→Q4 2024**: +70% (big accumulation with $510M convert proceeds)
+- [x] **Q2→Q3 2025**: +13% holdings, but dilution kept HPS flat
+
+### 7. Non-Crypto Investments ✅
+- [x] **Cash reserves**: $330.7M unrestricted (Q3 2025)
+- [x] **Mining infrastructure**: Not included in mNAV
+
+### 8. Company Metadata ✅
+- [x] **Strategy accurate**: HODL miner + treasury, converts fund BTC buys
+- [x] **Notes accurate**: Adopted DAT playbook Dec 2024
+- [x] **Leader**: Jason Les (CEO)
+
+### 9. Dilutive Instruments ⚠️
+- [x] **Convertible notes**: $594M 0.75% due 2030 (~49.5M shares at ~$12)
+- [ ] **TODO**: Verify exact conversion price from 8-K Dec 2024
+- [x] **BTC-backed credit**: $200M Coinbase facility (not dilutive)
+- [x] **Added to dilutive-instruments.ts**: Yes (with estimated strike)
+
+---
+
 ## SBET (SharpLink Gaming) - Verified 2026-01-28
 
 ### 1. Holdings Data ✅

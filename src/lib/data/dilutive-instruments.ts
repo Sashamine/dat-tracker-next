@@ -115,6 +115,24 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // RIOT Platforms - BTC miner with HODL strategy
+  // Verified 2026-01-28 via SEC filings + press releases (CIK 0001167419)
+  // Note: RIOT sold 1,818 BTC in Dec 2025 (first major sale) - unusual for HODL miner
+  RIOT: [
+    {
+      type: "convertible",
+      strikePrice: 12.00, // TODO: Verify from 8-K Dec 2024 - estimated based on typical 30% premium
+      potentialShares: 49_500_000, // $594M / ~$12 = 49.5M shares (estimated)
+      faceValue: 594_000_000,
+      source: "8-K Dec 2024",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001167419&type=8-K",
+      expiration: "2030-01-15",
+      issuedDate: "2024-12-10",
+      notes: "0.75% Convertible Senior Notes due 2030 - used proceeds for $510M BTC purchase",
+    },
+  ],
+
   // MARA Holdings - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC 8-Ks + XBRL (CIK 0001507605)
   MARA: [
