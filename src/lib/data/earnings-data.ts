@@ -626,7 +626,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // BTC holdings = TOTAL (unrestricted + restricted)
   // Shares = CommonStockSharesOutstanding from XBRL
   //
-  // Q4 2025 - Upcoming
+  // Q4 2025 - Holdings from 8-K (Dec 2025 production update), earnings upcoming
+  // Source: https://www.riotplatforms.com/riot-announces-december-2025-production-and-operations-updates/
+  // Note: Sold 1,818 BTC in Dec 2025 → 18,005 BTC remaining
   {
     ticker: "RIOT",
     fiscalYear: 2025,
@@ -635,7 +637,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-20",
     earningsTime: "AMC",
-    source: "sec-filing",
+    holdingsAtQuarterEnd: 18005,
+    sharesAtQuarterEnd: 371_100_000, // Using Q3 2025 shares until 10-K
+    holdingsPerShare: 0.0000485,
+    source: "press-release",
     status: "upcoming",
   },
   // Q3 2025 - XBRL verified: 19,287 BTC total (15,987 unrestricted + 3,300 restricted), 371.1M shares
