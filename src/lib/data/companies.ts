@@ -232,14 +232,14 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     holdings: 712_647,  // SEC 8-K Jan 26, 2026 (+2,932 BTC Jan 20-25)
-    holdingsLastUpdated: "2026-01-26",
+    holdingsLastUpdated: "2026-01-25",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
     secCik: "0001050446",  // SEC CIK for EDGAR lookups
-    costBasisAvg: 75_353,  // Updated per Jan 12 8-K
+    costBasisAvg: 76_037,  // Updated per Jan 26 8-K ($54.19B / 712,647 BTC)
     isMiner: false,
     quarterlyBurnUsd: 15_204_000,  // SEC 10-Q Q3 2025: "Net cash used in operating activities" $45.6M / 3 quarters
     avgDailyVolume: 3_000_000_000,
@@ -279,7 +279,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-04-01",
     website: "https://metaplanet.jp",
     twitter: "https://twitter.com/Metaplanet_JP",
-    costBasisAvg: 107_912,
+    costBasisAvg: 107_607,  // metaplanet.jp/en/analytics (Jan 2026)
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
