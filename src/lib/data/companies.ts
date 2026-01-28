@@ -715,7 +715,7 @@ export const solCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.forwardindustries.com/",
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
-    fiscalYearEnd: "0930",  // September 30
+    // Fiscal year end: September 30
     costBasisAvg: 232.08,  // $1.59B / 6.85M SOL per SEC XBRL
     stakingPct: 0.99,
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
