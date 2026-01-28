@@ -39,10 +39,10 @@ export const ethCompanies: Company[] = [
     ticker: "SBET",
     asset: "ETH",
     tier: 1,
-    holdings: 863_424,  // Updated Jan 2026
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 863_424,  // 639,241 native + 224,183 LsETH (Dec 14, 2025)
+    holdingsLastUpdated: "2025-12-14",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1981535&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
     datStartDate: "2025-05-01",
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkGaming",
