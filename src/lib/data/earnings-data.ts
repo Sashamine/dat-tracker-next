@@ -1456,7 +1456,22 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Strive Asset (ASST) ==========
   // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Upcoming
+  // Merged with Semler Scientific on Jan 16, 2026
+  // NOTE: Tracking Strive specifically from merger date (no Semler backfill)
+  //
+  // Q1 2026 - First post-merger quarter (upcoming)
+  {
+    ticker: "ASST",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // Q4 2025 - Partial post-merger (Jan 16-31 only)
   {
     ticker: "ASST",
     fiscalYear: 2025,
@@ -1465,28 +1480,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 12798,  // Combined: ~10.5K (Strive) + ~2.3K (Semler)
+    sharesAtQuarterEnd: 1_247_436_814,  // 1.05B Class A + 198M Class B
+    holdingsPerShare: 0.00001026,
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C",
     status: "upcoming",
-  },
-  // Q3 2025
-  {
-    ticker: "ASST",
-    fiscalYear: 2025,
-    fiscalQuarter: 3,
-    calendarYear: 2025,
-    calendarQuarter: 3,
-    earningsDate: "2025-11-14",
-    earningsTime: "AMC",
-    epsActual: -0.08,
-    epsEstimate: -0.10,
-    revenueActual: 500_000,
-    revenueEstimate: 800_000,
-    netIncome: -2_100_000,
-    holdingsAtQuarterEnd: 250,
-    sharesAtQuarterEnd: 28_000_000,
-    holdingsPerShare: 0.0000089,
-    source: "sec-filing",
-    status: "reported",
   },
 
   // ========== Twenty One Capital (XXI) ==========

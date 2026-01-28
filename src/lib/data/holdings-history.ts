@@ -687,20 +687,14 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Strive Asset (ASST) - First publicly traded asset management BTC treasury
-// Includes pre-merger Semler Scientific (SMLR) data - merged Jan 2026
+// Merged with Semler Scientific (SMLR) on Jan 16, 2026
+// NOTE: No pre-merger Semler backfill - tracking Strive specifically from merger date
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
+// DUAL-CLASS: 1.05B Class A + 198M Class B = 1.247B total shares
 const ASST_HISTORY: HoldingsSnapshot[] = [
-  // Pre-merger Semler Scientific data (SMLR -> ASST)
-  { date: "2024-05-28", holdings: 581, sharesOutstandingDiluted: 7_068_024, holdingsPerShare: 0.0000822, source: "SMLR: Initial purchase 8-K" },
-  { date: "2024-06-17", holdings: 828, sharesOutstandingDiluted: 7_133_788, holdingsPerShare: 0.0001161, source: "SMLR: 8-K filing" },
-  { date: "2024-09-30", holdings: 1058, sharesOutstandingDiluted: 7_266_242, holdingsPerShare: 0.0001456, source: "SMLR: Q3 2024 10-Q" },
-  { date: "2024-12-31", holdings: 2321, sharesOutstandingDiluted: 9_596_486, holdingsPerShare: 0.0002419, source: "SMLR: Q4 2024 10-K" },
-  { date: "2025-03-31", holdings: 3082, sharesOutstandingDiluted: 11_151_572, holdingsPerShare: 0.0002764, source: "SMLR: Q1 2025 10-Q" },
-  { date: "2025-06-30", holdings: 2084, sharesOutstandingDiluted: 14_804_693, holdingsPerShare: 0.0001408, source: "SMLR: Q2 2025 10-Q" },
-  { date: "2025-09-30", holdings: 2058, sharesOutstandingDiluted: 15_159_895, holdingsPerShare: 0.0001357, source: "SMLR: Q3 2025 10-Q" },
-  { date: "2025-12-31", holdings: 2300, sharesOutstandingDiluted: 16_000_000, holdingsPerShare: 0.0001438, source: "SMLR: Q4 2025 10-K est" },
-  // Post-merger Strive + Semler combined
-  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001026, source: "SEC DEF 14C: 1.05B Class A + 198M Class B", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
+  // Jan 16, 2026: Strive + Semler merger closed
+  // Combined holdings: ~10,500 BTC (Strive) + ~2,300 BTC (Semler) = 12,798 BTC
+  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001026, source: "Merger closed - SEC DEF 14C: 1.05B Class A + 198M Class B", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
 ];
 
 // ==================== BNB COMPANIES ====================
