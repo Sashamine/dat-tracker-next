@@ -108,15 +108,45 @@ async function fetchSECSubmissions(cik: string): Promise<any> {
   return response.json();
 }
 
+// Filing types that should be processed by LLM extraction
+// 8-K: Material events (US companies)
+// 40-F: Annual reports (Canadian companies - no XBRL)
+// 6-K: Interim reports (Foreign private issuers - no XBRL)
+// 20-F: Annual reports (Foreign private issuers - no XBRL)
+const LLM_ELIGIBLE_FILING_TYPES = ['8-K', '40-F', '6-K', '20-F'];
+
+interface FilingForLLM {
+  accessionNumber: string;
+  filingDate: string;
+  formType: string;
+  items?: string[];
+  documentUrl?: string;
+  content?: string;
+}
+
 /**
- * Find recent 8-K filings for a company
+ * Find recent 8-K filings for a company (legacy - use findRecentFilingsForLLM)
  */
 async function findRecent8KFilings(
   ticker: string,
   cik: string,
   asset: string,
   sinceDays: number
-): Promise<Array<{ accessionNumber: string; filingDate: string; items?: string[]; documentUrl?: string; content?: string }>> {
+): Promise<Array<FilingForLLM>> {
+  return findRecentFilingsForLLM(ticker, cik, asset, sinceDays, ['8-K']);
+}
+
+/**
+ * Find recent filings eligible for LLM extraction
+ * Handles 8-K (US), 40-F (Canadian annual), 6-K (foreign interim), 20-F (foreign annual)
+ */
+async function findRecentFilingsForLLM(
+  ticker: string,
+  cik: string,
+  asset: string,
+  sinceDays: number,
+  formTypes: string[] = LLM_ELIGIBLE_FILING_TYPES
+): Promise<Array<FilingForLLM>> {
   const data = await fetchSECSubmissions(cik);
   if (!data?.filings?.recent) return [];
 
@@ -125,19 +155,20 @@ async function findRecent8KFilings(
   sinceDate.setDate(sinceDate.getDate() - sinceDays);
   const sinceDateStr = sinceDate.toISOString().split('T')[0];
 
-  const filings: Array<{ accessionNumber: string; filingDate: string; items?: string[]; documentUrl?: string; content?: string }> = [];
+  const filings: Array<FilingForLLM> = [];
 
   const count = Math.min(recent.form.length, 50);
   for (let i = 0; i < count; i++) {
     const formType = recent.form[i];
     const filingDate = recent.filingDate[i];
 
-    // Only 8-K filings within date range
-    if (formType !== '8-K' || filingDate < sinceDateStr) continue;
+    // Check if this is a filing type we want and within date range
+    if (!formTypes.includes(formType) || filingDate < sinceDateStr) continue;
 
     const accessionNumber = recent.accessionNumber[i];
     
     // Parse 8-K item codes (e.g., "7.01,8.01" -> ["7.01", "8.01"])
+    // Other form types don't have items
     const itemsStr = recent.items?.[i] || '';
     const items = itemsStr ? itemsStr.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
 
@@ -151,6 +182,7 @@ async function findRecent8KFilings(
       filings.push({
         accessionNumber,
         filingDate,
+        formType,
         items,
         documentUrl: result.documentUrl,
         content: result.content,
@@ -286,7 +318,7 @@ async function processCompanyHybrid(
   let llmHoldings: number | null = null;
   let llmConfidence: number = 0;
   let llmReasoning: string | undefined;
-  let filing8K: { accessionNumber: string; filingDate: string; items?: string[]; documentUrl?: string; content?: string } | undefined;
+  let llmFiling: FilingForLLM | undefined;
 
   try {
     // STEP 1: Try XBRL extraction (deterministic)
@@ -306,21 +338,23 @@ async function processCompanyHybrid(
       }
     }
 
-    // STEP 2: Try LLM extraction from 8-K (for recent events)
+    // STEP 2: Try LLM extraction from filings (8-K, 40-F, 6-K, 20-F)
+    // For US companies: 8-K material events
+    // For foreign filers: 40-F (annual), 6-K (interim), 20-F (annual)
     if (config.extractionMode !== 'xbrl_only') {
       const llmConfig = createLLMConfigFromEnv();
 
       if (llmConfig) {
-        console.log(`[SEC Update] ${ticker}: Checking for recent 8-K filings...`);
-        const filings = await findRecent8KFilings(ticker, cik, asset, config.sinceDays || 7);
+        console.log(`[SEC Update] ${ticker}: Checking for recent filings (8-K/40-F/6-K/20-F)...`);
+        const filings = await findRecentFilingsForLLM(ticker, cik, asset, config.sinceDays || 7);
 
         if (filings.length > 0) {
-          filing8K = filings[0];
+          llmFiling = filings[0];
 
-          if (filing8K.content) {
+          if (llmFiling.content) {
             try {
               const extraction = await extractHoldingsFromText(
-                filing8K.content,
+                llmFiling.content,
                 { companyName: ticker, ticker, asset, currentHoldings },
                 llmConfig
               );
@@ -341,7 +375,7 @@ async function processCompanyHybrid(
             }
           }
         } else {
-          console.log(`[SEC Update] ${ticker}: No recent 8-K filings with crypto content`);
+          console.log(`[SEC Update] ${ticker}: No recent filings (8-K/40-F/6-K/20-F) with crypto content`);
         }
       } else {
         // LLM config missing - alert (once per process)
@@ -366,12 +400,12 @@ async function processCompanyHybrid(
         const comparison = compareExtractions(xbrlResult, llmHoldings);
 
         // Record the comparison for accuracy tracking (when values differ)
-        if (!comparison.match && filing8K) {
+        if (!comparison.match && llmFiling) {
           try {
             await recordExtractionComparison({
               ticker,
-              accessionNumber: filing8K.accessionNumber || xbrlResult.accessionNumber || '',
-              filedDate: filing8K.filingDate || xbrlResult.filingDate || new Date().toISOString().split('T')[0],
+              accessionNumber: llmFiling.accessionNumber || xbrlResult.accessionNumber || '',
+              filedDate: llmFiling.filingDate || xbrlResult.filingDate || new Date().toISOString().split('T')[0],
               xbrlValue: xbrlResult.bitcoinHoldings,
               llmValue: llmHoldings,
             });
@@ -421,8 +455,8 @@ async function processCompanyHybrid(
       extractionMethod = 'llm';
       finalConfidence = llmConfidence;
       finalReasoning = llmReasoning || 'Extracted from 8-K text via LLM';
-      finalFilingDate = filing8K?.filingDate;
-      finalFilingUrl = filing8K?.documentUrl;
+      finalFilingDate = llmFiling?.filingDate;
+      finalFilingUrl = llmFiling?.documentUrl;
       source = 'sec-filing';
     }
     // Case 3: Neither available
