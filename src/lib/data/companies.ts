@@ -939,8 +939,8 @@ export const bnbCompanies: Company[] = [
     quarterlyBurnUsd: 3_000_000,
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 52_800_000,  // ~49.5M PIPE + 2.5M pre-existing + ~0.8M from warrant exercises (Jan 2026 dashboard implied)
-    cashReserves: 77_500_000,  // $77.5M unencumbered cash (Oct 2025)
-    // restrictedCash: 0 - cash is free
+    cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
+    restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
     cashAsOf: "2025-10-31",
     // totalDebt: 0 - "minimal debt" per press release
