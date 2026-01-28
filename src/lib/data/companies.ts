@@ -8,6 +8,7 @@ export const ethCompanies: Company[] = [
     id: "bmnr",
     name: "Bitmine Immersion",
     ticker: "BMNR",
+    secCik: "0001829311",
     asset: "ETH",
     tier: 1,
     holdings: 4_203_036,
@@ -69,6 +70,7 @@ export const ethCompanies: Company[] = [
     id: "ethm",
     name: "The Ether Machine",
     ticker: "ETHM",
+    secCik: "0002080334",
     asset: "ETH",
     tier: 1,
     holdings: 495_362,
@@ -92,6 +94,7 @@ export const ethCompanies: Company[] = [
     id: "btbt",
     name: "Bit Digital",
     ticker: "BTBT",
+    secCik: "0001710350",
     asset: "ETH",
     tier: 1,
     holdings: 155_227,  // Jan 7, 2026 - company announcement
@@ -121,6 +124,7 @@ export const ethCompanies: Company[] = [
     id: "btcs",
     name: "BTCS Inc.",
     ticker: "BTCS",
+    secCik: "0001436229",
     asset: "ETH",
     tier: 2,
     holdings: 70_500,  // Dec 31, 2025 shareholder letter
@@ -300,6 +304,7 @@ export const btcCompanies: Company[] = [
     id: "xxi",
     name: "Twenty One Capital",
     ticker: "XXI",
+    secCik: "0001865602",
     asset: "BTC",
     tier: 1,
     holdings: 43_514,
@@ -330,7 +335,8 @@ export const btcCompanies: Company[] = [
   {
     id: "cepo",  // BSTR Holdings pre-merger
     name: "BSTR Holdings",
-    ticker: "CEPO",  // Pre-merger SPAC, will become BSTR
+    ticker: "CEPO",
+    secCik: "0001865602",  // Pre-merger SPAC, will become BSTR
     asset: "BTC",
     tier: 1,
     holdings: 30_021,
@@ -594,6 +600,7 @@ export const btcCompanies: Company[] = [
     id: "djt",
     name: "Trump Media & Technology",
     ticker: "DJT",
+    secCik: "0001849635",
     asset: "BTC",
     tier: 1,
     holdings: 15_000,  // Verified: SEC 10-Q Q3 2025 XBRL shows $1.47B crypto FV (~15K BTC at $97K)
@@ -642,6 +649,7 @@ export const btcCompanies: Company[] = [
     id: "nxtt",
     name: "Next Technology Holding",
     ticker: "NXTT",
+    secCik: "0001784970",
     asset: "BTC",
     tier: 1,
     holdings: 1_015,  // Calculated from SEC 10-Q Q3 2025 XBRL: $98.5M fair value ÷ $97K
@@ -663,6 +671,7 @@ export const btcCompanies: Company[] = [
     id: "abtc",
     name: "American Bitcoin",
     ticker: "ABTC",
+    secCik: "0002068580",
     asset: "BTC",
     tier: 1,
     holdings: 5_427,  // Jan 2, 2026 - company announcement
@@ -692,6 +701,7 @@ export const solCompanies: Company[] = [
     id: "fwdi",
     name: "Forward Industries",
     ticker: "FWDI",
+    secCik: "0000038264",
     asset: "SOL",
     tier: 1,
     holdings: 6_979_967,  // Jan 15, 2026 treasury update
@@ -719,6 +729,7 @@ export const solCompanies: Company[] = [
     id: "hsdt",
     name: "Solana Company (fka Helius Medical)",
     ticker: "HSDT",
+    secCik: "0001610853",
     asset: "SOL",
     tier: 1,
     holdings: 2_300_000,  // Oct 29, 2025 press release - 2.3M SOL
@@ -742,6 +753,7 @@ export const solCompanies: Company[] = [
     id: "dfdv",
     name: "DeFi Development Corp",
     ticker: "DFDV",
+    secCik: "0001805526",
     asset: "SOL",
     tier: 1,
     holdings: 2_221_329,  // Q4 2025 business update
@@ -770,6 +782,7 @@ export const solCompanies: Company[] = [
     id: "upxi",
     name: "Upexi",
     ticker: "UPXI",
+    secCik: "0001775194",
     asset: "SOL",
     tier: 1,
     holdings: 2_174_583,  // Jan 5, 2026 - was 2,106,989
@@ -822,6 +835,7 @@ export const hypeCompanies: Company[] = [
     id: "purr",
     name: "Hyperliquid Strategies",
     ticker: "PURR",
+    secCik: "0002078856",
     asset: "HYPE",
     tier: 1,
     holdings: 12_500_000,  // ~12.5M HYPE from business combination
@@ -901,6 +915,7 @@ export const bnbCompanies: Company[] = [
     id: "bnc",
     name: "CEA Industries (BNC)",
     ticker: "BNC",
+    secCik: "0001855612",
     asset: "BNB",
     tier: 1,
     holdings: 512_000,  // 502,441 + 9,491 on exchanges (Oct 31, 2025)
@@ -1362,6 +1377,7 @@ export const hbarCompanies: Company[] = [
     id: "imtl",
     name: "Immutable Holdings",
     ticker: "IHLDF",
+    secCik: "0001905459",
     asset: "HBAR",
     tier: 1,
     holdings: 48_000_000,
