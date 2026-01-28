@@ -1304,51 +1304,51 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== ETH COMPANIES ====================
 
   // ========== Bitmine Immersion (BMNR) ==========
-  // Fiscal year ends Aug 31. ETH treasury strategy launched Jul 2025.
-  // FY2026 Q2 (Dec-Feb) - Upcoming
-  {
-    ticker: "BMNR",
-    fiscalYear: 2026,
-    fiscalQuarter: 2,
-    earningsDate: "2026-04-15",
-    earningsTime: "AMC",
-    source: "sec-filing",
-    status: "upcoming",
-  },
-  // FY2026 Q1 (Sep-Nov 2025) - 10-Q filed Jan 13, 2026 - SEC XBRL
+  // Normalized to CALENDAR QUARTERS (not fiscal year which ends Aug 31)
+  // ETH treasury strategy launched Jul 2025.
+  // CY2026 Q1 (Jan-Mar) - Upcoming
   {
     ticker: "BMNR",
     fiscalYear: 2026,
     fiscalQuarter: 1,
-    earningsDate: "2026-01-13",
+    earningsDate: "2026-05-15",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 3_737_333,  // SEC XBRL: CryptoAssetNumberOfUnits
-    sharesAtQuarterEnd: 408_578_823,  // SEC XBRL: CommonStockSharesOutstanding
-    holdingsPerShare: 0.009147,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-Q",
-    status: "reported",
+    status: "upcoming",
   },
-  // FY2025 Q4 / Annual (Jun-Aug 2025) - 10-K filed Nov 21, 2025
-  // Note: ETH strategy launched mid-quarter (Jul 2025), 10-K doesn't have CryptoAssetNumberOfUnits
+  // CY2025 Q4 (Oct-Dec 2025) - Dec 28 holdings update
   {
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
-    earningsDate: "2025-11-21",
+    earningsDate: "2026-01-13",  // 10-Q filed (covers Nov 30, close to Q4 end)
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 2_069_443,  // From 8-K Sep 7, 2025 (closest to Aug 31)
-    sharesAtQuarterEnd: 234_712_324,  // SEC XBRL: CommonStockSharesOutstanding
-    holdingsPerShare: 0.008817,
-    source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-K",
+    holdingsAtQuarterEnd: 4_110_525,  // Dec 28, 2025 press release
+    sharesAtQuarterEnd: 425_000_000,
+    holdingsPerShare: 0.009672,
+    source: "press-release",
+    sourceUrl: "https://bitmine.com/press-releases",
     status: "reported",
   },
-  // FY2025 Q3 (Mar-May 2025) - 10-Q filed Jul 2, 2025 - Pre-ETH strategy
+  // CY2025 Q3 (Jul-Sep 2025) - ETH strategy launched Jul 17
   {
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    earningsDate: "2025-11-21",  // 10-K filed (covers Aug 31)
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 2_069_443,  // Sep 7, 2025 (2M milestone)
+    sharesAtQuarterEnd: 260_000_000,
+    holdingsPerShare: 0.007959,
+    source: "press-release",
+    sourceUrl: "https://bitmine.com/press-releases",
+    status: "reported",
+  },
+  // CY2025 Q2 (Apr-Jun 2025) - Pre-ETH strategy
+  {
+    ticker: "BMNR",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
     earningsDate: "2025-07-02",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,
