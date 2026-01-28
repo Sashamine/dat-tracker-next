@@ -596,10 +596,10 @@ export const btcCompanies: Company[] = [
     ticker: "DJT",
     asset: "BTC",
     tier: 1,
-    holdings: 15_000,  // Jan 2026 - was 11,542
-    holdingsLastUpdated: "2026-01-21",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.theblock.co/treasuries/djt",
+    holdings: 15_000,  // Verified: SEC 10-Q Q3 2025 XBRL shows $1.47B crypto FV (~15K BTC at $97K)
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q",
     datStartDate: "2025-05-01",
     costBasisAvg: 100_000,
     isMiner: false,
@@ -653,7 +653,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 4_082_556,  // Jan 2026 per TipRanks/Morningstar (post-split + equity issuances)
+    sharesForMnav: 2_865_730,  // SEC 10-Q Oct 2025 (post 200:1 reverse split)
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
     notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025.",
   },
