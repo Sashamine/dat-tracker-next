@@ -59,11 +59,13 @@ Systematic verification process for DAT company data quality.
 - [x] **Staking info**: 95% staked via Linea/Lido (stakingPct, stakingMethod)
 - [x] **Leader**: Joseph Chalom (BlackRock) - updated Dec 15, 2025
 
-### 9. Dilutive Instruments ⚠️
-- [ ] **Warrants**: Not yet extracted
-- [ ] **Convertible notes**: Need to verify (none expected)
-- [ ] **Options/RSUs**: Not yet extracted
-- [ ] **TODO**: Pull from SEC filings, add to dilutive-instruments.ts
+### 9. Dilutive Instruments ✅
+- [x] **Warrants**: 3,455,019 @ $1.08 (post-split adjusted, ITM)
+- [x] **Convertible notes**: None
+- [x] **Options**: 9,022 @ $91.06 (deep OTM)
+- [x] **RSUs**: 18,116,449 @ $0 (large grant with Chalom leadership)
+- [x] **Total potential dilution**: ~21.6M shares (~11% of 192M basic)
+- [x] **Added to dilutive-instruments.ts**: Yes
 
 ---
 

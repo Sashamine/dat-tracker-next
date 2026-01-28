@@ -82,6 +82,39 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // SBET (SharpLink Gaming) - ETH treasury company
+  // Verified 2026-01-28 via SEC XBRL (CIK 0001981535)
+  // Note: 1:12 reverse split May 5, 2025 - all figures post-split adjusted
+  SBET: [
+    {
+      type: "warrant",
+      strikePrice: 1.08, // Post-split adjusted (pre-split ~$0.09 * 12)
+      potentialShares: 3_455_019,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+      notes: "ClassOfWarrantOrRightOutstanding - likely ITM at ~$10 stock",
+    },
+    {
+      type: "option",
+      strikePrice: 91.06,
+      potentialShares: 9_022,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+      notes: "Stock options - deep OTM at ~$10 stock price",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // RSUs vest at $0
+      potentialShares: 18_116_449,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+      notes: "RSUs (NonOptionEquityInstrumentsOutstanding) - large grant with new mgmt",
+    },
+  ],
+
   // MARA Holdings - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC 8-Ks + XBRL (CIK 0001507605)
   MARA: [
