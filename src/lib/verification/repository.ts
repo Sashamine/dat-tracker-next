@@ -389,6 +389,22 @@ export async function getTickersNeedingReview(): Promise<CompanyFilingCheck[]> {
   return rows.map(toCompanyFilingCheck);
 }
 
+/**
+ * Get filing check states for all companies
+ * Used by deep scan to identify gaps
+ */
+export async function getFilingCheckStates(): Promise<Record<string, CompanyFilingCheck>> {
+  const rows = await query<DbCompanyFilingCheck>(
+    `SELECT * FROM company_filing_checks ORDER BY ticker`
+  );
+  
+  const states: Record<string, CompanyFilingCheck> = {};
+  for (const row of rows) {
+    states[row.ticker] = toCompanyFilingCheck(row);
+  }
+  return states;
+}
+
 // ============================================
 // AGGREGATE STATE
 // ============================================
