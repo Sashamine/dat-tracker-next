@@ -32,6 +32,18 @@ function formatDate(dateStr: string): string {
   });
 }
 
+// Get quarter-end date for normalized comparison
+// Q1 = Mar 31, Q2 = Jun 30, Q3 = Sep 30, Q4 = Dec 31
+function getQuarterEndDate(calendarYear: number, calendarQuarter: 1 | 2 | 3 | 4): string {
+  const quarterEnds: Record<number, string> = {
+    1: `Mar 31, ${calendarYear}`,
+    2: `Jun 30, ${calendarYear}`,
+    3: `Sep 30, ${calendarYear}`,
+    4: `Dec 31, ${calendarYear}`,
+  };
+  return quarterEnds[calendarQuarter];
+}
+
 function formatTime(time: string | null): string {
   if (!time) return "";
   switch (time) {
@@ -334,14 +346,14 @@ export default function CompanyEarningsPage() {
                     return (
                       <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                          {formatDate(earning.earningsDate)}
+                          {getQuarterEndDate(earning.calendarYear, earning.calendarQuarter)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                           {viewType === "quarterly"
-                            ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}`
-                            : earning.fiscalQuarter === 4
-                              ? earning.fiscalYear
-                              : `${earning.fiscalYear} (Q${earning.fiscalQuarter})`
+                            ? `Q${earning.calendarQuarter} ${earning.calendarYear}`
+                            : earning.calendarQuarter === 4
+                              ? earning.calendarYear
+                              : `${earning.calendarYear} (Q${earning.calendarQuarter})`
                           }
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
@@ -391,14 +403,14 @@ export default function CompanyEarningsPage() {
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          {formatDate(earning.earningsDate)}
+                          {getQuarterEndDate(earning.calendarYear, earning.calendarQuarter)}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           {viewType === "quarterly"
-                            ? `Q${earning.fiscalQuarter} ${earning.fiscalYear}`
-                            : earning.fiscalQuarter === 4
-                              ? earning.fiscalYear
-                              : `${earning.fiscalYear} (Q${earning.fiscalQuarter})`
+                            ? `Q${earning.calendarQuarter} ${earning.calendarYear}`
+                            : earning.calendarQuarter === 4
+                              ? earning.calendarYear
+                              : `${earning.calendarYear} (Q${earning.calendarQuarter})`
                           }
                         </div>
                       </div>
