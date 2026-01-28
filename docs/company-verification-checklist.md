@@ -3,6 +3,68 @@
 ## Overview
 Systematic verification process for DAT company data quality.
 
+## Future Considerations
+- **LsETH / Liquid Staking Tokens**: Currently counted at "as-if redeemed" value (1:1 with ETH). Consider whether to apply haircut for protocol/counterparty risk, or track native vs staked separately. Relevant for SBET (~26% LsETH), potentially others.
+
+---
+
+## SBET (SharpLink Gaming) - Verified 2026-01-28
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 863,424 ETH
+  - Native ETH: 639,241
+  - LsETH (liquid staking): 224,183 (as-if redeemed)
+- [x] **Source**: SEC 8-K Dec 17, 2025
+- [x] **Source URL**: https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm
+- [x] **Last updated**: 2025-12-14
+- [x] **Staking rewards earned**: 9,241 ETH since Jun 2 (3,350 native + 5,891 LsETH)
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001981535
+- [x] **Recent 8-Ks checked**: Dec 17, Oct 28, Oct 21, Oct 17
+- [x] **Latest 10-K**: Pending (Q4 2025, expected Mar 2026)
+- [x] **Latest 10-Q**: Filed Nov 12, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **CommonStockSharesOutstanding**: 192,193,183 (Sep 30, 2025)
+- [x] **NetIncomeLoss Q3**: $104,270,205 (includes crypto gains)
+- [x] **Revenues Q3**: $10,843,567
+- [x] **EPS Diluted Q3**: $0.62
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Current quarter**: Q4 2025 (Oct-Dec), 10-K pending
+
+### 5. Earnings Data Backfill ✅
+| Quarter | Period End | Holdings | Shares | HPS | Source |
+|---------|------------|----------|--------|-----|--------|
+| Q1 2025 | Mar 31 | 0 | 575K | 0 | 10-Q (pre-ETH) |
+| Q2 2025 | Jun 30 | 520K | 66.2M | 0.00786 | 10-Q |
+| Q3 2025 | Sep 30 | 861,251 | 192.2M | 0.00448 | 10-Q XBRL |
+| Q4 2025 | Dec 31 | 863,424 | 196.7M | 0.00439 | 8-K (holdings only) |
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q2→Q3**: +65.6% holdings, but HPS dropped due to share issuance
+- [x] **Q3→Q4**: +0.25% holdings, HPS flat
+- [x] **Note**: Heavy dilution from ATM offset by ETH accumulation
+
+### 7. Non-Crypto Investments ✅
+- [x] **USDC stablecoins**: $26.7M (Q3 2025)
+- [x] **Cash reserves**: $11.1M (operating, restricted)
+- [x] **Treatment**: otherInvestments field captures USDC
+
+### 8. Company Metadata ✅
+- [x] **Strategy accurate**: Staking, Linea partnership, Superstate tokenization
+- [x] **Notes accurate**: #2 ETH treasury, buyback program, mNAV discount
+- [x] **Staking info**: 95% staked via Linea/Lido (stakingPct, stakingMethod)
+- [x] **Leader**: Joseph Chalom (BlackRock) - updated Dec 15, 2025
+
+### 9. Dilutive Instruments ⚠️
+- [ ] **Warrants**: Not yet extracted
+- [ ] **Convertible notes**: Need to verify (none expected)
+- [ ] **Options/RSUs**: Not yet extracted
+- [ ] **TODO**: Pull from SEC filings, add to dilutive-instruments.ts
+
 ---
 
 ## BMNR (Bitmine Immersion) - Verified 2026-01-28
