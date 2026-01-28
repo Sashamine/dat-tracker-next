@@ -2287,6 +2287,40 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
+
+  // ==================== HYPE COMPANIES ====================
+
+  // ========== Hyperliquid Strategies (PURR) ==========
+  // Calendar year company (fiscal = calendar), FY end Dec 31
+  // Formed via Sonnet BioTherapeutics + Rorschach I merger on Dec 2, 2025
+  // Q1 2026 - Upcoming
+  {
+    ticker: "PURR",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15",  // Estimated ~45 days after Q1 end
+    earningsTime: null,
+    source: "manual",
+    status: "upcoming",
+  },
+  // Q4 2025 - First quarter (partial: Dec 2-31, 2025)
+  {
+    ticker: "PURR",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",  // Estimated ~75 days after Q4 end (10-K timing)
+    earningsTime: null,
+    holdingsAtQuarterEnd: 12_000_000,  // 12M HYPE staked via Anchorage
+    sharesAtQuarterEnd: 127_025_563,  // SEC 10-Q Dec 8, 2025
+    holdingsPerShare: 0.0944,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm",
+    status: "upcoming",
+  },
 ];
 
 // Helper: Get days until a date
