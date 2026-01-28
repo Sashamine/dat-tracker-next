@@ -1,18 +1,14 @@
 // Earnings data for DAT companies
 // Sources: SEC EDGAR, company IR pages, investor presentations
 //
-// FISCAL YEAR MAPPINGS:
-// Most companies use calendar year (fiscal year ends December 31).
-// Companies with non-standard fiscal years:
+// QUARTER NORMALIZATION:
+// Prefer using XBRL period end dates directly via quarterFromPeriodEnd().
+// This avoids fiscal-to-calendar mapping errors - the SEC filing tells us
+// exactly what period the data covers.
 //
-// CLSK (CleanSpark) - Fiscal year ends September 30
-//   FY Q1 (Oct-Dec) → Calendar Q4 of PRIOR year
-//   FY Q2 (Jan-Mar) → Calendar Q1
-//   FY Q3 (Apr-Jun) → Calendar Q2
-//   FY Q4 (Jul-Sep) → Calendar Q3
-//
-// All other companies (MSTR, MARA, RIOT, HUT, CORZ, BTDR, KULR, SMLR, ASST, XXI, DJT, 3350.T, BMNR, BTCS, BTBT, STKE, DFDV):
-//   Use calendar year - fiscal quarters = calendar quarters
+// Legacy fiscal year mappings (kept for backwards compatibility):
+// - CLSK (CleanSpark) - Fiscal year ends September 30
+// - All others use calendar year (fiscal = calendar)
 
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter } from "../types";
 import { allCompanies } from "./companies";
@@ -20,8 +16,42 @@ import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 
 /**
- * Maps fiscal year/quarter to calendar year/quarter based on company's fiscal year end.
- * Returns { calendarYear, calendarQuarter }
+ * Derives calendar year/quarter directly from an XBRL period end date.
+ * This is the PREFERRED approach - no fiscal year guessing needed.
+ * 
+ * @param periodEnd - Date string in YYYY-MM-DD format (e.g., "2025-09-30")
+ * @returns { year, quarter } based on the month (Q1=Jan-Mar, Q2=Apr-Jun, Q3=Jul-Sep, Q4=Oct-Dec)
+ * 
+ * Examples:
+ *   "2025-03-31" → { year: 2025, quarter: 1 }
+ *   "2025-06-30" → { year: 2025, quarter: 2 }
+ *   "2025-09-30" → { year: 2025, quarter: 3 }
+ *   "2025-12-31" → { year: 2025, quarter: 4 }
+ */
+export function quarterFromPeriodEnd(periodEnd: string): { year: number; quarter: 1 | 2 | 3 | 4 } {
+  const [yearStr, monthStr] = periodEnd.split('-');
+  const year = parseInt(yearStr, 10);
+  const month = parseInt(monthStr, 10);
+  const quarter = Math.ceil(month / 3) as 1 | 2 | 3 | 4;
+  return { year, quarter };
+}
+
+/**
+ * Converts period end date to standard quarter-end date string.
+ * Handles month-end variations (28/29/30/31 days).
+ * 
+ * @param periodEnd - Any date in the quarter
+ * @returns Normalized quarter-end date (Mar 31, Jun 30, Sep 30, Dec 31)
+ */
+export function normalizeQuarterEnd(periodEnd: string): string {
+  const { year, quarter } = quarterFromPeriodEnd(periodEnd);
+  const quarterEnds = ['03-31', '06-30', '09-30', '12-31'];
+  return `${year}-${quarterEnds[quarter - 1]}`;
+}
+
+/**
+ * LEGACY: Maps fiscal year/quarter to calendar year/quarter based on company's fiscal year end.
+ * Prefer quarterFromPeriodEnd() when XBRL data is available.
  */
 function fiscalToCalendar(
   ticker: string,
