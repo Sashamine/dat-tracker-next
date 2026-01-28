@@ -822,6 +822,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   //   FY Q4 (Jul-Sep) → Calendar Q3
   //
   // Q1 FY2026 (Oct-Dec 2025) → Calendar Q4 2025 - Upcoming
+  // Holdings from SEC DEF 14A Jan 22, 2026 (most recent available)
+  // Shares from same DEF 14A (record date Jan 9, 2026)
   {
     ticker: "CLSK",
     fiscalYear: 2026,
@@ -830,6 +832,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-05",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 13099,  // SEC DEF 14A Jan 22, 2026
+    sharesAtQuarterEnd: 255_750_361,  // SEC DEF 14A (record date Jan 9, 2026)
+    holdingsPerShare: 0.0000512,
     source: "sec-filing",
     status: "upcoming",
   },

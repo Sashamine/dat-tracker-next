@@ -646,6 +646,8 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 10556, sharesOutstandingDiluted: 302_000_000, holdingsPerShare: 0.0000350, source: "Q4 2024 10-K" },
   { date: "2025-06-30", holdings: 11500, sharesOutstandingDiluted: 312_000_000, holdingsPerShare: 0.0000369, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 12300, sharesOutstandingDiluted: 317_760_000, holdingsPerShare: 0.0000387, source: "Q3 2025 10-Q" },
+  // Q4 2025 (Dec 31): Estimated from Jan 22, 2026 DEF 14A data
+  { date: "2025-12-31", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A (Jan 2026)", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)" },
   // Jan 2026: Share count decreased due to buybacks and updated dilution calc from SEC DEF 14A
   { date: "2026-01-22", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)" },
 ];
