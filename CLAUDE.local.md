@@ -1,9 +1,9 @@
 # Working Memory Buffer
 > Auto-updated during sessions. Re-read at session start.
-> Last updated: 2026-01-27
+> Last updated: 2026-01-28
 
 ## Current Goal
-mNAV methodology alignment with Strategy.com - COMPLETED
+Purchase history tracking and cost basis calculation
 
 ## Active Context
 - Project: dat-tracker-next (crypto treasury tracker)
@@ -20,6 +20,12 @@ mNAV methodology alignment with Strategy.com - COMPLETED
 - [ ] Phase 8d: Populate dilutive instruments for remaining companies
 - [ ] Phase 7d: Continue manual review of individual companies
 - [ ] Phase 7e: UI for estimates with provenance
+- [ ] Add more companies to purchase history (miners, smaller DATs)
+- [x] MSTR purchase history: 96 purchases, $76,014 avg
+- [x] Metaplanet purchase history: 52 purchases, $107,607 avg
+- [x] BMNR purchase history: 12 purchases, $2,839 avg ETH
+- [x] SBET purchase history: 6 purchases, $3,050 avg ETH
+- [x] Wire costBasisAvg into companies.ts from purchase history
 - [x] MSTR SEC History: XBRL quarterly data (mstr-sec-history.ts)
 - [x] MSTR 8-K Capital Events: Inter-quarter events (mstr-capital-events.ts)
 - [x] MSTR ATM Sales Backfill: Weekly ATM data added to BTC events (Jun-Nov 2025)
@@ -554,3 +560,34 @@ At $160.44 stock price:
 - 328 tests pass
 - TypeScript compiles
 
+## Session Notes (2026-01-28)
+
+### Purchase History and Cost Basis Tracking
+- User requested: Add more companies to purchase history, wire into companies.ts
+- Extended `purchases-history.ts` with BMNR and SBET purchase data
+- Added `getPurchaseStats()` helper function
+- Created `scripts/verify-cost-basis.ts` for validation
+
+### Purchase History Stats
+| Ticker | Asset | Purchases | Total Qty | Total Cost | Avg Cost |
+|--------|-------|-----------|-----------|------------|----------|
+| MSTR | BTC | 96 | 712,649 | $54.2B | $76,014 |
+| 3350.T | BTC | 52 | 35,102 | $3.8B | $107,607 |
+| BMNR | ETH | 12 | 4,203,036 | $11.9B | $2,839 |
+| SBET | ETH | 6 | 1,203,424 | $3.7B | $3,050 |
+
+### Wiring
+- Added `costBasisAvg` to BMNR ($2,839) and SBET ($3,050) in companies.ts
+- Values calculated from purchase history, not hardcoded
+
+### Notes
+- BMNR purchases derived from holdings history snapshots + ETH prices
+- SBET has complex history (sold ~340K ETH in early 2025, then resumed buying)
+- More companies can be added as purchase data is found
+
+### Commits
+- f510d79: feat: add BMNR/SBET purchase history and wire costBasisAvg
+
+### Tests
+- 403 tests pass
+- TypeScript compiles

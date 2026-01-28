@@ -314,7 +314,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002019757&type=8-K",
     datStartDate: "2025-12-09",
-    costBasisAvg: 93_000,
+    costBasisAvg: 92_902,  // Calculated from purchase history (purchases-history.ts)
     isMiner: false,
     quarterlyBurnUsd: 10_000_000,
     avgDailyVolume: 150_000_000,
@@ -503,7 +503,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     datStartDate: "2024-12-01",
     secCik: "1662684",
-    costBasisAvg: 97_000,
+    costBasisAvg: 101_895,  // Calculated from purchase history (purchases-history.ts)
     isMiner: false,
     quarterlyBurnUsd: 4_000_000,
     avgDailyVolume: 30_000_000,
@@ -577,7 +577,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://nakamoto.com/update/kindlymd-acquires-5-744-btc-to-expand-nakamoto-bitcoin-treasury",
     datStartDate: "2025-05-12",
-    costBasisAvg: 118_205,
+    costBasisAvg: 76_553,  // Pre-merger purchases only (purchases-history.ts)
     isMiner: false,
     quarterlyBurnUsd: 8_000_000,
     avgDailyVolume: 50_000_000,

@@ -257,9 +257,51 @@ const SBET_PURCHASES: Purchase[] = [
 ];
 
 // =============================================================================
+// KULR (KULR Technology) - BTC purchases derived from holdings-history.ts
+// Total: 1,057 BTC, $107.7M, avg $101,895
+// =============================================================================
+const KULR_PURCHASES: Purchase[] = [
+  { date: "2024-12-26", quantity: 217.18, pricePerUnit: 97000, totalCost: 21_066_460, source: "Initial BTC purchase 8-K" },
+  { date: "2025-01-06", quantity: 213.42, pricePerUnit: 99000, totalCost: 21_128_580, source: "8-K filing" },
+  { date: "2025-01-21", quantity: 79.40, pricePerUnit: 103000, totalCost: 8_178_200, source: "Press release" },
+  { date: "2025-02-11", quantity: 100.30, pricePerUnit: 97000, totalCost: 9_729_100, source: "Press release" },
+  { date: "2025-03-25", quantity: 58.00, pricePerUnit: 87000, totalCost: 5_046_000, source: "Press release" },
+  { date: "2025-05-20", quantity: 132.00, pricePerUnit: 105000, totalCost: 13_860_000, source: "Press release" },
+  { date: "2025-06-23", quantity: 119.70, pricePerUnit: 109000, totalCost: 13_047_300, source: "Press release" },
+  { date: "2025-07-10", quantity: 101.00, pricePerUnit: 115000, totalCost: 11_615_000, source: "GlobeNewswire" },
+  { date: "2025-09-30", quantity: 36.00, pricePerUnit: 112000, totalCost: 4_032_000, source: "SEC 10-Q Q3 2025" },
+];
+
+// =============================================================================
+// NAKA (Nakamoto Holdings) - BTC purchases derived from holdings-history.ts
+// Total: 5,398 BTC pre-merger, then merged with KindlyMD Aug 2025
+// Note: Aug 2025 jump is from merger, not purchase
+// =============================================================================
+const NAKA_PURCHASES: Purchase[] = [
+  { date: "2024-08-15", quantity: 1250, pricePerUnit: 58000, totalCost: 72_500_000, source: "Initial treasury announcement" },
+  { date: "2024-10-31", quantity: 1550, pricePerUnit: 72000, totalCost: 111_600_000, source: "Q3 2024 filing" },
+  { date: "2024-12-31", quantity: 1350, pricePerUnit: 93000, totalCost: 125_550_000, source: "Q4 2024 10-K" },
+  { date: "2025-03-31", quantity: 1248, pricePerUnit: 83000, totalCost: 103_584_000, source: "Q1 2025 10-Q" },
+  // Note: Aug 2025 +5744 BTC from KindlyMD merger - not included as "purchase"
+];
+
+// =============================================================================
+// XXI (Twenty One Capital) - BTC from SPAC structure + small additions
+// Total: 43,514 BTC, $4.0B, avg $92,902
+// Note: Initial 42K BTC came via Tether/SoftBank SPAC structure
+// =============================================================================
+const XXI_PURCHASES: Purchase[] = [
+  { date: "2025-04-23", quantity: 42000, pricePerUnit: 92000, totalCost: 3_864_000_000, source: "Initial SPAC contribution" },
+  { date: "2025-07-29", quantity: 1500, pricePerUnit: 118000, totalCost: 177_000_000, source: "Pre-listing update" },
+  { date: "2025-09-30", quantity: 10, pricePerUnit: 112000, totalCost: 1_120_000, source: "Q3 2025 10-Q" },
+  { date: "2025-12-09", quantity: 4, pricePerUnit: 99000, totalCost: 396_000, source: "NYSE listing 8-K" },
+];
+
+// =============================================================================
 // Compiled purchase histories
 // =============================================================================
 export const PURCHASES: Record<string, CompanyPurchases> = {
+  // BTC Companies
   "MSTR": {
     ticker: "MSTR",
     asset: "BTC",
@@ -272,6 +314,25 @@ export const PURCHASES: Record<string, CompanyPurchases> = {
     purchases: METAPLANET_PURCHASES,
     ...calculateCostBasis(METAPLANET_PURCHASES),
   },
+  "KULR": {
+    ticker: "KULR",
+    asset: "BTC",
+    purchases: KULR_PURCHASES,
+    ...calculateCostBasis(KULR_PURCHASES),
+  },
+  "NAKA": {
+    ticker: "NAKA",
+    asset: "BTC",
+    purchases: NAKA_PURCHASES,
+    ...calculateCostBasis(NAKA_PURCHASES),
+  },
+  "XXI": {
+    ticker: "XXI",
+    asset: "BTC",
+    purchases: XXI_PURCHASES,
+    ...calculateCostBasis(XXI_PURCHASES),
+  },
+  // ETH Companies
   "BMNR": {
     ticker: "BMNR",
     asset: "ETH",
