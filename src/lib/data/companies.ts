@@ -245,8 +245,10 @@ export const btcCompanies: Company[] = [
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
     totalDebt: 8_214_000_000,  // $8.214B per strategy.com/debt (Jan 26, 2026)
-    debtSource: "strategy.com/debt",
+    debtSource: "strategy.com/debt (official IR, real-time)",
+    debtSourceUrl: "https://www.strategy.com/debt",
     debtAsOf: "2026-01-26",
+    // SEC cross-ref: 10-Q Q3 2025 (filed Nov 3, 2025) for quarterly audit
     preferredEquity: 8_382_000_000,  // $8.382B per strategy.com/credit (Jan 26, 2026)
     // Preferred breakdown: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
