@@ -591,6 +591,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Riot Platforms (RIOT) ==========
   // Calendar year company (fiscal = calendar)
+  // CIK: 0001167419
+  // All data verified via SEC XBRL (2026-01-28)
+  // BTC holdings = TOTAL (unrestricted + restricted)
+  // Shares = CommonStockSharesOutstanding from XBRL
+  //
   // Q4 2025 - Upcoming
   {
     ticker: "RIOT",
@@ -603,7 +608,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 - XBRL verified: 19,287 BTC total (15,987 unrestricted + 3,300 restricted), 371.1M shares
   {
     ticker: "RIOT",
     fiscalYear: 2025,
@@ -617,13 +622,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 180_200_000,
     revenueEstimate: 125_000_000,
     netIncome: 104_500_000,
-    holdingsAtQuarterEnd: 17429,
-    sharesAtQuarterEnd: 378_000_000,
-    holdingsPerShare: 0.0000461,
+    holdingsAtQuarterEnd: 19287,
+    sharesAtQuarterEnd: 371_100_000,
+    holdingsPerShare: 0.0000520,
     source: "sec-filing",
     status: "reported",
   },
-  // Q2 2025
+  // Q2 2025 - XBRL verified: 19,273 BTC total (15,973 unrestricted + 3,300 restricted), 363.2M shares
   {
     ticker: "RIOT",
     fiscalYear: 2025,
@@ -637,13 +642,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 70_000_000,
     revenueEstimate: 84_000_000,
     netIncome: -247_800_000,
-    holdingsAtQuarterEnd: 15370,
-    sharesAtQuarterEnd: 378_000_000,
-    holdingsPerShare: 0.0000407,
+    holdingsAtQuarterEnd: 19273,
+    sharesAtQuarterEnd: 363_200_000,
+    holdingsPerShare: 0.0000531,
     source: "sec-filing",
     status: "reported",
   },
-  // Q1 2025
+  // Q1 2025 - XBRL verified: 19,223 BTC, 350.2M shares
   {
     ticker: "RIOT",
     fiscalYear: 2025,
@@ -658,12 +663,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueEstimate: 91_000_000,
     netIncome: -296_400_000,
     holdingsAtQuarterEnd: 19223,
-    sharesAtQuarterEnd: 398_000_000,
-    holdingsPerShare: 0.0000483,
+    sharesAtQuarterEnd: 350_200_000,
+    holdingsPerShare: 0.0000549,
     source: "sec-filing",
     status: "reported",
   },
-  // Q4 2024
+  // Q4 2024 - XBRL verified: 17,722 BTC, 344.9M shares
   {
     ticker: "RIOT",
     fiscalYear: 2024,
@@ -678,12 +683,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueEstimate: 113_000_000,
     netIncome: 166_100_000,
     holdingsAtQuarterEnd: 17722,
-    sharesAtQuarterEnd: 340_000_000,
-    holdingsPerShare: 0.0000521,
+    sharesAtQuarterEnd: 344_900_000,
+    holdingsPerShare: 0.0000514,
     source: "sec-filing",
     status: "reported",
   },
-  // Q3 2024
+  // Q3 2024 - XBRL verified: 10,427 BTC, 324.3M shares
   {
     ticker: "RIOT",
     fiscalYear: 2024,
@@ -698,12 +703,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueEstimate: 95_000_000,
     netIncome: -154_400_000,
     holdingsAtQuarterEnd: 10427,
-    sharesAtQuarterEnd: 328_000_000,
-    holdingsPerShare: 0.0000318,
+    sharesAtQuarterEnd: 324_300_000,
+    holdingsPerShare: 0.0000322,
     source: "sec-filing",
     status: "reported",
   },
-  // Q2 2024
+  // Q2 2024 - XBRL verified: 9,334 BTC, 283.7M shares
   {
     ticker: "RIOT",
     fiscalYear: 2024,
@@ -718,12 +723,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueEstimate: 77_000_000,
     netIncome: 127_300_000,
     holdingsAtQuarterEnd: 9334,
-    sharesAtQuarterEnd: 283_000_000,
-    holdingsPerShare: 0.0000330,
+    sharesAtQuarterEnd: 283_700_000,
+    holdingsPerShare: 0.0000329,
     source: "sec-filing",
     status: "reported",
   },
-  // Q1 2024
+  // Q1 2024 - XBRL verified: 8,490 BTC, 268.0M shares
   {
     ticker: "RIOT",
     fiscalYear: 2024,
@@ -737,9 +742,39 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 79_300_000,
     revenueEstimate: 72_000_000,
     netIncome: 211_800_000,
-    holdingsAtQuarterEnd: 8872,
-    sharesAtQuarterEnd: 280_000_000,
+    holdingsAtQuarterEnd: 8490,
+    sharesAtQuarterEnd: 268_000_000,
     holdingsPerShare: 0.0000317,
+    source: "sec-filing",
+    status: "reported",
+  },
+  // Q4 2023 - XBRL verified: 7,362 BTC, 230.8M shares
+  {
+    ticker: "RIOT",
+    fiscalYear: 2023,
+    fiscalQuarter: 4,
+    calendarYear: 2023,
+    calendarQuarter: 4,
+    earningsDate: "2024-02-28",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 7362,
+    sharesAtQuarterEnd: 230_800_000,
+    holdingsPerShare: 0.0000319,
+    source: "sec-filing",
+    status: "reported",
+  },
+  // Q4 2022 - XBRL verified: 6,974 BTC, 167.8M shares
+  {
+    ticker: "RIOT",
+    fiscalYear: 2022,
+    fiscalQuarter: 4,
+    calendarYear: 2022,
+    calendarQuarter: 4,
+    earningsDate: "2023-03-01",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 6974,
+    sharesAtQuarterEnd: 167_800_000,
+    holdingsPerShare: 0.0000416,
     source: "sec-filing",
     status: "reported",
   },
