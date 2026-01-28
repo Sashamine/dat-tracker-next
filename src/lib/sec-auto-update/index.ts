@@ -60,6 +60,7 @@ import { recordExtractionComparison } from '../verification/extraction-accuracy'
 
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';
+const HOLDINGS_HISTORY_FILE = 'src/lib/data/holdings-history.ts';
 
 export interface SecUpdateResult {
   ticker: string;
@@ -266,6 +267,106 @@ function updateCompaniesFile(
 }
 
 /**
+ * Update holdings-history.ts with a new snapshot entry
+ * Appends to the appropriate company's history array
+ */
+function updateHoldingsHistory(
+  ticker: string,
+  newHoldings: number,
+  filingDate: string,
+  filingUrl: string,
+  dryRun: boolean,
+  source: string = 'SEC auto-update'
+): { success: boolean; error?: string } {
+  const filePath = path.join(process.cwd(), HOLDINGS_HISTORY_FILE);
+  
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    
+    // Find the company's history array (e.g., "const MSTR_HISTORY: HoldingsSnapshot[] = [")
+    const historyVarName = `${ticker.toUpperCase()}_HISTORY`;
+    const historyPattern = new RegExp(`const ${historyVarName}:\\s*HoldingsSnapshot\\[\\]\\s*=\\s*\\[`, 'i');
+    
+    if (!historyPattern.test(content)) {
+      console.log(`[Holdings History] No history array found for ${ticker} (${historyVarName})`);
+      return { success: false, error: `No history array found for ${ticker}` };
+    }
+    
+    // Find the last entry in this company's array to get share count
+    // Look for the closing ]; of this company's array
+    const arrayStartMatch = content.match(historyPattern);
+    if (!arrayStartMatch) {
+      return { success: false, error: 'Could not find array start' };
+    }
+    
+    const arrayStartIndex = arrayStartMatch.index! + arrayStartMatch[0].length;
+    
+    // Find the matching closing bracket
+    let bracketCount = 1;
+    let arrayEndIndex = arrayStartIndex;
+    for (let i = arrayStartIndex; i < content.length && bracketCount > 0; i++) {
+      if (content[i] === '[') bracketCount++;
+      if (content[i] === ']') bracketCount--;
+      arrayEndIndex = i;
+    }
+    
+    const arrayContent = content.substring(arrayStartIndex, arrayEndIndex);
+    
+    // Extract the last entry's sharesOutstandingDiluted
+    const sharesPattern = /sharesOutstandingDiluted:\s*([\d_]+)/g;
+    let lastSharesMatch;
+    let lastShares = 0;
+    while ((lastSharesMatch = sharesPattern.exec(arrayContent)) !== null) {
+      lastShares = parseInt(lastSharesMatch[1].replace(/_/g, ''));
+    }
+    
+    if (lastShares === 0) {
+      console.log(`[Holdings History] Could not find previous share count for ${ticker}, using placeholder`);
+      lastShares = 1; // Placeholder - will need manual fix
+    }
+    
+    // Check if this date already exists
+    if (arrayContent.includes(`date: "${filingDate}"`)) {
+      console.log(`[Holdings History] Entry for ${ticker} on ${filingDate} already exists, skipping`);
+      return { success: true }; // Not an error, just skip
+    }
+    
+    // Calculate holdingsPerShare
+    const holdingsPerShare = (newHoldings / lastShares).toFixed(6);
+    
+    // Format the new entry
+    const newEntry = `  { date: "${filingDate}", holdings: ${newHoldings.toLocaleString().replace(/,/g, '_')}, sharesOutstandingDiluted: ${lastShares.toLocaleString().replace(/,/g, '_')}, holdingsPerShare: ${holdingsPerShare}, source: "${source}", sourceUrl: "${filingUrl}", sourceType: "sec-filing" },\n`;
+    
+    if (dryRun) {
+      console.log(`[DRY RUN] Would append to ${ticker} holdings history:`);
+      console.log(newEntry);
+      return { success: true };
+    }
+    
+    // Insert the new entry before the closing bracket
+    // Find the last entry (look for the last },)
+    const lastEntryPattern = /(\},?\s*)\]/;
+    const lastEntryMatch = arrayContent.match(lastEntryPattern);
+    
+    if (!lastEntryMatch) {
+      return { success: false, error: 'Could not find insertion point' };
+    }
+    
+    // Insert right before the final ];
+    const insertIndex = arrayEndIndex;
+    const newContent = content.substring(0, insertIndex) + '\n' + newEntry + content.substring(insertIndex);
+    
+    fs.writeFileSync(filePath, newContent);
+    console.log(`[Holdings History] Added entry for ${ticker} on ${filingDate}`);
+    
+    return { success: true };
+  } catch (error) {
+    console.error(`[Holdings History] Error updating ${ticker}:`, error);
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+/**
  * Commit changes to git
  */
 function gitCommit(
@@ -288,7 +389,7 @@ Auto-updated by SEC adapter.
 
 Co-Authored-By: Claude <noreply@anthropic.com>`;
 
-    execSync(`git add "${COMPANIES_FILE}"`, { stdio: 'pipe' });
+    execSync(`git add "${COMPANIES_FILE}" "${HOLDINGS_HISTORY_FILE}"`, { stdio: 'pipe' });
     execSync(`git commit -m "${message.replace(/"/g, '\\"')}"`, { stdio: 'pipe' });
 
     return true;
@@ -544,6 +645,20 @@ async function processCompanyHybrid(
         extractionMethod,
         xbrlResult,
       };
+    }
+
+    // Also update holdings history for historical tracking
+    const historyResult = updateHoldingsHistory(
+      ticker,
+      finalHoldings,
+      finalFilingDate || new Date().toISOString().split('T')[0],
+      finalFilingUrl || '',
+      config.dryRun || false,
+      `SEC ${extractionMethod === 'xbrl' ? 'XBRL' : '8-K'} auto-update`
+    );
+    if (!historyResult.success) {
+      console.log(`[SEC Update] Warning: Could not update holdings history for ${ticker}: ${historyResult.error}`);
+      // Continue anyway - companies.ts is the primary update
     }
 
     let committed = false;

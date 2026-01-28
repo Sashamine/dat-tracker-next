@@ -94,10 +94,17 @@ export function calculateNAVPerShare(
   return equityNav / sharesOutstanding;
 }
 
+/** Threshold for including otherInvestments in NAV (5% of crypto NAV) */
+export const OTHER_INVESTMENTS_MATERIALITY_THRESHOLD = 0.05;
+
 // Calculate mNAV (Enterprise Value / Crypto NAV) - key valuation metric
 // Industry standard: EV = Market Cap + Debt + Preferred - Free Cash
 // Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
 // This matches MSTR, SBET, Metaplanet official dashboards
+//
+// MATERIALITY RULE: otherInvestments (non-crypto assets like equity stakes, USDC)
+// are included in NAV only when material (>5% of crypto NAV). This prevents
+// misleading mNAV for hybrid treasuries while keeping pure-play DATs clean.
 export function calculateMNAV(
   marketCap: number,
   holdings: number,
@@ -109,9 +116,14 @@ export function calculateMNAV(
   restrictedCash: number = 0,
   secondaryCryptoValue: number = 0  // USD value of secondary crypto holdings
 ): number | null {
-  // Total Crypto NAV = primary holdings + secondary holdings value
-  const cryptoNav = (holdings * assetPrice) + secondaryCryptoValue;
-  if (!cryptoNav || cryptoNav <= 0) return null;
+  // Base Crypto NAV = primary holdings + secondary crypto holdings
+  const baseCryptoNav = (holdings * assetPrice) + secondaryCryptoValue;
+  if (!baseCryptoNav || baseCryptoNav <= 0) return null;
+
+  // Include otherInvestments only if material (>5% of crypto NAV)
+  // This prevents misleading mNAV for hybrid treasuries while keeping pure-play DATs clean
+  const otherInvestmentsMaterial = otherInvestments / baseCryptoNav > OTHER_INVESTMENTS_MATERIALITY_THRESHOLD;
+  const totalNav = otherInvestmentsMaterial ? baseCryptoNav + otherInvestments : baseCryptoNav;
 
   // Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
   const freeCash = cashReserves - restrictedCash;
@@ -119,7 +131,49 @@ export function calculateMNAV(
   // Enterprise Value = Market Cap + Debt + Preferred Stock - Free Cash
   const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
 
-  return enterpriseValue / cryptoNav;
+  return enterpriseValue / totalNav;
+}
+
+/** Extended mNAV result with materiality info */
+export interface MNAVResult {
+  mNAV: number;
+  cryptoNav: number;
+  totalNav: number;
+  enterpriseValue: number;
+  otherInvestmentsMaterial: boolean;
+  otherInvestmentsRatio: number;  // otherInvestments / cryptoNav
+}
+
+// Calculate mNAV with full breakdown (for UI display and debugging)
+export function calculateMNAVExtended(
+  marketCap: number,
+  holdings: number,
+  assetPrice: number,
+  cashReserves: number = 0,
+  otherInvestments: number = 0,
+  totalDebt: number = 0,
+  preferredEquity: number = 0,
+  restrictedCash: number = 0,
+  secondaryCryptoValue: number = 0
+): MNAVResult | null {
+  const baseCryptoNav = (holdings * assetPrice) + secondaryCryptoValue;
+  if (!baseCryptoNav || baseCryptoNav <= 0) return null;
+
+  const otherInvestmentsRatio = otherInvestments / baseCryptoNav;
+  const otherInvestmentsMaterial = otherInvestmentsRatio > OTHER_INVESTMENTS_MATERIALITY_THRESHOLD;
+  const totalNav = otherInvestmentsMaterial ? baseCryptoNav + otherInvestments : baseCryptoNav;
+
+  const freeCash = cashReserves - restrictedCash;
+  const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
+
+  return {
+    mNAV: enterpriseValue / totalNav,
+    cryptoNav: baseCryptoNav,
+    totalNav,
+    enterpriseValue,
+    otherInvestmentsMaterial,
+    otherInvestmentsRatio,
+  };
 }
 
 // Calculate mNAV 24h change percentage

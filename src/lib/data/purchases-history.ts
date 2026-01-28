@@ -236,6 +236,7 @@ const BMNR_PURCHASES: Purchase[] = [
   // Jan 2026
   { date: "2026-01-04", quantity: 32_977, pricePerUnit: 3280, totalCost: 108_164_560, source: "8-K press release" },
   { date: "2026-01-20", quantity: 59_534, pricePerUnit: 3350, totalCost: 199_438_900, source: "8-K press release", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html" },
+  { date: "2026-01-25", quantity: 40_302, pricePerUnit: 3320, totalCost: 133_802_640, source: "SEC 8-K Jan 26, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm" },
 ];
 
 // =============================================================================

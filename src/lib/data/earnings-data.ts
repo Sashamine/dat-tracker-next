@@ -1,10 +1,54 @@
 // Earnings data for DAT companies
 // Sources: SEC EDGAR, company IR pages, investor presentations
+//
+// FISCAL YEAR MAPPINGS:
+// Most companies use calendar year (fiscal year ends December 31).
+// Companies with non-standard fiscal years:
+//
+// CLSK (CleanSpark) - Fiscal year ends September 30
+//   FY Q1 (Oct-Dec) → Calendar Q4 of PRIOR year
+//   FY Q2 (Jan-Mar) → Calendar Q1
+//   FY Q3 (Apr-Jun) → Calendar Q2
+//   FY Q4 (Jul-Sep) → Calendar Q3
+//
+// All other companies (MSTR, MARA, RIOT, HUT, CORZ, BTDR, KULR, SMLR, ASST, XXI, DJT, 3350.T, BMNR, BTCS, BTBT, STKE, DFDV):
+//   Use calendar year - fiscal quarters = calendar quarters
 
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter } from "../types";
 import { allCompanies } from "./companies";
 import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
+
+/**
+ * Maps fiscal year/quarter to calendar year/quarter based on company's fiscal year end.
+ * Returns { calendarYear, calendarQuarter }
+ */
+function fiscalToCalendar(
+  ticker: string,
+  fiscalYear: number,
+  fiscalQuarter: 1 | 2 | 3 | 4
+): { calendarYear: number; calendarQuarter: 1 | 2 | 3 | 4 } {
+  // CLSK: Fiscal year ends September 30
+  // FY Q1 (Oct-Dec) → Calendar Q4 of prior year
+  // FY Q2 (Jan-Mar) → Calendar Q1 of same year  
+  // FY Q3 (Apr-Jun) → Calendar Q2 of same year
+  // FY Q4 (Jul-Sep) → Calendar Q3 of same year
+  if (ticker === "CLSK") {
+    switch (fiscalQuarter) {
+      case 1: // Oct-Dec → Calendar Q4 of prior year
+        return { calendarYear: fiscalYear - 1, calendarQuarter: 4 };
+      case 2: // Jan-Mar → Calendar Q1
+        return { calendarYear: fiscalYear, calendarQuarter: 1 };
+      case 3: // Apr-Jun → Calendar Q2
+        return { calendarYear: fiscalYear, calendarQuarter: 2 };
+      case 4: // Jul-Sep → Calendar Q3
+        return { calendarYear: fiscalYear, calendarQuarter: 3 };
+    }
+  }
+
+  // All other companies use calendar year (fiscal = calendar)
+  return { calendarYear: fiscalYear, calendarQuarter: fiscalQuarter };
+}
 
 /**
  * Helper: Get MSTR data from capital structure timeline for a specific quarter
@@ -44,11 +88,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== BTC COMPANIES ====================
 
   // ========== Strategy (MSTR) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming earnings (prelim data from 8-K)
   {
     ticker: "MSTR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-02-04",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 712647, // Jan 25, 2026 8-K (latest in Q4)
@@ -63,6 +110,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-10-30",
     earningsTime: "AMC",
     epsActual: -1.72,
@@ -80,6 +129,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-01",
     earningsTime: "AMC",
     epsActual: -5.74,
@@ -97,6 +148,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-05-01",
     earningsTime: "AMC",
     epsActual: -16.49,
@@ -114,6 +167,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-02-05",
     earningsTime: "AMC",
     epsActual: 0.89,
@@ -131,6 +186,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2024-10-30",
     earningsTime: "AMC",
     epsActual: -1.72,
@@ -148,6 +205,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2024,
     fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
     earningsDate: "2024-08-01",
     earningsTime: "AMC",
     epsActual: -5.74,
@@ -165,6 +224,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2024,
     fiscalQuarter: 1,
+    calendarYear: 2024,
+    calendarQuarter: 1,
     earningsDate: "2024-04-29",
     earningsTime: "AMC",
     epsActual: -8.26,
@@ -182,6 +243,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2023,
     fiscalQuarter: 4,
+    calendarYear: 2023,
+    calendarQuarter: 4,
     earningsDate: "2024-01-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2023, 4),
@@ -194,6 +257,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2023,
     fiscalQuarter: 3,
+    calendarYear: 2023,
+    calendarQuarter: 3,
     earningsDate: "2023-10-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2023, 3),
@@ -206,6 +271,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2023,
     fiscalQuarter: 2,
+    calendarYear: 2023,
+    calendarQuarter: 2,
     earningsDate: "2023-07-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2023, 2),
@@ -218,6 +285,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2023,
     fiscalQuarter: 1,
+    calendarYear: 2023,
+    calendarQuarter: 1,
     earningsDate: "2023-04-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2023, 1),
@@ -230,6 +299,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2022,
     fiscalQuarter: 4,
+    calendarYear: 2022,
+    calendarQuarter: 4,
     earningsDate: "2023-01-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2022, 4),
@@ -242,6 +313,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2022,
     fiscalQuarter: 3,
+    calendarYear: 2022,
+    calendarQuarter: 3,
     earningsDate: "2022-10-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2022, 3),
@@ -254,6 +327,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2022,
     fiscalQuarter: 2,
+    calendarYear: 2022,
+    calendarQuarter: 2,
     earningsDate: "2022-07-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2022, 2),
@@ -266,6 +341,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2022,
     fiscalQuarter: 1,
+    calendarYear: 2022,
+    calendarQuarter: 1,
     earningsDate: "2022-04-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2022, 1),
@@ -278,6 +355,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2021,
     fiscalQuarter: 4,
+    calendarYear: 2021,
+    calendarQuarter: 4,
     earningsDate: "2022-01-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2021, 4),
@@ -290,6 +369,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2021,
     fiscalQuarter: 3,
+    calendarYear: 2021,
+    calendarQuarter: 3,
     earningsDate: "2021-10-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2021, 3),
@@ -302,6 +383,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2021,
     fiscalQuarter: 2,
+    calendarYear: 2021,
+    calendarQuarter: 2,
     earningsDate: "2021-07-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2021, 2),
@@ -314,6 +397,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2021,
     fiscalQuarter: 1,
+    calendarYear: 2021,
+    calendarQuarter: 1,
     earningsDate: "2021-04-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2021, 1),
@@ -326,6 +411,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2020,
     fiscalQuarter: 4,
+    calendarYear: 2020,
+    calendarQuarter: 4,
     earningsDate: "2021-01-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2020, 4),
@@ -338,6 +425,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MSTR",
     fiscalYear: 2020,
     fiscalQuarter: 3,
+    calendarYear: 2020,
+    calendarQuarter: 3,
     earningsDate: "2020-10-30",
     earningsTime: "AMC",
     ...getMSTRQuarterData(2020, 3),
@@ -347,11 +436,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Marathon Digital (MARA) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "MARA",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-02-26",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -362,6 +454,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-12",
     earningsTime: "AMC",
     epsActual: 0.32,
@@ -379,6 +473,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-06",
     earningsTime: "AMC",
     epsActual: -0.42,
@@ -397,6 +493,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-05-08",
     earningsTime: "AMC",
     epsActual: -0.47,
@@ -415,6 +513,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-02-26",
     earningsTime: "AMC",
     epsActual: 1.24,
@@ -433,6 +533,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2024-11-13",
     earningsTime: "AMC",
     epsActual: -0.42,
@@ -451,6 +553,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2024,
     fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
     earningsDate: "2024-08-08",
     earningsTime: "AMC",
     epsActual: -0.72,
@@ -469,6 +573,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "MARA",
     fiscalYear: 2024,
     fiscalQuarter: 1,
+    calendarYear: 2024,
+    calendarQuarter: 1,
     earningsDate: "2024-05-09",
     earningsTime: "AMC",
     epsActual: 1.26,
@@ -484,11 +590,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Riot Platforms (RIOT) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "RIOT",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-02-20",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -499,6 +608,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-05",
     earningsTime: "AMC",
     epsActual: 0.29,
@@ -517,6 +628,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-07-30",
     earningsTime: "AMC",
     epsActual: -0.63,
@@ -535,6 +648,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-04-30",
     earningsTime: "AMC",
     epsActual: -0.72,
@@ -553,6 +668,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-02-26",
     earningsTime: "AMC",
     epsActual: 0.50,
@@ -571,6 +688,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2024-10-30",
     earningsTime: "AMC",
     epsActual: -0.54,
@@ -589,6 +708,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2024,
     fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
     earningsDate: "2024-07-31",
     earningsTime: "AMC",
     epsActual: 0.32,
@@ -607,6 +728,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "RIOT",
     fiscalYear: 2024,
     fiscalQuarter: 1,
+    calendarYear: 2024,
+    calendarQuarter: 1,
     earningsDate: "2024-05-01",
     earningsTime: "AMC",
     epsActual: 0.25,
@@ -622,21 +745,31 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== CleanSpark (CLSK) - Fiscal Year ends September ==========
-  // Q1 FY2026 - Upcoming
+  // CLSK FY→Calendar mapping:
+  //   FY Q1 (Oct-Dec) → Calendar Q4 of PRIOR year
+  //   FY Q2 (Jan-Mar) → Calendar Q1
+  //   FY Q3 (Apr-Jun) → Calendar Q2
+  //   FY Q4 (Jul-Sep) → Calendar Q3
+  //
+  // Q1 FY2026 (Oct-Dec 2025) → Calendar Q4 2025 - Upcoming
   {
     ticker: "CLSK",
     fiscalYear: 2026,
     fiscalQuarter: 1,
+    calendarYear: 2025,  // FY Q1 maps to Q4 of prior year
+    calendarQuarter: 4,
     earningsDate: "2026-02-05",
     earningsTime: "AMC",
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q4 FY2025 (Oct-Dec 2024, reported Dec 2025)
+  // Q4 FY2025 (Jul-Sep 2025) → Calendar Q3 2025
   {
     ticker: "CLSK",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-12-09",
     earningsTime: "AMC",
     epsActual: 0.12,
@@ -650,11 +783,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
-  // Q3 FY2025 (Jul-Sep 2025)
+  // Q3 FY2025 (Apr-Jun 2025) → Calendar Q2 2025
   {
     ticker: "CLSK",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-12",
     earningsTime: "AMC",
     epsActual: -0.21,
@@ -668,11 +803,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
-  // Q2 FY2025 (Apr-Jun 2025)
+  // Q2 FY2025 (Jan-Mar 2025) → Calendar Q1 2025
   {
     ticker: "CLSK",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-05-06",
     earningsTime: "AMC",
     epsActual: -0.30,
@@ -686,11 +823,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
-  // Q1 FY2025 (Jan-Mar 2025)
+  // Q1 FY2025 (Oct-Dec 2024) → Calendar Q4 2024
   {
     ticker: "CLSK",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2024,  // FY Q1 maps to Q4 of prior year
+    calendarQuarter: 4,
     earningsDate: "2025-02-11",
     earningsTime: "AMC",
     epsActual: 0.22,
@@ -704,11 +843,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
-  // Q4 FY2024 (Oct-Dec 2024)
+  // Q4 FY2024 (Jul-Sep 2024) → Calendar Q3 2024
   {
     ticker: "CLSK",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2024-12-10",
     earningsTime: "AMC",
     epsActual: -0.13,
@@ -722,11 +863,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
-  // Q3 FY2024 (Jul-Sep 2024)
+  // Q3 FY2024 (Apr-Jun 2024) → Calendar Q2 2024
   {
     ticker: "CLSK",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 2,
     earningsDate: "2024-08-05",
     earningsTime: "AMC",
     epsActual: -0.04,
@@ -742,11 +885,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Hut 8 (HUT) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "HUT",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-13",
     earningsTime: "BMO",
     source: "sec-filing",
@@ -757,6 +903,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "HUT",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: "BMO",
     epsActual: 0.31,
@@ -775,6 +923,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "HUT",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-13",
     earningsTime: "BMO",
     epsActual: -0.41,
@@ -793,6 +943,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "HUT",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-05-15",
     earningsTime: "BMO",
     epsActual: -0.40,
@@ -811,6 +963,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "HUT",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-03-27",
     earningsTime: "BMO",
     epsActual: 0.55,
@@ -829,6 +983,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "HUT",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2024-11-14",
     earningsTime: "BMO",
     epsActual: -0.12,
@@ -844,11 +1000,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Core Scientific (CORZ) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "CORZ",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-02-12",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -859,6 +1018,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "CORZ",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-06",
     earningsTime: "AMC",
     epsActual: 0.19,
@@ -877,6 +1038,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "CORZ",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-07",
     earningsTime: "AMC",
     epsActual: -0.07,
@@ -895,6 +1058,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "CORZ",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-05-08",
     earningsTime: "AMC",
     epsActual: -0.06,
@@ -913,6 +1078,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "CORZ",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-02-27",
     earningsTime: "AMC",
     epsActual: 0.07,
@@ -928,11 +1095,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Bitdeer (BTDR) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "BTDR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-05",
     earningsTime: "BMO",
     source: "sec-filing",
@@ -943,6 +1113,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTDR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-18",
     earningsTime: "BMO",
     epsActual: -0.24,
@@ -961,6 +1133,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTDR",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-13",
     earningsTime: "BMO",
     epsActual: -0.35,
@@ -979,6 +1153,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTDR",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-03-11",
     earningsTime: "BMO",
     epsActual: -0.16,
@@ -997,6 +1173,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTDR",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2024-11-19",
     earningsTime: "BMO",
     epsActual: -0.46,
@@ -1015,6 +1193,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTDR",
     fiscalYear: 2024,
     fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
     earningsDate: "2024-08-16",
     earningsTime: "BMO",
     epsActual: -0.12,
@@ -1030,11 +1210,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== KULR Technology (KULR) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "KULR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-27",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1045,6 +1228,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "KULR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-13",
     earningsTime: "AMC",
     epsActual: -0.03,
@@ -1063,6 +1248,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "KULR",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-11",
     earningsTime: "AMC",
     epsActual: -0.04,
@@ -1081,6 +1268,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "KULR",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-03-31",
     earningsTime: "AMC",
     epsActual: -0.04,
@@ -1096,11 +1285,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Semler Scientific (SMLR) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "SMLR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-02-27",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1111,6 +1303,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "SMLR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-07",
     earningsTime: "AMC",
     epsActual: -3.14,
@@ -1129,6 +1323,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "SMLR",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-08",
     earningsTime: "AMC",
     epsActual: -1.23,
@@ -1147,6 +1343,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "SMLR",
     fiscalYear: 2025,
     fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
     earningsDate: "2025-05-08",
     earningsTime: "AMC",
     epsActual: -2.71,
@@ -1165,6 +1363,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "SMLR",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-03-06",
     earningsTime: "AMC",
     epsActual: 0.57,
@@ -1180,11 +1380,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Strive Asset (ASST) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "ASST",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1195,6 +1398,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "ASST",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: "AMC",
     epsActual: -0.08,
@@ -1210,12 +1415,15 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Twenty One Capital (XXI) ==========
-  // Went public Dec 9, 2025 via SPAC merger. Calendar year.
+  // Calendar year company (fiscal = calendar)
+  // Went public Dec 9, 2025 via SPAC merger.
   // Q1 2026 - Upcoming
   {
     ticker: "XXI",
     fiscalYear: 2026,
     fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
     earningsDate: "2026-05-15",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1226,6 +1434,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "XXI",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 43_514,  // Post-merger combined holdings
@@ -1237,11 +1447,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== DJT / Trump Media ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "DJT",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-20",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1252,6 +1465,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "DJT",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-08",
     earningsTime: "AMC",
     epsActual: -0.10,
@@ -1270,6 +1485,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "DJT",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-08",
     earningsTime: "AMC",
     epsActual: -0.09,
@@ -1285,21 +1502,27 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Metaplanet (3350.T) ==========
-  // Q4 FY2024 - Upcoming
+  // Calendar year company - fiscal year ends December 31
+  // Note: Japanese companies often report ~45 days after quarter end
+  // Q4 FY2024 (Oct-Dec 2024) → Calendar Q4 2024 - Upcoming
   {
     ticker: "3350.T",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2026-02-14",
     earningsTime: null,
     source: "press-release",
     status: "upcoming",
   },
-  // Q3 FY2024
+  // Q3 FY2024 (Jul-Sep 2024) → Calendar Q3 2024
   {
     ticker: "3350.T",
     fiscalYear: 2024,
     fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: null,
     epsActual: 12.5,
@@ -1311,11 +1534,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "press-release",
     status: "reported",
   },
-  // Q2 FY2024
+  // Q2 FY2024 (Apr-Jun 2024) → Calendar Q2 2024
   {
     ticker: "3350.T",
     fiscalYear: 2024,
     fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
     earningsDate: "2025-08-14",
     earningsTime: null,
     epsActual: 8.2,
@@ -1331,13 +1556,16 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== ETH COMPANIES ====================
 
   // ========== Bitmine Immersion (BMNR) ==========
-  // Normalized to CALENDAR QUARTERS (not fiscal year which ends Aug 31)
+  // Calendar year company - data already normalized to calendar quarters
+  // Note: Fiscal year ends Aug 31 but we store as calendar quarters for consistency
   // ETH treasury strategy launched Jul 2025.
   // CY2026 Q1 (Jan-Mar) - Upcoming
   {
     ticker: "BMNR",
     fiscalYear: 2026,
     fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
     earningsDate: "2026-05-15",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1348,6 +1576,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-02-15",  // Expected ~45 days after Dec 31
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 4_110_525,  // Dec 28, 2025 press release
@@ -1362,6 +1592,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-09",  // ~40 days after Sep 30
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 2_069_443,  // Sep 7, 2025 (2M milestone)
@@ -1376,6 +1608,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BMNR",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-10",  // ~40 days after Jun 30
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,
@@ -1387,11 +1621,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== BTCS Inc (BTCS) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "BTCS",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-20",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1402,6 +1639,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTCS",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-13",
     earningsTime: "AMC",
     epsActual: -0.03,
@@ -1417,6 +1656,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTCS",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-12",
     earningsTime: "AMC",
     epsActual: -0.04,
@@ -1432,6 +1673,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTCS",
     fiscalYear: 2024,
     fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
     earningsDate: "2025-03-27",
     earningsTime: "AMC",
     epsActual: 0.05,
@@ -1444,11 +1687,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== Bit Digital (BTBT) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "BTBT",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-12",
     earningsTime: "BMO",
     source: "sec-filing",
@@ -1459,6 +1705,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTBT",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-13",
     earningsTime: "BMO",
     epsActual: 0.03,
@@ -1474,6 +1722,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "BTBT",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-13",
     earningsTime: "BMO",
     epsActual: -0.05,
@@ -1488,11 +1738,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== SOL COMPANIES ====================
 
   // ========== Sol Strategies (STKE) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "STKE",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-28",
     earningsTime: null,
     source: "press-release",
@@ -1503,6 +1756,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "STKE",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-28",
     earningsTime: null,
     epsActual: -0.02,
@@ -1516,6 +1771,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "STKE",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-29",
     earningsTime: null,
     epsActual: -0.03,
@@ -1526,11 +1783,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== DeFi Development Corp (DFDV) ==========
+  // Calendar year company (fiscal = calendar)
   // Q4 2025 - Upcoming
   {
     ticker: "DFDV",
     fiscalYear: 2025,
     fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
     source: "sec-filing",
@@ -1541,6 +1801,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "DFDV",
     fiscalYear: 2025,
     fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: "AMC",
     epsActual: -0.15,
@@ -1556,6 +1818,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ticker: "DFDV",
     fiscalYear: 2025,
     fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
     epsActual: -0.18,

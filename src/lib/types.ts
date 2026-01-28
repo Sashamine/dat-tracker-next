@@ -242,6 +242,10 @@ export interface EarningsRecord {
   ticker: string;
   fiscalYear: number;
   fiscalQuarter: 1 | 2 | 3 | 4;
+  // Calendar quarter normalization - all companies mapped to calendar year basis
+  // Q1=Jan-Mar, Q2=Apr-Jun, Q3=Jul-Sep, Q4=Oct-Dec
+  calendarYear: number;
+  calendarQuarter: 1 | 2 | 3 | 4;
   earningsDate: string;                    // ISO date
   earningsTime: EarningsTime;
 
