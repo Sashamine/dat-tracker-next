@@ -389,12 +389,13 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
-    // Debt: $350M line of credit + $1.95B convertible notes (0% 2030 + 2032 series)
-    totalDebt: 2_300_000_000,  // SEC 10-Q Q3 2025: $350M LOC + $1.95B converts
-    debtSource: "SEC 10-Q Q3 2025",
+    // Debt: $350M line of credit + ~$2.9B convertible notes (0% 2030 + 2031 + 2032 series)
+    // Q3 2025: Issued additional ~$1B in 0% converts
+    totalDebt: 3_248_000_000,  // SEC 10-Q Q3 2025 XBRL: LongTermDebt
+    debtSource: "SEC 10-Q Q3 2025 XBRL",
     debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
     debtAsOf: "2025-09-30",
-    notes: "Largest US public miner. $350M credit facility + $1.95B in 0% convertible notes (2030 + 2032 series).",
+    notes: "Largest US public miner. $350M credit facility + ~$2.9B in 0% convertible notes (2030 + 2031 + 2032 series). Q3 2025 issued ~$1B new converts.",
   },
   {
     id: "riot",
