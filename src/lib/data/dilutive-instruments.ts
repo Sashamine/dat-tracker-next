@@ -82,6 +82,54 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // MARA Holdings - BTC miner with HODL strategy
+  // Verified 2026-01-28 via SEC XBRL (CIK 0001507605)
+  // Note: Multiple convertible tranches - need to verify full structure from 10-Q notes
+  MARA: [
+    {
+      type: "convertible",
+      strikePrice: 76.17,
+      potentialShares: 9_800_000, // ~$747M face / $76.17 = ~9.8M shares
+      faceValue: 747_500_000,
+      source: "8-K Nov 2021",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=8-K",
+      expiration: "2026-11-15",
+      notes: "0% Convertible Senior Notes due 2026 (original issuance)",
+    },
+    {
+      type: "convertible",
+      strikePrice: 25.91, // Estimated - needs verification from 10-Q
+      potentialShares: 39_000_000, // ~$1B / ~$25.91 = ~39M shares (estimated)
+      faceValue: 1_000_000_000,
+      source: "10-Q Q3 2025 (estimated)",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+      expiration: "2030-03-01",
+      notes: "0% Convertible Notes 2030 series - STRIKE PRICE NEEDS VERIFICATION",
+    },
+    {
+      type: "convertible",
+      strikePrice: 35.00, // Estimated - needs verification from 10-Q
+      potentialShares: 43_000_000, // ~$1.5B / ~$35 = ~43M shares (estimated)
+      faceValue: 1_500_000_000,
+      source: "10-Q Q3 2025 (estimated)",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+      expiration: "2032-03-01",
+      notes: "0% Convertible Notes 2031/2032 series - STRIKE PRICE NEEDS VERIFICATION",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // RSUs vest at $0
+      potentialShares: 324_375,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+      notes: "RSUs/restricted stock (NonOptionEquityInstrumentsOutstanding)",
+    },
+  ],
+
   // BTCS Inc - ETH treasury company
   // Verified 2026-01-25 via adversarial process against SEC filings and btcs.com
   BTCS: [
