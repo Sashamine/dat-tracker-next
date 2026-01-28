@@ -4,6 +4,7 @@
  */
 
 import { ExtractionResult, ExtractionContext } from './types';
+import { chunkFilingText, isLikelyRelevant } from './text-chunker';
 
 export type LLMProvider = 'anthropic' | 'grok';
 
@@ -18,6 +19,24 @@ const DEFAULT_MODELS: Record<LLMProvider, string> = {
   anthropic: 'claude-sonnet-4-20250514',
   grok: 'grok-beta',
 };
+
+/**
+ * Smart chunk text using the text-chunker module
+ * Extracts relevant sections instead of blind truncation
+ */
+function smartChunkText(text: string, context: ExtractionContext): string {
+  const result = chunkFilingText(text, {
+    itemCodes: context.itemCodes,
+    maxSize: 8000,
+  });
+  
+  // Log chunking method for debugging
+  if (result.method !== 'truncated') {
+    console.log(`[LLM Extractor] Used ${result.method} chunking${result.sections ? ` (Items: ${result.sections.join(', ')})` : ''}`);
+  }
+  
+  return result.text;
+}
 
 /**
  * Build the extraction prompt
@@ -126,7 +145,7 @@ Only extract values you are confident about based on the text. Do NOT make up nu
 
 TEXT TO ANALYZE:
 ---
-${text.substring(0, 8000)}
+${smartChunkText(text, context)}
 ---
 
 Respond in valid JSON format only, with no markdown formatting:
@@ -303,6 +322,25 @@ export async function extractHoldingsFromText(
       costBasis: null,
       confidence: 0,
       reasoning: 'Text too short for extraction',
+      extractedDate: null,
+      rawNumbers: [],
+      transactionType: null,
+      transactionAmount: null,
+      holdingsExplicitlyStated: false,
+    };
+  }
+
+  // Early relevance check - skip LLM if text clearly doesn't contain crypto info
+  if (!isLikelyRelevant(text)) {
+    console.log(`[LLM Extractor] Skipping ${context.ticker} - text not relevant (no crypto keywords + numbers)`);
+    return {
+      holdings: null,
+      sharesOutstanding: null,
+      classAShares: null,
+      classBShares: null,
+      costBasis: null,
+      confidence: 0,
+      reasoning: 'Text does not appear to contain crypto holdings information',
       extractedDate: null,
       rawNumbers: [],
       transactionType: null,
