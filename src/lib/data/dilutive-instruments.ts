@@ -293,19 +293,10 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 
   // FWDI (Forward Industries) - SOL treasury company
   // Verified 2026-01-28 via SEC XBRL (CIK 0000038264)
-  // Fiscal year end: September 30
-  // $1.65B PIPE closed Sep 11, 2025
-  FWDI: [
-    {
-      type: "warrant",
-      strikePrice: 0.03, // Pre-funded warrants - essentially shares
-      potentialShares: 26_359_600,
-      source: "10-K FY2025 (Sep 30, 2025)",
-      sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K",
-      notes: "Pre-funded warrants @ $0.03 from $1.65B PIPE. Always ITM - treat as shares.",
-    },
-  ],
+  // NOTE: 26.4M pre-funded warrants @ $0.03 are ALREADY INCLUDED in sharesForMnav (112.5M)
+  // Pre-funded warrants at $0.03 are essentially shares - don't add them again here
+  // sharesForMnav = 86.1M basic + 26.4M pre-funded = 112.5M FD
+  FWDI: [],
 
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
