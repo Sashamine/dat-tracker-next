@@ -209,27 +209,45 @@ export function formatItemsForDisplay(items: string[]): string {
 
 /**
  * Crypto keywords for Tier 2 verification
+ * General terms - we track multiple assets (BTC, ETH, SOL, HYPE, etc.)
  */
 export const CRYPTO_KEYWORDS = [
-  // Asset names
-  'bitcoin', 'btc', 'ethereum', 'ether', 'eth', 'solana', 'sol',
+  // General crypto terms
   'cryptocurrency', 'crypto asset', 'digital asset', 'virtual currency',
-  'cryptoasset', 'crypto-asset',
+  'cryptoasset', 'crypto-asset', 'digital currency', 'virtual asset',
   
-  // Treasury terms
+  // Major assets (cover the DAT universe)
+  'bitcoin', 'btc',
+  'ethereum', 'ether', 'eth',
+  'solana', 'sol',
+  'hyperliquid', 'hype',
+  'bittensor', 'tao',
+  'chainlink', 'link',
+  'dogecoin', 'doge',
+  'avalanche', 'avax',
+  'litecoin', 'ltc',
+  'ripple', 'xrp',
+  'cardano', 'ada',
+  'hedera', 'hbar',
+  'binance coin', 'bnb',
+  'tron', 'trx',
+  'sui',
+  
+  // Treasury strategy terms
   'treasury reserve', 'treasury strategy', 'balance sheet',
   'corporate treasury', 'reserve asset', 'treasury asset',
+  'treasury holdings', 'digital treasury',
   
   // Transaction terms
   'acquired', 'purchased', 'acquisition of', 'purchase of',
-  'holdings', 'hold', 'hodl', 'custody',
+  'holdings', 'hold', 'hodl', 'custody', 'custodian',
   
-  // Financial instruments for crypto buys
+  // Financial instruments commonly used for crypto buys
   'convertible note', 'convertible senior', 'at-the-market', 'atm offering',
   'use of proceeds', 'net proceeds',
   
-  // Specific company terms
-  'microstrategy', 'saylor', // Often mentioned in copycat announcements
+  // On-chain / wallet terms
+  'wallet', 'blockchain', 'on-chain', 'cold storage',
 ];
 
 /**
