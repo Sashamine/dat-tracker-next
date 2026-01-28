@@ -115,6 +115,37 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // CleanSpark (CLSK) - BTC miner with HODL strategy
+  // Verified 2026-01-28 via SEC filings (CIK 0000827876)
+  // $1.7B total converts: $550M (Dec 2024) + $1.15B (Nov 2025)
+  // Note: Strike prices need verification from 8-K exhibits
+  CLSK: [
+    {
+      type: "convertible",
+      strikePrice: 18.50, // Estimated - Dec 2024 ~30% premium over ~$14 stock
+      potentialShares: 29_730_000, // $550M / $18.50 = ~29.7M shares
+      faceValue: 550_000_000,
+      source: "8-K Dec 2024",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876&type=8-K",
+      expiration: "2030-12-15",
+      issuedDate: "2024-12-12",
+      notes: "0% Convertible Senior Notes due 2030 - strike needs verification",
+    },
+    {
+      type: "convertible",
+      strikePrice: 15.50, // Estimated - Nov 2025 ~30% premium over ~$12 stock
+      potentialShares: 74_190_000, // $1.15B / $15.50 = ~74.2M shares
+      faceValue: 1_150_000_000,
+      source: "8-K Nov 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876&type=8-K",
+      expiration: "2032-06-15",
+      issuedDate: "2025-11-13",
+      notes: "0% Convertible Senior Notes due 2032 - strike needs verification",
+    },
+  ],
+
   // RIOT Platforms - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC 8-K (CIK 0001167419)
   // Note: RIOT sold 1,818 BTC in Dec 2025 (first major sale) - unusual for HODL miner

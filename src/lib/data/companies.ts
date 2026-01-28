@@ -446,7 +446,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-01-01",
     website: "https://cleanspark.com",
     twitter: "https://twitter.com/CleanSpark_Inc",
-    secCik: "0001785459",
+    secCik: "0000827876",  // Verified 2026-01-28 (was incorrectly 0001785459)
     costBasisAvg: 45_000,
     isMiner: true,
     btcMinedAnnual: 9_000,

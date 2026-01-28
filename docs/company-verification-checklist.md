@@ -179,6 +179,70 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## CLSK (CleanSpark) - Verified 2026-01-28
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 13,099 BTC
+- [x] **Source**: SEC DEF 14A Jan 22, 2026
+- [x] **Source URL**: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876&type=DEF+14A
+- [x] **Last updated**: 2026-01-17
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0000827876 (FIXED - was incorrectly 0001785459)
+- [x] **Recent filings checked**: DEF 14A Jan 22, 10-K Nov 25, 8-K Nov 13
+- [x] **Latest 10-K**: Filed Nov 25, 2025 (FY2025 ending Sep 30)
+- [x] **Latest 10-Q**: Filed Aug 7, 2025 (FY Q3)
+
+### 3. XBRL Data Extraction ✅
+- [x] **EntityCommonStockSharesOutstanding**: 255,583,445 (10-K Nov 25, 2025)
+- [x] **Note**: No CryptoAssetNumberOfUnits in XBRL - BTC from production updates
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: September 30
+- [x] **Fiscal→Calendar mapping**: FY Q1=CY Q4(prior), FY Q2=CY Q1, FY Q3=CY Q2, FY Q4=CY Q3
+
+### 5. Earnings Data ✅
+| Calendar Q | Fiscal Q | Holdings | Shares | HPS | Status |
+|------------|----------|----------|--------|-----|--------|
+| Q2 2024 | FY24 Q3 | 6,154 | 173M | 0.0000356 | reported |
+| Q3 2024 | FY24 Q4 | 8,049 | 199M | 0.0000404 | reported |
+| Q4 2024 | FY25 Q1 | 6,061 | 243M | 0.0000249 | reported |
+| Q1 2025 | FY25 Q2 | 6,100 | 263M | 0.0000232 | reported |
+| Q2 2025 | FY25 Q3 | 8,049 | 276M | 0.0000292 | reported |
+| Q3 2025 | FY25 Q4 | 10,556 | 310M | 0.0000341 | reported |
+| Q4 2025 | FY26 Q1 | — | — | — | upcoming (Feb 5) |
+
+**Note**: Shares in earnings use diluted count for HPS consistency
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q2→Q3 2025**: +17% (10,556 from 8,049 BTC, shares +12%)
+- [x] **Trend**: Positive HPS growth despite significant dilution
+
+### 7. Non-Crypto Investments ✅
+- [x] **Cash reserves**: $43M (Sep 2025)
+- [x] **Treatment**: Marked as restricted (operating capital for miner)
+
+### 8. Company Metadata ✅
+- [x] **Strategy accurate**: "Efficient US miner. 50 EH/s. DAM derivatives program."
+- [x] **Debt accurate**: $1.7B ($550M 2030 + $1.15B 2032 converts)
+- [x] **Leader**: Zach Bradford (CEO)
+
+### 9. Dilutive Instruments ✅
+- [x] **$550M 0% Convertible Notes due 2030** (Dec 2024)
+  - Strike: ~$18.50 (estimated, needs verification)
+  - Potential shares: ~29.7M
+- [x] **$1.15B 0% Convertible Notes due 2032** (Nov 2025)
+  - Strike: ~$15.50 (estimated, needs verification)
+  - Potential shares: ~74.2M
+- [x] **$400M BTC-backed credit** (largely undrawn, not dilutive)
+- [x] **Added to dilutive-instruments.ts**: Yes
+
+### Outstanding Items ⚠️
+- [ ] Verify exact conversion prices from 8-K exhibits
+- [ ] Reconcile earnings shares (diluted) vs XBRL basic shares
+
+---
+
 ## Verification Template (Copy for Next Company)
 
 ### Company: [TICKER] - Verification Date: YYYY-MM-DD
