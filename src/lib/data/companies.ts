@@ -309,13 +309,14 @@ export const btcCompanies: Company[] = [
     id: "xxi",
     name: "Twenty One Capital",
     ticker: "XXI",
-    secCik: "0001865602",
+    secCik: "0002070457",  // Post-merger CIK (was 0001865602 Cantor SPAC)
     asset: "BTC",
     tier: 1,
-    holdings: 43_514,
-    holdingsLastUpdated: "2025-09-30",
+    holdings: 43_514,  // Combined: Tether (~31K) + SoftBank (~10K) + other (~2.5K)
+    holdingsLastUpdated: "2025-12-09",  // Merger close date
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002019757&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=8-K",
+    // Note: SEC XBRL shows 10,500 BTC (pre-merger entity). 43,514 is post-merger combined holdings.
     datStartDate: "2025-12-09",
     costBasisAvg: 92_902,  // Calculated from purchase history (purchases-history.ts)
     isMiner: false,
