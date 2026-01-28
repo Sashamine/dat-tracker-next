@@ -208,7 +208,7 @@ const BTBT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 85000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000409, source: "Q1 2025 10-Q" },
   { date: "2025-06-30", holdings: 120000, sharesOutstandingDiluted: 315_000_000, holdingsPerShare: 0.000381, source: "Q2 2025 10-Q" },
   { date: "2025-09-30", holdings: 140000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000432, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted" },
-  { date: "2025-12-31", holdings: 155227, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000479, source: "Dec 2025 Press Release", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release" },
+  { date: "2025-12-31", holdings: 155_227, sharesOutstandingDiluted: 323_792_059, holdingsPerShare: 0.000479, source: "Jan 7, 2026 Press Release (Dec 2025 metrics)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release" },
 ];
 
 // ==================== SOL COMPANIES ====================

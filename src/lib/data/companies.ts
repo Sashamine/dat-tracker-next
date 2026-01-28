@@ -102,28 +102,32 @@ export const ethCompanies: Company[] = [
     secCik: "0001710350",
     asset: "ETH",
     tier: 1,
-    holdings: 155_227,  // Jan 7, 2026 - company announcement
-    holdingsLastUpdated: "2026-01-07",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1710350&type=8-K",
+    holdings: 155_227,  // Dec 31, 2025 (Jan 7, 2026 press release)
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
     datStartDate: "2025-01-01",
     website: "https://bitdigital.com",
     twitter: "https://twitter.com/Aboringcompany",
-    stakingPct: 0.86,
+    costBasisAvg: 3_045,  // Jan 7, 2026 press release: "total average ETH acquisition price"
+    stakingPct: 0.89,  // 138,263 / 155,227 = 89% staked (Jan 7, 2026 PR)
+    stakingApy: 0.035,  // 3.5% annualized yield (Jan 7, 2026 PR)
     stakingMethod: "Native staking",
     quarterlyBurnUsd: 8_500_000,
     capitalRaisedAtm: 172_000_000,
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
-    sharesForMnav: 324_000_000,  // SEC 10-Q Q3 2025 (diluted)
+    sharesForMnav: 323_792_059,  // Jan 7, 2026 press release (basic shares)
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
+    otherInvestments: 427_300_000,  // ~27M WhiteFiber (WYFI) shares @ ~$15.83 (Jan 7, 2026 PR)
+    otherInvestmentsNote: "WhiteFiber (NASDAQ: WYFI) equity stake - AI infrastructure",
     leader: "Sam Tabar",
-    strategy: "86% staked, fully exited BTC. Avg cost $3,045/ETH.",
-    notes: "Staking yield ~2.93% annualized. mNAV $3.84/share.",
+    strategy: "89% staked, fully exited BTC. Avg cost $3,045/ETH.",
+    notes: "Staking yield ~3.5% annualized. Majority stake in WhiteFiber (WYFI).",
   },
   {
     id: "btcs",
