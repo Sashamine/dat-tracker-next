@@ -11,10 +11,10 @@ export const ethCompanies: Company[] = [
     secCik: "0001829311",
     asset: "ETH",
     tier: 1,
-    holdings: 4_203_036,
-    holdingsLastUpdated: "2026-01-20",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html",
+    holdings: 4_243_338,  // Jan 26, 2026 8-K: acquired 40,302 ETH in past week
+    holdingsLastUpdated: "2026-01-25",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm",
     datStartDate: "2025-07-01",
     stakingPct: 0.85,
     stakingMethod: "MAVAN validators",
@@ -24,11 +24,11 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 800_000_000,
     hasOptions: true,
     sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
-    cashReserves: 979_000_000,  // $979M cash (Jan 20, 2026)
-    restrictedCash: 979_000_000,  // Operating capital - not excess
-    cashSource: "Press release Jan 2026",
-    cashAsOf: "2026-01-20",
-    otherInvestments: 25_000_000,  // $25M Eightco Holdings stake
+    cashReserves: 682_000_000,  // $682M cash (Jan 25, 2026)
+    restrictedCash: 682_000_000,  // Operating capital - not excess
+    cashSource: "SEC 8-K Jan 26, 2026",
+    cashAsOf: "2026-01-25",
+    otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (ORBS)
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking, MAVAN validators Q1 2026",
     notes: "Largest ETH treasury. NAV ~$30/share. Trades at 0.8x book.",
