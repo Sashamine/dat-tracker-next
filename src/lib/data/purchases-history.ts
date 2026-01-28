@@ -30,6 +30,123 @@ export function calculateCostBasis(purchases: Purchase[]): { totalQuantity: numb
 }
 
 // =============================================================================
+// MSTR (Strategy) - Complete purchase history from strategy.com/purchases
+// 96 purchases from Aug 2020 to Jan 2026
+// Official totals: 712,647 BTC, $54.188B cost, $76,037 avg
+// =============================================================================
+const MSTR_PURCHASES: Purchase[] = [
+  // 2020
+  { date: "2020-08-10", quantity: 21454, pricePerUnit: 11652, totalCost: 250_000_000, source: "8-K" },
+  { date: "2020-09-14", quantity: 16796, pricePerUnit: 10419, totalCost: 175_000_000, source: "8-K" },
+  { date: "2020-12-04", quantity: 2574, pricePerUnit: 19427, totalCost: 50_000_000, source: "8-K" },
+  { date: "2020-12-21", quantity: 29646, pricePerUnit: 21925, totalCost: 650_000_000, source: "8-K" },
+  
+  // 2021
+  { date: "2021-01-22", quantity: 314, pricePerUnit: 31808, totalCost: 10_000_000, source: "8-K" },
+  { date: "2021-02-02", quantity: 295, pricePerUnit: 33810, totalCost: 10_000_000, source: "8-K" },
+  { date: "2021-02-19", quantity: 19452, pricePerUnit: 52765, totalCost: 1_023_000_000, source: "8-K" },
+  { date: "2021-03-01", quantity: 328, pricePerUnit: 45710, totalCost: 15_000_000, source: "8-K" },
+  { date: "2021-03-05", quantity: 205, pricePerUnit: 48888, totalCost: 10_000_000, source: "8-K" },
+  { date: "2021-03-12", quantity: 262, pricePerUnit: 57146, totalCost: 15_000_000, source: "8-K" },
+  { date: "2021-04-05", quantity: 253, pricePerUnit: 59339, totalCost: 15_000_000, source: "8-K" },
+  { date: "2021-05-13", quantity: 271, pricePerUnit: 55387, totalCost: 15_000_000, source: "8-K" },
+  { date: "2021-05-18", quantity: 229, pricePerUnit: 43663, totalCost: 10_000_000, source: "8-K" },
+  { date: "2021-06-21", quantity: 13005, pricePerUnit: 37617, totalCost: 489_000_000, source: "10-Q" },
+  { date: "2021-08-24", quantity: 3907, pricePerUnit: 45294, totalCost: 177_000_000, source: "8-K" },
+  { date: "2021-09-13", quantity: 5050, pricePerUnit: 48099, totalCost: 242_000_000, source: "8-K" },
+  { date: "2021-11-29", quantity: 7002, pricePerUnit: 59187, totalCost: 414_000_000, source: "8-K" },
+  { date: "2021-12-09", quantity: 1434, pricePerUnit: 57477, totalCost: 82_000_000, source: "8-K" },
+  { date: "2021-12-30", quantity: 1914, pricePerUnit: 49229, totalCost: 94_000_000, source: "8-K" },
+  
+  // 2022
+  { date: "2022-02-01", quantity: 660, pricePerUnit: 37865, totalCost: 25_000_000, source: "8-K" },
+  { date: "2022-04-05", quantity: 4167, pricePerUnit: 45714, totalCost: 190_000_000, source: "8-K" },
+  { date: "2022-06-29", quantity: 480, pricePerUnit: 20817, totalCost: 10_000_000, source: "8-K" },
+  { date: "2022-09-20", quantity: 301, pricePerUnit: 19851, totalCost: 6_000_000, source: "8-K" },
+  { date: "2022-12-28", quantity: 2501, pricePerUnit: 17847, totalCost: 45_000_000, source: "8-K" },
+  
+  // 2023
+  { date: "2023-03-23", quantity: 6455, pricePerUnit: 23238, totalCost: 150_000_000, source: "8-K" },
+  { date: "2023-04-05", quantity: 1045, pricePerUnit: 28016, totalCost: 29_000_000, source: "8-K" },
+  { date: "2023-06-28", quantity: 12333, pricePerUnit: 28136, totalCost: 347_000_000, source: "8-K" },
+  { date: "2023-08-01", quantity: 467, pricePerUnit: 30788, totalCost: 14_000_000, source: "8-K" },
+  { date: "2023-09-25", quantity: 5445, pricePerUnit: 27053, totalCost: 147_000_000, source: "8-K" },
+  { date: "2023-11-01", quantity: 155, pricePerUnit: 34495, totalCost: 5_000_000, source: "10-Q" },
+  { date: "2023-11-30", quantity: 16130, pricePerUnit: 36785, totalCost: 593_000_000, source: "8-K" },
+  { date: "2023-12-27", quantity: 14620, pricePerUnit: 42110, totalCost: 616_000_000, source: "8-K" },
+  
+  // 2024
+  { date: "2024-02-06", quantity: 850, pricePerUnit: 43723, totalCost: 37_000_000, source: "8-K" },
+  { date: "2024-02-26", quantity: 3000, pricePerUnit: 51813, totalCost: 155_000_000, source: "8-K" },
+  { date: "2024-03-11", quantity: 12000, pricePerUnit: 68477, totalCost: 822_000_000, source: "8-K" },
+  { date: "2024-03-19", quantity: 9245, pricePerUnit: 67382, totalCost: 623_000_000, source: "10-Q" },
+  { date: "2024-04-29", quantity: 155, pricePerUnit: 63397, totalCost: 10_000_000, source: "8-K" },
+  { date: "2024-06-20", quantity: 11931, pricePerUnit: 65883, totalCost: 786_000_000, source: "8-K" },
+  { date: "2024-08-01", quantity: 169, pricePerUnit: 67455, totalCost: 11_000_000, source: "8-K" },
+  { date: "2024-09-13", quantity: 18300, pricePerUnit: 60408, totalCost: 1_110_000_000, source: "8-K" },
+  { date: "2024-09-20", quantity: 7420, pricePerUnit: 61750, totalCost: 458_000_000, source: "8-K" },
+  { date: "2024-11-11", quantity: 27200, pricePerUnit: 74463, totalCost: 2_025_000_000, source: "8-K" },
+  { date: "2024-11-18", quantity: 51780, pricePerUnit: 88627, totalCost: 4_600_000_000, source: "8-K" },
+  { date: "2024-11-25", quantity: 55500, pricePerUnit: 97862, totalCost: 5_400_000_000, source: "8-K" },
+  { date: "2024-12-02", quantity: 15400, pricePerUnit: 95976, totalCost: 1_500_000_000, source: "8-K" },
+  { date: "2024-12-09", quantity: 21550, pricePerUnit: 98783, totalCost: 2_100_000_000, source: "8-K" },
+  { date: "2024-12-16", quantity: 15350, pricePerUnit: 100386, totalCost: 1_500_000_000, source: "8-K" },
+  { date: "2024-12-23", quantity: 5262, pricePerUnit: 106662, totalCost: 561_000_000, source: "8-K" },
+  { date: "2024-12-30", quantity: 2138, pricePerUnit: 97837, totalCost: 209_000_000, source: "8-K" },
+  
+  // 2025
+  { date: "2025-01-06", quantity: 1070, pricePerUnit: 94004, totalCost: 101_000_000, source: "8-K" },
+  { date: "2025-01-13", quantity: 2530, pricePerUnit: 95972, totalCost: 243_000_000, source: "8-K" },
+  { date: "2025-01-21", quantity: 11000, pricePerUnit: 101191, totalCost: 1_100_000_000, source: "8-K" },
+  { date: "2025-01-27", quantity: 10107, pricePerUnit: 105596, totalCost: 1_100_000_000, source: "8-K" },
+  { date: "2025-02-10", quantity: 7633, pricePerUnit: 97255, totalCost: 742_000_000, source: "8-K" },
+  { date: "2025-02-24", quantity: 20356, pricePerUnit: 97514, totalCost: 1_985_000_000, source: "8-K" },
+  { date: "2025-03-17", quantity: 130, pricePerUnit: 82981, totalCost: 11_000_000, source: "8-K" },
+  { date: "2025-03-24", quantity: 6911, pricePerUnit: 84529, totalCost: 584_000_000, source: "8-K" },
+  { date: "2025-03-31", quantity: 22048, pricePerUnit: 86969, totalCost: 1_918_000_000, source: "8-K" },
+  { date: "2025-04-14", quantity: 3459, pricePerUnit: 82618, totalCost: 286_000_000, source: "8-K" },
+  { date: "2025-04-21", quantity: 6556, pricePerUnit: 84785, totalCost: 556_000_000, source: "8-K" },
+  { date: "2025-04-28", quantity: 15355, pricePerUnit: 92737, totalCost: 1_424_000_000, source: "8-K" },
+  { date: "2025-05-05", quantity: 1895, pricePerUnit: 95167, totalCost: 180_000_000, source: "8-K" },
+  { date: "2025-05-12", quantity: 13390, pricePerUnit: 99856, totalCost: 1_337_000_000, source: "8-K" },
+  { date: "2025-05-19", quantity: 7390, pricePerUnit: 103498, totalCost: 765_000_000, source: "8-K" },
+  { date: "2025-05-26", quantity: 4020, pricePerUnit: 106237, totalCost: 427_000_000, source: "8-K" },
+  { date: "2025-06-02", quantity: 705, pricePerUnit: 106495, totalCost: 75_000_000, source: "8-K" },
+  { date: "2025-06-09", quantity: 1045, pricePerUnit: 105426, totalCost: 110_000_000, source: "8-K" },
+  { date: "2025-06-16", quantity: 10100, pricePerUnit: 104080, totalCost: 1_051_000_000, source: "8-K" },
+  { date: "2025-06-23", quantity: 245, pricePerUnit: 105856, totalCost: 26_000_000, source: "8-K" },
+  { date: "2025-06-30", quantity: 4980, pricePerUnit: 106801, totalCost: 532_000_000, source: "8-K" },
+  { date: "2025-07-14", quantity: 4225, pricePerUnit: 111827, totalCost: 472_000_000, source: "8-K" },
+  { date: "2025-07-21", quantity: 6220, pricePerUnit: 118940, totalCost: 740_000_000, source: "8-K" },
+  { date: "2025-07-29", quantity: 21021, pricePerUnit: 117256, totalCost: 2_465_000_000, source: "8-K" },
+  { date: "2025-08-11", quantity: 155, pricePerUnit: 116401, totalCost: 18_000_000, source: "8-K" },
+  { date: "2025-08-18", quantity: 430, pricePerUnit: 119666, totalCost: 51_000_000, source: "8-K" },
+  { date: "2025-08-25", quantity: 3081, pricePerUnit: 115829, totalCost: 357_000_000, source: "8-K" },
+  { date: "2025-09-02", quantity: 4048, pricePerUnit: 110981, totalCost: 449_000_000, source: "8-K" },
+  { date: "2025-09-08", quantity: 1955, pricePerUnit: 111196, totalCost: 217_000_000, source: "8-K" },
+  { date: "2025-09-15", quantity: 525, pricePerUnit: 114562, totalCost: 60_000_000, source: "8-K" },
+  { date: "2025-09-22", quantity: 850, pricePerUnit: 117344, totalCost: 100_000_000, source: "8-K" },
+  { date: "2025-09-29", quantity: 196, pricePerUnit: 113048, totalCost: 22_000_000, source: "8-K" },
+  { date: "2025-10-13", quantity: 220, pricePerUnit: 123561, totalCost: 27_000_000, source: "8-K" },
+  { date: "2025-10-20", quantity: 168, pricePerUnit: 112051, totalCost: 19_000_000, source: "8-K" },
+  { date: "2025-10-27", quantity: 390, pricePerUnit: 111053, totalCost: 43_000_000, source: "8-K" },
+  { date: "2025-11-03", quantity: 397, pricePerUnit: 114771, totalCost: 46_000_000, source: "8-K" },
+  { date: "2025-11-10", quantity: 487, pricePerUnit: 102557, totalCost: 50_000_000, source: "8-K" },
+  { date: "2025-11-17", quantity: 8178, pricePerUnit: 102171, totalCost: 836_000_000, source: "8-K" },
+  { date: "2025-12-01", quantity: 130, pricePerUnit: 89959, totalCost: 12_000_000, source: "8-K" },
+  { date: "2025-12-08", quantity: 10624, pricePerUnit: 90615, totalCost: 963_000_000, source: "8-K" },
+  { date: "2025-12-15", quantity: 10645, pricePerUnit: 92098, totalCost: 980_000_000, source: "8-K" },
+  { date: "2025-12-29", quantity: 1229, pricePerUnit: 88568, totalCost: 109_000_000, source: "8-K" },
+  { date: "2025-12-31", quantity: 3, pricePerUnit: 88210, totalCost: 0, source: "8-K" },
+  
+  // 2026
+  { date: "2026-01-05", quantity: 1283, pricePerUnit: 90391, totalCost: 116_000_000, source: "8-K" },
+  { date: "2026-01-12", quantity: 13627, pricePerUnit: 91519, totalCost: 1_247_000_000, source: "8-K" },
+  { date: "2026-01-20", quantity: 22305, pricePerUnit: 95284, totalCost: 2_125_000_000, source: "8-K" },
+  { date: "2026-01-26", quantity: 2932, pricePerUnit: 90061, totalCost: 264_000_000, source: "8-K" },
+];
+
+// =============================================================================
 // METAPLANET (3350.T) - Full purchase history from metaplanet.jp/en/analytics
 // =============================================================================
 const METAPLANET_PURCHASES: Purchase[] = [
@@ -88,50 +205,6 @@ const METAPLANET_PURCHASES: Purchase[] = [
   { date: "2025-09-22", quantity: 5419.00, pricePerUnit: 116724, totalCost: 632_530_000, source: "metaplanet.jp" },
   { date: "2025-09-30", quantity: 5268.00, pricePerUnit: 116870, totalCost: 615_670_000, source: "metaplanet.jp" },
   { date: "2025-12-30", quantity: 4279.00, pricePerUnit: 105412, totalCost: 451_060_000, source: "metaplanet.jp" },
-];
-
-// =============================================================================
-// MSTR (Strategy) - From SEC 8-K filings
-// PARTIAL DATA: Only 2024 Q4+ purchases included. Full history has 100+ purchases since 2020.
-// Official totals from Jan 26, 2026 8-K: 712,647 BTC, $54.19B cost, $76,037 avg
-// Historical data can be backfilled from 8-K archive at:
-// https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K
-// =============================================================================
-const MSTR_PURCHASES: Purchase[] = [
-  // 2024 Q4 - Major accumulation
-  { date: "2024-11-11", quantity: 27200, pricePerUnit: 74463, totalCost: 2_025_000_000, source: "8-K Nov 2024" },
-  { date: "2024-11-18", quantity: 51780, pricePerUnit: 88627, totalCost: 4_588_000_000, source: "8-K Nov 2024" },
-  { date: "2024-11-25", quantity: 55500, pricePerUnit: 97862, totalCost: 5_431_000_000, source: "8-K Nov 2024" },
-  { date: "2024-12-02", quantity: 15400, pricePerUnit: 95976, totalCost: 1_478_000_000, source: "8-K Dec 2024" },
-  { date: "2024-12-09", quantity: 21550, pricePerUnit: 98783, totalCost: 2_129_000_000, source: "8-K Dec 2024" },
-  { date: "2024-12-16", quantity: 5262, pricePerUnit: 106662, totalCost: 561_000_000, source: "8-K Dec 2024" },
-  { date: "2024-12-23", quantity: 5200, pricePerUnit: 97837, totalCost: 509_000_000, source: "8-K Dec 2024" },
-  { date: "2024-12-30", quantity: 1070, pricePerUnit: 94004, totalCost: 100_600_000, source: "8-K Dec 2024" },
-  
-  // 2025 Q1
-  { date: "2025-01-06", quantity: 1070, pricePerUnit: 94004, totalCost: 100_600_000, source: "8-K Jan 2025" },
-  { date: "2025-01-13", quantity: 2530, pricePerUnit: 95972, totalCost: 243_000_000, source: "8-K Jan 2025" },
-  { date: "2025-01-21", quantity: 11000, pricePerUnit: 101191, totalCost: 1_113_000_000, source: "8-K Jan 2025" },
-  { date: "2025-01-27", quantity: 10107, pricePerUnit: 105596, totalCost: 1_067_000_000, source: "8-K Jan 2025" },
-  { date: "2025-02-03", quantity: 7633, pricePerUnit: 97255, totalCost: 742_000_000, source: "8-K Feb 2025" },
-  { date: "2025-02-10", quantity: 7633, pricePerUnit: 97255, totalCost: 742_000_000, source: "8-K Feb 2025" },
-  { date: "2025-02-18", quantity: 20356, pricePerUnit: 97514, totalCost: 1_985_000_000, source: "8-K Feb 2025" },
-  { date: "2025-02-24", quantity: 20356, pricePerUnit: 97514, totalCost: 1_985_000_000, source: "8-K Feb 2025" },
-  { date: "2025-03-10", quantity: 12000, pricePerUnit: 82981, totalCost: 996_000_000, source: "8-K Mar 2025" },
-  { date: "2025-03-17", quantity: 6911, pricePerUnit: 83148, totalCost: 574_600_000, source: "8-K Mar 2025" },
-  { date: "2025-03-24", quantity: 6911, pricePerUnit: 86969, totalCost: 601_000_000, source: "8-K Mar 2025" },
-  { date: "2025-03-31", quantity: 22048, pricePerUnit: 86969, totalCost: 1_917_000_000, source: "8-K Mar 2025" },
-  
-  // 2025 Q2-Q4 (condensed - can expand with full 8-K data)
-  { date: "2025-06-30", quantity: 26695, pricePerUnit: 105000, totalCost: 2_803_000_000, source: "8-K filings Q2 2025 aggregate" },
-  { date: "2025-09-30", quantity: 60558, pricePerUnit: 110000, totalCost: 6_661_000_000, source: "8-K filings Q3 2025 aggregate" },
-  { date: "2025-12-31", quantity: 31692, pricePerUnit: 95000, totalCost: 3_011_000_000, source: "8-K filings Q4 2025 aggregate" },
-  
-  // 2026
-  { date: "2026-01-05", quantity: 1283, pricePerUnit: 94004, totalCost: 120_600_000, source: "8-K Jan 5, 2026" },
-  { date: "2026-01-12", quantity: 13627, pricePerUnit: 93765, totalCost: 1_278_000_000, source: "8-K Jan 12, 2026" },
-  { date: "2026-01-20", quantity: 22305, pricePerUnit: 102148, totalCost: 2_278_000_000, source: "8-K Jan 20, 2026" },
-  { date: "2026-01-26", quantity: 2932, pricePerUnit: 90061, totalCost: 264_100_000, source: "8-K Jan 26, 2026" },
 ];
 
 // =============================================================================
