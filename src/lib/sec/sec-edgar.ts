@@ -67,6 +67,10 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "AVX": "0001826397",   // AVAX One Technology (fka AgriFORCE)
   // HBAR (OTC)
   "IHLDF": "0001905459", // IHLDF
+  // BNB
+  "BNC": "0001482541",   // CEA Industries
+  // SOL (Canadian but files with SEC)
+  "STKE": "0001846839",  // Sol Strategies
 };
 
 // Crypto-related keywords by asset
