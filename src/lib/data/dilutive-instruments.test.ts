@@ -13,6 +13,8 @@ import {
   formatEffectiveShares,
   getSharesProvenance,
   dilutiveInstruments,
+  detectDilutiveInstruments,
+  formatDilutionDetection,
 } from "./dilutive-instruments";
 
 describe("Dilutive Instruments", () => {
@@ -117,6 +119,96 @@ describe("Dilutive Instruments", () => {
       expect(provenance).toContain("IN money");
       expect(provenance).toContain("OUT of money");
       expect(provenance).toContain("Effective diluted:");
+    });
+  });
+
+  describe("detectDilutiveInstruments", () => {
+    it("should detect dilutive instruments when diluted > basic", () => {
+      const result = detectDilutiveInstruments(
+        100_000_000, // basic
+        105_000_000, // diluted
+        "TEST",
+        "2025-09-30",
+        "10-Q Q3 2025"
+      );
+
+      expect(result.hasDilutiveInstruments).toBe(true);
+      expect(result.delta).toBe(5_000_000);
+      expect(result.deltaPct).toBeCloseTo(5.0);
+    });
+
+    it("should NOT flag when diluted equals basic", () => {
+      const result = detectDilutiveInstruments(
+        100_000_000,
+        100_000_000,
+        "TEST"
+      );
+
+      expect(result.hasDilutiveInstruments).toBe(false);
+      expect(result.delta).toBe(0);
+      expect(result.deltaPct).toBe(0);
+    });
+
+    it("should flag even small deltas (no significance threshold)", () => {
+      // 0.1% dilution - should still flag
+      const result = detectDilutiveInstruments(
+        100_000_000,
+        100_100_000, // +100k shares
+        "TEST"
+      );
+
+      expect(result.hasDilutiveInstruments).toBe(true);
+      expect(result.delta).toBe(100_000);
+      expect(result.deltaPct).toBeCloseTo(0.1);
+    });
+
+    it("should handle missing share data gracefully", () => {
+      const result = detectDilutiveInstruments(null, null, "TEST");
+
+      expect(result.hasDilutiveInstruments).toBe(false);
+      expect(result.delta).toBe(0);
+      expect(result.basicShares).toBeNull();
+      expect(result.dilutedShares).toBeNull();
+    });
+
+    it("should handle partial missing data", () => {
+      const result1 = detectDilutiveInstruments(100_000_000, null, "TEST");
+      expect(result1.hasDilutiveInstruments).toBe(false);
+
+      const result2 = detectDilutiveInstruments(null, 105_000_000, "TEST");
+      expect(result2.hasDilutiveInstruments).toBe(false);
+    });
+  });
+
+  describe("formatDilutionDetection", () => {
+    it("should format detected dilution", () => {
+      const result = detectDilutiveInstruments(
+        100_000_000,
+        103_200_000,
+        "BTCS"
+      );
+      const formatted = formatDilutionDetection(result);
+
+      expect(formatted).toContain("BTCS");
+      expect(formatted).toContain("Has dilutive instruments");
+      expect(formatted).toContain("3.2M shares");
+      expect(formatted).toContain("3.2% dilution");
+    });
+
+    it("should format no dilution detected", () => {
+      const result = detectDilutiveInstruments(100_000_000, 100_000_000, "MSTR");
+      const formatted = formatDilutionDetection(result);
+
+      expect(formatted).toContain("MSTR");
+      expect(formatted).toContain("No dilutive instruments detected");
+    });
+
+    it("should format missing data case", () => {
+      const result = detectDilutiveInstruments(null, null, "XYZ");
+      const formatted = formatDilutionDetection(result);
+
+      expect(formatted).toContain("XYZ");
+      expect(formatted).toContain("Unable to detect");
     });
   });
 

@@ -21,6 +21,7 @@
 import { TICKER_TO_CIK } from './sec-edgar';
 import { getCompanySource } from './company-sources';
 import { fetchWithRateLimit } from './rate-limiter';
+import { detectDilutiveInstruments, DilutionDetectionResult } from '../data/dilutive-instruments';
 
 // SEC EDGAR API base URL
 const SEC_API_BASE = 'https://data.sec.gov';
@@ -64,6 +65,17 @@ const SHARES_CONCEPTS = [
   'dei:EntityCommonStockSharesOutstanding',
   'us-gaap:CommonStockSharesOutstanding',
   'us-gaap:WeightedAverageNumberOfSharesOutstandingBasic',
+  'us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding',
+];
+
+// Specific concepts for basic vs diluted share detection
+const BASIC_SHARES_CONCEPTS = [
+  'us-gaap:WeightedAverageNumberOfSharesOutstandingBasic',
+  'dei:EntityCommonStockSharesOutstanding',
+  'us-gaap:CommonStockSharesOutstanding',
+];
+
+const DILUTED_SHARES_CONCEPTS = [
   'us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding',
 ];
 
@@ -420,6 +432,159 @@ export function compareExtractions(
     // Only flag for review if discrepancy is large
     recommendation: match ? 'use_xbrl' : (discrepancyPct > 20 ? 'manual_review' : 'use_xbrl'),
   };
+}
+
+/**
+ * Share count extraction result with both basic and diluted
+ */
+export interface ShareCountsResult {
+  ticker: string;
+  cik: string;
+  success: boolean;
+  basicShares: number | null;
+  dilutedShares: number | null;
+  asOfDate: string | null;
+  filingType: string | null;
+  accessionNumber: string | null;
+  secUrl: string | null;
+  error?: string;
+}
+
+/**
+ * Extract both basic and diluted share counts from SEC XBRL data.
+ *
+ * This enables dilution detection by comparing the two values.
+ * Any non-zero delta indicates dilutive instruments exist.
+ *
+ * @param ticker - Company ticker symbol
+ * @returns Share counts result with both basic and diluted values
+ */
+export async function extractShareCounts(ticker: string): Promise<ShareCountsResult> {
+  const cik = TICKER_TO_CIK[ticker.toUpperCase()];
+
+  if (!cik) {
+    return {
+      ticker,
+      cik: '',
+      success: false,
+      basicShares: null,
+      dilutedShares: null,
+      asOfDate: null,
+      filingType: null,
+      accessionNumber: null,
+      secUrl: null,
+      error: `No CIK mapping found for ticker ${ticker}`,
+    };
+  }
+
+  const facts = await fetchCompanyFacts(cik);
+
+  if (!facts) {
+    return {
+      ticker,
+      cik,
+      success: false,
+      basicShares: null,
+      dilutedShares: null,
+      asOfDate: null,
+      filingType: null,
+      accessionNumber: null,
+      secUrl: null,
+      error: 'No XBRL data available from SEC EDGAR',
+    };
+  }
+
+  // Extract basic shares
+  const basicData = findMostRecentValue(facts.facts, BASIC_SHARES_CONCEPTS);
+
+  // Extract diluted shares
+  const dilutedData = findMostRecentValue(facts.facts, DILUTED_SHARES_CONCEPTS);
+
+  // Use the most recent date from either source
+  const asOfDate = basicData?.date || dilutedData?.date || null;
+  const filingType = basicData?.form || dilutedData?.form || null;
+  const accessionNumber = basicData?.accn || dilutedData?.accn || null;
+
+  // Build SEC URL
+  let secUrl: string | null = null;
+  if (accessionNumber) {
+    const cikNum = cik.replace(/^0+/, '');
+    secUrl = `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cikNum}&type=10&dateb=&owner=include&count=40`;
+  }
+
+  return {
+    ticker,
+    cik,
+    success: basicData !== null || dilutedData !== null,
+    basicShares: basicData?.value ?? null,
+    dilutedShares: dilutedData?.value ?? null,
+    asOfDate,
+    filingType,
+    accessionNumber,
+    secUrl,
+  };
+}
+
+/**
+ * Extract share counts for multiple tickers
+ */
+export async function extractShareCountsBatch(
+  tickers: string[],
+  delayMs: number = 200
+): Promise<Map<string, ShareCountsResult>> {
+  const results = new Map<string, ShareCountsResult>();
+
+  for (const ticker of tickers) {
+    const result = await extractShareCounts(ticker);
+    results.set(ticker, result);
+
+    // Rate limit to respect SEC's 10 requests/second guideline
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+
+  return results;
+}
+
+/**
+ * Detect dilutive instruments for a company by extracting share counts from SEC XBRL.
+ *
+ * This is the Phase 1 approach: flag any non-zero difference between
+ * diluted and basic share counts as having dilutive instruments.
+ *
+ * @param ticker - Company ticker symbol
+ * @returns Dilution detection result
+ */
+export async function detectDilutionFromSEC(ticker: string): Promise<DilutionDetectionResult> {
+  const shareCounts = await extractShareCounts(ticker);
+
+  return detectDilutiveInstruments(
+    shareCounts.basicShares,
+    shareCounts.dilutedShares,
+    ticker,
+    shareCounts.asOfDate,
+    shareCounts.filingType,
+    shareCounts.secUrl
+  );
+}
+
+/**
+ * Detect dilution for multiple tickers
+ */
+export async function detectDilutionFromSECBatch(
+  tickers: string[],
+  delayMs: number = 200
+): Promise<Map<string, DilutionDetectionResult>> {
+  const results = new Map<string, DilutionDetectionResult>();
+
+  for (const ticker of tickers) {
+    const result = await detectDilutionFromSEC(ticker);
+    results.set(ticker, result);
+
+    // Rate limit
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+
+  return results;
 }
 
 /**

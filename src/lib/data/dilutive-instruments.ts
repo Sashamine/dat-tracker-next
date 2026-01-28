@@ -589,6 +589,105 @@ export function getEffectiveSharesAt(
 }
 
 /**
+ * Dilution detection result from SEC share count delta
+ */
+export interface DilutionDetectionResult {
+  ticker: string;
+  basicShares: number | null;
+  dilutedShares: number | null;
+  hasDilutiveInstruments: boolean;
+  delta: number;           // diluted - basic (0 if either is null)
+  deltaPct: number;        // (diluted - basic) / basic * 100
+  asOfDate: string | null;
+  source: string | null;   // Filing type (10-Q, 10-K)
+  sourceUrl: string | null;
+}
+
+/**
+ * Detect dilutive instruments from SEC XBRL share count delta.
+ *
+ * Phase 1 approach: Any non-zero difference between diluted and basic
+ * share counts indicates the presence of dilutive instruments.
+ *
+ * Note: This catches most cases but may miss anti-dilutive instruments
+ * (convertibles that are out-of-the-money and excluded from diluted EPS
+ * calculation per GAAP). For complete coverage, combine with balance
+ * sheet parsing for convertible notes (Phase 2).
+ *
+ * @param basicShares - Basic shares outstanding from SEC filing
+ * @param dilutedShares - Diluted shares from SEC filing
+ * @param ticker - Company ticker
+ * @param asOfDate - Date of the share count data
+ * @param source - Filing type (e.g., "10-Q Q3 2025")
+ * @param sourceUrl - Link to SEC filing
+ */
+export function detectDilutiveInstruments(
+  basicShares: number | null,
+  dilutedShares: number | null,
+  ticker: string,
+  asOfDate: string | null = null,
+  source: string | null = null,
+  sourceUrl: string | null = null
+): DilutionDetectionResult {
+  // If we don't have both values, can't detect
+  if (basicShares === null || dilutedShares === null) {
+    return {
+      ticker,
+      basicShares,
+      dilutedShares,
+      hasDilutiveInstruments: false,
+      delta: 0,
+      deltaPct: 0,
+      asOfDate,
+      source,
+      sourceUrl,
+    };
+  }
+
+  const delta = dilutedShares - basicShares;
+  const deltaPct = basicShares > 0 ? (delta / basicShares) * 100 : 0;
+
+  // Flag ANY non-zero difference as having dilutive instruments
+  // This is intentionally sensitive to catch small positions
+  const hasDilutiveInstruments = delta > 0;
+
+  return {
+    ticker,
+    basicShares,
+    dilutedShares,
+    hasDilutiveInstruments,
+    delta,
+    deltaPct,
+    asOfDate,
+    source,
+    sourceUrl,
+  };
+}
+
+/**
+ * Format dilution detection result for display/logging.
+ *
+ * Example outputs:
+ * - "BTCS: Has dilutive instruments (3.2M shares, 6.8% dilution)"
+ * - "MSTR: Has dilutive instruments (45.2M shares, 12.3% dilution)"
+ * - "XYZ: No dilutive instruments detected (basic = diluted)"
+ */
+export function formatDilutionDetection(result: DilutionDetectionResult): string {
+  if (!result.hasDilutiveInstruments) {
+    if (result.basicShares === null || result.dilutedShares === null) {
+      return `${result.ticker}: Unable to detect (missing share data)`;
+    }
+    return `${result.ticker}: No dilutive instruments detected (basic = diluted)`;
+  }
+
+  const deltaStr = result.delta >= 1_000_000
+    ? `${(result.delta / 1_000_000).toFixed(1)}M`
+    : result.delta.toLocaleString();
+
+  return `${result.ticker}: Has dilutive instruments (${deltaStr} shares, ${result.deltaPct.toFixed(1)}% dilution)`;
+}
+
+/**
  * Format effective shares result for display/logging.
  *
  * Example output:
