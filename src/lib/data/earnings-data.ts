@@ -1518,6 +1518,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== DJT / Trump Media ==========
   // Calendar year company (fiscal = calendar)
+  // CIK: 0001849635
+  // BTC treasury started May 2025 ($2.5B private placement)
+  // XBRL shows CryptoAssetFairValueNoncurrent, not unit count - use holdings-history for BTC
+  //
   // Q4 2025 - Upcoming
   {
     ticker: "DJT",
@@ -1530,7 +1534,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 - XBRL: $1.467B crypto FV, 279.997M shares (SEC 10-Q)
+  // BTC count: 11,542 (from 10-Q filing, per holdings-history)
   {
     ticker: "DJT",
     fiscalYear: 2025,
@@ -1544,13 +1549,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 1_000_000,
     revenueEstimate: 2_500_000,
     netIncome: -19_200_000,
-    holdingsAtQuarterEnd: 0,
-    sharesAtQuarterEnd: 195_000_000,
-    holdingsPerShare: 0,
+    holdingsAtQuarterEnd: 11542,
+    sharesAtQuarterEnd: 279_997_636,
+    holdingsPerShare: 0.0000412,
     source: "sec-filing",
     status: "reported",
   },
-  // Q2 2025
+  // Q2 2025 - Deal closed May 29, first BTC purchases in Q2
+  // No XBRL crypto data for Q2, using 0 as conservative estimate (bulk purchases likely Q3)
   {
     ticker: "DJT",
     fiscalYear: 2025,
@@ -1564,8 +1570,38 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 900_000,
     revenueEstimate: 2_000_000,
     netIncome: -16_400_000,
+    holdingsAtQuarterEnd: 0, // Deal closed late May, bulk purchases in Q3
+    sharesAtQuarterEnd: 191_500_000, // XBRL verified
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    status: "reported",
+  },
+  // Q1 2025 - Pre-treasury, no BTC yet
+  {
+    ticker: "DJT",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-08",
+    earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,
-    sharesAtQuarterEnd: 195_000_000,
+    sharesAtQuarterEnd: 220_600_000, // XBRL verified
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    status: "reported",
+  },
+  // Q4 2024 - Pre-treasury
+  {
+    ticker: "DJT",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-02-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,
+    sharesAtQuarterEnd: 220_700_000, // XBRL verified
     holdingsPerShare: 0,
     source: "sec-filing",
     status: "reported",

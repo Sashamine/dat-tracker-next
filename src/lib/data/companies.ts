@@ -609,7 +609,7 @@ export const btcCompanies: Company[] = [
     secCik: "0001849635",
     asset: "BTC",
     tier: 1,
-    holdings: 15_000,  // Verified: SEC 10-Q Q3 2025 XBRL shows $1.47B crypto FV (~15K BTC at $97K)
+    holdings: 11_542,  // Verified: SEC 10-Q Q3 2025 filing (per holdings-history)
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q",
