@@ -653,7 +653,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 4_082_556,  // Jan 2026 per TipRanks/Morningstar - NEEDS VERIFICATION (SEC 10-Q Oct shows 2.87M)
+    sharesForMnav: 2_865_730,  // SEC 10-Q Oct 2025 + 8-K Sep 12 2025 (post 200:1 reverse split)
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
     notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025.",
   },
