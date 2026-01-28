@@ -915,7 +915,7 @@ export const bnbCompanies: Company[] = [
     id: "bnc",
     name: "CEA Industries (BNC)",
     ticker: "BNC",
-    secCik: "0001855612",
+    secCik: "0001482541",
     asset: "BNB",
     tier: 1,
     holdings: 512_000,  // 502,441 + 9,491 on exchanges (Oct 31, 2025)

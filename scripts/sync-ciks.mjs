@@ -40,7 +40,7 @@ const CIK_MAPPINGS = {
   'AVX': '0001826397',
   'IHLDF': '0001905459',
   'STKE': '0001846839',
-  'BNC': '0001855612',
+  'BNC': '0001482541',
 };
 
 let content = fs.readFileSync('src/lib/data/companies.ts', 'utf8');
