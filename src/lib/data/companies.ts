@@ -714,13 +714,15 @@ export const solCompanies: Company[] = [
     holdingsLastUpdated: "2026-01-15",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.forwardindustries.com/",
-    datStartDate: "2025-09-01",  // Initiated SOL strategy Sept 2025
-    costBasisAvg: 232.08,
+    datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
+    fiscalYearEnd: "0930",  // September 30
+    costBasisAvg: 232.08,  // $1.59B / 6.85M SOL per SEC XBRL
     stakingPct: 0.99,
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
     quarterlyBurnUsd: 3_400_000,
     capitalRaisedPipe: 1_650_000_000,
-    sharesForMnav: 86_459_465,  // SEC 10-K Dec 11, 2025 (as of Sep 30, 2025, post $1.65B PIPE)
+    // Shares: 86,145,514 basic (SEC 10-K) + 26,359,600 pre-funded warrants @ $0.03 = 112,505,114 FD
+    sharesForMnav: 112_505_114,
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
@@ -729,7 +731,7 @@ export const solCompanies: Company[] = [
     cashAsOf: "2025-12-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
-    notes: "Raised $1.65B PIPE. Debt free. 133K+ SOL staking rewards since Sept 2025. First equity on Solana via Superstate.",
+    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 26.4M pre-funded warrants @ $0.03. First equity on Solana via Superstate.",
   },
   {
     id: "hsdt",

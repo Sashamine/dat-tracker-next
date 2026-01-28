@@ -2095,6 +2095,41 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
+
+  // ========== Forward Industries (FWDI) ==========
+  // Fiscal year end: September 30
+  // $1.65B PIPE closed Sep 11, 2025 - SOL treasury began
+  // FY 2025 Q4 (Jul-Sep 2025) = First quarter with SOL holdings
+  // Verified 2026-01-28 via SEC XBRL
+  //
+  // FY 2026 Q1 (Oct-Dec 2025) - Upcoming
+  {
+    ticker: "FWDI",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-14",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // FY 2025 Q4 (Jul-Sep 2025) - First SOL quarter
+  {
+    ticker: "FWDI",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-12-11",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 6_854_000,  // SEC XBRL CryptoAssetNumberOfUnits
+    sharesAtQuarterEnd: 112_505_114,  // 86.1M basic + 26.4M pre-funded warrants
+    holdingsPerShare: 0.0609,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
