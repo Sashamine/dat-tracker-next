@@ -644,7 +644,7 @@ export const btcCompanies: Company[] = [
     ticker: "NXTT",
     asset: "BTC",
     tier: 1,
-    holdings: 5_833,
+    holdings: 1_015,  // Calculated from SEC 10-Q Q3 2025 XBRL: $98.5M fair value ÷ $97K
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q",
