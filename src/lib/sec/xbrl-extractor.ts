@@ -213,10 +213,13 @@ function findMostRecentValue(
     const units = factData.units['USD'] || factData.units['shares'] || factData.units['pure'];
     if (!units || units.length === 0) continue;
 
-    // Sort by filed date descending to get most recent
-    const sorted = [...units].sort((a, b) =>
-      new Date(b.filed).getTime() - new Date(a.filed).getTime()
-    );
+    // Sort by period end date descending (primary), then filed date (secondary)
+    // This ensures we get the current period, not comparative periods from the same filing
+    const sorted = [...units].sort((a, b) => {
+      const endCompare = new Date(b.end).getTime() - new Date(a.end).getTime();
+      if (endCompare !== 0) return endCompare;
+      return new Date(b.filed).getTime() - new Date(a.filed).getTime();
+    });
 
     // Find the most recent value from a preferred form
     for (const entry of sorted) {
@@ -226,7 +229,7 @@ function findMostRecentValue(
 
       // If this is better than what we have, use it
       if (!bestMatch ||
-          (isPreferredForm && new Date(entry.filed) > new Date(bestMatch.filed))) {
+          (isPreferredForm && new Date(entry.end) > new Date(bestMatch.date))) {
         bestMatch = {
           value: entry.val,
           date: entry.end,
