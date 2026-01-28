@@ -258,12 +258,15 @@ Systematic verification process for DAT company data quality.
 - [ ] **Source**: 
 - [ ] **Source URL**: 
 - [ ] **Last updated**: 
+- [ ] **Check recent 8-Ks** for production updates / purchase announcements
+- [ ] **Ensure current quarter isn't stale** — use 8-K data if more recent than 10-Q 
 
 ### 2. SEC Filing Verification
 - [ ] **CIK**: 
-- [ ] **Recent 8-Ks checked**: 
+- [ ] **Recent 8-Ks checked**: (Item 7.01/8.01 for holdings updates)
 - [ ] **Latest 10-K**: 
 - [ ] **Latest 10-Q**: 
+- [ ] **8-K holdings data** pulled for current quarter (if available) 
 
 ### 3. XBRL Data Extraction
 - [ ] **CryptoAssetNumberOfUnits**: 
@@ -279,6 +282,7 @@ Systematic verification process for DAT company data quality.
 - [ ] **Backfill missing quarters** with holdings/shares/HPS
 - [ ] **Use diluted shares** for HPS calculations (standard)
 - [ ] **Fix any discrepancies** between earnings-data.ts and XBRL
+- [ ] **Current quarter**: Use 8-K data (status: "upcoming") if 10-Q not filed yet
 
 | Quarter | Period End | Holdings | Shares (diluted) | HPS | Source |
 |---------|------------|----------|------------------|-----|--------|
