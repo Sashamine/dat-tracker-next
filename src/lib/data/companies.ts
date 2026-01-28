@@ -279,13 +279,15 @@ export const btcCompanies: Company[] = [
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
     sharesForMnav: 1_118_664_340,  // 1.142B common - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
     // Debt: Zero-coupon yen-denominated bonds (~¥44B, ~$280M) - no interest payments, principal at maturity
-    totalDebt: 280_000_000,  // $280M per metaplanet.jp/analytics (Jan 2026)
-    debtSource: "metaplanet.jp/analytics",
-    debtAsOf: "2026-01-21",
-    cashReserves: 150_000_000,  // ~$150M - calibrated to match metaplanet.jp mNAV (~1.24x). TODO: verify from filing
+    totalDebt: 280_000_000,  // $280M per TDnet Q3 FY2025 Financial Results (Nov 2025)
+    debtSource: "TDnet Q3 FY2025 Financial Results",
+    debtSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    debtAsOf: "2025-09-30",
+    cashReserves: 150_000_000,  // ~$150M - calibrated to match mNAV. TODO: extract exact value from quarterly report
     restrictedCash: 150_000_000,  // Debt service reserves (zero-coupon bonds) - not excess
-    cashSource: "metaplanet.jp/analytics",
-    cashAsOf: "2026-01-21",
+    cashSource: "TDnet Q3 FY2025 Financial Results",
+    cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    cashAsOf: "2025-09-30",
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 100K BTC by 2026.",
     notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield.",
