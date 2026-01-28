@@ -652,6 +652,30 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // - IN money: $118, $125, $135, $143.25, $183.19 → ~30.4M dilutive shares
   // - OUT of money: $433.43, $672.40 → ~9.1M non-dilutive
   // Note: Dec 2020 $650M notes matured Dec 15, 2025 and converted to ~16.3M shares
+
+  // ==================== BNB COMPANIES ====================
+
+  // CEA Industries / BNB Network Company (BNC) - World's largest BNB treasury
+  // $500M PIPE closed Aug 5, 2025 with stapled warrants
+  // Verified 2026-01-28 via SEC filings and investor dashboard
+  // Basic shares: ~52M (PIPE shares + pre-existing)
+  // Warrants: 49.5M @ $15.15 (currently OTM at ~$5.32 stock)
+  BNC: [
+    {
+      type: "warrant",
+      strikePrice: 15.15,
+      potentialShares: 49_504_988,
+      source: "8-K Aug 2025 (PIPE)",
+      sourceUrl:
+        "https://www.globenewswire.com/news-release/2025/08/05/3127489/0/en/CEA-Industries-Closes-500-Million-Private-Placement-to-Advance-Its-BNB-Treasury-Strategy-Common-Stock-Ticker-to-Become-BNC.html",
+      issuedDate: "2025-08-05",
+      notes:
+        "Stapled warrants from $500M PIPE. Trade as BNCWW. Up to $750M if all exercised.",
+    },
+  ],
+  // Total BNC dilution: 49.5M potential warrant shares
+  // At $5.32 stock: All warrants OUT of money ($15.15 strike)
+  // Fully diluted if ITM: ~52M basic + 49.5M = ~101.5M shares
 };
 
 /**

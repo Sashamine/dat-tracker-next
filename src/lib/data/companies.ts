@@ -938,7 +938,7 @@ export const bnbCompanies: Company[] = [
     // No staking disclosed - holding spot BNB
     quarterlyBurnUsd: 3_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 44_062_938,  // SEC 10-Q Dec 12, 2025
+    sharesForMnav: 52_800_000,  // ~49.5M PIPE + 2.5M pre-existing + ~0.8M from warrant exercises (Jan 2026 dashboard implied)
     cashReserves: 77_500_000,  // $77.5M unencumbered cash (Oct 2025)
     // restrictedCash: 0 - cash is free
     cashSource: "FY Q2 2026 earnings",
