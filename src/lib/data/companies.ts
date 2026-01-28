@@ -366,16 +366,19 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 3_600_000_000,
     sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
-    cashReserves: 826_000_000,  // $826M per mNAV.com Jan 2026
-    restrictedCash: 826_000_000,  // Operating capital (miner) - not excess
-    cashSource: "mNAV.com",
-    cashAsOf: "2026-01-21",
+    cashReserves: 826_392_000,  // SEC 10-Q Q3 2025: $826,392K
+    restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+    cashAsOf: "2025-09-30",
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
-    // Debt: $1B 0% converts due 2030 (Nov 2024) + $950M 0% converts due 2032 (Jul 2025) + earlier 1% notes
-    totalDebt: 3_640_000_000,  // $3.64B per mNAV.com Jan 2026
-    debtSource: "mNAV.com",
-    debtAsOf: "2026-01-21",
+    // Debt: $350M line of credit (current) + convertible notes in Notes section
+    totalDebt: 350_000_000,  // SEC 10-Q Q3 2025: $350M line of credit (current portion)
+    debtSource: "SEC 10-Q Q3 2025",
+    debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+    debtAsOf: "2025-09-30",
+    // Note: Full convertible notes breakdown needs extraction from Notes to Financial Statements
     notes: "Largest US public miner. $1.95B in 0% convertible notes (2030 + 2032 series).",
   },
   {
@@ -572,10 +575,12 @@ export const btcCompanies: Company[] = [
     totalDebt: 210_000_000,  // Kraken loan Dec 2025 (replaced Two Prime which replaced Yorkville)
     debtSource: "Kraken credit facility Dec 2025",
     debtAsOf: "2025-12-31",
-    cashReserves: 24_200_000,  // $24.2M per nakamoto.com/dashboard (mNAV.com)
+    cashReserves: 24_185_083,  // SEC 10-Q Q3 2025 balance sheet
     // restrictedCash: 0 - cash is free, subtracted from EV
-    cashSource: "nakamoto.com/dashboard",
-    cashAsOf: "2026-01-24",
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q",
+    cashAsOf: "2025-09-30",
+    secCik: "0001946573",
     leader: "David Bailey (CEO, Bitcoin Magazine)",
     strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies.",
     notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). Share buyback authorized Dec 2025 as mNAV < 1.",
@@ -932,9 +937,11 @@ export const bnbCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
     totalDebt: 500_000_000,  // $500M convertible notes (360-day maturity, 0% interest)
-    sharesForMnav: 20_700_000,  // ~20.7M Class A shares (companiesmarketcap.com Jan 2026)
-    sharesSource: "companiesmarketcap.com",
-    sharesAsOf: "2026-01-01",
+    sharesForMnav: 15_674_052,  // SEC 20-F FY2024: 12,815,143 Class A + 2,858,909 Class B
+    sharesSource: "SEC 20-F FY2024",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=20-F",
+    sharesAsOf: "2024-12-31",
+    // Note: Check 6-K filings for more recent share counts (possible issuances after FY2024)
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
     notes: "$25M buyback authorized.",
