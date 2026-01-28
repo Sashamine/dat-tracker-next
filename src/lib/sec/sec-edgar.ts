@@ -16,6 +16,7 @@ import {
   cleanHtmlText,
   type ExtractionResult 
 } from './content-extractor';
+import { fetchFilingWithCache } from './filing-cache';
 
 // Map tickers to SEC CIK numbers (legacy - use company-sources.ts instead)
 // CIKs verified against SEC EDGAR on 2026-01-21
@@ -401,13 +402,20 @@ const DEFAULT_8K_PATTERNS = [
 /**
  * Search all documents in a filing for crypto holdings mentions
  * Uses company-specific patterns from company-sources.ts
+ * Now with caching support for reduced SEC API calls
  */
 export async function searchFilingDocuments(
   ticker: string,
   cik: string,
   accessionNumber: string,
-  asset: string
+  asset: string,
+  options?: {
+    formType?: string;
+    filedDate?: string;
+  }
 ): Promise<{ documentUrl: string; content: string } | null> {
+  const formType = options?.formType || '8-K';
+  const filedDate = options?.filedDate || new Date().toISOString().split('T')[0];
   const companySource = getCompanySource(ticker);
   const cikNum = cik.replace(/^0+/, '');
   const accNum = accessionNumber.replace(/-/g, '');
@@ -466,13 +474,16 @@ export async function searchFilingDocuments(
   // Check each document for crypto mentions
   for (const doc of uniqueDocs.slice(0, 6)) {
     try {
-      const response = await fetch(doc.url, {
-        headers: { 'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)' },
+      // Use cached fetch to reduce SEC API calls
+      const rawHtml = await fetchFilingWithCache(doc.url, {
+        accessionNumber,
+        ticker,
+        formType,
+        filedDate,
+        documentName: doc.name,
       });
 
-      if (!response.ok) continue;
-
-      const rawHtml = await response.text();
+      if (!rawHtml) continue;
       
       // Use smart content extraction
       const extraction = smartExtractContent(rawHtml, {
@@ -491,8 +502,8 @@ export async function searchFilingDocuments(
         return { documentUrl: doc.url, content };
       }
 
-      // Rate limit
-      await new Promise(r => setTimeout(r, 100));
+      // Rate limit only for non-cached fetches (handled in fetchFilingWithCache)
+      await new Promise(r => setTimeout(r, 50));
     } catch (error) {
       console.error(`Error fetching document ${doc.name}:`, error);
     }

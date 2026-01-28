@@ -138,8 +138,11 @@ async function findRecent8KFilings(
     const itemsStr = recent.items?.[i] || '';
     const items = itemsStr ? itemsStr.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
 
-    // Search for crypto content in the filing
-    const result = await searchFilingDocuments(ticker, cik, accessionNumber, asset);
+    // Search for crypto content in the filing (with caching)
+    const result = await searchFilingDocuments(ticker, cik, accessionNumber, asset, {
+      formType,
+      filedDate: filingDate,
+    });
 
     if (result) {
       filings.push({
