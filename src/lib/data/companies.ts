@@ -792,7 +792,7 @@ export const solCompanies: Company[] = [
     capitalRaisedAtm: 200_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
-    marketCap: 240_000_000,  // ~$240M (Jan 2026)
+    // marketCap removed - calculated from sharesForMnav × FMP price
     sharesForMnav: 29_892_800,  // Company press release Jan 5, 2026 (Q4 business update); SEC 8-K Nov 13, 2025 showed 31.4M pre-buyback
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
