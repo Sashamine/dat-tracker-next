@@ -423,6 +423,11 @@ Systematic verification process for DAT company data quality.
 - [x] **Total potential dilution**: ~6.4M shares (13.6% of basic)
 - [x] **Added to dilutive-instruments.ts**: Yes (updated 2026-01-29)
 
+### 10. Company Links ✅
+- [x] **website**: https://www.btcs.com
+- [x] **twitter**: https://twitter.com/BTCSInc
+- [x] **investorRelationsUrl**: https://www.btcs.com/investors/
+
 ---
 
 ## BTBT (Bit Digital) - Verified 2026-01-29
@@ -582,3 +587,8 @@ Systematic verification process for DAT company data quality.
 - [ ] **Warrants**: 
 - [ ] **Convertible notes**: 
 - [ ] **Options**: 
+
+### 10. Company Links
+- [ ] **website**: (e.g., https://company.com)
+- [ ] **twitter**: (e.g., https://twitter.com/CompanyHandle)
+- [ ] **investorRelationsUrl**: (e.g., https://company.com/investors/) 
