@@ -372,9 +372,26 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   Low Liq
                 </Badge>
               )}
+              {/* Holdings source verification badge */}
+              {company.holdingsSource && !["sec-filing", "regulatory-filing", "on-chain"].includes(company.holdingsSource) && (
+                company.secReferenced ? (
+                  <Badge variant="outline" className="text-[10px] px-1 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
+                    SEC Ref
+                  </Badge>
+                ) : ["company-dashboard", "company-reported", "company-website", "press-release"].includes(company.holdingsSource) ? (
+                  <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
+                    Co. Reported
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="text-[10px] px-1 py-0 bg-red-500/10 text-red-500 border-red-500/30">
+                    ⚠️ Unverified
+                  </Badge>
+                )
+              )}
+              {/* Shares verification badge */}
               {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
-                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-red-500/10 text-red-500 border-red-500/30">
-                  ⚠️ Unverified
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
+                  Shares: Co. Reported
                 </Badge>
               )}
             </div>
@@ -619,9 +636,26 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                             Low Liquidity
                           </Badge>
                         )}
+                        {/* Holdings source verification badge */}
+                        {company.holdingsSource && !["sec-filing", "regulatory-filing", "on-chain"].includes(company.holdingsSource) && (
+                          company.secReferenced ? (
+                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
+                              SEC Referenced
+                            </Badge>
+                          ) : ["company-dashboard", "company-reported", "company-website", "press-release"].includes(company.holdingsSource) ? (
+                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
+                              Company Reported
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-red-500/10 text-red-500 border-red-500/30">
+                              ⚠️ Unverified
+                            </Badge>
+                          )
+                        )}
+                        {/* Shares verification badge */}
                         {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-red-500/10 text-red-500 border-red-500/30">
-                            ⚠️ Unverified
+                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
+                            Shares: Company Reported
                           </Badge>
                         )}
                       </span>
