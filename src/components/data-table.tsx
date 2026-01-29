@@ -340,6 +340,18 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   </Tooltip>
                 </TooltipProvider>
               )}
+              {company.filingType === "FPI" && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-xs px-1 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded cursor-help">FPI</span>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs">
+                      <p className="text-sm">Foreign Private Issuer - files 20-F/6-K. Less frequent XBRL updates.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
               {company.dataWarnings && company.dataWarnings.length > 0 && (
                 <TooltipProvider>
                   <Tooltip>

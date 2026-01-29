@@ -23,6 +23,7 @@ import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { CompanyFilings } from "@/components/company-filings";
 import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
+import { DataFlagBadge, FPIBadge } from "@/components/ui/data-flag-badge";
 import { cn } from "@/lib/utils";
 import {
   calculateNAV,
@@ -293,6 +294,8 @@ export default function CompanyPage() {
                   Pending Merger
                 </Badge>
               )}
+              {/* FPI badge for Foreign Private Issuers */}
+              <FPIBadge filingType={displayCompany.filingType} />
               {/* SEC Referenced badge - only when explicitly flagged */}
               {displayCompany.secReferenced && (
                 <Badge variant="outline" className="font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30">
@@ -614,7 +617,7 @@ export default function CompanyPage() {
               {cashReserves > 0 && (
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    Cash Reserves
+                    Cash Reserves <DataFlagBadge flags={displayCompany.dataFlags} field="cash" />
                   </p>
                   <p className="text-lg font-bold text-green-600">
                     +{formatLargeNumber(cashReserves)}
@@ -625,7 +628,7 @@ export default function CompanyPage() {
               {totalDebt > 0 && (
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-red-200 dark:border-red-700">
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    Total Debt
+                    Total Debt <DataFlagBadge flags={displayCompany.dataFlags} field="debt" />
                   </p>
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(totalDebt)}

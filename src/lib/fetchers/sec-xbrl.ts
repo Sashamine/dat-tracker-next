@@ -131,9 +131,34 @@ async function fetchCompanyFacts(cik: string): Promise<XBRLCompanyFacts | null> 
   }
 }
 
+// Valid SEC filing forms for data extraction
+// US domestic: 10-K (annual), 10-Q (quarterly)
+// FPI (Foreign Private Issuer): 20-F (annual), 6-K (current/semi-annual)
+const US_FILING_FORMS = ['10-K', '10-Q', '10-K/A', '10-Q/A'];
+const FPI_FILING_FORMS = ['20-F', '20-F/A', '6-K'];
+const ALL_VALID_FORMS = [...US_FILING_FORMS, ...FPI_FILING_FORMS];
+
+/**
+ * Detect if a company is an FPI based on their filing forms
+ */
+function detectFilingType(facts: XBRLCompanyFacts['facts']): 'US' | 'FPI' | 'unknown' {
+  // Check a common field to see what forms are used
+  const cashFact = facts['us-gaap']?.CashAndCashEquivalentsAtCarryingValue;
+  if (!cashFact?.units?.USD) return 'unknown';
+  
+  const forms = new Set(cashFact.units.USD.map(e => e.form));
+  
+  const hasFPI = FPI_FILING_FORMS.some(f => forms.has(f));
+  const hasUS = US_FILING_FORMS.some(f => forms.has(f));
+  
+  if (hasFPI && !hasUS) return 'FPI';
+  if (hasUS && !hasFPI) return 'US';
+  return 'unknown';
+}
+
 /**
  * Get the most recent value for a field from XBRL data
- * Prefers 10-Q and 10-K filings over other form types
+ * Supports both US domestic (10-Q/10-K) and FPI (20-F/6-K) filings
  */
 function getMostRecentValue(
   facts: XBRLCompanyFacts['facts'],
@@ -147,14 +172,13 @@ function getMostRecentValue(
   const entries = nsFacts[fieldName].units[unitType];
   if (!entries || entries.length === 0) return null;
 
-  // Filter to quarterly filings (10-K, 10-Q, and their amendments)
-  const quarterlyForms = ['10-K', '10-Q', '10-K/A', '10-Q/A'];
-  const quarterlyEntries = entries.filter(e => quarterlyForms.includes(e.form));
+  // Accept both US and FPI filing forms
+  const validEntries = entries.filter(e => ALL_VALID_FORMS.includes(e.form));
 
-  if (quarterlyEntries.length === 0) return null;
+  if (validEntries.length === 0) return null;
 
   // Sort by period end date descending, then by filed date descending
-  const sorted = quarterlyEntries.sort((a, b) => {
+  const sorted = validEntries.sort((a, b) => {
     const dateCompare = b.end.localeCompare(a.end);
     if (dateCompare !== 0) return dateCompare;
     return b.filed.localeCompare(a.filed);
@@ -172,6 +196,13 @@ function getMostRecentValue(
 /**
  * Extract Bitcoin/crypto holdings from company-specific XBRL namespaces
  * Companies often use their own extension taxonomy for crypto assets
+ * 
+ * FPIs (like NA) tend to use standard us-gaap fields:
+ * - CryptoAssetFairValueCurrent (fair value in USD)
+ * - CryptoAssetCost (cost basis)
+ * 
+ * US companies often use custom extensions:
+ * - mstr:Bitcoin, clsk:DigitalAssets, etc.
  */
 function extractBitcoinHoldings(
   facts: XBRLCompanyFacts['facts'],
@@ -185,6 +216,11 @@ function extractBitcoinHoldings(
 
   // Build list of namespace:concept pairs to check
   const conceptsToCheck: Array<{ namespace: string; concept: string }> = [];
+
+  // FPI-friendly: Check standard us-gaap crypto fields FIRST
+  // These are used by FPIs like NA that use standard taxonomy
+  conceptsToCheck.push({ namespace: 'us-gaap', concept: 'CryptoAssetFairValueCurrent' });
+  conceptsToCheck.push({ namespace: 'us-gaap', concept: 'CryptoAssetCost' });
 
   // Add company-specific concepts
   for (const conceptStr of companySpecificConcepts) {
@@ -220,13 +256,13 @@ function extractBitcoinHoldings(
     if (!factData?.units?.USD) continue;
 
     const entries: XBRLEntry[] = factData.units.USD;
-    const quarterlyForms = ['10-K', '10-Q', '10-K/A', '10-Q/A'];
-    const quarterlyEntries = entries.filter((e: XBRLEntry) => quarterlyForms.includes(e.form));
+    // Accept both US and FPI forms
+    const validEntries = entries.filter((e: XBRLEntry) => ALL_VALID_FORMS.includes(e.form));
 
-    if (quarterlyEntries.length === 0) continue;
+    if (validEntries.length === 0) continue;
 
     // Sort by period end date descending
-    const sorted = quarterlyEntries.sort((a: XBRLEntry, b: XBRLEntry) => b.end.localeCompare(a.end));
+    const sorted = validEntries.sort((a: XBRLEntry, b: XBRLEntry) => b.end.localeCompare(a.end));
     const latest = sorted[0];
 
     // Keep the most recent value
@@ -347,6 +383,20 @@ export const secXbrlFetcher: Fetcher = {
  */
 export function getSupportedTickers(): string[] {
   return Object.keys(TICKER_TO_CIK);
+}
+
+/**
+ * Detect if a company is a Foreign Private Issuer based on XBRL filing types
+ * Returns 'FPI' for 20-F/6-K filers, 'US' for 10-Q/10-K filers
+ */
+export async function detectCompanyFilingType(ticker: string): Promise<'US' | 'FPI' | 'unknown'> {
+  const cik = TICKER_TO_CIK[ticker.toUpperCase()];
+  if (!cik) return 'unknown';
+
+  const data = await fetchCompanyFacts(cik);
+  if (!data?.facts) return 'unknown';
+
+  return detectFilingType(data.facts);
 }
 
 /**
