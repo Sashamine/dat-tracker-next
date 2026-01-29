@@ -223,8 +223,9 @@ export default function CompanyPage() {
     totalCryptoNav += cryptoInvestmentsValue;
   }
 
-  // Leverage ratio = Total Debt / Crypto NAV
-  const debtToCryptoRatio = totalCryptoNav > 0 ? (displayCompany.totalDebt || 0) / totalCryptoNav : 0;
+  // Leverage ratio = Net Debt / Crypto NAV (net debt = total debt - cash)
+  const netDebt = Math.max(0, (displayCompany.totalDebt || 0) - cashReserves);
+  const debtToCryptoRatio = totalCryptoNav > 0 ? netDebt / totalCryptoNav : 0;
 
   // Calculate metrics (including other assets in NAV)
   const nav = calculateNAV(displayCompany.holdings, cryptoPrice, cashReserves, otherInvestments);

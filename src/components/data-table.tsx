@@ -126,8 +126,9 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       }
     }
 
-    // Leverage ratio = Total Debt / Crypto NAV
-    const leverageRatio = cryptoNav > 0 ? totalDebt / cryptoNav : 0;
+    // Leverage ratio = Net Debt / Crypto NAV (net debt = total debt - cash)
+    const netDebt = Math.max(0, totalDebt - cashReserves);
+    const leverageRatio = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
     // mNAV uses shared calculation for consistency across all pages
     const mNAV = getCompanyMNAV(company, prices);
