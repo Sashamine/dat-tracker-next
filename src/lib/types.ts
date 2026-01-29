@@ -239,7 +239,7 @@ export interface CompanyMetrics {
 // Earnings data types
 export type EarningsTime = "BMO" | "AMC" | "TNS" | null; // Before Market Open, After Market Close, Time Not Specified
 export type EarningsStatus = "upcoming" | "confirmed" | "reported";
-export type EarningsSource = "sec-filing" | "press-release" | "investor-presentation" | "manual";
+export type EarningsSource = "sec-filing" | "press-release" | "investor-presentation" | "estimated" | "manual";
 
 export interface EarningsRecord {
   ticker: string;
