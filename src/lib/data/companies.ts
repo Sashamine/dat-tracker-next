@@ -996,27 +996,35 @@ export const bnbCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
     datStartDate: "2025-06-01",
     secCik: "1872302",
-    costBasisAvg: 600.00,
+    filingType: "FPI",  // Foreign Private Issuer - files 20-F/6-K, limited XBRL
+    costBasisAvg: 600.00,  // Unverified - not in XBRL
     stakingPct: 0.30,
     stakingApy: 0.03,
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
-    totalDebt: 500_000_000,  // $500M convertible notes (360-day maturity, 0% interest)
-    cashReserves: 365_940_000,  // Yahoo Finance Q3 2025: $365.94M total cash
-    cashSource: "Yahoo Finance / SEC 6-K Q3 2025",
-    cashAsOf: "2025-09-30",
-    sharesForMnav: 20_700_000,  // Dec 31, 2025 6-K + convertible issuances. FY2024: 15.67M (12.8M A + 2.9M B)
-    sharesSource: "SEC 6-K Dec 31, 2025",
+    totalDebt: 500_000_000,  // $500M convertible notes - from narrative disclosure, not XBRL
+    debtSource: "SEC 6-K narrative disclosure",
+    debtAsOf: "2025-09-30",
+    // XBRL shows $50.8M cash (Q2 2025) - Yahoo's $365M likely includes crypto holdings incorrectly
+    cashReserves: 50_800_000,  // SEC XBRL CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
+    cashSource: "SEC XBRL 6-K Q2 2025",
+    cashSourceUrl: "https://data.sec.gov/api/xbrl/companyfacts/CIK0001872302.json",
+    cashAsOf: "2025-06-30",
+    // Shares: XBRL stale (111.5M from 2022). Using narrative disclosure estimate.
+    sharesForMnav: 20_700_000,  // From 6-K narrative + convertible issuances
+    sharesSource: "SEC 6-K narrative (XBRL stale since 2022)",
     sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
     sharesAsOf: "2025-12-31",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
-    notes: "$25M buyback authorized. Also holds ~1,000 BTC from convert deal. Verified 2026-01-29.",
+    notes: "$25M buyback authorized. XBRL CryptoAssetFairValueCurrent: $108.5M (Q2 2025).",
     website: "https://www.nano.cn",
     twitter: "https://x.com/nano_labs_NA",
     investorRelationsUrl: "https://www.nano.cn/investor-relations",
+    // FPI data quality flags - these fields need verification from narrative disclosure
+    dataFlags: ["shares_xbrl_stale", "debt_unverified"],
     secondaryCryptoHoldings: [
-      { asset: "BTC", amount: 1_000, note: "passive hold from convertible deal" },
+      { asset: "BTC", amount: 1_000, note: "passive hold from convertible deal - unverified" },
     ],
   },
 ];

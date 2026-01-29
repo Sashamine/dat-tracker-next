@@ -26,6 +26,19 @@ export type DataWarningType =
   | "stale-data"         // Data may be outdated
   | "unverified-shares"; // Share counts from non-primary source (e.g., dashboard vs regulatory filing)
 
+// SEC filing type - US domestic vs Foreign Private Issuer
+export type FilingType =
+  | "US"    // Files 10-Q, 10-K, 8-K - quarterly XBRL data
+  | "FPI";  // Foreign Private Issuer - files 20-F, 6-K - annual/semi-annual, limited XBRL
+
+// Data verification flags for fields that need manual review
+export type DataFlag =
+  | "shares_unverified"     // Share count from non-XBRL source (Yahoo, manual)
+  | "shares_xbrl_stale"     // XBRL share count outdated (FPIs often have this)
+  | "debt_unverified"       // Debt from narrative disclosure, not XBRL
+  | "cash_unverified"       // Cash figure needs verification
+  | "holdings_estimated";   // Holdings calculated from fair value, not unit count
+
 export interface DataWarning {
   type: DataWarningType;
   message: string;        // Short description shown in UI
@@ -143,6 +156,12 @@ export interface Company {
 
   // Data warnings for pending filings/events that may affect accuracy
   dataWarnings?: DataWarning[];
+
+  // Filing type for SEC data handling
+  filingType?: FilingType;  // "US" (10-Q/10-K) or "FPI" (20-F/6-K)
+
+  // Data verification flags - fields that need manual review
+  dataFlags?: DataFlag[];
 
   // Secondary crypto holdings (for multi-asset treasury companies)
   // These are added to Crypto NAV in mNAV calculation
