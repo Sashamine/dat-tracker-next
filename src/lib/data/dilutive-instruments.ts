@@ -302,18 +302,10 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
   // Q3 earnings press release: "75.9 million common shares and pre-funded warrants outstanding"
   // Basic shares (Nov 17): 41.3M → Pre-funded warrants: ~34.6M
-  // Pre-funded warrants already included in sharesForMnav (75.9M)
-  HSDT: [
-    {
-      type: "warrant",
-      strikePrice: 0.0001, // Pre-funded warrants - essentially shares
-      potentialShares: 34_600_000, // 75.9M - 41.3M basic = ~34.6M pre-funded
-      source: "10-Q Q3 2025 earnings press release",
-      sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113672/hsdt-20251118xex99d1.htm",
-      notes: "Pre-funded warrants from Sep 2025 PIPE. Already in sharesForMnav (75.9M).",
-    },
-  ],
+  // NOTE: Pre-funded warrants ALREADY INCLUDED in sharesForMnav (75.9M)
+  // DO NOT add them here - would cause double-counting in mNAV calculation
+  // sharesForMnav = 41.3M basic + 34.6M pre-funded = 75.9M FD
+  HSDT: [],
 
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
