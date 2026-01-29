@@ -1223,6 +1223,9 @@ export const zecCompanies: Company[] = [
     ticker: "CYPH",
     asset: "ZEC",
     tier: 1,
+    website: "https://www.cypherpunk.com",
+    twitter: "https://x.com/cypherpunk",
+    investorRelationsUrl: "https://investors.leaptx.com/",
     holdings: 290_062,  // Dec 30, 2025 8-K: 290,062.67 ZEC
     holdingsLastUpdated: "2025-12-30",
     holdingsSource: "sec-filing",

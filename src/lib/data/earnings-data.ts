@@ -2749,6 +2749,58 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ==================== ZEC COMPANIES ====================
+
+  // ========== Cypherpunk Technologies (CYPH) ==========
+  // Calendar year company (fiscal year end 12/31)
+  // DAT start: Oct 8, 2025 (PIPE closed) - pivoted from Leap Therapeutics (pharma)
+  // First ZEC treasury quarter: Q4 2025
+
+  // Q1 2026 (Jan-Mar) - Upcoming
+  {
+    ticker: "CYPH",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15", // Expected ~45 days after Mar 31
+    earningsTime: "AMC",
+    source: "estimated",
+    status: "upcoming",
+  },
+  // Q4 2025 (Oct-Dec) - First quarter with ZEC holdings, 10-K expected ~Mar 2026
+  {
+    ticker: "CYPH",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-17", // 10-K expected ~75 days after Dec 31 (accelerated filer)
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 290_062, // Dec 30, 2025 8-K: 290,062.67 ZEC
+    sharesAtQuarterEnd: 137_420_344, // Basic (56.6M) + Pre-funded warrants (80.8M)
+    holdingsPerShare: 2.111, // 290,062 / 137,420,344
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
+    status: "upcoming", // Awaiting 10-K
+  },
+  // Q3 2025 (Jul-Sep) - Pre-DAT (was Leap Therapeutics pharma company, no ZEC)
+  {
+    ticker: "CYPH",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14", // 10-Q filed
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0, // Pre-DAT - company was Leap Therapeutics
+    sharesAtQuarterEnd: 56_600_000, // Pre-PIPE basic shares
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1509745&type=10-Q",
+    status: "reported",
+  },
+
   // ==================== AVAX COMPANIES ====================
 
   // ========== AVAX One Technology (AVX) ==========
