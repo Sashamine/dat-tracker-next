@@ -84,7 +84,7 @@ const tickerToCIK: Record<string, string> = {
   "TBH": "0001903595", // Brag House Holdings
   "BTOG": "0001833498",
   // AVAX
-  "AVX": "0001845123",
+  "AVX": "0001826397",  // AVAX One Technology (formerly AgriFORCE)
   // HBAR (OTC)
   "IHLDF": "0001905459", // Immutable Holdings
 };
