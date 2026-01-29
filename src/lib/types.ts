@@ -14,6 +14,7 @@ export type HoldingsSource =
   | "press-release"      // Official company announcement
   | "company-website"    // IR page or official site
   | "company-dashboard"  // Official company dashboard/tracker (real-time)
+  | "company-reported"   // Company-reported data (not SEC-verified)
   | "aggregator"         // bitbo.io, bitcointreasuries.net, etc.
   | "manual";            // Manual entry (needs verification)
 

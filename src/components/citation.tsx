@@ -17,6 +17,7 @@ const SOURCE_LABELS: Record<HoldingsSource, string> = {
   "press-release": "Press Release",
   "company-website": "Company Website",
   "company-dashboard": "Company Dashboard",
+  "company-reported": "Company Reported",
   "aggregator": "Third-party Aggregator",
   "manual": "Manual Entry",
 };
@@ -29,6 +30,7 @@ const SOURCE_COLORS: Record<HoldingsSource, string> = {
   "press-release": "text-yellow-400",
   "company-website": "text-purple-400",
   "company-dashboard": "text-cyan-400",
+  "company-reported": "text-teal-400",
   "aggregator": "text-orange-400",
   "manual": "text-gray-400",
 };

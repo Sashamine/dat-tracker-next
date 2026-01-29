@@ -83,6 +83,7 @@ export function formatHoldingsSource(source?: string): string {
     "company website": "Company Website",
     "company-website": "Company Website",
     "company-dashboard": "Company Dashboard",
+    "company-reported": "Company Reported",
     "bitcointreasuries.net": "BTC Treasuries",
     "manual": "Manual Entry",
     "api": "API"
