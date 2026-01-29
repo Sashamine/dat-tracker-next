@@ -372,19 +372,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   Low Liq
                 </Badge>
               )}
-              {/* Holdings source verification badge */}
-              {company.holdingsSource && !["sec-filing", "regulatory-filing", "on-chain"].includes(company.holdingsSource) && (
-                company.secReferenced ? (
-                  <Badge variant="outline" className="text-[10px] px-1 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
-                    SEC Ref
-                  </Badge>
-                ) : (
-                  <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
-                    Co. Reported
-                  </Badge>
-                )
+              {/* SEC Referenced badge - only when explicitly flagged */}
+              {company.secReferenced && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
+                  SEC Ref
+                </Badge>
               )}
-              {/* Shares verification badge */}
+              {/* Shares verification badge - only when explicitly flagged */}
               {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
                 <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
                   Shares: Co. Reported
@@ -632,19 +626,13 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                             Low Liquidity
                           </Badge>
                         )}
-                        {/* Holdings source verification badge */}
-                        {company.holdingsSource && !["sec-filing", "regulatory-filing", "on-chain"].includes(company.holdingsSource) && (
-                          company.secReferenced ? (
-                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
-                              SEC Referenced
-                            </Badge>
-                          ) : (
-                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
-                              Company Reported
-                            </Badge>
-                          )
+                        {/* SEC Referenced badge - only when explicitly flagged */}
+                        {company.secReferenced && (
+                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
+                            SEC Referenced
+                          </Badge>
                         )}
-                        {/* Shares verification badge */}
+                        {/* Shares verification badge - only when explicitly flagged */}
                         {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
                           <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
                             Shares: Company Reported
