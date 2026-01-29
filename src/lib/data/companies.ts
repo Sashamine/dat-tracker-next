@@ -539,6 +539,7 @@ export const btcCompanies: Company[] = [
     ticker: "ALTBG",
     asset: "BTC",
     tier: 2,
+    website: "https://cptlb.com",
     holdings: 2_823,  // AMF filing Nov 25, 2025
     holdingsLastUpdated: "2025-11-25",
     holdingsSource: "regulatory-filing",
