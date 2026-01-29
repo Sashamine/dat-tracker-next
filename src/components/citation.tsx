@@ -16,6 +16,7 @@ const SOURCE_LABELS: Record<HoldingsSource, string> = {
   "regulatory-filing": "Regulatory Filing",
   "press-release": "Press Release",
   "company-website": "Company Website",
+  "company-dashboard": "Company Dashboard",
   "aggregator": "Third-party Aggregator",
   "manual": "Manual Entry",
 };
@@ -27,6 +28,7 @@ const SOURCE_COLORS: Record<HoldingsSource, string> = {
   "regulatory-filing": "text-blue-300",
   "press-release": "text-yellow-400",
   "company-website": "text-purple-400",
+  "company-dashboard": "text-cyan-400",
   "aggregator": "text-orange-400",
   "manual": "text-gray-400",
 };
