@@ -16,7 +16,15 @@ import { litestrategyFetcher, getSupportedTickers as getLitestrategyTickers } fr
 import { kulrFetcher, getSupportedTickers as getKulrTickers } from './dashboards/kulr';
 import { upexiFetcher, getSupportedTickers as getUpexiTickers } from './dashboards/upexi';
 import { capitalBFetcher, getSupportedTickers as getCapitalBTickers } from './dashboards/capital-b';
-import { secXbrlFetcher, getSupportedTickers as getSecXbrlTickers } from './sec-xbrl';
+import { 
+  secXbrlFetcher, 
+  getSupportedTickers as getSecXbrlTickers,
+  fetchOperatingCashFlow,
+  fetchBurnRates,
+  extractOperatingCashFlow,
+  type OperatingCashFlowResult,
+  type FilingPeriodType,
+} from './sec-xbrl';
 import { yahooFinanceFetcher, getSupportedTickers as getYahooTickers } from './yahoo-finance';
 import { amfFetcher, getSupportedTickers as getAmfTickers } from './amf';
 import { hkexFetcher, getSupportedTickers as getHkexTickers } from './hkex';
@@ -25,6 +33,15 @@ export * from './types';
 export * from './hkex';
 export * from './hkex-pdf-extractor';
 export * from './hkex-monitor';
+
+// Burn rate / operating cash flow exports
+export {
+  fetchOperatingCashFlow,
+  fetchBurnRates,
+  extractOperatingCashFlow,
+  type OperatingCashFlowResult,
+  type FilingPeriodType,
+} from './sec-xbrl';
 
 /**
  * All registered fetchers

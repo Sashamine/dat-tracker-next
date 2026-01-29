@@ -108,6 +108,265 @@ const XBRL_FIELD_MAPPINGS: Record<FetchField, { gaapFields: string[]; deiFields?
   },
 };
 
+// ===========================================================================
+// OPERATING CASH FLOW (BURN RATE) EXTRACTION
+// ===========================================================================
+
+/**
+ * XBRL concepts for operating cash flow (burn rate calculation)
+ * 
+ * NetCashProvidedByUsedInOperatingActivities is the primary concept.
+ * Negative values indicate cash burn; positive values indicate cash generation.
+ */
+const OPERATING_CASH_FLOW_CONCEPTS = [
+  'NetCashProvidedByUsedInOperatingActivities',
+  'NetCashProvidedByUsedInOperatingActivitiesContinuingOperations',
+  'CashFlowsFromUsedInOperatingActivities',  // IFRS variant
+];
+
+/**
+ * Filing period types for burn rate calculation
+ */
+export type FilingPeriodType = 
+  | 'quarterly'      // 10-Q: ~3 months (US domestic)
+  | 'semi-annual'    // 6-K: ~6 months (FPI interim)
+  | 'annual'         // 10-K/20-F: 12 months
+  | 'unknown';
+
+/**
+ * Operating cash flow result with period metadata
+ */
+export interface OperatingCashFlowResult {
+  value: number;              // Total operating cash flow for the period (negative = burn)
+  periodStart: string;        // YYYY-MM-DD
+  periodEnd: string;          // YYYY-MM-DD
+  periodMonths: number;       // Approximate months in period
+  periodType: FilingPeriodType;
+  quarterlyBurn: number;      // Normalized to quarterly rate (positive = burn, negative = generation)
+  form: string;               // 10-Q, 10-K, 6-K, 20-F
+  filed: string;              // Filing date
+}
+
+/**
+ * Calculate the number of months between two dates
+ */
+function monthsBetween(startDate: string, endDate: string): number {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  // Add 1 because periods are inclusive
+  return Math.max(1, months + 1);
+}
+
+/**
+ * Determine period type from form type and duration
+ */
+function determinePeriodType(form: string, months: number): FilingPeriodType {
+  const formUpper = form.toUpperCase().replace('/A', '');
+  
+  if (formUpper === '10-Q') return 'quarterly';
+  if (formUpper === '10-K') return 'annual';
+  if (formUpper === '20-F') return 'annual';
+  if (formUpper === '6-K') {
+    // 6-K can be quarterly or semi-annual depending on the FPI
+    return months <= 4 ? 'quarterly' : 'semi-annual';
+  }
+  
+  // Fallback based on duration
+  if (months <= 4) return 'quarterly';
+  if (months <= 7) return 'semi-annual';
+  if (months <= 13) return 'annual';
+  return 'unknown';
+}
+
+/**
+ * Extract operating cash flow from XBRL data
+ * 
+ * Returns the most recent operating cash flow with quarterly burn rate calculation.
+ * Handles different periodicities:
+ * - 10-Q: Quarterly (divide by 1 to get quarterly)
+ * - 6-K: Semi-annual (divide by 2 to get quarterly)
+ * - 10-K/20-F: Annual (divide by 4 to get quarterly)
+ */
+export function extractOperatingCashFlow(
+  facts: XBRLCompanyFacts['facts']
+): OperatingCashFlowResult | null {
+  // Try each concept in order
+  for (const concept of OPERATING_CASH_FLOW_CONCEPTS) {
+    const factData = facts['us-gaap']?.[concept];
+    if (!factData?.units?.USD) continue;
+
+    const entries = factData.units.USD;
+    
+    // Filter to valid filing forms
+    const validEntries = entries.filter(e => ALL_VALID_FORMS.includes(e.form));
+    if (validEntries.length === 0) continue;
+
+    // Sort by period end date descending, then by filed date descending
+    const sorted = validEntries.sort((a, b) => {
+      const dateCompare = b.end.localeCompare(a.end);
+      if (dateCompare !== 0) return dateCompare;
+      return b.filed.localeCompare(a.filed);
+    });
+
+    // Get the most recent entry
+    const latest = sorted[0];
+    
+    // Calculate period start (XBRL uses 'start' field for duration concepts)
+    // If not available, estimate based on form type
+    let periodStart: string;
+    const periodEnd = latest.end;
+    
+    // Look for entries with explicit start date in the raw data
+    // XBRL duration concepts have start dates
+    const entryWithStart = sorted.find((e: XBRLEntry & { start?: string }) => 
+      e.end === periodEnd && e.form === latest.form && e.start
+    ) as (XBRLEntry & { start?: string }) | undefined;
+    
+    if (entryWithStart?.start) {
+      periodStart = entryWithStart.start;
+    } else {
+      // Estimate based on form type
+      const form = latest.form.toUpperCase().replace('/A', '');
+      const endDate = new Date(periodEnd);
+      if (form === '10-Q') {
+        // Quarterly: ~3 months before
+        endDate.setMonth(endDate.getMonth() - 3);
+        endDate.setDate(endDate.getDate() + 1);
+      } else if (form === '6-K') {
+        // Could be 3 or 6 months - default to 6
+        endDate.setMonth(endDate.getMonth() - 6);
+        endDate.setDate(endDate.getDate() + 1);
+      } else {
+        // Annual: 12 months before
+        endDate.setFullYear(endDate.getFullYear() - 1);
+        endDate.setDate(endDate.getDate() + 1);
+      }
+      periodStart = endDate.toISOString().split('T')[0];
+    }
+    
+    const periodMonths = monthsBetween(periodStart, periodEnd);
+    const periodType = determinePeriodType(latest.form, periodMonths);
+    
+    // Calculate quarterly burn rate
+    // Operating cash flow is negative when burning cash, positive when generating
+    // quarterlyBurn is positive when burning (inverted for intuitive reading)
+    const cashFlow = latest.val;
+    const quarterlyDivisor = periodMonths / 3;
+    const quarterlyBurn = -cashFlow / quarterlyDivisor;  // Negate so burn is positive
+    
+    return {
+      value: cashFlow,
+      periodStart,
+      periodEnd,
+      periodMonths,
+      periodType,
+      quarterlyBurn: Math.round(quarterlyBurn),
+      form: latest.form,
+      filed: latest.filed,
+    };
+  }
+  
+  return null;
+}
+
+/**
+ * Fetch operating cash flow (burn rate) for a single company
+ * 
+ * Returns the quarterly burn rate normalized from the filing period.
+ * Use this to update company.quarterlyBurnUsd, burnSource, burnSourceUrl, burnAsOf
+ */
+export async function fetchOperatingCashFlow(ticker: string): Promise<{
+  quarterlyBurn: number;
+  periodType: FilingPeriodType;
+  periodEnd: string;
+  form: string;
+  sourceUrl: string;
+} | null> {
+  const cik = TICKER_TO_CIK[ticker.toUpperCase()];
+  if (!cik) return null;
+
+  const data = await fetchCompanyFacts(cik);
+  if (!data?.facts) return null;
+
+  const result = extractOperatingCashFlow(data.facts);
+  if (!result) return null;
+
+  return {
+    quarterlyBurn: result.quarterlyBurn,
+    periodType: result.periodType,
+    periodEnd: result.periodEnd,
+    form: result.form,
+    sourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}&type=${result.form}`,
+  };
+}
+
+/**
+ * Fetch burn rates for multiple companies
+ * Returns array of results with company ticker and burn data
+ */
+export async function fetchBurnRates(tickers: string[]): Promise<Array<{
+  ticker: string;
+  quarterlyBurn: number | null;
+  periodType: FilingPeriodType | null;
+  periodEnd: string | null;
+  form: string | null;
+  sourceUrl: string | null;
+  error?: string;
+}>> {
+  const results: Array<{
+    ticker: string;
+    quarterlyBurn: number | null;
+    periodType: FilingPeriodType | null;
+    periodEnd: string | null;
+    form: string | null;
+    sourceUrl: string | null;
+    error?: string;
+  }> = [];
+
+  for (const ticker of tickers) {
+    try {
+      const burnData = await fetchOperatingCashFlow(ticker);
+      
+      if (burnData) {
+        results.push({
+          ticker,
+          quarterlyBurn: burnData.quarterlyBurn,
+          periodType: burnData.periodType,
+          periodEnd: burnData.periodEnd,
+          form: burnData.form,
+          sourceUrl: burnData.sourceUrl,
+        });
+      } else {
+        results.push({
+          ticker,
+          quarterlyBurn: null,
+          periodType: null,
+          periodEnd: null,
+          form: null,
+          sourceUrl: null,
+          error: 'No operating cash flow data found',
+        });
+      }
+
+      // Rate limit - SEC requires polite access
+      await new Promise(r => setTimeout(r, 200));
+    } catch (error) {
+      results.push({
+        ticker,
+        quarterlyBurn: null,
+        periodType: null,
+        periodEnd: null,
+        form: null,
+        sourceUrl: null,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
+
+  return results;
+}
+
 async function fetchCompanyFacts(cik: string): Promise<XBRLCompanyFacts | null> {
   try {
     const url = `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`;

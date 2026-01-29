@@ -47,3 +47,15 @@ export {
   needsFilingRefresh,
   getTickersNeedingRefresh,
 } from './repository';
+
+// Burn rate staleness checker
+export {
+  checkBurnStaleness,
+  getStaleCompanies,
+  getFreshCompanies,
+  getBurnStalenessSummary,
+  getTickersNeedingBurnUpdate,
+  getSECCompanies,
+  type BurnStalenessResult,
+  type BurnStalenessSummary,
+} from './burn-staleness';
