@@ -223,7 +223,7 @@ export function MNAVTooltip({
               </div>
             </div>
 
-            {/* Enterprise Value breakdown */}
+            {/* Enterprise Value breakdown - always show all components for formula consistency */}
             <div>
               <div className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">
                 Enterprise Value
@@ -233,41 +233,42 @@ export function MNAVTooltip({
                   <span>Market Cap</span>
                   <span className="font-mono">{formatCompact(marketCap)}</span>
                 </div>
-                {totalDebt > 0 && (
-                  <>
-                    <div className="flex justify-between items-start">
-                      <span className="flex items-center flex-wrap">
-                        + Debt
-                        <SourceCite source={debtSource} asOf={debtAsOf} sourceUrl={debtSourceUrl} />
-                      </span>
-                      <span className="font-mono text-red-400">{formatCompact(totalDebt + (itmDebtAdjustment || 0))}</span>
-                    </div>
-                    {itmDebtAdjustment && itmDebtAdjustment > 0 && (
-                      <div className="flex justify-between items-start text-[10px] text-green-400/80">
-                        <span className="italic">− ITM convert debt</span>
-                        <span className="font-mono">({formatCompact(itmDebtAdjustment)})</span>
-                      </div>
-                    )}
-                  </>
-                )}
-                {preferredEquity > 0 && (
-                  <div className="flex justify-between items-start">
-                    <span className="flex items-center flex-wrap">
-                      + Preferred
-                      <SourceCite source={preferredSource} asOf={preferredAsOf} sourceUrl={preferredSourceUrl} />
-                    </span>
-                    <span className="font-mono text-red-400">{formatCompact(preferredEquity)}</span>
+                {/* Always show debt row */}
+                <div className="flex justify-between items-start">
+                  <span className="flex items-center flex-wrap">
+                    + Debt
+                    {totalDebt > 0 && <SourceCite source={debtSource} asOf={debtAsOf} sourceUrl={debtSourceUrl} />}
+                  </span>
+                  <span className={`font-mono ${totalDebt > 0 ? 'text-red-400' : 'text-gray-500'}`}>
+                    {totalDebt > 0 ? formatCompact(totalDebt + (itmDebtAdjustment || 0)) : '$0'}
+                  </span>
+                </div>
+                {itmDebtAdjustment && itmDebtAdjustment > 0 && (
+                  <div className="flex justify-between items-start text-[10px] text-green-400/80">
+                    <span className="italic">− ITM convert debt</span>
+                    <span className="font-mono">({formatCompact(itmDebtAdjustment)})</span>
                   </div>
                 )}
-                {freeCash > 0 && (
-                  <div className="flex justify-between items-start">
-                    <span className="flex items-center flex-wrap">
-                      - {hasRestrictedCash ? 'Free Cash' : 'Cash'}
-                      <SourceCite source={cashSource} asOf={cashAsOf} sourceUrl={cashSourceUrl} />
-                    </span>
-                    <span className="font-mono text-green-400">({formatCompact(freeCash)})</span>
-                  </div>
-                )}
+                {/* Always show preferred row */}
+                <div className="flex justify-between items-start">
+                  <span className="flex items-center flex-wrap">
+                    + Preferred
+                    {preferredEquity > 0 && <SourceCite source={preferredSource} asOf={preferredAsOf} sourceUrl={preferredSourceUrl} />}
+                  </span>
+                  <span className={`font-mono ${preferredEquity > 0 ? 'text-red-400' : 'text-gray-500'}`}>
+                    {preferredEquity > 0 ? formatCompact(preferredEquity) : '$0'}
+                  </span>
+                </div>
+                {/* Always show cash row */}
+                <div className="flex justify-between items-start">
+                  <span className="flex items-center flex-wrap">
+                    − {hasRestrictedCash ? 'Free Cash' : 'Cash'}
+                    {freeCash > 0 && <SourceCite source={cashSource} asOf={cashAsOf} sourceUrl={cashSourceUrl} />}
+                  </span>
+                  <span className={`font-mono ${freeCash > 0 ? 'text-green-400' : 'text-gray-500'}`}>
+                    {freeCash > 0 ? `(${formatCompact(freeCash)})` : '$0'}
+                  </span>
+                </div>
                 {hasRestrictedCash && (
                   <div className="flex justify-between items-start text-[10px] text-gray-500">
                     <span className="italic">({formatCompact(restrictedCash)} restricted)</span>
