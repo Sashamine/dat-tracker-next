@@ -762,7 +762,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 12_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 84_130_257,  // Nov 4, 2025 investor update - includes pre-funded + penny warrants (exercisable at $0.0001)
+    sharesForMnav: 75_900_000,  // Q3 2025 10-Q press release: "75.9 million common shares and pre-funded warrants outstanding"
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",

@@ -300,18 +300,18 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
   // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
-  // NOTE: Pre-funded + penny warrants (exercisable at $0.0001) ALREADY INCLUDED in sharesForMnav (84.1M)
-  // sharesForMnav = 41.3M basic + ~42.8M pre-funded/penny warrants = 84.1M FD
-  // Multiple warrant tranches from Sep/Jun/Apr 2025 offerings - most are penny warrants essentially shares
+  // Q3 earnings press release: "75.9 million common shares and pre-funded warrants outstanding"
+  // Basic shares (Nov 17): 41.3M → Pre-funded warrants: ~34.6M
+  // Pre-funded warrants already included in sharesForMnav (75.9M)
   HSDT: [
     {
       type: "warrant",
-      strikePrice: 0.0001, // Penny warrants - essentially shares
-      potentialShares: 42_828_857, // Difference between FD (84.1M) and basic (41.3M)
-      source: "10-Q Q3 2025 + Nov 4 investor update",
+      strikePrice: 0.0001, // Pre-funded warrants - essentially shares
+      potentialShares: 34_600_000, // 75.9M - 41.3M basic = ~34.6M pre-funded
+      source: "10-Q Q3 2025 earnings press release",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001610853&type=10-Q",
-      notes: "Pre-funded + penny warrants from multiple offerings (Sep/Jun/Apr 2025). Already in sharesForMnav.",
+        "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113672/hsdt-20251118xex99d1.htm",
+      notes: "Pre-funded warrants from Sep 2025 PIPE. Already in sharesForMnav (75.9M).",
     },
   ],
 

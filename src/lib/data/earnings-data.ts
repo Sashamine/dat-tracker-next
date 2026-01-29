@@ -2210,8 +2210,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-03-15",  // Estimated 10-K filing
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 2_300_000,  // Oct 29, 2025 8-K (~2.3M SOL, best available)
-    sharesAtQuarterEnd: 84_130_257,  // FD shares (41.3M basic + 42.8M warrants)
-    holdingsPerShare: 0.0273,  // 2.3M / 84.1M
+    sharesAtQuarterEnd: 75_900_000,  // Q3 press release: "75.9M common shares and pre-funded warrants"
+    holdingsPerShare: 0.0303,  // 2.3M / 75.9M
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
     status: "upcoming",
@@ -2226,8 +2226,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-18",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL: 1,393,804 unrestricted + 345,551 restricted
-    sharesAtQuarterEnd: 84_130_257,  // FD shares (41.3M basic + 42.8M warrants)
-    holdingsPerShare: 0.0207,  // 1.74M / 84.1M
+    sharesAtQuarterEnd: 75_900_000,  // Q3 press release: "75.9M common shares and pre-funded warrants"
+    holdingsPerShare: 0.0229,  // 1.74M / 75.9M
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001610853&type=10-Q",
     status: "reported",
