@@ -2350,6 +2350,49 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ==================== SUI COMPANIES ====================
+
+  // ========== SUI Group Holdings (SUIG) ==========
+  // Calendar year company (fiscal year ends December 31)
+  // Formerly Mill City Ventures (MCVT), renamed Aug 26, 2025
+  // DAT strategy launched late July 2025
+  // Verified 2026-01-29 via SEC EDGAR (CIK 0001425355)
+  // Only public company with Sui Foundation relationship
+  // Note: "Fully adjusted shares" = basic + pre-funded warrants
+  //
+  // Q4 2025 - Upcoming
+  {
+    ticker: "SUIG",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-31",  // Estimated - 10-K due ~90 days after FY end
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 108_098_436,  // Jan 8, 2026 8-K (as of Jan 7)
+    sharesAtQuarterEnd: 80_900_000,  // Jan 8, 2026 8-K "fully adjusted shares"
+    holdingsPerShare: 1.336,  // 108,098,436 / 80,900,000
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+    status: "upcoming",
+  },
+  // Q3 2025 - SEC 10-Q filed Nov 13, 2025
+  {
+    ticker: "SUIG",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-13",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 106_000_000,  // SEC 10-Q: "106 million SUI tokens" (valued at $344.5M @ $3.26)
+    sharesAtQuarterEnd: 89_075_630,  // 10-Q: ~1.19 SUI per share → 106M / 1.19 ≈ 89M
+    holdingsPerShare: 1.190,  // Per 10-Q: "approximately 1.19 SUI per-share of common stock and Pre-Funded Warrants"
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=10-Q",
+    status: "reported",
+  },
+
   // ==================== TRX COMPANIES ====================
 
   // ========== Tron Inc (TRON) ==========

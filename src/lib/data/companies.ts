@@ -1297,6 +1297,10 @@ export const suiCompanies: Company[] = [
     leader: "Douglas Polinsky (CEO)",
     strategy: "Only public company with Sui Foundation relationship",
     notes: "Formerly Mill City Ventures. ~2.9% of SUI supply. Q4 2025: repurchased 7.8M shares.",
+    website: "https://www.suig.io",
+    twitter: "https://x.com/suig_io",
+    investorRelationsUrl: "https://www.suig.io/investors",
+    // otherInvestments: ~$20.7M legacy portfolio (short-term loans, commercial loans, common stock) - not included in mNAV
   },
 ];
 

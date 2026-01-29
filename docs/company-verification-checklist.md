@@ -555,6 +555,79 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## SUIG (SUI Group Holdings) - Verified 2026-01-29
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 108,098,436 SUI (Jan 7, 2026)
+- [x] **Source**: SEC 8-K Jan 8, 2026
+- [x] **Source URL**: https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm
+- [x] **Last updated**: 2026-01-07
+- [x] **Note**: ~2.9% of SUI supply. Q4 2025: repurchased 7.8M shares.
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001425355
+- [x] **Recent 8-Ks checked**: Jan 8 (treasury update), Jan 5 (board changes)
+- [x] **Latest 10-K**: Pending (FY2025 expected ~Mar 2026)
+- [x] **Latest 10-Q**: Filed Nov 13, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **Holdings**: 106M SUI (Sep 30, 2025 per 10-Q narrative)
+- [x] **Shares**: ~89M at Q3 (from 1.19 SUI per share calculation in 10-Q)
+- [x] **Note**: No CryptoAssetNumberOfUnits in XBRL - SUI in narrative sections
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Current quarter**: Q4 2025 (Oct-Dec), 10-K expected ~Mar 2026
+
+### 5. Earnings Data ✅
+| Quarter | Period End | Holdings | Shares (adj) | HPS | Status |
+|---------|------------|----------|--------------|-----|--------|
+| Q3 2025 | Sep 30 | 106,000,000 | 89,075,630 | 1.190 | reported |
+| Q4 2025 | Dec 31 | 108,098,436 | 80,900,000 | 1.336 | upcoming |
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q3→Q4 2025**: +12% HPS (holdings +2%, shares -9% from buybacks)
+- [x] **Trend**: Positive - buybacks improving HPS
+- [x] **Note**: 7.8M shares repurchased in Q4 2025 (8.80% of outstanding)
+
+### 7. Non-Crypto Investments ✅
+- [x] **Legacy portfolio**: ~$20.7M (short-term loans, commercial loans, equity)
+- [x] **Treatment**: Not included in mNAV - documented in notes
+
+### 8. Company Metadata ✅
+- [x] **Strategy**: Only public company with Sui Foundation relationship
+- [x] **Notes**: Formerly Mill City Ventures. ~2.9% of SUI supply.
+- [x] **Staking**: 100% staked, 2.2% APY
+- [x] **Leader**: Douglas Polinsky (CEO)
+
+### 9. Dilutive Instruments ✅
+- [x] **Quintenz director warrants**: 207,565 shares total at $5.42-$7.05 (all OTM)
+  - 83,026 @ $5.420
+  - 41,513 @ $5.962
+  - 41,513 @ $6.504
+  - 41,513 @ $7.046
+- [x] **Note**: 80.9M "fully adjusted shares" already includes pre-funded warrants
+- [x] **Added to dilutive-instruments.ts**: Yes (2026-01-29)
+
+### 10. Company Links ✅
+- [x] **website**: https://www.suig.io
+- [x] **twitter**: https://x.com/suig_io
+- [x] **investorRelationsUrl**: https://www.suig.io/investors
+
+### 11. mNAV Calculation ✅ (verified 2026-01-29)
+- [x] **SUI price**: $1.30 (CoinGecko)
+- [x] **Stock price**: $1.70 (Yahoo Finance)
+- [x] **Holdings**: 108,098,436 SUI
+- [x] **Basic shares**: 80,900,000 (fully adjusted)
+- [x] **ITM dilutives**: None (all warrants OTM)
+- [x] **Diluted shares**: 80,900,000
+- [x] **NAV**: 108,098,436 × $1.30 = $140.5M
+- [x] **NAV/share**: $140.5M / 80.9M = $1.74
+- [x] **mNAV**: $1.70 / $1.74 = **0.98** (2% discount)
+- [ ] **UI match**: (check against dat-tracker UI)
+
+---
+
 ## HSDT (Solana Company) - Pending Verification
 
 ### Company Metadata Added 2026-01-29

@@ -115,6 +115,58 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // SUIG (SUI Group Holdings) - SUI treasury company
+  // Verified 2026-01-29 via SEC 8-K Jan 8, 2026 (accession 0001654954-26-000201)
+  // Treasury: 108,098,436 SUI (Jan 7, 2026) | Shares: 80.9M fully adjusted
+  // Note: 80.9M already includes pre-funded warrants - sharesForMnav uses this
+  // Director warrants below vest over 24mo (starting 6mo from Jan 2026), 5-year exercise
+  SUIG: [
+    {
+      type: "warrant",
+      strikePrice: 5.42,
+      potentialShares: 83_026,
+      source: "8-K Jan 8, 2026",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Brian Quintenz director warrants (tranche 1) - vest 25% every 6mo starting Jul 2026",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.962,
+      potentialShares: 41_513,
+      source: "8-K Jan 8, 2026",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Brian Quintenz director warrants (tranche 2)",
+    },
+    {
+      type: "warrant",
+      strikePrice: 6.504,
+      potentialShares: 41_513,
+      source: "8-K Jan 8, 2026",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Brian Quintenz director warrants (tranche 3)",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.046,
+      potentialShares: 41_513,
+      source: "8-K Jan 8, 2026",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Brian Quintenz director warrants (tranche 4)",
+    },
+  ],
+
   // CleanSpark (CLSK) - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC filings (CIK 0000827876)
   // $1.7B total converts: $550M (Dec 2024) + $1.15B (Nov 2025)
