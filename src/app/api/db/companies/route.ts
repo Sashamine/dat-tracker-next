@@ -73,7 +73,6 @@ export async function GET(request: Request) {
       cryptoInvestments: c.cryptoInvestments,
       secReferenced: c.secReferenced,
       dataWarnings: c.dataWarnings,
-      dataWarnings: c.dataWarnings,
     }));
 
     return NextResponse.json({
