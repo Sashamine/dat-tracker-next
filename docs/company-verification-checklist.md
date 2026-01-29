@@ -268,6 +268,18 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## DFDV (DeFi Development Corp) - Pending Verification
+
+### Company Metadata Added 2026-01-29
+- [x] **Website**: https://defidevcorp.com
+- [x] **X/Twitter**: https://x.com/defidevcorp
+- [ ] **Holdings data**: Verify current SOL holdings (Q4 2025 shows 2.22M)
+- [ ] **SEC filings**: Check for recent 8-Ks
+- [ ] **Earnings data**: Backfill quarters
+- [ ] **Dilutive instruments**: Document warrants/converts
+
+---
+
 ## Verification Template (Copy for Next Company)
 
 ### Company: [TICKER] - Verification Date: YYYY-MM-DD

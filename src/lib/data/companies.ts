@@ -778,6 +778,8 @@ export const solCompanies: Company[] = [
     secCik: "0001805526",
     asset: "SOL",
     tier: 1,
+    website: "https://defidevcorp.com",
+    twitter: "https://x.com/defidevcorp",
     holdings: 2_221_329,  // Q4 2025 business update
     holdingsLastUpdated: "2026-01-01",
     holdingsSource: "sec-filing",
