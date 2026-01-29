@@ -1002,14 +1002,16 @@ export const bnbCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
     totalDebt: 500_000_000,  // $500M convertible notes (360-day maturity, 0% interest)
-    sharesForMnav: 15_674_052,  // SEC 20-F FY2024: 12,815,143 Class A + 2,858,909 Class B
-    sharesSource: "SEC 20-F FY2024",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=20-F",
-    sharesAsOf: "2024-12-31",
-    // Note: Check 6-K filings for more recent share counts (possible issuances after FY2024)
+    sharesForMnav: 20_700_000,  // Dec 31, 2025 6-K + convertible issuances. FY2024: 15.67M (12.8M A + 2.9M B)
+    sharesSource: "SEC 6-K Dec 31, 2025",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
+    sharesAsOf: "2025-12-31",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
-    notes: "$25M buyback authorized.",
+    notes: "$25M buyback authorized. Also holds ~1,000 BTC from convert deal. Verified 2026-01-29.",
+    website: "https://www.intchains.com",
+    twitter: "https://x.com/nano_labs_NA",
+    investorRelationsUrl: "https://ir.intchains.com",
     secondaryCryptoHoldings: [
       { asset: "BTC", amount: 1_000, note: "passive hold from convertible deal" },
     ],

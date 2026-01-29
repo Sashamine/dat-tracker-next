@@ -2488,6 +2488,45 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== Nano Labs (NA) ==========
+  // Calendar year company (FY ends December 31)
+  // Foreign Private Issuer (Cayman Islands) - files 20-F (annual) + 6-K (current)
+  // BNB treasury strategy began July 2025
+  // Verified 2026-01-29 via SEC EDGAR (CIK 0001872302)
+  //
+  // FY 2025 - Full year (includes BNB treasury period Jul-Dec)
+  {
+    ticker: "NA",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,  // Annual report covers full year
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-04-30",  // 20-F due ~120 days after FY end
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 130_000,  // Dec 31, 2025 6-K: "over 130,000 BNB"
+    sharesAtQuarterEnd: 20_700_000,  // Estimated from holdings-history
+    holdingsPerShare: 6.280,  // 130,000 / 20,700,000
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
+    status: "upcoming",
+  },
+  // H1 2025 (Jan-Jun 2025) - Pre-treasury baseline
+  {
+    ticker: "NA",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,  // Semi-annual
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-09-30",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // No BNB yet - DAT started Jul 2025
+    sharesAtQuarterEnd: 15_674_052,  // FY2024 20-F share count
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
+    status: "reported",
+  },
+
   // ==================== HYPE COMPANIES ====================
 
   // ========== Hyperliquid Strategies (PURR) ==========

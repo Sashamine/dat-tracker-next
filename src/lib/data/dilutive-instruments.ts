@@ -768,6 +768,51 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // At $5.32 stock: All warrants OUT of money ($15.15 strike)
   // Fully diluted if ITM: ~52M basic + 49.5M = ~101.5M shares
 
+  // Nano Labs (NA) - BNB treasury company (#2 behind BNC)
+  // $500M convertible notes program announced Jul 2025
+  // Conversion price: $20/share, 360-day term, 0% interest
+  // Also has warrants from 2024 private placement
+  // Verified 2026-01-29 via SEC 424B3 filings (CIK 0001872302)
+  NA: [
+    {
+      type: "convertible",
+      strikePrice: 20.00,
+      potentialShares: 25_000_000,  // $500M / $20 = 25M shares max
+      faceValue: 500_000_000,
+      source: "SEC 424B3 Jul 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=424B3",
+      expiration: "2026-07-01",  // ~360 days from Jul 2025
+      issuedDate: "2025-07-01",
+      notes: "$500M 0% converts @ $20. Deep OTM at ~$5 stock. If can't convert, repay in BTC.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 10.00,
+      potentialShares: 5_952_381,  // From 424B3 prospectus (Sep 2025)
+      source: "SEC 424B3 Sep 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=424B3",
+      expiration: "2030-04-11",  // 5 years from Apr 2024 issuance
+      issuedDate: "2024-04-11",
+      notes: "Warrants from Apr 2024 private placement. OTM at ~$5 stock.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.30,  // From Apr 2024 6-K (652,174 shares @ $7.30)
+      potentialShares: 652_174,
+      source: "SEC 424B3 Sep 2025",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=424B3",
+      expiration: "2029-04-11",  // 5 years from Apr 2024
+      issuedDate: "2024-04-11",
+      notes: "Additional warrants from Apr 2024 placement.",
+    },
+  ],
+  // Total NA dilution: ~31.6M potential shares (if all ITM)
+  // At ~$5 stock: All instruments OUT of money
+  // Converts especially deep OTM ($20 strike vs $5 stock)
+
   // AVX (AVAX One Technology) - AVAX treasury company
   // Verified 2026-01-29 via SEC 8-K (CIK 0001826397)
   // Basic shares: 93,112,148 (10-Q Nov 14, 2025)
