@@ -494,6 +494,67 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## TRON (Tron Inc) - Verified 2026-01-29
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 677,000,000 TRX
+- [x] **Source**: SEC 8-K Jan 23, 2026 ("more than 677 million TRX")
+- [x] **Last updated**: 2026-01-23
+- [x] **Staking**: 81% staked via JustLend, 4.5% APY
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 1956744
+- [x] **Recent 8-Ks checked**: Jan 23 (holdings), Dec 29 (Justin Sun $18M)
+- [x] **Latest 10-Q**: Filed Nov 10, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **EntityCommonStockSharesOutstanding**: 257,115,400 (Nov 5, 2025)
+- [x] **Post-Justin Sun shares**: 274,382,064 (Dec 29, 2025 8-K)
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+
+### 5. Earnings Data ✅
+| Quarter | Period End | Holdings | Shares | HPS | Source |
+|---------|------------|----------|--------|-----|--------|
+| Q3 2025 | Sep 30 | 677.6M | 257.1M | 2.636 | 10-Q |
+| Q4 2025 | Dec 31 | 677M | 274.4M | 2.468 | 8-K |
+
+### 6. Holdings Per Share Growth ⚠️
+- [x] **Jun→Sep 2025**: -80% HPS (warrant exercise diluted shares)
+- [x] **Sep→Dec 2025**: -6% HPS (Justin Sun investment dilution)
+- [x] **Trend**: Declining due to capital raises (but adding TRX)
+
+### 7. Non-Crypto Investments ✅
+- [x] **Other investments**: None significant
+
+### 8. Company Metadata ✅
+- [x] **Leader**: Richard Miller (CEO)
+- [x] **Strategy**: TRX treasury via JustLend staking, Justin Sun backing
+- [x] **Notes**: First US public company to hold blockchain's native token
+
+### 9. Dilutive Instruments ✅
+- [x] **Sep 2025 warrants**: Exercised (added 312M TRX + diluted shares)
+- [x] **No known outstanding dilutives** at this time
+
+### 10. Company Links ✅
+- [x] **website**: https://srmentertainment.com
+- [x] **twitter**: https://x.com/tron_inc
+- [x] **investorRelationsUrl**: https://srmentertainment.com/investor-relations
+
+### 11. mNAV Calculation ✅ (verified 2026-01-29)
+- [x] **TRX price**: $0.2916 (CoinGecko)
+- [x] **Stock price**: $1.415 (Yahoo Finance)
+- [x] **Holdings**: 677,000,000 TRX
+- [x] **Basic shares**: 274,382,064
+- [x] **ITM dilutives**: None
+- [x] **NAV**: 677M × $0.2916 = $197.4M
+- [x] **NAV/share**: $197.4M / 274.4M = $0.72
+- [x] **mNAV**: $1.415 / $0.72 = **1.97** (97% premium!)
+- [ ] **UI match**: (check against dat-tracker UI)
+
+---
+
 ## HSDT (Solana Company) - Pending Verification
 
 ### Company Metadata Added 2026-01-29
