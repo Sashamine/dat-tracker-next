@@ -1002,6 +1002,9 @@ export const bnbCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
     totalDebt: 500_000_000,  // $500M convertible notes (360-day maturity, 0% interest)
+    cashReserves: 365_940_000,  // Yahoo Finance Q3 2025: $365.94M total cash
+    cashSource: "Yahoo Finance / SEC 6-K Q3 2025",
+    cashAsOf: "2025-09-30",
     sharesForMnav: 20_700_000,  // Dec 31, 2025 6-K + convertible issuances. FY2024: 15.67M (12.8M A + 2.9M B)
     sharesSource: "SEC 6-K Dec 31, 2025",
     sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
@@ -1009,9 +1012,9 @@ export const bnbCompanies: Company[] = [
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
     notes: "$25M buyback authorized. Also holds ~1,000 BTC from convert deal. Verified 2026-01-29.",
-    website: "https://www.intchains.com",
+    website: "https://www.nano.cn",
     twitter: "https://x.com/nano_labs_NA",
-    investorRelationsUrl: "https://ir.intchains.com",
+    investorRelationsUrl: "https://www.nano.cn/investor-relations",
     secondaryCryptoHoldings: [
       { asset: "BTC", amount: 1_000, note: "passive hold from convertible deal" },
     ],
