@@ -755,7 +755,7 @@ export const solCompanies: Company[] = [
     holdings: 2_300_000,  // Oct 29, 2025 press release - 2.3M SOL
     holdingsLastUpdated: "2025-10-29",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://ir.heliusmedical.com/news-releases/news-release-details/solana-company-nasdaqhsdt-formerly-helius-continues-amassing-sol",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
     datStartDate: "2025-05-01",
     costBasisAvg: 227.00,
     stakingPct: 0.95,

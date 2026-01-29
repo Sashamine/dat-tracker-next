@@ -2195,6 +2195,44 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== Solana Company (HSDT, fka Helius Medical) ==========
+  // Calendar year company (fiscal = calendar), FY end Dec 31
+  // SOL treasury began ~May 2025, partnered with Pantera Capital + Summer Capital
+  // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
+  //
+  // Q4 2025 - Upcoming (10-K due ~Mar 2026)
+  {
+    ticker: "HSDT",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",  // Estimated 10-K filing
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 2_300_000,  // Oct 29, 2025 8-K (~2.3M SOL, best available)
+    sharesAtQuarterEnd: 84_130_257,  // FD shares (41.3M basic + 42.8M warrants)
+    holdingsPerShare: 0.0273,  // 2.3M / 84.1M
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
+    status: "upcoming",
+  },
+  // Q3 2025 - Reported (10-Q Nov 18, 2025)
+  {
+    ticker: "HSDT",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-18",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL: 1,393,804 unrestricted + 345,551 restricted
+    sharesAtQuarterEnd: 84_130_257,  // FD shares (41.3M basic + 42.8M warrants)
+    holdingsPerShare: 0.0207,  // 1.74M / 84.1M
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001610853&type=10-Q",
+    status: "reported",
+  },
+
   // ========== Forward Industries (FWDI) ==========
   // Fiscal year end: September 30
   // $1.65B PIPE closed Sep 11, 2025 - SOL treasury began

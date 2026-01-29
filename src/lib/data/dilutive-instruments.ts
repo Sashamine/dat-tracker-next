@@ -298,6 +298,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // sharesForMnav = 86.1M basic + 26.4M pre-funded = 112.5M FD
   FWDI: [],
 
+  // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
+  // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
+  // NOTE: Pre-funded + penny warrants (exercisable at $0.0001) ALREADY INCLUDED in sharesForMnav (84.1M)
+  // sharesForMnav = 41.3M basic + ~42.8M pre-funded/penny warrants = 84.1M FD
+  // Multiple warrant tranches from Sep/Jun/Apr 2025 offerings - most are penny warrants essentially shares
+  HSDT: [
+    {
+      type: "warrant",
+      strikePrice: 0.0001, // Penny warrants - essentially shares
+      potentialShares: 42_828_857, // Difference between FD (84.1M) and basic (41.3M)
+      source: "10-Q Q3 2025 + Nov 4 investor update",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001610853&type=10-Q",
+      notes: "Pre-funded + penny warrants from multiple offerings (Sep/Jun/Apr 2025). Already in sharesForMnav.",
+    },
+  ],
+
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
   // Source: Euronext press releases
