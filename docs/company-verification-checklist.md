@@ -256,6 +256,58 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## UPXI (Upexi) - Verified 2026-01-29
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 2,174,583 SOL (Jan 5, 2026)
+- [x] **Source**: SEC 8-K Jan 9, 2026
+- [x] **Source URL**: https://www.sec.gov/Archives/edgar/data/1775194/000147793226000137/upxi_ex991.htm
+- [x] **Last updated**: 2026-01-05
+- [x] **Note**: Post-Jan 14 deal expects ~2.4M+ SOL (pending 8-K confirmation)
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001775194
+- [x] **Recent 8-Ks checked**: Jan 28 (bylaws), Jan 14 ($36M convert), Jan 9 (holdings), Dec 31, Dec 1 ($10M PIPE)
+- [x] **Latest 10-K**: Filed Oct 2025 (FY2025 ending Jun 30)
+- [x] **Latest 10-Q**: Filed Nov 12, 2025 (Q1 FY2026 ending Sep 30)
+
+### 3. XBRL Data Extraction ✅
+- [x] **CommonStockSharesOutstanding**: 58,888,756 (Sep 30, 2025 10-Q)
+- [x] **Note**: SOL holdings in narrative sections, not structured XBRL
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: June 30
+- [x] **FY→CY mapping**: FY Q1=CY Q3, FY Q2=CY Q4, FY Q3=CY Q1, FY Q4=CY Q2
+
+### 5. Earnings Data ✅
+| Calendar Q | Fiscal Q | Period End | Holdings | Shares | HPS | Status |
+|------------|----------|------------|----------|--------|-----|--------|
+| Q2 2025 | FY25 Q4 | Jun 30 | 735,692 | 28M | 0.0263 | reported |
+| Q3 2025 | FY26 Q1 | Sep 30 | 2,018,419 | 58.9M | 0.0343 | reported |
+| Q4 2025 | FY26 Q2 | Dec 31 | 2,174,583 | 62.2M | 0.0350 | upcoming |
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q2→Q3 2025**: +30% HPS (holdings +174%, shares +110%)
+- [x] **Q3→Q4 2025**: +2% HPS (holdings +8%, shares +5.5%)
+
+### 7. Non-Crypto Investments ✅
+- [x] **Consumer brands**: Legacy business, immaterial to mNAV
+- [x] **Cash reserves**: $2.2M (restricted operating capital)
+
+### 8. Company Metadata ✅
+- [x] **Strategy**: SOL treasury + consumer brands, 95% staked, discounted locked token purchases
+- [x] **Notes**: $50M buyback approved, Hivemind + AGP capital partners
+- [x] **Leader**: Arthur Hayes (advisory), Allan Marshall (CEO)
+
+### 9. Dilutive Instruments ✅
+- [x] **$150M Convertible @ $4.25** (Jul 2025): 35.3M potential shares, deep OTM
+- [x] **$36M Convertible @ $2.39** (Jan 2026): 15.1M potential shares, slightly OTM
+- [x] **Warrants @ $4.00** (Dec 2025): 3.29M shares, OTM at ~$2.12
+- [x] **Total potential dilution**: ~53.6M shares (if all converts + warrants exercised)
+- [x] **Added to dilutive-instruments.ts**: Yes
+
+---
+
 ## HSDT (Solana Company) - Pending Verification
 
 ### Company Metadata Added 2026-01-29
