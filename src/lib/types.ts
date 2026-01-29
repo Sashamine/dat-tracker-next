@@ -100,6 +100,7 @@ export interface Company {
   holdingsLastUpdated?: string; // ISO date when holdings were last verified
   holdingsSource?: HoldingsSource; // Where the holdings data came from
   holdingsSourceUrl?: string; // Direct link to the source (SEC filing, press release, etc.)
+  secReferenced?: boolean; // True if non-SEC source is referenced in SEC filings (legal accountability)
 
   // Shares tracking (for mNAV calculation transparency)
   sharesAsOf?: string; // ISO date of share count

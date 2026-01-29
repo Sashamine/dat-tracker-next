@@ -1399,6 +1399,7 @@ export const avaxCompanies: Company[] = [
     holdingsLastUpdated: "2026-01-28",
     holdingsSource: "company-dashboard",  // Not SEC - PIPE closed after Q3 10-Q period
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
+    secReferenced: true,  // Dashboard referenced in SEC 8-K filings
     totalDebt: 1_414_415,  // SEC 10-Q Sep 30, 2025 (legacy debentures, pre-PIPE)
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     costBasisAvg: 11.73,
