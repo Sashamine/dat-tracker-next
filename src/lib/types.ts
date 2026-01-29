@@ -75,6 +75,8 @@ export interface Company {
   stakingMethod?: string;
   quarterlyBurnUsd?: number;
   burnSource?: string;
+  burnSourceUrl?: string;
+  burnAsOf?: string;  // ISO date of the period the burn is calculated from
   capitalRaisedAtm?: number;
   capitalRaisedPipe?: number;
   capitalRaisedConverts?: number;

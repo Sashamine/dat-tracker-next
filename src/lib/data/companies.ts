@@ -1001,7 +1001,10 @@ export const bnbCompanies: Company[] = [
     // costBasisAvg: REMOVED - no SEC source found
     stakingPct: 0.30,
     stakingApy: 0.03,
-    quarterlyBurnUsd: 5_000_000,
+    quarterlyBurnUsd: 3_550_000,  // H1 2025: $7.1M/6mo = $3.55M/qtr (down from FY2024's $4.85M/qtr)
+    burnSource: "SEC 6-K H1 2025",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025088368/ea025544701ex99-2_nano.htm",
+    burnAsOf: "2025-06-30",
     // VERIFIED from 20-F FY2024: Long-term RMB170.7M ($23.7M) + Short-term RMB18M ($2.5M) = ~$26.2M
     totalDebt: 26_200_000,
     debtSource: "SEC 20-F FY2024 balance sheet",
