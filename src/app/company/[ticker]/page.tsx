@@ -298,13 +298,9 @@ export default function CompanyPage() {
                   <Badge variant="outline" className="font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30">
                     SEC Referenced
                   </Badge>
-                ) : ["company-dashboard", "company-reported", "company-website", "press-release"].includes(displayCompany.holdingsSource) ? (
+                ) : (
                   <Badge variant="outline" className="font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30">
                     Company Reported
-                  </Badge>
-                ) : (
-                  <Badge variant="outline" className="font-medium bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30">
-                    Unverified
                   </Badge>
                 )
               )}
