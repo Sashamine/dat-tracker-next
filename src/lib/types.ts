@@ -48,6 +48,7 @@ export interface Company {
   // Company info (CMC-style) - all optional for backwards compatibility
   website?: string;
   twitter?: string;
+  investorRelationsUrl?: string;
   tokenizedAddress?: string; // On-chain tokenized stock (e.g., Solana)
   tokenizedChain?: string; // Which chain the token is on
   logoUrl?: string;
