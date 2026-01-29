@@ -2350,6 +2350,47 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ==================== TRX COMPANIES ====================
+
+  // ========== Tron Inc (TRON) ==========
+  // Calendar year company (fiscal = calendar)
+  // Formerly SRM Entertainment, rebranded to Tron Inc in 2025
+  // DAT strategy began June 2025 with TRX treasury
+  // Justin Sun backing, JustLend staking
+  //
+  // Q4 2025 - Upcoming
+  {
+    ticker: "TRON",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-31",  // Estimated - 10-K due ~90 days after FY end
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 677_000_000,  // Jan 23, 2026 8-K
+    sharesAtQuarterEnd: 274_382_064,  // Dec 29, 2025 8-K
+    holdingsPerShare: 2.468,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=8-K",
+    status: "upcoming",
+  },
+  // Q3 2025 - SEC 10-Q filed Nov 10, 2025
+  {
+    ticker: "TRON",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-10",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 677_596_945,  // After Sep warrant exercise
+    sharesAtQuarterEnd: 257_115_400,  // SEC XBRL
+    holdingsPerShare: 2.636,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=10-Q",
+    status: "reported",
+  },
+
   // ==================== BNB COMPANIES ====================
 
   // ========== CEA Industries (BNC) ==========
