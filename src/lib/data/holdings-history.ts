@@ -258,20 +258,19 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
-// Data from HKEX filings and press releases
+// Quarterly data from H1 2025 HKEX Interim Results - BTC Yield table (page 16-17)
+// Share counts corrected per official filing (previously had ~660M, actual is ~709-710M)
 const BOYAA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-01-26", holdings: 1100, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00000167, source: "Initial accumulation" },
-  { date: "2024-03-29", holdings: 1194, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00000181, source: "HKEX filing" },
-  { date: "2024-05-22", holdings: 1956, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00000296, source: "HKEX filing" },
-  { date: "2024-06-28", holdings: 2079, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00000315, source: "HKEX filing" },
-  { date: "2024-08-21", holdings: 2410, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00000365, source: "HKEX filing" },
-  { date: "2024-09-27", holdings: 2635, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00000399, source: "Q3 report" },
-  { date: "2024-11-29", holdings: 3183, sharesOutstandingDiluted: 664_000_000, holdingsPerShare: 0.00000479, source: "ETH-to-BTC swap announcement" },
-  { date: "2024-12-30", holdings: 3274, sharesOutstandingDiluted: 664_000_000, holdingsPerShare: 0.00000493, source: "HKEX filing" },
-  { date: "2025-02-28", holdings: 3350, sharesOutstandingDiluted: 664_000_000, holdingsPerShare: 0.00000505, source: "Press release" },
-  { date: "2025-08-22", holdings: 3670, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000535, source: "Press release" },
-  { date: "2025-09-16", holdings: 3925, sharesOutstandingDiluted: 686_000_000, holdingsPerShare: 0.00000572, source: "HKEX filing" },
-  { date: "2025-11-17", holdings: 4091, sharesOutstandingDiluted: 729_120_000, holdingsPerShare: 0.00000561, source: "Q3 2025 results (Sep 2025 ~60M share placement)", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf", sourceType: "regulatory-filing" },
+  // Official quarterly snapshots from H1 2025 filing BTC Yield table
+  { date: "2023-12-31", holdings: 5, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.000000007, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
+  { date: "2024-03-31", holdings: 1_194, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000168, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
+  { date: "2024-06-30", holdings: 2_079, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000293, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
+  { date: "2024-09-30", holdings: 2_635, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000371, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
+  { date: "2024-12-31", holdings: 3_274, sharesOutstandingDiluted: 710_183_730, holdingsPerShare: 0.00000461, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
+  { date: "2025-03-31", holdings: 3_351, sharesOutstandingDiluted: 710_183_730, holdingsPerShare: 0.00000472, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
+  { date: "2025-06-30", holdings: 3_353, sharesOutstandingDiluted: 710_698_730, holdingsPerShare: 0.00000472, source: "H1 2025 HKEX Filing - BTC Yield Table (avg cost $58,695)", sourceType: "regulatory-filing" },
+  // Post H1 2025 updates from Q3 report and subsequent filings
+  { date: "2025-11-17", holdings: 4_091, sharesOutstandingDiluted: 768_004_730, holdingsPerShare: 0.00000533, source: "Q3 2025 results (Sep 2025 ~60M share placement)", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf", sourceType: "regulatory-filing" },
 ];
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
