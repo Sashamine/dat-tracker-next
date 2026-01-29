@@ -369,6 +369,62 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## BTCS (BTCS Inc) - Verified 2026-01-29
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 70,500 ETH
+- [x] **Source**: SEC 8-K Jan 7, 2026 (shareholder letter)
+- [x] **Source URL**: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K
+- [x] **Last updated**: 2025-12-31
+- [x] **Note**: 380% growth Q2→Q3 2025, staking via Builder+ validators
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001436229
+- [x] **Recent 8-Ks checked**: Jan 7 (shareholder letter), Jan 5 (exec comp + equity)
+- [x] **Latest 10-K**: Pending (Q4 2025, expected Mar 2026)
+- [x] **Latest 10-Q**: Filed Nov 13, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **EntityCommonStockSharesOutstanding**: 46,838,532 (Nov 10, 2025)
+- [x] **WeightedAverageNumberOfDilutedSharesOutstanding Q3**: 50,298,201
+- [x] **Note**: No CryptoAssetNumberOfUnits in XBRL - ETH in narrative
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Current quarter**: Q4 2025 (Oct-Dec), 10-K expected ~Mar 2026
+
+### 5. Earnings Data ✅
+| Quarter | Period End | Holdings | Shares (diluted) | HPS | Source |
+|---------|------------|----------|------------------|-----|--------|
+| Q4 2024 | Dec 31 | 9,000 | 20.1M | 0.000448 | 10-K (est) |
+| Q2 2025 | Jun 30 | 14,700 | 27.9M | 0.000526 | 10-Q (est) |
+| Q3 2025 | Sep 30 | 70,322 | 50.3M | 0.001398 | 10-Q XBRL |
+| Q4 2025 | Dec 31 | 70,500 | 50.3M | 0.001402 | 8-K |
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q2→Q3 2025**: +166% HPS (holdings +378%, shares +80% from ATM)
+- [x] **Q3→Q4 2025**: +0.3% HPS (holdings +0.25%, shares flat)
+- [x] **Note**: Massive HPS growth in Q3 despite dilution - staking + purchases
+
+### 7. Non-Crypto Investments ✅
+- [x] **Other investments**: None significant
+- [x] **Cash reserves**: Not material
+
+### 8. Company Metadata ✅
+- [x] **Strategy**: ETH 'Bividend,' DeFi/TradFi flywheel, Builder+
+- [x] **Staking**: 75% staked via Builder+ validators
+- [x] **Notes updated**: Added verification date and HPS growth
+
+### 9. Dilutive Instruments ✅
+- [x] **$10M Convertible @ $5.85** (May 2025): 1.7M shares, deep OTM
+- [x] **$10M Convertible @ $13.00** (Jul 2025): 769K shares, deep OTM
+- [x] **Options @ $2.64**: 3.9M shares (3.2M Q3 + 690K Jan 2026 grants), ITM
+- [x] **Jan 5 8-K**: +310,606 net shares issued (restricted stock)
+- [x] **Total potential dilution**: ~6.4M shares (13.6% of basic)
+- [x] **Added to dilutive-instruments.ts**: Yes (updated 2026-01-29)
+
+---
+
 ## HSDT (Solana Company) - Pending Verification
 
 ### Company Metadata Added 2026-01-29

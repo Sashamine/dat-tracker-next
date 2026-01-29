@@ -149,17 +149,11 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
-    sharesForMnav: 47_075_189,  // BASIC shares from 10-Q Q3 2025. Dilution (options, convertibles) calculated dynamically via dilutive-instruments.ts
+    sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K stock grants). Options in dilutive-instruments.ts
+    sharesSource: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026 restricted stock",
+    sharesAsOf: "2026-01-05",
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
-    dataWarnings: [
-      {
-        type: "equity-sale",
-        message: "8-K Jan 5: Unregistered equity sale - share count may change",
-        filingDate: "2026-01-05",
-        filingUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
-        severity: "warning",
-      },
-    ],
+    notes: "Verified 2026-01-29. Q3→Q4: +0.3% HPS growth. Options ITM at ~$2.87 (Jan 2026 price).",
   },
   {
     id: "game",

@@ -1874,7 +1874,16 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== BTCS Inc (BTCS) ==========
   // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Upcoming
+  // SEC CIK: 0001436229
+  // ETH treasury company - scaled dramatically in 2025 (380% growth Q2→Q3)
+  //
+  // Holdings History:
+  //   Q4 2024: ~9,000 ETH (estimated)
+  //   Q2 2025: ~14,700 ETH (implied from Q3 "380% growth")
+  //   Q3 2025: 70,322 ETH (SEC 8-K)
+  //   Q4 2025: 70,500 ETH (Jan 7 shareholder letter)
+  //
+  // Q4 2025 - 10-K upcoming, holdings from 8-K Jan 7, 2026
   {
     ticker: "BTCS",
     fiscalYear: 2025,
@@ -1883,10 +1892,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-20",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 70_500,  // Jan 7, 2026 shareholder letter
+    sharesAtQuarterEnd: 50_298_201,  // Q3 diluted + estimated small increase
+    holdingsPerShare: 0.001402,  // 70500 / 50298201
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 - Major ETH accumulation quarter (380% growth)
   {
     ticker: "BTCS",
     fiscalYear: 2025,
@@ -1900,7 +1913,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 1_600_000,
     revenueEstimate: 1_800_000,
     netIncome: -500_000,
+    holdingsAtQuarterEnd: 70_322,  // SEC 8-K Q3 2025
+    sharesAtQuarterEnd: 50_298_201,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding
+    holdingsPerShare: 0.001398,  // 70322 / 50298201
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=10-Q",
     status: "reported",
   },
   // Q2 2025
@@ -1917,6 +1934,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 1_400_000,
     revenueEstimate: 1_600_000,
     netIncome: -700_000,
+    holdingsAtQuarterEnd: 14_700,  // Estimated from Q3 "380% growth" claim
+    sharesAtQuarterEnd: 27_938_660,  // SEC XBRL Q2 2025 diluted
+    holdingsPerShare: 0.000526,  // 14700 / 27938660
     source: "sec-filing",
     status: "reported",
   },
@@ -1934,6 +1954,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 2_500_000,
     revenueEstimate: 1_900_000,
     netIncome: 900_000,
+    holdingsAtQuarterEnd: 9_000,  // Estimated from YTD growth trajectory
+    sharesAtQuarterEnd: 20_087_981,  // SEC 10-K basic shares
+    holdingsPerShare: 0.000448,  // 9000 / 20087981
     source: "sec-filing",
     status: "reported",
   },

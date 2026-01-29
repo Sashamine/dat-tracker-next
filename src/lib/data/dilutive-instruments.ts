@@ -229,7 +229,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // BTCS Inc - ETH treasury company
-  // Verified 2026-01-25 via adversarial process against SEC filings and btcs.com
+  // Verified 2026-01-29 via SEC filings and btcs.com
+  // Jan 5 8-K: +690,300 options granted @ $2.64 (2025 performance incentives)
   BTCS: [
     {
       type: "convertible",
@@ -256,11 +257,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     {
       type: "option",
       strikePrice: 2.64,
-      potentialShares: 3_223_012,
-      source: "10-Q Q3 2025",
+      potentialShares: 3_913_312,  // 3,223,012 (Q3) + 690,300 (Jan 5 8-K grants)
+      source: "10-Q Q3 2025 + 8-K Jan 5 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=10-Q",
-      notes: "Employee stock options (weighted avg exercise price)",
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
+      expiration: "2033-01-01",  // 7-year term from Jan 2026
+      notes: "Employee stock options - 3.2M (Q3) + 690K (Jan 2026 performance grants)",
     },
   ],
 
