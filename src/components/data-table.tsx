@@ -25,6 +25,7 @@ import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/component
 import { MNAVTooltip } from "@/components/mnav-tooltip";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { convertToUSDSync } from "@/lib/utils/currency";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -99,7 +100,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
     const cryptoChange = prices?.crypto[company.asset]?.change24h;
     const stockData = prices?.stocks[company.ticker];
-    const stockPrice = stockData?.price;
+    // Convert stock price to USD if company trades in foreign currency
+    const rawStockPrice = stockData?.price;
+    const stockPrice = rawStockPrice && company.currency && company.currency !== "USD"
+      ? convertToUSDSync(rawStockPrice, company.currency, prices?.forex)
+      : rawStockPrice;
     // Use same market cap that's used for mNAV calculation (shares × price)
     // This ensures tooltip EV matches the actual mNAV calculation
     const marketCapResult = getMarketCapForMnavSync(company, stockData, prices?.forex);
