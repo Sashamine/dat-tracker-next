@@ -223,15 +223,16 @@ export async function runMonitor(config: MonitorConfig): Promise<NewFilingAlert[
 
 /**
  * Default monitor configuration
- * Includes all known HK crypto treasury companies
+ * Currently focused on Boyaa - other HK companies TBD
  */
 export const DEFAULT_MONITOR_CONFIG: MonitorConfig = {
   stockCodes: [
-    '434',   // Boyaa Interactive - BTC treasury
-    '1357',  // Meitu - BTC/ETH
-    '2369',  // Coolpad - BTC
-    '1611',  // New Huo Technology - Multi
-    '863',   // BC Technology (OSL) - Multi
+    '434',   // Boyaa Interactive - BTC treasury (ACTIVE)
+    // TODO: Add these later:
+    // '1357',  // Meitu - BTC/ETH
+    // '2369',  // Coolpad - BTC
+    // '1611',  // New Huo Technology - Multi
+    // '863',   // BC Technology (OSL) - Multi
   ],
   lookbackDays: 7,
   lookforwardDays: 1,
