@@ -256,6 +256,18 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## HSDT (Solana Company) - Pending Verification
+
+### Company Metadata Added 2026-01-29
+- [x] **Website**: https://solanacompany.co
+- [x] **X/Twitter**: https://x.com/SolanaCompany1
+- [ ] **Holdings data**: Verify current SOL holdings (Oct 2025 shows 2.3M)
+- [ ] **SEC filings**: Check for recent 8-Ks
+- [ ] **Earnings data**: Backfill quarters
+- [ ] **Dilutive instruments**: Document warrants/converts
+
+---
+
 ## Verification Template (Copy for Next Company)
 
 ### Company: [TICKER] - Verification Date: YYYY-MM-DD

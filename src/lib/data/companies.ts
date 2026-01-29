@@ -752,6 +752,8 @@ export const solCompanies: Company[] = [
     secCik: "0001610853",
     asset: "SOL",
     tier: 1,
+    website: "https://solanacompany.co",
+    twitter: "https://x.com/SolanaCompany1",
     holdings: 2_300_000,  // Oct 29, 2025 press release - 2.3M SOL
     holdingsLastUpdated: "2025-10-29",
     holdingsSource: "press-release",
