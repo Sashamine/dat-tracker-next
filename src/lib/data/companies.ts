@@ -552,6 +552,13 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 226_884_068,  // Basic shares per mNAV.com Jan 2026. Diluted: ~392M (via convertibles)
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
+    dataWarnings: [
+      {
+        type: "unverified-shares",
+        message: "Share counts sourced from mNAV dashboard (cptlb.com/analytics), not primary AMF/Euronext filings. Company lacks public IR infrastructure.",
+        severity: "info",
+      },
+    ],
   },
   {
     id: "h100st",
