@@ -575,7 +575,10 @@ const SUIG_HISTORY: HoldingsSnapshot[] = [
 const AVX_HISTORY: HoldingsSnapshot[] = [
   // Nov 5, 2025: PIPE closed, $219M raised ($145M cash + $73.7M in AVAX tokens)
   // 86.7M new shares + 6.1M pre-funded warrants issued
-  { date: "2025-11-05", holdings: 13_800_000, sharesOutstandingDiluted: 93_112_148, holdingsPerShare: 0.148, source: "8-K PIPE closing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm", sourceType: "sec-filing" },
+  // NOTE: AVAX token count NOT in SEC filing - only $ value. Holdings from company dashboard.
+  { date: "2025-11-05", holdings: 13_800_000, sharesOutstandingDiluted: 93_112_148, holdingsPerShare: 0.148, source: "Company dashboard (AVAX count not SEC-disclosed)", sourceUrl: "https://analytics-avaxone.theblueprint.xyz/", sourceType: "company-reported" },
+  // Jan 28, 2026: Updated from dashboard + buyback 8-K
+  { date: "2026-01-28", holdings: 13_871_000, sharesOutstandingDiluted: 92_462_303, holdingsPerShare: 0.150, source: "Dashboard + 8-K buyback (649K shares repurchased)", sourceUrl: "https://analytics-avaxone.theblueprint.xyz/", sourceType: "company-reported" },
 ];
 
 // CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation

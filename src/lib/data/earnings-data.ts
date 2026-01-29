@@ -2666,6 +2666,59 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "manual",
     status: "reported",
   },
+
+  // ==================== AVAX COMPANIES ====================
+
+  // ========== AVAX One Technology (AVX) ==========
+  // DAT start: Nov 5, 2025 (PIPE closed)
+  // Prior: AgriFORCE Growing Systems (agriculture tech, no crypto holdings)
+  // NOTE: AVAX token count not SEC-disclosed until Q4 2025 10-K
+
+  // Q1 2026 (Jan-Mar) - Upcoming
+  {
+    ticker: "AVX",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15", // Expected ~45 days after Mar 31
+    earningsTime: "AMC",
+    source: "estimated",
+    status: "upcoming",
+  },
+  // Q4 2025 (Oct-Dec) - First full quarter post-PIPE, 10-K expected Feb/Mar 2026
+  {
+    ticker: "AVX",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-01", // 10-K expected ~60 days after Dec 31
+    earningsTime: "AMC",
+    // Dashboard shows 13.87M AVAX as of Jan 28, 2026 - pending SEC verification in 10-K
+    holdingsAtQuarterEnd: 13_800_000, // Estimated from dashboard (PIPE closed Nov 5)
+    sharesAtQuarterEnd: 92_462_303, // 93.1M - 649K buybacks
+    holdingsPerShare: 0.1493, // 13.8M / 92.46M
+    source: "company-dashboard",
+    sourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
+    status: "upcoming", // Awaiting 10-K SEC filing
+  },
+  // Q3 2025 (Jul-Sep) - Pre-PIPE (no AVAX holdings)
+  {
+    ticker: "AVX",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14", // 10-Q filed
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0, // Pre-PIPE - company was AgriFORCE with no AVAX
+    sharesAtQuarterEnd: 6_297_654, // Pre-PIPE share count (10-Q XBRL)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
