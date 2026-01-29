@@ -822,13 +822,18 @@ export const solCompanies: Company[] = [
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
     capitalRaisedAtm: 100_000_000,
-    sharesForMnav: 59_000_000,  // SEC 10-Q Sep 2025: 58.9M basic. Convertibles ($150M@$4.25, $36M@$2.39) OUT of money at ~$2.12
+    sharesForMnav: 59_000_000,  // SEC 10-Q Sep 2025: 58.9M basic. Convertibles ($150M@$4.25, $36M@$2.39) OUT of money at ~$1.83
+    totalDebt: 200_000_000,  // $200M: $150M convert @$4.25 + $36M convert @$2.39 + $14M other (SEC 10-Q Sep 2025)
+    cashReserves: 2_200_000,  // $2.2M cash (SEC 10-Q Sep 2025)
+    restrictedCash: 2_200_000,  // Operating capital - not excess
+    cashSource: "SEC 10-Q Sep 2025",
+    cashAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 120_000_000,
     hasOptions: true,
     leader: "Arthur Hayes (advisory)",
     strategy: "SOL treasury + consumer brands",
-    notes: "$50M buyback approved Nov 2025.",
+    notes: "$50M buyback approved Nov 2025. Converts OTM at $1.83 (strikes $4.25, $2.39).",
   },
   {
     id: "stke",
