@@ -1340,7 +1340,25 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "reported",
   },
-  // Q4 2024
+  // Q1 2025 - Added 2026-01-29
+  // Pre-reverse-split share count (split was June 23, 2025)
+  {
+    ticker: "KULR",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-12",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 668,  // Mar 25, 2025 press release (668.3 BTC)
+    sharesAtQuarterEnd: 284_389_637,  // Pre-split shares
+    holdingsPerShare: 0.00000235,  // 668 / 284.4M
+    source: "press-release",
+    status: "reported",
+  },
+  // Q4 2024 - Verified 2026-01-29
+  // Note: First BTC purchase was Dec 26, 2024 (217.18 BTC per 8-K)
+  // Pre-reverse-split share count (split was June 23, 2025)
   {
     ticker: "KULR",
     fiscalYear: 2024,
@@ -1354,9 +1372,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 4_200_000,
     revenueEstimate: 4_500_000,
     netIncome: -6_200_000,
-    holdingsAtQuarterEnd: 510,
-    sharesAtQuarterEnd: 234_000_000,
-    holdingsPerShare: 0.0000022,
+    holdingsAtQuarterEnd: 217,  // Dec 26, 2024 initial purchase (217.18 BTC)
+    sharesAtQuarterEnd: 214_227_808,  // Pre-split shares from Dec 26 8-K
+    holdingsPerShare: 0.00000101,  // 217 / 214.2M
     source: "sec-filing",
     status: "reported",
   },
