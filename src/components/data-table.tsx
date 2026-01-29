@@ -372,6 +372,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   Low Liq
                 </Badge>
               )}
+              {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-red-500/10 text-red-500 border-red-500/30">
+                  ⚠️ Unverified
+                </Badge>
+              )}
             </div>
             <p className="text-sm text-gray-500 truncate max-w-[200px]">{company.name}</p>
           </div>
@@ -612,6 +617,11 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                         {company.lowLiquidity && (
                           <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-gray-500/10 text-gray-500 border-gray-500/30">
                             Low Liquidity
+                          </Badge>
+                        )}
+                        {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
+                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-red-500/10 text-red-500 border-red-500/30">
+                            ⚠️ Unverified
                           </Badge>
                         )}
                       </span>
