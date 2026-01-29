@@ -640,9 +640,9 @@ export const btcCompanies: Company[] = [
     ticker: "0434.HK",
     asset: "BTC",
     tier: 1,
-    holdings: 4_091,  // Sep 2025 after HK$370M placement purchase
-    holdingsLastUpdated: "2025-09-18",
-    holdingsSource: "company-website",
+    holdings: 4_091,  // Nov 2025 (Q3 results)
+    holdingsLastUpdated: "2025-11-17",
+    holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf",
     datStartDate: "2024-01-26",
     costBasisAvg: 58_628,
@@ -651,9 +651,14 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 20_000_000,
     marketCap: 500_000_000,
     sharesForMnav: 729_120_000,  // Stock Analysis Jan 2026 (after Sep 2025 ~60M share placement)
+    // TODO: Verify from HKEx filings:
+    // - Cash reserves (need interim/annual report)
+    // - Total debt (need balance sheet)
+    // - Dilutive instruments (warrants, options)
+    // - FY end: Dec 31 (calendar year, standard for HK)
     leader: "Zhang Wei (Chairman)",
     strategy: "Hong Kong's largest BTC treasury. Converted ETH to BTC.",
-    notes: "MicroStrategy of Asia. Board games company. Top 15 global corporate holder.",
+    notes: "MicroStrategy of Asia. Board games company. #23 global corporate BTC holder.",
   },
   {
     id: "nxtt",

@@ -2321,6 +2321,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm",
     status: "upcoming",
   },
+
+  // ==================== HK/INTL COMPANIES ====================
+
+  // ========== Boyaa Interactive (0434.HK) ==========
+  // TODO: Add earnings from HKEx regulatory filings (interim/annual reports)
+  // Calendar year FY (Dec 31). Need primary source verification.
+  // Holdings history exists in holdings-history.ts but needs regulatory source links
 ];
 
 // Helper: Get days until a date
