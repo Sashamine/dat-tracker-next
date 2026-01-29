@@ -76,6 +76,7 @@ export const ethCompanies: Company[] = [
     id: "ethm",
     name: "The Ether Machine",
     ticker: "ETHM",
+    currency: "CAD",  // Toronto Stock Exchange
     secCik: "0002080334",
     asset: "ETH",
     tier: 1,
@@ -297,6 +298,7 @@ export const btcCompanies: Company[] = [
     id: "3350t",
     name: "Metaplanet",
     ticker: "3350.T",
+    currency: "JPY",
     asset: "BTC",
     tier: 1,
     holdings: 35_102,  // Dec 30, 2025: purchased 4,279 BTC bringing total to 35,102
@@ -553,6 +555,7 @@ export const btcCompanies: Company[] = [
     id: "altbg",
     name: "The Blockchain Group",
     ticker: "ALTBG",
+    currency: "EUR",
     asset: "BTC",
     tier: 2,
     website: "https://cptlb.com",
@@ -581,6 +584,7 @@ export const btcCompanies: Company[] = [
     id: "h100st",
     name: "H100 Group",
     ticker: "H100.ST",
+    currency: "SEK",
     asset: "BTC",
     tier: 2,
     holdings: 1_047,  // MFN Sep 17, 2025: "Total Holdings Reach 1,046" (1,046.66 per treasury tracker)
@@ -666,6 +670,7 @@ export const btcCompanies: Company[] = [
     id: "boyaa",
     name: "Boyaa Interactive",
     ticker: "0434.HK",
+    currency: "HKD",
     asset: "BTC",
     tier: 1,
     holdings: 4_091,  // Q3 2025 report (Sep 30, 2025) - confirmed same as of Nov 17, 2025

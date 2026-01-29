@@ -50,11 +50,15 @@ export interface DataWarning {
 // Company type
 export type CompanyType = "Treasury" | "Miner";
 
+// Stock currency (for non-USD exchanges)
+export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR";
+
 // Base company interface
 export interface Company {
   id: string;
   name: string;
   ticker: string;
+  currency?: StockCurrency;  // Stock trading currency (default: USD). Used for price display conversion.
   asset: Asset;
   tier: Tier;
   holdings: number;
