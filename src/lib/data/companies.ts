@@ -1395,26 +1395,26 @@ export const avaxCompanies: Company[] = [
     ticker: "AVX",
     asset: "AVAX",
     tier: 1,
-    holdings: 13_800_000,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://avax-one.com/",
+    holdings: 13_871_000,  // Dashboard Jan 28, 2026 (not SEC-disclosed, see verification doc)
+    holdingsLastUpdated: "2026-01-28",
+    holdingsSource: "company-dashboard",
+    holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     costBasisAvg: 11.73,
-    stakingPct: 0.80,
+    stakingPct: 0.90,  // 8-K Jan 28, 2026: "more than 90% of AVAX holdings staked"
     stakingApy: 0.08,
     quarterlyBurnUsd: 1_000_000,
     capitalRaisedAtm: 40_000_000,
     capitalRaisedPipe: 219_000_000,  // $219M PIPE Nov 2025 ($145M cash + $73.7M AVAX)
     avgDailyVolume: 15_000_000,
     marketCap: 193_000_000,
-    sharesForMnav: 93_112_148,  // 8-K Nov 6, 2025: shares after PIPE closing
-    sharesAsOf: "2025-11-05",
-    sharesSource: "SEC 8-K Nov 6, 2025",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
+    sharesForMnav: 93_112_148,  // 10-Q Nov 14, 2025 cover page
+    sharesAsOf: "2025-11-14",
+    sharesSource: "SEC 10-Q Nov 14, 2025",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     secCik: "1826397",
     strategy: "Regulated AVAX exposure for US capital markets.",
-    notes: "Nasdaq listed. $40M share repurchase program. Hivemind asset manager.",
+    notes: "Nasdaq listed. $40M buyback program (649K repurchased thru Jan 25). Hivemind asset manager. 6.1M pre-funded warrants ITM.",
   },
 ];
 

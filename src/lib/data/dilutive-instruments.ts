@@ -715,6 +715,26 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Total BNC dilution: 49.5M potential warrant shares
   // At $5.32 stock: All warrants OUT of money ($15.15 strike)
   // Fully diluted if ITM: ~52M basic + 49.5M = ~101.5M shares
+
+  // AVX (AVAX One Technology) - AVAX treasury company
+  // Verified 2026-01-29 via SEC 8-K (CIK 0001826397)
+  // Basic shares: 93,112,148 (10-Q Nov 14, 2025)
+  // After buybacks: ~92.5M (dashboard shows 92.67M as of Jan 28, 2026)
+  AVX: [
+    {
+      type: "warrant",
+      strikePrice: 0.0001, // Pre-funded warrants - essentially exercisable at any price
+      potentialShares: 6_123_837,
+      source: "8-K Nov 6, 2025 (PIPE closing)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
+      issuedDate: "2025-11-05",
+      notes:
+        "Pre-funded warrants from $219M PIPE. Strike essentially zero - always ITM.",
+    },
+  ],
+  // Total AVX dilution: 6.1M pre-funded warrants (always ITM)
+  // Fully diluted: ~93M basic + 6.1M = ~99.2M shares
 };
 
 /**
