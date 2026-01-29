@@ -640,25 +640,28 @@ export const btcCompanies: Company[] = [
     ticker: "0434.HK",
     asset: "BTC",
     tier: 1,
-    holdings: 4_091,  // Nov 2025 (Q3 results)
+    holdings: 4_091,  // Q3 2025 report (Sep 30, 2025) - confirmed same as of Nov 17, 2025
     holdingsLastUpdated: "2025-11-17",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0923/2025092301140.pdf",
+    holdingsSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     datStartDate: "2024-01-26",
-    costBasisAvg: 58_628,
+    costBasisAvg: 68_114,  // Q3 2025 report: "average cost of approximately US$68,114 per unit"
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 20_000_000,
-    marketCap: 500_000_000,
-    sharesForMnav: 729_120_000,  // Stock Analysis Jan 2026 (after Sep 2025 ~60M share placement)
-    // TODO: Verify from HKEx filings:
-    // - Cash reserves (need interim/annual report)
-    // - Total debt (need balance sheet)
-    // - Dilutive instruments (warrants, options)
-    // - FY end: Dec 31 (calendar year, standard for HK)
-    leader: "Zhang Wei (Chairman)",
-    strategy: "Hong Kong's largest BTC treasury. Converted ETH to BTC.",
-    notes: "MicroStrategy of Asia. Board games company. #23 global corporate BTC holder.",
+    // Shares: 768,004,730 (Dec 31, 2025 Monthly Return - excluding 2,972,000 treasury shares)
+    // Pre-Sep 2025 placement: 711,003,730 → Post-placement: 770,976,730 (+59,973,000 @ HK$6.95)
+    // Buybacks: 2,972,000 shares repurchased (held as treasury, not cancelled)
+    sharesForMnav: 768_004_730,
+    sharesSource: "HKEx Monthly Return Dec 2025 (filed Jan 5, 2026)",
+    sharesAsOf: "2025-12-31",
+    // FY end: Dec 31 (calendar year)
+    // TODO: Extract from annual/interim reports:
+    // - Cash reserves
+    // - Total debt
+    leader: "Dai Zhikang (Chairman & Executive Director)",
+    strategy: "Hong Kong's largest BTC treasury. 15.1% BTC Yield (9mo 2025). Active buyback program.",
+    notes: "Asia's MicroStrategy. Sep 2025 raised HK$410M via placement for BTC. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled.",
   },
   {
     id: "nxtt",

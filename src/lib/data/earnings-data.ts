@@ -2325,9 +2325,75 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== HK/INTL COMPANIES ====================
 
   // ========== Boyaa Interactive (0434.HK) ==========
-  // TODO: Add earnings from HKEx regulatory filings (interim/annual reports)
-  // Calendar year FY (Dec 31). Need primary source verification.
-  // Holdings history exists in holdings-history.ts but needs regulatory source links
+  // Calendar year FY (Dec 31). Source: HKEX Interim/Annual Results
+  // Note: All financials in HKD (not USD)
+  // Q2 2025 (H1 2025 Interim Results)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-28", // H1 2025 results announcement (estimated)
+    earningsTime: null,
+    revenueActual: 110_713_000, // HK$110.7M (Q2 standalone)
+    netIncome: 449_581_000, // HK$449.6M profit (includes BTC FV gains)
+    holdingsAtQuarterEnd: 3_353, // BTC Yield table
+    sharesAtQuarterEnd: 710_698_730,
+    holdingsPerShare: 0.00000472,
+    source: "press-release",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0828/",
+    status: "reported",
+  },
+  // Q1 2025 (derived from H1 2025 - Q2 2025)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-15", // Q1 results (estimated)
+    earningsTime: null,
+    revenueActual: 111_892_000, // HK$111.9M (H1 222.6M - Q2 110.7M)
+    netIncome: -223_561_000, // HK$(223.6)M loss (H1 226M - Q2 449.6M; BTC FV loss in Q1)
+    holdingsAtQuarterEnd: 3_351, // BTC Yield table
+    sharesAtQuarterEnd: 710_183_730,
+    holdingsPerShare: 0.00000472,
+    source: "press-release",
+    status: "reported",
+  },
+  // Q4 2024 (FY 2024 Annual Results)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-03-28", // FY 2024 results (estimated)
+    earningsTime: null,
+    holdingsAtQuarterEnd: 3_274, // BTC Yield table
+    sharesAtQuarterEnd: 710_183_730,
+    holdingsPerShare: 0.00000461,
+    source: "press-release",
+    status: "reported",
+  },
+  // Q2 2024 (H1 2024 from H1 2025 filing comparative)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2024,
+    fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
+    earningsDate: "2024-08-28",
+    earningsTime: null,
+    revenueActual: 115_205_000, // HK$115.2M (Q2 2024)
+    netIncome: -74_670_000, // HK$(74.7)M loss
+    holdingsAtQuarterEnd: 2_079, // BTC Yield table
+    sharesAtQuarterEnd: 709_576_301,
+    holdingsPerShare: 0.00000293,
+    source: "press-release",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
