@@ -428,6 +428,18 @@ Systematic verification process for DAT company data quality.
 - [x] **twitter**: https://twitter.com/BTCSInc
 - [x] **investorRelationsUrl**: https://www.btcs.com/investors/
 
+### 11. mNAV Calculation ✅ (verified 2026-01-29)
+- [x] **ETH price**: $2,834.28 (CoinGecko)
+- [x] **Stock price**: $2.53 (Yahoo Finance)
+- [x] **Holdings**: 70,500 ETH
+- [x] **Basic shares**: 47,149,138
+- [x] **ITM dilutives**: None (all OTM: options@$2.64, converts@$5.85/$13.00)
+- [x] **Diluted shares**: 47,149,138 (basic only)
+- [x] **NAV**: 70,500 × $2,834.28 = $199.8M
+- [x] **NAV/share**: $199.8M / 47.1M = $4.24
+- [x] **mNAV**: $2.53 / $4.24 = **0.60**
+- [ ] **UI match**: (check against dat-tracker UI)
+
 ---
 
 ## BTBT (Bit Digital) - Verified 2026-01-29
@@ -591,4 +603,16 @@ Systematic verification process for DAT company data quality.
 ### 10. Company Links
 - [ ] **website**: (e.g., https://company.com)
 - [ ] **twitter**: (e.g., https://twitter.com/CompanyHandle)
-- [ ] **investorRelationsUrl**: (e.g., https://company.com/investors/) 
+- [ ] **investorRelationsUrl**: (e.g., https://company.com/investors/)
+
+### 11. mNAV Calculation (verify against UI)
+- [ ] **Asset price**: $ (source: CoinGecko/etc)
+- [ ] **Stock price**: $ (source: Yahoo Finance)
+- [ ] **Holdings**: 
+- [ ] **Basic shares**: 
+- [ ] **ITM dilutives**: (list any with strike < stock price)
+- [ ] **Diluted shares**: (basic + ITM dilutives)
+- [ ] **NAV**: holdings × asset price = $
+- [ ] **NAV/share**: NAV / diluted shares = $
+- [ ] **mNAV**: stock price / NAV per share = 
+- [ ] **UI match**: ✅/❌ 
