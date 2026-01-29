@@ -1235,14 +1235,13 @@ export const zecCompanies: Company[] = [
     costBasisAvg: 334.41,
     costBasisSource: "SEC 8-K Dec 30, 2025 - cumulative average price per ZEC",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
-    quarterlyBurnUsd: 3_100_000,  // Legacy pharma burn - update from Q4 2025 10-K (expected Mar 2026) for post-pivot treasury ops
     capitalRaisedPipe: 58_880_000,  // Oct 2025 PIPE gross proceeds
     sharesForMnav: 137_420_344,  // Basic (56.6M) + Pre-funded warrants (80.8M) per SEC filings
     sharesSource: "SEC 10-Q Q3 2025 + 8-K Oct 9, 2025 (basic + pre-funded warrants)",
     sharesAsOf: "2025-11-10",
     leader: "Douglas Onsi (CEO)",
     strategy: "Target 5% of ZEC supply (~540K ZEC). Winklevoss backed.",
-    notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply. ~72M common warrants outstanding at $0.5335.",
+    notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply. ~76M common warrants @ $0.5335 (expire Oct 2035).",
   },
   // RELI (Reliance Global) removed - InsurTech company, not beta to ZEC
 ];

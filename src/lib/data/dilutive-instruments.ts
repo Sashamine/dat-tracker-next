@@ -832,6 +832,37 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
   // Total AVX dilution: 6.1M pre-funded warrants (always ITM)
   // Fully diluted: ~93M basic + 6.1M = ~99.2M shares
+
+  // CYPH (Cypherpunk Technologies) - ZEC treasury company
+  // Verified 2026-01-29 via SEC 8-K Oct 9, 2025 (CIK 0001509745)
+  // Basic shares: 137,420,344 (56.6M common + 80.8M pre-funded warrants already in basic)
+  CYPH: [
+    {
+      type: "warrant",
+      strikePrice: 0.5335,
+      potentialShares: 71_985_605,
+      source: "SEC 8-K Oct 9, 2025 (PIPE closing)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1509745/000110465925098082/tm2528058d2_8k.htm",
+      expiration: "2035-10-08",
+      issuedDate: "2025-10-08",
+      notes: "Common warrants from $58.88M PIPE. 10-year term.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0.5335,
+      potentialShares: 4_000_000,
+      source: "SEC 8-K Oct 9, 2025 (placement agent warrants)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1509745/000110465925098082/tm2528058d2_8k.htm",
+      expiration: "2035-10-08",
+      issuedDate: "2025-10-08",
+      notes: "Placement agent warrants (Parcrest). Same terms as common warrants.",
+    },
+  ],
+  // Total CYPH dilution: ~76M warrants @ $0.5335 (expire Oct 2035)
+  // At stock prices above $0.5335: all warrants ITM
+  // Fully diluted: 137.4M basic + 76M warrants = ~213.4M shares
 };
 
 /**
