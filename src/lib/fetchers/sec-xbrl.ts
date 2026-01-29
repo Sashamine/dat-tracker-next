@@ -124,6 +124,175 @@ const OPERATING_CASH_FLOW_CONCEPTS = [
   'CashFlowsFromUsedInOperatingActivities',  // IFRS variant
 ];
 
+// ===========================================================================
+// BURN QUALITY METRICS EXTRACTION
+// ===========================================================================
+
+/**
+ * XBRL concepts for burn quality analysis
+ * These metrics help determine if operating cash flow is a reliable burn proxy
+ */
+
+const SGA_CONCEPTS = [
+  'SellingGeneralAndAdministrativeExpense',
+  'GeneralAndAdministrativeExpense',
+  'SellingAndMarketingExpense',
+  'OperatingExpenses',  // Fallback if SG&A not available
+];
+
+const STOCK_BASED_COMP_CONCEPTS = [
+  'ShareBasedCompensation',
+  'StockIssuedDuringPeriodValueShareBasedCompensation',
+  'SharebasedCompensationArrangementBySharebasedPaymentAwardCompensationCost1',
+  'AllocatedShareBasedCompensationExpense',
+];
+
+const DEPRECIATION_CONCEPTS = [
+  'DepreciationDepletionAndAmortization',
+  'Depreciation',
+  'DepreciationAndAmortization',
+  'DepreciationAmortizationAndAccretionNet',
+];
+
+const NET_INCOME_CONCEPTS = [
+  'NetIncomeLoss',
+  'ProfitLoss',  // IFRS variant
+  'NetIncomeLossAttributableToParent',
+  'NetIncomeLossAvailableToCommonStockholdersBasic',
+];
+
+/**
+ * Result from fetching burn quality metrics
+ */
+export interface BurnQualityMetrics {
+  // Primary burn metrics
+  operatingCashFlow: number | null;    // From cash flow statement
+  netIncome: number | null;            // From income statement
+  
+  // Non-cash adjustments
+  stockBasedComp: number | null;       // Non-cash comp expense
+  depreciation: number | null;         // D&A (big for miners)
+  
+  // Alternative burn proxy
+  sgaExpenses: number | null;          // G&A expenses (good for miners)
+  
+  // Period metadata
+  periodEnd: string;
+  periodMonths: number;
+  form: string;
+  filed: string;
+}
+
+/**
+ * Extract a single financial metric from XBRL data
+ * Returns the most recent value from valid forms
+ */
+function extractFinancialMetric(
+  facts: XBRLCompanyFacts['facts'],
+  concepts: string[],
+  unitType: 'USD' | 'shares' = 'USD'
+): { value: number; periodEnd: string; form: string; filed: string } | null {
+  for (const concept of concepts) {
+    const factData = facts['us-gaap']?.[concept];
+    if (!factData?.units?.[unitType]) continue;
+
+    const entries = factData.units[unitType];
+    const validEntries = entries.filter(e => ALL_VALID_FORMS.includes(e.form));
+    if (validEntries.length === 0) continue;
+
+    // Sort by period end date descending, then by filed date descending
+    const sorted = validEntries.sort((a, b) => {
+      const dateCompare = b.end.localeCompare(a.end);
+      if (dateCompare !== 0) return dateCompare;
+      return b.filed.localeCompare(a.filed);
+    });
+
+    const latest = sorted[0];
+    return {
+      value: latest.val,
+      periodEnd: latest.end,
+      form: latest.form,
+      filed: latest.filed,
+    };
+  }
+  return null;
+}
+
+/**
+ * Extract all burn quality metrics from XBRL data
+ */
+export function extractBurnQualityMetrics(
+  facts: XBRLCompanyFacts['facts']
+): BurnQualityMetrics | null {
+  // Get operating cash flow first (our primary reference)
+  const ocfResult = extractOperatingCashFlow(facts);
+  if (!ocfResult) return null;
+
+  // Extract other metrics
+  const sgaResult = extractFinancialMetric(facts, SGA_CONCEPTS);
+  const sbcResult = extractFinancialMetric(facts, STOCK_BASED_COMP_CONCEPTS);
+  const depResult = extractFinancialMetric(facts, DEPRECIATION_CONCEPTS);
+  const niResult = extractFinancialMetric(facts, NET_INCOME_CONCEPTS);
+
+  return {
+    operatingCashFlow: ocfResult.value,
+    netIncome: niResult?.value ?? null,
+    stockBasedComp: sbcResult?.value ?? null,
+    depreciation: depResult?.value ?? null,
+    sgaExpenses: sgaResult?.value ?? null,
+    periodEnd: ocfResult.periodEnd,
+    periodMonths: ocfResult.periodMonths,
+    form: ocfResult.form,
+    filed: ocfResult.filed,
+  };
+}
+
+/**
+ * Fetch burn quality metrics for a single company
+ */
+export async function fetchBurnQualityMetrics(ticker: string): Promise<BurnQualityMetrics | null> {
+  const cik = TICKER_TO_CIK[ticker.toUpperCase()];
+  if (!cik) return null;
+
+  const data = await fetchCompanyFacts(cik);
+  if (!data?.facts) return null;
+
+  return extractBurnQualityMetrics(data.facts);
+}
+
+/**
+ * Fetch burn quality metrics for multiple companies
+ */
+export async function fetchAllBurnQualityMetrics(tickers: string[]): Promise<Array<{
+  ticker: string;
+  metrics: BurnQualityMetrics | null;
+  error?: string;
+}>> {
+  const results: Array<{
+    ticker: string;
+    metrics: BurnQualityMetrics | null;
+    error?: string;
+  }> = [];
+
+  for (const ticker of tickers) {
+    try {
+      const metrics = await fetchBurnQualityMetrics(ticker);
+      results.push({ ticker, metrics });
+      
+      // Rate limit - SEC requires polite access
+      await new Promise(r => setTimeout(r, 200));
+    } catch (error) {
+      results.push({
+        ticker,
+        metrics: null,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
+
+  return results;
+}
+
 /**
  * Filing period types for burn rate calculation
  */

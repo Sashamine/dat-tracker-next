@@ -59,3 +59,15 @@ export {
   type BurnStalenessResult,
   type BurnStalenessSummary,
 } from './burn-staleness';
+
+// Burn quality scoring
+export {
+  calculateAdjustedBurnRate,
+  calculateBurnQualityScore,
+  analyzeBurnQuality,
+  formatBurn,
+  getScoreLabel,
+  type AdjustedBurnRate,
+  type BurnQualityScore,
+  type BurnQualityResult,
+} from './burn-quality';
