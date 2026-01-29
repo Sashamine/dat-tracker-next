@@ -212,24 +212,40 @@ export const ethCompanies: Company[] = [
     ticker: "FGNX",
     asset: "ETH",
     tier: 1,
-    holdings: 37_594,  // Jan 21, 2026 press release - sold more for buybacks
+    // VERIFIED: SEC 8-K Jan 21, 2026
+    holdings: 37_594,
     holdingsLastUpdated: "2026-01-21",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
     datStartDate: "2025-07-30",
     secCik: "1591890",
     stakingPct: 0.80,
     stakingMethod: "Native staking",
-    quarterlyBurnUsd: 2_000_000,
+    // VERIFIED: 10-Q Q3 2025 - 9mo burn $4.75M = $1.58M/qtr
+    quarterlyBurnUsd: 1_580_000,
+    burnSource: "SEC 10-Q Q3 2025",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+    burnAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 10_000_000,
-    marketCap: 110_000_000,  // ~$110M (Jan 2026)
-    sharesForMnav: 33_600_000,  // Jan 21, 2026 press release (after 9.9M buybacks)
-    sharesSource: "Press release Jan 21, 2026",
+    // VERIFIED: SEC 8-K Jan 21, 2026 - 33.6M common + 0.8M preferred
+    sharesForMnav: 33_600_000,
+    sharesSource: "SEC 8-K Jan 21, 2026",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
     sharesAsOf: "2026-01-20",
-    leader: "Galaxy, Kraken, Hivemind, DCG backed",
+    // VERIFIED: SEC 10-Q Q3 2025 balance sheet
+    cashReserves: 7_500_000,
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+    cashAsOf: "2025-09-30",
+    // VERIFIED: SEC 8-K Jan 21, 2026 - $1.9M total debt
+    totalDebt: 1_900_000,
+    debtSource: "SEC 8-K Jan 21, 2026",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
+    debtAsOf: "2026-01-20",
+    leader: "Kyle Cerminara (CEO); Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
-    notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some Nov 2025.",
+    notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some for buybacks. 0.8M preferred shares also outstanding.",
   },
   // ICG (Intchains) removed - ASIC chip company, not beta to ETH
 ];
