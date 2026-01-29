@@ -2362,6 +2362,22 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "press-release",
     status: "reported",
   },
+  // Q3 2025 (Q3 2025 Results - Nov 17, 2025)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-17",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 4_091, // Q3 2025 results
+    sharesAtQuarterEnd: 768_004_730, // Post Sep 2025 placement
+    holdingsPerShare: 0.00000533,
+    source: "press-release",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+    status: "reported",
+  },
   // Q4 2024 (FY 2024 Annual Results)
   {
     ticker: "0434.HK",
@@ -2374,6 +2390,21 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 3_274, // BTC Yield table
     sharesAtQuarterEnd: 710_183_730,
     holdingsPerShare: 0.00000461,
+    source: "press-release",
+    status: "reported",
+  },
+  // Q3 2024 (Q3 2024 Results)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2024,
+    fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
+    earningsDate: "2024-11-17", // Estimated
+    earningsTime: null,
+    holdingsAtQuarterEnd: 2_635, // BTC Yield table
+    sharesAtQuarterEnd: 709_576_301,
+    holdingsPerShare: 0.00000371,
     source: "press-release",
     status: "reported",
   },
@@ -2391,6 +2422,21 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 2_079, // BTC Yield table
     sharesAtQuarterEnd: 709_576_301,
     holdingsPerShare: 0.00000293,
+    source: "press-release",
+    status: "reported",
+  },
+  // Q1 2024 (derived)
+  {
+    ticker: "0434.HK",
+    fiscalYear: 2024,
+    fiscalQuarter: 1,
+    calendarYear: 2024,
+    calendarQuarter: 1,
+    earningsDate: "2024-05-15", // Estimated
+    earningsTime: null,
+    holdingsAtQuarterEnd: 1_194, // BTC Yield table
+    sharesAtQuarterEnd: 709_576_301,
+    holdingsPerShare: 0.00000168,
     source: "press-release",
     status: "reported",
   },
