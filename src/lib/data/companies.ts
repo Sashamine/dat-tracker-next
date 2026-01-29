@@ -1395,10 +1395,11 @@ export const avaxCompanies: Company[] = [
     ticker: "AVX",
     asset: "AVAX",
     tier: 1,
-    holdings: 13_871_000,  // Dashboard Jan 28, 2026 (not SEC-disclosed, see verification doc)
+    holdings: 13_871_000,  // ⚠️ Dashboard only - not SEC verified until Q4 10-K
     holdingsLastUpdated: "2026-01-28",
-    holdingsSource: "company-dashboard",
+    holdingsSource: "company-dashboard",  // Not SEC - PIPE closed after Q3 10-Q period
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
+    totalDebt: 1_414_415,  // SEC 10-Q Sep 30, 2025 (legacy debentures, pre-PIPE)
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     costBasisAvg: 11.73,
     stakingPct: 0.90,  // 8-K Jan 28, 2026: "more than 90% of AVAX holdings staked"
