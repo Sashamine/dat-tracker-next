@@ -1012,20 +1012,20 @@ export const bnbCompanies: Company[] = [
     cashSource: "SEC XBRL 6-K Q2 2025",
     cashSourceUrl: "https://data.sec.gov/api/xbrl/companyfacts/CIK0001872302.json",
     cashAsOf: "2025-06-30",
-    // UNVERIFIED: XBRL shows 111.5M shares from 2022, stale after multiple offerings
-    // Using estimate based on prospectus + convertible issuances
-    sharesForMnav: 20_700_000,
-    sharesSource: "Estimated (XBRL stale since 2022, need 20-F narrative)",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
-    sharesAsOf: "2025-12-31",
+    // VERIFIED from 20-F (FY2024): 12,815,143 Class A + 2,858,909 Class B = 15,674,052
+    // Multiple 424B3 prospectuses filed in 2025 for additional shares - estimate ~20.7M current
+    sharesForMnav: 15_674_052,  // Verified 20-F base - 2025 offerings NOT included
+    sharesSource: "SEC 20-F FY2024 (Class A: 12.8M + Class B: 2.9M)",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025031065/ea0235323-20f_nanolabs.htm",
+    sharesAsOf: "2024-12-31",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
-    notes: "$25M buyback commenced Dec 2025. XBRL CryptoAssetFairValueCurrent: $108.5M (Q2 2025). Press releases mention BTC holdings but no amount disclosed.",
+    notes: "$25M buyback commenced Dec 2025. Shares verified from 20-F (15.67M as of Dec 2024) - 2025 offerings may have increased count. Press releases mention BTC but no amount.",
     website: "https://www.nano.cn",
     twitter: "https://x.com/nano_labs_NA",
     investorRelationsUrl: "https://www.nano.cn/investor-relations",
-    // FPI data quality flags - these fields need verification from 20-F narrative
-    dataFlags: ["shares_xbrl_stale", "debt_unverified"],
+    // FPI data quality flags - shares verified from 20-F but excludes 2025 offerings
+    dataFlags: ["debt_unverified"],
     // REMOVED: secondaryCryptoHoldings BTC - 6-K mentions "BNB and BTC" but no amount disclosed
   },
 ];
