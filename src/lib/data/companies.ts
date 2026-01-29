@@ -1012,12 +1012,12 @@ export const bnbCompanies: Company[] = [
     cashSource: "SEC XBRL 6-K Q2 2025",
     cashSourceUrl: "https://data.sec.gov/api/xbrl/companyfacts/CIK0001872302.json",
     cashAsOf: "2025-06-30",
-    // VERIFIED from 20-F (FY2024): 12,815,143 Class A + 2,858,909 Class B = 15,674,052
-    // Multiple 424B3 prospectuses filed in 2025 for additional shares - estimate ~20.7M current
-    sharesForMnav: 15_674_052,  // Verified 20-F base - 2025 offerings NOT included
-    sharesSource: "SEC 20-F FY2024 (Class A: 12.8M + Class B: 2.9M)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025031065/ea0235323-20f_nanolabs.htm",
-    sharesAsOf: "2024-12-31",
+    // VERIFIED from 424B3 Oct 2025: 20,768,315 Class A + 2,858,909 Class B = 23,627,224
+    // Significant dilution in 2025: 15.67M (Dec 2024) → 23.6M (Oct 2025) = +50%
+    sharesForMnav: 23_627_224,
+    sharesSource: "SEC 424B3 Oct 2025 (Class A: 20.77M + Class B: 2.86M)",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025097024/ea0204760-11.htm",
+    sharesAsOf: "2025-10-07",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
     notes: "$25M buyback commenced Dec 2025. Shares verified from 20-F (15.67M as of Dec 2024) - 2025 offerings may have increased count. Press releases mention BTC but no amount.",
