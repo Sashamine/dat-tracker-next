@@ -2533,6 +2533,75 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "press-release",
     status: "reported",
   },
+
+  // ========== Capital B (ALTBG) - The Blockchain Group ==========
+  // French company, Euronext Growth Paris (ISIN: FR0011053636)
+  // Fiscal year: Calendar year (Jan-Dec). Reports H1 (Jun 30) and FY (Dec 31).
+  // Data from AMF filings + company website (cptlb.com/analytics)
+  // BTC treasury strategy launched Nov 5, 2024 ("Europe's first Bitcoin Treasury Company")
+  // Verified 2026-01-29 via Euronext + cptlb.com
+  //
+  // H2 2025 / FY 2025 (Dec 31) - Upcoming
+  {
+    ticker: "ALTBG",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-04-30", // Estimated annual report (French companies have 4 months post FY-end)
+    earningsTime: null,
+    holdingsAtQuarterEnd: 2_823, // Nov 25, 2025 AMF filing (most recent)
+    sharesAtQuarterEnd: 226_884_068, // Basic shares per mNAV.com Jan 2026
+    holdingsPerShare: 0.0000124,
+    source: "manual",
+    sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf",
+    status: "upcoming",
+  },
+  // H1 2025 (Jun 30) - Reported
+  {
+    ticker: "ALTBG",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-09-30", // H1 2025 report release
+    earningsTime: null,
+    holdingsAtQuarterEnd: 2_201, // Holdings history
+    sharesAtQuarterEnd: 48_000_000, // Pre-Sep 2025 dilution
+    holdingsPerShare: 0.0000459,
+    source: "manual",
+    status: "reported",
+  },
+  // H2 2024 / FY 2024 (Dec 31) - Reported
+  {
+    ticker: "ALTBG",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-04-30", // Annual report
+    earningsTime: null,
+    holdingsAtQuarterEnd: 1_800, // Holdings history
+    sharesAtQuarterEnd: 45_000_000,
+    holdingsPerShare: 0.0000400,
+    source: "manual",
+    status: "reported",
+  },
+  // H1 2024 (Jun 30) - Reported
+  {
+    ticker: "ALTBG",
+    fiscalYear: 2024,
+    fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
+    earningsDate: "2024-09-30", // H1 2024 report
+    earningsTime: null,
+    holdingsAtQuarterEnd: 1_200, // Holdings history
+    sharesAtQuarterEnd: 42_000_000,
+    holdingsPerShare: 0.0000286,
+    source: "manual",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date

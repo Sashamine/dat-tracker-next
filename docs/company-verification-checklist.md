@@ -308,6 +308,67 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## ALTBG (Capital B / The Blockchain Group) - Verified 2026-01-29
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 2,823 BTC (Nov 25, 2025)
+- [x] **Source**: AMF filing via OpenDataSoft API
+- [x] **Source URL**: https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf
+- [x] **Last updated**: 2025-11-25
+- [x] **Note**: No acquisitions since Nov 25 per cptlb.com/analytics (BTC Yield YTD: 0%)
+
+### 2. Regulatory Filing Verification ✅
+- [x] **ISIN**: FR0011053636
+- [x] **Regulator**: AMF (Autorité des marchés financiers) - France
+- [x] **Recent filings checked**: Jan 27 (ATM renewal), Nov 25 (holdings), Sep 22 (EUR58.1M placement)
+- [x] **Exchange**: Euronext Growth Paris
+- [x] **Company website**: https://cptlb.com
+
+### 3. Share Data ✅
+- [x] **Basic shares**: 226,884,068 (per mNAV.com Jan 2026)
+- [x] **Fully diluted**: ~392M (per cptlb.com/analytics)
+- [x] **Massive dilution in Sep 2025** from EUR58.1M private placement
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Reporting**: Semi-annual (H1 Jun 30, FY Dec 31)
+
+### 5. Earnings Data ✅
+| Period | Holdings | Shares | HPS | Status |
+|--------|----------|--------|-----|--------|
+| H1 2024 | 1,200 | 42M | 28.6 sats | reported |
+| FY 2024 | 1,800 | 45M | 40.0 sats | reported |
+| H1 2025 | 2,201 | 48M | 45.9 sats | reported |
+| FY 2025 | 2,823 | 227M | 12.4 sats | upcoming |
+
+**Note**: HPS dropped dramatically in H2 2025 due to EUR58.1M placement dilution (~4x share increase)
+
+### 6. Holdings Per Share Growth ✅
+- [x] **H1→H2 2024**: +40% HPS (holdings +50%, shares +7%)
+- [x] **H2 2024→H1 2025**: +15% HPS (holdings +22%, shares +7%)
+- [x] **H1→H2 2025**: -73% HPS (holdings +28%, shares +373% from placement)
+
+### 7. Non-Crypto Investments ✅
+- [x] **Operating subsidiaries**: iORGA, Trimane, Metadev 3 (tech consulting)
+- [x] **Treatment**: Not included in BTC NAV calculations
+
+### 8. Company Metadata ✅
+- [x] **Strategy**: "Europe's First Bitcoin Treasury Company" - accumulate 1% of BTC by 2033
+- [x] **Target**: 15,000 BTC by EOY 2027
+- [x] **ATM Program**: EUR300M with TOBAM (renewed Jan 27, 2026)
+- [x] **Key investors**: Adam Back, Fulgur Ventures, UTXO, TOBAM
+
+### 9. Dilutive Instruments ✅
+- [x] **OCA Tranche 1** (Mar 2025): 89.4M shares @ €0.544
+- [x] **BSA 2025-01 Warrants** (Apr 2025): 13.3M shares @ €0.544 (expires Apr 2026)
+- [x] **OCA B-02** (May 2025): 99.6M shares @ €0.707 (Fulgur, UTXO, Adam Back)
+- [x] **OCA B-03** (May 2025): 2.8M shares @ €3.81-€4.95 (Moonlight)
+- [x] **OCA A-03** (Jun 2025): 1.0M shares @ €6.24 (TOBAM)
+- [x] **Total potential dilution**: ~165M shares (if all converts exercised)
+- [x] **Added to dilutive-instruments.ts**: Yes (verified 2026-01-25)
+
+---
+
 ## HSDT (Solana Company) - Pending Verification
 
 ### Company Metadata Added 2026-01-29
