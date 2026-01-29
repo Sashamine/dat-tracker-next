@@ -1,0 +1,125 @@
+{
+  "ticker": "AVX",
+  "cik": "1826397",
+  "asset": "AVAX",
+  "companyName": "AVAX ONE TECHNOLOGY LTD.",
+  "filings": [
+    {
+      "accessionNumber": "0001493152-26-004069",
+      "formType": "8-K",
+      "filedDate": "2026-01-28",
+      "periodDate": "2026-01-28",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315226004069/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-003716",
+      "formType": "8-K",
+      "filedDate": "2026-01-27",
+      "periodDate": "2026-01-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315226003716/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-003637",
+      "formType": "8-K",
+      "filedDate": "2026-01-26",
+      "periodDate": "2026-01-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315226003637/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-003635",
+      "formType": "424B5",
+      "filedDate": "2026-01-26",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315226003635/form424b5.htm"
+    },
+    {
+      "accessionNumber": "0001493152-26-001125",
+      "formType": "S-3/A",
+      "filedDate": "2026-01-09",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315226001125/forms-3a.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-026425",
+      "formType": "S-3",
+      "filedDate": "2025-12-05",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225026425/forms-3.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-024469",
+      "formType": "8-K",
+      "filedDate": "2025-11-20",
+      "periodDate": "2025-11-19",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225024469/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-023464",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-022400",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225022400/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-021948",
+      "formType": "8-K",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-11-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021948/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-021006",
+      "formType": "8-K",
+      "filedDate": "2025-11-06",
+      "periodDate": "2025-11-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-019747",
+      "formType": "8-K",
+      "filedDate": "2025-10-27",
+      "periodDate": "2025-10-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225019747/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-019013",
+      "formType": "8-K",
+      "filedDate": "2025-10-23",
+      "periodDate": "2025-10-21",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225019013/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-018839",
+      "formType": "424B5",
+      "filedDate": "2025-10-22",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225018839/form424b5.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:35.599Z"
+}

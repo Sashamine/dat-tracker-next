@@ -1,0 +1,80 @@
+{
+  "ticker": "DFDV",
+  "cik": "1805526",
+  "asset": "SOL",
+  "companyName": "DeFi Development Corp.",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-26-009173",
+      "formType": "8-K",
+      "filedDate": "2026-01-29",
+      "periodDate": "2026-01-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390026009173/ea0274507-8k_defi.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001193125-26-002668",
+      "formType": "8-K",
+      "filedDate": "2026-01-05",
+      "periodDate": "2026-01-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001213900-25-125412",
+      "formType": "8-K",
+      "filedDate": "2025-12-23",
+      "periodDate": "2025-12-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390025125412/ea0270779-8k_defi.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-123331",
+      "formType": "S-1",
+      "filedDate": "2025-12-18",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm"
+    },
+    {
+      "accessionNumber": "0001193125-25-286660",
+      "formType": "10-Q",
+      "filedDate": "2025-11-19",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-111783",
+      "formType": "424B3",
+      "filedDate": "2025-11-18",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390025111783/ea0266101-424b3_defi.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-109627",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390025109627/ea0265415-8k_defi.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-105278",
+      "formType": "424B3",
+      "filedDate": "2025-11-03",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390025105278/ea0263533-424b3_defi.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-103170",
+      "formType": "S-1",
+      "filedDate": "2025-10-28",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1805526/000121390025103170/ea0262753-s1_defi.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:28.371Z"
+}

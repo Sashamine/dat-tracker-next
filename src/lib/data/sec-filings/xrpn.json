@@ -1,0 +1,70 @@
+{
+  "ticker": "XRPN",
+  "cik": "2044009",
+  "asset": "XRP",
+  "companyName": "Armada Acquisition Corp. II",
+  "filings": [
+    {
+      "accessionNumber": "0001193125-25-308177",
+      "formType": "10-K",
+      "filedDate": "2025-12-04",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525308177/d66244d10k.htm"
+    },
+    {
+      "accessionNumber": "0001193125-25-279035",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525279035/d17530d8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-263628",
+      "formType": "8-K",
+      "filedDate": "2025-11-04",
+      "periodDate": "2025-11-04",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525263628/d77894d8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-255392",
+      "formType": "8-K",
+      "filedDate": "2025-10-29",
+      "periodDate": "2025-10-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525255392/d71054d8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-243103",
+      "formType": "8-K",
+      "filedDate": "2025-10-20",
+      "periodDate": "2025-10-19",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525243103/d97098d8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-191346",
+      "formType": "8-K",
+      "filedDate": "2025-08-28",
+      "periodDate": "2025-08-28",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525191346/d44986d8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-179096",
+      "formType": "8-K",
+      "filedDate": "2025-08-12",
+      "periodDate": "2025-08-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525179096/d445009d8k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:33.221Z"
+}

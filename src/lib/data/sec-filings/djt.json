@@ -1,0 +1,54 @@
+{
+  "ticker": "DJT",
+  "cik": "1849635",
+  "asset": "BTC",
+  "companyName": "Trump Media & Technology Group Corp.",
+  "filings": [
+    {
+      "accessionNumber": "0001140361-26-001056",
+      "formType": "8-K",
+      "filedDate": "2026-01-13",
+      "periodDate": "2026-01-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1849635/000114036126001056/ef20062775_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-047062",
+      "formType": "8-K",
+      "filedDate": "2025-12-31",
+      "periodDate": "2025-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125047062/ef20062199_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-046825",
+      "formType": "8-K",
+      "filedDate": "2025-12-30",
+      "periodDate": "2025-12-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125046825/ef20062009_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-046056",
+      "formType": "8-K",
+      "filedDate": "2025-12-18",
+      "periodDate": "2025-12-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125046056/ef20061577_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-045947",
+      "formType": "8-K",
+      "filedDate": "2025-12-18",
+      "periodDate": "2025-12-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125045947/ef20061515_8k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:23.794Z"
+}

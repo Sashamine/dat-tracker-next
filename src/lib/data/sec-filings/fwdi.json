@@ -1,0 +1,134 @@
+{
+  "ticker": "FWDI",
+  "cik": "38264",
+  "asset": "SOL",
+  "companyName": "Forward Industries, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001683168-25-009073",
+      "formType": "8-K",
+      "filedDate": "2025-12-11",
+      "periodDate": "2025-12-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825009073/forward_i8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001683168-25-009068",
+      "formType": "10-K",
+      "filedDate": "2025-12-11",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825009068/forward_i10k-093025.htm"
+    },
+    {
+      "accessionNumber": "0001683168-25-008941",
+      "formType": "8-K",
+      "filedDate": "2025-12-05",
+      "periodDate": "2025-12-01",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825008941/forward_i8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001683168-25-008454",
+      "formType": "8-K",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-11-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825008454/forward_i8k.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001683168-25-008451",
+      "formType": "424B5",
+      "filedDate": "2025-11-14",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825008451/forward_424b5-resale.htm"
+    },
+    {
+      "accessionNumber": "0001683168-25-008146",
+      "formType": "8-K",
+      "filedDate": "2025-11-10",
+      "periodDate": "2025-11-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825008146/forward_i8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001683168-25-008141",
+      "formType": "424B5",
+      "filedDate": "2025-11-10",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825008141/forward_424b5-resale.htm"
+    },
+    {
+      "accessionNumber": "0001683168-25-007933",
+      "formType": "8-K",
+      "filedDate": "2025-11-04",
+      "periodDate": "2025-11-03",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007933/forward_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001683168-25-007923",
+      "formType": "424B5",
+      "filedDate": "2025-11-03",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007923/forward_424b5-resale.htm"
+    },
+    {
+      "accessionNumber": "0001683168-25-007870",
+      "formType": "8-K",
+      "filedDate": "2025-10-31",
+      "periodDate": "2025-10-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007870/forward_i8k.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001683168-25-007687",
+      "formType": "8-K",
+      "filedDate": "2025-10-21",
+      "periodDate": "2025-10-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007687/forward_8k.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001683168-25-007508",
+      "formType": "8-K",
+      "filedDate": "2025-10-10",
+      "periodDate": "2025-10-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007508/forward_i8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001683168-25-007047",
+      "formType": "8-K",
+      "filedDate": "2025-09-17",
+      "periodDate": "2025-09-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007047/forward_i8k.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001683168-25-007043",
+      "formType": "S-3ASR",
+      "filedDate": "2025-09-17",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007043/forward_s3asr.htm"
+    },
+    {
+      "accessionNumber": "0001683168-25-007036",
+      "formType": "8-K",
+      "filedDate": "2025-09-16",
+      "periodDate": "2024-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007036/forward_i8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:29.214Z"
+}

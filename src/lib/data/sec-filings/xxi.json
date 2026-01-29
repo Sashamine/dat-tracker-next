@@ -1,0 +1,66 @@
+{
+  "ticker": "XXI",
+  "cik": "2070457",
+  "asset": "BTC",
+  "companyName": "Twenty One Capital, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-26-001442",
+      "formType": "8-K",
+      "filedDate": "2026-01-06",
+      "periodDate": "2026-01-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001442/ea0271770-8k_twenty.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-26-001285",
+      "formType": "S-1",
+      "filedDate": "2026-01-05",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-123918",
+      "formType": "10-Q",
+      "filedDate": "2025-12-19",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025123918/ea0270339-10q_twenty.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-121293",
+      "formType": "8-K",
+      "filedDate": "2025-12-12",
+      "periodDate": "2025-12-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-120736",
+      "formType": "8-K",
+      "filedDate": "2025-12-11",
+      "periodDate": "2025-12-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025120736/ea0269379-8k_twenty.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-119445",
+      "formType": "8-K",
+      "filedDate": "2025-12-09",
+      "periodDate": "2025-12-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-118048",
+      "formType": "424B3",
+      "filedDate": "2025-12-04",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025118048/ea0268415-424b3_twentyone.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:23.431Z"
+}

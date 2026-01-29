@@ -1,0 +1,37 @@
+{
+  "ticker": "NA",
+  "cik": "1872302",
+  "asset": "BNB",
+  "companyName": "Nano Labs Ltd",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-25-097024",
+      "formType": "424B3",
+      "filedDate": "2025-10-07",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025097024/ea0204760-11.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-090878",
+      "formType": "424B3",
+      "filedDate": "2025-09-24",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025090878/ea0258429-424b3_nano.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-083343",
+      "formType": "424B3",
+      "filedDate": "2025-09-02",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025083343/ea0255510-424b3_nanolabs.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-079171",
+      "formType": "424B5",
+      "filedDate": "2025-08-21",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025079171/ea0250038-424b5_nanolabs.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:31.008Z"
+}

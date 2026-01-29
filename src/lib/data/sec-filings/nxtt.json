@@ -1,0 +1,175 @@
+{
+  "ticker": "NXTT",
+  "cik": "1784970",
+  "asset": "BTC",
+  "companyName": "Next Technology Holding Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-26-007151",
+      "formType": "8-K",
+      "filedDate": "2026-01-23",
+      "periodDate": "2026-01-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390026007151/ea0273619-8k_next.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-121322",
+      "formType": "8-K",
+      "filedDate": "2025-12-15",
+      "periodDate": "2025-12-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025121322/ea0269567-8k_next.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-115307",
+      "formType": "8-K",
+      "filedDate": "2025-11-26",
+      "periodDate": "2025-11-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025115307/ea0267322-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-104679",
+      "formType": "S-3/A",
+      "filedDate": "2025-10-31",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-097321",
+      "formType": "10-Q",
+      "filedDate": "2025-10-08",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-093260",
+      "formType": "8-K",
+      "filedDate": "2025-09-30",
+      "periodDate": "2025-09-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025093260/ea0259382-8k_next.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-092085",
+      "formType": "8-K",
+      "filedDate": "2025-09-26",
+      "periodDate": "2025-09-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025092085/ea0258827-8k_next.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-087680",
+      "formType": "S-3",
+      "filedDate": "2025-09-15",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025087680/ea0257058-s3_nexttech.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-086946",
+      "formType": "8-K",
+      "filedDate": "2025-09-12",
+      "periodDate": "2025-09-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025086946/ea0256316-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-085190",
+      "formType": "8-K",
+      "filedDate": "2025-09-08",
+      "periodDate": "2025-09-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025085190/ea0256179-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-083876",
+      "formType": "424B5",
+      "filedDate": "2025-09-03",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025083876/ea0255777-424b5_nexttech.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-081800",
+      "formType": "8-K",
+      "filedDate": "2025-08-28",
+      "periodDate": "2025-08-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025081800/ea0255041-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-074012",
+      "formType": "8-K",
+      "filedDate": "2025-08-11",
+      "periodDate": "2025-08-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025074012/ea0252515-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-073282",
+      "formType": "10-Q",
+      "filedDate": "2025-08-08",
+      "periodDate": "2025-06-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025073282/ea0250722-10q_next.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-056703",
+      "formType": "8-K",
+      "filedDate": "2025-06-23",
+      "periodDate": "2025-06-20",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025056703/ea0246591-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-049014",
+      "formType": "8-K",
+      "filedDate": "2025-05-29",
+      "periodDate": "2025-05-28",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025049014/ea0243945-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-041307",
+      "formType": "10-Q",
+      "filedDate": "2025-05-09",
+      "periodDate": "2025-03-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025041307/ea0240879-10q_nexttech.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-031752",
+      "formType": "8-K",
+      "filedDate": "2025-04-15",
+      "periodDate": "2025-04-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025031752/ea0238298-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001013762-25-003282",
+      "formType": "10-K",
+      "filedDate": "2025-03-27",
+      "periodDate": "2024-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000101376225003282/ea0233807-10k_nexttech.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-023221",
+      "formType": "8-K",
+      "filedDate": "2025-03-12",
+      "periodDate": "2025-03-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1784970/000121390025023221/ea0233833-8k_nexttech.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:24.447Z"
+}

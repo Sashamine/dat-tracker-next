@@ -1,0 +1,37 @@
+{
+  "ticker": "BTDR",
+  "cik": "1899123",
+  "asset": "BTC",
+  "companyName": "Bitdeer Technologies Group",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-25-110978",
+      "formType": "424B5",
+      "filedDate": "2025-11-14",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1899123/000121390025110978/ea0265759-424b5_bitdeer.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-109593",
+      "formType": "424B5",
+      "filedDate": "2025-11-13",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1899123/000121390025109593/ea0265489-424b5_bitdeer.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-109293",
+      "formType": "424B5",
+      "filedDate": "2025-11-12",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1899123/000121390025109293/ea026527902-424b5_bitdeer.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-109286",
+      "formType": "424B5",
+      "filedDate": "2025-11-12",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1899123/000121390025109286/ea0265279-424b5_bitdeer.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:22.705Z"
+}

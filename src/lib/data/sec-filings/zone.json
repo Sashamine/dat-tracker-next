@@ -1,0 +1,75 @@
+{
+  "ticker": "ZONE",
+  "cik": "1956741",
+  "asset": "DOGE",
+  "companyName": "CleanCore Solutions, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-25-123866",
+      "formType": "8-K",
+      "filedDate": "2025-12-19",
+      "periodDate": "2025-12-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025123866/ea0270308-8k_cleancore.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-109642",
+      "formType": "10-Q",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-109635",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109635/ea0265353-8k_cleancore.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-107716",
+      "formType": "S-3ASR",
+      "filedDate": "2025-11-07",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025107716/ea0264460-s3asr_cleancore.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-103110",
+      "formType": "8-K",
+      "filedDate": "2025-10-28",
+      "periodDate": "2025-10-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025103110/ea0262705-8k_clean.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-091217",
+      "formType": "S-3",
+      "filedDate": "2025-09-24",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025091217/ea0258608-s3_cleancore.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-085268",
+      "formType": "8-K/A",
+      "filedDate": "2025-09-08",
+      "periodDate": "2025-08-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025085268/ea0256328-8ka1_clearcore.htm",
+      "items": [],
+      "description": "AMENDMENT NO. 1 TO FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001213900-25-085107",
+      "formType": "8-K",
+      "filedDate": "2025-09-05",
+      "periodDate": "2025-08-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956741/000121390025085107/ea0255944-8k_clean.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:34.631Z"
+}

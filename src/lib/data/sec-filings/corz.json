@@ -1,0 +1,70 @@
+{
+  "ticker": "CORZ",
+  "cik": "1839341",
+  "asset": "BTC",
+  "companyName": "Core Scientific, Inc./tx",
+  "filings": [
+    {
+      "accessionNumber": "0001140361-25-040020",
+      "formType": "8-K",
+      "filedDate": "2025-10-31",
+      "periodDate": "2025-10-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000114036125040020/ef20058085_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-039864",
+      "formType": "8-K",
+      "filedDate": "2025-10-30",
+      "periodDate": "2025-10-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000114036125039864/ef20057996_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-039808",
+      "formType": "8-K",
+      "filedDate": "2025-10-30",
+      "periodDate": "2025-10-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000114036125039808/ef20057995_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-039804",
+      "formType": "8-K",
+      "filedDate": "2025-10-30",
+      "periodDate": "2025-10-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000114036125039804/ef20057993_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001628280-25-046272",
+      "formType": "10-Q",
+      "filedDate": "2025-10-24",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828025046272/core-20250930.htm"
+    },
+    {
+      "accessionNumber": "0001628280-25-046263",
+      "formType": "8-K",
+      "filedDate": "2025-10-24",
+      "periodDate": "2025-10-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828025046263/core-20251024.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-25-038945",
+      "formType": "8-K",
+      "filedDate": "2025-10-22",
+      "periodDate": "2025-10-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000114036125038945/ef20057524_8k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:22.352Z"
+}

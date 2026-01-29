@@ -1,0 +1,115 @@
+{
+  "ticker": "BMNR",
+  "cik": "1829311",
+  "asset": "ETH",
+  "companyName": "BITMINE IMMERSION TECHNOLOGIES, INC.",
+  "filings": [
+    {
+      "accessionNumber": "0001493152-26-004016",
+      "formType": "8-K",
+      "filedDate": "2026-01-28",
+      "periodDate": "2026-01-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004016/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-003536",
+      "formType": "8-K",
+      "filedDate": "2026-01-26",
+      "periodDate": "2026-01-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-002762",
+      "formType": "8-K",
+      "filedDate": "2026-01-20",
+      "periodDate": "2026-01-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002762/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-002335",
+      "formType": "8-K",
+      "filedDate": "2026-01-15",
+      "periodDate": "2026-01-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002335/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-002135",
+      "formType": "8-K",
+      "filedDate": "2026-01-14",
+      "periodDate": "2026-01-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002135/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-002084",
+      "formType": "10-Q",
+      "filedDate": "2026-01-13",
+      "periodDate": "2025-11-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001493152-26-001237",
+      "formType": "8-K",
+      "filedDate": "2026-01-12",
+      "periodDate": "2026-01-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226001237/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-001088",
+      "formType": "8-K",
+      "filedDate": "2026-01-09",
+      "periodDate": "2026-01-06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226001088/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-000274",
+      "formType": "8-K",
+      "filedDate": "2026-01-05",
+      "periodDate": "2026-01-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226000274/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-000042",
+      "formType": "8-K",
+      "filedDate": "2026-01-02",
+      "periodDate": "2026-01-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226000042/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-26-000023",
+      "formType": "8-K",
+      "filedDate": "2026-01-02",
+      "periodDate": "2026-01-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226000023/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-029227",
+      "formType": "8-K",
+      "filedDate": "2025-12-29",
+      "periodDate": "2025-12-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1829311/000149315225029227/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:25.879Z"
+}

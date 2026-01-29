@@ -1,0 +1,175 @@
+{
+  "ticker": "UPXI",
+  "cik": "1775194",
+  "asset": "SOL",
+  "companyName": "UPEXI, INC.",
+  "filings": [
+    {
+      "accessionNumber": "0001477932-26-000482",
+      "formType": "8-K",
+      "filedDate": "2026-01-28",
+      "periodDate": "2026-01-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000482/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-26-000207",
+      "formType": "8-K",
+      "filedDate": "2026-01-14",
+      "periodDate": "2026-01-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000207/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-26-000137",
+      "formType": "8-K",
+      "filedDate": "2026-01-09",
+      "periodDate": "2026-01-07",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000137/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-009281",
+      "formType": "8-K",
+      "filedDate": "2025-12-31",
+      "periodDate": "2025-12-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225009281/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-009212",
+      "formType": "8-K",
+      "filedDate": "2025-12-29",
+      "periodDate": "2025-12-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225009212/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-009150",
+      "formType": "S-3",
+      "filedDate": "2025-12-22",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225009150/upxi_s3.htm"
+    },
+    {
+      "accessionNumber": "0001477932-25-008833",
+      "formType": "424B3",
+      "filedDate": "2025-12-08",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008833/upxi_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001477932-25-008815",
+      "formType": "8-K",
+      "filedDate": "2025-12-05",
+      "periodDate": "2025-12-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008815/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-008717",
+      "formType": "S-1",
+      "filedDate": "2025-12-02",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008717/upxi_s1.htm"
+    },
+    {
+      "accessionNumber": "0001477932-25-008713",
+      "formType": "8-K",
+      "filedDate": "2025-12-01",
+      "periodDate": "2025-11-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008713/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-008662",
+      "formType": "8-K",
+      "filedDate": "2025-11-28",
+      "periodDate": "2025-11-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008662/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-008305",
+      "formType": "8-K",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008305/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-008089",
+      "formType": "8-K",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-11-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008089/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-008025",
+      "formType": "10-Q",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/upxi_10q.htm"
+    },
+    {
+      "accessionNumber": "0001477932-25-007993",
+      "formType": "424B3",
+      "filedDate": "2025-11-10",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225007993/upxi_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001477932-25-007992",
+      "formType": "424B3",
+      "filedDate": "2025-11-10",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225007992/upxi_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001477932-25-007982",
+      "formType": "8-K",
+      "filedDate": "2025-11-07",
+      "periodDate": "2025-11-06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225007982/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-007931",
+      "formType": "8-K",
+      "filedDate": "2025-11-05",
+      "periodDate": "2025-10-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225007931/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-007749",
+      "formType": "8-K",
+      "filedDate": "2025-10-24",
+      "periodDate": "2025-10-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225007749/upxi_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001477932-25-007662",
+      "formType": "S-1/A",
+      "filedDate": "2025-10-20",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1775194/000147793225007662/upxi_s1a.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:28.765Z"
+}

@@ -1,0 +1,99 @@
+{
+  "ticker": "MSTR",
+  "cik": "1050446",
+  "asset": "BTC",
+  "companyName": "Strategy Inc",
+  "filings": [
+    {
+      "accessionNumber": "0001193125-26-021726",
+      "formType": "8-K",
+      "filedDate": "2026-01-26",
+      "periodDate": "2026-01-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/mstr-20260105.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-26-016002",
+      "formType": "8-K",
+      "filedDate": "2026-01-20",
+      "periodDate": "2026-01-20",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526016002/mstr-20260105.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-26-009811",
+      "formType": "8-K",
+      "filedDate": "2026-01-12",
+      "periodDate": "2026-01-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526009811/mstr-20260105.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-26-001550",
+      "formType": "8-K",
+      "filedDate": "2026-01-05",
+      "periodDate": "2026-01-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/mstr-20260105.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-26-000264",
+      "formType": "8-K",
+      "filedDate": "2026-01-02",
+      "periodDate": "2025-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526000264/mstr-20251117.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-332296",
+      "formType": "8-K",
+      "filedDate": "2025-12-29",
+      "periodDate": "2025-12-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312525332296/mstr-20251117.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-327598",
+      "formType": "8-K",
+      "filedDate": "2025-12-22",
+      "periodDate": "2025-12-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312525327598/mstr-20251117.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-318468",
+      "formType": "8-K",
+      "filedDate": "2025-12-15",
+      "periodDate": "2025-12-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312525318468/mstr-20251117.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-310607",
+      "formType": "8-K",
+      "filedDate": "2025-12-08",
+      "periodDate": "2025-12-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312525310607/mstr-20251117.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-303157",
+      "formType": "8-K",
+      "filedDate": "2025-12-01",
+      "periodDate": "2025-11-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312525303157/d69948d8k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:20.912Z"
+}

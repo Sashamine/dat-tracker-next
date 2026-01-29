@@ -1,0 +1,118 @@
+{
+  "ticker": "TWAV",
+  "cik": "746210",
+  "asset": "TAO",
+  "companyName": "TaoWeave, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001437749-25-038437",
+      "formType": "8-K",
+      "filedDate": "2025-12-19",
+      "periodDate": "2025-12-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925038437/twav20251216_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-037490",
+      "formType": "8-K",
+      "filedDate": "2025-12-11",
+      "periodDate": "2025-12-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925037490/twav20251210_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-037088",
+      "formType": "8-K",
+      "filedDate": "2025-12-08",
+      "periodDate": "2025-12-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925037088/oblg20251203_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-034619",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925034619/oblg20250821_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-034612",
+      "formType": "10-Q",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/oblg20250930_10q.htm"
+    },
+    {
+      "accessionNumber": "0001437749-25-028846",
+      "formType": "8-K",
+      "filedDate": "2025-09-11",
+      "periodDate": "2025-09-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925028846/oblg20250910_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-026687",
+      "formType": "8-K",
+      "filedDate": "2025-08-14",
+      "periodDate": "2025-08-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925026687/oblg20250604_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-026680",
+      "formType": "10-Q",
+      "filedDate": "2025-08-14",
+      "periodDate": "2025-06-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925026680/oblg20250630_10q.htm"
+    },
+    {
+      "accessionNumber": "0001437749-25-025437",
+      "formType": "8-K",
+      "filedDate": "2025-08-07",
+      "periodDate": "2025-08-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925025437/oblg20250807_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-023781",
+      "formType": "S-3/A",
+      "filedDate": "2025-07-29",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925023781/oblg20250728_s3a.htm"
+    },
+    {
+      "accessionNumber": "0001437749-25-023005",
+      "formType": "S-3/A",
+      "filedDate": "2025-07-18",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925023005/oblg20250701_s3a.htm"
+    },
+    {
+      "accessionNumber": "0001437749-25-022766",
+      "formType": "8-K",
+      "filedDate": "2025-07-16",
+      "periodDate": "2025-07-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925022766/oblg20250715_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001437749-25-021864",
+      "formType": "8-K",
+      "filedDate": "2025-07-02",
+      "periodDate": "2025-07-01",
+      "url": "https://www.sec.gov/Archives/edgar/data/746210/000143774925021864/oblg20250701_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:32.115Z"
+}

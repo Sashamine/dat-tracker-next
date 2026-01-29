@@ -1,0 +1,25 @@
+{
+  "ticker": "MARA",
+  "cik": "1507605",
+  "asset": "BTC",
+  "companyName": "MARA Holdings, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001507605-25-000028",
+      "formType": "10-Q",
+      "filedDate": "2025-11-04",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm"
+    },
+    {
+      "accessionNumber": "0001507605-25-000026",
+      "formType": "8-K",
+      "filedDate": "2025-11-04",
+      "periodDate": "2025-11-04",
+      "url": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000026/mara-20251104.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:21.272Z"
+}

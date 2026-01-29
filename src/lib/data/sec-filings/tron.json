@@ -1,0 +1,143 @@
+{
+  "ticker": "TRON",
+  "cik": "1956744",
+  "asset": "TRX",
+  "companyName": "Tron Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001493152-26-003321",
+      "formType": "8-K",
+      "filedDate": "2026-01-23",
+      "periodDate": "2026-01-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-029225",
+      "formType": "8-K",
+      "filedDate": "2025-12-29",
+      "periodDate": "2025-12-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-028353",
+      "formType": "8-K",
+      "filedDate": "2025-12-18",
+      "periodDate": "2025-12-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000149315225028353/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-021757",
+      "formType": "8-K",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-11-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000149315225021757/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-021526",
+      "formType": "10-Q",
+      "filedDate": "2025-11-10",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000149315225021526/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-018367",
+      "formType": "S-3/A",
+      "filedDate": "2025-10-17",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000149315225018367/forms-3a.htm"
+    },
+    {
+      "accessionNumber": "0001641172-25-026144",
+      "formType": "8-K",
+      "filedDate": "2025-09-02",
+      "periodDate": "2025-09-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225026144/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-026127",
+      "formType": "8-K",
+      "filedDate": "2025-09-02",
+      "periodDate": "2025-08-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225026127/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-026036",
+      "formType": "8-K",
+      "filedDate": "2025-08-29",
+      "periodDate": "2025-08-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225026036/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-025261",
+      "formType": "S-3/A",
+      "filedDate": "2025-08-22",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225025261/forms-3a.htm"
+    },
+    {
+      "accessionNumber": "0001641172-25-022909",
+      "formType": "8-K",
+      "filedDate": "2025-08-11",
+      "periodDate": "2025-08-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225022909/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-022765",
+      "formType": "10-Q",
+      "filedDate": "2025-08-08",
+      "periodDate": "2025-06-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225022765/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001641172-25-021114",
+      "formType": "S-3",
+      "filedDate": "2025-07-28",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225021114/forms-3.htm"
+    },
+    {
+      "accessionNumber": "0001641172-25-020664",
+      "formType": "8-K",
+      "filedDate": "2025-07-23",
+      "periodDate": "2025-07-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225020664/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-019987",
+      "formType": "8-K",
+      "filedDate": "2025-07-17",
+      "periodDate": "2025-07-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225019987/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-019830",
+      "formType": "8-K",
+      "filedDate": "2025-07-16",
+      "periodDate": "2025-07-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1956744/000164117225019830/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:32.849Z"
+}

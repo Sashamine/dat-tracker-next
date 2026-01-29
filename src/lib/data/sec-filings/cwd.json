@@ -1,0 +1,229 @@
+{
+  "ticker": "CWD",
+  "cik": "1627282",
+  "asset": "LINK",
+  "companyName": "CaliberCos Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001627282-25-000164",
+      "formType": "8-K",
+      "filedDate": "2025-12-16",
+      "periodDate": "2025-12-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000164/cwd-20251216.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000162",
+      "formType": "8-K",
+      "filedDate": "2025-12-12",
+      "periodDate": "2025-12-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000162/cwd-20251211.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-116475",
+      "formType": "424B3",
+      "filedDate": "2025-11-26",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925116475/tm2532122d1_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-116025",
+      "formType": "424B3",
+      "filedDate": "2025-11-25",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925116025/tm2532138d1_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001627282-25-000160",
+      "formType": "8-K",
+      "filedDate": "2025-11-19",
+      "periodDate": "2025-11-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000160/cwd-20251117.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000157",
+      "formType": "10-Q",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000157/cwd-20250930.htm"
+    },
+    {
+      "accessionNumber": "0001627282-25-000155",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000155/cwd-20251113.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000142",
+      "formType": "8-K",
+      "filedDate": "2025-11-04",
+      "periodDate": "2025-11-04",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000142/cwd-20251104.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-105213",
+      "formType": "S-3",
+      "filedDate": "2025-11-03",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925105213/tm2529892d1_s3.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-105047",
+      "formType": "8-K",
+      "filedDate": "2025-11-03",
+      "periodDate": "2025-10-28",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925105047/tm2529978d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000138",
+      "formType": "8-K",
+      "filedDate": "2025-10-24",
+      "periodDate": "2025-10-20",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000138/cwd-20251020.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-101675",
+      "formType": "8-K",
+      "filedDate": "2025-10-23",
+      "periodDate": "2025-10-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925101675/tm2529321d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000136",
+      "formType": "8-K",
+      "filedDate": "2025-10-17",
+      "periodDate": "2025-10-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000136/cwd-20251016.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000131",
+      "formType": "8-K",
+      "filedDate": "2025-10-14",
+      "periodDate": "2025-10-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000131/cwd-20251009.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000128",
+      "formType": "8-K",
+      "filedDate": "2025-10-07",
+      "periodDate": "2025-10-07",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000128/cwd-20251007.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000126",
+      "formType": "8-K",
+      "filedDate": "2025-10-01",
+      "periodDate": "2025-10-01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000126/cwd-20251001.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-095192",
+      "formType": "S-3",
+      "filedDate": "2025-10-01",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925095192/tm2526834d1_s3.htm"
+    },
+    {
+      "accessionNumber": "0001627282-25-000121",
+      "formType": "8-K",
+      "filedDate": "2025-09-29",
+      "periodDate": "2025-09-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000121/cwd-20250929.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-093943",
+      "formType": "8-K",
+      "filedDate": "2025-09-26",
+      "periodDate": "2025-09-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925093943/tm2527018d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000116",
+      "formType": "8-K",
+      "filedDate": "2025-09-23",
+      "periodDate": "2025-09-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000116/cwd-20250923.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-091795",
+      "formType": "424B3",
+      "filedDate": "2025-09-22",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925091795/tm2526606d1_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-091023",
+      "formType": "8-K",
+      "filedDate": "2025-09-18",
+      "periodDate": "2025-09-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925091023/tm2526187d2_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-090626",
+      "formType": "424B5",
+      "filedDate": "2025-09-17",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925090626/tm2524335d1_424b5.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-090624",
+      "formType": "8-K",
+      "filedDate": "2025-09-17",
+      "periodDate": "2025-09-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925090624/tm2526187d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001627282-25-000109",
+      "formType": "8-K",
+      "filedDate": "2025-09-12",
+      "periodDate": "2025-09-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000109/cwd-20250912.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-088692",
+      "formType": "8-K",
+      "filedDate": "2025-09-10",
+      "periodDate": "2025-09-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627282/000110465925088692/tm2525700d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:32.482Z"
+}

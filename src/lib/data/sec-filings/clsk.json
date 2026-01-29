@@ -1,0 +1,61 @@
+{
+  "ticker": "CLSK",
+  "cik": "827876",
+  "asset": "BTC",
+  "companyName": "CLEANSPARK, INC.",
+  "filings": [
+    {
+      "accessionNumber": "0001193125-25-297510",
+      "formType": "10-K",
+      "filedDate": "2025-11-25",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm"
+    },
+    {
+      "accessionNumber": "0001193125-25-297163",
+      "formType": "8-K",
+      "filedDate": "2025-11-25",
+      "periodDate": "2025-11-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297163/clsk-20251125.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-280105",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525280105/clsk-20251113.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-276014",
+      "formType": "8-K",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-11-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525276014/clsk-20251110.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-274179",
+      "formType": "8-K",
+      "filedDate": "2025-11-10",
+      "periodDate": "2025-11-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525274179/clsk-20251110.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-256352",
+      "formType": "8-K",
+      "filedDate": "2025-10-29",
+      "periodDate": "2025-10-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525256352/clsk-20251029.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:22.000Z"
+}

@@ -1,0 +1,154 @@
+{
+  "ticker": "BTBT",
+  "cik": "1710350",
+  "asset": "ETH",
+  "companyName": "Bit Digital, Inc",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-25-121063",
+      "formType": "8-K",
+      "filedDate": "2025-12-12",
+      "periodDate": "2025-12-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025121063/ea0269526-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-120806",
+      "formType": "8-K",
+      "filedDate": "2025-12-12",
+      "periodDate": "2025-12-07",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025120806/ea0269172-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-110383",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-110283",
+      "formType": "8-K",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-11-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110283/ea0265645-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-104749",
+      "formType": "8-K",
+      "filedDate": "2025-10-31",
+      "periodDate": "2025-10-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025104749/ea0263383-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-104745",
+      "formType": "S-3ASR",
+      "filedDate": "2025-10-31",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025104745/ea0262917-s3asr_bitdigital.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-095533",
+      "formType": "8-K",
+      "filedDate": "2025-10-02",
+      "periodDate": "2025-09-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025095533/ea0259669-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-094778",
+      "formType": "424B5",
+      "filedDate": "2025-10-01",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025094778/ea0259621-424b5_bitdigital.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-093122",
+      "formType": "424B5",
+      "filedDate": "2025-09-29",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025093122/ea0258576-424b5_bitdigital.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-093092",
+      "formType": "8-K",
+      "filedDate": "2025-09-29",
+      "periodDate": "2025-09-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025093092/ea0259157-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-091672",
+      "formType": "8-K",
+      "filedDate": "2025-09-25",
+      "periodDate": "2025-09-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025091672/ea0258790-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-090885",
+      "formType": "8-K",
+      "filedDate": "2025-09-24",
+      "periodDate": "2025-09-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025090885/ea0258546-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-090138",
+      "formType": "8-K",
+      "filedDate": "2025-09-22",
+      "periodDate": "2025-09-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025090138/ea0258282-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-089644",
+      "formType": "8-K",
+      "filedDate": "2025-09-19",
+      "periodDate": "2025-09-19",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025089644/ea0258085-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-088495",
+      "formType": "8-K",
+      "filedDate": "2025-09-17",
+      "periodDate": "2025-09-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025088495/ea0257723-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-086572",
+      "formType": "8-K",
+      "filedDate": "2025-09-10",
+      "periodDate": "2025-09-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025086572/ea0256830-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-085266",
+      "formType": "8-K",
+      "filedDate": "2025-09-08",
+      "periodDate": "2025-09-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025085266/ea0256319-8k_bitdigital.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:26.966Z"
+}

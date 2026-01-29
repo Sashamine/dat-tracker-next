@@ -1,0 +1,68 @@
+{
+  "ticker": "RIOT",
+  "cik": "1167419",
+  "asset": "BTC",
+  "companyName": "Riot Platforms, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001104659-26-004551",
+      "formType": "8-K",
+      "filedDate": "2026-01-16",
+      "periodDate": "2026-01-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926004551/riot-20260116x8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-26-000720",
+      "formType": "8-K/A",
+      "filedDate": "2026-01-05",
+      "periodDate": "2025-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926000720/riot-20251231x8ka.htm",
+      "items": [],
+      "description": "8-K/A"
+    },
+    {
+      "accessionNumber": "0001104659-26-000248",
+      "formType": "8-K",
+      "filedDate": "2026-01-02",
+      "periodDate": "2025-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926000248/riot-20251231x8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-125324",
+      "formType": "8-K",
+      "filedDate": "2025-12-31",
+      "periodDate": "2025-12-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465925125324/riot-20251230x8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-125315",
+      "formType": "424B5",
+      "filedDate": "2025-12-31",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465925125315/riot-20251230x424b5.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-104466",
+      "formType": "10-Q",
+      "filedDate": "2025-10-30",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/riot-20250930x10q.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-104461",
+      "formType": "8-K",
+      "filedDate": "2025-10-30",
+      "periodDate": "2025-10-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104461/riot-20251030x8k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:21.646Z"
+}

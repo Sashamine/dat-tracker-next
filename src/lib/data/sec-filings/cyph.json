@@ -1,0 +1,54 @@
+{
+  "ticker": "CYPH",
+  "cik": "1509745",
+  "asset": "ZEC",
+  "companyName": "CYPHERPUNK TECHNOLOGIES INC.",
+  "filings": [
+    {
+      "accessionNumber": "0001104659-25-125224",
+      "formType": "8-K",
+      "filedDate": "2025-12-30",
+      "periodDate": "2025-12-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125224/tm2534480d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-125039",
+      "formType": "8-K",
+      "filedDate": "2025-12-30",
+      "periodDate": "2025-12-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-121566",
+      "formType": "8-K",
+      "filedDate": "2025-12-16",
+      "periodDate": "2025-12-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1509745/000110465925121566/tm2533529d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-114435",
+      "formType": "8-K",
+      "filedDate": "2025-11-20",
+      "periodDate": "2025-11-19",
+      "url": "https://www.sec.gov/Archives/edgar/data/1509745/000110465925114435/tm2531822d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-113698",
+      "formType": "8-K",
+      "filedDate": "2025-11-18",
+      "periodDate": "2025-11-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1509745/000110465925113698/tm2531584d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:33.580Z"
+}

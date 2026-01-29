@@ -1,0 +1,123 @@
+{
+  "ticker": "HYPD",
+  "cik": "1682639",
+  "asset": "HYPE",
+  "companyName": "HYPERION DEFI, INC.",
+  "filings": [
+    {
+      "accessionNumber": "0001104659-26-002496",
+      "formType": "424B3",
+      "filedDate": "2026-01-09",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm"
+    },
+    {
+      "accessionNumber": "0001104659-26-000748",
+      "formType": "8-K",
+      "filedDate": "2026-01-05",
+      "periodDate": "2026-01-01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465926000748/tm2534601d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-119843",
+      "formType": "8-K",
+      "filedDate": "2025-12-10",
+      "periodDate": "2025-12-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925119843/tm2533145d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-118923",
+      "formType": "S-3/A",
+      "filedDate": "2025-12-05",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925118923/tm2521045d4_s3a.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-112968",
+      "formType": "8-K",
+      "filedDate": "2025-11-17",
+      "periodDate": "2025-11-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925112968/tm2531349d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-112966",
+      "formType": "S-3",
+      "filedDate": "2025-11-17",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925112966/tm2531328d1_s3.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-111671",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-111287",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111287/tm2531076d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-104662",
+      "formType": "8-K",
+      "filedDate": "2025-10-31",
+      "periodDate": "2025-10-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925104662/tm2529890d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-096051",
+      "formType": "8-K",
+      "filedDate": "2025-10-02",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925096051/tm2527853d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-094565",
+      "formType": "8-K",
+      "filedDate": "2025-09-29",
+      "periodDate": "2025-09-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925094565/tm25227454d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-093962",
+      "formType": "S-3/A",
+      "filedDate": "2025-09-29",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925093962/tm2521045d2_s3a.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-092753",
+      "formType": "424B5",
+      "filedDate": "2025-09-24",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925092753/tm2526091d2_424b5.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-092748",
+      "formType": "8-K",
+      "filedDate": "2025-09-24",
+      "periodDate": "2025-09-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925092748/tm2526091d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:30.282Z"
+}

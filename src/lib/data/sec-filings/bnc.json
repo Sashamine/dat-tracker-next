@@ -1,0 +1,79 @@
+{
+  "ticker": "BNC",
+  "cik": "1482541",
+  "asset": "BNB",
+  "companyName": "CEA Industries Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001493152-26-000598",
+      "formType": "8-K",
+      "filedDate": "2026-01-06",
+      "periodDate": "2025-12-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315226000598/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-029421",
+      "formType": "8-K",
+      "filedDate": "2025-12-29",
+      "periodDate": "2025-12-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225029421/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-029251",
+      "formType": "8-K",
+      "filedDate": "2025-12-29",
+      "periodDate": "2025-12-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225029251/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-027818",
+      "formType": "8-K",
+      "filedDate": "2025-12-16",
+      "periodDate": "2025-12-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027818/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-027782",
+      "formType": "10-Q",
+      "filedDate": "2025-12-15",
+      "periodDate": "2025-10-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-026259",
+      "formType": "8-K",
+      "filedDate": "2025-12-05",
+      "periodDate": "2025-12-04",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225026259/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-025299",
+      "formType": "8-K",
+      "filedDate": "2025-11-28",
+      "periodDate": "2025-11-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225025299/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-024180",
+      "formType": "8-K",
+      "filedDate": "2025-11-19",
+      "periodDate": "2025-11-19",
+      "url": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225024180/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:31.381Z"
+}

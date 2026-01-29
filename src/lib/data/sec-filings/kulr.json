@@ -1,0 +1,131 @@
+{
+  "ticker": "KULR",
+  "cik": "1662684",
+  "asset": "BTC",
+  "companyName": "KULR Technology Group, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001104659-26-003564",
+      "formType": "8-K",
+      "filedDate": "2026-01-14",
+      "periodDate": "2026-01-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465926003564/tm263119d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-123511",
+      "formType": "8-K",
+      "filedDate": "2025-12-22",
+      "periodDate": "2025-12-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925123511/tm2534003d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-121827",
+      "formType": "8-K",
+      "filedDate": "2025-12-17",
+      "periodDate": "2025-12-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925121827/tm2533694d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-120154",
+      "formType": "8-K",
+      "filedDate": "2025-12-11",
+      "periodDate": "2025-12-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925120154/tm2533237d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-119501",
+      "formType": "8-K",
+      "filedDate": "2025-12-09",
+      "periodDate": "2025-12-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925119501/tm2533019d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-116483",
+      "formType": "8-K",
+      "filedDate": "2025-11-26",
+      "periodDate": "2025-11-21",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925116483/tm2532209d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-115183",
+      "formType": "8-K",
+      "filedDate": "2025-11-24",
+      "periodDate": "2025-11-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925115183/tm2532002d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-113666",
+      "formType": "8-K",
+      "filedDate": "2025-11-18",
+      "periodDate": "2025-11-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113666/tm2531615d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-113662",
+      "formType": "10-Q",
+      "filedDate": "2025-11-18",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-110399",
+      "formType": "8-K",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-11-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925110399/tm2531047d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-098100",
+      "formType": "8-K",
+      "filedDate": "2025-10-09",
+      "periodDate": "2025-10-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925098100/tm2528372d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-095884",
+      "formType": "8-K",
+      "filedDate": "2025-10-02",
+      "periodDate": "2025-10-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925095884/tm2527802d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-094763",
+      "formType": "424B5",
+      "filedDate": "2025-09-30",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925094763/tm2526981d1_424b5.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-088474",
+      "formType": "8-K",
+      "filedDate": "2025-09-09",
+      "periodDate": "2025-09-09",
+      "url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925088474/tm2525621d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:23.073Z"
+}

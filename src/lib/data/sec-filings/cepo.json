@@ -1,0 +1,59 @@
+{
+  "ticker": "CEPO",
+  "cik": "2027708",
+  "asset": "BTC",
+  "companyName": "Cantor Equity Partners I, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001213900-26-008287",
+      "formType": "8-K",
+      "filedDate": "2026-01-27",
+      "periodDate": "2026-01-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390026008287/ea0274216-8k_cantor1.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-110824",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390025110824/ea0263493-10q_cantor1.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-081868",
+      "formType": "8-K",
+      "filedDate": "2025-08-28",
+      "periodDate": "2025-08-28",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390025081868/ea0255098-8k425_cantor1.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-080126",
+      "formType": "8-K",
+      "filedDate": "2025-08-25",
+      "periodDate": "2025-08-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390025080126/ea0254340-8k425_cantor1.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-076719",
+      "formType": "10-Q",
+      "filedDate": "2025-08-14",
+      "periodDate": "2025-06-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390025076719/ea0251730-10q_cantor1.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-073158",
+      "formType": "8-K",
+      "filedDate": "2025-08-07",
+      "periodDate": "2025-08-01",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390025073158/ea025217201-8k425_cantor1.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:24.121Z"
+}

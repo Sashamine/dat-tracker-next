@@ -1,0 +1,86 @@
+{
+  "ticker": "ASST",
+  "cik": "1920406",
+  "asset": "BTC",
+  "companyName": "Strive, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001140361-26-002606",
+      "formType": "8-K",
+      "filedDate": "2026-01-28",
+      "periodDate": "2026-01-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001140361-26-002238",
+      "formType": "424B5",
+      "filedDate": "2026-01-23",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002238/ny20063534x5_424b5.htm"
+    },
+    {
+      "accessionNumber": "0001140361-26-002005",
+      "formType": "8-K",
+      "filedDate": "2026-01-22",
+      "periodDate": "2026-01-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002005/ny20063534x3_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001140361-26-001919",
+      "formType": "424B5",
+      "filedDate": "2026-01-22",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000114036126001919/ny20063534x1_424b5.htm"
+    },
+    {
+      "accessionNumber": "0001140361-26-001875",
+      "formType": "8-K",
+      "filedDate": "2026-01-21",
+      "periodDate": "2026-01-21",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000114036126001875/ny20063534x2_8k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0000950103-26-000616",
+      "formType": "8-K",
+      "filedDate": "2026-01-16",
+      "periodDate": "2026-01-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000095010326000616/dp240082_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001628280-26-002115",
+      "formType": "8-K",
+      "filedDate": "2026-01-15",
+      "periodDate": "2026-01-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026002115/asst-20260115.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001628280-26-001928",
+      "formType": "8-K",
+      "filedDate": "2026-01-13",
+      "periodDate": "2026-01-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026001928/asst-20260113.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001628280-26-000225",
+      "formType": "8-K",
+      "filedDate": "2026-01-05",
+      "periodDate": "2026-01-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:25.551Z"
+}

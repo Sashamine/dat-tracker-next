@@ -1,0 +1,93 @@
+{
+  "ticker": "LITS",
+  "cik": "1262104",
+  "asset": "LTC",
+  "companyName": "Lite Strategy, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001193125-25-335761",
+      "formType": "8-K",
+      "filedDate": "2025-12-30",
+      "periodDate": "2025-12-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525335761/lits-20251223.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-309593",
+      "formType": "8-K",
+      "filedDate": "2025-12-05",
+      "periodDate": "2025-12-02",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525309593/lits-20251202.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-290059",
+      "formType": "8-K/A",
+      "filedDate": "2025-11-20",
+      "periodDate": "2025-11-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525290059/lits-20251114.htm",
+      "items": [],
+      "description": "8-K/A"
+    },
+    {
+      "accessionNumber": "0001193125-25-286424",
+      "formType": "8-K",
+      "filedDate": "2025-11-18",
+      "periodDate": "2025-11-14",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525286424/lits-20251114.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-283111",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm"
+    },
+    {
+      "accessionNumber": "0001193125-25-258474",
+      "formType": "8-K",
+      "filedDate": "2025-10-30",
+      "periodDate": "2025-10-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525258474/lits-20251024.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001193125-25-234596",
+      "formType": "S-3",
+      "filedDate": "2025-10-08",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525234596/lits-20251008.htm"
+    },
+    {
+      "accessionNumber": "0001193125-25-220421",
+      "formType": "10-K",
+      "filedDate": "2025-09-26",
+      "periodDate": "2025-06-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525220421/lits-20250630.htm"
+    },
+    {
+      "accessionNumber": "0001193125-25-203520",
+      "formType": "8-K",
+      "filedDate": "2025-09-15",
+      "periodDate": "2025-09-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000119312525203520/lits-20250910.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001262104-25-000009",
+      "formType": "8-K",
+      "filedDate": "2025-09-10",
+      "periodDate": "2025-09-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1262104/000126210425000009/meip-20250910.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:33.929Z"
+}

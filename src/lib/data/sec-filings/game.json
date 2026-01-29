@@ -1,0 +1,97 @@
+{
+  "ticker": "GAME",
+  "cik": "1714562",
+  "asset": "ETH",
+  "companyName": "GameSquare Holdings, Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001493152-26-002602",
+      "formType": "8-K",
+      "filedDate": "2026-01-16",
+      "periodDate": "2026-01-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315226002602/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-029779",
+      "formType": "8-K",
+      "filedDate": "2025-12-31",
+      "periodDate": "2025-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225029779/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-026442",
+      "formType": "8-K",
+      "filedDate": "2025-12-05",
+      "periodDate": "2025-12-04",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225026442/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-023589",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-022366",
+      "formType": "8-K",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-11-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225022366/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-021065",
+      "formType": "8-K",
+      "filedDate": "2025-11-06",
+      "periodDate": "2025-11-04",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225021065/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-017320",
+      "formType": "8-K",
+      "filedDate": "2025-10-07",
+      "periodDate": "2025-10-07",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225017320/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-015703",
+      "formType": "8-K",
+      "filedDate": "2025-09-26",
+      "periodDate": "2025-09-22",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225015703/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-027096",
+      "formType": "8-K",
+      "filedDate": "2025-09-11",
+      "periodDate": "2025-09-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000164117225027096/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001641172-25-025686",
+      "formType": "8-K",
+      "filedDate": "2025-08-27",
+      "periodDate": "2025-08-27",
+      "url": "https://www.sec.gov/Archives/edgar/data/1714562/000164117225025686/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:27.322Z"
+}

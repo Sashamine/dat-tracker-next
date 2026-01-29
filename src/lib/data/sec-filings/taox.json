@@ -1,0 +1,105 @@
+{
+  "ticker": "TAOX",
+  "cik": "1571934",
+  "asset": "TAO",
+  "companyName": "TAO Synergies Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001104659-26-000214",
+      "formType": "S-3/A",
+      "filedDate": "2026-01-02",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465926000214/tm2533983d1_s3a.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-123187",
+      "formType": "8-K",
+      "filedDate": "2025-12-19",
+      "periodDate": "2025-12-18",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925123187/tm2533681d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-112570",
+      "formType": "10-Q",
+      "filedDate": "2025-11-14",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-110353",
+      "formType": "S-3",
+      "filedDate": "2025-11-12",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925110353/tm2530709d1_s3.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-098909",
+      "formType": "8-K",
+      "filedDate": "2025-10-14",
+      "periodDate": "2025-10-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925098909/tm2528153d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-085770",
+      "formType": "8-K",
+      "filedDate": "2025-08-29",
+      "periodDate": "2025-08-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925085770/tm2524680d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-078731",
+      "formType": "S-3",
+      "filedDate": "2025-08-14",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925078731/tm2523341d1_s3.htm"
+    },
+    {
+      "accessionNumber": "0001410578-25-001820",
+      "formType": "10-Q",
+      "filedDate": "2025-08-14",
+      "periodDate": "2025-06-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001820/snpx-20250630x10q.htm"
+    },
+    {
+      "accessionNumber": "0001104659-25-075748",
+      "formType": "8-K",
+      "filedDate": "2025-08-08",
+      "periodDate": "2025-08-06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925075748/tm2522780d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-074544",
+      "formType": "8-K",
+      "filedDate": "2025-08-06",
+      "periodDate": "2025-08-06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925074544/tm2522717d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-068559",
+      "formType": "8-K",
+      "filedDate": "2025-07-17",
+      "periodDate": "2025-07-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925068559/tm2520114d1_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001104659-25-067442",
+      "formType": "S-3",
+      "filedDate": "2025-07-11",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925067442/tm2520096d1_s3.htm"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:31.752Z"
+}

@@ -1,0 +1,146 @@
+{
+  "ticker": "NAKA",
+  "cik": "1946573",
+  "asset": "BTC",
+  "companyName": "Nakamoto Inc.",
+  "filings": [
+    {
+      "accessionNumber": "0001493152-26-003380",
+      "formType": "424B3",
+      "filedDate": "2026-01-23",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315226003380/form424b3.htm"
+    },
+    {
+      "accessionNumber": "0001493152-26-003008",
+      "formType": "8-K",
+      "filedDate": "2026-01-21",
+      "periodDate": "2026-01-16",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315226003008/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-028290",
+      "formType": "8-K",
+      "filedDate": "2025-12-18",
+      "periodDate": "2025-12-17",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225028290/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-027527",
+      "formType": "8-K",
+      "filedDate": "2025-12-12",
+      "periodDate": "2025-12-10",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225027527/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-026862",
+      "formType": "8-K",
+      "filedDate": "2025-12-09",
+      "periodDate": "2025-12-03",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001213900-25-118971",
+      "formType": "8-K",
+      "filedDate": "2025-12-08",
+      "periodDate": "2025-12-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025118971/ea0268789-8k_kindlymd.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001493152-25-024619",
+      "formType": "424B3",
+      "filedDate": "2025-11-21",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024619/form424b3.htm"
+    },
+    {
+      "accessionNumber": "0001493152-25-024314",
+      "formType": "8-K",
+      "filedDate": "2025-11-19",
+      "periodDate": "2025-11-19",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/form8-k.htm",
+      "items": [],
+      "description": "8-K"
+    },
+    {
+      "accessionNumber": "0001493152-25-024260",
+      "formType": "10-Q",
+      "filedDate": "2025-11-19",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-097114",
+      "formType": "424B3",
+      "filedDate": "2025-10-07",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025097114/ea0260635-424b3_kindly.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-096801",
+      "formType": "8-K",
+      "filedDate": "2025-10-07",
+      "periodDate": "2025-10-06",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025096801/ea0260402-8k_kindly.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-096239",
+      "formType": "424B3",
+      "filedDate": "2025-10-06",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025096239/ea026027002-424b3_kindly.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-096183",
+      "formType": "8-K",
+      "filedDate": "2025-10-03",
+      "periodDate": "2025-09-29",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025096183/ea0260270-8k_kindly.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-092533",
+      "formType": "424B3",
+      "filedDate": "2025-09-29",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025092533/ea025907103-424b3_kindly.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-092532",
+      "formType": "424B3",
+      "filedDate": "2025-09-29",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025092532/ea025907102-424b3_kindly.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-092531",
+      "formType": "424B3",
+      "filedDate": "2025-09-29",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025092531/ea025907101-424b3_kindly.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-092429",
+      "formType": "8-K",
+      "filedDate": "2025-09-26",
+      "periodDate": "2025-09-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025092429/ea0259039-8k_kindly.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:24.816Z"
+}

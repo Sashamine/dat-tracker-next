@@ -1,0 +1,157 @@
+{
+  "ticker": "SUIG",
+  "cik": "1425355",
+  "asset": "SUI",
+  "companyName": "SUI Group Holdings Ltd.",
+  "filings": [
+    {
+      "accessionNumber": "0001654954-26-000203",
+      "formType": "8-K",
+      "filedDate": "2026-01-09",
+      "periodDate": "2026-01-05",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001654954-26-000201",
+      "formType": "8-K",
+      "filedDate": "2026-01-09",
+      "periodDate": "2026-01-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001654954-25-013935",
+      "formType": "8-K",
+      "filedDate": "2025-12-15",
+      "periodDate": "2025-12-13",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000165495425013935/suig_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001654954-25-012949",
+      "formType": "10-Q",
+      "filedDate": "2025-11-13",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm"
+    },
+    {
+      "accessionNumber": "0001654954-25-012924",
+      "formType": "8-K",
+      "filedDate": "2025-11-12",
+      "periodDate": "2025-11-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012924/suigroup_8k.htm",
+      "items": [],
+      "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001213900-25-096622",
+      "formType": "8-K",
+      "filedDate": "2025-10-06",
+      "periodDate": "2025-09-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025096622/ea0260390-8k_suigroup.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-094758",
+      "formType": "424B3",
+      "filedDate": "2025-10-01",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025094758/ea0253998-05.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-091783",
+      "formType": "8-K",
+      "filedDate": "2025-09-26",
+      "periodDate": "2025-09-24",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025091783/ea0258853-8k_suigroup.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-089613",
+      "formType": "8-K",
+      "filedDate": "2025-09-19",
+      "periodDate": "2025-09-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025089613/ea0258089-8k_suigroup.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-088239",
+      "formType": "S-1/A",
+      "filedDate": "2025-09-16",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-087368",
+      "formType": "8-K",
+      "filedDate": "2025-09-15",
+      "periodDate": "2025-09-12",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025087368/ea0257271-8k_suigroup.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-086248",
+      "formType": "424B3",
+      "filedDate": "2025-09-09",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025086248/ea0252206-06.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-085143",
+      "formType": "S-1/A",
+      "filedDate": "2025-09-05",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025085143/ea0252206-04.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-084142",
+      "formType": "8-K",
+      "filedDate": "2025-09-03",
+      "periodDate": "2025-09-03",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025084142/ea0255906-8k_suigroup.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-081325",
+      "formType": "S-1/A",
+      "filedDate": "2025-08-28",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025081325/ea0252206-02.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-081315",
+      "formType": "S-1/A",
+      "filedDate": "2025-08-28",
+      "periodDate": "",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025081315/ea0253998-01.htm"
+    },
+    {
+      "accessionNumber": "0001213900-25-080829",
+      "formType": "8-K",
+      "filedDate": "2025-08-26",
+      "periodDate": "2025-08-26",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025080829/ea0254593-8k_suigroup.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    },
+    {
+      "accessionNumber": "0001213900-25-080371",
+      "formType": "8-K",
+      "filedDate": "2025-08-25",
+      "periodDate": "2025-08-25",
+      "url": "https://www.sec.gov/Archives/edgar/data/1425355/000121390025080371/ea0254303-8k_millcity3.htm",
+      "items": [],
+      "description": "CURRENT REPORT"
+    }
+  ],
+  "fetchedAt": "2026-01-29T17:43:34.276Z"
+}
