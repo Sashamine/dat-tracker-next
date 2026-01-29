@@ -198,6 +198,40 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // KULR Technology - Bitcoin First Company
+  // Verified 2026-01-29 via SEC 10-Q Q3 2025 (CIK 0001662684)
+  // Note: 1-for-8 reverse split June 23, 2025 - all figures are post-split
+  // All instruments currently OTM (stock ~$2.50), but tracked for ITM scenarios
+  KULR: [
+    {
+      type: "option",
+      strikePrice: 5.08, // Midpoint of $2.24-$7.92 range
+      potentialShares: 40_938,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      notes: "Stock options - exercise price range $2.24-$7.92 (post-split)",
+    },
+    {
+      type: "warrant",
+      strikePrice: 8.0,
+      potentialShares: 66_667,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      notes: "Warrants @ $8 exercise price (post-split)",
+    },
+    {
+      type: "warrant",
+      strikePrice: 10.0,
+      potentialShares: 111_143, // 88,905 + 22,238
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      notes: "Warrants @ $10 exercise price (post-split)",
+    },
+  ],
+
   // RIOT Platforms - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC 8-K (CIK 0001167419)
   // Note: RIOT sold 1,818 BTC in Dec 2025 (first major sale) - unusual for HODL miner
