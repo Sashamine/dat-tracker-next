@@ -990,42 +990,43 @@ export const bnbCompanies: Company[] = [
     ticker: "NA",
     asset: "BNB",
     tier: 2,
-    holdings: 130_000,  // Dec 31, 2025 6-K: "over 130,000 BNB"
+    // VERIFIED: SEC 6-K Dec 31, 2025 press release: "over 130,000 BNB...~$112M"
+    holdings: 130_000,
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea027141101ex99-1_nano.htm",
     datStartDate: "2025-06-01",
     secCik: "1872302",
     filingType: "FPI",  // Foreign Private Issuer - files 20-F/6-K, limited XBRL
-    costBasisAvg: 600.00,  // Unverified - not in XBRL
+    // costBasisAvg: REMOVED - no SEC source found
     stakingPct: 0.30,
     stakingApy: 0.03,
     quarterlyBurnUsd: 5_000_000,
     capitalRaisedConverts: 500_000_000,
-    totalDebt: 500_000_000,  // $500M convertible notes - from narrative disclosure, not XBRL
-    debtSource: "SEC 6-K narrative disclosure",
+    // UNVERIFIED: $500M convertible notes mentioned in press releases, not in XBRL
+    totalDebt: 500_000_000,
+    debtSource: "Press releases (not in SEC XBRL)",
     debtAsOf: "2025-09-30",
-    // XBRL shows $50.8M cash (Q2 2025) - Yahoo's $365M likely includes crypto holdings incorrectly
-    cashReserves: 50_800_000,  // SEC XBRL CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
+    // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
+    cashReserves: 50_800_000,
     cashSource: "SEC XBRL 6-K Q2 2025",
     cashSourceUrl: "https://data.sec.gov/api/xbrl/companyfacts/CIK0001872302.json",
     cashAsOf: "2025-06-30",
-    // Shares: XBRL stale (111.5M from 2022). Using narrative disclosure estimate.
-    sharesForMnav: 20_700_000,  // From 6-K narrative + convertible issuances
-    sharesSource: "SEC 6-K narrative (XBRL stale since 2022)",
+    // UNVERIFIED: XBRL shows 111.5M shares from 2022, stale after multiple offerings
+    // Using estimate based on prospectus + convertible issuances
+    sharesForMnav: 20_700_000,
+    sharesSource: "Estimated (XBRL stale since 2022, need 20-F narrative)",
     sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
     sharesAsOf: "2025-12-31",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
-    notes: "$25M buyback authorized. XBRL CryptoAssetFairValueCurrent: $108.5M (Q2 2025).",
+    notes: "$25M buyback commenced Dec 2025. XBRL CryptoAssetFairValueCurrent: $108.5M (Q2 2025). Press releases mention BTC holdings but no amount disclosed.",
     website: "https://www.nano.cn",
     twitter: "https://x.com/nano_labs_NA",
     investorRelationsUrl: "https://www.nano.cn/investor-relations",
-    // FPI data quality flags - these fields need verification from narrative disclosure
+    // FPI data quality flags - these fields need verification from 20-F narrative
     dataFlags: ["shares_xbrl_stale", "debt_unverified"],
-    secondaryCryptoHoldings: [
-      { asset: "BTC", amount: 1_000, note: "passive hold from convertible deal - unverified" },
-    ],
+    // REMOVED: secondaryCryptoHoldings BTC - 6-K mentions "BNB and BTC" but no amount disclosed
   },
 ];
 
