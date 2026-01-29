@@ -1298,7 +1298,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 - Verified 2026-01-29 from SEC 10-Q
+  // Note: 1-for-8 reverse split was June 23, 2025
   {
     ticker: "KULR",
     fiscalYear: 2025,
@@ -1312,13 +1313,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 3_800_000,
     revenueEstimate: 4_500_000,
     netIncome: -5_300_000,
-    holdingsAtQuarterEnd: 610,
-    sharesAtQuarterEnd: 260_000_000,
-    holdingsPerShare: 0.0000023,
+    holdingsAtQuarterEnd: 1_057,  // Q3 10-Q: 1,056.7 BTC held + 70 BTC collateral
+    sharesAtQuarterEnd: 45_650_000,  // Post-split shares (SEC 10-Q cover page)
+    holdingsPerShare: 0.0000232,  // 1057 / 45.65M
     source: "sec-filing",
     status: "reported",
   },
-  // Q2 2025
+  // Q2 2025 - Verified 2026-01-29
+  // Note: 1-for-8 reverse split was June 23, 2025 (before quarter end)
   {
     ticker: "KULR",
     fiscalYear: 2025,
@@ -1332,9 +1334,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 3_600_000,
     revenueEstimate: 4_000_000,
     netIncome: -7_900_000,
-    holdingsAtQuarterEnd: 430,
-    sharesAtQuarterEnd: 248_000_000,
-    holdingsPerShare: 0.0000017,
+    holdingsAtQuarterEnd: 920,  // June 23 press release (post-split announcement)
+    sharesAtQuarterEnd: 41_108_543,  // Post-split shares
+    holdingsPerShare: 0.0000224,  // 920 / 41.1M
     source: "sec-filing",
     status: "reported",
   },
