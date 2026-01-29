@@ -71,6 +71,7 @@ export async function GET(request: Request) {
       lowLiquidity: c.lowLiquidity,
       secondaryCryptoHoldings: c.secondaryCryptoHoldings,
       cryptoInvestments: c.cryptoInvestments,
+      dataWarnings: c.dataWarnings,
     }));
 
     return NextResponse.json({
