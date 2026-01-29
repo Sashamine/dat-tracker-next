@@ -266,6 +266,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // BTBT (Bit Digital) - ETH treasury company (formerly BTC miner)
+  // Verified 2026-01-29 via SEC 8-K Oct 2, 2025
+  // $165M 4.00% Convertible Senior Notes due 2030 (underwritten by Barclays, Cantor, B. Riley)
+  BTBT: [
+    {
+      type: "convertible",
+      strikePrice: 4.16,
+      potentialShares: 39_663_462,  // $165M / $4.16 (or 240.3846 shares per $1,000 × 165,000)
+      faceValue: 165_000_000,  // $150M + $15M overallotment
+      source: "8-K Oct 2, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1710350/000121390025095533/0001213900-25-095533-index.htm",
+      expiration: "2030-10-01",
+      notes: "$165M 4% convertible notes - OTM at ~$2.35 stock (Jan 2026). Put date Oct 1, 2028.",
+    },
+  ],
+
   // UPXI (Upexi Inc) - SOL treasury company
   // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
   // Convertibles OTM at ~$2.12 (Jan 2026 price): $150M@$4.25, $36M@$2.39

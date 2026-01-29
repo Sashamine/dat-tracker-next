@@ -425,6 +425,58 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## BTBT (Bit Digital) - Verified 2026-01-29
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 155,227 ETH
+- [x] **Source**: Jan 7, 2026 Press Release (Dec 2025 metrics)
+- [x] **Source URL**: https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/
+- [x] **Last updated**: 2025-12-31
+- [x] **Staking**: 89% staked (138,263 ETH), 3.5% APY
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001710350
+- [x] **Recent 8-Ks checked**: Dec 12 (exec), Nov 14 (results), Oct 2 (converts)
+- [x] **Latest 10-K**: Pending (Q4 2025, expected Mar 2026)
+- [x] **Latest 10-Q**: Filed Nov 14, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **EntityCommonStockSharesOutstanding**: 323,674,831 (Nov 10, 2025)
+- [x] **WeightedAverageNumberOfDilutedSharesOutstanding Q3**: 318,896,222
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Current quarter**: Q4 2025 (Oct-Dec), 10-K expected ~Mar 2026
+
+### 5. Earnings Data ✅
+| Quarter | Period End | Holdings | Shares | HPS | Source |
+|---------|------------|----------|--------|-----|--------|
+| Q1 2025 | Mar 31 | 85,000 | 207.8M | 0.000409 | 10-Q |
+| Q2 2025 | Jun 30 | 120,000 | 315M | 0.000381 | 10-Q |
+| Q3 2025 | Sep 30 | 140,000 | 324M | 0.000432 | 10-Q |
+| Q4 2025 | Dec 31 | 155,227 | 323.8M | 0.000479 | PR |
+
+### 6. Holdings Per Share Growth ✅
+- [x] **Q3→Q4 2025**: +11% HPS (holdings +11%, shares flat)
+- [x] **Trend**: Positive - accumulating ETH without dilution
+
+### 7. Non-Crypto Investments ✅
+- [x] **WhiteFiber (WYFI)**: $427.3M (~27M shares @ ~$15.83)
+- [x] **Treatment**: In otherInvestments field
+
+### 8. Company Metadata ✅
+- [x] **Strategy updated**: Added $165M converts reference
+- [x] **Staking**: 89% staked, 3.5% APY, native staking
+- [x] **Leader**: Sam Tabar
+
+### 9. Dilutive Instruments ✅
+- [x] **$165M 4% Convertible Notes due 2030** (Oct 2025): 39.7M shares @ $4.16, deep OTM
+- [x] **Note**: Put date Oct 1, 2028 (holders can require repurchase)
+- [x] **Added to dilutive-instruments.ts**: Yes (added 2026-01-29)
+- [x] **totalDebt updated**: $42M → $207M (includes converts)
+
+---
+
 ## HSDT (Solana Company) - Pending Verification
 
 ### Company Metadata Added 2026-01-29

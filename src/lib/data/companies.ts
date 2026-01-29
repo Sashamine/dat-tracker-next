@@ -124,10 +124,12 @@ export const ethCompanies: Company[] = [
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
-    totalDebt: 42_000_000,  // $42M mostly lease liabilities (SEC 10-Q Q3 2025)
+    totalDebt: 207_000_000,  // $165M converts (Oct 2025) + $42M lease liabilities (SEC 10-Q Q3 2025)
+    debtSource: "SEC 8-K Oct 2, 2025 (converts) + 10-Q Q3 2025 (leases)",
+    debtAsOf: "2025-10-02",
     otherInvestments: 427_300_000,  // WhiteFiber (WYFI) ~27M shares @ ~$15.83 (Jan 7, 2026 PR)
     leader: "Sam Tabar",
-    strategy: "89% staked, fully exited BTC. Avg cost $3,045/ETH.",
+    strategy: "89% staked, fully exited BTC. $165M 4% converts due 2030.",
     notes: "Staking yield ~3.5% annualized. $427M WhiteFiber (WYFI) stake - AI infrastructure.",
   },
   {
