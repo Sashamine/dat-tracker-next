@@ -1235,7 +1235,7 @@ export const zecCompanies: Company[] = [
     costBasisAvg: 334.41,
     costBasisSource: "SEC 8-K Dec 30, 2025 - cumulative average price per ZEC",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
-    quarterlyBurnUsd: 3_100_000,  // TODO: Verify from SEC 10-Q Q3 2025 cash flow statement
+    quarterlyBurnUsd: 3_100_000,  // Legacy pharma burn - update from Q4 2025 10-K (expected Mar 2026) for post-pivot treasury ops
     capitalRaisedPipe: 58_880_000,  // Oct 2025 PIPE gross proceeds
     sharesForMnav: 137_420_344,  // Basic (56.6M) + Pre-funded warrants (80.8M) per SEC filings
     sharesSource: "SEC 10-Q Q3 2025 + 8-K Oct 9, 2025 (basic + pre-funded warrants)",
