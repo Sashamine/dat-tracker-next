@@ -81,6 +81,8 @@ export function formatHoldingsSource(source?: string): string {
     "8-K filing": "SEC 8-K",
     "press release": "Press Release",
     "company website": "Company Website",
+    "company-website": "Company Website",
+    "company-dashboard": "Company Dashboard",
     "bitcointreasuries.net": "BTC Treasuries",
     "manual": "Manual Entry",
     "api": "API"
