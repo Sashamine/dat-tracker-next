@@ -1,8 +1,8 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-01-28
+> **Last Updated**: 2026-01-29
 > **Current Phase**: 8d - Populate Dilutive Instruments
-> **Status**: Phase 7a-7c complete. Phase 8a-8c complete. SEC monitoring optimized. 7d/7e moved to Phase 9.
+> **Status**: Phase 7a-7c complete. Phase 8a-8c complete. SEC monitoring optimized. Phase 9 (burn rate/mNAV) scaffolded.
 
 ---
 
@@ -588,6 +588,60 @@ After this phase, we can answer:
 > - Convertible at $13.00: 769,231 (OUT of money)
 > = Effective diluted: 50,298,201
 > Sources: SEC 10-Q Q3 2025, 8-K Jul 2024, 8-K Dec 2024"
+
+---
+
+## Phase 9: Burn Rate & mNAV Chart Fixes
+**Status**: NOT STARTED
+**Added**: 2026-01-29
+
+### The Problem
+
+1. **Burn rate data is unreliable** — XBRL `NetCashProvidedByUsedInOperatingActivities` includes non-cash items (stock-based comp, depreciation) that distort true cash burn
+2. **mNAV charts need fixing** — Related to accurate burn projections and runway calculations
+
+### What We Built (2026-01-29)
+
+- `src/lib/fetchers/sec-xbrl.ts` — Extended with burn rate extraction + quality metrics (SG&A, stock comp, D&A, net income)
+- `src/lib/verification/burn-quality.ts` — Calculates adjusted burn rate and quality score (0-100)
+- `src/lib/verification/burn-staleness.ts` — Flags companies with stale burn data
+- `src/lib/sec/filing-monitor.ts` — Detects new financial filings
+
+### Quality Score Results (Top 26 companies)
+
+| Score | Count | Action |
+|-------|-------|--------|
+| 80+ (High) | 4 | Reliable XBRL burn |
+| 50-79 (Medium) | 11 | Acceptable |
+| <50 (Low) | 8 | Need manual review |
+| Miners | 3 | Use SG&A instead of OCF |
+
+**Notable issues:**
+- DJT: Score 0 (1746% stock comp ratio)
+- MSTR: Score 20 (94% stock comp ratio)
+- Miners (MARA/RIOT/CLSK): Using SG&A proxy instead of distorted OCF
+
+### Phase 9a: Review Low-Quality Companies
+**Status**: NOT STARTED
+
+- [ ] Review 8 companies with quality score <50
+- [ ] Manually determine appropriate burn rate for each
+- [ ] Update `quarterlyBurnUsd` in companies.ts with verified values
+- [ ] Add `burnSource` and `burnAsOf` fields where missing
+
+### Phase 9b: Fix mNAV Charts
+**Status**: NOT STARTED
+
+- [ ] Identify specific chart issues
+- [ ] Fix calculation/display bugs
+- [ ] Ensure burn rate flows into runway projections correctly
+
+### Phase 9c: Automate Burn Updates
+**Status**: NOT STARTED
+
+- [ ] Integrate burn-staleness checker into comparison cron
+- [ ] Alert when burn data >6 months old (US) or >12 months (FPI)
+- [ ] Alert when new financial filing detected for company with stale burn
 
 ---
 
