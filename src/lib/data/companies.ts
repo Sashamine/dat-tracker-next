@@ -151,9 +151,10 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
-    sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K stock grants). Options in dilutive-instruments.ts
-    sharesSource: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026 restricted stock",
+    sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K grants). Dilutives in dilutive-instruments.ts
+    sharesSource: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
     sharesAsOf: "2026-01-05",
+    leader: "Charles Allen",
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
     notes: "Verified 2026-01-29. Q3→Q4: +0.3% HPS growth. Options ITM at ~$2.87 (Jan 2026 price).",
   },
