@@ -1002,11 +1002,11 @@ export const bnbCompanies: Company[] = [
     stakingPct: 0.30,
     stakingApy: 0.03,
     quarterlyBurnUsd: 5_000_000,
-    capitalRaisedConverts: 500_000_000,
-    // UNVERIFIED: $500M convertible notes mentioned in press releases, not in XBRL
-    totalDebt: 500_000_000,
-    debtSource: "Press releases (not in SEC XBRL)",
-    debtAsOf: "2025-09-30",
+    // VERIFIED from 20-F FY2024: Long-term RMB170.7M ($23.7M) + Short-term RMB18M ($2.5M) = ~$26.2M
+    totalDebt: 26_200_000,
+    debtSource: "SEC 20-F FY2024 balance sheet",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025031065/ea0235323-20f_nanolabs.htm",
+    debtAsOf: "2024-12-31",
     // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
     cashReserves: 50_800_000,
     cashSource: "SEC XBRL 6-K Q2 2025",
@@ -1025,7 +1025,7 @@ export const bnbCompanies: Company[] = [
     twitter: "https://x.com/nano_labs_NA",
     investorRelationsUrl: "https://www.nano.cn/investor-relations",
     // FPI data quality flags - shares verified from 20-F but excludes 2025 offerings
-    dataFlags: ["debt_unverified"],
+    // dataFlags removed - debt now verified from 20-F
     // REMOVED: secondaryCryptoHoldings BTC - 6-K mentions "BNB and BTC" but no amount disclosed
   },
 ];
