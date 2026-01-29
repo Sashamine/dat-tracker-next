@@ -19,8 +19,10 @@ import { capitalBFetcher, getSupportedTickers as getCapitalBTickers } from './da
 import { secXbrlFetcher, getSupportedTickers as getSecXbrlTickers } from './sec-xbrl';
 import { yahooFinanceFetcher, getSupportedTickers as getYahooTickers } from './yahoo-finance';
 import { amfFetcher, getSupportedTickers as getAmfTickers } from './amf';
+import { hkexFetcher, getSupportedTickers as getHkexTickers } from './hkex';
 
 export * from './types';
+export * from './hkex';
 
 /**
  * All registered fetchers
@@ -39,6 +41,7 @@ export const fetchers: Record<string, Fetcher> = {
   'sec-xbrl': secXbrlFetcher,
   'yahoo-finance': yahooFinanceFetcher,
   'amf-france': amfFetcher,  // French regulatory filings (Capital B / ALTBG)
+  'hkex': hkexFetcher,       // Hong Kong Stock Exchange filings (Boyaa, etc.)
 };
 
 /**
@@ -86,6 +89,8 @@ export function getTickersForFetcher(fetcherName: string): string[] {
       return getYahooTickers();
     case 'amf-france':
       return getAmfTickers();
+    case 'hkex':
+      return getHkexTickers();
     default:
       return [];
   }
