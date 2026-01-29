@@ -2272,6 +2272,61 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== Upexi (UPXI) ==========
+  // Fiscal year ends June 30
+  // FY Q1 = Jul-Sep (CY Q3), FY Q2 = Oct-Dec (CY Q4), FY Q3 = Jan-Mar (CY Q1), FY Q4 = Apr-Jun (CY Q2)
+  // SOL treasury began April 2025 with Arthur Hayes advisory
+  // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
+  //
+  // FY 2026 Q2 (Oct-Dec 2025) = CY Q4 2025 - Upcoming
+  {
+    ticker: "UPXI",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-14",  // Estimated 10-Q filing
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 2_174_583,  // Jan 5, 2026 8-K (most recent before Q-end)
+    sharesAtQuarterEnd: 62_178_230,  // 58.9M + 3.29M PIPE shares
+    holdingsPerShare: 0.0350,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000137/upxi_ex991.htm",
+    status: "upcoming",
+  },
+  // FY 2026 Q1 (Jul-Sep 2025) = CY Q3 2025 - Reported (10-Q Nov 12, 2025)
+  {
+    ticker: "UPXI",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-12",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 2_018_419,  // SEC 10-Q Sep 30, 2025
+    sharesAtQuarterEnd: 58_888_756,  // SEC 10-Q basic shares
+    holdingsPerShare: 0.0343,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=10-Q",
+    status: "reported",
+  },
+  // FY 2025 Q4 (Apr-Jun 2025) = CY Q2 2025 - First full SOL quarter
+  {
+    ticker: "UPXI",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-09-26",  // 8-K results announcement
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 735_692,  // Holdings history
+    sharesAtQuarterEnd: 28_000_000,  // Approximate from holdings history
+    holdingsPerShare: 0.0263,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
+    status: "reported",
+  },
+
   // ==================== BNB COMPANIES ====================
 
   // ========== CEA Industries (BNC) ==========

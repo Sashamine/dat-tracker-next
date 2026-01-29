@@ -265,7 +265,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // UPXI (Upexi Inc) - SOL treasury company
-  // Verified 2026-01-25 during company verification process
+  // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
+  // Convertibles OTM at ~$2.12 (Jan 2026 price): $150M@$4.25, $36M@$2.39
   UPXI: [
     {
       type: "convertible",
@@ -276,7 +277,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       sourceUrl:
         "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
       expiration: "2030-07-01",
-      notes: "$150M convertible note",
+      notes: "$150M convertible note - deep OTM",
     },
     {
       type: "convertible",
@@ -285,9 +286,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 36_000_000,
       source: "8-K Jan 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
-      expiration: "2031-01-15",
-      notes: "$36M convertible note",
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000207/upxi_ex41.htm",
+      expiration: "2028-01-14",  // 24 months from Jan 2026
+      notes: "$36M Hivemind convertible - slightly OTM",
+    },
+    {
+      type: "warrant",
+      strikePrice: 4.00,
+      potentialShares: 3_289_474,
+      source: "8-K Dec 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008713/0001477932-25-008713-index.htm",
+      expiration: "2029-12-01",  // 48 months from Dec 2025
+      notes: "Dec 2025 PIPE warrants - OTM at ~$2.12",
     },
   ],
 
