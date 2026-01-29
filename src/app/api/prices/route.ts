@@ -297,11 +297,17 @@ export async function GET() {
       }
     }
 
-    // Merge FMP stocks (with ticker mapping and market cap overrides)
+    // Merge FMP stocks (with ticker mapping, currency conversion, and market cap overrides)
     for (const [ticker, data] of Object.entries(fmpStocks)) {
       const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
+      // Convert price to USD if it's a foreign currency stock
+      const currency = TICKER_CURRENCY[displayTicker];
+      const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
+      const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
+      
       stockPrices[displayTicker] = {
         ...data,
+        price: priceUsd,
         // Apply market cap override if available (fixes currency conversion issues)
         marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
       };
