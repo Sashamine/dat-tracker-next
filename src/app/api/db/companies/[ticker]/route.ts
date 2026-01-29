@@ -108,6 +108,8 @@ export async function GET(
       lowLiquidity: company.lowLiquidity,
       secondaryCryptoHoldings: company.secondaryCryptoHoldings,
       cryptoInvestments: company.cryptoInvestments,
+      secReferenced: company.secReferenced,
+      dataWarnings: company.dataWarnings,
     };
 
     return NextResponse.json({

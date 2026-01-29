@@ -71,6 +71,8 @@ export async function GET(request: Request) {
       lowLiquidity: c.lowLiquidity,
       secondaryCryptoHoldings: c.secondaryCryptoHoldings,
       cryptoInvestments: c.cryptoInvestments,
+      secReferenced: c.secReferenced,
+      dataWarnings: c.dataWarnings,
       dataWarnings: c.dataWarnings,
     }));
 
