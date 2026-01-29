@@ -21,7 +21,8 @@ export type DataWarningType =
   | "equity-sale"        // 8-K Item 3.02 - unregistered equity sale
   | "share-change"       // Potential share count change (ATM, conversion, etc.)
   | "debt-change"        // Potential debt change
-  | "stale-data";        // Data may be outdated
+  | "stale-data"         // Data may be outdated
+  | "unverified-shares"; // Share counts from non-primary source (e.g., dashboard vs regulatory filing)
 
 export interface DataWarning {
   type: DataWarningType;
