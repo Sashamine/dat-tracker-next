@@ -70,6 +70,8 @@ export interface Company {
 
   // Financials
   costBasisAvg?: number;
+  costBasisSource?: string;
+  costBasisSourceUrl?: string;
   stakingPct?: number;
   stakingApy?: number;
   stakingMethod?: string;
