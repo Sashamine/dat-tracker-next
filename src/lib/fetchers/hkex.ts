@@ -20,9 +20,43 @@
 import { FetchResult, Fetcher, FetchField } from './types';
 
 // Known HKEX stock codes for DAT companies
-export const HKEX_DAT_COMPANIES: Record<string, { stockCode: string; name: string }> = {
-  'boyaa': { stockCode: '434', name: 'Boyaa Interactive' },
-  // Add more as needed
+// Source: BitcoinTreasuries.net, company announcements
+export const HKEX_DAT_COMPANIES: Record<string, {
+  stockCode: string;
+  name: string;
+  asset: 'BTC' | 'ETH' | 'MULTI';  // Primary crypto holding
+  notes?: string;
+}> = {
+  'boyaa': {
+    stockCode: '434',
+    name: 'Boyaa Interactive',
+    asset: 'BTC',
+    notes: 'HK largest BTC treasury. Also holds ETH.',
+  },
+  'meitu': {
+    stockCode: '1357',
+    name: 'Meitu Inc',
+    asset: 'MULTI',
+    notes: 'Photo app company. Holds BTC + ETH. Sold some in 2023.',
+  },
+  'coolpad': {
+    stockCode: '2369',
+    name: 'Coolpad Group',
+    asset: 'BTC',
+    notes: 'Smartphone maker. Announced BTC treasury 2024.',
+  },
+  'newhuotech': {
+    stockCode: '1611',
+    name: 'New Huo Technology',
+    asset: 'MULTI',
+    notes: 'Crypto infrastructure. Rebranded from Huobi Tech.',
+  },
+  'osl': {
+    stockCode: '863',
+    name: 'BC Technology Group (OSL)',
+    asset: 'MULTI',
+    notes: 'Licensed crypto exchange. Holds operational crypto.',
+  },
 };
 
 // Filing URL pattern: https://www1.hkexnews.hk/listedco/listconews/sehk/{YYYY}/{MMDD}/{docId}.pdf
@@ -142,15 +176,32 @@ export const BOYAA_EXTRACTED_DATA: Record<string, {
   },
 };
 
+// Known filings registry - add more as discovered
+const KNOWN_FILINGS_REGISTRY: Record<string, HKEXFiling[]> = {
+  '434': BOYAA_KNOWN_FILINGS,
+  // TODO: Add Meitu (1357), Coolpad (2369), etc. as filings are identified
+};
+
 /**
  * Get known filings for a stock code
  */
 export function getKnownFilings(stockCode: string): HKEXFiling[] {
   const code = stockCode.replace('.HK', '').replace(/^0+/, '');
-  if (code === '434') {
-    return BOYAA_KNOWN_FILINGS;
+  return KNOWN_FILINGS_REGISTRY[code] || [];
+}
+
+/**
+ * Add a known filing to the registry (for runtime updates)
+ */
+export function addKnownFiling(stockCode: string, filing: HKEXFiling): void {
+  const code = stockCode.replace('.HK', '').replace(/^0+/, '');
+  if (!KNOWN_FILINGS_REGISTRY[code]) {
+    KNOWN_FILINGS_REGISTRY[code] = [];
   }
-  return [];
+  // Avoid duplicates
+  if (!KNOWN_FILINGS_REGISTRY[code].some(f => f.url === filing.url)) {
+    KNOWN_FILINGS_REGISTRY[code].unshift(filing); // Add to front (most recent)
+  }
 }
 
 /**
@@ -240,7 +291,15 @@ export function generatePotentialFilingUrls(
  * Get supported HKEX tickers
  */
 export function getSupportedTickers(): string[] {
-  return Object.values(HKEX_DAT_COMPANIES).map(c => `${c.stockCode}.HK`);
+  return Object.values(HKEX_DAT_COMPANIES).map(c => `0${c.stockCode}.HK`);
+}
+
+/**
+ * Get company info by stock code
+ */
+export function getCompanyInfo(stockCode: string): typeof HKEX_DAT_COMPANIES[string] | null {
+  const code = stockCode.replace('.HK', '').replace(/^0+/, '');
+  return Object.values(HKEX_DAT_COMPANIES).find(c => c.stockCode === code) || null;
 }
 
 // ============ Fetcher Interface Implementation ============

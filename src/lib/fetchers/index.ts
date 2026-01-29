@@ -23,6 +23,8 @@ import { hkexFetcher, getSupportedTickers as getHkexTickers } from './hkex';
 
 export * from './types';
 export * from './hkex';
+export * from './hkex-pdf-extractor';
+export * from './hkex-monitor';
 
 /**
  * All registered fetchers
