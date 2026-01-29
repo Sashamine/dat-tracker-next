@@ -25,8 +25,6 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 800_000_000,
     hasOptions: true,
     sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
-    sharesSource: "SEC 8-K Jan 26, 2026 (shareholder vote confirmed 454.9M)",
-    sharesAsOf: "2026-01-25",
     cashReserves: 682_000_000,  // $682M cash (Jan 25, 2026)
     restrictedCash: 682_000_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 26, 2026",
@@ -64,8 +62,6 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     sharesForMnav: 196_690_000,  // 196.69M basic shares (matches SBET dashboard methodology)
-    sharesSource: "SEC 10-Q Q3 2025 XBRL - EntityCommonStockSharesOutstanding",
-    sharesAsOf: "2025-09-30",
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     restrictedCash: 11_100_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -123,9 +119,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
-    sharesForMnav: 323_792_059,
-    sharesSource: "Jan 7, 2026 press release - basic shares outstanding",
-    sharesAsOf: "2025-12-31",
+    sharesForMnav: 323_792_059,  // Jan 7, 2026 press release (basic shares)
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -279,9 +273,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 331_748_000,
-    sharesSource: "strategy.com/shares - official IR real-time share tracker",
-    sharesAsOf: "2026-01-25",
+    sharesForMnav: 331_748_000,  // Basic shares outstanding per strategy.com/shares (Jan 25, 2026). Diluted shares (364M) are wrong for market cap calculation.
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
     totalDebt: 8_214_000_000,  // $8.214B per strategy.com/debt (Jan 26, 2026)
@@ -319,9 +311,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 200_000_000,
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
-    sharesForMnav: 1_118_664_340,
-    sharesSource: "metaplanet.jp/en/shareholders - 1.142B common minus 23.6M OTM Mercury converts",
-    sharesAsOf: "2025-12-30",
+    sharesForMnav: 1_118_664_340,  // 1.142B common - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
     // Debt: Zero-coupon yen-denominated bonds (~¥44B, ~$280M) - no interest payments, principal at maturity
     totalDebt: 280_000_000,  // $280M per TDnet Q3 FY2025 Financial Results (Nov 2025)
     debtSource: "TDnet Q3 FY2025 Financial Results",
@@ -357,9 +347,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
-    sharesForMnav: 651_390_912,
-    sharesSource: "SEC S-1 Dec 2025 - Class A (346.5M) + Class B (304.8M)",
-    sharesAsOf: "2025-12-09",
+    sharesForMnav: 651_390_912,  // Total shares (both classes)
     // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC (~3:1 ratio)
     totalDebt: 486_500_000,
     debtSource: "SEC 8-K Dec 2025",
@@ -416,9 +404,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     marketCap: 3_600_000_000,
-    sharesForMnav: 470_000_000,
-    sharesSource: "SEC 10-Q Q3 2025 XBRL - WeightedAverageNumberOfDilutedSharesOutstanding",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
     cashReserves: 826_392_000,  // SEC 10-Q Q3 2025: $826,392K
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
     cashSource: "SEC 10-Q Q3 2025",
@@ -455,9 +441,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 350_000_000,
     hasOptions: true,
     marketCap: 5_220_000_000,
-    sharesForMnav: 403_000_000,
-    sharesSource: "SEC 10-Q Q3 2025 - diluted shares (implied from EPS calculation)",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
     // Note: RIOT reports "unrestricted cash" separately from restricted cash in SEC filings
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
     restrictedCash: 330_700_000,  // Operating capital (miner) - not excess
@@ -492,9 +476,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 250_000_000,
     hasOptions: true,
     marketCap: 3_040_000_000,
-    sharesForMnav: 255_750_361,
-    sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)",
-    sharesAsOf: "2026-01-09",
+    sharesForMnav: 255_750_361,  // SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -525,9 +507,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 100_000_000,  // Increased post-merger
     hasOptions: true,
     marketCap: 1_110_000_000,  // ~$1.11B per Stock Analysis (Jan 2026)
-    sharesForMnav: 1_247_436_814,
-    sharesSource: "SEC DEF 14C Jan 16, 2026 - Class A (1.05B) + Class B (198M)",
-    sharesAsOf: "2026-01-16",
+    sharesForMnav: 1_247_436_814,  // SEC DEF 14C Jan 16, 2026: 1.05B Class A + 198M Class B
     cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
     restrictedCash: 77_780_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 2026",
@@ -586,9 +566,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
-    sharesForMnav: 226_884_068,
-    sharesSource: "mNAV.com / cptlb.com/analytics (AMF filings not easily accessible)",
-    sharesAsOf: "2026-01-20",
+    sharesForMnav: 226_884_068,  // Basic shares per mNAV.com Jan 2026. Diluted: ~392M (via convertibles)
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
     dataWarnings: [
@@ -639,9 +617,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 511_555_864,
-    sharesSource: "SEC 10-Q Nov 2025 - 439.85M shares + 71.7M pre-funded warrants",
-    sharesAsOf: "2025-11-14",
+    sharesForMnav: 511_555_864,  // SEC 10-Q Nov 2025: 439.85M shares + 71.7M pre-funded warrants = 511.56M fully diluted
     // Debt: $210M Kraken BTC-backed loan only - Yorkville converts redeemed Oct 2025 via Two Prime, then refinanced Dec 2025
     totalDebt: 210_000_000,  // Kraken loan Dec 2025 (replaced Two Prime which replaced Yorkville)
     debtSource: "Kraken credit facility Dec 2025",
@@ -675,9 +651,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 279_997_636,
-    sharesSource: "SEC 10-Q Q3 2025 cover page",
-    sharesAsOf: "2025-11-05",
+    sharesForMnav: 279_997_636,  // SEC 10-Q Q3 2025 (Nov 5, 2025)
     // Debt: $1B 0% convertible senior secured notes due 2030, part of $2.5B private placement (May 2025)
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     debtSource: "SEC 8-K May 2025",
@@ -731,9 +705,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 2_865_730,
-    sharesSource: "SEC 10-Q Q3 2025 (post 200:1 reverse split Sep 16, 2025)",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 2_865_730,  // SEC 10-Q Oct 2025 + 8-K Sep 12 2025 (post 200:1 reverse split)
     strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
     notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025.",
   },
@@ -759,8 +731,6 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // Shares: 899,489,426 diluted per Q3 2025 10-Q
     sharesForMnav: 899_489_426,
-    sharesSource: "SEC 10-Q Q3 2025 XBRL - EntityCommonStockSharesOutstanding",
-    sharesAsOf: "2025-09-30",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
     notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: 432 satoshis/share (Nov 5).",
@@ -791,8 +761,6 @@ export const solCompanies: Company[] = [
     capitalRaisedPipe: 1_650_000_000,
     // Shares: 86,145,514 basic (SEC 10-K) + 26,359,600 pre-funded warrants @ $0.03 = 112,505,114 FD
     sharesForMnav: 112_505_114,
-    sharesSource: "SEC 10-K FY2025 - 86.1M basic + 26.4M pre-funded warrants @ $0.03",
-    sharesAsOf: "2025-09-30",
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
@@ -822,9 +790,7 @@ export const solCompanies: Company[] = [
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 12_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 75_900_000,
-    sharesSource: "Q3 2025 earnings PR: 75.9M common + pre-funded warrants",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 75_900_000,  // Q3 2025 10-Q press release: "75.9 million common shares and pre-funded warrants outstanding"
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
@@ -853,12 +819,8 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
-    sharesForMnav: 29_892_800,
-    sharesSource: "Company PR Jan 5, 2026 (31.4M Nov 2025 - buybacks)",
-    sharesAsOf: "2026-01-05",
-    totalDebt: 186_000_000,
-    debtSource: "defidevcorp.com/dashboard - $134M converts (OTM) + $52M SOL/DeFi loans",
-    debtAsOf: "2026-01-05",
+    sharesForMnav: 29_892_800,  // Company press release Jan 5, 2026 (Q4 business update); SEC 8-K Nov 13, 2025 showed 31.4M pre-buyback
+    totalDebt: 186_000_000,  // $186M: $134M converts (OTM) + $52M SOL/DeFi loans (defidevcorp.com/dashboard Jan 2026)
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -884,12 +846,8 @@ export const solCompanies: Company[] = [
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
     capitalRaisedAtm: 100_000_000,
-    sharesForMnav: 61_761_756,
-    sharesSource: "SEC 10-Q Sep 2025 (58.9M) + Dec PIPE (3.29M) - buybacks (0.42M)",
-    sharesAsOf: "2026-01-05",
-    totalDebt: 200_000_000,
-    debtSource: "SEC 8-K Jul 2025 ($150M) + 8-K Jan 2026 ($36M Hivemind) + legacy",
-    debtAsOf: "2026-01-14",
+    sharesForMnav: 61_761_756,  // 58.9M (10-Q Sep) + 3.29M (Dec PIPE) - 0.42M (buybacks) = 61.76M
+    totalDebt: 200_000_000,  // $200M: $150M convert @$4.25 + $36M convert @$2.39 + $14M other
     cashReserves: 2_200_000,  // $2.2M cash (SEC 10-Q Sep 2025)
     restrictedCash: 2_200_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Sep 2025",
@@ -947,9 +905,7 @@ export const hypeCompanies: Company[] = [
     stakingMethod: "Anchorage Digital",
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
-    sharesForMnav: 127_025_563,
-    sharesSource: "SEC 10-Q Dec 8, 2025 cover page",
-    sharesAsOf: "2025-12-08",
+    sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
     cashReserves: 300_000_000,  // $300M+ cash (Dec 2025)
     restrictedCash: 300_000_000,  // No debt = cash not encumbered, don't subtract from EV
     cashSource: "Trefis Dec 5, 2025 analysis",
@@ -1033,9 +989,7 @@ export const bnbCompanies: Company[] = [
     // No staking disclosed - holding spot BNB
     quarterlyBurnUsd: 3_000_000,
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 52_800_000,
-    sharesSource: "SEC 8-K Aug 2025 PIPE (49.5M) + pre-existing (2.5M) + warrant exercises",
-    sharesAsOf: "2026-01-28",
+    sharesForMnav: 52_800_000,  // ~49.5M PIPE + 2.5M pre-existing + ~0.8M from warrant exercises (Jan 2026 dashboard implied)
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
     restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
@@ -1483,9 +1437,7 @@ export const avaxCompanies: Company[] = [
     holdingsSource: "company-dashboard",  // Not SEC - PIPE closed after Q3 10-Q period
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
-    totalDebt: 1_414_415,
-    debtSource: "SEC 10-Q Sep 30, 2025 (legacy debentures, pre-PIPE)",
-    debtAsOf: "2025-09-30",
+    totalDebt: 1_414_415,  // SEC 10-Q Sep 30, 2025 (legacy debentures, pre-PIPE)
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     costBasisAvg: 11.73,
     stakingPct: 0.90,  // 8-K Jan 28, 2026: "more than 90% of AVAX holdings staked"
@@ -1530,9 +1482,7 @@ export const hbarCompanies: Company[] = [
     capitalRaisedPipe: 5_000_000,
     avgDailyVolume: 1_000_000,
     marketCap: 10_000_000,
-    sharesForMnav: 65_000_000,
-    sharesSource: "Company IR page - immutableholdings.com",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 65_000_000,  // From holdings-history.ts
     leader: "Jordan Fried (CEO, Hedera founding team)",
     strategy: "HBAR treasury via Immutable Asset Management subsidiary.",
     notes: "OTC. Owns NFT.com, HBAR Labs, MyHBARWallet.",
