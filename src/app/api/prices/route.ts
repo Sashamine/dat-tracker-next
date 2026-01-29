@@ -15,6 +15,15 @@ const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
 const FOREX_CACHE_TTL = 5 * 60 * 1000;
 
+// Ticker -> currency mapping for non-USD stocks (used for price conversion)
+const TICKER_CURRENCY: Record<string, string> = {
+  "3350.T": "JPY",
+  "H100.ST": "SEK",
+  "0434.HK": "HKD",
+  "ALTBG": "EUR",
+  "ETHM": "CAD",
+};
+
 // Stocks not on major exchanges (OTC/international) - use FMP
 // Map: FMP ticker -> display ticker (for tickers with different formats)
 const FMP_TICKER_MAP: Record<string, string> = {
@@ -313,8 +322,13 @@ export async function GET() {
     // Add fallback data for illiquid stocks without real-time data
     for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
       if (!stockPrices[ticker]) {
+        // Convert fallback price to USD if it's a foreign currency stock
+        const currency = TICKER_CURRENCY[ticker];
+        const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
+        const priceUsd = rate && rate > 0 ? fallback.price / rate : fallback.price;
+
         stockPrices[ticker] = {
-          price: fallback.price,
+          price: priceUsd,
           change24h: 0,
           volume: 0,
           marketCap: fallback.marketCap,
