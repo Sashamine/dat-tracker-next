@@ -232,6 +232,25 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // H100 Group (H100.ST) - Swedish BTC treasury company
+  // Verified 2026-01-29 via MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
+  // Jul 9, 2025: SEK 516M raised via convertible debentures (Adam Back et al)
+  // Nov 21, 2025: SEK 122.5M converted to shares
+  // Remaining: ~SEK 393.5M in outstanding convertibles
+  // Note: IR page incorrectly states "no warrants/convertibles" - MFN filings prove otherwise
+  "H100.ST": [
+    {
+      type: "convertible",
+      strikePrice: 0.77, // Estimated: SEK 8 / 10.4 USD/SEK. Shares issued at SEK 6-8.48 in Jul-Sep 2025.
+      potentialShares: 43_000_000, // 354.43M diluted - 311.50M basic = ~43M from convertibles
+      faceValue: 38_000_000, // ~SEK 393.5M remaining / 10.4 = $37.8M USD
+      source: "MFN Jul 9, 2025 + Nov 21, 2025",
+      sourceUrl: "https://mfn.se/a/h100-group",
+      issuedDate: "2025-07-09",
+      notes: "SEK 516M convertible (Adam Back investment), SEK 122.5M converted Nov 2025. Strike price estimated - needs verification from offering docs.",
+    },
+  ],
+
   // RIOT Platforms - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC 8-K (CIK 0001167419)
   // Note: RIOT sold 1,818 BTC in Dec 2025 (first major sale) - unusual for HODL miner

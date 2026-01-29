@@ -583,22 +583,24 @@ export const btcCompanies: Company[] = [
     ticker: "H100.ST",
     asset: "BTC",
     tier: 2,
-    holdings: 1_046,  // Jan 2, 2026 shareholder letter confirms 1,046 BTC
-    holdingsLastUpdated: "2026-01-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.h100.group/",  // Official website shows ₿1,046.66
+    holdings: 1_047,  // MFN Sep 17, 2025: "Total Holdings Reach 1,046" (1,046.66 per treasury tracker)
+    holdingsLastUpdated: "2025-09-17",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://mfn.se/a/h100-group",  // Swedish MFN regulatory filings
     datStartDate: "2025-05-22",  // First BTC purchase May 22, 2025
-    costBasisAvg: 90_000,
+    costBasisAvg: 114_808,  // treasury.h100.group avg cost
+    costBasisSource: "company-website",
+    costBasisSourceUrl: "https://treasury.h100.group",
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 5_000_000,
-    marketCap: 62_000_000,  // SEK 645M / 10.4 = $62M (Jan 23, 2026)
-    sharesForMnav: 335_250_237,  // Official IR page: 335,250,237 shares
-    sharesSource: "h100.group/investor-relations/shares (official)",
-    sharesAsOf: "2026-01-23",
+    // marketCap calculated from sharesForMnav x price
+    sharesForMnav: 335_250_237,  // IR page share capital table (basic shares)
+    sharesSource: "h100.group/investor-relations/shares",
+    sharesAsOf: "2025-09-30",
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
-    notes: "NGM Nordic SME listed. ISK-eligible. Adam Back invested SEK 492M. Acquiring Future Holdings AG (Switzerland).",
+    notes: "NGM Nordic SME listed. ISK-eligible. SEK 516M convertible (Jul 2025, Adam Back et al), SEK 122.5M converted Nov 2025. Acquiring Future Holdings AG (Switzerland). IR page incorrectly claims 'no convertibles'.",
   },
   {
     id: "naka",

@@ -354,17 +354,28 @@ const ALTBG_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
-// NOTE: BTC treasury strategy started May 22, 2025 - no BTC holdings before that date
-// Share count grew massively in 2025 through directed issues to fund BTC purchases (254M → 335M)
+// Source: MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
+// Verified 2026-01-29 from MFN press releases
+// Share count grew via directed issues + SEK 516M convertible (117M → 335M)
 const H100_HISTORY: HoldingsSnapshot[] = [
-  // May 2025: First BTC purchase - strategy initiated
-  { date: "2025-05-22", holdings: 4, sharesOutstandingDiluted: 254_000_000, holdingsPerShare: 0.0000000157, source: "Press release - first BTC purchase (4.39 BTC)", sharesSource: "H100 IR (pre-dilution)", sourceType: "press-release" },
-  // July 2025: Rapid accumulation via Adam Back convertible + directed issues
-  { date: "2025-07-15", holdings: 628, sharesOutstandingDiluted: 300_000_000, holdingsPerShare: 0.00000209, source: "Press release - 628.22 BTC total", sharesSource: "Estimated mid-dilution", sourceType: "press-release" },
-  // Sep 2025: Interim report (May-Sep 2025) released Nov 20, 2025
-  { date: "2025-09-30", holdings: 1046, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "Interim report May-Sep 2025", sourceUrl: "https://www.h100.group/investor-relations/financial-reports", sharesSource: "H100 IR shares page", sourceType: "company-website" },
-  // Jan 2026: Shareholder letter confirms holdings stable at 1,046 BTC
-  { date: "2026-01-02", holdings: 1046, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "Jan 2, 2026 shareholder letter", sourceUrl: "https://www.h100.group/", sharesSource: "H100 IR shares page", sourceType: "company-website" },
+  // May-Jun 2025: Initial purchases
+  { date: "2025-05-22", holdings: 4, sharesOutstandingDiluted: 117_090_000, holdingsPerShare: 0.0000000342, source: "MFN: first BTC purchase (4.39 BTC)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-06-16", holdings: 169, sharesOutstandingDiluted: 117_090_000, holdingsPerShare: 0.00000144, source: "MFN: 144.8 BTC purchase", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  // July 2025: Rapid accumulation via Adam Back SEK 516M convertible + directed issues
+  { date: "2025-07-02", holdings: 248, sharesOutstandingDiluted: 233_170_000, holdingsPerShare: 0.00000106, source: "MFN: 47.33 BTC purchase", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-07-16", holdings: 370, sharesOutstandingDiluted: 233_170_000, holdingsPerShare: 0.00000159, source: "MFN: 75.53 BTC → 370 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-07-21", holdings: 510, sharesOutstandingDiluted: 249_230_000, holdingsPerShare: 0.00000205, source: "MFN: 140.25 BTC → 510 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-07-23", holdings: 628, sharesOutstandingDiluted: 249_230_000, holdingsPerShare: 0.00000252, source: "MFN: 117.93 BTC → 628.22 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  // Aug 2025: Continued accumulation
+  { date: "2025-08-06", holdings: 763, sharesOutstandingDiluted: 254_070_000, holdingsPerShare: 0.00000300, source: "MFN: 60.6 BTC → 763.2 total (largest Nordic)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-08-20", holdings: 911, sharesOutstandingDiluted: 287_520_000, holdingsPerShare: 0.00000317, source: "MFN: 102 BTC → 911 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  // Sep 2025: Crossed 1,000 BTC milestone
+  { date: "2025-09-03", holdings: 1005, sharesOutstandingDiluted: 309_700_000, holdingsPerShare: 0.00000324, source: "MFN: Surpasses 1,000 BTC in 104 days", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-09-17", holdings: 1047, sharesOutstandingDiluted: 311_500_000, holdingsPerShare: 0.00000336, source: "MFN: 21 BTC → 1,046.66 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  // Nov 2025: SEK 122.5M convertibles converted to shares
+  { date: "2025-11-19", holdings: 1047, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN Interim Report", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  // Jan 2026: Holdings confirmed stable
+  { date: "2026-01-02", holdings: 1047, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN: Shareholder Letter", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
 ];
 
 // ==================== ADDITIONAL ETH COMPANIES ====================
