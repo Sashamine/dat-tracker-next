@@ -344,21 +344,23 @@ const BOYAA_INTEL: CompanyIntel = {
 
 const NXTT_INTEL: CompanyIntel = {
   ticker: "NXTT",
-  lastResearched: "2026-01-13",
+  lastResearched: "2026-01-29",
   pressReleases: [
-    { date: "2025-09-16", title: "Executed 200-for-1 reverse stock split", summary: "Share consolidation", url: "https://www.nexttechnology.io/news" },
-    { date: "2025-05-09", title: "Stock surged 661% on Bitcoin investment news", summary: "Market enthusiasm", url: "https://www.nexttechnology.io/news" },
-    { date: "2024-03-01", title: "Rebranded from WeTrade to Next Technology", summary: "Corporate pivot", url: "https://www.nexttechnology.io/news" },
+    { date: "2025-11-26", title: "MOU to acquire up to 10,000 BTC at $84K", summary: "Non-binding deal with Global Nexgen", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025115307/ea0267322-8k_nexttech.htm" },
+    { date: "2025-10-08", title: "Q3 2025 10-Q: 5,833 BTC holdings", summary: "$666.8M fair value, massive YTD accumulation", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm" },
+    { date: "2025-09-16", title: "200-for-1 reverse stock split", summary: "566M → 2.87M shares", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=8-K" },
+    { date: "2024-03-01", title: "Rebranded from WeTrade to Next Technology", summary: "Corporate pivot to BTC treasury", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970" },
   ],
-  strategySummary: "Dual-track strategy: AI-enabled software development services + Bitcoin accumulation. Operates in Asia-Pacific region providing AI-enabled SaaS solutions. May sell, collateralize, or utilize Bitcoin holdings as circumstances warrant. Views Bitcoin as long-term inflation hedge. Described as 'technology company built on dual-engine strategy of AI plus digital assets.'",
+  strategySummary: "Dual-track strategy: AI-enabled software development + aggressive Bitcoin accumulation. Acquired 5,000 BTC in 9 months (Jan-Sep 2025). Views Bitcoin as long-term strategic reserve asset. Uses liquid assets exceeding working capital for BTC purchases. May also issue equity/debt for acquisitions. Japan-based (Saitama Prefecture) with Wyoming incorporation.",
   recentDevelopments: [
-    "5,833 BTC holdings (~$526.7M)",
-    "PENDING: MOU with Global Nexgen (Nov 2025) to buy up to 10,000 BTC at $84K/BTC - would nearly triple holdings",
-    "$500M shelf registration for continued BTC acquisitions",
-    "Shenzhen-based operations",
+    "5,833 BTC holdings @ $666.8M fair value (Sep 30, 2025)",
+    "Purchased 5,000 BTC in 9 months at ~$27.1K avg cost basis",
+    "PENDING: MOU with Global Nexgen to buy up to 10,000 BTC at $84K locked price",
+    "$500M shelf registration for continued acquisitions",
+    "200:1 reverse split Sep 2025 (566M → 2.87M shares)",
   ],
   keyBackers: [],
-  outlook2026: "Global Nexgen deal could add up to 10K BTC. Continued accumulation via $500M shelf.",
+  outlook2026: "Global Nexgen deal could add 10K BTC at below-market $84K. Continued accumulation strategy.",
 };
 
 const ABTC_INTEL: CompanyIntel = {
