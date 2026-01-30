@@ -97,10 +97,11 @@ export function calculateNAVPerShare(
 /** Threshold for including otherInvestments in NAV (5% of crypto NAV) */
 export const OTHER_INVESTMENTS_MATERIALITY_THRESHOLD = 0.05;
 
-// Calculate mNAV (Enterprise Value / Crypto NAV) - key valuation metric
+// Calculate mNAV (Enterprise Value / NAV) - key valuation metric
 // Industry standard: EV = Market Cap + Debt + Preferred - Free Cash
 // Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
-// This matches MSTR, SBET, Metaplanet official dashboards
+// NAV = Crypto + Restricted Cash + Other Investments (if material)
+// Restricted cash is "pre-crypto" - earmarked for purchases, so included in NAV
 //
 // MATERIALITY RULE: otherInvestments (non-crypto assets like equity stakes, USDC)
 // are included in NAV only when material (>5% of crypto NAV). This prevents
@@ -123,7 +124,10 @@ export function calculateMNAV(
   // Include otherInvestments only if material (>5% of crypto NAV)
   // This prevents misleading mNAV for hybrid treasuries while keeping pure-play DATs clean
   const otherInvestmentsMaterial = otherInvestments / baseCryptoNav > OTHER_INVESTMENTS_MATERIALITY_THRESHOLD;
-  const totalNav = otherInvestmentsMaterial ? baseCryptoNav + otherInvestments : baseCryptoNav;
+  
+  // Total NAV = Crypto + Restricted Cash (pre-crypto) + Other Investments (if material)
+  // Restricted cash is earmarked for crypto purchases, so it's effectively "pre-crypto" value
+  const totalNav = baseCryptoNav + restrictedCash + (otherInvestmentsMaterial ? otherInvestments : 0);
 
   // Free Cash = Cash Reserves - Restricted Cash (only subtract unencumbered cash)
   const freeCash = cashReserves - restrictedCash;
@@ -161,7 +165,9 @@ export function calculateMNAVExtended(
 
   const otherInvestmentsRatio = otherInvestments / baseCryptoNav;
   const otherInvestmentsMaterial = otherInvestmentsRatio > OTHER_INVESTMENTS_MATERIALITY_THRESHOLD;
-  const totalNav = otherInvestmentsMaterial ? baseCryptoNav + otherInvestments : baseCryptoNav;
+  
+  // Total NAV = Crypto + Restricted Cash (pre-crypto) + Other Investments (if material)
+  const totalNav = baseCryptoNav + restrictedCash + (otherInvestmentsMaterial ? otherInvestments : 0);
 
   const freeCash = cashReserves - restrictedCash;
   const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
