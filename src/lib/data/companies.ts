@@ -1082,6 +1082,8 @@ export const taoCompanies: Company[] = [
     ticker: "XTAIF",
     asset: "TAO",
     tier: 1,
+    website: "https://www.xtao.co",
+    // No Twitter found - website is single-page, IR at https://www.xtao.co/#investors
     holdings: 59_962,
     holdingsLastUpdated: "2025-11-25",
     holdingsSource: "press-release",
@@ -1090,8 +1092,11 @@ export const taoCompanies: Company[] = [
     costBasisAvg: 350.00,
     stakingPct: 1.00,
     stakingApy: 0.10,
-    quarterlyBurnUsd: 400_000,
+    quarterlyBurnUsd: 450_000,  // Google Finance Q2 FY26: ~$450K cash from ops outflow
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
+    cashReserves: 4_130_000,  // Google Finance Q2 FY26 (Sep 2025)
+    cashSource: "Google Finance Q2 FY26",
+    cashAsOf: "2025-09-30",
     sharesForMnav: 38_031_285,  // 28,552,195 shares + 9,479,090 pre-funded warrants (auto-convert)
     sharesAsOf: "2025-09-30",
     sharesSource: "SEDAR+ MD&A Sep 30, 2025 (page 11: shares, page 5: warrants)",
