@@ -1825,6 +1825,61 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== H100 Group (H100.ST) ==========
+  // Swedish BTC treasury company - first Nordic Bitcoin treasury
+  // Reports via MFN (Swedish regulator) - quarterly reports
+  // BTC strategy started May 22, 2025
+  // Source: mfn.se/a/h100-group
+  //
+  // Q4 2025 (Oct-Dec 2025) - Holdings stable, shares increased via convertible conversion
+  {
+    ticker: "H100.ST",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-28",  // Expected ~60 days after quarter end
+    earningsTime: null,
+    holdingsAtQuarterEnd: 1_047,  // Stable since Sep 17, 2025
+    sharesAtQuarterEnd: 335_250_237,  // After SEK 122.5M convertible conversion (Nov 2025)
+    holdingsPerShare: 0.00000312,  // 1047 / 335.25M
+    source: "regulatory-filing",
+    sourceUrl: "https://mfn.se/a/h100-group",
+    status: "upcoming",
+  },
+  // Q3 2025 (Jul-Sep 2025) - Crossed 1,000 BTC milestone
+  {
+    ticker: "H100.ST",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-19",  // MFN Interim Report
+    earningsTime: null,
+    holdingsAtQuarterEnd: 1_047,  // Sep 17, 2025 - 1,046.66 BTC
+    sharesAtQuarterEnd: 311_500_000,  // Before convertible conversion
+    holdingsPerShare: 0.00000336,  // 1047 / 311.5M
+    source: "regulatory-filing",
+    sourceUrl: "https://mfn.se/a/h100-group",
+    status: "reported",
+  },
+  // Q2 2025 (Apr-Jun 2025) - First quarter with BTC (started May 22)
+  {
+    ticker: "H100.ST",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-15",  // Estimated
+    earningsTime: null,
+    holdingsAtQuarterEnd: 169,  // Jun 16, 2025 - 169 BTC per MFN
+    sharesAtQuarterEnd: 117_090_000,  // Pre-capital raises
+    holdingsPerShare: 0.00000144,  // 169 / 117M
+    source: "regulatory-filing",
+    sourceUrl: "https://mfn.se/a/h100-group",
+    status: "reported",
+  },
+
   // ==================== ETH COMPANIES ====================
 
   // ========== Bitmine Immersion (BMNR) ==========
