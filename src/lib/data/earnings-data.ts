@@ -2678,7 +2678,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // Holdings note: Direct HYPE tracked in holdings field, iHYPE (liquid staked) tracked in cryptoInvestments
   // Combined HYPE exposure: ~1.46M direct + ~1.35M via iHYPE = ~2.81M HYPE
   //
-  // Q4 2025 (Oct-Dec) - 10-K upcoming
+  // Q4 2025 (Oct-Dec) - 10-K upcoming, using Q3 holdings as placeholder
+  // Note: HYPD doesn't publish regular holdings updates; Q4 data pending 10-K (~Mar 2026)
   {
     ticker: "HYPD",
     fiscalYear: 2025,
@@ -2687,7 +2688,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-31",  // 10-K expected ~90 days after Dec 31
     earningsTime: "AMC",
+    // Using Q3 holdings as placeholder - no 8-K updates with Q4 holdings
+    holdingsAtQuarterEnd: 1_459_615,  // Q3 holdings (placeholder)
+    sharesAtQuarterEnd: 24_400_000,  // 8.1M common + 16.3M from preferred
+    holdingsPerShare: 0.0598,
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
     status: "upcoming",
   },
   // Q3 2025 (Jul-Sep) - First full quarter as HYPE treasury
