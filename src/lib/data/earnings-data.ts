@@ -2225,7 +2225,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 435_000,
     sharesAtQuarterEnd: 22_999_841,
     holdingsPerShare: 0.0189,
-    source: "SEC 40-F",
+    source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666",
     status: "reported",
   },
