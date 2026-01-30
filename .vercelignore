@@ -1,0 +1,3 @@
+# Exclude large data folders from serverless function bundles
+data/sec-content/
+data/mfn-content/
