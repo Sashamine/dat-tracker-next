@@ -868,6 +868,11 @@ export const solCompanies: Company[] = [
     capitalRaisedAtm: 50_000_000,
     sharesForMnav: 25_300_567,  // Post 1:8 reverse split (Aug 2025): 22,999,841 (40-F) + 2,300,726 (Jan 7 credit facility)
     sharesSource: "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
+    totalDebt: 37_000_000,  // CAD $51.9M → ~$37M USD: Credit facility ($16.2M) + Convertibles ($14.5M current + $21.3M LT)
+    cashReserves: 1_300_000,  // CAD $1.79M → ~$1.3M USD
+    restrictedCash: 0,  // Operating cash - available
+    cashSource: "SEC 40-F Sep 2025",
+    cashAsOf: "2025-09-30",
     avgDailyVolume: 50_000_000,
     leader: "Michael Hubbard (Interim CEO)",
     strategy: "Validator-first SOL treasury (DAT++ model). VanEck ETF staking provider. 99.999% uptime.",
