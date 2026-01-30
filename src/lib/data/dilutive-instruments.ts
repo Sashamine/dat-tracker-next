@@ -444,6 +444,13 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // sharesForMnav = 41.3M basic + 34.6M pre-funded = 75.9M FD
   HSDT: [],
 
+  // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)
+  // Verified 2026-01-29 via SEC 40-F FY2025 (CIK 0001846839)
+  // TODO: Extract specific option/RSU counts from 40-F
+  // 40-F shows equity incentive plan with options and RSUs - need to pull specific numbers
+  // For now, no material ITM dilutives documented
+  STKE: [],
+
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
   // Source: Euronext press releases

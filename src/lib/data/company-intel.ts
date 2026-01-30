@@ -626,9 +626,13 @@ const STKE_INTEL: CompanyIntel = {
     "6 institutional-grade validators (4 proprietary, 2 white-label)",
     "FY2025 validator revenue: $5.4M",
     "SOL Treasury grew from $21M to $126M (YoY through Sep 30, 2025)",
+    "Shareholder meeting Mar 31, 2026 for board reconstitution vote",
+    "Stock down 95% from 52W high ($30.80 → $1.57)",
+    "Corrective disclosure Nov 2025 (accounting reclassification, not fraud)",
+    "Equity investments: NGRAVE NV (hardware wallet), Chia Network, Animoca Brands",
   ],
-  keyBackers: ["Michael Hubbard (CEO)"],
-  outlook2026: "Validator scale and performance. Secure new institutional mandates from ETF issuers and asset managers.",
+  keyBackers: ["Tony Guoga (19.7% shareholder, activist)", "Max Kaplan (activist shareholder)", "VanEck (staking mandate)"],
+  outlook2026: "Board governance resolution. Validator scale. Secure new institutional mandates from ETF issuers.",
 };
 
 // =============================================================================

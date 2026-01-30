@@ -869,9 +869,12 @@ export const solCompanies: Company[] = [
     sharesForMnav: 25_300_567,  // Post 1:8 reverse split (Aug 2025): 22,999,841 (40-F) + 2,300,726 (Jan 7 credit facility)
     sharesSource: "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
     avgDailyVolume: 50_000_000,
-    leader: "Leah Wald (CEO)",
-    strategy: "Validator operations, VanEck staking provider, STKESOL LST",
-    notes: "3.35M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ listing.",
+    leader: "Michael Hubbard (Interim CEO)",
+    strategy: "Validator-first SOL treasury (DAT++ model). VanEck ETF staking provider. 99.999% uptime.",
+    notes: "3.35M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Shareholder meeting Mar 31, 2026 re: board reconstitution (Tony Guoga + Max Kaplan requisition). Equity investments: NGRAVE NV, Chia Network, Animoca Brands.",
+    website: "https://solstrategies.io/",
+    twitter: "https://x.com/SolStrategies",
+    investorRelationsUrl: "https://solstrategies.io/investor-relations",
   },
 ];
 
