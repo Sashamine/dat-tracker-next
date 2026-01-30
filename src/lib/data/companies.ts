@@ -696,35 +696,9 @@ export const btcCompanies: Company[] = [
     strategy: "Hong Kong's largest BTC treasury. 15.1% BTC Yield (9mo 2025). Active buyback program.",
     notes: "Asia's MicroStrategy. Sep 2025 raised HK$410M via placement for BTC. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled.",
   },
-  {
-    id: "nxtt",
-    name: "Next Technology Holding",
-    ticker: "NXTT",
-    secCik: "0001784970",
-    asset: "BTC",
-    tier: 1,
-    holdings: 5_833,  // SEC 10-Q Q3 2025: "Approximate number of bitcoins held"
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm",
-    datStartDate: "2024-06-01",
-    costBasisAvg: 27_100,  // $158M cost basis / 5,833 BTC (from 10-Q roll-forward)
-    isMiner: false,
-    quarterlyBurnUsd: 5_000_000,
-    avgDailyVolume: 15_000_000,
-    cashReserves: 12_357_568,  // SEC 10-Q Q3 2025
-    restrictedCash: 12_357_568,  // 10-Q: "acquiring bitcoin with liquid assets that exceed working capital"
-    cashSource: "SEC 10-Q Q3 2025",
-    cashAsOf: "2025-09-30",
-    totalDebt: 0,  // No debt per 10-Q balance sheet
-    sharesForMnav: 5_553_144,  // 4,082,556 basic (S-3/A Oct 31, 2025) + 1,470,588 warrants at nominal exercise
-    sharesSource: "SEC S-3/A Oct 31, 2025 + warrants (294M pre-split / 200)",
-    sharesAsOf: "2025-10-31",
-    strategy: "AI software company with BTC treasury. Actively acquiring via equity issuance.",
-    notes: "Formerly WeTrade Group. Japan-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025. 5,833 BTC @ $666.8M fair value. Mar 2025: issued 135M shares + 294M warrants (nominal exercise) for 5,000 BTC.",
-    riskFlags: ["undisclosed-sellers", "extreme-nav-discount"],
-    riskNotes: "⚠️ UNUSUAL STRUCTURE: Mar 2025 acquired 5,000 BTC from undisclosed 'certain sellers' at implied $27.6K/BTC cost basis (SEC 10-Q shows $158M for 5,833 BTC). Sellers received 135M shares + 294M warrants. Market trades at ~5% of NAV - significant skepticism about holdings accessibility or company fundamentals. Former WeTrade Group (China). Due diligence recommended.",
-  },
+  // NXTT (Next Technology Holding) removed - formerly WeTrade Group, history of "untrue" financial reports (Nov 2023),
+  // internal investigation found inconsistent expenditures, shareholder lawsuits, derivative suits against former officers.
+  // Market trades at 5% of NAV reflecting zero confidence in reported holdings.
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
   {

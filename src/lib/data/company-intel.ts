@@ -342,28 +342,7 @@ const BOYAA_INTEL: CompanyIntel = {
   outlook2026: "Continued BTC accumulation. Hong Kong crypto hub positioning.",
 };
 
-const NXTT_INTEL: CompanyIntel = {
-  ticker: "NXTT",
-  lastResearched: "2026-01-29",
-  pressReleases: [
-    { date: "2025-11-26", title: "MOU to acquire up to 10,000 BTC at $84K", summary: "Non-binding deal with Global Nexgen", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025115307/ea0267322-8k_nexttech.htm" },
-    { date: "2025-10-08", title: "Q3 2025 10-Q: 5,833 BTC holdings", summary: "$666.8M fair value, massive YTD accumulation", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm" },
-    { date: "2025-09-16", title: "200-for-1 reverse stock split", summary: "566M → 2.87M shares", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=8-K" },
-    { date: "2025-03-12", title: "Acquired 5,000 BTC from undisclosed sellers", summary: "135M shares + 294M warrants issued per S-3/A; SEC cost basis implies $27K/BTC", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm" },
-    { date: "2024-03-01", title: "Rebranded from WeTrade to Next Technology", summary: "Corporate pivot to BTC treasury", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970" },
-  ],
-  strategySummary: "Dual AI software + BTC treasury strategy. Mar 2025 acquired 5,000 BTC from undisclosed 'certain sellers' (per S-3/A). SEC filings show $158M cost basis for 5,833 BTC = $27.1K/BTC implied avg. Market trades at ~5% of NAV. Former WeTrade Group (China/Japan).",
-  recentDevelopments: [
-    "mNAV ~5% - significant discount to claimed NAV",
-    "5,833 BTC per SEC 10-Q @ $666.8M fair value (Sep 30, 2025)",
-    "SEC cost basis: $158M for 5,833 BTC = $27.1K avg",
-    "Mar 2025 acquisition: 135M shares + 294M warrants to sellers",
-    "Post-split fully diluted: ~5.5M shares",
-    "200:1 reverse split Sep 2025",
-  ],
-  keyBackers: [],
-  outlook2026: "Extreme NAV discount warrants due diligence. Global Nexgen MOU for 10K more BTC is non-binding. Consider why market values at ~5% of reported NAV.",
-};
+// NXTT_INTEL removed - company has history of false financial reports (Nov 2023), shareholder lawsuits
 
 const ABTC_INTEL: CompanyIntel = {
   ticker: "ABTC",
@@ -1069,7 +1048,7 @@ export const COMPANY_INTEL: Record<string, CompanyIntel> = {
   NAKA: NAKA_INTEL,
   DJT: DJT_INTEL,
   "0434.HK": BOYAA_INTEL,
-  NXTT: NXTT_INTEL,
+  // NXTT removed
   ABTC: ABTC_INTEL,
   // ETH
   BMNR: BMNR_INTEL,

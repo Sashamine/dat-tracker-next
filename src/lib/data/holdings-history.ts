@@ -324,27 +324,7 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   // TODO: Jan 2026 - no PR/8-K found, company discloses via X now
 ];
 
-// Next Technology Holding (NXTT) - BTC treasury company
-// NOTE: 200-for-1 reverse stock split effective Sep 16, 2025
-// Pre-split: ~566M shares → Post-split: ~2.83M shares
-// All entries below are POST-SPLIT adjusted (divide pre-split by 200)
-// SEC XBRL source: us-gaap:CommonStockSharesOutstanding
-const NXTT_HISTORY: HoldingsSnapshot[] = [
-  // 2024 - Pre-BTC treasury era (all split-adjusted: XBRL value / 200)
-  { date: "2024-03-31", holdings: 833, sharesOutstandingDiluted: 13_126, holdingsPerShare: 0.0635, source: "SEC 10-Q XBRL: 2,625,130 / 200", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q XBRL: 6,976,410 / 200", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q XBRL: 6,976,410 / 200", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q XBRL (post-split adjusted)", sourceType: "sec-filing" },
-  // Mar 12, 2025: Issued 135,171,078 shares + 294,117,647 warrants (nominal exercise) for 5,000 BTC
-  // Pre-split shares: 6,976,410 + 135,171,078 = ~142M → XBRL shows 436,265,135 (likely more issuances)
-  { date: "2025-03-31", holdings: 5_833, sharesOutstandingDiluted: 2_181_326, holdingsPerShare: 2.674, source: "SEC 10-Q XBRL: 436,265,135 / 200", sharesSource: "Post-BTC acquisition, pre-split", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 5_833, sharesOutstandingDiluted: 2_181_326, holdingsPerShare: 2.674, source: "SEC 10-Q XBRL: 436,265,135 / 200", sharesSource: "Pre-split", sourceType: "sec-filing" },
-  // Sep 16, 2025: 200:1 reverse split effective
-  // Q3 2025: SEC 10-Q XBRL: us-gaap:CryptoAssetNumberOfUnits = 5,833 at Sep 30, 2025
-  { date: "2025-09-30", holdings: 5_833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 2.036, source: "SEC 10-Q XBRL (post-split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm", sourceType: "sec-filing" },
-  // Oct 2025: S-3/A shows 4,082,556 basic shares + 1,470,588 warrants at nominal exercise (294M pre-split / 200)
-  { date: "2025-10-31", holdings: 5_833, sharesOutstandingDiluted: 5_553_144, holdingsPerShare: 1.050, source: "SEC S-3/A Oct 31, 2025", sharesSource: "4,082,556 basic + 1,470,588 warrants (nominal exercise)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm", sourceType: "sec-filing" },
-];
+// NXTT (Next Technology Holding) removed - history of false financial reports, shareholder lawsuits
 
 // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
 // Data from AMF (Autorité des marchés financiers) regulatory filings
@@ -833,7 +813,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   XXI: { ticker: "XXI", asset: "BTC", history: XXI_HISTORY },
   NAKA: { ticker: "NAKA", asset: "BTC", history: NAKA_HISTORY },
   ABTC: { ticker: "ABTC", asset: "BTC", history: ABTC_HISTORY },
-  NXTT: { ticker: "NXTT", asset: "BTC", history: NXTT_HISTORY },
+  // NXTT removed - history of false financial reports
   ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
   "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },
 

@@ -417,19 +417,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-22",
   },
 
-  NXTT: {
-    ticker: "NXTT",
-    name: "Next Technology Holding",
-    secCik: "1784970",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970",
-    exchange: "NASDAQ",
-    sharesSource: "basic",
-    sharesNotes: "Formerly WeTrade Group Inc.",
-    reportsHoldingsFrequency: "quarterly",
-    reportsMnavDaily: false,
-    notes: "AI software company with BTC treasury. Shenzhen-based.",
-    lastVerified: "2026-01-22",
-  },
+  // NXTT removed - history of false financial reports, shareholder lawsuits
 
   NAKA: {
     ticker: "NAKA",
