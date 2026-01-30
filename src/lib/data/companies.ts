@@ -1259,7 +1259,7 @@ export const ltcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.litestrategy.com/dashboard/",
     datStartDate: "2025-07-01",
     costBasisAvg: 107.58,
-    quarterlyBurnUsd: 3_600_000,
+    quarterlyBurnUsd: 5_000_000,  // Trailing avg: FY2025 $20.8M/yr + Q1 FY2026 $4.5M
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
     sharesForMnav: 36_769_677,  // DEF 14A Record Date Dec 15, 2025
