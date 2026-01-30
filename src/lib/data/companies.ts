@@ -1275,7 +1275,7 @@ export const ltcCompanies: Company[] = [
     notes: "Formerly MEI Pharma. Charlie Lee on board. Dashboard: litestrategy.com/dashboard",
     website: "https://www.litestrategy.com",
     twitter: "https://x.com/litestrategyco",
-    irUrl: "https://investors.litestrategy.com",
+    investorRelationsUrl: "https://investors.litestrategy.com",
   },
   {
     id: "luxff",
