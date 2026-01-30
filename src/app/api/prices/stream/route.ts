@@ -298,12 +298,25 @@ export async function GET(request: NextRequest) {
       const stockPollInterval = setInterval(async () => {
         if (isAborted) return;
         try {
-          const newStockPrices = await fetchFMPStockQuotes();
+          const [newStockPrices, forexRates] = await Promise.all([
+            fetchFMPStockQuotes(),
+            fetchForexRates(),
+          ]);
           const timestamp = new Date().toISOString();
 
           // Send individual trade events for changed prices
           for (const [symbol, data] of Object.entries(newStockPrices)) {
-            const newPrice = (data as any).price || 0;
+            let newPrice = (data as any).price || 0;
+            
+            // Convert foreign currency prices to USD
+            const currency = TICKER_CURRENCY[symbol];
+            if (currency && newPrice > 0) {
+              const rate = forexRates[currency] || FALLBACK_RATES[currency];
+              if (rate && rate > 0) {
+                newPrice = newPrice / rate;
+              }
+            }
+            
             const lastPrice = lastStockPrices[symbol] || 0;
 
             // Only send update if price actually changed
