@@ -2210,7 +2210,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-28",
     earningsTime: null,
-    source: "estimate",
+    source: "estimated",
     status: "upcoming",
   },
   // Q3 2025 (Jul-Sep) - from 40-F
