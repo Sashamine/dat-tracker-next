@@ -1370,7 +1370,7 @@ export const dogeCompanies: Company[] = [
     avgDailyVolume: 10_000_000,
     marketCap: 150_000_000,
     cashReserves: 12_900_000,  // Sep 30, 2025 10-Q
-    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
+    restrictedCash: 12_900_000,  // 10-Q: "restricted cash...to be used for the purchase of Dogecoin"
     cashSource: "SEC 10-Q Q1 FY2026",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Minimal liabilities per 10-Q
