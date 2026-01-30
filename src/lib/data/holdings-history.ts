@@ -327,17 +327,22 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
 // Next Technology Holding (NXTT) - BTC treasury company
 // NOTE: 200-for-1 reverse stock split effective Sep 16, 2025
 // Pre-split: ~566M shares → Post-split: ~2.83M shares
-// All entries below are POST-SPLIT adjusted
+// All entries below are POST-SPLIT adjusted (divide pre-split by 200)
+// SEC XBRL source: us-gaap:CommonStockSharesOutstanding
 const NXTT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 833, sharesOutstandingDiluted: 425_000, holdingsPerShare: 0.00196, source: "Q1 2024 filing (split-adjusted)" },
-  { date: "2024-06-30", holdings: 833, sharesOutstandingDiluted: 440_000, holdingsPerShare: 0.00189, source: "Q2 2024 filing (split-adjusted)" },
-  { date: "2024-09-30", holdings: 1000, sharesOutstandingDiluted: 456_000, holdingsPerShare: 0.00219, source: "Q3 2024 filing (split-adjusted)" },
-  { date: "2024-12-31", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q shows 833 BTC at Dec 31, 2024 (split-adjusted)", sourceType: "sec-filing" },
-  // Q3 2025: Massive BTC acquisition - purchased 5,000 BTC during 9 months ended Sep 30
-  // SEC 10-Q XBRL: us-gaap:CryptoAssetNumberOfUnits = 5,833 at Sep 30, 2025
-  { date: "2025-09-30", holdings: 5_833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 2.036, source: "SEC 10-Q Q3 2025 - 5,833 BTC @ $666.8M fair value", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm", sourceType: "sec-filing" },
+  // 2024 - Pre-BTC treasury era (all split-adjusted: XBRL value / 200)
+  { date: "2024-03-31", holdings: 833, sharesOutstandingDiluted: 13_126, holdingsPerShare: 0.0635, source: "SEC 10-Q XBRL: 2,625,130 / 200", sourceType: "sec-filing" },
+  { date: "2024-06-30", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q XBRL: 6,976,410 / 200", sourceType: "sec-filing" },
+  { date: "2024-09-30", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q XBRL: 6,976,410 / 200", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q XBRL (post-split adjusted)", sourceType: "sec-filing" },
+  // Mar 12, 2025: Issued 135,171,078 shares + 294,117,647 warrants (nominal exercise) for 5,000 BTC
+  // Pre-split shares: 6,976,410 + 135,171,078 = ~142M → XBRL shows 436,265,135 (likely more issuances)
+  { date: "2025-03-31", holdings: 5_833, sharesOutstandingDiluted: 2_181_326, holdingsPerShare: 2.674, source: "SEC 10-Q XBRL: 436,265,135 / 200", sharesSource: "Post-BTC acquisition, pre-split", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 5_833, sharesOutstandingDiluted: 2_181_326, holdingsPerShare: 2.674, source: "SEC 10-Q XBRL: 436,265,135 / 200", sharesSource: "Pre-split", sourceType: "sec-filing" },
+  // Sep 16, 2025: 200:1 reverse split effective
+  // Q3 2025: SEC 10-Q XBRL: us-gaap:CryptoAssetNumberOfUnits = 5,833 at Sep 30, 2025
+  { date: "2025-09-30", holdings: 5_833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 2.036, source: "SEC 10-Q XBRL (post-split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm", sourceType: "sec-filing" },
   // Oct 2025: S-3/A shows 4,082,556 basic shares + 1,470,588 warrants at nominal exercise (294M pre-split / 200)
-  // Mar 2025 BTC acquisition: 135,171,078 shares + 294,117,647 warrants for 5,000 BTC
   { date: "2025-10-31", holdings: 5_833, sharesOutstandingDiluted: 5_553_144, holdingsPerShare: 1.050, source: "SEC S-3/A Oct 31, 2025", sharesSource: "4,082,556 basic + 1,470,588 warrants (nominal exercise)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm", sourceType: "sec-filing" },
 ];
 
