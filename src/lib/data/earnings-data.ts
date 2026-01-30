@@ -2200,7 +2200,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // ==================== SOL COMPANIES ====================
 
   // ========== Sol Strategies (STKE) ==========
-  // Calendar year company (fiscal = calendar)
+  // Calendar year normalized
   // Q4 2025 - Upcoming
   {
     ticker: "STKE",
@@ -2210,25 +2210,26 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-28",
     earningsTime: null,
-    source: "press-release",
+    source: "estimate",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 (Jul-Sep) - from 40-F
   {
     ticker: "STKE",
     fiscalYear: 2025,
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-11-28",
+    earningsDate: "2025-12-31",
     earningsTime: null,
-    epsActual: -0.02,
-    revenueActual: 1_200_000,
-    netIncome: -800_000,
-    source: "press-release",
+    holdingsAtQuarterEnd: 435_000,
+    sharesAtQuarterEnd: 22_999_841,
+    holdingsPerShare: 0.0189,
+    source: "SEC 40-F",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666",
     status: "reported",
   },
-  // Q2 2025
+  // Q2 2025 (Apr-Jun)
   {
     ticker: "STKE",
     fiscalYear: 2025,
@@ -2237,9 +2238,39 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-29",
     earningsTime: null,
-    epsActual: -0.03,
-    revenueActual: 900_000,
-    netIncome: -1_100_000,
+    holdingsAtQuarterEnd: 310_000,
+    sharesAtQuarterEnd: 10_600_000,
+    holdingsPerShare: 0.0292,
+    source: "press-release",
+    status: "reported",
+  },
+  // Q1 2025 (Jan-Mar)
+  {
+    ticker: "STKE",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-30",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 245_000,
+    sharesAtQuarterEnd: 9_400_000,
+    holdingsPerShare: 0.0261,
+    source: "press-release",
+    status: "reported",
+  },
+  // Q4 2024 (Oct-Dec)
+  {
+    ticker: "STKE",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-02-28",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 189_000,
+    sharesAtQuarterEnd: 8_100_000,
+    holdingsPerShare: 0.0233,
     source: "press-release",
     status: "reported",
   },
