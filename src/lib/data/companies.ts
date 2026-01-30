@@ -934,7 +934,7 @@ export const hypeCompanies: Company[] = [
     costBasisAvg: 38.25,
     stakingPct: 0,  // Direct holdings not staked (staked tracked in cryptoInvestments)
     stakingApy: 0.05,
-    quarterlyBurnUsd: 1_500_000,
+    quarterlyBurnUsd: 3_570_000,  // SEC 10-Q: $10.7M cash used in ops (9mo) / 3 = $3.57M/qtr
     capitalRaisedPipe: 50_000_000,
     // Shares: 8,097,659 common (Nov 10, 2025) + 5,435,897 preferred × 3 conversion = 24.4M FD
     sharesForMnav: 24_400_000,
