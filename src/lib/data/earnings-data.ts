@@ -2928,6 +2928,59 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     status: "reported",
   },
+
+  // ==================== DOGE COMPANIES ====================
+
+  // ========== CleanCore Solutions (ZONE) ==========
+  // Fiscal year ends June 30
+  // Official Dogecoin Treasury - launched Sep 5, 2025
+  // CIK: 0001956741
+  // Source: SEC EDGAR filings
+  //
+  // Q2 FY2026 (Oct-Dec 2025) - Upcoming
+  {
+    ticker: "ZONE",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-14",  // Expected ~45 days after Dec 31
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // Q1 FY2026 (Jul-Sep 2025) - Reported Nov 13, 2025
+  {
+    ticker: "ZONE",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-13",
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 703_617_752,  // Sep 30, 2025 - $163.8M fair value
+    sharesAtQuarterEnd: 201_309_022,  // Nov 10, 2025 cover page (post warrant exercises)
+    holdingsPerShare: 3.495,  // 703.6M / 201.3M
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/0001213900-25-109642-index.htm",
+    status: "reported",
+  },
+  // Q4 FY2025 (Apr-Jun 2025) - Pre-treasury (no DOGE holdings)
+  {
+    ticker: "ZONE",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-09-15",  // 10-K filing
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-treasury - DOGE strategy launched Sep 5, 2025
+    sharesAtQuarterEnd: 11_837_022,  // Basic shares before PIPE
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956741&type=10-K",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
