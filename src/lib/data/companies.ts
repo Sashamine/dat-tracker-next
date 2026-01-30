@@ -703,18 +703,25 @@ export const btcCompanies: Company[] = [
     secCik: "0001784970",
     asset: "BTC",
     tier: 1,
-    holdings: 1_015,  // Calculated from SEC 10-Q Q3 2025 XBRL: $98.5M fair value ÷ $97K
+    holdings: 5_833,  // SEC 10-Q Q3 2025: "Approximate number of bitcoins held"
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm",
     datStartDate: "2024-06-01",
-    costBasisAvg: 65_000,
+    costBasisAvg: 27_100,  // $158M cost basis / 5,833 BTC (from 10-Q roll-forward)
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 2_865_730,  // SEC 10-Q Oct 2025 + 8-K Sep 12 2025 (post 200:1 reverse split)
-    strategy: "AI software company with BTC treasury. Actively acquiring via debt/equity.",
-    notes: "Formerly WeTrade Group. Shenzhen-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025.",
+    cashReserves: 12_357_568,  // SEC 10-Q Q3 2025
+    restrictedCash: 12_357_568,  // 10-Q: "acquiring bitcoin with liquid assets that exceed working capital"
+    cashSource: "SEC 10-Q Q3 2025",
+    cashAsOf: "2025-09-30",
+    totalDebt: 0,  // No debt per 10-Q balance sheet
+    sharesForMnav: 2_865_730,  // SEC 10-Q Q3 2025 (post 200:1 reverse split Sep 16, 2025)
+    sharesSource: "SEC 10-Q Q3 2025",
+    sharesAsOf: "2025-09-30",
+    strategy: "AI software company with BTC treasury. Actively acquiring via equity issuance.",
+    notes: "Formerly WeTrade Group. Japan-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025. 5,833 BTC @ $666.8M fair value.",
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company

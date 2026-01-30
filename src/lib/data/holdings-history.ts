@@ -332,10 +332,10 @@ const NXTT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 833, sharesOutstandingDiluted: 425_000, holdingsPerShare: 0.00196, source: "Q1 2024 filing (split-adjusted)" },
   { date: "2024-06-30", holdings: 833, sharesOutstandingDiluted: 440_000, holdingsPerShare: 0.00189, source: "Q2 2024 filing (split-adjusted)" },
   { date: "2024-09-30", holdings: 1000, sharesOutstandingDiluted: 456_000, holdingsPerShare: 0.00219, source: "Q3 2024 filing (split-adjusted)" },
-  { date: "2024-12-31", holdings: 1000, sharesOutstandingDiluted: 460_000, holdingsPerShare: 0.00217, source: "Q4 2024 filing (split-adjusted)" },
-  // Post reverse split (200:1) - Sep 16, 2025
-  // NOTE: SEC XBRL shows $98.5M crypto fair value @ ~$97K/BTC = ~1,015 BTC
-  { date: "2025-09-30", holdings: 1015, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 0.000354, source: "SEC 10-Q Q3 2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=10-Q", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 833, sharesOutstandingDiluted: 34_882, holdingsPerShare: 0.0239, source: "SEC 10-Q shows 833 BTC at Dec 31, 2024 (split-adjusted)", sourceType: "sec-filing" },
+  // Q3 2025: Massive BTC acquisition - purchased 5,000 BTC during 9 months ended Sep 30
+  // SEC 10-Q XBRL: us-gaap:CryptoAssetNumberOfUnits = 5,833 at Sep 30, 2025
+  { date: "2025-09-30", holdings: 5_833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 2.036, source: "SEC 10-Q Q3 2025 - 5,833 BTC @ $666.8M fair value", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm", sourceType: "sec-filing" },
 ];
 
 // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
