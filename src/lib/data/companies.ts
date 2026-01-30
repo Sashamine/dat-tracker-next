@@ -1273,6 +1273,9 @@ export const ltcCompanies: Company[] = [
     leader: "Justin File (CEO)",
     strategy: "First US-listed LTC treasury. GSR as treasury manager.",
     notes: "Formerly MEI Pharma. Charlie Lee on board. Dashboard: litestrategy.com/dashboard",
+    website: "https://www.litestrategy.com",
+    twitter: "https://x.com/litestrategyco",
+    irUrl: "https://investors.litestrategy.com",
   },
   {
     id: "luxff",

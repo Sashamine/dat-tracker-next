@@ -978,9 +978,10 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Fully diluted: 137.4M basic + 76M warrants = ~213.4M shares
 
   // LITS (Lite Strategy) - LTC treasury company
-  // Verified 2026-01-29 via SEC 10-Q Q1 FY2026 (CIK 0001262104)
+  // Verified 2026-01-30 via SEC 10-Q Q1 FY2026 (CIK 0001262104)
   // Pre-funded warrants @ $0.0001 already included in sharesForMnav (36.8M)
   // Only tracking GSR advisory warrants here (OTM at current price ~$2.70)
+  // All 4 tranches: 584,795 @ $3.42, 292,398 @ $3.93, 292,398 @ $4.62, 292,398 @ $5.13
   LITS: [
     {
       type: "warrant",
@@ -999,6 +1000,24 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
       expiration: "2030-07-22",
       notes: "GSR 2 advisory warrants - OTM at ~$2.70",
+    },
+    {
+      type: "warrant",
+      strikePrice: 4.62,
+      potentialShares: 292_398,
+      source: "10-Q Q1 FY2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+      expiration: "2030-07-22",
+      notes: "GSR 3 advisory warrants - OTM at ~$2.70",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.13,
+      potentialShares: 292_398,
+      source: "10-Q Q1 FY2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+      expiration: "2030-07-22",
+      notes: "GSR 4 advisory warrants - OTM at ~$2.70",
     },
   ],
 };
