@@ -446,10 +446,71 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 
   // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)
   // Verified 2026-01-29 via SEC 40-F FY2025 (CIK 0001846839)
-  // TODO: Extract specific option/RSU counts from 40-F
-  // 40-F shows equity incentive plan with options and RSUs - need to pull specific numbers
-  // For now, no material ITM dilutives documented
-  STKE: [],
+  // As of Sep 30, 2025: 643,626 options (WAEP $13.71), 1,552,042 warrants (WAEP $22.14), 15,106 RSUs
+  // At ~$1.57 stock price: Most options/warrants deep OTM, only low-strike options + RSUs ITM
+  STKE: [
+    {
+      type: "option",
+      strikePrice: 0.80,
+      potentialShares: 3_689,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      expiration: "2027-11-21",
+      notes: "Low-strike options - ITM at $1.57",
+    },
+    {
+      type: "option",
+      strikePrice: 1.24,
+      potentialShares: 125_000,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      expiration: "2029-08-07",
+      notes: "ITM at $1.57 stock price",
+    },
+    {
+      type: "option",
+      strikePrice: 13.71, // WAEP for remaining 514,937 options
+      potentialShares: 514_937,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      notes: "Remaining options at WAEP - deep OTM at $1.57",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // RSUs vest at $0
+      potentialShares: 15_106,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      notes: "RSUs (restricted share units) - always ITM",
+    },
+    {
+      type: "warrant",
+      strikePrice: 23.84,
+      potentialShares: 562_500,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      expiration: "2028-03-17",
+      notes: "Deep OTM at $1.57",
+    },
+    {
+      type: "warrant",
+      strikePrice: 20.00,
+      potentialShares: 922_667,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      expiration: "2030-01-16",
+      notes: "Deep OTM at $1.57",
+    },
+    {
+      type: "warrant",
+      strikePrice: 37.28,
+      potentialShares: 66_875,
+      source: "40-F FY2025",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      expiration: "2030-01-21",
+      notes: "Deep OTM at $1.57",
+    },
+  ],
 
   // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
