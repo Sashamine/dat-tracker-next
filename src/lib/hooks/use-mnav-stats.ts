@@ -54,16 +54,21 @@ export function getCompanyMNAV(
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
-  // Also get inTheMoneyDebtValue to avoid double-counting ITM convertibles
-  const { marketCap, source, inTheMoneyDebtValue } = getMarketCapForMnavSync(company, stockData, prices.forex);
+  // Also get inTheMoneyDebtValue and inTheMoneyWarrantProceeds for symmetric dilution treatment
+  const { marketCap, source, inTheMoneyDebtValue, inTheMoneyWarrantProceeds } = getMarketCapForMnavSync(company, stockData, prices.forex);
 
   // Adjust debt by subtracting in-the-money convertible face values
   // This avoids double-counting: ITM converts are in diluted shares AND debt
   // We treat them as equity (in share count), so remove from debt
   const adjustedDebt = Math.max(0, (company.totalDebt || 0) - inTheMoneyDebtValue);
 
-  // Debug logging for Metaplanet, BTBT, KULR, and MSTR
-  if (company.ticker === '3350.T' || company.ticker === 'BTBT' || company.ticker === 'KULR' || company.ticker === 'MSTR') {
+  // Add in-the-money warrant exercise proceeds to restricted cash
+  // Symmetric treatment: if we count warrant dilution (shares), we should count the incoming cash
+  // This is analogous to how we subtract ITM convert face value from debt
+  const adjustedRestrictedCash = (company.restrictedCash || 0) + inTheMoneyWarrantProceeds;
+
+  // Debug logging for Metaplanet, BTBT, KULR, MSTR, and HYPD
+  if (company.ticker === '3350.T' || company.ticker === 'BTBT' || company.ticker === 'KULR' || company.ticker === 'MSTR' || company.ticker === 'HYPD') {
     console.log(`[mNAV Debug] ${company.ticker}:`, {
       stockPrice: stockData?.price,
       forexJPY: prices.forex?.JPY,
@@ -74,9 +79,11 @@ export function getCompanyMNAV(
       holdings: company.holdings,
       cashReserves: company.cashReserves,
       restrictedCash: company.restrictedCash,
+      adjustedRestrictedCash,
       totalDebt: company.totalDebt,
       inTheMoneyDebtValue,
       adjustedDebt,
+      inTheMoneyWarrantProceeds,
       freeCash: (company.cashReserves || 0) - (company.restrictedCash || 0),
     });
   }
@@ -127,7 +134,7 @@ export function getCompanyMNAV(
     company.otherInvestments || 0,
     adjustedDebt,  // Use adjusted debt (totalDebt - ITM convertible face values)
     company.preferredEquity || 0,
-    company.restrictedCash || 0,
+    adjustedRestrictedCash,  // Use adjusted restrictedCash (+ ITM warrant exercise proceeds)
     secondaryCryptoValue
   );
 

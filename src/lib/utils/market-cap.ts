@@ -56,6 +56,7 @@ export interface MarketCapResult {
   dilutionApplied: boolean;
   dilutionFactor?: number;
   inTheMoneyDebtValue: number; // Face value of ITM converts - subtract from debt in EV calc
+  inTheMoneyWarrantProceeds: number; // Exercise proceeds from ITM warrants - add to CryptoNAV
   warning?: string;
 }
 
@@ -97,6 +98,7 @@ export function getMarketCap(
       currency: "USD",
       dilutionApplied: false,
       inTheMoneyDebtValue: 0,
+      inTheMoneyWarrantProceeds: 0,
     };
   }
 
@@ -108,6 +110,7 @@ export function getMarketCap(
       currency: "USD",
       dilutionApplied: false,
       inTheMoneyDebtValue: 0,
+      inTheMoneyWarrantProceeds: 0,
     };
   }
 
@@ -119,6 +122,7 @@ export function getMarketCap(
       currency: "USD",
       dilutionApplied: false,
       inTheMoneyDebtValue: 0,
+      inTheMoneyWarrantProceeds: 0,
       warning: "Using static market cap - may be stale",
     };
   }
@@ -130,6 +134,7 @@ export function getMarketCap(
     currency,
     dilutionApplied: false,
     inTheMoneyDebtValue: 0,
+    inTheMoneyWarrantProceeds: 0,
     warning: `No market cap data available for ${ticker}`,
   };
 }
@@ -168,12 +173,14 @@ export async function getMarketCapForMnav(
     let effectiveShares = company.sharesForMnav;
     let dilutionApplied = false;
     let inTheMoneyDebtValue = 0;
+    let inTheMoneyWarrantProceeds = 0;
 
     if (dilutiveInstruments[ticker]) {
       const result = getEffectiveShares(ticker, company.sharesForMnav, priceInUsd);
       effectiveShares = result.diluted;
       dilutionApplied = result.diluted !== result.basic;
       inTheMoneyDebtValue = result.inTheMoneyDebtValue;
+      inTheMoneyWarrantProceeds = result.inTheMoneyWarrantProceeds;
     }
 
     const calculatedMarketCap = priceInUsd * effectiveShares;
@@ -183,6 +190,7 @@ export async function getMarketCapForMnav(
       currency: "USD",
       dilutionApplied,
       inTheMoneyDebtValue,
+      inTheMoneyWarrantProceeds,
     };
   }
 
@@ -236,12 +244,14 @@ export function getMarketCapForMnavSync(
     let effectiveShares = company.sharesForMnav;
     let dilutionApplied = false;
     let inTheMoneyDebtValue = 0;
+    let inTheMoneyWarrantProceeds = 0;
 
     if (dilutiveInstruments[ticker]) {
       const result = getEffectiveShares(ticker, company.sharesForMnav, priceInUsd);
       effectiveShares = result.diluted;
       dilutionApplied = result.diluted !== result.basic;
       inTheMoneyDebtValue = result.inTheMoneyDebtValue;
+      inTheMoneyWarrantProceeds = result.inTheMoneyWarrantProceeds;
 
       // Debug for MSTR dilution calculation
       if (ticker === 'MSTR') {
@@ -251,6 +261,7 @@ export function getMarketCapForMnavSync(
           dilutedShares: result.diluted,
           dilutionAdded: result.diluted - result.basic,
           inTheMoneyDebtValue: result.inTheMoneyDebtValue,
+          inTheMoneyWarrantProceeds: result.inTheMoneyWarrantProceeds,
           breakdown: result.breakdown.map(b => ({
             type: b.type,
             strike: b.strikePrice,
@@ -279,6 +290,7 @@ export function getMarketCapForMnavSync(
       currency: "USD",
       dilutionApplied,
       inTheMoneyDebtValue,
+      inTheMoneyWarrantProceeds,
     };
   }
 

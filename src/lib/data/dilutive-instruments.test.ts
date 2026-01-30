@@ -29,6 +29,7 @@ describe("Dilutive Instruments", () => {
     it("should include in-the-money instruments for BTCS", () => {
       // BTCS: Basic 47,075,189, options at $2.64
       // At $3.00 stock price: options are in the money
+      // Updated Jan 2026: 3,223,012 (Q3) + 690,300 (Jan 5 8-K grants) = 3,913,312
       const result = getEffectiveShares("BTCS", 47_075_189, 3.0);
 
       expect(result.basic).toBe(47_075_189);
@@ -38,10 +39,10 @@ describe("Dilutive Instruments", () => {
         (b) => b.type === "option" && b.inTheMoney
       );
       expect(inMoneyOptions).toBeDefined();
-      expect(inMoneyOptions?.potentialShares).toBe(3_223_012);
+      expect(inMoneyOptions?.potentialShares).toBe(3_913_312);
 
       // Diluted should include the options
-      expect(result.diluted).toBe(47_075_189 + 3_223_012);
+      expect(result.diluted).toBe(47_075_189 + 3_913_312);
     });
 
     it("should exclude out-of-money instruments for BTCS", () => {
@@ -90,7 +91,8 @@ describe("Dilutive Instruments", () => {
       const result = getEffectiveShares("BTCS", 47_075_189, 3.0);
       const formatted = formatEffectiveShares(result);
 
-      expect(formatted).toContain("50,298,201 shares");
+      // Updated: 47,075,189 + 3,913,312 = 50,988,501
+      expect(formatted).toContain("50,988,501 shares");
       expect(formatted).toContain("47,075,189 basic");
       expect(formatted).toContain("in-money");
     });

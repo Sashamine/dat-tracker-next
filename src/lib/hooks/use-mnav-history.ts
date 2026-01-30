@@ -89,7 +89,7 @@ function calculateIntradayMnav(
   date: string
 ): number {
   // Get diluted shares based on current stock price
-  // This includes ITM convertibles and returns inTheMoneyDebtValue for debt adjustment
+  // This includes ITM convertibles/warrants and returns adjustment values
   const effectiveShares = getEffectiveSharesAt(
     "MSTR",
     company.sharesForMnav,
@@ -101,13 +101,18 @@ function calculateIntradayMnav(
   // ITM converts are counted as equity (in diluted shares), so remove from debt
   const adjustedDebt = Math.max(0, company.totalDebt - effectiveShares.inTheMoneyDebtValue);
 
-  // Free cash = cash - restricted cash
-  const freeCash = company.cashReserves - company.restrictedCash;
+  // Add ITM warrant exercise proceeds to restricted cash (symmetric treatment)
+  // If we count warrant dilution, we should also count the incoming cash
+  const adjustedRestrictedCash = company.restrictedCash + effectiveShares.inTheMoneyWarrantProceeds;
+
+  // Free cash = cash - restricted cash (adjusted for warrant proceeds)
+  const freeCash = company.cashReserves - adjustedRestrictedCash;
 
   const marketCap = effectiveShares.diluted * stockPrice;
   const enterpriseValue =
     marketCap + adjustedDebt + company.preferredEquity - freeCash;
-  const cryptoNav = company.holdings * btcPrice;
+  // CryptoNav includes restricted cash (which now includes warrant proceeds)
+  const cryptoNav = company.holdings * btcPrice + adjustedRestrictedCash;
 
   return cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
 }

@@ -29,6 +29,7 @@ export interface EffectiveSharesResult {
   basic: number;
   diluted: number;
   inTheMoneyDebtValue: number; // Face value of ITM convertibles (subtract from debt to avoid double-counting)
+  inTheMoneyWarrantProceeds: number; // Exercise proceeds from ITM warrants (add to CryptoNAV for symmetric treatment)
   breakdown: InstrumentBreakdown[];
 }
 
@@ -1108,10 +1109,18 @@ export function getEffectiveShares(
     .filter((b) => b.inTheMoney && b.type === "convertible" && b.faceValue)
     .reduce((sum, b) => sum + (b.faceValue || 0), 0);
 
+  // Calculate exercise proceeds from in-the-money WARRANTS
+  // Symmetric treatment: if we count warrant dilution, we should also count the incoming cash
+  // Exercise proceeds = potentialShares × strikePrice
+  const inTheMoneyWarrantProceeds = breakdown
+    .filter((b) => b.inTheMoney && b.type === "warrant")
+    .reduce((sum, b) => sum + (b.potentialShares * b.strikePrice), 0);
+
   return {
     basic: basicShares,
     diluted: basicShares + inTheMoneyShares,
     inTheMoneyDebtValue,
+    inTheMoneyWarrantProceeds,
     breakdown,
   };
 }
@@ -1172,10 +1181,16 @@ export function getEffectiveSharesAt(
     .filter((b) => b.inTheMoney && b.type === "convertible" && b.faceValue)
     .reduce((sum, b) => sum + (b.faceValue || 0), 0);
 
+  // Calculate exercise proceeds from in-the-money WARRANTS
+  const inTheMoneyWarrantProceeds = breakdown
+    .filter((b) => b.inTheMoney && b.type === "warrant")
+    .reduce((sum, b) => sum + (b.potentialShares * b.strikePrice), 0);
+
   return {
     basic: basicShares,
     diluted: basicShares + inTheMoneyShares,
     inTheMoneyDebtValue,
+    inTheMoneyWarrantProceeds,
     breakdown,
   };
 }
