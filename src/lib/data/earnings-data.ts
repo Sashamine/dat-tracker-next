@@ -1843,7 +1843,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 1_047,  // Stable since Sep 17, 2025
     sharesAtQuarterEnd: 335_250_237,  // After SEK 122.5M convertible conversion (Nov 2025)
     holdingsPerShare: 0.00000312,  // 1047 / 335.25M
-    source: "regulatory-filing",
+    source: "press-release",
     sourceUrl: "https://mfn.se/a/h100-group",
     status: "upcoming",
   },
@@ -1859,7 +1859,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 1_047,  // Sep 17, 2025 - 1,046.66 BTC
     sharesAtQuarterEnd: 311_500_000,  // Before convertible conversion
     holdingsPerShare: 0.00000336,  // 1047 / 311.5M
-    source: "regulatory-filing",
+    source: "press-release",
     sourceUrl: "https://mfn.se/a/h100-group",
     status: "reported",
   },
@@ -1875,7 +1875,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 169,  // Jun 16, 2025 - 169 BTC per MFN
     sharesAtQuarterEnd: 117_090_000,  // Pre-capital raises
     holdingsPerShare: 0.00000144,  // 169 / 117M
-    source: "regulatory-filing",
+    source: "press-release",
     sourceUrl: "https://mfn.se/a/h100-group",
     status: "reported",
   },
