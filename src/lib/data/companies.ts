@@ -1265,10 +1265,8 @@ export const ltcCompanies: Company[] = [
     sharesForMnav: 36_769_677,  // DEF 14A Record Date Dec 15, 2025
     sharesSource: "SEC DEF 14A Dec 30, 2025",
     sharesAsOf: "2025-12-15",
-    cashReserves: 10_113_000,  // $10.1M cash (SEC 10-Q Q1 FY2026)
-    restrictedCash: 10_113_000,  // Operating capital (opex runway) - not excess, not for LTC purchases
-    cashSource: "SEC 10-Q Q1 FY2026",
-    cashAsOf: "2025-09-30",
+    // Cash ($10.1M) is opex runway per 10-Q - neutral for mNAV (not for LTC, not excess)
+    // Removed from mNAV calculation entirely - will be burned on operations
     // No interest-bearing debt per SEC 10-Q Q1 FY2026 (only $1.07M operating liabilities)
     leader: "Justin File (CEO)",
     strategy: "First US-listed LTC treasury. GSR as treasury manager.",
