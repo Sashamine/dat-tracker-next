@@ -1356,6 +1356,8 @@ export const dogeCompanies: Company[] = [
     ticker: "ZONE",
     asset: "DOGE",
     tier: 1,
+    website: "https://www.cleancoresol.com",
+    twitter: "https://twitter.com/CleanCoreSol",
     secCik: "1956741",
     holdings: 733_100_000,  // Nov 12, 2025 press release (Q1 FY2026 results)
     holdingsLastUpdated: "2025-11-12",
