@@ -1266,7 +1266,7 @@ export const ltcCompanies: Company[] = [
     sharesSource: "SEC DEF 14A Dec 30, 2025",
     sharesAsOf: "2025-12-15",
     cashReserves: 10_113_000,  // $10.1M cash (SEC 10-Q Q1 FY2026)
-    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
+    restrictedCash: 10_113_000,  // Operating capital (opex runway) - not excess, not for LTC purchases
     cashSource: "SEC 10-Q Q1 FY2026",
     cashAsOf: "2025-09-30",
     // No interest-bearing debt per SEC 10-Q Q1 FY2026 (only $1.07M operating liabilities)
