@@ -101,12 +101,14 @@ function calculateIntradayMnav(
   // ITM converts are counted as equity (in diluted shares), so remove from debt
   const adjustedDebt = Math.max(0, company.totalDebt - effectiveShares.inTheMoneyDebtValue);
 
-  // Add ITM warrant exercise proceeds to restricted cash (symmetric treatment)
+  // Add ITM warrant exercise proceeds to both cash and restricted cash (symmetric treatment)
   // If we count warrant dilution, we should also count the incoming cash
+  // Adding to both keeps freeCash unchanged while adding proceeds to NAV
+  const adjustedCashReserves = company.cashReserves + effectiveShares.inTheMoneyWarrantProceeds;
   const adjustedRestrictedCash = company.restrictedCash + effectiveShares.inTheMoneyWarrantProceeds;
 
-  // Free cash = cash - restricted cash (adjusted for warrant proceeds)
-  const freeCash = company.cashReserves - adjustedRestrictedCash;
+  // Free cash = cash - restricted cash (unchanged by warrant proceeds)
+  const freeCash = adjustedCashReserves - adjustedRestrictedCash;
 
   const marketCap = effectiveShares.diluted * stockPrice;
   const enterpriseValue =

@@ -62,9 +62,12 @@ export function getCompanyMNAV(
   // We treat them as equity (in share count), so remove from debt
   const adjustedDebt = Math.max(0, (company.totalDebt || 0) - inTheMoneyDebtValue);
 
-  // Add in-the-money warrant exercise proceeds to restricted cash
+  // Add in-the-money warrant exercise proceeds to both cash and restricted cash
   // Symmetric treatment: if we count warrant dilution (shares), we should count the incoming cash
+  // - Adding to cashReserves: keeps freeCash unchanged (doesn't distort EV)
+  // - Adding to restrictedCash: adds to CryptoNAV (treat as "pre-crypto" cash)
   // This is analogous to how we subtract ITM convert face value from debt
+  const adjustedCashReserves = (company.cashReserves || 0) + inTheMoneyWarrantProceeds;
   const adjustedRestrictedCash = (company.restrictedCash || 0) + inTheMoneyWarrantProceeds;
 
   // Debug logging for Metaplanet, BTBT, KULR, MSTR, and HYPD
@@ -78,13 +81,14 @@ export function getCompanyMNAV(
       cryptoPrice,
       holdings: company.holdings,
       cashReserves: company.cashReserves,
+      adjustedCashReserves,
       restrictedCash: company.restrictedCash,
       adjustedRestrictedCash,
       totalDebt: company.totalDebt,
       inTheMoneyDebtValue,
       adjustedDebt,
       inTheMoneyWarrantProceeds,
-      freeCash: (company.cashReserves || 0) - (company.restrictedCash || 0),
+      freeCash: adjustedCashReserves - adjustedRestrictedCash,  // Should equal original freeCash
     });
   }
 
@@ -130,7 +134,7 @@ export function getCompanyMNAV(
     marketCap,
     company.holdings,
     cryptoPrice,
-    company.cashReserves || 0,
+    adjustedCashReserves,  // Use adjusted cash (+ ITM warrant exercise proceeds)
     company.otherInvestments || 0,
     adjustedDebt,  // Use adjusted debt (totalDebt - ITM convertible face values)
     company.preferredEquity || 0,
