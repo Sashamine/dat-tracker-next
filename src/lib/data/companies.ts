@@ -722,8 +722,8 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-10-31",
     strategy: "AI software company with BTC treasury. Actively acquiring via equity issuance.",
     notes: "Formerly WeTrade Group. Japan-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025. 5,833 BTC @ $666.8M fair value. Mar 2025: issued 135M shares + 294M warrants (nominal exercise) for 5,000 BTC.",
-    riskFlags: ["related-party-btc-acquisition", "extreme-nav-discount", "insider-dilution"],
-    riskNotes: "⚠️ HIGH RISK: Mar 2025 acquired 5,000 BTC from 'certain sellers' at $27.6K/BTC (70% below market) in exchange for shares at $1.02. Warrants at nominal exercise given to sellers. Classic insider enrichment structure. Market prices at 95% discount to NAV - does not believe holdings are real/accessible.",
+    riskFlags: ["undisclosed-sellers", "extreme-nav-discount"],
+    riskNotes: "⚠️ UNUSUAL STRUCTURE: Mar 2025 acquired 5,000 BTC from undisclosed 'certain sellers' at implied $27.6K/BTC cost basis (SEC 10-Q shows $158M for 5,833 BTC). Sellers received 135M shares + 294M warrants. Market trades at ~5% of NAV - significant skepticism about holdings accessibility or company fundamentals. Former WeTrade Group (China). Due diligence recommended.",
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
