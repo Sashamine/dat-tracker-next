@@ -349,18 +349,20 @@ const NXTT_INTEL: CompanyIntel = {
     { date: "2025-11-26", title: "MOU to acquire up to 10,000 BTC at $84K", summary: "Non-binding deal with Global Nexgen", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025115307/ea0267322-8k_nexttech.htm" },
     { date: "2025-10-08", title: "Q3 2025 10-Q: 5,833 BTC holdings", summary: "$666.8M fair value, massive YTD accumulation", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm" },
     { date: "2025-09-16", title: "200-for-1 reverse stock split", summary: "566M → 2.87M shares", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970&type=8-K" },
+    { date: "2025-03-12", title: "⚠️ Acquired 5,000 BTC from 'certain sellers'", summary: "Paid $27.6K/BTC (70% below market) via 135M shares @ $1.02 + 294M warrants", url: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm" },
     { date: "2024-03-01", title: "Rebranded from WeTrade to Next Technology", summary: "Corporate pivot to BTC treasury", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001784970" },
   ],
-  strategySummary: "Dual-track strategy: AI-enabled software development + aggressive Bitcoin accumulation. Acquired 5,000 BTC in 9 months (Jan-Sep 2025). Views Bitcoin as long-term strategic reserve asset. Uses liquid assets exceeding working capital for BTC purchases. May also issue equity/debt for acquisitions. Japan-based (Saitama Prefecture) with Wyoming incorporation.",
+  strategySummary: "⚠️ HIGH RISK: Mar 2025 BTC acquisition is suspicious - 'certain sellers' received shares at $1.02 (now $5+) plus 294M warrants for BTC valued at 70% below market ($27.6K vs $80-100K). Market prices at ~5% of NAV. Japan-based (Saitama) with Wyoming incorporation.",
   recentDevelopments: [
-    "5,833 BTC holdings @ $666.8M fair value (Sep 30, 2025)",
-    "Purchased 5,000 BTC in 9 months at ~$27.1K avg cost basis",
-    "PENDING: MOU with Global Nexgen to buy up to 10,000 BTC at $84K locked price",
-    "$500M shelf registration for continued acquisitions",
-    "200:1 reverse split Sep 2025 (566M → 2.87M shares)",
+    "⚠️ mNAV ~5% - market deeply discounts claimed holdings",
+    "5,833 BTC claimed @ $666.8M fair value (Sep 30, 2025)",
+    "Mar 2025: 5,000 BTC from 'certain sellers' at $27.6K/BTC (market was $80-100K)",
+    "Sellers received 135M shares @ $1.02 + 294M warrants (nominal exercise)",
+    "Post-split fully diluted: ~5.5M shares",
+    "200:1 reverse split Sep 2025",
   ],
   keyBackers: [],
-  outlook2026: "Global Nexgen deal could add 10K BTC at below-market $84K. Continued accumulation strategy.",
+  outlook2026: "⚠️ CAUTION: Extreme NAV discount suggests market skepticism. Global Nexgen MOU is non-binding. Massive insider dilution from Mar 2025 deal.",
 };
 
 const ABTC_INTEL: CompanyIntel = {
