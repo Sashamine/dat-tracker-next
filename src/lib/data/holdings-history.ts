@@ -336,6 +336,9 @@ const NXTT_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: Massive BTC acquisition - purchased 5,000 BTC during 9 months ended Sep 30
   // SEC 10-Q XBRL: us-gaap:CryptoAssetNumberOfUnits = 5,833 at Sep 30, 2025
   { date: "2025-09-30", holdings: 5_833, sharesOutstandingDiluted: 2_865_730, holdingsPerShare: 2.036, source: "SEC 10-Q Q3 2025 - 5,833 BTC @ $666.8M fair value", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025097321/ea0260504-10q_nexttech.htm", sourceType: "sec-filing" },
+  // Oct 2025: S-3/A shows 4,082,556 basic shares + 1,470,588 warrants at nominal exercise (294M pre-split / 200)
+  // Mar 2025 BTC acquisition: 135,171,078 shares + 294,117,647 warrants for 5,000 BTC
+  { date: "2025-10-31", holdings: 5_833, sharesOutstandingDiluted: 5_553_144, holdingsPerShare: 1.050, source: "SEC S-3/A Oct 31, 2025", sharesSource: "4,082,556 basic + 1,470,588 warrants (nominal exercise)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm", sourceType: "sec-filing" },
 ];
 
 // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)

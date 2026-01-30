@@ -269,6 +269,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // NXTT (Next Technology Holding) - BTC treasury company
+  // Verified 2026-01-29 via SEC S-3/A Oct 31, 2025 (CIK 0001784970)
+  // Mar 2025: Issued 135,171,078 shares + 294,117,647 warrants at NOMINAL exercise for 5,000 BTC
+  // Post 200:1 reverse split (Sep 16, 2025): 1,470,588 warrants outstanding
+  NXTT: [
+    {
+      type: "warrant",
+      strikePrice: 0.01, // "Nominal exercise price" per S-3/A - essentially free
+      potentialShares: 1_470_588, // 294,117,647 pre-split / 200
+      source: "S-3/A Oct 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1784970/000121390025104679/ea0263465-s3a1_nexttech.htm",
+      issuedDate: "2025-03-12",
+      notes: "Warrants issued with Mar 2025 BTC acquisition (135M shares for 5,000 BTC). Nominal exercise = essentially shares.",
+    },
+  ],
+
   // MARA Holdings - BTC miner with HODL strategy
   // Verified 2026-01-28 via SEC 8-Ks + XBRL (CIK 0001507605)
   MARA: [

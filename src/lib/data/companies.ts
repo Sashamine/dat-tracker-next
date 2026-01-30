@@ -717,11 +717,11 @@ export const btcCompanies: Company[] = [
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // No debt per 10-Q balance sheet
-    sharesForMnav: 2_865_730,  // SEC 10-Q Q3 2025 (post 200:1 reverse split Sep 16, 2025)
-    sharesSource: "SEC 10-Q Q3 2025",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 5_553_144,  // 4,082,556 basic (S-3/A Oct 31, 2025) + 1,470,588 warrants at nominal exercise
+    sharesSource: "SEC S-3/A Oct 31, 2025 + warrants (294M pre-split / 200)",
+    sharesAsOf: "2025-10-31",
     strategy: "AI software company with BTC treasury. Actively acquiring via equity issuance.",
-    notes: "Formerly WeTrade Group. Japan-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025. 5,833 BTC @ $666.8M fair value.",
+    notes: "Formerly WeTrade Group. Japan-based. $500M shelf for BTC acquisitions. 200:1 reverse split Sep 2025. 5,833 BTC @ $666.8M fair value. Mar 2025: issued 135M shares + 294M warrants (nominal exercise) for 5,000 BTC.",
   },
   // GNS (Genius Group) removed - AI education company, not beta to BTC
   // HUT (Hut 8) removed - pivoted to AI/HPC infrastructure, not a DAT company
