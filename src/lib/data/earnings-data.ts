@@ -2960,6 +2960,42 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ==================== LTC COMPANIES ====================
+
+  // ========== Lite Strategy (LITS) ==========
+  // Fiscal year ends June 30 (formerly MEI Pharma)
+  // First US-listed LTC treasury - launched Jul 2025
+  // CIK: 0001262104
+  //
+  // Q2 FY2026 (Oct-Dec 2025) - Upcoming
+  {
+    ticker: "LITS",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-14",
+    earningsTime: null,
+    source: "estimated",
+    status: "upcoming",
+  },
+  // Q1 FY2026 (Jul-Sep 2025)
+  {
+    ticker: "LITS",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 929_548,
+    sharesAtQuarterEnd: 36_769_677,
+    holdingsPerShare: 0.0253,  // 929,548 / 36,769,677
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+    status: "reported",
+  },
+
   // ==================== DOGE COMPANIES ====================
 
   // ========== CleanCore Solutions (ZONE) ==========

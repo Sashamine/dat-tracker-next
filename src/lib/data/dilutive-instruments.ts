@@ -976,6 +976,31 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Total CYPH dilution: ~76M warrants @ $0.5335 (expire Oct 2035)
   // At stock prices above $0.5335: all warrants ITM
   // Fully diluted: 137.4M basic + 76M warrants = ~213.4M shares
+
+  // LITS (Lite Strategy) - LTC treasury company
+  // Verified 2026-01-29 via SEC 10-Q Q1 FY2026 (CIK 0001262104)
+  // Pre-funded warrants @ $0.0001 already included in sharesForMnav (36.8M)
+  // Only tracking GSR advisory warrants here (OTM at current price ~$2.70)
+  LITS: [
+    {
+      type: "warrant",
+      strikePrice: 3.42,
+      potentialShares: 584_795,
+      source: "10-Q Q1 FY2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+      expiration: "2030-07-22",
+      notes: "GSR 1 advisory warrants - OTM at ~$2.70",
+    },
+    {
+      type: "warrant",
+      strikePrice: 3.93,
+      potentialShares: 292_398,
+      source: "10-Q Q1 FY2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+      expiration: "2030-07-22",
+      notes: "GSR 2 advisory warrants - OTM at ~$2.70",
+    },
+  ],
 };
 
 /**
