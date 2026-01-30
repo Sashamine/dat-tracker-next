@@ -920,6 +920,9 @@ export const hypeCompanies: Company[] = [
     asset: "HYPE",
     tier: 2,
     secCik: "1682639",
+    website: "https://www.hyperiondefi.io",
+    twitter: "https://x.com/hyperion_defi",
+    investorRelationsUrl: "https://ir.hyperiondefi.io",
     // SEC 10-Q Sep 30, 2025: HYPE digital assets $37.95M = direct holdings only
     // At $26/HYPE (Sep 30 price): $37.95M / $26 = 1,459,615 HYPE
     // Liquid staked HYPE tracked separately in cryptoInvestments

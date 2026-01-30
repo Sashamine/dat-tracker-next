@@ -2667,6 +2667,68 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
 
+  // ========== Hyperion DeFi (HYPD) - fka Eyenovia ==========
+  // Calendar year company (fiscal year ends Dec 31)
+  // Rebranded from Eyenovia to Hyperion DeFi on Jul 1, 2025
+  // 1-for-80 reverse split Jan 31, 2025
+  // First US public HYPE treasury company
+  // SEC CIK: 0001682639
+  // Verified 2026-01-30
+  //
+  // Holdings note: Direct HYPE tracked in holdings field, iHYPE (liquid staked) tracked in cryptoInvestments
+  // Combined HYPE exposure: ~1.46M direct + ~1.35M via iHYPE = ~2.81M HYPE
+  //
+  // Q4 2025 (Oct-Dec) - 10-K upcoming
+  {
+    ticker: "HYPD",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-31",  // 10-K expected ~90 days after Dec 31
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // Q3 2025 (Jul-Sep) - First full quarter as HYPE treasury
+  // Source: SEC 10-Q filed Nov 14, 2025 (CIK 1682639)
+  {
+    ticker: "HYPD",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14",
+    earningsTime: "AMC",
+    netIncome: -5_800_000,  // Q3 net loss from operations + crypto mark-to-market
+    // Direct HYPE only (iHYPE tracked separately in cryptoInvestments)
+    // SEC 10-Q: "Digital assets" $37.95M at Sep 30, 2025
+    // At ~$26/HYPE (Sep 30 price): $37.95M / $26 = ~1,459,615 HYPE
+    holdingsAtQuarterEnd: 1_459_615,
+    // Shares: 8,097,659 common + 5,435,897 preferred × 3 = 24.4M FD
+    sharesAtQuarterEnd: 24_400_000,
+    holdingsPerShare: 0.0598,  // 1,459,615 / 24,400,000
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
+    status: "reported",
+  },
+  // Q2 2025 (Apr-Jun) - Partial quarter (DAT pivot announced Jun 17, 2025)
+  // Pre-HYPE: company was still focused on ophthalmic devices
+  {
+    ticker: "HYPD",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // DAT pivot announced Jun 17, first purchases in Q3
+    sharesAtQuarterEnd: 8_097_659,  // Pre-PIPE shares only
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    status: "reported",
+  },
+
   // ==================== HK/INTL COMPANIES ====================
 
   // ========== Boyaa Interactive (0434.HK) ==========

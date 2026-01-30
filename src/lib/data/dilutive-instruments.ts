@@ -977,6 +977,44 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // At stock prices above $0.5335: all warrants ITM
   // Fully diluted: 137.4M basic + 76M warrants = ~213.4M shares
 
+  // HYPD (Hyperion DeFi) - HYPE treasury company
+  // Verified 2026-01-30 via SEC 424B3 (Jan 9, 2026) and 10-Q Q3 2025
+  // CIK: 0001682639
+  // sharesForMnav already includes: 8.1M common + 16.3M from preferred conversion = 24.4M
+  // Warrants NOT included in sharesForMnav - tracking here for ITM dilution
+  // At ~$3.45 stock (Jan 8, 2026): $3.25 warrants are ITM, $4.00 warrants are OTM
+  HYPD: [
+    {
+      type: "warrant",
+      strikePrice: 3.25,
+      potentialShares: 30_769_230,
+      source: "424B3 Jan 9, 2026 (Purchaser Warrants)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm",
+      issuedDate: "2025-06-20",
+      notes: "Purchaser Warrants from Jun 2025 PIPE. ITM at $3.45 stock.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 3.25,
+      potentialShares: 1_846_153,
+      source: "424B3 Jan 9, 2026 (Placement Agent Warrants)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm",
+      issuedDate: "2025-06-20",
+      notes: "Chardan placement agent warrants. ITM at $3.45 stock.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 4.00,
+      potentialShares: 350_000,
+      source: "424B3 Jan 9, 2026 (Lender Warrants)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm",
+      notes: "Avenue Capital lender warrants. OTM at $3.45 stock.",
+    },
+  ],
+
   // LITS (Lite Strategy) - LTC treasury company
   // Verified 2026-01-30 via SEC 10-Q Q1 FY2026 (CIK 0001262104)
   // Pre-funded warrants @ $0.0001 already included in sharesForMnav (36.8M)
