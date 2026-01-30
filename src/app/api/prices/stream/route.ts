@@ -12,6 +12,15 @@ const FMP_API_KEY = process.env.FMP_API_KEY || "";
 // Forex pairs we need (FMP format)
 const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
 
+// Ticker -> currency mapping for non-USD stocks (used for price conversion)
+const TICKER_CURRENCY: Record<string, string> = {
+  "3350.T": "JPY",
+  "H100.ST": "SEK",
+  "0434.HK": "HKD",
+  "ALTBG": "EUR",
+  "ETHM": "CAD",
+};
+
 // Cache for forex rates (5 minute TTL - forex doesn't move fast)
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
 const FOREX_CACHE_TTL = 5 * 60 * 1000;
@@ -203,6 +212,21 @@ async function fetchAllPrices() {
     fetchFMPStockQuotes(),
     fetchForexRates(),
   ]);
+
+  // Convert foreign stock prices to USD
+  for (const [ticker, data] of Object.entries(stockPrices)) {
+    const currency = TICKER_CURRENCY[ticker];
+    if (currency) {
+      const rate = forexRates[currency] || FALLBACK_RATES[currency];
+      if (rate && rate > 0) {
+        stockPrices[ticker] = {
+          ...data,
+          price: data.price / rate,
+          prevClose: data.prevClose ? data.prevClose / rate : data.price / rate,
+        };
+      }
+    }
+  }
 
   return {
     crypto: cryptoPrices,
