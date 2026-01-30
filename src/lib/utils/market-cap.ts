@@ -23,12 +23,15 @@ import { convertToUSD, convertToUSDSync } from "@/lib/utils/currency";
 import { getEffectiveShares, dilutiveInstruments } from "@/lib/data/dilutive-instruments";
 
 // Tickers that have non-USD stock prices
-// These require currency conversion before shares × price calculation
-const NON_USD_TICKERS = new Set([
-  "3350.T",    // Metaplanet - JPY (Tokyo Stock Exchange)
-  "0434.HK",   // Boyaa Interactive - HKD (Hong Kong)
-  "H100.ST",   // Hashdex - SEK (Stockholm)
-  "ALTBG",     // Capital B (The Blockchain Group) - EUR (Euronext Paris)
+// NOTE: As of Jan 2026, the /api/prices and /api/prices/stream endpoints
+// now convert foreign currency prices to USD before returning them.
+// So this set should be EMPTY - all prices from the API are in USD.
+const NON_USD_TICKERS = new Set<string>([
+  // DISABLED - API now returns USD prices for all tickers
+  // "3350.T",    // Metaplanet - JPY (Tokyo Stock Exchange)
+  // "0434.HK",   // Boyaa Interactive - HKD (Hong Kong)
+  // "H100.ST",   // Hashdex - SEK (Stockholm)
+  // "ALTBG",     // Capital B (The Blockchain Group) - EUR (Euronext Paris)
 ]);
 
 // Currency codes for logging/display
