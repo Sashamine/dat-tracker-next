@@ -1487,9 +1487,12 @@ export const hbarCompanies: Company[] = [
     id: "imtl",
     name: "Immutable Holdings",
     ticker: "IHLDF",
-    secCik: "0001905459",
+    secCik: "0001905459",  // Only Form D filings - Canadian company files with SEDAR+
     asset: "HBAR",
     tier: 1,
+    website: "https://www.immutableholdings.com",
+    twitter: "https://x.com/ImmutableHold",
+    investorRelationsUrl: "https://www.immutableholdings.com/investors",
     holdings: 48_000_000,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "company-website",
@@ -1505,7 +1508,7 @@ export const hbarCompanies: Company[] = [
     sharesForMnav: 65_000_000,  // From holdings-history.ts
     leader: "Jordan Fried (CEO, Hedera founding team)",
     strategy: "HBAR treasury via Immutable Asset Management subsidiary.",
-    notes: "OTC. Owns NFT.com, HBAR Labs, MyHBARWallet.",
+    notes: "CBOE Canada: HOLD | OTCQB: IHLDF. Canadian company (BC), files with SEDAR+. Owns NFT.com, HBAR Labs, MyHBARWallet.",
   },
 ];
 
