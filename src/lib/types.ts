@@ -71,6 +71,11 @@ export interface Company {
   tokenizedAddress?: string; // On-chain tokenized stock (e.g., Solana)
   tokenizedChain?: string; // Which chain the token is on
   logoUrl?: string;
+  
+  // Regulatory identifiers (Canadian)
+  sedarProfile?: string;    // SEDAR+ profile number (Canadian companies)
+  cusip?: string;           // CUSIP identifier
+  isin?: string;            // International Securities Identification Number
 
   // Financials
   costBasisAvg?: number;

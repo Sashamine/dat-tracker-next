@@ -1488,6 +1488,9 @@ export const hbarCompanies: Company[] = [
     name: "Immutable Holdings",
     ticker: "IHLDF",
     secCik: "0001905459",  // Only Form D filings - Canadian company files with SEDAR+
+    sedarProfile: "000044016",
+    cusip: "45258G",
+    isin: "CA45258G3061",
     asset: "HBAR",
     tier: 1,
     website: "https://www.immutableholdings.com",
@@ -1506,7 +1509,7 @@ export const hbarCompanies: Company[] = [
     avgDailyVolume: 1_000_000,
     marketCap: 10_000_000,
     sharesForMnav: 65_000_000,  // From holdings-history.ts
-    leader: "Jordan Fried (CEO, Hedera founding team)",
+    leader: "Melyssa Charlton (CEO)",  // Jordan Fried was previous CEO
     strategy: "HBAR treasury via Immutable Asset Management subsidiary.",
     notes: "CBOE Canada: HOLD | OTCQB: IHLDF. Canadian company (BC), files with SEDAR+. Owns NFT.com, HBAR Labs, MyHBARWallet.",
   },
