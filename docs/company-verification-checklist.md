@@ -652,6 +652,69 @@ Systematic verification process for DAT company data quality.
 
 ---
 
+## GAME (GameSquare Holdings) - Verified 2026-02-01
+
+### 1. Holdings Data ✅
+- [x] **Current holdings**: 1,608 ETH direct + $64.5M Dialectic fund
+- [x] **Source**: SEC 10-Q Q3 2025 ($4,020,415 / $2,500 = 1,608 ETH)
+- [x] **Source URL**: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q
+- [x] **Last updated**: 2025-09-30
+- [x] **Note**: Most ETH exposure via Dialectic Medici ETH Fund, not direct custody
+
+### 2. SEC Filing Verification ✅
+- [x] **CIK**: 0001714562
+- [x] **Recent 8-Ks checked**: Jan 16, Dec 31, Dec 5
+- [x] **Latest 10-K**: Filed Apr 15, 2025 (FY2024)
+- [x] **Latest 10-Q**: Filed Nov 14, 2025 (Q3 2025)
+
+### 3. XBRL Data Extraction ✅
+- [x] **CommonStockSharesOutstanding**: 98,380,767 (Sep 30, 2025)
+- [x] **WeightedAverageNumberOfDilutedSharesOutstanding Q3**: 87,949,202
+- [x] **Note**: No CryptoAssetNumberOfUnits - ETH in narrative sections
+
+### 4. Fiscal Year Identification ✅
+- [x] **Fiscal year end**: December 31 (calendar year)
+- [x] **Current quarter**: Q4 2025 (Oct-Dec), 10-K expected ~Mar 2026
+
+### 5. Earnings Data ✅
+| Quarter | Period End | Holdings | Shares (diluted) | HPS | Status |
+|---------|------------|----------|------------------|-----|--------|
+| Q2 2025 | Jun 30 | 0 | 39.0M | 0 | reported |
+| Q3 2025 | Sep 30 | 1,608 | 87.9M | 0.0000183 | reported |
+| Q4 2025 | Dec 31 | 1,608 | 94.8M | 0.0000170 | upcoming |
+
+### 6. Holdings Per Share Growth ⚠️
+- [x] **Q2→Q3 2025**: N/A (treasury launched Q3)
+- [x] **Note**: ETH treasury strategy launched Q3 2025 via Dialectic partnership
+
+### 7. Non-Crypto Investments ✅
+- [x] **Dialectic Medici ETH Fund**: $64.5M fair value (Sep 30, 2025)
+- [x] **Treatment**: In cryptoInvestments field (indirect ETH exposure)
+
+### 8. Company Metadata ✅
+- [x] **Strategy**: "$250M ETH treasury via Dialectic. 7.84% yield funds buybacks."
+- [x] **Leader**: Justin Kenna (CEO)
+- [x] **Preferred equity**: $5.15M Series A Preferred
+- [x] **Cash**: $6M (operating capital)
+
+### 9. Dilutive Instruments ✅
+- [x] **Warrants**: 600,000 @ $1.00 (OTM at ~$0.45)
+- [x] **Convertible notes**: None (fully converted to equity)
+- [x] **Preferred stock**: $5.15M liquidation value (tracked in preferredEquity)
+- [x] **Added to dilutive-instruments.ts**: Yes
+
+### 10. Company Links ✅
+- [x] **website**: https://www.gamesquare.com
+- [x] **twitter**: https://x.com/GSQHoldings
+- [x] **investorRelationsUrl**: https://www.gamesquare.com/#investors
+
+### 11. mNAV Calculation (to verify)
+- [ ] **ETH price**: Check against live
+- [ ] **Stock price**: Check against live  
+- [ ] **UI match**: Compare calculated vs displayed mNAV
+
+---
+
 ## Verification Template (Copy for Next Company)
 
 ### Company: [TICKER] - Verification Date: YYYY-MM-DD

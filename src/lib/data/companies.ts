@@ -191,6 +191,9 @@ export const ethCompanies: Company[] = [
     preferredEquity: 5_150_000,  // Series A Preferred
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
+    website: "https://www.gamesquare.com",
+    twitter: "https://x.com/GSQHoldings",
+    investorRelationsUrl: "https://www.gamesquare.com/#investors",
     strategy: "$250M ETH treasury via Dialectic. 7.84% yield funds buybacks.",
     notes: "Most ETH exposure via Dialectic Medici fund, not direct custody. Buyback: 3.54M shares.",
     // Indirect crypto exposure via fund investment
