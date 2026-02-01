@@ -5,7 +5,7 @@ import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight
 import { MobileHeader } from "@/components/mobile-header";
 import { useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
-import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { cn } from "@/lib/utils";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
@@ -208,13 +208,12 @@ export default function MNAVPage() {
   const [timeRange1, setTimeRange1] = useState<TimeRange>("1y");
 
   const { data: prices } = usePricesStream();
-  const { overrides } = useCompanyOverrides();
   const { data: companiesData, isLoading } = useCompanies();
 
   const companies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
-    return mergeAllCompanies(baseCompanies, overrides);
-  }, [companiesData, overrides]);
+    return enrichAllCompanies(baseCompanies);
+  }, [companiesData]);
 
   // Use shared mNAV stats hook - single source of truth
   const mnavStats = useMNAVStats(companies, prices);

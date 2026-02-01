@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCompanies } from "@/lib/hooks/use-companies";
-import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { COMPANY_SOURCES, CompanyDataSources } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
 import { ExternalLink } from "lucide-react";
@@ -136,8 +136,7 @@ function CompanySourceCard({ ticker, sources }: { ticker: string; sources: Compa
 
 export default function SourcesPage() {
   const { data: companiesData } = useCompanies();
-  const { overrides } = useCompanyOverrides();
-  const allCompanies = mergeAllCompanies(companiesData?.companies || [], overrides);
+  const allCompanies = enrichAllCompanies(companiesData?.companies || []);
 
   // Get companies that have source documentation
   const companiesWithSources = allCompanies.filter(

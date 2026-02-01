@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAsset, useAssets } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
-import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -60,7 +60,6 @@ export default function AssetPage() {
   const router = useRouter();
   const symbol = (params.symbol as string).toUpperCase();
   const { data: prices } = usePricesStream();
-  const { overrides } = useCompanyOverrides();
   const [sortField, setSortField] = useState<string>("holdingsValue");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
@@ -68,10 +67,10 @@ export default function AssetPage() {
   const { data: assetData, isLoading: isLoadingAsset } = useAsset(symbol);
   const { data: assetsData } = useAssets();
 
-  // Merge with overrides from Google Sheets
+  // Enrich company data with holdings history and source tracking
   const companies = useMemo(
-    () => mergeAllCompanies(assetData?.companies || [], overrides),
-    [assetData, overrides]
+    () => enrichAllCompanies(assetData?.companies || []),
+    [assetData]
   );
 
   const assetInfo = ASSET_INFO[symbol];

@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
-import { useCompanyOverrides, mergeCompanyWithOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { Company } from "@/lib/types";
@@ -69,15 +69,14 @@ export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
   const { data: prices } = usePricesStream();
-  const { overrides } = useCompanyOverrides();
 
   // Fetch company from database API
   const { data: companyData, isLoading: isLoadingCompany } = useCompany(ticker);
 
-  // Merge with overrides from Google Sheets
+  // Enrich company data with holdings history and source tracking
   const company = useMemo(
-    () => companyData?.company ? mergeCompanyWithOverrides(companyData.company, overrides) : null,
-    [companyData, overrides]
+    () => companyData?.company ? enrichCompany(companyData.company) : null,
+    [companyData]
   );
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
@@ -91,8 +90,8 @@ export default function CompanyPage() {
   const { data: companiesData, isLoading: isLoadingCompanies } = useCompanies();
   const allCompanies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
-    return mergeAllCompanies(baseCompanies, overrides);
-  }, [companiesData, overrides]);
+    return enrichAllCompanies(baseCompanies);
+  }, [companiesData]);
 
   // Calculate sidebar stats
   const { assetStats, totalValue, mnavStats } = useMemo(() => {

@@ -13,7 +13,7 @@ import { DataTableSkeleton } from "@/components/mobile-card-skeleton";
 import { useCompanies } from "@/lib/hooks/use-companies";
 import { Company } from "@/lib/types";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
-import { useCompanyOverrides, mergeAllCompanies } from "@/lib/hooks/use-company-overrides";
+import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 
@@ -33,7 +33,6 @@ function getAssetStats(companies: Company[], prices: any) {
 function HomeContent() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { data: prices, isConnected } = usePricesStream();
-  const { overrides } = useCompanyOverrides();
   const { assets, companyTypes, minMarketCap, maxMarketCap, minMNAV, maxMNAV, search } = useFilters();
 
   // Calculate active filter count for mobile button
@@ -64,11 +63,11 @@ function HomeContent() {
     await refetchCompanies();
   };
 
-  // Merge database company data with Google Sheets overrides
+  // Enrich company data with holdings history and source tracking
   const companies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
-    return mergeAllCompanies(baseCompanies, overrides);
-  }, [companiesData, overrides]);
+    return enrichAllCompanies(baseCompanies);
+  }, [companiesData]);
 
   const assetStats = getAssetStats(companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
