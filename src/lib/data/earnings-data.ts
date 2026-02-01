@@ -3225,6 +3225,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
   // Q2 FY2026 (Oct-Dec 2025) = Calendar Q4 2025 - Upcoming
   // Note: No holdings update since Aug 2025
+  // Quarter ends Dec 31, 2025 - BEFORE the Jan 20, 2026 split, so use pre-split shares
   {
     ticker: "BTOG",
     fiscalYear: 2026,
@@ -3234,8 +3235,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-02-28",  // Estimated 6-K filing (~60 days after quarter end)
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 70_543_745,  // No update since Aug - using last known
-    sharesAtQuarterEnd: 1_500_000,  // Post 1:60 reverse split (Jan 20, 2026)
-    holdingsPerShare: 47.03,  // 70.5M / 1.5M (post-split adjusted)
+    sharesAtQuarterEnd: 88_600_000,  // Pre-split shares (split was Jan 20, 2026)
+    holdingsPerShare: 0.796,  // 70.5M / 88.6M
     source: "estimated",
     status: "upcoming",
   },

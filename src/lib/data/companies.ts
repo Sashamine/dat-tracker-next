@@ -1434,6 +1434,9 @@ export const dogeCompanies: Company[] = [
     totalDebt: 16_338_506,  // $10M Series A-1 + $5M Series B-1 + $1.34M Series C-1 convertible notes
     debtSource: "SEC 6-K Jan 20, 2026",
     debtAsOf: "2026-01-20",
+    cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
+    cashSource: "Yahoo Finance",
+    cashAsOf: "2025-06-30",
     secCik: "1735556",
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
