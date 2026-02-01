@@ -3410,6 +3410,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // First Nasdaq-listed LINK treasury company - strategy launched Sep 2025
   // Real estate asset manager pivoting to LINK
   //
+  // IMPORTANT: ~1:19 reverse split in early 2025
+  // All 2025 share counts are POST-SPLIT
+  // Pre-2025 share counts would need to be divided by ~19 for comparison
+  //
   // Q4 2025 - Upcoming
   {
     ticker: "CWD",
@@ -3427,6 +3431,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
   // Q3 2025 - First full quarter with LINK (10-Q filed Nov 13, 2025)
+  // Capital raise increased shares from 1.28M to 2.62M for LINK accumulation
   {
     ticker: "CWD",
     fiscalYear: 2025,
@@ -3435,14 +3440,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-13",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 562_535,  // Sep 30, 2025
-    sharesAtQuarterEnd: 2_615_000,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding Q3 2025
+    holdingsAtQuarterEnd: 562_535,  // Sep 30, 2025 - LINK treasury launched
+    sharesAtQuarterEnd: 2_615_000,  // SEC XBRL diluted (post-split + capital raise)
     holdingsPerShare: 0.2151,  // 562535 / 2615000
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
     status: "reported",
   },
-  // Q2 2025 - Pre-LINK strategy
+  // Q2 2025 - Pre-LINK strategy (post-split)
   {
     ticker: "CWD",
     fiscalYear: 2025,
@@ -3452,10 +3457,42 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // Pre-LINK strategy (launched Sep 2025)
-    sharesAtQuarterEnd: 1_404_000,  // SEC XBRL diluted shares Q2 2025
+    sharesAtQuarterEnd: 1_278_000,  // SEC XBRL diluted Q2 2025 (post-split)
     holdingsPerShare: 0,
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    status: "reported",
+  },
+  // Q1 2025 - Pre-LINK strategy (post-split)
+  {
+    ticker: "CWD",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-15",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-LINK
+    sharesAtQuarterEnd: 1_146_000,  // SEC XBRL diluted Q1 2025 (post-split)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    status: "reported",
+  },
+  // Q4 2024 - Pre-LINK, pre-split (adjusted to post-split equivalent)
+  {
+    ticker: "CWD",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-03-31",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-LINK
+    sharesAtQuarterEnd: 1_157_000,  // 21.99M pre-split ÷ 19 = ~1.16M post-split adjusted
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-K",
     status: "reported",
   },
 ];

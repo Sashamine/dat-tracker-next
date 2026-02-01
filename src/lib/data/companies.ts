@@ -1169,7 +1169,7 @@ export const linkCompanies: Company[] = [
     twitter: "https://x.com/CaliberCompany",
     investorRelationsUrl: "https://ir.caliberco.com/",
     strategy: "First Nasdaq LINK treasury. DCA accumulation + staking.",
-    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner.",
+    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner. ~1:19 reverse split early 2025.",
   },
 ];
 
