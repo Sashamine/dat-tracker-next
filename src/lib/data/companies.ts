@@ -1417,7 +1417,8 @@ export const dogeCompanies: Company[] = [
     asset: "DOGE",
     tier: 2,
     website: "https://www.bitorigin.io",
-    // Twitter: Not found - company doesn't appear to have X account
+    twitter: "https://x.com/BitOriginLtd",
+    investorRelationsUrl: "https://www.bitorigin.io/investors",
     holdings: 70_543_745,  // Aug 2025 - was 40.5M (missed PIPE)
     holdingsLastUpdated: "2025-08-11",
     holdingsSource: "press-release",
