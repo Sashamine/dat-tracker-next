@@ -3153,19 +3153,64 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
     status: "reported",
   },
-  // FY2025 Q3 (Mar-May 2025) - From Q3 interim
+  // FY2025 Q3 (Mar-May 2025) - Post 1:10 reverse split (Mar 21, 2025)
   {
     ticker: "LUXFF",
     fiscalYear: 2025,
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-07-30",  // Estimated
+    earningsDate: "2025-07-30",
     earningsTime: null,
-    holdingsAtQuarterEnd: 12_000,  // Estimated from trajectory
-    sharesAtQuarterEnd: 26_930_164,
-    holdingsPerShare: 0.000446,
+    holdingsAtQuarterEnd: 15_000,  // Estimated - ramping LTC accumulation
+    sharesAtQuarterEnd: 16_930_164,  // Post-split, pre-Jul placement
+    holdingsPerShare: 0.000886,  // 15000 / 16930164
     source: "manual",  // SEDAR+ (Canadian regulatory filing)
+    status: "reported",
+  },
+  // FY2025 Q2 (Dec 2024 - Feb 2025) - Pre-split (adjusted)
+  {
+    ticker: "LUXFF",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-04-30",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 8_000,  // Estimated
+    sharesAtQuarterEnd: 14_500_000,  // Post-split adjusted (~145M ÷ 10)
+    holdingsPerShare: 0.000552,  // 8000 / 14500000
+    source: "manual",
+    status: "reported",
+  },
+  // FY2025 Q1 (Sep-Nov 2024) - Pre-split (adjusted)
+  {
+    ticker: "LUXFF",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2024,
+    calendarQuarter: 3,
+    earningsDate: "2025-01-30",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 5_000,  // Estimated
+    sharesAtQuarterEnd: 13_900_000,  // Post-split adjusted (~139M ÷ 10)
+    holdingsPerShare: 0.000360,  // 5000 / 13900000
+    source: "manual",
+    status: "reported",
+  },
+  // FY2024 Q4 (Jun-Aug 2024) - LTC treasury strategy launch
+  {
+    ticker: "LUXFF",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 3,
+    earningsDate: "2024-12-15",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 2_000,  // Estimated - early accumulation
+    sharesAtQuarterEnd: 13_900_000,  // Post-split adjusted
+    holdingsPerShare: 0.000144,  // 2000 / 13900000
+    source: "manual",
     status: "reported",
   },
 
