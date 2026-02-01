@@ -1416,11 +1416,13 @@ export const dogeCompanies: Company[] = [
     ticker: "BTOG",
     asset: "DOGE",
     tier: 2,
+    website: "https://www.bitorigin.io",
+    // Twitter: Not found - company doesn't appear to have X account
     holdings: 70_543_745,  // Aug 2025 - was 40.5M (missed PIPE)
     holdingsLastUpdated: "2025-08-11",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
-    datStartDate: "2025-07-01",
+    datStartDate: "2025-07-17",  // DOGE strategy announced
     costBasisAvg: 0.25,
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedAtm: 500_000_000,

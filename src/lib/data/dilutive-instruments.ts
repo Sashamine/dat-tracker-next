@@ -1060,6 +1060,112 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // BTOG (Bit Origin) - DOGE treasury company
+  // Verified 2026-02-01 via SEC 6-K Jan 20, 2026 (CIK 1735556)
+  // 1:60 reverse split effective Jan 20, 2026 - all figures post-split
+  // Basic shares: ~1.5M Class A + ~12.8K Class B
+  // Convertible notes have floor prices that prevent extreme dilution
+  BTOG: [
+    // === Convertible Notes (all mature Jul 2029) ===
+    {
+      type: "convertible",
+      strikePrice: 3.354,  // Floor price post-split (was $0.0559 pre-split)
+      potentialShares: 2_981_514,  // $10M / $3.354
+      faceValue: 10_000_000,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2029-07-16",
+      issuedDate: "2025-07-16",
+      notes: "Series A-1 Senior Secured Convertible Note",
+    },
+    {
+      type: "convertible",
+      strikePrice: 3.354,  // Floor price post-split
+      potentialShares: 1_490_757,  // $5M / $3.354
+      faceValue: 5_000_000,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2029-07-16",
+      issuedDate: "2025-07-16",
+      notes: "Series B-1 Senior Secured Convertible Note",
+    },
+    {
+      type: "convertible",
+      strikePrice: 4.74,  // Floor price post-split (was $0.079 pre-split)
+      potentialShares: 282_386,  // $1,338,506 / $4.74
+      faceValue: 1_338_506,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2029-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Series C-1 Senior Secured Convertible Note",
+    },
+    // === Warrants (post-split adjusted) ===
+    {
+      type: "warrant",
+      strikePrice: 30.24,
+      potentialShares: 572_514,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2026-11-24",
+      notes: "Deep OTM warrants",
+    },
+    {
+      type: "warrant",
+      strikePrice: 28.80,
+      potentialShares: 28_626,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2026-11-24",
+      notes: "Deep OTM warrants",
+    },
+    {
+      type: "warrant",
+      strikePrice: 30.24,
+      potentialShares: 604_147,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2027-01-30",
+      notes: "Deep OTM warrants",
+    },
+    {
+      type: "warrant",
+      strikePrice: 26.70,
+      potentialShares: 30_207,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2027-01-30",
+      notes: "Deep OTM warrants",
+    },
+    {
+      type: "warrant",
+      strikePrice: 15.30,
+      potentialShares: 18_791,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2027-06-03",
+      notes: "OTM warrants",
+    },
+    {
+      type: "warrant",
+      strikePrice: 1.3552,  // Subject to VWAP adjustment post-split
+      potentialShares: 1_945_333,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2030-04-22",
+      notes: "Likely ITM - subject to price reset based on VWAP",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.4383,  // Subject to VWAP adjustment post-split
+      potentialShares: 1_070_719,
+      source: "SEC 6-K Jan 20, 2026",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      expiration: "2034-06-29",
+      notes: "OTM warrants - subject to price reset based on VWAP",
+    },
+  ],
+
   // XTAIF (xTAO Inc) - TAO treasury company (TSX-V: XTAO.U / OTC: XTAIF)
   // Verified 2026-02-01 via SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)
   // Profile: 000108977 | Filing: Nov 25, 2025

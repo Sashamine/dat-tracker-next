@@ -3178,6 +3178,67 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
     status: "upcoming",
   },
+
+  // ==================== DOGE COMPANIES ====================
+
+  // ========== Bit Origin (BTOG) ==========
+  // Fiscal year ends June 30. Foreign private issuer (Cayman Islands).
+  // CIK: 1735556 | 1:60 reverse split Jan 20, 2026
+  // DOGE strategy announced Jul 17, 2025. First purchase Jul 21, 2025.
+  // Verified 2026-02-01 via SEC 6-K filings
+  //
+  // Note: Share counts below are PRE-SPLIT for historical accuracy.
+  // Post-split (Jan 20, 2026): divide by 60 for current share count.
+  //
+  // Q4 FY2025 (Apr-Jun 2025) = Calendar Q2 2025 - Pre-DOGE baseline
+  {
+    ticker: "BTOG",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-10-31",  // 20-F annual report filed
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-DOGE strategy (announced Jul 17, 2025)
+    sharesAtQuarterEnd: 88_600_000,  // Pre-split shares
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009",
+    status: "reported",
+  },
+  // Q1 FY2026 (Jul-Sep 2025) = Calendar Q3 2025 - First DOGE quarter
+  // Jul 21: 40.5M DOGE acquired | Aug 12: Reached 70M+ DOGE
+  {
+    ticker: "BTOG",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-30",  // Estimated 6-K filing
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 70_543_745,  // Aug 12, 2025 press release (end of quarter)
+    sharesAtQuarterEnd: 88_600_000,  // Pre-split shares
+    holdingsPerShare: 0.796,  // 70.5M / 88.6M
+    source: "press-release",
+    sourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
+    status: "reported",
+  },
+  // Q2 FY2026 (Oct-Dec 2025) = Calendar Q4 2025 - Upcoming
+  // Note: No holdings update since Aug 2025
+  {
+    ticker: "BTOG",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-28",  // Estimated 6-K filing (~60 days after quarter end)
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 70_543_745,  // No update since Aug - using last known
+    sharesAtQuarterEnd: 1_500_000,  // Post 1:60 reverse split (Jan 20, 2026)
+    holdingsPerShare: 47.03,  // 70.5M / 1.5M (post-split adjusted)
+    source: "estimated",
+    status: "upcoming",
+  },
 ];
 
 // Helper: Get days until a date
