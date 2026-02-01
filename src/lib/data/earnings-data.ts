@@ -3116,6 +3116,51 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956741&type=10-K",
     status: "reported",
   },
+
+  // ==================== TAO COMPANIES ====================
+
+  // ========== xTAO Inc (XTAIF) - TSX-V: XTAO.U ==========
+  // Fiscal year ends March 31. Canadian company filing on SEDAR+ (Profile: 000108977)
+  // IPO: July 22, 2025. World's largest public TAO holder.
+  // Verified 2026-02-01 via SEDAR+ Q2 FY26 MD&A
+  //
+  // Q2 FY26 (Jul-Sep 2025) = Calendar Q3 2025
+  {
+    ticker: "XTAIF",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-25",  // SEDAR+ filing date
+    earningsTime: "AMC",
+    netIncome: -3_879_803,  // Net loss for six months ended Sep 30, 2025
+    holdingsAtQuarterEnd: 42_051,  // TAO holdings from SEDAR+ MD&A
+    sharesAtQuarterEnd: 38_031_285,  // 28,552,195 basic + 9,479,090 pre-funded warrants
+    holdingsPerShare: 0.001106,  // 42,051 / 38,031,285
+    source: "sec-filing",  // SEDAR+ = Canadian equivalent of SEC
+    sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
+    status: "reported",
+  },
+  // Q3 FY26 (Oct-Dec 2025) = Calendar Q4 2025 - Upcoming
+  // Expected filing: ~mid-Feb 2026 (45 days after Dec 31)
+  // Note: Nov 25 press release reported 59,962 TAO - will be confirmed in Q3 filing
+  {
+    ticker: "XTAIF",
+    fiscalYear: 2026,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-14",  // Estimated ~45 days after Dec 31
+    earningsTime: "AMC",
+    // Placeholder: Using Nov 25 press release holdings (59,962 TAO)
+    // Will update when Q3 FY26 filing drops on SEDAR+
+    holdingsAtQuarterEnd: 59_962,  // Nov 25, 2025 press release (pending Q3 confirmation)
+    sharesAtQuarterEnd: 38_031_285,  // Shares unchanged (no new issuance announced)
+    holdingsPerShare: 0.001577,  // 59,962 / 38,031,285
+    source: "press-release",  // News release filed on SEDAR+ Nov 26, 2025
+    sourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
+    status: "upcoming",
+  },
 ];
 
 // Helper: Get days until a date
