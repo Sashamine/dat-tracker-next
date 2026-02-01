@@ -3124,6 +3124,23 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // IPO: July 22, 2025. World's largest public TAO holder.
   // Verified 2026-02-01 via SEDAR+ Q2 FY26 MD&A
   //
+  // Q1 FY26 (Apr-Jun 2025) = Calendar Q2 2025 - Pre-IPO (no TAO holdings)
+  // IPO was July 22, 2025 - this quarter had no treasury operations
+  {
+    ticker: "XTAIF",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-11-25",  // Filed with Q2 in combined interim report
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-IPO - no TAO holdings yet
+    sharesAtQuarterEnd: 0,  // Pre-IPO - company not yet public
+    holdingsPerShare: 0,
+    source: "sec-filing",  // SEDAR+ = Canadian equivalent of SEC
+    sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
+    status: "reported",
+  },
   // Q2 FY26 (Jul-Sep 2025) = Calendar Q3 2025
   {
     ticker: "XTAIF",
