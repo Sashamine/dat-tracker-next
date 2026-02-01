@@ -3179,6 +3179,62 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
 
+  // ========== TaoWeave (TWAV) - fka Oblong ==========
+  // Fiscal year ends December 31 (calendar year).
+  // CIK: 746210 | Ticker changed from OBLG to TWAV Dec 2025
+  // TAO strategy announced Jun 2025. 100% staked with BitGo (10% APY).
+  // Verified 2026-02-01 via SEC XBRL + 8-K filings
+  //
+  // Q2 2025 (Apr-Jun) - TAO strategy launch quarter
+  {
+    ticker: "TWAV",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 20_800,  // Per 10-Q: ~$8M purchase at ~$385/TAO
+    sharesAtQuarterEnd: 2_350_307,  // EntityCommonStockSharesOutstanding
+    holdingsPerShare: 8.85,  // 20,800 / 2,350,307
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=746210&type=10-Q",
+    status: "reported",
+  },
+  // Q3 2025 (Jul-Sep)
+  {
+    ticker: "TWAV",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-13",
+    earningsTime: "AMC",
+    netIncome: -2_290_000,  // XBRL NetIncomeLoss Q3 2025
+    holdingsAtQuarterEnd: 21_943,  // 10-Q shows $6.6M digital assets / ~$300 TAO price
+    sharesAtQuarterEnd: 3_207_210,  // EntityCommonStockSharesOutstanding
+    holdingsPerShare: 6.84,  // 21,943 / 3,207,210
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-034612-index.html",
+    status: "reported",
+  },
+  // Q4 2025 (Oct-Dec) - Latest 8-K update
+  {
+    ticker: "TWAV",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",  // Estimated 10-K filing
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 24_382,  // Dec 10, 2025 8-K: "increased its TAO holdings to 24,382 tokens"
+    sharesAtQuarterEnd: 3_207_210,  // No new issuance announced
+    holdingsPerShare: 7.60,  // 24,382 / 3,207,210
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
+    status: "upcoming",
+  },
+
   // ==================== DOGE COMPANIES ====================
 
   // ========== Bit Origin (BTOG) ==========

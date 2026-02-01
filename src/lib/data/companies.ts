@@ -1127,12 +1127,15 @@ export const taoCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "746210",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
-    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
+    restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
+    website: "https://taoweave.com",
+    twitter: "https://x.com/taoweave",
+    investorRelationsUrl: "https://taoweave.com/investor-relations",
     leader: "Peter Holst (President & CEO)",
     strategy: "Decentralized AI treasury strategy via TAO accumulation",
-    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo.",
+    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo. ~2.3M warrants @ $1.72.",
   },
 ];
 

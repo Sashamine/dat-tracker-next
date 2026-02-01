@@ -1205,6 +1205,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "Management/consultant options tranche 3 - OTM at ~$0.50 stock",
     },
   ],
+
+  // TWAV (TaoWeave, fka Oblong) - TAO treasury company
+  // Verified 2026-02-01 via SEC XBRL (CIK 746210)
+  // Ticker changed from OBLG to TWAV Dec 2025
+  // Warrants from Q1 2025 10-Q filing
+  TWAV: [
+    {
+      type: "warrant",
+      strikePrice: 1.72,  // ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1 @ 2024-03-31
+      potentialShares: 2_262_203,  // ClassOfWarrantOrRightOutstanding @ 2025-03-31
+      source: "SEC 10-Q Q1 2025",
+      sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=746210&type=10-Q",
+      expiration: "2026-06-28",  // Estimated - verify from 10-Q
+      issuedDate: "2021-06-28",
+      notes: "Legacy warrants from pre-TAO era. Slightly OTM at ~$1.65 stock price.",
+    },
+  ],
 };
 
 /**
