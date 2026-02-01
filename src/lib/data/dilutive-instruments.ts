@@ -391,6 +391,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // GAME (GameSquare Holdings) - ETH treasury company
+  // Verified 2026-02-01 via SEC XBRL (CIK 0001714562)
+  // Convertible debt fully converted to equity as of Q3 2025
+  // Only remaining dilutive: 600K warrants @ $1.00 (deep ITM at ~$0.45 stock price)
+  GAME: [
+    {
+      type: "warrant",
+      strikePrice: 1.00,
+      potentialShares: 600_000,
+      source: "SEC 10-Q Q3 2025 XBRL",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+      expiration: "2026-07-01",  // Estimated based on Jul 2025 issuance
+      notes: "600K warrants at $1.00 - OTM at ~$0.45 stock price (Jan 2026)",
+    },
+  ],
+
   // UPXI (Upexi Inc) - SOL treasury company
   // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
   // Convertibles OTM at ~$2.12 (Jan 2026 price): $150M@$4.25, $36M@$2.39

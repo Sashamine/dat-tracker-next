@@ -2197,6 +2197,62 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== GameSquare (GAME) ==========
+  // Calendar year company (fiscal = calendar)
+  // SEC CIK: 0001714562
+  // ETH treasury strategy: Most holdings via Dialectic Medici ETH Fund ($64.5M as of Q3 2025)
+  // Direct ETH holdings: 1,608 ETH ($4M at $2,500)
+  // Note: Only direct holdings tracked here; fund exposure in cryptoInvestments field
+  //
+  // Q4 2025 - Upcoming
+  {
+    ticker: "GAME",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-15",  // Estimated ~75 days after Dec 31
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 1_608,  // Direct ETH only (fund holdings separate)
+    sharesAtQuarterEnd: 94_845_193,  // 98.4M - 3.54M buybacks through Jan 6, 2026
+    holdingsPerShare: 0.0000170,  // 1608 / 94845193
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+    status: "upcoming",
+  },
+  // Q3 2025 - First full quarter with ETH holdings (10-Q filed Nov 14, 2025)
+  {
+    ticker: "GAME",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 1_608,  // $4,020,415 / $2,500 = 1,608 ETH (SEC 10-Q Sep 30, 2025)
+    sharesAtQuarterEnd: 87_949_202,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding Q3 2025
+    holdingsPerShare: 0.0000183,  // 1608 / 87949202
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+    status: "reported",
+  },
+  // Q2 2025 - Pre-ETH strategy
+  {
+    ticker: "GAME",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-ETH treasury
+    sharesAtQuarterEnd: 38_968_089,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding Q2 2025
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+    status: "reported",
+  },
+
   // ==================== SOL COMPANIES ====================
 
   // ========== Sol Strategies (STKE) ==========
@@ -3061,6 +3117,55 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsPerShare: 0.0253,  // 929,548 / 36,769,677
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+    status: "reported",
+  },
+
+  // ========== Luxxfolio Holdings (LUXFF) - CSE: LUXX ==========
+  // Fiscal year ends August 31. Canadian company filing on SEDAR+ (Profile: 000044736)
+  // LTC treasury strategy - Charlie Lee + David Schwartz on advisory
+  // 1:10 reverse split Mar 21, 2025. All share counts post-split.
+  //
+  // FY2026 Q1 (Sep-Nov 2025) - Upcoming
+  {
+    ticker: "LUXFF",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 4,  // Sep-Nov 2025 falls mostly in CY Q4
+    earningsDate: "2026-01-30",  // Estimated ~60 days after Nov 30
+    earningsTime: null,
+    source: "estimated",
+    status: "upcoming",
+  },
+  // FY2025 (Sep 2024 - Aug 2025) - Annual audited report filed Dec 29, 2025
+  {
+    ticker: "LUXFF",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 3,  // Fiscal year end Aug 31 = CY Q3
+    earningsDate: "2025-12-29",  // Audited annual filing date
+    earningsTime: null,
+    holdingsAtQuarterEnd: 20_226,  // LTC holdings Aug 31, 2025 (SEDAR+ audited)
+    sharesAtQuarterEnd: 31_554_164,  // 26.9M basic + 4.6M Dec 9 placement
+    holdingsPerShare: 0.000641,  // 20226 / 31554164
+    source: "manual",  // SEDAR+ (Canadian regulatory filing)
+    sourceUrl: "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
+    status: "reported",
+  },
+  // FY2025 Q3 (Mar-May 2025) - From Q3 interim
+  {
+    ticker: "LUXFF",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-07-30",  // Estimated
+    earningsTime: null,
+    holdingsAtQuarterEnd: 12_000,  // Estimated from trajectory
+    sharesAtQuarterEnd: 26_930_164,
+    holdingsPerShare: 0.000446,
+    source: "manual",  // SEDAR+ (Canadian regulatory filing)
     status: "reported",
   },
 
