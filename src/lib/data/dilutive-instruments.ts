@@ -1059,6 +1059,46 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "GSR 4 advisory warrants - OTM at ~$2.70",
     },
   ],
+
+  // XTAIF (xTAO Inc) - TAO treasury company (TSX-V: XTAO.U / OTC: XTAIF)
+  // Verified 2026-02-01 via SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)
+  // Profile: 000108977 | Filing: Nov 25, 2025
+  // Basic shares: 28,552,195
+  // Pre-funded warrants: 9,479,090 @ $0.77 - ALREADY INCLUDED in sharesForMnav (38,031,285)
+  // DO NOT add pre-funded warrants here - would cause double-counting
+  // Only tracking stock options that are NOT in sharesForMnav
+  XTAIF: [
+    {
+      type: "option",
+      strikePrice: 1.00,
+      potentialShares: 200_000,
+      source: "SEDAR+ Q2 FY26 MD&A",
+      sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
+      expiration: "2030-07-01",
+      issuedDate: "2025-07-10",
+      notes: "Management/consultant options tranche 1 - OTM at ~$0.50 stock",
+    },
+    {
+      type: "option",
+      strikePrice: 1.00,
+      potentialShares: 415_000,
+      source: "SEDAR+ Q2 FY26 MD&A",
+      sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
+      expiration: "2030-07-21",
+      issuedDate: "2025-07-10",
+      notes: "Management/consultant options tranche 2 - OTM at ~$0.50 stock",
+    },
+    {
+      type: "option",
+      strikePrice: 1.00,
+      potentialShares: 1_255_000,
+      source: "SEDAR+ Q2 FY26 MD&A",
+      sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
+      expiration: "2035-07-21",
+      issuedDate: "2025-07-10",
+      notes: "Management/consultant options tranche 3 - OTM at ~$0.50 stock",
+    },
+  ],
 };
 
 /**

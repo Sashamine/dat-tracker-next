@@ -1086,7 +1086,7 @@ export const taoCompanies: Company[] = [
     // No Twitter found - website is single-page, IR at https://www.xtao.co/#investors
     holdings: 59_962,
     holdingsLastUpdated: "2025-11-25",
-    holdingsSource: "press-release",
+    holdingsSource: "regulatory-filing",  // News release filed on SEDAR+ Nov 26, 2025
     holdingsSourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
     datStartDate: "2025-07-22",
     costBasisAvg: 350.00,
