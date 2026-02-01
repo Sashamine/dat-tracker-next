@@ -1,0 +1,60 @@
+name: SEDAR+ Filing Check
+
+on:
+  schedule:
+    # Run twice daily at 9am and 5pm UTC (2am and 10am MST)
+    - cron: '0 9,17 * * *'
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: 'Specific ticker to check (optional)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Dry run (no notifications)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  check-filings:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+        
+      - name: Run SEDAR+ check
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          NEXT_PUBLIC_BASE_URL: ${{ vars.NEXT_PUBLIC_BASE_URL || 'https://dat-tracker-next.vercel.app' }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.ticker }}" != "" ]; then
+            ARGS="$ARGS --ticker=${{ inputs.ticker }}"
+          fi
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          npx ts-node scripts/sedar-check.ts $ARGS
+          
+      - name: Commit state changes
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/sedar-state.json || true
+          git diff --staged --quiet || git commit -m "chore: update SEDAR+ state [skip ci]"
+          git push || true

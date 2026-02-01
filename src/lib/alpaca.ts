@@ -64,8 +64,7 @@ export const STOCK_TICKERS = [
   "ZONE", "TBH", "BTOG",
   // AVAX
   "AVX",
-  // HBAR
-  "IHLDF",
+  // HBAR - IHLDF moved to FMP (OTC coverage)
 ];
 
 export interface AlpacaStockQuote {

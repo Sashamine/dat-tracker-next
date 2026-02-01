@@ -36,6 +36,7 @@ const FMP_ONLY_STOCKS = [
   "ALTBG.PA",  // The Blockchain Group (Euronext Paris) - FMP ticker
   "ALTBG",     // The Blockchain Group - display ticker (not valid on Alpaca)
   "LUXFF",     // Luxxfolio (OTC)
+  "IHLDF",     // Immutable Holdings (OTC) - Alpaca has poor OTC coverage
   "NA",        // Nano Labs
   "3350.T",    // Metaplanet (Tokyo)
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)

@@ -36,8 +36,22 @@
 - **Aug 01, 2025 - Material Change Report:** https://www.sedarplus.ca/csa-party/viewInstance/resource.html?node=W1510&drmKey=0f093984d6d04fee
 - **Jul 28, 2025 - News Release (HBAR):** https://www.sedarplus.ca/csa-party/viewInstance/resource.html?node=W1652&drmKey=ea8cc9a283faff85
 
-## Notes
-- URLs require session authentication to download
+## Download Notes
+- SEDAR+ uses session-based DRM tokens for document downloads
+- URLs above are session-specific and will expire
+- For permanent links, use the "Generate URL" feature on SEDAR+
+- Example permanent URL format:
+  `https://www.sedarplus.ca/csa-party/records/document.html?id=<hash>`
+
+## Verified Information (from SEDAR+ as of Feb 1, 2026)
 - 291 total documents available on SEDAR+
+- Company size category: $25 million to under $100 million (assets)
+- Reporting issuer in: Alberta, British Columbia, Ontario
+- NAICS code: 551113 (Holding companies)
+- Date of formation: Jan 31, 2017
+- Head office: 700 West Georgia Street, Suite 2200, Vancouver BC
+
+## Data Status
 - Holdings data (48M HBAR) needs verification from Q3 2025 filing
-- Current CEO is NOT Jordan Fried (was formerly, appears to have changed)
+- Current CEO: Melyssa Charlton (NOT Jordan Fried - changed)
+- Need to manually download and analyze Q3 2025 interim financials

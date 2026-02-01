@@ -42,29 +42,75 @@ async function downloadSedarProfile(ticker, options = {}) {
 
   const browser = await chromium.launch({
     headless: false,
-    slowMo: 50
+    slowMo: 100
   });
 
   const context = await browser.newContext({
-    acceptDownloads: true
+    acceptDownloads: true,
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    viewport: { width: 1280, height: 800 }
   });
 
   const page = await context.newPage();
+  
+  // Set download behavior via CDP
+  const client = await page.context().newCDPSession(page);
+  await client.send('Page.setDownloadBehavior', {
+    behavior: 'allow',
+    downloadPath: outputDir
+  });
 
   try {
     // Go directly to search
     console.log('🔐 Establishing session...');
-    await page.goto('https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments&_locale=en', { waitUntil: 'networkidle' });
-    await page.waitForTimeout(2000);
+    await page.goto('https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments&_locale=en', { 
+      waitUntil: 'domcontentloaded',
+      timeout: 60000 
+    });
+    // Wait for page to be interactive
+    await page.waitForTimeout(5000);
 
-    // Switch to Profiles tab using the tab element
+    // Switch to Profiles tab
     console.log('🔍 Switching to Profiles tab...');
-    await page.click('[role="tab"]:has-text("Profiles")');
-    await page.waitForTimeout(2000);
+    
+    // Take screenshot for debugging
+    await page.screenshot({ path: path.join(outputDir, 'debug-1-before-tab.png') });
+    
+    // Try to find and click the Profiles tab
+    const tabClicked = await page.evaluate(() => {
+      // Look for tab elements
+      const tabs = document.querySelectorAll('[role="tab"]');
+      console.log('Found tabs:', tabs.length);
+      for (const tab of tabs) {
+        if (tab.textContent && tab.textContent.includes('Profiles')) {
+          tab.click();
+          return true;
+        }
+      }
+      // Also try looking for tab-like elements
+      const allElements = document.querySelectorAll('*');
+      for (const el of allElements) {
+        if (el.textContent === 'Profiles' && el.tagName !== 'SCRIPT') {
+          el.click();
+          return true;
+        }
+      }
+      return false;
+    });
+    console.log(`   Tab click result: ${tabClicked}`);
+    await page.waitForTimeout(3000);
+    
+    // Take another screenshot
+    await page.screenshot({ path: path.join(outputDir, 'debug-2-after-tab.png') });
     
     // Search by profile number
     console.log(`🔍 Searching for ${profile.name}...`);
-    await page.fill('input[placeholder*="Profile"]', profile.number);
+    // Wait for input to appear after tab switch
+    await page.waitForSelector('input[type="text"]', { timeout: 10000 });
+    const inputs = await page.$$('input[type="text"]');
+    if (inputs.length > 0) {
+      await inputs[0].fill(profile.number);
+    }
     await page.click('button:has-text("Search")');
     await page.waitForTimeout(3000);
     
@@ -77,22 +123,22 @@ async function downloadSedarProfile(ticker, options = {}) {
     await page.click('a:has-text("Search and download documents")');
     await page.waitForTimeout(3000);
     
-    // Now get document links
+    // Get all PDF links
     console.log('📄 Fetching documents...\n');
-    
-    // Get all PDF links in the table
     const pdfLinks = await page.$$('a[href*="resource.html"]');
     console.log(`   Found ${pdfLinks.length} document links\n`);
     
     let downloaded = 0;
     const limit = options.limit || pdfLinks.length;
     
-    // Get info about each document first
+    // Collect document info
     const docs = [];
     for (const link of pdfLinks.slice(0, limit)) {
       const text = await link.innerText();
       const href = await link.getAttribute('href');
-      docs.push({ text, href });
+      if (href && href.includes('resource.html')) {
+        docs.push({ text: text.trim(), href });
+      }
     }
     
     for (let i = 0; i < docs.length; i++) {
@@ -111,28 +157,38 @@ async function downloadSedarProfile(ticker, options = {}) {
       console.log(`📄 [${i+1}/${docs.length}] ${doc.text.substring(0, 60)}...`);
       
       try {
-        // Navigate to the document URL to trigger download
-        const [download] = await Promise.all([
-          page.waitForEvent('download', { timeout: 30000 }),
-          page.goto(doc.href, { waitUntil: 'commit' })
-        ]);
+        // Wait for download event and navigate
+        const downloadPromise = page.waitForEvent('download', { timeout: 30000 });
+        await page.goto(doc.href, { waitUntil: 'commit', timeout: 30000 }).catch(() => {});
         
+        const download = await downloadPromise;
         await download.saveAs(filePath);
+        
         const stats = fs.statSync(filePath);
         console.log(`   ✅ Saved (${(stats.size / 1024).toFixed(1)} KB)`);
         downloaded++;
         
-        // Go back to search results
-        await page.goBack();
-        await page.waitForTimeout(1000);
+        // Small delay
+        await page.waitForTimeout(500);
         
       } catch (err) {
         console.log(`   ❌ ${err.message.split('\n')[0]}`);
-        // Try to recover by going back to the documents page
+      }
+      
+      // Re-navigate to documents page for next download
+      if (i < docs.length - 1) {
         try {
-          await page.goto('https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments&_locale=en');
+          await page.goto('https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments&_locale=en', { waitUntil: 'networkidle' });
+          await page.evaluate(() => {
+            const tabs = document.querySelectorAll('[role="tab"]');
+            for (const tab of tabs) {
+              if (tab.textContent.includes('Profiles')) {
+                tab.click();
+                return;
+              }
+            }
+          });
           await page.waitForTimeout(1000);
-          await page.click('[role="tab"]:has-text("Profiles")');
           await page.fill('input[placeholder*="Profile"]', profile.number);
           await page.click('button:has-text("Search")');
           await page.waitForTimeout(2000);
@@ -140,8 +196,14 @@ async function downloadSedarProfile(ticker, options = {}) {
           await page.waitForTimeout(2000);
           await page.click('a:has-text("Search and download documents")');
           await page.waitForTimeout(2000);
+          
+          // Re-fetch document links with fresh URLs
+          const newLinks = await page.$$('a[href*="resource.html"]');
+          if (newLinks[i + 1]) {
+            docs[i + 1].href = await newLinks[i + 1].getAttribute('href');
+          }
         } catch (e) {
-          console.log('   ⚠️  Could not recover session');
+          console.log('   ⚠️  Navigation error, continuing...');
         }
       }
     }
