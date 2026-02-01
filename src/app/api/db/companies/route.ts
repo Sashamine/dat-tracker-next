@@ -60,6 +60,7 @@ export async function GET(request: Request) {
       leverageRatio: c.leverageRatio,
       btcMinedAnnual: c.btcMinedAnnual,
       cashReserves: c.cashReserves,
+      restrictedCash: c.restrictedCash,
       otherInvestments: c.otherInvestments,
       totalDebt: c.totalDebt,
       preferredEquity: c.preferredEquity,
