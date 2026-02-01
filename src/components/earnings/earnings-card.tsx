@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { EarningsCalendarEntry } from "@/lib/types";
+import { ExternalLink } from "lucide-react";
 
 // Asset colors (matching data-table.tsx)
 const assetColors: Record<string, string> = {
@@ -111,6 +112,22 @@ export function EarningsCard({ entry, onClick }: EarningsCardProps) {
           </div>
         </div>
       </div>
+
+      {/* Earnings Call Link (for upcoming earnings with call URL) */}
+      {entry.earningsCallUrl && (isUpcoming || isToday) && (
+        <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+          <a
+            href={entry.earningsCallUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            <ExternalLink className="h-3 w-3" />
+            Join Earnings Call
+          </a>
+        </div>
+      )}
 
       {/* Bottom row: Metrics (for reported earnings) */}
       {entry.status === "reported" && (

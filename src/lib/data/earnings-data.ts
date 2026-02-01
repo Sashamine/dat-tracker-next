@@ -3364,6 +3364,7 @@ export function getEarningsCalendar(options?: {
       daysUntil,
       epsSurprisePct,
       holdingsPerShareGrowth,
+      earningsCallUrl: earnings.earningsCallUrl,
     });
   }
 

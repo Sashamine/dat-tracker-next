@@ -301,6 +301,7 @@ export interface EarningsRecord {
   // Metadata
   source: EarningsSource;
   sourceUrl?: string;
+  earningsCallUrl?: string;           // Link to earnings call webcast/registration
   status: EarningsStatus;
 }
 
@@ -314,6 +315,7 @@ export interface EarningsCalendarEntry {
   daysUntil: number;                  // Negative if past
   epsSurprisePct?: number;            // (actual - estimate) / |estimate| * 100
   holdingsPerShareGrowth?: number;    // QoQ treasury yield %
+  earningsCallUrl?: string;           // Link to earnings call webcast/registration
 }
 
 export type YieldPeriod = "1W" | "1M" | "3M" | "1Y";
