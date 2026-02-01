@@ -218,9 +218,9 @@ export function getMarketCapForMnavSync(
   const isNonUsd = NON_USD_TICKERS.has(ticker);
   const currency = TICKER_CURRENCIES[ticker] || "USD";
 
-  // Debug for Metaplanet
-  if (ticker === '3350.T') {
-    console.log('[MarketCap Debug] 3350.T input:', {
+  // Debug for Metaplanet and TWAV
+  if (ticker === '3350.T' || ticker === 'TWAV') {
+    console.log(`[MarketCap Debug] ${ticker} input:`, {
       sharesForMnav: company.sharesForMnav,
       stockDataPrice: stockData?.price,
       stockDataMarketCap: stockData?.marketCap,
@@ -275,12 +275,13 @@ export function getMarketCapForMnavSync(
 
     const calculatedMarketCap = priceInUsd * effectiveShares;
 
-    // Debug for Metaplanet and MSTR
-    if (ticker === '3350.T' || ticker === 'MSTR') {
+    // Debug for Metaplanet, MSTR, and TWAV
+    if (ticker === '3350.T' || ticker === 'MSTR' || ticker === 'TWAV') {
       console.log(`[MarketCap Debug] ${ticker} calculated:`, {
         priceInUsd,
         effectiveShares,
         calculatedMarketCap,
+        source: 'calculated',
       });
     }
 
