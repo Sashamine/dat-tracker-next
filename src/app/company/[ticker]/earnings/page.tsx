@@ -9,7 +9,7 @@ import { MobileHeader } from "@/components/mobile-header";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { getCompanyEarnings, getNextEarnings } from "@/lib/data/earnings-data";
-import { formatLargeNumber, formatPercent } from "@/lib/calculations";
+import { formatLargeNumber, formatPercent, formatTokenAmountPrecise } from "@/lib/calculations";
 import type { EarningsRecord } from "@/lib/types";
 
 // Asset colors
@@ -358,7 +358,7 @@ export default function CompanyEarningsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
                           {earning.holdingsAtQuarterEnd !== undefined ? (
-                            formatLargeNumber(earning.holdingsAtQuarterEnd)
+                            formatTokenAmountPrecise(earning.holdingsAtQuarterEnd, company.asset)
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}
@@ -421,7 +421,7 @@ export default function CompanyEarningsPage() {
                         <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Holdings</div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">
                           {earning.holdingsAtQuarterEnd !== undefined ? (
-                            formatLargeNumber(earning.holdingsAtQuarterEnd)
+                            formatTokenAmountPrecise(earning.holdingsAtQuarterEnd, company.asset)
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}

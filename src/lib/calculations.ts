@@ -957,6 +957,12 @@ export function formatTokenAmount(num: number | null | undefined, symbol: string
   return `${num.toLocaleString()} ${symbol}`;
 }
 
+// Precise token formatting - shows exact number with commas, no rounding
+export function formatTokenAmountPrecise(num: number | null | undefined, symbol: string): string {
+  if (num === null || num === undefined) return "—";
+  return `${num.toLocaleString()} $${symbol}`;
+}
+
 export function formatPercent(num: number | null | undefined, includeSign = false): string {
   if (num === null || num === undefined) return "—";
   const sign = includeSign && num > 0 ? "+" : "";
