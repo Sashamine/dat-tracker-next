@@ -677,6 +677,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // CWD (Caliber / CaliberCos) - LINK treasury company
+  // SEC CIK: 0001627282 | Nasdaq: CWD
+  // First Nasdaq-listed LINK treasury - strategy launched Sep 2025
+  // Verified 2026-02-01 via SEC XBRL Q3 2025
+  // All warrants deep OTM at ~$1.22 stock price
+  CWD: [
+    {
+      type: "warrant",
+      strikePrice: 16.49,
+      potentialShares: 129_040,
+      source: "SEC 10-Q Q3 2025 XBRL",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+      notes: "Warrants outstanding @ $16.49 - deep OTM at ~$1.22 stock",
+    },
+  ],
+
   // LUXFF (Luxxfolio Holdings) - Canadian LTC treasury company
   // CSE: LUXX | OTCQB: LUXFF | SEDAR+ Profile: 000044736
   // All prices in USD (converted from CAD at ~0.71 USD/CAD)

@@ -3401,6 +3401,63 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "estimated",
     status: "upcoming",
   },
+
+  // ==================== LINK COMPANIES ====================
+
+  // ========== Caliber (CWD) ==========
+  // Calendar year company (fiscal = calendar)
+  // SEC CIK: 0001627282
+  // First Nasdaq-listed LINK treasury company - strategy launched Sep 2025
+  // Real estate asset manager pivoting to LINK
+  //
+  // Q4 2025 - Upcoming
+  {
+    ticker: "CWD",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-31",  // 10-K expected ~90 days after Dec 31
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 562_535,  // Last known from IR site
+    sharesAtQuarterEnd: 6_905_000,  // 6.53M Class A + 0.37M Class B per DEF 14A Jan 7, 2026
+    holdingsPerShare: 0.0815,  // 562535 / 6905000
+    source: "company-dashboard",
+    sourceUrl: "https://ir.caliberco.com/",
+    status: "upcoming",
+  },
+  // Q3 2025 - First full quarter with LINK (10-Q filed Nov 13, 2025)
+  {
+    ticker: "CWD",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-13",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 562_535,  // Sep 30, 2025
+    sharesAtQuarterEnd: 2_615_000,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding Q3 2025
+    holdingsPerShare: 0.2151,  // 562535 / 2615000
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    status: "reported",
+  },
+  // Q2 2025 - Pre-LINK strategy
+  {
+    ticker: "CWD",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-LINK strategy (launched Sep 2025)
+    sharesAtQuarterEnd: 1_404_000,  // SEC XBRL diluted shares Q2 2025
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date

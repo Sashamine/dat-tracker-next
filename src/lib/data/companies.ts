@@ -1165,8 +1165,11 @@ export const linkCompanies: Company[] = [
     sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
     secCik: "1627282",
     leader: "John C. Loeffler II (CEO)",
+    website: "https://caliberco.com",
+    twitter: "https://x.com/CaliberCompany",
+    investorRelationsUrl: "https://ir.caliberco.com/",
     strategy: "First Nasdaq LINK treasury. DCA accumulation + staking.",
-    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked.",
+    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner.",
   },
 ];
 
