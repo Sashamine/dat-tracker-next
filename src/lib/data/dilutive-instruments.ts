@@ -1102,6 +1102,25 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // All instruments deep OTM at ~$2 stock vs $9-$15 strikes
   // 300 BTC collateral on June note, 475 BTC funded March note
 
+  // FUFU (BitFuFu) - BTC miner
+  // Verified 2026-02-02 via SEC 20-F (Apr 2025) and 6-K (Jan 2026)
+  // CIK: 0001921158
+  // Basic shares: 164,131,946 (Jun 2025 XBRL)
+  // Debt: $101.3M long-term
+  FUFU: [
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 5_382_292,  // 7,176,389 warrants × 0.75 shares each
+      source: "SEC 20-F FY2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1921158/000121390025033733/ea0238119-20f_bitfu.htm",
+      notes: "Public warrants @ $11.50 - each warrant = 3/4 share. Deep OTM at ~$2.80 stock.",
+    },
+  ],
+  // Total FUFU dilution: 5.4M potential shares from warrants (all OTM at $11.50 vs ~$2.80)
+  // Also Unit Purchase Option for 115,000 units @ $11.50
+
   // HYPD (Hyperion DeFi) - HYPE treasury company
   // Verified 2026-01-30 via SEC 424B3 (Jan 9, 2026) and 10-Q Q3 2025
   // CIK: 0001682639
