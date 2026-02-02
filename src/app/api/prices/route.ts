@@ -228,6 +228,10 @@ async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
     if (Array.isArray(data)) {
       for (const stock of data) {
         if (stock?.symbol) {
+          // Debug logging for TSWCF to diagnose pricing issue
+          if (stock.symbol === "TSWCF") {
+            console.log("[FMP DEBUG] TSWCF raw response:", JSON.stringify(stock));
+          }
           result[stock.symbol] = {
             price: stock.price || 0,
             change24h: stock.changePercentage || 0,
