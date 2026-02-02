@@ -1056,6 +1056,71 @@ export const btcCompanies: Company[] = [
     notes: "ASX listed. Holds BTC + ETH in corporate treasury + fund units. Early adopter, transparent reporting.",
   },
   {
+    id: "ndav",
+    name: "Neptune Digital Assets",
+    ticker: "NDA.V",
+    currency: "CAD",
+    asset: "BTC",
+    tier: 2,
+    holdings: 416,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2025-04-10",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://neptunedigitalassets.com/",
+    datStartDate: "2018-01-01",
+    costBasisAvg: 30_428,  // $12.66M / 416 BTC
+    isMiner: true,
+    quarterlyBurnUsd: 500_000,
+    avgDailyVolume: 500_000,
+    sharesForMnav: 200_000_000,  // Estimated
+    strategy: "Focused exclusively on BTC and digital assets. Active DCA, mining rewards, and derivative trading.",
+    notes: "TSX Venture (Canada). Long-term accumulator with transparent reporting. Total cost basis $12.66M.",
+  },
+  {
+    id: "dmgi",
+    name: "DMG Blockchain Solutions",
+    ticker: "DMGI.V",
+    currency: "CAD",
+    asset: "BTC",
+    tier: 2,
+    holdings: 403,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2025-03-31",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://dmgblockchain.com/",
+    datStartDate: "2018-01-01",
+    isMiner: true,
+    quarterlyBurnUsd: 2_000_000,
+    avgDailyVolume: 1_000_000,
+    sharesForMnav: 200_000_000,  // Estimated
+    strategy: "BTC miner with long-term treasury accumulation. Active management with infrastructure investments.",
+    notes: "TSX Venture (Canada). Mining-as-a-service provider. Recent MOU for 10MW data center expansion.",
+  },
+  {
+    id: "lmfa",
+    name: "LM Funding America",
+    ticker: "LMFA",
+    asset: "BTC",
+    tier: 2,
+    holdings: 356,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2024-06-30",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://www.lmfunding.com/",
+    datStartDate: "2024-01-01",
+    secCik: "1622879",
+    isMiner: true,
+    quarterlyBurnUsd: 1_000_000,
+    avgDailyVolume: 2_000_000,
+    sharesForMnav: 50_000_000,  // Estimated
+    strategy: "Pivoted from specialty finance to vertically integrated BTC mining. 15MW Oklahoma facility.",
+    notes: "Nasdaq. Holdings surged 300%+ in 2024 to ~$14M. 0.07x mNAV extreme discount.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Extreme mNAV discount (0.07x) suggests market skepticism about company viability.",
+        severity: "warning",
+      },
+    ],
+  },
+  {
     id: "naka",
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
