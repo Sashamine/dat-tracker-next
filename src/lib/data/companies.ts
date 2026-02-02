@@ -769,6 +769,9 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
+    totalDebt: 82_394_322,  // SEC 10-Q Sep 2025: $21.6M June convert + $60.8M March convert (related party)
+    debtAsOf: "2025-09-30",
+    debtSource: "SEC 10-Q Q3 2025",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     notes: "Nasdaq: FLD. Fold Card debit with BTC rewards. Went public July 2024. Russell 2000 (Dec 2025). Also 800 BTC restricted as collateral.",
   },

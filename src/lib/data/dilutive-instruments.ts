@@ -1062,6 +1062,46 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // 2023 ESOP allows up to 1.208M shares + 10% annual increase
   // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually
 
+  // FLD (Fold Holdings) - BTC treasury company
+  // Verified 2026-02-02 via SEC 10-Q Q3 2025 (CIK 0001889123)
+  // Basic shares: 48,307,642 (Nov 2025)
+  // Convertible debt: $82.4M ($21.6M June convert + $60.8M March convert related party)
+  FLD: [
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 925_590,  // Per Nasdaq listing - FLDDW warrants
+      source: "SEC 10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      expiration: "2029-07-01",  // Typical 5-year SPAC warrant term
+      notes: "Public warrants (FLDDW) at $11.50 - deep OTM at ~$2 stock",
+    },
+    {
+      type: "convertible",
+      strikePrice: 3.00,  // Estimated based on $3 per share terms mentioned in 10-Q
+      potentialShares: 750_000,  // Closing Shares mentioned in 10-Q
+      faceValue: 21_644_139,  // June 2025 convertible note
+      source: "SEC 10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      notes: "June 2025 convertible note - conversion terms need verification",
+    },
+    {
+      type: "convertible",
+      strikePrice: 3.00,  // Estimated
+      potentialShares: 20_250_000,  // Estimated based on face value / strike
+      faceValue: 60_750_183,  // March 2025 convertible note - related party
+      source: "SEC 10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      notes: "March 2025 convertible note (related party) - conversion terms need verification",
+    },
+  ],
+  // Total FLD dilution: 925K warrants (OTM) + ~21M potential convert shares
+  // Warrants deep OTM at $11.50 vs ~$2 stock
+  // Converts need strike verification - could add significant dilution if ITM
+
   // HYPD (Hyperion DeFi) - HYPE treasury company
   // Verified 2026-01-30 via SEC 424B3 (Jan 9, 2026) and 10-Q Q3 2025
   // CIK: 0001682639
