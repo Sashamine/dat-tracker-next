@@ -251,10 +251,15 @@ async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
 }
 
 export async function GET() {
+  console.log("[Prices] GET called at", new Date().toISOString());
+  
   // Return cached data if fresh
   if (priceCache && Date.now() - priceCache.timestamp < CACHE_TTL) {
+    console.log("[Prices] Returning cached data");
     return NextResponse.json(priceCache.data, { headers: RESPONSE_HEADERS });
   }
+  
+  console.log("[Prices] Cache miss, fetching fresh data...");
 
   try {
     const marketOpen = isMarketOpen();
