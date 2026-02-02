@@ -654,7 +654,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 500_000,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 695_687_093,  // Companies House Jan 12, 2026 statement of capital (par 0.001)
+    sharesForMnav: 395_188_479,  // Company website "Fully Diluted Shares" (Feb 2026) - used for mNAV calc
     strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
     notes: "AQUIS: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested £221.4M at avg £82,800/BTC. Companies House: 00092343.",
     dataWarnings: [

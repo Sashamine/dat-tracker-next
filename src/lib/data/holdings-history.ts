@@ -811,8 +811,9 @@ const IHLDF_HISTORY: HoldingsSnapshot[] = [
 // Source: AQUIS RNS announcements
 const SWC_HISTORY: HoldingsSnapshot[] = [
   // "The 10 Year Plan" launched Apr 2025
-  { date: "2025-11-04", holdings: 2664, sharesOutstandingDiluted: 645_687_093, holdingsPerShare: 0.00000413, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5447426", sourceType: "regulatory-filing" },
-  { date: "2026-01-22", holdings: 2674, sharesOutstandingDiluted: 695_687_093, holdingsPerShare: 0.00000384, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558", sourceType: "regulatory-filing" },
+  // Note: Company reports "Fully Diluted Shares" separately from Companies House issued capital
+  { date: "2025-11-04", holdings: 2664, sharesOutstandingDiluted: 380_000_000, holdingsPerShare: 0.00000701, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5447426", sourceType: "regulatory-filing" },
+  { date: "2026-01-22", holdings: 2674, sharesOutstandingDiluted: 395_188_479, holdingsPerShare: 0.00000677, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558", sourceType: "regulatory-filing" },
 ];
 
 // Map of all companies with historical data
