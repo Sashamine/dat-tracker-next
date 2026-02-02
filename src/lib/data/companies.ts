@@ -691,7 +691,7 @@ export const btcCompanies: Company[] = [
     ticker: "DDC",
     asset: "BTC",
     tier: 2,
-    holdings: 1_783,  // treasury.ddc.xyz Jan 29, 2026 (company-reported)
+    holdings: 1_783,  // treasury.ddc.xyz Jan 29, 2026
     holdingsLastUpdated: "2026-01-29",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://treasury.ddc.xyz",
@@ -702,9 +702,9 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 24_184_005,  // SEC 6-K Oct 2025: 23.31M Class A + 0.875M Class B (basic shares)
+    sharesForMnav: 23_310_000,  // treasury.ddc.xyz basic shares (matches their 0.43x mNAV calc)
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
-    notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). ⚠️ HOLDINGS: Company reports 1,783 BTC (treasury.ddc.xyz Jan 29), SEC 424B3 Jan 26 shows 1,383 BTC. ⚠️ DILUTIVE INSTRUMENTS: $300M convertible note (Anson, ~$6.50 conversion, OTM), $200M ELOC undrawn, 1.8M Pre-IPO options ($0.0016-$30.60), 2023 ESOP pool. Fully diluted: 29.75M shares.",
+    notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). ⚠️ HOLDINGS: Company reports 1,783 BTC, SEC 424B3 Jan 26 shows 1,383 BTC. ⚠️ DILUTIVE INSTRUMENTS: $300M convertible note (Anson, OTM), $200M ELOC undrawn, 1.8M Pre-IPO options, 2023 ESOP pool. Fully diluted: 29.75M shares (0.47x mNAV).",
   },
   // HIVE Digital Technologies (HIVE) REMOVED 2026-02-02
   // Reason: Not a DAT accumulator. SEC XBRL shows only $24.4M crypto (Sep 2025) = ~313 BTC
