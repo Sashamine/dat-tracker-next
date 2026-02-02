@@ -656,9 +656,8 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 1_000_000,
     sharesForMnav: 395_188_479,  // Company website "Fully Diluted Shares" (Feb 2026) - used for mNAV calc
     strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
-    notes: "AQUIS: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested £221.4M at avg £82,800/BTC. Companies House: 00092343.",
-    dataWarnings: [
-    ],
+    notes: "AQUIS: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested £221.4M at avg £82,800/BTC. Companies House shows ~696M total shares but company reports 395M fully diluted - difference likely deferred shares from shell restructuring (was Uranium Energy Exploration PLC until Apr 2025). Using company-reported figure for mNAV.",
+    dataWarnings: [],
   },
   {
     id: "sqns",
