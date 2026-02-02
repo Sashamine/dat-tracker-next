@@ -23,11 +23,12 @@
 **Why**: Miners have different dynamics:
 - They produce BTC continuously, so mNAV premium is justified by mining capacity
 - Their holdings grow from operations, not just purchases
-- Comparing a treasury's mNAV to a miner's mNAV is apples-to-oranges
+- Miner mNAV is still valid/useful, just shouldn't be mixed with treasury mNAV in averages
 
 **Implementation ideas**:
 - Add tabs or toggle to sector stats: "All | Treasuries | Miners"
 - Show separate totals: total BTC held, total market cap, weighted avg mNAV
+- **Separate mNAV benchmarks**: Treasury avg mNAV vs Miner avg mNAV
 - Maybe show miner-specific stats: combined hashrate, monthly BTC production
 
 ---
