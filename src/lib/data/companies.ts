@@ -750,26 +750,8 @@ export const btcCompanies: Company[] = [
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (600k+ users).",
     notes: "Singapore listed. BITMAIN strategic partner. 3.1 EH/s self-owned, 20.6 EH/s under management. 480 MW hosting (US + Ethiopia). 82% insider ownership.",
   },
-  {
-    id: "exod",
-    name: "Exodus Movement",
-    ticker: "EXOD",
-    asset: "BTC",
-    tier: 2,
-    holdings: 1_704,  // Dec 31, 2025 Treasury Update (reduced to repay $60M loan)
-    holdingsLastUpdated: "2025-12-31",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.exodus.com/investors/news-events/press-releases/detail/96/exodus-movement-inc-december-2025-treasury-update-and-monthly-metrics",
-    datStartDate: "2024-01-01",
-    website: "https://exodus.com",
-    secCik: "0001821534",  // Fixed - was incorrectly 1839341 (Core Scientific)
-    isMiner: false,
-    quarterlyBurnUsd: 5_000_000,
-    avgDailyVolume: 10_000_000,
-    sharesForMnav: 29_237_916,  // SEC 10-Q Sep 2025: 9.77M Class A + 19.47M Class B
-    strategy: "Crypto wallet company with explicit treasury strategy. Receives revenue in BTC, accumulates rather than converts.",
-    notes: "NYSE American listed. 1.5M MAUs. Also holds 1,898 ETH + 12,473 SOL. Debt-free as of Dec 2025 (repaid $60M Galaxy loan).",
-  },
+  // EXOD (Exodus Movement) REMOVED - not a DAT accumulator
+  // They hold BTC but sell it for operations/acquisitions, no explicit accumulation strategy
   {
     id: "fld",
     name: "Fold Holdings",
