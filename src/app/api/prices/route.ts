@@ -9,7 +9,8 @@ import { getLSTExchangeRates, getSupportedLSTIds } from "@/lib/lst";
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Forex pairs we need (FMP format)
-const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR", "USDGBP"];
+// Note: FMP uses GBPUSD format for some pairs
+const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR", "GBPUSD"];
 
 // Cache for forex rates (5 minute TTL - forex doesn't move that fast)
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;

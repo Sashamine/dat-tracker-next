@@ -73,6 +73,9 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   // SPACs/Pre-merger (limited data availability)
   "ETHM": { price: 10.00, marketCap: 230_000_000 },        // Ether Machine (pending SPAC merger)
 
+  // UK/AQUIS (FMP has bad data for TSWCF)
+  "SWC": { price: 0.57, marketCap: 225_000_000 },  // Smarter Web Company - £0.42 GBP = ~$0.57 USD, 395M shares
+
   // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
   "XTAIF": { price: 0.50, marketCap: 18_900_000 },  // Updated Jan 26, 2026 - TMX Money XTAO.U
