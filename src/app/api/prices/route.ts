@@ -19,6 +19,7 @@ const FOREX_CACHE_TTL = 5 * 60 * 1000;
 // Ticker -> currency mapping for non-USD stocks (used for price conversion)
 const TICKER_CURRENCY: Record<string, string> = {
   "3350.T": "JPY",
+  "3189.T": "JPY",    // ANAP Holdings (Tokyo Stock Exchange)
   "H100.ST": "SEK",
   "0434.HK": "HKD",
   "ALTBG": "EUR",
@@ -43,6 +44,7 @@ const FMP_ONLY_STOCKS = [
   "IHLDF",     // Immutable Holdings (OTC) - Alpaca has poor OTC coverage
   "NA",        // Nano Labs
   "3350.T",    // Metaplanet (Tokyo)
+  "3189.T",    // ANAP Holdings (Tokyo)
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)

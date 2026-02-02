@@ -15,6 +15,7 @@ const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
 // Ticker -> currency mapping for non-USD stocks (used for price conversion)
 const TICKER_CURRENCY: Record<string, string> = {
   "3350.T": "JPY",
+  "3189.T": "JPY",    // ANAP Holdings (Tokyo Stock Exchange)
   "H100.ST": "SEK",
   "0434.HK": "HKD",
   "ALTBG": "EUR",
