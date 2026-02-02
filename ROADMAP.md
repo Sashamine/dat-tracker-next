@@ -14,6 +14,24 @@
 - Added "⛏️ Miner" badge to data table for companies with `isMiner: true`
 - Orange color scheme with tooltip explaining miners produce BTC
 
+### Upcoming: Multi-Asset Companies Tab
+
+**Goal**: Add a "Multi-Asset" category for companies holding multiple crypto assets.
+
+**Why**: Companies like Remixpoint (3825.T) hold BTC + ETH + XRP + SOL + DOGE. Can't categorize under single asset.
+
+**Implementation ideas**:
+- New `asset: "MULTI"` value or `assets: ["BTC", "ETH", "SOL"]` array
+- Multi-asset tab in UI alongside BTC/ETH filters
+- Show breakdown of holdings by asset
+- mNAV calculation uses total crypto value across all assets
+
+**Candidates**:
+- Remixpoint (1,411 BTC + 901 ETH + 1.2M XRP + 13,920 SOL + 2.8M DOGE)
+- Others TBD
+
+---
+
 ### Upcoming: Split Sector Statistics by Miner vs Treasury
 
 **Goal**: Divide the sector statistics panel to show separate aggregates for:
