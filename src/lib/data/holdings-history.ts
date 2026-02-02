@@ -807,9 +807,18 @@ const IHLDF_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-31", holdings: 48000000, sharesOutstandingDiluted: 65_000_000, holdingsPerShare: 0.738, source: "Q4 2025 filing", sourceUrl: "https://www.sedarplus.ca", sourceType: "regulatory-filing" },
 ];
 
+// SWC (The Smarter Web Company) - UK BTC Treasury
+// Source: AQUIS RNS announcements
+const SWC_HISTORY: HoldingsSnapshot[] = [
+  // "The 10 Year Plan" launched Apr 2025
+  { date: "2025-11-04", holdings: 2664, sharesOutstandingDiluted: 645_687_093, holdingsPerShare: 0.00000413, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5447426", sourceType: "regulatory-filing" },
+  { date: "2026-01-22", holdings: 2674, sharesOutstandingDiluted: 695_687_093, holdingsPerShare: 0.00000384, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558", sourceType: "regulatory-filing" },
+];
+
 // Map of all companies with historical data
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   // BTC Companies
+  SWC: { ticker: "SWC", asset: "BTC", history: SWC_HISTORY },
   MSTR: { ticker: "MSTR", asset: "BTC", history: MSTR_HISTORY },
   MARA: { ticker: "MARA", asset: "BTC", history: MARA_HISTORY },
   RIOT: { ticker: "RIOT", asset: "BTC", history: RIOT_HISTORY },
