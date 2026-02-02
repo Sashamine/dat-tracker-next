@@ -651,6 +651,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558",
     datStartDate: "2025-04-01",
     website: "https://www.smarterwebcompany.co.uk",
+    twitter: "https://x.com/smarterwebuk",
     isMiner: false,
     quarterlyBurnUsd: 500_000,
     avgDailyVolume: 1_000_000,
