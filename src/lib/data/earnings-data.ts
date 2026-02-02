@@ -3596,7 +3596,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 1417, // Jan 21, 2026 - 1,417.0341 BTC (ongoing quarter)
     sharesAtQuarterEnd: 39_954_400,
     holdingsPerShare: 0.0000355,
-    source: "press-release",
+    source: "regulatory-filing",
     sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
     status: "upcoming",
   },
@@ -3612,7 +3612,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 1347, // Dec 25, 2025 - 1,346.5856 BTC
     sharesAtQuarterEnd: 39_954_400,
     holdingsPerShare: 0.0000337,
-    source: "press-release",
+    source: "regulatory-filing",
     sourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
     status: "reported",
   },
@@ -3628,7 +3628,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 962, // Sep 30, 2025 - 961.6579 BTC
     sharesAtQuarterEnd: 39_954_400,
     holdingsPerShare: 0.0000241,
-    source: "press-release",
+    source: "regulatory-filing",
     status: "reported",
   },
   // Q2 2025
@@ -3643,7 +3643,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 332, // Jun 18, 2025 - 331.6579 BTC
     sharesAtQuarterEnd: 39_954_400,
     holdingsPerShare: 0.0000083,
-    source: "press-release",
+    source: "regulatory-filing",
     status: "reported",
   },
 ];
