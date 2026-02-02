@@ -826,37 +826,8 @@ export const btcCompanies: Company[] = [
     strategy: "EV charging company (flywheel tech) pivoted to BTC treasury Sep 2025. First NIS-denominated Bitcoin exposure on TASE.",
     notes: "Nasdaq + TASE dual-listed (Israel). ✅ NO LEVERAGE: BTC funded via $180M equity raise (Jul 2025). Underwater on BTC ($116k avg). Dilutive: 269M fully diluted (warrants @ $3.06 strike, 5yr). Renamed to 'ZOOZ Strategy Ltd.' Oct 2025.",
   },
-  {
-    id: "usbc",
-    name: "USBC Inc",
-    ticker: "USBC",
-    asset: "BTC",
-    tier: 2,
-    holdings: 1_003,  // SEC 10-K FY2025: 1,000 BTC received Aug 6 + 2.617 from trading = 1,002.617
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1074828/000165495425014138/usbc_10k.htm",
-    datStartDate: "2025-08-06",
-    website: "https://usbc.xyz",
-    investorRelationsUrl: "https://investors.usbc.xyz",
-    secCik: "0001074828",
-    costBasisAvg: 115_567,  // SEC 10-K: "recorded at an average price of $115,567 per Bitcoin"
-    isMiner: false,
-    quarterlyBurnUsd: 6_000_000,
-    avgDailyVolume: 5_000_000,
-    sharesForMnav: 388_143_679,  // SEC 10-K: exact shares as of Sep 30, 2025
-    sharesSource: "SEC 10-K FY2025",
-    sharesAsOf: "2025-09-30",
-    totalDebt: 0,  // NO DEBT for BTC: received 1,000 BTC via equity (357.8M shares + $15M cash from Goldeneye)
-    debtSource: "SEC 10-K FY2025 - BTC acquired via equity issuance, not debt",
-    debtAsOf: "2025-09-30",
-    cashReserves: 8_822_000,  // SEC 10-K: $8,821,999 cash as of Sep 30, 2025
-    cashSource: "SEC 10-K FY2025",
-    cashAsOf: "2025-09-30",
-    leader: "Greg Kidd (CEO, Chairman)",
-    strategy: "BTC treasury + tokenized deposit platform (USBC). Uses options/derivatives to generate yield on BTC holdings via Hyrcanian Asset Management.",
-    notes: "NYSE American. Formerly Know Labs (Aug 2025). FY ends Sep 30. BTC fair value $115M (Sep 30). ~$34.5M BTC pledged as collateral for derivative trading. 71.5% owned by Goldeneye (Kidd). Dec 2025: 1,011.344 BTC @ $86,225 = $87.2M fair value.",
-  },
+  // USBC removed 2026-02-02: SEC 10-K states "does not currently intend to make future BTC purchases"
+  // They hold ~1,003 BTC but it was a one-time equity contribution, not an ongoing treasury strategy
   {
     id: "btct",
     name: "Bitcoin Treasury Corp",
