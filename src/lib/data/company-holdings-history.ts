@@ -7,11 +7,13 @@
 
 import { getHoldingsAsOf as getANAPHoldings } from "./anap-holdings-history";
 import { getHoldingsAsOf as getRemixpointHoldings } from "./remixpoint-holdings-history";
+import { getHoldingsAsOf as getDDCHoldings } from "./ddc-holdings-history";
 
 // Map of tickers to their holdings history lookup functions
 const HOLDINGS_HISTORY_FUNCTIONS: Record<string, (date: string) => number> = {
   "3189.T": getANAPHoldings,
   "3825.T": getRemixpointHoldings,
+  "DDC": getDDCHoldings,
   // Add more companies here as we build their histories:
   // "SWC": getSWCHoldings,
   // "3350.T": getMetaplanetHoldings,

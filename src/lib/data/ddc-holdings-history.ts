@@ -243,6 +243,15 @@ export function getHoldingsAtDate(targetDate: string): DDCHoldingsEntry | null {
   return entries.length > 0 ? entries[entries.length - 1] : null;
 }
 
+/**
+ * Get cumulative BTC holdings as of a specific date (for mNAV chart)
+ */
+export function getHoldingsAsOf(date: string): number {
+  const entries = ddcHoldingsHistory.filter(e => e.date <= date);
+  if (entries.length === 0) return 0;
+  return entries[entries.length - 1].cumulativeBtc;
+}
+
 // Helper function to calculate BTC per share at a date
 export function getBtcPerShareAtDate(targetDate: string): number | null {
   const entry = getHoldingsAtDate(targetDate);
