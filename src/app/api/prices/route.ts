@@ -55,10 +55,11 @@ const FMP_ONLY_STOCKS = [
   "HSDT",      // Heliogen
   ];
 
-// Canadian stocks - use Yahoo Finance (FMP doesn't cover TSX Venture well)
-// Yahoo ticker format: XTAO-U.V for TSX Venture USD-quoted
+// Stocks using Yahoo Finance (FMP doesn't cover well)
+// Yahoo ticker format varies by exchange
 const YAHOO_TICKERS: Record<string, string> = {
   "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD) - also trades as XTAO.V in CAD
+  "SWC": "TSWCF",        // Smarter Web Company - OTC ticker (AQUIS primary not on Yahoo)
 };
 
 // Cache for prices (2 second TTL)
@@ -307,18 +308,9 @@ export async function GET() {
       }
     }
 
-    // Debug: Check if SWC came from Alpaca
-    if (stockPrices["SWC"]) {
-      console.log("[DEBUG] SWC after Alpaca:", JSON.stringify(stockPrices["SWC"]));
-    }
-
     // Merge FMP stocks (with ticker mapping, currency conversion, and market cap overrides)
     for (const [ticker, data] of Object.entries(fmpStocks)) {
       const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
-      // Debug: Log any SWC-related FMP data
-      if (ticker === "SWC" || ticker === "TSWCF" || displayTicker === "SWC") {
-        console.log(`[DEBUG] FMP ticker=${ticker} -> displayTicker=${displayTicker}, data=`, JSON.stringify(data));
-      }
       // Convert price to USD if it's a foreign currency stock
       const currency = TICKER_CURRENCY[displayTicker];
       const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
@@ -330,11 +322,6 @@ export async function GET() {
         // Apply market cap override if available (fixes currency conversion issues)
         marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
       };
-    }
-
-    // Debug: Check SWC after FMP merge
-    if (stockPrices["SWC"]) {
-      console.log("[DEBUG] SWC after FMP:", JSON.stringify(stockPrices["SWC"]));
     }
 
     // Merge Yahoo Finance stocks (for TSX Venture, etc.)
