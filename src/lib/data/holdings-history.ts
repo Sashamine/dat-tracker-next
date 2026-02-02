@@ -266,7 +266,7 @@ const SQNS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-23", holdings: 0, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0, source: "DAT strategy announced", sourceType: "press-release" },
   { date: "2025-07-08", holdings: 1_500, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0.00000597, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "sec-filing" },
   { date: "2025-09-17", holdings: 3_234, sharesOutstandingDiluted: 25_140_892, holdingsPerShare: 0.0001287, source: "1:10 reverse split + peak holdings", sourceType: "sec-filing" },
-  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 15_590_000, holdingsPerShare: 0.0001452, source: "6-K: Sold 970 BTC to repay debt", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "sec-filing" },
+  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 13_933_963, holdingsPerShare: 0.0001625, source: "6-K: Sold 970 BTC to repay debt", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "sec-filing" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury

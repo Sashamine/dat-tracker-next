@@ -1396,8 +1396,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-02-10",
     earningsTime: "BMO",
     holdingsAtQuarterEnd: 2_264,  // Nov 4, 2025 6-K: sold 970 BTC, now 2,264
-    sharesAtQuarterEnd: 15_590_000,  // Post-split, StockAnalysis Feb 2026
-    holdingsPerShare: 0.0001452,  // 2264 / 15.59M
+    sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 diluted ADS (using Q3 until Q4 filed)
+    holdingsPerShare: 0.0001625,  // 2264 / 13.93M
     source: "sec-filing",
     sourceUrl: "https://sequans.com/bitcoin-treasury/",
     status: "upcoming",
@@ -1412,8 +1412,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-04",
     earningsTime: "BMO",
     holdingsAtQuarterEnd: 3_234,  // Peak before Nov 4 sale of 970 BTC
-    sharesAtQuarterEnd: 25_140_000,  // Post-split (251.4M / 10)
-    holdingsPerShare: 0.0001287,  // 3234 / 25.14M
+    sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 weighted avg diluted ADS
+    holdingsPerShare: 0.0002321,  // 3234 / 13.93M
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
     status: "reported",

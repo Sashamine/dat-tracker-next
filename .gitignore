@@ -42,3 +42,5 @@ next-env.d.ts
 
 # SEC filing content (large - stored locally only)
 /data/sec-content/
+
+.env*.local
