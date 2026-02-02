@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getStaticHistoryForRange } from "@/lib/data/stock-price-history";
 
 interface HistoricalPrice {
   time: string;
@@ -82,10 +83,26 @@ export async function GET(
       return NextResponse.json(yahooData);
     }
 
+    // Fallback to static historical data for illiquid/international stocks
+    const staticData = getStaticHistoryForRange(ticker, days, interval);
+    if (staticData && staticData.length > 0) {
+      console.log(`[StockHistory] Using static data for ${ticker}: ${staticData.length} points`);
+      cache.set(cacheKey, { data: staticData, timestamp: Date.now() });
+      return NextResponse.json(staticData);
+    }
+
     // Return empty array if no data
     return NextResponse.json([]);
   } catch (error) {
     console.error("Error fetching stock history:", error);
+    
+    // Try static data on error as well
+    const staticData = getStaticHistoryForRange(ticker, days, interval);
+    if (staticData && staticData.length > 0) {
+      console.log(`[StockHistory] Using static fallback for ${ticker} after error`);
+      return NextResponse.json(staticData);
+    }
+    
     return NextResponse.json([]);
   }
 }
