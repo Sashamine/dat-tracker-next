@@ -689,6 +689,7 @@ export const btcCompanies: Company[] = [
     id: "ddc",
     name: "DDC Enterprise",
     ticker: "DDC",
+    xAccount: "ddcbtc_",
     asset: "BTC",
     tier: 2,
     holdings: 1_783,  // treasury.ddc.xyz Jan 29, 2026
