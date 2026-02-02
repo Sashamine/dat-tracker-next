@@ -979,6 +979,83 @@ export const btcCompanies: Company[] = [
     notes: "KOSDAQ (South Korea). Fintech company with blockchain focus. Transparent reporting via DART filings.",
   },
   {
+    id: "arlp",
+    name: "Alliance Resource Partners",
+    ticker: "ARLP",
+    asset: "BTC",
+    tier: 2,
+    holdings: 541,  // Dec 31, 2024 SEC filing
+    holdingsLastUpdated: "2024-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1086600/000155837025001805/arlp-20241231x10k.htm",
+    datStartDate: "2024-04-01",
+    secCik: "1086600",
+    isMiner: true,  // Mining BTC as part of operations
+    quarterlyBurnUsd: 0,  // Profitable coal company
+    avgDailyVolume: 20_000_000,
+    sharesForMnav: 130_000_000,  // LP units estimated
+    strategy: "Coal miner actively mining and holding BTC as treasury. Views BTC as non-sovereign inflation-resistant asset.",
+    notes: "Nasdaq (LP). One of first major US coal miners with BTC. 73x mNAV reflects coal business dominates valuation.",
+  },
+  {
+    id: "srag",
+    name: "Samara Asset Group",
+    ticker: "SRAG.DU",
+    currency: "EUR",
+    asset: "BTC",
+    tier: 2,
+    holdings: 540,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2024-12-02",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://www.samara-ag.com/",
+    datStartDate: "2024-01-01",
+    costBasisAvg: 60_000,  // Estimated
+    isMiner: false,
+    quarterlyBurnUsd: 2_000_000,
+    avgDailyVolume: 1_000_000,
+    sharesForMnav: 20_000_000,  // Estimated
+    strategy: "BTC as primary treasury reserve. Issuing €30M bonds specifically to buy more BTC. Aims to match MicroStrategy.",
+    notes: "Frankfurt listed (Malta HQ). CEO aspires to rival MSTR holdings. Donates to Brink (BTC development).",
+  },
+  {
+    id: "phx",
+    name: "Phoenix Group PLC",
+    ticker: "PHX.AD",
+    currency: "AED",
+    asset: "BTC",
+    tier: 2,
+    holdings: 514,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2024-12-31",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/phoenix-group-plc",
+    datStartDate: "2024-12-31",
+    isMiner: true,  // Mining and hosting
+    quarterlyBurnUsd: 5_000_000,
+    avgDailyVolume: 2_000_000,
+    sharesForMnav: 100_000_000,  // Estimated
+    strategy: "UAE crypto mining and data center company. Hosts computing power across UAE, Oman, US, Canada.",
+    notes: "Abu Dhabi Securities Exchange (ADX). Cloud mining and data center hosting for digital assets.",
+  },
+  {
+    id: "dcc",
+    name: "DigitalX",
+    ticker: "DCC.AX",
+    currency: "AUD",
+    asset: "BTC",
+    tier: 2,
+    holdings: 502,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2024-10-31",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://investorhub.digitalx.com/",
+    datStartDate: "2018-06-30",
+    isMiner: false,
+    quarterlyBurnUsd: 1_000_000,
+    avgDailyVolume: 500_000,
+    sharesForMnav: 500_000_000,  // Estimated
+    strategy: "Australia's pioneering blockchain/digital asset company since 2014. Fund manager + corporate treasury.",
+    notes: "ASX listed. Holds BTC + ETH in corporate treasury + fund units. Early adopter, transparent reporting.",
+  },
+  {
     id: "naka",
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
