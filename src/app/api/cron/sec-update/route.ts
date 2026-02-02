@@ -42,8 +42,15 @@ export async function GET(request: NextRequest) {
     // Get optional parameters
     const tickersParam = searchParams.get('tickers');
     const tickers = tickersParam ? tickersParam.split(',').map(t => t.trim().toUpperCase()) : undefined;
-    const dryRun = searchParams.get('dryRun') === 'true';
     const sinceDays = parseInt(searchParams.get('sinceDays') || '7');
+    
+    // Force dryRun on Vercel (read-only filesystem)
+    const isVercel = !!process.env.VERCEL;
+    const dryRun = searchParams.get('dryRun') === 'true' || isVercel;
+    
+    if (isVercel && searchParams.get('dryRun') !== 'true') {
+      console.log('[SEC Update Cron] Auto-enabled dryRun on Vercel (read-only filesystem)');
+    }
 
     console.log(`[SEC Update Cron] Starting ${isManual ? 'manual' : 'scheduled'} run...`);
     if (dryRun) {
