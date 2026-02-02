@@ -35,11 +35,28 @@ export const STOCK_TICKERS = [
   "BMNR", "SBET", "ETHM", "BTBT", "BTCS", "GAME", "FGNX",
   // BTC - US
   "MSTR", "XXI", "CEPO", "MARA", "RIOT", "CLSK", "ASST", "SMLR", "KULR", "DJT", "NAKA", "NXTT", "ABTC",
+  "SQNS", "DDC", "EXOD", "FLD", "ZOOZ", "USBC", "ARLP", "LMFA", "FUFU",  // Added 2026-02-02
   // BTC - International
   "3350.T",    // Metaplanet (Japan)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
   "ALTBG",     // The Blockchain Group (France/Euronext)
   "H100.ST",   // H100 Group (Sweden)
+  "3825.T",    // Remixpoint (Japan) - Added 2026-02-02
+  "3189.T",    // ANAP Holdings (Japan) - Added 2026-02-02
+  "SATS.L",    // Satsuma Technology (UK) - Added 2026-02-02
+  "SWC",       // Smarter Web Company (UK AQUIS) - Added 2026-02-02
+  "CASH3.SA",  // Méliuz (Brazil B3) - Added 2026-02-02
+  "377030.KQ", // bitmax (South Korea) - Added 2026-02-02
+  "SRAG.DU",   // Samara Asset Group (Germany) - Added 2026-02-02
+  "PHX.AD",    // Phoenix Group (UAE) - Added 2026-02-02
+  "DCC.AX",    // DigitalX (Australia) - Added 2026-02-02
+  // BTC - Canada
+  "BTCT.V",    // Bitcoin Treasury Corp - Added 2026-02-02
+  "NDA.V",     // Neptune Digital - Added 2026-02-02
+  "DMGI.V",    // DMG Blockchain - Added 2026-02-02
+  "HIVE",      // HIVE Digital - Added 2026-02-02
+  // BTC - Norway
+  "AKER",      // Aker ASA - Added 2026-02-02
   // SOL
   "FWDI", "HSDT", "DFDV", "UPXI", "STKE",
   // HYPE
