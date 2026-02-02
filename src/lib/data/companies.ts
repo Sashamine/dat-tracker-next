@@ -858,25 +858,11 @@ export const btcCompanies: Company[] = [
   // Seetee not listed among major unlisted investments in Q3 2025 report
   // Website only mentions "first purchase 1,170 BTC" with no current figure
   // No Bitcoin disclosure in quarterly reports - possibly sold or too small to report
-  {
-    id: "satsl",
-    name: "Satsuma Technology",
-    ticker: "SATS.L",
-    currency: "GBP",
-    asset: "BTC",
-    tier: 2,
-    holdings: 620,  // BitcoinTreasuries.net
-    holdingsLastUpdated: "2025-07-14",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/satsuma-technology",
-    datStartDate: "2025-07-14",
-    isMiner: false,
-    quarterlyBurnUsd: 1_000_000,
-    avgDailyVolume: 500_000,
-    sharesForMnav: 100_000_000,  // Estimated
-    strategy: "Adopted Bitcoin Treasury via wholly owned subsidiary. Also working on TAO subnet economies.",
-    notes: "London Stock Exchange. Formerly TAO Alpha Plc. High mNAV (94x) suggests market values TAO business beyond BTC.",
-  },
+  
+  // SATS.L (Satsuma Technology) removed 2026-02-02: Cannot verify BTC holdings
+  // 620 BTC figure only from BitcoinTreasuries.net (secondary source)
+  // No RNS filings found mentioning Bitcoin holdings
+  // Stock crashed 99% (27.5p -> 0.31p), trading below NAV if holdings are real
   {
     id: "cash3",
     name: "Méliuz",
