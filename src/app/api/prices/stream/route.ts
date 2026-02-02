@@ -266,11 +266,22 @@ async function fetchAllPrices() {
   ]);
 
   // Convert foreign stock prices to USD
+  console.log("[Stream DEBUG] Forex rates:", forexRates);
   for (const [ticker, data] of Object.entries(stockPrices)) {
     const currency = TICKER_CURRENCY[ticker];
     if (currency) {
       const rate = forexRates[currency] || FALLBACK_RATES[currency];
       if (rate && rate > 0) {
+        // Debug logging for 3189.T
+        if (ticker === "3189.T") {
+          console.log(`[Stream DEBUG] 3189.T conversion:`, {
+            rawPrice: data.price,
+            currency,
+            rate,
+            convertedPrice: data.price / rate,
+            rawMarketCap: data.marketCap,
+          });
+        }
         stockPrices[ticker] = {
           ...data,
           price: data.price / rate,
