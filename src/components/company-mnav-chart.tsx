@@ -53,8 +53,8 @@ export function CompanyMNAVChart({
     const now = new Date();
     const today = now.toISOString().split("T")[0];
 
-    if (isMstr && mnavData && mnavData.length > 0) {
-      // Use data from hook (intraday or daily)
+    if (mnavData && mnavData.length > 0) {
+      // Use data from hook (works for MSTR and companies with holdings history like 3189.T)
       for (const point of mnavData) {
         // For intraday data, time is a Unix timestamp string - convert to number
         // For daily data, time is YYYY-MM-DD string - keep as string
@@ -115,7 +115,7 @@ export function CompanyMNAVChart({
     return { mnavHistory: result, dataPoints: points };
   }, [ticker, timeRange, currentMNAV, isMstr, mnavData, isIntraday]);
 
-  const isLoading = isMstr && isLoadingMnav;
+  const isLoading = isLoadingMnav;
   const hasData = mnavHistory.length > 0;
 
   // Initialize and update chart when data is available
