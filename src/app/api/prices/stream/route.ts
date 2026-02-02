@@ -21,6 +21,13 @@ const TICKER_CURRENCY: Record<string, string> = {
   "ETHM": "CAD",
 };
 
+// Stocks to fetch from Yahoo Finance (FMP has wrong data or no coverage)
+// Map: display ticker -> Yahoo ticker
+const YAHOO_TICKERS: Record<string, string> = {
+  "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD)
+  "SWC": "TSWCF",        // Smarter Web Company - OTC ticker (FMP has wrong SWC)
+};
+
 // Cache for forex rates (5 minute TTL - forex doesn't move fast)
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
 const FOREX_CACHE_TTL = 5 * 60 * 1000;
@@ -202,14 +209,58 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
   }
 }
 
+// Fetch stocks from Yahoo Finance (for tickers FMP doesn't cover well)
+async function fetchYahooStocks(): Promise<Record<string, any>> {
+  const result: Record<string, any> = {};
+
+  for (const [displayTicker, yahooTicker] of Object.entries(YAHOO_TICKERS)) {
+    try {
+      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${yahooTicker}?interval=1d&range=2d`;
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        cache: "no-store",
+      });
+
+      if (!response.ok) continue;
+
+      const data = await response.json();
+      const quote = data?.chart?.result?.[0];
+      if (!quote) continue;
+
+      const meta = quote.meta;
+      const indicators = quote.indicators?.quote?.[0];
+      const closes = indicators?.close?.filter((c: number | null) => c !== null) || [];
+      const currentPrice = meta?.regularMarketPrice || closes[closes.length - 1] || 0;
+      const prevClose = meta?.previousClose || closes[closes.length - 2] || currentPrice;
+      const change24h = prevClose > 0 ? ((currentPrice - prevClose) / prevClose) * 100 : 0;
+
+      result[displayTicker] = {
+        price: currentPrice,
+        prevClose,
+        change24h,
+        volume: indicators?.volume?.[indicators.volume.length - 1] || 0,
+        marketCap: MARKET_CAP_OVERRIDES[displayTicker] || 0,
+        source: "yahoo",
+      };
+    } catch (error) {
+      console.error(`[Yahoo] Error fetching ${displayTicker}:`, error);
+    }
+  }
+
+  return result;
+}
+
 // Fetch all initial prices
 async function fetchAllPrices() {
   const marketOpen = isMarketOpen();
   const extendedHours = isExtendedHours();
 
-  const [cryptoPrices, stockPrices, forexRates] = await Promise.all([
+  const [cryptoPrices, stockPrices, yahooStocks, forexRates] = await Promise.all([
     fetchCryptoPrices(),
     fetchFMPStockQuotes(),
+    fetchYahooStocks(),
     fetchForexRates(),
   ]);
 
@@ -226,6 +277,11 @@ async function fetchAllPrices() {
         };
       }
     }
+  }
+
+  // Merge Yahoo stocks (overwrites FMP data for these tickers)
+  for (const [ticker, data] of Object.entries(yahooStocks)) {
+    stockPrices[ticker] = data;
   }
 
   return {
