@@ -308,9 +308,18 @@ export async function GET() {
       }
     }
 
+    // Debug: Check if SWC came from Alpaca
+    if (stockPrices["SWC"]) {
+      console.log("[DEBUG] SWC after Alpaca:", JSON.stringify(stockPrices["SWC"]));
+    }
+
     // Merge FMP stocks (with ticker mapping, currency conversion, and market cap overrides)
     for (const [ticker, data] of Object.entries(fmpStocks)) {
       const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
+      // Debug: Log any SWC-related FMP data
+      if (ticker === "SWC" || ticker === "TSWCF" || displayTicker === "SWC") {
+        console.log(`[DEBUG] FMP ticker=${ticker} -> displayTicker=${displayTicker}, data=`, JSON.stringify(data));
+      }
       // Convert price to USD if it's a foreign currency stock
       const currency = TICKER_CURRENCY[displayTicker];
       const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
@@ -322,6 +331,11 @@ export async function GET() {
         // Apply market cap override if available (fixes currency conversion issues)
         marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
       };
+    }
+
+    // Debug: Check SWC after FMP merge
+    if (stockPrices["SWC"]) {
+      console.log("[DEBUG] SWC after FMP:", JSON.stringify(stockPrices["SWC"]));
     }
 
     // Merge Yahoo Finance stocks (for TSX Venture, etc.)
