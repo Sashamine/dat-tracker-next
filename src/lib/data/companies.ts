@@ -644,24 +644,20 @@ export const btcCompanies: Company[] = [
     ticker: "SWC",
     currency: "GBP",
     asset: "BTC",
-    tier: 2,
-    holdings: 2_674,  // BitcoinTreasuries.net Feb 2026
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/the-smarter-web-company-plc",
+    tier: 1,  // Verified holdings via RNS
+    holdings: 2_674,  // RNS Jan 22, 2026: "Total Bitcoin Holdings: 2,674 Bitcoin"
+    holdingsLastUpdated: "2026-01-22",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558",
     datStartDate: "2025-04-01",
+    website: "https://www.smarterwebcompany.co.uk",
     isMiner: false,
     quarterlyBurnUsd: 500_000,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 695_000_000,  // Companies House statement of capital (~695M at 0.1p nominal)
-    strategy: "UK BTC treasury company. Explicit treasury strategy.",
-    notes: "AQUIS Stock Exchange listed. Shell pivot (was Uranium Energy Exploration until Apr 2025). #1 UK BTC holder. Companies House: 00092343.",
+    sharesForMnav: 350_200_000,  // AQUIS "Tradable Securities" Feb 2026
+    strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
+    notes: "AQUIS: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested £221.4M at avg £82,800/BTC. Companies House: 00092343.",
     dataWarnings: [
-      {
-        type: "unverified-shares",
-        message: "Share count derived from Companies House nominal value. mNAV reported as 79.80x needs verification.",
-        severity: "warning",
-      },
     ],
   },
   {
