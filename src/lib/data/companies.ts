@@ -881,6 +881,104 @@ export const btcCompanies: Company[] = [
     ],
   },
   {
+    id: "btct",
+    name: "Bitcoin Treasury Corp",
+    ticker: "BTCT.V",
+    currency: "CAD",
+    asset: "BTC",
+    tier: 2,
+    holdings: 771,  // BitcoinTreasuries.net Feb 2026
+    holdingsLastUpdated: "2026-02-02",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/bitcoin-treasury-corp",
+    datStartDate: "2025-06-26",
+    costBasisAvg: 107_689,  // BitcoinTreasuries.net
+    isMiner: false,
+    quarterlyBurnUsd: 500_000,
+    avgDailyVolume: 1_000_000,
+    sharesForMnav: 50_000_000,  // Estimated
+    strategy: "Strategic accumulation and active deployment of Bitcoin. BTC-denominated lending services.",
+    notes: "TSX Venture (Canada). Institutional-grade Bitcoin services including lending, liquidity, and collateral solutions.",
+  },
+  {
+    id: "aker",
+    name: "Aker ASA",
+    ticker: "AKER",
+    currency: "NOK",
+    asset: "BTC",
+    tier: 2,
+    holdings: 754,  // Held via Seetee subsidiary since Mar 2021
+    holdingsLastUpdated: "2025-04-01",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://www.seetee.io/",
+    datStartDate: "2021-03-08",
+    costBasisAvg: 50_219,  // ~$58.75M / 1,170 BTC initial purchase
+    isMiner: false,
+    quarterlyBurnUsd: 0,  // Industrial conglomerate, profitable
+    avgDailyVolume: 10_000_000,
+    sharesForMnav: 74_300_000,  // Estimated from market cap
+    strategy: "HODL strategy via Seetee subsidiary. Views BTC as 'economic battery' and future financial infrastructure.",
+    notes: "Oslo Stock Exchange. Norwegian industrial conglomerate (founded 1841). Created Seetee in 2021 specifically for Bitcoin. Initial purchase 1,170 BTC.",
+  },
+  {
+    id: "satsl",
+    name: "Satsuma Technology",
+    ticker: "SATS.L",
+    currency: "GBP",
+    asset: "BTC",
+    tier: 2,
+    holdings: 620,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2025-07-14",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/satsuma-technology",
+    datStartDate: "2025-07-14",
+    isMiner: false,
+    quarterlyBurnUsd: 1_000_000,
+    avgDailyVolume: 500_000,
+    sharesForMnav: 100_000_000,  // Estimated
+    strategy: "Adopted Bitcoin Treasury via wholly owned subsidiary. Also working on TAO subnet economies.",
+    notes: "London Stock Exchange. Formerly TAO Alpha Plc. High mNAV (94x) suggests market values TAO business beyond BTC.",
+  },
+  {
+    id: "cash3",
+    name: "Méliuz",
+    ticker: "CASH3",
+    currency: "BRL",
+    asset: "BTC",
+    tier: 2,
+    holdings: 605,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2025-04-01",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/mliuz",
+    datStartDate: "2025-03-06",
+    costBasisAvg: 90_926,  // First purchase price
+    isMiner: false,
+    quarterlyBurnUsd: 5_000_000,
+    avgDailyVolume: 5_000_000,
+    sharesForMnav: 100_000_000,  // Estimated
+    strategy: "Allocating up to 10% of cash reserves to BTC. Proposing to make BTC 'primary strategic asset'.",
+    notes: "B3 (Brazil). Leading fintech with 30M+ users. First major Brazilian firm to adopt BTC treasury strategy.",
+  },
+  {
+    id: "377030",
+    name: "bitmax",
+    ticker: "377030.KQ",
+    currency: "KRW",
+    asset: "BTC",
+    tier: 2,
+    holdings: 551,  // BitcoinTreasuries.net
+    holdingsLastUpdated: "2025-04-10",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/bitmax",
+    datStartDate: "2025-01-01",
+    isMiner: false,
+    quarterlyBurnUsd: 2_000_000,
+    avgDailyVolume: 2_000_000,
+    sharesForMnav: 50_000_000,  // Estimated
+    strategy: "Proactive Bitcoin investment strategy. Active accumulation throughout 2025.",
+    notes: "KOSDAQ (South Korea). Fintech company with blockchain focus. Transparent reporting via DART filings.",
+  },
+  {
     id: "naka",
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
