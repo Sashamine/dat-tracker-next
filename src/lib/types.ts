@@ -51,7 +51,7 @@ export interface DataWarning {
 export type CompanyType = "Treasury" | "Miner";
 
 // Stock currency (for non-USD exchanges)
-export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR";
+export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL";
 
 // Base company interface
 export interface Company {

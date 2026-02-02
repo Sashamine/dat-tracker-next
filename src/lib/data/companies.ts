@@ -11,10 +11,10 @@ export const ethCompanies: Company[] = [
     secCik: "0001829311",
     asset: "ETH",
     tier: 1,
-    holdings: 4_243_338,  // Jan 26, 2026 8-K: acquired 40,302 ETH in past week
-    holdingsLastUpdated: "2026-01-25",
+    holdings: 4_285_125,  // Feb 2, 2026 8-K: acquired 41,788 ETH in past week
+    holdingsLastUpdated: "2026-02-01",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
     datStartDate: "2025-07-01",
     costBasisAvg: 2_839,  // Calculated from purchase history (purchases-history.ts)
     stakingPct: 0.85,
@@ -25,17 +25,17 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 800_000_000,
     hasOptions: true,
     sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
-    cashReserves: 682_000_000,  // $682M cash (Jan 25, 2026)
-    restrictedCash: 682_000_000,  // Operating capital - not excess
-    cashSource: "SEC 8-K Jan 26, 2026",
-    cashAsOf: "2026-01-25",
+    cashReserves: 586_000_000,  // $586M cash (Feb 1, 2026)
+    restrictedCash: 586_000_000,  // Operating capital - not excess
+    cashSource: "SEC 8-K Feb 2, 2026",
+    cashAsOf: "2026-02-01",
     otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO)
     totalDebt: 0,  // No debt financing - ETH purchases funded via equity (ATM + PIPE)
     debtSource: "SEC 10-Q Q1 FY2026 - no convertibles, no credit facilities drawn",
     debtAsOf: "2025-11-30",
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Also holds $219M in non-crypto investments (Beast Industries, OCTO) not reflected in mNAV.",
-    notes: "Largest ETH treasury. 3.52% of ETH supply. $200M Beast Industries (MrBeast) + $19M Eightco (OCTO) equity investments.",
+    notes: "Largest ETH treasury. 3.55% of ETH supply. 2.9M ETH staked ($188M annual staking revenue). $200M Beast Industries + $20M Eightco (OCTO) equity investments.",
   },
   {
     id: "sbet",
@@ -262,8 +262,8 @@ export const btcCompanies: Company[] = [
     ticker: "MSTR",
     asset: "BTC",
     tier: 1,
-    holdings: 712_647,  // SEC 8-K Jan 26, 2026 (+2,932 BTC Jan 20-25)
-    holdingsLastUpdated: "2026-01-25",
+    holdings: 713_502,  // SEC 8-K Feb 2, 2026 (+855 BTC Jan 26-31)
+    holdingsLastUpdated: "2026-01-31",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
     datStartDate: "2024-01-01",
@@ -608,6 +608,35 @@ export const btcCompanies: Company[] = [
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
     notes: "NGM Nordic SME listed. ISK-eligible. SEK 516M convertible (Jul 2025, Adam Back et al), SEK 122.5M converted Nov 2025. Acquiring Future Holdings AG (Switzerland). IR page incorrectly claims 'no convertibles'.",
+  },
+  {
+    id: "obtc3",
+    name: "OranjeBTC",
+    ticker: "OBTC3",
+    currency: "BRL",
+    asset: "BTC",
+    tier: 2,
+    holdings: 0,  // TBD - CVM filings hard to access, IR sparse
+    holdingsLastUpdated: "2026-02-02",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://ri.oranjebtc.com",
+    datStartDate: "2025-01-01",
+    website: "https://www.oranjebtc.com",
+    isMiner: false,
+    quarterlyBurnUsd: 500_000,  // Education business minimal burn
+    avgDailyVolume: 1_000_000,  // ~R$5.3M/day = ~$1M USD
+    marketCap: 450_000_000,  // ~R$2.51B = ~$450M USD (Feb 2026)
+    sharesForMnav: 318_000_000,  // Estimated from market cap / price
+    totalDebt: 0,  // Per StatusInvest - no debt
+    strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
+    notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Holdings not yet verified from CVM filings. Brazilian regulatory system (CVM) lacks API. Market cap (~$450M) suggests substantial BTC holdings.",
+        severity: "warning",
+      },
+    ],
   },
   {
     id: "naka",
