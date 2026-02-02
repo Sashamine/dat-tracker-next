@@ -28,14 +28,15 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "RIOT": "0001167419",  // Riot Platforms
   "CLSK": "0000827876",  // CleanSpark
   // "HUT": "0001964789", // Removed - pivoted to AI/HPC, not a DAT company
-  // CORZ/BTDR removed - miners not in companies.ts
+  "CORZ": "0001839341",  // Core Scientific (miner + treasury)
+  "BTDR": "0001899123",  // Bitdeer (miner + treasury)
   "KULR": "0001662684",  // KULR Technology
   "NAKA": "0001946573",  // Nakamoto (KindlyMD post-merger)
   "DJT": "0001849635",   // Trump Media
   "XXI": "0001865602",   // Twenty One Capital (Cantor Equity Partners)
   "CEPO": "0001865602",  // Same as XXI
   "ASST": "0001920406",  // Strive (acquired Semler Jan 2026)
-  // NXTT removed - not in companies.ts
+  "NXTT": "0001784970",  // Next Technology Holding
   "ABTC": "0002068580",  // American Bitcoin (miner with HODL strategy)
   // ETH
   "BMNR": "0001829311",  // Bitmine Immersion
