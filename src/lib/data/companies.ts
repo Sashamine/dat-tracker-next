@@ -832,18 +832,20 @@ export const btcCompanies: Company[] = [
     ticker: "USBC",
     asset: "BTC",
     tier: 2,
-    holdings: 1_000,  // BitcoinTreasuries.net Aug 2025
-    holdingsLastUpdated: "2025-08-07",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/usbc-inc",
+    holdings: 1_000,  // 10-K FY Sep 2025 - needs verification
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001074828",
     datStartDate: "2025-08-06",
-    secCik: "0001956166",
+    website: "https://usbc.xyz",
+    investorRelationsUrl: "https://investors.usbc.xyz",
+    secCik: "0001074828",  // Fixed: was 0001956166 (Ming Shing - wrong company!)
     isMiner: false,
     quarterlyBurnUsd: 6_000_000,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 388_140_000,  // StockAnalysis Feb 2026
-    strategy: "Explicit BTC treasury strategy announced June 2025 by controlling shareholder Greg Kidd.",
-    notes: "NYSE American. Formerly Know Labs. Zero revenue, 2,830% share dilution YoY, 97% insider control. High risk shell company with BTC.",
+    strategy: "BTC treasury + tokenized deposit platform (USBC token). Greg Kidd (CEO) driving crypto pivot.",
+    notes: "NYSE American. Formerly Know Labs (Aug 2025), Visualant. Fiscal year ends Sep 30. ⚠️ HOLDINGS: 1,000 BTC from Aug 2025 - needs 10-K verification. High dilution, insider control.",
     dataWarnings: [
       {
         type: "share-change",
