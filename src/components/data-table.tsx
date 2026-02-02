@@ -385,6 +385,21 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                   Low Liq
                 </Badge>
               )}
+              {/* Miner badge - shows for BTC miners with HODL strategies */}
+              {company.isMiner && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="outline" className="text-[10px] px-1 py-0 bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 cursor-help">
+                        ⛏️ Miner
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs">
+                      <p className="text-sm">Bitcoin miner - produces BTC through mining operations. mNAV includes value of mining capacity.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
               {/* SEC Referenced badge - only when explicitly flagged */}
               {company.secReferenced && (
                 <Badge variant="outline" className="text-[10px] px-1 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
@@ -650,6 +665,21 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
                           <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
                             Shares: Company Reported
                           </Badge>
+                        )}
+                        {/* Miner badge */}
+                        {company.isMiner && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 cursor-help">
+                                  ⛏️ Miner
+                                </Badge>
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-xs">
+                                <p className="text-sm">Bitcoin miner - produces BTC through mining operations. mNAV includes value of mining capacity.</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         )}
                       </span>
                       <span className="text-sm text-gray-500 truncate max-w-[180px]">
