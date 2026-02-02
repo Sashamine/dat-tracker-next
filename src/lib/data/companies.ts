@@ -854,26 +854,10 @@ export const btcCompanies: Company[] = [
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
     notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services. BPS: ₿0.0000634 (diluted). Basic shares: 10,075,080. Convertible debentures outstanding increase diluted count to 12.16M. First Canadian Bitcoin-native treasury company.",
   },
-  {
-    id: "aker",
-    name: "Aker ASA",
-    ticker: "AKER",
-    currency: "NOK",
-    asset: "BTC",
-    tier: 2,
-    holdings: 754,  // Held via Seetee subsidiary since Mar 2021
-    holdingsLastUpdated: "2025-04-01",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.seetee.io/",
-    datStartDate: "2021-03-08",
-    costBasisAvg: 50_219,  // ~$58.75M / 1,170 BTC initial purchase
-    isMiner: false,
-    quarterlyBurnUsd: 0,  // Industrial conglomerate, profitable
-    avgDailyVolume: 10_000_000,
-    sharesForMnav: 74_300_000,  // Estimated from market cap
-    strategy: "HODL strategy via Seetee subsidiary. Views BTC as 'economic battery' and future financial infrastructure.",
-    notes: "Oslo Stock Exchange. Norwegian industrial conglomerate (founded 1841). Created Seetee in 2021 specifically for Bitcoin. Initial purchase 1,170 BTC.",
-  },
+  // AKER (Aker ASA) removed 2026-02-02: Cannot verify BTC holdings
+  // Seetee not listed among major unlisted investments in Q3 2025 report
+  // Website only mentions "first purchase 1,170 BTC" with no current figure
+  // No Bitcoin disclosure in quarterly reports - possibly sold or too small to report
   {
     id: "satsl",
     name: "Satsuma Technology",
