@@ -1,0 +1,237 @@
+<SEC-DOCUMENT>0001213900-25-100181.txt : 20251020
+<SEC-HEADER>0001213900-25-100181.hdr.sgml : 20251020
+<ACCEPTANCE-DATETIME>20251020092455
+ACCESSION NUMBER:		0001213900-25-100181
+CONFORMED SUBMISSION TYPE:	6-K
+PUBLIC DOCUMENT COUNT:		1
+CONFORMED PERIOD OF REPORT:	20251020
+FILED AS OF DATE:		20251020
+DATE AS OF CHANGE:		20251020
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			DDC Enterprise Ltd
+		CENTRAL INDEX KEY:			0001808110
+		STANDARD INDUSTRIAL CLASSIFICATION:	FOOD & KINDRED PRODUCTS [2000]
+		ORGANIZATION NAME:           	04 Manufacturing
+		EIN:				000000000
+		STATE OF INCORPORATION:			E9
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		6-K
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	001-41872
+		FILM NUMBER:		251402461
+
+	BUSINESS ADDRESS:	
+		STREET 1:		368 9TH AVE
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10001
+		BUSINESS PHONE:		852-2803-0688
+
+	MAIL ADDRESS:	
+		STREET 1:		368 9TH AVE
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10001
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>6-K
+<SEQUENCE>1
+<FILENAME>ea0261776-6k_ddcenter.htm
+<DESCRIPTION>REPORT OF FOREIGN PRIVATE ISSUER
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="margin: 0"></P>
+
+<P STYLE="margin: 0"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 2pt solid; border-bottom: Black 1pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="margin: 0"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>SECURITIES AND EXCHANGE
+COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Washington, D.C. 20549</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>FORM 6-K</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>REPORT OF FOREIGN PRIVATE
+ISSUER</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>PURSUANT TO RULE 13a-16
+OR 15d-16</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>UNDER THE SECURITIES EXCHANGE ACT OF 1934</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>For the month of October 2025</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Commission File Number: 001-41872</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>DDC Enterprise Limited</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">368 9<SUP>th</SUP> Ave., New York, NY 10001 USA</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>+ 852-2803-0688</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>(Address of principal executive office)</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left; margin-top: 0pt; margin-bottom: 0pt">Indicate by check mark whether the registrant files or will file annual
+reports under cover of Form 20-F or Form 40-F:</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">Form 20-F <FONT STYLE="font-family: Times New Roman, Times, Serif">&#9746;</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;Form 40-F <FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1pt solid; border-bottom: Black 2pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 226pt"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 226pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Information Contained in this Form 6-K Report</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">When used in this Form 6-K (this &ldquo;<U>Report</U>&rdquo;),
+unless otherwise indicated, the terms, &ldquo;DDC,&rdquo; &ldquo;Company,&rdquo; and &ldquo;we&rdquo; refer to DDC Enterprise Limited.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Updated Share Count</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As of the date hereof, there are 23,309,005 Class
+A ordinary shares issued and outstanding.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Recent Bitcoin Acquisition and Holdings</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On October 15, 2025, DDC Enterprise Limited acquired
+an additional 25 BTC, bringing its total Bitcoin treasury holdings to 1,083 BTC. This acquisition reflects DDC&rsquo;s continued adherence
+to its disciplined Bitcoin accumulation strategy, which emphasizes consistency, transparency, and long-term value creation. The Company&rsquo;s
+average cost per bitcoin holding is USD $108,726, and its disciplined approach has delivered a H2 Bitcoin yield to date of 263%. This
+acquisition further highlights DDC&rsquo;s commitment to responsibly building one of the largest corporate Bitcoin treasuries globally.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The updated Bitcoin holdings translate to approximately
+0.108309 BTC per 1,000 DDC shares, demonstrating added value to shareholders. Norma Ka Yin Chu, Founder, Chairwoman, and CEO of DDC, stated,
+&ldquo;Discipline enables us to capitalize on market fluctuations, transforming volatility into strategic advantage. This week&rsquo;s
+pullback presented an ideal window to increase our holdings, which was made possible by our rigorous risk controls and prudent balance
+sheet management.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Safe Harbor Statements</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This filing contains forward-looking statements.
+These statements are made under the &ldquo;safe harbor&rdquo; provisions of the U.S. Private Securities Litigation Reform Act of 1995.
+These forward-looking statements may include but are not limited to statements regarding DDC&rsquo;s Bitcoin strategy and its future business
+development, results of operations, and financial condition. Actual results may differ materially due to risks and uncertainties detailed
+in DDC&rsquo;s filings with the SEC. DDC undertakes no obligation to update any forward-looking statements except as required by law.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SIGNATURES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Pursuant to the requirements of the Securities Exchange Act of 1934,
+the registrant has duly caused this report to be signed on its behalf by the undersigned, thereunto duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; font: 10pt Times New Roman, Times, Serif; width: 100%">
+<TR STYLE="vertical-align: top; text-align: left">
+  <TD>&nbsp;</TD>
+  <TD COLSPAN="2">DDC Enterprise Limited</TD></TR>
+<TR STYLE="vertical-align: top; text-align: left">
+  <TD STYLE="width: 60%">&nbsp;</TD>
+  <TD STYLE="width: 5%">&nbsp;</TD>
+  <TD STYLE="width: 35%">&nbsp;</TD></TR>
+<TR STYLE="vertical-align: top; text-align: left">
+  <TD>Date: October 20, 2025</TD>
+  <TD>By:</TD>
+  <TD STYLE="border-bottom: Black 1.5pt solid">/s/ Norma Ka Yin Chu</TD></TR>
+<TR STYLE="vertical-align: top; text-align: left">
+  <TD>&nbsp;</TD>
+  <TD>Name:&nbsp;</TD>
+  <TD>Norma Ka Yin Chu</TD></TR>
+<TR STYLE="vertical-align: top; text-align: left">
+  <TD>&nbsp;</TD>
+  <TD>Title:</TD>
+  <TD>Chief Executive Officer</TD></TR>
+</TABLE>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">2</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

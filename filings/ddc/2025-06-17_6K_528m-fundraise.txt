@@ -1,0 +1,444 @@
+<SEC-DOCUMENT>0001213900-25-054959.txt : 20250617
+<SEC-HEADER>0001213900-25-054959.hdr.sgml : 20250617
+<ACCEPTANCE-DATETIME>20250617081617
+ACCESSION NUMBER:		0001213900-25-054959
+CONFORMED SUBMISSION TYPE:	6-K
+PUBLIC DOCUMENT COUNT:		2
+CONFORMED PERIOD OF REPORT:	20250617
+FILED AS OF DATE:		20250617
+DATE AS OF CHANGE:		20250617
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			DDC Enterprise Ltd
+		CENTRAL INDEX KEY:			0001808110
+		STANDARD INDUSTRIAL CLASSIFICATION:	FOOD & KINDRED PRODUCTS [2000]
+		ORGANIZATION NAME:           	04 Manufacturing
+		EIN:				000000000
+		STATE OF INCORPORATION:			E9
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		6-K
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	001-41872
+		FILM NUMBER:		251051918
+
+	BUSINESS ADDRESS:	
+		STREET 1:		368 9TH AVE
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10001
+		BUSINESS PHONE:		852-2803-0688
+
+	MAIL ADDRESS:	
+		STREET 1:		368 9TH AVE
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10001
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>6-K
+<SEQUENCE>1
+<FILENAME>ea0245842-6k_ddcenter.htm
+<DESCRIPTION>REPORT OF FOREIGN PRIVATE ISSUER
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 3pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 2pt solid; border-bottom: Black 1pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SECURITIES AND EXCHANGE COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Washington, D.C. 20549</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>FORM 6-K</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>REPORT OF FOREIGN PRIVATE ISSUER</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>PURSUANT TO RULE 13a-16 OR 15d-16</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>UNDER THE SECURITIES EXCHANGE ACT OF 1934</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>For the month of June 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Commission File Number: 001-41872</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>DDC Enterprise Limited</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">368 9<SUP>th</SUP>&nbsp;Ave., New York, NY
+10001 USA</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>+ 852-2803-0688</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>(Address of principal executive office)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Indicate by check mark whether the registrant files or will file annual
+reports under cover of Form 20-F or Form 40-F:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Form 20-F &#9746;&nbsp;&nbsp;&nbsp;&nbsp;Form
+40-F &#9744;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1pt solid; border-bottom: Black 2pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Information Contained in this Form 6-K Report</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">When used in this Form 6-K (this &ldquo;<U>Report</U>&rdquo;),
+unless otherwise indicated, the terms, &ldquo;DDC,&rdquo; &ldquo;Company,&rdquo; and &ldquo;we&rdquo; refer to DDC Enterprise Limited.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On June 17, 2025, the Company issued a press release
+announcing the signing of various agreements to expand its Bitcoin treasury. The press release is attached hereto and incorporated by
+reference.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Safe Harbor Statements</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This filing contains forward-looking statements.
+These statements are made under the &ldquo;safe harbor&rdquo; provisions of the U.S. Private Securities Litigation Reform Act of 1995.
+These forward-looking statements can be identified by terminology such as &ldquo;in the process of,&rdquo; &ldquo;will,&rdquo; &ldquo;expects,&rdquo;
+&ldquo;anticipates,&rdquo; &ldquo;aims,&rdquo; &ldquo;future,&rdquo; &ldquo;intends,&rdquo; &ldquo;plans,&rdquo; &ldquo;believes,&rdquo;
+&ldquo;estimates,&rdquo; &ldquo;confident,&rdquo; &ldquo;potential,&rdquo; &ldquo;continue&rdquo; or other similar expressions. Among
+other things, completion of the reverse split and removal of the trade halt are forward-looking statements. DDC may also make written
+or oral forward-looking statements in its periodic reports to the U.S. Securities and Exchange Commission (the &ldquo;<U>SEC</U>&rdquo;),
+in its annual report to shareholders, in press releases and other written materials and in oral statements made by its officers, directors
+or employees to third parties. Statements that are not historical facts, including but not limited to statements about DDC&rsquo;s beliefs
+and expectations, are forward-looking statements. Forward-looking statements involve inherent risks and uncertainties. A number of factors
+could cause actual results to differ materially from those contained in any forward-looking statement, including but not limited to the
+following: DDC&rsquo;s Bitcoin strategy, performance of JV&rsquo;s; DDC&rsquo;s growth strategies; its future business development, results
+of operations and financial condition; its ability to understand buyer needs and provide products and services to attract and retain buyers;
+its ability to maintain and enhance the recognition and reputation of its brand; its ability to rely on merchants and third-party logistics
+service providers to provide delivery services to buyers; its ability to maintain and improve quality control policies and measures; its
+ability to establish and maintain relationships with merchants; trends and competition in China&rsquo;s e-commerce market; changes in
+its revenues and certain cost or expense items; the expected growth of China&rsquo;s e-commerce market; PRC governmental policies and
+regulations relating to DDC&rsquo;s industry, and general economic and business conditions globally and in China and assumptions underlying
+or related to any of the foregoing. Further information regarding these and other risks is included in DDC&rsquo;s filings with the SEC.
+All information provided in this report and in the attachments is as of the date of this report, and DDC undertakes no obligation to update
+any forward-looking statement, except as required under applicable law.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 2; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="text-align: center; font: normal 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SIGNATURES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, thereunto duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">DDC Enterprise Limited</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: June 17, 2025</FONT></TD>
+    <TD STYLE="width: 5%; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</FONT></TD>
+    <TD STYLE="width: 35%; border-bottom: black 1.5pt solid; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Norma Ka Yin Chu</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:&nbsp;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Norma Ka Yin Chu</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title:</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Executive Officer</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="text-align: center; font: normal 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>EXHIBIT INDEX</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="vertical-align: bottom; width: 9%; border-bottom: black 1.5pt solid"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Exhibit&nbsp;No.</B></FONT></TD>
+    <TD STYLE="vertical-align: top; width: 1%">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom; width: 90%; border-bottom: black 1.5pt solid"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Description</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: #CCEEFF">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">99.1</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD><A HREF="ea024584201ex99-1_ddcenter.htm"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Press Release issued June 17, 2025</FONT></A></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">3</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>EX-99.1
+<SEQUENCE>2
+<FILENAME>ea024584201ex99-1_ddcenter.htm
+<DESCRIPTION>PRESS RELEASE ISSUED JUNE 17, 2025
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="margin: 0pt; font: 10pt Times New Roman, Times, Serif; text-align: right"><FONT STYLE="color: Black"><B>Exhibit 99.1</B></FONT></P>
+
+<P STYLE="margin: 0pt; font: 10pt Times New Roman, Times, Serif"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; color: #404040"><FONT STYLE="font-size: 10pt; color: Black"><B>DDC Enterprise
+Announces Up to $528 Million Raise to Accelerate Bitcoin Treasury Strategy</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="font-size: 10pt; color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt; color: #404040"><FONT STYLE="font-size: 10pt; color: Black"><B></B></FONT><FONT STYLE="color: Black"><I>Landmark Funding Dedicated
+Exclusively to Bitcoin Acquisition Positions DDC to Become a Global Leader in Bitcoin Holdings</I></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>FOR IMMEDIATE RELEASE</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>NEW YORK &mdash; June
+17, 2025&nbsp;</B>&mdash;<B>&nbsp;</B>DDC Enterprise Limited&nbsp;(NYSE: DDC) (&ldquo;DDC&rdquo; or the &ldquo;Company&rdquo;) today
+announced it has entered into three securities purchase agreements for a total of up to $528 million of gross proceeds to the Company,
+before placement agent fees and offering expenses. Investors include Anson Funds, Animoca Brands, Kenetic Capital, QCP Capital, and a
+network of leading institutional funds and individual Bitcoin investors. Substantially all of the capital raise will be dedicated to
+expanding the Company&rsquo;s Bitcoin treasury. This transformative financing, among the largest single-purpose Bitcoin raises by any
+NYSE-listed company, is expected to accelerate DDC&rsquo;s mission to establish one of the most valuable corporate Bitcoin holdings. The closings
+of the financings are subject to the satisfaction of customary closing conditions.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>Strategic Funding Structure:
+Institutional Confidence at Scale</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center; width: 10%">&#9679;</TD>
+    <TD STYLE="width: 90%"><B>$26 Million Equity PIPE Investment</B></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="text-align: justify">The Company has entered into subscription agreements with premier investors including Animoca Brands, Kenetic Capital, QCP Capital, Jack Liu, Matthew Liu (Co-Founder, Origin Protocol), and other leading institutional funds and individual Bitcoin investors. Subject to standard closing conditions, DDC expects to issue up to 2,435,169 Class A Ordinary shares at an average price of $10.30 per share. The shares will be restricted for 180-days.</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&#9679;</TD>
+    <TD><B>$300 Million Convertible Secured Note and $2 Million Equity Private Placement</B></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="text-align: justify">With Anson Funds as the investor, an institutional investment firm with offices in the United States and Canada, the convertible secured note accrues no interest and will mature in 24 months. Pursuant to the Facility, the Company will issue a note in the aggregate principal amount of $25 million as its first tranche, with additional capacity of up to $275 million available in subsequent drawdowns upon mutual agreement of the parties. Anson Funds is also purchasing 307,693 Class A Ordinary shares for $2 million in a concurrent private placement.</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&#9679;</TD>
+    <TD><B>$200 Million Equity Line</B></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="text-align: justify">The $200 million equity line of credit (&ldquo;ELOC&rdquo;), also secured with Anson Funds, is designed to offer DDC maximum flexibility in accessing capital for dedicated BTC stacking. With the ELOC, upon its future commencement following registration, the Company can optimize market timing and can consistently make BTC purchases over time at management discretion.</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">Substantially all of the
+gross proceeds from the financings will be deployed to acquire Bitcoin.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>Statement from Norma Chu,
+Founder, Chairwoman &amp; CEO of DDC Enterprise</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0pt; color: #404040"><FONT STYLE="color: Black">&ldquo;Today is a defining
+moment for DDC Enterprise and our shareholders. This capital commitment of up to $528 million, backed by respected institutions from
+both traditional finance and the digital asset frontier, represents a strong mandate to execute an ambitious corporate Bitcoin accumulation
+strategy globally. Our vision is unequivocal: we are building the world&rsquo;s most valuable Bitcoin treasury.&rdquo;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0pt; color: #404040"><FONT STYLE="color: Black">Ms. Chu, continued, &ldquo;This
+funding is expected to propel DDC into one of the top global corporate Bitcoin holders. This investment by Anson Funds and the group
+of PIPE investors is a resounding validation of Bitcoin&rsquo;s important role in future corporate balance sheets. At DDC, we will deploy this
+capital with institutional discipline and unwavering conviction, cementing our position as the premier bridge between global capital
+markets and the Bitcoin ecosystem. DDC Enterprise is strongly positioned as the definitive publicly-traded vehicle for concentrated Bitcoin
+exposure and value creation. My focus will be on growing our BTC treasury and delivering attractive BTC yield consistently for our shareholders.&rdquo;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">Maxim Group LLC acted as
+the exclusive financial advisor in connection with the offering.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">This press release shall
+not constitute an offer to sell or a solicitation of an offer to buy these securities, nor shall there be any sale of these securities
+in any state or other jurisdiction in which such offer, solicitation or sale would be unlawful prior to the registration or qualification
+under the securities laws of any such state or other jurisdiction.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B></B></FONT></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 6pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>About DDC Enterprise</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">DDC Enterprise Limited (NYSE: DDC) is spearheading
+the corporate Bitcoin treasury revolution while maintaining its foundation as a leading global Asian food platform. The Company has strategically
+positioned Bitcoin as a core reserve asset, executing an aggressive accumulation strategy. While continuing to grow its portfolio of
+culinary brands &ndash; including DayDayCook, Nona Lim, and Yai&rsquo;s Thai &ndash; DDC is now at the vanguard of public companies integrating
+Bitcoin into their financial architecture.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black"><B>Caution Regarding Forward-Looking
+Statements</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">Certain statements in this announcement are
+forward-looking statements.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">Investors can identify these forward-looking
+statements by words or phrases such as &ldquo;may,&rdquo; &ldquo;will,&rdquo; &ldquo;expect,&rdquo; &ldquo;anticipate,&rdquo; &ldquo;aim,&rdquo;
+&ldquo;estimate,&rdquo; &ldquo;intend,&rdquo; &ldquo;plan,&rdquo; &ldquo;believe,&rdquo; &ldquo;is/are likely to,&rdquo; &ldquo;potential,&rdquo;
+&ldquo;continue&rdquo; or other similar expressions. Examples of forward-looking statements include those related to business prospects,
+accumulation of Bitcoin, and the Company&rsquo;s goals and future activity under the financing transactions described above, including
+the statements on the closings of the offerings and the satisfaction of closing conditions and use of proceeds in the offerings. These
+statements are subject to uncertainties and risks including, but not limited to, the risk factors discussed in the Risk Factors and in
+Management&rsquo;s Discussion and Analysis of Financial Condition and Results of Operations sections of our Forms 20-F, 6-K and other
+reports, including a Form 6-K which with copies of the definitive documents related to the above transactions, to be filed with the Securities
+and Exchange Commission (&ldquo;SEC&rdquo;) and available at&nbsp;www.sec.gov. Although the Company believes that the expectations expressed
+in these forward-looking statements are reasonable, it cannot assure you that such expectations will turn out to be correct, and the
+Company cautions investors that actual results may differ materially from the anticipated results and encourages investors to review
+other factors that may affect its future results in the Company&rsquo;s filings with the SEC. Additional factors are discussed in the
+Company&rsquo;s filings with the SEC, which are available for review at&nbsp;www.sec.gov. The Company undertakes no obligation to update
+or revise publicly any forward-looking statements to reflect subsequent occurring events or circumstances, or changes in its expectations
+that arise after the date hereof, except as may be required by law.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; color: #404040"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black"><B>For Bitcoin Investor Relations:</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black"><B>&nbsp;</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">Yujia Zhai | ddc@orangegroupadvisors.com</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">Media: pr@daydaycook.com</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black"></FONT></P>
+
+<!-- Field: Page; Sequence: 2; Options: Last -->
+    <DIV STYLE="margin-top: 6pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="color: Black">&nbsp;</FONT></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

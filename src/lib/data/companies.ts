@@ -691,20 +691,20 @@ export const btcCompanies: Company[] = [
     ticker: "DDC",
     asset: "BTC",
     tier: 2,
-    holdings: 1_383,  // SEC 424B3 Jan 26, 2026 (was 1,783 - incorrect)
-    holdingsLastUpdated: "2026-01-15",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+    holdings: 1_783,  // treasury.ddc.xyz Jan 29, 2026 (company-reported)
+    holdingsLastUpdated: "2026-01-29",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://treasury.ddc.xyz",
     datStartDate: "2025-02-21",
     website: "https://ir.ddc.xyz",
-    secCik: "0001808110",  // Fixed - was incorrectly 1879726 (Sidus Space)
-    costBasisAvg: 108_726,  // SEC 6-K Oct 20, 2025
+    secCik: "0001808110",
+    costBasisAvg: 88_112,  // treasury.ddc.xyz Jan 29, 2026
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 24_532_958,  // SEC 424B3: 22.78M Class A + 1.75M Class B
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
-    notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). 263% Bitcoin yield cited H2 2025.",
+    notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). ⚠️ DISCREPANCY: Company reports 1,783 BTC (treasury.ddc.xyz Jan 29), but most recent SEC filing (424B3 Jan 26) shows 1,383 BTC. Difference of 400 BTC not yet filed.",
   },
   // HIVE Digital Technologies (HIVE) REMOVED 2026-02-02
   // Reason: Not a DAT accumulator. SEC XBRL shows only $24.4M crypto (Sep 2025) = ~313 BTC

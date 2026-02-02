@@ -1,0 +1,469 @@
+<SEC-DOCUMENT>0001213900-25-044621.txt : 20250516
+<SEC-HEADER>0001213900-25-044621.hdr.sgml : 20250516
+<ACCEPTANCE-DATETIME>20250516090014
+ACCESSION NUMBER:		0001213900-25-044621
+CONFORMED SUBMISSION TYPE:	6-K
+PUBLIC DOCUMENT COUNT:		2
+CONFORMED PERIOD OF REPORT:	20250516
+FILED AS OF DATE:		20250516
+DATE AS OF CHANGE:		20250516
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			DDC Enterprise Ltd
+		CENTRAL INDEX KEY:			0001808110
+		STANDARD INDUSTRIAL CLASSIFICATION:	FOOD & KINDRED PRODUCTS [2000]
+		ORGANIZATION NAME:           	04 Manufacturing
+		EIN:				000000000
+		STATE OF INCORPORATION:			E9
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		6-K
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	001-41872
+		FILM NUMBER:		25957091
+
+	BUSINESS ADDRESS:	
+		STREET 1:		368 9TH AVE
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10001
+		BUSINESS PHONE:		852-2803-0688
+
+	MAIL ADDRESS:	
+		STREET 1:		368 9TH AVE
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10001
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>6-K
+<SEQUENCE>1
+<FILENAME>ea0242513-6k_ddcenter.htm
+<DESCRIPTION>REPORT OF FOREIGN PRIVATE ISSUER
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 2pt solid; border-bottom: Black 1pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SECURITIES AND EXCHANGE COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Washington, D.C. 20549</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>FORM 6-K</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>REPORT OF FOREIGN PRIVATE ISSUER</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>PURSUANT TO RULE 13a-16 OR 15d-16</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>UNDER THE SECURITIES EXCHANGE ACT OF 1934</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>For the month of May 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Commission File Number: 001-41872</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>DDC Enterprise Limited</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;368 9<SUP>th</SUP> Ave., New York, NY 10001
+USA</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><BR>
++ 852-2803-0688</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>(Address of principal executive office)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Indicate by check mark whether the registrant files or will file annual
+reports under cover of Form 20-F or Form 40-F:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Form 20-F &#9746; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Form 40-F &#9744;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1pt solid; border-bottom: Black 2pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Information Contained in this Form 6-K Report</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">When used in this Form 6-K (this &ldquo;<U>Report</U>&rdquo;),
+unless otherwise indicated, the terms, &ldquo;DDC,&rdquo; &ldquo;Company,&rdquo; and &ldquo;we&rdquo; refer to DDC Enterprise Limited.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On May 15, 2025, the Company issued a press release announcing 2024
+results and a corporate update. The press release is attached hereto and incorporate by this reference.</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">As of May 15, 2025, the Company had 4,645,749 Class A Ordinary shares issued and outstanding, which includes 1,470,000 shares that DDC
+is obligated to issue but are subject to completion of an application with the NYSE-American.</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Safe Harbor Statements</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">This filing contains forward-looking statements. These statements are
+made under the &ldquo;safe harbor&rdquo; provisions of the U.S. Private Securities Litigation Reform Act of 1995. These forward-looking
+statements can be identified by terminology such as &ldquo;in the process of,&rdquo; &ldquo;will,&rdquo; &ldquo;expects,&rdquo; &ldquo;anticipates,&rdquo;
+&ldquo;aims,&rdquo; &ldquo;future,&rdquo; &ldquo;intends,&rdquo; &ldquo;plans,&rdquo; &ldquo;believes,&rdquo; &ldquo;estimates,&rdquo;
+&ldquo;confident,&rdquo; &ldquo;potential,&rdquo; &ldquo;continue&rdquo; or other similar expressions. Among other things, completion
+of the reverse split and removal of the trade halt are forward-looking statements. DDC may also make written or oral forward-looking statements
+in its periodic reports to the U.S. Securities and Exchange Commission (the &ldquo;<U>SEC</U>&rdquo;), in its annual report to shareholders,
+in press releases and other written materials and in oral statements made by its officers, directors or employees to third parties. Statements
+that are not historical facts, including but not limited to statements about DDC&rsquo;s beliefs and expectations, are forward-looking
+statements. Forward-looking statements involve inherent risks and uncertainties. A number of factors could cause actual results to differ
+materially from those contained in any forward-looking statement, including but not limited to the following: DDC&rsquo;s Bitcoin strategy,
+performance of JV&rsquo;s; DDC&rsquo;s growth strategies; its future business development, results of operations and financial condition;
+its ability to understand buyer needs and provide products and services to attract and retain buyers; its ability to maintain and enhance
+the recognition and reputation of its brand; its ability to rely on merchants and third-party logistics service providers to provide delivery
+services to buyers; its ability to maintain and improve quality control policies and measures; its ability to establish and maintain relationships
+with merchants; trends and competition in China&rsquo;s e-commerce market; changes in its revenues and certain cost or expense items;
+the expected growth of China&rsquo;s e-commerce market; PRC governmental policies and regulations relating to DDC&rsquo;s industry, and
+general economic and business conditions globally and in China and assumptions underlying or related to any of the foregoing. Further
+information regarding these and other risks is included in DDC&rsquo;s filings with the SEC. All information provided in this report and
+in the attachments is as of the date of this report, and DDC undertakes no obligation to update any forward-looking statement, except
+as required under applicable law.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SIGNATURES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, thereunto duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">DDC Enterprise Limited</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: May 16, 2025</FONT></TD>
+    <TD COLSPAN="2" STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; text-align: justify">&nbsp;</TD>
+    <TD STYLE="width: 5%; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</FONT></TD>
+    <TD STYLE="width: 35%; border-bottom: black 1.5pt solid; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Norma Ka Yin Chu</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:&nbsp;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Norma Ka Yin Chu</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title:</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Executive Officer</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 3 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><B>EXHIBIT INDEX</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="border-bottom: black 1.5pt solid; text-align: left; width: 9%; vertical-align: bottom"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Exhibit&nbsp;No.</B></FONT></TD>
+    <TD STYLE="text-align: left; width: 1%; vertical-align: top">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; text-align: left; width: 90%; vertical-align: bottom"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Description</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: #CCEEFF">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif">99.1</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD><A HREF="ea024251301ex99-1_ddcenter.htm"><FONT STYLE="font-family: Times New Roman, Times, Serif">Press Release issued May 15, 2025</FONT></A></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">3</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>EX-99.1
+<SEQUENCE>2
+<FILENAME>ea024251301ex99-1_ddcenter.htm
+<DESCRIPTION>PRESS RELEASE ISSUED MAY 15, 2025
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: right"><B>Exhibit 99.1</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: right"><B>&nbsp;</B></P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B>DDC Announces Record 2024 Growth and</B></P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B>Strategic Bitcoin Reserve Initiative in</B></P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B>Shareholder Letter by Founder &amp; CEO</B></P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B>Norma Chu</B></P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">NEW YORK--(BUSINESS WIRE)-- DDC Enterprise Ltd. (NYSEAM: DDC),
+today released its 2024 full year results alongside a Shareholder Letter from Founder, Chairwoman, and CEO Norma Chu, underscoring the
+company&rsquo;s positive financial performance and unveiling a pioneering Bitcoin accumulation strategy poised to redefine long-term value
+creation.</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">To Our Valued Shareholders,</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">2024 was a year of transformative growth and strategic milestones
+for DDC. I am thrilled to share that we not only met our financial forecasts but exceeded expectations, delivering strong performance
+across key metrics while laying the groundwork for an even more exciting future. As we enter 2025, our momentum is accelerating, driven
+by disciplined execution and a bold new chapter in our corporate strategy.</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B><U>2024 Financial &amp; Operational Highlights</U></B></P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Revenue
+                                            Growth: USD 37.4 million, a 33% year-over-year increase, propelled by the strategic acquisition
+                                            of U.S. brands and sustained resilience in our core China operations.</FONT></TD>
+</TR></TABLE>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Margin
+                                            Expansion: Gross profit margin improved to 28.4%, up from 25.0% in 2023, reflecting stringent
+                                            supply chain optimization and cost discipline.</FONT></TD>
+</TR></TABLE>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Path
+                                            to Profitability: Adjusted EBITDA with loss narrowed to USD 3.5 million (or USD 2 million
+                                            excluding non-recurring expenses), with our China business generating positive EBITDA for
+                                            the full year.</FONT></TD>
+</TR></TABLE>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Strengthened
+                                            Balance Sheet: Shareholders&rsquo; equity surged 33% to USD 11.3 million, supported by debt
+                                            conversion and equity issuances. Cash, cash equivalents and short-term investments are estimated
+                                            at $23.6 million as of March 31, 2</FONT><FONT STYLE="font-family: Times New Roman, Times, Serif">025.</FONT></TD>
+</TR></TABLE>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Our team&rsquo;s relentless focus on operational efficiency
+and strategic reinvestment has positioned DDC as a leaner, more agile organization, ready to capitalize on emerging opportunities.</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B><U>2025: A Year of Strategic Acceleration</U></B></P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Building on 2024&rsquo;s foundation, we are well-positioned
+to achieve positive adjusted EBITDA in 2025, fueled by two transformative initiatives:</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in; text-align: left">1.</TD><TD STYLE="text-align: justify">China Joint Venture (JV): Our recently announced JV partnership
+is projected to contribute USD 3 million in annual net profit each year over the next five years.</TD>
+</TR></TABLE>
+
+<P STYLE="margin-top: 0; margin-bottom: 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in; text-align: left">2.</TD><TD STYLE="text-align: justify">Bitcoin Reserve Strategy: We are embarking on a pioneering
+initiative to position DDC at the forefront of digital asset innovation with laser-focused execution on Bitcoin accumulation.</TD>
+</TR></TABLE>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B><U>The Bitcoin Opportunity: A Vision for the Future</U></B></P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">I am exceptionally enthusiastic to announce DDC&rsquo;s Bitcoin
+Accumulation Strategy, a cornerstone of our long term value creation plan. Bitcoin&rsquo;s unique properties as a store of value and hedge
+against macroeconomic uncertainty align perfectly with our vision to diversify reserves and enhance shareholder returns.</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B><U>Our Commitment:</U></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Immediate execution of a 100 BTC acquisition, with a target
+to accumulate 500 BTC within six months and 5,000 BTC within 36 months.</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">A dedicated treasury management team and newly expanded crypto-native
+advisory board will oversee this strategy, ensuring disciplined, risk-aware accumulation.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">This initiative underscores our confidence in blockchain technology&rsquo;s
+transformative potential and our commitment to pioneering corporate financial strategies.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt"><B><U>Looking Ahead</U></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">As founder and CEO, I am more optimistic than ever about DDC&rsquo;s
+trajectory. Our 2024 results demonstrate our ability to scale efficiently, while our 2025 initiatives&mdash;particularly our Bitcoin strategy&mdash;reflect
+a forward-thinking approach to value creation. We are not merely adapting to the future; we are shaping it.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; text-indent: 0pt; margin: 0pt">To our shareholders: Thank you for your unwavering trust.
+Together, we are building a company defined by innovation, resilience, and bold ambition.</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Sincerely,</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Norma Chu</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Founder, Chairwoman &amp; CEO</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">DDC Enterprise Limited</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B><U>Forward-Looking Statements</U></B></P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt"><B>&nbsp;</B></P>
+
+<P STYLE="text-align: justify; text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">Certain statements in this
+press release are forward-looking statements, including, for example, statements about our Bitcoin strategy, performance of JVs,
+NYSE and SEC compliance, estimated revenue, margins, growth and expansion. These forward-looking statements involve known and
+unknown risks and uncertainties and are based on the Company&rsquo;s current expectations and projections about future events that
+the Company believes may affect its financial condition, results of operations, business strategy and financial needs. These
+forward-looking statements are also based on assumptions regarding the Company&rsquo;s present and future business strategies and
+the environment in which the Company will operate in the future. Investors can find many (but not all) of these statements by the
+use of words such as &ldquo;may,&rdquo; &ldquo;will,&rdquo; &ldquo;expect,&rdquo; &ldquo;anticipate,&rdquo; &ldquo;aim,&rdquo;
+&ldquo;estimate,&rdquo; &ldquo;intend,&rdquo; &ldquo;plan,&rdquo; &ldquo;believe,&rdquo; &ldquo;likely to&rdquo; or other similar
+expressions. The Company undertakes no obligation to update or revise publicly any forward-looking statements to reflect subsequent
+occurring events or circumstances, or changes in its expectations, except as may be required by law. Although the Company believes
+that the expectations expressed in these forward-looking statements are reasonable, it cannot assure you that such expectations will
+turn out to be correct, and the Company cautions investors that actual results may differ materially from the anticipated results
+and encourages investors to review other factors that may affect its future results in the Company&rsquo;s registration statement
+and other filings with the SEC.</P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt">&nbsp;</P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify">Investors:</P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify">Jeff Ervin</P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify">jeffervin@daydaycook.com</P>
+
+<P STYLE="text-indent: 0pt; font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify">Source: DDC Enterprise, Ltd.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-indent: 0pt; margin: 0pt; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></P>
+
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
