@@ -20,6 +20,7 @@ const FOREX_CACHE_TTL = 5 * 60 * 1000;
 const TICKER_CURRENCY: Record<string, string> = {
   "3350.T": "JPY",
   "3189.T": "JPY",    // ANAP Holdings (Tokyo Stock Exchange)
+  "3825.T": "JPY",    // Remixpoint (Tokyo Stock Exchange)
   "H100.ST": "SEK",
   "0434.HK": "HKD",
   "ALTBG": "EUR",

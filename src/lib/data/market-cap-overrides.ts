@@ -68,6 +68,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   // International (price in local currency for display, marketCap in USD)
   "3350.T": { price: 548, marketCap: 4_010_000_000 },      // Metaplanet (JPY) - 1.142B shares × 548 JPY ÷ 156
   "3189.T": { price: 245, marketCap: 63_000_000 },         // ANAP Holdings (JPY) - 39.95M shares × ¥245 ÷ 156 = $63M
+  "3825.T": { price: 255, marketCap: 244_000_000 },        // Remixpoint (JPY) - 149M shares × ¥255 ÷ 156 = $244M
   "0434.HK": { price: 1.50, marketCap: 500_000_000 },      // Boyaa Interactive (HKD)
   "ALTBG": { price: 0.77, marketCap: 175_000_000 },        // Capital B / Blockchain Group (EUR, Euronext Paris)
   "H100.ST": { price: 1.93, marketCap: 62_000_000 },       // H100 Group (SEK price, USD market cap)

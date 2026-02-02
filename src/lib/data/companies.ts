@@ -766,18 +766,19 @@ export const btcCompanies: Company[] = [
     currency: "JPY",
     asset: "BTC",
     tier: 2,
-    holdings: 1_411,  // BitcoinTreasuries.net Feb 2026
+    holdings: 1_411,  // Company website Feb 2026: 1,411.30 BTC
     holdingsLastUpdated: "2026-02-02",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.remixpoint.co.jp/digital-asset/",
-    datStartDate: "2024-01-01",
+    datStartDate: "2024-09-26",  // First BTC purchase
     website: "https://www.remixpoint.co.jp",
+    twitter: "https://x.com/remixpoint_x",
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 149_039_800,  // Yahoo Japan Finance
     strategy: "Japanese company with explicit Digital Asset Management division. Actively accumulates with press releases for each purchase.",
-    notes: "TSE Standard Market. Japan's #4 BTC holder. Also holds ETH, XRP, SOL, DOGE. Originally auto/energy business, pivoting to DAT.",
+    notes: "TSE Standard Market. Japan's #4 BTC holder (World #43). Also holds 901 ETH, 1.2M XRP, 13,920 SOL, 2.8M DOGE. Originally auto/energy business, pivoting to DAT.",
   },
   {
     id: "3189t",

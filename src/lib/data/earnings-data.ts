@@ -3646,6 +3646,116 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "regulatory-filing",
     status: "reported",
   },
+
+  // ========== Remixpoint (3825.T) - Japan ==========
+  // Calendar year quarters, holdings derived from TDnet/company website
+  // First BTC purchase: September 26, 2024
+  // Q1 2026 - In progress
+  {
+    ticker: "3825.T",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-04-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 1411, // Nov 4, 2025 - 1,411.30 BTC (no new purchases since)
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000095,
+    source: "regulatory-filing",
+    sourceUrl: "https://www.remixpoint.co.jp/digital-asset/",
+    status: "upcoming",
+  },
+  // Q4 2025
+  {
+    ticker: "3825.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-01-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 1411, // ~1,411 BTC at Dec 31
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000095,
+    source: "regulatory-filing",
+    status: "reported",
+  },
+  // Q3 2025
+  {
+    ticker: "3825.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-10-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 1375, // Sep 18, 2025 - 1,375 BTC
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000092,
+    source: "regulatory-filing",
+    status: "reported",
+  },
+  // Q2 2025
+  {
+    ticker: "3825.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-07-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 1285, // Jun 16, 2025 - 1,285 BTC
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000086,
+    source: "regulatory-filing",
+    status: "reported",
+  },
+  // Q1 2025
+  {
+    ticker: "3825.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-04-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 960, // Mar 3, 2025 - 960 BTC
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000064,
+    source: "regulatory-filing",
+    status: "reported",
+  },
+  // Q4 2024
+  {
+    ticker: "3825.T",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-01-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 420, // Dec 17, 2024 - 420 BTC
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000028,
+    source: "regulatory-filing",
+    status: "reported",
+  },
+  // Q3 2024 - First quarter with BTC
+  {
+    ticker: "3825.T",
+    fiscalYear: 2024,
+    fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
+    earningsDate: "2024-10-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 75, // Sep 27, 2024 - 75 BTC (first purchases Sep 26-27)
+    sharesAtQuarterEnd: 149_039_800,
+    holdingsPerShare: 0.0000005,
+    source: "regulatory-filing",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
