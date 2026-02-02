@@ -1069,38 +1069,38 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   FLD: [
     {
       type: "warrant",
-      strikePrice: 11.50,
-      potentialShares: 925_590,  // Per Nasdaq listing - FLDDW warrants
+      strikePrice: 15.00,
+      potentialShares: 925_590,
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      expiration: "2029-07-01",  // Typical 5-year SPAC warrant term
-      notes: "Public warrants (FLDDW) at $11.50 - deep OTM at ~$2 stock",
+      notes: "March 2025 Warrants @ $15 - deep OTM at ~$2 stock",
     },
     {
       type: "convertible",
-      strikePrice: 3.00,  // Estimated based on $3 per share terms mentioned in 10-Q
-      potentialShares: 750_000,  // Closing Shares mentioned in 10-Q
-      faceValue: 21_644_139,  // June 2025 convertible note
+      strikePrice: 9.00,
+      potentialShares: 2_222_222,  // $20M / $9
+      faceValue: 20_000_000,
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      notes: "June 2025 convertible note - conversion terms need verification",
+      expiration: "2028-02-14",
+      notes: "June 2025 Amended Investor Note @ $9/share. Secured by 300 BTC. Deep OTM at ~$2 stock.",
     },
     {
       type: "convertible",
-      strikePrice: 3.00,  // Estimated
-      potentialShares: 20_250_000,  // Estimated based on face value / strike
-      faceValue: 60_750_183,  // March 2025 convertible note - related party
+      strikePrice: 12.50,
+      potentialShares: 3_704_000,  // $46.3M / $12.50
+      faceValue: 46_300_000,  // Principal (fair value is $60.8M)
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      notes: "March 2025 convertible note (related party) - conversion terms need verification",
+      notes: "March 2025 Investor Note (SATS Credit Fund - related party) @ $12.50/share. Funded with 475 BTC. Triggering events at $15-$40 stock. Deep OTM at ~$2 stock.",
     },
   ],
-  // Total FLD dilution: 925K warrants (OTM) + ~21M potential convert shares
-  // Warrants deep OTM at $11.50 vs ~$2 stock
-  // Converts need strike verification - could add significant dilution if ITM
+  // Total FLD dilution: 925K warrants + 5.9M convert shares = 6.8M potential (all OTM)
+  // All instruments deep OTM at ~$2 stock vs $9-$15 strikes
+  // 300 BTC collateral on June note, 475 BTC funded March note
 
   // HYPD (Hyperion DeFi) - HYPE treasury company
   // Verified 2026-01-30 via SEC 424B3 (Jan 9, 2026) and 10-Q Q3 2025
