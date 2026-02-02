@@ -44,7 +44,7 @@ const FMP_ONLY_STOCKS = [
   "IHLDF",     // Immutable Holdings (OTC) - Alpaca has poor OTC coverage
   "NA",        // Nano Labs
   "3350.T",    // Metaplanet (Tokyo)
-  "3189.T",    // ANAP Holdings (Tokyo)
+  // "3189.T" removed - using FALLBACK_STOCKS with verified TDnet data instead
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
