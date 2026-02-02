@@ -808,6 +808,7 @@ export const btcCompanies: Company[] = [
     id: "zooz",
     name: "ZOOZ Power",
     ticker: "ZOOZ",
+    twitter: "zoozbitcoin",
     asset: "BTC",
     tier: 2,
     holdings: 1_047,  // treasury.zoozpower.com Feb 2, 2026 (1,046.96 BTC)
