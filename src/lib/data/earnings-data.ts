@@ -3580,6 +3580,72 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-K",
     status: "reported",
   },
+
+  // ========== ANAP Holdings (3189.T) - Japan ==========
+  // Calendar year quarters, holdings derived from TDnet purchase announcements
+  // First BTC purchase: April 16, 2025
+  // Q1 2026 - In progress
+  {
+    ticker: "3189.T",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-04-15", // Estimated - Japanese companies typically report ~45 days after quarter end
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 1417, // Jan 21, 2026 - 1,417.0341 BTC (ongoing quarter)
+    sharesAtQuarterEnd: 39_954_400,
+    holdingsPerShare: 0.0000355,
+    source: "regulatory-filing",
+    sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
+    status: "upcoming",
+  },
+  // Q4 2025
+  {
+    ticker: "3189.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-01-14", // Actual TDnet filing date
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 1347, // Dec 25, 2025 - 1,346.5856 BTC
+    sharesAtQuarterEnd: 39_954_400,
+    holdingsPerShare: 0.0000337,
+    source: "regulatory-filing",
+    sourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
+    status: "reported",
+  },
+  // Q3 2025
+  {
+    ticker: "3189.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-10-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 962, // Sep 30, 2025 - 961.6579 BTC
+    sharesAtQuarterEnd: 39_954_400,
+    holdingsPerShare: 0.0000241,
+    source: "regulatory-filing",
+    status: "reported",
+  },
+  // Q2 2025
+  {
+    ticker: "3189.T",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-07-15", // Estimated
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 332, // Jun 18, 2025 - 331.6579 BTC
+    sharesAtQuarterEnd: 39_954_400,
+    holdingsPerShare: 0.0000083,
+    source: "regulatory-filing",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
