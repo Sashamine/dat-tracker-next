@@ -340,11 +340,28 @@ export async function GET() {
 
     // Add fallback data for illiquid stocks without real-time data
     for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
+      // Debug: check if 3189.T already has data (shouldn't, since we removed it from FMP_ONLY_STOCKS)
+      if (ticker === "3189.T" && stockPrices[ticker]) {
+        console.log(`[Prices DEBUG] 3189.T already has data (NOT using fallback):`, stockPrices[ticker]);
+      }
       if (!stockPrices[ticker]) {
         // Convert fallback price to USD if it's a foreign currency stock
         const currency = TICKER_CURRENCY[ticker];
         const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
         const priceUsd = rate && rate > 0 ? fallback.price / rate : fallback.price;
+
+        // Debug logging for 3189.T
+        if (ticker === "3189.T") {
+          console.log(`[Prices DEBUG] 3189.T fallback:`, {
+            fallbackPrice: fallback.price,
+            currency,
+            forexRateFromFMP: forexRates[currency as string],
+            fallbackRate: FALLBACK_RATES[currency as string],
+            rateUsed: rate,
+            priceUsd,
+            fallbackMarketCap: fallback.marketCap,
+          });
+        }
 
         stockPrices[ticker] = {
           price: priceUsd,
