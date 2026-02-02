@@ -816,13 +816,14 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://treasury.zoozpower.com",
     datStartDate: "2025-09-28",
     website: "https://zoozpower.com",
+    secCik: "0001992818",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 1_000_000,
     sharesForMnav: 162_000_000,  // treasury.zoozpower.com basic shares
     costBasisAvg: 116_485,  // treasury.zoozpower.com
-    strategy: "EV charging company (flywheel tech) with explicit BTC treasury. Dedicated treasury page.",
-    notes: "Nasdaq + TASE dual-listed (Israel). 0.86x mNAV. Underwater on BTC ($116k avg cost). Diluted: 269.2M shares (1.43x mNAV).",
+    strategy: "EV charging company (flywheel tech) pivoted to BTC treasury Sep 2025. First NIS-denominated Bitcoin exposure on TASE.",
+    notes: "Nasdaq + TASE dual-listed (Israel). ✅ NO LEVERAGE: BTC funded via $180M equity raise (Jul 2025). Underwater on BTC ($116k avg). Dilutive: 269M fully diluted (warrants @ $3.06 strike, 5yr). Renamed to 'ZOOZ Strategy Ltd.' Oct 2025.",
   },
   {
     id: "usbc",
