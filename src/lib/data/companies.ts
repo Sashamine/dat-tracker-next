@@ -832,27 +832,30 @@ export const btcCompanies: Company[] = [
     ticker: "USBC",
     asset: "BTC",
     tier: 2,
-    holdings: 1_000,  // 10-K FY Sep 2025 - needs verification
+    holdings: 1_003,  // SEC 10-K FY2025: 1,000 BTC received Aug 6 + 2.617 from trading = 1,002.617
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001074828",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1074828/000165495425014138/usbc_10k.htm",
     datStartDate: "2025-08-06",
     website: "https://usbc.xyz",
     investorRelationsUrl: "https://investors.usbc.xyz",
-    secCik: "0001074828",  // Fixed: was 0001956166 (Ming Shing - wrong company!)
+    secCik: "0001074828",
+    costBasisAvg: 115_567,  // SEC 10-K: "recorded at an average price of $115,567 per Bitcoin"
     isMiner: false,
     quarterlyBurnUsd: 6_000_000,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 388_140_000,  // StockAnalysis Feb 2026
-    strategy: "BTC treasury + tokenized deposit platform (USBC token). Greg Kidd (CEO) driving crypto pivot.",
-    notes: "NYSE American. Formerly Know Labs (Aug 2025), Visualant. Fiscal year ends Sep 30. ⚠️ HOLDINGS: 1,000 BTC from Aug 2025 - needs 10-K verification. High dilution, insider control.",
-    dataWarnings: [
-      {
-        type: "share-change",
-        message: "Extreme dilution: shares increased 2,830% YoY. Near-delisting history (Jan 2025). Zero operating revenue.",
-        severity: "warning",
-      },
-    ],
+    sharesForMnav: 388_143_679,  // SEC 10-K: exact shares as of Sep 30, 2025
+    sharesSource: "SEC 10-K FY2025",
+    sharesAsOf: "2025-09-30",
+    totalDebt: 0,  // NO DEBT for BTC: received 1,000 BTC via equity (357.8M shares + $15M cash from Goldeneye)
+    debtSource: "SEC 10-K FY2025 - BTC acquired via equity issuance, not debt",
+    debtAsOf: "2025-09-30",
+    cashReserves: 8_822_000,  // SEC 10-K: $8,821,999 cash as of Sep 30, 2025
+    cashSource: "SEC 10-K FY2025",
+    cashAsOf: "2025-09-30",
+    leader: "Greg Kidd (CEO, Chairman)",
+    strategy: "BTC treasury + tokenized deposit platform (USBC). Uses options/derivatives to generate yield on BTC holdings via Hyrcanian Asset Management.",
+    notes: "NYSE American. Formerly Know Labs (Aug 2025). FY ends Sep 30. BTC fair value $115M (Sep 30). ~$34.5M BTC pledged as collateral for derivative trading. 71.5% owned by Goldeneye (Kidd). Dec 2025: 1,011.344 BTC @ $86,225 = $87.2M fair value.",
   },
   {
     id: "btct",
