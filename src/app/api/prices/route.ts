@@ -9,7 +9,7 @@ import { getLSTExchangeRates, getSupportedLSTIds } from "@/lib/lst";
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Forex pairs we need (FMP format)
-const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
+const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR", "USDGBP"];
 
 // Cache for forex rates (5 minute TTL - forex doesn't move that fast)
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
@@ -22,6 +22,8 @@ const TICKER_CURRENCY: Record<string, string> = {
   "0434.HK": "HKD",
   "ALTBG": "EUR",
   "ETHM": "CAD",
+  "SWC": "GBP",     // Smarter Web Company (AQUIS UK)
+  "TSWCF": "GBP",   // SWC OTC ticker
 };
 
 // Stocks not on major exchanges (OTC/international) - use FMP
@@ -29,6 +31,7 @@ const TICKER_CURRENCY: Record<string, string> = {
 const FMP_TICKER_MAP: Record<string, string> = {
   "ALTBG.PA": "ALTBG",   // Euronext Paris
   "HOGPF": "H100.ST",    // H100 Group OTC ticker -> display as H100.ST
+  "TSWCF": "SWC",        // Smarter Web Company OTC ticker -> display as SWC (AQUIS primary)
 };
 const FMP_ONLY_STOCKS = [
   "MSTR",      // Strategy - use FMP for price since Alpaca not working on Vercel
@@ -42,6 +45,8 @@ const FMP_ONLY_STOCKS = [
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
+  "TSWCF",     // Smarter Web Company (OTC) - AQUIS primary not supported
+  "SWC",       // SWC display ticker
   // SOL treasury companies - Alpaca IEX often has no data (low volume)
   "DFDV",      // DeFi Development
   "UPXI",      // Upexi
