@@ -835,18 +835,24 @@ export const btcCompanies: Company[] = [
     currency: "CAD",
     asset: "BTC",
     tier: 2,
-    holdings: 771,  // BitcoinTreasuries.net Feb 2026
+    holdings: 771,  // btctcorp.com homepage: 771.37 BTC (Feb 2026)
     holdingsLastUpdated: "2026-02-02",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/bitcoin-treasury-corp",
-    datStartDate: "2025-06-26",
+    holdingsSourceUrl: "https://btctcorp.com",
+    datStartDate: "2025-06-30",  // TSX Venture listing date
     costBasisAvg: 107_689,  // BitcoinTreasuries.net
     isMiner: false,
     quarterlyBurnUsd: 500_000,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 50_000_000,  // Estimated
-    strategy: "Strategic accumulation and active deployment of Bitcoin. BTC-denominated lending services.",
-    notes: "TSX Venture (Canada). Institutional-grade Bitcoin services including lending, liquidity, and collateral solutions.",
+    website: "https://btctcorp.com",
+    sedarProfile: "000053693",  // SEDAR+ profile number
+    // Shares: 10,075,080 basic, 12,158,413 diluted (accounts for convertible debentures)
+    sharesForMnav: 12_158_413,  // Diluted per btctcorp.com - includes convertible debentures
+    sharesSource: "btctcorp.com homepage",
+    sharesAsOf: "2026-02-02",
+    // Note: Diluted shares include convertible debentures - indicates leverage via converts
+    strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
+    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services. BPS: ₿0.0000634 (diluted). Basic shares: 10,075,080. Convertible debentures outstanding increase diluted count to 12.16M. First Canadian Bitcoin-native treasury company.",
   },
   {
     id: "aker",
