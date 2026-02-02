@@ -701,7 +701,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001879726&type=6-K",
     datStartDate: "2025-02-21",
     website: "https://ir.ddc.xyz",
-    secCik: "0001879726",
+    secCik: "0001808110",  // Fixed - was incorrectly 1879726 (Sidus Space)
     costBasisAvg: 88_170,  // BitcoinTreasuries.net
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
