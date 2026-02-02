@@ -759,14 +759,14 @@ export const btcCompanies: Company[] = [
     holdings: 2_011,  // Q1 2025 (Mar 31) - company reports
     holdingsLastUpdated: "2025-03-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001839341&type=10-K",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001821534&type=10-Q",
     datStartDate: "2024-01-01",
     website: "https://exodus.com",
-    secCik: "0001839341",
+    secCik: "0001821534",  // Fixed - was incorrectly 1839341 (Core Scientific)
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 10_000_000,
-    sharesForMnav: 29_280_000,  // StockAnalysis Feb 2026
+    sharesForMnav: 29_237_916,  // SEC 10-Q Sep 2025: 9.77M Class A + 19.47M Class B
     strategy: "Crypto wallet company with explicit treasury strategy. Receives revenue in BTC, accumulates rather than converts.",
     notes: "NYSE American listed. 1.6M monthly active users. Also holds 2,693 ETH + $62.8M cash/USDC. 75% insider ownership.",
   },
