@@ -557,7 +557,7 @@ export const btcCompanies: Company[] = [
   {
     id: "altbg",
     name: "The Blockchain Group",
-    ticker: "ALTBG",
+    ticker: "ALCPB",  // Changed from ALTBG (Capital B rebrand)
     currency: "EUR",
     asset: "BTC",
     tier: 2,
@@ -637,6 +637,96 @@ export const btcCompanies: Company[] = [
         severity: "warning",
       },
     ],
+  },
+  {
+    id: "swc",
+    name: "The Smarter Web Company",
+    ticker: "SWC",
+    currency: "GBP",
+    asset: "BTC",
+    tier: 2,
+    holdings: 2_674,  // BitcoinTreasuries.net Feb 2026
+    holdingsLastUpdated: "2026-02-02",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/the-smarter-web-company-plc",
+    datStartDate: "2025-04-01",
+    isMiner: false,
+    quarterlyBurnUsd: 500_000,
+    avgDailyVolume: 1_000_000,
+    sharesForMnav: 695_000_000,  // Companies House statement of capital (~695M at 0.1p nominal)
+    strategy: "UK BTC treasury company. Explicit treasury strategy.",
+    notes: "AQUIS Stock Exchange listed. Shell pivot (was Uranium Energy Exploration until Apr 2025). #1 UK BTC holder. Companies House: 00092343.",
+    dataWarnings: [
+      {
+        type: "unverified-shares",
+        message: "Share count derived from Companies House nominal value. mNAV reported as 79.80x needs verification.",
+        severity: "warning",
+      },
+    ],
+  },
+  {
+    id: "sqns",
+    name: "Sequans Communications",
+    ticker: "SQNS",
+    asset: "BTC",
+    tier: 2,
+    holdings: 2_264,  // Nov 4, 2025 (was 3,234, sold 970 to repay debt)
+    holdingsLastUpdated: "2025-11-04",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://sequans.com/bitcoin-treasury/",
+    datStartDate: "2025-06-23",
+    website: "https://sequans.com",
+    secCik: "0001383395",
+    costBasisAvg: 80_000,  // Estimated from $189M raise / ~2.3k BTC peak
+    isMiner: false,
+    quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops
+    avgDailyVolume: 5_000_000,
+    sharesForMnav: 13_900_000,  // Q3 2025 weighted avg diluted ADS
+    totalDebt: 189_000_000,  // $189M convertible debt (July 2025)
+    debtSource: "SEC Form 6-K",
+    strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC.",
+    notes: "NYSE listed (French HQ). Dedicated bitcoin-treasury page with live KPIs. BTC pledged as collateral, later amended. Sold 970 BTC to repay portion of debt.",
+  },
+  {
+    id: "ddc",
+    name: "DDC Enterprise",
+    ticker: "DDC",
+    asset: "BTC",
+    tier: 2,
+    holdings: 1_783,  // BitcoinTreasuries.net Feb 2026
+    holdingsLastUpdated: "2026-02-02",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001879726&type=6-K",
+    datStartDate: "2025-02-21",
+    website: "https://ir.ddc.xyz",
+    secCik: "0001879726",
+    costBasisAvg: 88_170,  // BitcoinTreasuries.net
+    isMiner: false,
+    quarterlyBurnUsd: 2_000_000,
+    avgDailyVolume: 5_000_000,
+    sharesForMnav: 24_400_000,  // ~22.66M Class A + 1.75M Class B
+    strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
+    notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). 263% Bitcoin yield cited H2 2025.",
+  },
+  {
+    id: "hive",
+    name: "HIVE Digital Technologies",
+    ticker: "HIVE",
+    currency: "CAD",
+    asset: "BTC",
+    tier: 2,
+    holdings: 2_201,  // BitcoinTreasuries.net Feb 2026
+    holdingsLastUpdated: "2026-02-02",
+    holdingsSource: "company-website",
+    holdingsSourceUrl: "https://hivedigitaltechnologies.com",
+    datStartDate: "2024-01-01",
+    website: "https://hivedigitaltechnologies.com",
+    isMiner: true,
+    quarterlyBurnUsd: 20_000_000,  // Mining operations
+    avgDailyVolume: 50_000_000,
+    sharesForMnav: 237_710_000,  // StockAnalysis Feb 2026
+    strategy: "HODL-forward miner. Explicit policy to retain significant portion of mined BTC as treasury.",
+    notes: "Nasdaq/TSX.V/FSE listed. 25 EH/s hashrate (~2% of network). Mines ~9 BTC/day. 540 MW renewable energy (Paraguay, Canada, Sweden). Also BUZZ HPC (AI cloud).",
   },
   {
     id: "naka",
