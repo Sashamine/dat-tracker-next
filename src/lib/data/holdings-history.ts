@@ -257,6 +257,18 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 1057, sharesOutstandingDiluted: 45_650_000, holdingsPerShare: 0.0000231, source: "SEC 10-Q Q3 2025", sharesSource: "Stock Analysis Jan 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm", sourceType: "sec-filing" },
 ];
 
+// Sequans Communications (SQNS) - IoT semiconductor with BTC treasury
+// Foreign private issuer (France) - files 6-K instead of 10-Q
+// 1:10 reverse split Sep 17, 2025
+// $189M convertible debt raised Jul 2025 for BTC purchases
+// Nov 4, 2025: Sold 970 BTC to repay portion of debt
+const SQNS_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-06-23", holdings: 0, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0, source: "DAT strategy announced", sourceType: "press-release" },
+  { date: "2025-07-08", holdings: 1_500, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0.00000597, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "sec-filing" },
+  { date: "2025-09-17", holdings: 3_234, sharesOutstandingDiluted: 25_140_892, holdingsPerShare: 0.0001287, source: "1:10 reverse split + peak holdings", sourceType: "sec-filing" },
+  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 15_590_000, holdingsPerShare: 0.0001452, source: "6-K: Sold 970 BTC to repay debt", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "sec-filing" },
+];
+
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
 // Quarterly data from H1 2025 HKEX Interim Results - BTC Yield table (page 16-17)
 // Share counts corrected per official filing (previously had ~660M, actual is ~709-710M)
@@ -804,6 +816,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   CLSK: { ticker: "CLSK", asset: "BTC", history: CLSK_HISTORY },
   "3350.T": { ticker: "3350.T", asset: "BTC", history: METAPLANET_HISTORY },
   KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },
+  SQNS: { ticker: "SQNS", asset: "BTC", history: SQNS_HISTORY },
   "0434.HK": { ticker: "0434.HK", asset: "BTC", history: BOYAA_HISTORY },
   ASST: { ticker: "ASST", asset: "BTC", history: ASST_HISTORY },
   // HUT removed - pivoted to AI/HPC infrastructure, not a DAT company

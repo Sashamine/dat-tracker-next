@@ -1379,6 +1379,46 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== Sequans Communications (SQNS) ==========
+  // Calendar year company (fiscal = calendar)
+  // Foreign private issuer (France) - files 6-K instead of 10-Q
+  // SEC CIK: 0001383395
+  // 1:10 reverse split Sep 17, 2025
+  // Verified 2026-02-02
+  //
+  // Q4 2025 - Current holdings after Nov 4 sale
+  {
+    ticker: "SQNS",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-10",
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 2_264,  // Nov 4, 2025 6-K: sold 970 BTC, now 2,264
+    sharesAtQuarterEnd: 15_590_000,  // Post-split, StockAnalysis Feb 2026
+    holdingsPerShare: 0.0001452,  // 2264 / 15.59M
+    source: "sec-filing",
+    sourceUrl: "https://sequans.com/bitcoin-treasury/",
+    status: "upcoming",
+  },
+  // Q3 2025 - Peak holdings before Nov sale
+  {
+    ticker: "SQNS",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-04",
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 3_234,  // Peak before Nov 4 sale of 970 BTC
+    sharesAtQuarterEnd: 25_140_000,  // Post-split (251.4M / 10)
+    holdingsPerShare: 0.0001287,  // 3234 / 25.14M
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
+    status: "reported",
+  },
+
   // ========== American Bitcoin (ABTC) ==========
   // Calendar year company (fiscal = calendar)
   // Merged with Gryphon Digital Mining Sep 3, 2025

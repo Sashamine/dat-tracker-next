@@ -233,6 +233,24 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // Sequans Communications (SQNS) - IoT semiconductor with BTC treasury
+  // Verified 2026-02-02 via SEC 6-K filings (CIK 0001383395)
+  // Jul 2025: $189M convertible debt raised for BTC purchases
+  // Nov 4, 2025: Sold 970 BTC to repay portion of debt
+  // Note: Foreign private issuer (France), 1:10 reverse split Sep 17, 2025
+  SQNS: [
+    {
+      type: "convertible",
+      strikePrice: 58.40, // Estimated: $189M / ~3.24M potential shares (pre-split 32.4M / 10)
+      potentialShares: 3_240_000, // Estimated post-split shares
+      faceValue: 189_000_000, // $189M convertible debt
+      source: "SEC 6-K Jul 2025",
+      sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
+      issuedDate: "2025-07-08",
+      notes: "$189M convertible debt for BTC treasury (3-year term, matures ~Jul 2028). BTC pledged as collateral initially, later amended. Strike estimated - needs verification.",
+    },
+  ],
+
   // H100 Group (H100.ST) - Swedish BTC treasury company
   // Verified 2026-01-29 via MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
   // Jul 9, 2025: SEK 516M raised via convertible debentures (Adam Back et al)

@@ -676,6 +676,8 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://sequans.com/bitcoin-treasury/",
     datStartDate: "2025-06-23",
     website: "https://sequans.com",
+    twitter: "https://twitter.com/Sequans",
+    investorRelationsUrl: "https://sequans.com/investor-relations/investor-materials/",
     secCik: "0001383395",
     costBasisAvg: 80_000,  // Estimated from $189M raise / ~2.3k BTC peak
     isMiner: false,
