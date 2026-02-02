@@ -42,9 +42,9 @@ export const STOCK_TICKERS = [
   "ALTBG",     // The Blockchain Group (France/Euronext)
   "H100.ST",   // H100 Group (Sweden)
   "3825.T",    // Remixpoint (Japan) - Added 2026-02-02
-  "3189.T",    // ANAP Holdings (Japan) - Added 2026-02-02
+  // "3189.T" removed - Alpaca doesn't support Tokyo Stock Exchange, use FALLBACK_STOCKS
   "SATS.L",    // Satsuma Technology (UK) - Added 2026-02-02
-  "SWC",       // Smarter Web Company (UK AQUIS) - Added 2026-02-02
+  // "SWC" removed - Alpaca returns wrong US stock, use FALLBACK_STOCKS for UK AQUIS
   "CASH3.SA",  // Méliuz (Brazil B3) - Added 2026-02-02
   "377030.KQ", // bitmax (South Korea) - Added 2026-02-02
   "SRAG.DU",   // Samara Asset Group (Germany) - Added 2026-02-02
