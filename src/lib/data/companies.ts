@@ -710,26 +710,10 @@ export const btcCompanies: Company[] = [
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
     notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). 263% Bitcoin yield cited H2 2025.",
   },
-  {
-    id: "hive",
-    name: "HIVE Digital Technologies",
-    ticker: "HIVE",
-    currency: "CAD",
-    asset: "BTC",
-    tier: 2,
-    holdings: 2_201,  // BitcoinTreasuries.net Feb 2026
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://hivedigitaltechnologies.com",
-    datStartDate: "2024-01-01",
-    website: "https://hivedigitaltechnologies.com",
-    isMiner: true,
-    quarterlyBurnUsd: 20_000_000,  // Mining operations
-    avgDailyVolume: 50_000_000,
-    sharesForMnav: 237_710_000,  // StockAnalysis Feb 2026
-    strategy: "HODL-forward miner. Explicit policy to retain significant portion of mined BTC as treasury.",
-    notes: "Nasdaq/TSX.V/FSE listed. 25 EH/s hashrate (~2% of network). Mines ~9 BTC/day. 540 MW renewable energy (Paraguay, Canada, Sweden). Also BUZZ HPC (AI cloud).",
-  },
+  // HIVE Digital Technologies (HIVE) REMOVED 2026-02-02
+  // Reason: Not a DAT accumulator. SEC XBRL shows only $24.4M crypto (Sep 2025) = ~313 BTC
+  // Despite claiming 2,805 BTC HODL in Dec 2024, they sold ~2,500 BTC during 2025 to fund Paraguay expansion
+  // They mine and sell, not mine and hold. Does not meet DAT criteria.
   {
     id: "fufu",
     name: "BITFUFU",
