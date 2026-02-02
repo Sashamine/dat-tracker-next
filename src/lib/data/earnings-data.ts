@@ -3756,6 +3756,75 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "regulatory-filing",
     status: "reported",
   },
+
+  // ========== DDC Enterprise (DDC) - NYSE American ==========
+  // Foreign Private Issuer (Cayman Islands) - files 20-F annually, 6-K interim
+  // First BTC purchase: May 23, 2025
+  // Source: treasury.ddc.xyz, SEC 6-K filings
+  // Q1 2026 - In progress
+  {
+    ticker: "DDC",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15", // 20-F due within 4 months of fiscal year end
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 1783, // Jan 29, 2026 - 1,783 BTC (ongoing)
+    sharesAtQuarterEnd: 23_310_000,
+    holdingsPerShare: 0.0000765,
+    source: "company-dashboard",
+    sourceUrl: "https://treasury.ddc.xyz",
+    status: "upcoming",
+  },
+  // Q4 2025
+  {
+    ticker: "DDC",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-03-01", // Estimated interim 6-K
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 1183, // Nov 26, 2025 - 1,183 BTC
+    sharesAtQuarterEnd: 23_310_000,
+    holdingsPerShare: 0.0000508,
+    source: "company-dashboard",
+    sourceUrl: "https://treasury.ddc.xyz",
+    status: "reported",
+  },
+  // Q3 2025
+  {
+    ticker: "DDC",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-15", // Estimated
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 1058, // Sep 24, 2025 - 1,058 BTC
+    sharesAtQuarterEnd: 8_310_000,
+    holdingsPerShare: 0.0001273,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=6-K",
+    status: "reported",
+  },
+  // Q2 2025 - First quarter with BTC
+  {
+    ticker: "DDC",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-15", // Estimated
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 138, // Jun 12, 2025 - 137.69 BTC (~138)
+    sharesAtQuarterEnd: 6_500_000,
+    holdingsPerShare: 0.0000212,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=6-K",
+    status: "reported",
+  },
 ];
 
 // Helper: Get days until a date
