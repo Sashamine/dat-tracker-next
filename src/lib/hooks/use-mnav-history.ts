@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TimeRange, ChartInterval, DEFAULT_INTERVAL } from "./use-stock-history";
 import { MSTR_DAILY_MNAV, type DailyMnavSnapshot } from "@/lib/data/mstr-daily-mnav";
 import { getEffectiveSharesAt } from "@/lib/data/dilutive-instruments";
+import { hasHoldingsHistory, getHistoricalHoldings } from "@/lib/data/company-holdings-history";
 
 interface MnavDataPoint {
   time: string; // Unix timestamp (seconds) for intraday, YYYY-MM-DD for daily
@@ -205,6 +206,91 @@ function getDailyMnav(range: TimeRange): MnavDataPoint[] {
     }));
 }
 
+// Calculate daily mNAV for companies with holdings history
+async function getCompanyDailyMnav(
+  ticker: string,
+  range: TimeRange,
+  companyData: MnavCompanyData
+): Promise<MnavDataPoint[]> {
+  // Determine date range
+  const now = new Date();
+  let startDate: Date;
+
+  switch (range) {
+    case "1d":
+      startDate = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
+      break;
+    case "7d":
+      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      break;
+    case "1mo":
+      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      break;
+    case "1y":
+      startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+      break;
+    case "all":
+      startDate = new Date("2025-04-01"); // Most treasury companies started in 2024-2025
+      break;
+    default:
+      startDate = new Date("2025-04-01");
+  }
+
+  // Fetch historical BTC prices and stock prices
+  const [btcRes, stockRes] = await Promise.all([
+    fetch(`/api/crypto/BTC/history?range=${range}&interval=1d`),
+    fetch(`/api/stocks/${ticker}/history?range=${range}&interval=1d`),
+  ]);
+
+  if (!btcRes.ok || !stockRes.ok) {
+    console.warn(`[mnavHistory] Failed to fetch history for ${ticker}`);
+    return [];
+  }
+
+  const btcData: CryptoHistoryPoint[] = await btcRes.json();
+  const stockData: StockHistoryPoint[] = await stockRes.json();
+
+  if (!btcData.length || !stockData.length) {
+    return [];
+  }
+
+  // Build a map of stock prices by date
+  const stockPriceMap = new Map<string, number>();
+  for (const point of stockData) {
+    stockPriceMap.set(point.time, point.close);
+  }
+
+  // Calculate mNAV for each BTC data point
+  const result: MnavDataPoint[] = [];
+  
+  for (const btcPoint of btcData) {
+    const date = btcPoint.time;
+    const btcPrice = btcPoint.price;
+    const stockPrice = stockPriceMap.get(date);
+    
+    if (!stockPrice) continue;
+    
+    // Get historical holdings for this date
+    const holdings = getHistoricalHoldings(ticker, date) ?? companyData.holdings;
+    
+    // Calculate market cap and mNAV
+    const marketCap = stockPrice * companyData.sharesForMnav;
+    const cryptoNav = holdings * btcPrice;
+    const enterpriseValue = marketCap + (companyData.totalDebt || 0) - (companyData.cashReserves || 0);
+    const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
+    
+    result.push({
+      time: date,
+      mnav,
+      btcPrice,
+      stockPrice,
+      btcHoldings: holdings,
+    });
+  }
+
+  return result;
+}
+
 export function useMnavHistory(
   ticker: string,
   range: TimeRange,
@@ -212,6 +298,7 @@ export function useMnavHistory(
   companyData?: MnavCompanyData
 ) {
   const isMstr = ticker.toUpperCase() === "MSTR";
+  const hasHistory = hasHoldingsHistory(ticker);
   const effectiveInterval = interval || DEFAULT_INTERVAL[range];
 
   // Use intraday calculation for short ranges, pre-calculated for long ranges
@@ -221,10 +308,15 @@ export function useMnavHistory(
   const hasCompanyData = !!companyData;
 
   return useQuery({
-    queryKey: ["mnavHistory", ticker, range, effectiveInterval, useIntraday, companyData?.holdings],
+    queryKey: ["mnavHistory", ticker, range, effectiveInterval, useIntraday, companyData?.holdings, hasHistory],
     queryFn: async (): Promise<MnavDataPoint[]> => {
+      // For companies with holdings history, calculate daily mNAV
+      if (!isMstr && hasHistory && companyData) {
+        return getCompanyDailyMnav(ticker, range, companyData);
+      }
+      
       if (!isMstr) {
-        // For non-MSTR companies, return empty (no intraday mNAV support yet)
+        // For non-MSTR companies without holdings history, return empty
         return [];
       }
 
@@ -239,7 +331,7 @@ export function useMnavHistory(
       }
     },
     staleTime: useIntraday ? 60 * 1000 : 5 * 60 * 1000, // 1 min for intraday, 5 min for daily
-    enabled: isMstr && (!useIntraday || hasCompanyData),
+    enabled: (isMstr || (hasHistory && hasCompanyData)) && (!useIntraday || hasCompanyData),
   });
 }
 
