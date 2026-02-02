@@ -45,8 +45,8 @@ const FMP_ONLY_STOCKS = [
   "HOGPF",     // H100 Group (OTC ticker for Swedish company)
   "H100.ST",   // H100 Group - display ticker (not valid on Alpaca)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
-  "TSWCF",     // Smarter Web Company (OTC) - AQUIS primary not supported
-  "SWC",       // SWC display ticker
+  "TSWCF",     // Smarter Web Company (OTC) -> maps to SWC display ticker
+  "SWC",       // Exclude from Alpaca - price comes from TSWCF via FMP
   // SOL treasury companies - Alpaca IEX often has no data (low volume)
   "DFDV",      // DeFi Development
   "UPXI",      // Upexi
