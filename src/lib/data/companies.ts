@@ -681,7 +681,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 13_900_000,  // Q3 2025 weighted avg diluted ADS
+    sharesForMnav: 15_590_000,  // StockAnalysis Feb 2026 (was 13.9M Q3 2025)
     totalDebt: 189_000_000,  // $189M convertible debt (July 2025)
     debtSource: "SEC Form 6-K",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC.",
