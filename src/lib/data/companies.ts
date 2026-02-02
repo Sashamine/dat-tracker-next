@@ -765,7 +765,7 @@ export const btcCompanies: Company[] = [
     name: "Remixpoint",
     ticker: "3825.T",
     currency: "JPY",
-    asset: "BTC",
+    asset: "MULTI",  // BTC + ETH + XRP + SOL + DOGE
     tier: 2,
     holdings: 1_411,  // Company website Feb 2026: 1,411.30 BTC
     holdingsLastUpdated: "2026-02-02",

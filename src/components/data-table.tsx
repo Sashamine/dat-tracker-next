@@ -70,6 +70,7 @@ const assetColors: Record<string, string> = {
   TRX: "bg-red-500/10 text-red-600 border-red-500/20",
   XRP: "bg-gray-500/10 text-gray-600 border-gray-500/20",
   ZEC: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+  MULTI: "bg-gradient-to-r from-orange-500/10 via-indigo-500/10 to-purple-500/10 text-pink-600 border-pink-500/20",
   LTC: "bg-slate-500/10 text-slate-600 border-slate-500/20",
   SUI: "bg-sky-500/10 text-sky-600 border-sky-500/20",
   DOGE: "bg-amber-500/10 text-amber-600 border-amber-500/20",

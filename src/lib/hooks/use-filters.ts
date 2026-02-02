@@ -16,7 +16,7 @@ export type SortField = (typeof SORT_FIELDS)[number];
 export type SortDirection = "asc" | "desc";
 
 // Asset options
-export const ASSETS = ["ETH", "BTC", "SOL", "HYPE", "BNB", "TAO", "LINK", "TRX", "XRP", "ZEC", "LTC", "SUI", "DOGE", "AVAX", "ADA", "HBAR"] as const;
+export const ASSETS = ["ETH", "BTC", "SOL", "HYPE", "BNB", "TAO", "LINK", "TRX", "XRP", "ZEC", "LTC", "SUI", "DOGE", "AVAX", "ADA", "HBAR", "MULTI"] as const;
 export type Asset = (typeof ASSETS)[number];
 
 // Company type options

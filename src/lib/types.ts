@@ -1,7 +1,8 @@
 // Asset types
 export type Asset =
   | "ETH" | "BTC" | "SOL" | "HYPE" | "BNB" | "TAO" | "LINK"
-  | "TRX" | "XRP" | "ZEC" | "LTC" | "SUI" | "DOGE" | "AVAX" | "ADA" | "HBAR";
+  | "TRX" | "XRP" | "ZEC" | "LTC" | "SUI" | "DOGE" | "AVAX" | "ADA" | "HBAR"
+  | "MULTI";  // Multi-asset treasury (holds multiple crypto assets)
 
 // Company tier (1 = highest conviction, 3 = speculative)
 export type Tier = 1 | 2 | 3;
