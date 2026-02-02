@@ -873,25 +873,11 @@ export const btcCompanies: Company[] = [
   // DART filing Mar 10, 2025 shows only 50 BTC + 268 ETH purchase
   // Even with all reported purchases (50+38+37) = ~125 BTC max
   // Re-add with verified DART totals when available
-  {
-    id: "arlp",
-    name: "Alliance Resource Partners",
-    ticker: "ARLP",
-    asset: "BTC",
-    tier: 2,
-    holdings: 541,  // Dec 31, 2024 SEC filing
-    holdingsLastUpdated: "2024-12-31",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1086600/000155837025001805/arlp-20241231x10k.htm",
-    datStartDate: "2024-04-01",
-    secCik: "1086600",
-    isMiner: true,  // Mining BTC as part of operations
-    quarterlyBurnUsd: 0,  // Profitable coal company
-    avgDailyVolume: 20_000_000,
-    sharesForMnav: 130_000_000,  // LP units estimated
-    strategy: "Coal miner actively mining and holding BTC as treasury. Views BTC as non-sovereign inflation-resistant asset.",
-    notes: "Nasdaq (LP). One of first major US coal miners with BTC. 73x mNAV reflects coal business dominates valuation.",
-  },
+  
+  // ARLP (Alliance Resource Partners) removed 2026-02-02: Not a DAT
+  // Coal company (~$3-4B) that mines BTC as side venture using excess power
+  // 541 BTC ($42M) is ~1% of company value - not a treasury strategy
+  // 75x mNAV misleading - you're buying coal, not BTC exposure
   {
     id: "srag",
     name: "Samara Asset Group",
