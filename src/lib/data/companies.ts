@@ -758,18 +758,19 @@ export const btcCompanies: Company[] = [
     ticker: "FLD",
     asset: "BTC",
     tier: 2,
-    holdings: 1_526,  // BitcoinTreasuries.net Feb 2026
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/fold-holdings-inc",
+    holdings: 1_526,  // Q3 2025 Earnings PR (Nov 10, 2025) - also 800 BTC restricted/collateral
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://investor.foldapp.com/news-releases/news-release-details/fold-holdings-inc-nasdaq-fld-announces-third-quarter-2025",
     datStartDate: "2024-07-01",
     website: "https://foldapp.com",
+    secCik: "0001889123",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 48_310_000,  // StockAnalysis Feb 2026
-    strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform.",
-    notes: "Nasdaq: FLD. Fold Card debit with BTC rewards. Went public July 2024 while adding 1,000 BTC. Russell 2000 Index (Dec 2025). 0.86x mNAV.",
+    sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
+    strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
+    notes: "Nasdaq: FLD. Fold Card debit with BTC rewards. Went public July 2024. Russell 2000 (Dec 2025). Also 800 BTC restricted as collateral.",
   },
   {
     id: "3825t",
