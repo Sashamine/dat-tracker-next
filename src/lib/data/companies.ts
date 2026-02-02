@@ -737,18 +737,22 @@ export const btcCompanies: Company[] = [
     currency: "USD",
     asset: "BTC",
     tier: 2,
-    holdings: 1_780,  // BitcoinTreasuries.net Feb 2026
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/bitfufu",
+    holdings: 1_780,  // SEC 6-K Jan 7, 2026 (Dec 2025 Update) - includes 274 BTC pledged
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://ir.bitfufu.com/press-viewer/?i=160927",
     datStartDate: "2024-01-01",
     website: "https://bitfufu.com",
+    secCik: "0001921158",
     isMiner: true,
     quarterlyBurnUsd: 15_000_000,
     avgDailyVolume: 20_000_000,
-    sharesForMnav: 164_130_000,  // StockAnalysis Feb 2026
-    strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (600k+ users).",
-    notes: "Singapore listed. BITMAIN strategic partner. 3.1 EH/s self-owned, 20.6 EH/s under management. 480 MW hosting (US + Ethiopia). 82% insider ownership.",
+    sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
+    totalDebt: 101_301_000,  // SEC XBRL Jun 2025: Long Term Debt
+    debtAsOf: "2025-06-30",
+    debtSource: "SEC 20-F/6-K XBRL",
+    strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (648k+ users).",
+    notes: "Singapore (Nasdaq FUFU). BITMAIN partner. 3.7 EH/s self-owned, 26.1 EH/s under management. 478 MW hosting. 274 BTC pledged for loans.",
   },
   // EXOD (Exodus Movement) REMOVED - not a DAT accumulator
   // They hold BTC but sell it for operations/acquisitions, no explicit accumulation strategy
