@@ -810,26 +810,19 @@ export const btcCompanies: Company[] = [
     ticker: "ZOOZ",
     asset: "BTC",
     tier: 2,
-    holdings: 1_036,  // treasury.zoozpower.com Feb 2026
+    holdings: 1_047,  // treasury.zoozpower.com Feb 2, 2026 (1,046.96 BTC)
     holdingsLastUpdated: "2026-02-02",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://treasury.zoozpower.com",
-    datStartDate: "2025-09-01",
+    datStartDate: "2025-09-28",
     website: "https://zoozpower.com",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 11_000_000,  // Estimated from mcap/price
-    costBasisAvg: 111_004,  // treasury.zoozpower.com
+    sharesForMnav: 162_000_000,  // treasury.zoozpower.com basic shares
+    costBasisAvg: 116_485,  // treasury.zoozpower.com
     strategy: "EV charging company (flywheel tech) with explicit BTC treasury. Dedicated treasury page.",
-    notes: "Nasdaq + TASE dual-listed (Israel). 0.06x mNAV extreme discount (~$80M BTC vs $5M mcap). Underwater on BTC. High risk micro-cap.",
-    dataWarnings: [
-      {
-        type: "stale-data",
-        message: "Extreme mNAV discount (0.06x) suggests market skepticism about BTC accessibility or company viability.",
-        severity: "warning",
-      },
-    ],
+    notes: "Nasdaq + TASE dual-listed (Israel). 0.86x mNAV. Underwater on BTC ($116k avg cost). Diluted: 269.2M shares (1.43x mNAV).",
   },
   {
     id: "usbc",
