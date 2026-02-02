@@ -59,7 +59,7 @@ const FMP_ONLY_STOCKS = [
 // Yahoo ticker format varies by exchange
 const YAHOO_TICKERS: Record<string, string> = {
   "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD) - also trades as XTAO.V in CAD
-  "SWC": "TSWCF",        // Smarter Web Company - OTC ticker (AQUIS primary not on Yahoo)
+  // SWC removed - Yahoo TSWCF returns wrong price (~$11 vs actual ~$0.57). Using FALLBACK_STOCKS instead.
 };
 
 // Cache for prices (2 second TTL)
