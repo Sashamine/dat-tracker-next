@@ -863,26 +863,11 @@ export const btcCompanies: Company[] = [
   // 620 BTC figure only from BitcoinTreasuries.net (secondary source)
   // No RNS filings found mentioning Bitcoin holdings
   // Stock crashed 99% (27.5p -> 0.31p), trading below NAV if holdings are real
-  {
-    id: "cash3",
-    name: "Méliuz",
-    ticker: "CASH3",
-    currency: "BRL",
-    asset: "BTC",
-    tier: 2,
-    holdings: 605,  // BitcoinTreasuries.net
-    holdingsLastUpdated: "2025-04-01",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/mliuz",
-    datStartDate: "2025-03-06",
-    costBasisAvg: 90_926,  // First purchase price
-    isMiner: false,
-    quarterlyBurnUsd: 5_000_000,
-    avgDailyVolume: 5_000_000,
-    sharesForMnav: 100_000_000,  // Estimated
-    strategy: "Allocating up to 10% of cash reserves to BTC. Proposing to make BTC 'primary strategic asset'.",
-    notes: "B3 (Brazil). Leading fintech with 30M+ users. First major Brazilian firm to adopt BTC treasury strategy.",
-  },
+  
+  // CASH3 (Méliuz) removed 2026-02-02: Cannot verify 605 BTC figure
+  // CoinDesk + securities filing show only 45.72 BTC purchased (Mar 2025)
+  // 605 BTC from BitcoinTreasuries.net is unverified/likely wrong
+  // Re-add when they disclose verified holdings via CVM filing
   {
     id: "377030",
     name: "bitmax",
