@@ -1,12 +1,36 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-01-29
+> **Last Updated**: 2026-02-02
 > **Current Phase**: 8d - Populate Dilutive Instruments
 > **Status**: Phase 7a-7c complete. Phase 8a-8c complete. SEC monitoring optimized. Phase 9 (burn rate/mNAV) scaffolded.
 
 ---
 
 ## RESUME HERE
+
+**Session 2026-02-02:**
+
+### Miner Badge Added
+- Added "⛏️ Miner" badge to data table for companies with `isMiner: true`
+- Orange color scheme with tooltip explaining miners produce BTC
+
+### Upcoming: Split Sector Statistics by Miner vs Treasury
+
+**Goal**: Divide the sector statistics panel to show separate aggregates for:
+1. **Pure Treasuries** - Companies that only hold BTC (MSTR, SMLR, etc.)
+2. **Miners with HODL** - Companies that mine and hold BTC (MARA, RIOT, CLSK, etc.)
+
+**Why**: Miners have different dynamics:
+- They produce BTC continuously, so mNAV premium is justified by mining capacity
+- Their holdings grow from operations, not just purchases
+- Comparing a treasury's mNAV to a miner's mNAV is apples-to-oranges
+
+**Implementation ideas**:
+- Add tabs or toggle to sector stats: "All | Treasuries | Miners"
+- Show separate totals: total BTC held, total market cap, weighted avg mNAV
+- Maybe show miner-specific stats: combined hashrate, monthly BTC production
+
+---
 
 **Session 2026-01-25:**
 
