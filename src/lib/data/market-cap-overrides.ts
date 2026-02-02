@@ -27,6 +27,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   // "BTDR" removed - primarily a miner/ASIC manufacturer, not a DAT company
 
   // === BTC Treasury Companies (FMP returns stale/incorrect data) ===
+  "SWC": 225_000_000,         // $225M - Smarter Web Company (AQUIS UK) - FMP TSWCF data is wrong ($8.60 vs $0.57)
   "DJT": 3_900_000_000,       // $3.9B - Trump Media (Jan 2026, per Yahoo/Nasdaq)
   "NAKA": 1_500_000_000,      // $1.5B - Nakamoto Holdings (5K BTC, $410M convertible debt)
   "ASST": 850_000_000,        // $850M - Strive (per Yahoo Finance, FMP returns stale $665M)
