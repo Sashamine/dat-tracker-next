@@ -868,25 +868,11 @@ export const btcCompanies: Company[] = [
   // CoinDesk + securities filing show only 45.72 BTC purchased (Mar 2025)
   // 605 BTC from BitcoinTreasuries.net is unverified/likely wrong
   // Re-add when they disclose verified holdings via CVM filing
-  {
-    id: "377030",
-    name: "bitmax",
-    ticker: "377030.KQ",
-    currency: "KRW",
-    asset: "BTC",
-    tier: 2,
-    holdings: 551,  // BitcoinTreasuries.net
-    holdingsLastUpdated: "2025-04-10",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/bitmax",
-    datStartDate: "2025-01-01",
-    isMiner: false,
-    quarterlyBurnUsd: 2_000_000,
-    avgDailyVolume: 2_000_000,
-    sharesForMnav: 50_000_000,  // Estimated
-    strategy: "Proactive Bitcoin investment strategy. Active accumulation throughout 2025.",
-    notes: "KOSDAQ (South Korea). Fintech company with blockchain focus. Transparent reporting via DART filings.",
-  },
+  
+  // 377030.KQ (bitmax) removed 2026-02-02: 551 BTC grossly inflated
+  // DART filing Mar 10, 2025 shows only 50 BTC + 268 ETH purchase
+  // Even with all reported purchases (50+38+37) = ~125 BTC max
+  // Re-add with verified DART totals when available
   {
     id: "arlp",
     name: "Alliance Resource Partners",
