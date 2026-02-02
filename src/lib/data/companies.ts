@@ -756,10 +756,10 @@ export const btcCompanies: Company[] = [
     ticker: "EXOD",
     asset: "BTC",
     tier: 2,
-    holdings: 2_011,  // Q1 2025 (Mar 31) - company reports
-    holdingsLastUpdated: "2025-03-31",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001821534&type=10-Q",
+    holdings: 1_704,  // Dec 31, 2025 Treasury Update (reduced to repay $60M loan)
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.exodus.com/investors/news-events/press-releases/detail/96/exodus-movement-inc-december-2025-treasury-update-and-monthly-metrics",
     datStartDate: "2024-01-01",
     website: "https://exodus.com",
     secCik: "0001821534",  // Fixed - was incorrectly 1839341 (Core Scientific)
@@ -768,7 +768,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 10_000_000,
     sharesForMnav: 29_237_916,  // SEC 10-Q Sep 2025: 9.77M Class A + 19.47M Class B
     strategy: "Crypto wallet company with explicit treasury strategy. Receives revenue in BTC, accumulates rather than converts.",
-    notes: "NYSE American listed. 1.6M monthly active users. Also holds 2,693 ETH + $62.8M cash/USDC. 75% insider ownership.",
+    notes: "NYSE American listed. 1.5M MAUs. Also holds 1,898 ETH + 12,473 SOL. Debt-free as of Dec 2025 (repaid $60M Galaxy loan).",
   },
   {
     id: "fld",
