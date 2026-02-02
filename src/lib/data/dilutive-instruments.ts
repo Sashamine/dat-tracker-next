@@ -1030,6 +1030,38 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // At stock prices above $0.5335: all warrants ITM
   // Fully diluted: 137.4M basic + 76M warrants = ~213.4M shares
 
+  // DDC (DDC Enterprise) - BTC treasury company
+  // Verified 2026-02-02 via SEC F-1/424B3 (Jan 2026) and 20-F (May 2025)
+  // CIK: 0001808110
+  // Basic shares: 24,532,958 (22.78M Class A + 1.75M Class B)
+  // No preferred outstanding (all converted at IPO)
+  DDC: [
+    {
+      type: "option",
+      strikePrice: 3.85, // Weighted avg exercise price
+      potentialShares: 1_655_928,
+      source: "SEC 20-F FY2024",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/ea0241193-20f_ddcenter.htm",
+      notes: "2023 ESOP stock options outstanding as of Dec 31, 2024",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0, // Exercise price set by Board at issuance - TBD
+      potentialShares: 2_199_999,
+      source: "SEC F-1 Jan 15, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026004713/ea0262408-f1_ddcenter.htm",
+      issuedDate: "2025-06-01",
+      expiration: "2035-06-01", // 10-year term
+      notes: "2025 Warrant Program: CEO 1.7M + execs/directors 500K. Vest 3yr, expire 10yr. Strike TBD by Board.",
+    },
+  ],
+  // Total DDC dilution: 1.66M options + 2.2M warrants = ~3.86M potential shares
+  // At ~$2.60 stock: Options OTM ($3.85 strike), Warrants TBD
+  // 2023 ESOP allows up to 1.208M shares + 10% annual increase
+  // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually
+
   // HYPD (Hyperion DeFi) - HYPE treasury company
   // Verified 2026-01-30 via SEC 424B3 (Jan 9, 2026) and 10-Q Q3 2025
   // CIK: 0001682639
