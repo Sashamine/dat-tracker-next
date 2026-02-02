@@ -786,18 +786,21 @@ export const btcCompanies: Company[] = [
     currency: "JPY",
     asset: "BTC",
     tier: 2,
-    holdings: 1_417,  // BitcoinTreasuries.net Feb 2026
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/anap-holdings-inc",
-    datStartDate: "2025-04-01",
+    holdings: 1_417,  // TDnet Jan 21, 2026: 1,417.0341 BTC
+    holdingsLastUpdated: "2026-01-21",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
+    datStartDate: "2025-04-16",  // First BTC purchase
     website: "https://anap.co.jp",
     isMiner: false,
+    costBasisAvg: 98_571,  // ¥14,785,505/BTC ÷ 150 JPY/USD = ~$98.5k USD
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 2_000_000,
-    sharesForMnav: 40_609_400,  // Yahoo Japan Finance
+    sharesForMnav: 39_954_400,  // TDnet Q1 FY2026 earnings (Jan 14, 2026)
+    sharesSource: "TDnet Q1 FY2026 決算短信",
+    sharesAsOf: "2026-01-14",
     strategy: "Explicit 'hyperbitcoinization' mission. Runs 'Bitcoin Dojo' teaching other companies BTC treasury strategy.",
-    notes: "TSE listed. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Trades at 0.61x mNAV discount vs Metaplanet premium.",
+    notes: "TSE Standard. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Blockstream partnership (Dec 2025). First BTC purchase Apr 16, 2025. Total cost basis ¥20.95B (~$139M).",
   },
   {
     id: "zooz",
