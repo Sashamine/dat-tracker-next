@@ -44,6 +44,8 @@ export function CompanyMNAVChart({
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
   const [selectedAcquisition, setSelectedAcquisition] = useState<BTCAcquisitionEvent | null>(null);
   const [showAcquisitions, setShowAcquisitions] = useState(true);
+  const [isTooltipHovered, setIsTooltipHovered] = useState(false);
+  const tooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isMstr = ticker.toUpperCase() === "MSTR";
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
@@ -230,10 +232,22 @@ export function CompanyMNAVChart({
           
           // Check if hovering over an acquisition event
           const acquisition = MSTR_BTC_TIMELINE.find(e => e.date === timeStr);
-          setSelectedAcquisition(acquisition || null);
+          if (acquisition) {
+            // Clear any pending timeout
+            if (tooltipTimeoutRef.current) {
+              clearTimeout(tooltipTimeoutRef.current);
+              tooltipTimeoutRef.current = null;
+            }
+            setSelectedAcquisition(acquisition);
+          }
         } else {
           setSelectedPoint(null);
-          setSelectedAcquisition(null);
+          // Delay hiding acquisition tooltip to allow clicking
+          if (!isTooltipHovered && selectedAcquisition) {
+            tooltipTimeoutRef.current = setTimeout(() => {
+              setSelectedAcquisition(null);
+            }, 500);
+          }
         }
       });
     }
@@ -264,7 +278,17 @@ export function CompanyMNAVChart({
         chartRef.current = null;
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasData, mnavHistory, isMstr, dataPoints, acquisitionMarkers]);
+  
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (tooltipTimeoutRef.current) {
+        clearTimeout(tooltipTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Calculate current and change stats
   const stats = useMemo(() => {
@@ -371,7 +395,22 @@ export function CompanyMNAVChart({
 
           {/* BTC Acquisition event panel - shows on hover over marker */}
           {isMstr && selectedAcquisition && (
-            <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 text-xs">
+            <div 
+              className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 text-xs"
+              onMouseEnter={() => {
+                setIsTooltipHovered(true);
+                if (tooltipTimeoutRef.current) {
+                  clearTimeout(tooltipTimeoutRef.current);
+                  tooltipTimeoutRef.current = null;
+                }
+              }}
+              onMouseLeave={() => {
+                setIsTooltipHovered(false);
+                tooltipTimeoutRef.current = setTimeout(() => {
+                  setSelectedAcquisition(null);
+                }, 300);
+              }}
+            >
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
