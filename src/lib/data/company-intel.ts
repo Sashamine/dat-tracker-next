@@ -56,8 +56,6 @@ const MSTR_INTEL: CompanyIntel = {
 - Sub-$100K BTC enables aggressive accumulation at lower cost basis
 
 **Risks:**
-- BTC volatility directly impacts stock price and mNAV
-- Rising rates increase refinancing costs for maturing converts
 - Regulatory uncertainty around Bitcoin corporate holdings
 `.trim(),
 };
