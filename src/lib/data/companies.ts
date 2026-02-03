@@ -67,6 +67,8 @@ export const ethCompanies: Company[] = [
     cashSource: "SEC 10-Q Q3 2025",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Debt-free per SEC 10-Q Q3 2025 (was $12.8M in 2023, paid off)
+    debtSource: "SEC 10-Q Q3 2025",
+    debtAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",
     strategy: "Staking, Linea partnership, tokenized equity via Superstate",
