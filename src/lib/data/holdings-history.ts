@@ -975,6 +975,43 @@ export function getHoldingsAtDate(ticker: string, date: string): number | undefi
   return bestMatch?.holdings;
 }
 
+/**
+ * Get acquisition events derived from holdings history changes.
+ * Returns events where holdings increased between snapshots.
+ */
+export interface AcquisitionEvent {
+  date: string;
+  acquired: number;
+  cumulativeHoldings: number;
+  source?: string;
+}
+
+export function getAcquisitionEvents(ticker: string): AcquisitionEvent[] {
+  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  if (!companyHistory || companyHistory.history.length < 2) return [];
+
+  const events: AcquisitionEvent[] = [];
+  const history = companyHistory.history;
+
+  for (let i = 1; i < history.length; i++) {
+    const prev = history[i - 1];
+    const curr = history[i];
+    const acquired = curr.holdings - prev.holdings;
+    
+    // Only count positive acquisitions (not sales or adjustments)
+    if (acquired > 0) {
+      events.push({
+        date: curr.date,
+        acquired,
+        cumulativeHoldings: curr.holdings,
+        source: curr.source,
+      });
+    }
+  }
+
+  return events;
+}
+
 // Calculate growth metrics
 export function calculateHoldingsGrowth(history: HoldingsSnapshot[]): {
   totalGrowth: number; // % growth from first to last

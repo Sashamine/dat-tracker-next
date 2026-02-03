@@ -7,6 +7,7 @@ import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
 import { useMnavHistory, type MnavDataPoint, type MnavCompanyData } from "@/lib/hooks/use-mnav-history";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { MSTR_BTC_TIMELINE, type BTCAcquisitionEvent } from "@/lib/data/mstr-btc-timeline";
+import { getAcquisitionEvents, type AcquisitionEvent } from "@/lib/data/holdings-history";
 
 interface CompanyMNAVChartProps {
   ticker: string;
@@ -125,13 +126,28 @@ export function CompanyMNAVChart({
   const isLoading = isLoadingMnav;
   const hasData = mnavHistory.length > 0;
 
-  // Filter BTC acquisition events for the current time range (MSTR only)
+  // Get acquisition events for this company
+  const companyAcquisitions = useMemo(() => {
+    if (isMstr) return [];
+    return getAcquisitionEvents(ticker);
+  }, [ticker, isMstr]);
+
+  // Filter acquisition events for the current time range
   const acquisitionMarkers = useMemo(() => {
-    if (!isMstr || !showAcquisitions || isIntraday) return [];
+    if (!showAcquisitions) return [];
     
     const now = new Date();
     let startDate: Date;
     switch (timeRange) {
+      case "1d":
+        startDate = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
+        break;
+      case "7d":
+        startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        break;
+      case "1mo":
+        startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        break;
       case "1y":
         startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
         break;
@@ -143,20 +159,49 @@ export function CompanyMNAVChart({
     }
 
     const markers: SeriesMarker<Time>[] = [];
-    for (const event of MSTR_BTC_TIMELINE) {
-      const eventDate = new Date(event.date);
-      if (eventDate >= startDate && event.btcAcquired >= 1000) { // Only show events >= 1000 BTC
-        markers.push({
-          time: event.date as Time,
-          position: "belowBar",
-          color: "#f59e0b", // Amber
-          shape: "arrowUp",
-          text: `+${(event.btcAcquired / 1000).toFixed(0)}K`,
-        });
+    
+    if (isMstr) {
+      // MSTR uses dedicated timeline with more detail
+      for (const event of MSTR_BTC_TIMELINE) {
+        const eventDate = new Date(event.date);
+        if (eventDate >= startDate && event.btcAcquired >= 1000) {
+          markers.push({
+            time: event.date as Time,
+            position: "belowBar",
+            color: "#f59e0b",
+            shape: "arrowUp",
+            text: `+${(event.btcAcquired / 1000).toFixed(0)}K`,
+          });
+        }
+      }
+    } else {
+      // Other companies use derived acquisition events
+      for (const event of companyAcquisitions) {
+        const eventDate = new Date(event.date);
+        if (eventDate >= startDate) {
+          // Format the acquisition amount based on size
+          let text: string;
+          if (event.acquired >= 1000000) {
+            text = `+${(event.acquired / 1000000).toFixed(1)}M`;
+          } else if (event.acquired >= 1000) {
+            text = `+${(event.acquired / 1000).toFixed(0)}K`;
+          } else {
+            text = `+${event.acquired.toFixed(0)}`;
+          }
+          
+          markers.push({
+            time: event.date as Time,
+            position: "belowBar",
+            color: "#f59e0b",
+            shape: "arrowUp",
+            text,
+          });
+        }
       }
     }
+    
     return markers;
-  }, [isMstr, showAcquisitions, timeRange, isIntraday]);
+  }, [isMstr, showAcquisitions, timeRange, companyAcquisitions]);
 
   // Initialize and update chart when data is available
   useEffect(() => {
@@ -343,8 +388,8 @@ export function CompanyMNAVChart({
           </p>
         </div>
         <div className="flex items-center gap-4">
-          {/* Toggle for BTC acquisitions (MSTR only) */}
-          {isMstr && !isIntraday && (
+          {/* Toggle for acquisitions */}
+          {(isMstr || companyAcquisitions.length > 0) && (
             <button
               onClick={() => setShowAcquisitions(!showAcquisitions)}
               className={cn(
