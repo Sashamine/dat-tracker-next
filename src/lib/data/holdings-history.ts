@@ -816,6 +816,26 @@ const SWC_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-22", holdings: 2674, sharesOutstandingDiluted: 395_188_479, holdingsPerShare: 0.00000677, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558", sourceType: "regulatory-filing" },
 ];
 
+// DCC.AX (DigitalX Limited) - Australia's first ASX-listed BTC treasury company
+// Source: treasury.digitalx.com (real-time dashboard) + ASX Treasury Information filings
+// Note: Holdings include 308.8 BTC direct + ~194.9 BTC via BTXX ETF as of Dec 2025
+const DCC_HISTORY: HoldingsSnapshot[] = [
+  // BTC Treasury Strategy launched July 2025 - $20.7M raise from UTXO, ParaFi, Animoca
+  { date: "2025-07-01", holdings: 258.03, sharesOutstandingDiluted: 1_310_000_000, holdingsPerShare: 0.000000197, source: "Initial BTC purchase - treasury.digitalx.com", sourceUrl: "https://treasury.digitalx.com/", sourceType: "company-dashboard" },
+  { date: "2025-07-11", holdings: 367.3, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000232, source: "+109.3 BTC @ $118,000", sourceType: "company-dashboard" },
+  { date: "2025-07-17", holdings: 425.1, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000269, source: "+57.46 BTC @ $118,275", sourceType: "company-dashboard" },
+  { date: "2025-07-22", holdings: 499.8, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "+74.73 BTC @ $117,293", sourceType: "company-dashboard" },
+  // Aug-Sep: Holdings stable at ~500 BTC
+  { date: "2025-08-31", holdings: 500, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - August 2025", sourceType: "regulatory-filing" },
+  { date: "2025-09-30", holdings: 500, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - September 2025", sourceType: "regulatory-filing" },
+  // Oct 2025: Small addition
+  { date: "2025-10-21", holdings: 504, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "+2 BTC @ $108,430", sourceUrl: "https://treasury.digitalx.com/", sourceType: "company-dashboard" },
+  { date: "2025-10-31", holdings: 504, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - October 2025", sourceType: "regulatory-filing" },
+  // Nov-Dec: Stable holdings, includes ~194.85 BTC via BTXX ETF
+  { date: "2025-11-30", holdings: 503.2, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - November 2025 (308.8 direct + 194.4 ETF)", sourceType: "regulatory-filing" },
+  { date: "2025-12-31", holdings: 503.7, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - December 2025 (308.8 direct + 194.85 ETF)", sourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html", sourceType: "regulatory-filing" },
+];
+
 // Map of all companies with historical data
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   // BTC Companies
@@ -839,6 +859,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   // NXTT removed - history of false financial reports
   ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
   "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },
+  "DCC.AX": { ticker: "DCC.AX", asset: "BTC", history: DCC_HISTORY },
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },
