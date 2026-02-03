@@ -55,12 +55,39 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
     const filePath = path.join(dataDir, filingFile);
     filingContent = fs.readFileSync(filePath, "utf-8");
     
-    // If highlight param exists, wrap matching text in a highlight span
+    // If highlight param exists, find and highlight the BTC acquisition section
     if (highlight) {
       const highlightText = decodeURIComponent(highlight);
-      // Find and wrap the text (case insensitive, partial match)
-      const regex = new RegExp(`(${highlightText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').substring(0, 50)})`, "gi");
-      filingContent = filingContent.replace(regex, '<mark id="highlight" style="background-color: #fef08a; padding: 2px 4px;">$1</mark>');
+      
+      // Try multiple patterns to find the acquisition text
+      const patterns = [
+        // Pattern 1: "acquired approximately X bitcoins"
+        new RegExp(`(acquired approximately [\\d,]+ bitcoin[s]?[^.]*\\.)`, "gi"),
+        // Pattern 2: "X BTC" or "X bitcoin"
+        new RegExp(`([^.]*${highlightText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^.]*\\.)`, "gi"),
+        // Pattern 3: BTC Acquired table row context
+        new RegExp(`(BTC Acquired[^<]*<[^>]*>[^<]*${highlightText.substring(0,10)}[^.]*\\.?)`, "gi"),
+      ];
+      
+      let highlighted = false;
+      for (const pattern of patterns) {
+        if (pattern.test(filingContent) && !highlighted) {
+          filingContent = filingContent.replace(pattern, (match) => {
+            highlighted = true;
+            return `<div id="highlight" style="background: linear-gradient(to right, #fef08a, #fde047); padding: 16px; margin: 16px 0; border-left: 4px solid #eab308; border-radius: 4px; box-shadow: 0 2px 8px rgba(234, 179, 8, 0.3);">${match}</div>`;
+          });
+          break;
+        }
+      }
+      
+      // Fallback: highlight any mention of "bitcoin" or "BTC" with the number
+      if (!highlighted) {
+        const numMatch = highlightText.match(/[\d,]+/);
+        if (numMatch) {
+          const btcPattern = new RegExp(`([^<>]{0,100}${numMatch[0]}[^<>]{0,50}(?:bitcoin|BTC)[^<>]{0,100})`, "gi");
+          filingContent = filingContent.replace(btcPattern, '<mark id="highlight" style="background-color: #fef08a; padding: 4px 8px; border-radius: 4px;">$1</mark>');
+        }
+      }
     }
     
     // Inject scroll-to-highlight script and basic styling
