@@ -885,11 +885,12 @@ export const btcCompanies: Company[] = [
     currency: "EUR",
     asset: "BTC",
     tier: 2,
-    holdings: 540,  // BitcoinTreasuries.net
-    holdingsLastUpdated: "2024-12-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.samara-ag.com/",
+    holdings: 525,  // CEO Patrick Lowry X post Nov 30, 2024
+    holdingsLastUpdated: "2024-11-30",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387",
     datStartDate: "2024-01-01",
+    twitter: "https://x.com/Patrick_Lowry_",
     costBasisAvg: 60_000,  // Estimated
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
