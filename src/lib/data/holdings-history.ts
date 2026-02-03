@@ -83,21 +83,20 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
 // MARA Holdings - Largest US public miner
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 // SEC CIK: 0001507605
+// Holdings verified from SEC 10-K/10-Q Digital Assets tables (Jan 2026)
 const MARA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2023-12-31", holdings: 15126, sharesOutstandingDiluted: 310_890_000, holdingsPerShare: 0.0000487, source: "FY 2023 10-K", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000162828024007680/0001628280-24-007680-index.htm", sourceType: "sec-filing" },
-  { date: "2024-03-31", holdings: 17631, sharesOutstandingDiluted: 328_630_000, holdingsPerShare: 0.0000537, source: "Q1 2024 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000162828024022243/0001628280-24-022243-index.htm", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 18488, sharesOutstandingDiluted: 356_800_000, holdingsPerShare: 0.0000518, source: "Q2 2024 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000162828024034196/0001628280-24-034196-index.htm", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 26747, sharesOutstandingDiluted: 396_980_000, holdingsPerShare: 0.0000674, source: "Q3 2024 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000162828024047148/0001628280-24-047148-index.htm", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 44893, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.0001044, source: "FY 2024 10-K", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000003/0001507605-25-000003-index.htm", sourceType: "sec-filing" },
-  { date: "2025-03-31", holdings: 46376, sharesOutstandingDiluted: 445_000_000, holdingsPerShare: 0.0001042, source: "Q1 2025 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000009/0001507605-25-000009-index.htm", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 49951, sharesOutstandingDiluted: 458_000_000, holdingsPerShare: 0.0001091, source: "Q2 2025 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000018/0001507605-25-000018-index.htm", sourceType: "sec-filing" },
+  { date: "2023-12-31", holdings: 15126, sharesOutstandingDiluted: 310_890_000, holdingsPerShare: 0.0000487, source: "FY 2023 10-K", sourceUrl: "/filings/mara/2023-12-31#holdings", sourceType: "sec-filing" },
+  { date: "2024-03-31", holdings: 17320, sharesOutstandingDiluted: 328_630_000, holdingsPerShare: 0.0000527, source: "Q1 2024 10-Q", sourceUrl: "/filings/mara/2024-03-31#holdings", sourceType: "sec-filing" },
+  { date: "2024-06-30", holdings: 18488, sharesOutstandingDiluted: 356_800_000, holdingsPerShare: 0.0000518, source: "Q2 2024 10-Q", sourceUrl: "/filings/mara/2024-06-30#holdings", sourceType: "sec-filing" },
+  { date: "2024-09-30", holdings: 26747, sharesOutstandingDiluted: 396_980_000, holdingsPerShare: 0.0000674, source: "Q3 2024 10-Q", sourceUrl: "/filings/mara/2024-09-30#holdings", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 44893, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.0001044, source: "FY 2024 10-K", sourceUrl: "/filings/mara/2024-12-31#holdings", sourceType: "sec-filing" },
+  { date: "2025-03-31", holdings: 47531, sharesOutstandingDiluted: 445_000_000, holdingsPerShare: 0.0001068, source: "Q1 2025 10-Q (33,263 + 14,269 receivable)", sourceUrl: "/filings/mara/2025-03-31#holdings", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 49951, sharesOutstandingDiluted: 458_000_000, holdingsPerShare: 0.0001091, source: "Q2 2025 10-Q (34,401 + 15,550 receivable)", sourceUrl: "/filings/mara/2025-06-30#holdings", sourceType: "sec-filing" },
   // Q3 2025: SEC 10-Q WeightedAverageNumberOfDilutedSharesOutstanding = 470,126,290
   // Note: 378M on cover page is EntityCommonStockSharesOutstanding (basic), not diluted
   // Q3 2025 was a profit quarter ($123M net income), so diluted includes convertibles
-  // Cross-referenced: mNAV.com fullyDilutedShares=470,100,000, FinanceCharts=470,126,290
-  // Q3 2025 earnings report: 53,250 BTC (mNAV uses this). SEC 10-Q digital assets show 52,850.
-  // Using earnings report value as it's more recent and cross-verified.
-  { date: "2025-09-30", holdings: 53250, sharesOutstandingDiluted: 470_126_290, holdingsPerShare: 0.0001133, source: "Q3 2025 10-Q", sharesSource: "SEC WeightedAverageNumberOfDilutedSharesOutstanding", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/0001507605-25-000028-index.htm", sourceType: "sec-filing" },
+  // SEC 10-Q digital assets: 52,850 total (35,493 + 17,357 receivable)
+  { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 470_126_290, holdingsPerShare: 0.0001124, source: "Q3 2025 10-Q (35,493 + 17,357 receivable)", sharesSource: "SEC WeightedAverageNumberOfDilutedSharesOutstanding", sourceUrl: "/filings/mara/2025-09-30#holdings", sourceType: "sec-filing" },
 ];
 
 // RIOT Platforms - BTC Miner
