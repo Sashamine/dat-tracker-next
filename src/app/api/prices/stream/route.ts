@@ -352,14 +352,21 @@ async function fetchAllPrices() {
     const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
     const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
     
+    // Calculate market cap: implied shares × USD price
+    // Note: FALLBACK_STOCKS.marketCap is USD, .price is local currency
+    const fallback = FALLBACK_STOCKS[ticker];
+    const impliedShares = fallback && rate ? (fallback.marketCap * rate) / fallback.price : 0;
+    const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : (MARKET_CAP_OVERRIDES[ticker] || 0);
+    
     if (currency) {
-      console.log(`[Stream] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate})`);
+      console.log(`[Stream] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate}, marketCap: $${(calculatedMarketCap/1e6).toFixed(1)}M)`);
     }
     
     stockPrices[ticker] = {
       ...data,
       price: priceUsd,
       prevClose: rate && rate > 0 ? data.prevClose / rate : data.prevClose,
+      marketCap: calculatedMarketCap,
     };
   }
 

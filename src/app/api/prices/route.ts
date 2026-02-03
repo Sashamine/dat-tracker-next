@@ -381,10 +381,12 @@ export async function GET() {
       const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
       const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
       
-      // Calculate market cap from sharesForMnav if available in override
+      // Calculate market cap: use shares from company data × USD price
+      // Note: FALLBACK_STOCKS.marketCap is in USD, .price is in local currency
+      // shares = marketCap_USD / (price_local / rate) = marketCap_USD * rate / price_local
       const fallback = FALLBACK_STOCKS[ticker];
-      // For currency-converted stocks, recalculate market cap based on USD price
-      const calculatedMarketCap = fallback ? (fallback.marketCap / fallback.price) * priceUsd * (rate || 1) : 0;
+      const impliedShares = fallback && rate ? (fallback.marketCap * rate) / fallback.price : 0;
+      const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : 0;
       
       stockPrices[ticker] = {
         ...data,
