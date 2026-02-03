@@ -222,15 +222,18 @@ export function getMarketCapForMnavSync(
 
   // Debug for Metaplanet, TWAV, and DCC.AX
   if (ticker === '3350.T' || ticker === 'TWAV' || ticker === 'DCC.AX') {
-    console.log(`[MarketCap Debug] ${ticker} input:`, {
+    const calcMktCap = (stockData?.price || 0) * (company.sharesForMnav || 0);
+    console.log(`[MarketCap Debug] ${ticker} DETAILED:`, {
       sharesForMnav: company.sharesForMnav,
       stockDataPrice: stockData?.price,
       stockDataMarketCap: stockData?.marketCap,
       stockDataIsStatic: stockData?.isStatic,
-      forexJPY: forexRates?.JPY,
       forexAUD: forexRates?.AUD,
       isNonUsd,
       currency,
+      calculatedFromSharesXPrice: calcMktCap,
+      calculatedMktCapInMillions: calcMktCap / 1e6,
+      apiMktCapInMillions: (stockData?.marketCap || 0) / 1e6,
     });
   }
 
