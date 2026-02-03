@@ -259,8 +259,8 @@ export function CompanyMNAVChart({
     mnavSeries.setData(mnavHistory);
     seriesRef.current = mnavSeries;
     
-    // Add BTC acquisition markers for MSTR
-    if (isMstr && acquisitionMarkers.length > 0) {
+    // Add acquisition markers for all companies
+    if (acquisitionMarkers.length > 0) {
       const markers = createSeriesMarkers(mnavSeries, acquisitionMarkers);
       markersRef.current = markers;
     }
