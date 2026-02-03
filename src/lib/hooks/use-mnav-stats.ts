@@ -54,19 +54,6 @@ export function getCompanyMNAV(
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
   
-  // Debug DCC.AX - DETAILED
-  if (company.ticker === 'DCC.AX') {
-    console.log('[getCompanyMNAV] DCC.AX FULL DEBUG:', {
-      stockData,
-      pricesForex: prices?.forex,
-      cryptoPrice,
-      holdings: company.holdings,
-      sharesForMnav: company.sharesForMnav,
-      expectedNav: company.holdings * cryptoPrice,
-      wouldBe1_48: company.holdings * cryptoPrice * 1.48,
-    });
-  }
-  
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
   // Also get inTheMoneyDebtValue and inTheMoneyWarrantProceeds for symmetric dilution treatment
   const { marketCap, source, inTheMoneyDebtValue, inTheMoneyWarrantProceeds } = getMarketCapForMnavSync(company, stockData, prices.forex);

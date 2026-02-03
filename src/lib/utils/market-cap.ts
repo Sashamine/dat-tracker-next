@@ -220,29 +220,9 @@ export function getMarketCapForMnavSync(
   const isNonUsd = NON_USD_TICKERS.has(ticker);
   const currency = TICKER_CURRENCIES[ticker] || "USD";
 
-  // Debug for Metaplanet, TWAV, and DCC.AX
-  if (ticker === '3350.T' || ticker === 'TWAV' || ticker === 'DCC.AX') {
-    const calcMktCap = (stockData?.price || 0) * (company.sharesForMnav || 0);
-    console.log(`[MarketCap Debug] ${ticker} DETAILED:`, {
-      sharesForMnav: company.sharesForMnav,
-      stockDataPrice: stockData?.price,
-      stockDataMarketCap: stockData?.marketCap,
-      stockDataIsStatic: stockData?.isStatic,
-      forexAUD: forexRates?.AUD,
-      isNonUsd,
-      currency,
-      calculatedFromSharesXPrice: calcMktCap,
-      calculatedMktCapInMillions: calcMktCap / 1e6,
-      apiMktCapInMillions: (stockData?.marketCap || 0) / 1e6,
-    });
-  }
-
   // For static fallback stocks, use the verified marketCap directly (from company dashboard)
   // The fallback marketCap is more accurate than shares × price due to forex rate discrepancies
   if (stockData?.isStatic && stockData.marketCap && stockData.marketCap > 0) {
-    if (ticker === 'DCC.AX') {
-      console.log(`[MarketCap Debug] DCC.AX using static marketCap:`, stockData.marketCap);
-    }
     return {
       marketCap: stockData.marketCap,
       source: "api",
