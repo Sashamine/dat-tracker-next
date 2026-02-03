@@ -89,53 +89,80 @@ const RESPONSE_HEADERS = {
   "Expires": "0",
 };
 
-// Fetch forex rates from FMP (cached)
+// Fetch forex rates from exchangerate-api.com (free, no API key needed)
+async function fetchExchangeRateApi(): Promise<Record<string, number> | null> {
+  try {
+    const response = await fetch("https://open.er-api.com/v6/latest/USD", { cache: "no-store" });
+    if (!response.ok) return null;
+    
+    const data = await response.json();
+    if (data?.result !== "success" || !data?.rates) return null;
+    
+    // Map to our format (1 USD = X currency)
+    const rates: Record<string, number> = {};
+    const currencies = ["AUD", "CAD", "EUR", "GBP", "JPY", "HKD", "SEK"];
+    for (const cur of currencies) {
+      if (data.rates[cur]) {
+        rates[cur] = data.rates[cur];
+      }
+    }
+    console.log("[Forex] exchangerate-api rates:", rates);
+    return rates;
+  } catch (error) {
+    console.error("[Forex] exchangerate-api error:", error);
+    return null;
+  }
+}
+
+// Fetch forex rates (primary: exchangerate-api, fallback: FMP, final: static)
 async function fetchForexRates(): Promise<Record<string, number>> {
   if (forexCache && Date.now() - forexCache.timestamp < FOREX_CACHE_TTL) {
     return forexCache.data;
   }
 
-  if (!FMP_API_KEY) {
-    console.warn("[Forex] FMP_API_KEY not configured, using fallback rates");
-    return FALLBACK_RATES;
-  }
-
-  try {
-    const pairList = FOREX_PAIRS.join(",");
-    const url = `https://financialmodelingprep.com/api/v3/quote/${pairList}?apikey=${FMP_API_KEY}`;
-    console.log("[Forex] Fetching rates from FMP...");
-
-    const response = await fetch(url, { cache: "no-store" });
-
-    if (!response.ok) {
-      console.error(`[Forex] FMP API error: ${response.status}`);
-      return forexCache?.data || FALLBACK_RATES;
-    }
-
-    const data = await response.json();
-
-    // Convert from FMP format (USDJPY=156) to our format (JPY=156)
-    const rates: Record<string, number> = { ...FALLBACK_RATES };
-
-    if (Array.isArray(data)) {
-      for (const quote of data) {
-        if (quote?.symbol && quote?.price > 0) {
-          // Extract currency from pair (USDJPY -> JPY)
-          const currency = quote.symbol.replace("USD", "");
-          rates[currency] = quote.price;
-        }
-      }
-      console.log("[Forex] Fetched rates:", rates);
-    } else {
-      console.error("[Forex] FMP returned non-array:", data);
-    }
-
+  // Start with fallback rates
+  const rates: Record<string, number> = { ...FALLBACK_RATES };
+  
+  // Try exchangerate-api.com first (free, reliable, covers all currencies)
+  const erApiRates = await fetchExchangeRateApi();
+  if (erApiRates) {
+    Object.assign(rates, erApiRates);
+    console.log("[Forex] Using exchangerate-api.com rates");
     forexCache = { data: rates, timestamp: Date.now() };
     return rates;
-  } catch (error) {
-    console.error("[Forex] Error fetching rates:", error);
-    return forexCache?.data || FALLBACK_RATES;
   }
+
+  // Fallback to FMP for any missing rates
+  if (FMP_API_KEY) {
+    try {
+      const pairList = FOREX_PAIRS.join(",");
+      const url = `https://financialmodelingprep.com/api/v3/quote/${pairList}?apikey=${FMP_API_KEY}`;
+      console.log("[Forex] Fetching rates from FMP...");
+
+      const response = await fetch(url, { cache: "no-store" });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          for (const quote of data) {
+            if (quote?.symbol && quote?.price > 0) {
+              const currency = quote.symbol.replace("USD", "");
+              // Only use FMP if we don't already have a rate
+              if (!rates[currency] || rates[currency] === FALLBACK_RATES[currency]) {
+                rates[currency] = quote.price;
+              }
+            }
+          }
+          console.log("[Forex] FMP supplemented rates:", rates);
+        }
+      }
+    } catch (error) {
+      console.error("[Forex] FMP error:", error);
+    }
+  }
+
+  forexCache = { data: rates, timestamp: Date.now() };
+  return rates;
 }
 
 // Fetch market caps from FMP (cached)
