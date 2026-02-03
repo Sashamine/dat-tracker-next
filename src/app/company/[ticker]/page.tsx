@@ -47,6 +47,7 @@ import { FilingCite } from "@/components/wiki-citation";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
+import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -655,25 +656,40 @@ export default function CompanyPage() {
                   <p className="text-xs text-gray-400">USD</p>
                 </div>
               )}
-              {totalDebt > 0 && (
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-red-200 dark:border-red-700">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                    Total Debt <DataFlagBadge flags={displayCompany.dataFlags} field="debt" />
-                  </p>
-                  <p className="text-lg font-bold text-red-600">
-                    −{formatLargeNumber(totalDebt)}
-                    {displayCompany.debtAsOf && (
-                      <FilingCite 
-                        ticker={displayCompany.ticker} 
-                        date={displayCompany.debtAsOf} 
-                        highlight="Long-term debt"
-                        filingType="10-Q"
-                      />
-                    )}
-                  </p>
-                  <p className="text-xs text-gray-400">Convertibles & loans</p>
-                </div>
-              )}
+              {totalDebt > 0 && (() => {
+                // Calculate ITM converts for display
+                const effectiveShares = stockPrice ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav || 0, stockPrice) : null;
+                const itmConvertValue = effectiveShares?.inTheMoneyDebtValue || 0;
+                const itmConverts = effectiveShares?.breakdown.filter(b => b.type === "convertible" && b.inTheMoney) || [];
+                
+                return (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-red-200 dark:border-red-700">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                      Total Debt <DataFlagBadge flags={displayCompany.dataFlags} field="debt" />
+                    </p>
+                    <p className="text-lg font-bold text-red-600">
+                      −{formatLargeNumber(totalDebt)}
+                      {displayCompany.debtAsOf && (
+                        <FilingCite 
+                          ticker={displayCompany.ticker} 
+                          date={displayCompany.debtAsOf} 
+                          highlight="Long-term debt"
+                          filingType="10-Q"
+                        />
+                      )}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {itmConvertValue > 0 ? (
+                        <span title={`${itmConverts.length} convertible notes in-the-money at $${stockPrice?.toFixed(0)}`}>
+                          Incl. {formatLargeNumber(itmConvertValue)} ITM converts
+                        </span>
+                      ) : (
+                        "Convertibles & loans"
+                      )}
+                    </p>
+                  </div>
+                );
+              })()}
               {preferredEquity > 0 && (
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-red-200 dark:border-red-700">
                   <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
