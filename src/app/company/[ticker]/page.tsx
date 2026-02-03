@@ -43,6 +43,7 @@ import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
 import { StalenessBadge } from "@/components/staleness-indicator";
 import { Citation } from "@/components/citation";
+import { FilingCite } from "@/components/wiki-citation";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
@@ -557,6 +558,15 @@ export default function CompanyPage() {
                 </p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
+                  {displayCompany.holdingsSourceUrl && displayCompany.holdingsSource === "sec-filing" && (
+                    <FilingCite 
+                      ticker={displayCompany.ticker} 
+                      date={displayCompany.holdingsLastUpdated || ""} 
+                      highlight={`${displayCompany.holdings.toLocaleString()}`}
+                    >
+                      [1]
+                    </FilingCite>
+                  )}
                 </p>
                 <p className="text-xs text-gray-400">
                   {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
@@ -620,6 +630,15 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-green-600">
                     +{formatLargeNumber(cashReserves)}
+                    {displayCompany.cashSource && displayCompany.cashAsOf && (
+                      <FilingCite 
+                        ticker={displayCompany.ticker} 
+                        date={displayCompany.cashAsOf} 
+                        highlight="USD Reserve"
+                      >
+                        [2]
+                      </FilingCite>
+                    )}
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
                 </div>
@@ -631,6 +650,15 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(totalDebt)}
+                    {displayCompany.debtAsOf && (
+                      <FilingCite 
+                        ticker={displayCompany.ticker} 
+                        date={displayCompany.debtAsOf} 
+                        highlight="Long-term debt"
+                      >
+                        [3]
+                      </FilingCite>
+                    )}
                   </p>
                   <p className="text-xs text-gray-400">Convertibles & loans</p>
                 </div>
