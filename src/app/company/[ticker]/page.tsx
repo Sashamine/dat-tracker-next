@@ -462,7 +462,7 @@ export default function CompanyPage() {
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Burn</p>
               <p className="text-2xl font-bold text-red-600">
-                {cryptoPrice > 0 ? `-${Math.round((displayCompany.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()}` : `${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M`}
+                -${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M
                 {displayCompany.burnAsOf && (
                   <FilingCite 
                     ticker={displayCompany.ticker} 
@@ -473,7 +473,7 @@ export default function CompanyPage() {
                 )}
               </p>
               <p className="text-xs text-gray-400">
-                {cryptoPrice > 0 ? `${displayCompany.asset}/yr` : '/yr'} (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
+                USD/yr (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
               </p>
             </div>
           )}
