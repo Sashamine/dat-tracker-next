@@ -264,22 +264,25 @@ export const btcCompanies: Company[] = [
     ticker: "MSTR",
     asset: "BTC",
     tier: 1,
-    holdings: 713_502,  // SEC 8-K Feb 2, 2026 (+855 BTC Jan 26-31)
-    holdingsLastUpdated: "2026-01-31",
+    holdings: 713_502,  // SEC 8-K Feb 2, 2026: "Aggregate BTC Holdings: 713,502"
+    holdingsLastUpdated: "2026-02-01",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm",
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
     secCik: "0001050446",  // SEC CIK for EDGAR lookups
-    costBasisAvg: 76_037,  // Updated per Jan 26 8-K ($54.19B / 712,647 BTC)
+    costBasisAvg: 76_052,  // SEC 8-K Feb 2, 2026: "$54.26B / 713,502 BTC = $76,052 avg"
+    costBasisSource: "SEC 8-K Feb 2, 2026 (Accession: 0001193125-26-032731)",
     isMiner: false,
     quarterlyBurnUsd: 15_204_000,  // SEC 10-Q Q3 2025: "Net cash used in operating activities" $45.6M / 3 quarters
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 331_748_000,  // Basic shares outstanding per strategy.com/shares (Jan 25, 2026). Diluted shares (364M) are wrong for market cap calculation.
+    sharesForMnav: 332_431_000,  // strategy.com/shares (Feb 3, 2026) derived from SEC filings. Basic shares only; diluted 364.8M excluded.
+    sharesSource: "strategy.com/shares (SEC-derived)",
+    sharesAsOf: "2026-02-03",
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
     totalDebt: 8_214_000_000,  // $8.214B per strategy.com/debt (Jan 26, 2026)
