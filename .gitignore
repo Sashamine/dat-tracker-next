@@ -46,6 +46,6 @@ next-env.d.ts
 .env*.local
 
 # SEC raw filings (can be re-downloaded)
-data/sec/mstr/8k/
-data/sec/mstr/10k/
-data/sec/mstr/10q/
+
+
+

@@ -439,12 +439,10 @@ export function CompanyMNAVChart({
                 </div>
                 <div>
                   <a 
-                    href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/filings/mstr/${selectedAcquisition.date}?highlight=${encodeURIComponent(`${selectedAcquisition.btcAcquired.toLocaleString()} bitcoin`)}`}
                     className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
                   >
-                    SEC Filing →
+                    View Filing →
                   </a>
                 </div>
               </div>
