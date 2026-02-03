@@ -84,11 +84,25 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 // SEC CIK: 0001507605
 // Holdings verified from SEC 10-K/10-Q Digital Assets tables (Jan 2026)
+//
+// 8-K FILING PATTERN NOTE (Feb 2026 research):
+// Unlike MSTR which files weekly 8-Ks with specific BTC purchase details, MARA typically:
+// 1. Files BTC Yield 8-Ks (Items 7.01) showing total holdings at interim dates
+// 2. Files offering announcements (Items 1.01, 8.01) for convertible notes
+// 3. Only ONE specific BTC purchase 8-K found: Aug 14, 2024 (+4,144 BTC at ~$59,500)
+// 4. Most purchases happen through treasury operations reported in quarterly 10-Q/10-K
+// BTC Yield 8-K filings from Dec 2024 provide useful interim total holdings data.
 const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2023-12-31", holdings: 15126, sharesOutstandingDiluted: 310_890_000, holdingsPerShare: 0.0000487, source: "FY 2023 10-K", sourceUrl: "/filings/mara/2023-12-31#holdings", sourceType: "sec-filing" },
   { date: "2024-03-31", holdings: 17320, sharesOutstandingDiluted: 328_630_000, holdingsPerShare: 0.0000527, source: "Q1 2024 10-Q", sourceUrl: "/filings/mara/2024-03-31#holdings", sourceType: "sec-filing" },
   { date: "2024-06-30", holdings: 18488, sharesOutstandingDiluted: 356_800_000, holdingsPerShare: 0.0000518, source: "Q2 2024 10-Q", sourceUrl: "/filings/mara/2024-06-30#holdings", sourceType: "sec-filing" },
+  // Aug 14, 2024: +4,144 BTC purchase at ~$59,500/BTC = ~$249M - First major treasury purchase
+  // This is the only specific BTC purchase 8-K MARA has filed (unlike MSTR's weekly updates)
+  { date: "2024-08-14", holdings: 22632, sharesOutstandingDiluted: 375_000_000, holdingsPerShare: 0.0000604, source: "8-K BTC Treasury Purchase (+4,144 BTC at ~$59,500)", sourceUrl: "/data/sec/mara/8k/8k-2024-08-14.html#holdings", sourceType: "sec-filing", methodology: "Q2 holdings (18,488) + purchase (4,144) = 22,632 BTC", confidence: "high" },
   { date: "2024-09-30", holdings: 26747, sharesOutstandingDiluted: 396_980_000, holdingsPerShare: 0.0000674, source: "Q3 2024 10-Q", sourceUrl: "/filings/mara/2024-09-30#holdings", sourceType: "sec-filing" },
+  // Dec BTC Yield 8-K filings show interim holdings between quarters
+  { date: "2024-12-09", holdings: 40435, sharesOutstandingDiluted: 460_260_000, holdingsPerShare: 0.0000879, source: "8-K BTC Yield (47.6% YTD)", sourceUrl: "/data/sec/mara/8k/8k-2024-12-10.html#holdings", sourceType: "sec-filing" },
+  { date: "2024-12-18", holdings: 44394, sharesOutstandingDiluted: 463_400_000, holdingsPerShare: 0.0000958, source: "8-K BTC Yield (60.9% YTD)", sourceUrl: "/data/sec/mara/8k/8k-2024-12-19.html#holdings", sourceType: "sec-filing" },
   { date: "2024-12-31", holdings: 44893, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.0001044, source: "FY 2024 10-K", sourceUrl: "/filings/mara/2024-12-31#holdings", sourceType: "sec-filing" },
   { date: "2025-03-31", holdings: 47531, sharesOutstandingDiluted: 445_000_000, holdingsPerShare: 0.0001068, source: "Q1 2025 10-Q (33,263 + 14,269 receivable)", sourceUrl: "/filings/mara/2025-03-31#holdings", sourceType: "sec-filing" },
   { date: "2025-06-30", holdings: 49951, sharesOutstandingDiluted: 458_000_000, holdingsPerShare: 0.0001091, source: "Q2 2025 10-Q (34,401 + 15,550 receivable)", sourceUrl: "/filings/mara/2025-06-30#holdings", sourceType: "sec-filing" },
