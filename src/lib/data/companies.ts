@@ -276,6 +276,7 @@ export const btcCompanies: Company[] = [
     costBasisSource: "SEC 8-K Feb 2, 2026 (Accession: 0001193125-26-032731)",
     isMiner: false,
     quarterlyBurnUsd: 15_200_000,  // SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities $45.6M ÷ 3 = $15.2M
+    burnAsOf: "2025-11-03",  // 10-Q filing date
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market

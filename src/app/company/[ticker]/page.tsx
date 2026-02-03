@@ -417,6 +417,7 @@ export default function CompanyPage() {
               debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
             )}>
               {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
+              <span className="text-[10px] text-gray-400 align-super ml-1">[calc]</span>
             </p>
             <p className="text-xs text-gray-400">
               {debtToCryptoRatio >= 1 ? (
@@ -431,7 +432,8 @@ export default function CompanyPage() {
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">NAV/Share</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {navPerShare ? `${navPerShare.toFixed(2)}` : "—"}
+              {navPerShare ? `$${navPerShare.toFixed(2)}` : "—"}
+              <span className="text-[10px] text-gray-400 align-super ml-1">[calc]</span>
             </p>
             <p className="text-xs text-gray-400">
               {navDiscount !== null && (
@@ -457,6 +459,14 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Burn</p>
               <p className="text-2xl font-bold text-red-600">
                 {cryptoPrice > 0 ? `-${Math.round((displayCompany.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()}` : `${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M`}
+                {displayCompany.burnAsOf && (
+                  <FilingCite 
+                    ticker={displayCompany.ticker} 
+                    date={displayCompany.burnAsOf} 
+                    highlight="operating expenses"
+                    filingType="10-Q"
+                  />
+                )}
               </p>
               <p className="text-xs text-gray-400">
                 {cryptoPrice > 0 ? `${displayCompany.asset}/yr` : '/yr'} (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
@@ -667,6 +677,14 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(preferredEquity)}
+                    {displayCompany.preferredAsOf && (
+                      <FilingCite 
+                        ticker={displayCompany.ticker} 
+                        date={displayCompany.preferredAsOf} 
+                        highlight="preferred stock"
+                        filingType="8-K"
+                      />
+                    )}
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>
