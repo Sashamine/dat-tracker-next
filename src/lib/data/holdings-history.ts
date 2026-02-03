@@ -952,6 +952,29 @@ export function getLatestSnapshot(ticker: string): HoldingsSnapshot | undefined 
   return history.history[history.history.length - 1];
 }
 
+/**
+ * Get holdings at a specific date by finding the most recent snapshot on or before that date.
+ * Returns undefined if no snapshot exists before the given date.
+ */
+export function getHoldingsAtDate(ticker: string, date: string): number | undefined {
+  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  if (!companyHistory || companyHistory.history.length === 0) return undefined;
+
+  const targetDate = new Date(date).getTime();
+  let bestMatch: HoldingsSnapshot | undefined;
+
+  for (const snapshot of companyHistory.history) {
+    const snapshotDate = new Date(snapshot.date).getTime();
+    if (snapshotDate <= targetDate) {
+      bestMatch = snapshot;
+    } else {
+      break; // Snapshots are sorted chronologically
+    }
+  }
+
+  return bestMatch?.holdings;
+}
+
 // Calculate growth metrics
 export function calculateHoldingsGrowth(history: HoldingsSnapshot[]): {
   totalGrowth: number; // % growth from first to last

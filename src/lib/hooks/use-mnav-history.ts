@@ -4,7 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { TimeRange, ChartInterval, DEFAULT_INTERVAL } from "./use-stock-history";
 import { MSTR_DAILY_MNAV, type DailyMnavSnapshot } from "@/lib/data/mstr-daily-mnav";
 import { getEffectiveSharesAt } from "@/lib/data/dilutive-instruments";
-import { hasHoldingsHistory, getHistoricalHoldings } from "@/lib/data/company-holdings-history";
+import { getHistoricalHoldings } from "@/lib/data/company-holdings-history";
+import { getHoldingsHistory, getHoldingsAtDate } from "@/lib/data/holdings-history";
 
 interface MnavDataPoint {
   time: string; // Unix timestamp (seconds) for intraday, YYYY-MM-DD for daily
@@ -273,7 +274,10 @@ async function getCompanyDailyMnav(
     if (!stockPrice) continue;
     
     // Get historical holdings for this date
-    const holdings = getHistoricalHoldings(ticker, date) ?? companyData.holdings;
+    // Try dedicated lookup function first, then general holdings history, then fall back to current
+    const holdings = getHistoricalHoldings(ticker, date) 
+      ?? getHoldingsAtDate(ticker, date) 
+      ?? companyData.holdings;
     
     // Calculate market cap and mNAV
     const marketCap = stockPrice * companyData.sharesForMnav;
@@ -300,7 +304,7 @@ export function useMnavHistory(
   companyData?: MnavCompanyData
 ) {
   const isMstr = ticker.toUpperCase() === "MSTR";
-  const hasHistory = hasHoldingsHistory(ticker);
+  const hasHistory = !!getHoldingsHistory(ticker);
   const effectiveInterval = interval || DEFAULT_INTERVAL[range];
 
   // Use intraday calculation for short ranges, pre-calculated for long ranges
