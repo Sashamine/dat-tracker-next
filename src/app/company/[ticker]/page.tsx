@@ -1133,7 +1133,7 @@ export default function CompanyPage() {
             </div>
           )}
 
-          {/* 2026 Outlook */}
+          {/* Outlook & Catalysts */}
           {intel?.outlook2026 && (() => {
             // Parse outlook into bullet points (split by "- " or ". " or newlines)
             const outlookItems = intel.outlook2026
@@ -1144,7 +1144,7 @@ export default function CompanyPage() {
             return (
               <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                 <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
-                  2026 Outlook
+                  Outlook & Catalysts
                 </h4>
                 <ul className="space-y-2">
                   {outlookItems.map((item, idx) => (
