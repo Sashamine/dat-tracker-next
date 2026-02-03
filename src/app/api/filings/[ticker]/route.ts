@@ -21,6 +21,7 @@ function getJurisdiction(ticker: string): string {
   if (ticker.endsWith(".T")) return "Japan";
   if (ticker.endsWith(".HK")) return "Hong Kong";
   if (ticker.endsWith(".ST")) return "Sweden";
+  if (ticker.endsWith(".AX")) return "Australia";
   // Canadian tickers - check specific ones we know
   const canadianTickers = ["STKE", "LUXFF", "XTAIF", "CYPH"];
   if (canadianTickers.includes(ticker.toUpperCase())) return "Canada";
@@ -220,6 +221,12 @@ const internationalFilingUrls: Record<string, { source: string; sourceUrl: strin
     sourceUrl: "https://live.euronext.com/en/product/equities/FR001400RU69-ALXP",
     note: "The Blockchain Group on Euronext",
   },
+  // Australia
+  "DCC.AX": {
+    source: "ASX",
+    sourceUrl: "https://www.asx.com.au/asx/v2/statistics/announcements.do?by=asxCode&asxCode=DCC&timeframe=Y&period=M6",
+    note: "DigitalX announcements on ASX",
+  },
 };
 
 // Get filing source info for international companies
@@ -257,6 +264,10 @@ function getInternationalFilingInfo(ticker: string, jurisdiction: string, compan
     "France": {
       source: "AMF / Euronext",
       sourceUrl: "https://www.amf-france.org/en",
+    },
+    "Australia": {
+      source: "ASX",
+      sourceUrl: "https://www.asx.com.au/asx/v2/statistics/announcements.do",
     },
   };
 
