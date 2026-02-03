@@ -391,6 +391,15 @@ export function CompanyMNAVChart({
         </div>
       ) : hasData ? (
         <>
+          {/* Show note for non-MSTR on short timeframes */}
+          {!isMstr && (timeRange === "1d" || timeRange === "7d") && (
+            <div className="mb-2 px-3 py-2 bg-amber-50 dark:bg-amber-900/20 rounded text-xs text-amber-700 dark:text-amber-300 flex items-center gap-2">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Daily data only. Select 1M or longer for smoother trends.</span>
+            </div>
+          )}
           <div ref={chartContainerRef} className="w-full h-[300px]" />
 
           {/* BTC Acquisition event panel - shows on hover over marker */}
