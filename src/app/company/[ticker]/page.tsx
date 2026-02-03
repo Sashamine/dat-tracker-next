@@ -563,9 +563,8 @@ export default function CompanyPage() {
                       ticker={displayCompany.ticker} 
                       date={displayCompany.holdingsLastUpdated || ""} 
                       highlight={`${displayCompany.holdings.toLocaleString()}`}
-                    >
-                      [1]
-                    </FilingCite>
+                      filingType="8-K"
+                    />
                   )}
                 </p>
                 <p className="text-xs text-gray-400">
@@ -635,9 +634,8 @@ export default function CompanyPage() {
                         ticker={displayCompany.ticker} 
                         date={displayCompany.cashAsOf} 
                         highlight="USD Reserve"
-                      >
-                        [2]
-                      </FilingCite>
+                        filingType="8-K"
+                      />
                     )}
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
@@ -655,9 +653,8 @@ export default function CompanyPage() {
                         ticker={displayCompany.ticker} 
                         date={displayCompany.debtAsOf} 
                         highlight="Long-term debt"
-                      >
-                        [3]
-                      </FilingCite>
+                        filingType="10-Q"
+                      />
                     )}
                   </p>
                   <p className="text-xs text-gray-400">Convertibles & loans</p>

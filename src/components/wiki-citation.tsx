@@ -86,27 +86,28 @@ export function Cite({
 
 /**
  * Inline citation that links directly to filing viewer
+ * Shows filing type like [8-K ↗] or [10-Q ↗]
  */
 export function FilingCite({
   ticker,
   date,
   highlight,
-  children,
+  filingType = "8-K",
 }: {
   ticker: string;
   date: string;
   highlight?: string;
-  children?: ReactNode;
+  filingType?: "8-K" | "10-Q" | "10-K" | "S-3" | "424B3";
 }) {
   const url = `/filings/${ticker.toLowerCase()}/${date}${highlight ? `?highlight=${encodeURIComponent(highlight)}` : ""}`;
   
   return (
     <Link
       href={url}
-      className="text-[10px] text-blue-500 hover:text-blue-400 align-super ml-0.5 no-underline"
-      title={`SEC Filing ${date}`}
+      className="text-[10px] text-blue-500 hover:text-blue-400 align-super ml-1 no-underline whitespace-nowrap"
+      title={`View ${filingType} filing from ${date}`}
     >
-      {children || "[filing]"}
+      [{filingType}&nbsp;↗]
     </Link>
   );
 }
