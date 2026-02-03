@@ -1018,51 +1018,6 @@ export function getAcquisitionEvents(ticker: string): AcquisitionEvent[] {
   return events;
 }
 
-/**
- * Get dilution events derived from holdings history changes.
- * Returns events where shares outstanding increased between snapshots.
- */
-export interface DilutionEvent {
-  date: string;
-  sharesAdded: number;
-  percentDilution: number;
-  cumulativeShares: number;
-  source?: string;
-  sharesSource?: string;
-  sourceUrl?: string;
-}
-
-export function getDilutionEvents(ticker: string): DilutionEvent[] {
-  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
-  if (!companyHistory || companyHistory.history.length < 2) return [];
-
-  const events: DilutionEvent[] = [];
-  const history = companyHistory.history;
-
-  for (let i = 1; i < history.length; i++) {
-    const prev = history[i - 1];
-    const curr = history[i];
-    const sharesAdded = curr.sharesOutstandingDiluted - prev.sharesOutstandingDiluted;
-    
-    // Only count positive dilution (not buybacks)
-    // Threshold: at least 1% dilution to be significant
-    const percentDilution = (sharesAdded / prev.sharesOutstandingDiluted) * 100;
-    if (sharesAdded > 0 && percentDilution >= 1) {
-      events.push({
-        date: curr.date,
-        sharesAdded,
-        percentDilution,
-        cumulativeShares: curr.sharesOutstandingDiluted,
-        source: curr.source,
-        sharesSource: curr.sharesSource,
-        sourceUrl: curr.sourceUrl,
-      });
-    }
-  }
-
-  return events;
-}
-
 // Calculate growth metrics
 export function calculateHoldingsGrowth(history: HoldingsSnapshot[]): {
   totalGrowth: number; // % growth from first to last

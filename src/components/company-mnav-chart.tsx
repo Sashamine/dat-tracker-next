@@ -7,7 +7,7 @@ import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
 import { useMnavHistory, type MnavDataPoint, type MnavCompanyData } from "@/lib/hooks/use-mnav-history";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { MSTR_BTC_TIMELINE, type BTCAcquisitionEvent } from "@/lib/data/mstr-btc-timeline";
-import { getAcquisitionEvents, getDilutionEvents, type AcquisitionEvent, type DilutionEvent } from "@/lib/data/holdings-history";
+import { getAcquisitionEvents, type AcquisitionEvent } from "@/lib/data/holdings-history";
 
 interface CompanyMNAVChartProps {
   ticker: string;
@@ -45,9 +45,7 @@ export function CompanyMNAVChart({
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
   const [selectedAcquisition, setSelectedAcquisition] = useState<BTCAcquisitionEvent | null>(null);
   const [selectedCompanyAcquisition, setSelectedCompanyAcquisition] = useState<AcquisitionEvent | null>(null);
-  const [selectedDilution, setSelectedDilution] = useState<DilutionEvent | null>(null);
   const [showAcquisitions, setShowAcquisitions] = useState(true);
-  const [showDilution, setShowDilution] = useState(false);
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);
   const tooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -135,12 +133,6 @@ export function CompanyMNAVChart({
     return getAcquisitionEvents(ticker);
   }, [ticker, isMstr]);
 
-  // Get dilution events for MSTR only
-  const dilutionEvents = useMemo(() => {
-    if (!isMstr) return [];
-    return getDilutionEvents(ticker);
-  }, [ticker, isMstr]);
-
   // Filter acquisition events for the current time range
   const acquisitionMarkers = useMemo(() => {
     if (!showAcquisitions) return [];
@@ -212,60 +204,6 @@ export function CompanyMNAVChart({
     return markers;
   }, [isMstr, showAcquisitions, timeRange, companyAcquisitions]);
 
-  // Filter dilution events for MSTR
-  const dilutionMarkers = useMemo(() => {
-    if (!isMstr || !showDilution) return [];
-    
-    const now = new Date();
-    let startDate: Date;
-    switch (timeRange) {
-      case "1d":
-        startDate = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
-        break;
-      case "7d":
-        startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        break;
-      case "1mo":
-        startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        break;
-      case "1y":
-        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-        break;
-      case "all":
-        startDate = new Date("2020-01-01");
-        break;
-      default:
-        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-    }
-
-    const markers: SeriesMarker<Time>[] = [];
-    
-    for (const event of dilutionEvents) {
-      const eventDate = new Date(event.date);
-      if (eventDate >= startDate) {
-        // Format shares added
-        let text: string;
-        if (event.sharesAdded >= 1000000000) {
-          text = `+${(event.sharesAdded / 1000000000).toFixed(1)}B`;
-        } else if (event.sharesAdded >= 1000000) {
-          text = `+${(event.sharesAdded / 1000000).toFixed(0)}M`;
-        } else {
-          text = `+${(event.sharesAdded / 1000).toFixed(0)}K`;
-        }
-        
-        markers.push({
-          time: event.date as Time,
-          position: "aboveBar",
-          color: "#ef4444", // Red for dilution
-          shape: "arrowDown",
-          text,
-        });
-      }
-    }
-    
-    return markers;
-  }, [isMstr, showDilution, timeRange, dilutionEvents]);
-
   // Initialize and update chart when data is available
   useEffect(() => {
     if (!chartContainerRef.current || !hasData) return;
@@ -322,10 +260,9 @@ export function CompanyMNAVChart({
     mnavSeries.setData(mnavHistory);
     seriesRef.current = mnavSeries;
     
-    // Combine acquisition and dilution markers
-    const allMarkers = [...acquisitionMarkers, ...dilutionMarkers];
-    if (allMarkers.length > 0) {
-      const markers = createSeriesMarkers(mnavSeries, allMarkers);
+    // Add acquisition markers for all companies
+    if (acquisitionMarkers.length > 0) {
+      const markers = createSeriesMarkers(mnavSeries, acquisitionMarkers);
       markersRef.current = markers;
     }
     
@@ -348,16 +285,6 @@ export function CompanyMNAVChart({
             }
             setSelectedAcquisition(acquisition);
           }
-          
-          // Check if hovering over a dilution event
-          const dilution = dilutionEvents.find(e => e.date === timeStr);
-          if (dilution) {
-            if (tooltipTimeoutRef.current) {
-              clearTimeout(tooltipTimeoutRef.current);
-              tooltipTimeoutRef.current = null;
-            }
-            setSelectedDilution(dilution);
-          }
         } else {
           // Check if hovering over a company acquisition event
           const acquisition = companyAcquisitions.find(e => e.date === timeStr);
@@ -371,12 +298,11 @@ export function CompanyMNAVChart({
         }
       } else {
         setSelectedPoint(null);
-        // Delay hiding tooltips to allow clicking
+        // Delay hiding acquisition tooltip to allow clicking
         if (!isTooltipHovered) {
           tooltipTimeoutRef.current = setTimeout(() => {
             setSelectedAcquisition(null);
             setSelectedCompanyAcquisition(null);
-            setSelectedDilution(null);
           }, 500);
         }
       }
@@ -409,7 +335,7 @@ export function CompanyMNAVChart({
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasData, mnavHistory, isMstr, dataPoints, acquisitionMarkers, dilutionMarkers, dilutionEvents]);
+  }, [hasData, mnavHistory, isMstr, dataPoints, acquisitionMarkers]);
   
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -485,20 +411,6 @@ export function CompanyMNAVChart({
               )}
             >
               {showAcquisitions ? "🔶 Acquisitions ON" : "○ Acquisitions OFF"}
-            </button>
-          )}
-          {/* Toggle for dilution - MSTR only */}
-          {isMstr && (
-            <button
-              onClick={() => setShowDilution(!showDilution)}
-              className={cn(
-                "text-xs px-2 py-1 rounded border transition-colors",
-                showDilution
-                  ? "bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700 text-red-700 dark:text-red-400"
-                  : "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500"
-              )}
-            >
-              {showDilution ? "🔴 Dilution ON" : "○ Dilution OFF"}
             </button>
           )}
         </div>
@@ -602,59 +514,6 @@ export function CompanyMNAVChart({
             </div>
           )}
 
-          {/* Dilution event panel - shows on hover over marker (MSTR only) */}
-          {isMstr && selectedDilution && (
-            <div 
-              className="mt-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 text-xs"
-              onMouseEnter={() => {
-                setIsTooltipHovered(true);
-                if (tooltipTimeoutRef.current) {
-                  clearTimeout(tooltipTimeoutRef.current);
-                  tooltipTimeoutRef.current = null;
-                }
-              }}
-              onMouseLeave={() => {
-                setIsTooltipHovered(false);
-                tooltipTimeoutRef.current = setTimeout(() => {
-                  setSelectedDilution(null);
-                }, 300);
-              }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-red-800 dark:text-red-200 flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
-                  </svg>
-                  Share Dilution
-                </span>
-                <span className="font-bold text-red-600 dark:text-red-400">
-                  +{selectedDilution.sharesAdded >= 1000000 
-                    ? (selectedDilution.sharesAdded / 1000000).toFixed(1) + "M"
-                    : (selectedDilution.sharesAdded / 1000).toFixed(0) + "K"
-                  } shares ({selectedDilution.percentDilution.toFixed(1)}%)
-                </span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-red-700 dark:text-red-300">
-                <div>
-                  <span className="text-red-600 dark:text-red-500">Date:</span>{" "}
-                  <span className="font-medium">{selectedDilution.date}</span>
-                </div>
-                <div>
-                  <span className="text-red-600 dark:text-red-500">Total After:</span>{" "}
-                  <span className="font-medium">
-                    {(selectedDilution.cumulativeShares / 1000000).toFixed(1)}M shares
-                  </span>
-                </div>
-                {selectedDilution.sharesSource && (
-                  <div className="col-span-2">
-                    <span className="text-red-600 dark:text-red-500">Source:</span>{" "}
-                    <span className="font-medium">{selectedDilution.sharesSource}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
           {/* Company acquisition event panel - shows on hover over marker */}
           {!isMstr && selectedCompanyAcquisition && (
             <div 
@@ -726,7 +585,7 @@ export function CompanyMNAVChart({
           )}
 
           {/* Point info panel for MSTR - shows on hover */}
-          {isMstr && selectedPoint && !selectedAcquisition && !selectedDilution && (
+          {isMstr && selectedPoint && !selectedAcquisition && (
             <div className="mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-xs">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
