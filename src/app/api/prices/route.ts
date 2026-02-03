@@ -66,6 +66,12 @@ const FMP_ONLY_STOCKS = [
 const YAHOO_TICKERS: Record<string, string> = {
   "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD) - also trades as XTAO.V in CAD
   // SWC removed - Yahoo TSWCF returns wrong price (~$11 vs actual ~$0.57). Using FALLBACK_STOCKS instead.
+  "DCC.AX": "DCC.AX",    // DigitalX - ASX (Yahoo supports .AX suffix, returns AUD)
+};
+
+// Yahoo tickers that need currency conversion (ticker -> currency)
+const YAHOO_CURRENCIES: Record<string, string> = {
+  "DCC.AX": "AUD",
 };
 
 // Cache for prices (2 second TTL)
@@ -341,15 +347,28 @@ export async function GET() {
       };
     }
 
-    // Merge Yahoo Finance stocks (for TSX Venture, etc.)
+    // Merge Yahoo Finance stocks (for TSX Venture, ASX, etc.)
     for (const [ticker, data] of Object.entries(yahooStocks)) {
+      // Convert price to USD if it's a foreign currency stock (e.g., DCC.AX in AUD)
+      const currency = YAHOO_CURRENCIES[ticker];
+      const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
+      const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
+      
       // Calculate market cap from sharesForMnav if available in override
       const fallback = FALLBACK_STOCKS[ticker];
+      // For currency-converted stocks, recalculate market cap based on USD price
+      const calculatedMarketCap = fallback ? (fallback.marketCap / fallback.price) * priceUsd * (rate || 1) : 0;
+      
       stockPrices[ticker] = {
         ...data,
+        price: priceUsd,
         // Use override or calculate from fallback based on new price
-        marketCap: MARKET_CAP_OVERRIDES[ticker] || (fallback ? (fallback.marketCap / fallback.price) * data.price : 0),
+        marketCap: MARKET_CAP_OVERRIDES[ticker] || calculatedMarketCap,
       };
+      
+      if (currency) {
+        console.log(`[Yahoo] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate})`);
+      }
     }
 
 

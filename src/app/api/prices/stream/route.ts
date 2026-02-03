@@ -28,6 +28,7 @@ const TICKER_CURRENCY: Record<string, string> = {
 const YAHOO_TICKERS: Record<string, string> = {
   "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD)
   "SWC": "TSWCF",        // Smarter Web Company - OTC ticker (FMP has wrong SWC)
+  "DCC.AX": "DCC.AX",    // DigitalX - ASX (Yahoo supports .AX suffix)
 };
 
 // Cache for forex rates (5 minute TTL - forex doesn't move fast)
@@ -300,8 +301,26 @@ async function fetchAllPrices() {
   }
 
   // Merge Yahoo stocks (overwrites FMP data for these tickers)
+  // Currency mapping for Yahoo tickers that need conversion
+  const YAHOO_CURRENCIES: Record<string, string> = {
+    "DCC.AX": "AUD",
+  };
+  
   for (const [ticker, data] of Object.entries(yahooStocks)) {
-    stockPrices[ticker] = data;
+    // Convert price to USD if it's a foreign currency stock
+    const currency = YAHOO_CURRENCIES[ticker];
+    const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
+    const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
+    
+    if (currency) {
+      console.log(`[Stream] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate})`);
+    }
+    
+    stockPrices[ticker] = {
+      ...data,
+      price: priceUsd,
+      prevClose: rate && rate > 0 ? data.prevClose / rate : data.prevClose,
+    };
   }
 
   return {
