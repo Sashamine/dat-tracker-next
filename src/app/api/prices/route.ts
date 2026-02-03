@@ -10,7 +10,7 @@ const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Forex pairs we need (FMP format)
 // Note: FMP uses GBPUSD format for some pairs
-const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR", "GBPUSD"];
+const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR", "GBPUSD", "USDAUD"];
 
 // Cache for forex rates (5 minute TTL - forex doesn't move that fast)
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
@@ -27,6 +27,9 @@ const TICKER_CURRENCY: Record<string, string> = {
   "ETHM": "CAD",
   "SWC": "GBP",     // Smarter Web Company (AQUIS UK)
   "TSWCF": "GBP",   // SWC OTC ticker
+  "DCC.AX": "AUD",  // DigitalX (ASX Australia)
+  "NDA.V": "CAD",   // Neptune Digital Assets (TSX Venture)
+  "DMGI.V": "CAD",  // DMG Blockchain (TSX Venture)
 };
 
 // Stocks not on major exchanges (OTC/international) - use FMP
@@ -305,13 +308,19 @@ export async function GET() {
         const change24h = prevClose > 0 ? ((currentPrice - prevClose) / prevClose) * 100 : 0;
         const dailyBar = snapshot.dailyBar || {};
 
+        // Convert price to USD if it's a foreign currency stock (Alpaca returns native currency)
+        const currency = TICKER_CURRENCY[ticker];
+        const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
+        const priceUsd = rate && rate > 0 ? currentPrice / rate : currentPrice;
+        const regularPriceUsd = rate && rate > 0 ? (snapshot.prevDailyBar?.c || currentPrice) / rate : (snapshot.prevDailyBar?.c || currentPrice);
+
         stockPrices[ticker] = {
-          price: currentPrice,
+          price: priceUsd,
           change24h,
           volume: dailyBar.v || 0,
           marketCap: MARKET_CAP_OVERRIDES[ticker] || marketCaps[ticker] || 0,
           isAfterHours: extendedHours && !marketOpen,
-          regularPrice: snapshot.prevDailyBar?.c || currentPrice,
+          regularPrice: regularPriceUsd,
         };
       }
     }

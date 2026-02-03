@@ -16,6 +16,8 @@ const CURRENCY_PAIRS: Record<string, string> = {
   SEK: "USDSEK",  // 1 USD = X SEK (need to divide)
   CAD: "USDCAD",  // 1 USD = X CAD (need to divide)
   EUR: "USDEUR",  // 1 USD = X EUR (need to divide)
+  AUD: "USDAUD",  // 1 USD = X AUD (need to divide)
+  GBP: "USDGBP",  // 1 USD = X GBP (need to divide)
 };
 
 // Cache for exchange rates (5 minute TTL)
@@ -30,6 +32,8 @@ export const FALLBACK_RATES: Record<string, number> = {
   SEK: 10.5,    // 1 USD = 10.5 SEK (approximate)
   CAD: 1.44,    // 1 USD = 1.44 CAD (Jan 2026)
   EUR: 0.96,    // 1 USD = 0.96 EUR (Jan 2026)
+  AUD: 1.60,    // 1 USD = 1.60 AUD (Feb 2026)
+  GBP: 0.80,    // 1 USD = 0.80 GBP (Feb 2026)
 };
 
 /**

@@ -37,9 +37,13 @@ const NON_USD_TICKERS = new Set<string>([
 // Currency codes for logging/display
 const TICKER_CURRENCIES: Record<string, string> = {
   "3350.T": "JPY",
+  "3189.T": "JPY",
   "0434.HK": "HKD",
   "H100.ST": "SEK",
   "ALTBG": "EUR",
+  "DCC.AX": "AUD",
+  "NDA.V": "CAD",
+  "DMGI.V": "CAD",
 };
 
 export interface StockPriceData {
