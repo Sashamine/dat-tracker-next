@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useMemo, useState } from "react";
-import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, LineSeries, Time, ISeriesApi, SeriesMarker, createSeriesMarkers, ISeriesMarkersPluginApi } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
 import { useMnavHistory, type MnavDataPoint, type MnavCompanyData } from "@/lib/hooks/use-mnav-history";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
+import { MSTR_BTC_TIMELINE, type BTCAcquisitionEvent } from "@/lib/data/mstr-btc-timeline";
 
 interface CompanyMNAVChartProps {
   ticker: string;
@@ -38,7 +39,11 @@ export function CompanyMNAVChart({
 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const seriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
+  const [selectedAcquisition, setSelectedAcquisition] = useState<BTCAcquisitionEvent | null>(null);
+  const [showAcquisitions, setShowAcquisitions] = useState(true);
 
   const isMstr = ticker.toUpperCase() === "MSTR";
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
@@ -118,6 +123,39 @@ export function CompanyMNAVChart({
   const isLoading = isLoadingMnav;
   const hasData = mnavHistory.length > 0;
 
+  // Filter BTC acquisition events for the current time range (MSTR only)
+  const acquisitionMarkers = useMemo(() => {
+    if (!isMstr || !showAcquisitions || isIntraday) return [];
+    
+    const now = new Date();
+    let startDate: Date;
+    switch (timeRange) {
+      case "1y":
+        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        break;
+      case "all":
+        startDate = new Date("2020-01-01");
+        break;
+      default:
+        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+    }
+
+    const markers: SeriesMarker<Time>[] = [];
+    for (const event of MSTR_BTC_TIMELINE) {
+      const eventDate = new Date(event.date);
+      if (eventDate >= startDate && event.btcAcquired >= 1000) { // Only show events >= 1000 BTC
+        markers.push({
+          time: event.date as Time,
+          position: "belowBar",
+          color: "#f59e0b", // Amber
+          shape: "arrowUp",
+          text: `+${(event.btcAcquired / 1000).toFixed(0)}K`,
+        });
+      }
+    }
+    return markers;
+  }, [isMstr, showAcquisitions, timeRange, isIntraday]);
+
   // Initialize and update chart when data is available
   useEffect(() => {
     if (!chartContainerRef.current || !hasData) return;
@@ -172,6 +210,14 @@ export function CompanyMNAVChart({
     });
 
     mnavSeries.setData(mnavHistory);
+    seriesRef.current = mnavSeries;
+    
+    // Add BTC acquisition markers for MSTR
+    if (isMstr && acquisitionMarkers.length > 0) {
+      const markers = createSeriesMarkers(mnavSeries, acquisitionMarkers);
+      markersRef.current = markers;
+    }
+    
     chart.timeScale().fitContent();
 
     // Add crosshair move handler for MSTR to show point info
@@ -181,8 +227,13 @@ export function CompanyMNAVChart({
           const timeStr = String(param.time);
           const point = dataPoints.get(timeStr);
           setSelectedPoint(point || null);
+          
+          // Check if hovering over an acquisition event
+          const acquisition = MSTR_BTC_TIMELINE.find(e => e.date === timeStr);
+          setSelectedAcquisition(acquisition || null);
         } else {
           setSelectedPoint(null);
+          setSelectedAcquisition(null);
         }
       });
     }
@@ -204,12 +255,16 @@ export function CompanyMNAVChart({
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      if (markersRef.current) {
+        markersRef.current.detach();
+        markersRef.current = null;
+      }
       if (chartRef.current) {
         chartRef.current.remove();
         chartRef.current = null;
       }
     };
-  }, [hasData, mnavHistory, isMstr, dataPoints]);
+  }, [hasData, mnavHistory, isMstr, dataPoints, acquisitionMarkers]);
 
   // Calculate current and change stats
   const stats = useMemo(() => {
@@ -263,6 +318,22 @@ export function CompanyMNAVChart({
               : "Market Cap / Net Asset Value over time"}
           </p>
         </div>
+        <div className="flex items-center gap-4">
+          {/* Toggle for BTC acquisitions (MSTR only) */}
+          {isMstr && !isIntraday && (
+            <button
+              onClick={() => setShowAcquisitions(!showAcquisitions)}
+              className={cn(
+                "text-xs px-2 py-1 rounded border transition-colors",
+                showAcquisitions
+                  ? "bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400"
+                  : "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500"
+              )}
+            >
+              {showAcquisitions ? "🔶 Acquisitions ON" : "○ Acquisitions OFF"}
+            </button>
+          )}
+        </div>
         {stats && (
           <div className="flex gap-4 text-right">
             <div>
@@ -298,8 +369,51 @@ export function CompanyMNAVChart({
         <>
           <div ref={chartContainerRef} className="w-full h-[300px]" />
 
+          {/* BTC Acquisition event panel - shows on hover over marker */}
+          {isMstr && selectedAcquisition && (
+            <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 text-xs">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                  BTC Acquisition
+                </span>
+                <span className="font-bold text-amber-600 dark:text-amber-400">
+                  +{selectedAcquisition.btcAcquired.toLocaleString()} BTC
+                </span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-amber-700 dark:text-amber-300">
+                <div>
+                  <span className="text-amber-600 dark:text-amber-500">Date:</span>{" "}
+                  <span className="font-medium">{selectedAcquisition.date}</span>
+                </div>
+                {selectedAcquisition.avgPriceUsd && (
+                  <div>
+                    <span className="text-amber-600 dark:text-amber-500">Avg Price:</span>{" "}
+                    <span className="font-medium">${selectedAcquisition.avgPriceUsd.toLocaleString()}</span>
+                  </div>
+                )}
+                <div>
+                  <span className="text-amber-600 dark:text-amber-500">Total After:</span>{" "}
+                  <span className="font-medium">{selectedAcquisition.cumulativeHoldings.toLocaleString()} BTC</span>
+                </div>
+                <div>
+                  <a 
+                    href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
+                  >
+                    SEC Filing →
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Point info panel for MSTR - shows on hover */}
-          {isMstr && selectedPoint && (
+          {isMstr && selectedPoint && !selectedAcquisition && (
             <div className="mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-xs">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
