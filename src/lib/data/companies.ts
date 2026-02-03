@@ -275,7 +275,7 @@ export const btcCompanies: Company[] = [
     costBasisAvg: 76_052,  // SEC 8-K Feb 2, 2026: "$54.26B / 713,502 BTC = $76,052 avg"
     costBasisSource: "SEC 8-K Feb 2, 2026 (Accession: 0001193125-26-032731)",
     isMiner: false,
-    quarterlyBurnUsd: 15_204_000,  // SEC 10-Q Q3 2025: "Net cash used in operating activities" $45.6M / 3 quarters
+    quarterlyBurnUsd: 15_200_000,  // SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities $45.6M ÷ 3 = $15.2M
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
@@ -285,18 +285,19 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-02-03",
     capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
     // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
-    totalDebt: 8_214_000_000,  // $8.214B per strategy.com/debt (Jan 26, 2026)
-    debtSource: "strategy.com/debt (official IR, real-time)",
-    debtSourceUrl: "https://www.strategy.com/debt",
-    debtAsOf: "2026-01-26",
+    totalDebt: 8_173_903_000,  // SEC 10-Q Q3 2025 XBRL: LongTermDebt as of Sep 30, 2025
+    debtSource: "SEC 10-Q Q3 2025 (Accession: 0001193125-25-262568)",
+    debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
+    debtAsOf: "2025-09-30",
     // SEC cross-ref: 10-Q Q3 2025 (filed Nov 3, 2025) for quarterly audit
-    preferredEquity: 8_382_000_000,  // $8.382B per strategy.com/credit (Jan 26, 2026)
-    // Preferred breakdown: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
+    preferredEquity: 8_382_000_000,  // strategy.com/credit (Jan 26, 2026) - STRF/STRC/STRK/STRD/STRE totals
+    // Note: Preferred issued post-Q3 2025; not in SEC 10-Q Sep 30. Verify against next 10-K/10-Q.
+    // Breakdown: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
-    cashReserves: 2_250_000_000,  // $2.25B USD reserves (mNAV Jan 2026)
-    restrictedCash: 2_250_000_000,  // Debt service reserves - not excess
-    cashSource: "SEC 8-K Jan 5, 2026 (USD Reserve)",
-    cashAsOf: "2026-01-04",
+    cashReserves: 54_285_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue as of Sep 30, 2025
+    // Note: strategy.com may show higher cash from post-quarter ATM proceeds
+    cashSource: "SEC 10-Q Q3 2025 (Accession: 0001193125-25-262568)",
+    cashAsOf: "2025-09-30",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
     notes: "712K BTC @ $75K avg. 5 perpetual preferred classes: STRF/STRC/STRE/STRK/STRD. Bitcoin credit company thesis.",
