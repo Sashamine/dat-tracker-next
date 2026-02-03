@@ -58,35 +58,23 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
     // If highlight param exists, find and highlight the BTC acquisition section
     if (highlight) {
       const highlightText = decodeURIComponent(highlight);
+      const numMatch = highlightText.match(/[\d,]+/);
+      const searchNum = numMatch ? numMatch[0] : highlightText;
       
-      // Try multiple patterns to find the acquisition text
-      const patterns = [
-        // Pattern 1: "acquired approximately X bitcoins"
-        new RegExp(`(acquired approximately [\\d,]+ bitcoin[s]?[^.]*\\.)`, "gi"),
-        // Pattern 2: "X BTC" or "X bitcoin"
-        new RegExp(`([^.]*${highlightText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^.]*\\.)`, "gi"),
-        // Pattern 3: BTC Acquired table row context
-        new RegExp(`(BTC Acquired[^<]*<[^>]*>[^<]*${highlightText.substring(0,10)}[^.]*\\.?)`, "gi"),
-      ];
-      
-      let highlighted = false;
-      for (const pattern of patterns) {
-        if (pattern.test(filingContent) && !highlighted) {
-          filingContent = filingContent.replace(pattern, (match) => {
-            highlighted = true;
-            return `<div id="highlight" style="background: linear-gradient(to right, #fef08a, #fde047); padding: 16px; margin: 16px 0; border-left: 4px solid #eab308; border-radius: 4px; box-shadow: 0 2px 8px rgba(234, 179, 8, 0.3);">${match}</div>`;
-          });
-          break;
-        }
-      }
-      
-      // Fallback: highlight any mention of "bitcoin" or "BTC" with the number
-      if (!highlighted) {
-        const numMatch = highlightText.match(/[\d,]+/);
-        if (numMatch) {
-          const btcPattern = new RegExp(`([^<>]{0,100}${numMatch[0]}[^<>]{0,50}(?:bitcoin|BTC)[^<>]{0,100})`, "gi");
-          filingContent = filingContent.replace(btcPattern, '<mark id="highlight" style="background-color: #fef08a; padding: 4px 8px; border-radius: 4px;">$1</mark>');
-        }
+      // For table-format filings (weekly ATM updates), highlight the cell containing the number
+      // and add a visible marker
+      if (filingContent.includes(searchNum)) {
+        // Add highlight style to the number itself (in table cells)
+        filingContent = filingContent.replace(
+          new RegExp(`(>\\s*)(${searchNum.replace(/,/g, ',')})(\\s*<)`, 'g'),
+          '$1<span id="highlight" style="background-color: #fef08a; padding: 2px 6px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 0 3px #eab308;">$2</span>$3'
+        );
+        
+        // Also try to highlight prose mentions like "acquired X bitcoins"
+        const prosePattern = new RegExp(`(acquired[^.]*${searchNum}[^.]*\\.)`, 'gi');
+        filingContent = filingContent.replace(prosePattern, 
+          '<div style="background: linear-gradient(to right, #fef08a, #fde047); padding: 16px; margin: 16px 0; border-left: 4px solid #eab308; border-radius: 4px;">$1</div>'
+        );
       }
     }
     
