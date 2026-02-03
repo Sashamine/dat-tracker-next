@@ -911,18 +911,22 @@ export const btcCompanies: Company[] = [
     ticker: "DCC.AX",
     currency: "AUD",
     asset: "BTC",
-    tier: 2,
-    holdings: 502,  // BitcoinTreasuries.net
-    holdingsLastUpdated: "2024-10-31",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://investorhub.digitalx.com/",
+    tier: 1,  // Upgraded - transparent real-time dashboard
+    holdings: 504,  // treasury.digitalx.com real-time tracker
+    holdingsLastUpdated: "2025-10-21",
+    holdingsSource: "company-dashboard",
+    holdingsSourceUrl: "https://treasury.digitalx.com/",
     datStartDate: "2018-06-30",
+    website: "https://www.digitalx.com",
+    costBasisAvg: 113_262,  // Weighted average from dashboard
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 500_000,
-    sharesForMnav: 500_000_000,  // Estimated
-    strategy: "Australia's pioneering blockchain/digital asset company since 2014. Fund manager + corporate treasury.",
-    notes: "ASX listed. Holds BTC + ETH in corporate treasury + fund units. Early adopter, transparent reporting.",
+    sharesForMnav: 1_490_000_000,  // 1.49B basic shares from dashboard
+    sharesSource: "treasury.digitalx.com",
+    sharesAsOf: "2025-10-21",
+    strategy: "Australia's first and largest ASX-listed Bitcoin treasury company. Goal: 2,100 BTC by 2027.",
+    notes: "Real-time treasury tracker. Jul 2025: Raised $20.7M from UTXO, ParaFi, Animoca. Trading at 1.0x mNAV.",
   },
   {
     id: "ndav",
