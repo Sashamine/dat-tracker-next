@@ -27,11 +27,8 @@ import { getEffectiveShares, dilutiveInstruments } from "@/lib/data/dilutive-ins
 // now convert foreign currency prices to USD before returning them.
 // So this set should be EMPTY - all prices from the API are in USD.
 const NON_USD_TICKERS = new Set<string>([
-  // DISABLED - API now returns USD prices for all tickers
-  // "3350.T",    // Metaplanet - JPY (Tokyo Stock Exchange)
-  // "0434.HK",   // Boyaa Interactive - HKD (Hong Kong)
-  // "H100.ST",   // Hashdex - SEK (Stockholm)
-  // "ALTBG",     // Capital B (The Blockchain Group) - EUR (Euronext Paris)
+  // DISABLED - prices route now converts FALLBACK_STOCKS to USD
+  // These would cause double-conversion
 ]);
 
 // Currency codes for logging/display
@@ -51,6 +48,7 @@ export interface StockPriceData {
   marketCap: number;  // Already in USD from API
   change24h?: number;
   volume?: number;
+  isStatic?: boolean;  // True for FALLBACK_STOCKS data
 }
 
 export interface MarketCapResult {
@@ -232,6 +230,19 @@ export function getMarketCapForMnavSync(
       isNonUsd,
       currency,
     });
+  }
+
+  // For static fallback stocks, use the verified marketCap directly (from company dashboard)
+  // The fallback marketCap is more accurate than shares × price due to forex rate discrepancies
+  if (stockData?.isStatic && stockData.marketCap && stockData.marketCap > 0) {
+    return {
+      marketCap: stockData.marketCap,
+      source: "api",
+      currency: "USD",
+      dilutionApplied: false,
+      inTheMoneyDebtValue: 0,
+      inTheMoneyWarrantProceeds: 0,
+    };
   }
 
   // If company has explicit share count for mNAV and we have a stock price
