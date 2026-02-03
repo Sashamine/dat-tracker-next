@@ -834,6 +834,8 @@ const DCC_HISTORY: HoldingsSnapshot[] = [
   // Nov-Dec: Stable holdings, includes ~194.85 BTC via BTXX ETF
   { date: "2025-11-30", holdings: 503.2, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - November 2025 (308.8 direct + 194.4 ETF)", sourceType: "regulatory-filing" },
   { date: "2025-12-31", holdings: 503.7, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - December 2025 (308.8 direct + 194.85 ETF)", sourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html", sourceType: "regulatory-filing" },
+  // Jan 2026: Updated share count from ASX (ISIN: AU000000DCC9)
+  { date: "2026-01-30", holdings: 504, sharesOutstandingDiluted: 1_488_510_854, holdingsPerShare: 0.000000339, source: "ASX share registry update", sourceUrl: "https://asx.com.au", sourceType: "regulatory-filing" },
 ];
 
 // Map of all companies with historical data

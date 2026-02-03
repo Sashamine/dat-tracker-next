@@ -191,11 +191,18 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
     }
 
     // Add fallbacks for international/illiquid stocks
+    // Note: FALLBACK_STOCKS prices are in local currency, need to convert to USD
+    const forexRates = await fetchForexRates();
     for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
       if (!result[ticker]) {
+        // Convert price to USD if currency is specified
+        const currency = fallback.currency;
+        const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
+        const priceUsd = rate && rate > 0 ? fallback.price / rate : fallback.price;
+        
         result[ticker] = {
-          price: fallback.price,
-          prevClose: fallback.price,
+          price: priceUsd,
+          prevClose: priceUsd,
           change24h: 0,
           volume: 0,
           marketCap: fallback.marketCap,
