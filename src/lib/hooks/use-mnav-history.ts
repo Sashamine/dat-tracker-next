@@ -285,10 +285,10 @@ async function getCompanyDailyMnav(
       startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
       break;
     case "all":
-      startDate = new Date("2025-04-01"); // Most treasury companies started in 2024-2025
+      startDate = new Date("2020-01-01"); // Show full history for all companies
       break;
     default:
-      startDate = new Date("2025-04-01");
+      startDate = new Date("2020-01-01");
   }
 
   // Always fetch 1y data to ensure we get YYYY-MM-DD format (not timestamps)
