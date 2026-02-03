@@ -417,13 +417,14 @@ export default function CompanyPage() {
               debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
             )}>
               {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
-              <span className="text-[10px] text-gray-400 align-super ml-1">[calc]</span>
             </p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-400 font-mono">
               {debtToCryptoRatio >= 1 ? (
                 <span className="text-amber-600">High - mNAV elevated by debt</span>
               ) : debtToCryptoRatio > 0 ? (
-                "Debt / Crypto NAV"
+                <span title="Debt / Crypto NAV">
+                  {formatLargeNumber(totalDebt)} / {formatLargeNumber(cryptoHoldingsValue)}
+                </span>
               ) : (
                 "No debt"
               )}
@@ -433,14 +434,17 @@ export default function CompanyPage() {
             <p className="text-sm text-gray-500 dark:text-gray-400">NAV/Share</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {navPerShare ? `$${navPerShare.toFixed(2)}` : "—"}
-              <span className="text-[10px] text-gray-400 align-super ml-1">[calc]</span>
             </p>
             <p className="text-xs text-gray-400">
-              {navDiscount !== null && (
+              {navPerShare && displayCompany.sharesForMnav ? (
+                <span className="font-mono" title="Equity NAV / Shares Outstanding">
+                  {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)} / {(displayCompany.sharesForMnav / 1e6).toFixed(0)}M
+                </span>
+              ) : navDiscount !== null ? (
                 <span className={navDiscount >= 0 ? "text-green-600" : "text-red-600"}>
                   {formatPercent(navDiscount, true)} {navDiscount < 0 ? "discount" : "premium"}
                 </span>
-              )}
+              ) : null}
             </p>
           </div>
           {displayCompany.stakingPct != null && displayCompany.stakingPct > 0 && (
