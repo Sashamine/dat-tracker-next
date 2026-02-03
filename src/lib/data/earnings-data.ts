@@ -1865,6 +1865,45 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
+  // ========== DigitalX (DCC.AX) ==========
+  // Australian BTC treasury company
+  // Fiscal year ends June 30 (Australian financial year)
+  // BTC strategy started July 1, 2025
+  // Source: treasury.digitalx.com, ASX announcements
+  //
+  // FY2026 Q2 (Oct-Dec 2025 = Calendar Q4 2025) - Upcoming
+  {
+    ticker: "DCC.AX",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 4,
+    earningsDate: "2026-02-28",  // Expected ~60 days after quarter end
+    earningsTime: null,
+    holdingsAtQuarterEnd: 504,  // Oct 21, 2025 purchase data
+    sharesAtQuarterEnd: 1_488_752_609,  // Basic shares
+    holdingsPerShare: 0.000000339,  // 504 / 1.489B
+    source: "company-ir",
+    sourceUrl: "https://treasury.digitalx.com/",
+    status: "upcoming",
+  },
+  // FY2026 Q1 (Jul-Sep 2025 = Calendar Q3 2025) - Reported
+  {
+    ticker: "DCC.AX",
+    fiscalYear: 2026,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-10-31",  // Quarterly report
+    earningsTime: null,
+    holdingsAtQuarterEnd: 499.8,  // Jul 22, 2025 (closest to Sep 30)
+    sharesAtQuarterEnd: 1_475_070_604,  // Basic shares at quarter end
+    holdingsPerShare: 0.000000339,  // 499.8 / 1.475B
+    source: "company-ir",
+    sourceUrl: "https://treasury.digitalx.com/",
+    status: "reported",
+  },
+
   // ========== H100 Group (H100.ST) ==========
   // Swedish BTC treasury company - first Nordic Bitcoin treasury
   // Reports via MFN (Swedish regulator) - quarterly reports
