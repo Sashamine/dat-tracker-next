@@ -174,6 +174,60 @@ async function fetchSECFilings(ticker: string): Promise<{ filings: Filing[]; isP
   }
 }
 
+// Static filings for international companies without API access
+const staticFilings: Record<string, Filing[]> = {
+  "DCC.AX": [
+    {
+      type: "Treasury Update",
+      title: "Treasury Information - December 2025",
+      date: "2025-12-31",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
+    },
+    {
+      type: "Treasury Update",
+      title: "Treasury Information - November 2025",
+      date: "2025-11-29",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-november-2025-3286185.html",
+    },
+    {
+      type: "AGM Results",
+      title: "Results of Annual General Meeting",
+      date: "2025-11-28",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/results-of-annual-general-meeting-3285292.html",
+    },
+    {
+      type: "Treasury Update",
+      title: "Treasury Information - October 2025",
+      date: "2025-10-31",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-october-2025-3266746.html",
+    },
+    {
+      type: "Quarterly Report",
+      title: "Quarterly Activities/Appendix 4C Cash Flow Report",
+      date: "2025-10-31",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activitiesappendix-4c-cash-flow-report-3266743.html",
+    },
+    {
+      type: "Treasury Update",
+      title: "Treasury Information - September 2025",
+      date: "2025-09-30",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-september-2025-3247296.html",
+    },
+    {
+      type: "Annual Report",
+      title: "Annual Report to Shareholders",
+      date: "2025-09-30",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/annual-report-to-shareholders-3247293.html",
+    },
+    {
+      type: "Funding",
+      title: "DigitalX Raises $20.7M from UTXO, ParaFi, Animoca",
+      date: "2025-07-01",
+      url: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/digitalx-raises-a207m-from-utxo-parafi-animoca-3194251.html",
+    },
+  ],
+};
+
 // Company-specific filing URLs for international companies
 const internationalFilingUrls: Record<string, { source: string; sourceUrl: string; note?: string }> = {
   // Canada - SEDAR+ search links
@@ -231,11 +285,16 @@ const internationalFilingUrls: Record<string, { source: string; sourceUrl: strin
 
 // Get filing source info for international companies
 function getInternationalFilingInfo(ticker: string, jurisdiction: string, companyName: string): FilingsResponse {
+  const upperTicker = ticker.toUpperCase();
+  
+  // Get static filings if available
+  const filings = staticFilings[upperTicker] || [];
+  
   // Check for company-specific URLs first
-  const specificInfo = internationalFilingUrls[ticker.toUpperCase()];
+  const specificInfo = internationalFilingUrls[upperTicker];
   if (specificInfo) {
     return {
-      filings: [],
+      filings,
       source: specificInfo.source,
       sourceUrl: specificInfo.sourceUrl,
       jurisdiction,
