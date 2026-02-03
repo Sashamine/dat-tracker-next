@@ -147,9 +147,17 @@ export function usePricesStream(): UsePricesStreamResult {
           // Handle full updates (initial or refresh)
           const fullUpdate = message as FullUpdateMessage;
           
-          // Debug DCC.AX in full updates
+          // Debug DCC.AX in full updates - DETAILED
           if (fullUpdate.stocks?.["DCC.AX"]) {
-            console.log("[Stream] DCC.AX in full update:", fullUpdate.stocks["DCC.AX"], "partial:", fullUpdate.partialUpdate);
+            const dccData = fullUpdate.stocks["DCC.AX"];
+            console.log("[Stream] DCC.AX RECEIVED FROM SERVER:", {
+              price: dccData.price,
+              priceIsAUD: dccData.price > 0.03 && dccData.price < 0.05,
+              priceIsUSD: dccData.price > 0.02 && dccData.price < 0.03,
+              marketCap: dccData.marketCap,
+              fullData: dccData,
+              partialUpdate: fullUpdate.partialUpdate,
+            });
           }
 
           if (fullUpdate.partialUpdate) {
