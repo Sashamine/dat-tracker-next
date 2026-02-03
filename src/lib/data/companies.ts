@@ -901,25 +901,10 @@ export const btcCompanies: Company[] = [
     strategy: "BTC as primary treasury reserve. Issuing €30M bonds specifically to buy more BTC. Aims to match MicroStrategy.",
     notes: "Frankfurt listed (Malta HQ). CEO aspires to rival MSTR holdings. Donates to Brink (BTC development).",
   },
-  {
-    id: "phx",
-    name: "Phoenix Group PLC",
-    ticker: "PHX.AD",
-    currency: "AED",
-    asset: "BTC",
-    tier: 2,
-    holdings: 514,  // BitcoinTreasuries.net
-    holdingsLastUpdated: "2024-12-31",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/phoenix-group-plc",
-    datStartDate: "2024-12-31",
-    isMiner: true,  // Mining and hosting
-    quarterlyBurnUsd: 5_000_000,
-    avgDailyVolume: 2_000_000,
-    sharesForMnav: 100_000_000,  // Estimated
-    strategy: "UAE crypto mining and data center company. Hosts computing power across UAE, Oman, US, Canada.",
-    notes: "Abu Dhabi Securities Exchange (ADX). Cloud mining and data center hosting for digital assets.",
-  },
+  // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
+  // 514 BTC from BitcoinTreasuries.net only - no primary source
+  // UAE company (ADX) - no IR website found, no SEC filings
+  // Company is real (crypto miner) but holdings unverifiable
   {
     id: "dcc",
     name: "DigitalX",
