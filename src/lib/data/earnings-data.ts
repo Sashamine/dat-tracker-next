@@ -1866,26 +1866,26 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== DigitalX (DCC.AX) ==========
-  // Australian BTC treasury company
+  // Australian BTC treasury company (ASX listed)
   // Fiscal year ends June 30 (Australian financial year)
   // BTC strategy started July 1, 2025
-  // Source: treasury.digitalx.com, ASX announcements
+  // Source: ASX announcements (Treasury Information filings)
   //
-  // FY2026 Q2 (Oct-Dec 2025 = Calendar Q4 2025) - Upcoming
+  // FY2026 Q2 (Oct-Dec 2025 = Calendar Q4 2025) - Reported
   {
     ticker: "DCC.AX",
     fiscalYear: 2026,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-28",  // Expected ~60 days after quarter end
+    earningsDate: "2026-01-29",  // Quarterly Activities/Appendix 4C Cash Flow Report
     earningsTime: null,
-    holdingsAtQuarterEnd: 504,  // Oct 21, 2025 purchase data
-    sharesAtQuarterEnd: 1_488_752_609,  // Basic shares
+    holdingsAtQuarterEnd: 504,  // Treasury Information - December 2025 (ASX filing Jan 22, 2026)
+    sharesAtQuarterEnd: 1_488_510_854,  // Shares on issue per ASX
     holdingsPerShare: 0.000000339,  // 504 / 1.489B
-    source: "company-ir",
-    sourceUrl: "https://treasury.digitalx.com/",
-    status: "upcoming",
+    source: "asx-filing",
+    sourceUrl: "https://www.asx.com.au/markets/company/DCC",
+    status: "reported",
   },
   // FY2026 Q1 (Jul-Sep 2025 = Calendar Q3 2025) - Reported
   {
@@ -1896,11 +1896,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-10-31",  // Quarterly report
     earningsTime: null,
-    holdingsAtQuarterEnd: 499.8,  // Jul 22, 2025 (closest to Sep 30)
+    holdingsAtQuarterEnd: 499.8,  // End of Q3 holdings (Jul 22 purchase data)
     sharesAtQuarterEnd: 1_475_070_604,  // Basic shares at quarter end
     holdingsPerShare: 0.000000339,  // 499.8 / 1.475B
-    source: "company-ir",
-    sourceUrl: "https://treasury.digitalx.com/",
+    source: "asx-filing",
+    sourceUrl: "https://www.asx.com.au/markets/company/DCC",
     status: "reported",
   },
 
