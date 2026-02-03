@@ -103,6 +103,10 @@ export interface Company {
   leader?: string;
   strategy?: string;
   notes?: string;
+  description?: string;  // Longer company overview/history
+  founded?: number;      // Year founded
+  headquarters?: string; // City, Country
+  ceo?: string;          // Current CEO name
 
   // BTC-specific
   isMiner?: boolean;

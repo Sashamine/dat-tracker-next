@@ -926,8 +926,12 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 1_488_510_854,  // 1.49B from ASX (ISIN: AU000000DCC9)
     sharesSource: "asx.com.au",
     sharesAsOf: "2026-01-30",
-    strategy: "Australia's first and largest ASX-listed Bitcoin treasury company. Goal: 2,100 BTC by 2027.",
-    notes: "503.7 BTC: 308.8 direct + 194.85 via BTXX ETF. Real-time: treasury.digitalx.com. Jul 2025: Raised $20.7M from UTXO, ParaFi, Animoca.",
+    strategy: "Australia's first and largest ASX-listed Bitcoin treasury company. Goal: 2,100 BTC by 2027. Focused on increasing BTC per share via strategic capital raises and market-neutral trading strategies.",
+    notes: "503.7 BTC: 308.8 direct + 194.85 via BTXX ETF. Real-time dashboard: treasury.digitalx.com. Jul 2025: Raised A$20.7M from UTXO Group, ParaFi Capital, and Animoca Brands. Uses trading strategies and third-party fund managers to generate cash flow for operations.",
+    description: "DigitalX (ASX:DCC) is a pioneering digital asset company founded in 2014, making it one of the first blockchain companies to list on a major stock exchange globally. In July 2025, the company pivoted to a Bitcoin treasury strategy, raising A$20.7M from institutional investors including UTXO Group, ParaFi Capital, and Animoca Brands. The company holds BTC both directly and through its BTXX Bitcoin ETF. DigitalX leverages its deep expertise in digital asset trading to grow Bitcoin holdings per share while generating operational cash flow through market-neutral strategies.",
+    founded: 2014,
+    headquarters: "Perth, Australia",
+    ceo: "Lisa Wade",
   },
   {
     id: "ndav",

@@ -882,6 +882,34 @@ export default function CompanyPage() {
             </div>
           </div>
 
+          {/* Company Overview */}
+          {displayCompany.description && (
+            <div className="mb-6">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{displayCompany.description}</p>
+            </div>
+          )}
+
+          {/* Company Info Pills */}
+          {(displayCompany.founded || displayCompany.headquarters || displayCompany.ceo) && (
+            <div className="flex flex-wrap gap-3 mb-6">
+              {displayCompany.founded && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-500 dark:text-gray-400 mr-1">Founded:</span> {displayCompany.founded}
+                </span>
+              )}
+              {displayCompany.headquarters && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-500 dark:text-gray-400 mr-1">HQ:</span> {displayCompany.headquarters}
+                </span>
+              )}
+              {displayCompany.ceo && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-500 dark:text-gray-400 mr-1">CEO:</span> {displayCompany.ceo}
+                </span>
+              )}
+            </div>
+          )}
+
           {/* Strategy Summary */}
           {(intel?.strategySummary || displayCompany.strategy || displayCompany.notes) && (
             <div className="mb-6">
@@ -890,7 +918,7 @@ export default function CompanyPage() {
               ) : (
                 <>
                   {displayCompany.strategy && (
-                    <p className="text-gray-700 dark:text-gray-300 mb-2">{displayCompany.strategy}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2"><span className="font-medium">Strategy:</span> {displayCompany.strategy}</p>
                   )}
                   {displayCompany.notes && (
                     <p className="text-gray-600 dark:text-gray-400 text-sm">{displayCompany.notes}</p>
