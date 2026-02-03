@@ -944,14 +944,20 @@ export const btcCompanies: Company[] = [
     holdingsLastUpdated: "2025-04-10",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://neptunedigitalassets.com/",
+    website: "https://neptunedigitalassets.com",
+    twitter: "https://twitter.com/NeptuneDAssets",
     datStartDate: "2018-01-01",
     costBasisAvg: 30_428,  // $12.66M / 416 BTC
     isMiner: true,
     quarterlyBurnUsd: 500_000,
     avgDailyVolume: 500_000,
     sharesForMnav: 200_000_000,  // Estimated
-    strategy: "Focused exclusively on BTC and digital assets. Active DCA, mining rewards, and derivative trading.",
-    notes: "TSX Venture (Canada). Long-term accumulator with transparent reporting. Total cost basis $12.66M.",
+    strategy: "Focused exclusively on BTC and digital assets. Active DCA, mining rewards, and derivative trading. Vision: become the global public market cryptocurrency leader.",
+    notes: "TSX Venture (Canada). Long-term accumulator with transparent reporting. Total cost basis $12.66M. Also operates Bitcoin mining and staking operations.",
+    description: "Neptune Digital Assets (TSXV:NDA) is a Canadian cryptocurrency company focused on Bitcoin accumulation, mining, staking, and DeFi. Founded in 2017, Neptune was one of the early movers in the public market crypto space. The company employs a multi-strategy approach including dollar-cost averaging, mining rewards reinvestment, and derivative trading to grow its Bitcoin holdings. Neptune emphasizes transparent reporting and long-term accumulation over short-term trading.",
+    founded: 2017,
+    headquarters: "Vancouver, Canada",
+    ceo: "Cale Moodie",
   },
   {
     id: "dmgi",
