@@ -49,7 +49,7 @@ export const STOCK_TICKERS = [
   "377030.KQ", // bitmax (South Korea) - Added 2026-02-02
   "SRAG.DU",   // Samara Asset Group (Germany) - Added 2026-02-02
   "PHX.AD",    // Phoenix Group (UAE) - Added 2026-02-02
-  "DCC.AX",    // DigitalX (Australia) - Added 2026-02-02
+  // "DCC.AX" removed - fetched via Yahoo Finance (FMP doesn't support ASX)
   // BTC - Canada
   "BTCT.V",    // Bitcoin Treasury Corp - Added 2026-02-02
   "NDA.V",     // Neptune Digital - Added 2026-02-02
