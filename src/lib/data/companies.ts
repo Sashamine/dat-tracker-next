@@ -39,7 +39,7 @@ export const ethCompanies: Company[] = [
   },
   {
     id: "sbet",
-    name: "SharpLink Gaming",
+    name: "Sharplink, Inc.",  // Renamed from SharpLink Gaming (Feb 3, 2026)
     ticker: "SBET",
     asset: "ETH",
     tier: 1,
