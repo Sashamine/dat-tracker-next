@@ -294,10 +294,9 @@ export const btcCompanies: Company[] = [
     // Note: Preferred issued post-Q3 2025; not in SEC 10-Q Sep 30. Verify against next 10-K/10-Q.
     // Breakdown: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
     capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
-    cashReserves: 54_285_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue as of Sep 30, 2025
-    // Note: strategy.com may show higher cash from post-quarter ATM proceeds
-    cashSource: "SEC 10-Q Q3 2025 (Accession: 0001193125-25-262568)",
-    cashAsOf: "2025-09-30",
+    // Cash fluctuates significantly - they raise via ATM and immediately buy BTC
+    // Sep 30, 2025 SEC 10-Q showed only $54M; actual current cash unknown without Q4 filing
+    // Omitting cashReserves until Q4 2025 10-K is filed
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
     notes: "712K BTC @ $75K avg. 5 perpetual preferred classes: STRF/STRC/STRE/STRK/STRD. Bitcoin credit company thesis.",
