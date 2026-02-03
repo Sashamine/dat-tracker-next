@@ -940,20 +940,24 @@ export const btcCompanies: Company[] = [
     currency: "CAD",
     asset: "BTC",
     tier: 2,
-    holdings: 416,  // BitcoinTreasuries.net
+    holdings: 416,  // BitcoinTreasuries.net Apr 10, 2025: 416 BTC
     holdingsLastUpdated: "2025-04-10",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://neptunedigitalassets.com/",
+    holdingsSource: "aggregator",  // BitcoinTreasuries.net - need SEDAR+ verification
+    holdingsSourceUrl: "https://bitcointreasuries.net/public-companies/neptune-digital-assets",
     website: "https://neptunedigitalassets.com",
     twitter: "https://twitter.com/NeptuneDAssets",
     datStartDate: "2018-01-01",
-    costBasisAvg: 30_428,  // $12.66M / 416 BTC
+    costBasisAvg: 30_428,  // $12.66M / 416 BTC = $30,428 avg
+    costBasisSource: "BitcoinTreasuries.net",
     isMiner: true,
     quarterlyBurnUsd: 500_000,
-    avgDailyVolume: 500_000,
-    sharesForMnav: 200_000_000,  // Estimated
+    avgDailyVolume: 300_000,  // Yahoo: 321k avg volume
+    cashReserves: 9_900_000,  // Yahoo: $9.9M CAD (~$7M USD)
+    sharesForMnav: 140_000_000,  // Yahoo market cap / price = ~140M shares (was 200M - 30% reduction)
+    sharesSource: "yahoo-finance-implied",
+    sharesAsOf: "2026-01-30",
     strategy: "Focused exclusively on BTC and digital assets. Active DCA, mining rewards, and derivative trading. Vision: become the global public market cryptocurrency leader.",
-    notes: "TSX Venture (Canada). Long-term accumulator with transparent reporting. Total cost basis $12.66M. Also operates Bitcoin mining and staking operations.",
+    notes: "TSXV:NDA, OTCQX:NPPTF, FWB:1NW. Long-term accumulator. Cost basis $12.66M. Staking, mining, DeFi operations. FY ends Aug 31. Holdings need SEDAR+ verification.",
     description: "Neptune Digital Assets (TSXV:NDA) is a Canadian cryptocurrency company focused on Bitcoin accumulation, mining, staking, and DeFi. Founded in 2017, Neptune was one of the early movers in the public market crypto space. The company employs a multi-strategy approach including dollar-cost averaging, mining rewards reinvestment, and derivative trading to grow its Bitcoin holdings. Neptune emphasizes transparent reporting and long-term accumulation over short-term trading.",
     founded: 2017,
     headquarters: "Vancouver, Canada",
