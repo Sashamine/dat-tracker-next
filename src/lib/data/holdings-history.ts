@@ -288,17 +288,18 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
 // Data from SEC filings and weekly press releases
+// SEC EDGAR CIK: 1829311
 const BMNR_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-07-17", holdings: 300657, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.006013, source: "$1B milestone press release" },
-  { date: "2025-08-10", holdings: 1150263, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.007668, source: "Press release" },
-  { date: "2025-08-17", holdings: 1523373, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.008463, source: "Press release" },
-  { date: "2025-08-24", holdings: 1713899, sharesOutstandingDiluted: 221_515_180, holdingsPerShare: 0.007738, source: "Press release" },
-  { date: "2025-09-07", holdings: 2069443, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.007959, source: "2M milestone" },
-  { date: "2025-11-09", holdings: 3505723, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.010016, source: "Press release" },
-  { date: "2025-11-20", holdings: 3559879, sharesOutstandingDiluted: 384_067_823, holdingsPerShare: 0.009269, source: "10-K filing" },
-  { date: "2025-11-30", holdings: 3726499, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.009316, source: "Press release" },
-  { date: "2025-12-14", holdings: 3967210, sharesOutstandingDiluted: 410_000_000, holdingsPerShare: 0.009676, source: "Press release" },
-  { date: "2025-12-28", holdings: 4110525, sharesOutstandingDiluted: 425_000_000, holdingsPerShare: 0.009672, source: "Press release" },
+  { date: "2025-07-17", holdings: 300657, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.006013, source: "SEC 8-K $1B milestone", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-08-10", holdings: 1150263, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.007668, source: "SEC 8-K Aug 11, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011799/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-08-17", holdings: 1523373, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.008463, source: "SEC 8-K Aug 18, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225012109/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-08-24", holdings: 1713899, sharesOutstandingDiluted: 221_515_180, holdingsPerShare: 0.007738, source: "SEC 8-K Aug 25, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225012292/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-09-07", holdings: 2069443, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.007959, source: "SEC 8-K 2M ETH milestone", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225012776/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-11-09", holdings: 3505723, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.010016, source: "SEC 8-K Nov 10, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225021429/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-11-20", holdings: 3559879, sharesOutstandingDiluted: 384_067_823, holdingsPerShare: 0.009269, source: "SEC 8-K FY2025 earnings", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225024555/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-11-30", holdings: 3726499, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.009316, source: "SEC 8-K Dec 1, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225025501/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-12-14", holdings: 3967210, sharesOutstandingDiluted: 410_000_000, holdingsPerShare: 0.009676, source: "SEC 8-K Dec 15, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225027660/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2025-12-28", holdings: 4110525, sharesOutstandingDiluted: 425_000_000, holdingsPerShare: 0.009672, source: "SEC 8-K Dec 29, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225029227/ex99-1.htm", sourceType: "sec-filing" },
   { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, source: "Press release", sourceUrl: "https://bitmine.com/press-releases", sourceType: "press-release" },
   { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, source: "Press release", sharesSource: "Jan 15 shareholder vote (454.9M)", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html", sourceType: "press-release" },
   { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009325, source: "SEC 8-K Jan 26, 2026 (+40,302 ETH)", sharesSource: "455M diluted (unchanged from Jan 20)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm", sourceType: "sec-filing" },
@@ -984,6 +985,8 @@ export interface AcquisitionEvent {
   acquired: number;
   cumulativeHoldings: number;
   source?: string;
+  sourceUrl?: string;
+  sourceType?: string;
 }
 
 export function getAcquisitionEvents(ticker: string): AcquisitionEvent[] {
@@ -1005,6 +1008,8 @@ export function getAcquisitionEvents(ticker: string): AcquisitionEvent[] {
         acquired,
         cumulativeHoldings: curr.holdings,
         source: curr.source,
+        sourceUrl: curr.sourceUrl,
+        sourceType: curr.sourceType,
       });
     }
   }
