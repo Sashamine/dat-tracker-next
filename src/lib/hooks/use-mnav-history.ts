@@ -20,12 +20,13 @@ interface MnavDataPoint {
 
 // Company data needed for mNAV calculation (from companies.ts / merged data)
 export interface MnavCompanyData {
-  holdings: number;           // BTC holdings
+  holdings: number;           // Crypto holdings
   sharesForMnav: number;      // Basic shares outstanding
   totalDebt: number;          // Total debt in USD
   preferredEquity: number;    // Preferred equity in USD
   cashReserves: number;       // Cash in USD
   restrictedCash: number;     // Restricted cash in USD
+  asset?: string;             // Asset type (BTC, ETH, SOL, etc.) - defaults to BTC
 }
 
 interface CryptoHistoryPoint {
@@ -236,21 +237,22 @@ async function getCompanyDailyMnav(
       startDate = new Date("2025-04-01");
   }
 
-  // Fetch historical BTC prices and stock prices
-  const [btcRes, stockRes] = await Promise.all([
-    fetch(`/api/crypto/BTC/history?range=${range}&interval=1d`),
+  // Fetch historical crypto prices and stock prices
+  const asset = companyData.asset || "BTC";
+  const [cryptoRes, stockRes] = await Promise.all([
+    fetch(`/api/crypto/${asset}/history?range=${range}&interval=1d`),
     fetch(`/api/stocks/${ticker}/history?range=${range}&interval=1d`),
   ]);
 
-  if (!btcRes.ok || !stockRes.ok) {
-    console.warn(`[mnavHistory] Failed to fetch history for ${ticker}`);
+  if (!cryptoRes.ok || !stockRes.ok) {
+    console.warn(`[mnavHistory] Failed to fetch history for ${ticker} (asset: ${asset})`);
     return [];
   }
 
-  const btcData: CryptoHistoryPoint[] = await btcRes.json();
+  const cryptoData: CryptoHistoryPoint[] = await cryptoRes.json();
   const stockData: StockHistoryPoint[] = await stockRes.json();
 
-  if (!btcData.length || !stockData.length) {
+  if (!cryptoData.length || !stockData.length) {
     return [];
   }
 
@@ -260,12 +262,12 @@ async function getCompanyDailyMnav(
     stockPriceMap.set(point.time, point.close);
   }
 
-  // Calculate mNAV for each BTC data point
+  // Calculate mNAV for each crypto data point
   const result: MnavDataPoint[] = [];
   
-  for (const btcPoint of btcData) {
-    const date = btcPoint.time;
-    const btcPrice = btcPoint.price;
+  for (const cryptoPoint of cryptoData) {
+    const date = cryptoPoint.time;
+    const cryptoPrice = cryptoPoint.price;
     const stockPrice = stockPriceMap.get(date);
     
     if (!stockPrice) continue;
@@ -275,16 +277,16 @@ async function getCompanyDailyMnav(
     
     // Calculate market cap and mNAV
     const marketCap = stockPrice * companyData.sharesForMnav;
-    const cryptoNav = holdings * btcPrice;
+    const cryptoNav = holdings * cryptoPrice;
     const enterpriseValue = marketCap + (companyData.totalDebt || 0) - (companyData.cashReserves || 0);
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
     
     result.push({
       time: date,
       mnav,
-      btcPrice,
+      btcPrice: cryptoPrice, // Keep field name for compatibility but it's actually crypto price
       stockPrice,
-      btcHoldings: holdings,
+      btcHoldings: holdings, // Keep field name for compatibility
     });
   }
 
