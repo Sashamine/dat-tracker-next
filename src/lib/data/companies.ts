@@ -911,22 +911,22 @@ export const btcCompanies: Company[] = [
     ticker: "DCC.AX",
     currency: "AUD",
     asset: "BTC",
-    tier: 1,  // Upgraded - transparent real-time dashboard
-    holdings: 504,  // treasury.digitalx.com real-time tracker
-    holdingsLastUpdated: "2025-10-21",
-    holdingsSource: "company-dashboard",
-    holdingsSourceUrl: "https://treasury.digitalx.com/",
-    datStartDate: "2018-06-30",
+    tier: 1,  // ASX-verified + real-time dashboard
+    holdings: 504,  // ASX Dec 2025: 503.7 (308.8 direct + 194.9 BTXX ETF)
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "regulatory-filing",  // ASX Treasury Information filing
+    holdingsSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
+    datStartDate: "2025-07-01",  // New BTC treasury strategy started Jul 2025
     website: "https://www.digitalx.com",
     costBasisAvg: 113_262,  // Weighted average from dashboard
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 500_000,
-    sharesForMnav: 1_490_000_000,  // 1.49B basic shares from dashboard
-    sharesSource: "treasury.digitalx.com",
-    sharesAsOf: "2025-10-21",
+    sharesForMnav: 1_488_510_854,  // 1.49B from ASX (ISIN: AU000000DCC9)
+    sharesSource: "asx.com.au",
+    sharesAsOf: "2026-01-30",
     strategy: "Australia's first and largest ASX-listed Bitcoin treasury company. Goal: 2,100 BTC by 2027.",
-    notes: "Real-time treasury tracker. Jul 2025: Raised $20.7M from UTXO, ParaFi, Animoca. Trading at 1.0x mNAV.",
+    notes: "503.7 BTC: 308.8 direct + 194.85 via BTXX ETF. Real-time: treasury.digitalx.com. Jul 2025: Raised $20.7M from UTXO, ParaFi, Animoca.",
   },
   {
     id: "ndav",
