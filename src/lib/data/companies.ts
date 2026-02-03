@@ -918,6 +918,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
     datStartDate: "2025-07-01",  // New BTC treasury strategy started Jul 2025
     website: "https://www.digitalx.com",
+    twitter: "https://twitter.com/DigitalXLtd",
     costBasisAvg: 113_262,  // Weighted average from dashboard
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
