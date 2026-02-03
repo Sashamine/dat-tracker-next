@@ -1903,6 +1903,22 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www.asx.com.au/markets/company/DCC",
     status: "reported",
   },
+  // FY2025 Q4 (Apr-Jun 2025 = Calendar Q2 2025) - Pre-BTC baseline
+  {
+    ticker: "DCC.AX",
+    fiscalYear: 2025,
+    fiscalQuarter: 4,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-07-31",  // FY2025 annual report
+    earningsTime: null,
+    holdingsAtQuarterEnd: 0,  // No BTC before Jul 1, 2025
+    sharesAtQuarterEnd: 1_203_623_886,  // Shares before BTC strategy
+    holdingsPerShare: 0,
+    source: "regulatory-filing",
+    sourceUrl: "https://www.asx.com.au/markets/company/DCC",
+    status: "reported",
+  },
 
   // ========== H100 Group (H100.ST) ==========
   // Swedish BTC treasury company - first Nordic Bitcoin treasury
