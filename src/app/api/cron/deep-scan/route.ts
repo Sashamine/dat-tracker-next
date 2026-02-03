@@ -120,7 +120,8 @@ export async function GET(request: NextRequest) {
         await sendDiscordAlert(
           '🔍 Weekly Deep Scan Complete',
           lines.join('\n'),
-          result.totalNewFilings > 0 ? 'info' : 'info'
+          result.totalNewFilings > 0 ? 'info' : 'info',
+          result.totalNewFilings > 0  // Mention only if new filings found
         );
       } catch (notifyError) {
         console.error('[Deep Scan] Failed to send Discord notification:', notifyError);
@@ -174,7 +175,8 @@ export async function GET(request: NextRequest) {
       await sendDiscordAlert(
         '🚨 Deep Scan Failed',
         `Weekly deep scan encountered an error:\n\n\`${error instanceof Error ? error.message : String(error)}\``,
-        'error'
+        'error',
+        true  // Always mention on failures
       );
     } catch {}
 

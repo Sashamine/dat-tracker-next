@@ -90,7 +90,8 @@ export async function GET(request: NextRequest) {
         await sendDiscordAlert(
           'New SEC Filings Detected',
           `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}${statsLine}\n\nRun /api/cron/filing-check?manual=true to see details.`,
-          'info'
+          'info',
+          true  // Mention Clawdbot
         );
       } catch (notifyError) {
         console.error('[Filing Check] Failed to send Discord notification:', notifyError);

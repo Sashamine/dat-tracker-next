@@ -37,13 +37,18 @@ const COLORS = {
   success: 0x2ecc71,  // Green
 } as const;
 
+// Clawdbot Discord user ID for mentions
+const CLAWDBOT_USER_ID = '1465706137792938015';
+
 /**
  * Send a simple text alert to Discord
+ * @param mention - if true, mentions Clawdbot for visibility
  */
 export async function sendDiscordAlert(
   title: string,
   message: string,
-  severity: Severity = 'info'
+  severity: Severity = 'info',
+  mention: boolean = false
 ): Promise<boolean> {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
   if (!webhookUrl) {
@@ -53,6 +58,8 @@ export async function sendDiscordAlert(
 
   const payload: DiscordWebhookPayload = {
     username: 'DAT Tracker',
+    // Add mention as content (outside embed) so it actually pings
+    content: mention ? `<@${CLAWDBOT_USER_ID}>` : undefined,
     embeds: [{
       title,
       description: message,
@@ -86,8 +93,9 @@ export async function sendDiscordAlert(
 
 /**
  * Send a rich embed with multiple fields (for discrepancy reports)
+ * @param mention - if true, mentions Clawdbot for visibility
  */
-export async function sendDiscordEmbed(embed: DiscordEmbed): Promise<boolean> {
+export async function sendDiscordEmbed(embed: DiscordEmbed, mention: boolean = false): Promise<boolean> {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
   if (!webhookUrl) {
     console.log('[Discord] No DISCORD_WEBHOOK_URL configured, skipping notification');
@@ -96,6 +104,7 @@ export async function sendDiscordEmbed(embed: DiscordEmbed): Promise<boolean> {
 
   const payload: DiscordWebhookPayload = {
     username: 'DAT Tracker',
+    content: mention ? `<@${CLAWDBOT_USER_ID}>` : undefined,
     embeds: [{
       ...embed,
       timestamp: embed.timestamp ?? new Date().toISOString(),
@@ -208,6 +217,9 @@ export async function sendDiscrepancySummary(
     color,
   };
 
-  return sendDiscordEmbed(embed);
+  // Mention Clawdbot if there are major discrepancies or items needing review
+  const shouldMention = major > 0 || needsReview > 0;
+  
+  return sendDiscordEmbed(embed, shouldMention);
 }
 

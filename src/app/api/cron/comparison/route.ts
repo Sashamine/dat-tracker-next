@@ -89,7 +89,8 @@ export async function GET(request: NextRequest) {
           await sendDiscordAlert(
             'Verification Errors',
             `${result.errors.length} error(s) during verification:\n${result.errors.map(e => `- ${e.source}: ${e.error}`).join('\n')}`,
-            'warning'
+            'warning',
+            true  // Mention on errors
           );
         }
       } catch (notifyError) {
