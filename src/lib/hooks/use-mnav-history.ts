@@ -214,7 +214,7 @@ async function getCompanyDailyMnav(
   range: TimeRange,
   companyData: MnavCompanyData
 ): Promise<MnavDataPoint[]> {
-  // Determine date range
+  // Determine date range for filtering
   const now = new Date();
   let startDate: Date;
 
@@ -238,11 +238,12 @@ async function getCompanyDailyMnav(
       startDate = new Date("2025-04-01");
   }
 
-  // Fetch historical crypto prices and stock prices
+  // Always fetch 1y data to ensure we get YYYY-MM-DD format (not timestamps)
+  // Then filter to requested range
   const asset = companyData.asset || "BTC";
   const [cryptoRes, stockRes] = await Promise.all([
-    fetch(`/api/crypto/${asset}/history?range=${range}&interval=1d`),
-    fetch(`/api/stocks/${ticker}/history?range=${range}&interval=1d`),
+    fetch(`/api/crypto/${asset}/history?range=1y&interval=1d`),
+    fetch(`/api/stocks/${ticker}/history?range=1y&interval=1d`),
   ]);
 
   if (!cryptoRes.ok || !stockRes.ok) {
@@ -265,9 +266,14 @@ async function getCompanyDailyMnav(
 
   // Calculate mNAV for each crypto data point
   const result: MnavDataPoint[] = [];
+  const startDateStr = startDate.toISOString().split("T")[0];
   
   for (const cryptoPoint of cryptoData) {
     const date = cryptoPoint.time;
+    
+    // Filter to requested date range
+    if (date < startDateStr) continue;
+    
     const cryptoPrice = cryptoPoint.price;
     const stockPrice = stockPriceMap.get(date);
     
