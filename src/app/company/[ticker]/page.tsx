@@ -1134,16 +1134,29 @@ export default function CompanyPage() {
           )}
 
           {/* 2026 Outlook */}
-          {intel?.outlook2026 && (
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
-                2026 Outlook
-              </h4>
-              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-800">
-                <p className="text-gray-700 dark:text-gray-300 italic">{intel.outlook2026}</p>
+          {intel?.outlook2026 && (() => {
+            // Parse outlook into bullet points (split by "- " or ". " or newlines)
+            const outlookItems = intel.outlook2026
+              .split(/(?:^|\n)\s*[-•]\s*|(?<=[.!])\s+/)
+              .map(s => s.trim())
+              .filter(s => s.length > 0 && !s.startsWith('**'));
+            
+            return (
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                  2026 Outlook
+                </h4>
+                <ul className="space-y-2">
+                  {outlookItems.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                      <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-purple-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
 
         {/* Press Releases */}
