@@ -280,20 +280,29 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     optionsOi: 500_000,  // Deep options market
     // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 332_431_000,  // strategy.com/shares (Feb 3, 2026) derived from SEC filings. Basic shares only; diluted 364.8M excluded.
-    sharesSource: "strategy.com/shares (SEC-derived)",
+    // SHARES: strategy.com/shares compiles from SEC filings (10-Q baseline + weekly 8-K ATM disclosures)
+    // SEC 10-Q Sep 30, 2025: 267.7M baseline. ATM 8-Ks (Nov 2025 - Feb 2026): +64.7M shares
+    // Diluted shares (364.8M) include converts/options; basic (332.4M) used for simple market cap
+    sharesForMnav: 332_431_000,
+    sharesSource: "strategy.com/shares (SEC 10-Q + 8-K ATM filings aggregated)",
     sharesAsOf: "2026-02-03",
-    capitalRaisedConverts: 7_200_000_000,  // ~$7.2B in convertible notes outstanding
-    // Debt: ~$8.2B convertible notes (0%, 0.625%, 0.75%, 0.875% various maturities 2027-2032)
+    // CONVERTS: 10-Q Q3 2025 Note 7 shows convertible notes at face value
+    // 2025: $1.05B, 2027: $1.05B, 2028: $1.01B, 2029: $3.0B, 2030: $3.0B, 2031: $603M, 2032: $800M = ~$10.5B face
+    // Net carrying value after discounts: $8.17B (LongTermDebt XBRL)
+    capitalRaisedConverts: 7_274_000_000,  // SEC 10-Q Q3 2025: Net proceeds from convert issuances (see cash flow stmt)
+    // Debt: Convertible notes (0%-0.875% coupons, maturities 2025-2032)
     totalDebt: 8_173_903_000,  // SEC 10-Q Q3 2025 XBRL: LongTermDebt as of Sep 30, 2025
     debtSource: "SEC 10-Q Q3 2025 (Accession: 0001193125-25-262568)",
     debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     debtAsOf: "2025-09-30",
-    // SEC cross-ref: 10-Q Q3 2025 (filed Nov 3, 2025) for quarterly audit
-    preferredEquity: 8_382_000_000,  // strategy.com/credit (Jan 26, 2026) - STRF/STRC/STRK/STRD/STRE totals
-    // Note: Preferred issued post-Q3 2025; not in SEC 10-Q Sep 30. Verify against next 10-K/10-Q.
-    // Breakdown: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
-    capitalRaisedAtm: 21_000_000_000,  // 21/21 plan ATM component
+    // PREFERRED: SEC 10-Q Q3 2025 XBRL shows $5.89B cumulative proceeds through Sep 30
+    // Post-Q3 issuances: STRE €620M (~$717M) via 8-K Nov 13, 2025 + additional ATM pref sales
+    // strategy.com/credit aggregates from SEC filings: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
+    preferredEquity: 8_382_000_000,
+    preferredSource: "SEC 10-Q Q3 2025 ($5.89B) + 8-K Nov 13 2025 STRE (~$717M) + post-Q3 ATM (strategy.com/credit aggregated)",
+    preferredAsOf: "2026-01-26",
+    // ATM PROGRAM: S-3 shelf registration for $21B equity component of 21/21 plan
+    capitalRaisedAtm: 21_000_000_000,  // SEC S-3 shelf capacity (21/21 plan equity component)
     cashReserves: 2_250_000_000,  // SEC 8-K Jan 5, 2026: "USD Reserve was $2.25 billion" for dividends/interest
     cashSource: "SEC 8-K Jan 5, 2026 (Accession: 0001193125-26-001550)",
     cashAsOf: "2026-01-04",
