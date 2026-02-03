@@ -104,6 +104,10 @@ export function usePricesStream(): UsePricesStreamResult {
           // Handle real-time trade updates
           if ("type" in message && message.type === "trade") {
             const trade = message as TradeMessage;
+            // Debug DCC.AX trades (shouldn't happen - it's Yahoo stock)
+            if (trade.symbol === "DCC.AX") {
+              console.log("[Stream] UNEXPECTED DCC.AX trade event:", trade);
+            }
             setLastTradeTime(trade.timestamp);
 
             setData((prevData) => {
@@ -142,6 +146,11 @@ export function usePricesStream(): UsePricesStreamResult {
 
           // Handle full updates (initial or refresh)
           const fullUpdate = message as FullUpdateMessage;
+          
+          // Debug DCC.AX in full updates
+          if (fullUpdate.stocks?.["DCC.AX"]) {
+            console.log("[Stream] DCC.AX in full update:", fullUpdate.stocks["DCC.AX"], "partial:", fullUpdate.partialUpdate);
+          }
 
           if (fullUpdate.partialUpdate) {
             // Crypto-only partial update (legacy support)
