@@ -77,6 +77,7 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-12", holdings: 687410, sharesOutstandingDiluted: 345_000_000, holdingsPerShare: 0.001993, source: "SEC 8-K Jan 12 (via bitbo.io)", sharesSource: "ESTIMATE: ATM dilution", methodology: "Q3 2025 diluted (315M) + estimated ATM issuance (~30M shares)", confidence: "medium", confidenceRange: { floor: 330_000_000, ceiling: 360_000_000 } },
   { date: "2026-01-20", holdings: 709715, sharesOutstandingDiluted: 362_606_000, holdingsPerShare: 0.001958, source: "SEC 8-K Jan 20 (via bitbo.io)", sharesSource: "mNAV.com fullyDilutedShares", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K", sourceType: "sec-filing" },
   { date: "2026-01-26", holdings: 712647, sharesOutstandingDiluted: 364_176_000, holdingsPerShare: 0.001957, source: "SEC 8-K Jan 26, 2026 (+2,932 BTC Jan 20-25)", sharesSource: "362.6M (Jan 19) + 1.57M ATM (Jan 20-25) per 8-K", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K", sourceType: "sec-filing" },
+  { date: "2026-02-01", holdings: 713502, sharesOutstandingDiluted: 332_431_000, holdingsPerShare: 0.002147, source: "SEC 8-K Feb 2, 2026", sharesSource: "strategy.com/shares (basic shares for mNAV)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm", sourceType: "sec-filing" },
 ];
 
 // MARA Holdings - Largest US public miner
