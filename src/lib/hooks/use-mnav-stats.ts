@@ -53,6 +53,12 @@ export function getCompanyMNAV(
 
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const stockData = prices.stocks[company.ticker];
+  
+  // Debug DCC.AX
+  if (company.ticker === 'DCC.AX') {
+    console.log('[getCompanyMNAV] DCC.AX stockData:', stockData);
+  }
+  
   // Use sharesForMnav × price for accurate FD market cap (not API market cap)
   // Also get inTheMoneyDebtValue and inTheMoneyWarrantProceeds for symmetric dilution treatment
   const { marketCap, source, inTheMoneyDebtValue, inTheMoneyWarrantProceeds } = getMarketCapForMnavSync(company, stockData, prices.forex);
@@ -70,8 +76,8 @@ export function getCompanyMNAV(
   const adjustedCashReserves = (company.cashReserves || 0) + inTheMoneyWarrantProceeds;
   const adjustedRestrictedCash = (company.restrictedCash || 0) + inTheMoneyWarrantProceeds;
 
-  // Debug logging for Metaplanet, BTBT, KULR, MSTR, HYPD, TWAV, and SWC
-  if (company.ticker === '3350.T' || company.ticker === '3189.T' || company.ticker === '3825.T' || company.ticker === 'BTBT' || company.ticker === 'KULR' || company.ticker === 'MSTR' || company.ticker === 'HYPD' || company.ticker === 'TWAV' || company.ticker === 'SWC') {
+  // Debug logging for Metaplanet, BTBT, KULR, MSTR, HYPD, TWAV, SWC, and DCC.AX
+  if (company.ticker === '3350.T' || company.ticker === '3189.T' || company.ticker === '3825.T' || company.ticker === 'BTBT' || company.ticker === 'KULR' || company.ticker === 'MSTR' || company.ticker === 'HYPD' || company.ticker === 'TWAV' || company.ticker === 'SWC' || company.ticker === 'DCC.AX') {
     console.log(`[mNAV Debug] ${company.ticker}:`, {
       stockPrice: stockData?.price,
       forexJPY: prices.forex?.JPY,
