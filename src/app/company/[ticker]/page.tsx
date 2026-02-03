@@ -235,7 +235,8 @@ export default function CompanyPage() {
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
 
-  const sharesOutstanding = marketCap && stockPrice ? marketCap / stockPrice : 0;
+  // Use sharesForMnav from company data (same as mNAV calc), fall back to marketCap/price
+  const sharesOutstanding = displayCompany.sharesForMnav || (marketCap && stockPrice ? marketCap / stockPrice : 0);
   const totalDebt = displayCompany.totalDebt || 0;
   const preferredEquity = displayCompany.preferredEquity || 0;
   const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity);
@@ -423,8 +424,8 @@ export default function CompanyPage() {
               {debtToCryptoRatio >= 1 ? (
                 <span className="text-amber-600">High - mNAV elevated by debt</span>
               ) : debtToCryptoRatio > 0 ? (
-                <span title="Debt / Crypto NAV">
-                  {formatLargeNumber(totalDebt)} / {formatLargeNumber(cryptoHoldingsValue)}
+                <span title="(Debt - Cash) / Crypto NAV">
+                  ({formatLargeNumber(totalDebt)} - {formatLargeNumber(cashReserves)}) / {formatLargeNumber(cryptoHoldingsValue)}
                 </span>
               ) : (
                 "No debt"
