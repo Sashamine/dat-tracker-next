@@ -44,6 +44,7 @@ export function CompanyMNAVChart({
   const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
   const [selectedAcquisition, setSelectedAcquisition] = useState<BTCAcquisitionEvent | null>(null);
+  const [selectedCompanyAcquisition, setSelectedCompanyAcquisition] = useState<AcquisitionEvent | null>(null);
   const [showAcquisitions, setShowAcquisitions] = useState(true);
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);
   const tooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -267,18 +268,17 @@ export function CompanyMNAVChart({
     
     chart.timeScale().fitContent();
 
-    // Add crosshair move handler for MSTR to show point info
-    if (isMstr) {
-      chart.subscribeCrosshairMove((param) => {
-        if (param.time) {
-          const timeStr = String(param.time);
-          const point = dataPoints.get(timeStr);
-          setSelectedPoint(point || null);
-          
-          // Check if hovering over an acquisition event
+    // Add crosshair move handler to show acquisition info on hover
+    chart.subscribeCrosshairMove((param) => {
+      if (param.time) {
+        const timeStr = String(param.time);
+        const point = dataPoints.get(timeStr);
+        setSelectedPoint(point || null);
+        
+        if (isMstr) {
+          // Check if hovering over a MSTR acquisition event
           const acquisition = MSTR_BTC_TIMELINE.find(e => e.date === timeStr);
           if (acquisition) {
-            // Clear any pending timeout
             if (tooltipTimeoutRef.current) {
               clearTimeout(tooltipTimeoutRef.current);
               tooltipTimeoutRef.current = null;
@@ -286,16 +286,27 @@ export function CompanyMNAVChart({
             setSelectedAcquisition(acquisition);
           }
         } else {
-          setSelectedPoint(null);
-          // Delay hiding acquisition tooltip to allow clicking
-          if (!isTooltipHovered && selectedAcquisition) {
-            tooltipTimeoutRef.current = setTimeout(() => {
-              setSelectedAcquisition(null);
-            }, 500);
+          // Check if hovering over a company acquisition event
+          const acquisition = companyAcquisitions.find(e => e.date === timeStr);
+          if (acquisition) {
+            if (tooltipTimeoutRef.current) {
+              clearTimeout(tooltipTimeoutRef.current);
+              tooltipTimeoutRef.current = null;
+            }
+            setSelectedCompanyAcquisition(acquisition);
           }
         }
-      });
-    }
+      } else {
+        setSelectedPoint(null);
+        // Delay hiding acquisition tooltip to allow clicking
+        if (!isTooltipHovered) {
+          tooltipTimeoutRef.current = setTimeout(() => {
+            setSelectedAcquisition(null);
+            setSelectedCompanyAcquisition(null);
+          }, 500);
+        }
+      }
+    });
 
     chartRef.current = chart;
 
@@ -499,6 +510,76 @@ export function CompanyMNAVChart({
                     View Filing →
                   </a>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Company acquisition event panel - shows on hover over marker */}
+          {!isMstr && selectedCompanyAcquisition && (
+            <div 
+              className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 text-xs"
+              onMouseEnter={() => {
+                setIsTooltipHovered(true);
+                if (tooltipTimeoutRef.current) {
+                  clearTimeout(tooltipTimeoutRef.current);
+                  tooltipTimeoutRef.current = null;
+                }
+              }}
+              onMouseLeave={() => {
+                setIsTooltipHovered(false);
+                tooltipTimeoutRef.current = setTimeout(() => {
+                  setSelectedCompanyAcquisition(null);
+                }, 300);
+              }}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                  {asset} Acquisition
+                </span>
+                <span className="font-bold text-amber-600 dark:text-amber-400">
+                  +{selectedCompanyAcquisition.acquired >= 1000000 
+                    ? (selectedCompanyAcquisition.acquired / 1000000).toFixed(2) + "M"
+                    : selectedCompanyAcquisition.acquired >= 1000
+                    ? (selectedCompanyAcquisition.acquired / 1000).toFixed(0) + "K"
+                    : selectedCompanyAcquisition.acquired.toLocaleString()
+                  } {asset}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-amber-700 dark:text-amber-300">
+                <div>
+                  <span className="text-amber-600 dark:text-amber-500">Date:</span>{" "}
+                  <span className="font-medium">{selectedCompanyAcquisition.date}</span>
+                </div>
+                <div>
+                  <span className="text-amber-600 dark:text-amber-500">Total After:</span>{" "}
+                  <span className="font-medium">
+                    {selectedCompanyAcquisition.cumulativeHoldings >= 1000000
+                      ? (selectedCompanyAcquisition.cumulativeHoldings / 1000000).toFixed(2) + "M"
+                      : selectedCompanyAcquisition.cumulativeHoldings.toLocaleString()
+                    } {asset}
+                  </span>
+                </div>
+                {selectedCompanyAcquisition.source && (
+                  <div>
+                    <span className="text-amber-600 dark:text-amber-500">Source:</span>{" "}
+                    <span className="font-medium">{selectedCompanyAcquisition.source}</span>
+                  </div>
+                )}
+                {selectedCompanyAcquisition.sourceUrl && (
+                  <div>
+                    <a 
+                      href={selectedCompanyAcquisition.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
+                    >
+                      {selectedCompanyAcquisition.sourceType === "sec-filing" ? "View SEC Filing →" : "View Source →"}
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           )}
