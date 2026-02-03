@@ -32,7 +32,7 @@ export const FALLBACK_RATES: Record<string, number> = {
   SEK: 10.5,    // 1 USD = 10.5 SEK (approximate)
   CAD: 1.44,    // 1 USD = 1.44 CAD (Jan 2026)
   EUR: 0.96,    // 1 USD = 0.96 EUR (Jan 2026)
-  AUD: 1.60,    // 1 USD = 1.60 AUD (Feb 2026)
+  AUD: 1.43,    // 1 USD = 1.43 AUD (Feb 2026) - 1 AUD = ~$0.70 USD
   GBP: 0.80,    // 1 USD = 0.80 GBP (Feb 2026)
 };
 
