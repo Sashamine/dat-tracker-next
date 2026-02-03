@@ -178,6 +178,59 @@ async function fetchIntradayMnav(
   }));
 }
 
+// Fetch intraday mNAV for non-MSTR companies (simpler calculation)
+async function fetchCompanyIntradayMnav(
+  ticker: string,
+  range: TimeRange,
+  company: MnavCompanyData
+): Promise<MnavDataPoint[]> {
+  const asset = company.asset || "BTC";
+  const optimalInterval = OPTIMAL_INTERVALS[range] || "1h";
+
+  // Fetch crypto and stock prices in parallel
+  const [cryptoRes, stockRes] = await Promise.all([
+    fetch(`/api/crypto/${asset}/history?range=${range}`),
+    fetch(`/api/stocks/${ticker}/history?range=${range}&interval=${optimalInterval}`),
+  ]);
+
+  if (!cryptoRes.ok || !stockRes.ok) {
+    console.warn(`[mnavHistory] Failed to fetch intraday data for ${ticker}`);
+    return [];
+  }
+
+  const cryptoData: CryptoHistoryPoint[] = await cryptoRes.json();
+  const stockData: StockHistoryPoint[] = await stockRes.json();
+
+  if (cryptoData.length === 0 || stockData.length === 0) {
+    return [];
+  }
+
+  // Interval in milliseconds for alignment
+  const intervalMs =
+    optimalInterval === "5m" ? 5 * 60 * 1000 :
+    optimalInterval === "15m" ? 15 * 60 * 1000 :
+    optimalInterval === "1h" ? 60 * 60 * 1000 :
+    24 * 60 * 60 * 1000;
+
+  // Align timestamps and pair prices
+  const aligned = alignTimestamps(cryptoData, stockData, intervalMs);
+
+  // Calculate mNAV using simple formula (no dilution adjustments)
+  return aligned.map(({ time, btcPrice: cryptoPrice, stockPrice }) => {
+    const marketCap = stockPrice * company.sharesForMnav;
+    const enterpriseValue = marketCap + (company.totalDebt || 0) - (company.cashReserves || 0);
+    const cryptoNav = company.holdings * cryptoPrice;
+    const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
+
+    return {
+      time,
+      btcPrice: cryptoPrice,
+      stockPrice,
+      mnav,
+    };
+  });
+}
+
 // Get daily mNAV from pre-calculated data
 function getDailyMnav(range: TimeRange): MnavDataPoint[] {
   const now = new Date();
@@ -313,37 +366,43 @@ export function useMnavHistory(
   const hasHistory = !!getHoldingsHistory(ticker);
   const effectiveInterval = interval || DEFAULT_INTERVAL[range];
 
-  // Use intraday calculation for short ranges, pre-calculated for long ranges
-  const useIntraday = isMstr && (range === "1d" || range === "7d" || range === "1mo");
+  // Use intraday calculation for short ranges
+  const isShortRange = range === "1d" || range === "7d" || range === "1mo";
 
   // For intraday, we need company data to calculate mNAV
   const hasCompanyData = !!companyData;
 
   return useQuery({
-    queryKey: ["mnavHistory", ticker, range, effectiveInterval, useIntraday, companyData?.holdings, hasHistory],
+    queryKey: ["mnavHistory", ticker, range, effectiveInterval, isShortRange, companyData?.holdings, hasHistory],
     queryFn: async (): Promise<MnavDataPoint[]> => {
-      // For companies with holdings history, calculate daily mNAV
-      if (!isMstr && hasHistory && companyData) {
-        return getCompanyDailyMnav(ticker, range, companyData);
-      }
-      
-      if (!isMstr) {
-        // For non-MSTR companies without holdings history, return empty
-        return [];
+      // MSTR has its own optimized path
+      if (isMstr) {
+        if (isShortRange) {
+          if (!companyData) {
+            console.warn("useMnavHistory: companyData required for intraday mNAV");
+            return [];
+          }
+          return fetchIntradayMnav(range, effectiveInterval, companyData);
+        } else {
+          return getDailyMnav(range);
+        }
       }
 
-      if (useIntraday) {
-        if (!companyData) {
-          console.warn("useMnavHistory: companyData required for intraday mNAV");
-          return [];
+      // For other companies with holdings history
+      if (hasHistory && companyData) {
+        // Use intraday for short ranges, daily for longer ranges
+        if (isShortRange) {
+          return fetchCompanyIntradayMnav(ticker, range, companyData);
+        } else {
+          return getCompanyDailyMnav(ticker, range, companyData);
         }
-        return fetchIntradayMnav(range, effectiveInterval, companyData);
-      } else {
-        return getDailyMnav(range);
       }
+      
+      // No data available
+      return [];
     },
-    staleTime: useIntraday ? 60 * 1000 : 5 * 60 * 1000, // 1 min for intraday, 5 min for daily
-    enabled: (isMstr || (hasHistory && hasCompanyData)) && (!useIntraday || hasCompanyData),
+    staleTime: isShortRange ? 60 * 1000 : 5 * 60 * 1000, // 1 min for intraday, 5 min for daily
+    enabled: (isMstr || (hasHistory && hasCompanyData)),
   });
 }
 
