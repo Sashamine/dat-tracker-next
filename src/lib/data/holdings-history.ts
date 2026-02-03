@@ -302,6 +302,7 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, source: "Press release", sourceUrl: "https://bitmine.com/press-releases", sourceType: "press-release" },
   { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, source: "Press release", sharesSource: "Jan 15 shareholder vote (454.9M)", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html", sourceType: "press-release" },
   { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009325, source: "SEC 8-K Jan 26, 2026 (+40,302 ETH)", sharesSource: "455M diluted (unchanged from Jan 20)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2026-02-01", holdings: 4285125, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009418, source: "SEC 8-K Feb 2, 2026 (+41,788 ETH)", sharesSource: "455M diluted", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm", sourceType: "sec-filing" },
 ];
 
 // Nakamoto Inc. (NAKA) - Rebranded from KindlyMD Jan 21, 2026

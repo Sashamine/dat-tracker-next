@@ -20,6 +20,7 @@ export const ethCompanies: Company[] = [
     stakingPct: 0.85,
     stakingMethod: "MAVAN validators",
     quarterlyBurnUsd: 2_500_000,
+    burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedPipe: 615_000_000,
     avgDailyVolume: 800_000_000,
