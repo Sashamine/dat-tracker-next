@@ -294,9 +294,11 @@ async function getCompanyDailyMnav(
   // Always fetch 1y data to ensure we get YYYY-MM-DD format (not timestamps)
   // Then filter to requested range
   const asset = companyData.asset || "BTC";
+  // Use max available data for "all" range, otherwise 1y
+  const fetchRange = range === "all" ? "5y" : "1y";
   const [cryptoRes, stockRes] = await Promise.all([
-    fetch(`/api/crypto/${asset}/history?range=1y&interval=1d`),
-    fetch(`/api/stocks/${ticker}/history?range=1y&interval=1d`),
+    fetch(`/api/crypto/${asset}/history?range=${fetchRange}&interval=1d`),
+    fetch(`/api/stocks/${ticker}/history?range=${fetchRange}&interval=1d`),
   ]);
 
   if (!cryptoRes.ok || !stockRes.ok) {
