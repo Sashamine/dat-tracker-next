@@ -279,7 +279,6 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-11-03",  // 10-Q filing date
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
-    optionsOi: 500_000,  // Deep options market
     // marketCap calculated from sharesForMnav × price (removed static override)
     // SHARES: strategy.com/shares compiles from SEC filings (10-Q baseline + weekly 8-K ATM disclosures)
     // SEC 10-Q Sep 30, 2025: 267.7M baseline. ATM 8-Ks (Nov 2025 - Feb 2026): +64.7M shares
@@ -310,7 +309,6 @@ export const btcCompanies: Company[] = [
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
     notes: "712K BTC @ $75K avg. 5 perpetual preferred classes: STRF/STRC/STRE/STRK/STRD. Bitcoin credit company thesis.",
-    leverageRatio: 1.5, // ~$21B debt provides leveraged BTC exposure via converts
   },
   {
     id: "3350t",
@@ -345,7 +343,6 @@ export const btcCompanies: Company[] = [
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 100K BTC by 2026.",
     notes: "Largest Asian public BTC holder. Zero-interest bonds. Reports BTC Yield.",
-    leverageRatio: 1.3,
   },
   {
     id: "xxi",
