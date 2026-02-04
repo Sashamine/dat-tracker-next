@@ -26,9 +26,9 @@ export function HoldingsPerShareChart({
 
   const historyData = useMemo(() => getHoldingsHistory(ticker), [ticker]);
   
-  // Filter history based on time range
-  const filteredHistory = useMemo(() => {
-    if (!historyData) return null;
+  // Filter history based on time range, extending if insufficient data
+  const { filteredHistory, rangeExtended, actualStartDate } = useMemo(() => {
+    if (!historyData) return { filteredHistory: null, rangeExtended: false, actualStartDate: null };
     
     const now = new Date();
     let startDate: Date;
@@ -45,10 +45,25 @@ export function HoldingsPerShareChart({
         break;
       case "all":
       default:
-        return historyData.history;
+        return { filteredHistory: historyData.history, rangeExtended: false, actualStartDate: null };
     }
     
-    return historyData.history.filter(snapshot => new Date(snapshot.date) >= startDate);
+    const filtered = historyData.history.filter(snapshot => new Date(snapshot.date) >= startDate);
+    
+    // If less than 2 data points in range, extend to include most recent available data
+    if (filtered.length < 2 && historyData.history.length >= 2) {
+      // Take the last N points that give us at least 2, or all if still not enough
+      const minPoints = Math.min(historyData.history.length, Math.max(2, filtered.length + 2));
+      const extended = historyData.history.slice(-minPoints);
+      const extendedStartDate = new Date(extended[0].date);
+      return { 
+        filteredHistory: extended, 
+        rangeExtended: true, 
+        actualStartDate: extendedStartDate 
+      };
+    }
+    
+    return { filteredHistory: filtered, rangeExtended: false, actualStartDate: null };
   }, [historyData, timeRange]);
 
   const growthMetrics = useMemo(
@@ -186,6 +201,11 @@ export function HoldingsPerShareChart({
             {new Date(firstSnapshot.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
             {" → "}
             {new Date(lastSnapshot.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+            {rangeExtended && (
+              <span className="ml-2 text-amber-600 dark:text-amber-400" title="Range extended to show available data">
+                (extended - latest data from {new Date(lastSnapshot.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })})
+              </span>
+            )}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
