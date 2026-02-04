@@ -1,4 +1,4 @@
-// Historical holdings per share data for companies that report it
+﻿// Historical holdings per share data for companies that report it
 // Sources: Company quarterly reports, 8-K filings, press releases
 // Last updated: 2026-01-22 - Added source tracking for verification system (Phase 7a)
 // NOTE: Share counts use DILUTED figures from SEC filings for accurate market cap calculation
@@ -118,7 +118,7 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
 //
 // SHARE COUNT CORRECTION (Jan 2026):
 // Previous entries used 371M from SEC 10-Q cover page (basic shares)
-// Correct diluted shares: ~402M (implied from Q3 2025 EPS: $104.5M ÷ $0.26 = 402M)
+// Correct diluted shares: ~402M (implied from Q3 2025 EPS: $104.5M Ã· $0.26 = 402M)
 // Q3 2025 was a profit quarter, so diluted includes all convertible securities
 //
 // HOLDINGS NOTE: RIOT sold 1,818 BTC in Dec 2025, reducing holdings to 18,005 BTC
@@ -138,7 +138,7 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 19273, sharesOutstandingDiluted: 363_200_000, holdingsPerShare: 0.0000531, source: "Q2 2025 10-Q (XBRL)", sourceType: "sec-filing" },
   // Q3 2025: 19,287 BTC total = 15,987 unrestricted + 3,300 restricted
   { date: "2025-09-30", holdings: 19287, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000520, source: "Q3 2025 10-Q (XBRL)", sourceType: "sec-filing" },
-  // Dec 2025: Sold 1,818 BTC → 18,005 BTC remaining (per production update)
+  // Dec 2025: Sold 1,818 BTC â†’ 18,005 BTC remaining (per production update)
   // Note: This is from press release, not yet in SEC filing
   { date: "2025-12-31", holdings: 18005, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000485, source: "8-K Dec 2025 production", sourceUrl: "/filings/riot/0001104659-26-000248", sourceType: "sec-filing" },
 ];
@@ -147,8 +147,8 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
 // Data from TSE filings and press releases
 //
 // STOCK SPLIT HISTORY:
-// - July 30, 2024: 1-for-10 reverse split (shares ÷10)
-// - March 28, 2025: 10-for-1 forward split (shares ×10)
+// - July 30, 2024: 1-for-10 reverse split (shares Ã·10)
+// - March 28, 2025: 10-for-1 forward split (shares Ã—10)
 // All historical numbers below are split-adjusted.
 //
 // SHARE STRUCTURE (Jan 2026):
@@ -157,9 +157,9 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
 // - Difference:      ~294M from preferred stock (Class B "MERCURY" etc.)
 //
 // PREFERRED STOCK:
-// - Class B "MERCURY" (Dec 2025): 23.61M shares, ¥1,000 conversion price
-// - Currently underwater (stock ¥510 vs conversion ¥1,000)
-// - Total preferred: ¥86.58B - handled via preferredEquity in companies.ts, NOT share dilution
+// - Class B "MERCURY" (Dec 2025): 23.61M shares, Â¥1,000 conversion price
+// - Currently underwater (stock Â¥510 vs conversion Â¥1,000)
+// - Total preferred: Â¥86.58B - handled via preferredEquity in companies.ts, NOT share dilution
 //
 // For mNAV calculation, we use COMMON SHARES (1.14B) because:
 // - metaplanet.jp shows ~1.26x mNAV using this methodology
@@ -167,68 +167,68 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
 // - Double-counting (diluted shares + preferredEquity) would inflate mNAV incorrectly
 // Full purchase history from metaplanet.jp/en/analytics
 // All values SPLIT-ADJUSTED to current share basis (post Mar 28, 2025 10:1 forward split)
-// Historical shares ×10, historical BTC/share ÷10 for continuity
+// Historical shares Ã—10, historical BTC/share Ã·10 for continuity
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
-  // 2024 Q2 (split-adjusted: shares ×10)
-  { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 176_000_000, holdingsPerShare: 0.000000556, source: "Initial BTC purchase", sourceType: "press-release" },
-  { date: "2024-05-09", holdings: 117.72, sharesOutstandingDiluted: 179_000_000, holdingsPerShare: 0.000000658, source: "Press release", sourceType: "press-release" },
-  { date: "2024-06-10", holdings: 141.07, sharesOutstandingDiluted: 185_000_000, holdingsPerShare: 0.000000763, source: "Press release", sourceType: "press-release" },
+  // 2024 Q2 (split-adjusted: shares Ã—10)
+  { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 176_000_000, holdingsPerShare: 0.000000556, source: "Initial BTC purchase", sourceType: "regulatory-filing" },
+  { date: "2024-05-09", holdings: 117.72, sharesOutstandingDiluted: 179_000_000, holdingsPerShare: 0.000000658, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-06-10", holdings: 141.07, sharesOutstandingDiluted: 185_000_000, holdingsPerShare: 0.000000763, source: "TDnet disclosure", sourceType: "regulatory-filing" },
   // 2024 Q3 (split-adjusted)
-  { date: "2024-07-01", holdings: 161.27, sharesOutstandingDiluted: 195_000_000, holdingsPerShare: 0.000000827, source: "Press release", sourceType: "press-release" },
-  { date: "2024-07-08", holdings: 203.73, sharesOutstandingDiluted: 205_000_000, holdingsPerShare: 0.000000994, source: "Press release", sourceType: "press-release" },
-  { date: "2024-07-16", holdings: 225.61, sharesOutstandingDiluted: 215_000_000, holdingsPerShare: 0.00000105, source: "Press release", sourceType: "press-release" },
-  { date: "2024-07-22", holdings: 245.99, sharesOutstandingDiluted: 225_000_000, holdingsPerShare: 0.00000109, source: "Press release", sourceType: "press-release" },
-  { date: "2024-08-13", holdings: 303.09, sharesOutstandingDiluted: 250_000_000, holdingsPerShare: 0.00000121, source: "Press release", sourceType: "press-release" },
-  { date: "2024-08-20", holdings: 360.37, sharesOutstandingDiluted: 265_000_000, holdingsPerShare: 0.00000136, source: "Press release", sourceType: "press-release" },
-  { date: "2024-09-10", holdings: 398.83, sharesOutstandingDiluted: 290_000_000, holdingsPerShare: 0.00000138, source: "Press release", sourceType: "press-release" },
+  { date: "2024-07-01", holdings: 161.27, sharesOutstandingDiluted: 195_000_000, holdingsPerShare: 0.000000827, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-07-08", holdings: 203.73, sharesOutstandingDiluted: 205_000_000, holdingsPerShare: 0.000000994, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-07-16", holdings: 225.61, sharesOutstandingDiluted: 215_000_000, holdingsPerShare: 0.00000105, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-07-22", holdings: 245.99, sharesOutstandingDiluted: 225_000_000, holdingsPerShare: 0.00000109, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-08-13", holdings: 303.09, sharesOutstandingDiluted: 250_000_000, holdingsPerShare: 0.00000121, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-08-20", holdings: 360.37, sharesOutstandingDiluted: 265_000_000, holdingsPerShare: 0.00000136, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-09-10", holdings: 398.83, sharesOutstandingDiluted: 290_000_000, holdingsPerShare: 0.00000138, source: "TDnet disclosure", sourceType: "regulatory-filing" },
   // 2024 Q4 (split-adjusted)
-  { date: "2024-10-01", holdings: 506.74, sharesOutstandingDiluted: 320_000_000, holdingsPerShare: 0.00000158, source: "Press release", sourceType: "press-release" },
-  { date: "2024-10-03", holdings: 530.71, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.00000163, source: "Press release", sourceType: "press-release" },
-  { date: "2024-10-07", holdings: 639.50, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.00000194, source: "Press release", sourceType: "press-release" },
-  { date: "2024-10-11", holdings: 748.50, sharesOutstandingDiluted: 335_000_000, holdingsPerShare: 0.00000223, source: "Press release", sourceType: "press-release" },
-  { date: "2024-10-15", holdings: 855.48, sharesOutstandingDiluted: 340_000_000, holdingsPerShare: 0.00000252, source: "Press release", sourceType: "press-release" },
-  { date: "2024-10-16", holdings: 861.39, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.00000252, source: "Press release", sourceType: "press-release" },
-  { date: "2024-10-28", holdings: 1018.00, sharesOutstandingDiluted: 360_000_000, holdingsPerShare: 0.00000283, source: "Press release", sourceType: "press-release" },
-  { date: "2024-11-19", holdings: 1142.29, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.00000286, source: "Press release", sourceType: "press-release" },
-  { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 460_000_000, holdingsPerShare: 0.00000383, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-01", holdings: 506.74, sharesOutstandingDiluted: 320_000_000, holdingsPerShare: 0.00000158, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-10-03", holdings: 530.71, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.00000163, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-10-07", holdings: 639.50, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.00000194, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-10-11", holdings: 748.50, sharesOutstandingDiluted: 335_000_000, holdingsPerShare: 0.00000223, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-10-15", holdings: 855.48, sharesOutstandingDiluted: 340_000_000, holdingsPerShare: 0.00000252, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-10-16", holdings: 861.39, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.00000252, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-10-28", holdings: 1018.00, sharesOutstandingDiluted: 360_000_000, holdingsPerShare: 0.00000283, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-11-19", holdings: 1142.29, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.00000286, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 460_000_000, holdingsPerShare: 0.00000383, source: "TDnet disclosure", sourceType: "regulatory-filing" },
   // 2025 Q1 (split-adjusted until Mar 28)
-  { date: "2025-02-17", holdings: 2031.43, sharesOutstandingDiluted: 470_000_000, holdingsPerShare: 0.00000432, source: "Press release", sourceType: "press-release" },
-  { date: "2025-02-20", holdings: 2100.00, sharesOutstandingDiluted: 472_000_000, holdingsPerShare: 0.00000445, source: "Press release", sourceType: "press-release" },
-  { date: "2025-02-25", holdings: 2235.00, sharesOutstandingDiluted: 475_000_000, holdingsPerShare: 0.00000471, source: "Press release", sourceType: "press-release" },
-  { date: "2025-03-03", holdings: 2391.00, sharesOutstandingDiluted: 480_000_000, holdingsPerShare: 0.00000498, source: "Press release", sourceType: "press-release" },
-  { date: "2025-03-05", holdings: 2888.00, sharesOutstandingDiluted: 485_000_000, holdingsPerShare: 0.00000596, source: "Press release", sourceType: "press-release" },
-  { date: "2025-03-12", holdings: 3050.00, sharesOutstandingDiluted: 490_000_000, holdingsPerShare: 0.00000622, source: "Press release", sourceType: "press-release" },
-  { date: "2025-03-18", holdings: 3200.00, sharesOutstandingDiluted: 493_000_000, holdingsPerShare: 0.00000649, source: "Press release", sourceType: "press-release" },
-  { date: "2025-03-24", holdings: 3350.00, sharesOutstandingDiluted: 496_000_000, holdingsPerShare: 0.00000675, source: "Press release", sourceType: "press-release" },
+  { date: "2025-02-17", holdings: 2031.43, sharesOutstandingDiluted: 470_000_000, holdingsPerShare: 0.00000432, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-02-20", holdings: 2100.00, sharesOutstandingDiluted: 472_000_000, holdingsPerShare: 0.00000445, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-02-25", holdings: 2235.00, sharesOutstandingDiluted: 475_000_000, holdingsPerShare: 0.00000471, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-03-03", holdings: 2391.00, sharesOutstandingDiluted: 480_000_000, holdingsPerShare: 0.00000498, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-03-05", holdings: 2888.00, sharesOutstandingDiluted: 485_000_000, holdingsPerShare: 0.00000596, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-03-12", holdings: 3050.00, sharesOutstandingDiluted: 490_000_000, holdingsPerShare: 0.00000622, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-03-18", holdings: 3200.00, sharesOutstandingDiluted: 493_000_000, holdingsPerShare: 0.00000649, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-03-24", holdings: 3350.00, sharesOutstandingDiluted: 496_000_000, holdingsPerShare: 0.00000675, source: "TDnet disclosure", sourceType: "regulatory-filing" },
   // Mar 28, 2025: 10:1 forward split (now continuous with above)
-  { date: "2025-03-31", holdings: 4046.00, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.00000809, source: "Q1 end", sourceType: "press-release" },
+  { date: "2025-03-31", holdings: 4046.00, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.00000809, source: "TDnet Q1 end", sourceType: "regulatory-filing" },
   // 2025 Q2
-  { date: "2025-04-02", holdings: 4206.00, sharesOutstandingDiluted: 520_000_000, holdingsPerShare: 0.00000809, source: "Press release", sourceType: "press-release" },
-  { date: "2025-04-14", holdings: 4525.00, sharesOutstandingDiluted: 540_000_000, holdingsPerShare: 0.00000838, source: "Press release", sourceType: "press-release" },
-  { date: "2025-04-21", holdings: 4855.00, sharesOutstandingDiluted: 560_000_000, holdingsPerShare: 0.00000867, source: "Press release", sourceType: "press-release" },
-  { date: "2025-04-24", holdings: 5000.00, sharesOutstandingDiluted: 575_000_000, holdingsPerShare: 0.00000870, source: "Press release", sourceType: "press-release" },
-  { date: "2025-05-07", holdings: 5555.00, sharesOutstandingDiluted: 600_000_000, holdingsPerShare: 0.00000926, source: "Press release", sourceType: "press-release" },
-  { date: "2025-05-12", holdings: 6796.00, sharesOutstandingDiluted: 630_000_000, holdingsPerShare: 0.00001079, source: "Press release", sourceType: "press-release" },
-  { date: "2025-05-19", holdings: 7800.00, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00001182, source: "Press release", sourceType: "press-release" },
-  { date: "2025-06-02", holdings: 8888.00, sharesOutstandingDiluted: 700_000_000, holdingsPerShare: 0.00001270, source: "Press release", sourceType: "press-release" },
-  { date: "2025-06-16", holdings: 10000.00, sharesOutstandingDiluted: 740_000_000, holdingsPerShare: 0.00001351, source: "Press release", sourceType: "press-release" },
-  { date: "2025-06-23", holdings: 11111.00, sharesOutstandingDiluted: 765_000_000, holdingsPerShare: 0.00001452, source: "Press release", sourceType: "press-release" },
-  { date: "2025-06-26", holdings: 12345.00, sharesOutstandingDiluted: 780_000_000, holdingsPerShare: 0.00001583, source: "Press release", sourceType: "press-release" },
-  { date: "2025-06-30", holdings: 13350.00, sharesOutstandingDiluted: 800_000_000, holdingsPerShare: 0.00001669, source: "Q2 end", sourceType: "press-release" },
+  { date: "2025-04-02", holdings: 4206.00, sharesOutstandingDiluted: 520_000_000, holdingsPerShare: 0.00000809, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-04-14", holdings: 4525.00, sharesOutstandingDiluted: 540_000_000, holdingsPerShare: 0.00000838, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-04-21", holdings: 4855.00, sharesOutstandingDiluted: 560_000_000, holdingsPerShare: 0.00000867, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-04-24", holdings: 5000.00, sharesOutstandingDiluted: 575_000_000, holdingsPerShare: 0.00000870, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-05-07", holdings: 5555.00, sharesOutstandingDiluted: 600_000_000, holdingsPerShare: 0.00000926, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-05-12", holdings: 6796.00, sharesOutstandingDiluted: 630_000_000, holdingsPerShare: 0.00001079, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-05-19", holdings: 7800.00, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00001182, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-06-02", holdings: 8888.00, sharesOutstandingDiluted: 700_000_000, holdingsPerShare: 0.00001270, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-06-16", holdings: 10000.00, sharesOutstandingDiluted: 740_000_000, holdingsPerShare: 0.00001351, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-06-23", holdings: 11111.00, sharesOutstandingDiluted: 765_000_000, holdingsPerShare: 0.00001452, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-06-26", holdings: 12345.00, sharesOutstandingDiluted: 780_000_000, holdingsPerShare: 0.00001583, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-06-30", holdings: 13350.00, sharesOutstandingDiluted: 800_000_000, holdingsPerShare: 0.00001669, source: "TDnet Q2 end", sourceType: "regulatory-filing" },
   // 2025 Q3
-  { date: "2025-07-07", holdings: 15555.00, sharesOutstandingDiluted: 840_000_000, holdingsPerShare: 0.00001852, source: "Press release", sourceType: "press-release" },
-  { date: "2025-07-14", holdings: 16352.00, sharesOutstandingDiluted: 870_000_000, holdingsPerShare: 0.00001879, source: "Press release", sourceType: "press-release" },
-  { date: "2025-07-28", holdings: 17132.00, sharesOutstandingDiluted: 900_000_000, holdingsPerShare: 0.00001904, source: "Press release", sourceType: "press-release" },
-  { date: "2025-08-04", holdings: 17595.00, sharesOutstandingDiluted: 930_000_000, holdingsPerShare: 0.00001892, source: "Press release", sourceType: "press-release" },
-  { date: "2025-08-12", holdings: 18113.00, sharesOutstandingDiluted: 960_000_000, holdingsPerShare: 0.00001887, source: "Press release", sourceType: "press-release" },
-  { date: "2025-08-18", holdings: 18888.00, sharesOutstandingDiluted: 990_000_000, holdingsPerShare: 0.00001908, source: "Press release", sourceType: "press-release" },
-  { date: "2025-08-25", holdings: 18991.00, sharesOutstandingDiluted: 1_010_000_000, holdingsPerShare: 0.00001880, source: "Press release", sourceType: "press-release" },
-  { date: "2025-09-01", holdings: 20000.00, sharesOutstandingDiluted: 1_030_000_000, holdingsPerShare: 0.00001942, source: "Press release", sourceType: "press-release" },
-  { date: "2025-09-08", holdings: 20136.00, sharesOutstandingDiluted: 1_050_000_000, holdingsPerShare: 0.00001918, source: "Press release", sourceType: "press-release" },
-  { date: "2025-09-22", holdings: 25555.00, sharesOutstandingDiluted: 1_080_000_000, holdingsPerShare: 0.00002366, source: "Press release", sourceType: "press-release" },
-  { date: "2025-09-30", holdings: 30823.00, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, source: "Q3 end", sourceType: "press-release" },
+  { date: "2025-07-07", holdings: 15555.00, sharesOutstandingDiluted: 840_000_000, holdingsPerShare: 0.00001852, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-07-14", holdings: 16352.00, sharesOutstandingDiluted: 870_000_000, holdingsPerShare: 0.00001879, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-07-28", holdings: 17132.00, sharesOutstandingDiluted: 900_000_000, holdingsPerShare: 0.00001904, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-08-04", holdings: 17595.00, sharesOutstandingDiluted: 930_000_000, holdingsPerShare: 0.00001892, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-08-12", holdings: 18113.00, sharesOutstandingDiluted: 960_000_000, holdingsPerShare: 0.00001887, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-08-18", holdings: 18888.00, sharesOutstandingDiluted: 990_000_000, holdingsPerShare: 0.00001908, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-08-25", holdings: 18991.00, sharesOutstandingDiluted: 1_010_000_000, holdingsPerShare: 0.00001880, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-09-01", holdings: 20000.00, sharesOutstandingDiluted: 1_030_000_000, holdingsPerShare: 0.00001942, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-09-08", holdings: 20136.00, sharesOutstandingDiluted: 1_050_000_000, holdingsPerShare: 0.00001918, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-09-22", holdings: 25555.00, sharesOutstandingDiluted: 1_080_000_000, holdingsPerShare: 0.00002366, source: "TDnet disclosure", sourceType: "regulatory-filing" },
+  { date: "2025-09-30", holdings: 30823.00, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, source: "TDnet Q3 end", sourceType: "regulatory-filing" },
   // 2025 Q4 / 2026
-  { date: "2025-12-30", holdings: 35102.00, sharesOutstandingDiluted: 1_118_664_340, holdingsPerShare: 0.00003138, source: "Press release", sharesSource: "Common shares ex-OTM Mercury converts", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "press-release" },
+  { date: "2025-12-30", holdings: 35102.00, sharesOutstandingDiluted: 1_118_664_340, holdingsPerShare: 0.00003138, source: "TDnet disclosure", sharesSource: "Common shares ex-OTM Mercury converts", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "regulatory-filing" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury
@@ -403,7 +403,7 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
 // NXTT (Next Technology Holding) removed - history of false financial reports, shareholder lawsuits
 
 // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
-// Data from AMF (Autorité des marchés financiers) regulatory filings
+// Data from AMF (AutoritÃ© des marchÃ©s financiers) regulatory filings
 // API: https://dilaamf.opendatasoft.com/api/v2/ (ISIN: FR0011053636)
 // Note: Massive dilution in Sep 2025 from EUR58.1M private placement (Sep 16, 2025 AMF filing)
 const ALTBG_HISTORY: HoldingsSnapshot[] = [
@@ -420,22 +420,22 @@ const ALTBG_HISTORY: HoldingsSnapshot[] = [
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
 // Source: MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
 // Verified 2026-01-29 from MFN press releases
-// Share count grew via directed issues + SEK 516M convertible (117M → 335M)
+// Share count grew via directed issues + SEK 516M convertible (117M â†’ 335M)
 const H100_HISTORY: HoldingsSnapshot[] = [
   // May-Jun 2025: Initial purchases
   { date: "2025-05-22", holdings: 4, sharesOutstandingDiluted: 117_090_000, holdingsPerShare: 0.0000000342, source: "MFN: first BTC purchase (4.39 BTC)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   { date: "2025-06-16", holdings: 169, sharesOutstandingDiluted: 117_090_000, holdingsPerShare: 0.00000144, source: "MFN: 144.8 BTC purchase", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // July 2025: Rapid accumulation via Adam Back SEK 516M convertible + directed issues
   { date: "2025-07-02", holdings: 248, sharesOutstandingDiluted: 233_170_000, holdingsPerShare: 0.00000106, source: "MFN: 47.33 BTC purchase", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  { date: "2025-07-16", holdings: 370, sharesOutstandingDiluted: 233_170_000, holdingsPerShare: 0.00000159, source: "MFN: 75.53 BTC → 370 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  { date: "2025-07-21", holdings: 510, sharesOutstandingDiluted: 249_230_000, holdingsPerShare: 0.00000205, source: "MFN: 140.25 BTC → 510 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  { date: "2025-07-23", holdings: 628, sharesOutstandingDiluted: 249_230_000, holdingsPerShare: 0.00000252, source: "MFN: 117.93 BTC → 628.22 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-07-16", holdings: 370, sharesOutstandingDiluted: 233_170_000, holdingsPerShare: 0.00000159, source: "MFN: 75.53 BTC â†’ 370 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-07-21", holdings: 510, sharesOutstandingDiluted: 249_230_000, holdingsPerShare: 0.00000205, source: "MFN: 140.25 BTC â†’ 510 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-07-23", holdings: 628, sharesOutstandingDiluted: 249_230_000, holdingsPerShare: 0.00000252, source: "MFN: 117.93 BTC â†’ 628.22 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Aug 2025: Continued accumulation
-  { date: "2025-08-06", holdings: 763, sharesOutstandingDiluted: 254_070_000, holdingsPerShare: 0.00000300, source: "MFN: 60.6 BTC → 763.2 total (largest Nordic)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  { date: "2025-08-20", holdings: 911, sharesOutstandingDiluted: 287_520_000, holdingsPerShare: 0.00000317, source: "MFN: 102 BTC → 911 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-08-06", holdings: 763, sharesOutstandingDiluted: 254_070_000, holdingsPerShare: 0.00000300, source: "MFN: 60.6 BTC â†’ 763.2 total (largest Nordic)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-08-20", holdings: 911, sharesOutstandingDiluted: 287_520_000, holdingsPerShare: 0.00000317, source: "MFN: 102 BTC â†’ 911 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Sep 2025: Crossed 1,000 BTC milestone
   { date: "2025-09-03", holdings: 1005, sharesOutstandingDiluted: 309_700_000, holdingsPerShare: 0.00000324, source: "MFN: Surpasses 1,000 BTC in 104 days", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  { date: "2025-09-17", holdings: 1047, sharesOutstandingDiluted: 311_500_000, holdingsPerShare: 0.00000336, source: "MFN: 21 BTC → 1,046.66 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-09-17", holdings: 1047, sharesOutstandingDiluted: 311_500_000, holdingsPerShare: 0.00000336, source: "MFN: 21 BTC â†’ 1,046.66 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Nov 2025: SEK 122.5M convertibles converted to shares
   { date: "2025-11-19", holdings: 1047, sharesOutstandingDiluted: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN Interim Report", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Jan 2026: Holdings confirmed stable
@@ -542,7 +542,7 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
 
 // Helius Medical / Solana Company (HSDT) - SOL treasury
 // NOTE: 1-for-50 reverse stock split effective July 1, 2025
-// Pre-split: ~33.8M shares → Post-split: ~676K, then grew via offerings
+// Pre-split: ~33.8M shares â†’ Post-split: ~676K, then grew via offerings
 // sharesOutstandingDiluted includes pre-funded warrants at $0.0001 (essentially shares)
 const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Pre-split entries (adjusted for 1:50 split)
@@ -657,7 +657,7 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation
-// MASSIVE DILUTION in Sep 2025: 11.8M → 186.6M shares (warrant exercises + ATM)
+// MASSIVE DILUTION in Sep 2025: 11.8M â†’ 186.6M shares (warrant exercises + ATM)
 // Prior history entries had fabricated share counts; rewritten with SEC-verified data
 const ZONE_HISTORY: HoldingsSnapshot[] = [
   // Pre-treasury: ~11.8M shares (Class A + B) per 10-Q
@@ -828,7 +828,7 @@ const CEPO_HISTORY: HoldingsSnapshot[] = [
 
 // TWAV (Taoweave, fka Oblong) - TAO treasury
 // SEC CIK: 746210 | NOTE: Prior share counts (12M-18M) were completely fabricated.
-// Actual: ~1.1M shares Dec 2024 → ~3.2M Nov 2025 via warrant exercises
+// Actual: ~1.1M shares Dec 2024 â†’ ~3.2M Nov 2025 via warrant exercises
 // TAO holdings started Jun 2025 with $8M purchase per 10-Q
 const TWAV_HISTORY: HoldingsSnapshot[] = [
   // Jun 2025: Private placement, TAO treasury strategy launched
