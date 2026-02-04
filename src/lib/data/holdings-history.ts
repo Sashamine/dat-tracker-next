@@ -39,7 +39,7 @@ export interface CompanyHoldingsHistory {
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 const MSTR_HISTORY: HoldingsSnapshot[] = [
   // 2020 - Initial purchases (split-adjusted: original * 10)
-  { date: "2020-09-14", holdings: 38250, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.000390, source: "Initial BTC purchase announcement", sourceType: "press-release" },
+  { date: "2020-09-14", holdings: 38250, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.000390, source: "8-K Initial BTC purchase", sourceUrl: "/filings/mstr/8k-2020-09-14-244732", sourceType: "sec-filing" },
   { date: "2020-12-21", holdings: 70470, sharesOutstandingDiluted: 103_000_000, holdingsPerShare: 0.000684, source: "Q4 2020", sourceType: "sec-filing" },
 
   // 2021 (split-adjusted)
@@ -533,10 +533,10 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
 // DILUTION: 86.1M basic shares + 26.4M pre-funded warrants @ $0.03 = 112.5M FD shares
 // Verified 2026-01-28 via SEC XBRL
 const FWDI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-09-11", holdings: 6_834_506, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0608, source: "Initial $1.65B PIPE close", sharesSource: "86.1M basic + 26.4M pre-funded warrants", sourceType: "press-release" },
+  { date: "2025-09-11", holdings: 6_834_506, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0608, source: "8-K Initial PIPE close", sharesSource: "86.1M basic + 26.4M pre-funded warrants", sourceUrl: "/filings/fwdi/0001683168-25-007036", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 6_854_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0609, source: "SEC 10-K FY2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K", sourceType: "sec-filing" },
-  { date: "2025-11-15", holdings: 6_900_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0613, source: "Press release", sourceType: "press-release" },
-  { date: "2025-12-01", holdings: 6_921_342, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0615, source: "Shareholder update", sourceType: "press-release" },
+  { date: "2025-11-15", holdings: 6_900_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0613, source: "8-K SOL holdings update", sourceUrl: "/filings/fwdi/0001683168-25-008454", sourceType: "sec-filing" },
+  { date: "2025-12-01", holdings: 6_921_342, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0615, source: "8-K Shareholder update", sourceUrl: "/filings/fwdi/0001683168-25-008941", sourceType: "sec-filing" },
   { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0620, source: "Press release", sourceUrl: "https://www.forwardindustries.com/", sourceType: "press-release" },
 ];
 
