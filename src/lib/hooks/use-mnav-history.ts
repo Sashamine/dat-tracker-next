@@ -425,6 +425,8 @@ export function useMnavHistory(
   return useQuery({
     queryKey: ["mnavHistory", ticker, range, effectiveInterval, isShortRange, companyData?.holdings, companyData?.currency, hasHistory],
     queryFn: async (): Promise<MnavDataPoint[]> => {
+      console.log(`[mnavHistory] queryFn called: ticker=${ticker}, range=${range}, hasHistory=${hasHistory}, hasCompanyData=${!!companyData}, currency=${companyData?.currency}`);
+      
       // MSTR has its own optimized path
       if (isMstr) {
         if (isShortRange) {
@@ -440,6 +442,7 @@ export function useMnavHistory(
 
       // For other companies with holdings history
       if (hasHistory && companyData) {
+        console.log(`[mnavHistory] ${ticker}: Using company path, isShortRange=${isShortRange}`);
         // Use intraday for short ranges, daily for longer ranges
         if (isShortRange) {
           return fetchCompanyIntradayMnav(ticker, range, companyData);
