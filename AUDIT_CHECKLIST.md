@@ -49,6 +49,8 @@ Use this checklist when reviewing each company's data for accuracy.
 | Ticker | Core | Financial | Info | Regulatory | Warnings | Status |
 |--------|------|-----------|------|------------|----------|--------|
 | BMNR | ✅ | ✅ | ✅ | ✅ | ✅ | **Done** |
+| MARA | ✅ | ⬜ | ✅ | ✅ | ⬜ | Partial (stale data) |
+| XXI | ✅ | ✅ | ✅ | ✅ | ✅ | **Done** |
 | MSTR | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | Pending |
 | SBET | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | Pending |
 | BTCS | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | Pending |
@@ -78,6 +80,19 @@ Use this checklist when reviewing each company's data for accuracy.
 - Staking was listed as 85%, actual is ~47% (ramping via MAVAN)
 - Added `burnEstimated: true` for $2.5M/qtr figure
 - Added website and Twitter
+
+### MARA (Feb 4, 2026)
+- Holdings corrected from 53,250 to 52,850 BTC (matches Q3 10-Q)
+- Data is stale (Sep 30, 2025 - 4 months old)
+- No monthly production updates published since Sep 2025
+- 10-K for FY2025 expected late Feb/early March 2026
+
+### XXI (Feb 4, 2026)
+- Added website (xxi.money) and twitter (xxicapital)
+- Added stakingPct: 0 (BTC not staked)
+- Added burnEstimated: true (new company, estimate only)
+- Updated holdingsSourceUrl to specific 8-K filing
+- Verified holdings breakdown: Tether 24.5K + Bitfinex 7K + PIPE ~11.5K = ~43K BTC
 
 ---
 

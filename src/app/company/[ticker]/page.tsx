@@ -420,7 +420,13 @@ export default function CompanyPage() {
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Leverage</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+              Leverage
+              <span 
+                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
+                title="Net Debt ÷ Crypto NAV. Shows how much debt the company has relative to its crypto holdings. Higher leverage = more risk, can inflate mNAV."
+              >?</span>
+            </p>
             <p className={cn(
               "text-2xl font-bold",
               debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
@@ -570,6 +576,16 @@ export default function CompanyPage() {
                 Net assets belonging to common shareholders.
                 <br />
                 <span className="font-mono text-xs">Crypto NAV + Cash − Debt − Preferred</span>
+              </p>
+            </div>
+            <div>
+              <p className="font-medium text-gray-700 dark:text-gray-300">Leverage</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                Debt relative to crypto holdings. Higher leverage = more risk.
+                <br />
+                <span className="font-mono text-xs">(Total Debt − Cash) ÷ Crypto NAV</span>
+                <br />
+                <span className="text-xs">0x = no debt, &gt;1x = net debt exceeds crypto value</span>
               </p>
             </div>
           </div>

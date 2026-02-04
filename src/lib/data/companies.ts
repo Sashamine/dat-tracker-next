@@ -355,33 +355,38 @@ export const btcCompanies: Company[] = [
     name: "Twenty One Capital",
     ticker: "XXI",
     secCik: "0002070457",  // Post-merger CIK (was 0001865602 Cantor SPAC)
+    website: "https://xxi.money",
+    twitter: "xxicapital",
     asset: "BTC",
     tier: 1,
-    holdings: 43_514,  // Combined: Tether (~31K) + SoftBank (~10K) + other (~2.5K)
+    holdings: 43_514,  // Combined: Tether (24,500) + Bitfinex (7,000) + PIPE (~11.5K) + In-Kind (~0.4K)
     holdingsLastUpdated: "2025-12-09",  // Merger close date
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=8-K",
-    // Note: SEC XBRL shows 10,500 BTC (pre-merger entity). 43,514 is post-merger combined holdings.
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/0001213900-25-121293-index.htm",
+    // Breakdown: Contribution 31,500 + PIPE Bitcoin ~11,533 + In-Kind PIPE ~392 = ~43,425
     datStartDate: "2025-12-09",
     costBasisAvg: 92_902,  // Calculated from purchase history (purchases-history.ts)
     isMiner: false,
+    stakingPct: 0,  // BTC not staked
     quarterlyBurnUsd: 10_000_000,
+    burnEstimated: true,  // New company, estimate only
     avgDailyVolume: 150_000_000,
     hasOptions: true,
-    // marketCap calculated from sharesForMnav × price (removed static override)
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
     sharesForMnav: 651_390_912,  // Total shares (both classes)
+    sharesSource: "SEC 8-K Dec 12, 2025",
+    sharesAsOf: "2025-12-09",
     // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC (~3:1 ratio)
     totalDebt: 486_500_000,
-    debtSource: "SEC 8-K Dec 2025",
+    debtSource: "SEC 8-K Dec 12, 2025 - 1% secured converts due 2030",
     debtAsOf: "2025-12-09",
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     restrictedCash: 119_300_000,  // Debt service reserves - not excess
     cashSource: "SEC 8-K Dec 2025",
     cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
-    strategy: "BTC treasury + Bitcoin-native financial services.",
-    notes: "Tether/SoftBank/Mallers. Secured converts at 33% LTV. 3rd largest corporate BTC holder.",
+    strategy: "BTC treasury + Bitcoin-native financial services. Tether/SoftBank/Cantor backed.",
+    notes: "Merged Dec 2025. 16,116 BTC collateralizes debt at ~3:1 ratio. #3 corporate BTC holder.",
   },
   {
     id: "cepo",  // BSTR Holdings pre-merger
@@ -412,7 +417,7 @@ export const btcCompanies: Company[] = [
     ticker: "MARA",
     asset: "BTC",
     tier: 1,
-    holdings: 53_250,  // Sep 30, 2025 - Q3 2025 earnings report (SEC 10-Q shows 52,850)
+    holdings: 52_850,  // Sep 30, 2025 - Q3 2025 10-Q
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
