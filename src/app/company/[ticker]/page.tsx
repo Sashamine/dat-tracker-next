@@ -20,6 +20,7 @@ import {
 import { StockChart } from "@/components/stock-chart";
 import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
+import { HoldingsHistoryTable } from "@/components/holdings-history-table";
 import { CompanyFilings } from "@/components/company-filings";
 import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
@@ -901,6 +902,13 @@ export default function CompanyPage() {
           ticker={displayCompany.ticker}
           asset={displayCompany.asset}
           currentHoldingsPerShare={holdingsPerShare}
+          className="mb-8"
+        />
+
+        {/* Holdings History Table - shows each acquisition with SEC links */}
+        <HoldingsHistoryTable
+          ticker={displayCompany.ticker}
+          asset={displayCompany.asset}
           className="mb-8"
         />
 
