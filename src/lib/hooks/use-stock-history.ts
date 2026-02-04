@@ -23,11 +23,11 @@ export const VALID_INTERVALS: Record<TimeRange, ChartInterval[]> = {
   "all": ["1d"],                  // Daily only
 };
 
-// Default interval per time range (optimized for maximum granularity)
+// Default interval per time range (optimized for readability)
 export const DEFAULT_INTERVAL: Record<TimeRange, ChartInterval> = {
-  "1d": "5m",   // 5-minute candles (~288 per day)
-  "7d": "1h",   // Hourly candles (~168 per week)
-  "1mo": "1h",  // Hourly candles (~720 per month) - Yahoo supports this
+  "1d": "5m",   // 5-minute candles (~78 per trading day)
+  "7d": "1h",   // Hourly candles (~45 per week)
+  "1mo": "1d",  // Daily candles - avoids weekend/overnight gaps
   "1y": "1d",   // Daily candles
   "all": "1d",  // Daily candles
 };
