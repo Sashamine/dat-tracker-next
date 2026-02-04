@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useMemo, useState } from "react";
+import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time, ISeriesApi, SeriesMarker, createSeriesMarkers, ISeriesMarkersPluginApi } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { getHoldingsHistory, calculateHoldingsGrowth, getAcquisitionEvents } from "@/lib/data/holdings-history";
 import { MSTR_BTC_TIMELINE } from "@/lib/data/mstr-btc-timeline";
 
 type TimeRange = "3mo" | "6mo" | "1y" | "all";
+
+interface AcquisitionInfo {
+  date: string;
+  total: number;
+  sourceUrl?: string;
+  source?: string;
+}
 
 interface HoldingsPerShareChartProps {
   ticker: string;
@@ -27,6 +34,8 @@ export function HoldingsPerShareChart({
   const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
   const [showAcquisitions, setShowAcquisitions] = useState(false);
+  const [hoveredAcquisition, setHoveredAcquisition] = useState<AcquisitionInfo | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
 
   const historyData = useMemo(() => getHoldingsHistory(ticker), [ticker]);
   const isMstr = ticker.toUpperCase() === "MSTR";
@@ -57,7 +66,6 @@ export function HoldingsPerShareChart({
     
     // If less than 2 data points in range, extend to include most recent available data
     if (filtered.length < 2 && historyData.history.length >= 2) {
-      // Take the last N points that give us at least 2, or all if still not enough
       const minPoints = Math.min(historyData.history.length, Math.max(2, filtered.length + 2));
       const extended = historyData.history.slice(-minPoints);
       const extendedStartDate = new Date(extended[0].date);
@@ -83,8 +91,8 @@ export function HoldingsPerShareChart({
   }, [ticker, isMstr]);
 
   // Filter and aggregate acquisition events for the current time range
-  const acquisitionMarkers = useMemo(() => {
-    if (!showAcquisitions) return [];
+  const { acquisitionMarkers, acquisitionData } = useMemo(() => {
+    if (!showAcquisitions) return { acquisitionMarkers: [], acquisitionData: new Map<string, AcquisitionInfo>() };
     
     const now = new Date();
     let startDate: Date;
@@ -107,16 +115,21 @@ export function HoldingsPerShareChart({
 
     // Aggregate purchases within 7 days to reduce marker overlap
     const AGGREGATION_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
-    const aggregatedEvents: { date: string; total: number }[] = [];
+    const aggregatedEvents: AcquisitionInfo[] = [];
     
-    const rawEvents: { date: string; amount: number }[] = [];
+    const rawEvents: { date: string; amount: number; sourceUrl?: string; source?: string }[] = [];
     
     if (isMstr) {
       // MSTR uses dedicated timeline
       for (const event of MSTR_BTC_TIMELINE) {
         const eventDate = new Date(event.date);
         if (eventDate >= startDate && event.btcAcquired >= 1000) {
-          rawEvents.push({ date: event.date, amount: event.btcAcquired });
+          rawEvents.push({ 
+            date: event.date, 
+            amount: event.btcAcquired,
+            sourceUrl: event.sourceUrl,
+            source: event.source,
+          });
         }
       }
     } else {
@@ -124,7 +137,12 @@ export function HoldingsPerShareChart({
       for (const event of companyAcquisitions) {
         const eventDate = new Date(event.date);
         if (eventDate >= startDate) {
-          rawEvents.push({ date: event.date, amount: event.acquired });
+          rawEvents.push({ 
+            date: event.date, 
+            amount: event.acquired,
+            sourceUrl: event.sourceUrl,
+            source: event.source,
+          });
         }
       }
     }
@@ -137,15 +155,26 @@ export function HoldingsPerShareChart({
       const lastAggregated = aggregatedEvents[aggregatedEvents.length - 1];
       
       if (lastAggregated && eventTime - new Date(lastAggregated.date).getTime() < AGGREGATION_WINDOW_MS) {
-        // Aggregate with previous event
+        // Aggregate with previous event (keep first sourceUrl)
         lastAggregated.total += event.amount;
       } else {
         // Start new aggregation window
-        aggregatedEvents.push({ date: event.date, total: event.amount });
+        aggregatedEvents.push({ 
+          date: event.date, 
+          total: event.amount,
+          sourceUrl: event.sourceUrl,
+          source: event.source,
+        });
       }
     }
     
-    // Create subtle dot markers from aggregated events
+    // Create map for quick lookup by date
+    const dataMap = new Map<string, AcquisitionInfo>();
+    for (const event of aggregatedEvents) {
+      dataMap.set(event.date, event);
+    }
+    
+    // Create subtle dot markers
     const markers: SeriesMarker<Time>[] = [];
     for (const event of aggregatedEvents) {
       markers.push({
@@ -157,11 +186,41 @@ export function HoldingsPerShareChart({
       });
     }
     
-    return markers;
+    return { acquisitionMarkers: markers, acquisitionData: dataMap };
   }, [isMstr, showAcquisitions, timeRange, companyAcquisitions]);
 
   // Check if company has acquisition data
   const hasAcquisitionData = isMstr || companyAcquisitions.length > 0;
+
+  // Handle crosshair move for acquisition tooltips
+  const handleCrosshairMove = useCallback((param: { time?: Time; point?: { x: number; y: number } }) => {
+    if (!showAcquisitions || !param.time || !param.point) {
+      setHoveredAcquisition(null);
+      setTooltipPosition(null);
+      return;
+    }
+    
+    // Check if we're near an acquisition date (within 2 days)
+    const crosshairTime = typeof param.time === 'string' ? new Date(param.time).getTime() : param.time * 1000;
+    const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000;
+    
+    let nearestAcquisition: AcquisitionInfo | null = null;
+    for (const [dateStr, info] of acquisitionData) {
+      const acquisitionTime = new Date(dateStr).getTime();
+      if (Math.abs(crosshairTime - acquisitionTime) < TWO_DAYS_MS) {
+        nearestAcquisition = info;
+        break;
+      }
+    }
+    
+    if (nearestAcquisition) {
+      setHoveredAcquisition(nearestAcquisition);
+      setTooltipPosition({ x: param.point.x, y: param.point.y });
+    } else {
+      setHoveredAcquisition(null);
+      setTooltipPosition(null);
+    }
+  }, [showAcquisitions, acquisitionData]);
 
   // Initialize and update chart
   useEffect(() => {
@@ -202,7 +261,7 @@ export function HoldingsPerShareChart({
 
     // Holdings per share line
     const series = chart.addSeries(LineSeries, {
-      color: "#22c55e", // Green for growth
+      color: "#22c55e",
       lineWidth: 2,
       title: `${asset}/Share`,
       priceFormat: {
@@ -231,6 +290,9 @@ export function HoldingsPerShareChart({
       markersRef.current = markers;
     }
 
+    // Subscribe to crosshair move for tooltips
+    chart.subscribeCrosshairMove(handleCrosshairMove);
+
     chart.timeScale().fitContent();
 
     // Handle resize
@@ -253,7 +315,7 @@ export function HoldingsPerShareChart({
         chartRef.current = null;
       }
     };
-  }, [filteredHistory, asset, acquisitionMarkers]);
+  }, [filteredHistory, asset, acquisitionMarkers, handleCrosshairMove]);
 
   // If no historical data, show current value only
   if (!historyData || historyData.history.length < 2) {
@@ -291,6 +353,13 @@ export function HoldingsPerShareChart({
   const firstSnapshot = filteredHistory && filteredHistory.length > 0 ? filteredHistory[0] : historyData.history[0];
   const lastSnapshot = filteredHistory && filteredHistory.length > 0 ? filteredHistory[filteredHistory.length - 1] : historyData.history[historyData.history.length - 1];
 
+  // Format acquisition amount for tooltip
+  const formatAmount = (amount: number) => {
+    if (amount >= 1000000) return `+${(amount / 1000000).toFixed(1)}M`;
+    if (amount >= 1000) return `+${(amount / 1000).toFixed(0)}K`;
+    return `+${amount.toFixed(0)}`;
+  };
+
   return (
     <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-6", className)}>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
@@ -321,7 +390,7 @@ export function HoldingsPerShareChart({
                   : "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500"
               )}
             >
-              {showAcquisitions ? "📈 Acquisitions ON" : "📈 Acquisitions OFF"}
+              {showAcquisitions ? "● Acquisitions ON" : "○ Acquisitions OFF"}
             </button>
           )}
           {/* Time Range Buttons */}
@@ -409,7 +478,42 @@ export function HoldingsPerShareChart({
       </div>
 
       {filteredHistory && filteredHistory.length >= 2 ? (
-        <div ref={chartContainerRef} className="w-full" />
+        <div className="relative">
+          <div ref={chartContainerRef} className="w-full" />
+          
+          {/* Acquisition Tooltip */}
+          {hoveredAcquisition && tooltipPosition && (
+            <div
+              className="absolute z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-2 text-xs pointer-events-auto"
+              style={{
+                left: Math.min(tooltipPosition.x, (chartContainerRef.current?.clientWidth || 300) - 150),
+                top: Math.max(tooltipPosition.y - 60, 0),
+              }}
+            >
+              <div className="font-semibold text-amber-600 dark:text-amber-400">
+                {formatAmount(hoveredAcquisition.total)} {asset}
+              </div>
+              <div className="text-gray-500">
+                {new Date(hoveredAcquisition.date).toLocaleDateString("en-US", { 
+                  month: "short", 
+                  day: "numeric", 
+                  year: "numeric" 
+                })}
+              </div>
+              {hoveredAcquisition.sourceUrl && (
+                <a
+                  href={hoveredAcquisition.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-600 hover:underline block mt-1"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  View source →
+                </a>
+              )}
+            </div>
+          )}
+        </div>
       ) : (
         <div className="h-[200px] flex items-center justify-center text-gray-500">
           Not enough data points for selected time range
