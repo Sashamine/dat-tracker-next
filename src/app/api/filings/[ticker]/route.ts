@@ -176,6 +176,56 @@ async function fetchSECFilings(ticker: string): Promise<{ filings: Filing[]; isP
 
 // Static filings for international companies without API access
 const staticFilings: Record<string, Filing[]> = {
+  "3350.T": [
+    {
+      type: "BTC Purchase",
+      title: "Notice of BTC Purchase (Total: 1,762 BTC)",
+      date: "2026-01-27",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "BTC Purchase",
+      title: "Notice of BTC Purchase (Total: 1,000 BTC)",
+      date: "2026-01-20",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "BTC Purchase",
+      title: "Notice of BTC Purchase (Total: 619 BTC)",
+      date: "2026-01-13",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "Financial Results",
+      title: "Q3 FY2025 Financial Results (Nov 2025)",
+      date: "2025-11-14",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "Bond Issuance",
+      title: "Zero-Coupon Bond Issuance (¥9.5B)",
+      date: "2025-10-28",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "BTC Yield",
+      title: "BTC Yield Report Q3 2025",
+      date: "2025-10-01",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "Stock Split",
+      title: "10:1 Stock Split Effective",
+      date: "2024-10-01",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+    {
+      type: "BTC Strategy",
+      title: "Adoption of Bitcoin Treasury Strategy",
+      date: "2024-04-08",
+      url: "https://metaplanet.jp/en/shareholders/disclosures",
+    },
+  ],
   "DCC.AX": [
     {
       type: "Quarterly Report",
@@ -253,9 +303,9 @@ const internationalFilingUrls: Record<string, { source: string; sourceUrl: strin
   },
   // Japan
   "3350.T": {
-    source: "JPX / TDnet",
-    sourceUrl: "https://www2.jpx.co.jp/disc/33500/140120241125527959.pdf",
-    note: "Metaplanet disclosures on JPX",
+    source: "TDnet / Metaplanet IR",
+    sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    note: "Metaplanet investor relations disclosures",
   },
   // Hong Kong
   "0434.HK": {
