@@ -302,13 +302,19 @@ export function HoldingsPerShareChart({
       )}
 
       <div className="mt-4 text-xs text-gray-500 space-y-1">
-        <p>
-          Source: Quarterly 10-Q/10-K filings and 8-K announcements.
-          {asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
-        </p>
-        {ticker === "3350.T" && (
+        {ticker === "3350.T" ? (
           <p className="text-amber-600 dark:text-amber-400">
-            ⚠️ Stock splits: 1:10 reverse (Jul 2024), 10:1 forward (Mar 2025). All data is split-adjusted.
+            ⚠️ Source: Company disclosures (metaplanet.jp) — not regulatory-verified. Stock splits: 1:10 reverse (Jul 2024), 10:1 forward (Mar 2025).
+          </p>
+        ) : ticker.includes(".") ? (
+          <p>
+            Source: Company disclosures and local exchange filings.
+            {" "}{asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
+          </p>
+        ) : (
+          <p>
+            Source: SEC 10-Q/10-K filings and 8-K announcements.
+            {" "}{asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
           </p>
         )}
       </div>
