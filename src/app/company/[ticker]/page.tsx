@@ -568,10 +568,21 @@ export default function CompanyPage() {
 
         {/* Equity Value - Balance Sheet Summary */}
         {(otherAssets > 0 || cryptoHoldingsValue > 0) && (
-          <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              Equity Value (What Shareholders Own)
-            </h2>
+          <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+            <summary className="p-4 cursor-pointer flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Equity Value (What Shareholders Own)
+              </h2>
+              <div className="flex items-center gap-3">
+                <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                  {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}
+                </span>
+                <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </summary>
+            <div className="px-4 pb-4">
 
             {/* Lead with Equity NAV */}
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700 mb-4">
@@ -794,6 +805,7 @@ export default function CompanyPage() {
               )}
             </div>
           </div>
+          </details>
         )}
 
         {/* Chart with Time Range Selector */}
@@ -1001,12 +1013,17 @@ export default function CompanyPage() {
         />
 
         {/* Comprehensive Strategy & Overview Section */}
-        <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group">
+          <summary className="p-6 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               Strategy & Overview
             </h3>
-            <div className="flex items-center gap-3">
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-6 pb-6">
+            <div className="flex items-center gap-3 mb-6">
               {displayCompany.website && (
                 <a
                   href={displayCompany.website}
@@ -1034,7 +1051,6 @@ export default function CompanyPage() {
                 </a>
               )}
             </div>
-          </div>
 
           {/* Company Overview */}
           {displayCompany.description && (
@@ -1247,20 +1263,26 @@ export default function CompanyPage() {
               </div>
             );
           })()}
-        </div>
+          </div>
+        </details>
 
         {/* Press Releases */}
         {intel?.pressReleases && intel.pressReleases.length > 0 && (
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8">
-            <div className="flex items-center justify-between mb-4">
+          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group">
+            <summary className="p-6 cursor-pointer flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Recent Press Releases
               </h3>
-              <span className="text-xs text-gray-500">
-                Last researched: {intel.lastResearched}
-              </span>
-            </div>
-            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-gray-500">
+                  {intel.pressReleases.length} releases
+                </span>
+                <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </summary>
+            <div className="px-6 pb-6 space-y-3">
               {intel.pressReleases.slice(0, 8).map((pr, idx) => (
                 <div
                   key={idx}
@@ -1292,7 +1314,7 @@ export default function CompanyPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </details>
         )}
         {/* SEC / Regulatory Filings */}
         <CompanyFilings
