@@ -9,6 +9,7 @@ export const ethCompanies: Company[] = [
     name: "Bitmine Immersion",
     ticker: "BMNR",
     secCik: "0001829311",
+    website: "https://www.bitminetech.io/",
     twitter: "BitMNR",
     asset: "ETH",
     tier: 1,
