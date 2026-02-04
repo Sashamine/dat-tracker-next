@@ -249,8 +249,9 @@ async function sendDiscordNotification(
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
+  const tickerIndex = args.indexOf('--ticker');
   const tickerArg = args.find(a => a.startsWith('--ticker='))?.split('=')[1] ||
-                    args[args.indexOf('--ticker') + 1];
+                    (tickerIndex !== -1 ? args[tickerIndex + 1] : undefined);
 
   const companies = tickerArg
     ? CANADIAN_COMPANIES.filter(c => c.ticker.toUpperCase() === tickerArg.toUpperCase())
