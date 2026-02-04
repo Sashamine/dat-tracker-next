@@ -21,6 +21,7 @@ export const ethCompanies: Company[] = [
     stakingMethod: "MAVAN validators (ramping)",
     quarterlyBurnUsd: 2_500_000,
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
+    burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedPipe: 615_000_000,
     avgDailyVolume: 800_000_000,

@@ -501,7 +501,10 @@ export default function CompanyPage() {
               if (totalObligations <= 0) return null;
               return (
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Cash Obligations</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Cash Obligations
+                    {displayCompany.burnEstimated && <span className="text-amber-500 ml-1">(est.)</span>}
+                  </p>
                   <p className="text-2xl font-bold text-amber-600">
                     ${(totalObligations / 1e6).toFixed(0)}M
                   </p>
