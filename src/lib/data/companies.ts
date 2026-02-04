@@ -332,7 +332,9 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/Metaplanet_JP",
     costBasisAvg: 107_607,  // metaplanet.jp/en/analytics (Jan 2026)
     isMiner: false,
-    quarterlyBurnUsd: 5_000_000,
+    quarterlyBurnUsd: 5_000_000,  // Estimated from Q3 FY2025 operating expenses
+    burnSource: "TDnet Q3 FY2025 Financial Results (estimated)",
+    burnAsOf: "2025-09-30",
     avgDailyVolume: 200_000_000,
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
     sharesForMnav: 1_118_664_340,  // 1.142B common - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
@@ -341,8 +343,9 @@ export const btcCompanies: Company[] = [
     debtSource: "TDnet Q3 FY2025 Financial Results",
     debtSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     debtAsOf: "2025-09-30",
-    cashReserves: 150_000_000,  // ~$150M - calibrated to match mNAV. TODO: extract exact value from quarterly report
+    cashReserves: 150_000_000,  // ~$150M estimated from Q3 FY2025 (¥23.4B cash / 156 JPY/USD)
     restrictedCash: 150_000_000,  // Debt service reserves (zero-coupon bonds) - not excess
+    cashEstimated: true,  // Mark as estimated until verified from TDnet filing
     cashSource: "TDnet Q3 FY2025 Financial Results",
     cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2025-09-30",

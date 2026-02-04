@@ -1365,6 +1365,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "Legacy warrants from pre-TAO era. Slightly OTM at ~$1.65 stock price.",
     },
   ],
+
+  // Metaplanet (3350.T) - Japan TSE
+  // Mercury convertible bonds - ¥1000 strike (~$6.41 at 156 JPY/USD)
+  // Currently OTM at ~¥540 (~$3.46) stock price
+  "3350.T": [
+    {
+      type: "convertible",
+      strikePrice: 6.41,  // ¥1000 conversion price / 156 JPY/USD
+      potentialShares: 23_600_000,  // 23.6M shares if fully converted
+      faceValue: 151_000_000,  // ~¥23.6B face value (~$151M at 156 JPY/USD)
+      source: "TDnet Q3 FY2025 Financial Results",
+      sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+      expiration: "2029-12-31",  // Mercury bonds mature 2029 (verify exact date)
+      issuedDate: "2024-10-01",  // Approximate issue date
+      notes: "Mercury zero-coupon convertible bonds. ¥1000 strike, OTM at ¥540. Excluded from sharesForMnav.",
+    },
+  ],
 };
 
 /**
