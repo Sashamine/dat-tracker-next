@@ -82,7 +82,7 @@ export function HoldingsPerShareChart({
     return getAcquisitionEvents(ticker);
   }, [ticker, isMstr]);
 
-  // Filter acquisition events for the current time range
+  // Filter and aggregate acquisition events for the current time range
   const acquisitionMarkers = useMemo(() => {
     if (!showAcquisitions) return [];
     
@@ -105,20 +105,18 @@ export function HoldingsPerShareChart({
         startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
     }
 
-    const markers: SeriesMarker<Time>[] = [];
+    // Aggregate purchases within 7 days to reduce marker overlap
+    const AGGREGATION_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+    const aggregatedEvents: { date: string; total: number }[] = [];
+    
+    const rawEvents: { date: string; amount: number }[] = [];
     
     if (isMstr) {
-      // MSTR uses dedicated timeline with more detail
+      // MSTR uses dedicated timeline
       for (const event of MSTR_BTC_TIMELINE) {
         const eventDate = new Date(event.date);
         if (eventDate >= startDate && event.btcAcquired >= 1000) {
-          markers.push({
-            time: event.date as Time,
-            position: "belowBar",
-            color: "#f59e0b",
-            shape: "arrowUp",
-            text: `+${(event.btcAcquired / 1000).toFixed(0)}K`,
-          });
+          rawEvents.push({ date: event.date, amount: event.btcAcquired });
         }
       }
     } else {
@@ -126,25 +124,46 @@ export function HoldingsPerShareChart({
       for (const event of companyAcquisitions) {
         const eventDate = new Date(event.date);
         if (eventDate >= startDate) {
-          // Format the acquisition amount based on size
-          let text: string;
-          if (event.acquired >= 1000000) {
-            text = `+${(event.acquired / 1000000).toFixed(1)}M`;
-          } else if (event.acquired >= 1000) {
-            text = `+${(event.acquired / 1000).toFixed(0)}K`;
-          } else {
-            text = `+${event.acquired.toFixed(0)}`;
-          }
-          
-          markers.push({
-            time: event.date as Time,
-            position: "belowBar",
-            color: "#f59e0b",
-            shape: "arrowUp",
-            text,
-          });
+          rawEvents.push({ date: event.date, amount: event.acquired });
         }
       }
+    }
+    
+    // Sort by date and aggregate nearby events
+    rawEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    
+    for (const event of rawEvents) {
+      const eventTime = new Date(event.date).getTime();
+      const lastAggregated = aggregatedEvents[aggregatedEvents.length - 1];
+      
+      if (lastAggregated && eventTime - new Date(lastAggregated.date).getTime() < AGGREGATION_WINDOW_MS) {
+        // Aggregate with previous event
+        lastAggregated.total += event.amount;
+      } else {
+        // Start new aggregation window
+        aggregatedEvents.push({ date: event.date, total: event.amount });
+      }
+    }
+    
+    // Create markers from aggregated events
+    const markers: SeriesMarker<Time>[] = [];
+    for (const event of aggregatedEvents) {
+      let text: string;
+      if (event.total >= 1000000) {
+        text = `+${(event.total / 1000000).toFixed(1)}M`;
+      } else if (event.total >= 1000) {
+        text = `+${(event.total / 1000).toFixed(0)}K`;
+      } else {
+        text = `+${event.total.toFixed(0)}`;
+      }
+      
+      markers.push({
+        time: event.date as Time,
+        position: "belowBar",
+        color: "#f59e0b",
+        shape: "arrowUp",
+        text,
+      });
     }
     
     return markers;
