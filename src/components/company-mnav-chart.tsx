@@ -487,7 +487,7 @@ export function CompanyMNAVChart({
                   +{selectedAcquisition.btcAcquired.toLocaleString()} BTC
                 </span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-amber-700 dark:text-amber-300">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-amber-700 dark:text-amber-300">
                 <div>
                   <span className="text-amber-600 dark:text-amber-500">Date:</span>{" "}
                   <span className="font-medium">{selectedAcquisition.date}</span>
@@ -501,14 +501,6 @@ export function CompanyMNAVChart({
                 <div>
                   <span className="text-amber-600 dark:text-amber-500">Total After:</span>{" "}
                   <span className="font-medium">{selectedAcquisition.cumulativeHoldings.toLocaleString()} BTC</span>
-                </div>
-                <div>
-                  <a 
-                    href={`/filings/mstr/${selectedAcquisition.date}?highlight=${encodeURIComponent(`${selectedAcquisition.btcAcquired.toLocaleString()} bitcoin`)}`}
-                    className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
-                  >
-                    View Filing →
-                  </a>
                 </div>
               </div>
             </div>
@@ -548,7 +540,7 @@ export function CompanyMNAVChart({
                   } {asset}
                 </span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-amber-700 dark:text-amber-300">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-amber-700 dark:text-amber-300">
                 <div>
                   <span className="text-amber-600 dark:text-amber-500">Date:</span>{" "}
                   <span className="font-medium">{selectedCompanyAcquisition.date}</span>
@@ -566,18 +558,6 @@ export function CompanyMNAVChart({
                   <div>
                     <span className="text-amber-600 dark:text-amber-500">Source:</span>{" "}
                     <span className="font-medium">{selectedCompanyAcquisition.source}</span>
-                  </div>
-                )}
-                {selectedCompanyAcquisition.sourceUrl && (
-                  <div>
-                    <a 
-                      href={selectedCompanyAcquisition.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
-                    >
-                      {selectedCompanyAcquisition.sourceType === "sec-filing" ? "View SEC Filing →" : "View Source →"}
-                    </a>
                   </div>
                 )}
               </div>
