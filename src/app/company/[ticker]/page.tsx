@@ -81,9 +81,14 @@ export default function CompanyPage() {
     () => companyData?.company ? enrichCompany(companyData.company) : null,
     [companyData]
   );
+  // Stock price chart timeframe
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
   const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange, interval);
+
+  // mNAV chart timeframe (separate from stock price)
+  const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1y");
+  const [mnavInterval, setMnavInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
 
   // Company intel - must be called before any early returns (React hooks rule)
   const intel = useMemo(() => getCompanyIntel(ticker), [ticker]);
@@ -131,11 +136,17 @@ export default function CompanyPage() {
     return { assetStats, totalValue, mnavStats };
   }, [allCompanies, prices]);
 
-  // Update interval when time range changes
+  // Update interval when time range changes (stock price chart)
   const handleTimeRangeChange = (newRange: TimeRange) => {
     setTimeRange(newRange);
     // Reset to default interval for the new range
     setInterval(DEFAULT_INTERVAL[newRange]);
+  };
+
+  // Update interval when time range changes (mNAV chart)
+  const handleMnavTimeRangeChange = (newRange: TimeRange) => {
+    setMnavTimeRange(newRange);
+    setMnavInterval(DEFAULT_INTERVAL[newRange]);
   };
 
   // Wait for BOTH data sources to load to ensure consistency with main page
@@ -937,14 +948,63 @@ export default function CompanyPage() {
               </div>
             </summary>
             <div className="px-4 pb-4">
+              {/* mNAV Time Range Selector */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex gap-1">
+                    {([
+                      { value: "1d", label: "24H" },
+                      { value: "7d", label: "7D" },
+                      { value: "1mo", label: "1M" },
+                      { value: "1y", label: "1Y" },
+                      { value: "all", label: "ALL" },
+                    ] as const).map(({ value, label }) => (
+                      <button
+                        key={value}
+                        onClick={() => handleMnavTimeRangeChange(value)}
+                        className={cn(
+                          "px-3 py-1 text-sm rounded-md transition-colors",
+                          mnavTimeRange === value
+                            ? "bg-indigo-600 text-white"
+                            : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                        )}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  {/* Interval Buttons (only show if multiple options) */}
+                  {VALID_INTERVALS[mnavTimeRange].length > 1 && (
+                    <>
+                      <span className="text-gray-400 text-sm hidden sm:inline">|</span>
+                      <div className="flex gap-1">
+                        {VALID_INTERVALS[mnavTimeRange].map((int) => (
+                          <button
+                            key={int}
+                            onClick={() => setMnavInterval(int)}
+                            className={cn(
+                              "px-2 py-1 text-xs rounded transition-colors",
+                              mnavInterval === int
+                                ? "bg-gray-600 text-white"
+                                : "bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-300"
+                            )}
+                          >
+                            {INTERVAL_LABELS[int]}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
               <CompanyMNAVChart
                 ticker={displayCompany.ticker}
                 asset={displayCompany.asset}
                 currentMNAV={mNAV}
                 currentStockPrice={stockPrice}
                 currentCryptoPrice={cryptoPrice}
-                timeRange={timeRange}
-                interval={interval}
+                timeRange={mnavTimeRange}
+                interval={mnavInterval}
                 className=""
                 companyData={{
                   holdings: displayCompany.holdings,
