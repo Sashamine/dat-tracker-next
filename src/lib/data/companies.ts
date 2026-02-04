@@ -9,6 +9,7 @@ export const ethCompanies: Company[] = [
     name: "Bitmine Immersion",
     ticker: "BMNR",
     secCik: "0001829311",
+    twitter: "BitMNR",
     asset: "ETH",
     tier: 1,
     holdings: 4_285_125,  // Feb 2, 2026 8-K: acquired 41,788 ETH in past week
