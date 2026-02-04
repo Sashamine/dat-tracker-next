@@ -345,9 +345,9 @@ async function getCompanyDailyMnav(
   if (needsForexConversion && pricesRes?.ok) {
     const pricesData = await pricesRes.json();
     forexRate = pricesData.forex?.[currency] || 1;
-    if (forexRate === 1) {
-      console.warn(`[mnavHistory] No forex rate found for ${currency}, using 1`);
-    }
+    console.log(`[mnavHistory] ${ticker} forex conversion: currency=${currency}, rate=${forexRate}, forexData=`, pricesData.forex);
+  } else if (needsForexConversion) {
+    console.warn(`[mnavHistory] ${ticker} needs forex but pricesRes failed: ok=${pricesRes?.ok}, status=${pricesRes?.status}`);
   }
 
   if (!cryptoData.length || !stockData.length) {
@@ -388,6 +388,11 @@ async function getCompanyDailyMnav(
     const cryptoNav = holdings * cryptoPrice;
     const enterpriseValue = marketCap + (companyData.totalDebt || 0) - (companyData.cashReserves || 0);
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
+    
+    // Debug first few points
+    if (result.length < 3) {
+      console.log(`[mnavHistory] ${ticker} calc: date=${date}, stockPrice=${stockPrice}, forexRate=${forexRate}, stockPriceUsd=${stockPriceUsd}, marketCap=${marketCap}, cryptoNav=${cryptoNav}, mnav=${mnav}`);
+    }
     
     result.push({
       time: date,
