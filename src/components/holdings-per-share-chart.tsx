@@ -304,7 +304,7 @@ export function HoldingsPerShareChart({
       <div className="mt-4 text-xs text-gray-500 space-y-1">
         {ticker === "3350.T" ? (
           <p className="text-amber-600 dark:text-amber-400">
-            ⚠️ Source: Company disclosures (metaplanet.jp) — not regulatory-verified. Stock splits: 1:10 reverse (Jul 2024), 10:1 forward (Mar 2025).
+            ⚠️ Source: Company disclosures (metaplanet.jp) — not regulatory-verified. All data split-adjusted.
           </p>
         ) : ticker.includes(".") ? (
           <p>
