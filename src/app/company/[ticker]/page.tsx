@@ -409,7 +409,7 @@ export default function CompanyPage() {
               mNAV
               <span 
                 className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
-                title="mNAV = EV ÷ Crypto NAV&#10;&#10;• EV (Enterprise Value) = Market Cap + Debt + Preferred - Cash&#10;• Crypto NAV = Crypto holdings × current price&#10;&#10;mNAV of 1.0x means you're paying exactly for the crypto. Above 1.0x is a premium."
+                title="EV ÷ Crypto NAV"
               >?</span>
             </p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -581,7 +581,7 @@ export default function CompanyPage() {
                     Equity NAV
                     <span 
                       className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-indigo-200 dark:bg-indigo-800 text-[10px] text-indigo-600 dark:text-indigo-300 cursor-help"
-                      title="Equity NAV = What common shareholders own&#10;&#10;Crypto NAV + Cash − Debt − Preferred Equity&#10;&#10;This is the net asset value attributable to common stock."
+                      title="Crypto NAV + Cash − Debt − Preferred"
                     >?</span>
                   </p>
                   <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
