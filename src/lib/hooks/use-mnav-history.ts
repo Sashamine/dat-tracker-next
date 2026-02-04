@@ -421,6 +421,9 @@ export function useMnavHistory(
 
   // For intraday, we need company data to calculate mNAV
   const hasCompanyData = !!companyData;
+  
+  // Debug: log enabled condition
+  console.log(`[mnavHistory] useMnavHistory called: ticker=${ticker}, isMstr=${isMstr}, hasHistory=${hasHistory}, hasCompanyData=${hasCompanyData}, enabled=${isMstr || (hasHistory && hasCompanyData)}`);
 
   return useQuery({
     queryKey: ["mnavHistory", ticker, range, effectiveInterval, isShortRange, companyData?.holdings, companyData?.currency, hasHistory],
