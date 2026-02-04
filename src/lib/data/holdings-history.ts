@@ -680,8 +680,8 @@ const ZONE_HISTORY: HoldingsSnapshot[] = [
 const TBH_HISTORY: HoldingsSnapshot[] = [
   // TBH has no DOGE - these are TBH shares only for tracking purposes
   { date: "2025-03-07", holdings: 0, sharesOutstandingDiluted: 8_000_000, holdingsPerShare: 0, source: "TBH IPO on Nasdaq", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595", sourceType: "sec-filing" },
-  { date: "2025-10-12", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "House of Doge merger announced - HOD has 730M DOGE", sourceUrl: "https://www.globenewswire.com/news-release/2025/10/13/3165515/0/en/House-of-Doge-the-Corporate-Arm-of-the-Dogecoin-Foundation-to-List-on-NASDAQ-Through-Merger-with-Brag-House-Holdings-Inc.html", sourceType: "press-release" },
-  { date: "2025-12-18", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "HOD shareholder letter confirms 730M DOGE treasury", sourceUrl: "https://www.globenewswire.com/news-release/2025/12/18/3207820/0/en/House-of-Doge-Issues-2025-Shareholder-Letter-Highlighting-Brag-House-NASDAQ-Merger-Treasury-Expansion-Diversified-Revenue-Strategy-and-Payments-Ecosystem-Development.html", sourceType: "press-release" },
+  { date: "2025-10-12", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "8-K HOD merger", sourceUrl: "/filings/tbh/0001213900-25-099991", sourceType: "sec-filing" },
+  { date: "2025-12-18", holdings: 0, sharesOutstandingDiluted: 10_800_000, holdingsPerShare: 0, source: "8-K DOGE treasury update", sourceUrl: "/filings/tbh/0001213900-25-122463", sourceType: "sec-filing" },
 ];
 
 // Bit Origin (BTOG) - DOGE treasury, Singapore-based (Cayman Islands incorporated)
