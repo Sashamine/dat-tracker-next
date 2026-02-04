@@ -405,7 +405,13 @@ export default function CompanyPage() {
         {/* Key Valuation Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+              mNAV
+              <span 
+                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
+                title="mNAV = EV ÷ Crypto NAV&#10;&#10;• EV (Enterprise Value) = Market Cap + Debt + Preferred - Cash&#10;• Crypto NAV = Crypto holdings × current price&#10;&#10;mNAV of 1.0x means you're paying exactly for the crypto. Above 1.0x is a premium."
+              >?</span>
+            </p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
             </p>
@@ -517,6 +523,49 @@ export default function CompanyPage() {
           )}
         </div>
 
+        {/* Definitions */}
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg">
+          <summary className="px-4 py-3 cursor-pointer text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">
+            📖 Key Definitions
+          </summary>
+          <div className="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="font-medium text-gray-700 dark:text-gray-300">Crypto NAV</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                Value of crypto holdings at current market price.
+                <br />
+                <span className="font-mono text-xs">{displayCompany.asset} Holdings × {displayCompany.asset} Price</span>
+              </p>
+            </div>
+            <div>
+              <p className="font-medium text-gray-700 dark:text-gray-300">EV (Enterprise Value)</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                Total value of the company including debt obligations.
+                <br />
+                <span className="font-mono text-xs">Market Cap + Debt + Preferred − Cash</span>
+              </p>
+            </div>
+            <div>
+              <p className="font-medium text-gray-700 dark:text-gray-300">mNAV (Market NAV Multiple)</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                How much you&apos;re paying per dollar of crypto.
+                <br />
+                <span className="font-mono text-xs">EV ÷ Crypto NAV</span>
+                <br />
+                <span className="text-xs">1.0x = fair value, &gt;1.0x = premium, &lt;1.0x = discount</span>
+              </p>
+            </div>
+            <div>
+              <p className="font-medium text-gray-700 dark:text-gray-300">Equity NAV</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                Net assets belonging to common shareholders.
+                <br />
+                <span className="font-mono text-xs">Crypto NAV + Cash − Debt − Preferred</span>
+              </p>
+            </div>
+          </div>
+        </details>
+
         {/* Equity Value - Balance Sheet Summary */}
         {(otherAssets > 0 || cryptoHoldingsValue > 0) && (
           <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -528,7 +577,13 @@ export default function CompanyPage() {
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700 mb-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Equity NAV</p>
+                  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-1">
+                    Equity NAV
+                    <span 
+                      className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-indigo-200 dark:bg-indigo-800 text-[10px] text-indigo-600 dark:text-indigo-300 cursor-help"
+                      title="Equity NAV = What common shareholders own&#10;&#10;Crypto NAV + Cash − Debt − Preferred Equity&#10;&#10;This is the net asset value attributable to common stock."
+                    >?</span>
+                  </p>
                   <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
                     {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}
                   </p>
