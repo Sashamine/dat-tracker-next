@@ -294,8 +294,9 @@ export function HoldingsPerShareChart({
 
       <div className="mt-4 text-xs text-gray-500 space-y-1">
         {ticker === "3350.T" ? (
-          <p className="text-amber-600 dark:text-amber-400">
-            ⚠️ Source: Company disclosures (metaplanet.jp) — not regulatory-verified. All data split-adjusted.
+          <p>
+            Source: TDnet regulatory filings (TSE disclosure system). All data split-adjusted.
+            {" "}{asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
           </p>
         ) : ticker.includes(".") ? (
           <p>
