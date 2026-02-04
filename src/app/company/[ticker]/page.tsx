@@ -944,6 +944,7 @@ export default function CompanyPage() {
                   cashReserves: displayCompany.cashReserves || 0,
                   restrictedCash: displayCompany.restrictedCash || 0,
                   asset: displayCompany.asset,
+                  currency: displayCompany.currency,
                 }}
               />
             </div>

@@ -28,6 +28,7 @@ export interface MnavCompanyData {
   cashReserves: number;       // Cash in USD
   restrictedCash: number;     // Restricted cash in USD
   asset?: string;             // Asset type (BTC, ETH, SOL, etc.) - defaults to BTC
+  currency?: string;          // Stock currency (USD, JPY, etc.) - for forex conversion
 }
 
 interface CryptoHistoryPoint {
@@ -185,13 +186,22 @@ async function fetchCompanyIntradayMnav(
   company: MnavCompanyData
 ): Promise<MnavDataPoint[]> {
   const asset = company.asset || "BTC";
+  const currency = company.currency || "USD";
+  const needsForexConversion = currency !== "USD";
   const optimalInterval = OPTIMAL_INTERVALS[range] || "1h";
 
-  // Fetch crypto and stock prices in parallel
-  const [cryptoRes, stockRes] = await Promise.all([
+  // Fetch crypto and stock prices in parallel (+ forex if needed)
+  const fetchPromises: Promise<Response>[] = [
     fetch(`/api/crypto/${asset}/history?range=${range}`),
     fetch(`/api/stocks/${ticker}/history?range=${range}&interval=${optimalInterval}`),
-  ]);
+  ];
+  if (needsForexConversion) {
+    fetchPromises.push(fetch("/api/prices/forex"));
+  }
+
+  const responses = await Promise.all(fetchPromises);
+  const [cryptoRes, stockRes] = responses;
+  const forexRes = needsForexConversion ? responses[2] : null;
 
   if (!cryptoRes.ok || !stockRes.ok) {
     console.warn(`[mnavHistory] Failed to fetch intraday data for ${ticker}`);
@@ -200,6 +210,13 @@ async function fetchCompanyIntradayMnav(
 
   const cryptoData: CryptoHistoryPoint[] = await cryptoRes.json();
   const stockData: StockHistoryPoint[] = await stockRes.json();
+
+  // Get forex rate for currency conversion
+  let forexRate = 1;
+  if (needsForexConversion && forexRes?.ok) {
+    const forexData = await forexRes.json();
+    forexRate = forexData[currency] || 1;
+  }
 
   if (cryptoData.length === 0 || stockData.length === 0) {
     return [];
@@ -217,7 +234,9 @@ async function fetchCompanyIntradayMnav(
 
   // Calculate mNAV using simple formula (no dilution adjustments)
   return aligned.map(({ time, btcPrice: cryptoPrice, stockPrice }) => {
-    const marketCap = stockPrice * company.sharesForMnav;
+    // Convert stock price to USD if needed
+    const stockPriceUsd = stockPrice / forexRate;
+    const marketCap = stockPriceUsd * company.sharesForMnav;
     const enterpriseValue = marketCap + (company.totalDebt || 0) - (company.cashReserves || 0);
     const cryptoNav = company.holdings * cryptoPrice;
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
@@ -225,7 +244,7 @@ async function fetchCompanyIntradayMnav(
     return {
       time,
       btcPrice: cryptoPrice,
-      stockPrice,
+      stockPrice: stockPriceUsd, // Return USD price for consistency
       mnav,
     };
   });
@@ -294,12 +313,24 @@ async function getCompanyDailyMnav(
   // Always fetch 1y data to ensure we get YYYY-MM-DD format (not timestamps)
   // Then filter to requested range
   const asset = companyData.asset || "BTC";
+  const currency = companyData.currency || "USD";
+  const needsForexConversion = currency !== "USD";
+  
   // Use max available data for "all" range, otherwise 1y
   const fetchRange = range === "all" ? "5y" : "1y";
-  const [cryptoRes, stockRes] = await Promise.all([
+  
+  // Fetch data - include forex rates if needed for non-USD stocks
+  const fetchPromises: Promise<Response>[] = [
     fetch(`/api/crypto/${asset}/history?range=${fetchRange}&interval=1d`),
     fetch(`/api/stocks/${ticker}/history?range=${fetchRange}&interval=1d`),
-  ]);
+  ];
+  if (needsForexConversion) {
+    fetchPromises.push(fetch("/api/prices/forex"));
+  }
+  
+  const responses = await Promise.all(fetchPromises);
+  const [cryptoRes, stockRes] = responses;
+  const forexRes = needsForexConversion ? responses[2] : null;
 
   if (!cryptoRes.ok || !stockRes.ok) {
     console.warn(`[mnavHistory] Failed to fetch history for ${ticker} (asset: ${asset})`);
@@ -308,6 +339,16 @@ async function getCompanyDailyMnav(
 
   const cryptoData: CryptoHistoryPoint[] = await cryptoRes.json();
   const stockData: StockHistoryPoint[] = await stockRes.json();
+  
+  // Get forex rate for currency conversion (e.g., JPY: 156 means 1 USD = 156 JPY)
+  let forexRate = 1;
+  if (needsForexConversion && forexRes?.ok) {
+    const forexData = await forexRes.json();
+    forexRate = forexData[currency] || 1;
+    if (forexRate === 1) {
+      console.warn(`[mnavHistory] No forex rate found for ${currency}, using 1`);
+    }
+  }
 
   if (!cryptoData.length || !stockData.length) {
     return [];
@@ -341,7 +382,9 @@ async function getCompanyDailyMnav(
       ?? companyData.holdings;
     
     // Calculate market cap and mNAV
-    const marketCap = stockPrice * companyData.sharesForMnav;
+    // Convert stock price to USD if needed (forexRate = units of foreign currency per USD)
+    const stockPriceUsd = stockPrice / forexRate;
+    const marketCap = stockPriceUsd * companyData.sharesForMnav;
     const cryptoNav = holdings * cryptoPrice;
     const enterpriseValue = marketCap + (companyData.totalDebt || 0) - (companyData.cashReserves || 0);
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
