@@ -809,9 +809,15 @@ export default function CompanyPage() {
         )}
 
         {/* Chart with Time Range Selector */}
-        <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-4 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <div className="flex flex-wrap items-center gap-2">
               {/* Time Range Buttons */}
               <div className="flex gap-1">
@@ -871,30 +877,44 @@ export default function CompanyPage() {
               No historical data available
             </div>
           )}
-        </div>
+          </div>
+        </details>
 
 
         {/* mNAV History Chart */}
         {mNAV && stockPrice > 0 && cryptoPrice > 0 && !displayCompany.pendingMerger && (
-          <CompanyMNAVChart
-            ticker={displayCompany.ticker}
-            asset={displayCompany.asset}
-            currentMNAV={mNAV}
-            currentStockPrice={stockPrice}
-            currentCryptoPrice={cryptoPrice}
-            timeRange={timeRange}
-            interval={interval}
-            className="mb-8"
-            companyData={{
-              holdings: displayCompany.holdings,
-              sharesForMnav: displayCompany.sharesForMnav || 0,
-              totalDebt: displayCompany.totalDebt || 0,
-              preferredEquity: displayCompany.preferredEquity || 0,
-              cashReserves: displayCompany.cashReserves || 0,
-              restrictedCash: displayCompany.restrictedCash || 0,
-              asset: displayCompany.asset,
-            }}
-          />
+          <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+            <summary className="p-4 cursor-pointer flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV History</h2>
+              <div className="flex items-center gap-3">
+                <span className="text-lg font-bold text-gray-900 dark:text-gray-100">{formatMNAV(mNAV)}</span>
+                <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </summary>
+            <div className="px-4 pb-4">
+              <CompanyMNAVChart
+                ticker={displayCompany.ticker}
+                asset={displayCompany.asset}
+                currentMNAV={mNAV}
+                currentStockPrice={stockPrice}
+                currentCryptoPrice={cryptoPrice}
+                timeRange={timeRange}
+                interval={interval}
+                className=""
+                companyData={{
+                  holdings: displayCompany.holdings,
+                  sharesForMnav: displayCompany.sharesForMnav || 0,
+                  totalDebt: displayCompany.totalDebt || 0,
+                  preferredEquity: displayCompany.preferredEquity || 0,
+                  cashReserves: displayCompany.cashReserves || 0,
+                  restrictedCash: displayCompany.restrictedCash || 0,
+                  asset: displayCompany.asset,
+                }}
+              />
+            </div>
+          </details>
         )}
 
         {/* Treasury & Holdings */}
@@ -1010,12 +1030,27 @@ export default function CompanyPage() {
         </details>
 
         {/* Holdings Per Share Growth Chart */}
-        <HoldingsPerShareChart
-          ticker={displayCompany.ticker}
-          asset={displayCompany.asset}
-          currentHoldingsPerShare={holdingsPerShare}
-          className="mb-8"
-        />
+        <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{displayCompany.asset}/Share Growth</h2>
+            <div className="flex items-center gap-3">
+              <span className="text-lg font-mono text-gray-900 dark:text-gray-100">
+                {holdingsPerShare ? holdingsPerShare.toFixed(6) : "—"}
+              </span>
+              <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </summary>
+          <div className="px-4 pb-4">
+            <HoldingsPerShareChart
+              ticker={displayCompany.ticker}
+              asset={displayCompany.asset}
+              currentHoldingsPerShare={holdingsPerShare}
+              className=""
+            />
+          </div>
+        </details>
 
         {/* Holdings History Table - shows each acquisition with SEC links */}
         <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
