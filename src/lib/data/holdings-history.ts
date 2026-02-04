@@ -140,7 +140,7 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 19287, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000520, source: "Q3 2025 10-Q (XBRL)", sourceType: "sec-filing" },
   // Dec 2025: Sold 1,818 BTC → 18,005 BTC remaining (per production update)
   // Note: This is from press release, not yet in SEC filing
-  { date: "2025-12-31", holdings: 18005, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000485, source: "Dec 2025 Production Update", sourceUrl: "https://www.riotplatforms.com/news-media/press-releases", sourceType: "press-release" },
+  { date: "2025-12-31", holdings: 18005, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000485, source: "8-K Dec 2025 production", sourceUrl: "/filings/riot/0001104659-26-000248", sourceType: "sec-filing" },
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
@@ -371,7 +371,7 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
 // SEC CIK: 0001946573
 // Verified 2026-01-28 via SEC 8-K filings
 const NAKA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-08-15", holdings: 1250, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000132, source: "Initial treasury announcement", sourceType: "press-release" },
+  { date: "2024-08-15", holdings: 1250, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000132, source: "8-K ETH treasury", sourceUrl: "/filings/bmnr/0001493152-24-033579", sourceType: "sec-filing" },
   { date: "2024-10-31", holdings: 2800, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.0000255, source: "Q3 2024 filing", sourceType: "sec-filing" },
   { date: "2024-12-31", holdings: 4150, sharesOutstandingDiluted: 125_000_000, holdingsPerShare: 0.0000332, source: "Q4 2024 10-K", sourceType: "sec-filing" },
   { date: "2025-03-31", holdings: 5398, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.0000386, source: "Q1 2025 10-Q", sourceType: "sec-filing" },
@@ -393,7 +393,7 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   // Post-merger (Sep 3, 2025)
   { date: "2025-09-30", holdings: 3_418, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000038, source: "SEC 10-Q Q3 2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=10-Q", sourceType: "sec-filing" },
   { date: "2025-10-24", holdings: 3_865, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000043, source: "Press release", sourceType: "press-release" },
-  { date: "2025-11-05", holdings: 4_004, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000045, source: "PR Newswire Nov 5, 2025 (SPS: 432)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html", sourceType: "press-release" },
+  { date: "2025-11-05", holdings: 4_004, sharesOutstandingDiluted: 899_489_426, holdingsPerShare: 0.0000045, source: "8-K BTC holdings", sourceUrl: "/filings/naka/0001193125-25-277545", sourceType: "sec-filing" },
   // Dec 2025 updates - verified 2026-01-28
   { date: "2025-12-08", holdings: 4_783, sharesOutstandingDiluted: 943_392_505, holdingsPerShare: 0.0000051, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
   { date: "2025-12-14", holdings: 5_098, sharesOutstandingDiluted: 943_392_505, holdingsPerShare: 0.0000054, source: "PR Newswire Dec 14, 2025 (Top 20 milestone)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html", sourceType: "press-release" },
@@ -501,7 +501,7 @@ const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-06-30", holdings: 0, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0, source: "Pre-DAT strategy", sourceType: "company-reported" },
   { date: "2024-12-31", holdings: 0, sharesOutstandingDiluted: 32_635_995, holdingsPerShare: 0, source: "SEC 10-Q Q3 2025 (Jan 1, 2025 balance)", sourceType: "sec-filing" },
   // 2025 - ETH treasury strategy launched
-  { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 0.0000303, source: "Initial $5M ETH purchase (direct)", sourceType: "press-release" },
+  { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 0.0000303, source: "8-K ETH treasury", sourceUrl: "/filings/game/0001641172-25-018427", sourceType: "sec-filing" },
   // Q3 2025: Direct holdings only = $4.02M / $2,500 = 1,608 ETH (fund position tracked separately)
   { date: "2025-09-30", holdings: 1608, sharesOutstandingDiluted: 98_380_767, holdingsPerShare: 0.0000163, source: "SEC 10-Q Q3 2025 (direct holdings only)", sharesSource: "SEC 10-Q cover page Nov 11, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=10-Q", sourceType: "sec-filing" },
   // Jan 2026: After 3.54M share buybacks (Oct-Jan), holdings unchanged (no Q4 filing yet)
@@ -760,8 +760,8 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
 // 279,997,636 shares per SEC 10-Q Q3 2025 (filed Nov 5, 2025)
 const DJT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, source: "Treasury deal closed", sourceType: "press-release" },
-  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, source: "Press reports ~$2B BTC", sourceType: "press-release" },
+  { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, source: "8-K Treasury deal", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
+  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, source: "8-K BTC holdings", sourceUrl: "/filings/djt/0001140361-25-026510", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.0000412, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q", sourceType: "sec-filing" },
 ];
 
