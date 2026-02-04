@@ -195,7 +195,7 @@ export function HoldingsPerShareChart({
   const hasAcquisitionData = isMstr || companyAcquisitions.length > 0;
 
   // Handle crosshair move for acquisition tooltips
-  const handleCrosshairMove = useCallback((param: { time?: Time; point?: { x: number; y: number }; sourceEvent?: MouseEvent }) => {
+  const handleCrosshairMove = useCallback((param: { time?: Time; point?: { x: number; y: number } }) => {
     if (!showAcquisitions || !param.time || !param.point || acquisitionData.size === 0) {
       setHoveredAcquisition(null);
       setTooltipPosition(null);
