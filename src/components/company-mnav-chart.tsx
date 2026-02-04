@@ -43,11 +43,7 @@ export function CompanyMNAVChart({
   const seriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
-  const [selectedAcquisition, setSelectedAcquisition] = useState<BTCAcquisitionEvent | null>(null);
-  const [selectedCompanyAcquisition, setSelectedCompanyAcquisition] = useState<AcquisitionEvent | null>(null);
   const [showAcquisitions, setShowAcquisitions] = useState(true);
-  const [isTooltipHovered, setIsTooltipHovered] = useState(false);
-  const tooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isMstr = ticker.toUpperCase() === "MSTR";
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
@@ -268,43 +264,14 @@ export function CompanyMNAVChart({
     
     chart.timeScale().fitContent();
 
-    // Add crosshair move handler to show acquisition info on hover
+    // Add crosshair move handler to show point info on hover
     chart.subscribeCrosshairMove((param) => {
       if (param.time) {
         const timeStr = String(param.time);
         const point = dataPoints.get(timeStr);
         setSelectedPoint(point || null);
-        
-        if (isMstr) {
-          // Check if hovering over a MSTR acquisition event
-          const acquisition = MSTR_BTC_TIMELINE.find(e => e.date === timeStr);
-          if (acquisition) {
-            if (tooltipTimeoutRef.current) {
-              clearTimeout(tooltipTimeoutRef.current);
-              tooltipTimeoutRef.current = null;
-            }
-            setSelectedAcquisition(acquisition);
-          }
-        } else {
-          // Check if hovering over a company acquisition event
-          const acquisition = companyAcquisitions.find(e => e.date === timeStr);
-          if (acquisition) {
-            if (tooltipTimeoutRef.current) {
-              clearTimeout(tooltipTimeoutRef.current);
-              tooltipTimeoutRef.current = null;
-            }
-            setSelectedCompanyAcquisition(acquisition);
-          }
-        }
       } else {
         setSelectedPoint(null);
-        // Delay hiding acquisition tooltip to allow clicking
-        if (!isTooltipHovered) {
-          tooltipTimeoutRef.current = setTimeout(() => {
-            setSelectedAcquisition(null);
-            setSelectedCompanyAcquisition(null);
-          }, 500);
-        }
       }
     });
 
@@ -337,15 +304,6 @@ export function CompanyMNAVChart({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasData, mnavHistory, isMstr, dataPoints, acquisitionMarkers]);
   
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (tooltipTimeoutRef.current) {
-        clearTimeout(tooltipTimeoutRef.current);
-      }
-    };
-  }, []);
-
   // Calculate current and change stats
   const stats = useMemo(() => {
     if (mnavHistory.length < 2) return null;
@@ -458,114 +416,8 @@ export function CompanyMNAVChart({
           )}
           <div ref={chartContainerRef} className="w-full h-[300px]" />
 
-          {/* BTC Acquisition event panel - shows on hover over marker */}
-          {isMstr && selectedAcquisition && (
-            <div 
-              className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 text-xs"
-              onMouseEnter={() => {
-                setIsTooltipHovered(true);
-                if (tooltipTimeoutRef.current) {
-                  clearTimeout(tooltipTimeoutRef.current);
-                  tooltipTimeoutRef.current = null;
-                }
-              }}
-              onMouseLeave={() => {
-                setIsTooltipHovered(false);
-                tooltipTimeoutRef.current = setTimeout(() => {
-                  setSelectedAcquisition(null);
-                }, 300);
-              }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                  </svg>
-                  BTC Acquisition
-                </span>
-                <span className="font-bold text-amber-600 dark:text-amber-400">
-                  +{selectedAcquisition.btcAcquired.toLocaleString()} BTC
-                </span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-amber-700 dark:text-amber-300">
-                <div>
-                  <span className="text-amber-600 dark:text-amber-500">Date:</span>{" "}
-                  <span className="font-medium">{selectedAcquisition.date}</span>
-                </div>
-                {selectedAcquisition.avgPriceUsd && (
-                  <div>
-                    <span className="text-amber-600 dark:text-amber-500">Avg Price:</span>{" "}
-                    <span className="font-medium">${selectedAcquisition.avgPriceUsd.toLocaleString()}</span>
-                  </div>
-                )}
-                <div>
-                  <span className="text-amber-600 dark:text-amber-500">Total After:</span>{" "}
-                  <span className="font-medium">{selectedAcquisition.cumulativeHoldings.toLocaleString()} BTC</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Company acquisition event panel - shows on hover over marker */}
-          {!isMstr && selectedCompanyAcquisition && (
-            <div 
-              className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 text-xs"
-              onMouseEnter={() => {
-                setIsTooltipHovered(true);
-                if (tooltipTimeoutRef.current) {
-                  clearTimeout(tooltipTimeoutRef.current);
-                  tooltipTimeoutRef.current = null;
-                }
-              }}
-              onMouseLeave={() => {
-                setIsTooltipHovered(false);
-                tooltipTimeoutRef.current = setTimeout(() => {
-                  setSelectedCompanyAcquisition(null);
-                }, 300);
-              }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                  </svg>
-                  {asset} Acquisition
-                </span>
-                <span className="font-bold text-amber-600 dark:text-amber-400">
-                  +{selectedCompanyAcquisition.acquired >= 1000000 
-                    ? (selectedCompanyAcquisition.acquired / 1000000).toFixed(2) + "M"
-                    : selectedCompanyAcquisition.acquired >= 1000
-                    ? (selectedCompanyAcquisition.acquired / 1000).toFixed(0) + "K"
-                    : selectedCompanyAcquisition.acquired.toLocaleString()
-                  } {asset}
-                </span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-amber-700 dark:text-amber-300">
-                <div>
-                  <span className="text-amber-600 dark:text-amber-500">Date:</span>{" "}
-                  <span className="font-medium">{selectedCompanyAcquisition.date}</span>
-                </div>
-                <div>
-                  <span className="text-amber-600 dark:text-amber-500">Total After:</span>{" "}
-                  <span className="font-medium">
-                    {selectedCompanyAcquisition.cumulativeHoldings >= 1000000
-                      ? (selectedCompanyAcquisition.cumulativeHoldings / 1000000).toFixed(2) + "M"
-                      : selectedCompanyAcquisition.cumulativeHoldings.toLocaleString()
-                    } {asset}
-                  </span>
-                </div>
-                {selectedCompanyAcquisition.source && (
-                  <div>
-                    <span className="text-amber-600 dark:text-amber-500">Source:</span>{" "}
-                    <span className="font-medium">{selectedCompanyAcquisition.source}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
           {/* Point info panel for MSTR - shows on hover */}
-          {isMstr && selectedPoint && !selectedAcquisition && (
+          {isMstr && selectedPoint && (
             <div className="mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-xs">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-gray-900 dark:text-gray-100">

@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { getHoldingsHistory, calculateHoldingsGrowth } from "@/lib/data/holdings-history";
+
+type TimeRange = "3mo" | "6mo" | "1y" | "all";
 
 interface HoldingsPerShareChartProps {
   ticker: string;
@@ -20,16 +22,49 @@ export function HoldingsPerShareChart({
 }: HoldingsPerShareChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const [timeRange, setTimeRange] = useState<TimeRange>("all");
 
   const historyData = useMemo(() => getHoldingsHistory(ticker), [ticker]);
+  
+  // Filter history based on time range
+  const filteredHistory = useMemo(() => {
+    if (!historyData) return null;
+    
+    const now = new Date();
+    let startDate: Date;
+    
+    switch (timeRange) {
+      case "3mo":
+        startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+        break;
+      case "6mo":
+        startDate = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+        break;
+      case "1y":
+        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        break;
+      case "all":
+      default:
+        return historyData.history;
+    }
+    
+    return historyData.history.filter(snapshot => new Date(snapshot.date) >= startDate);
+  }, [historyData, timeRange]);
+
   const growthMetrics = useMemo(
-    () => (historyData ? calculateHoldingsGrowth(historyData.history) : null),
-    [historyData]
+    () => (filteredHistory && filteredHistory.length >= 2 ? calculateHoldingsGrowth(filteredHistory) : null),
+    [filteredHistory]
   );
 
   // Initialize and update chart
   useEffect(() => {
-    if (!chartContainerRef.current || !historyData || historyData.history.length < 2) return;
+    if (!chartContainerRef.current || !filteredHistory || filteredHistory.length < 2) return;
+
+    // Clean up existing chart
+    if (chartRef.current) {
+      chartRef.current.remove();
+      chartRef.current = null;
+    }
 
     const isMobile = window.innerWidth < 768;
     const chart = createChart(chartContainerRef.current, {
@@ -74,7 +109,7 @@ export function HoldingsPerShareChart({
     });
 
     // Format data for chart
-    const chartData = historyData.history.map((snapshot) => ({
+    const chartData = filteredHistory.map((snapshot) => ({
       time: snapshot.date as Time,
       value: snapshot.holdingsPerShare,
     }));
@@ -84,9 +119,9 @@ export function HoldingsPerShareChart({
 
     // Handle resize
     const handleResize = () => {
-      if (chartContainerRef.current) {
+      if (chartContainerRef.current && chartRef.current) {
         const isMobileNow = window.innerWidth < 768;
-        chart.applyOptions({
+        chartRef.current.applyOptions({
           width: chartContainerRef.current.clientWidth,
           height: isMobileNow ? 200 : 250,
         });
@@ -97,9 +132,12 @@ export function HoldingsPerShareChart({
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      chart.remove();
+      if (chartRef.current) {
+        chartRef.current.remove();
+        chartRef.current = null;
+      }
     };
-  }, [historyData, asset]);
+  }, [filteredHistory, asset]);
 
   // If no historical data, show current value only
   if (!historyData || historyData.history.length < 2) {
@@ -134,12 +172,12 @@ export function HoldingsPerShareChart({
     );
   }
 
-  const firstSnapshot = historyData.history[0];
-  const lastSnapshot = historyData.history[historyData.history.length - 1];
+  const firstSnapshot = filteredHistory && filteredHistory.length > 0 ? filteredHistory[0] : historyData.history[0];
+  const lastSnapshot = filteredHistory && filteredHistory.length > 0 ? filteredHistory[filteredHistory.length - 1] : historyData.history[historyData.history.length - 1];
 
   return (
     <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-6", className)}>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             {asset} Per Share Growth
@@ -150,43 +188,74 @@ export function HoldingsPerShareChart({
             {new Date(lastSnapshot.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
           </p>
         </div>
-        <div className="flex gap-6 text-right">
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide">Current</p>
-            <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
-              {lastSnapshot.holdingsPerShare >= 0.01
-                ? lastSnapshot.holdingsPerShare.toFixed(4)
-                : lastSnapshot.holdingsPerShare >= 0.0001
-                ? lastSnapshot.holdingsPerShare.toFixed(6)
-                : lastSnapshot.holdingsPerShare.toFixed(8)}
-            </p>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Time Range Buttons */}
+          <div className="flex gap-1">
+            {([
+              { value: "3mo", label: "3M" },
+              { value: "6mo", label: "6M" },
+              { value: "1y", label: "1Y" },
+              { value: "all", label: "ALL" },
+            ] as const).map(({ value, label }) => (
+              <button
+                key={value}
+                onClick={() => setTimeRange(value)}
+                className={cn(
+                  "px-3 py-1 text-sm rounded-md transition-colors",
+                  timeRange === value
+                    ? "bg-green-600 text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                )}
+              >
+                {label}
+              </button>
+            ))}
           </div>
-          {growthMetrics && (
-            <>
-              <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wide">Total Growth</p>
-                <p className={cn(
-                  "text-xl font-bold",
-                  growthMetrics.totalGrowth >= 0 ? "text-green-600" : "text-red-600"
-                )}>
-                  {growthMetrics.totalGrowth >= 0 ? "+" : ""}{growthMetrics.totalGrowth.toFixed(1)}%
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wide">CAGR</p>
-                <p className={cn(
-                  "text-xl font-bold",
-                  growthMetrics.annualizedGrowth >= 0 ? "text-green-600" : "text-red-600"
-                )}>
-                  {growthMetrics.annualizedGrowth >= 0 ? "+" : ""}{growthMetrics.annualizedGrowth.toFixed(1)}%
-                </p>
-              </div>
-            </>
-          )}
         </div>
       </div>
 
-      <div ref={chartContainerRef} className="w-full" />
+      <div className="flex gap-6 text-right mb-4">
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Current</p>
+          <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
+            {lastSnapshot.holdingsPerShare >= 0.01
+              ? lastSnapshot.holdingsPerShare.toFixed(4)
+              : lastSnapshot.holdingsPerShare >= 0.0001
+              ? lastSnapshot.holdingsPerShare.toFixed(6)
+              : lastSnapshot.holdingsPerShare.toFixed(8)}
+          </p>
+        </div>
+        {growthMetrics && (
+          <>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide">Period Growth</p>
+              <p className={cn(
+                "text-xl font-bold",
+                growthMetrics.totalGrowth >= 0 ? "text-green-600" : "text-red-600"
+              )}>
+                {growthMetrics.totalGrowth >= 0 ? "+" : ""}{growthMetrics.totalGrowth.toFixed(1)}%
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide">CAGR</p>
+              <p className={cn(
+                "text-xl font-bold",
+                growthMetrics.annualizedGrowth >= 0 ? "text-green-600" : "text-red-600"
+              )}>
+                {growthMetrics.annualizedGrowth >= 0 ? "+" : ""}{growthMetrics.annualizedGrowth.toFixed(1)}%
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+
+      {filteredHistory && filteredHistory.length >= 2 ? (
+        <div ref={chartContainerRef} className="w-full" />
+      ) : (
+        <div className="h-[200px] flex items-center justify-center text-gray-500">
+          Not enough data points for selected time range
+        </div>
+      )}
 
       <div className="mt-4 text-xs text-gray-500">
         <p>
