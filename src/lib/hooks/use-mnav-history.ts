@@ -196,12 +196,12 @@ async function fetchCompanyIntradayMnav(
     fetch(`/api/stocks/${ticker}/history?range=${range}&interval=${optimalInterval}`),
   ];
   if (needsForexConversion) {
-    fetchPromises.push(fetch("/api/prices/forex"));
+    fetchPromises.push(fetch("/api/prices")); // Forex is in /api/prices response
   }
 
   const responses = await Promise.all(fetchPromises);
   const [cryptoRes, stockRes] = responses;
-  const forexRes = needsForexConversion ? responses[2] : null;
+  const pricesRes = needsForexConversion ? responses[2] : null;
 
   if (!cryptoRes.ok || !stockRes.ok) {
     console.warn(`[mnavHistory] Failed to fetch intraday data for ${ticker}`);
@@ -213,9 +213,9 @@ async function fetchCompanyIntradayMnav(
 
   // Get forex rate for currency conversion
   let forexRate = 1;
-  if (needsForexConversion && forexRes?.ok) {
-    const forexData = await forexRes.json();
-    forexRate = forexData[currency] || 1;
+  if (needsForexConversion && pricesRes?.ok) {
+    const pricesData = await pricesRes.json();
+    forexRate = pricesData.forex?.[currency] || 1;
   }
 
   if (cryptoData.length === 0 || stockData.length === 0) {
@@ -325,12 +325,12 @@ async function getCompanyDailyMnav(
     fetch(`/api/stocks/${ticker}/history?range=${fetchRange}&interval=1d`),
   ];
   if (needsForexConversion) {
-    fetchPromises.push(fetch("/api/prices/forex"));
+    fetchPromises.push(fetch("/api/prices")); // Forex is in /api/prices response
   }
   
   const responses = await Promise.all(fetchPromises);
   const [cryptoRes, stockRes] = responses;
-  const forexRes = needsForexConversion ? responses[2] : null;
+  const pricesRes = needsForexConversion ? responses[2] : null;
 
   if (!cryptoRes.ok || !stockRes.ok) {
     console.warn(`[mnavHistory] Failed to fetch history for ${ticker} (asset: ${asset})`);
@@ -342,9 +342,9 @@ async function getCompanyDailyMnav(
   
   // Get forex rate for currency conversion (e.g., JPY: 156 means 1 USD = 156 JPY)
   let forexRate = 1;
-  if (needsForexConversion && forexRes?.ok) {
-    const forexData = await forexRes.json();
-    forexRate = forexData[currency] || 1;
+  if (needsForexConversion && pricesRes?.ok) {
+    const pricesData = await pricesRes.json();
+    forexRate = pricesData.forex?.[currency] || 1;
     if (forexRate === 1) {
       console.warn(`[mnavHistory] No forex rate found for ${currency}, using 1`);
     }
