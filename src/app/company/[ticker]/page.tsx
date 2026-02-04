@@ -898,8 +898,18 @@ export default function CompanyPage() {
         )}
 
         {/* Treasury & Holdings */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Treasury & Holdings</h3>
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-mono text-gray-600 dark:text-gray-400">{formatTokenAmount(displayCompany.holdings, displayCompany.asset)}</span>
+              <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </summary>
+          <div className="px-4 pb-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-1">
               <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset} Holdings</p>
               <StalenessBadge
@@ -923,24 +933,32 @@ export default function CompanyPage() {
               </span>
             </Citation>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {formatLargeNumber(marketCap)}
             </p>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset}/Share</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {holdingsPerShare ? holdingsPerShare.toFixed(6) : "—"}
             </p>
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Yield & Operations */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Yield & Operations</h3>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-4 pb-4 grid grid-cols-2 md:grid-cols-4 gap-4">
           {displayCompany.stakingPct !== undefined && (
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <p className="text-sm text-gray-500 dark:text-gray-400">Staking</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {formatPercent(displayCompany.stakingPct)}
@@ -951,7 +969,7 @@ export default function CompanyPage() {
             </div>
           )}
           {displayCompany.quarterlyBurnUsd !== undefined && (
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <p className="text-sm text-gray-500 dark:text-gray-400">Quarterly Burn</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {formatLargeNumber(displayCompany.quarterlyBurnUsd)}
@@ -959,7 +977,7 @@ export default function CompanyPage() {
             </div>
           )}
           {displayCompany.costBasisAvg && (
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <p className="text-sm text-gray-500 dark:text-gray-400">Avg Cost Basis</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 ${displayCompany.costBasisAvg.toLocaleString()}
@@ -977,7 +995,7 @@ export default function CompanyPage() {
               </p>
             </div>
           )}
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset} Price</p>
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
               ${cryptoPrice.toLocaleString()}
@@ -988,7 +1006,8 @@ export default function CompanyPage() {
               </p>
             )}
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Holdings Per Share Growth Chart */}
         <HoldingsPerShareChart
@@ -999,18 +1018,38 @@ export default function CompanyPage() {
         />
 
         {/* Holdings History Table - shows each acquisition with SEC links */}
-        <HoldingsHistoryTable
-          ticker={displayCompany.ticker}
-          asset={displayCompany.asset}
-          className="mb-8"
-        />
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Holdings History</h3>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-4 pb-4">
+            <HoldingsHistoryTable
+              ticker={displayCompany.ticker}
+              asset={displayCompany.asset}
+              className=""
+            />
+          </div>
+        </details>
 
         {/* Scheduled Events (debt maturities, pending verifications) */}
-        <ScheduledEvents
-          ticker={displayCompany.ticker}
-          stockPrice={stockPrice}
-          className="mb-8"
-        />
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Scheduled Events</h3>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-4 pb-4">
+            <ScheduledEvents
+              ticker={displayCompany.ticker}
+              stockPrice={stockPrice}
+              className=""
+            />
+          </div>
+        </details>
 
         {/* Comprehensive Strategy & Overview Section */}
         <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group">
@@ -1317,11 +1356,21 @@ export default function CompanyPage() {
           </details>
         )}
         {/* SEC / Regulatory Filings */}
-        <CompanyFilings
-          ticker={displayCompany.ticker}
-          companyName={displayCompany.name}
-          className="mb-8"
-        />
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">SEC / Regulatory Filings</h3>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-4 pb-4">
+            <CompanyFilings
+              ticker={displayCompany.ticker}
+              companyName={displayCompany.name}
+              className=""
+            />
+          </div>
+        </details>
 
       </main>
 
