@@ -137,6 +137,8 @@ export function enrichCompany(company: Company): Company {
     ...company,
     ...mergedFinancials,
     sharesOutstandingFD: sharesOutstandingFD ?? company.sharesOutstandingFD,
+    // Currency from static data (for non-USD stocks like JPY, HKD)
+    currency: staticCompany?.currency ?? company.currency,
   };
 }
 
