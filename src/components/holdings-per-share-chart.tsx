@@ -145,24 +145,15 @@ export function HoldingsPerShareChart({
       }
     }
     
-    // Create markers from aggregated events
+    // Create subtle dot markers from aggregated events
     const markers: SeriesMarker<Time>[] = [];
     for (const event of aggregatedEvents) {
-      let text: string;
-      if (event.total >= 1000000) {
-        text = `+${(event.total / 1000000).toFixed(1)}M`;
-      } else if (event.total >= 1000) {
-        text = `+${(event.total / 1000).toFixed(0)}K`;
-      } else {
-        text = `+${event.total.toFixed(0)}`;
-      }
-      
       markers.push({
         time: event.date as Time,
         position: "belowBar",
         color: "#f59e0b",
-        shape: "arrowUp",
-        text,
+        shape: "circle",
+        size: 0.5,
       });
     }
     
