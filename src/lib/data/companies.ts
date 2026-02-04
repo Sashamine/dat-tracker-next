@@ -17,8 +17,8 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
     datStartDate: "2025-07-01",
     costBasisAvg: 2_839,  // Calculated from purchase history (purchases-history.ts)
-    stakingPct: 0.85,
-    stakingMethod: "MAVAN validators",
+    stakingPct: 0.47,  // 2,009,267 staked / 4.28M total (Jan 25, 2026) - ramping up MAVAN
+    stakingMethod: "MAVAN validators (ramping)",
     quarterlyBurnUsd: 2_500_000,
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     capitalRaisedAtm: 10_000_000_000,
@@ -36,7 +36,7 @@ export const ethCompanies: Company[] = [
     debtAsOf: "2025-11-30",
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Also holds $219M in non-crypto investments (Beast Industries, OCTO) not reflected in mNAV.",
-    notes: "Largest ETH treasury. 3.55% of ETH supply. 2.9M ETH staked ($188M annual staking revenue). $200M Beast Industries + $20M Eightco (OCTO) equity investments.",
+    notes: "Largest ETH treasury. 3.55% of ETH supply. 2.0M ETH staked (~47%, ramping via MAVAN). $200M Beast Industries + $25M Eightco (OCTO) equity investments.",
   },
   {
     id: "sbet",
