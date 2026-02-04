@@ -120,15 +120,17 @@ export function HoldingsPerShareChart({
     const rawEvents: { date: string; amount: number; sourceUrl?: string; source?: string }[] = [];
     
     if (isMstr) {
-      // MSTR uses dedicated timeline
+      // MSTR uses dedicated timeline - construct SEC URL from filing accession
       for (const event of MSTR_BTC_TIMELINE) {
         const eventDate = new Date(event.date);
         if (eventDate >= startDate && event.btcAcquired >= 1000) {
+          // Construct SEC EDGAR URL from accession number
+          const sourceUrl = `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K&dateb=&owner=include&count=40`;
           rawEvents.push({ 
             date: event.date, 
             amount: event.btcAcquired,
-            sourceUrl: event.sourceUrl,
-            source: event.source,
+            sourceUrl,
+            source: `8-K Filing (${event.filingAccession})`,
           });
         }
       }
@@ -193,23 +195,38 @@ export function HoldingsPerShareChart({
   const hasAcquisitionData = isMstr || companyAcquisitions.length > 0;
 
   // Handle crosshair move for acquisition tooltips
-  const handleCrosshairMove = useCallback((param: { time?: Time; point?: { x: number; y: number } }) => {
-    if (!showAcquisitions || !param.time || !param.point) {
+  const handleCrosshairMove = useCallback((param: { time?: Time; point?: { x: number; y: number }; sourceEvent?: MouseEvent }) => {
+    if (!showAcquisitions || !param.time || !param.point || acquisitionData.size === 0) {
       setHoveredAcquisition(null);
       setTooltipPosition(null);
       return;
     }
     
-    // Check if we're near an acquisition date (within 2 days)
-    const crosshairTime = typeof param.time === 'string' ? new Date(param.time).getTime() : param.time * 1000;
-    const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000;
+    // Parse crosshair time - could be string (YYYY-MM-DD) or number (unix timestamp)
+    let crosshairTime: number;
+    if (typeof param.time === 'string') {
+      crosshairTime = new Date(param.time).getTime();
+    } else if (typeof param.time === 'number') {
+      // Unix timestamp in seconds
+      crosshairTime = param.time * 1000;
+    } else {
+      setHoveredAcquisition(null);
+      setTooltipPosition(null);
+      return;
+    }
+    
+    // Check if we're near an acquisition date (within 5 days for better hit detection)
+    const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
     
     let nearestAcquisition: AcquisitionInfo | null = null;
+    let minDistance = Infinity;
+    
     for (const [dateStr, info] of acquisitionData) {
       const acquisitionTime = new Date(dateStr).getTime();
-      if (Math.abs(crosshairTime - acquisitionTime) < TWO_DAYS_MS) {
+      const distance = Math.abs(crosshairTime - acquisitionTime);
+      if (distance < FIVE_DAYS_MS && distance < minDistance) {
+        minDistance = distance;
         nearestAcquisition = info;
-        break;
       }
     }
     
