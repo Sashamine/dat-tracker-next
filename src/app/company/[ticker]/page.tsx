@@ -579,6 +579,16 @@ export default function CompanyPage() {
               </p>
             </div>
             <div>
+              <p className="font-medium text-gray-700 dark:text-gray-300">NAV/Share</p>
+              <p className="text-gray-500 dark:text-gray-400">
+                Net asset value per share — what each share is &quot;worth&quot; based on assets.
+                <br />
+                <span className="font-mono text-xs">Equity NAV ÷ Shares Outstanding</span>
+                <br />
+                <span className="text-xs">Compare to stock price to see premium/discount</span>
+              </p>
+            </div>
+            <div>
               <p className="font-medium text-gray-700 dark:text-gray-300">Leverage</p>
               <p className="text-gray-500 dark:text-gray-400">
                 Debt relative to crypto holdings. Higher leverage = more risk.
