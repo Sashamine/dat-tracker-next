@@ -43,7 +43,7 @@ export function CompanyMNAVChart({
   const seriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
-  const [showAcquisitions, setShowAcquisitions] = useState(true);
+  const [showAcquisitions, setShowAcquisitions] = useState(false);
 
   const isMstr = ticker.toUpperCase() === "MSTR";
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
