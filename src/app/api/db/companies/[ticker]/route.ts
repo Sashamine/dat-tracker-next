@@ -86,6 +86,7 @@ export async function GET(
       stakingApy: company.stakingApy,
       stakingMethod: company.stakingMethod,
       quarterlyBurnUsd: company.quarterlyBurnUsd,
+      burnEstimated: company.burnEstimated,
       capitalRaisedAtm: company.capitalRaisedAtm,
       capitalRaisedPipe: company.capitalRaisedPipe,
       capitalRaisedConverts: company.capitalRaisedConverts,

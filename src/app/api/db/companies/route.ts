@@ -49,6 +49,7 @@ export async function GET(request: Request) {
       stakingApy: c.stakingApy,
       stakingMethod: c.stakingMethod,
       quarterlyBurnUsd: c.quarterlyBurnUsd,
+      burnEstimated: c.burnEstimated,
       capitalRaisedAtm: c.capitalRaisedAtm,
       capitalRaisedPipe: c.capitalRaisedPipe,
       capitalRaisedConverts: c.capitalRaisedConverts,
