@@ -808,8 +808,16 @@ export default function CompanyPage() {
           </details>
         )}
 
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {/* CHARTS SECTION */}
+        <div className="mb-4 flex items-center gap-2">
+          <span className="text-lg">📊</span>
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Charts</h2>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+        </div>
+
         {/* Chart with Time Range Selector */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -883,7 +891,7 @@ export default function CompanyPage() {
 
         {/* mNAV History Chart */}
         {mNAV && stockPrice > 0 && cryptoPrice > 0 && !displayCompany.pendingMerger && (
-          <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
             <summary className="p-4 cursor-pointer flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV History</h2>
               <div className="flex items-center gap-3">
@@ -917,8 +925,16 @@ export default function CompanyPage() {
           </details>
         )}
 
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {/* FINANCIALS SECTION */}
+        <div className="mb-4 mt-8 flex items-center gap-2">
+          <span className="text-lg">📋</span>
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Financials</h2>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+        </div>
+
         {/* Treasury & Holdings */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Treasury & Holdings</h3>
             <div className="flex items-center gap-3">
@@ -969,7 +985,7 @@ export default function CompanyPage() {
         </details>
 
         {/* Yield & Operations */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Yield & Operations</h3>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1030,7 +1046,7 @@ export default function CompanyPage() {
         </details>
 
         {/* Holdings Per Share Growth Chart */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{displayCompany.asset}/Share Growth</h2>
             <div className="flex items-center gap-3">
@@ -1052,8 +1068,16 @@ export default function CompanyPage() {
           </div>
         </details>
 
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {/* DATA SECTION */}
+        <div className="mb-4 mt-8 flex items-center gap-2">
+          <span className="text-lg">📁</span>
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Data</h2>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+        </div>
+
         {/* Holdings History Table - shows each acquisition with SEC links */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Holdings History</h3>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1070,7 +1094,7 @@ export default function CompanyPage() {
         </details>
 
         {/* Scheduled Events (debt maturities, pending verifications) */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Scheduled Events</h3>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1086,8 +1110,16 @@ export default function CompanyPage() {
           </div>
         </details>
 
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {/* RESEARCH SECTION */}
+        <div className="mb-4 mt-8 flex items-center gap-2">
+          <span className="text-lg">📰</span>
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Research & Filings</h2>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+        </div>
+
         {/* Comprehensive Strategy & Overview Section */}
-        <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group">
+        <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 group">
           <summary className="p-6 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               Strategy & Overview
@@ -1342,7 +1374,7 @@ export default function CompanyPage() {
 
         {/* Press Releases */}
         {intel?.pressReleases && intel.pressReleases.length > 0 && (
-          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group">
+          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 group">
             <summary className="p-6 cursor-pointer flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Recent Press Releases
@@ -1391,7 +1423,7 @@ export default function CompanyPage() {
           </details>
         )}
         {/* SEC / Regulatory Filings */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">SEC / Regulatory Filings</h3>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
