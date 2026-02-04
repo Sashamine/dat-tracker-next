@@ -64,6 +64,7 @@ export async function GET(request: Request) {
       otherInvestments: c.otherInvestments,
       totalDebt: c.totalDebt,
       preferredEquity: c.preferredEquity,
+      preferredDividendAnnual: c.preferredDividendAnnual,
       sharesForMnav: c.sharesForMnav,
       sharesOutstandingFD: c.sharesOutstandingFD,
       pendingMerger: c.pendingMerger || false,

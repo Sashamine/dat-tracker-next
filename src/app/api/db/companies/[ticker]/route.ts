@@ -96,6 +96,7 @@ export async function GET(
       marketCap: company.marketCap,
       totalDebt: company.totalDebt,
       preferredEquity: company.preferredEquity,
+      preferredDividendAnnual: company.preferredDividendAnnual,
       sharesOutstandingFD: company.sharesOutstandingFD,
       sharesForMnav: company.sharesForMnav,
       leverageRatio: company.leverageRatio,
