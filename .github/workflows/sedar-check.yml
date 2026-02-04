@@ -48,7 +48,7 @@ jobs:
           if [ "${{ inputs.dry_run }}" == "true" ]; then
             ARGS="$ARGS --dry-run"
           fi
-          npx ts-node scripts/sedar-check.ts $ARGS
+          npx tsx scripts/sedar-check.ts $ARGS
           
       - name: Commit state changes
         if: ${{ !inputs.dry_run }}
