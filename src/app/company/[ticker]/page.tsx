@@ -463,7 +463,7 @@ export default function CompanyPage() {
           )}
           {displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0 && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Annual Burn</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Operating Burn</p>
               <p className="text-2xl font-bold text-red-600">
                 -${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M
                 {displayCompany.burnAsOf && (
@@ -479,6 +479,32 @@ export default function CompanyPage() {
                 USD/yr (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
               </p>
             </div>
+          )}
+          {/* Total Cash Obligations - Operating Burn + Preferred Dividends */}
+          {(displayCompany.quarterlyBurnUsd || displayCompany.preferredDividendAnnual) && (
+            (() => {
+              const annualBurn = (displayCompany.quarterlyBurnUsd || 0) * 4;
+              const prefDividends = displayCompany.preferredDividendAnnual || 0;
+              const totalObligations = annualBurn + prefDividends;
+              if (totalObligations <= 0) return null;
+              return (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Cash Obligations</p>
+                  <p className="text-2xl font-bold text-amber-600">
+                    ${(totalObligations / 1e6).toFixed(0)}M
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {annualBurn > 0 && prefDividends > 0 ? (
+                      <>Burn ${(annualBurn / 1e6).toFixed(0)}M + Div ${(prefDividends / 1e6).toFixed(0)}M</>
+                    ) : annualBurn > 0 ? (
+                      <>Operating burn/yr</>
+                    ) : (
+                      <>Preferred dividends/yr</>
+                    )}
+                  </p>
+                </div>
+              );
+            })()
           )}
           {(displayCompany.btcMinedAnnual != null && displayCompany.btcMinedAnnual > 0) && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">

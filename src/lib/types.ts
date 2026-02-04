@@ -123,6 +123,7 @@ export interface Company {
   // where freeCash = cashReserves - restrictedCash
   totalDebt?: number;           // Total debt outstanding (converts, bonds, credit facilities)
   preferredEquity?: number;     // Preferred stock notional value (MSTR-style STRK/STRF)
+  preferredDividendAnnual?: number; // Annual preferred dividend obligation (USD)
 
   // Leverage/optionality (for non-yielding assets)
   leverageRatio?: number; // > 1 means company uses debt/converts to amplify exposure

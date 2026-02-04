@@ -302,6 +302,8 @@ export const btcCompanies: Company[] = [
     preferredEquity: 8_382_000_000,
     preferredSource: "SEC 10-Q Q3 2025 ($5.89B) + 8-K Nov 13 2025 STRE (~$717M) + post-Q3 ATM (strategy.com/credit aggregated)",
     preferredAsOf: "2026-01-26",
+    // Preferred dividends: STRK $1.4B @ 8% + STRF/STRC/STRE/STRD ~$7B @ 10% = ~$810M/yr
+    preferredDividendAnnual: 810_000_000,
     // ATM PROGRAM: S-3 shelf registration for $21B equity component of 21/21 plan
     capitalRaisedAtm: 21_000_000_000,  // SEC S-3 shelf capacity (21/21 plan equity component)
     cashReserves: 2_250_000_000,  // SEC 8-K Jan 5, 2026: "USD Reserve was $2.25 billion" for dividends/interest
