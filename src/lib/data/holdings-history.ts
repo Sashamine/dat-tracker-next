@@ -308,13 +308,13 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 214_227_808, holdingsPerShare: 0.00000101, source: "Initial BTC purchase 8-K", sourceType: "sec-filing" },
   { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 240_000_000, holdingsPerShare: 0.00000179, source: "8-K filing", sourceType: "sec-filing" },
-  { date: "2025-01-21", holdings: 510, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.00000196, source: "Press release", sourceType: "press-release" },
-  { date: "2025-02-11", holdings: 610.3, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.00000218, source: "Press release", sourceType: "press-release" },
-  { date: "2025-03-25", holdings: 668.3, sharesOutstandingDiluted: 284_389_637, holdingsPerShare: 0.00000235, source: "Press release", sourceType: "press-release" },
-  { date: "2025-05-20", holdings: 800.3, sharesOutstandingDiluted: 298_466_335, holdingsPerShare: 0.00000268, source: "Press release", sourceType: "press-release" },
+  { date: "2025-01-21", holdings: 510, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.00000196, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-004744", sourceType: "sec-filing" },
+  { date: "2025-02-11", holdings: 610.3, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.00000218, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-011205", sourceType: "sec-filing" },
+  { date: "2025-03-25", holdings: 668.3, sharesOutstandingDiluted: 284_389_637, holdingsPerShare: 0.00000235, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-027569", sourceType: "sec-filing" },
+  { date: "2025-05-20", holdings: 800.3, sharesOutstandingDiluted: 298_466_335, holdingsPerShare: 0.00000268, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-050769", sourceType: "sec-filing" },
   // Post reverse split (1-for-8) - SEC shows split-adjusted shares
-  { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "Press release + reverse split", sourceType: "press-release" },
-  { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "GlobeNewswire press release", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/10/3113243/0/en/KULR-Expands-Bitcoin-Holdings-to-1-021-BTC-Reports-291-2-BTC-Yield.html", sourceType: "press-release" },
+  { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "8-K reverse split + BTC", sourceUrl: "/filings/kulr/0001104659-25-063716", sourceType: "sec-filing" },
+  { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-066854", sourceType: "sec-filing" },
   // Q3 2025: 10-Q shows 1,056.7 BTC held + 70 BTC as collateral = 1,127 total. Using 1,057 (excludes collateral).
   { date: "2025-09-30", holdings: 1057, sharesOutstandingDiluted: 45_650_000, holdingsPerShare: 0.0000231, source: "SEC 10-Q Q3 2025", sharesSource: "Stock Analysis Jan 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm", sourceType: "sec-filing" },
 ];
@@ -622,10 +622,10 @@ const CYPH_HISTORY: HoldingsSnapshot[] = [
 const CWD_HISTORY: HoldingsSnapshot[] = [
   // 2025: LINK treasury strategy launched
   { date: "2025-08-28", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "LINK treasury policy adopted", sourceType: "press-release" },
-  { date: "2025-09-09", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "Initial purchase announced", sourceType: "press-release" },
-  { date: "2025-09-18", holdings: 278_011, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.04026, source: "$6.5M LINK purchase", sourceType: "press-release" },
-  { date: "2025-09-25", holdings: 467_632, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.06773, source: "$10M milestone", sourceType: "press-release" },
-  { date: "2025-10-16", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "$2M additional purchase", sourceType: "press-release" },
+  { date: "2025-09-09", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "8-K LINK treasury", sourceUrl: "/filings/cwd/0001627282-25-000109", sourceType: "sec-filing" },
+  { date: "2025-09-18", holdings: 278_011, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.04026, source: "8-K LINK purchase", sourceUrl: "/filings/cwd/0001104659-25-091023", sourceType: "sec-filing" },
+  { date: "2025-09-25", holdings: 467_632, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.06773, source: "8-K $10M milestone", sourceUrl: "/filings/cwd/0001104659-25-093943", sourceType: "sec-filing" },
+  { date: "2025-10-16", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "8-K LINK purchase", sourceUrl: "/filings/cwd/0001627282-25-000136", sourceType: "sec-filing" },
   // Dec 31, 2025: 6.53M Class A + 0.37M Class B = 6.9M shares per SEC DEF 14A
   { date: "2025-12-31", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "SEC DEF 14A Jan 7, 2026", sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF", sourceType: "sec-filing" },
 ];
