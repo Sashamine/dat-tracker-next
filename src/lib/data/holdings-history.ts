@@ -294,7 +294,7 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
 const DFDV_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-15", holdings: 150000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.01000, source: "Initial SOL treasury", sourceType: "press-release" },
   { date: "2025-06-30", holdings: 735692, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.04087, source: "Q2 2025", sourceType: "sec-filing" },
-  { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.08002, source: "2M SOL milestone" },
+  { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.08002, source: "2M SOL milestone", sourceType: "press-release" },
   { date: "2025-09-30", holdings: 2018419, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.07209, source: "Q3 2025", sourceType: "sec-filing" },
   { date: "2025-12-31", holdings: 2106000, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.07020, source: "Q4 2025 preliminary", sourceType: "sec-filing" },
   { date: "2026-01-01", holdings: 2221329, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.07404, source: "Year in review", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001805526", sourceType: "sec-filing" },
@@ -375,7 +375,7 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-31", holdings: 2800, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.0000255, source: "Q3 2024 filing", sourceType: "sec-filing" },
   { date: "2024-12-31", holdings: 4150, sharesOutstandingDiluted: 125_000_000, holdingsPerShare: 0.0000332, source: "Q4 2024 10-K", sourceType: "sec-filing" },
   { date: "2025-03-31", holdings: 5398, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.0000386, source: "Q1 2025 10-Q", sourceType: "sec-filing" },
-  { date: "2025-08-14", holdings: 21, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000001, source: "Pre-merger" },
+  { date: "2025-08-14", holdings: 21, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000001, source: "Pre-merger", sourceType: "company-reported" },
   { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 450_000_000, holdingsPerShare: 0.0000128, source: "Post-merger 8-K", sourceType: "sec-filing" },
   // Nov 14, 2025: 439,850,889 shares + 71,704,975 pre-funded warrants = 511,555,864 fully diluted
   { date: "2025-11-14", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, source: "SEC 10-Q Nov 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },
@@ -407,9 +407,9 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
 // API: https://dilaamf.opendatasoft.com/api/v2/ (ISIN: FR0011053636)
 // Note: Massive dilution in Sep 2025 from EUR58.1M private placement (Sep 16, 2025 AMF filing)
 const ALTBG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 1200, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.0000286, source: "H1 2024 Euronext filing" },
+  { date: "2024-06-30", holdings: 1200, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.0000286, source: "H1 2024 Euronext filing", sourceType: "regulatory-filing" },
   { date: "2024-12-31", holdings: 1800, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.0000400, source: "FY 2024 annual report", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 2201, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000459, source: "H1 2025 filing" },
+  { date: "2025-06-30", holdings: 2201, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000459, source: "H1 2025 filing", sourceType: "regulatory-filing" },
   // Sep 2025: EUR58.1M capital increase via private placement caused ~4x share dilution
   { date: "2025-09-22", holdings: 2800, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000140, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076270_20250922.pdf", sourceType: "regulatory-filing" },
   { date: "2025-09-29", holdings: 2812, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000141, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076388_20250929.pdf", sourceType: "regulatory-filing" },
@@ -498,7 +498,7 @@ const ETHM_HISTORY: HoldingsSnapshot[] = [
 // Buyback program: $5M authorized, 3,535,574 shares repurchased Oct 2025-Jan 2026 (avg $0.56)
 const GAME_HISTORY: HoldingsSnapshot[] = [
   // Note: 2024 entries are pre-DAT strategy (gaming company) - share counts unverified
-  { date: "2024-06-30", holdings: 0, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0, source: "Pre-DAT strategy" },
+  { date: "2024-06-30", holdings: 0, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0, source: "Pre-DAT strategy", sourceType: "company-reported" },
   { date: "2024-12-31", holdings: 0, sharesOutstandingDiluted: 32_635_995, holdingsPerShare: 0, source: "SEC 10-Q Q3 2025 (Jan 1, 2025 balance)", sourceType: "sec-filing" },
   // 2025 - ETH treasury strategy launched
   { date: "2025-07-10", holdings: 1819, sharesOutstandingDiluted: 60_000_000, holdingsPerShare: 0.0000303, source: "Initial $5M ETH purchase (direct)", sourceType: "press-release" },
@@ -536,7 +536,7 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-11", holdings: 6_834_506, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0608, source: "Initial $1.65B PIPE close", sharesSource: "86.1M basic + 26.4M pre-funded warrants", sourceType: "press-release" },
   { date: "2025-09-30", holdings: 6_854_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0609, source: "SEC 10-K FY2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K", sourceType: "sec-filing" },
   { date: "2025-11-15", holdings: 6_900_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0613, source: "Press release", sourceType: "press-release" },
-  { date: "2025-12-01", holdings: 6_921_342, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0615, source: "Shareholder update" },
+  { date: "2025-12-01", holdings: 6_921_342, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0615, source: "Shareholder update", sourceType: "press-release" },
   { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0620, source: "Press release", sourceUrl: "https://www.forwardindustries.com/", sourceType: "press-release" },
 ];
 
@@ -551,7 +551,7 @@ const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (July 1, 2025)
   { date: "2025-06-30", holdings: 2200000, sharesOutstandingDiluted: 1_000_000, holdingsPerShare: 2.200, source: "Q2 2025 10-Q (split-adj)", sourceType: "sec-filing" },
   // Nov 2025: FD shares include pre-funded + penny warrants exercisable at $0.0001
-  { date: "2025-11-04", holdings: 2_300_000, sharesOutstandingDiluted: 84_130_257, holdingsPerShare: 0.02734, source: "Investor update", sharesSource: "Nov 4, 2025 investor update (incl. warrants)" },
+  { date: "2025-11-04", holdings: 2_300_000, sharesOutstandingDiluted: 84_130_257, holdingsPerShare: 0.02734, source: "Investor update", sharesSource: "Nov 4, 2025 investor update (incl. warrants)", sourceType: "press-release" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025
@@ -560,7 +560,7 @@ const UPXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-15", holdings: 596714, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.02712, source: "Initial $100M SOL purchase", sourceType: "press-release" },
   { date: "2025-06-30", holdings: 735692, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.02627, source: "Q2 2025", sourceType: "sec-filing" },
   { date: "2025-07-31", holdings: 1900000, sharesOutstandingDiluted: 40_000_000, holdingsPerShare: 0.04750, source: "Press release", sourceType: "press-release" },
-  { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.04446, source: "2M SOL milestone" },
+  { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.04446, source: "2M SOL milestone", sourceType: "press-release" },
   { date: "2025-09-30", holdings: 2018419, sharesOutstandingDiluted: 58_888_756, holdingsPerShare: 0.03427, source: "Q3 2025 10-Q", sourceType: "sec-filing" },
   { date: "2026-01-05", holdings: 2_174_583, sharesOutstandingDiluted: 59_000_000, holdingsPerShare: 0.03686, source: "8-K Jan 9, 2026", sharesSource: "10-Q Sep 2025 basic shares. Convertibles ($150M@$4.25, $36M@$2.39) out of money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194", sourceType: "sec-filing" },
 ];
@@ -621,11 +621,11 @@ const CYPH_HISTORY: HoldingsSnapshot[] = [
 // Holdings are from company announcements; share count verified via SEC DEF 14A (record date Dec 31, 2025).
 const CWD_HISTORY: HoldingsSnapshot[] = [
   // 2025: LINK treasury strategy launched
-  { date: "2025-08-28", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "LINK treasury policy adopted" },
+  { date: "2025-08-28", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "LINK treasury policy adopted", sourceType: "press-release" },
   { date: "2025-09-09", holdings: 0, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0, source: "Initial purchase announced", sourceType: "press-release" },
-  { date: "2025-09-18", holdings: 278_011, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.04026, source: "$6.5M LINK purchase" },
-  { date: "2025-09-25", holdings: 467_632, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.06773, source: "$10M milestone" },
-  { date: "2025-10-16", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "$2M additional purchase" },
+  { date: "2025-09-18", holdings: 278_011, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.04026, source: "$6.5M LINK purchase", sourceType: "press-release" },
+  { date: "2025-09-25", holdings: 467_632, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.06773, source: "$10M milestone", sourceType: "press-release" },
+  { date: "2025-10-16", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "$2M additional purchase", sourceType: "press-release" },
   // Dec 31, 2025: 6.53M Class A + 0.37M Class B = 6.9M shares per SEC DEF 14A
   { date: "2025-12-31", holdings: 562_535, sharesOutstandingDiluted: 6_905_000, holdingsPerShare: 0.08147, source: "SEC DEF 14A Jan 7, 2026", sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF", sourceType: "sec-filing" },
 ];
@@ -743,9 +743,9 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 11500, sharesOutstandingDiluted: 312_000_000, holdingsPerShare: 0.0000369, source: "Q2 2025 10-Q", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 12300, sharesOutstandingDiluted: 317_760_000, holdingsPerShare: 0.0000387, source: "Q3 2025 10-Q", sourceType: "sec-filing" },
   // Q4 2025 (Dec 31): Estimated from Jan 22, 2026 DEF 14A data
-  { date: "2025-12-31", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A (Jan 2026)", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)" },
+  { date: "2025-12-31", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A (Jan 2026)", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)", sourceType: "sec-filing" },
   // Jan 2026: Share count decreased due to buybacks and updated dilution calc from SEC DEF 14A
-  { date: "2026-01-22", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)" },
+  { date: "2026-01-22", holdings: 13099, sharesOutstandingDiluted: 255_750_361, holdingsPerShare: 0.0000512, source: "SEC DEF 14A", sharesSource: "SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)", sourceType: "sec-filing" },
 ];
 
 // Hut 8 (HUT) - Canadian miner, merged with US Bitcoin Corp Nov 2023
@@ -760,8 +760,8 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
 // 279,997,636 shares per SEC 10-Q Q3 2025 (filed Nov 5, 2025)
 const DJT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, source: "Treasury deal closed" },
-  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, source: "Press reports ~$2B BTC" },
+  { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, source: "Treasury deal closed", sourceType: "press-release" },
+  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, source: "Press reports ~$2B BTC", sourceType: "press-release" },
   { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.0000412, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q", sourceType: "sec-filing" },
 ];
 
@@ -775,7 +775,7 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 // For mNAV, use TOTAL shares (both classes have economic rights)
 const XXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-23", holdings: 42000, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement (31.5K Tether + 10.5K PIPE)", sourceType: "press-release" },
-  { date: "2025-07-29", holdings: 43500, sharesOutstandingDiluted: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update" },
+  { date: "2025-07-29", holdings: 43500, sharesOutstandingDiluted: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update", sourceType: "press-release" },
   { date: "2025-09-30", holdings: 10500, sharesOutstandingDiluted: 1, holdingsPerShare: 10500, source: "SEC 10-Q XBRL (pre-merger entity only)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=10-Q", sourceType: "sec-filing" },
   { date: "2025-12-09", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "NYSE listing - merger closed", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm", sourceType: "sec-filing" },
   // Jan 2026: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
@@ -820,7 +820,7 @@ const NA_HISTORY: HoldingsSnapshot[] = [
 // CEPO (Blockstream SPAC) - Adam Back's BTC treasury play
 const CEPO_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-10-15", holdings: 25000, sharesOutstandingDiluted: 120_000_000, holdingsPerShare: 0.0002083, source: "Initial contribution from Adam Back", sourceType: "press-release" },
-  { date: "2025-11-30", holdings: 28000, sharesOutstandingDiluted: 135_000_000, holdingsPerShare: 0.0002074, source: "Additional purchases" },
+  { date: "2025-11-30", holdings: 28000, sharesOutstandingDiluted: 135_000_000, holdingsPerShare: 0.0002074, source: "Additional purchases", sourceType: "press-release" },
   { date: "2025-12-31", holdings: 30021, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.0002070, source: "Year-end 8-K", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027708&type=8-K", sourceType: "sec-filing" },
 ];
 
