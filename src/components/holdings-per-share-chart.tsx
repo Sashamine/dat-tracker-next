@@ -234,9 +234,22 @@ export function HoldingsPerShareChart({
         </div>
       </div>
 
-      <div className="flex gap-6 text-right mb-4">
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wide">Current</p>
+      <div className="flex flex-wrap gap-4 sm:gap-6 mb-4">
+        <div className="text-left">
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Total {asset}</p>
+          <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
+            {lastSnapshot.holdings >= 1000 
+              ? lastSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 0 })
+              : lastSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+          </p>
+          <p className="text-xs text-gray-400">
+            from {firstSnapshot.holdings >= 1000 
+              ? firstSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 0 })
+              : firstSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+          </p>
+        </div>
+        <div className="text-left">
+          <p className="text-xs text-gray-500 uppercase tracking-wide">{asset}/Share</p>
           <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
             {lastSnapshot.holdingsPerShare >= 0.01
               ? lastSnapshot.holdingsPerShare.toFixed(4)
@@ -244,10 +257,17 @@ export function HoldingsPerShareChart({
               ? lastSnapshot.holdingsPerShare.toFixed(6)
               : lastSnapshot.holdingsPerShare.toFixed(8)}
           </p>
+          <p className="text-xs text-gray-400">
+            from {firstSnapshot.holdingsPerShare >= 0.01
+              ? firstSnapshot.holdingsPerShare.toFixed(4)
+              : firstSnapshot.holdingsPerShare >= 0.0001
+              ? firstSnapshot.holdingsPerShare.toFixed(6)
+              : firstSnapshot.holdingsPerShare.toFixed(8)}
+          </p>
         </div>
         {growthMetrics && (
           <>
-            <div>
+            <div className="text-left">
               <p className="text-xs text-gray-500 uppercase tracking-wide">Period Growth</p>
               <p className={cn(
                 "text-xl font-bold",
@@ -255,8 +275,11 @@ export function HoldingsPerShareChart({
               )}>
                 {growthMetrics.totalGrowth >= 0 ? "+" : ""}{growthMetrics.totalGrowth.toFixed(1)}%
               </p>
+              <p className="text-xs text-gray-400">
+                {filteredHistory ? filteredHistory.length : 0} data points
+              </p>
             </div>
-            <div>
+            <div className="text-left">
               <p className="text-xs text-gray-500 uppercase tracking-wide">CAGR</p>
               <p className={cn(
                 "text-xl font-bold",
@@ -264,6 +287,7 @@ export function HoldingsPerShareChart({
               )}>
                 {growthMetrics.annualizedGrowth >= 0 ? "+" : ""}{growthMetrics.annualizedGrowth.toFixed(1)}%
               </p>
+              <p className="text-xs text-gray-400">annualized</p>
             </div>
           </>
         )}
@@ -277,11 +301,16 @@ export function HoldingsPerShareChart({
         </div>
       )}
 
-      <div className="mt-4 text-xs text-gray-500">
+      <div className="mt-4 text-xs text-gray-500 space-y-1">
         <p>
           Source: Quarterly 10-Q/10-K filings and 8-K announcements.
           {asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
         </p>
+        {ticker === "3350.T" && (
+          <p className="text-amber-600 dark:text-amber-400">
+            ⚠️ Stock splits: 1:10 reverse (Jul 2024), 10:1 forward (Mar 2025). All data is split-adjusted.
+          </p>
+        )}
       </div>
     </div>
   );
