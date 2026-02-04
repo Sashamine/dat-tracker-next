@@ -12,57 +12,77 @@ interface PageProps {
   }>;
 }
 
+// Filing types to search, in priority order
+const FILING_TYPES = ["8k", "10k", "10q"] as const;
+type FilingType = typeof FILING_TYPES[number];
+
+const FILING_TYPE_LABELS: Record<FilingType, string> = {
+  "8k": "Form 8-K",
+  "10k": "Form 10-K (Annual Report)",
+  "10q": "Form 10-Q (Quarterly Report)",
+};
+
 export default async function FilingViewerPage({ params, searchParams }: PageProps) {
   const { ticker, accession } = await params;
   const { highlight } = await searchParams;
   
   const tickerUpper = ticker.toUpperCase();
-  
-  // Find the filing file
-  const dataDir = path.join(process.cwd(), "data", "sec", ticker.toLowerCase(), "8k");
+  const tickerLower = ticker.toLowerCase();
   
   let filingContent = "";
   let filingDate = "";
   let filingFile = "";
+  let filingType: FilingType = "8k";
+  let foundFilingDir = "";
   
   try {
-    // Look for file matching the accession
-    const files = fs.readdirSync(dataDir);
-    const matchingFile = files.find(f => f.includes(accession) && f.endsWith(".html"));
-    
-    if (!matchingFile) {
-      // Try to find by date pattern in accession
-      const dateMatch = accession.match(/(\d{4}-\d{2}-\d{2})/);
-      if (dateMatch) {
-        const dateFile = files.find(f => f.includes(dateMatch[1]));
-        if (dateFile) {
-          filingFile = dateFile;
+    // Search all filing type folders for matching file
+    for (const type of FILING_TYPES) {
+      const dataDir = path.join(process.cwd(), "data", "sec", tickerLower, type);
+      
+      // Skip if directory doesn't exist
+      if (!fs.existsSync(dataDir)) continue;
+      
+      const files = fs.readdirSync(dataDir);
+      
+      // Look for file matching the accession
+      let matchingFile = files.find(f => f.includes(accession) && f.endsWith(".html"));
+      
+      if (!matchingFile) {
+        // Try to find by date pattern in accession (e.g., "2025-09-30")
+        const dateMatch = accession.match(/(\d{4}-\d{2}-\d{2})/);
+        if (dateMatch) {
+          matchingFile = files.find(f => f.includes(dateMatch[1]) && f.endsWith(".html"));
         }
       }
-    } else {
-      filingFile = matchingFile;
+      
+      if (matchingFile) {
+        filingFile = matchingFile;
+        filingType = type;
+        foundFilingDir = dataDir;
+        break;
+      }
     }
     
-    if (!filingFile) {
+    if (!filingFile || !foundFilingDir) {
       return notFound();
     }
     
-    // Extract date from filename
-    const dateExtract = filingFile.match(/8k-(\d{4}-\d{2}-\d{2})/);
+    // Extract date from filename (handles 8k-DATE, 10k-DATE, 10q-DATE patterns)
+    const dateExtract = filingFile.match(/(?:8k|10k|10q)-(\d{4}-\d{2}-\d{2})/i);
     filingDate = dateExtract ? dateExtract[1] : "Unknown";
     
     // Read the file
-    const filePath = path.join(dataDir, filingFile);
+    const filePath = path.join(foundFilingDir, filingFile);
     filingContent = fs.readFileSync(filePath, "utf-8");
     
-    // If highlight param exists, find and highlight the BTC acquisition section
+    // If highlight param exists, find and highlight the relevant section
     if (highlight) {
       const highlightText = decodeURIComponent(highlight);
       const numMatch = highlightText.match(/[\d,]+/);
       const searchNum = numMatch ? numMatch[0] : highlightText;
       
-      // For table-format filings (weekly ATM updates), highlight the cell containing the number
-      // and add a visible marker
+      // For table-format filings, highlight the cell containing the number
       if (filingContent.includes(searchNum)) {
         // Add highlight style to the number itself (in table cells)
         filingContent = filingContent.replace(
@@ -90,6 +110,8 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       </script>
     ` : "";
     
+    const filingLabel = FILING_TYPE_LABELS[filingType];
+    
     // Wrap content with our styling
     const styledContent = `
       <!DOCTYPE html>
@@ -97,7 +119,7 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>${tickerUpper} 8-K Filing - ${filingDate}</title>
+        <title>${tickerUpper} ${filingLabel} - ${filingDate}</title>
         <style>
           body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -133,6 +155,17 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
           .filing-header a:hover {
             text-decoration: underline;
           }
+          .filing-type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+          }
+          .badge-8k { background: #dbeafe; color: #1d4ed8; }
+          .badge-10k { background: #dcfce7; color: #16a34a; }
+          .badge-10q { background: #fef3c7; color: #d97706; }
           .filing-content {
             background: white;
             border: 1px solid #e5e7eb;
@@ -149,9 +182,12 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       </head>
       <body>
         <div class="filing-header">
-          <h1>${tickerUpper} Form 8-K - ${filingDate}</h1>
+          <h1>
+            ${tickerUpper} ${filingLabel} - ${filingDate}
+            <span class="filing-type-badge badge-${filingType}">${filingType.toUpperCase()}</span>
+          </h1>
           <p>
-            <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K" target="_blank">View on SEC EDGAR →</a>
+            <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${tickerLower}&type=${filingType}" target="_blank">View all ${filingType.toUpperCase()} filings on SEC EDGAR →</a>
             ${highlight ? ' | <span style="color: #d97706;">Highlighted text below</span>' : ''}
           </p>
         </div>
@@ -166,7 +202,7 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       <iframe
         srcDoc={styledContent}
         className="w-full h-screen border-0"
-        title={`${tickerUpper} 8-K Filing - ${filingDate}`}
+        title={`${tickerUpper} ${filingLabel} - ${filingDate}`}
       />
     );
     
