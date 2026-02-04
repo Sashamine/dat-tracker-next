@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useMemo, useState } from "react";
-import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, LineSeries, Time, ISeriesApi, SeriesMarker, createSeriesMarkers, ISeriesMarkersPluginApi } from "lightweight-charts";
 import { cn } from "@/lib/utils";
-import { getHoldingsHistory, calculateHoldingsGrowth } from "@/lib/data/holdings-history";
+import { getHoldingsHistory, calculateHoldingsGrowth, getAcquisitionEvents } from "@/lib/data/holdings-history";
+import { MSTR_BTC_TIMELINE } from "@/lib/data/mstr-btc-timeline";
 
 type TimeRange = "3mo" | "6mo" | "1y" | "all";
 
@@ -22,12 +23,16 @@ export function HoldingsPerShareChart({
 }: HoldingsPerShareChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const seriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+  const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
+  const [showAcquisitions, setShowAcquisitions] = useState(false);
 
   const historyData = useMemo(() => getHoldingsHistory(ticker), [ticker]);
+  const isMstr = ticker.toUpperCase() === "MSTR";
   
   // Filter history based on time range, extending if insufficient data
-  const { filteredHistory, rangeExtended, actualStartDate } = useMemo(() => {
+  const { filteredHistory, rangeExtended } = useMemo(() => {
     if (!historyData) return { filteredHistory: null, rangeExtended: false, actualStartDate: null };
     
     const now = new Date();
@@ -70,6 +75,83 @@ export function HoldingsPerShareChart({
     () => (filteredHistory && filteredHistory.length >= 2 ? calculateHoldingsGrowth(filteredHistory) : null),
     [filteredHistory]
   );
+
+  // Get acquisition events for this company
+  const companyAcquisitions = useMemo(() => {
+    if (isMstr) return [];
+    return getAcquisitionEvents(ticker);
+  }, [ticker, isMstr]);
+
+  // Filter acquisition events for the current time range
+  const acquisitionMarkers = useMemo(() => {
+    if (!showAcquisitions) return [];
+    
+    const now = new Date();
+    let startDate: Date;
+    switch (timeRange) {
+      case "3mo":
+        startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+        break;
+      case "6mo":
+        startDate = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+        break;
+      case "1y":
+        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        break;
+      case "all":
+        startDate = new Date("2020-01-01");
+        break;
+      default:
+        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+    }
+
+    const markers: SeriesMarker<Time>[] = [];
+    
+    if (isMstr) {
+      // MSTR uses dedicated timeline with more detail
+      for (const event of MSTR_BTC_TIMELINE) {
+        const eventDate = new Date(event.date);
+        if (eventDate >= startDate && event.btcAcquired >= 1000) {
+          markers.push({
+            time: event.date as Time,
+            position: "belowBar",
+            color: "#f59e0b",
+            shape: "arrowUp",
+            text: `+${(event.btcAcquired / 1000).toFixed(0)}K`,
+          });
+        }
+      }
+    } else {
+      // Other companies use derived acquisition events
+      for (const event of companyAcquisitions) {
+        const eventDate = new Date(event.date);
+        if (eventDate >= startDate) {
+          // Format the acquisition amount based on size
+          let text: string;
+          if (event.acquired >= 1000000) {
+            text = `+${(event.acquired / 1000000).toFixed(1)}M`;
+          } else if (event.acquired >= 1000) {
+            text = `+${(event.acquired / 1000).toFixed(0)}K`;
+          } else {
+            text = `+${event.acquired.toFixed(0)}`;
+          }
+          
+          markers.push({
+            time: event.date as Time,
+            position: "belowBar",
+            color: "#f59e0b",
+            shape: "arrowUp",
+            text,
+          });
+        }
+      }
+    }
+    
+    return markers;
+  }, [isMstr, showAcquisitions, timeRange, companyAcquisitions]);
+
+  // Check if company has acquisition data
+  const hasAcquisitionData = isMstr || companyAcquisitions.length > 0;
 
   // Initialize and update chart
   useEffect(() => {
@@ -123,6 +205,8 @@ export function HoldingsPerShareChart({
       },
     });
 
+    seriesRef.current = series;
+
     // Format data for chart
     const chartData = filteredHistory.map((snapshot) => ({
       time: snapshot.date as Time,
@@ -130,6 +214,13 @@ export function HoldingsPerShareChart({
     }));
 
     series.setData(chartData);
+
+    // Add acquisition markers
+    if (acquisitionMarkers.length > 0) {
+      const markers = createSeriesMarkers(series, acquisitionMarkers);
+      markersRef.current = markers;
+    }
+
     chart.timeScale().fitContent();
 
     // Handle resize
@@ -152,7 +243,7 @@ export function HoldingsPerShareChart({
         chartRef.current = null;
       }
     };
-  }, [filteredHistory, asset]);
+  }, [filteredHistory, asset, acquisitionMarkers]);
 
   // If no historical data, show current value only
   if (!historyData || historyData.history.length < 2) {
@@ -209,6 +300,20 @@ export function HoldingsPerShareChart({
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          {/* Acquisitions Toggle */}
+          {hasAcquisitionData && (
+            <button
+              onClick={() => setShowAcquisitions(!showAcquisitions)}
+              className={cn(
+                "text-xs px-2 py-1 rounded border transition-colors",
+                showAcquisitions
+                  ? "bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400"
+                  : "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500"
+              )}
+            >
+              {showAcquisitions ? "📈 Acquisitions ON" : "📈 Acquisitions OFF"}
+            </button>
+          )}
           {/* Time Range Buttons */}
           <div className="flex gap-1">
             {([

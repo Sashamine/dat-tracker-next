@@ -1,14 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useMemo, useState } from "react";
-import { createChart, ColorType, IChartApi, LineSeries, Time, ISeriesApi, SeriesMarker, createSeriesMarkers, ISeriesMarkersPluginApi } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, LineSeries, Time, ISeriesApi } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { TimeRange, ChartInterval } from "@/lib/hooks/use-stock-history";
 import { useMnavHistory, type MnavDataPoint, type MnavCompanyData } from "@/lib/hooks/use-mnav-history";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
-import { MSTR_BTC_TIMELINE, type BTCAcquisitionEvent } from "@/lib/data/mstr-btc-timeline";
-import { getAcquisitionEvents, type AcquisitionEvent } from "@/lib/data/holdings-history";
-
 interface CompanyMNAVChartProps {
   ticker: string;
   asset: string;
@@ -41,9 +38,7 @@ export function CompanyMNAVChart({
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Line"> | null>(null);
-  const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
-  const [showAcquisitions, setShowAcquisitions] = useState(false);
 
   const isMstr = ticker.toUpperCase() === "MSTR";
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
@@ -123,83 +118,6 @@ export function CompanyMNAVChart({
   const isLoading = isLoadingMnav;
   const hasData = mnavHistory.length > 0;
 
-  // Get acquisition events for this company
-  const companyAcquisitions = useMemo(() => {
-    if (isMstr) return [];
-    return getAcquisitionEvents(ticker);
-  }, [ticker, isMstr]);
-
-  // Filter acquisition events for the current time range
-  const acquisitionMarkers = useMemo(() => {
-    if (!showAcquisitions) return [];
-    
-    const now = new Date();
-    let startDate: Date;
-    switch (timeRange) {
-      case "1d":
-        startDate = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
-        break;
-      case "7d":
-        startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        break;
-      case "1mo":
-        startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        break;
-      case "1y":
-        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-        break;
-      case "all":
-        startDate = new Date("2020-01-01");
-        break;
-      default:
-        startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-    }
-
-    const markers: SeriesMarker<Time>[] = [];
-    
-    if (isMstr) {
-      // MSTR uses dedicated timeline with more detail
-      for (const event of MSTR_BTC_TIMELINE) {
-        const eventDate = new Date(event.date);
-        if (eventDate >= startDate && event.btcAcquired >= 1000) {
-          markers.push({
-            time: event.date as Time,
-            position: "belowBar",
-            color: "#f59e0b",
-            shape: "arrowUp",
-            text: `+${(event.btcAcquired / 1000).toFixed(0)}K`,
-          });
-        }
-      }
-    } else {
-      // Other companies use derived acquisition events
-      for (const event of companyAcquisitions) {
-        const eventDate = new Date(event.date);
-        if (eventDate >= startDate) {
-          // Format the acquisition amount based on size
-          let text: string;
-          if (event.acquired >= 1000000) {
-            text = `+${(event.acquired / 1000000).toFixed(1)}M`;
-          } else if (event.acquired >= 1000) {
-            text = `+${(event.acquired / 1000).toFixed(0)}K`;
-          } else {
-            text = `+${event.acquired.toFixed(0)}`;
-          }
-          
-          markers.push({
-            time: event.date as Time,
-            position: "belowBar",
-            color: "#f59e0b",
-            shape: "arrowUp",
-            text,
-          });
-        }
-      }
-    }
-    
-    return markers;
-  }, [isMstr, showAcquisitions, timeRange, companyAcquisitions]);
-
   // Initialize and update chart when data is available
   useEffect(() => {
     if (!chartContainerRef.current || !hasData) return;
@@ -255,13 +173,7 @@ export function CompanyMNAVChart({
 
     mnavSeries.setData(mnavHistory);
     seriesRef.current = mnavSeries;
-    
-    // Add acquisition markers for all companies
-    if (acquisitionMarkers.length > 0) {
-      const markers = createSeriesMarkers(mnavSeries, acquisitionMarkers);
-      markersRef.current = markers;
-    }
-    
+
     chart.timeScale().fitContent();
 
     // Add crosshair move handler to show point info on hover
@@ -292,18 +204,14 @@ export function CompanyMNAVChart({
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (markersRef.current) {
-        markersRef.current.detach();
-        markersRef.current = null;
-      }
       if (chartRef.current) {
         chartRef.current.remove();
         chartRef.current = null;
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasData, mnavHistory, isMstr, dataPoints, acquisitionMarkers]);
-  
+  }, [hasData, mnavHistory, isMstr, dataPoints]);
+
   // Calculate current and change stats
   const stats = useMemo(() => {
     if (mnavHistory.length < 2) return null;
@@ -355,22 +263,6 @@ export function CompanyMNAVChart({
               ? "Enterprise Value / Crypto NAV (fully diluted)"
               : "Market Cap / Net Asset Value over time"}
           </p>
-        </div>
-        <div className="flex items-center gap-4">
-          {/* Toggle for acquisitions */}
-          {(isMstr || companyAcquisitions.length > 0) && (
-            <button
-              onClick={() => setShowAcquisitions(!showAcquisitions)}
-              className={cn(
-                "text-xs px-2 py-1 rounded border transition-colors",
-                showAcquisitions
-                  ? "bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400"
-                  : "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500"
-              )}
-            >
-              {showAcquisitions ? "🔶 Acquisitions ON" : "○ Acquisitions OFF"}
-            </button>
-          )}
         </div>
         {stats && (
           <div className="flex gap-4 text-right">
