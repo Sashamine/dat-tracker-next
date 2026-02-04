@@ -809,7 +809,7 @@ export default function CompanyPage() {
         )}
 
         {/* Chart with Time Range Selector */}
-        <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -883,7 +883,7 @@ export default function CompanyPage() {
 
         {/* mNAV History Chart */}
         {mNAV && stockPrice > 0 && cryptoPrice > 0 && !displayCompany.pendingMerger && (
-          <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
             <summary className="p-4 cursor-pointer flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV History</h2>
               <div className="flex items-center gap-3">
@@ -1030,7 +1030,7 @@ export default function CompanyPage() {
         </details>
 
         {/* Holdings Per Share Growth Chart */}
-        <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{displayCompany.asset}/Share Growth</h2>
             <div className="flex items-center gap-3">
