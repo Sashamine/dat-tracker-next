@@ -16,6 +16,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkAllCompanyFilings } from '@/lib/verification/filing-checker';
 import { getTickersNeedingReview } from '@/lib/verification/repository';
 import { sendDiscordAlert } from '@/lib/discord';
+import { notifyNewFilings } from '@/lib/clawdbot';
 
 // Verify cron secret for scheduled runs
 function verifyCronSecret(request: NextRequest): boolean {
@@ -93,6 +94,16 @@ export async function GET(request: NextRequest) {
           'info',
           true  // Mention Clawdbot
         );
+
+        // Also notify Clawdbot directly to trigger action
+        const filingsForClawdbot = result.results
+          .filter(r => r.newFilings.length > 0)
+          .flatMap(r => r.newFilings.map(f => ({
+            ticker: r.ticker,
+            formType: f.formType,
+            items: f.items,
+          })));
+        await notifyNewFilings(filingsForClawdbot);
       } catch (notifyError) {
         console.error('[Filing Check] Failed to send Discord notification:', notifyError);
       }
