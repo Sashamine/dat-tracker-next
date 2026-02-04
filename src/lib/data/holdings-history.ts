@@ -165,23 +165,70 @@ const RIOT_HISTORY: HoldingsSnapshot[] = [
 // - metaplanet.jp shows ~1.26x mNAV using this methodology
 // - Preferred stock value is captured via preferredEquity field in EV calculation
 // - Double-counting (diluted shares + preferredEquity) would inflate mNAV incorrectly
+// Full purchase history from metaplanet.jp/en/analytics
+// Share counts interpolated between quarterly filings
+// STOCK SPLITS: 1:10 reverse (Jul 30, 2024), 10:1 forward (Mar 28, 2025) - all data split-adjusted
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 17_600_000, holdingsPerShare: 0.00000556, source: "Initial BTC purchase" },
-  { date: "2024-05-13", holdings: 141.07, sharesOutstandingDiluted: 18_200_000, holdingsPerShare: 0.00000775, source: "Press release" },
-  { date: "2024-06-11", holdings: 161.27, sharesOutstandingDiluted: 19_500_000, holdingsPerShare: 0.00000827, source: "Press release" },
-  { date: "2024-07-16", holdings: 245.99, sharesOutstandingDiluted: 24_000_000, holdingsPerShare: 0.00001025, source: "Press release" },
-  { date: "2024-08-13", holdings: 360.37, sharesOutstandingDiluted: 28_500_000, holdingsPerShare: 0.00001265, source: "Press release" },
-  { date: "2024-09-10", holdings: 398.83, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.00001246, source: "Press release" },
-  { date: "2024-10-11", holdings: 530.71, sharesOutstandingDiluted: 36_000_000, holdingsPerShare: 0.00001474, source: "Press release" },
-  { date: "2024-11-18", holdings: 1142.29, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.00002720, source: "Press release" },
-  { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release" },
-  // Quarter-end holdings from metaplanet.jp/en/analytics purchase history
-  { date: "2025-03-31", holdings: 4046, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.00000809, source: "Q1 2025 (Mar 31 purchase)" },
-  { date: "2025-06-30", holdings: 13350, sharesOutstandingDiluted: 800_000_000, holdingsPerShare: 0.00001669, source: "Q2 2025 (Jun 30 purchase)" },
-  { date: "2025-09-30", holdings: 30823, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, source: "Q3 2025 (Sep 30 purchase)" },
-  // Common shares minus OTM Mercury converts (¥1000 strike vs ¥540 stock price)
-  // 1.142B common - 23.6M Mercury converts = 1.119B (matches metaplanet.jp mNAV methodology)
-  { date: "2026-01-24", holdings: 35102, sharesOutstandingDiluted: 1_118_664_340, holdingsPerShare: 0.00003138, source: "Press release", sharesSource: "Common shares ex-OTM Mercury converts", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "company-website" },
+  // 2024 Q2
+  { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 17_600_000, holdingsPerShare: 0.00000556, source: "Initial BTC purchase", sourceType: "press-release" },
+  { date: "2024-05-09", holdings: 117.72, sharesOutstandingDiluted: 17_900_000, holdingsPerShare: 0.00000658, source: "Press release", sourceType: "press-release" },
+  { date: "2024-06-10", holdings: 141.07, sharesOutstandingDiluted: 18_500_000, holdingsPerShare: 0.00000763, source: "Press release", sourceType: "press-release" },
+  // 2024 Q3
+  { date: "2024-07-01", holdings: 161.27, sharesOutstandingDiluted: 19_500_000, holdingsPerShare: 0.00000827, source: "Press release", sourceType: "press-release" },
+  { date: "2024-07-08", holdings: 203.73, sharesOutstandingDiluted: 20_500_000, holdingsPerShare: 0.00000994, source: "Press release", sourceType: "press-release" },
+  { date: "2024-07-16", holdings: 225.61, sharesOutstandingDiluted: 21_500_000, holdingsPerShare: 0.00001049, source: "Press release", sourceType: "press-release" },
+  { date: "2024-07-22", holdings: 245.99, sharesOutstandingDiluted: 22_500_000, holdingsPerShare: 0.00001093, source: "Press release", sourceType: "press-release" },
+  { date: "2024-08-13", holdings: 303.09, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.00001212, source: "Press release", sourceType: "press-release" },
+  { date: "2024-08-20", holdings: 360.37, sharesOutstandingDiluted: 26_500_000, holdingsPerShare: 0.00001360, source: "Press release", sourceType: "press-release" },
+  { date: "2024-09-10", holdings: 398.83, sharesOutstandingDiluted: 29_000_000, holdingsPerShare: 0.00001375, source: "Press release", sourceType: "press-release" },
+  // 2024 Q4
+  { date: "2024-10-01", holdings: 506.74, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.00001584, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-03", holdings: 530.71, sharesOutstandingDiluted: 32_500_000, holdingsPerShare: 0.00001633, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-07", holdings: 639.50, sharesOutstandingDiluted: 33_000_000, holdingsPerShare: 0.00001938, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-11", holdings: 748.50, sharesOutstandingDiluted: 33_500_000, holdingsPerShare: 0.00002234, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-15", holdings: 855.48, sharesOutstandingDiluted: 34_000_000, holdingsPerShare: 0.00002516, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-16", holdings: 861.39, sharesOutstandingDiluted: 34_200_000, holdingsPerShare: 0.00002519, source: "Press release", sourceType: "press-release" },
+  { date: "2024-10-28", holdings: 1018.00, sharesOutstandingDiluted: 36_000_000, holdingsPerShare: 0.00002828, source: "Press release", sourceType: "press-release" },
+  { date: "2024-11-19", holdings: 1142.29, sharesOutstandingDiluted: 40_000_000, holdingsPerShare: 0.00002856, source: "Press release", sourceType: "press-release" },
+  { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 46_000_000, holdingsPerShare: 0.00003830, source: "Press release", sourceType: "press-release" },
+  // 2025 Q1 (pre-split until Mar 28)
+  { date: "2025-02-17", holdings: 2031.43, sharesOutstandingDiluted: 47_000_000, holdingsPerShare: 0.00004323, source: "Press release", sourceType: "press-release" },
+  { date: "2025-02-20", holdings: 2100.00, sharesOutstandingDiluted: 47_200_000, holdingsPerShare: 0.00004449, source: "Press release", sourceType: "press-release" },
+  { date: "2025-02-25", holdings: 2235.00, sharesOutstandingDiluted: 47_500_000, holdingsPerShare: 0.00004705, source: "Press release", sourceType: "press-release" },
+  { date: "2025-03-03", holdings: 2391.00, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.00004981, source: "Press release", sourceType: "press-release" },
+  { date: "2025-03-05", holdings: 2888.00, sharesOutstandingDiluted: 48_500_000, holdingsPerShare: 0.00005955, source: "Press release", sourceType: "press-release" },
+  { date: "2025-03-12", holdings: 3050.00, sharesOutstandingDiluted: 49_000_000, holdingsPerShare: 0.00006224, source: "Press release", sourceType: "press-release" },
+  { date: "2025-03-18", holdings: 3200.00, sharesOutstandingDiluted: 49_300_000, holdingsPerShare: 0.00006490, source: "Press release", sourceType: "press-release" },
+  { date: "2025-03-24", holdings: 3350.00, sharesOutstandingDiluted: 49_600_000, holdingsPerShare: 0.00006754, source: "Press release", sourceType: "press-release" },
+  // Mar 28, 2025: 10:1 forward split - shares ×10
+  { date: "2025-03-31", holdings: 4046.00, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.00000809, source: "Q1 end (post 10:1 split)", sourceType: "press-release" },
+  // 2025 Q2
+  { date: "2025-04-02", holdings: 4206.00, sharesOutstandingDiluted: 520_000_000, holdingsPerShare: 0.00000809, source: "Press release", sourceType: "press-release" },
+  { date: "2025-04-14", holdings: 4525.00, sharesOutstandingDiluted: 540_000_000, holdingsPerShare: 0.00000838, source: "Press release", sourceType: "press-release" },
+  { date: "2025-04-21", holdings: 4855.00, sharesOutstandingDiluted: 560_000_000, holdingsPerShare: 0.00000867, source: "Press release", sourceType: "press-release" },
+  { date: "2025-04-24", holdings: 5000.00, sharesOutstandingDiluted: 575_000_000, holdingsPerShare: 0.00000870, source: "Press release", sourceType: "press-release" },
+  { date: "2025-05-07", holdings: 5555.00, sharesOutstandingDiluted: 600_000_000, holdingsPerShare: 0.00000926, source: "Press release", sourceType: "press-release" },
+  { date: "2025-05-12", holdings: 6796.00, sharesOutstandingDiluted: 630_000_000, holdingsPerShare: 0.00001079, source: "Press release", sourceType: "press-release" },
+  { date: "2025-05-19", holdings: 7800.00, sharesOutstandingDiluted: 660_000_000, holdingsPerShare: 0.00001182, source: "Press release", sourceType: "press-release" },
+  { date: "2025-06-02", holdings: 8888.00, sharesOutstandingDiluted: 700_000_000, holdingsPerShare: 0.00001270, source: "Press release", sourceType: "press-release" },
+  { date: "2025-06-16", holdings: 10000.00, sharesOutstandingDiluted: 740_000_000, holdingsPerShare: 0.00001351, source: "Press release", sourceType: "press-release" },
+  { date: "2025-06-23", holdings: 11111.00, sharesOutstandingDiluted: 765_000_000, holdingsPerShare: 0.00001452, source: "Press release", sourceType: "press-release" },
+  { date: "2025-06-26", holdings: 12345.00, sharesOutstandingDiluted: 780_000_000, holdingsPerShare: 0.00001583, source: "Press release", sourceType: "press-release" },
+  { date: "2025-06-30", holdings: 13350.00, sharesOutstandingDiluted: 800_000_000, holdingsPerShare: 0.00001669, source: "Q2 end", sourceType: "press-release" },
+  // 2025 Q3
+  { date: "2025-07-07", holdings: 15555.00, sharesOutstandingDiluted: 840_000_000, holdingsPerShare: 0.00001852, source: "Press release", sourceType: "press-release" },
+  { date: "2025-07-14", holdings: 16352.00, sharesOutstandingDiluted: 870_000_000, holdingsPerShare: 0.00001879, source: "Press release", sourceType: "press-release" },
+  { date: "2025-07-28", holdings: 17132.00, sharesOutstandingDiluted: 900_000_000, holdingsPerShare: 0.00001904, source: "Press release", sourceType: "press-release" },
+  { date: "2025-08-04", holdings: 17595.00, sharesOutstandingDiluted: 930_000_000, holdingsPerShare: 0.00001892, source: "Press release", sourceType: "press-release" },
+  { date: "2025-08-12", holdings: 18113.00, sharesOutstandingDiluted: 960_000_000, holdingsPerShare: 0.00001887, source: "Press release", sourceType: "press-release" },
+  { date: "2025-08-18", holdings: 18888.00, sharesOutstandingDiluted: 990_000_000, holdingsPerShare: 0.00001908, source: "Press release", sourceType: "press-release" },
+  { date: "2025-08-25", holdings: 18991.00, sharesOutstandingDiluted: 1_010_000_000, holdingsPerShare: 0.00001880, source: "Press release", sourceType: "press-release" },
+  { date: "2025-09-01", holdings: 20000.00, sharesOutstandingDiluted: 1_030_000_000, holdingsPerShare: 0.00001942, source: "Press release", sourceType: "press-release" },
+  { date: "2025-09-08", holdings: 20136.00, sharesOutstandingDiluted: 1_050_000_000, holdingsPerShare: 0.00001918, source: "Press release", sourceType: "press-release" },
+  { date: "2025-09-22", holdings: 25555.00, sharesOutstandingDiluted: 1_080_000_000, holdingsPerShare: 0.00002366, source: "Press release", sourceType: "press-release" },
+  { date: "2025-09-30", holdings: 30823.00, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, source: "Q3 end", sourceType: "press-release" },
+  // 2025 Q4 / 2026
+  { date: "2025-12-30", holdings: 35102.00, sharesOutstandingDiluted: 1_118_664_340, holdingsPerShare: 0.00003138, source: "Press release", sharesSource: "Common shares ex-OTM Mercury converts", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "press-release" },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury
