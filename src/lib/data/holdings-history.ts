@@ -783,11 +783,9 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 // DUAL-CLASS: Class A (346.5M non-voting) + Class B (304.8M voting) = 651.4M total shares
 // For mNAV, use TOTAL shares (both classes have economic rights)
 const XXI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-04-23", holdings: 42000, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.0000840, source: "Initial announcement (31.5K Tether + 10.5K PIPE)", sourceType: "press-release" },
-  { date: "2025-07-29", holdings: 43500, sharesOutstandingDiluted: 550_000_000, holdingsPerShare: 0.0000791, source: "Pre-listing update", sourceType: "press-release" },
-  { date: "2025-09-30", holdings: 10500, sharesOutstandingDiluted: 1, holdingsPerShare: 10500, source: "SEC 10-Q XBRL (pre-merger entity only)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=10-Q", sourceType: "sec-filing" },
-  { date: "2025-12-09", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "NYSE listing - merger closed", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm", sourceType: "sec-filing" },
-  // Jan 2026: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
+  // Pre-merger announcements removed - no verifiable SEC filings
+  // Post-merger (NYSE listing Dec 9, 2025):
+  { date: "2025-12-09", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "8-K NYSE listing - merger closed", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm", sourceType: "sec-filing" },
   { date: "2026-01-05", holdings: 43514, sharesOutstandingDiluted: 651_390_912, holdingsPerShare: 0.0000668, source: "S-1 prospectus", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm", sourceType: "sec-filing" },
 ];
 
