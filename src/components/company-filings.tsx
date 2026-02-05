@@ -78,6 +78,17 @@ function FilingRow({ filing }: { filing: Filing }) {
     day: "numeric",
   });
 
+  // Get human-readable description
+  const formDescription = getFormDescription(filing.type);
+  
+  // For Form 4 and similar, always show the description as the title
+  // and use the SEC title as subtitle if it adds info
+  const isInsiderForm = filing.type === "4" || filing.type.startsWith("SC 13");
+  const displayTitle = isInsiderForm ? formDescription : (filing.title || formDescription);
+  const displaySubtitle = isInsiderForm && filing.title && filing.title !== filing.type 
+    ? filing.title.replace(/^FORM\s+\d+\s*[-–]?\s*/i, "").trim()
+    : null;
+
   return (
     <a
       href={filing.url}
@@ -90,7 +101,7 @@ function FilingRow({ filing }: { filing: Filing }) {
       </span>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate group-hover:text-blue-600 dark:group-hover:text-blue-400">
-          {filing.title || getFormDescription(filing.type)}
+          {displayTitle}{displaySubtitle ? ` - ${displaySubtitle}` : ""}
         </p>
         <p className="text-xs text-gray-500">{formattedDate}</p>
       </div>
