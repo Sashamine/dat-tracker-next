@@ -58,8 +58,7 @@ export const ethCompanies: Company[] = [
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkGaming",
     secCik: "0001981535",
-    tokenizedAddress: "SBETxQGMcKL7oPBqJgUm7gXmMFqLz4PnPuRGqDfvpump",
-    tokenizedChain: "Solana",
+    // tokenizedAddress removed — was a pump.fun meme token, not an official tokenized stock
     stakingPct: 0.95,  // "nearly all" deployed to staking per Q3 2025 PR
     stakingMethod: "Linea/Lido",
     stakingSource: "PR Nov 12, 2025 - Q3 2025 ETH Treasury Strategy",
