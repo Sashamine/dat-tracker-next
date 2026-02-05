@@ -488,6 +488,17 @@ export default function CompanyPage() {
               <p className="text-xs text-gray-400">
                 {displayCompany.asset}/yr ({(displayCompany.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
               </p>
+              {displayCompany.stakingSourceUrl && (
+                <a
+                  href={displayCompany.stakingSourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 mt-2 text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  SEC Filing{displayCompany.stakingAsOf ? ` (${new Date(displayCompany.stakingAsOf).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })})` : ""}
+                </a>
+              )}
             </div>
           )}
           {displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0 && (
@@ -1098,6 +1109,17 @@ export default function CompanyPage() {
               {displayCompany.stakingMethod && (
                 <p className="text-xs text-gray-500">{displayCompany.stakingMethod}</p>
               )}
+              {displayCompany.stakingSourceUrl && (
+                <a
+                  href={displayCompany.stakingSourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 mt-1 text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  Source
+                </a>
+              )}
             </div>
           )}
           {displayCompany.costBasisAvg && (
@@ -1356,6 +1378,17 @@ export default function CompanyPage() {
                     <p className="text-xs text-gray-500 mt-0.5">
                       {(displayCompany.stakingPct * 100).toFixed(0)}% staked @ {(companyStakingApy * 100).toFixed(1)}% APY
                     </p>
+                    {displayCompany.stakingSourceUrl && (
+                      <a
+                        href={displayCompany.stakingSourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 mt-1 text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        SEC Filing
+                      </a>
+                    )}
                   </div>
                 )}
                 {displayCompany.leverageRatio && displayCompany.leverageRatio > 1 && (
