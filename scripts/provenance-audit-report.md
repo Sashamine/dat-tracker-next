@@ -3,9 +3,9 @@ Generated: 2026-02-05
 
 ## Summary
 - **34** companies audited
-- **5** with 100% provenance (15%)
+- **12** with 100% provenance (35%)
 - **1** with 0% provenance
-- **Average score: 59%**
+- **Average score: 68%**
 
 ## Field Coverage
 
@@ -15,9 +15,9 @@ Generated: 2026-02-05
 | costBasisAvg | 11 | 11 | 11 | 100% |
 | stakingPct | 4 | 4 | 4 | 100% |
 | quarterlyBurnUsd | 33 | 17 | 17 | 52% |
-| cashReserves | 14 | 14 | 5 | 36% |
-| totalDebt | 14 | 14 | 4 | 29% |
-| preferredEquity | 3 | 1 | 0 | 0% |
+| cashReserves | 14 | 14 | 14 | 100% |
+| totalDebt | 14 | 14 | 10 | 71% |
+| preferredEquity | 3 | 1 | 1 | 33% |
 | sharesForMnav | 33 | 25 | 18 | 55% |
 
 ## Companies Needing Work
@@ -33,33 +33,33 @@ Generated: 2026-02-05
 | BTCT.V | Bitcoin Treasury Corp | 33% | sharesForMnav | quarterlyBurnUsd |
 | SRAG.DU | Samara Asset Group | 33% | — | quarterlyBurnUsd, sharesForMnav |
 | DCC.AX | DigitalX | 33% | sharesForMnav | quarterlyBurnUsd |
-| XXI | Twenty One Capital | 40% | cashReserves, totalDebt, sharesForMnav | — |
 | H100.ST | H100 Group | 50% | sharesForMnav | quarterlyBurnUsd |
 | SQNS | Sequans Communications | 50% | totalDebt | quarterlyBurnUsd |
 | DDC | DDC Enterprise | 50% | — | quarterlyBurnUsd, sharesForMnav |
-| FUFU | BITFUFU | 50% | totalDebt | quarterlyBurnUsd |
 | 0434.HK | Boyaa Interactive | 50% | sharesForMnav | quarterlyBurnUsd |
-| MSTR | Strategy (fka MicroStrategy) | 57% | preferredEquity, sharesForMnav | — |
-| GAME | GameSquare | 60% | cashReserves | preferredEquity |
-| RIOT | Riot Platforms | 60% | cashReserves, totalDebt | — |
-| CLSK | CleanSpark | 60% | cashReserves, totalDebt | — |
-| ASST | Strive (Strive + Semler) | 60% | cashReserves | preferredEquity |
+| XXI | Twenty One Capital | 60% | totalDebt, sharesForMnav | — |
 | 3350.T | Metaplanet | 67% | quarterlyBurnUsd | sharesForMnav |
-| KULR | KULR Technology | 67% | cashReserves, totalDebt | — |
 | ZOOZ | ZOOZ Power | 67% | — | quarterlyBurnUsd |
-| BTBT | Bit Digital | 71% | cashReserves, totalDebt | — |
+| MSTR | Strategy (fka MicroStrategy) | 71% | sharesForMnav | — |
+| FUFU | BITFUFU | 75% | — | quarterlyBurnUsd |
 | FLD | Fold Holdings | 75% | totalDebt | — |
-| DJT | Trump Media & Technology | 75% | totalDebt | — |
-| BMNR | Bitmine Immersion | 83% | cashReserves | — |
-| SBET | Sharplink, Inc. | 83% | cashReserves | — |
-| NAKA | Nakamoto Inc. | 83% | totalDebt | — |
+| GAME | GameSquare | 80% | — | preferredEquity |
+| ASST | Strive (Strive + Semler) | 80% | — | preferredEquity |
+| KULR | KULR Technology | 83% | totalDebt | — |
 
 ## ✅ Full Provenance
 
+- **BMNR** (Bitmine Immersion) — 6 fields sourced
+- **SBET** (Sharplink, Inc.) — 6 fields sourced
+- **BTBT** (Bit Digital) — 7 fields sourced
 - **BTCS** (BTCS Inc.) — 4 fields sourced
 - **FGNX** (FG Nexus) — 5 fields sourced
 - **CEPO** (BSTR Holdings) — 2 fields sourced
 - **MARA** (MARA Holdings) — 5 fields sourced
+- **RIOT** (Riot Platforms) — 5 fields sourced
+- **CLSK** (CleanSpark) — 5 fields sourced
+- **NAKA** (Nakamoto Inc.) — 6 fields sourced
+- **DJT** (Trump Media & Technology) — 4 fields sourced
 - **ABTC** (American Bitcoin) — 3 fields sourced
 
 ## 🔴 Priority: Cost Basis Without Source

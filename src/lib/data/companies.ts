@@ -45,6 +45,7 @@ export const ethCompanies: Company[] = [
     cashReserves: 586_000_000,  // $586M cash (Feb 1, 2026)
     restrictedCash: 586_000_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Feb 2, 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     cashAsOf: "2026-02-01",
     otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO)
     totalDebt: 0,  // No debt financing - ETH purchases funded via equity (ATM + PIPE)
@@ -92,9 +93,11 @@ export const ethCompanies: Company[] = [
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     restrictedCash: 11_100_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Debt-free per SEC 10-Q Q3 2025 (was $12.8M in 2023, paid off)
     debtSource: "SEC 10-Q Q3 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
     debtAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",
@@ -166,9 +169,11 @@ export const ethCompanies: Company[] = [
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
     cashAsOf: "2025-09-30",
     totalDebt: 207_000_000,  // $165M converts (Oct 2025) + $42M lease liabilities (SEC 10-Q Q3 2025)
     debtSource: "SEC 8-K Oct 2, 2025 (converts) + 10-Q Q3 2025 (leases)",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390023033401/",
     debtAsOf: "2025-10-02",
     otherInvestments: 427_300_000,  // WhiteFiber (WYFI) ~27M shares @ ~$15.83 (Jan 7, 2026 PR)
     leader: "Sam Tabar",
@@ -241,6 +246,7 @@ export const ethCompanies: Company[] = [
     cashReserves: 6_012_219,  // SEC 10-Q Sep 30, 2025
     // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/",
     cashAsOf: "2025-09-30",
     // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value
     preferredEquity: 5_150_000,  // Series A Preferred
@@ -355,6 +361,7 @@ export const btcCompanies: Company[] = [
     // strategy.com/credit aggregates from SEC filings: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
     preferredEquity: 8_382_000_000,
     preferredSource: "SEC 10-Q Q3 2025 ($5.89B) + 8-K Nov 13 2025 STRE (~$717M) + post-Q3 ATM (strategy.com/credit aggregated)",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
     preferredAsOf: "2026-01-26",
     // Preferred dividends: STRK $1.4B @ 8% + STRF/STRC/STRE/STRD ~$7B @ 10% = ~$810M/yr
     preferredDividendAnnual: 810_000_000,
@@ -440,6 +447,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     restrictedCash: 119_300_000,  // Debt service reserves - not excess
     cashSource: "SEC 8-K Dec 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025123918/",
     cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services. Tether/SoftBank/Cantor backed.",
@@ -546,12 +554,14 @@ export const btcCompanies: Company[] = [
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
     restrictedCash: 330_700_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
     cashAsOf: "2025-09-30",
     leader: "Jason Les (CEO)",
     strategy: "HODL miner + treasury. Converts fund BTC buys. 1 GW Corsicana.",
     // Debt: $594M 0.75% convertible notes due 2030 (Dec 2024) + $200M Coinbase BTC-backed credit facility
     totalDebt: 794_000_000,
     debtSource: "SEC 10-Q + press releases",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
     debtAsOf: "2025-12-31",
     notes: "Adopted DAT playbook Dec 2024. $594M converts used for $510M BTC purchase. 3rd largest corporate holder.",
   },
@@ -586,12 +596,14 @@ export const btcCompanies: Company[] = [
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
     cashAsOf: "2025-09-30",
     leader: "Zach Bradford (CEO)",
     strategy: "Efficient US miner. 50 EH/s. DAM derivatives program.",
     // Debt: $550M 0% converts due 2030 (Dec 2024) + $1.15B 0% converts due 2032 (Nov 2025) = $1.7B total
     totalDebt: 1_700_000_000,  // $550M (2030) + $1.15B (2032) convertible notes
     debtSource: "SEC filings Dec 2024 + Nov 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
     debtAsOf: "2025-11-13",
     notes: "$1.7B total converts: $550M due 2030 + $1.15B due 2032. $400M BTC-backed credit (largely undrawn).",
   },
@@ -623,6 +635,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
     restrictedCash: 77_780_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/",
     cashAsOf: "2026-01-16",
     preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
@@ -662,6 +675,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
     restrictedCash: 20_600_000,  // Earmarked for BTC purchases per 90% policy - not excess cash
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/",
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
@@ -853,6 +867,7 @@ export const btcCompanies: Company[] = [
     totalDebt: 101_301_000,  // SEC XBRL Jun 2025: Long Term Debt
     debtAsOf: "2025-06-30",
     debtSource: "SEC 20-F/6-K XBRL",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (648k+ users).",
     notes: "Singapore (Nasdaq FUFU). BITMAIN partner. 3.7 EH/s self-owned, 26.1 EH/s under management. 478 MW hosting. 274 BTC pledged for loans.",
   },
@@ -1091,6 +1106,7 @@ export const btcCompanies: Company[] = [
     // Debt: $210M Kraken BTC-backed loan only - Yorkville converts redeemed Oct 2025 via Two Prime, then refinanced Dec 2025
     totalDebt: 210_000_000,  // Kraken loan Dec 2025 (replaced Two Prime which replaced Yorkville)
     debtSource: "Kraken credit facility Dec 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225009328/",
     debtAsOf: "2025-12-31",
     cashReserves: 24_185_083,  // SEC 10-Q Q3 2025 balance sheet
     // TODO: No debt - review if cash should be restricted (not subtracted from EV)
@@ -1131,6 +1147,7 @@ export const btcCompanies: Company[] = [
     // Debt: $1B 0% convertible senior secured notes due 2030, part of $2.5B private placement (May 2025)
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     debtSource: "SEC 8-K May 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
     debtAsOf: "2025-05-29",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
@@ -1247,6 +1264,7 @@ export const solCompanies: Company[] = [
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
     restrictedCash: 30_000_000,  // Operating capital - not excess
     cashSource: "Press release Dec 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000100329716000907/",
     cashAsOf: "2025-12-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
@@ -1329,6 +1347,7 @@ export const solCompanies: Company[] = [
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/",
     cashAsOf: "2025-09-30",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
@@ -1368,6 +1387,7 @@ export const solCompanies: Company[] = [
     cashReserves: 2_200_000,  // $2.2M cash (SEC 10-Q Sep 2025)
     restrictedCash: 2_200_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Sep 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793222007297/",
     cashAsOf: "2025-09-30",
     capitalRaisedPipe: 210_000_000,  // $200M (prior) + $10M (Dec 2025 PIPE)
     avgDailyVolume: 120_000_000,
@@ -1481,9 +1501,11 @@ export const hypeCompanies: Company[] = [
     sharesAsOf: "2025-11-10",
     cashReserves: 8_223_180,  // SEC 10-Q Sep 30, 2025
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/",
     cashAsOf: "2025-09-30",
     totalDebt: 7_656_005,  // Notes payable (Avenue loan)
     debtSource: "SEC 10-Q Q3 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465921104176/",
     debtAsOf: "2025-09-30",
     leader: "Hyunsu Jung (CEO)",
     strategy: "First US public HYPE treasury. Liquid staking via Kinetiq.",
@@ -1540,6 +1562,7 @@ export const bnbCompanies: Company[] = [
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
     restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/",
     cashAsOf: "2025-10-31",
     // totalDebt: 0 - "minimal debt" per press release
     leader: "David Namdar (CEO), YZi Labs backed",
@@ -1695,6 +1718,7 @@ export const taoCompanies: Company[] = [
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
     restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/",
     cashAsOf: "2025-09-30",
     website: "https://taoweave.com",
     twitter: "https://x.com/taoweave",
@@ -1984,6 +2008,7 @@ export const dogeCompanies: Company[] = [
     cashReserves: 12_900_000,  // Sep 30, 2025 10-Q
     restrictedCash: 12_900_000,  // 10-Q: "restricted cash...to be used for the purchase of Dogecoin"
     cashSource: "SEC 10-Q Q1 FY2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Minimal liabilities per 10-Q
     sharesForMnav: 201_309_022,  // SEC 10-Q Q1 FY2026 cover page (Nov 10, 2025)
@@ -2055,6 +2080,7 @@ export const dogeCompanies: Company[] = [
     debtAsOf: "2026-01-20",
     cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
     cashSource: "Yahoo Finance",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/",
     cashAsOf: "2025-06-30",
     secCik: "1735556",
     leader: "Jinghai Jiang (CEO)",
