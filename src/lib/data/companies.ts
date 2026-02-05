@@ -121,7 +121,9 @@ export const ethCompanies: Company[] = [
     datStartDate: "2025-01-01",
     website: "https://bitdigital.com",
     twitter: "https://twitter.com/Aboringcompany",
-    costBasisAvg: 3_045,  // Jan 7, 2026 press release: "total average ETH acquisition price"
+    costBasisAvg: 3_045,
+    costBasisSource: "PR Jan 7, 2026 - 'total average ETH acquisition price'",
+    costBasisSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
     stakingPct: 0.89,  // 138,263 / 155,227 = 89% staked
     stakingApy: 0.035,  // 3.5% annualized yield
     stakingMethod: "Native staking",
@@ -336,7 +338,9 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-04-01",
     website: "https://metaplanet.jp",
     twitter: "https://twitter.com/Metaplanet_JP",
-    costBasisAvg: 107_607,  // metaplanet.jp/en/analytics (Jan 2026)
+    costBasisAvg: 107_607,
+    costBasisSource: "company-website",
+    costBasisSourceUrl: "https://metaplanet.jp/en/analytics",
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,  // Estimated from Q3 FY2025 operating expenses
     burnSource: "TDnet Q3 FY2025 Financial Results (estimated)",
@@ -407,7 +411,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027708&type=8-K",
     datStartDate: "2025-10-01",
-    costBasisAvg: 85_000,
+    // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
     avgDailyVolume: 80_000_000,
@@ -432,7 +436,7 @@ export const btcCompanies: Company[] = [
     website: "https://mara.com",
     twitter: "https://twitter.com/MARAHoldings",
     secCik: "0001507605",
-    costBasisAvg: 43_000,
+    // costBasisAvg removed - needs SEC verification
     isMiner: true,
     btcMinedAnnual: 18_000,
     quarterlyBurnUsd: 85_000_000,
@@ -469,7 +473,7 @@ export const btcCompanies: Company[] = [
     website: "https://riotplatforms.com",
     twitter: "https://twitter.com/RiotPlatforms",
     secCik: "0001167419",
-    costBasisAvg: 39_000,
+    // costBasisAvg removed - needs SEC verification
     isMiner: true,
     btcMinedAnnual: 6_000,
     quarterlyBurnUsd: 120_000_000,
@@ -504,7 +508,7 @@ export const btcCompanies: Company[] = [
     website: "https://cleanspark.com",
     twitter: "https://twitter.com/CleanSpark_Inc",
     secCik: "0000827876",  // Verified 2026-01-28 (was incorrectly 0001785459)
-    costBasisAvg: 45_000,
+    // costBasisAvg removed - needs SEC verification
     isMiner: true,
     btcMinedAnnual: 9_000,
     quarterlyBurnUsd: 65_000_000,
@@ -536,7 +540,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=8-K&dateb=&owner=include&count=40",
     datStartDate: "2024-05-01",
     secCik: "0001920406",
-    costBasisAvg: 95_000,  // Blended avg after merger
+    // costBasisAvg removed - needs SEC verification
     isMiner: false,
     quarterlyBurnUsd: 15_000_000,  // Combined burn
     avgDailyVolume: 100_000_000,  // Increased post-merger
@@ -597,7 +601,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf",
     datStartDate: "2024-12-01",
-    costBasisAvg: 85_000,
+    // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 10_000_000,
@@ -705,7 +709,7 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/Sequans",
     investorRelationsUrl: "https://sequans.com/investor-relations/investor-materials/",
     secCik: "0001383395",
-    costBasisAvg: 80_000,  // Estimated from $189M raise / ~2.3k BTC peak
+    // costBasisAvg removed - was estimate
     isMiner: false,
     quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops
     avgDailyVolume: 5_000_000,
@@ -729,7 +733,9 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-02-21",
     website: "https://ir.ddc.xyz",
     secCik: "0001808110",
-    costBasisAvg: 88_112,  // treasury.ddc.xyz Jan 29, 2026
+    costBasisAvg: 88_112,
+    costBasisSource: "company-website",
+    costBasisSourceUrl: "https://treasury.ddc.xyz",
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
@@ -825,7 +831,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-04-16",  // First BTC purchase
     website: "https://anap.co.jp",
     isMiner: false,
-    costBasisAvg: 98_571,  // ¥14,785,505/BTC ÷ 150 JPY/USD = ~$98.5k USD
+    // costBasisAvg removed - calculation needs verification
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 2_000_000,
     sharesForMnav: 39_954_400,  // TDnet Q1 FY2026 earnings (Jan 14, 2026)
@@ -852,7 +858,7 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 1_000_000,
     sharesForMnav: 162_000_000,  // treasury.zoozpower.com basic shares
-    costBasisAvg: 116_485,  // treasury.zoozpower.com
+    // costBasisAvg removed - needs verification
     strategy: "EV charging company (flywheel tech) pivoted to BTC treasury Sep 2025. First NIS-denominated Bitcoin exposure on TASE.",
     notes: "Nasdaq + TASE dual-listed (Israel). ✅ NO LEVERAGE: BTC funded via $180M equity raise (Jul 2025). Underwater on BTC ($116k avg). Dilutive: 269M fully diluted (warrants @ $3.06 strike, 5yr). Renamed to 'ZOOZ Strategy Ltd.' Oct 2025.",
   },
@@ -870,7 +876,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://btctcorp.com",
     datStartDate: "2025-06-30",  // TSX Venture listing date
-    costBasisAvg: 107_689,  // BitcoinTreasuries.net
+    // costBasisAvg removed - third-party source only
     isMiner: false,
     quarterlyBurnUsd: 500_000,
     avgDailyVolume: 1_000_000,
@@ -921,7 +927,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387",
     datStartDate: "2024-01-01",
     twitter: "https://x.com/Patrick_Lowry_",
-    costBasisAvg: 60_000,  // Estimated
+    // costBasisAvg removed - was estimate
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 1_000_000,
@@ -947,7 +953,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-07-01",  // New BTC treasury strategy started Jul 2025
     website: "https://www.digitalx.com",
     twitter: "https://twitter.com/DigitalXLtd",
-    costBasisAvg: 113_262,  // Weighted average from dashboard
+    // costBasisAvg removed - dashboard source needs verification
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     avgDailyVolume: 500_000,
@@ -973,7 +979,8 @@ export const btcCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     datStartDate: "2025-05-12",
-    costBasisAvg: 118_205,  // SEC 8-K Nov 19, 2025: "weighted average price of $118,204.88"
+    costBasisAvg: 118_205,
+    costBasisSource: "SEC 8-K Nov 19, 2025",
     isMiner: false,
     quarterlyBurnUsd: 8_000_000,
     avgDailyVolume: 50_000_000,
@@ -1006,7 +1013,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q",
     datStartDate: "2025-05-01",
-    costBasisAvg: 100_000,
+    // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 10_000_000,
     capitalRaisedPipe: 2_500_000_000,
@@ -1034,7 +1041,8 @@ export const btcCompanies: Company[] = [
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     datStartDate: "2024-01-26",
-    costBasisAvg: 68_114,  // Q3 2025 report: "average cost of approximately US$68,114 per unit"
+    costBasisAvg: 68_114,
+    costBasisSource: "Q3 2025 report - 'average cost of approximately US$68,114 per unit'",
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 20_000_000,
@@ -1069,7 +1077,7 @@ export const btcCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
     datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
-    costBasisAvg: 85_000,
+    // costBasisAvg removed - needs verification
     isMiner: true,
     btcMinedAnnual: 2_000,
     quarterlyBurnUsd: 15_000_000,
@@ -1100,7 +1108,8 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://www.forwardindustries.com/",
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
     // Fiscal year end: September 30
-    costBasisAvg: 232.08,  // $1.59B / 6.85M SOL per SEC XBRL
+    costBasisAvg: 232.08,
+    costBasisSource: "SEC XBRL - $1.59B / 6.85M SOL",
     // stakingPct: 0.99 removed - needs SEC verification
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
     quarterlyBurnUsd: 3_400_000,
@@ -1131,7 +1140,7 @@ export const solCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
     datStartDate: "2025-05-01",
-    costBasisAvg: 227.00,
+    // costBasisAvg removed - needs verification
     // stakingPct: 0.95 removed - needs PR verification
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 12_000_000,
@@ -1157,7 +1166,7 @@ export const solCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1805526&type=8-K",
     datStartDate: "2025-04-01",
-    costBasisAvg: 110.00,
+    // costBasisAvg removed - needs verification
     // stakingPct: 0.90 removed - needs SEC verification
     stakingApy: 0.114,
     quarterlyBurnUsd: 1_500_000,
@@ -1187,7 +1196,7 @@ export const solCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
     datStartDate: "2025-04-01",
-    costBasisAvg: 157.66,
+    // costBasisAvg removed - needs verification
     // stakingPct: 0.95 removed - needs PR verification
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
@@ -1217,7 +1226,7 @@ export const solCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update",
     datStartDate: "2024-06-01",
-    costBasisAvg: 130.00,
+    // costBasisAvg removed - needs verification
     // stakingPct: 0.85 removed - needs verification
     stakingApy: 0.065,
     quarterlyBurnUsd: 1_200_000,
@@ -1344,7 +1353,8 @@ export const bnbCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.ceaindustries.com/dashboard.html",
     datStartDate: "2025-06-01",
-    costBasisAvg: 855.00,  // Investor dashboard: "Avg. Cost Basis $855.00"
+    costBasisAvg: 855.00,
+    costBasisSource: "company-website - Investor dashboard",
     // No staking disclosed - holding spot BNB
     quarterlyBurnUsd: 3_000_000,
     capitalRaisedPipe: 500_000_000,
@@ -1421,7 +1431,7 @@ export const taoCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://ir.taosynergies.com/",
     datStartDate: "2025-06-01",
-    costBasisAvg: 334.00,
+    // costBasisAvg removed - needs verification
     // stakingPct: 1.00 removed - needs verification
     stakingApy: 0.10,
     quarterlyBurnUsd: 500_000,
@@ -1448,7 +1458,7 @@ export const taoCompanies: Company[] = [
     holdingsSource: "regulatory-filing",  // News release filed on SEDAR+ Nov 26, 2025
     holdingsSourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
     datStartDate: "2025-07-22",
-    costBasisAvg: 350.00,
+    // costBasisAvg removed - needs SEDAR verification
     // stakingPct: 1.00 removed - needs SEDAR verification
     stakingApy: 0.10,
     quarterlyBurnUsd: 450_000,  // SEDAR+ Q2 FY26 MD&A: ~$450K quarterly ops burn
@@ -1475,7 +1485,7 @@ export const taoCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
     datStartDate: "2025-06-01",
-    costBasisAvg: 384.00,
+    // costBasisAvg removed - needs SEC verification
     // stakingPct: 1.00 removed - needs SEC verification
     stakingApy: 0.10,
     quarterlyBurnUsd: 150_000,
@@ -1510,7 +1520,7 @@ export const linkCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://ir.caliberco.com/",
     datStartDate: "2025-09-09",
-    costBasisAvg: 22.50,
+    // costBasisAvg removed - needs verification
     // stakingPct: 0.13 removed - needs verification
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
@@ -1545,7 +1555,7 @@ export const trxCompanies: Company[] = [
     twitter: "https://x.com/tron_inc",
     investorRelationsUrl: "https://srmentertainment.com/investor-relations",
     secCik: "1956744",
-    costBasisAvg: 0.28,
+    // costBasisAvg removed - needs verification
     // stakingPct: 0.81 removed - needs verification
     stakingApy: 0.045,
     quarterlyBurnUsd: 500_000,
