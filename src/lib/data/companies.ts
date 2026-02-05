@@ -39,6 +39,9 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 800_000_000,
     hasOptions: true,
     sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
+    sharesSource: "SEC 10-Q (filed 2026-01-13): EntityCommonStockSharesOutstanding = 454,862,451 as of 2026-01-12",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
+    sharesAsOf: "2026-01-12",
     cashReserves: 586_000_000,  // $586M cash (Feb 1, 2026)
     restrictedCash: 586_000_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Feb 2, 2026",
@@ -83,6 +86,9 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     sharesForMnav: 196_690_000,  // 196.69M basic shares (matches SBET dashboard methodology)
+    sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
+    sharesAsOf: "2025-11-12",
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     restrictedCash: 11_100_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -154,6 +160,9 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
     sharesForMnav: 323_792_059,  // Jan 7, 2026 press release (basic shares)
+    sharesSource: "SEC 10-Q (filed 2025-11-14): EntityCommonStockSharesOutstanding = 323,674,831 as of 2025-11-10",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
+    sharesAsOf: "2025-11-10",
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -197,6 +206,7 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
     sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K grants). Dilutives in dilutive-instruments.ts
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/",
     sharesSource: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
     sharesAsOf: "2026-01-05",
     leader: "Charles Allen",
@@ -225,6 +235,7 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtm: 30_000_000,
     // Shares: 98,380,767 (SEC 10-Q Sep 30) - 3,535,574 buybacks (Oct-Jan) = 94,845,193
     sharesForMnav: 94_845_193,
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/",
     sharesSource: "SEC 10-Q Sep 30 (98.4M) - 3.54M buybacks through Jan 6, 2026",
     sharesAsOf: "2026-01-06",
     cashReserves: 6_012_219,  // SEC 10-Q Sep 30, 2025
@@ -485,6 +496,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 3_600_000_000,
     sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
+    sharesSource: "SEC 10-Q (filed 2025-11-04): EntityCommonStockSharesOutstanding = 378,184,353 as of 2025-10-28",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    sharesAsOf: "2025-10-28",
     cashReserves: 826_392_000,  // SEC 10-Q Q3 2025: $826,392K
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
     cashSource: "SEC 10-Q Q3 2025",
@@ -525,6 +539,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 5_220_000_000,
     sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
+    sharesSource: "SEC 10-Q (filed 2025-10-30): EntityCommonStockSharesOutstanding = 371,807,186 as of 2025-10-29",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
+    sharesAsOf: "2025-10-29",
     // Note: RIOT reports "unrestricted cash" separately from restricted cash in SEC filings
     cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
     restrictedCash: 330_700_000,  // Operating capital (miner) - not excess
@@ -563,6 +580,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 3_040_000_000,
     sharesForMnav: 255_750_361,  // SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)
+    sharesSource: "SEC 10-K (filed 2025-11-25): EntityCommonStockSharesOutstanding = 255,583,445 as of 2025-11-19",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
+    sharesAsOf: "2025-11-19",
     cashReserves: 43_000_000,  // $43M cash (Sep 2025)
     restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
@@ -597,6 +617,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     marketCap: 1_110_000_000,  // ~$1.11B per Stock Analysis (Jan 2026)
     sharesForMnav: 1_247_436_814,  // SEC DEF 14C Jan 16, 2026: 1.05B Class A + 198M Class B
+    sharesSource: "SEC 10-Q (filed 2024-08-14): CommonStockSharesOutstanding = 1,677,056 as of 2023-12-31",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000121390024069032/",
+    sharesAsOf: "2023-12-31",
     cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
     restrictedCash: 77_780_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Jan 2026",
@@ -630,6 +653,7 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 45_674_420,  // SEC 10-Q Q3 2025 (as of Nov 14, 2025)
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/",
     sharesSource: "SEC 10-Q Q3 2025",
     sharesAsOf: "2025-11-14",
     totalDebt: 3_800_000,  // Coinbase credit facility loan - SEC 10-Q Q3 2025
@@ -769,6 +793,9 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops
     avgDailyVolume: 5_000_000,
     sharesForMnav: 13_933_963,  // SEC 6-K Q3 2025 weighted avg diluted ADS (verified Feb 2, 2026)
+    sharesSource: "SEC 20-F (filed 2025-04-30): EntityCommonStockSharesOutstanding = 251,408,922 as of 2024-12-31",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339525000018/",
+    sharesAsOf: "2024-12-31",
     totalDebt: 189_000_000,  // $189M convertible debt (July 2025)
     debtSource: "SEC Form 6-K",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC.",
@@ -820,6 +847,9 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 15_000_000,
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
+    sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/",
+    sharesAsOf: "2025-06-30",
     totalDebt: 101_301_000,  // SEC XBRL Jun 2025: Long Term Debt
     debtAsOf: "2025-06-30",
     debtSource: "SEC 20-F/6-K XBRL",
@@ -848,6 +878,9 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-03-31",
     avgDailyVolume: 5_000_000,
     sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
+    sharesSource: "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/",
+    sharesAsOf: "2025-11-10",
     totalDebt: 66_300_000,  // SEC 10-Q Sep 2025: $20M June convert + $46.3M March convert (principal, not fair value)
     debtAsOf: "2025-09-30",
     debtSource: "SEC 10-Q Q3 2025",
@@ -916,6 +949,9 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 3_000_000,
     avgDailyVolume: 1_000_000,
     sharesForMnav: 162_000_000,  // treasury.zoozpower.com basic shares
+    sharesSource: "SEC 20-F (filed 2025-03-07): EntityCommonStockSharesOutstanding = 12,105,496 as of 2024-12-31",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225009478/",
+    sharesAsOf: "2024-12-31",
     // costBasisAvg removed - needs verification
     strategy: "EV charging company (flywheel tech) pivoted to BTC treasury Sep 2025. First NIS-denominated Bitcoin exposure on TASE.",
     notes: "Nasdaq + TASE dual-listed (Israel). ✅ NO LEVERAGE: BTC funded via $180M equity raise (Jul 2025). Underwater on BTC ($116k avg). Dilutive: 269M fully diluted (warrants @ $3.06 strike, 5yr). Renamed to 'ZOOZ Strategy Ltd.' Oct 2025.",
@@ -1049,6 +1085,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 511_555_864,  // SEC 10-Q Nov 2025: 439.85M shares + 71.7M pre-funded warrants = 511.56M fully diluted
+    sharesSource: "SEC 10-Q (filed 2025-11-19): EntityCommonStockSharesOutstanding = 439,850,889 as of 2025-11-14",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/",
+    sharesAsOf: "2025-11-14",
     // Debt: $210M Kraken BTC-backed loan only - Yorkville converts redeemed Oct 2025 via Two Prime, then refinanced Dec 2025
     totalDebt: 210_000_000,  // Kraken loan Dec 2025 (replaced Two Prime which replaced Yorkville)
     debtSource: "Kraken credit facility Dec 2025",
@@ -1086,6 +1125,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 279_997_636,  // SEC 10-Q Q3 2025 (Nov 5, 2025)
+    sharesSource: "SEC 10-Q (filed 2025-11-07): EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
+    sharesAsOf: "2025-11-05",
     // Debt: $1B 0% convertible senior secured notes due 2030, part of $2.5B private placement (May 2025)
     totalDebt: 1_000_000_000,  // $1B zero-coupon converts
     debtSource: "SEC 8-K May 2025",
@@ -1154,6 +1196,9 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // Shares: 899,489,426 diluted per Q3 2025 10-Q
     sharesForMnav: 899_489_426,
+    sharesSource: "SEC 10-Q (filed 2025-08-14): EntityCommonStockSharesOutstanding = 82,802,406 as of 2025-08-14",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000121390025076632/",
+    sharesAsOf: "2025-08-14",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
     notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: 432 satoshis/share (Nov 5).",
@@ -1194,6 +1239,9 @@ export const solCompanies: Company[] = [
     capitalRaisedPipe: 1_650_000_000,
     // Shares: 86,145,514 basic (SEC 10-K) + 26,359,600 pre-funded warrants @ $0.03 = 112,505,114 FD
     sharesForMnav: 112_505_114,
+    sharesSource: "SEC 10-K (filed 2025-12-11): EntityCommonStockSharesOutstanding = 86,459,465 as of 2025-12-05",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825009068/",
+    sharesAsOf: "2025-12-05",
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
@@ -1233,6 +1281,9 @@ export const solCompanies: Company[] = [
     burnAsOf: "2025-03-31",
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 75_900_000,  // Q3 2025 10-Q press release: "75.9 million common shares and pre-funded warrants outstanding"
+    sharesSource: "SEC 10-Q (filed 2025-11-18): EntityCommonStockSharesOutstanding = 41,301,400 as of 2025-11-17",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
+    sharesAsOf: "2025-11-17",
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
@@ -1271,6 +1322,9 @@ export const solCompanies: Company[] = [
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
     sharesForMnav: 29_892_800,  // Company press release Jan 5, 2026 (Q4 business update); SEC 8-K Nov 13, 2025 showed 31.4M pre-buyback
+    sharesSource: "SEC 10-Q (filed 2025-11-19): EntityCommonStockSharesOutstanding = 31,401,212 as of 2025-11-19",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/",
+    sharesAsOf: "2025-11-19",
     totalDebt: 186_000_000,  // $186M: $134M converts (OTM) + $52M SOL/DeFi loans (defidevcorp.com/dashboard Jan 2026)
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
@@ -1307,6 +1361,9 @@ export const solCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 100_000_000,
     sharesForMnav: 61_761_756,  // 58.9M (10-Q Sep) + 3.29M (Dec PIPE) - 0.42M (buybacks) = 61.76M
+    sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 59,918,609 as of 2025-11-12",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
+    sharesAsOf: "2025-11-12",
     totalDebt: 200_000_000,  // $200M: $150M convert @$4.25 + $36M convert @$2.39 + $14M other
     cashReserves: 2_200_000,  // $2.2M cash (SEC 10-Q Sep 2025)
     restrictedCash: 2_200_000,  // Operating capital - not excess
@@ -1379,6 +1436,9 @@ export const hypeCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 583_000_000,
     sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
+    sharesSource: "SEC 10-Q (filed 2025-12-08): EntityCommonStockSharesOutstanding = 127,025,563 as of 2025-12-05",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/",
+    sharesAsOf: "2025-12-05",
     cashReserves: 300_000_000,  // $300M+ cash (Dec 2025)
     restrictedCash: 300_000_000,  // No debt = cash not encumbered, don't subtract from EV
     cashSource: "Trefis Dec 5, 2025 analysis",
@@ -1416,6 +1476,7 @@ export const hypeCompanies: Company[] = [
     capitalRaisedPipe: 50_000_000,
     // Shares: 8,097,659 common (Nov 10, 2025) + 5,435,897 preferred × 3 conversion = 24.4M FD
     sharesForMnav: 24_400_000,
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/",
     sharesSource: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
     sharesAsOf: "2025-11-10",
     cashReserves: 8_223_180,  // SEC 10-Q Sep 30, 2025
@@ -1473,6 +1534,9 @@ export const bnbCompanies: Company[] = [
     burnAsOf: "2025-07-31",
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 52_800_000,  // ~49.5M PIPE + 2.5M pre-existing + ~0.8M from warrant exercises (Jan 2026 dashboard implied)
+    sharesSource: "SEC 10-Q (filed 2025-12-15): EntityCommonStockSharesOutstanding = 44,062,938 as of 2025-12-12",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/",
+    sharesAsOf: "2025-12-12",
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
     restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
@@ -1560,6 +1624,7 @@ export const taoCompanies: Company[] = [
     burnAsOf: "2025-03-31",
     capitalRaisedPipe: 11_000_000,
     sharesForMnav: 7_000_000,  // ~6.85M per SEC DEF 14A Oct 2025; Series E convertible ($8 strike) out of money
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/",
     sharesAsOf: "2025-10-31",
     sharesSource: "SEC DEF 14A Nov 17, 2025 (6,848,912 shares as of Oct 31)",
     secCik: "1571934",
@@ -1623,6 +1688,7 @@ export const taoCompanies: Company[] = [
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 7_500_000,
     sharesForMnav: 3_207_210,  // SEC 10-Q Nov 13, 2025 (as of Nov 10, 2025)
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/",
     sharesAsOf: "2025-11-10",
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "746210",
@@ -1667,6 +1733,7 @@ export const linkCompanies: Company[] = [
     burnAsOf: "2025-03-31",
     avgDailyVolume: 5_000_000,
     sharesForMnav: 6_905_000,  // 6.53M Class A + 0.37M Class B = 6.9M per SEC DEF 14A Jan 7, 2026
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000028/",
     sharesAsOf: "2025-12-31",
     sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
     secCik: "1627282",
@@ -1768,6 +1835,7 @@ export const zecCompanies: Company[] = [
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
     capitalRaisedPipe: 58_880_000,  // Oct 2025 PIPE gross proceeds
     sharesForMnav: 137_420_344,  // Basic (56.6M) + Pre-funded warrants (80.8M) per SEC filings
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925109827/",
     sharesSource: "SEC 10-Q Q3 2025 + 8-K Oct 9, 2025 (basic + pre-funded warrants)",
     sharesAsOf: "2025-11-10",
     leader: "Douglas Onsi (CEO)",
@@ -1799,6 +1867,7 @@ export const ltcCompanies: Company[] = [
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
     sharesForMnav: 36_769_677,  // DEF 14A Record Date Dec 15, 2025
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/",
     sharesSource: "SEC DEF 14A Dec 30, 2025",
     sharesAsOf: "2025-12-15",
     // Cash ($10.1M) is opex runway per 10-Q - neutral for mNAV (not for LTC, not excess)
@@ -1918,6 +1987,7 @@ export const dogeCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Minimal liabilities per 10-Q
     sharesForMnav: 201_309_022,  // SEC 10-Q Q1 FY2026 cover page (Nov 10, 2025)
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/",
     sharesSource: "SEC 10-Q Q1 FY2026 cover page",
     sharesAsOf: "2025-11-10",
     leader: "Clayton Adams (CEO)",
@@ -1951,6 +2021,9 @@ export const dogeCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     marketCap: 8_000_000,  // TBH pre-merger market cap ~$8M (10.8M shares × ~$0.75)
     sharesForMnav: 10_800_000,  // TBH pre-merger shares (Nov 2025 10-Q)
+    sharesSource: "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025111616/",
+    sharesAsOf: "2025-11-12",
     leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
     notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1).",
@@ -1974,6 +2047,7 @@ export const dogeCompanies: Company[] = [
     capitalRaisedAtm: 500_000_000,
     avgDailyVolume: 3_000_000,
     sharesForMnav: 1_500_000,  // Post 1:60 reverse split Jan 20, 2026 (was 88.6M -> 1.5M)
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/",
     sharesAsOf: "2026-01-20",
     sharesSource: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
     totalDebt: 16_338_506,  // $10M Series A-1 + $5M Series B-1 + $1.34M Series C-1 convertible notes
