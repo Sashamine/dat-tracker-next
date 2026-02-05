@@ -82,6 +82,8 @@ export async function GET(
       strategy: company.strategy,
       notes: company.notes,
       costBasisAvg: company.costBasisAvg,
+      costBasisSource: company.costBasisSource,
+      costBasisSourceUrl: company.costBasisSourceUrl,
       stakingPct: company.stakingPct,
       stakingApy: company.stakingApy,
       stakingMethod: company.stakingMethod,

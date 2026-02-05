@@ -240,21 +240,21 @@ const BMNR_PURCHASES: Purchase[] = [
 ];
 
 // =============================================================================
-// SBET (SharpLink Gaming) - ETH purchases from SEC filings
-// #2 ETH treasury - accumulation since 2024
-// Note: Holdings declined Q1 2025 (sold ~340K ETH) then resumed buying
+// SBET (SharpLink Gaming) - ETH purchases from SEC 10-Q filings
+// ETH treasury strategy launched June 2, 2025 (NO holdings before this date)
+// Cost basis from SEC filings: Q2 10-Q and Q3 10-Q digital asset notes
 // =============================================================================
 const SBET_PURCHASES: Purchase[] = [
-  // 2024 - Initial accumulation
-  { date: "2024-03-31", quantity: 450_000, pricePerUnit: 3350, totalCost: 1_507_500_000, source: "10-Q Q1 2024" },
-  { date: "2024-06-30", quantity: 130_000, pricePerUnit: 3450, totalCost: 448_500_000, source: "10-Q Q2 2024" },
-  { date: "2024-09-30", quantity: 140_000, pricePerUnit: 2400, totalCost: 336_000_000, source: "10-Q Q3 2024" },
-  { date: "2024-12-31", quantity: 140_000, pricePerUnit: 3700, totalCost: 518_000_000, source: "10-K FY2024" },
-  
-  // 2025 - Q1 sold ~340K, then resumed buying
-  // Net: Started 860K, dropped to 520K by Jun, back to 863K by Jan 2026
-  { date: "2025-09-30", quantity: 341_251, pricePerUnit: 2500, totalCost: 853_127_500, source: "10-Q Q3 2025" },
-  { date: "2026-01-10", quantity: 2_173, pricePerUnit: 3300, totalCost: 7_170_900, source: "8-K filing" },
+  // Q2 2025 (Jun 2 - Jun 30): First quarter of ETH accumulation
+  // 10-Q Note 2: 24,704 native ETH at $63,899,229 cost + 164,731 LsETH at $470,235,927 cost
+  { date: "2025-06-30", quantity: 24_704, pricePerUnit: 2587, totalCost: 63_899_229, source: "Q2 2025 10-Q (native ETH)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024107/" },
+  { date: "2025-06-30", quantity: 164_731, pricePerUnit: 2854, totalCost: 470_235_927, source: "Q2 2025 10-Q (LsETH at cost)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024107/" },
+
+  // Q3 2025 (Jul 1 - Sep 30): Massive accumulation phase
+  // 10-Q Note: 580,841 native ETH at $2,304,908,135 + 236,906 LsETH at $717,419,123
+  // Delta from Q2: 556,137 native ETH at ~$2,241M + 72,175 LsETH at ~$247M
+  { date: "2025-09-30", quantity: 556_137, pricePerUnit: 4030, totalCost: 2_241_008_906, source: "Q3 2025 10-Q (native ETH delta)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/" },
+  { date: "2025-09-30", quantity: 72_175, pricePerUnit: 3424, totalCost: 247_183_196, source: "Q3 2025 10-Q (LsETH delta)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/" },
 ];
 
 // =============================================================================

@@ -58,7 +58,9 @@ export const ethCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
     datStartDate: "2025-05-01",
-    costBasisAvg: 3_050,  // Calculated from purchase history (purchases-history.ts)
+    costBasisAvg: 3_696,  // SEC Q3 2025 10-Q: $3.022B total cost / 817,747 ETH-equivalent units
+    costBasisSource: "SEC 10-Q Q3 2025: Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkGaming",
     secCik: "0001981535",
