@@ -95,7 +95,7 @@ export const ethCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=2080334&type=8-K",
     datStartDate: "2025-10-01",
-    stakingPct: 1.0,
+    // stakingPct removed - SPAC pending, needs verification
     stakingMethod: "Native staking",
     quarterlyBurnUsd: 800_000,
     avgDailyVolume: 100_000_000,
@@ -160,7 +160,7 @@ export const ethCompanies: Company[] = [
     website: "https://www.btcs.com",
     twitter: "https://twitter.com/BTCSInc",
     investorRelationsUrl: "https://www.btcs.com/investors/",
-    stakingPct: 0.75,
+    // stakingPct removed - needs SEC/PR verification
     stakingMethod: "Builder+ validators",
     quarterlyBurnUsd: 1_800_000,
     capitalRaisedAtm: 60_000_000,
@@ -235,7 +235,7 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
     datStartDate: "2025-07-30",
     secCik: "1591890",
-    stakingPct: 0.80,
+    // stakingPct removed - needs SEC verification
     stakingMethod: "Native staking",
     // VERIFIED: 10-Q Q3 2025 - 9mo burn $4.75M = $1.58M/qtr
     quarterlyBurnUsd: 1_580_000,
@@ -1101,7 +1101,7 @@ export const solCompanies: Company[] = [
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
     // Fiscal year end: September 30
     costBasisAvg: 232.08,  // $1.59B / 6.85M SOL per SEC XBRL
-    stakingPct: 0.99,
+    // stakingPct: 0.99 removed - needs SEC verification
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
     quarterlyBurnUsd: 3_400_000,
     capitalRaisedPipe: 1_650_000_000,
@@ -1132,7 +1132,7 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
     datStartDate: "2025-05-01",
     costBasisAvg: 227.00,
-    stakingPct: 0.95,
+    // stakingPct: 0.95 removed - needs PR verification
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 12_000_000,
     capitalRaisedPipe: 500_000_000,
@@ -1158,7 +1158,7 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1805526&type=8-K",
     datStartDate: "2025-04-01",
     costBasisAvg: 110.00,
-    stakingPct: 0.90,
+    // stakingPct: 0.90 removed - needs SEC verification
     stakingApy: 0.114,
     quarterlyBurnUsd: 1_500_000,
     capitalRaisedAtm: 200_000_000,
@@ -1188,7 +1188,7 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
     datStartDate: "2025-04-01",
     costBasisAvg: 157.66,
-    stakingPct: 0.95,
+    // stakingPct: 0.95 removed - needs PR verification
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
     capitalRaisedAtm: 100_000_000,
@@ -1218,7 +1218,7 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update",
     datStartDate: "2024-06-01",
     costBasisAvg: 130.00,
-    stakingPct: 0.85,
+    // stakingPct: 0.85 removed - needs verification
     stakingApy: 0.065,
     quarterlyBurnUsd: 1_200_000,
     capitalRaisedAtm: 50_000_000,
@@ -1374,7 +1374,7 @@ export const bnbCompanies: Company[] = [
     secCik: "1872302",
     filingType: "FPI",  // Foreign Private Issuer - files 20-F/6-K, limited XBRL
     // costBasisAvg: REMOVED - no SEC source found
-    stakingPct: 0.30,
+    // stakingPct: 0.30 removed - needs verification
     stakingApy: 0.03,
     quarterlyBurnUsd: 3_550_000,  // H1 2025: $7.1M/6mo = $3.55M/qtr (down from FY2024's $4.85M/qtr)
     burnSource: "SEC 6-K H1 2025",
@@ -1422,7 +1422,7 @@ export const taoCompanies: Company[] = [
     holdingsSourceUrl: "https://ir.taosynergies.com/",
     datStartDate: "2025-06-01",
     costBasisAvg: 334.00,
-    stakingPct: 1.00,
+    // stakingPct: 1.00 removed - needs verification
     stakingApy: 0.10,
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 11_000_000,
@@ -1449,7 +1449,7 @@ export const taoCompanies: Company[] = [
     holdingsSourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
     datStartDate: "2025-07-22",
     costBasisAvg: 350.00,
-    stakingPct: 1.00,
+    // stakingPct: 1.00 removed - needs SEDAR verification
     stakingApy: 0.10,
     quarterlyBurnUsd: 450_000,  // SEDAR+ Q2 FY26 MD&A: ~$450K quarterly ops burn
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
@@ -1476,7 +1476,7 @@ export const taoCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
     datStartDate: "2025-06-01",
     costBasisAvg: 384.00,
-    stakingPct: 1.00,
+    // stakingPct: 1.00 removed - needs SEC verification
     stakingApy: 0.10,
     quarterlyBurnUsd: 150_000,
     capitalRaisedAtm: 7_500_000,
@@ -1511,7 +1511,7 @@ export const linkCompanies: Company[] = [
     holdingsSourceUrl: "https://ir.caliberco.com/",
     datStartDate: "2025-09-09",
     costBasisAvg: 22.50,
-    stakingPct: 0.13,
+    // stakingPct: 0.13 removed - needs verification
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 5_000_000,
@@ -1546,7 +1546,7 @@ export const trxCompanies: Company[] = [
     investorRelationsUrl: "https://srmentertainment.com/investor-relations",
     secCik: "1956744",
     costBasisAvg: 0.28,
-    stakingPct: 0.81,
+    // stakingPct: 0.81 removed - needs verification
     stakingApy: 0.045,
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 310_000_000,
@@ -1660,7 +1660,7 @@ export const ltcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
     datStartDate: "2024-06-01",
     costBasisAvg: 80.00,
-    stakingPct: 0.042,
+    // stakingPct: 0.042 removed - needs verification
     stakingApy: 0.03,
     quarterlyBurnUsd: 200_000,
     capitalRaisedAtm: 100_000_000,
@@ -1695,7 +1695,7 @@ export const suiCompanies: Company[] = [
     datStartDate: "2025-08-01",
     secCik: "1425355",
     costBasisAvg: 2.23,
-    stakingPct: 1.0,
+    // stakingPct: 1.0 removed - needs verification
     stakingApy: 0.022,
     quarterlyBurnUsd: 1_000_000,
     capitalRaisedAtm: 500_000_000,
@@ -1871,7 +1871,7 @@ export const hbarCompanies: Company[] = [
     holdingsSourceUrl: "https://www.immutableholdings.com/",
     datStartDate: "2025-07-01",
     costBasisAvg: 0.10,
-    stakingPct: 0.50,
+    // stakingPct: 0.50 removed - needs verification
     stakingApy: 0.065,
     quarterlyBurnUsd: 500_000,
     capitalRaisedPipe: 5_000_000,
