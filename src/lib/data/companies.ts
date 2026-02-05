@@ -370,8 +370,7 @@ export const btcCompanies: Company[] = [
     costBasisAvg: 92_902,  // Calculated from purchase history (purchases-history.ts)
     isMiner: false,
     stakingPct: 0,  // BTC not staked
-    quarterlyBurnUsd: 10_000_000,
-    burnEstimated: true,  // New company, estimate only
+    // No burn data yet - awaiting first 10-Q (merged Dec 2025)
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
