@@ -15,25 +15,9 @@ export interface StockSplit {
 }
 
 export const STOCK_SPLITS: Record<string, StockSplit[]> = {
-  // SBET - 3 reverse splits (source: stocksplithistory.com)
-  // Total cumulative factor: 3 × 10 × 12 = 360
-  'SBET': [
-    {
-      date: '2017-09-06',
-      ratio: 3,
-      description: '1:3 reverse split',
-    },
-    {
-      date: '2023-04-26',
-      ratio: 10,
-      description: '1:10 reverse split',
-    },
-    {
-      date: '2025-05-06',
-      ratio: 12,
-      description: '1:12 reverse split',
-    },
-  ],
+  // SBET - Yahoo data is inconsistently adjusted across splits
+  // Disabled split adjustment - using date filter instead in stock history API
+  // 'SBET': [...],
   
   // BMNR - 1:20 reverse split
   'BMNR': [

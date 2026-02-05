@@ -49,8 +49,8 @@ const FMP_API_KEY = process.env.FMP_API_KEY || "";
 // Tickers with known Yahoo data issues (incorrect split adjustments)
 // These will try FMP first, and filter out corrupt old data
 // Date is set to AFTER the most recent split to only show clean post-split data
-// Note: SBET removed - now has full split history in stock-splits.ts
 const YAHOO_PROBLEM_TICKERS: Record<string, string> = {
+  'SBET': '2025-06-15',  // Yahoo data inconsistently adjusted - show post-volatility only
   'HSDT': '2025-08-01',  // Split was ~June 2025 - needs split research
   'NXTT': '2025-10-01',  // 200:1 split Sep 2025 - needs split research
 };
