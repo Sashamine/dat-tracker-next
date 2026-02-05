@@ -68,6 +68,22 @@ const tierColors: Record<number, string> = {
   3: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
+// Source link component for provenance
+function SourceLink({ url, label }: { url?: string; label?: string }) {
+  if (!url) return null;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[10px] text-blue-500 hover:text-blue-400 align-super ml-1 no-underline whitespace-nowrap"
+      title={label || "View source"}
+    >
+      [src&nbsp;↗]
+    </a>
+  );
+}
+
 export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
@@ -803,6 +819,7 @@ export default function CompanyPage() {
                         filingType="8-K"
                       />
                     )}
+                    <SourceLink url={displayCompany.cashSourceUrl} label={displayCompany.cashSource} />
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
                 </div>
@@ -828,6 +845,7 @@ export default function CompanyPage() {
                           filingType="10-Q"
                         />
                       )}
+                      <SourceLink url={displayCompany.debtSourceUrl} label={displayCompany.debtSource} />
                     </p>
                     <p className="text-xs text-gray-400">
                       {itmConvertValue > 0 ? (
@@ -856,6 +874,7 @@ export default function CompanyPage() {
                         filingType="8-K"
                       />
                     )}
+                    <SourceLink url={displayCompany.preferredSourceUrl} label={displayCompany.preferredSource} />
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>
