@@ -50,7 +50,7 @@ const tickerToCIK: Record<string, string> = {
   "NXTT": "0001831978",
   "ABTC": "0002068580", // American Bitcoin Corp
   // ETH
-  "BMNR": "0001866292",
+  "BMNR": "0001829311",  // Bitmine Immersion Technologies
   "SBET": "0001869198",
   "ETHM": "0002028699", // Dynamix Corp (The Ether Machine)
   "BTBT": "0001799290",
