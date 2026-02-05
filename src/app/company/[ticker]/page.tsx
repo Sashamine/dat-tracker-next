@@ -530,6 +530,7 @@ export default function CompanyPage() {
                     filingType="10-Q"
                   />
                 )}
+                <SourceLink url={displayCompany.burnSourceUrl} label={displayCompany.burnSource} />
               </p>
               <p className="text-xs text-gray-400">
                 USD/yr (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
@@ -551,6 +552,7 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-2xl font-bold text-amber-600">
                     ${(totalObligations / 1e6).toFixed(0)}M
+                    <SourceLink url={displayCompany.cashObligationsSourceUrl} label={displayCompany.cashObligationsSource} />
                   </p>
                   <p className="text-xs text-gray-400">
                     {annualBurn > 0 && prefDividends > 0 ? (
