@@ -30,6 +30,8 @@ export const ethCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     quarterlyBurnUsd: 2_500_000,
+    burnSource: "SEC 10-Q (filed 2026-01-13): NetCashUsedInOperatingActivities $228,356,000 (2025-09-01 to 2025-11-30)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
     capitalRaisedAtm: 10_000_000_000,
@@ -73,6 +75,9 @@ export const ethCompanies: Company[] = [
     stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
     stakingAsOf: "2025-12-14",
     quarterlyBurnUsd: 2_850_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $514,085 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225010881/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 2_000_000_000,
     avgDailyVolume: 300_000_000,
     hasOptions: true,
@@ -141,6 +146,9 @@ export const ethCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     quarterlyBurnUsd: 8_500_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $17,401,915 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 172_000_000,
     avgDailyVolume: 80_000_000,
     hasOptions: true,
@@ -181,6 +189,9 @@ export const ethCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     quarterlyBurnUsd: 1_800_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $1,902,417 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225010401/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 60_000_000,
     avgDailyVolume: 15_000_000,
     hasOptions: true,
@@ -208,6 +219,9 @@ export const ethCompanies: Company[] = [
     datStartDate: "2025-07-01",
     stakingPct: 0,  // Direct holdings not staked - yield is via Dialectic fund
     quarterlyBurnUsd: 5_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $8,582,365 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000164117225010979/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 30_000_000,
     // Shares: 98,380,767 (SEC 10-Q Sep 30) - 3,535,574 buybacks (Oct-Jan) = 94,845,193
     sharesForMnav: 94_845_193,
@@ -435,6 +449,9 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $37,607 (2024-01-01 to 2024-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1865602/000121390025044273/",
+    burnAsOf: "2024-03-31",
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     pendingMerger: true,  // SPAC merger not yet closed - no mNAV
@@ -461,6 +478,9 @@ export const btcCompanies: Company[] = [
     isMiner: true,
     btcMinedAnnual: 18_000,
     quarterlyBurnUsd: 85_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-08): NetCashUsedInOperatingActivities $215,488,000 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000009/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     marketCap: 3_600_000_000,
@@ -498,6 +518,9 @@ export const btcCompanies: Company[] = [
     isMiner: true,
     btcMinedAnnual: 6_000,
     quarterlyBurnUsd: 120_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-01): NetCashUsedInOperatingActivities $122,060,000 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000155837025006119/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 350_000_000,
     hasOptions: true,
     marketCap: 5_220_000_000,
@@ -533,6 +556,9 @@ export const btcCompanies: Company[] = [
     isMiner: true,
     btcMinedAnnual: 9_000,
     quarterlyBurnUsd: 65_000_000,
+    burnSource: "SEC 10-Q (filed 2025-02-06): NetCashUsedInOperatingActivities $119,452,000 (2024-10-01 to 2024-12-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000095017025015470/",
+    burnAsOf: "2024-12-31",
     avgDailyVolume: 250_000_000,
     hasOptions: true,
     marketCap: 3_040_000_000,
@@ -564,6 +590,9 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - needs SEC verification
     isMiner: false,
     quarterlyBurnUsd: 15_000_000,  // Combined burn
+    burnSource: "SEC 10-Q (filed 2025-11-14): NetCashUsedInOperatingActivities $13,955,000 (2025-09-12 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/",
+    burnAsOf: "2025-09-30",
     avgDailyVolume: 100_000_000,  // Increased post-merger
     hasOptions: true,
     marketCap: 1_110_000_000,  // ~$1.11B per Stock Analysis (Jan 2026)
@@ -594,6 +623,9 @@ export const btcCompanies: Company[] = [
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     isMiner: false,
     quarterlyBurnUsd: 4_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $9,771,951 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001326/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
@@ -811,6 +843,9 @@ export const btcCompanies: Company[] = [
     secCik: "0001889123",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $4,954,200 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000095017025072818/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 5_000_000,
     sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
     totalDebt: 66_300_000,  // SEC 10-Q Sep 2025: $20M June convert + $46.3M March convert (principal, not fair value)
@@ -1007,6 +1042,9 @@ export const btcCompanies: Company[] = [
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     isMiner: false,
     quarterlyBurnUsd: 8_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-08): NetCashUsedInOperatingActivities $865,083 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225009328/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 50_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
@@ -1040,6 +1078,9 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 10_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-09): NetCashUsedInOperatingActivities $9,737,800 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125018209/",
+    burnAsOf: "2025-03-31",
     capitalRaisedPipe: 2_500_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
@@ -1106,6 +1147,9 @@ export const btcCompanies: Company[] = [
     isMiner: true,
     btcMinedAnnual: 2_000,
     quarterlyBurnUsd: 15_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $3,219,000 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000121390025044194/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     // Shares: 899,489,426 diluted per Q3 2025 10-Q
@@ -1144,6 +1188,9 @@ export const solCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
     quarterlyBurnUsd: 3_400_000,
+    burnSource: "SEC 10-Q (filed 2024-02-14): NetCashUsedInOperatingActivities $148,605 (2022-10-01 to 2022-12-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316824000976/",
+    burnAsOf: "2022-12-31",
     capitalRaisedPipe: 1_650_000_000,
     // Shares: 86,145,514 basic (SEC 10-K) + 26,359,600 pre-funded warrants @ $0.03 = 112,505,114 FD
     sharesForMnav: 112_505_114,
@@ -1181,6 +1228,9 @@ export const solCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 12_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-01): NetCashUsedInOperatingActivities $3,536,000 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025006120/",
+    burnAsOf: "2025-03-31",
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 75_900_000,  // Q3 2025 10-Q press release: "75.9 million common shares and pre-funded warrants outstanding"
     avgDailyVolume: 150_000_000,
@@ -1213,6 +1263,9 @@ export const solCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.114,
     quarterlyBurnUsd: 1_500_000,
+    burnSource: "SEC 10-Q (filed 2025-05-14): NetCashUsedInOperatingActivities $785,639 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 200_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
@@ -1249,6 +1302,9 @@ export const solCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.08,
     quarterlyBurnUsd: 2_500_000,
+    burnSource: "SEC 10-Q (filed 2025-11-12): NetCashUsedInOperatingActivities $9,780,221 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
+    burnAsOf: "2025-09-30",
     capitalRaisedAtm: 100_000_000,
     sharesForMnav: 61_761_756,  // 58.9M (10-Q Sep) + 3.29M (Dec PIPE) - 0.42M (buybacks) = 61.76M
     totalDebt: 200_000_000,  // $200M: $150M convert @$4.25 + $36M convert @$2.39 + $14M other
@@ -1318,6 +1374,9 @@ export const hypeCompanies: Company[] = [
     stakingSource: "PR Dec 4, 2025 - 12M HYPE staked",
     stakingAsOf: "2025-12-04",
     quarterlyBurnUsd: 2_000_000,
+    burnSource: "SEC 10-Q (filed 2025-12-08): NetCashUsedInOperatingActivities $0 (2025-07-02 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/",
+    burnAsOf: "2025-09-30",
     capitalRaisedPipe: 583_000_000,
     sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
     cashReserves: 300_000_000,  // $300M+ cash (Dec 2025)
@@ -1351,6 +1410,9 @@ export const hypeCompanies: Company[] = [
     stakingPct: 0,  // Direct holdings not staked (staked tracked in cryptoInvestments)
     stakingApy: 0.05,
     quarterlyBurnUsd: 3_570_000,  // SEC 10-Q: $10.7M cash used in ops (9mo) / 3 = $3.57M/qtr
+    burnSource: "SEC 10-Q (filed 2025-05-19): NetCashUsedInOperatingActivities $4,442,846 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000141057825001361/",
+    burnAsOf: "2025-03-31",
     capitalRaisedPipe: 50_000_000,
     // Shares: 8,097,659 common (Nov 10, 2025) + 5,435,897 preferred × 3 conversion = 24.4M FD
     sharesForMnav: 24_400_000,
@@ -1406,6 +1468,9 @@ export const bnbCompanies: Company[] = [
     costBasisSource: "company-website - Investor dashboard",
     // No staking disclosed - holding spot BNB
     quarterlyBurnUsd: 3_000_000,
+    burnSource: "SEC 10-Q (filed 2025-09-22): NetCashUsedInOperatingActivities $1,725,439 (2025-06-07 to 2025-07-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225014503/",
+    burnAsOf: "2025-07-31",
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 52_800_000,  // ~49.5M PIPE + 2.5M pre-existing + ~0.8M from warrant exercises (Jan 2026 dashboard implied)
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
@@ -1490,6 +1555,9 @@ export const taoCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.10,
     quarterlyBurnUsd: 500_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $2,000,596 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001327/",
+    burnAsOf: "2025-03-31",
     capitalRaisedPipe: 11_000_000,
     sharesForMnav: 7_000_000,  // ~6.85M per SEC DEF 14A Oct 2025; Series E convertible ($8 strike) out of money
     sharesAsOf: "2025-10-31",
@@ -1550,6 +1618,9 @@ export const taoCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.10,
     quarterlyBurnUsd: 150_000,
+    burnSource: "SEC 10-Q (filed 2025-05-13): NetCashUsedInOperatingActivities $680,000 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925016275/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 7_500_000,
     sharesForMnav: 3_207_210,  // SEC 10-Q Nov 13, 2025 (as of Nov 10, 2025)
     sharesAsOf: "2025-11-10",
@@ -1591,6 +1662,9 @@ export const linkCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.05,
     quarterlyBurnUsd: 2_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $1,738,000 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000059/",
+    burnAsOf: "2025-03-31",
     avgDailyVolume: 5_000_000,
     sharesForMnav: 6_905_000,  // 6.53M Class A + 0.37M Class B = 6.9M per SEC DEF 14A Jan 7, 2026
     sharesAsOf: "2025-12-31",
@@ -1632,6 +1706,9 @@ export const trxCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.045,
     quarterlyBurnUsd: 500_000,
+    burnSource: "SEC 10-Q (filed 2025-05-09): NetCashUsedInOperatingActivities $206,514 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000164117225009334/",
+    burnAsOf: "2025-03-31",
     capitalRaisedPipe: 310_000_000,
     avgDailyVolume: 50_000_000,
     sharesForMnav: 274_382_064,  // Dec 29, 2025 8-K: after $18M Justin Sun investment
@@ -1716,6 +1793,9 @@ export const ltcCompanies: Company[] = [
     datStartDate: "2025-07-01",
     costBasisAvg: 107.58,
     quarterlyBurnUsd: 5_000_000,  // Trailing avg: FY2025 $20.8M/yr + Q1 FY2026 $4.5M
+    burnSource: "SEC 10-Q (filed 2025-11-14): NetCashUsedInOperatingActivities $4,508,000 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/",
+    burnAsOf: "2025-09-30",
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
     sharesForMnav: 36_769_677,  // DEF 14A Record Date Dec 15, 2025
@@ -1787,6 +1867,9 @@ export const suiCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.022,
     quarterlyBurnUsd: 1_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-13): NetCashUsedInOperatingActivities $3,646,585 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425005448/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 500_000_000,
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
@@ -1823,6 +1906,9 @@ export const dogeCompanies: Company[] = [
     datStartDate: "2025-09-05",
     costBasisAvg: 0.23,  // $163.8M fair value / 703.6M DOGE at Sep 30
     quarterlyBurnUsd: 500_000,
+    burnSource: "SEC 10-Q (filed 2025-11-13): NetCashUsedInOperatingActivities $3,796,652 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/",
+    burnAsOf: "2025-09-30",
     capitalRaisedPipe: 175_000_000,
     avgDailyVolume: 10_000_000,
     marketCap: 150_000_000,
@@ -1858,6 +1944,9 @@ export const dogeCompanies: Company[] = [
     mergerExpectedClose: "2026-Q1",
     costBasisAvg: 0.20,
     quarterlyBurnUsd: 1_000_000,
+    burnSource: "SEC 10-Q (filed 2025-07-18): NetCashUsedInOperatingActivities $1,767,013 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025065688/",
+    burnAsOf: "2025-03-31",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 5_000_000,
     marketCap: 8_000_000,  // TBH pre-merger market cap ~$8M (10.8M shares × ~$0.75)
@@ -1921,6 +2010,9 @@ export const avaxCompanies: Company[] = [
     stakingSource: "SEC 8-K Jan 28, 2026",
     stakingAsOf: "2026-01-28",
     quarterlyBurnUsd: 1_000_000,
+    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $2,172,409 (2025-01-01 to 2025-03-31)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000164117225010961/",
+    burnAsOf: "2025-03-31",
     capitalRaisedAtm: 40_000_000,
     capitalRaisedPipe: 219_000_000,  // $219M PIPE Nov 2025 ($145M cash + $73.7M AVAX)
     avgDailyVolume: 15_000_000,
