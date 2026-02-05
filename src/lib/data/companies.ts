@@ -60,8 +60,10 @@ export const ethCompanies: Company[] = [
     secCik: "0001981535",
     tokenizedAddress: "SBETxQGMcKL7oPBqJgUm7gXmMFqLz4PnPuRGqDfvpump",
     tokenizedChain: "Solana",
-    stakingPct: 0.95,
+    stakingPct: 0.95,  // "nearly all" deployed to staking per Q3 2025 PR
     stakingMethod: "Linea/Lido",
+    stakingSource: "PR Nov 12, 2025 - Q3 2025 ETH Treasury Strategy",
+    stakingAsOf: "2025-09-30",
     quarterlyBurnUsd: 2_850_000,
     capitalRaisedAtm: 2_000_000_000,
     avgDailyVolume: 300_000_000,
