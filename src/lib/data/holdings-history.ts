@@ -453,35 +453,31 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== ADDITIONAL ETH COMPANIES ====================
 
-// SharpLink Gaming (SBET) - Largest ETH treasury
+// Sharplink Inc (SBET) - Largest ETH treasury (formerly SharpLink Gaming, renamed Feb 3, 2026)
+// ETH treasury strategy launched June 2, 2025 — NO ETH holdings before that date
 // Note: 1:12 reverse split on May 6, 2025
-// Pre-split data uses pre-split share basis; post-split uses post-split basis
-// NOT split-adjusted — shows ETH/share as reported at each point in time
-// This avoids an artificial 96% cliff from the corporate restructuring
-// The pre→post transition reflects both the split and massive dilution (8M→145M+ shares)
-// Post-split trend shows accretive (Q2→Q3) then dilutive (Q3→Dec) ATM offering impact
+// Using BASIC shares (EntityCommonStockSharesOutstanding)
+// SEC CIK: 1981535 | Fiscal year ends Jan 31
 //
-// Using BASIC shares (EntityCommonStockSharesOutstanding) - matches reported mNAV (~0.83 on Nov 28, 2025)
-// Fully diluted count (warrants, options, RSUs) not publicly available
+// Weekly 8-K filings provide ETH updates with capital summary tables
+// ETH totals = native ETH + LsETH "as-if redeemed" (liquid staking tokens at conversion rate)
+// ~100% of ETH is staked
 //
-// ETH Holdings Breakdown (as of Dec 14, 2025 per 8-K filed Dec 17):
-//   - Native ETH: 639,241
-//   - LsETH (liquid staking, as-if redeemed): 224,183
-//   - Total: 863,424 ETH
-//   - Staking rewards earned: 9,241 ETH (3,350 native + 5,891 from LsETH)
-//   - ~100% of ETH is staked
+// Key corporate actions:
+//   - Jun 2, 2025: ETH treasury strategy adopted
+//   - Jul 11, 2025: Purchased 10,000 ETH from Ethereum Foundation ($25.7M, $2,572/ETH)
+//   - Ongoing ATM share offerings to fund ETH purchases
+//   - Feb 3, 2026: Renamed from SharpLink Gaming to Sharplink Inc
 const SBET_HISTORY: HoldingsSnapshot[] = [
-  // Pre-split (pre-split share basis)
-  { date: "2024-03-31", holdings: 450000, sharesOutstandingDiluted: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 580000, sharesOutstandingDiluted: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 720000, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.008000, source: "Q3 2024 10-Q", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 860000, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.008776, source: "Q4 2024 10-K", sourceType: "sec-filing" },
-  // Post reverse split (1:12 on May 6, 2025) + restructuring (sold ETH, issued shares, then rebought)
-  // Q2→Q3: accretive dilution (+33% ETH/share via premium ATM offerings)
-  // Q3→Dec: dilutive (-8% ETH/share, shares grew faster than ETH)
+  // Q2 2025 10-Q (first quarter with ETH holdings — strategy launched Jun 2)
   { date: "2025-06-30", holdings: 520000, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.003586, source: "Q2 2025 10-Q", sourceType: "sec-filing" },
-  { date: "2025-09-30", holdings: 861251, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004785, source: "Q3 2025 10-Q", sourceType: "sec-filing" },
-  // Q4 2025: 8-K filed Dec 17, holdings as of Dec 14. Breakdown: 639,241 native + 224,183 LsETH
+  // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH as-if-redeemed)
+  { date: "2025-09-30", holdings: 817747, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004543, source: "Q3 2025 10-Q (Nov 12 earnings)", sourceType: "sec-filing" },
+  // 8-K Oct 21: Week ending Oct 19, 2025 (601,143 native + 258,710 LsETH)
+  { date: "2025-10-19", holdings: 859853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004661, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/form8-k.htm", sourceType: "sec-filing" },
+  // 8-K Nov 12: As of Nov 9, 2025 (637,752 native + 204,332 LsETH)
+  { date: "2025-11-09", holdings: 842084, sharesOutstandingDiluted: 189_000_000, holdingsPerShare: 0.004456, source: "8-K Nov 12, 2025 (earnings release)", sourceType: "sec-filing" },
+  // 8-K Dec 17: As of Dec 14, 2025 (639,241 native + 224,183 LsETH). Staking rewards: 9,241 ETH total
   { date: "2025-12-14", holdings: 863424, sharesOutstandingDiluted: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm", sourceType: "sec-filing" },
 ];
 
