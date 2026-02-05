@@ -44,7 +44,7 @@ const tickerToCIK: Record<string, string> = {
   "KULR": "0001662684",
   "NAKA": "0001977303",
   "DJT": "0001849635",
-  "XXI": "0002019757",
+  "XXI": "0002070457",  // Post-merger CIK (was 0001865602 Cantor SPAC)
   "CEPO": "0002019757", // BSTR Holdings SPAC
   "ASST": "0001955745", // Strive Enterprises
   "NXTT": "0001831978",
