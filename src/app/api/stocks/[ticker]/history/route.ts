@@ -48,10 +48,11 @@ const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Tickers with known Yahoo data issues (incorrect split adjustments)
 // These will try FMP first, and filter out corrupt old data
+// Date is set to AFTER the most recent split to only show clean post-split data
 const YAHOO_PROBLEM_TICKERS: Record<string, string> = {
-  'SBET': '2025-01-01',  // Only show data from 2025 onwards (multiple reverse splits before)
-  'HSDT': '2025-01-01',  // Only show data from 2025 onwards
-  'NXTT': '2025-09-01',  // Only show data from Sep 2025 (200:1 split)
+  'SBET': '2025-08-01',  // Split was ~June-July 2025, show only post-split
+  'HSDT': '2025-08-01',  // Split was ~June 2025
+  'NXTT': '2025-10-01',  // 200:1 split Sep 2025
 };
 
 export async function GET(
