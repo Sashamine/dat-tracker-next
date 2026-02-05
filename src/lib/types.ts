@@ -117,6 +117,9 @@ export interface Company {
   // BTC-specific
   isMiner?: boolean;
   btcMinedAnnual?: number;
+  btcMinedSource?: string;
+  btcMinedSourceUrl?: string;
+  btcMinedAsOf?: string;
   btcAcquired2025?: number;
 
   // Non-crypto assets (for full NAV calculation)

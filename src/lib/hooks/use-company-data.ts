@@ -103,6 +103,12 @@ export function enrichCompany(company: Company): Company {
   const debtInterestAnnual = staticCompany?.debtInterestAnnual;
   const preferredDividendAnnual = staticCompany?.preferredDividendAnnual;
 
+  // Mining source tracking (from static data)
+  const btcMinedAnnual = staticCompany?.btcMinedAnnual;
+  const btcMinedSource = staticCompany?.btcMinedSource;
+  const btcMinedSourceUrl = staticCompany?.btcMinedSourceUrl;
+  const btcMinedAsOf = staticCompany?.btcMinedAsOf;
+
   // Merge financial data for mNAV calculation
   // All balance sheet data comes from static files (SEC-sourced)
   const mergedFinancials = {
@@ -148,6 +154,11 @@ export function enrichCompany(company: Company): Company {
     cashObligationsAnnual,
     debtInterestAnnual,
     preferredDividendAnnual,
+    // Mining source tracking
+    btcMinedAnnual,
+    btcMinedSource,
+    btcMinedSourceUrl,
+    btcMinedAsOf,
     // Flags from static data
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,

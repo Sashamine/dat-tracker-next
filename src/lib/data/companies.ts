@@ -525,7 +525,10 @@ export const btcCompanies: Company[] = [
     secCik: "0001507605",
     // costBasisAvg removed - needs SEC verification
     isMiner: true,
-    btcMinedAnnual: 18_000,
+    btcMinedAnnual: 18_000,  // ~50 EH/s at current difficulty (~1,500 BTC/month)
+    btcMinedSource: "MARA monthly production updates (annualized from Q4 2025 rate)",
+    btcMinedSourceUrl: "https://ir.mara.com/news-events/press-releases",
+    btcMinedAsOf: "2025-12-31",
     quarterlyBurnUsd: 85_000_000,
     burnSource: "SEC 10-Q (filed 2025-05-08): NetCashUsedInOperatingActivities $215,488,000 (2025-01-01 to 2025-03-31)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000009/",
@@ -568,7 +571,10 @@ export const btcCompanies: Company[] = [
     secCik: "0001167419",
     // costBasisAvg removed - needs SEC verification
     isMiner: true,
-    btcMinedAnnual: 6_000,
+    btcMinedAnnual: 6_000,  // ~500 BTC/month at current hashrate
+    btcMinedSource: "RIOT monthly production updates (annualized)",
+    btcMinedSourceUrl: "https://www.riotplatforms.com/riot-announces-december-2025-production-and-operations-updates/",
+    btcMinedAsOf: "2025-12-31",
     quarterlyBurnUsd: 69_832_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense (excl mining COGS)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000155837025006119/",
@@ -617,7 +623,10 @@ export const btcCompanies: Company[] = [
     secCik: "0000827876",  // Verified 2026-01-28 (was incorrectly 0001785459)
     // costBasisAvg removed - needs SEC verification
     isMiner: true,
-    btcMinedAnnual: 9_000,
+    btcMinedAnnual: 9_000,  // ~750 BTC/month at ~37 EH/s
+    btcMinedSource: "CleanSpark monthly production updates (annualized)",
+    btcMinedSourceUrl: "https://ir.cleanspark.com/press-releases",
+    btcMinedAsOf: "2025-12-31",
     quarterlyBurnUsd: 16_566_000,
     burnSource: "SEC 10-Q Q2 FY2025 XBRL: GeneralAndAdministrativeExpense (excl mining COGS)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000095017025015470/",
@@ -1324,7 +1333,10 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
     // costBasisAvg removed - needs verification
     isMiner: true,
-    btcMinedAnnual: 2_000,
+    btcMinedAnnual: 2_000,  // Estimate based on hashrate post-merger
+    btcMinedSource: "Company announcements (estimated from hashrate)",
+    btcMinedSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
+    btcMinedAsOf: "2025-11-05",
     quarterlyBurnUsd: 15_000_000,
     burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $3,219,000 (2025-01-01 to 2025-03-31)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000121390025044194/",

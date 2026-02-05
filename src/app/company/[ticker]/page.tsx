@@ -571,6 +571,7 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
               <p className="text-2xl font-bold text-orange-600">
                 +{displayCompany.btcMinedAnnual.toLocaleString()}
+                <SourceLink url={displayCompany.btcMinedSourceUrl} label={displayCompany.btcMinedSource} />
               </p>
               <p className="text-xs text-gray-400">BTC/yr</p>
             </div>
