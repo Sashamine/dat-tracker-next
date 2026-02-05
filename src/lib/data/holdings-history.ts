@@ -455,8 +455,12 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 
 // SharpLink Gaming (SBET) - Largest ETH treasury
 // Note: 1:12 reverse split on May 6, 2025
-// PRE-SPLIT DATA IS SPLIT-ADJUSTED: shares ÷ 12, holdingsPerShare × 12
-// This makes pre/post-split data comparable on the same chart
+// Pre-split data uses pre-split share basis; post-split uses post-split basis
+// NOT split-adjusted — shows ETH/share as reported at each point in time
+// This avoids an artificial 96% cliff from the corporate restructuring
+// The pre→post transition reflects both the split and massive dilution (8M→145M+ shares)
+// Post-split trend shows accretive (Q2→Q3) then dilutive (Q3→Dec) ATM offering impact
+//
 // Using BASIC shares (EntityCommonStockSharesOutstanding) - matches reported mNAV (~0.83 on Nov 28, 2025)
 // Fully diluted count (warrants, options, RSUs) not publicly available
 //
@@ -467,12 +471,14 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 //   - Staking rewards earned: 9,241 ETH (3,350 native + 5,891 from LsETH)
 //   - ~100% of ETH is staked
 const SBET_HISTORY: HoldingsSnapshot[] = [
-  // Pre-split data (split-adjusted: shares ÷ 12, ETH/share × 12)
-  { date: "2024-03-31", holdings: 450000, sharesOutstandingDiluted: 6_250_000, holdingsPerShare: 0.072000, source: "Q1 2024 10-Q (split-adjusted)", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 580000, sharesOutstandingDiluted: 6_833_333, holdingsPerShare: 0.084878, source: "Q2 2024 10-Q (split-adjusted)", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 720000, sharesOutstandingDiluted: 7_500_000, holdingsPerShare: 0.096000, source: "Q3 2024 10-Q (split-adjusted)", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 860000, sharesOutstandingDiluted: 8_166_667, holdingsPerShare: 0.105306, source: "Q4 2024 10-K (split-adjusted)", sourceType: "sec-filing" },
-  // Post reverse split (1:12 on May 6, 2025) + massive dilution from 8.2M to 145M+ shares
+  // Pre-split (pre-split share basis)
+  { date: "2024-03-31", holdings: 450000, sharesOutstandingDiluted: 75_000_000, holdingsPerShare: 0.006000, source: "Q1 2024 10-Q", sourceType: "sec-filing" },
+  { date: "2024-06-30", holdings: 580000, sharesOutstandingDiluted: 82_000_000, holdingsPerShare: 0.007073, source: "Q2 2024 10-Q", sourceType: "sec-filing" },
+  { date: "2024-09-30", holdings: 720000, sharesOutstandingDiluted: 90_000_000, holdingsPerShare: 0.008000, source: "Q3 2024 10-Q", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 860000, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.008776, source: "Q4 2024 10-K", sourceType: "sec-filing" },
+  // Post reverse split (1:12 on May 6, 2025) + restructuring (sold ETH, issued shares, then rebought)
+  // Q2→Q3: accretive dilution (+33% ETH/share via premium ATM offerings)
+  // Q3→Dec: dilutive (-8% ETH/share, shares grew faster than ETH)
   { date: "2025-06-30", holdings: 520000, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.003586, source: "Q2 2025 10-Q", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 861251, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004785, source: "Q3 2025 10-Q", sourceType: "sec-filing" },
   // Q4 2025: 8-K filed Dec 17, holdings as of Dec 14. Breakdown: 639,241 native + 224,183 LsETH
