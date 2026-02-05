@@ -1443,14 +1443,7 @@ export default function CompanyPage() {
                     </p>
                   </div>
                 )}
-                {displayCompany.hasOptions && (
-                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 uppercase tracking-wide">Options</p>
-                    <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mt-1">
-                      {displayCompany.optionsOi ? `${(displayCompany.optionsOi / 1e6).toFixed(1)}M OI` : 'Available'}
-                    </p>
-                  </div>
-                )}
+                {/* Options display removed - will add back when options data is on-site */}
               </div>
             </div>
           )}
