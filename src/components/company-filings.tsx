@@ -191,7 +191,7 @@ export function CompanyFilings({ ticker, companyName, className }: CompanyFiling
         <div className="flex flex-col items-center justify-center h-[200px] text-gray-500">
           <p className="text-lg font-medium">No Filings Available</p>
           <p className="text-sm mt-2">
-            SEC filings for this company are not yet indexed.
+            Filings for this company are not yet indexed.
           </p>
           {data?.sourceUrl && data.sourceUrl !== "#" && (
             <a
