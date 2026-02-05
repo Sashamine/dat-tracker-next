@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStaticHistoryForRange } from "@/lib/data/stock-price-history";
+import { adjustPricesForSplits, STOCK_SPLITS } from "@/lib/data/stock-splits";
 
 interface HistoricalPrice {
   time: string;
@@ -75,18 +76,28 @@ export async function GET(
     return NextResponse.json(cached.data);
   }
 
+  // Check if this ticker needs split adjustment
+  const needsSplitAdjustment = ticker.toUpperCase() in STOCK_SPLITS;
+
   try {
     // Use Yahoo Finance for historical data
-    const yahooData = await fetchFromYahoo(ticker, days, interval, intraday, filterToLastDay);
+    let yahooData = await fetchFromYahoo(ticker, days, interval, intraday, filterToLastDay);
     if (yahooData.length > 0) {
+      // Apply split adjustments if needed (Yahoo sometimes doesn't adjust properly)
+      if (needsSplitAdjustment) {
+        yahooData = adjustPricesForSplits(ticker, yahooData);
+      }
       cache.set(cacheKey, { data: yahooData, timestamp: Date.now() });
       return NextResponse.json(yahooData);
     }
 
     // Fallback to static historical data for illiquid/international stocks
-    const staticData = getStaticHistoryForRange(ticker, days, interval);
+    let staticData = getStaticHistoryForRange(ticker, days, interval);
     if (staticData && staticData.length > 0) {
       console.log(`[StockHistory] Using static data for ${ticker}: ${staticData.length} points`);
+      if (needsSplitAdjustment) {
+        staticData = adjustPricesForSplits(ticker, staticData);
+      }
       cache.set(cacheKey, { data: staticData, timestamp: Date.now() });
       return NextResponse.json(staticData);
     }
@@ -97,9 +108,12 @@ export async function GET(
     console.error("Error fetching stock history:", error);
     
     // Try static data on error as well
-    const staticData = getStaticHistoryForRange(ticker, days, interval);
+    let staticData = getStaticHistoryForRange(ticker, days, interval);
     if (staticData && staticData.length > 0) {
       console.log(`[StockHistory] Using static fallback for ${ticker} after error`);
+      if (needsSplitAdjustment) {
+        staticData = adjustPricesForSplits(ticker, staticData);
+      }
       return NextResponse.json(staticData);
     }
     
