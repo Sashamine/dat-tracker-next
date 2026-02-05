@@ -36,6 +36,8 @@ export const ethCompanies: Company[] = [
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
     // No cashObligations fields needed - burn-only companies show Operating Burn card only
     capitalRaisedAtm: 10_000_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=S-3",
     capitalRaisedPipe: 615_000_000,
     avgDailyVolume: 800_000_000,
     hasOptions: true,
@@ -84,6 +86,8 @@ export const ethCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225010881/",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 2_000_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=S-3",
     avgDailyVolume: 300_000_000,
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
@@ -167,6 +171,8 @@ export const ethCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 172_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001710350&type=S-3",
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
@@ -215,6 +221,8 @@ export const ethCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225010401/",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 60_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=S-3",
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     marketCap: 136_000_000,  // ~$136M (Jan 2026)
@@ -246,6 +254,8 @@ export const ethCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000164117225010979/",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 30_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=S-3",
     // Shares: 98,380,767 (SEC 10-Q Sep 30) - 3,535,574 buybacks (Oct-Jan) = 94,845,193
     sharesForMnav: 94_845_193,
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/",
@@ -1472,6 +1482,8 @@ export const solCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 200_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001805526&type=S-3",
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
@@ -1518,6 +1530,8 @@ export const solCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 100_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=S-3",
     sharesForMnav: 61_761_756,  // 58.9M (10-Q Sep) + 3.29M (Dec PIPE) - 0.42M (buybacks) = 61.76M
     sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 59,918,609 as of 2025-11-12",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
@@ -1559,6 +1573,8 @@ export const solCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     burnEstimated: true,
     capitalRaisedAtm: 50_000_000,
+    capitalRaisedAtmSource: "SEC 40-F FY2025 / SEDAR+ filings",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839&type=40-F",
     sharesForMnav: 25_300_567,  // Post 1:8 reverse split (Aug 2025): 22,999,841 (40-F) + 2,300,726 (Jan 7 credit facility)
     sharesSource: "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/",
@@ -1877,6 +1893,8 @@ export const taoCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925016275/",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 7_500_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000746210&type=S-3",
     sharesForMnav: 3_207_210,  // SEC 10-Q Nov 13, 2025 (as of Nov 10, 2025)
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/",
     sharesAsOf: "2025-11-10",
@@ -2094,6 +2112,8 @@ export const ltcCompanies: Company[] = [
     burnAsOf: "2025-08-31",
     burnEstimated: true,
     capitalRaisedAtm: 100_000_000,
+    capitalRaisedAtmSource: "SEDAR+ filings (Canadian)",
+    capitalRaisedAtmSourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736",
     capitalRaisedPipe: 3_286_080,  // $2.5M Jul 2025 + $786K Dec 2025
     avgDailyVolume: 500_000,
     sedarProfile: "000044736",
@@ -2139,6 +2159,8 @@ export const suiCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425005448/",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 500_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=S-3",
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 160_000_000,
@@ -2248,6 +2270,8 @@ export const dogeCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/",
     burnAsOf: "2025-06-30",
     capitalRaisedAtm: 500_000_000,
+    capitalRaisedAtmSource: "SEC 20-F / 6-K filings",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=20-F",
     avgDailyVolume: 3_000_000,
     sharesForMnav: 1_500_000,  // Post 1:60 reverse split Jan 20, 2026 (was 88.6M -> 1.5M)
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/",
@@ -2296,6 +2320,8 @@ export const avaxCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000164117225010961/",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 40_000_000,
+    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826397&type=S-3",
     capitalRaisedPipe: 219_000_000,  // $219M PIPE Nov 2025 ($145M cash + $73.7M AVAX)
     avgDailyVolume: 15_000_000,
     marketCap: 193_000_000,
