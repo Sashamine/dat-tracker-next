@@ -1094,6 +1094,7 @@ export default function CompanyPage() {
             >
               <span className="text-sm text-gray-500 font-mono">
                 {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
+                <SourceLink url={displayCompany.holdingsSourceUrl} label={displayCompany.holdingsSource} />
               </span>
             </Citation>
           </div>
