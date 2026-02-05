@@ -1386,7 +1386,7 @@ export default function CompanyPage() {
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Annual Burn</p>
                     <p className="text-sm font-semibold text-red-600 dark:text-red-400 mt-1">
-                      {cryptoPrice > 0 ? `-${Math.round((displayCompany.quarterlyBurnUsd * 4) / cryptoPrice).toLocaleString()} ${displayCompany.asset}/yr` : `${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(1)}M/yr`}
+                      -${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(1)}M/yr
                     </p>
                     <p className="text-xs text-gray-500 mt-0.5">
                       ${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr
