@@ -15,14 +15,16 @@ export interface StockSplit {
 }
 
 export const STOCK_SPLITS: Record<string, StockSplit[]> = {
-  // SBET - 1:30 reverse split
-  'SBET': [
-    {
-      date: '2025-01-06',  // Effective date of reverse split
-      ratio: 30,
-      description: '1:30 reverse split',
-    },
-  ],
+  // SBET - Multiple reverse splits over the years
+  // Yahoo Finance data is inconsistent - sometimes adjusted, sometimes not
+  // Disabled for now until we can verify exact split history
+  // 'SBET': [
+  //   {
+  //     date: '2025-07-01',
+  //     ratio: 30,
+  //     description: '1:30 reverse split',
+  //   },
+  // ],
   
   // BMNR - 1:20 reverse split
   'BMNR': [

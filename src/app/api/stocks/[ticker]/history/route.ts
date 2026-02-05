@@ -43,6 +43,13 @@ const DEFAULT_INTERVAL: Record<string, string> = {
 const cache: Map<string, { data: HistoricalPrice[]; timestamp: number }> = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+// FMP API key
+const FMP_API_KEY = process.env.FMP_API_KEY || "";
+
+// Tickers with known Yahoo data issues (incorrect split adjustments)
+// These will try FMP first
+const YAHOO_PROBLEM_TICKERS = new Set(['SBET', 'HSDT', 'NXTT']);
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ ticker: string }> }
@@ -78,8 +85,19 @@ export async function GET(
 
   // Check if this ticker needs split adjustment
   const needsSplitAdjustment = ticker.toUpperCase() in STOCK_SPLITS;
+  const hasYahooProblems = YAHOO_PROBLEM_TICKERS.has(ticker.toUpperCase());
 
   try {
+    // For tickers with known Yahoo data issues, try FMP first (daily data only)
+    if (hasYahooProblems && !intraday && FMP_API_KEY) {
+      const fmpData = await fetchFromFMP(ticker, days);
+      if (fmpData.length > 0) {
+        console.log(`[StockHistory] Using FMP for ${ticker}: ${fmpData.length} points`);
+        cache.set(cacheKey, { data: fmpData, timestamp: Date.now() });
+        return NextResponse.json(fmpData);
+      }
+    }
+
     // Use Yahoo Finance for historical data
     let yahooData = await fetchFromYahoo(ticker, days, interval, intraday, filterToLastDay);
     if (yahooData.length > 0) {
@@ -185,6 +203,56 @@ async function fetchFromYahoo(
     }
 
     return prices;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Fetch historical data from FMP (Financial Modeling Prep)
+ * FMP provides properly split-adjusted data
+ */
+async function fetchFromFMP(
+  ticker: string,
+  days: number
+): Promise<HistoricalPrice[]> {
+  if (!FMP_API_KEY) return [];
+  
+  try {
+    // FMP historical endpoint
+    const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?apikey=${FMP_API_KEY}`;
+    
+    const response = await fetch(url, {
+      headers: { "User-Agent": "DAT-Tracker" },
+      cache: "no-store",
+    });
+    
+    if (!response.ok) return [];
+    
+    const data = await response.json();
+    const historical = data.historical || [];
+    
+    // FMP returns data in reverse chronological order, limit to requested days
+    const prices: HistoricalPrice[] = [];
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - days);
+    
+    for (const item of historical) {
+      const itemDate = new Date(item.date);
+      if (itemDate < cutoffDate) break;
+      
+      prices.push({
+        time: item.date, // YYYY-MM-DD format
+        open: item.open,
+        high: item.high,
+        low: item.low,
+        close: item.close,
+        volume: item.volume || 0,
+      });
+    }
+    
+    // Reverse to chronological order
+    return prices.reverse();
   } catch {
     return [];
   }
