@@ -59,10 +59,11 @@ export const ethCompanies: Company[] = [
     twitter: "https://twitter.com/SharpLinkGaming",
     secCik: "0001981535",
     // tokenizedAddress removed — was a pump.fun meme token, not an official tokenized stock
-    stakingPct: 0.95,  // "nearly all" deployed to staking per Q3 2025 PR
-    stakingMethod: "Linea/Lido",
-    stakingSource: "PR Nov 12, 2025 - Q3 2025 ETH Treasury Strategy",
-    stakingAsOf: "2025-09-30",
+    stakingPct: 1.0,  // "100%" (Jul 1 8-K) / "substantially all" (Aug-Dec 8-Ks) / "nearly 100%" (Q2 earnings)
+    stakingMethod: "Native staking + Lido LsETH (liquid staking)",
+    stakingSource: "SEC 8-K Dec 17, 2025: 639,241 native ETH + 224,183 LsETH as-if-redeemed. Cumulative rewards: 9,241 ETH (3,350 native + 5,891 LsETH)",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
+    stakingAsOf: "2025-12-14",
     quarterlyBurnUsd: 2_850_000,
     capitalRaisedAtm: 2_000_000_000,
     avgDailyVolume: 300_000_000,

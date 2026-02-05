@@ -86,6 +86,7 @@ export interface Company {
   stakingApy?: number;
   stakingMethod?: string;
   stakingSource?: string;      // Source for staking percentage (SEC filing, PR, etc.)
+  stakingSourceUrl?: string;   // URL to source document for staking data
   stakingAsOf?: string;        // ISO date of staking data
   quarterlyBurnUsd?: number;
   burnSource?: string;
