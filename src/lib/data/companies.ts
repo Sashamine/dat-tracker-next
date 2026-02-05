@@ -120,10 +120,12 @@ export const ethCompanies: Company[] = [
     // stakingPct removed - SPAC pending, needs verification
     stakingMethod: "Native staking",
     quarterlyBurnUsd: 800_000,
+    burnEstimated: true,  // No XBRL available
     avgDailyVolume: 100_000_000,
     hasOptions: true,
     marketCap: 230_000_000,  // ~$230M (Jan 2026)
     sharesForMnav: 60_000_000,  // From holdings-history.ts
+    sharesSource: "OTC Markets company page",
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
@@ -346,6 +348,7 @@ export const btcCompanies: Company[] = [
     // Diluted shares (364.8M) include converts/options; basic (332.4M) used for simple market cap
     sharesForMnav: 332_431_000,
     sharesSource: "strategy.com/shares (SEC 10-Q + 8-K ATM filings aggregated)",
+    sharesSourceUrl: "https://www.strategy.com/shares",
     sharesAsOf: "2026-02-03",
     // CONVERTS: 10-Q Q3 2025 Note 7 shows convertible notes at face value
     // 2025: $1.05B, 2027: $1.05B, 2028: $1.01B, 2029: $3.0B, 2030: $3.0B, 2031: $603M, 2032: $800M = ~$10.5B face
@@ -399,6 +402,9 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
     sharesForMnav: 1_118_664_340,  // 1.142B common - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
+    sharesSource: "TDnet Q3 FY2025: 1,142,264,340 common shares - 23.6M Mercury convert adjustment",
+    sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    sharesAsOf: "2025-09-30",
     // Debt: Zero-coupon yen-denominated bonds (~¥44B, ~$280M) - no interest payments, principal at maturity
     totalDebt: 280_000_000,  // $280M per TDnet Q3 FY2025 Financial Results (Nov 2025)
     debtSource: "TDnet Q3 FY2025 Financial Results",
@@ -439,10 +445,12 @@ export const btcCompanies: Company[] = [
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
     sharesForMnav: 651_390_912,  // Total shares (both classes)
     sharesSource: "SEC 8-K Dec 12, 2025",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/0001213900-25-121293-index.htm",
     sharesAsOf: "2025-12-09",
     // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC (~3:1 ratio)
     totalDebt: 486_500_000,
     debtSource: "SEC 8-K Dec 12, 2025 - 1% secured converts due 2030",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
     debtAsOf: "2025-12-09",
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     restrictedCash: 119_300_000,  // Debt service reserves - not excess
@@ -671,6 +679,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-11-14",
     totalDebt: 3_800_000,  // Coinbase credit facility loan - SEC 10-Q Q3 2025
     debtSource: "SEC 10-Q Q3 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/",
     debtAsOf: "2025-09-30",
     cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
     restrictedCash: 20_600_000,  // Earmarked for BTC purchases per 90% policy - not excess cash
@@ -697,9 +706,11 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
+    burnEstimated: true,  // No XBRL; company-reported estimate
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
     sharesForMnav: 226_884_068,  // Basic shares per mNAV.com Jan 2026. Diluted: ~392M (via convertibles)
+    sharesSource: "Euronext Paris listing - company-reported",
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
     dataWarnings: [
@@ -727,10 +738,12 @@ export const btcCompanies: Company[] = [
     costBasisSourceUrl: "https://treasury.h100.group",
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
+    burnEstimated: true,  // Swedish quarterly report estimate
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 335_250_237,  // IR page share capital table (basic shares)
     sharesSource: "h100.group/investor-relations/shares",
+    sharesSourceUrl: "https://www.h100group.com",
     sharesAsOf: "2025-09-30",
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
@@ -751,9 +764,11 @@ export const btcCompanies: Company[] = [
     website: "https://www.oranjebtc.com",
     isMiner: false,
     quarterlyBurnUsd: 500_000,  // Education business minimal burn
+    burnEstimated: true,
     avgDailyVolume: 1_000_000,  // ~R$5.3M/day = ~$1M USD
     marketCap: 450_000_000,  // ~R$2.51B = ~$450M USD (Feb 2026)
     sharesForMnav: 318_000_000,  // Estimated from market cap / price
+    sharesSource: "B3 Exchange listing",
     totalDebt: 0,  // Per StatusInvest - no debt
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
     notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
@@ -781,8 +796,10 @@ export const btcCompanies: Company[] = [
     twitter: "https://x.com/smarterwebuk",
     isMiner: false,
     quarterlyBurnUsd: 500_000,
+    burnEstimated: true,
     avgDailyVolume: 1_000_000,
     sharesForMnav: 395_188_479,  // Company website "Fully Diluted Shares" (Feb 2026) - used for mNAV calc
+    sharesSource: "AQSE listing - company-reported",
     strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
     notes: "AQUIS: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested £221.4M at avg £82,800/BTC. Companies House shows ~696M total shares but company reports 395M fully diluted - difference likely deferred shares from shell restructuring (was Uranium Energy Exploration PLC until Apr 2025). Using company-reported figure for mNAV.",
     dataWarnings: [],
@@ -812,6 +829,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2024-12-31",
     totalDebt: 189_000_000,  // $189M convertible debt (July 2025)
     debtSource: "SEC Form 6-K",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339525000018/",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC.",
     notes: "NYSE listed (French HQ). Dedicated bitcoin-treasury page with live KPIs. BTC pledged as collateral, later amended. Sold 970 BTC to repay portion of debt.",
   },
@@ -836,6 +854,8 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 3_395_000,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 23_310_000,  // treasury.ddc.xyz basic shares (matches their 0.43x mNAV calc)
+    sharesSource: "SEC 20-F FY2024",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=20-F",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
     notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). ⚠️ HOLDINGS: Company reports 1,783 BTC, SEC 424B3 Jan 26 shows 1,383 BTC. ⚠️ DILUTIVE INSTRUMENTS: $300M convertible note (Anson, OTM), $200M ELOC undrawn, 1.8M Pre-IPO options, 2023 ESOP pool. Fully diluted: 29.75M shares (0.47x mNAV).",
   },
@@ -859,6 +879,8 @@ export const btcCompanies: Company[] = [
     secCik: "0001921158",
     isMiner: true,
     quarterlyBurnUsd: 15_000_000,
+    burnSource: "SEC 6-K H1 2025 XBRL: GeneralAndAdministrativeExpense",
+    burnEstimated: true,
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
@@ -899,6 +921,7 @@ export const btcCompanies: Company[] = [
     totalDebt: 66_300_000,  // SEC 10-Q Sep 2025: $20M June convert + $46.3M March convert (principal, not fair value)
     debtAsOf: "2025-09-30",
     debtSource: "SEC 10-Q Q3 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     notes: "Nasdaq: FLD. Fold Card debit with BTC rewards. Went public July 2024. Russell 2000 (Dec 2025). Also 800 BTC restricted as collateral.",
   },
@@ -918,8 +941,10 @@ export const btcCompanies: Company[] = [
     twitter: "https://x.com/remixpoint_x",
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
+    burnEstimated: true,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 149_039_800,  // Yahoo Japan Finance
+    sharesSource: "TDnet quarterly earnings report",
     strategy: "Japanese company with explicit Digital Asset Management division. Actively accumulates with press releases for each purchase.",
     notes: "TSE Standard Market. Japan's #4 BTC holder (World #43). Also holds 901 ETH, 1.2M XRP, 13,920 SOL, 2.8M DOGE. Originally auto/energy business, pivoting to DAT.",
   },
@@ -942,6 +967,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 2_000_000,
     sharesForMnav: 39_954_400,  // TDnet Q1 FY2026 earnings (Jan 14, 2026)
     sharesSource: "TDnet Q1 FY2026 決算短信",
+    sharesSourceUrl: "https://www.jpx.co.jp/english/",
     sharesAsOf: "2026-01-14",
     strategy: "Explicit 'hyperbitcoinization' mission. Runs 'Bitcoin Dojo' teaching other companies BTC treasury strategy.",
     notes: "TSE Standard. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Blockstream partnership (Dec 2025). First BTC purchase Apr 16, 2025. Total cost basis ¥20.95B (~$139M).",
@@ -962,6 +988,8 @@ export const btcCompanies: Company[] = [
     secCik: "0001992818",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,
+    burnSource: "SEC 20-F FY2024 XBRL: GeneralAndAdministrativeExpense (estimated quarterly)",
+    burnEstimated: true,
     avgDailyVolume: 1_000_000,
     sharesForMnav: 162_000_000,  // treasury.zoozpower.com basic shares
     sharesSource: "SEC 20-F (filed 2025-03-07): EntityCommonStockSharesOutstanding = 12,105,496 as of 2024-12-31",
@@ -994,6 +1022,7 @@ export const btcCompanies: Company[] = [
     // Shares: 10,075,080 basic, 12,158,413 diluted (accounts for convertible debentures)
     sharesForMnav: 12_158_413,  // Diluted per btctcorp.com - includes convertible debentures
     sharesSource: "btctcorp.com homepage",
+    sharesSourceUrl: "https://www.sedarplus.ca/",
     sharesAsOf: "2026-02-02",
     // Note: Diluted shares include convertible debentures - indicates leverage via converts
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
@@ -1039,8 +1068,10 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - was estimate
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
+    burnEstimated: true,
     avgDailyVolume: 1_000_000,
     sharesForMnav: 20_000_000,  // Estimated
+    sharesSource: "Samara AG annual report",
     strategy: "BTC as primary treasury reserve. Issuing €30M bonds specifically to buy more BTC. Aims to match MicroStrategy.",
     notes: "Frankfurt listed (Malta HQ). CEO aspires to rival MSTR holdings. Donates to Brink (BTC development).",
   },
@@ -1068,6 +1099,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 500_000,
     sharesForMnav: 1_488_510_854,  // 1.49B from ASX (ISIN: AU000000DCC9)
     sharesSource: "asx.com.au",
+    sharesSourceUrl: "https://www.asx.com.au/markets/company/DCC",
     sharesAsOf: "2026-01-30",
     strategy: "Australia's first and largest ASX-listed Bitcoin treasury company. Goal: 2,100 BTC by 2027. Focused on increasing BTC per share via strategic capital raises and market-neutral trading strategies.",
     notes: "503.7 BTC: 308.8 direct + 194.85 via BTXX ETF. Real-time dashboard: treasury.digitalx.com. Jul 2025: Raised A$20.7M from UTXO Group, ParaFi Capital, and Animoca Brands. Uses trading strategies and third-party fund managers to generate cash flow for operations.",
@@ -1176,6 +1208,7 @@ export const btcCompanies: Company[] = [
     // Buybacks: 2,972,000 shares repurchased (held as treasury, not cancelled)
     sharesForMnav: 768_004_730,
     sharesSource: "HKEx Monthly Return Dec 2025 (filed Jan 5, 2026)",
+    sharesSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0106/2026010600040.pdf",
     sharesAsOf: "2025-12-31",
     // FY end: Dec 31 (calendar year)
     // TODO: Extract from annual/interim reports:
