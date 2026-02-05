@@ -19,8 +19,10 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
     datStartDate: "2025-07-01",
     costBasisAvg: 2_839,  // Calculated from purchase history (purchases-history.ts)
-    stakingPct: 0.47,  // 2,009,267 staked / 4.28M total (Jan 25, 2026) - ramping up MAVAN
+    stakingPct: 0.47,  // 2,009,267 staked / 4.28M total - ramping up MAVAN
     stakingMethod: "MAVAN validators (ramping)",
+    stakingSource: "SEC 8-K Jan 25, 2026",
+    stakingAsOf: "2026-01-25",
     quarterlyBurnUsd: 2_500_000,
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
@@ -118,9 +120,11 @@ export const ethCompanies: Company[] = [
     website: "https://bitdigital.com",
     twitter: "https://twitter.com/Aboringcompany",
     costBasisAvg: 3_045,  // Jan 7, 2026 press release: "total average ETH acquisition price"
-    stakingPct: 0.89,  // 138,263 / 155,227 = 89% staked (Jan 7, 2026 PR)
-    stakingApy: 0.035,  // 3.5% annualized yield (Jan 7, 2026 PR)
+    stakingPct: 0.89,  // 138,263 / 155,227 = 89% staked
+    stakingApy: 0.035,  // 3.5% annualized yield
     stakingMethod: "Native staking",
+    stakingSource: "PR Jan 7, 2026 - Monthly ETH Treasury Report",
+    stakingAsOf: "2025-12-31",
     quarterlyBurnUsd: 8_500_000,
     capitalRaisedAtm: 172_000_000,
     avgDailyVolume: 80_000_000,
@@ -1251,6 +1255,8 @@ export const hypeCompanies: Company[] = [
     stakingPct: 1.00,  // 100% staked via Anchorage
     stakingApy: 0.024,  // ~288K HYPE/year on 12M staked
     stakingMethod: "Anchorage Digital",
+    stakingSource: "PR Dec 4, 2025 - 12M HYPE staked",
+    stakingAsOf: "2025-12-04",
     quarterlyBurnUsd: 2_000_000,
     capitalRaisedPipe: 583_000_000,
     sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
@@ -1819,8 +1825,10 @@ export const avaxCompanies: Company[] = [
     totalDebt: 1_414_415,  // SEC 10-Q Sep 30, 2025 (legacy debentures, pre-PIPE)
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     costBasisAvg: 11.73,
-    stakingPct: 0.90,  // 8-K Jan 28, 2026: "more than 90% of AVAX holdings staked"
+    stakingPct: 0.90,  // "more than 90% of AVAX holdings staked"
     stakingApy: 0.08,
+    stakingSource: "SEC 8-K Jan 28, 2026",
+    stakingAsOf: "2026-01-28",
     quarterlyBurnUsd: 1_000_000,
     capitalRaisedAtm: 40_000_000,
     capitalRaisedPipe: 219_000_000,  // $219M PIPE Nov 2025 ($145M cash + $73.7M AVAX)
