@@ -15,16 +15,25 @@ export interface StockSplit {
 }
 
 export const STOCK_SPLITS: Record<string, StockSplit[]> = {
-  // SBET - Multiple reverse splits over the years
-  // Yahoo Finance data is inconsistent - sometimes adjusted, sometimes not
-  // Disabled for now until we can verify exact split history
-  // 'SBET': [
-  //   {
-  //     date: '2025-07-01',
-  //     ratio: 30,
-  //     description: '1:30 reverse split',
-  //   },
-  // ],
+  // SBET - 3 reverse splits (source: stocksplithistory.com)
+  // Total cumulative factor: 3 × 10 × 12 = 360
+  'SBET': [
+    {
+      date: '2017-09-06',
+      ratio: 3,
+      description: '1:3 reverse split',
+    },
+    {
+      date: '2023-04-26',
+      ratio: 10,
+      description: '1:10 reverse split',
+    },
+    {
+      date: '2025-05-06',
+      ratio: 12,
+      description: '1:12 reverse split',
+    },
+  ],
   
   // BMNR - 1:20 reverse split
   'BMNR': [
