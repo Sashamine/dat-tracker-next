@@ -300,9 +300,11 @@ export const btcCompanies: Company[] = [
     secCik: "0001050446",  // SEC CIK for EDGAR lookups
     costBasisAvg: 76_052,  // SEC 8-K Feb 2, 2026: "$54.26B / 713,502 BTC = $76,052 avg"
     costBasisSource: "SEC 8-K Feb 2, 2026 (Accession: 0001193125-26-032731)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm",
     isMiner: false,
     quarterlyBurnUsd: 15_200_000,  // SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities $45.6M ÷ 3 = $15.2M
     burnAsOf: "2025-11-03",  // 10-Q filing date
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
@@ -333,6 +335,7 @@ export const btcCompanies: Company[] = [
     capitalRaisedAtm: 21_000_000_000,  // SEC S-3 shelf capacity (21/21 plan equity component)
     cashReserves: 2_250_000_000,  // SEC 8-K Jan 5, 2026: "USD Reserve was $2.25 billion" for dividends/interest
     cashSource: "SEC 8-K Jan 5, 2026 (Accession: 0001193125-26-001550)",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/",
     cashAsOf: "2026-01-04",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
