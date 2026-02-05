@@ -537,12 +537,13 @@ export default function CompanyPage() {
               </p>
             </div>
           )}
-          {/* Total Cash Obligations - Operating Burn + Preferred Dividends */}
-          {(displayCompany.quarterlyBurnUsd || displayCompany.preferredDividendAnnual) && (
+          {/* Total Cash Obligations - Only show when there's more than just burn (debt interest or preferred divs) */}
+          {(displayCompany.preferredDividendAnnual || displayCompany.debtInterestAnnual) && (
             (() => {
               const annualBurn = (displayCompany.quarterlyBurnUsd || 0) * 4;
               const prefDividends = displayCompany.preferredDividendAnnual || 0;
-              const totalObligations = annualBurn + prefDividends;
+              const debtInterest = displayCompany.debtInterestAnnual || 0;
+              const totalObligations = annualBurn + prefDividends + debtInterest;
               if (totalObligations <= 0) return null;
               return (
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -555,12 +556,10 @@ export default function CompanyPage() {
                     <SourceLink url={displayCompany.cashObligationsSourceUrl} label={displayCompany.cashObligationsSource} />
                   </p>
                   <p className="text-xs text-gray-400">
-                    {annualBurn > 0 && prefDividends > 0 ? (
-                      <>Burn ${(annualBurn / 1e6).toFixed(0)}M + Div ${(prefDividends / 1e6).toFixed(0)}M</>
-                    ) : annualBurn > 0 ? (
-                      <>Operating burn/yr</>
+                    {annualBurn > 0 && (prefDividends > 0 || debtInterest > 0) ? (
+                      <>Burn ${(annualBurn / 1e6).toFixed(0)}M + Debt/Div ${((prefDividends + debtInterest) / 1e6).toFixed(0)}M</>
                     ) : (
-                      <>Preferred dividends/yr</>
+                      <>Debt interest + preferred dividends/yr</>
                     )}
                   </p>
                 </div>

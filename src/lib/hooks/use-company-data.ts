@@ -99,6 +99,9 @@ export function enrichCompany(company: Company): Company {
   const cashObligationsSource = staticCompany?.cashObligationsSource;
   const cashObligationsAsOf = staticCompany?.cashObligationsAsOf;
   const cashObligationsSourceUrl = staticCompany?.cashObligationsSourceUrl;
+  const cashObligationsAnnual = staticCompany?.cashObligationsAnnual;
+  const debtInterestAnnual = staticCompany?.debtInterestAnnual;
+  const preferredDividendAnnual = staticCompany?.preferredDividendAnnual;
 
   // Merge financial data for mNAV calculation
   // All balance sheet data comes from static files (SEC-sourced)
@@ -142,6 +145,9 @@ export function enrichCompany(company: Company): Company {
     cashObligationsSource,
     cashObligationsAsOf,
     cashObligationsSourceUrl,
+    cashObligationsAnnual,
+    debtInterestAnnual,
+    preferredDividendAnnual,
     // Flags from static data
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,
