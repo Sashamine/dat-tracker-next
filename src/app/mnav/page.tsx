@@ -215,8 +215,12 @@ export default function MNAVPage() {
     return enrichAllCompanies(baseCompanies);
   }, [companiesData]);
 
-  // Use shared mNAV stats hook - single source of truth
-  const mnavStats = useMNAVStats(companies, prices);
+  // Separate treasuries from miners
+  const treasuries = useMemo(() => companies.filter(c => !c.isMiner), [companies]);
+  const miners = useMemo(() => companies.filter(c => c.isMiner), [companies]);
+
+  // Use shared mNAV stats hook - treasuries only for mNAV stats
+  const mnavStats = useMNAVStats(treasuries, prices);
 
   // Calculate holdings statistics
   const holdingsStats = useMemo(() => {
@@ -348,7 +352,7 @@ export default function MNAVPage() {
             Sector Statistics
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm lg:text-base">
-            Aggregate metrics across {companies.length} DAT companies
+            Aggregate metrics across {companies.length} DAT companies ({treasuries.length} treasuries, {miners.length} miners)
           </p>
         </div>
 
@@ -445,9 +449,10 @@ export default function MNAVPage() {
           </div>
         </div>
 
-        {/* mNAV Statistics */}
+        {/* mNAV Statistics - Treasuries Only */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">mNAV Valuation</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">mNAV Valuation</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Treasuries only (excludes miners)</p>
           <div className="flex gap-4">
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
               <p className="text-xs lg:text-sm text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Median</p>
