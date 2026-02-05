@@ -128,8 +128,15 @@ export interface Company {
   // EV = Market Cap + totalDebt + preferredEquity - freeCash
   // where freeCash = cashReserves - restrictedCash
   totalDebt?: number;           // Total debt outstanding (converts, bonds, credit facilities)
+  debtInterestAnnual?: number;  // Annual interest payments on debt (USD)
   preferredEquity?: number;     // Preferred stock notional value (MSTR-style STRK/STRF)
   preferredDividendAnnual?: number; // Annual preferred dividend obligation (USD)
+  
+  // Cash obligations (combined annual obligation for preferred dividends + debt interest)
+  cashObligationsAnnual?: number; // Total annual cash obligations (dividends + interest)
+  cashObligationsSource?: string;
+  cashObligationsSourceUrl?: string;
+  cashObligationsAsOf?: string;
 
   // Leverage/optionality (for non-yielding assets)
   leverageRatio?: number; // > 1 means company uses debt/converts to amplify exposure
