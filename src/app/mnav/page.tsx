@@ -204,16 +204,38 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
   );
 }
 
+type AssetFilter = "ALL" | "BTC" | "ETH" | "SOL" | "HYPE" | "TAO" | "OTHER";
+
 export default function MNAVPage() {
   const [timeRange1, setTimeRange1] = useState<TimeRange>("1y");
+  const [selectedAsset, setSelectedAsset] = useState<AssetFilter>("ALL");
 
   const { data: prices } = usePricesStream();
   const { data: companiesData, isLoading } = useCompanies();
 
-  const companies = useMemo(() => {
+  const allCompanies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
     return enrichAllCompanies(baseCompanies);
   }, [companiesData]);
+
+  // Filter companies by selected asset
+  const companies = useMemo(() => {
+    if (selectedAsset === "ALL") return allCompanies;
+    if (selectedAsset === "OTHER") {
+      const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
+      return allCompanies.filter(c => !mainAssets.includes(c.asset));
+    }
+    return allCompanies.filter(c => c.asset === selectedAsset);
+  }, [allCompanies, selectedAsset]);
+
+  // Get available assets for filter tabs
+  const availableAssets = useMemo(() => {
+    const assetCounts: Record<string, number> = {};
+    allCompanies.forEach(c => {
+      assetCounts[c.asset] = (assetCounts[c.asset] || 0) + 1;
+    });
+    return assetCounts;
+  }, [allCompanies]);
 
   // Separate treasuries from miners
   const treasuries = useMemo(() => companies.filter(c => !c.isMiner), [companies]);
@@ -347,13 +369,57 @@ export default function MNAVPage() {
 
       <main className="px-4 py-6 lg:px-8 lg:py-8 max-w-7xl mx-auto">
         {/* Page Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Sector Statistics
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm lg:text-base">
             Aggregate metrics across {companies.length} DAT companies ({treasuries.length} treasuries, {miners.length} miners)
           </p>
+        </div>
+
+        {/* Asset Filter Tabs */}
+        <div className="mb-8 flex flex-wrap gap-2">
+          <button
+            onClick={() => setSelectedAsset("ALL")}
+            className={cn(
+              "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+              selectedAsset === "ALL"
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            )}
+          >
+            All ({allCompanies.length})
+          </button>
+          {(["BTC", "ETH", "SOL", "HYPE", "TAO"] as const).map(asset => (
+            availableAssets[asset] > 0 && (
+              <button
+                key={asset}
+                onClick={() => setSelectedAsset(asset)}
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  selectedAsset === asset
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                {asset} ({availableAssets[asset]})
+              </button>
+            )
+          ))}
+          {Object.keys(availableAssets).filter(a => !["BTC", "ETH", "SOL", "HYPE", "TAO"].includes(a)).length > 0 && (
+            <button
+              onClick={() => setSelectedAsset("OTHER")}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                selectedAsset === "OTHER"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              )}
+            >
+              Other ({Object.entries(availableAssets).filter(([a]) => !["BTC", "ETH", "SOL", "HYPE", "TAO"].includes(a)).reduce((sum, [, c]) => sum + c, 0)})
+            </button>
+          )}
         </div>
 
         {/* Holdings Statistics */}
