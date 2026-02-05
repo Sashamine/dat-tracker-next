@@ -109,6 +109,20 @@ export function enrichCompany(company: Company): Company {
   const btcMinedSourceUrl = staticCompany?.btcMinedSourceUrl;
   const btcMinedAsOf = staticCompany?.btcMinedAsOf;
 
+  // Cost basis and capital raised source tracking (from static data)
+  const costBasisAvg = staticCompany?.costBasisAvg;
+  const costBasisSource = staticCompany?.costBasisSource;
+  const costBasisSourceUrl = staticCompany?.costBasisSourceUrl;
+  const capitalRaisedAtm = staticCompany?.capitalRaisedAtm;
+  const capitalRaisedAtmSource = staticCompany?.capitalRaisedAtmSource;
+  const capitalRaisedAtmSourceUrl = staticCompany?.capitalRaisedAtmSourceUrl;
+  const capitalRaisedPipe = staticCompany?.capitalRaisedPipe;
+  const capitalRaisedPipeSource = staticCompany?.capitalRaisedPipeSource;
+  const capitalRaisedPipeSourceUrl = staticCompany?.capitalRaisedPipeSourceUrl;
+  const capitalRaisedConverts = staticCompany?.capitalRaisedConverts;
+  const capitalRaisedConvertsSource = staticCompany?.capitalRaisedConvertsSource;
+  const capitalRaisedConvertsSourceUrl = staticCompany?.capitalRaisedConvertsSourceUrl;
+
   // Merge financial data for mNAV calculation
   // All balance sheet data comes from static files (SEC-sourced)
   const mergedFinancials = {
@@ -159,6 +173,19 @@ export function enrichCompany(company: Company): Company {
     btcMinedSource,
     btcMinedSourceUrl,
     btcMinedAsOf,
+    // Cost basis and capital raised source tracking
+    costBasisAvg,
+    costBasisSource,
+    costBasisSourceUrl,
+    capitalRaisedAtm,
+    capitalRaisedAtmSource,
+    capitalRaisedAtmSourceUrl,
+    capitalRaisedPipe,
+    capitalRaisedPipeSource,
+    capitalRaisedPipeSourceUrl,
+    capitalRaisedConverts,
+    capitalRaisedConvertsSource,
+    capitalRaisedConvertsSourceUrl,
     // Flags from static data
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,

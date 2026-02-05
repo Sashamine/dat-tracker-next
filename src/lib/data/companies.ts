@@ -363,6 +363,8 @@ export const btcCompanies: Company[] = [
     // 2025: $1.05B, 2027: $1.05B, 2028: $1.01B, 2029: $3.0B, 2030: $3.0B, 2031: $603M, 2032: $800M = ~$10.5B face
     // Net carrying value after discounts: $8.17B (LongTermDebt XBRL)
     capitalRaisedConverts: 7_274_000_000,  // SEC 10-Q Q3 2025: Net proceeds from convert issuances (see cash flow stmt)
+    capitalRaisedConvertsSource: "SEC 10-Q Q3 2025: Cash flow statement - proceeds from convertible notes",
+    capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
     // Debt: Convertible notes (0%-0.875% coupons, maturities 2025-2032)
     totalDebt: 8_173_903_000,  // SEC 10-Q Q3 2025 XBRL: LongTermDebt as of Sep 30, 2025
     debtSource: "SEC 10-Q Q3 2025 (Accession: 0001193125-25-262568)",
@@ -385,6 +387,8 @@ export const btcCompanies: Company[] = [
     cashObligationsAsOf: "2025-11-28",
     // ATM PROGRAM: S-3 shelf registration for $21B equity component of 21/21 plan
     capitalRaisedAtm: 21_000_000_000,  // SEC S-3 shelf capacity (21/21 plan equity component)
+    capitalRaisedAtmSource: "SEC S-3 shelf registration (21/21 plan equity component)",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=S-3",
     cashReserves: 2_250_000_000,  // SEC 8-K Jan 5, 2026: "USD Reserve was $2.25 billion" for dividends/interest
     cashSource: "SEC 8-K Jan 5, 2026 (Accession: 0001193125-26-001550)",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/",

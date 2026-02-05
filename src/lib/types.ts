@@ -96,8 +96,14 @@ export interface Company {
   burnAsOf?: string;  // ISO date of the period the burn is calculated from
   burnEstimated?: boolean;  // True if burn figure is estimated/unverified
   capitalRaisedAtm?: number;
+  capitalRaisedAtmSource?: string;
+  capitalRaisedAtmSourceUrl?: string;
   capitalRaisedPipe?: number;
+  capitalRaisedPipeSource?: string;
+  capitalRaisedPipeSourceUrl?: string;
   capitalRaisedConverts?: number;
+  capitalRaisedConvertsSource?: string;
+  capitalRaisedConvertsSourceUrl?: string;
   avgIssuancePremium?: number;
   avgDailyVolume?: number;
   hasOptions?: boolean;

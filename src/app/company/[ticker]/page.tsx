@@ -1366,6 +1366,7 @@ export default function CompanyPage() {
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Avg Cost Basis</p>
                     <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">
                       ${displayCompany.costBasisAvg.toLocaleString()}
+                      <SourceLink url={displayCompany.costBasisSourceUrl} label={displayCompany.costBasisSource} />
                     </p>
                   </div>
                 )}
@@ -1374,6 +1375,7 @@ export default function CompanyPage() {
                     <p className="text-xs text-gray-500 uppercase tracking-wide">ATM Raised</p>
                     <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
                       ${(displayCompany.capitalRaisedAtm / 1e9).toFixed(2)}B
+                      <SourceLink url={displayCompany.capitalRaisedAtmSourceUrl} label={displayCompany.capitalRaisedAtmSource} />
                     </p>
                   </div>
                 )}
@@ -1382,6 +1384,7 @@ export default function CompanyPage() {
                     <p className="text-xs text-gray-500 uppercase tracking-wide">PIPE Raised</p>
                     <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
                       ${(displayCompany.capitalRaisedPipe / 1e9).toFixed(2)}B
+                      <SourceLink url={displayCompany.capitalRaisedPipeSourceUrl} label={displayCompany.capitalRaisedPipeSource} />
                     </p>
                   </div>
                 )}
@@ -1390,6 +1393,7 @@ export default function CompanyPage() {
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Converts Raised</p>
                     <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
                       ${(displayCompany.capitalRaisedConverts / 1e9).toFixed(2)}B
+                      <SourceLink url={displayCompany.capitalRaisedConvertsSourceUrl} label={displayCompany.capitalRaisedConvertsSource} />
                     </p>
                   </div>
                 )}
