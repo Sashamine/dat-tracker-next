@@ -50,9 +50,9 @@ export function HoldingsPerShareChart({
     
     const filtered = historyData.history.filter(snapshot => new Date(snapshot.date) >= startDate);
     
-    // If less than 2 data points in range, extend to include most recent available data
-    if (filtered.length < 2 && historyData.history.length >= 2) {
-      const minPoints = Math.min(historyData.history.length, Math.max(2, filtered.length + 2));
+    // If fewer than 3 data points in range, extend to include more history for a meaningful chart
+    if (filtered.length < 3 && historyData.history.length >= 3) {
+      const minPoints = Math.min(historyData.history.length, Math.max(3, filtered.length + 2));
       const extended = historyData.history.slice(-minPoints);
       return { filteredHistory: extended, rangeExtended: true };
     }
