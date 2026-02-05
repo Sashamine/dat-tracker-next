@@ -34,6 +34,11 @@ export const ethCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
+    // Cash obligations = burn only (no debt, no preferred)
+    cashObligationsAnnual: 10_000_000,  // $2.5M/qtr × 4 = $10M/yr
+    cashObligationsSource: "SEC 10-Q Q1 FY2026: Operating burn only (no debt/preferred)",
+    cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
+    cashObligationsAsOf: "2025-11-30",
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedPipe: 615_000_000,
     avgDailyVolume: 800_000_000,
