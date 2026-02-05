@@ -90,6 +90,16 @@ export function enrichCompany(company: Company): Company {
   const preferredAsOf = staticCompany?.preferredAsOf;
   const preferredSourceUrl = staticCompany?.preferredSourceUrl;
 
+  // Burn source tracking (from static data)
+  const burnSource = staticCompany?.burnSource;
+  const burnAsOf = staticCompany?.burnAsOf;
+  const burnSourceUrl = staticCompany?.burnSourceUrl;
+
+  // Cash obligations source tracking (from static data)
+  const cashObligationsSource = staticCompany?.cashObligationsSource;
+  const cashObligationsAsOf = staticCompany?.cashObligationsAsOf;
+  const cashObligationsSourceUrl = staticCompany?.cashObligationsSourceUrl;
+
   // Merge financial data for mNAV calculation
   // All balance sheet data comes from static files (SEC-sourced)
   const mergedFinancials = {
@@ -124,6 +134,14 @@ export function enrichCompany(company: Company): Company {
     preferredSource,
     preferredAsOf,
     preferredSourceUrl,
+    // Burn source tracking
+    burnSource,
+    burnAsOf,
+    burnSourceUrl,
+    // Cash obligations source tracking
+    cashObligationsSource,
+    cashObligationsAsOf,
+    cashObligationsSourceUrl,
     // Flags from static data
     pendingMerger: staticCompany?.pendingMerger ?? company.pendingMerger,
     lowLiquidity: staticCompany?.lowLiquidity ?? company.lowLiquidity,
