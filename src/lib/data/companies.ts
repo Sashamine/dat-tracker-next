@@ -1385,7 +1385,6 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://www.forwardindustries.com/",
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
     // Fiscal year end: September 30
-    costBasisAvg: 232.08,
     costBasisSource: "SEC XBRL - $1.59B / 6.85M SOL",
     stakingPct: 0.99,  // "staking the majority of the SOL in our treasury" per 10-K; 6.73% APY confirms active staking
     stakingMethod: "Native staking via white-label validators + third-party validators",
@@ -1618,7 +1617,6 @@ export const hypeCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://cryptorank.io/news/feed/hyperliquid-strategies-hype-stake",
     datStartDate: "2025-12-02",
-    costBasisAvg: 46.27,
     stakingPct: 1.00,  // 100% staked via Anchorage
     stakingApy: 0.024,  // ~288K HYPE/year on 12M staked
     stakingMethod: "Anchorage Digital",
@@ -1664,7 +1662,6 @@ export const hypeCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
     datStartDate: "2025-07-01",
-    costBasisAvg: 38.25,
     stakingPct: 0,  // Direct holdings not staked (staked tracked in cryptoInvestments)
     stakingApy: 0.05,
     quarterlyBurnUsd: 3_570_000,  // SEC 10-Q: $10.7M cash used in ops (9mo) / 3 = $3.57M/qtr
@@ -1725,7 +1722,6 @@ export const bnbCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.ceaindustries.com/dashboard.html",
     datStartDate: "2025-06-01",
-    costBasisAvg: 855.00,
     costBasisSource: "company-website - Investor dashboard",
     // No staking disclosed - holding spot BNB
     quarterlyBurnUsd: 3_000_000,
@@ -1762,7 +1758,6 @@ export const bnbCompanies: Company[] = [
     datStartDate: "2025-06-01",
     secCik: "1872302",
     filingType: "FPI",  // Foreign Private Issuer - files 20-F/6-K, limited XBRL
-    // costBasisAvg: REMOVED - no SEC source found
     // stakingPct: 0.30 removed - needs verification
     stakingApy: 0.03,
     quarterlyBurnUsd: 3_550_000,  // H1 2025: $7.1M/6mo = $3.55M/qtr (down from FY2024's $4.85M/qtr)
@@ -2010,7 +2005,6 @@ export const xrpCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
     datStartDate: "2025-11-01",
-    costBasisAvg: 2.00,  // ~$2.00-2.44 avg across purchases
     quarterlyBurnUsd: 0,
     burnSource: "SPAC - minimal operating expenses pre-merger",
     burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1991453&type=10-Q",
@@ -2071,7 +2065,6 @@ export const ltcCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.litestrategy.com/dashboard/",
     datStartDate: "2025-07-01",
-    costBasisAvg: 107.58,
     quarterlyBurnUsd: 3_098_000,  // Trailing avg: FY2025 $20.8M/yr + Q1 FY2026 $4.5M
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/",
@@ -2103,7 +2096,6 @@ export const ltcCompanies: Company[] = [
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
     datStartDate: "2024-06-01",
-    costBasisAvg: 80.00,
     // stakingPct: 0.042 removed - needs verification
     stakingApy: 0.03,
     quarterlyBurnUsd: 200_000,
@@ -2145,7 +2137,6 @@ export const suiCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
     datStartDate: "2025-08-01",
     secCik: "1425355",
-    costBasisAvg: 2.23,
     stakingPct: 0.98,  // "Substantially almost all of these holdings continue to be staked"
     stakingMethod: "Native staking, liquid staking, and restaking via third-party validators",
     stakingSource: "SEC 10-Q Nov 13, 2025: 'Substantially almost all...staked, generating annualized yield of ~2.2%'. $1.01M SUI staking revenue.",
@@ -2194,7 +2185,6 @@ export const dogeCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/11/13/3187485/0/en/CleanCore-Solutions-Reports-Fiscal-First-Quarter-2026-Financial-Results-and-Provides-Update-on-its-DOGE-Treasury-Strategy.html",
     datStartDate: "2025-09-05",
-    costBasisAvg: 0.23,  // $163.8M fair value / 703.6M DOGE at Sep 30
     quarterlyBurnUsd: 500_000,
     burnSource: "SEC 10-Q (filed 2025-11-13): NetCashUsedInOperatingActivities $3,796,652 (2025-07-01 to 2025-09-30)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/",
@@ -2234,7 +2224,6 @@ export const dogeCompanies: Company[] = [
     pendingMerger: true,  // SPAC-style merger not yet closed
     expectedHoldings: 730_000_000,  // HOD holds 730M DOGE per Dec 18, 2025 shareholder letter
     mergerExpectedClose: "2026-Q1",
-    costBasisAvg: 0.20,
     quarterlyBurnUsd: 713_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025065688/",
@@ -2264,7 +2253,6 @@ export const dogeCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
     datStartDate: "2025-07-17",  // DOGE strategy announced
-    costBasisAvg: 0.25,
     quarterlyBurnUsd: 771_000,
     burnSource: "SEC 20-F FY2025 (Jun 30, 2025)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/",
@@ -2310,7 +2298,6 @@ export const avaxCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/",
     debtAsOf: "2025-09-30",
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
-    costBasisAvg: 11.73,
     stakingPct: 0.90,  // "more than 90% of AVAX holdings staked"
     stakingApy: 0.08,
     stakingSource: "SEC 8-K Jan 28, 2026",
@@ -2359,7 +2346,6 @@ export const hbarCompanies: Company[] = [
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.immutableholdings.com/",
     datStartDate: "2025-07-01",
-    costBasisAvg: 0.10,
     // stakingPct: 0.50 removed - needs verification
     stakingApy: 0.065,
     quarterlyBurnUsd: 500_000,
