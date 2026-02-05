@@ -47,8 +47,12 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
 // Tickers with known Yahoo data issues (incorrect split adjustments)
-// These will try FMP first
-const YAHOO_PROBLEM_TICKERS = new Set(['SBET', 'HSDT', 'NXTT']);
+// These will try FMP first, and filter out corrupt old data
+const YAHOO_PROBLEM_TICKERS: Record<string, string> = {
+  'SBET': '2025-01-01',  // Only show data from 2025 onwards (multiple reverse splits before)
+  'HSDT': '2025-01-01',  // Only show data from 2025 onwards
+  'NXTT': '2025-09-01',  // Only show data from Sep 2025 (200:1 split)
+};
 
 export async function GET(
   request: NextRequest,
@@ -85,22 +89,31 @@ export async function GET(
 
   // Check if this ticker needs split adjustment
   const needsSplitAdjustment = ticker.toUpperCase() in STOCK_SPLITS;
-  const hasYahooProblems = YAHOO_PROBLEM_TICKERS.has(ticker.toUpperCase());
+  const minDateStr = YAHOO_PROBLEM_TICKERS[ticker.toUpperCase()];
+  const hasYahooProblems = !!minDateStr;
 
   try {
     // For tickers with known Yahoo data issues, try FMP first (daily data only)
     if (hasYahooProblems && !intraday && FMP_API_KEY) {
-      const fmpData = await fetchFromFMP(ticker, days);
+      let fmpData = await fetchFromFMP(ticker, days);
       if (fmpData.length > 0) {
-        console.log(`[StockHistory] Using FMP for ${ticker}: ${fmpData.length} points`);
-        cache.set(cacheKey, { data: fmpData, timestamp: Date.now() });
-        return NextResponse.json(fmpData);
+        // Filter out data before the clean date
+        fmpData = fmpData.filter(p => p.time >= minDateStr);
+        if (fmpData.length > 0) {
+          console.log(`[StockHistory] Using FMP for ${ticker}: ${fmpData.length} points (filtered from ${minDateStr})`);
+          cache.set(cacheKey, { data: fmpData, timestamp: Date.now() });
+          return NextResponse.json(fmpData);
+        }
       }
     }
 
     // Use Yahoo Finance for historical data
     let yahooData = await fetchFromYahoo(ticker, days, interval, intraday, filterToLastDay);
     if (yahooData.length > 0) {
+      // Filter out corrupt old data for problem tickers
+      if (hasYahooProblems && !intraday) {
+        yahooData = yahooData.filter(p => p.time >= minDateStr);
+      }
       // Apply split adjustments if needed (Yahoo sometimes doesn't adjust properly)
       if (needsSplitAdjustment) {
         yahooData = adjustPricesForSplits(ticker, yahooData);
