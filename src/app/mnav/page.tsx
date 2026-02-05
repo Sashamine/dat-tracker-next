@@ -290,11 +290,17 @@ export default function MNAVPage() {
     return counts;
   }, [companies]);
 
-  // Calculate quarterly yield statistics
+  // Get tickers for filtered companies
+  const filteredTickers = useMemo(() => new Set(companies.map(c => c.ticker)), [companies]);
+
+  // Calculate quarterly yield statistics (filtered by selected asset)
   const yieldStats = useMemo(() => {
     const quarters = getAvailableQuarters();
     const currentQuarter = quarters[0];
-    const leaderboard = getQuarterlyYieldLeaderboard({ quarter: currentQuarter });
+    const allLeaderboard = getQuarterlyYieldLeaderboard({ quarter: currentQuarter });
+    
+    // Filter by selected asset's companies
+    const leaderboard = allLeaderboard.filter(m => filteredTickers.has(m.ticker));
 
     if (leaderboard.length === 0) {
       return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null };
@@ -316,13 +322,16 @@ export default function MNAVPage() {
       best: leaderboard[0],
       worst: leaderboard[leaderboard.length - 1],
     };
-  }, []);
+  }, [filteredTickers]);
 
-  // Calculate dilution statistics
+  // Calculate dilution statistics (filtered by selected asset)
   const dilutionStats = useMemo(() => {
     const dilutionRates: { ticker: string; rate: number }[] = [];
 
     Object.entries(HOLDINGS_HISTORY).forEach(([ticker, data]) => {
+      // Only include companies that match the selected asset filter
+      if (!filteredTickers.has(ticker)) return;
+      
       const history = data.history;
       if (history.length < 2) return;
 
@@ -342,7 +351,7 @@ export default function MNAVPage() {
     const highDilution = dilutionRates.filter((d) => d.rate > 10);
 
     return { avgDilution, highDilution, total: dilutionRates.length };
-  }, []);
+  }, [filteredTickers]);
 
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
     { value: "1d", label: "24H" },
