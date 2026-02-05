@@ -18,7 +18,9 @@ export const ethCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
     datStartDate: "2025-07-01",
-    costBasisAvg: 2_839,  // Calculated from purchase history (purchases-history.ts)
+    costBasisAvg: 4_002,  // SEC 10-Q Q1 FY2026 (Nov 30, 2025): $14,953,824K cost / 3,737,140 ETH (filed Jan 13, 2026)
+    costBasisSource: "SEC 10-Q Q1 FY2026: ETH cost basis $14,953,824K for 3,737,140 units (balance sheet in thousands)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
     stakingPct: 0.676,  // 2,897,459 staked / 4,285,125 total per Feb 2 8-K (up from 2,009,267)
     stakingApy: 0.0281,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil
     stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",
@@ -394,7 +396,9 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/0001213900-25-121293-index.htm",
     // Breakdown: Contribution 31,500 + PIPE Bitcoin ~11,533 + In-Kind PIPE ~392 = ~43,425
     datStartDate: "2025-12-09",
-    costBasisAvg: 92_902,  // Calculated from purchase history (purchases-history.ts)
+    costBasisAvg: 91_509,  // S-1 Jan 2026: Initial ~42K BTC at $90,560.40 (closing date FV) + 1,500 post-close at ~$118K
+    costBasisSource: "SEC S-1 Jan 5, 2026: Bitcoin valued at $90,560.40 per BTC (Closing date Dec 8, 2025). PIPE BTC: $458.7M (4,812 BTC) + $99.5M (917 BTC) + $147.5M (1,381 BTC)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
     isMiner: false,
     stakingPct: 0,  // BTC not staked
     // No burn data yet - awaiting first 10-Q (merged Dec 2025)
@@ -585,7 +589,9 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     datStartDate: "2024-12-01",
     secCik: "1662684",
-    costBasisAvg: 101_895,  // Calculated from purchase history (purchases-history.ts)
+    costBasisAvg: 101_024,  // SEC 10-Q Q3 2025: $106,785,454 cost basis / 1,057 BTC
+    costBasisSource: "SEC 10-Q Q3 2025: digital assets cost basis $106,785,454 (1,057 BTC)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     isMiner: false,
     quarterlyBurnUsd: 4_000_000,
     avgDailyVolume: 30_000_000,
@@ -998,6 +1004,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-05-12",
     costBasisAvg: 118_205,
     costBasisSource: "SEC 8-K Nov 19, 2025",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     isMiner: false,
     quarterlyBurnUsd: 8_000_000,
     avgDailyVolume: 50_000_000,
@@ -1060,6 +1067,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-01-26",
     costBasisAvg: 68_114,
     costBasisSource: "Q3 2025 report - 'average cost of approximately US$68,114 per unit'",
+    costBasisSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     avgDailyVolume: 20_000_000,
