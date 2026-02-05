@@ -88,6 +88,8 @@ export interface Company {
   stakingSource?: string;      // Source for staking percentage (SEC filing, PR, etc.)
   stakingSourceUrl?: string;   // URL to source document for staking data
   stakingAsOf?: string;        // ISO date of staking data
+  stakingVerified?: boolean;   // Whether staking data has been verified against a primary source
+  stakingLastAudited?: string; // ISO date of last audit
   quarterlyBurnUsd?: number;
   burnSource?: string;
   burnSourceUrl?: string;
