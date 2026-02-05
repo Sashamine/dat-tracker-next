@@ -19,9 +19,11 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
     datStartDate: "2025-07-01",
     costBasisAvg: 2_839,  // Calculated from purchase history (purchases-history.ts)
-    stakingPct: 0.47,  // 2,009,267 staked / 4.28M total - ramping up MAVAN
-    stakingMethod: "MAVAN validators (ramping)",
-    stakingSource: "SEC 8-K Jan 25, 2026",
+    stakingPct: 0.47,  // 2,009,267 staked / 4,243,338 total per Jan 26 8-K
+    stakingApy: 0.0281,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil
+    stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",
+    stakingSource: "SEC 8-K Jan 26, 2026 (ex99-1): 2,009,267 ETH staked of 4,243,338 total. At full scale: $374M/yr staking revenue",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm",
     stakingAsOf: "2026-01-25",
     quarterlyBurnUsd: 2_500_000,
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
