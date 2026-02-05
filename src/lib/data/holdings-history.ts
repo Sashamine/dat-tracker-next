@@ -469,15 +469,32 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 //   - Ongoing ATM share offerings to fund ETH purchases
 //   - Feb 3, 2026: Renamed from SharpLink Gaming to Sharplink Inc
 const SBET_HISTORY: HoldingsSnapshot[] = [
-  // Q2 2025 10-Q (first quarter with ETH holdings — strategy launched Jun 2)
-  { date: "2025-06-30", holdings: 520000, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.003586, source: "Q2 2025 10-Q", sourceType: "sec-filing" },
-  // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH as-if-redeemed)
-  { date: "2025-09-30", holdings: 817747, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004543, source: "Q3 2025 10-Q (Nov 12 earnings)", sourceType: "sec-filing" },
-  // 8-K Oct 21: Week ending Oct 19, 2025 (601,143 native + 258,710 LsETH)
-  { date: "2025-10-19", holdings: 859853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004661, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/form8-k.htm", sourceType: "sec-filing" },
-  // 8-K Nov 12: As of Nov 9, 2025 (637,752 native + 204,332 LsETH)
-  { date: "2025-11-09", holdings: 842084, sharesOutstandingDiluted: 189_000_000, holdingsPerShare: 0.004456, source: "8-K Nov 12, 2025 (earnings release)", sourceType: "sec-filing" },
-  // 8-K Dec 17: As of Dec 14, 2025 (639,241 native + 224,183 LsETH). Staking rewards: 9,241 ETH total
+  // Weekly 8-K filings — ETH totals include native ETH + LsETH "as-if redeemed"
+  // Shares outstanding interpolated between quarterly filings where not directly available
+  // Q2 2025: 145M shares (Jun 30) → Q3 2025: 180M shares (Sep 30) → Dec 2025: 196.7M shares
+  //
+  // Jun 2025 — Initial accumulation phase
+  { date: "2025-06-12", holdings: 176270, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.001259, source: "8-K Jun 13, 2025", sourceType: "sec-filing" },
+  { date: "2025-06-20", holdings: 188478, sharesOutstandingDiluted: 142_000_000, holdingsPerShare: 0.001327, source: "8-K Jun 24, 2025", sourceType: "sec-filing" },
+  { date: "2025-06-27", holdings: 198167, sharesOutstandingDiluted: 144_000_000, holdingsPerShare: 0.001376, source: "8-K Jul 1, 2025", sourceType: "sec-filing" },
+  //
+  // Jul 2025 — Rapid accumulation (inc. 10K ETH from Ethereum Foundation on Jul 11)
+  { date: "2025-07-20", holdings: 360807, sharesOutstandingDiluted: 152_000_000, holdingsPerShare: 0.002374, source: "8-K Jul 22, 2025", sourceType: "sec-filing" },
+  //
+  // Aug 2025 — Massive buying spree
+  { date: "2025-08-03", holdings: 521939, sharesOutstandingDiluted: 158_000_000, holdingsPerShare: 0.003303, source: "8-K Aug 5, 2025", sourceType: "sec-filing" },
+  { date: "2025-08-17", holdings: 740760, sharesOutstandingDiluted: 164_000_000, holdingsPerShare: 0.004517, source: "8-K Aug 19, 2025", sourceType: "sec-filing" },
+  { date: "2025-08-24", holdings: 797704, sharesOutstandingDiluted: 167_000_000, holdingsPerShare: 0.004776, source: "8-K Aug 26, 2025", sourceType: "sec-filing" },
+  { date: "2025-08-31", holdings: 837230, sharesOutstandingDiluted: 170_000_000, holdingsPerShare: 0.004925, source: "8-K Sep 2, 2025", sourceType: "sec-filing" },
+  //
+  // Sep 2025 — Accumulation slows, approaching 850K
+  { date: "2025-09-14", holdings: 838152, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.004789, source: "8-K Sep 16, 2025", sourceType: "sec-filing" },
+  // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH). Note: lower than Sep 14 due to LsETH conversion rate changes
+  { date: "2025-09-30", holdings: 817747, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004543, source: "Q3 2025 10-Q", sourceType: "sec-filing" },
+  //
+  // Oct-Dec 2025 — Stabilizing around 850-865K
+  { date: "2025-10-19", holdings: 859853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004661, source: "8-K Oct 21, 2025", sourceType: "sec-filing" },
+  { date: "2025-11-09", holdings: 842084, sharesOutstandingDiluted: 189_000_000, holdingsPerShare: 0.004456, source: "8-K Nov 12, 2025", sourceType: "sec-filing" },
   { date: "2025-12-14", holdings: 863424, sharesOutstandingDiluted: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm", sourceType: "sec-filing" },
 ];
 
