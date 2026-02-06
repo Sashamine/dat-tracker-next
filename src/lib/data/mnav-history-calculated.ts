@@ -1,5 +1,5 @@
 // Auto-generated historical mNAV data
-// Generated: 2026-02-06T03:46:35.688Z
+// Generated: 2026-02-06T15:00:17.553Z
 // DO NOT EDIT - regenerate with: npx tsx scripts/generate-mnav-history.ts
 
 export interface HistoricalMNAVCompany {
@@ -22,210 +22,6 @@ export interface HistoricalMNAVSnapshot {
 }
 
 export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
-  {
-    "date": "2024-01-07",
-    "median": 10.972687155169304,
-    "average": 7.67665148709288,
-    "count": 3,
-    "btcPrice": 44000,
-    "ethPrice": 2300,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 1.035,
-        "marketCap": 8612478000,
-        "enterpriseValue": 8612478000,
-        "cryptoNav": 8322600000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 10.973,
-        "marketCap": 7302806100,
-        "enterpriseValue": 7302806100,
-        "cryptoNav": 665544000
-      },
-      {
-        "ticker": "RIOT",
-        "asset": "BTC",
-        "mnav": 11.022,
-        "marketCap": 3570476000,
-        "enterpriseValue": 3570476000,
-        "cryptoNav": 323928000
-      }
-    ]
-  },
-  {
-    "date": "2024-01-14",
-    "median": 11.227865926219753,
-    "average": 7.855178265862484,
-    "count": 3,
-    "btcPrice": 43000,
-    "ethPrice": 2550,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 1.059,
-        "marketCap": 8612478000,
-        "enterpriseValue": 8612478000,
-        "cryptoNav": 8133450000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 11.228,
-        "marketCap": 7302806100,
-        "enterpriseValue": 7302806100,
-        "cryptoNav": 650418000
-      },
-      {
-        "ticker": "RIOT",
-        "asset": "BTC",
-        "mnav": 11.279,
-        "marketCap": 3570476000,
-        "enterpriseValue": 3570476000,
-        "cryptoNav": 316566000
-      }
-    ]
-  },
-  {
-    "date": "2024-01-21",
-    "median": 11.633692405480707,
-    "average": 8.139100371857511,
-    "count": 3,
-    "btcPrice": 41500,
-    "ethPrice": 2450,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 1.097,
-        "marketCap": 8612478000,
-        "enterpriseValue": 8612478000,
-        "cryptoNav": 7849725000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 11.634,
-        "marketCap": 7302806100,
-        "enterpriseValue": 7302806100,
-        "cryptoNav": 627729000
-      },
-      {
-        "ticker": "RIOT",
-        "asset": "BTC",
-        "mnav": 11.686,
-        "marketCap": 3570476000,
-        "enterpriseValue": 3570476000,
-        "cryptoNav": 305523000
-      }
-    ]
-  },
-  {
-    "date": "2024-01-28",
-    "median": 11.227865926219753,
-    "average": 7.855178265862484,
-    "count": 3,
-    "btcPrice": 43000,
-    "ethPrice": 2300,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 1.059,
-        "marketCap": 8612478000,
-        "enterpriseValue": 8612478000,
-        "cryptoNav": 8133450000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 11.228,
-        "marketCap": 7302806100,
-        "enterpriseValue": 7302806100,
-        "cryptoNav": 650418000
-      },
-      {
-        "ticker": "RIOT",
-        "asset": "BTC",
-        "mnav": 11.279,
-        "marketCap": 3570476000,
-        "enterpriseValue": 3570476000,
-        "cryptoNav": 316566000
-      }
-    ]
-  },
-  {
-    "date": "2024-02-04",
-    "median": 11.175885065450217,
-    "average": 7.818811699816823,
-    "count": 3,
-    "btcPrice": 43200,
-    "ethPrice": 2350,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 1.054,
-        "marketCap": 8612478000,
-        "enterpriseValue": 8612478000,
-        "cryptoNav": 8171280000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 11.176,
-        "marketCap": 7302806100,
-        "enterpriseValue": 7302806100,
-        "cryptoNav": 653443200
-      },
-      {
-        "ticker": "RIOT",
-        "asset": "BTC",
-        "mnav": 11.227,
-        "marketCap": 3570476000,
-        "enterpriseValue": 3570476000,
-        "cryptoNav": 318038400
-      }
-    ]
-  },
-  {
-    "date": "2024-02-11",
-    "median": 10.058296558905194,
-    "average": 7.036930529835142,
-    "count": 3,
-    "btcPrice": 48000,
-    "ethPrice": 2550,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 0.949,
-        "marketCap": 8612478000,
-        "enterpriseValue": 8612478000,
-        "cryptoNav": 9079200000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 10.058,
-        "marketCap": 7302806100,
-        "enterpriseValue": 7302806100,
-        "cryptoNav": 726048000
-      },
-      {
-        "ticker": "RIOT",
-        "asset": "BTC",
-        "mnav": 10.104,
-        "marketCap": 3570476000,
-        "enterpriseValue": 3570476000,
-        "cryptoNav": 353376000
-      }
-    ]
-  },
   {
     "date": "2024-03-31",
     "median": 4.872540467423049,
@@ -690,9 +486,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-07-28",
-    "median": 5.108560083488177,
-    "average": 13.055804472442883,
-    "count": 5,
+    "median": 4.565664732753554,
+    "average": 4.001095018216562,
+    "count": 4,
     "btcPrice": 68000,
     "ethPrice": 3300,
     "companies": [
@@ -727,14 +523,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 6612000000,
         "enterpriseValue": 6612000000,
         "cryptoNav": 1254000000
-      },
-      {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 49.275,
-        "marketCap": 774843750,
-        "enterpriseValue": 774843750,
-        "cryptoNav": 15725000
       }
     ]
   },
@@ -1009,36 +797,10 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
     ]
   },
   {
-    "date": "2024-09-22",
-    "median": 2.675133001706704,
-    "average": 2.675133001706704,
-    "count": 2,
-    "btcPrice": 63500,
-    "ethPrice": 2600,
-    "companies": [
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 3.914,
-        "marketCap": 5625000000,
-        "enterpriseValue": 5625000000,
-        "cryptoNav": 1437132000
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.436,
-        "marketCap": 114000005,
-        "enterpriseValue": 114000005,
-        "cryptoNav": 79375000
-      }
-    ]
-  },
-  {
     "date": "2024-09-30",
-    "median": 3.973646819700412,
-    "average": 13.309420578989783,
-    "count": 5,
+    "median": 3.946093729311361,
+    "average": 4.4253744044289745,
+    "count": 4,
     "btcPrice": 63497,
     "ethPrice": 2659,
     "companies": [
@@ -1073,14 +835,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 8767200000,
         "enterpriseValue": 8767200000,
         "cryptoNav": 1169960000
-      },
-      {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 48.846,
-        "marketCap": 1095900000,
-        "enterpriseValue": 1095900000,
-        "cryptoNav": 22436000
       }
     ]
   },
@@ -1136,9 +890,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-10-13",
-    "median": 3.8548479004628233,
-    "average": 11.36390739384841,
-    "count": 6,
+    "median": 3.827931922302307,
+    "average": 3.678488054808006,
+    "count": 5,
     "btcPrice": 65000,
     "ethPrice": 2550,
     "companies": [
@@ -1175,14 +929,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1122000000
       },
       {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 49.791,
-        "marketCap": 1095900000,
-        "enterpriseValue": 1095900000,
-        "cryptoNav": 22010000
-      },
-      {
         "ticker": "SUIG",
         "asset": "SUI",
         "mnav": 0.607,
@@ -1194,9 +940,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-10-20",
-    "median": 3.657884869052314,
-    "average": 10.560485208327323,
-    "count": 6,
+    "median": 3.632344159848904,
+    "average": 3.4849564954656236,
+    "count": 5,
     "btcPrice": 68500,
     "ethPrice": 2700,
     "companies": [
@@ -1233,14 +979,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1188000000
       },
       {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 45.938,
-        "marketCap": 1095900000,
-        "enterpriseValue": 1095900000,
-        "cryptoNav": 23856000
-      },
-      {
         "ticker": "SUIG",
         "asset": "SUI",
         "mnav": 0.583,
@@ -1252,9 +990,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-10-27",
-    "median": 3.5290861060575143,
-    "average": 10.230482300088354,
-    "count": 6,
+    "median": 3.5044447176007036,
+    "average": 3.4564580357599484,
+    "count": 5,
     "btcPrice": 71000,
     "ethPrice": 2650,
     "companies": [
@@ -1291,14 +1029,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1166000000
       },
       {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 44.101,
-        "marketCap": 1095900000,
-        "enterpriseValue": 1095900000,
-        "cryptoNav": 24850000
-      },
-      {
         "ticker": "SUIG",
         "asset": "SUI",
         "mnav": 0.634,
@@ -1310,9 +1040,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-03",
-    "median": 2.8685281745577735,
-    "average": 8.422092130844021,
-    "count": 8,
+    "median": 2.1310335237583016,
+    "average": 2.9433385098799056,
+    "count": 7,
     "btcPrice": 69000,
     "ethPrice": 2500,
     "companies": [
@@ -1357,14 +1087,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1100000000
       },
       {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 46.773,
-        "marketCap": 1095900000,
-        "enterpriseValue": 1095900000,
-        "cryptoNav": 23430000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 2.013,
@@ -1384,9 +1106,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-10",
-    "median": 2.413761512737639,
-    "average": 6.712929165396371,
-    "count": 8,
+    "median": 1.7931867456014978,
+    "average": 2.4218471864374735,
+    "count": 7,
     "btcPrice": 82000,
     "ethPrice": 3100,
     "companies": [
@@ -1431,14 +1153,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1364000000
       },
       {
-        "ticker": "STKE",
-        "asset": "SOL",
-        "mnav": 36.751,
-        "marketCap": 1095900000,
-        "enterpriseValue": 1095900000,
-        "cryptoNav": 29820000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.775,
@@ -1453,32 +1167,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 54600001,
         "enterpriseValue": 54600001,
         "cryptoNav": 126000000
-      }
-    ]
-  },
-  {
-    "date": "2024-11-17",
-    "median": 0.9026886932610343,
-    "average": 0.9026886932610343,
-    "count": 2,
-    "btcPrice": 91000,
-    "ethPrice": 3200,
-    "companies": [
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.397,
-        "marketCap": 101200002,
-        "enterpriseValue": 101200002,
-        "cryptoNav": 254800000
-      },
-      {
-        "ticker": "HSDT",
-        "asset": "SOL",
-        "mnav": 1.408,
-        "marketCap": 270375000,
-        "enterpriseValue": 270375000,
-        "cryptoNav": 192000000
       }
     ]
   },
@@ -1518,9 +1206,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-24",
-    "median": 2.192172801624759,
-    "average": 5.193130859524568,
-    "count": 4,
+    "median": 1.1658088235294117,
+    "average": 1.6072511911674727,
+    "count": 3,
     "btcPrice": 97000,
     "ethPrice": 3450,
     "companies": [
@@ -1547,14 +1235,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 237825000,
         "enterpriseValue": 237825000,
         "cryptoNav": 204000000
-      },
-      {
-        "ticker": "HYPD",
-        "asset": "HYPE",
-        "mnav": 15.951,
-        "marketCap": 103680004,
-        "enterpriseValue": 103680004,
-        "cryptoNav": 6500000
       }
     ]
   },
@@ -1669,36 +1349,10 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
     ]
   },
   {
-    "date": "2024-12-22",
-    "median": 2.822092256096539,
-    "average": 2.822092256096539,
-    "count": 2,
-    "btcPrice": 96000,
-    "ethPrice": 3450,
-    "companies": [
-      {
-        "ticker": "MSTR",
-        "asset": "BTC",
-        "mnav": 3.252,
-        "marketCap": 103400000000,
-        "enterpriseValue": 103400000000,
-        "cryptoNav": 31795200000
-      },
-      {
-        "ticker": "MARA",
-        "asset": "BTC",
-        "mnav": 2.392,
-        "marketCap": 10194800000,
-        "enterpriseValue": 10194800000,
-        "cryptoNav": 4261824000
-      }
-    ]
-  },
-  {
     "date": "2024-12-31",
-    "median": 2.126789481508879,
-    "average": 10.018615355457717,
-    "count": 7,
+    "median": 1.8789042118365749,
+    "average": 1.695564291110322,
+    "count": 4,
     "btcPrice": 93429,
     "ethPrice": 3334,
     "companies": [
@@ -1727,44 +1381,20 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1655748738
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 10.056,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1656998000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 0.898,
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 283500000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 32.445,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 326820000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 20.847,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 799280000
       }
     ]
   },
   {
     "date": "2025-01-05",
-    "median": 2.0172976088110968,
-    "average": 8.918557103485838,
-    "count": 7,
+    "median": 1.9336007859832978,
+    "average": 3.166739380053955,
+    "count": 5,
     "btcPrice": 98500,
     "ethPrice": 3550,
     "companies": [
@@ -1807,30 +1437,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 315000000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 28.322,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 374400000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 18.275,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 911800000
       }
     ]
   },
   {
     "date": "2025-01-12",
-    "median": 2.113870366679713,
-    "average": 8.835611797159713,
-    "count": 7,
+    "median": 1.8674908681668017,
+    "average": 1.691480052780356,
+    "count": 4,
     "btcPrice": 94000,
     "ethPrice": 3250,
     "companies": [
@@ -1859,44 +1473,20 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1665868000
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 10.316,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1615250000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 0.917,
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 277500000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 30.21,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 351000000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 14.558,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1144600000
       }
     ]
   },
   {
     "date": "2025-01-19",
-    "median": 1.8924172806466004,
-    "average": 8.106414239070599,
-    "count": 7,
+    "median": 1.6718489676921842,
+    "average": 1.4786864040077423,
+    "count": 4,
     "btcPrice": 105000,
     "ethPrice": 3350,
     "companies": [
@@ -1925,44 +1515,20 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1860810000
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 10.008,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1664950000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 0.679,
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 375000000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 27.189,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 390000000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 13.633,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1222200000
       }
     ]
   },
   {
     "date": "2025-01-26",
-    "median": 1.948076612430324,
-    "average": 9.02906420431644,
-    "count": 7,
+    "median": 1.7210209961537188,
+    "average": 1.5280164596950787,
+    "count": 4,
     "btcPrice": 102000,
     "ethPrice": 3150,
     "companies": [
@@ -1991,44 +1557,20 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1807644000
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 10.643,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1565550000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 0.722,
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 352500000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 32.368,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 327600000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 14.08,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1183400000
       }
     ]
   },
   {
     "date": "2025-02-02",
-    "median": 2.037987840696339,
-    "average": 10.01442111078518,
-    "count": 7,
+    "median": 1.8004527344377368,
+    "average": 1.6116966607262866,
+    "count": 4,
     "btcPrice": 97500,
     "ethPrice": 2800,
     "companies": [
@@ -2057,44 +1599,20 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1727895000
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 11.974,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1391600000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 0.808,
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 315000000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 35.775,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 296400000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 15.906,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1047600000
       }
     ]
   },
   {
     "date": "2025-02-09",
-    "median": 2.027589943549929,
-    "average": 10.65426067982816,
-    "count": 7,
+    "median": 1.7912667510987688,
+    "average": 1.6200406050266103,
+    "count": 4,
     "btcPrice": 98000,
     "ethPrice": 2700,
     "companies": [
@@ -2123,44 +1641,20 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1736756000
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 12.417,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 1341900000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 0.87,
         "marketCap": 254486400,
         "enterpriseValue": 254486400,
         "cryptoNav": 292500000
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 38.841,
-        "marketCap": 10603600000,
-        "enterpriseValue": 10603600000,
-        "cryptoNav": 273000000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 16.841,
-        "marketCap": 16662800000,
-        "enterpriseValue": 16662800000,
-        "cryptoNav": 989400000
       }
     ]
   },
   {
     "date": "2025-03-31",
-    "median": 1.928058311050703,
-    "average": 2.007613714214609,
-    "count": 3,
+    "median": 2.12265300159141,
+    "average": 3.2068674985675845,
+    "count": 4,
     "btcPrice": 82549,
     "ethPrice": 1822,
     "companies": [
@@ -2187,14 +1681,22 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 3677100000,
         "enterpriseValue": 3677100000,
         "cryptoNav": 1586839427
+      },
+      {
+        "ticker": "KULR",
+        "asset": "BTC",
+        "mnav": 6.805,
+        "marketCap": 375394340,
+        "enterpriseValue": 375394340,
+        "cryptoNav": 55167497
       }
     ]
   },
   {
     "date": "2025-04-06",
-    "median": 2.040503660499032,
-    "average": 2.1246987755730995,
-    "count": 3,
+    "median": 2.2464472131842217,
+    "average": 3.2302236943631484,
+    "count": 4,
     "btcPrice": 78000,
     "ethPrice": 1700,
     "companies": [
@@ -2221,13 +1723,21 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 3677100000,
         "enterpriseValue": 3677100000,
         "cryptoNav": 1499394000
+      },
+      {
+        "ticker": "KULR",
+        "asset": "BTC",
+        "mnav": 6.547,
+        "marketCap": 341267582,
+        "enterpriseValue": 341267582,
+        "cryptoNav": 52127400
       }
     ]
   },
   {
     "date": "2025-04-13",
     "median": 2.0859866979567774,
-    "average": 13.840679580888654,
+    "average": 3.0248232802752923,
     "count": 4,
     "btcPrice": 84000,
     "ethPrice": 1800,
@@ -2259,9 +1769,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
       {
         "ticker": "KULR",
         "asset": "BTC",
-        "mnav": 49.444,
-        "marketCap": 2775642922,
-        "enterpriseValue": 2775642922,
+        "mnav": 6.18,
+        "marketCap": 346955369,
+        "enterpriseValue": 346955369,
         "cryptoNav": 56137200
       }
     ]
@@ -2269,7 +1779,7 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   {
     "date": "2025-04-20",
     "median": 2.0025472300385063,
-    "average": 9.823518293398708,
+    "average": 2.901370261006157,
     "count": 6,
     "btcPrice": 87500,
     "ethPrice": 1850,
@@ -2301,9 +1811,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
       {
         "ticker": "KULR",
         "asset": "BTC",
-        "mnav": 47.466,
-        "marketCap": 2775642922,
-        "enterpriseValue": 2775642922,
+        "mnav": 5.933,
+        "marketCap": 346955369,
+        "enterpriseValue": 346955369,
         "cryptoNav": 58476250
       },
       {
@@ -2327,7 +1837,7 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   {
     "date": "2025-04-27",
     "median": 2.8620997920493805,
-    "average": 10.442459779837415,
+    "average": 3.3123696892226087,
     "count": 6,
     "btcPrice": 94000,
     "ethPrice": 1900,
@@ -2359,9 +1869,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
       {
         "ticker": "KULR",
         "asset": "BTC",
-        "mnav": 48.892,
-        "marketCap": 3071408134,
-        "enterpriseValue": 3071408134,
+        "mnav": 6.112,
+        "marketCap": 383926021,
+        "enterpriseValue": 383926021,
         "cryptoNav": 62820200
       },
       {
@@ -2385,7 +1895,7 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   {
     "date": "2025-05-04",
     "median": 2.6121871570952013,
-    "average": 10.399225392762213,
+    "average": 3.5567469728889485,
     "count": 6,
     "btcPrice": 96500,
     "ethPrice": 1950,
@@ -2417,9 +1927,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
       {
         "ticker": "KULR",
         "asset": "BTC",
-        "mnav": 46.92,
-        "marketCap": 3025905835,
-        "enterpriseValue": 3025905835,
+        "mnav": 5.865,
+        "marketCap": 378238233,
+        "enterpriseValue": 378238233,
         "cryptoNav": 64490950
       },
       {
@@ -2491,121 +2001,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
     ]
   },
   {
-    "date": "2025-05-18",
-    "median": 7.481157603437747,
-    "average": 7.481157603437747,
-    "count": 2,
-    "btcPrice": 107000,
-    "ethPrice": 2250,
-    "companies": [
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 12.816,
-        "marketCap": 336407146,
-        "enterpriseValue": 336407146,
-        "cryptoNav": 26250000
-      },
-      {
-        "ticker": "UPXI",
-        "asset": "SOL",
-        "mnav": 2.147,
-        "marketCap": 224179991,
-        "enterpriseValue": 224179991,
-        "cryptoNav": 104424950
-      }
-    ]
-  },
-  {
-    "date": "2025-05-25",
-    "median": 19.241573033707866,
-    "average": 18.008777231951115,
-    "count": 3,
-    "btcPrice": 109000,
-    "ethPrice": 2400,
-    "companies": [
-      {
-        "ticker": "KULR",
-        "asset": "BTC",
-        "mnav": 32.573,
-        "marketCap": 2841399646,
-        "enterpriseValue": 2841399646,
-        "cryptoNav": 87232700
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 19.242,
-        "marketCap": 513750000,
-        "enterpriseValue": 513750000,
-        "cryptoNav": 26700000
-      },
-      {
-        "ticker": "UPXI",
-        "asset": "SOL",
-        "mnav": 2.212,
-        "marketCap": 234960007,
-        "enterpriseValue": 234960007,
-        "cryptoNav": 106215092
-      }
-    ]
-  },
-  {
-    "date": "2025-06-01",
-    "median": 19.245336398065497,
-    "average": 19.245336398065497,
-    "count": 2,
-    "btcPrice": 105000,
-    "ethPrice": 2350,
-    "companies": [
-      {
-        "ticker": "KULR",
-        "asset": "BTC",
-        "mnav": 33.245,
-        "marketCap": 2793644793,
-        "enterpriseValue": 2793644793,
-        "cryptoNav": 84031500
-      },
-      {
-        "ticker": "LUXFF",
-        "asset": "LTC",
-        "mnav": 5.245,
-        "marketCap": 2737377,
-        "enterpriseValue": 2737377,
-        "cryptoNav": 521856
-      }
-    ]
-  },
-  {
-    "date": "2025-06-08",
-    "median": 19.53586238682028,
-    "average": 19.53586238682028,
-    "count": 2,
-    "btcPrice": 108000,
-    "ethPrice": 2450,
-    "companies": [
-      {
-        "ticker": "KULR",
-        "asset": "BTC",
-        "mnav": 32.598,
-        "marketCap": 2817522077,
-        "enterpriseValue": 2817522077,
-        "cryptoNav": 86432400
-      },
-      {
-        "ticker": "LUXFF",
-        "asset": "LTC",
-        "mnav": 6.474,
-        "marketCap": 3483934,
-        "enterpriseValue": 3483934,
-        "cryptoNav": 538164
-      }
-    ]
-  },
-  {
     "date": "2025-06-15",
     "median": 3.772727359424938,
-    "average": 8.804111363359196,
+    "average": 3.3455811626661456,
     "count": 5,
     "btcPrice": 110000,
     "ethPrice": 2550,
@@ -2613,9 +2011,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
       {
         "ticker": "KULR",
         "asset": "BTC",
-        "mnav": 31.192,
-        "marketCap": 2745890225,
-        "enterpriseValue": 2745890225,
+        "mnav": 3.899,
+        "marketCap": 343236279,
+        "enterpriseValue": 343236279,
         "cryptoNav": 88033000
       },
       {
@@ -2654,8 +2052,8 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-06-22",
-    "median": 3.412213653098536,
-    "average": 7.711992685637587,
+    "median": 2.990419073759764,
+    "average": 3.5254059984047728,
     "count": 5,
     "btcPrice": 108500,
     "ethPrice": 2500,
@@ -2663,9 +2061,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
       {
         "ticker": "KULR",
         "asset": "BTC",
-        "mnav": 23.923,
-        "marketCap": 2077325703,
-        "enterpriseValue": 2077325703,
+        "mnav": 2.99,
+        "marketCap": 259665714,
+        "enterpriseValue": 259665714,
         "cryptoNav": 86832550
       },
       {
@@ -2704,9 +2102,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-06-30",
-    "median": 2.8899095577892933,
-    "average": 9.192708347077035,
-    "count": 12,
+    "median": 2.584624800322078,
+    "average": 3.1802105661819677,
+    "count": 9,
     "btcPrice": 109368,
     "ethPrice": 2517,
     "companies": [
@@ -2751,14 +2149,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 498786339
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 16.936,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1384350000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.062,
@@ -2767,28 +2157,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 380600000
       },
       {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 40.938,
-        "marketCap": 16977660000,
-        "enterpriseValue": 16977660000,
-        "cryptoNav": 414720000
-      },
-      {
         "ticker": "TRON",
         "asset": "TRX",
         "mnav": 2.087,
         "marketCap": 212551368,
         "enterpriseValue": 212551368,
         "cryptoNav": 101862020
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 23.817,
-        "marketCap": 27487640000,
-        "enterpriseValue": 27487640000,
-        "cryptoNav": 1154120000
       },
       {
         "ticker": "BNC",
@@ -2810,9 +2184,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-07-06",
-    "median": 3.2262120141312414,
-    "average": 8.642268250631252,
-    "count": 14,
+    "median": 2.738664318115241,
+    "average": 2.7294921954938696,
+    "count": 10,
     "btcPrice": 107000,
     "ethPrice": 2600,
     "companies": [
@@ -2865,14 +2239,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 534648400
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 16.395,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1430000000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.05,
@@ -2881,28 +2247,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 385000000
       },
       {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 42.487,
-        "marketCap": 16977660000,
-        "enterpriseValue": 16977660000,
-        "cryptoNav": 399600000
-      },
-      {
         "ticker": "TRON",
         "asset": "TRX",
         "mnav": 2.281,
         "marketCap": 224893055,
         "enterpriseValue": 224893055,
         "cryptoNav": 98576148
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 24.729,
-        "marketCap": 27487640000,
-        "enterpriseValue": 27487640000,
-        "cryptoNav": 1111550000
       },
       {
         "ticker": "BNC",
@@ -2919,22 +2269,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 142460002,
         "enterpriseValue": 142460002,
         "cryptoNav": 47561600
-      },
-      {
-        "ticker": "LUXFF",
-        "asset": "LTC",
-        "mnav": 10.086,
-        "marketCap": 5208481,
-        "enterpriseValue": 5208481,
-        "cryptoNav": 516420
       }
     ]
   },
   {
     "date": "2025-07-13",
-    "median": 4.572580552870227,
-    "average": 10.84185506373669,
-    "count": 15,
+    "median": 2.7058590936888613,
+    "average": 2.897509079803298,
+    "count": 10,
     "btcPrice": 100000,
     "ethPrice": 2450,
     "companies": [
@@ -2987,22 +2329,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 687729700
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 17.399,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1347500000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 24.234,
-        "marketCap": 107999997,
-        "enterpriseValue": 107999997,
-        "cryptoNav": 4456550
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.114,
@@ -3011,28 +2337,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 363000000
       },
       {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 49.125,
-        "marketCap": 16977660000,
-        "enterpriseValue": 16977660000,
-        "cryptoNav": 345600000
-      },
-      {
         "ticker": "TRON",
         "asset": "TRX",
         "mnav": 1.947,
         "marketCap": 177720370,
         "enterpriseValue": 177720370,
         "cryptoNav": 91274211
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 27.673,
-        "marketCap": 27487640000,
-        "enterpriseValue": 27487640000,
-        "cryptoNav": 993300000
       },
       {
         "ticker": "BNC",
@@ -3049,22 +2359,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 131410000,
         "enterpriseValue": 131410000,
         "cryptoNav": 46075300
-      },
-      {
-        "ticker": "LUXFF",
-        "asset": "LTC",
-        "mnav": 15.221,
-        "marketCap": 7281422,
-        "enterpriseValue": 7281422,
-        "cryptoNav": 478368
       }
     ]
   },
   {
     "date": "2025-07-20",
-    "median": 3.4486794712607156,
-    "average": 9.648723680911164,
-    "count": 17,
+    "median": 3.0725570126263593,
+    "average": 3.3809493765880605,
+    "count": 13,
     "btcPrice": 92000,
     "ethPrice": 2350,
     "companies": [
@@ -3101,14 +2403,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 93932000
       },
       {
-        "ticker": "SQNS",
-        "asset": "BTC",
-        "mnav": 49.189,
-        "marketCap": 6788040894,
-        "enterpriseValue": 6788040894,
-        "cryptoNav": 138000000
-      },
-      {
         "ticker": "DCC.AX",
         "asset": "BTC",
         "mnav": 4.04,
@@ -3133,22 +2427,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 847896450
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 18.14,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1292500000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 21.335,
-        "marketCap": 91199999,
-        "enterpriseValue": 91199999,
-        "cryptoNav": 4274650
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.163,
@@ -3163,14 +2441,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 277002439,
         "enterpriseValue": 277002439,
         "cryptoNav": 80321306
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 31.413,
-        "marketCap": 27487640000,
-        "enterpriseValue": 27487640000,
-        "cryptoNav": 875050000
       },
       {
         "ticker": "BNC",
@@ -3208,9 +2478,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-07-27",
-    "median": 3.381945656413999,
-    "average": 8.369611662028477,
-    "count": 19,
+    "median": 3.2042895619688623,
+    "average": 3.145029685013552,
+    "count": 15,
     "btcPrice": 86500,
     "ethPrice": 2300,
     "companies": [
@@ -3247,14 +2517,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 88316500
       },
       {
-        "ticker": "SQNS",
-        "asset": "BTC",
-        "mnav": 38.365,
-        "marketCap": 4977896464,
-        "enterpriseValue": 4977896464,
-        "cryptoNav": 129750000
-      },
-      {
         "ticker": "DJT",
         "asset": "BTC",
         "mnav": 3.204,
@@ -3287,22 +2549,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1007837000
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 18.534,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1265000000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 16.206,
-        "marketCap": 67800000,
-        "enterpriseValue": 67800000,
-        "cryptoNav": 4183700
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.185,
@@ -3325,14 +2571,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 263289447,
         "enterpriseValue": 263289447,
         "cryptoNav": 73019369
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 38.742,
-        "marketCap": 27487640000,
-        "enterpriseValue": 27487640000,
-        "cryptoNav": 709500000
       },
       {
         "ticker": "BNC",
@@ -3370,9 +2608,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-08-03",
-    "median": 3.098029544353236,
-    "average": 7.857133693927297,
-    "count": 19,
+    "median": 2.80174037519777,
+    "average": 2.8307956007553083,
+    "count": 15,
     "btcPrice": 78000,
     "ethPrice": 2200,
     "companies": [
@@ -3409,14 +2647,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 79638000
       },
       {
-        "ticker": "SQNS",
-        "asset": "BTC",
-        "mnav": 26.86,
-        "marketCap": 3142611525,
-        "enterpriseValue": 3142611525,
-        "cryptoNav": 117000000
-      },
-      {
         "ticker": "DJT",
         "asset": "BTC",
         "mnav": 3.14,
@@ -3447,22 +2677,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 2708119904,
         "enterpriseValue": 2708119904,
         "cryptoNav": 1148265800
-      },
-      {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 19.376,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1210000000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 12.16,
-        "marketCap": 48659999,
-        "enterpriseValue": 48659999,
-        "cryptoNav": 4001800
       },
       {
         "ticker": "HSDT",
@@ -3497,14 +2711,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 5676124
       },
       {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 48.428,
-        "marketCap": 27487640000,
-        "enterpriseValue": 27487640000,
-        "cryptoNav": 567600000
-      },
-      {
         "ticker": "NA",
         "asset": "BNB",
         "mnav": 1.174,
@@ -3532,9 +2738,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-08-10",
-    "median": 3.0005305587097277,
-    "average": 5.772532605489988,
-    "count": 19,
+    "median": 2.7953453736464065,
+    "average": 2.995645034992021,
+    "count": 16,
     "btcPrice": 72000,
     "ethPrice": 2350,
     "companies": [
@@ -3571,14 +2777,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 73512000
       },
       {
-        "ticker": "SQNS",
-        "asset": "BTC",
-        "mnav": 29.797,
-        "marketCap": 3218034250,
-        "enterpriseValue": 3218034250,
-        "cryptoNav": 108000000
-      },
-      {
         "ticker": "DJT",
         "asset": "BTC",
         "mnav": 3.415,
@@ -3609,22 +2807,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 3851120012,
         "enterpriseValue": 3851120012,
         "cryptoNav": 1407180000
-      },
-      {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 18.14,
-        "marketCap": 23445340000,
-        "enterpriseValue": 23445340000,
-        "cryptoNav": 1292500000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 13.812,
-        "marketCap": 59040002,
-        "enterpriseValue": 59040002,
-        "cryptoNav": 4274650
       },
       {
         "ticker": "DFDV",
@@ -3694,9 +2876,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-08-17",
-    "median": 3.2804910579782254,
-    "average": 5.577831626287115,
-    "count": 14,
+    "median": 3.0009138179615436,
+    "average": 3.2176158623185422,
+    "count": 12,
     "btcPrice": 68000,
     "ethPrice": 2450,
     "companies": [
@@ -3707,14 +2889,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 223125000,
         "enterpriseValue": 223125000,
         "cryptoNav": 69428000
-      },
-      {
-        "ticker": "SQNS",
-        "asset": "BTC",
-        "mnav": 29.085,
-        "marketCap": 2966625328,
-        "enterpriseValue": 2966625328,
-        "cryptoNav": 102000000
       },
       {
         "ticker": "DJT",
@@ -3747,14 +2921,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 3255400063,
         "enterpriseValue": 3255400063,
         "cryptoNav": 1814862000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 10.394,
-        "marketCap": 46320001,
-        "enterpriseValue": 46320001,
-        "cryptoNav": 4456550
       },
       {
         "ticker": "DFDV",
@@ -3816,9 +2982,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-08-24",
-    "median": 3.296809884745197,
-    "average": 4.412740065691469,
-    "count": 14,
+    "median": 2.977267961371516,
+    "average": 3.17128675913334,
+    "count": 12,
     "btcPrice": 65000,
     "ethPrice": 2500,
     "companies": [
@@ -3837,14 +3003,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 4914250231,
         "enterpriseValue": 4914250231,
         "cryptoNav": 1235000000
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 12.165,
-        "marketCap": 4558500051,
-        "enterpriseValue": 4558500051,
-        "cryptoNav": 374725000
       },
       {
         "ticker": "DCC.AX",
@@ -3869,14 +3027,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 3485290140,
         "enterpriseValue": 3485290140,
         "cryptoNav": 1994260000
-      },
-      {
-        "ticker": "GAME",
-        "asset": "ETH",
-        "mnav": 11.558,
-        "marketCap": 52559999,
-        "enterpriseValue": 52559999,
-        "cryptoNav": 4547500
       },
       {
         "ticker": "DFDV",
@@ -4224,9 +3374,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-09-21",
-    "median": 3.2598449552511264,
-    "average": 4.408878868564729,
-    "count": 10,
+    "median": 3.109841219016484,
+    "average": 3.430516730514358,
+    "count": 9,
     "btcPrice": 63000,
     "ethPrice": 2530,
     "companies": [
@@ -4279,14 +3429,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1004672382
       },
       {
-        "ticker": "CWD",
-        "asset": "LINK",
-        "mnav": 13.214,
-        "marketCap": 47023050,
-        "enterpriseValue": 47023050,
-        "cryptoNav": 3558541
-      },
-      {
         "ticker": "BTOG",
         "asset": "DOGE",
         "mnav": 4.202,
@@ -4314,9 +3456,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-09-30",
-    "median": 3.7434416563620303,
-    "average": 10.763736588496217,
-    "count": 12,
+    "median": 2.0813823035803276,
+    "average": 2.640398547223943,
+    "count": 8,
     "btcPrice": 64021,
     "ethPrice": 2547,
     "companies": [
@@ -4369,38 +3511,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 5270871321
       },
       {
-        "ticker": "SBET",
-        "asset": "ETH",
-        "mnav": 28.21,
-        "marketCap": 58755600000,
-        "enterpriseValue": 58755600000,
-        "cryptoNav": 2082801609
-      },
-      {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 13.033,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1502730000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 30.596,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 298726012
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 36.203,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1014392000
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 5.494,
@@ -4420,9 +3530,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-10-05",
-    "median": 4.841100794400509,
-    "average": 11.205325413357242,
-    "count": 11,
+    "median": 2.62376447630764,
+    "average": 2.724909373014011,
+    "count": 7,
     "btcPrice": 66000,
     "ethPrice": 2600,
     "companies": [
@@ -4467,38 +3577,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 5380551800
       },
       {
-        "ticker": "SBET",
-        "asset": "ETH",
-        "mnav": 27.635,
-        "marketCap": 58755600000,
-        "enterpriseValue": 58755600000,
-        "cryptoNav": 2126142200
-      },
-      {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 12.767,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1534000000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 29.214,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 312854945
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 34.568,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1062370000
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 4.841,
@@ -4518,9 +3596,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-10-12",
-    "median": 3.9867889447292217,
-    "average": 10.643439813557437,
-    "count": 11,
+    "median": 2.4415588079574344,
+    "average": 2.4494306366852805,
+    "count": 7,
     "btcPrice": 68000,
     "ethPrice": 2700,
     "companies": [
@@ -4565,38 +3643,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 5587496100
       },
       {
-        "ticker": "SBET",
-        "asset": "ETH",
-        "mnav": 26.611,
-        "marketCap": 58755600000,
-        "enterpriseValue": 58755600000,
-        "cryptoNav": 2207916900
-      },
-      {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 12.295,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1593000000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 27.952,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 326983878
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 33.074,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1110348000
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 3.987,
@@ -4616,9 +3662,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-10-19",
-    "median": 2.236799191734112,
-    "average": 7.488186658924479,
-    "count": 11,
+    "median": 1.3196474171149521,
+    "average": 1.545057225137874,
+    "count": 8,
     "btcPrice": 71000,
     "ethPrice": 2800,
     "companies": [
@@ -4671,30 +3717,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 2407588400
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 11.855,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1652000000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 26.636,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 343131230
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 31.518,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1165180000
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 2.419,
@@ -4714,9 +3736,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-10-26",
-    "median": 2.550355856160473,
-    "average": 12.719214017691753,
-    "count": 14,
+    "median": 1.2492662215354882,
+    "average": 1.5128285174024403,
+    "count": 8,
     "btcPrice": 75000,
     "ethPrice": 2950,
     "companies": [
@@ -4753,14 +3775,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 242550000
       },
       {
-        "ticker": "ABTC",
-        "asset": "BTC",
-        "mnav": 17.439,
-        "marketCap": 5055130471,
-        "enterpriseValue": 5055130471,
-        "cryptoNav": 289875000
-      },
-      {
         "ticker": "DCC.AX",
         "asset": "BTC",
         "mnav": 2.792,
@@ -4777,52 +3791,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 2536566350
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 11.253,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1740500000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 25.157,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 363315420
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 29.767,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1233720000
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 2.087,
         "marketCap": 22303150,
         "enterpriseValue": 22303150,
         "cryptoNav": 10688165
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 41.412,
-        "marketCap": 15668160000,
-        "enterpriseValue": 15668160000,
-        "cryptoNav": 378344526
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 40.939,
-        "marketCap": 24481500000,
-        "enterpriseValue": 24481500000,
-        "cryptoNav": 598000000
       },
       {
         "ticker": "CEPO",
@@ -4836,9 +3810,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-11-02",
-    "median": 2.402777851943577,
-    "average": 10.510012014457374,
-    "count": 15,
+    "median": 1.2304387585673087,
+    "average": 1.5235891791726133,
+    "count": 9,
     "btcPrice": 80000,
     "ethPrice": 3050,
     "companies": [
@@ -4867,14 +3841,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1542960000
       },
       {
-        "ticker": "ABTC",
-        "asset": "BTC",
-        "mnav": 14.807,
-        "marketCap": 4578401316,
-        "enterpriseValue": 4578401316,
-        "cryptoNav": 309200000
-      },
-      {
         "ticker": "DCC.AX",
         "asset": "BTC",
         "mnav": 2.403,
@@ -4891,30 +3857,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 2622551650
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 10.884,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1799500000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 24.086,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 379462772
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 28.5,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1288552000
-      },
-      {
         "ticker": "TAOX",
         "asset": "TAO",
         "mnav": 2.466,
@@ -4929,22 +3871,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 20024501,
         "enterpriseValue": 20024501,
         "cryptoNav": 11250700
-      },
-      {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 36.236,
-        "marketCap": 15668160000,
-        "enterpriseValue": 15668160000,
-        "cryptoNav": 432393744
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 29.425,
-        "marketCap": 24481500000,
-        "enterpriseValue": 24481500000,
-        "cryptoNav": 832000000
       },
       {
         "ticker": "BNC",
@@ -4966,9 +3892,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-11-09",
-    "median": 1.8807959819159237,
-    "average": 9.764919097345992,
-    "count": 20,
+    "median": 1.0465274417051589,
+    "average": 1.2086395928150204,
+    "count": 13,
     "btcPrice": 85000,
     "ethPrice": 3150,
     "companies": [
@@ -5005,14 +3931,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 192440000
       },
       {
-        "ticker": "ABTC",
-        "asset": "BTC",
-        "mnav": 12.263,
-        "marketCap": 4173630817,
-        "enterpriseValue": 4173630817,
-        "cryptoNav": 340340000
-      },
-      {
         "ticker": "DCC.AX",
         "asset": "BTC",
         "mnav": 2.181,
@@ -5037,44 +3955,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 2712940650
       },
       {
-        "ticker": "ETHM",
-        "asset": "ETH",
-        "mnav": 10.538,
-        "marketCap": 19585200000,
-        "enterpriseValue": 19585200000,
-        "cryptoNav": 1858500000
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 23.221,
-        "marketCap": 9139760000,
-        "enterpriseValue": 9139760000,
-        "cryptoNav": 393591705
-      },
-      {
-        "ticker": "FWDI",
-        "asset": "SOL",
-        "mnav": 27.477,
-        "marketCap": 36723919312,
-        "enterpriseValue": 36723919312,
-        "cryptoNav": 1336530000
-      },
-      {
         "ticker": "HSDT",
         "asset": "SOL",
         "mnav": 1.032,
         "marketCap": 462716414,
         "enterpriseValue": 462716414,
         "cryptoNav": 448500000
-      },
-      {
-        "ticker": "UPXI",
-        "asset": "SOL",
-        "mnav": 48.839,
-        "marketCap": 19222467734,
-        "enterpriseValue": 19222467734,
-        "cryptoNav": 393591705
       },
       {
         "ticker": "TAOX",
@@ -5093,28 +3979,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 11813235
       },
       {
-        "ticker": "SUIG",
-        "asset": "SUI",
-        "mnav": 33.708,
-        "marketCap": 15668160000,
-        "enterpriseValue": 15668160000,
-        "cryptoNav": 464823275
-      },
-      {
         "ticker": "AVX",
         "asset": "AVAX",
         "mnav": 0.369,
         "marketCap": 203915609,
         "enterpriseValue": 203915609,
         "cryptoNav": 552000000
-      },
-      {
-        "ticker": "XRPN",
-        "asset": "XRP",
-        "mnav": 23.54,
-        "marketCap": 24481500000,
-        "enterpriseValue": 24481500000,
-        "cryptoNav": 1040000000
       },
       {
         "ticker": "BNC",
@@ -5136,9 +4006,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-11-16",
-    "median": 0.7353203706944006,
-    "average": 1.5908968429809522,
-    "count": 15,
+    "median": 0.6909232374659435,
+    "average": 0.8380340026232584,
+    "count": 14,
     "btcPrice": 90000,
     "ethPrice": 3250,
     "companies": [
@@ -5157,14 +4027,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 314095312,
         "enterpriseValue": 314095312,
         "cryptoNav": 485820000
-      },
-      {
-        "ticker": "ABTC",
-        "asset": "BTC",
-        "mnav": 12.131,
-        "marketCap": 4371518730,
-        "enterpriseValue": 4371518730,
-        "cryptoNav": 360360000
       },
       {
         "ticker": "DCC.AX",
@@ -5266,9 +4128,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-11-23",
-    "median": 0.6387865383460777,
-    "average": 3.01722948886504,
-    "count": 17,
+    "median": 0.6330748990175193,
+    "average": 1.1831122509178265,
+    "count": 15,
     "btcPrice": 92000,
     "ethPrice": 3300,
     "companies": [
@@ -5295,14 +4157,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 226619242,
         "enterpriseValue": 226619242,
         "cryptoNav": 496616000
-      },
-      {
-        "ticker": "ABTC",
-        "asset": "BTC",
-        "mnav": 10.817,
-        "marketCap": 3984738003,
-        "enterpriseValue": 3984738003,
-        "cryptoNav": 368368000
       },
       {
         "ticker": "DCC.AX",
@@ -5361,14 +4215,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 26380304
       },
       {
-        "ticker": "CYPH",
-        "asset": "ZEC",
-        "mnav": 22.729,
-        "marketCap": 313318380,
-        "enterpriseValue": 313318380,
-        "cryptoNav": 13784996
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 1.116,
@@ -5412,9 +4258,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-11-30",
-    "median": 0.8005269382869388,
-    "average": 2.541993900272577,
-    "count": 18,
+    "median": 0.7402080747877589,
+    "average": 1.2856591562803255,
+    "count": 16,
     "btcPrice": 93500,
     "ethPrice": 3350,
     "companies": [
@@ -5441,14 +4287,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 255777932,
         "enterpriseValue": 255777932,
         "cryptoNav": 504713000
-      },
-      {
-        "ticker": "ABTC",
-        "asset": "BTC",
-        "mnav": 10.187,
-        "marketCap": 3813834960,
-        "enterpriseValue": 3813834960,
-        "cryptoNav": 374374000
       },
       {
         "ticker": "DCC.AX",
@@ -5515,14 +4353,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 29501304
       },
       {
-        "ticker": "CYPH",
-        "asset": "ZEC",
-        "mnav": 14.998,
-        "marketCap": 210253122,
-        "enterpriseValue": 210253122,
-        "cryptoNav": 14018640
-      },
-      {
         "ticker": "CWD",
         "asset": "LINK",
         "mnav": 1.227,
@@ -5566,9 +4396,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-12-07",
-    "median": 0.7706795174319769,
-    "average": 2.046946631787781,
-    "count": 18,
+    "median": 0.7172210336590514,
+    "average": 1.5052264729984879,
+    "count": 17,
     "btcPrice": 92000,
     "ethPrice": 3280,
     "companies": [
@@ -5669,14 +4499,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 29081570
       },
       {
-        "ticker": "CYPH",
-        "asset": "ZEC",
-        "mnav": 11.256,
-        "marketCap": 152536584,
-        "enterpriseValue": 152536584,
-        "cryptoNav": 13551352
-      },
-      {
         "ticker": "AVX",
         "asset": "AVAX",
         "mnav": 0.315,
@@ -5720,9 +4542,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-12-14",
-    "median": 0.8376386740039484,
-    "average": 1.9812975262043475,
-    "count": 21,
+    "median": 0.7761687989756385,
+    "average": 1.3626062884639871,
+    "count": 20,
     "btcPrice": 94000,
     "ethPrice": 3350,
     "companies": [
@@ -5831,14 +4653,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 29381380
       },
       {
-        "ticker": "CYPH",
-        "asset": "ZEC",
-        "mnav": 14.355,
-        "marketCap": 197885303,
-        "enterpriseValue": 197885303,
-        "cryptoNav": 13784996
-      },
-      {
         "ticker": "AVX",
         "asset": "AVAX",
         "mnav": 0.248,
@@ -5898,9 +4712,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-12-21",
-    "median": 0.7582243451432286,
-    "average": 2.166266803463035,
-    "count": 17,
+    "median": 0.7409804845247905,
+    "average": 1.463270781603112,
+    "count": 16,
     "btcPrice": 92500,
     "ethPrice": 3300,
     "companies": [
@@ -5993,14 +4807,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 96672992
       },
       {
-        "ticker": "CYPH",
-        "asset": "ZEC",
-        "mnav": 13.414,
-        "marketCap": 178646441,
-        "enterpriseValue": 178646441,
-        "cryptoNav": 13317708
-      },
-      {
         "ticker": "ZONE",
         "asset": "DOGE",
         "mnav": 0.232,
@@ -6044,9 +4850,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-12-31",
-    "median": 2.534120506159762,
-    "average": 7.870941474512422,
-    "count": 20,
+    "median": 1.4567275290075858,
+    "average": 2.3083239178236195,
+    "count": 15,
     "btcPrice": 93000,
     "ethPrice": 3300,
     "companies": [
@@ -6065,14 +4871,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 4701837000,
         "enterpriseValue": 4701837000,
         "cryptoNav": 1674465000
-      },
-      {
-        "ticker": "CLSK",
-        "asset": "BTC",
-        "mnav": 32.669,
-        "marketCap": 39797313675,
-        "enterpriseValue": 39797313675,
-        "cryptoNav": 1218207000
       },
       {
         "ticker": "0434.HK",
@@ -6099,14 +4897,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 474114000
       },
       {
-        "ticker": "BTCS",
-        "asset": "ETH",
-        "mnav": 33.443,
-        "marketCap": 7780500000,
-        "enterpriseValue": 7780500000,
-        "cryptoNav": 232650000
-      },
-      {
         "ticker": "BMNR",
         "asset": "ETH",
         "mnav": 0.869,
@@ -6121,14 +4911,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 1728933141,
         "enterpriseValue": 1728933141,
         "cryptoNav": 2849299200
-      },
-      {
-        "ticker": "DFDV",
-        "asset": "SOL",
-        "mnav": 11.083,
-        "marketCap": 4668300000,
-        "enterpriseValue": 4668300000,
-        "cryptoNav": 421200000
       },
       {
         "ticker": "FWDI",
@@ -6155,14 +4937,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 97602540
       },
       {
-        "ticker": "CYPH",
-        "asset": "ZEC",
-        "mnav": 10.7,
-        "marketCap": 180020643,
-        "enterpriseValue": 180020643,
-        "cryptoNav": 16823596
-      },
-      {
         "ticker": "PURR",
         "asset": "HYPE",
         "mnav": 1.274,
@@ -6177,14 +4951,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 397854006,
         "enterpriseValue": 397854006,
         "cryptoNav": 176020000
-      },
-      {
-        "ticker": "NA",
-        "asset": "BNB",
-        "mnav": 34.898,
-        "marketCap": 3221127000,
-        "enterpriseValue": 3221127000,
-        "cryptoNav": 92300000
       },
       {
         "ticker": "CEPO",
@@ -6214,9 +4980,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2026-01-05",
-    "median": 1.4721528564885404,
-    "average": 6.745789925537733,
-    "count": 20,
+    "median": 1.2137998444123916,
+    "average": 2.2016993930463165,
+    "count": 17,
     "btcPrice": 97000,
     "ethPrice": 3450,
     "companies": [
@@ -6237,14 +5003,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1746485000
       },
       {
-        "ticker": "CLSK",
-        "asset": "BTC",
-        "mnav": 31.322,
-        "marketCap": 39797313675,
-        "enterpriseValue": 39797313675,
-        "cryptoNav": 1270603000
-      },
-      {
         "ticker": "XXI",
         "asset": "BTC",
         "mnav": 1.528,
@@ -6259,14 +5017,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 1905652842,
         "enterpriseValue": 1905652842,
         "cryptoNav": 494506000
-      },
-      {
-        "ticker": "BTCS",
-        "asset": "ETH",
-        "mnav": 31.989,
-        "marketCap": 7780500000,
-        "enterpriseValue": 7780500000,
-        "cryptoNav": 243225000
       },
       {
         "ticker": "BMNR",
@@ -6349,14 +5099,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 182790000
       },
       {
-        "ticker": "NA",
-        "asset": "BNB",
-        "mnav": 34.176,
-        "marketCap": 3221127000,
-        "enterpriseValue": 3221127000,
-        "cryptoNav": 94250000
-      },
-      {
         "ticker": "CEPO",
         "asset": "BTC",
         "mnav": 7.748,
@@ -6384,9 +5126,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2026-01-12",
-    "median": 1.623743830895469,
-    "average": 6.582251005703822,
-    "count": 22,
+    "median": 1.259305167836353,
+    "average": 2.4136626345118946,
+    "count": 19,
     "btcPrice": 95000,
     "ethPrice": 3400,
     "companies": [
@@ -6407,14 +5149,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1710475000
       },
       {
-        "ticker": "CLSK",
-        "asset": "BTC",
-        "mnav": 31.981,
-        "marketCap": 39797313675,
-        "enterpriseValue": 39797313675,
-        "cryptoNav": 1244405000
-      },
-      {
         "ticker": "XXI",
         "asset": "BTC",
         "mnav": 1.451,
@@ -6429,14 +5163,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 1716974409,
         "enterpriseValue": 1716974409,
         "cryptoNav": 484310000
-      },
-      {
-        "ticker": "BTCS",
-        "asset": "ETH",
-        "mnav": 32.459,
-        "marketCap": 7780500000,
-        "enterpriseValue": 7780500000,
-        "cryptoNav": 239700000
       },
       {
         "ticker": "BMNR",
@@ -6535,14 +5261,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 182790000
       },
       {
-        "ticker": "NA",
-        "asset": "BNB",
-        "mnav": 34.51,
-        "marketCap": 3221127000,
-        "enterpriseValue": 3221127000,
-        "cryptoNav": 93340000
-      },
-      {
         "ticker": "CEPO",
         "asset": "BTC",
         "mnav": 7.911,
@@ -6570,9 +5288,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2026-01-19",
-    "median": 1.5174470652664076,
-    "average": 6.207106943930881,
-    "count": 22,
+    "median": 1.1429296051183222,
+    "average": 2.2693698111773593,
+    "count": 18,
     "btcPrice": 102000,
     "ethPrice": 3500,
     "companies": [
@@ -6593,22 +5311,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1836510000
       },
       {
-        "ticker": "CLSK",
-        "asset": "BTC",
-        "mnav": 29.786,
-        "marketCap": 39797313675,
-        "enterpriseValue": 39797313675,
-        "cryptoNav": 1336098000
-      },
-      {
-        "ticker": "ASST",
-        "asset": "BTC",
-        "mnav": 0.906,
-        "marketCap": 1182570117,
-        "enterpriseValue": 1182570117,
-        "cryptoNav": 1305396000
-      },
-      {
         "ticker": "XXI",
         "asset": "BTC",
         "mnav": 1.362,
@@ -6623,14 +5325,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 1547163695,
         "enterpriseValue": 1547163695,
         "cryptoNav": 519996000
-      },
-      {
-        "ticker": "BTCS",
-        "asset": "ETH",
-        "mnav": 31.532,
-        "marketCap": 7780500000,
-        "enterpriseValue": 7780500000,
-        "cryptoNav": 246750000
       },
       {
         "ticker": "BMNR",
@@ -6721,14 +5415,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 189560000
       },
       {
-        "ticker": "NA",
-        "asset": "BNB",
-        "mnav": 33.484,
-        "marketCap": 3221127000,
-        "enterpriseValue": 3221127000,
-        "cryptoNav": 96200000
-      },
-      {
         "ticker": "CEPO",
         "asset": "BTC",
         "mnav": 7.369,
@@ -6756,20 +5442,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2026-01-26",
-    "median": 1.7033959309447735,
-    "average": 5.551888550545271,
-    "count": 23,
+    "median": 1.1619327078781623,
+    "average": 2.3925824358621113,
+    "count": 19,
     "btcPrice": 105000,
     "ethPrice": 3600,
     "companies": [
-      {
-        "ticker": "SWC",
-        "asset": "BTC",
-        "mnav": 18.03,
-        "marketCap": 5062364416,
-        "enterpriseValue": 5062364416,
-        "cryptoNav": 280770000
-      },
       {
         "ticker": "MSTR",
         "asset": "BTC",
@@ -6795,14 +5473,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1375395000
       },
       {
-        "ticker": "ASST",
-        "asset": "BTC",
-        "mnav": 0.73,
-        "marketCap": 980485352,
-        "enterpriseValue": 980485352,
-        "cryptoNav": 1343790000
-      },
-      {
         "ticker": "XXI",
         "asset": "BTC",
         "mnav": 1.162,
@@ -6817,14 +5487,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 1424522674,
         "enterpriseValue": 1424522674,
         "cryptoNav": 535290000
-      },
-      {
-        "ticker": "BTCS",
-        "asset": "ETH",
-        "mnav": 30.656,
-        "marketCap": 7780500000,
-        "enterpriseValue": 7780500000,
-        "cryptoNav": 253800000
       },
       {
         "ticker": "BMNR",
@@ -6931,14 +5593,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 189560000
       },
       {
-        "ticker": "NA",
-        "asset": "BNB",
-        "mnav": 32.818,
-        "marketCap": 3221127000,
-        "enterpriseValue": 3221127000,
-        "cryptoNav": 98150000
-      },
-      {
         "ticker": "CEPO",
         "asset": "BTC",
         "mnav": 7.158,
@@ -6950,20 +5604,12 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2026-02-02",
-    "median": 1.426269188267653,
-    "average": 5.797586312353706,
-    "count": 23,
+    "median": 1.1517492966447131,
+    "average": 2.4934732017031735,
+    "count": 19,
     "btcPrice": 98000,
     "ethPrice": 3450,
     "companies": [
-      {
-        "ticker": "SWC",
-        "asset": "BTC",
-        "mnav": 19.318,
-        "marketCap": 5062364416,
-        "enterpriseValue": 5062364416,
-        "cryptoNav": 262052000
-      },
       {
         "ticker": "MSTR",
         "asset": "BTC",
@@ -6989,14 +5635,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 1283702000
       },
       {
-        "ticker": "ASST",
-        "asset": "BTC",
-        "mnav": 0.719,
-        "marketCap": 901896804,
-        "enterpriseValue": 901896804,
-        "cryptoNav": 1254204000
-      },
-      {
         "ticker": "XXI",
         "asset": "BTC",
         "mnav": 1.152,
@@ -7011,14 +5649,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 55074902,
         "enterpriseValue": 55074902,
         "cryptoNav": 49392000
-      },
-      {
-        "ticker": "BTCS",
-        "asset": "ETH",
-        "mnav": 31.989,
-        "marketCap": 7780500000,
-        "enterpriseValue": 7780500000,
-        "cryptoNav": 243225000
       },
       {
         "ticker": "BMNR",
@@ -7123,14 +5753,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 213705245,
         "enterpriseValue": 213705245,
         "cryptoNav": 376347120
-      },
-      {
-        "ticker": "NA",
-        "asset": "BNB",
-        "mnav": 33.942,
-        "marketCap": 3221127000,
-        "enterpriseValue": 3221127000,
-        "cryptoNav": 94900000
       },
       {
         "ticker": "CEPO",
