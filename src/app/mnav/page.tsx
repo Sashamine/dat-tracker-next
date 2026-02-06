@@ -34,85 +34,51 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
   const isMedian = metric === "median";
   const color = isMedian ? "#6366f1" : "#a855f7";
 
-  // Fetch intraday data for short timeframes
+  // Disable intraday API for now - we don't have proper intraday stock prices
+  // All timeframes will use MNAV_HISTORY weekly data + current live value
   useEffect(() => {
-    if (timeRange === "1y" || timeRange === "all") {
-      setIntradayData(null);
-      return;
-    }
-
-    setIsLoading(true);
-    fetch(`/api/mnav/intraday?range=${timeRange}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.data && data.data.length > 0) {
-          const points = data.data.map((d: any) => ({
-            time: d.timestamp.slice(0, 10) as Time, // Use date portion for chart
-            value: isMedian ? d.median : d.average,
-          }));
-          setIntradayData(points);
-        } else {
-          setIntradayData(null);
-        }
-      })
-      .catch(() => setIntradayData(null))
-      .finally(() => setIsLoading(false));
+    setIntradayData(null);
+    setIsLoading(false);
   }, [timeRange, isMedian]);
 
-  // Generate historical data from pre-calculated MNAV_HISTORY (for 1y/all)
+  // Generate historical data from pre-calculated MNAV_HISTORY
   const historicalData = useMemo(() => {
-    // Use intraday data if available for short timeframes
-    if (intradayData && intradayData.length > 0 && (timeRange === "1d" || timeRange === "7d" || timeRange === "1mo")) {
-      return intradayData;
-    }
-
     const now = Date.now();
-    const rangeMs: Record<TimeRange, number> = {
-      "1d": 24 * 60 * 60 * 1000,
-      "7d": 7 * 24 * 60 * 60 * 1000,
-      "1mo": 30 * 24 * 60 * 60 * 1000,
-      "1y": 365 * 24 * 60 * 60 * 1000,
-      "all": 10 * 365 * 24 * 60 * 60 * 1000,
+    
+    // Define how many data points to show for each timeframe
+    const pointsForRange: Record<TimeRange, number> = {
+      "1d": 7,    // Show last week of data for context
+      "7d": 10,   // Show ~2 weeks
+      "1mo": 12,  // Show ~3 months of weekly data
+      "1y": 52,   // Show full year
+      "all": MNAV_HISTORY.length,
     };
 
-    let cutoffDate = new Date(now - rangeMs[timeRange]);
+    const targetPoints = pointsForRange[timeRange];
     let result: { time: Time; value: number }[] = [];
 
-    // First pass: get data points in range
-    for (const snapshot of MNAV_HISTORY) {
-      const snapshotDate = new Date(snapshot.date);
-      if (snapshotDate >= cutoffDate) {
-        result.push({
-          time: snapshot.date as Time,
-          value: isMedian ? snapshot.median : snapshot.average,
-        });
-      }
+    // Get last N snapshots from MNAV_HISTORY
+    const startIdx = Math.max(0, MNAV_HISTORY.length - targetPoints);
+    for (let i = startIdx; i < MNAV_HISTORY.length; i++) {
+      const snapshot = MNAV_HISTORY[i];
+      result.push({
+        time: snapshot.date as Time,
+        value: isMedian ? snapshot.median : snapshot.average,
+      });
     }
 
-    // For short timeframes with insufficient data, extend to get at least 5 points
-    const minPoints = 5;
-    if (result.length < minPoints && (timeRange === "1d" || timeRange === "7d" || timeRange === "1mo")) {
-      result = [];
-      // Get last N snapshots from MNAV_HISTORY
-      const startIdx = Math.max(0, MNAV_HISTORY.length - minPoints);
-      for (let i = startIdx; i < MNAV_HISTORY.length; i++) {
-        const snapshot = MNAV_HISTORY[i];
-        result.push({
-          time: snapshot.date as Time,
-          value: isMedian ? snapshot.median : snapshot.average,
-        });
-      }
-    }
-
-    // Add today's live value
+    // Add today's live value if different from last historical date
     const today = new Date().toISOString().split("T")[0] as Time;
-    result.push({
-      time: today,
-      value: isMedian ? currentStats.median : currentStats.average,
-    });
+    const lastDate = result.length > 0 ? result[result.length - 1].time : "";
+    if (today !== lastDate) {
+      result.push({
+        time: today,
+        value: isMedian ? currentStats.median : currentStats.average,
+      });
+    }
 
     return result;
-  }, [currentStats, timeRange, isMedian, intradayData]);
+  }, [currentStats, timeRange, isMedian]);
 
   // Calculate change from start
   const change = useMemo(() => {
@@ -200,13 +166,9 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <p className="text-xs text-gray-400">
-            {isLoading ? (
-              <span className="text-yellow-500">Loading...</span>
-            ) : intradayData && (timeRange === "1d" || timeRange === "7d" || timeRange === "1mo") ? (
-              <span className="text-green-500">Live data ({historicalData.length} points)</span>
-            ) : (
-              <span className="text-green-500">Weekly data ({historicalData.length - 1} historical + current)</span>
-            )}
+            <span className="text-green-500">
+              {historicalData.length} data points
+            </span>
           </p>
         </div>
         <div className="flex items-center gap-1 text-sm">
