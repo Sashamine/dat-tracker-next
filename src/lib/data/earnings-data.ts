@@ -10,7 +10,7 @@
 // - CLSK (CleanSpark) - Fiscal year ends September 30
 // - All others use calendar year (fiscal = calendar)
 
-import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter } from "../types";
+import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter, YieldPeriod } from "../types";
 import { allCompanies } from "./companies";
 import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
@@ -4247,6 +4247,106 @@ export function getQuarterlyYieldLeaderboard(options?: {
       growthPct,
       annualizedGrowthPct,
       startDate: previous.date,
+      endDate: latest.date,
+      daysCovered,
+    });
+  }
+
+  // Sort by growth (descending) and add rank
+  metrics.sort((a, b) => b.growthPct - a.growthPct);
+  metrics.forEach((m, i) => {
+    m.rank = i + 1;
+  });
+
+  return metrics;
+}
+
+/**
+ * Calculate holdings growth over a specific time period.
+ * @param options.days - Number of days to look back (30, 90, 365, or undefined for all time)
+ * @param options.asset - Filter by asset type (BTC, ETH, etc.)
+ * @returns Array of metrics sorted by growth descending
+ */
+export function getHoldingsGrowthByPeriod(options?: {
+  days?: number;
+  asset?: Asset;
+}): TreasuryYieldMetrics[] {
+  const { days, asset } = options || {};
+  const metrics: TreasuryYieldMetrics[] = [];
+  const now = new Date();
+  const cutoffDate = days ? new Date(now.getTime() - days * 24 * 60 * 60 * 1000) : null;
+
+  for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+    if (data.history.length < 2) continue;
+
+    const company = allCompanies.find((c) => c.ticker === ticker);
+    if (!company) continue;
+
+    if (asset && company.asset !== asset) continue;
+
+    const history = data.history;
+    const latest = history[history.length - 1];
+
+    // Find the snapshot closest to (but not after) the cutoff date
+    let startSnapshot: typeof history[0] | null = null;
+    
+    if (cutoffDate) {
+      // Find snapshot closest to cutoff date
+      for (let i = history.length - 2; i >= 0; i--) {
+        const snapshotDate = new Date(history[i].date);
+        if (snapshotDate <= cutoffDate) {
+          startSnapshot = history[i];
+          break;
+        }
+      }
+      // If no snapshot before cutoff, use earliest available
+      if (!startSnapshot && history.length >= 2) {
+        startSnapshot = history[0];
+      }
+    } else {
+      // "All time" - use first snapshot
+      startSnapshot = history[0];
+    }
+
+    if (!startSnapshot) continue;
+
+    const startValue = startSnapshot.holdingsPerShare;
+    const endValue = latest.holdingsPerShare;
+
+    // Skip if invalid data
+    if (!startValue || startValue <= 0) continue;
+    if (!endValue || endValue <= 0) continue;
+
+    // Calculate period covered
+    const startDate = new Date(startSnapshot.date);
+    const endDate = new Date(latest.date);
+    const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    // Skip if data points are too close together (less than 7 days)
+    if (daysCovered < 7) continue;
+
+    const growthPct = ((endValue / startValue) - 1) * 100;
+
+    // Annualized growth if period is significant (30+ days)
+    let annualizedGrowthPct: number | undefined;
+    if (daysCovered >= 30) {
+      const yearsFraction = daysCovered / 365.25;
+      annualizedGrowthPct = (Math.pow(endValue / startValue, 1 / yearsFraction) - 1) * 100;
+    }
+
+    // Map days to YieldPeriod format
+    const periodLabel: YieldPeriod = days === 30 ? "1M" : days === 90 ? "3M" : days === 365 ? "1Y" : "1Y";
+    
+    metrics.push({
+      ticker,
+      companyName: company.name,
+      asset: company.asset,
+      period: periodLabel,
+      holdingsPerShareStart: startValue,
+      holdingsPerShareEnd: endValue,
+      growthPct,
+      annualizedGrowthPct,
+      startDate: startSnapshot.date,
       endDate: latest.date,
       daysCovered,
     });

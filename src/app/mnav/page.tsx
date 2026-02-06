@@ -10,11 +10,12 @@ import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { cn } from "@/lib/utils";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
-import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/earnings-data";
+import { getQuarterlyYieldLeaderboard, getAvailableQuarters, getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 type MetricType = "median" | "average";
+type GrowthPeriod = "30d" | "90d" | "1y" | "all";
 
 interface MNAVChartProps {
   mnavStats: { median: number; average: number };
@@ -194,6 +195,7 @@ export default function MNAVPage() {
   const [timeRange1, setTimeRange1] = useState<TimeRange>("1y");
   const [selectedMetric, setSelectedMetric] = useState<MetricType>("median");
   const [selectedAsset, setSelectedAsset] = useState<AssetFilter>("ALL");
+  const [growthPeriod, setGrowthPeriod] = useState<GrowthPeriod>("90d");
 
   const { data: prices } = usePricesStream();
   const { data: companiesData, isLoading } = useCompanies();
@@ -275,46 +277,65 @@ export default function MNAVPage() {
     return counts;
   }, [companies]);
 
-  // Calculate quarterly yield statistics (filtered by selected asset)
-  const yieldStats = useMemo(() => {
-    const quarters = getAvailableQuarters();
-    const currentQuarter = quarters[0];
-    const allLeaderboard = getQuarterlyYieldLeaderboard({ quarter: currentQuarter });
+  // Calculate holdings growth statistics (filtered by selected asset and time period)
+  const growthStats = useMemo(() => {
+    // Convert growth period to days
+    const daysMap: Record<GrowthPeriod, number | undefined> = {
+      "30d": 30,
+      "90d": 90,
+      "1y": 365,
+      "all": undefined,
+    };
+    const days = daysMap[growthPeriod];
     
-    // Filter by selected asset's companies
+    // Get asset filter for the API call
+    const assetFilter = selectedAsset === "ALL" || selectedAsset === "OTHER" 
+      ? undefined 
+      : selectedAsset as "BTC" | "ETH" | "SOL" | "HYPE" | "TAO";
+    
+    // Get growth data with time period and asset filter
+    let allGrowthData = getHoldingsGrowthByPeriod({ days, asset: assetFilter });
+    
+    // For "OTHER" filter, we need to filter after the fact
+    if (selectedAsset === "OTHER") {
+      const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
+      allGrowthData = allGrowthData.filter(m => !mainAssets.includes(m.asset));
+    }
+    
+    // Filter by selected asset's companies (for tickers in our filtered company list)
     const tickerSet = new Set(companies.map(c => c.ticker));
-    const leaderboard = allLeaderboard.filter(m => tickerSet.has(m.ticker));
+    const leaderboard = allGrowthData.filter(m => tickerSet.has(m.ticker));
     
     // Count companies without sufficient history data
-    const companiesWithYieldData = new Set(leaderboard.map(m => m.ticker));
-    const insufficientData = companies.filter(c => !companiesWithYieldData.has(c.ticker)).length;
-    const missingTickers = companies.filter(c => !companiesWithYieldData.has(c.ticker)).map(c => c.ticker);
+    const companiesWithData = new Set(leaderboard.map(m => m.ticker));
+    const insufficientData = companies.filter(c => !companiesWithData.has(c.ticker)).length;
+    const missingTickers = companies.filter(c => !companiesWithData.has(c.ticker)).map(c => c.ticker);
 
     if (leaderboard.length === 0) {
-      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null, insufficientData, totalCompanies: companies.length, leaderboard: [], missingTickers };
+      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, period: growthPeriod, best: null, worst: null, insufficientData, totalCompanies: companies.length, leaderboard: [], missingTickers };
     }
 
-    const yields = leaderboard.map((m) => m.growthPct);
-    const positiveCount = yields.filter((y) => y > 0).length;
-    const sortedYields = [...yields].sort((a, b) => a - b);
-    const mid = Math.floor(sortedYields.length / 2);
-    const medianYield = sortedYields.length % 2 ? sortedYields[mid] : (sortedYields[mid - 1] + sortedYields[mid]) / 2;
-    const avgYield = yields.reduce((a, b) => a + b, 0) / yields.length;
+    const growths = leaderboard.map((m) => m.growthPct);
+    const positiveCount = growths.filter((y) => y > 0).length;
+    const sortedGrowths = [...growths].sort((a, b) => a - b);
+    const mid = Math.floor(sortedGrowths.length / 2);
+    const medianGrowth = sortedGrowths.length % 2 ? sortedGrowths[mid] : (sortedGrowths[mid - 1] + sortedGrowths[mid]) / 2;
+    const avgGrowth = growths.reduce((a, b) => a + b, 0) / growths.length;
 
     return {
-      median: medianYield,
-      average: avgYield,
+      median: medianGrowth,
+      average: avgGrowth,
       positiveCount,
       totalCount: leaderboard.length,
-      quarter: currentQuarter,
+      period: growthPeriod,
       best: leaderboard[0],
       worst: leaderboard[leaderboard.length - 1],
       insufficientData,
       totalCompanies: companies.length,
       leaderboard,  // Full sorted leaderboard for tooltip
-      missingTickers,  // Companies without yield data
+      missingTickers,  // Companies without growth data
     };
-  }, [companies]);
+  }, [companies, growthPeriod, selectedAsset]);
 
   // Calculate dilution statistics (filtered by selected asset)
   const dilutionStats = useMemo(() => {
@@ -454,27 +475,46 @@ export default function MNAVPage() {
           </div>
         </div>
 
-        {/* Quarterly Yield Statistics */}
+        {/* Holdings Growth Statistics */}
         <div className="mb-8">
-          <div className="flex items-baseline gap-2 mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Treasury Yield (Recent)
-            </h2>
-            {yieldStats.insufficientData > 0 && (
-              <span className="text-xs text-amber-600 dark:text-amber-400">
-                {yieldStats.insufficientData} of {yieldStats.totalCompanies} companies lack sufficient history
-              </span>
-            )}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div className="flex items-baseline gap-2">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Holdings Growth
+              </h2>
+              {growthStats.insufficientData > 0 && (
+                <span className="text-xs text-amber-600 dark:text-amber-400">
+                  {growthStats.insufficientData} of {growthStats.totalCompanies} lack history
+                </span>
+              )}
+            </div>
+            {/* Time Period Selector */}
+            <div className="flex gap-1">
+              {(["30d", "90d", "1y", "all"] as const).map((period) => (
+                <button
+                  key={period}
+                  onClick={() => setGrowthPeriod(period)}
+                  className={cn(
+                    "px-3 py-1 text-xs font-medium rounded transition-colors",
+                    growthPeriod === period
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  )}
+                >
+                  {period === "all" ? "ALL" : period.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
           <StatTooltip 
-            title="All Companies - Treasury Yield"
+            title={`Holdings Growth (${growthPeriod === "all" ? "All Time" : growthPeriod.toUpperCase()})`}
             data={[
-              ...yieldStats.leaderboard.map(m => ({
+              ...growthStats.leaderboard.map(m => ({
                 label: m.ticker,
                 value: `${m.growthPct >= 0 ? '+' : ''}${m.growthPct.toFixed(1)}%`,
                 subValue: `${m.daysCovered}d`
               })),
-              ...yieldStats.missingTickers.map(t => ({
+              ...growthStats.missingTickers.map(t => ({
                 label: t,
                 value: 'No data',
               }))
@@ -482,37 +522,37 @@ export default function MNAVPage() {
           >
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Median Yield</p>
-                <p className={cn("text-xl font-bold", yieldStats.median >= 0 ? "text-green-600" : "text-red-600")}>
-                  {yieldStats.median >= 0 ? "+" : ""}{yieldStats.median.toFixed(1)}%
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Median Growth</p>
+                <p className={cn("text-xl font-bold", growthStats.median >= 0 ? "text-green-600" : "text-red-600")}>
+                  {growthStats.median >= 0 ? "+" : ""}{growthStats.median.toFixed(1)}%
                 </p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Average Yield</p>
-                <p className={cn("text-xl font-bold", yieldStats.average >= 0 ? "text-green-600" : "text-red-600")}>
-                  {yieldStats.average >= 0 ? "+" : ""}{yieldStats.average.toFixed(1)}%
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Average Growth</p>
+                <p className={cn("text-xl font-bold", growthStats.average >= 0 ? "text-green-600" : "text-red-600")}>
+                  {growthStats.average >= 0 ? "+" : ""}{growthStats.average.toFixed(1)}%
                 </p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Positive Yield</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Positive Growth</p>
                 <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                  {yieldStats.positiveCount}/{yieldStats.totalCount}
+                  {growthStats.positiveCount}/{growthStats.totalCount}
                 </p>
                 <p className="text-xs text-gray-500">
-                  {yieldStats.totalCount > 0 ? ((yieldStats.positiveCount / yieldStats.totalCount) * 100).toFixed(0) : 0}% of companies
+                  {growthStats.totalCount > 0 ? ((growthStats.positiveCount / growthStats.totalCount) * 100).toFixed(0) : 0}% of companies
                 </p>
-                {yieldStats.insufficientData > 0 && (
+                {growthStats.insufficientData > 0 && (
                   <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                    +{yieldStats.insufficientData} no data
+                    +{growthStats.insufficientData} no data
                   </p>
                 )}
               </div>
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best / Worst</p>
-                {yieldStats.best && yieldStats.worst && (
+                {growthStats.best && growthStats.worst && (
                   <div className="text-sm">
-                    <p className="text-green-600 font-medium">{yieldStats.best.ticker} +{yieldStats.best.growthPct.toFixed(0)}%</p>
-                    <p className="text-red-600 font-medium">{yieldStats.worst.ticker} {yieldStats.worst.growthPct.toFixed(0)}%</p>
+                    <p className="text-green-600 font-medium">{growthStats.best.ticker} +{growthStats.best.growthPct.toFixed(0)}%</p>
+                    <p className="text-red-600 font-medium">{growthStats.worst.ticker} {growthStats.worst.growthPct.toFixed(0)}%</p>
                   </div>
                 )}
               </div>
