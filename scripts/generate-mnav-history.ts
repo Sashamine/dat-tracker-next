@@ -37,8 +37,16 @@ interface HistoricalMNAVSnapshot {
   companies: CompanyMNAV[];
 }
 
-// Historical crypto prices (from CoinGecko/CoinMarketCap public data)
-// Weekly data for better chart resolution
+// Load crypto prices from fetched data file
+const CRYPTO_PRICES_FILE = path.join(__dirname, "../data/crypto-prices.json");
+let FETCHED_CRYPTO_PRICES: Record<string, Record<string, number>> = {};
+
+if (fs.existsSync(CRYPTO_PRICES_FILE)) {
+  FETCHED_CRYPTO_PRICES = JSON.parse(fs.readFileSync(CRYPTO_PRICES_FILE, "utf-8"));
+  console.log(`Loaded ${Object.keys(FETCHED_CRYPTO_PRICES).length} days of crypto prices from file`);
+}
+
+// Fallback historical crypto prices (only used if fetched file missing)
 const HISTORICAL_CRYPTO_PRICES: Record<string, Record<string, number>> = {
   // 2024 Q1
   "2024-01-07": { BTC: 44000, ETH: 2300, SOL: 105, TAO: 320, LTC: 75, ZEC: 30, LINK: 15, SUI: 1.1, AVAX: 42, DOGE: 0.08, HYPE: 0, TRX: 0.11, XRP: 0.60, BNB: 320, HBAR: 0.09, ADA: 0.58 },
@@ -261,17 +269,23 @@ function getAllTradingDates(): string[] {
   return Array.from(allDates).sort();
 }
 
-// Target dates - combine hardcoded + all trading dates from stock files
-const HARDCODED_DATES = Object.keys(HISTORICAL_CRYPTO_PRICES).sort();
-const ALL_TRADING_DATES = getAllTradingDates();
+// Use fetched crypto prices if available, otherwise fallback to hardcoded
+const CRYPTO_PRICES = Object.keys(FETCHED_CRYPTO_PRICES).length > 0 
+  ? FETCHED_CRYPTO_PRICES 
+  : HISTORICAL_CRYPTO_PRICES;
 
-// For full daily data, use ALL_TRADING_DATES
-// For quick generation with hardcoded crypto prices only, use HARDCODED_DATES
-const USE_DAILY_DATA = process.argv.includes("--daily");
-const TARGET_DATES = USE_DAILY_DATA ? ALL_TRADING_DATES : HARDCODED_DATES;
+// Get all dates where we have both crypto prices AND stock prices
+const CRYPTO_DATES = new Set(Object.keys(CRYPTO_PRICES));
+const STOCK_DATES = new Set(getAllTradingDates());
 
-console.log(`Mode: ${USE_DAILY_DATA ? "DAILY (fetching crypto prices)" : "WEEKLY (hardcoded prices)"}`);
-console.log(`Target dates: ${TARGET_DATES.length}\n`);
+// Only process dates where we have both
+const TARGET_DATES = Array.from(CRYPTO_DATES)
+  .filter(date => STOCK_DATES.has(date))
+  .sort();
+
+console.log(`Crypto price dates: ${CRYPTO_DATES.size}`);
+console.log(`Stock price dates: ${STOCK_DATES.size}`);
+console.log(`Dates with both: ${TARGET_DATES.length}\n`);
 
 // Rate limiting helper
 async function delay(ms: number): Promise<void> {
@@ -302,53 +316,75 @@ function findHoldingsAtDate(
   return nearest;
 }
 
-// Fetch historical stock price from Yahoo Finance
+// Load stock prices from local files (much faster than Yahoo Finance)
+const stockPricesDir = path.join(__dirname, "../data/stock-prices");
+const stockPriceCache: Record<string, Record<string, number>> = {};
+
+function loadStockPricesForTicker(ticker: string): Record<string, number> {
+  if (stockPriceCache[ticker]) {
+    return stockPriceCache[ticker];
+  }
+  
+  const filePath = path.join(stockPricesDir, `${ticker.replace(/\./g, "_")}.json`);
+  if (!fs.existsSync(filePath)) {
+    stockPriceCache[ticker] = {};
+    return {};
+  }
+  
+  try {
+    const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const prices: Record<string, number> = {};
+    for (const p of data.prices || []) {
+      if (p.date && p.close) {
+        prices[p.date] = p.close;
+      }
+    }
+    stockPriceCache[ticker] = prices;
+    return prices;
+  } catch {
+    stockPriceCache[ticker] = {};
+    return {};
+  }
+}
+
+// Get stock price from local file
+function getLocalStockPrice(ticker: string, date: string): number | null {
+  const prices = loadStockPricesForTicker(ticker);
+  
+  // Exact match
+  if (prices[date]) {
+    return prices[date];
+  }
+  
+  // Try to find closest date within 5 days
+  const targetTime = new Date(date).getTime();
+  let closest: number | null = null;
+  let minDiff = 5 * 24 * 60 * 60 * 1000; // 5 days
+  
+  for (const [d, price] of Object.entries(prices)) {
+    const diff = Math.abs(new Date(d).getTime() - targetTime);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = price;
+    }
+  }
+  
+  return closest;
+}
+
+// Fetch historical stock price - uses local file first, then Yahoo Finance as fallback
 async function fetchStockPrice(
   ticker: string,
   date: string
 ): Promise<number | null> {
-  try {
-    const targetDate = new Date(date);
-    const startDate = new Date(targetDate);
-    startDate.setDate(startDate.getDate() - 7);
-    const endDate = new Date(targetDate);
-    endDate.setDate(endDate.getDate() + 1);
-
-    const period1 = Math.floor(startDate.getTime() / 1000);
-    const period2 = Math.floor(endDate.getTime() / 1000);
-
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?period1=${period1}&period2=${period2}&interval=1d`;
-
-    const response = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0" },
-    });
-
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    const result = data.chart?.result?.[0];
-
-    if (!result?.indicators?.quote?.[0]?.close) return null;
-
-    const closes = result.indicators.quote[0].close;
-    const timestamps = result.timestamp;
-
-    const targetTs = targetDate.getTime() / 1000;
-    let closestIdx = 0;
-    let minDiff = Infinity;
-
-    for (let i = 0; i < timestamps.length; i++) {
-      const diff = Math.abs(timestamps[i] - targetTs);
-      if (diff < minDiff && closes[i] != null) {
-        minDiff = diff;
-        closestIdx = i;
-      }
-    }
-
-    return closes[closestIdx] || null;
-  } catch {
-    return null;
+  // Try local file first (fast)
+  const localPrice = getLocalStockPrice(ticker, date);
+  if (localPrice) {
+    return localPrice;
   }
+  
+  // Fallback to Yahoo Finance (slow, rate limited)
+  return null; // Disabled for speed - we have local data
 }
 
 // Fetch balance sheet from FMP
@@ -421,9 +457,7 @@ async function generateHistoricalMNAV(): Promise<void> {
     
     console.log(`\nProcessing ${targetDate}...`);
 
-    const cryptoPrices = USE_DAILY_DATA 
-      ? await fetchCryptoPrices(targetDate)
-      : HISTORICAL_CRYPTO_PRICES[targetDate];
+    const cryptoPrices = CRYPTO_PRICES[targetDate];
     
     if (!cryptoPrices || Object.keys(cryptoPrices).length === 0) {
       console.log(`  No crypto prices for ${targetDate}`);
