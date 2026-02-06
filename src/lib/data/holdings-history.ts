@@ -47,7 +47,7 @@ export interface CompanyHoldingsHistory {
 const MSTR_HISTORY: HoldingsSnapshot[] = [
   // 2020 - Initial purchases (split-adjusted: original * 10)
   // Stock prices are split-adjusted (divide pre-split by 10)
-  { date: "2020-09-14", holdings: 38250, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.000390, stockPrice: 15.0, source: "8-K Initial BTC purchase", sourceUrl: "/filings/mstr/8k-2020-09-14-244732", sourceType: "sec-filing" },
+  { date: "2020-09-14", holdings: 38250, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.000390, stockPrice: 15.0, source: "8-K Initial BTC purchase", sourceUrl: "/filings/mstr/8k-2020-09-14-244732#btc-holdings", sourceType: "sec-filing" },
   { date: "2020-12-21", holdings: 70470, sharesOutstandingDiluted: 103_000_000, holdingsPerShare: 0.000684, stockPrice: 35.0, source: "Q4 2020 10-K", sourceUrl: "/filings/mstr/10-K-2021-02-12#btc-holdings", sourceType: "sec-filing" },
 
   // 2021 (split-adjusted)
@@ -72,7 +72,7 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 214246, sharesOutstandingDiluted: 185_560_000, holdingsPerShare: 0.001155, stockPrice: 180.0, source: "Q1 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-05-01#btc-holdings", sourceType: "sec-filing" },
   { date: "2024-06-30", holdings: 226500, sharesOutstandingDiluted: 178_610_000, holdingsPerShare: 0.001268, stockPrice: 138.0, source: "Q2 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-08-06#btc-holdings", sourceType: "sec-filing" },
   { date: "2024-09-30", holdings: 252220, sharesOutstandingDiluted: 197_270_000, holdingsPerShare: 0.001278, stockPrice: 188.0, source: "Q3 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-10-31#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-11-18", holdings: 331200, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.001505, stockPrice: 470.0, source: "8-K Nov 2024 - mNAV peak ~3.4x", sourceUrl: "/filings/mstr/8k-2024-11-18", sourceType: "sec-filing" },
+  { date: "2024-11-18", holdings: 331200, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.001505, stockPrice: 470.0, source: "8-K Nov 2024 - mNAV peak ~3.4x", sourceUrl: "/filings/mstr/8k-2024-11-18#btc-holdings", sourceType: "sec-filing" },
   { date: "2024-12-31", holdings: 446400, sharesOutstandingDiluted: 257_640_000, holdingsPerShare: 0.001733, stockPrice: 330.0, source: "Q4 2024 10-K", sourceUrl: "/filings/mstr/10-K-2025-02-18#btc-holdings", sourceType: "sec-filing" },
 
   // 2025 - Continued 21/21 plan execution (SEC EDGAR diluted shares)
@@ -80,11 +80,11 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 580250, sharesOutstandingDiluted: 306_760_000, holdingsPerShare: 0.001891, stockPrice: 350.0, source: "Q2 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-08-05#btc-holdings", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 640808, sharesOutstandingDiluted: 315_390_000, holdingsPerShare: 0.002032, stockPrice: 200.0, source: "Q3 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-11-03#btc-holdings", sourceType: "sec-filing" },
   // 2026 - Weekly 8-K filings
-  { date: "2025-12-31", holdings: 672500, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.002038, stockPrice: 280.0, source: "Back-calc from Jan 5 8-K", sourceUrl: "/filings/mstr/8k-2026-01-05", sourceType: "sec-filing" },
-  { date: "2026-01-12", holdings: 687410, sharesOutstandingDiluted: 345_000_000, holdingsPerShare: 0.001993, stockPrice: 340.0, source: "SEC 8-K Jan 12", sourceUrl: "/filings/mstr/8k-2026-01-12", sharesSource: "ESTIMATE: ATM dilution", methodology: "Q3 2025 diluted (315M) + estimated ATM issuance (~30M shares)", confidence: "medium", confidenceRange: { floor: 330_000_000, ceiling: 360_000_000 }, sourceType: "sec-filing" },
-  { date: "2026-01-20", holdings: 709715, sharesOutstandingDiluted: 362_606_000, holdingsPerShare: 0.001958, stockPrice: 360.0, source: "SEC 8-K Jan 20", sharesSource: "mNAV.com fullyDilutedShares", sourceUrl: "/filings/mstr/8k-2026-01-20", sourceType: "sec-filing" },
-  { date: "2026-01-26", holdings: 712647, sharesOutstandingDiluted: 364_176_000, holdingsPerShare: 0.001957, stockPrice: 350.0, source: "SEC 8-K Jan 26 (+2,932 BTC)", sharesSource: "362.6M (Jan 19) + 1.57M ATM per 8-K", sourceUrl: "/filings/mstr/8k-2026-01-26", sourceType: "sec-filing" },
-  { date: "2026-02-01", holdings: 713502, sharesOutstandingDiluted: 332_431_000, holdingsPerShare: 0.002147, stockPrice: 300.0, source: "SEC 8-K Feb 2, 2026", sharesSource: "strategy.com/shares (basic shares)", sourceUrl: "/filings/mstr/8k-2026-02-02", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 672500, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.002038, stockPrice: 280.0, source: "Back-calc from Jan 5 8-K", sourceUrl: "/filings/mstr/8k-2026-01-05#btc-holdings", sourceType: "sec-filing" },
+  { date: "2026-01-12", holdings: 687410, sharesOutstandingDiluted: 345_000_000, holdingsPerShare: 0.001993, stockPrice: 340.0, source: "SEC 8-K Jan 12", sourceUrl: "/filings/mstr/8k-2026-01-12#btc-holdings", sharesSource: "ESTIMATE: ATM dilution", methodology: "Q3 2025 diluted (315M) + estimated ATM issuance (~30M shares)", confidence: "medium", confidenceRange: { floor: 330_000_000, ceiling: 360_000_000 }, sourceType: "sec-filing" },
+  { date: "2026-01-20", holdings: 709715, sharesOutstandingDiluted: 362_606_000, holdingsPerShare: 0.001958, stockPrice: 360.0, source: "SEC 8-K Jan 20", sharesSource: "mNAV.com fullyDilutedShares", sourceUrl: "/filings/mstr/8k-2026-01-20#btc-holdings", sourceType: "sec-filing" },
+  { date: "2026-01-26", holdings: 712647, sharesOutstandingDiluted: 364_176_000, holdingsPerShare: 0.001957, stockPrice: 350.0, source: "SEC 8-K Jan 26 (+2,932 BTC)", sharesSource: "362.6M (Jan 19) + 1.57M ATM per 8-K", sourceUrl: "/filings/mstr/8k-2026-01-26#btc-holdings", sourceType: "sec-filing" },
+  { date: "2026-02-01", holdings: 713502, sharesOutstandingDiluted: 332_431_000, holdingsPerShare: 0.002147, stockPrice: 300.0, source: "SEC 8-K Feb 2, 2026", sharesSource: "strategy.com/shares (basic shares)", sourceUrl: "/filings/mstr/8k-2026-02-02#btc-holdings", sourceType: "sec-filing" },
 ];
 
 // MARA Holdings - Largest US public miner
