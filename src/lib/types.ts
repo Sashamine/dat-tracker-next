@@ -82,6 +82,7 @@ export interface Company {
   costBasisAvg?: number;
   costBasisSource?: string;
   costBasisSourceUrl?: string;
+  costBasisAsOf?: string;  // ISO date the cost basis is calculated from
   stakingPct?: number;
   stakingApy?: number;
   stakingMethod?: string;

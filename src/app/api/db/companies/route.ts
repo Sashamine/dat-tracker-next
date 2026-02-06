@@ -47,6 +47,7 @@ export async function GET(request: Request) {
       costBasisAvg: c.costBasisAvg,
       costBasisSource: c.costBasisSource,
       costBasisSourceUrl: c.costBasisSourceUrl,
+      costBasisAsOf: c.costBasisAsOf,
       stakingPct: c.stakingPct,
       stakingApy: c.stakingApy,
       stakingMethod: c.stakingMethod,

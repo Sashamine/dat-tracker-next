@@ -21,6 +21,7 @@ export const ethCompanies: Company[] = [
     costBasisAvg: 4_002,  // SEC 10-Q Q1 FY2026 (Nov 30, 2025): $14,953,824K cost / 3,737,140 ETH (filed Jan 13, 2026)
     costBasisSource: "SEC 10-Q Q1 FY2026: ETH cost basis $14,953,824K for 3,737,140 units (balance sheet in thousands)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+    costBasisAsOf: "2025-11-30",
     stakingPct: 0.676,  // 2,897,459 staked / 4,285,125 total per Feb 2 8-K (up from 2,009,267)
     stakingApy: 0.0281,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil
     stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",

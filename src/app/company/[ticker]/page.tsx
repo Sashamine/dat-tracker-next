@@ -1279,7 +1279,14 @@ export default function CompanyPage() {
             {displayCompany.costBasisAvg && (
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Avg Cost Basis</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Avg Cost Basis
+                    {displayCompany.costBasisAsOf && (
+                      <span className="text-xs text-gray-400 ml-1">
+                        (as of {new Date(displayCompany.costBasisAsOf).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })})
+                      </span>
+                    )}
+                  </p>
                   <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                     ${displayCompany.costBasisAvg.toLocaleString()}
                     {displayCompany.ticker === "MSTR" ? (
