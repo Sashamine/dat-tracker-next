@@ -1230,6 +1230,32 @@ export default function CompanyPage() {
               currentHoldingsPerShare={holdingsPerShare}
               className=""
             />
+            {/* Avg Cost Basis - shown for all companies that have it */}
+            {displayCompany.costBasisAvg && (
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Avg Cost Basis</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    ${displayCompany.costBasisAvg.toLocaleString()}
+                    {displayCompany.ticker === "MSTR" && (
+                      <FilingCite 
+                        ticker="MSTR" 
+                        date="2026-02-02" 
+                        anchor="cost-basis"
+                        filingType="8-K"
+                      />
+                    )}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Unrealized P&L</p>
+                  <p className={cn("text-xl font-bold", cryptoPrice > displayCompany.costBasisAvg ? "text-green-600" : "text-red-600")}>
+                    {cryptoPrice > displayCompany.costBasisAvg ? "+" : ""}
+                    {(((cryptoPrice - displayCompany.costBasisAvg) / displayCompany.costBasisAvg) * 100).toFixed(1)}%
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </details>
 
