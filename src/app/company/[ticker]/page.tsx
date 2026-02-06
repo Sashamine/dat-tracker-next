@@ -526,7 +526,10 @@ export default function CompanyPage() {
           )}
           {displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0 && (
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Operating Burn</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Operating Burn
+                {displayCompany.burnEstimated && <span className="ml-1 text-amber-500" title="Estimated">*</span>}
+              </p>
               <p className="text-2xl font-bold text-red-600">
                 -${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M
                 {displayCompany.ticker === "BMNR" ? (
@@ -548,6 +551,20 @@ export default function CompanyPage() {
               <p className="text-xs text-gray-400">
                 USD/yr (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
               </p>
+              {displayCompany.burnMethodology && (
+                <details className="mt-2">
+                  <summary className="text-xs text-blue-600 dark:text-blue-400 cursor-pointer hover:underline">
+                    How we calculated this
+                  </summary>
+                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-relaxed"
+                     dangerouslySetInnerHTML={{
+                       __html: displayCompany.burnMethodology
+                         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline">$1</a>')
+                         .replace(/\n/g, '<br/>')
+                     }}
+                  />
+                </details>
+              )}
             </div>
           )}
           {/* Total Cash Obligations - Only show when there's more than just burn (debt interest or preferred divs) */}

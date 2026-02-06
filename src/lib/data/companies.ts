@@ -29,11 +29,12 @@ export const ethCompanies: Company[] = [
     stakingAsOf: "2026-02-01",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    quarterlyBurnUsd: 1_500_000,  // ~$6M/yr recurring; 10-Q states ongoing ETH mgmt fees $40-50K/yr + staff
+    quarterlyBurnUsd: 1_000_000,  // ~$4M/yr based on Q1 FY2025 baseline G&A ($959K/qtr)
     burnSource: "SEC 10-Q: Q1 G&A $223M was mostly one-time capital raising fees; recurring mgmt ~$50K/yr",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
-    burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
+    burnEstimated: true,
+    burnMethodology: `Based on Q1 FY2025 (pre-ETH pivot) G&A of $959K/quarter, annualized to ~$4M/year. Current Q1 FY2026 G&A of $223M excluded as mostly one-time capital raising costs. Sources: [10-Q Q1 FY2025 G&A](/filings/bmnr/2026-01-13?type=10-q#operating-burn) | [MD&A disclosure on one-time costs](/filings/bmnr/2026-01-13?type=10-q#operating-burn-mda)`,
     // No cashObligations fields needed - burn-only companies show Operating Burn card only
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
