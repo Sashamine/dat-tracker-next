@@ -1209,36 +1209,6 @@ export default function CompanyPage() {
               )}
             </div>
           )}
-          {displayCompany.costBasisAvg && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Avg Cost Basis</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                ${displayCompany.costBasisAvg.toLocaleString()}
-              </p>
-              <p className="text-xs text-gray-500">
-                {cryptoPrice > displayCompany.costBasisAvg ? (
-                  <span className="text-green-600">
-                    +{formatPercent((cryptoPrice - displayCompany.costBasisAvg) / displayCompany.costBasisAvg)} gain
-                  </span>
-                ) : (
-                  <span className="text-red-600">
-                    {formatPercent((cryptoPrice - displayCompany.costBasisAvg) / displayCompany.costBasisAvg)} loss
-                  </span>
-                )}
-              </p>
-              {displayCompany.costBasisSourceUrl && (
-                <a
-                  href={displayCompany.costBasisSourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 mt-1 text-xs text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                  Source
-                </a>
-              )}
-            </div>
-          )}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400">{displayCompany.asset} Price</p>
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
@@ -1455,7 +1425,7 @@ export default function CompanyPage() {
           )}
 
           {/* Key Financial Metrics Grid */}
-          {(displayCompany.costBasisAvg || displayCompany.capitalRaisedAtm || displayCompany.capitalRaisedPipe ||
+          {(displayCompany.capitalRaisedAtm || displayCompany.capitalRaisedPipe ||
             displayCompany.capitalRaisedConverts || displayCompany.stakingPct || displayCompany.leverageRatio ||
             displayCompany.btcMinedAnnual || displayCompany.quarterlyBurnUsd || displayCompany.atmRemaining || displayCompany.leader) && (
             <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -1467,22 +1437,6 @@ export default function CompanyPage() {
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
                     <p className="text-xs text-gray-500 uppercase tracking-wide">Leadership</p>
                     <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">{displayCompany.leader}</p>
-                  </div>
-                )}
-                {displayCompany.costBasisAvg && (
-                  <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 uppercase tracking-wide">
-                      Avg Cost Basis
-                      {displayCompany.costBasisAsOf && (
-                        <span className="text-gray-400 normal-case ml-1">
-                          ({new Date(displayCompany.costBasisAsOf).toLocaleDateString("en-US", { month: "short", year: "numeric" })})
-                        </span>
-                      )}
-                    </p>
-                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">
-                      ${displayCompany.costBasisAvg.toLocaleString()}
-                      <SourceLink url={displayCompany.costBasisSourceUrl} label={displayCompany.costBasisSource} />
-                    </p>
                   </div>
                 )}
                 {displayCompany.capitalRaisedAtm && (
