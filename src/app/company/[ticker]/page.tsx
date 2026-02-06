@@ -530,7 +530,6 @@ export default function CompanyPage() {
                     filingType="10-Q"
                   />
                 )}
-                <SourceLink url={displayCompany.burnSourceUrl} label={displayCompany.burnSource} />
               </p>
               <p className="text-xs text-gray-400">
                 USD/yr (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
