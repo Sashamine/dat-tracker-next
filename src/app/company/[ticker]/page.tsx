@@ -531,7 +531,7 @@ export default function CompanyPage() {
                 {displayCompany.burnEstimated && <span className="ml-1 text-amber-500" title="Estimated">*</span>}
               </p>
               <p className="text-2xl font-bold text-red-600">
-                -${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M
+                -${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(0)}M
                 {displayCompany.ticker === "BMNR" ? (
                   <FilingCite 
                     ticker="BMNR" 
@@ -549,7 +549,7 @@ export default function CompanyPage() {
                 )}
               </p>
               <p className="text-xs text-gray-400">
-                USD/yr (${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(1)}M/qtr)
+                USD/qtr
               </p>
               {displayCompany.burnMethodology && (
                 <details className="mt-2">
