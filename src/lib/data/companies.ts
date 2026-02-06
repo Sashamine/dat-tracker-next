@@ -29,8 +29,8 @@ export const ethCompanies: Company[] = [
     stakingAsOf: "2026-02-01",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    quarterlyBurnUsd: 5_000_000,  // Estimated ~$20M/yr opex; 10-Q shows $223M G&A but likely includes brokerage fees on $10B ETH purchases
-    burnSource: "Estimated - SEC 10-Q G&A ($223M) appears inflated by ETH transaction costs",
+    quarterlyBurnUsd: 1_500_000,  // ~$6M/yr recurring; 10-Q states ongoing ETH mgmt fees $40-50K/yr + staff
+    burnSource: "SEC 10-Q: Q1 G&A $223M was mostly one-time capital raising fees; recurring mgmt ~$50K/yr",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
@@ -55,8 +55,8 @@ export const ethCompanies: Company[] = [
     debtSource: "SEC 10-Q Q1 FY2026 - no convertibles, no credit facilities drawn",
     debtAsOf: "2025-11-30",
     leader: "Tom Lee (Fundstrat)",
-    strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Also holds $219M in non-crypto investments (Beast Industries, OCTO) not reflected in mNAV.",
-    notes: "Largest ETH treasury. 3.55% of ETH supply. 2.9M ETH staked (~68%, ramping via MAVAN). $200M Beast Industries + $25M Eightco (OCTO) equity investments.",
+    strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Asset-light treasury model with minimal recurring costs (~$50K/yr ETH management fees per 10-Q). Q1 FY2026 G&A of $223M was mostly one-time capital raising costs (legal, advisory, banking fees for $8B+ ATM program).",
+    notes: "Largest ETH treasury. 3.55% of ETH supply. 2.9M ETH staked (~68%, ramping via MAVAN). $200M Beast Industries + $25M Eightco (OCTO) equity investments not in mNAV.",
   },
   {
     id: "sbet",
