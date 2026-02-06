@@ -2,7 +2,7 @@
   "ticker": "EXOD",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-06T21:45:02.306Z",
+  "lastUpdated": "2026-02-06T22:00:01.670Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -3771,6 +3771,15 @@
     {
       "date": "2026-02-06",
       "time": "14:45",
+      "open": 9.42,
+      "high": 11.005,
+      "low": 9.26,
+      "close": 10.56,
+      "volume": 144241
+    },
+    {
+      "date": "2026-02-06",
+      "time": "15:00",
       "open": 9.42,
       "high": 11.005,
       "low": 9.26,
