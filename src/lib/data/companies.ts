@@ -549,9 +549,9 @@ export const btcCompanies: Company[] = [
     btcMinedSourceUrl: "https://ir.mara.com/news-events/press-releases",
     btcMinedAsOf: "2025-12-31",
     btcMinedEstimated: true,
-    quarterlyBurnUsd: 199_000_000,  // Q3 2025: $577.98M - $378.93M = $199M
-    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashProvidedByUsedInOperatingActivities Q3=$199M (9M $577.98M - 6M $378.93M)",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+    quarterlyBurnUsd: 85_296_000,  // Q3 2025 G&A only (mining costs excluded - variable)
+    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $85,296,000 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q&dateb=&owner=include&count=40&search_text=",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 400_000_000,
     hasOptions: true,
