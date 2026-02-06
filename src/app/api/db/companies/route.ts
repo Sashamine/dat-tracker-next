@@ -55,6 +55,7 @@ export async function GET(request: Request) {
       stakingAsOf: c.stakingAsOf,
       quarterlyBurnUsd: c.quarterlyBurnUsd,
       burnEstimated: c.burnEstimated,
+      burnMethodology: c.burnMethodology,
       capitalRaisedAtm: c.capitalRaisedAtm,
       capitalRaisedPipe: c.capitalRaisedPipe,
       capitalRaisedConverts: c.capitalRaisedConverts,
