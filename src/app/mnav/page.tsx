@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { MobileHeader } from "@/components/mobile-header";
+import { StatTooltip } from "@/components/stat-tooltip";
 import { useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
@@ -303,9 +304,10 @@ export default function MNAVPage() {
     // Count companies without sufficient history data
     const companiesWithYieldData = new Set(leaderboard.map(m => m.ticker));
     const insufficientData = companies.filter(c => !companiesWithYieldData.has(c.ticker)).length;
+    const missingTickers = companies.filter(c => !companiesWithYieldData.has(c.ticker)).map(c => c.ticker);
 
     if (leaderboard.length === 0) {
-      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null, insufficientData, totalCompanies: companies.length };
+      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null, insufficientData, totalCompanies: companies.length, leaderboard: [], missingTickers };
     }
 
     const yields = leaderboard.map((m) => m.growthPct);
@@ -325,6 +327,8 @@ export default function MNAVPage() {
       worst: leaderboard[leaderboard.length - 1],
       insufficientData,
       totalCompanies: companies.length,
+      leaderboard,  // Full sorted leaderboard for tooltip
+      missingTickers,  // Companies without yield data
     };
   }, [companies]);
 
@@ -352,13 +356,17 @@ export default function MNAVPage() {
       }
     });
 
+    // Sort by dilution rate descending
+    dilutionRates.sort((a, b) => b.rate - a.rate);
+
     const avgDilution = dilutionRates.length > 0
       ? dilutionRates.reduce((sum, d) => sum + d.rate, 0) / dilutionRates.length
       : 0;
     const highDilution = dilutionRates.filter((d) => d.rate > 10);
     const insufficientData = companies.filter(c => !companiesWithData.has(c.ticker)).length;
+    const missingTickers = companies.filter(c => !companiesWithData.has(c.ticker)).map(c => c.ticker);
 
-    return { avgDilution, highDilution, total: dilutionRates.length, insufficientData, totalCompanies: companies.length };
+    return { avgDilution, highDilution, total: dilutionRates.length, insufficientData, totalCompanies: companies.length, allRates: dilutionRates, missingTickers };
   }, [companies]);
 
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
@@ -474,43 +482,58 @@ export default function MNAVPage() {
               </span>
             )}
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Median Yield</p>
-              <p className={cn("text-xl font-bold", yieldStats.median >= 0 ? "text-green-600" : "text-red-600")}>
-                {yieldStats.median >= 0 ? "+" : ""}{yieldStats.median.toFixed(1)}%
-              </p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Average Yield</p>
-              <p className={cn("text-xl font-bold", yieldStats.average >= 0 ? "text-green-600" : "text-red-600")}>
-                {yieldStats.average >= 0 ? "+" : ""}{yieldStats.average.toFixed(1)}%
-              </p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Positive Yield</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                {yieldStats.positiveCount}/{yieldStats.totalCount}
-              </p>
-              <p className="text-xs text-gray-500">
-                {yieldStats.totalCount > 0 ? ((yieldStats.positiveCount / yieldStats.totalCount) * 100).toFixed(0) : 0}% of companies
-              </p>
-              {yieldStats.insufficientData > 0 && (
-                <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                  +{yieldStats.insufficientData} no data
+          <StatTooltip 
+            title="All Companies - Treasury Yield"
+            data={[
+              ...yieldStats.leaderboard.map(m => ({
+                label: m.ticker,
+                value: `${m.growthPct >= 0 ? '+' : ''}${m.growthPct.toFixed(1)}%`,
+                subValue: `${m.daysCovered}d`
+              })),
+              ...yieldStats.missingTickers.map(t => ({
+                label: t,
+                value: 'No data',
+              }))
+            ]}
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Median Yield</p>
+                <p className={cn("text-xl font-bold", yieldStats.median >= 0 ? "text-green-600" : "text-red-600")}>
+                  {yieldStats.median >= 0 ? "+" : ""}{yieldStats.median.toFixed(1)}%
                 </p>
-              )}
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Average Yield</p>
+                <p className={cn("text-xl font-bold", yieldStats.average >= 0 ? "text-green-600" : "text-red-600")}>
+                  {yieldStats.average >= 0 ? "+" : ""}{yieldStats.average.toFixed(1)}%
+                </p>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Positive Yield</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  {yieldStats.positiveCount}/{yieldStats.totalCount}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {yieldStats.totalCount > 0 ? ((yieldStats.positiveCount / yieldStats.totalCount) * 100).toFixed(0) : 0}% of companies
+                </p>
+                {yieldStats.insufficientData > 0 && (
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                    +{yieldStats.insufficientData} no data
+                  </p>
+                )}
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best / Worst</p>
+                {yieldStats.best && yieldStats.worst && (
+                  <div className="text-sm">
+                    <p className="text-green-600 font-medium">{yieldStats.best.ticker} +{yieldStats.best.growthPct.toFixed(0)}%</p>
+                    <p className="text-red-600 font-medium">{yieldStats.worst.ticker} {yieldStats.worst.growthPct.toFixed(0)}%</p>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best / Worst</p>
-              {yieldStats.best && yieldStats.worst && (
-                <div className="text-sm">
-                  <p className="text-green-600 font-medium">{yieldStats.best.ticker} +{yieldStats.best.growthPct.toFixed(0)}%</p>
-                  <p className="text-red-600 font-medium">{yieldStats.worst.ticker} {yieldStats.worst.growthPct.toFixed(0)}%</p>
-                </div>
-              )}
-            </div>
-          </div>
+          </StatTooltip>
         </div>
 
         {/* Dilution Statistics */}
@@ -523,37 +546,51 @@ export default function MNAVPage() {
               </span>
             )}
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg Dilution Rate</p>
-              <p className={cn("text-xl font-bold", dilutionStats.avgDilution > 5 ? "text-red-600" : "text-gray-900 dark:text-gray-100")}>
-                {dilutionStats.avgDilution >= 0 ? "+" : ""}{dilutionStats.avgDilution.toFixed(1)}%
-              </p>
-              <p className="text-xs text-gray-500">per filing period</p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">High Dilution ({">"}10%)</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                {dilutionStats.highDilution.length}/{dilutionStats.total}
-              </p>
-              <p className="text-xs text-gray-500">companies</p>
-              {dilutionStats.insufficientData > 0 && (
-                <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                  +{dilutionStats.insufficientData} no data
+          <StatTooltip
+            title="All Companies - Share Dilution"
+            data={[
+              ...dilutionStats.allRates.map(d => ({
+                label: d.ticker,
+                value: `${d.rate >= 0 ? '+' : ''}${d.rate.toFixed(1)}%`,
+              })),
+              ...dilutionStats.missingTickers.map(t => ({
+                label: t,
+                value: 'No data',
+              }))
+            ]}
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg Dilution Rate</p>
+                <p className={cn("text-xl font-bold", dilutionStats.avgDilution > 5 ? "text-red-600" : "text-gray-900 dark:text-gray-100")}>
+                  {dilutionStats.avgDilution >= 0 ? "+" : ""}{dilutionStats.avgDilution.toFixed(1)}%
                 </p>
+                <p className="text-xs text-gray-500">per filing period</p>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">High Dilution ({">"}10%)</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  {dilutionStats.highDilution.length}/{dilutionStats.total}
+                </p>
+                <p className="text-xs text-gray-500">companies</p>
+                {dilutionStats.insufficientData > 0 && (
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                    +{dilutionStats.insufficientData} no data
+                  </p>
+                )}
+              </div>
+              {dilutionStats.highDilution.length > 0 && (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 col-span-2 lg:col-span-1">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">High Dilution List</p>
+                  <div className="text-sm text-red-600 space-y-0.5">
+                    {dilutionStats.highDilution.slice(0, 5).map((d) => (
+                      <p key={d.ticker}>{d.ticker}: +{d.rate.toFixed(0)}%</p>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
-            {dilutionStats.highDilution.length > 0 && (
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 col-span-2 lg:col-span-1">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">High Dilution List</p>
-                <div className="text-sm text-red-600 space-y-0.5">
-                  {dilutionStats.highDilution.slice(0, 5).map((d) => (
-                    <p key={d.ticker}>{d.ticker}: +{d.rate.toFixed(0)}%</p>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          </StatTooltip>
         </div>
 
         {/* mNAV Statistics - Treasuries Only */}
