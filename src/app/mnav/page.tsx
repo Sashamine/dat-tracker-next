@@ -495,6 +495,11 @@ export default function MNAVPage() {
               <p className="text-xs text-gray-500">
                 {yieldStats.totalCount > 0 ? ((yieldStats.positiveCount / yieldStats.totalCount) * 100).toFixed(0) : 0}% of companies
               </p>
+              {yieldStats.insufficientData > 0 && (
+                <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                  +{yieldStats.insufficientData} no data
+                </p>
+              )}
             </div>
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best / Worst</p>
@@ -529,9 +534,14 @@ export default function MNAVPage() {
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">High Dilution ({">"}10%)</p>
               <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                {dilutionStats.highDilution.length}
+                {dilutionStats.highDilution.length}/{dilutionStats.total}
               </p>
               <p className="text-xs text-gray-500">companies</p>
+              {dilutionStats.insufficientData > 0 && (
+                <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                  +{dilutionStats.insufficientData} no data
+                </p>
+              )}
             </div>
             {dilutionStats.highDilution.length > 0 && (
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 col-span-2 lg:col-span-1">
