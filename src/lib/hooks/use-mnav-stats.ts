@@ -10,6 +10,8 @@ export interface MNAVStats {
   average: number;
   count: number;
   mnavs: number[]; // Individual mNAV values for distribution charts
+  contributors: { ticker: string; mnav: number }[]; // Companies that contributed to stats
+  excluded: string[]; // Companies that couldn't calculate mNAV
 }
 
 export type PricesData = {
@@ -177,16 +179,30 @@ export function useMNAVStats(
 ): MNAVStats {
   return useMemo(() => {
     if (!companies.length || !prices) {
-      return { median: 0, average: 0, count: 0, mnavs: [] };
+      return { median: 0, average: 0, count: 0, mnavs: [], contributors: [], excluded: [] };
     }
 
+    // Track which companies contribute and which are excluded
+    const contributors: { ticker: string; mnav: number }[] = [];
+    const excluded: string[] = [];
+
     // Filter outliers for stats (mNAV >= 10x companies like miners with small treasuries)
-    const mnavs = companies
-      .map((company) => getCompanyMNAV(company, prices, true))
-      .filter((mnav): mnav is number => mnav !== null);
+    companies.forEach((company) => {
+      const mnav = getCompanyMNAV(company, prices, true);
+      if (mnav !== null) {
+        contributors.push({ ticker: company.ticker, mnav });
+      } else {
+        excluded.push(company.ticker);
+      }
+    });
+
+    // Sort contributors by mNAV for display
+    contributors.sort((a, b) => a.mnav - b.mnav);
+
+    const mnavs = contributors.map(c => c.mnav);
 
     if (mnavs.length === 0) {
-      return { median: 0, average: 0, count: 0, mnavs: [] };
+      return { median: 0, average: 0, count: 0, mnavs: [], contributors: [], excluded };
     }
 
     return {
@@ -194,6 +210,8 @@ export function useMNAVStats(
       average: mnavs.reduce((a, b) => a + b, 0) / mnavs.length,
       count: mnavs.length,
       mnavs,
+      contributors,
+      excluded,
     };
   }, [companies, prices]);
 }

@@ -558,8 +558,24 @@ export default function MNAVPage() {
 
         {/* mNAV Statistics - Treasuries Only */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">mNAV Valuation</h2>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Treasuries only (excludes miners)</p>
+          <div className="flex items-baseline gap-2 mb-1">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV Valuation</h2>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              Based on {mnavStats.count} of {treasuries.length} treasuries
+            </span>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+            {mnavStats.contributors.length > 0 && (
+              <span>
+                Included: {mnavStats.contributors.map(c => `${c.ticker} (${c.mnav.toFixed(2)}x)`).join(", ")}
+              </span>
+            )}
+            {mnavStats.excluded.length > 0 && (
+              <span className="text-amber-600 dark:text-amber-400 ml-2">
+                • No data: {mnavStats.excluded.join(", ")}
+              </span>
+            )}
+          </p>
           <div className="flex gap-4">
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
               <p className="text-xs lg:text-sm text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Median</p>
