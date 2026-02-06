@@ -84,6 +84,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
 
   // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
+  "TAOX": { price: 3.39, marketCap: 23_700_000 },   // Updated Feb 5, 2026 - MarketWatch (7M shares × $3.39)
   "XTAIF": { price: 0.50, marketCap: 18_900_000 },  // Updated Jan 26, 2026 - TMX Money XTAO.U
   "IHLDF": { price: 0.10, marketCap: 10_000_000 },
   "LUXFF": { price: 0.05, marketCap: 1_580_000 },  // 31.55M shares × ~$0.05 USD (Jan 2026 SEDAR+ verified)
