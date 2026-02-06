@@ -402,12 +402,13 @@ export async function GET() {
 
 
     // Add fallback data for illiquid stocks without real-time data
+    // Also use fallback if existing data has no price (empty API response)
     for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
       // Debug: check if 3189.T already has data (shouldn't, since we removed it from FMP_ONLY_STOCKS)
       if (ticker === "3189.T" && stockPrices[ticker]) {
         console.log(`[Prices DEBUG] 3189.T already has data (NOT using fallback):`, stockPrices[ticker]);
       }
-      if (!stockPrices[ticker]) {
+      if (!stockPrices[ticker] || !stockPrices[ticker].price) {
         // Convert fallback price to USD if it's a foreign currency stock
         const currency = TICKER_CURRENCY[ticker];
         const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
