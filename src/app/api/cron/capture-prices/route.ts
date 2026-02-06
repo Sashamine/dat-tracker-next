@@ -3,9 +3,6 @@
  * 
  * Called by Vercel Cron every 15 minutes during market hours.
  * Captures current stock prices and appends to historical files.
- * 
- * Vercel cron config in vercel.json:
- * { "crons": [{ "path": "/api/cron/capture-prices", "schedule": "*/15 4-20 * * 1-5" }] }
  */
 
 import { NextRequest, NextResponse } from "next/server";

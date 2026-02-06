@@ -14,22 +14,23 @@ import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/e
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
+type MetricType = "median" | "average";
 
 interface MNAVChartProps {
   mnavStats: { median: number; average: number };
   currentBTCPrice: number;
   timeRange: TimeRange;
+  metric: MetricType;
   title: string;
-  showMedian?: boolean;
-  showAverage?: boolean;
 }
 
-function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = true, showAverage = true }: MNAVChartProps) {
+function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
 
-  // Always use mnavStats from props for consistency with the rest of the page
   const currentStats = mnavStats;
+  const isMedian = metric === "median";
+  const color = isMedian ? "#6366f1" : "#a855f7"; // indigo vs purple
 
   // Generate historical data from pre-calculated MNAV_HISTORY
   const historicalData = useMemo(() => {
@@ -39,20 +40,19 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
       "7d": 7 * 24 * 60 * 60 * 1000,
       "1mo": 30 * 24 * 60 * 60 * 1000,
       "1y": 365 * 24 * 60 * 60 * 1000,
-      "all": 10 * 365 * 24 * 60 * 60 * 1000, // 10 years
+      "all": 10 * 365 * 24 * 60 * 60 * 1000,
     };
 
     const cutoffDate = new Date(now - rangeMs[timeRange]);
-    const result: { time: Time; median: number; average: number }[] = [];
+    const result: { time: Time; value: number }[] = [];
 
-    // Add historical snapshots from pre-calculated data
+    // Add historical snapshots
     for (const snapshot of MNAV_HISTORY) {
       const snapshotDate = new Date(snapshot.date);
       if (snapshotDate >= cutoffDate) {
         result.push({
           time: snapshot.date as Time,
-          median: snapshot.median,
-          average: snapshot.average,
+          value: isMedian ? snapshot.median : snapshot.average,
         });
       }
     }
@@ -61,22 +61,18 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
     const today = new Date().toISOString().split("T")[0] as Time;
     result.push({
       time: today,
-      median: currentStats.median,
-      average: currentStats.average,
+      value: isMedian ? currentStats.median : currentStats.average,
     });
 
     return result;
-  }, [currentStats, timeRange]);
+  }, [currentStats, timeRange, isMedian]);
 
   // Calculate change from start
   const change = useMemo(() => {
-    if (historicalData.length < 2) return { median: 0, average: 0 };
-    const first = historicalData[0];
-    const last = historicalData[historicalData.length - 1];
-    return {
-      median: ((last.median - first.median) / first.median) * 100,
-      average: ((last.average - first.average) / first.average) * 100,
-    };
+    if (historicalData.length < 2) return 0;
+    const first = historicalData[0].value;
+    const last = historicalData[historicalData.length - 1].value;
+    return ((last - first) / first) * 100;
   }, [historicalData]);
 
   // Initialize chart
@@ -109,32 +105,17 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
       },
     });
 
-    // Add Average first so Median appears on top in legend
-    if (showAverage) {
-      const averageSeries = chart.addSeries(LineSeries, {
-        color: "#a855f7",
-        lineWidth: 2,
-        title: "Average",
-        priceFormat: {
-          type: "custom",
-          formatter: (price: number) => price.toFixed(2) + "x",
-        },
-      });
-      averageSeries.setData(historicalData.map(d => ({ time: d.time, value: d.average })));
-    }
-
-    if (showMedian) {
-      const medianSeries = chart.addSeries(LineSeries, {
-        color: "#6366f1",
-        lineWidth: 2,
-        title: "Median",
-        priceFormat: {
-          type: "custom",
-          formatter: (price: number) => price.toFixed(2) + "x",
-        },
-      });
-      medianSeries.setData(historicalData.map(d => ({ time: d.time, value: d.median })));
-    }
+    // Single metric line
+    const mainSeries = chart.addSeries(LineSeries, {
+      color,
+      lineWidth: 2,
+      title: isMedian ? "Median" : "Average",
+      priceFormat: {
+        type: "custom",
+        formatter: (price: number) => price.toFixed(2) + "x",
+      },
+    });
+    mainSeries.setData(historicalData);
 
     // Fair value line at 1.0x
     const fairValueSeries = chart.addSeries(LineSeries, {
@@ -164,7 +145,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
         chartRef.current = null;
       }
     };
-  }, [historicalData, showMedian, showAverage, timeRange]);
+  }, [historicalData, metric, timeRange, color, isMedian]);
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -175,29 +156,17 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, title, showMedian = 
             <span className="text-green-500">Quarterly data ({historicalData.length - 1} historical + current)</span>
           </p>
         </div>
-        <div className="flex gap-3 text-sm">
-          {showMedian && (
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-3 bg-indigo-500 rounded-full" />
-              <span className="text-gray-600 dark:text-gray-400">
-                {currentStats.median.toFixed(2)}x
-              </span>
-              <span className={cn("text-xs", change.median >= 0 ? "text-green-600" : "text-red-600")}>
-                ({change.median >= 0 ? "+" : ""}{change.median.toFixed(1)}%)
-              </span>
-            </div>
-          )}
-          {showAverage && (
-            <div className="flex items-center gap-1">
-              <div className="w-3 h-3 bg-purple-500 rounded-full" />
-              <span className="text-gray-600 dark:text-gray-400">
-                {currentStats.average.toFixed(2)}x
-              </span>
-              <span className={cn("text-xs", change.average >= 0 ? "text-green-600" : "text-red-600")}>
-                ({change.average >= 0 ? "+" : ""}{change.average.toFixed(1)}%)
-              </span>
-            </div>
-          )}
+        <div className="flex items-center gap-1 text-sm">
+          <div 
+            className="w-3 h-3 rounded-full" 
+            style={{ backgroundColor: color }}
+          />
+          <span className="text-gray-600 dark:text-gray-400">
+            {(isMedian ? currentStats.median : currentStats.average).toFixed(2)}x
+          </span>
+          <span className={cn("text-xs", change >= 0 ? "text-green-600" : "text-red-600")}>
+            ({change >= 0 ? "+" : ""}{change.toFixed(1)}%)
+          </span>
         </div>
       </div>
       <div ref={chartContainerRef} className="w-full" />
@@ -209,6 +178,7 @@ type AssetFilter = "ALL" | "BTC" | "ETH" | "SOL" | "HYPE" | "TAO" | "OTHER";
 
 export default function MNAVPage() {
   const [timeRange1, setTimeRange1] = useState<TimeRange>("1y");
+  const [selectedMetric, setSelectedMetric] = useState<MetricType>("median");
   const [selectedAsset, setSelectedAsset] = useState<AssetFilter>("ALL");
 
   const { data: prices } = usePricesStream();
@@ -627,26 +597,55 @@ export default function MNAVPage() {
 
         {/* mNAV Chart */}
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">mNAV History</h2>
-        <div className="flex gap-1 mb-3">
-          {timeRangeOptions.map(({ value, label }) => (
+        <div className="flex items-center justify-between mb-3">
+          {/* Time range buttons */}
+          <div className="flex gap-1">
+            {timeRangeOptions.map(({ value, label }) => (
+              <button
+                key={value}
+                onClick={() => setTimeRange1(value)}
+                className={cn(
+                  "px-3 py-1.5 text-sm rounded-lg transition-colors",
+                  timeRange1 === value
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {/* Metric toggle */}
+          <div className="flex gap-1">
             <button
-              key={value}
-              onClick={() => setTimeRange1(value)}
+              onClick={() => setSelectedMetric("median")}
               className={cn(
                 "px-3 py-1.5 text-sm rounded-lg transition-colors",
-                timeRange1 === value
+                selectedMetric === "median"
                   ? "bg-indigo-600 text-white"
                   : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               )}
             >
-              {label}
+              Median
             </button>
-          ))}
+            <button
+              onClick={() => setSelectedMetric("average")}
+              className={cn(
+                "px-3 py-1.5 text-sm rounded-lg transition-colors",
+                selectedMetric === "average"
+                  ? "bg-purple-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              )}
+            >
+              Average
+            </button>
+          </div>
         </div>
         <MNAVChart
           mnavStats={mnavStats}
           currentBTCPrice={prices?.crypto?.BTC?.price || 0}
           timeRange={timeRange1}
+          metric={selectedMetric}
           title="mNAV History"
         />
 
