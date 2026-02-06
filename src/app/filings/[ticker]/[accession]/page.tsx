@@ -10,6 +10,7 @@ interface PageProps {
   searchParams: Promise<{
     highlight?: string;
     anchor?: string;  // e.g., "btc-holdings", "operating-burn"
+    type?: string;    // e.g., "8-k", "10-q", "10-k" - prioritizes this filing type
   }>;
 }
 
@@ -25,7 +26,7 @@ const FILING_TYPE_LABELS: Record<FilingType, string> = {
 
 export default async function FilingViewerPage({ params, searchParams }: PageProps) {
   const { ticker, accession } = await params;
-  const { highlight, anchor } = await searchParams;
+  const { highlight, anchor, type: preferredType } = await searchParams;
   
   const tickerUpper = ticker.toUpperCase();
   const tickerLower = ticker.toLowerCase();
@@ -37,8 +38,17 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
   let foundFilingDir = "";
   
   try {
+    // Reorder filing types to prioritize the preferred type (from ?type= param)
+    let searchOrder = [...FILING_TYPES];
+    if (preferredType) {
+      const normalized = preferredType.toLowerCase().replace('-', '') as FilingType;
+      if (FILING_TYPES.includes(normalized)) {
+        searchOrder = [normalized, ...FILING_TYPES.filter(t => t !== normalized)];
+      }
+    }
+    
     // Search all filing type folders for matching file
-    for (const type of FILING_TYPES) {
+    for (const type of searchOrder) {
       const dataDir = path.join(process.cwd(), "data", "sec", tickerLower, type);
       
       // Skip if directory doesn't exist

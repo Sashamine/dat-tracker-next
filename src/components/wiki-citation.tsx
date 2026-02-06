@@ -101,12 +101,12 @@ export function FilingCite({
   anchor?: string;  // e.g., "btc-holdings", "operating-burn"
   filingType?: "8-K" | "10-Q" | "10-K" | "S-3" | "424B3";
 }) {
-  // Use query param for anchor (works with iframe), fall back to highlight
-  const suffix = anchor 
-    ? `?anchor=${anchor}` 
-    : highlight 
-      ? `?highlight=${encodeURIComponent(highlight)}` 
-      : "";
+  // Build query params for anchor, highlight, and filing type
+  const params = new URLSearchParams();
+  if (anchor) params.set('anchor', anchor);
+  if (highlight) params.set('highlight', highlight);
+  if (filingType) params.set('type', filingType.toLowerCase());
+  const suffix = params.toString() ? `?${params.toString()}` : "";
   const url = `/filings/${ticker.toLowerCase()}/${date}${suffix}`;
   
   return (
