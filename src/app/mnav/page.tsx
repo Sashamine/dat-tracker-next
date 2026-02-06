@@ -75,9 +75,10 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
       "all": 10 * 365 * 24 * 60 * 60 * 1000,
     };
 
-    const cutoffDate = new Date(now - rangeMs[timeRange]);
-    const result: { time: Time; value: number }[] = [];
+    let cutoffDate = new Date(now - rangeMs[timeRange]);
+    let result: { time: Time; value: number }[] = [];
 
+    // First pass: get data points in range
     for (const snapshot of MNAV_HISTORY) {
       const snapshotDate = new Date(snapshot.date);
       if (snapshotDate >= cutoffDate) {
@@ -88,6 +89,22 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
       }
     }
 
+    // For short timeframes with insufficient data, extend to get at least 5 points
+    const minPoints = 5;
+    if (result.length < minPoints && (timeRange === "1d" || timeRange === "7d" || timeRange === "1mo")) {
+      result = [];
+      // Get last N snapshots from MNAV_HISTORY
+      const startIdx = Math.max(0, MNAV_HISTORY.length - minPoints);
+      for (let i = startIdx; i < MNAV_HISTORY.length; i++) {
+        const snapshot = MNAV_HISTORY[i];
+        result.push({
+          time: snapshot.date as Time,
+          value: isMedian ? snapshot.median : snapshot.average,
+        });
+      }
+    }
+
+    // Add today's live value
     const today = new Date().toISOString().split("T")[0] as Time;
     result.push({
       time: today,
