@@ -128,6 +128,7 @@ export interface Company {
   btcMinedSource?: string;
   btcMinedSourceUrl?: string;
   btcMinedAsOf?: string;
+  btcMinedEstimated?: boolean;
   btcAcquired2025?: number;
 
   // Non-crypto assets (for full NAV calculation)

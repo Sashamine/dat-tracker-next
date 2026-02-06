@@ -544,14 +544,15 @@ export const btcCompanies: Company[] = [
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
     costBasisAsOf: "2025-09-30",
     isMiner: true,
-    btcMinedAnnual: 18_000,  // ~50 EH/s at current difficulty (~1,500 BTC/month)
-    btcMinedSource: "MARA monthly production updates (annualized from Q4 2025 rate)",
+    btcMinedAnnual: 18_000,  // ~50 EH/s estimate (~1,500 BTC/month)
+    btcMinedSource: "Estimate based on ~50 EH/s hashrate",
     btcMinedSourceUrl: "https://ir.mara.com/news-events/press-releases",
     btcMinedAsOf: "2025-12-31",
-    quarterlyBurnUsd: 85_000_000,
-    burnSource: "SEC 10-Q (filed 2025-05-08): NetCashUsedInOperatingActivities $215,488,000 (2025-01-01 to 2025-03-31)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000009/",
-    burnAsOf: "2025-03-31",
+    btcMinedEstimated: true,
+    quarterlyBurnUsd: 193_000_000,  // 9M 2025: $577.98M / 3 = ~$193M/qtr
+    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashProvidedByUsedInOperatingActivities -$577,980,000 (9M ending 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+    burnAsOf: "2025-09-30",
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     marketCap: 3_600_000_000,
