@@ -526,7 +526,7 @@ export default function CompanyPage() {
                   <FilingCite 
                     ticker={displayCompany.ticker} 
                     date={displayCompany.burnAsOf} 
-                    highlight="operating expenses"
+                    anchor="operating-burn"
                     filingType="10-Q"
                   />
                 )}

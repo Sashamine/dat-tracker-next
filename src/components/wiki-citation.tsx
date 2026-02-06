@@ -92,14 +92,22 @@ export function FilingCite({
   ticker,
   date,
   highlight,
+  anchor,
   filingType = "8-K",
 }: {
   ticker: string;
   date: string;
   highlight?: string;
+  anchor?: string;  // e.g., "btc-holdings", "operating-burn"
   filingType?: "8-K" | "10-Q" | "10-K" | "S-3" | "424B3";
 }) {
-  const url = `/filings/${ticker.toLowerCase()}/${date}${highlight ? `?highlight=${encodeURIComponent(highlight)}` : ""}`;
+  // Prefer anchor over highlight for reliable scroll-to behavior
+  const suffix = anchor 
+    ? `#${anchor}` 
+    : highlight 
+      ? `?highlight=${encodeURIComponent(highlight)}` 
+      : "";
+  const url = `/filings/${ticker.toLowerCase()}/${date}${suffix}`;
   
   return (
     <Link
