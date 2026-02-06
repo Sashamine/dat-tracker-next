@@ -29,8 +29,8 @@ export const ethCompanies: Company[] = [
     stakingAsOf: "2026-02-01",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    quarterlyBurnUsd: 223_436_000,  // SEC 10-Q Q1 FY2026: G&A expenses $223.4M/qtr
-    burnSource: "SEC 10-Q (filed 2026-01-13): GeneralAndAdministrativeExpense $223,436,000 (2025-09-01 to 2025-11-30)",
+    quarterlyBurnUsd: 5_000_000,  // Estimated ~$20M/yr opex; 10-Q shows $223M G&A but likely includes brokerage fees on $10B ETH purchases
+    burnSource: "Estimated - SEC 10-Q G&A ($223M) appears inflated by ETH transaction costs",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
