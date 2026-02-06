@@ -2,7 +2,7 @@
   "ticker": "RIOT",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-06T18:45:01.530Z",
+  "lastUpdated": "2026-02-06T19:00:02.517Z",
   "prices": [
     {
       "date": "2021-01-04",
@@ -10343,6 +10343,15 @@
       "low": 12.81,
       "close": 14.355,
       "volume": 17058982
+    },
+    {
+      "date": "2026-02-06",
+      "time": "12:00",
+      "open": 13.01,
+      "high": 14.43,
+      "low": 12.81,
+      "close": 14.23,
+      "volume": 17489570
     }
   ]
 }
