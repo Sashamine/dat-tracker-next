@@ -101,9 +101,9 @@ export function FilingCite({
   anchor?: string;  // e.g., "btc-holdings", "operating-burn"
   filingType?: "8-K" | "10-Q" | "10-K" | "S-3" | "424B3";
 }) {
-  // Prefer anchor over highlight for reliable scroll-to behavior
+  // Use query param for anchor (works with iframe), fall back to highlight
   const suffix = anchor 
-    ? `#${anchor}` 
+    ? `?anchor=${anchor}` 
     : highlight 
       ? `?highlight=${encodeURIComponent(highlight)}` 
       : "";

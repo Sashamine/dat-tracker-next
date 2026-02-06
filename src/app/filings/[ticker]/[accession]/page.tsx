@@ -9,6 +9,7 @@ interface PageProps {
   }>;
   searchParams: Promise<{
     highlight?: string;
+    anchor?: string;  // e.g., "btc-holdings", "operating-burn"
   }>;
 }
 
@@ -24,7 +25,7 @@ const FILING_TYPE_LABELS: Record<FilingType, string> = {
 
 export default async function FilingViewerPage({ params, searchParams }: PageProps) {
   const { ticker, accession } = await params;
-  const { highlight } = await searchParams;
+  const { highlight, anchor } = await searchParams;
   
   const tickerUpper = ticker.toUpperCase();
   const tickerLower = ticker.toLowerCase();
@@ -98,10 +99,24 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       }
     }
     
-    // Inject scroll-to-highlight script and basic styling
-    const scrollScript = highlight ? `
+    // Inject scroll-to-highlight/anchor script
+    const scrollScript = (highlight || anchor) ? `
       <script>
         window.addEventListener('load', function() {
+          // Try anchor first (e.g., btc-holdings, operating-burn)
+          ${anchor ? `
+          const anchorEl = document.getElementById('${anchor}');
+          if (anchorEl) {
+            anchorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Add highlight styling
+            anchorEl.style.background = 'linear-gradient(to right, #fef08a, #fde047)';
+            anchorEl.style.outline = '3px solid #eab308';
+            anchorEl.style.outlineOffset = '2px';
+            anchorEl.style.borderRadius = '4px';
+            return;
+          }
+          ` : ''}
+          // Fall back to highlight ID
           const highlight = document.getElementById('highlight');
           if (highlight) {
             highlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
