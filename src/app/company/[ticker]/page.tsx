@@ -504,7 +504,14 @@ export default function CompanyPage() {
               <p className="text-xs text-gray-400">
                 {displayCompany.asset}/yr ({(displayCompany.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
               </p>
-              {displayCompany.stakingSourceUrl && (
+              {displayCompany.ticker === "BMNR" ? (
+                <FilingCite 
+                  ticker="BMNR" 
+                  date="2026-02-01" 
+                  anchor="staking"
+                  filingType="8-K"
+                />
+              ) : displayCompany.stakingSourceUrl && (
                 <a
                   href={displayCompany.stakingSourceUrl}
                   target="_blank"
@@ -522,7 +529,14 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Operating Burn</p>
               <p className="text-2xl font-bold text-red-600">
                 -${(displayCompany.quarterlyBurnUsd * 4 / 1e6).toFixed(0)}M
-                {displayCompany.burnAsOf && (
+                {displayCompany.ticker === "BMNR" ? (
+                  <FilingCite 
+                    ticker="BMNR" 
+                    date="2026-01-13" 
+                    anchor="operating-burn"
+                    filingType="10-Q"
+                  />
+                ) : displayCompany.burnAsOf && (
                   <FilingCite 
                     ticker={displayCompany.ticker} 
                     date={displayCompany.burnAsOf} 
