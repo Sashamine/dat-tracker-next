@@ -29,8 +29,8 @@ export const ethCompanies: Company[] = [
     stakingAsOf: "2026-02-01",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    quarterlyBurnUsd: 2_500_000,
-    burnSource: "SEC 10-Q (filed 2026-01-13): NetCashUsedInOperatingActivities $228,356,000 (2025-09-01 to 2025-11-30)",
+    quarterlyBurnUsd: 223_436_000,  // SEC 10-Q Q1 FY2026: G&A expenses $223.4M/qtr
+    burnSource: "SEC 10-Q (filed 2026-01-13): GeneralAndAdministrativeExpense $223,436,000 (2025-09-01 to 2025-11-30)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,  // Needs verification - swamped by ATM/ETH activity
