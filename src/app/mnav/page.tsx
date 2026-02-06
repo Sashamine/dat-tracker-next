@@ -231,52 +231,6 @@ export default function MNAVPage() {
   // Use shared mNAV stats hook - treasuries only for mNAV stats
   const mnavStats = useMNAVStats(treasuries, prices);
 
-  // Calculate holdings statistics
-  const holdingsStats = useMemo(() => {
-    const byAsset: Record<string, { total: number; companies: { ticker: string; holdings: number }[] }> = {};
-
-    companies.forEach((company) => {
-      if (company.holdings > 0) {
-        if (!byAsset[company.asset]) {
-          byAsset[company.asset] = { total: 0, companies: [] };
-        }
-        byAsset[company.asset].total += company.holdings;
-        byAsset[company.asset].companies.push({ ticker: company.ticker, holdings: company.holdings });
-      }
-    });
-
-    // Sort each asset's companies by holdings descending
-    Object.values(byAsset).forEach((assetData) => {
-      assetData.companies.sort((a, b) => b.holdings - a.holdings);
-    });
-
-    // Calculate concentration (top 5 as % of total) for each asset
-    const concentration: Record<string, number> = {};
-    Object.keys(byAsset).forEach((asset) => {
-      const { total, companies: assetCompanies } = byAsset[asset];
-      if (total > 0) {
-        const top5Holdings = assetCompanies.slice(0, 5).reduce((sum, c) => sum + c.holdings, 0);
-        concentration[asset] = (top5Holdings / total) * 100;
-      } else {
-        concentration[asset] = 0;
-      }
-    });
-
-    // Get sorted list of assets by total holdings
-    const sortedAssets = Object.keys(byAsset).sort((a, b) => byAsset[b].total - byAsset[a].total);
-
-    return { byAsset, concentration, sortedAssets };
-  }, [companies]);
-
-  // Calculate company counts by asset
-  const companyCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    companies.forEach((company) => {
-      counts[company.asset] = (counts[company.asset] || 0) + 1;
-    });
-    return counts;
-  }, [companies]);
-
   // Calculate holdings growth statistics (filtered by selected asset and time period)
   const growthStats = useMemo(() => {
     // Convert growth period to days
@@ -336,43 +290,6 @@ export default function MNAVPage() {
       missingTickers,  // Companies without growth data
     };
   }, [companies, growthPeriod, selectedAsset]);
-
-  // Calculate dilution statistics (filtered by selected asset)
-  const dilutionStats = useMemo(() => {
-    const tickerSet = new Set(companies.map(c => c.ticker));
-    const dilutionRates: { ticker: string; rate: number }[] = [];
-    const companiesWithData = new Set<string>();
-
-    Object.entries(HOLDINGS_HISTORY).forEach(([ticker, data]) => {
-      // Only include companies that match the selected asset filter
-      if (!tickerSet.has(ticker)) return;
-      
-      const history = data.history;
-      if (history.length < 2) return;
-
-      // Get last two data points to calculate recent dilution
-      const recent = history[history.length - 1];
-      const previous = history[history.length - 2];
-
-      if (previous.sharesOutstandingDiluted > 0) {
-        const dilutionRate = ((recent.sharesOutstandingDiluted - previous.sharesOutstandingDiluted) / previous.sharesOutstandingDiluted) * 100;
-        dilutionRates.push({ ticker, rate: dilutionRate });
-        companiesWithData.add(ticker);
-      }
-    });
-
-    // Sort by dilution rate descending
-    dilutionRates.sort((a, b) => b.rate - a.rate);
-
-    const avgDilution = dilutionRates.length > 0
-      ? dilutionRates.reduce((sum, d) => sum + d.rate, 0) / dilutionRates.length
-      : 0;
-    const highDilution = dilutionRates.filter((d) => d.rate > 10);
-    const insufficientData = companies.filter(c => !companiesWithData.has(c.ticker)).length;
-    const missingTickers = companies.filter(c => !companiesWithData.has(c.ticker)).map(c => c.ticker);
-
-    return { avgDilution, highDilution, total: dilutionRates.length, insufficientData, totalCompanies: companies.length, allRates: dilutionRates, missingTickers };
-  }, [companies]);
 
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
     { value: "1d", label: "24H" },
@@ -452,35 +369,12 @@ export default function MNAVPage() {
           )}
         </div>
 
-        {/* Holdings Statistics */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Total Holdings</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
-            {holdingsStats.sortedAssets.slice(0, 5).map((asset) => (
-              <div key={asset} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{asset}</p>
-                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                  {holdingsStats.byAsset[asset].total.toLocaleString()}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {companyCounts[asset] || 0} companies
-                </p>
-                {holdingsStats.concentration[asset] > 0 && (
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                    Top 5: {holdingsStats.concentration[asset].toFixed(0)}%
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Holdings Growth Statistics */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <div className="flex items-baseline gap-2">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Holdings Growth
+                Holdings Per Share Growth
               </h2>
               {growthStats.insufficientData > 0 && (
                 <span className="text-xs text-amber-600 dark:text-amber-400">
@@ -507,7 +401,7 @@ export default function MNAVPage() {
             </div>
           </div>
           <StatTooltip 
-            title={`Holdings Growth (${growthPeriod === "all" ? "All Time" : growthPeriod.toUpperCase()})`}
+            title={`Holdings Per Share Growth (${growthPeriod === "all" ? "All Time" : growthPeriod.toUpperCase()})`}
             data={[
               ...growthStats.leaderboard.map(m => ({
                 label: m.ticker,
@@ -556,63 +450,6 @@ export default function MNAVPage() {
                   </div>
                 )}
               </div>
-            </div>
-          </StatTooltip>
-        </div>
-
-        {/* Dilution Statistics */}
-        <div className="mb-8">
-          <div className="flex items-baseline gap-2 mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Share Dilution</h2>
-            {dilutionStats.insufficientData > 0 && (
-              <span className="text-xs text-amber-600 dark:text-amber-400">
-                {dilutionStats.insufficientData} of {dilutionStats.totalCompanies} companies lack sufficient history
-              </span>
-            )}
-          </div>
-          <StatTooltip
-            title="All Companies - Share Dilution"
-            data={[
-              ...dilutionStats.allRates.map(d => ({
-                label: d.ticker,
-                value: `${d.rate >= 0 ? '+' : ''}${d.rate.toFixed(1)}%`,
-              })),
-              ...dilutionStats.missingTickers.map(t => ({
-                label: t,
-                value: 'No data',
-              }))
-            ]}
-          >
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg Dilution Rate</p>
-                <p className={cn("text-xl font-bold", dilutionStats.avgDilution > 5 ? "text-red-600" : "text-gray-900 dark:text-gray-100")}>
-                  {dilutionStats.avgDilution >= 0 ? "+" : ""}{dilutionStats.avgDilution.toFixed(1)}%
-                </p>
-                <p className="text-xs text-gray-500">per filing period</p>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">High Dilution ({">"}10%)</p>
-                <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                  {dilutionStats.highDilution.length}/{dilutionStats.total}
-                </p>
-                <p className="text-xs text-gray-500">companies</p>
-                {dilutionStats.insufficientData > 0 && (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                    +{dilutionStats.insufficientData} no data
-                  </p>
-                )}
-              </div>
-              {dilutionStats.highDilution.length > 0 && (
-                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 col-span-2 lg:col-span-1">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">High Dilution List</p>
-                  <div className="text-sm text-red-600 space-y-0.5">
-                    {dilutionStats.highDilution.slice(0, 5).map((d) => (
-                      <p key={d.ticker}>{d.ticker}: +{d.rate.toFixed(0)}%</p>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </StatTooltip>
         </div>
