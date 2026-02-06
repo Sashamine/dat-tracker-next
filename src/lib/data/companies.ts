@@ -647,9 +647,9 @@ export const btcCompanies: Company[] = [
     btcMinedSource: "CleanSpark monthly production updates (annualized)",
     btcMinedSourceUrl: "https://ir.cleanspark.com/press-releases",
     btcMinedAsOf: "2025-12-31",
-    quarterlyBurnUsd: 16_566_000,
-    burnSource: "SEC 10-Q Q2 FY2025 XBRL: GeneralAndAdministrativeExpense (excl mining COGS)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000095017025015470/",
+    quarterlyBurnUsd: 19_400_760,  // Q3 2025 G&A
+    burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense $19,400,760 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829794&type=10-Q",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 250_000_000,
     hasOptions: true,
@@ -964,11 +964,10 @@ export const btcCompanies: Company[] = [
     website: "https://bitfufu.com",
     secCik: "0001921158",
     isMiner: true,
-    quarterlyBurnUsd: 15_000_000,
-    burnSource: "SEC 6-K H1 2025 XBRL: GeneralAndAdministrativeExpense",
+    quarterlyBurnUsd: 2_046_500,  // H1 2025: $4,093,000 / 2
+    burnSource: "SEC 6-K H1 2025 XBRL: GeneralAndAdministrativeExpense $4,093,000 (H1 2025) / 2",
     burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1921158&type=6-K",
     burnAsOf: "2025-06-30",
-    burnEstimated: true,
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
@@ -1357,10 +1356,10 @@ export const btcCompanies: Company[] = [
     btcMinedSource: "Company announcements (estimated from hashrate)",
     btcMinedSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
     btcMinedAsOf: "2025-11-05",
-    quarterlyBurnUsd: 15_000_000,
-    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $3,219,000 (2025-01-01 to 2025-03-31)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000121390025044194/",
-    burnAsOf: "2025-03-31",
+    quarterlyBurnUsd: 8_052_000,  // Q3 2025 G&A
+    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=10-Q",
+    burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     // Shares: 899,489,426 diluted per Q3 2025 10-Q
