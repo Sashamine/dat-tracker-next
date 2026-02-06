@@ -299,9 +299,13 @@ export default function MNAVPage() {
     // Filter by selected asset's companies
     const tickerSet = new Set(companies.map(c => c.ticker));
     const leaderboard = allLeaderboard.filter(m => tickerSet.has(m.ticker));
+    
+    // Count companies without sufficient history data
+    const companiesWithYieldData = new Set(leaderboard.map(m => m.ticker));
+    const insufficientData = companies.filter(c => !companiesWithYieldData.has(c.ticker)).length;
 
     if (leaderboard.length === 0) {
-      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null };
+      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, quarter: currentQuarter, best: null, worst: null, insufficientData, totalCompanies: companies.length };
     }
 
     const yields = leaderboard.map((m) => m.growthPct);
@@ -319,6 +323,8 @@ export default function MNAVPage() {
       quarter: currentQuarter,
       best: leaderboard[0],
       worst: leaderboard[leaderboard.length - 1],
+      insufficientData,
+      totalCompanies: companies.length,
     };
   }, [companies]);
 
@@ -326,6 +332,7 @@ export default function MNAVPage() {
   const dilutionStats = useMemo(() => {
     const tickerSet = new Set(companies.map(c => c.ticker));
     const dilutionRates: { ticker: string; rate: number }[] = [];
+    const companiesWithData = new Set<string>();
 
     Object.entries(HOLDINGS_HISTORY).forEach(([ticker, data]) => {
       // Only include companies that match the selected asset filter
@@ -341,6 +348,7 @@ export default function MNAVPage() {
       if (previous.sharesOutstandingDiluted > 0) {
         const dilutionRate = ((recent.sharesOutstandingDiluted - previous.sharesOutstandingDiluted) / previous.sharesOutstandingDiluted) * 100;
         dilutionRates.push({ ticker, rate: dilutionRate });
+        companiesWithData.add(ticker);
       }
     });
 
@@ -348,8 +356,9 @@ export default function MNAVPage() {
       ? dilutionRates.reduce((sum, d) => sum + d.rate, 0) / dilutionRates.length
       : 0;
     const highDilution = dilutionRates.filter((d) => d.rate > 10);
+    const insufficientData = companies.filter(c => !companiesWithData.has(c.ticker)).length;
 
-    return { avgDilution, highDilution, total: dilutionRates.length };
+    return { avgDilution, highDilution, total: dilutionRates.length, insufficientData, totalCompanies: companies.length };
   }, [companies]);
 
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
@@ -455,9 +464,16 @@ export default function MNAVPage() {
 
         {/* Quarterly Yield Statistics */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            Treasury Yield ({yieldStats.quarter})
-          </h2>
+          <div className="flex items-baseline gap-2 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Treasury Yield ({yieldStats.quarter})
+            </h2>
+            {yieldStats.insufficientData > 0 && (
+              <span className="text-xs text-amber-600 dark:text-amber-400">
+                {yieldStats.insufficientData} of {yieldStats.totalCompanies} companies lack sufficient history
+              </span>
+            )}
+          </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Median Yield</p>
@@ -494,7 +510,14 @@ export default function MNAVPage() {
 
         {/* Dilution Statistics */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Share Dilution</h2>
+          <div className="flex items-baseline gap-2 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Share Dilution</h2>
+            {dilutionStats.insufficientData > 0 && (
+              <span className="text-xs text-amber-600 dark:text-amber-400">
+                {dilutionStats.insufficientData} of {dilutionStats.totalCompanies} companies lack sufficient history
+              </span>
+            )}
+          </div>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg Dilution Rate</p>
