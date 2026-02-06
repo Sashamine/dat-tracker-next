@@ -69,6 +69,22 @@ const FILES_TO_UPDATE = [
     searchPattern: 'BTC Update<', 
     description: 'Feb 2 BTC update (alt)'
   },
+  // Additional 8-Ks with BTC updates (not in holdings-history but linked from filings)
+  {
+    file: '8k-2025-11-03-261714.html',
+    searchPattern: 'BTC Update<',
+    description: 'Nov 3 2025 BTC update'
+  },
+  {
+    file: '8k-2025-11-03a.html',
+    searchPattern: 'BTC Update<',
+    description: 'Nov 3 2025 BTC update (a)'
+  },
+  {
+    file: '8k-2025-11-03b.html',
+    searchPattern: 'BTC Update<',
+    description: 'Nov 3 2025 BTC update (b)'
+  },
 ];
 
 function addAnchorToFile(filename: string, searchPattern: string): boolean {
