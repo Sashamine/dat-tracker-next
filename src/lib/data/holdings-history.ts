@@ -48,37 +48,37 @@ const MSTR_HISTORY: HoldingsSnapshot[] = [
   // 2020 - Initial purchases (split-adjusted: original * 10)
   // Stock prices are split-adjusted (divide pre-split by 10)
   { date: "2020-09-14", holdings: 38250, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.000390, stockPrice: 15.0, source: "8-K Initial BTC purchase", sourceUrl: "/filings/mstr/8k-2020-09-14-244732", sourceType: "sec-filing" },
-  { date: "2020-12-21", holdings: 70470, sharesOutstandingDiluted: 103_000_000, holdingsPerShare: 0.000684, stockPrice: 35.0, source: "Q4 2020 10-K", sourceUrl: "/filings/mstr/10-K-2021-02-12", sourceType: "sec-filing" },
+  { date: "2020-12-21", holdings: 70470, sharesOutstandingDiluted: 103_000_000, holdingsPerShare: 0.000684, stockPrice: 35.0, source: "Q4 2020 10-K", sourceUrl: "/filings/mstr/10-K-2021-02-12#btc-holdings", sourceType: "sec-filing" },
 
   // 2021 (split-adjusted)
-  { date: "2021-03-31", holdings: 91326, sharesOutstandingDiluted: 105_000_000, holdingsPerShare: 0.000870, stockPrice: 64.0, source: "Q1 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-04-29", sourceType: "sec-filing" },
-  { date: "2021-06-30", holdings: 105085, sharesOutstandingDiluted: 109_000_000, holdingsPerShare: 0.000964, stockPrice: 63.0, source: "Q2 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-07-29", sourceType: "sec-filing" },
-  { date: "2021-09-30", holdings: 114042, sharesOutstandingDiluted: 112_000_000, holdingsPerShare: 0.001018, stockPrice: 60.0, source: "Q3 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-10-28", sourceType: "sec-filing" },
-  { date: "2021-12-31", holdings: 124391, sharesOutstandingDiluted: 115_000_000, holdingsPerShare: 0.001082, stockPrice: 55.0, source: "Q4 2021 10-K", sourceUrl: "/filings/mstr/10-K-2022-02-16", sourceType: "sec-filing" },
+  { date: "2021-03-31", holdings: 91326, sharesOutstandingDiluted: 105_000_000, holdingsPerShare: 0.000870, stockPrice: 64.0, source: "Q1 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-04-29#btc-holdings", sourceType: "sec-filing" },
+  { date: "2021-06-30", holdings: 105085, sharesOutstandingDiluted: 109_000_000, holdingsPerShare: 0.000964, stockPrice: 63.0, source: "Q2 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-07-29#btc-holdings", sourceType: "sec-filing" },
+  { date: "2021-09-30", holdings: 114042, sharesOutstandingDiluted: 112_000_000, holdingsPerShare: 0.001018, stockPrice: 60.0, source: "Q3 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-10-28#btc-holdings", sourceType: "sec-filing" },
+  { date: "2021-12-31", holdings: 124391, sharesOutstandingDiluted: 115_000_000, holdingsPerShare: 0.001082, stockPrice: 55.0, source: "Q4 2021 10-K", sourceUrl: "/filings/mstr/10-K-2022-02-16#btc-holdings", sourceType: "sec-filing" },
 
   // 2022 (split-adjusted) - Bear market
-  { date: "2022-03-31", holdings: 129218, sharesOutstandingDiluted: 117_000_000, holdingsPerShare: 0.001104, stockPrice: 44.0, source: "Q1 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-05-03", sourceType: "sec-filing" },
-  { date: "2022-06-30", holdings: 129699, sharesOutstandingDiluted: 118_000_000, holdingsPerShare: 0.001099, stockPrice: 17.0, source: "Q2 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-08-02", sourceType: "sec-filing" },
-  { date: "2022-09-30", holdings: 130000, sharesOutstandingDiluted: 119_000_000, holdingsPerShare: 0.001092, stockPrice: 21.0, source: "Q3 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-11-01", sourceType: "sec-filing" },
-  { date: "2022-12-31", holdings: 132500, sharesOutstandingDiluted: 120_000_000, holdingsPerShare: 0.001104, stockPrice: 14.0, source: "Q4 2022 10-K", sourceUrl: "/filings/mstr/10-K-2023-02-16", sourceType: "sec-filing" },
+  { date: "2022-03-31", holdings: 129218, sharesOutstandingDiluted: 117_000_000, holdingsPerShare: 0.001104, stockPrice: 44.0, source: "Q1 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-05-03#btc-holdings", sourceType: "sec-filing" },
+  { date: "2022-06-30", holdings: 129699, sharesOutstandingDiluted: 118_000_000, holdingsPerShare: 0.001099, stockPrice: 17.0, source: "Q2 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-08-02#btc-holdings", sourceType: "sec-filing" },
+  { date: "2022-09-30", holdings: 130000, sharesOutstandingDiluted: 119_000_000, holdingsPerShare: 0.001092, stockPrice: 21.0, source: "Q3 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-11-01#btc-holdings", sourceType: "sec-filing" },
+  { date: "2022-12-31", holdings: 132500, sharesOutstandingDiluted: 120_000_000, holdingsPerShare: 0.001104, stockPrice: 14.0, source: "Q4 2022 10-K", sourceUrl: "/filings/mstr/10-K-2023-02-16#btc-holdings", sourceType: "sec-filing" },
 
   // 2023 (split-adjusted, SEC EDGAR data) - Recovery
-  { date: "2023-03-31", holdings: 140000, sharesOutstandingDiluted: 118_340_000, holdingsPerShare: 0.001183, stockPrice: 28.0, source: "Q1 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-05-01", sourceType: "sec-filing" },
-  { date: "2023-06-30", holdings: 152800, sharesOutstandingDiluted: 117_390_000, holdingsPerShare: 0.001302, stockPrice: 34.0, source: "Q2 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-08-01", sourceType: "sec-filing" },
-  { date: "2023-09-30", holdings: 158245, sharesOutstandingDiluted: 116_648_000, holdingsPerShare: 0.001357, stockPrice: 34.0, source: "Q3 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-11-01", sourceType: "sec-filing" },
-  { date: "2023-12-31", holdings: 189150, sharesOutstandingDiluted: 136_706_000, holdingsPerShare: 0.001384, stockPrice: 63.0, source: "Q4 2023 10-K", sourceUrl: "/filings/mstr/10-K-2024-02-15", sourceType: "sec-filing" },
+  { date: "2023-03-31", holdings: 140000, sharesOutstandingDiluted: 118_340_000, holdingsPerShare: 0.001183, stockPrice: 28.0, source: "Q1 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-05-01#btc-holdings", sourceType: "sec-filing" },
+  { date: "2023-06-30", holdings: 152800, sharesOutstandingDiluted: 117_390_000, holdingsPerShare: 0.001302, stockPrice: 34.0, source: "Q2 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-08-01#btc-holdings", sourceType: "sec-filing" },
+  { date: "2023-09-30", holdings: 158245, sharesOutstandingDiluted: 116_648_000, holdingsPerShare: 0.001357, stockPrice: 34.0, source: "Q3 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-11-01#btc-holdings", sourceType: "sec-filing" },
+  { date: "2023-12-31", holdings: 189150, sharesOutstandingDiluted: 136_706_000, holdingsPerShare: 0.001384, stockPrice: 63.0, source: "Q4 2023 10-K", sourceUrl: "/filings/mstr/10-K-2024-02-15#btc-holdings", sourceType: "sec-filing" },
 
   // 2024 - Aggressive accumulation (SEC EDGAR diluted split-adjusted data)
-  { date: "2024-03-31", holdings: 214246, sharesOutstandingDiluted: 185_560_000, holdingsPerShare: 0.001155, stockPrice: 180.0, source: "Q1 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-05-01", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 226500, sharesOutstandingDiluted: 178_610_000, holdingsPerShare: 0.001268, stockPrice: 138.0, source: "Q2 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-08-06", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 252220, sharesOutstandingDiluted: 197_270_000, holdingsPerShare: 0.001278, stockPrice: 188.0, source: "Q3 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-10-31", sourceType: "sec-filing" },
+  { date: "2024-03-31", holdings: 214246, sharesOutstandingDiluted: 185_560_000, holdingsPerShare: 0.001155, stockPrice: 180.0, source: "Q1 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-05-01#btc-holdings", sourceType: "sec-filing" },
+  { date: "2024-06-30", holdings: 226500, sharesOutstandingDiluted: 178_610_000, holdingsPerShare: 0.001268, stockPrice: 138.0, source: "Q2 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-08-06#btc-holdings", sourceType: "sec-filing" },
+  { date: "2024-09-30", holdings: 252220, sharesOutstandingDiluted: 197_270_000, holdingsPerShare: 0.001278, stockPrice: 188.0, source: "Q3 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-10-31#btc-holdings", sourceType: "sec-filing" },
   { date: "2024-11-18", holdings: 331200, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.001505, stockPrice: 470.0, source: "8-K Nov 2024 - mNAV peak ~3.4x", sourceUrl: "/filings/mstr/8k-2024-11-18", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 446400, sharesOutstandingDiluted: 257_640_000, holdingsPerShare: 0.001733, stockPrice: 330.0, source: "Q4 2024 10-K", sourceUrl: "/filings/mstr/10-K-2025-02-18", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 446400, sharesOutstandingDiluted: 257_640_000, holdingsPerShare: 0.001733, stockPrice: 330.0, source: "Q4 2024 10-K", sourceUrl: "/filings/mstr/10-K-2025-02-18#btc-holdings", sourceType: "sec-filing" },
 
   // 2025 - Continued 21/21 plan execution (SEC EDGAR diluted shares)
-  { date: "2025-03-31", holdings: 553555, sharesOutstandingDiluted: 290_090_000, holdingsPerShare: 0.001908, stockPrice: 280.0, source: "Q1 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-05-05", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 580250, sharesOutstandingDiluted: 306_760_000, holdingsPerShare: 0.001891, stockPrice: 350.0, source: "Q2 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-08-05", sourceType: "sec-filing" },
-  { date: "2025-09-30", holdings: 640808, sharesOutstandingDiluted: 315_390_000, holdingsPerShare: 0.002032, stockPrice: 200.0, source: "Q3 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-11-03", sourceType: "sec-filing" },
+  { date: "2025-03-31", holdings: 553555, sharesOutstandingDiluted: 290_090_000, holdingsPerShare: 0.001908, stockPrice: 280.0, source: "Q1 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-05-05#btc-holdings", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 580250, sharesOutstandingDiluted: 306_760_000, holdingsPerShare: 0.001891, stockPrice: 350.0, source: "Q2 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-08-05#btc-holdings", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 640808, sharesOutstandingDiluted: 315_390_000, holdingsPerShare: 0.002032, stockPrice: 200.0, source: "Q3 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-11-03#btc-holdings", sourceType: "sec-filing" },
   // 2026 - Weekly 8-K filings
   { date: "2025-12-31", holdings: 672500, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.002038, stockPrice: 280.0, source: "Back-calc from Jan 5 8-K", sourceUrl: "/filings/mstr/8k-2026-01-05", sourceType: "sec-filing" },
   { date: "2026-01-12", holdings: 687410, sharesOutstandingDiluted: 345_000_000, holdingsPerShare: 0.001993, stockPrice: 340.0, source: "SEC 8-K Jan 12", sourceUrl: "/filings/mstr/8k-2026-01-12", sharesSource: "ESTIMATE: ATM dilution", methodology: "Q3 2025 diluted (315M) + estimated ATM issuance (~30M shares)", confidence: "medium", confidenceRange: { floor: 330_000_000, ceiling: 360_000_000 }, sourceType: "sec-filing" },
