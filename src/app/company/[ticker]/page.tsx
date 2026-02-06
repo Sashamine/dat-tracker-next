@@ -757,6 +757,13 @@ export default function CompanyPage() {
                       anchor="btc-holdings"
                       filingType="8-K"
                     />
+                  ) : displayCompany.ticker === "BMNR" && displayCompany.holdingsSource === "sec-filing" ? (
+                    <FilingCite 
+                      ticker="BMNR" 
+                      date="2026-02-01" 
+                      anchor="holdings"
+                      filingType="8-K"
+                    />
                   ) : displayCompany.holdingsSourceUrl && displayCompany.holdingsSource === "sec-filing" && (
                     <FilingCite 
                       ticker={displayCompany.ticker} 
@@ -833,6 +840,13 @@ export default function CompanyPage() {
                         ticker="MSTR" 
                         date="2026-01-05" 
                         anchor="cash-reserves"
+                        filingType="8-K"
+                      />
+                    ) : displayCompany.ticker === "BMNR" && displayCompany.cashAsOf ? (
+                      <FilingCite 
+                        ticker="BMNR" 
+                        date="2026-02-01" 
+                        anchor="holdings"
                         filingType="8-K"
                       />
                     ) : (
@@ -1237,14 +1251,20 @@ export default function CompanyPage() {
                   <p className="text-sm text-gray-500 dark:text-gray-400">Avg Cost Basis</p>
                   <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
                     ${displayCompany.costBasisAvg.toLocaleString()}
-                    {displayCompany.ticker === "MSTR" && (
+                    {displayCompany.ticker === "MSTR" ? (
                       <FilingCite 
                         ticker="MSTR" 
                         date="2026-02-02" 
                         anchor="cost-basis"
                         filingType="8-K"
                       />
-                    )}
+                    ) : displayCompany.ticker === "BMNR" ? (
+                      <FilingCite 
+                        ticker="BMNR" 
+                        date="2026-01-13" 
+                        filingType="10-Q"
+                      />
+                    ) : null}
                   </p>
                 </div>
                 <div className="text-right">
