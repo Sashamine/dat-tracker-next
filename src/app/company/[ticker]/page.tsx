@@ -552,7 +552,16 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-2xl font-bold text-amber-600">
                     ${(totalObligations / 1e6).toFixed(0)}M
-                    <SourceLink url={displayCompany.cashObligationsSourceUrl} label={displayCompany.cashObligationsSource} />
+                    {displayCompany.ticker === "MSTR" ? (
+                      <FilingCite 
+                        ticker="MSTR" 
+                        date="2025-12-01" 
+                        anchor="cash-obligations"
+                        filingType="8-K"
+                      />
+                    ) : (
+                      <SourceLink url={displayCompany.cashObligationsSourceUrl} label={displayCompany.cashObligationsSource} />
+                    )}
                   </p>
                   <p className="text-xs text-gray-400">
                     {annualBurn > 0 && (prefDividends > 0 || debtInterest > 0) ? (
