@@ -166,6 +166,18 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
           .badge-8k { background: #dbeafe; color: #1d4ed8; }
           .badge-10k { background: #dcfce7; color: #16a34a; }
           .badge-10q { background: #fef3c7; color: #d97706; }
+          /* Highlight anchor targets (btc-holdings, operating-burn, etc.) */
+          :target {
+            background: linear-gradient(to right, #fef08a, #fde047) !important;
+            outline: 3px solid #eab308;
+            outline-offset: 2px;
+            border-radius: 4px;
+            animation: pulse-highlight 2s ease-in-out;
+          }
+          @keyframes pulse-highlight {
+            0%, 100% { outline-color: #eab308; }
+            50% { outline-color: #facc15; }
+          }
           .filing-content {
             background: white;
             border: 1px solid #e5e7eb;
