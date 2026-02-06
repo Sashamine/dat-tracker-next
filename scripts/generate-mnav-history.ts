@@ -319,24 +319,27 @@ async function generateHistoricalMNAV(): Promise<void> {
       const cryptoPrice = cryptoPrices[companyData.asset];
       if (!cryptoPrice || cryptoPrice <= 0) continue;
 
-      // Get stock price
-      const stockPrice = await fetchStockPrice(ticker, targetDate);
-      await delay(100);
+      // Use stored stock price first, fallback to Yahoo Finance
+      let stockPrice = holdings.stockPrice;
+      
+      if (!stockPrice || stockPrice <= 0) {
+        // Try fetching from Yahoo Finance as fallback
+        stockPrice = await fetchStockPrice(ticker, targetDate);
+        await delay(100);
+      }
 
       if (!stockPrice || stockPrice <= 0) {
         console.log(`  ${ticker}: No stock price found`);
         continue;
       }
 
-      // Calculate market cap
-      const marketCap = stockPrice * holdings.sharesOutstandingDiluted;
+      // Use stored market cap or calculate from price × shares
+      const marketCap = holdings.marketCap || (stockPrice * holdings.sharesOutstandingDiluted);
 
-      // Get balance sheet
-      const balanceSheet = await fetchBalanceSheet(ticker, targetDate);
-      await delay(200);
-
-      const totalDebt = balanceSheet?.totalDebt || 0;
-      const cash = balanceSheet?.cash || 0;
+      // Skip balance sheet fetch for now - use simple mNAV (marketCap / NAV)
+      // TODO: Add debt/cash to holdings-history for EV-based mNAV
+      const totalDebt = 0;
+      const cash = 0;
 
       // Calculate EV and mNAV
       const enterpriseValue = marketCap + totalDebt - cash;

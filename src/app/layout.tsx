@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { BottomNavigation } from "@/components/bottom-navigation";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
+import { SiteJsonLd, DatasetJsonLd, FAQJsonLd } from "@/components/json-ld";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -44,6 +45,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <SiteJsonLd />
+        <DatasetJsonLd />
+        <FAQJsonLd />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
