@@ -301,7 +301,15 @@ async function generateHistoricalMNAV(): Promise<void> {
 
   const results: HistoricalMNAVSnapshot[] = [];
 
+  const today = new Date().toISOString().split("T")[0];
+  
   for (const targetDate of TARGET_DATES) {
+    // Skip future dates
+    if (targetDate > today) {
+      console.log(`\nSkipping future date: ${targetDate}`);
+      continue;
+    }
+    
     console.log(`\nProcessing ${targetDate}...`);
 
     const cryptoPrices = HISTORICAL_CRYPTO_PRICES[targetDate];
@@ -349,8 +357,8 @@ async function generateHistoricalMNAV(): Promise<void> {
 
       const mnav = enterpriseValue / cryptoNav;
 
-      // Filter outliers
-      if (mnav <= 0 || mnav > 50) {
+      // Filter outliers - mNAV > 10x is suspicious for sector median
+      if (mnav <= 0 || mnav > 10) {
         console.log(`  ${ticker}: Outlier mNAV ${mnav.toFixed(2)}x`);
         continue;
       }
@@ -373,8 +381,9 @@ async function generateHistoricalMNAV(): Promise<void> {
       console.log(`  ${ticker}: ${mnav.toFixed(2)}x mNAV`);
     }
 
-    if (companies.length === 0) {
-      console.log(`  No valid companies for ${targetDate}`);
+    // Require minimum 3 companies for reliable median
+    if (companies.length < 3) {
+      console.log(`  Only ${companies.length} companies for ${targetDate} - need at least 3`);
       continue;
     }
 

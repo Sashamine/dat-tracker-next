@@ -319,14 +319,16 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
 // Q3 2025 10-Q: 1,056.7 BTC + 70 BTC collateral, fair value $120.5M
 // ATM paused Dec 22, 2025 through Jun 30, 2026
+// KULR had 1-for-8 reverse split in June 2025
+// All shares below are SPLIT-ADJUSTED to match FMP's split-adjusted stock prices
 const KULR_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 214_227_808, holdingsPerShare: 0.00000101, source: "Initial BTC purchase 8-K", sourceType: "sec-filing" },
-  { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 240_000_000, holdingsPerShare: 0.00000179, source: "8-K filing", sourceType: "sec-filing" },
-  { date: "2025-01-21", holdings: 510, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.00000196, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-004744", sourceType: "sec-filing" },
-  { date: "2025-02-11", holdings: 610.3, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.00000218, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-011205", sourceType: "sec-filing" },
-  { date: "2025-03-25", holdings: 668.3, sharesOutstandingDiluted: 284_389_637, holdingsPerShare: 0.00000235, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-027569", sourceType: "sec-filing" },
-  { date: "2025-05-20", holdings: 800.3, sharesOutstandingDiluted: 298_466_335, holdingsPerShare: 0.00000268, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-050769", sourceType: "sec-filing" },
-  // Post reverse split (1-for-8) - SEC shows split-adjusted shares
+  { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 26_778_476, holdingsPerShare: 0.00000811, source: "Initial BTC purchase 8-K (split-adj)", sourceType: "sec-filing" },
+  { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.00001435, source: "8-K filing (split-adj)", sourceType: "sec-filing" },
+  { date: "2025-01-21", holdings: 510, sharesOutstandingDiluted: 32_500_000, holdingsPerShare: 0.00001569, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-004744", sourceType: "sec-filing" },
+  { date: "2025-02-11", holdings: 610.3, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 0.00001744, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-011205", sourceType: "sec-filing" },
+  { date: "2025-03-25", holdings: 668.3, sharesOutstandingDiluted: 35_548_705, holdingsPerShare: 0.00001880, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-027569", sourceType: "sec-filing" },
+  { date: "2025-05-20", holdings: 800.3, sharesOutstandingDiluted: 37_308_292, holdingsPerShare: 0.00002145, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-050769", sourceType: "sec-filing" },
+  // Post reverse split (1-for-8) - shares already split-adjusted
   { date: "2025-06-23", holdings: 920, sharesOutstandingDiluted: 41_108_543, holdingsPerShare: 0.0000224, source: "8-K reverse split + BTC", sourceUrl: "/filings/kulr/0001104659-25-063716", sourceType: "sec-filing" },
   { date: "2025-07-10", holdings: 1021, sharesOutstandingDiluted: 42_500_000, holdingsPerShare: 0.0000240, source: "8-K BTC update", sourceUrl: "/filings/kulr/0001104659-25-066854", sourceType: "sec-filing" },
   // Q3 2025: 10-Q shows 1,056.7 BTC held + 70 BTC as collateral = 1,127 total. Using 1,057 (excludes collateral).
