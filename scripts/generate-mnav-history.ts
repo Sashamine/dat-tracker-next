@@ -165,8 +165,113 @@ const HISTORICAL_CRYPTO_PRICES: Record<string, Record<string, number>> = {
   "2026-02-06": { BTC: 98500, ETH: 3420, SOL: 212, TAO: 515, LTC: 111, ZEC: 58, LINK: 23, SUI: 4.6, AVAX: 44, DOGE: 0.36, HYPE: 30, TRX: 0.26, XRP: 2.50, BNB: 722, HBAR: 0.33, ADA: 1.06 },
 };
 
-// Target dates
-const TARGET_DATES = Object.keys(HISTORICAL_CRYPTO_PRICES).sort();
+// CoinGecko IDs for assets
+const COINGECKO_IDS: Record<string, string> = {
+  BTC: "bitcoin",
+  ETH: "ethereum",
+  SOL: "solana",
+  TAO: "bittensor",
+  LTC: "litecoin",
+  ZEC: "zcash",
+  LINK: "chainlink",
+  SUI: "sui",
+  AVAX: "avalanche-2",
+  DOGE: "dogecoin",
+  HYPE: "hyperliquid",
+  TRX: "tron",
+  XRP: "ripple",
+  BNB: "binancecoin",
+  HBAR: "hedera-hashgraph",
+  ADA: "cardano",
+};
+
+// Cache for fetched crypto prices
+const cryptoPriceCache: Record<string, Record<string, number>> = {};
+
+// Fetch crypto prices from CoinGecko for a specific date
+async function fetchCryptoPrices(date: string): Promise<Record<string, number> | null> {
+  // Check cache first
+  if (cryptoPriceCache[date]) {
+    return cryptoPriceCache[date];
+  }
+  
+  // Check hardcoded prices
+  if (HISTORICAL_CRYPTO_PRICES[date]) {
+    return HISTORICAL_CRYPTO_PRICES[date];
+  }
+  
+  // Fetch from CoinGecko
+  const prices: Record<string, number> = {};
+  const [year, month, day] = date.split("-");
+  const cgDate = `${day}-${month}-${year}`; // CoinGecko uses DD-MM-YYYY
+  
+  for (const [asset, cgId] of Object.entries(COINGECKO_IDS)) {
+    try {
+      const url = `https://api.coingecko.com/api/v3/coins/${cgId}/history?date=${cgDate}&localization=false`;
+      const response = await fetch(url, {
+        headers: { "Accept": "application/json" }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.market_data?.current_price?.usd) {
+          prices[asset] = data.market_data.current_price.usd;
+        }
+      }
+      
+      // Rate limit - CoinGecko free tier is 10-30 calls/min
+      await delay(2500);
+    } catch (e) {
+      // Skip this asset
+    }
+  }
+  
+  if (Object.keys(prices).length > 0) {
+    cryptoPriceCache[date] = prices;
+    return prices;
+  }
+  
+  return null;
+}
+
+// Get all trading dates from stock price files
+function getAllTradingDates(): string[] {
+  const stockPricesDir = path.join(__dirname, "../data/stock-prices");
+  const allDates = new Set<string>();
+  
+  // Read a few major tickers to get trading dates
+  const majorTickers = ["MSTR", "MARA", "RIOT", "CLSK"];
+  
+  for (const ticker of majorTickers) {
+    const filePath = path.join(stockPricesDir, `${ticker}.json`);
+    if (fs.existsSync(filePath)) {
+      try {
+        const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+        for (const price of data.prices || []) {
+          if (price.date) {
+            allDates.add(price.date);
+          }
+        }
+      } catch (e) {
+        // Skip
+      }
+    }
+  }
+  
+  return Array.from(allDates).sort();
+}
+
+// Target dates - combine hardcoded + all trading dates from stock files
+const HARDCODED_DATES = Object.keys(HISTORICAL_CRYPTO_PRICES).sort();
+const ALL_TRADING_DATES = getAllTradingDates();
+
+// For full daily data, use ALL_TRADING_DATES
+// For quick generation with hardcoded crypto prices only, use HARDCODED_DATES
+const USE_DAILY_DATA = process.argv.includes("--daily");
+const TARGET_DATES = USE_DAILY_DATA ? ALL_TRADING_DATES : HARDCODED_DATES;
+
+console.log(`Mode: ${USE_DAILY_DATA ? "DAILY (fetching crypto prices)" : "WEEKLY (hardcoded prices)"}`);
+console.log(`Target dates: ${TARGET_DATES.length}\n`);
 
 // Rate limiting helper
 async function delay(ms: number): Promise<void> {
@@ -316,8 +421,11 @@ async function generateHistoricalMNAV(): Promise<void> {
     
     console.log(`\nProcessing ${targetDate}...`);
 
-    const cryptoPrices = HISTORICAL_CRYPTO_PRICES[targetDate];
-    if (!cryptoPrices) {
+    const cryptoPrices = USE_DAILY_DATA 
+      ? await fetchCryptoPrices(targetDate)
+      : HISTORICAL_CRYPTO_PRICES[targetDate];
+    
+    if (!cryptoPrices || Object.keys(cryptoPrices).length === 0) {
       console.log(`  No crypto prices for ${targetDate}`);
       continue;
     }
