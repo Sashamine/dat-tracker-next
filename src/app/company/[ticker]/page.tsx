@@ -533,7 +533,7 @@ export default function CompanyPage() {
                   <FilingCite 
                     ticker="BMNR" 
                     date="2026-01-13" 
-                    anchor="operating-burn"
+                    anchor="operating-burn-mda"
                     filingType="10-Q"
                   />
                 ) : displayCompany.burnAsOf && (
