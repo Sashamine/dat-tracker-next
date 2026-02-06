@@ -750,7 +750,14 @@ export default function CompanyPage() {
                 </p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
-                  {displayCompany.holdingsSourceUrl && displayCompany.holdingsSource === "sec-filing" && (
+                  {displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
+                    <FilingCite 
+                      ticker="MSTR" 
+                      date="2026-02-02" 
+                      anchor="btc-holdings"
+                      filingType="8-K"
+                    />
+                  ) : displayCompany.holdingsSourceUrl && displayCompany.holdingsSource === "sec-filing" && (
                     <FilingCite 
                       ticker={displayCompany.ticker} 
                       date={displayCompany.holdingsLastUpdated || ""} 
