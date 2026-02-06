@@ -2,7 +2,7 @@
   "ticker": "BITO",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-06T22:45:03.317Z",
+  "lastUpdated": "2026-02-06T23:00:01.775Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4436,6 +4436,15 @@
       "low": 9.27,
       "close": 9.69,
       "volume": 69772770
+    },
+    {
+      "date": "2026-02-06",
+      "time": "16:00",
+      "open": 9.27,
+      "high": 9.89,
+      "low": 9.27,
+      "close": 9.69,
+      "volume": 69715166
     }
   ]
 }
