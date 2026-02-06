@@ -1,5 +1,5 @@
 // Auto-generated historical mNAV data
-// Generated: 2026-02-06T15:00:17.553Z
+// Generated: 2026-02-06T15:13:10.547Z
 // DO NOT EDIT - regenerate with: npx tsx scripts/generate-mnav-history.ts
 
 export interface HistoricalMNAVCompany {
@@ -5761,6 +5761,654 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 22563450000,
         "enterpriseValue": 22563450000,
         "cryptoNav": 2942058000
+      }
+    ]
+  },
+  {
+    "date": "2026-02-03",
+    "median": 1.163623000733834,
+    "average": 2.5570920066691656,
+    "count": 19,
+    "btcPrice": 97000,
+    "ethPrice": 3400,
+    "companies": [
+      {
+        "ticker": "MSTR",
+        "asset": "BTC",
+        "mnav": 1.441,
+        "marketCap": 99729300000,
+        "enterpriseValue": 99729300000,
+        "cryptoNav": 69209694000
+      },
+      {
+        "ticker": "RIOT",
+        "asset": "BTC",
+        "mnav": 2.692,
+        "marketCap": 4701837000,
+        "enterpriseValue": 4701837000,
+        "cryptoNav": 1746485000
+      },
+      {
+        "ticker": "CLSK",
+        "asset": "BTC",
+        "mnav": 2.578,
+        "marketCap": 3276162124,
+        "enterpriseValue": 3276162124,
+        "cryptoNav": 1270603000
+      },
+      {
+        "ticker": "XXI",
+        "asset": "BTC",
+        "mnav": 1.164,
+        "marketCap": 4911487452,
+        "enterpriseValue": 4911487452,
+        "cryptoNav": 4220858000
+      },
+      {
+        "ticker": "DCC.AX",
+        "asset": "BTC",
+        "mnav": 1.157,
+        "marketCap": 56563411,
+        "enterpriseValue": 56563411,
+        "cryptoNav": 48888000
+      },
+      {
+        "ticker": "BMNR",
+        "asset": "ETH",
+        "mnav": 4.675,
+        "marketCap": 68118050000,
+        "enterpriseValue": 68118050000,
+        "cryptoNav": 14569425000
+      },
+      {
+        "ticker": "GAME",
+        "asset": "ETH",
+        "mnav": 6.453,
+        "marketCap": 35282413,
+        "enterpriseValue": 35282413,
+        "cryptoNav": 5467200
+      },
+      {
+        "ticker": "FGNX",
+        "asset": "ETH",
+        "mnav": 0.639,
+        "marketCap": 81648002,
+        "enterpriseValue": 81648002,
+        "cryptoNav": 127819600
+      },
+      {
+        "ticker": "STKE",
+        "asset": "SOL",
+        "mnav": 0.364,
+        "marketCap": 39974897,
+        "enterpriseValue": 39974897,
+        "cryptoNav": 109858140
+      },
+      {
+        "ticker": "DFDV",
+        "asset": "SOL",
+        "mnav": 0.304,
+        "marketCap": 141900001,
+        "enterpriseValue": 141900001,
+        "cryptoNav": 466479090
+      },
+      {
+        "ticker": "FWDI",
+        "asset": "SOL",
+        "mnav": 0.441,
+        "marketCap": 646904406,
+        "enterpriseValue": 646904406,
+        "cryptoNav": 1465793070
+      },
+      {
+        "ticker": "UPXI",
+        "asset": "SOL",
+        "mnav": 0.209,
+        "marketCap": 95580000,
+        "enterpriseValue": 95580000,
+        "cryptoNav": 456662430
+      },
+      {
+        "ticker": "CYPH",
+        "asset": "ZEC",
+        "mnav": 6.232,
+        "marketCap": 104851724,
+        "enterpriseValue": 104851724,
+        "cryptoNav": 16823596
+      },
+      {
+        "ticker": "SUIG",
+        "asset": "SUI",
+        "mnav": 0.244,
+        "marketCap": 121350000,
+        "enterpriseValue": 121350000,
+        "cryptoNav": 497252806
+      },
+      {
+        "ticker": "AVX",
+        "asset": "AVAX",
+        "mnav": 0.113,
+        "marketCap": 68884416,
+        "enterpriseValue": 68884416,
+        "cryptoNav": 610324000
+      },
+      {
+        "ticker": "BTOG",
+        "asset": "DOGE",
+        "mnav": 9.464,
+        "marketCap": 240345000,
+        "enterpriseValue": 240345000,
+        "cryptoNav": 25395748
+      },
+      {
+        "ticker": "TRON",
+        "asset": "TRX",
+        "mnav": 2.089,
+        "marketCap": 367671975,
+        "enterpriseValue": 367671975,
+        "cryptoNav": 176020000
+      },
+      {
+        "ticker": "BNC",
+        "asset": "BNB",
+        "mnav": 0.576,
+        "marketCap": 213705245,
+        "enterpriseValue": 213705245,
+        "cryptoNav": 371191680
+      },
+      {
+        "ticker": "CEPO",
+        "asset": "BTC",
+        "mnav": 7.748,
+        "marketCap": 22563450000,
+        "enterpriseValue": 22563450000,
+        "cryptoNav": 2912037000
+      }
+    ]
+  },
+  {
+    "date": "2026-02-04",
+    "median": 1.1349738068126198,
+    "average": 2.155249886125072,
+    "count": 18,
+    "btcPrice": 96000,
+    "ethPrice": 3350,
+    "companies": [
+      {
+        "ticker": "MSTR",
+        "asset": "BTC",
+        "mnav": 1.456,
+        "marketCap": 99729300000,
+        "enterpriseValue": 99729300000,
+        "cryptoNav": 68496192000
+      },
+      {
+        "ticker": "RIOT",
+        "asset": "BTC",
+        "mnav": 2.72,
+        "marketCap": 4701837000,
+        "enterpriseValue": 4701837000,
+        "cryptoNav": 1728480000
+      },
+      {
+        "ticker": "CLSK",
+        "asset": "BTC",
+        "mnav": 2.605,
+        "marketCap": 3276162124,
+        "enterpriseValue": 3276162124,
+        "cryptoNav": 1257504000
+      },
+      {
+        "ticker": "XXI",
+        "asset": "BTC",
+        "mnav": 1.101,
+        "marketCap": 4598819801,
+        "enterpriseValue": 4598819801,
+        "cryptoNav": 4177344000
+      },
+      {
+        "ticker": "DCC.AX",
+        "asset": "BTC",
+        "mnav": 1.169,
+        "marketCap": 56563411,
+        "enterpriseValue": 56563411,
+        "cryptoNav": 48384000
+      },
+      {
+        "ticker": "BMNR",
+        "asset": "ETH",
+        "mnav": 4.745,
+        "marketCap": 68118050000,
+        "enterpriseValue": 68118050000,
+        "cryptoNav": 14355168750
+      },
+      {
+        "ticker": "GAME",
+        "asset": "ETH",
+        "mnav": 6.268,
+        "marketCap": 33764889,
+        "enterpriseValue": 33764889,
+        "cryptoNav": 5386800
+      },
+      {
+        "ticker": "FGNX",
+        "asset": "ETH",
+        "mnav": 0.606,
+        "marketCap": 76271999,
+        "enterpriseValue": 76271999,
+        "cryptoNav": 125939900
+      },
+      {
+        "ticker": "STKE",
+        "asset": "SOL",
+        "mnav": 0.347,
+        "marketCap": 37191834,
+        "enterpriseValue": 37191834,
+        "cryptoNav": 107242470
+      },
+      {
+        "ticker": "DFDV",
+        "asset": "SOL",
+        "mnav": 0.298,
+        "marketCap": 135900006,
+        "enterpriseValue": 135900006,
+        "cryptoNav": 455372445
+      },
+      {
+        "ticker": "FWDI",
+        "asset": "SOL",
+        "mnav": 0.445,
+        "marketCap": 636778928,
+        "enterpriseValue": 636778928,
+        "cryptoNav": 1430893235
+      },
+      {
+        "ticker": "UPXI",
+        "asset": "SOL",
+        "mnav": 0.205,
+        "marketCap": 91449997,
+        "enterpriseValue": 91449997,
+        "cryptoNav": 445789515
+      },
+      {
+        "ticker": "CYPH",
+        "asset": "ZEC",
+        "mnav": 5.956,
+        "marketCap": 96743922,
+        "enterpriseValue": 96743922,
+        "cryptoNav": 16243472
+      },
+      {
+        "ticker": "SUIG",
+        "asset": "SUI",
+        "mnav": 0.257,
+        "marketCap": 122158999,
+        "enterpriseValue": 122158999,
+        "cryptoNav": 475633118
+      },
+      {
+        "ticker": "AVX",
+        "asset": "AVAX",
+        "mnav": 0.113,
+        "marketCap": 65833161,
+        "enterpriseValue": 65833161,
+        "cryptoNav": 582582000
+      },
+      {
+        "ticker": "TRON",
+        "asset": "TRX",
+        "mnav": 2.059,
+        "marketCap": 348465216,
+        "enterpriseValue": 348465216,
+        "cryptoNav": 169250000
+      },
+      {
+        "ticker": "BNC",
+        "asset": "BNB",
+        "mnav": 0.615,
+        "marketCap": 225161619,
+        "enterpriseValue": 225161619,
+        "cryptoNav": 366036240
+      },
+      {
+        "ticker": "CEPO",
+        "asset": "BTC",
+        "mnav": 7.829,
+        "marketCap": 22563450000,
+        "enterpriseValue": 22563450000,
+        "cryptoNav": 2882016000
+      }
+    ]
+  },
+  {
+    "date": "2026-02-05",
+    "median": 1.1207753827386504,
+    "average": 2.4953214655816542,
+    "count": 19,
+    "btcPrice": 97500,
+    "ethPrice": 3380,
+    "companies": [
+      {
+        "ticker": "MSTR",
+        "asset": "BTC",
+        "mnav": 1.434,
+        "marketCap": 99729300000,
+        "enterpriseValue": 99729300000,
+        "cryptoNav": 69566445000
+      },
+      {
+        "ticker": "RIOT",
+        "asset": "BTC",
+        "mnav": 2.678,
+        "marketCap": 4701837000,
+        "enterpriseValue": 4701837000,
+        "cryptoNav": 1755487500
+      },
+      {
+        "ticker": "CLSK",
+        "asset": "BTC",
+        "mnav": 2.565,
+        "marketCap": 3276162124,
+        "enterpriseValue": 3276162124,
+        "cryptoNav": 1277152500
+      },
+      {
+        "ticker": "XXI",
+        "asset": "BTC",
+        "mnav": 1.038,
+        "marketCap": 4403402714,
+        "enterpriseValue": 4403402714,
+        "cryptoNav": 4242615000
+      },
+      {
+        "ticker": "DCC.AX",
+        "asset": "BTC",
+        "mnav": 1.121,
+        "marketCap": 55074902,
+        "enterpriseValue": 55074902,
+        "cryptoNav": 49140000
+      },
+      {
+        "ticker": "BMNR",
+        "asset": "ETH",
+        "mnav": 4.703,
+        "marketCap": 68118050000,
+        "enterpriseValue": 68118050000,
+        "cryptoNav": 14483722500
+      },
+      {
+        "ticker": "GAME",
+        "asset": "ETH",
+        "mnav": 5.916,
+        "marketCap": 32152519,
+        "enterpriseValue": 32152519,
+        "cryptoNav": 5435040
+      },
+      {
+        "ticker": "FGNX",
+        "asset": "ETH",
+        "mnav": 0.574,
+        "marketCap": 72912003,
+        "enterpriseValue": 72912003,
+        "cryptoNav": 127067720
+      },
+      {
+        "ticker": "STKE",
+        "asset": "SOL",
+        "mnav": 0.321,
+        "marketCap": 34914782,
+        "enterpriseValue": 34914782,
+        "cryptoNav": 108811872
+      },
+      {
+        "ticker": "DFDV",
+        "asset": "SOL",
+        "mnav": 0.26,
+        "marketCap": 120000000,
+        "enterpriseValue": 120000000,
+        "cryptoNav": 462036432
+      },
+      {
+        "ticker": "FWDI",
+        "asset": "SOL",
+        "mnav": 0.396,
+        "marketCap": 574901148,
+        "enterpriseValue": 574901148,
+        "cryptoNav": 1451833136
+      },
+      {
+        "ticker": "UPXI",
+        "asset": "SOL",
+        "mnav": 0.177,
+        "marketCap": 80240001,
+        "enterpriseValue": 80240001,
+        "cryptoNav": 452313264
+      },
+      {
+        "ticker": "CYPH",
+        "asset": "ZEC",
+        "mnav": 5.901,
+        "marketCap": 97568441,
+        "enterpriseValue": 97568441,
+        "cryptoNav": 16533534
+      },
+      {
+        "ticker": "SUIG",
+        "asset": "SUI",
+        "mnav": 0.22,
+        "marketCap": 106788004,
+        "enterpriseValue": 106788004,
+        "cryptoNav": 486442962
+      },
+      {
+        "ticker": "AVX",
+        "asset": "AVAX",
+        "mnav": 0.113,
+        "marketCap": 67220094,
+        "enterpriseValue": 67220094,
+        "cryptoNav": 596453000
+      },
+      {
+        "ticker": "BTOG",
+        "asset": "DOGE",
+        "mnav": 9.734,
+        "marketCap": 240345000,
+        "enterpriseValue": 240345000,
+        "cryptoNav": 24690311
+      },
+      {
+        "ticker": "TRON",
+        "asset": "TRX",
+        "mnav": 1.949,
+        "marketCap": 342977580,
+        "enterpriseValue": 342977580,
+        "cryptoNav": 176020000
+      },
+      {
+        "ticker": "BNC",
+        "asset": "BNB",
+        "mnav": 0.604,
+        "marketCap": 222517845,
+        "enterpriseValue": 222517845,
+        "cryptoNav": 368613960
+      },
+      {
+        "ticker": "CEPO",
+        "asset": "BTC",
+        "mnav": 7.709,
+        "marketCap": 22563450000,
+        "enterpriseValue": 22563450000,
+        "cryptoNav": 2927047500
+      }
+    ]
+  },
+  {
+    "date": "2026-02-06",
+    "median": 1.2042456859111819,
+    "average": 2.689861048389717,
+    "count": 20,
+    "btcPrice": 98500,
+    "ethPrice": 3420,
+    "companies": [
+      {
+        "ticker": "MSTR",
+        "asset": "BTC",
+        "mnav": 1.419,
+        "marketCap": 99729300000,
+        "enterpriseValue": 99729300000,
+        "cryptoNav": 70279947000
+      },
+      {
+        "ticker": "RIOT",
+        "asset": "BTC",
+        "mnav": 2.651,
+        "marketCap": 4701837000,
+        "enterpriseValue": 4701837000,
+        "cryptoNav": 1773492500
+      },
+      {
+        "ticker": "CLSK",
+        "asset": "BTC",
+        "mnav": 2.539,
+        "marketCap": 3276162124,
+        "enterpriseValue": 3276162124,
+        "cryptoNav": 1290251500
+      },
+      {
+        "ticker": "ASST",
+        "asset": "BTC",
+        "mnav": 9.761,
+        "marketCap": 12304717133,
+        "enterpriseValue": 12304717133,
+        "cryptoNav": 1260603000
+      },
+      {
+        "ticker": "XXI",
+        "asset": "BTC",
+        "mnav": 0.9,
+        "marketCap": 3856234249,
+        "enterpriseValue": 3856234249,
+        "cryptoNav": 4286129000
+      },
+      {
+        "ticker": "DCC.AX",
+        "asset": "BTC",
+        "mnav": 0.989,
+        "marketCap": 49120858,
+        "enterpriseValue": 49120858,
+        "cryptoNav": 49644000
+      },
+      {
+        "ticker": "BMNR",
+        "asset": "ETH",
+        "mnav": 4.648,
+        "marketCap": 68118050000,
+        "enterpriseValue": 68118050000,
+        "cryptoNav": 14655127500
+      },
+      {
+        "ticker": "GAME",
+        "asset": "ETH",
+        "mnav": 4.829,
+        "marketCap": 26556654,
+        "enterpriseValue": 26556654,
+        "cryptoNav": 5499360
+      },
+      {
+        "ticker": "FGNX",
+        "asset": "ETH",
+        "mnav": 0.465,
+        "marketCap": 59807999,
+        "enterpriseValue": 59807999,
+        "cryptoNav": 128571480
+      },
+      {
+        "ticker": "STKE",
+        "asset": "SOL",
+        "mnav": 0.269,
+        "marketCap": 29854668,
+        "enterpriseValue": 29854668,
+        "cryptoNav": 110904408
+      },
+      {
+        "ticker": "DFDV",
+        "asset": "SOL",
+        "mnav": 0.191,
+        "marketCap": 89849997,
+        "enterpriseValue": 89849997,
+        "cryptoNav": 470921748
+      },
+      {
+        "ticker": "FWDI",
+        "asset": "SOL",
+        "mnav": 0.347,
+        "marketCap": 514148390,
+        "enterpriseValue": 514148390,
+        "cryptoNav": 1479753004
+      },
+      {
+        "ticker": "UPXI",
+        "asset": "SOL",
+        "mnav": 0.139,
+        "marketCap": 64310002,
+        "enterpriseValue": 64310002,
+        "cryptoNav": 461011596
+      },
+      {
+        "ticker": "CYPH",
+        "asset": "ZEC",
+        "mnav": 4.975,
+        "marketCap": 83688993,
+        "enterpriseValue": 83688993,
+        "cryptoNav": 16823596
+      },
+      {
+        "ticker": "SUIG",
+        "asset": "SUI",
+        "mnav": 0.2,
+        "marketCap": 99507002,
+        "enterpriseValue": 99507002,
+        "cryptoNav": 497252806
+      },
+      {
+        "ticker": "AVX",
+        "asset": "AVAX",
+        "mnav": 0.095,
+        "marketCap": 58251250,
+        "enterpriseValue": 58251250,
+        "cryptoNav": 610324000
+      },
+      {
+        "ticker": "BTOG",
+        "asset": "DOGE",
+        "mnav": 9.464,
+        "marketCap": 240345000,
+        "enterpriseValue": 240345000,
+        "cryptoNav": 25395748
+      },
+      {
+        "ticker": "TRON",
+        "asset": "TRX",
+        "mnav": 1.761,
+        "marketCap": 310051731,
+        "enterpriseValue": 310051731,
+        "cryptoNav": 176020000
+      },
+      {
+        "ticker": "BNC",
+        "asset": "BNB",
+        "mnav": 0.523,
+        "marketCap": 194537870,
+        "enterpriseValue": 194537870,
+        "cryptoNav": 372222768
+      },
+      {
+        "ticker": "CEPO",
+        "asset": "BTC",
+        "mnav": 7.63,
+        "marketCap": 22563450000,
+        "enterpriseValue": 22563450000,
+        "cryptoNav": 2957068500
       }
     ]
   }
