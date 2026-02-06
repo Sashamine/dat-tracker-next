@@ -821,15 +821,16 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-green-600">
                     +{formatLargeNumber(cashReserves)}
-                    {displayCompany.cashSource && displayCompany.cashAsOf && (
+                    {displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
                       <FilingCite 
-                        ticker={displayCompany.ticker} 
-                        date={displayCompany.cashAsOf} 
-                        highlight="USD Reserve"
+                        ticker="MSTR" 
+                        date="2026-01-05" 
+                        anchor="cash-reserves"
                         filingType="8-K"
                       />
+                    ) : (
+                      <SourceLink url={displayCompany.cashSourceUrl} label={displayCompany.cashSource} />
                     )}
-                    <SourceLink url={displayCompany.cashSourceUrl} label={displayCompany.cashSource} />
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
                 </div>
@@ -847,15 +848,16 @@ export default function CompanyPage() {
                     </p>
                     <p className="text-lg font-bold text-red-600">
                       −{formatLargeNumber(totalDebt)}
-                      {displayCompany.debtAsOf && (
+                      {displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
                         <FilingCite 
-                          ticker={displayCompany.ticker} 
-                          date={displayCompany.debtAsOf} 
-                          highlight="Long-term debt"
+                          ticker="MSTR" 
+                          date="2025-11-03" 
+                          anchor="long-term-debt"
                           filingType="10-Q"
                         />
+                      ) : (
+                        <SourceLink url={displayCompany.debtSourceUrl} label={displayCompany.debtSource} />
                       )}
-                      <SourceLink url={displayCompany.debtSourceUrl} label={displayCompany.debtSource} />
                     </p>
                     <p className="text-xs text-gray-400">
                       {itmConvertValue > 0 ? (
@@ -876,15 +878,16 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(preferredEquity)}
-                    {displayCompany.preferredAsOf && (
+                    {displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
                       <FilingCite 
-                        ticker={displayCompany.ticker} 
-                        date={displayCompany.preferredAsOf} 
-                        highlight="preferred stock"
+                        ticker="MSTR" 
+                        date="2026-01-26" 
+                        anchor="preferred-equity"
                         filingType="8-K"
                       />
+                    ) : (
+                      <SourceLink url={displayCompany.preferredSourceUrl} label={displayCompany.preferredSource} />
                     )}
-                    <SourceLink url={displayCompany.preferredSourceUrl} label={displayCompany.preferredSource} />
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>
