@@ -58,24 +58,23 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
     let result: { time: Time; value: number }[] = [];
 
     // Get last N snapshots from MNAV_HISTORY
+    const today = new Date().toISOString().split("T")[0];
     const startIdx = Math.max(0, MNAV_HISTORY.length - targetPoints);
     for (let i = startIdx; i < MNAV_HISTORY.length; i++) {
       const snapshot = MNAV_HISTORY[i];
+      // Skip today's historical data - we'll use live value instead
+      if (snapshot.date === today) continue;
       result.push({
         time: snapshot.date as Time,
         value: isMedian ? snapshot.median : snapshot.average,
       });
     }
 
-    // Add today's live value if different from last historical date
-    const today = new Date().toISOString().split("T")[0] as Time;
-    const lastDate = result.length > 0 ? result[result.length - 1].time : "";
-    if (today !== lastDate) {
-      result.push({
-        time: today,
-        value: isMedian ? currentStats.median : currentStats.average,
-      });
-    }
+    // Always add today's LIVE value (matches the card display)
+    result.push({
+      time: today as Time,
+      value: isMedian ? currentStats.median : currentStats.average,
+    });
 
     return result;
   }, [currentStats, timeRange, isMedian]);
