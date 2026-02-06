@@ -539,7 +539,10 @@ export const btcCompanies: Company[] = [
     website: "https://mara.com",
     twitter: "https://twitter.com/MARAHoldings",
     secCik: "0001507605",
-    // costBasisAvg removed - needs SEC verification
+    costBasisAvg: 87_760,  // SEC 10-Q Q3 2025: $4,637,673K / 52,850 BTC
+    costBasisSource: "SEC 10-Q Q3 2025: CryptoAssetCost $4,637,673K for 52,850 BTC",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    costBasisAsOf: "2025-09-30",
     isMiner: true,
     btcMinedAnnual: 18_000,  // ~50 EH/s at current difficulty (~1,500 BTC/month)
     btcMinedSource: "MARA monthly production updates (annualized from Q4 2025 rate)",
