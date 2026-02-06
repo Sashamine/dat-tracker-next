@@ -466,7 +466,7 @@ export default function MNAVPage() {
         <div className="mb-8">
           <div className="flex items-baseline gap-2 mb-4">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Treasury Yield ({yieldStats.quarter})
+              Treasury Yield (Recent)
             </h2>
             {yieldStats.insufficientData > 0 && (
               <span className="text-xs text-amber-600 dark:text-amber-400">
