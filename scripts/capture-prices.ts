@@ -216,4 +216,37 @@ async function main() {
   console.log(`✅ Captured: ${captured}, Skipped (duplicate): ${skipped}`);
 }
 
-main().catch(console.error);
+/**
+ * Git commit and push changes
+ */
+async function gitCommit(): Promise<void> {
+  const { execSync } = require("child_process");
+  
+  try {
+    // Check if there are changes
+    const status = execSync("git status --porcelain data/stock-prices/", { 
+      cwd: process.cwd(),
+      encoding: "utf-8" 
+    });
+    
+    if (!status.trim()) {
+      console.log("📝 No changes to commit");
+      return;
+    }
+    
+    const now = new Date();
+    const timestamp = now.toISOString().slice(0, 16).replace("T", " ");
+    
+    execSync("git add data/stock-prices/", { cwd: process.cwd() });
+    execSync(`git commit -m "📈 Price capture ${timestamp}"`, { cwd: process.cwd() });
+    execSync("git push", { cwd: process.cwd() });
+    
+    console.log("✅ Committed and pushed");
+  } catch (error) {
+    console.error("⚠️ Git error:", error);
+  }
+}
+
+main()
+  .then(() => gitCommit())
+  .catch(console.error);
