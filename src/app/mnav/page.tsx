@@ -27,13 +27,45 @@ interface MNAVChartProps {
 function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const [intradayData, setIntradayData] = useState<{ time: Time; value: number }[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentStats = mnavStats;
   const isMedian = metric === "median";
-  const color = isMedian ? "#6366f1" : "#a855f7"; // indigo vs purple
+  const color = isMedian ? "#6366f1" : "#a855f7";
 
-  // Generate historical data from pre-calculated MNAV_HISTORY
+  // Fetch intraday data for short timeframes
+  useEffect(() => {
+    if (timeRange === "1y" || timeRange === "all") {
+      setIntradayData(null);
+      return;
+    }
+
+    setIsLoading(true);
+    fetch(`/api/mnav/intraday?range=${timeRange}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.data && data.data.length > 0) {
+          const points = data.data.map((d: any) => ({
+            time: d.timestamp.slice(0, 10) as Time, // Use date portion for chart
+            value: isMedian ? d.median : d.average,
+          }));
+          setIntradayData(points);
+        } else {
+          setIntradayData(null);
+        }
+      })
+      .catch(() => setIntradayData(null))
+      .finally(() => setIsLoading(false));
+  }, [timeRange, isMedian]);
+
+  // Generate historical data from pre-calculated MNAV_HISTORY (for 1y/all)
   const historicalData = useMemo(() => {
+    // Use intraday data if available for short timeframes
+    if (intradayData && intradayData.length > 0 && (timeRange === "1d" || timeRange === "7d" || timeRange === "1mo")) {
+      return intradayData;
+    }
+
     const now = Date.now();
     const rangeMs: Record<TimeRange, number> = {
       "1d": 24 * 60 * 60 * 1000,
@@ -46,7 +78,6 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
     const cutoffDate = new Date(now - rangeMs[timeRange]);
     const result: { time: Time; value: number }[] = [];
 
-    // Add historical snapshots
     for (const snapshot of MNAV_HISTORY) {
       const snapshotDate = new Date(snapshot.date);
       if (snapshotDate >= cutoffDate) {
@@ -57,7 +88,6 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
       }
     }
 
-    // Add current point
     const today = new Date().toISOString().split("T")[0] as Time;
     result.push({
       time: today,
@@ -65,7 +95,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
     });
 
     return result;
-  }, [currentStats, timeRange, isMedian]);
+  }, [currentStats, timeRange, isMedian, intradayData]);
 
   // Calculate change from start
   const change = useMemo(() => {
@@ -153,7 +183,13 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <p className="text-xs text-gray-400">
-            <span className="text-green-500">Quarterly data ({historicalData.length - 1} historical + current)</span>
+            {isLoading ? (
+              <span className="text-yellow-500">Loading...</span>
+            ) : intradayData && (timeRange === "1d" || timeRange === "7d" || timeRange === "1mo") ? (
+              <span className="text-green-500">Live data ({historicalData.length} points)</span>
+            ) : (
+              <span className="text-green-500">Weekly data ({historicalData.length - 1} historical + current)</span>
+            )}
           </p>
         </div>
         <div className="flex items-center gap-1 text-sm">
