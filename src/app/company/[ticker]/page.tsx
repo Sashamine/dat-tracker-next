@@ -1072,7 +1072,9 @@ export default function CompanyPage() {
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* FINANCIALS SECTION */}
+        {/* FINANCIALS SECTION - Hidden for MSTR (redundant with mNAV breakdown) */}
+        {displayCompany.ticker !== "MSTR" && (
+        <>
         <div className="mb-4 mt-8 flex items-center gap-2">
           <span className="text-lg">📋</span>
           <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Financials</h2>
@@ -1205,6 +1207,8 @@ export default function CompanyPage() {
           </div>
           </div>
         </details>
+        </>
+        )}
 
         {/* Holdings Per Share Growth Chart */}
         <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
