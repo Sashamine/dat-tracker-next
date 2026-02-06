@@ -1471,7 +1471,14 @@ export default function CompanyPage() {
                 )}
                 {displayCompany.costBasisAvg && (
                   <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 uppercase tracking-wide">Avg Cost Basis</p>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">
+                      Avg Cost Basis
+                      {displayCompany.costBasisAsOf && (
+                        <span className="text-gray-400 normal-case ml-1">
+                          ({new Date(displayCompany.costBasisAsOf).toLocaleDateString("en-US", { month: "short", year: "numeric" })})
+                        </span>
+                      )}
+                    </p>
                     <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-1">
                       ${displayCompany.costBasisAvg.toLocaleString()}
                       <SourceLink url={displayCompany.costBasisSourceUrl} label={displayCompany.costBasisSource} />
