@@ -140,14 +140,12 @@ export async function GET() {
       }
     }
     
-    // Check 6: Dilutive instruments sum check
+    // Check 6: Dilutive instruments exist check
     if (dilution && dilution.length > 0 && company.sharesForMnav) {
       checks++;
       let totalDilutionShares = 0;
       for (const instrument of dilution) {
-        if (instrument.status === "outstanding") {
-          totalDilutionShares += instrument.shares;
-        }
+        totalDilutionShares += instrument.potentialShares || 0;
       }
       // Just log that we have dilution data (no specific expected value)
     }
