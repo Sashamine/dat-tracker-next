@@ -1,6 +1,8 @@
 # Exclude large data folders from serverless function bundles
 # Note: public/ files are served statically (not bundled into functions)
-data/
-filings/
-docs/filings/
+# Be specific to avoid excluding src/lib/data/ TypeScript files
+/data/
+/filings/
+/docs/filings/
+/public/sec-content/
 mstr_xbrl.json
