@@ -235,9 +235,6 @@ export default function MNAVPage() {
   // Separate treasuries from miners
   const treasuries = useMemo(() => companies.filter(c => !c.isMiner), [companies]);
   const miners = useMemo(() => companies.filter(c => c.isMiner), [companies]);
-  
-  // Check if any miners exist at all (for section visibility)
-  const hasAnyMiners = useMemo(() => allCompanies.some(c => c.isMiner), [allCompanies]);
 
   // Use shared mNAV stats hook - treasuries only for mNAV stats
   const mnavStats = useMNAVStats(treasuries, prices);
@@ -513,7 +510,7 @@ export default function MNAVPage() {
           </div>
 
           {/* Miner HPS Growth Table */}
-          {hasAnyMiners && (
+          {miners.length > 0 && (
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
               <button
                 onClick={() => setShowMinerHPS(!showMinerHPS)}
