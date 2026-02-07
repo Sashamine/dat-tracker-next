@@ -49,17 +49,51 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
     const parsed = parseDateFormat(rawAccession);
     if (parsed) {
       try {
-        const baseUrl = process.env.VERCEL_URL 
-          ? `https://${process.env.VERCEL_URL}` 
-          : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+        // Fetch directly from SEC EDGAR API instead of our own API (avoids self-fetch issues)
+        const ciks: Record<string, string> = {
+          mstr: "1050446", mara: "1507605", riot: "1167419", clsk: "1515671",
+          btbt: "1799290", kulr: "1662684", bmnr: "1829311", corz: "1878848",
+        };
+        const cik = ciks[ticker.toLowerCase()];
         
-        const lookupUrl = `${baseUrl}/api/filings/lookup?ticker=${ticker}&type=${parsed.type}&date=${parsed.date}`;
-        const response = await fetch(lookupUrl, { cache: "force-cache" });
-        
-        if (response.ok) {
-          const data = await response.json();
-          if (data.accession) {
-            accession = data.accession;
+        if (cik) {
+          const edgarUrl = `https://data.sec.gov/submissions/CIK${cik.padStart(10, "0")}.json`;
+          const response = await fetch(edgarUrl, {
+            headers: { "User-Agent": "DAT-Tracker research@dat-tracker.com" },
+            next: { revalidate: 3600 }, // Cache for 1 hour
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            const filings = data.filings?.recent;
+            
+            if (filings) {
+              // Find matching filing by type and date
+              for (let i = 0; i < filings.accessionNumber.length; i++) {
+                if (filings.form[i].toUpperCase() === parsed.type.toUpperCase() &&
+                    filings.filingDate[i] === parsed.date) {
+                  accession = filings.accessionNumber[i];
+                  break;
+                }
+              }
+              
+              // If no exact match, find closest within 7 days
+              if (accession === rawAccession) {
+                const targetDate = new Date(parsed.date);
+                let closestDiff = Infinity;
+                
+                for (let i = 0; i < filings.accessionNumber.length; i++) {
+                  if (filings.form[i].toUpperCase() === parsed.type.toUpperCase()) {
+                    const diff = Math.abs(new Date(filings.filingDate[i]).getTime() - targetDate.getTime());
+                    const daysDiff = diff / (1000 * 60 * 60 * 24);
+                    if (daysDiff < closestDiff && daysDiff <= 7) {
+                      closestDiff = daysDiff;
+                      accession = filings.accessionNumber[i];
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       } catch (e) {
