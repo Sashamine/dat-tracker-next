@@ -45,25 +45,28 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
 
   // Generate historical data from pre-calculated MNAV_HISTORY
   const historicalData = useMemo(() => {
-    const now = Date.now();
+    const now = new Date();
+    const today = now.toISOString().split("T")[0];
     
-    // Define how many data points to show for each timeframe
-    const pointsForRange: Record<TimeRange, number> = {
-      "1d": 7,    // Show last week of data for context
-      "7d": 10,   // Show ~2 weeks
-      "1mo": 12,  // Show ~3 months of weekly data
-      "1y": 52,   // Show full year
-      "all": MNAV_HISTORY.length,
+    // Calculate cutoff date based on time range
+    const daysForRange: Record<TimeRange, number> = {
+      "1d": 1,
+      "7d": 7,
+      "1mo": 30,
+      "1y": 365,
+      "all": 99999,
     };
+    
+    const daysBack = daysForRange[timeRange];
+    const cutoffDate = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000);
+    const cutoffStr = cutoffDate.toISOString().split("T")[0];
 
-    const targetPoints = pointsForRange[timeRange];
     let result: { time: Time; value: number }[] = [];
 
-    // Get last N snapshots from MNAV_HISTORY
-    const today = new Date().toISOString().split("T")[0];
-    const startIdx = Math.max(0, MNAV_HISTORY.length - targetPoints);
-    for (let i = startIdx; i < MNAV_HISTORY.length; i++) {
-      const snapshot = MNAV_HISTORY[i];
+    // Filter MNAV_HISTORY by date range
+    for (const snapshot of MNAV_HISTORY) {
+      // Skip if before cutoff date
+      if (snapshot.date < cutoffStr) continue;
       // Skip today's historical data - we'll use live value instead
       if (snapshot.date === today) continue;
       result.push({
