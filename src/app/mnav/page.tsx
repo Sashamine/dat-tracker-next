@@ -387,7 +387,7 @@ export default function MNAVPage() {
             className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              📊 Holdings Per Share Growth (Treasuries)
+              📊 Holdings Per Share Growth
             </h2>
             <svg
               className={cn("w-5 h-5 text-gray-500 transition-transform", showHPSGrowth && "rotate-180")}
