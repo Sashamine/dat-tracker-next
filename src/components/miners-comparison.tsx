@@ -82,13 +82,22 @@ function calculateMinerStats(company: Company): MinerStats | null {
 export function MinersComparison({ companies, prices, compact }: MinersComparisonProps) {
   const minerStats = useMemo(() => {
     const miners = companies.filter(c => c.isMiner);
+    console.log('[MinersComparison] Found miners:', miners.map(m => m.ticker));
+    console.log('[MinersComparison] HOLDINGS_HISTORY keys:', Object.keys(HOLDINGS_HISTORY));
     return miners
       .map(calculateMinerStats)
       .filter((s): s is MinerStats => s !== null)
       .sort((a, b) => (b.growth1y || 0) - (a.growth1y || 0));
   }, [companies]);
 
-  if (minerStats.length === 0) return null;
+  if (minerStats.length === 0) {
+    // Debug: show message if no miners found
+    return (
+      <div className="text-xs text-gray-400 p-2">
+        No miner HPS data available
+      </div>
+    );
+  }
 
   const formatGrowth = (growth: number | null) => {
     if (growth === null) return "—";
