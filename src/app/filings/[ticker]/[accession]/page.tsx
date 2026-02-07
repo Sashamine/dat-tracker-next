@@ -9,6 +9,8 @@ interface PageProps {
     q?: string;
     anchor?: string;
     type?: string;
+    tab?: string;
+    fact?: string;
   }>;
 }
 
@@ -47,7 +49,7 @@ function parseDateFormat(accession: string, typeParam?: string): { type: string;
 
 export default async function FilingViewerPage({ params, searchParams }: PageProps) {
   const { ticker, accession: rawAccession } = await params;
-  const { q: searchQuery, anchor, type } = await searchParams;
+  const { q: searchQuery, anchor, type, tab, fact } = await searchParams;
   
   let accession = rawAccession;
   let resolvedAnchor = anchor;
@@ -124,6 +126,8 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       accession={accession}
       searchQuery={searchQuery}
       anchor={resolvedAnchor}
+      initialTab={tab === "xbrl" ? "xbrl" : "document"}
+      highlightFact={fact}
     />
   );
 }

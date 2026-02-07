@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface XBRLFact {
   fact: string;
@@ -59,8 +59,9 @@ export default function XBRLViewer({ ticker, cik, accession, highlightFact }: XB
   const [facts, setFacts] = useState<XBRLFact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"priority" | "all">("priority");
-  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<"priority" | "all">(highlightFact ? "all" : "priority");
+  const [search, setSearch] = useState(highlightFact ? highlightFact.replace("us-gaap:", "") : "");
+  const highlightRef = useRef<HTMLTableRowElement>(null);
 
   useEffect(() => {
     async function fetchXBRL() {
@@ -85,6 +86,15 @@ export default function XBRLViewer({ ticker, cik, accession, highlightFact }: XB
     
     fetchXBRL();
   }, [cik, accession]);
+
+  // Scroll to highlighted fact after loading
+  useEffect(() => {
+    if (!loading && highlightFact && highlightRef.current) {
+      setTimeout(() => {
+        highlightRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [loading, highlightFact]);
 
   // Filter facts
   const filteredFacts = facts.filter(f => {
@@ -202,16 +212,20 @@ export default function XBRLViewer({ ticker, cik, accession, highlightFact }: XB
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {sortedFacts.map((fact, i) => {
-              const isHighlighted = highlightFact && fact.fact.includes(highlightFact);
+              const isHighlighted = highlightFact && fact.fact.toLowerCase().includes(highlightFact.toLowerCase().replace("us-gaap:", ""));
               const isPriority = PRIORITY_FACTS.some(pf => fact.fact.includes(pf));
+              const isFirstHighlight = isHighlighted && sortedFacts.findIndex(f => 
+                highlightFact && f.fact.toLowerCase().includes(highlightFact.toLowerCase().replace("us-gaap:", ""))
+              ) === i;
               
               return (
                 <tr 
                   key={`${fact.fact}-${fact.periodEnd}-${i}`}
+                  ref={isFirstHighlight ? highlightRef : undefined}
                   id={fact.fact}
                   className={`
-                    ${isHighlighted ? "bg-yellow-50 dark:bg-yellow-900/20" : ""}
-                    ${isPriority ? "bg-blue-50/50 dark:bg-blue-900/10" : ""}
+                    ${isHighlighted ? "bg-yellow-100 dark:bg-yellow-900/30 ring-2 ring-yellow-400 dark:ring-yellow-600" : ""}
+                    ${!isHighlighted && isPriority ? "bg-blue-50/50 dark:bg-blue-900/10" : ""}
                     hover:bg-gray-50 dark:hover:bg-gray-800/50
                   `}
                 >

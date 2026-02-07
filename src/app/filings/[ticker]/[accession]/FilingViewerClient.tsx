@@ -20,14 +20,15 @@ interface FilingViewerClientProps {
   accession: string;
   searchQuery?: string;
   anchor?: string; // Section anchor like "btc-holdings" or "staking"
+  initialTab?: "document" | "xbrl"; // Which tab to show initially
   highlightFact?: string; // XBRL fact to highlight
 }
 
-export default function FilingViewerClient({ ticker, accession, searchQuery, anchor, highlightFact }: FilingViewerClientProps) {
+export default function FilingViewerClient({ ticker, accession, searchQuery, anchor, initialTab, highlightFact }: FilingViewerClientProps) {
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"document" | "xbrl">(highlightFact ? "xbrl" : "document");
+  const [activeTab, setActiveTab] = useState<"document" | "xbrl">(initialTab || "document");
   
   const cik = TICKER_CIKS[ticker.toLowerCase()];
   
