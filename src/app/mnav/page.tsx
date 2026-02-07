@@ -257,17 +257,17 @@ export default function MNAVPage() {
       allGrowthData = allGrowthData.filter(m => !mainAssets.includes(m.asset));
     }
     
-    // Filter by selected asset's companies (for tickers in our filtered company list)
-    const tickerSet = new Set(companies.map(c => c.ticker));
+    // Filter by selected asset's TREASURY companies only (exclude miners)
+    const tickerSet = new Set(treasuries.map(c => c.ticker));
     const leaderboard = allGrowthData.filter(m => tickerSet.has(m.ticker));
     
-    // Count companies without sufficient history data
+    // Count treasuries without sufficient history data
     const companiesWithData = new Set(leaderboard.map(m => m.ticker));
-    const insufficientData = companies.filter(c => !companiesWithData.has(c.ticker)).length;
-    const missingTickers = companies.filter(c => !companiesWithData.has(c.ticker)).map(c => c.ticker);
+    const insufficientData = treasuries.filter(c => !companiesWithData.has(c.ticker)).length;
+    const missingTickers = treasuries.filter(c => !companiesWithData.has(c.ticker)).map(c => c.ticker);
 
     if (leaderboard.length === 0) {
-      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, period: growthPeriod, best: null, worst: null, insufficientData, totalCompanies: companies.length, leaderboard: [], missingTickers };
+      return { median: 0, average: 0, positiveCount: 0, totalCount: 0, period: growthPeriod, best: null, worst: null, insufficientData, totalCompanies: treasuries.length, leaderboard: [], missingTickers };
     }
 
     const growths = leaderboard.map((m) => m.growthPct);
@@ -290,7 +290,7 @@ export default function MNAVPage() {
       leaderboard,  // Full sorted leaderboard for tooltip
       missingTickers,  // Companies without growth data
     };
-  }, [companies, growthPeriod, selectedAsset]);
+  }, [treasuries, growthPeriod, selectedAsset]);
 
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
     { value: "1d", label: "24H" },
@@ -455,6 +455,31 @@ export default function MNAVPage() {
           </StatTooltip>
         </div>
 
+        {/* HPS Growth Comparison Tables */}
+        <div className="mb-8 space-y-6">
+          {/* Treasury HPS Growth Table */}
+          <div>
+            <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2 mb-3">
+              <span>🏦</span> Treasury HPS Leaderboard
+            </h3>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <HPSComparison companies={allCompanies} prices={prices} type="treasuries" />
+            </div>
+          </div>
+
+          {/* Miner HPS Growth Table */}
+          {miners.length > 0 && (
+            <div>
+              <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2 mb-3">
+                <span>⛏️</span> Miner HPS Leaderboard
+              </h3>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <HPSComparison companies={allCompanies} prices={prices} type="miners" />
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* mNAV Statistics - Treasuries Only */}
         <div className="mb-8">
           <div className="flex items-baseline gap-2 mb-1">
@@ -544,43 +569,6 @@ export default function MNAVPage() {
         {/* Legend */}
         <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
           <p>Dashed line = Fair Value (1.0x mNAV)</p>
-        </div>
-
-        {/* HPS Growth Sections */}
-        <div className="mt-12 space-y-8">
-          {/* Treasuries HPS Growth */}
-          <div>
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                <span>🏦</span> Treasury HPS Growth
-              </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Holdings per share (HPS) growth for pure treasury companies (non-miners).
-                Positive growth = accumulating crypto faster than share dilution.
-              </p>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <HPSComparison companies={allCompanies} prices={prices} type="treasuries" />
-            </div>
-          </div>
-
-          {/* Miners HPS Growth */}
-          {miners.length > 0 && (
-            <div>
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                  <span>⛏️</span> Miner HPS Growth
-                </h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  Miners add crypto through mining + purchases.
-                  Should theoretically outpace pure treasuries when adjusted for dilution.
-                </p>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <HPSComparison companies={allCompanies} prices={prices} type="miners" />
-              </div>
-            </div>
-          )}
         </div>
       </main>
     </div>
