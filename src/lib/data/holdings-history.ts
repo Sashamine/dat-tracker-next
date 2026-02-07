@@ -328,8 +328,8 @@ const DFDV_HISTORY: HoldingsSnapshot[] = [
 // KULR had 1-for-8 reverse split in June 2025
 // All shares below are SPLIT-ADJUSTED to match FMP's split-adjusted stock prices
 const KULR_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 26_778_476, holdingsPerShare: 0.00000811, source: "Initial BTC purchase 8-K (split-adj)", sourceType: "sec-filing" },
-  { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.00001435, source: "8-K filing (split-adj)", sourceType: "sec-filing" },
+  { date: "2024-12-26", holdings: 217.18, sharesOutstandingDiluted: 26_778_476, holdingsPerShare: 0.00000811, source: "Initial BTC purchase 8-K (split-adj)", sourceType: "sec-filing", sourceUrl: "/filings/kulr/0001104659-24-131749" },
+  { date: "2025-01-06", holdings: 430.6, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.00001435, source: "8-K filing (split-adj)", sourceType: "sec-filing", sourceUrl: "/filings/kulr/0001104659-25-003302" },
   { date: "2025-01-21", holdings: 510, sharesOutstandingDiluted: 32_500_000, holdingsPerShare: 0.00001569, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-004744", sourceType: "sec-filing" },
   { date: "2025-02-11", holdings: 610.3, sharesOutstandingDiluted: 35_000_000, holdingsPerShare: 0.00001744, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-011205", sourceType: "sec-filing" },
   { date: "2025-03-25", holdings: 668.3, sharesOutstandingDiluted: 35_548_705, holdingsPerShare: 0.00001880, source: "8-K BTC update (split-adj)", sourceUrl: "/filings/kulr/0001104659-25-027569", sourceType: "sec-filing" },
