@@ -191,17 +191,35 @@ export function pv<T>(value: T, source: XBRLSource | DocumentSource | DerivedSou
 }
 
 // ============================================================================
-// SEC XBRL URL BUILDERS
+// URL BUILDERS
 // ============================================================================
 
-/** Build URL to SEC XBRL viewer for a specific fact */
-export function xbrlViewerUrl(cik: string, accession: string): string {
-  const cleanAccession = accession.replace(/-/g, "");
-  return `https://www.sec.gov/cgi-bin/viewer?action=view&cik=${cik}&accession_number=${cleanAccession}`;
+// CIK to ticker mapping (reverse lookup)
+const CIK_TICKERS: Record<string, string> = {
+  "1050446": "mstr", "1507605": "mara", "1167419": "riot", "1515671": "clsk",
+  "1799290": "btbt", "1662684": "kulr", "1829311": "bmnr", "1878848": "corz",
+  "2068580": "abtc", "1510079": "btcs", "1825079": "game", "1437925": "fgnx",
+  "1652044": "dfdv", "1777319": "upxi", "1580063": "hsdt", "1956744": "tron",
+  "1627282": "cwd", "1846839": "stke", "1849635": "djt", "1977303": "naka",
+  "1903595": "tbh", "1879932": "fwdi", "1830131": "hypd", "1949556": "xxi",
+};
+
+/** Build URL to our internal XBRL viewer */
+export function xbrlViewerUrl(cik: string, accession: string, fact?: string): string {
+  const ticker = CIK_TICKERS[cik] || cik;
+  const base = `/filings/${ticker}/${accession}?tab=xbrl`;
+  return fact ? `${base}&fact=${encodeURIComponent(fact)}` : base;
 }
 
-/** Build URL to SEC EDGAR filing */
-export function edgarFilingUrl(cik: string, accession: string): string {
+/** Build URL to our internal filing viewer */
+export function filingViewerUrl(cik: string, accession: string, anchor?: string): string {
+  const ticker = CIK_TICKERS[cik] || cik;
+  const base = `/filings/${ticker}/${accession}`;
+  return anchor ? `${base}?anchor=${encodeURIComponent(anchor)}` : base;
+}
+
+/** Build URL to SEC EDGAR filing (for "View on SEC" backup link) */
+export function secEdgarUrl(cik: string, accession: string): string {
   return `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/`;
 }
 

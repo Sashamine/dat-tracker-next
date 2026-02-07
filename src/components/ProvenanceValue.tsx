@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
-import { xbrlViewerUrl, edgarFilingUrl } from "@/lib/data/types/provenance";
+import { xbrlViewerUrl, filingViewerUrl, secEdgarUrl } from "@/lib/data/types/provenance";
 
 interface ProvenanceValueProps {
   data: ProvenanceValue<number>;
@@ -33,14 +33,20 @@ function formatValue(value: number, format: "currency" | "number" | "compact" = 
 }
 
 /** Get verification URL based on source type */
-function getVerifyUrl(source: XBRLSource | DocumentSource | DerivedSource): string | null {
+function getVerifyUrl(source: XBRLSource | DocumentSource | DerivedSource): { internal: string | null; sec: string | null } {
   if (source.type === "xbrl") {
-    return xbrlViewerUrl(source.cik, source.accession);
+    return {
+      internal: xbrlViewerUrl(source.cik, source.accession, source.fact),
+      sec: secEdgarUrl(source.cik, source.accession),
+    };
   } else if (source.type === "sec-document" && source.cik && source.accession) {
-    return edgarFilingUrl(source.cik, source.accession);
+    return {
+      internal: filingViewerUrl(source.cik, source.accession, source.anchor),
+      sec: secEdgarUrl(source.cik, source.accession),
+    };
   } else if (source.type === "sec-document" || source.type === "press-release" || 
              source.type === "company-website" || source.type === "regulatory") {
-    return source.url;
+    return { internal: null, sec: source.url };
   } else if (source.type === "derived") {
     // For derived, link to first input's source
     const firstInput = Object.values(source.inputs)[0];
@@ -48,7 +54,7 @@ function getVerifyUrl(source: XBRLSource | DocumentSource | DerivedSource): stri
       return getVerifyUrl(firstInput.source);
     }
   }
-  return null;
+  return { internal: null, sec: null };
 }
 
 /** Get source label */
@@ -71,7 +77,7 @@ function getSourceLabel(source: XBRLSource | DocumentSource | DerivedSource): st
 
 export default function ProvenanceValueDisplay({ data, format = "number", className = "" }: ProvenanceValueProps) {
   const [showDetails, setShowDetails] = useState(false);
-  const verifyUrl = getVerifyUrl(data.source);
+  const { internal: internalUrl, sec: secUrl } = getVerifyUrl(data.source);
   
   return (
     <span className={`relative inline-block ${className}`}>
@@ -206,17 +212,31 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
                 </div>
               )}
               
-              {/* Verify button */}
-              {verifyUrl && (
-                <a
-                  href={verifyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
-                >
-                  Verify at Source →
-                </a>
-              )}
+              {/* Verify buttons */}
+              <div className="flex gap-2">
+                {internalUrl && (
+                  <a
+                    href={internalUrl}
+                    className="flex-1 text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
+                  >
+                    View Source →
+                  </a>
+                )}
+                {secUrl && (
+                  <a
+                    href={secUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-center py-2 rounded text-sm font-medium ${
+                      internalUrl 
+                        ? "px-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
+                        : "flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                    }`}
+                  >
+                    {internalUrl ? "SEC ↗" : "View on SEC →"}
+                  </a>
+                )}
+              </div>
               
               {/* Last verified */}
               <div className="text-xs text-gray-500 dark:text-gray-500 text-center">

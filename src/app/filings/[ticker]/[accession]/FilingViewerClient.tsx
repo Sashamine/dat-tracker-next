@@ -2,19 +2,34 @@
 
 import { useEffect, useState } from "react";
 import FilingViewer from "./FilingViewer";
+import XBRLViewer from "./XBRLViewer";
 import Link from "next/link";
+
+// Ticker to CIK mapping
+const TICKER_CIKS: Record<string, string> = {
+  mstr: "1050446", mara: "1507605", riot: "1167419", clsk: "1515671",
+  btbt: "1799290", kulr: "1662684", bmnr: "1829311", corz: "1878848",
+  abtc: "2068580", btcs: "1510079", game: "1825079", fgnx: "1437925",
+  dfdv: "1652044", upxi: "1777319", hsdt: "1580063", tron: "1956744",
+  cwd: "1627282", stke: "1846839", djt: "1849635", naka: "1977303",
+  tbh: "1903595", fwdi: "1879932", hypd: "1830131", xxi: "1949556",
+};
 
 interface FilingViewerClientProps {
   ticker: string;
   accession: string;
   searchQuery?: string;
   anchor?: string; // Section anchor like "btc-holdings" or "staking"
+  highlightFact?: string; // XBRL fact to highlight
 }
 
-export default function FilingViewerClient({ ticker, accession, searchQuery, anchor }: FilingViewerClientProps) {
+export default function FilingViewerClient({ ticker, accession, searchQuery, anchor, highlightFact }: FilingViewerClientProps) {
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"document" | "xbrl">(highlightFact ? "xbrl" : "document");
+  
+  const cik = TICKER_CIKS[ticker.toLowerCase()];
   
   useEffect(() => {
     async function fetchContent() {
@@ -113,12 +128,76 @@ export default function FilingViewerClient({ ticker, accession, searchQuery, anc
   }
   
   return (
-    <FilingViewer 
-      ticker={ticker}
-      accession={accession}
-      content={content}
-      searchQuery={searchQuery}
-      anchor={anchor}
-    />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Tab navigation */}
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center gap-4">
+              <Link 
+                href={`/company/${ticker.toLowerCase()}`}
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                ← {ticker}
+              </Link>
+              <span className="text-gray-300 dark:text-gray-600">|</span>
+              <span className="font-mono text-sm text-gray-600 dark:text-gray-400">
+                {accession}
+              </span>
+            </div>
+            
+            {/* Tabs */}
+            <div className="flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              <button
+                onClick={() => setActiveTab("document")}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
+                  activeTab === "document"
+                    ? "bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 shadow"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                }`}
+              >
+                📄 Document
+              </button>
+              <button
+                onClick={() => setActiveTab("xbrl")}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
+                  activeTab === "xbrl"
+                    ? "bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 shadow"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                }`}
+              >
+                📊 XBRL Data
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Content */}
+      {activeTab === "document" ? (
+        <FilingViewer 
+          ticker={ticker}
+          accession={accession}
+          content={content}
+          searchQuery={searchQuery}
+          anchor={anchor}
+        />
+      ) : (
+        <div className="max-w-7xl mx-auto p-4">
+          {cik ? (
+            <XBRLViewer
+              ticker={ticker}
+              cik={cik}
+              accession={accession}
+              highlightFact={highlightFact}
+            />
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              CIK not found for {ticker}. XBRL data unavailable.
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
