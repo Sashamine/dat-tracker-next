@@ -82,8 +82,6 @@ function calculateMinerStats(company: Company): MinerStats | null {
 export function MinersComparison({ companies, prices, compact }: MinersComparisonProps) {
   const minerStats = useMemo(() => {
     const miners = companies.filter(c => c.isMiner);
-    console.log('[MinersComparison] Found miners:', miners.map(m => m.ticker));
-    console.log('[MinersComparison] HOLDINGS_HISTORY keys:', Object.keys(HOLDINGS_HISTORY));
     return miners
       .map(calculateMinerStats)
       .filter((s): s is MinerStats => s !== null)

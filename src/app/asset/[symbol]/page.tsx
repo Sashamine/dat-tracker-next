@@ -26,6 +26,7 @@ import {
 import { getMarketCap } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { MobileHeader } from "@/components/mobile-header";
+import { MinersComparison } from "@/components/miners-comparison";
 
 // Asset metadata
 const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: boolean }> = {
@@ -244,6 +245,22 @@ export default function AssetPage() {
             </p>
           </div>
         </div>
+
+        {/* Miners Section - BTC only */}
+        {symbol === "BTC" && (
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+              <span>⛏️</span> Miners HPS Growth
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+              Holdings per share (HPS) growth shows whether miners are accumulating BTC faster than dilution.
+              Higher growth = more BTC per share over time.
+            </p>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <MinersComparison companies={companies} prices={prices} />
+            </div>
+          </div>
+        )}
 
         {/* Companies Table */}
         <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden overflow-x-auto">
