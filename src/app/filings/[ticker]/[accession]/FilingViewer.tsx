@@ -15,10 +15,17 @@ interface FilingViewerProps {
 const ANCHOR_KEYWORDS: Record<string, string[]> = {
   "btc-holdings": ["bitcoin", "btc", "digital assets"],
   "eth-holdings": ["ethereum", "eth", "ether"],
+  "sol-holdings": ["solana", "sol"],
+  "ltc-holdings": ["litecoin", "ltc"],
+  "trx-holdings": ["tron", "trx"],
+  "holdings": ["digital assets", "cryptocurrency", "holdings"],
   "staking": ["staking", "staked", "staking yield", "validator"],
   "crypto-holdings": ["digital assets", "cryptocurrency", "crypto"],
   "shares": ["shares outstanding", "common stock", "diluted shares"],
   "debt": ["convertible notes", "senior secured", "debt", "borrowings"],
+  "operating-burn": ["operating expenses", "cash used in operating", "net cash used"],
+  "operating-burn-mda": ["management's discussion", "liquidity", "operating activities"],
+  "investors": ["investor", "shareholders", "stockholders"],
 };
 
 export default function FilingViewer({ ticker, accession, content, searchQuery, anchor }: FilingViewerProps) {
