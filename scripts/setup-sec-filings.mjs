@@ -12,8 +12,14 @@ const COMPANIES = {
   hsdt: { cik: '1610853', asset: 'SOL', fiscalYearEnd: '1231' },
   fufu: { cik: '1921158', asset: 'BTC', fiscalYearEnd: '1231' },
   kulr: { cik: '1662684', asset: 'BTC', fiscalYearEnd: '1231' },
-  abtc: { cik: '1436229', asset: 'BTC', fiscalYearEnd: '1231' },
-  btcs: { cik: '1471941', asset: 'ETH', fiscalYearEnd: '1231' },
+  abtc: { cik: '1755953', asset: 'BTC', fiscalYearEnd: '1231' },
+  btcs: { cik: '1436229', asset: 'ETH', fiscalYearEnd: '1231' },
+  fld: { cik: '1889123', asset: 'BTC', fiscalYearEnd: '1231' },
+  game: { cik: '1714562', asset: 'ETH', fiscalYearEnd: '0331' },
+  fgnx: { cik: '1591890', asset: 'ETH', fiscalYearEnd: '1231' },
+  bmnr: { cik: '1829311', asset: 'ETH', fiscalYearEnd: '1231' },
+  naka: { cik: '1946573', asset: 'BTC', fiscalYearEnd: '1231' },
+  djt: { cik: '1849635', asset: 'BTC', fiscalYearEnd: '1231' },
 };
 
 const ticker = process.argv[2]?.toLowerCase();
