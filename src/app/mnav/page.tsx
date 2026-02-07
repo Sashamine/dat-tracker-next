@@ -144,7 +144,12 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
     });
     fairValueSeries.setData(historicalData.map(d => ({ time: d.time, value: 1.0 })));
 
-    chart.timeScale().fitContent();
+    // Set visible range to match data range
+    if (historicalData.length > 0) {
+      const from = historicalData[0].time;
+      const to = historicalData[historicalData.length - 1].time;
+      chart.timeScale().setVisibleRange({ from, to });
+    }
     chartRef.current = chart;
 
     const handleResize = () => {
