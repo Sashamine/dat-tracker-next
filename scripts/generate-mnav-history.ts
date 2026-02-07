@@ -12,6 +12,33 @@ import * as path from "path";
 // Import holdings history
 import { HOLDINGS_HISTORY, HoldingsSnapshot } from "../src/lib/data/holdings-history";
 
+// Import current company data for debt fallback
+import { allCompanies } from "../src/lib/data/companies";
+
+// Build debt and currency lookup from companies.ts
+const companyDataLookup: Record<string, { totalDebt: number; preferredEquity: number; cash: number; currency: string }> = {};
+for (const company of allCompanies) {
+  companyDataLookup[company.ticker] = {
+    totalDebt: (company as any).totalDebt || 0,
+    preferredEquity: (company as any).preferredEquity || 0,
+    cash: (company as any).cashReserves || 0,
+    currency: (company as any).currency || "USD",
+  };
+}
+
+// Approximate FX rates to USD (historical averages 2024-2025)
+const FX_TO_USD: Record<string, number> = {
+  USD: 1.0,
+  JPY: 0.0067,  // ~150 JPY/USD
+  CAD: 0.74,    // ~1.35 CAD/USD
+  EUR: 1.08,    // ~0.93 EUR/USD
+  GBP: 1.27,    // ~0.79 GBP/USD
+  AUD: 0.65,    // ~1.54 AUD/USD
+  HKD: 0.128,   // ~7.8 HKD/USD
+  SEK: 0.095,   // ~10.5 SEK/USD
+  BRL: 0.18,    // ~5.5 BRL/USD
+};
+
 interface CompanyMNAV {
   ticker: string;
   asset: string;
@@ -473,13 +500,13 @@ async function generateHistoricalMNAV(): Promise<void> {
       const cryptoPrice = cryptoPrices[companyData.asset];
       if (!cryptoPrice || cryptoPrice <= 0) continue;
 
-      // Use stored stock price first, fallback to Yahoo Finance
-      let stockPrice = holdings.stockPrice;
+      // Use actual daily stock price from local files first (more accurate)
+      // Only fall back to holdings snapshot price if daily price unavailable
+      let stockPrice = await fetchStockPrice(ticker, targetDate);
       
       if (!stockPrice || stockPrice <= 0) {
-        // Try fetching from Yahoo Finance as fallback
-        stockPrice = await fetchStockPrice(ticker, targetDate);
-        await delay(100);
+        // Fall back to holdings snapshot price
+        stockPrice = holdings.stockPrice || 0;
       }
 
       if (!stockPrice || stockPrice <= 0) {
@@ -487,16 +514,23 @@ async function generateHistoricalMNAV(): Promise<void> {
         continue;
       }
 
-      // Use stored market cap or calculate from price × shares
-      const marketCap = holdings.marketCap || (stockPrice * holdings.sharesOutstandingDiluted);
+      // Get company data including currency
+      const companyInfo = companyDataLookup[ticker] || { totalDebt: 0, preferredEquity: 0, cash: 0, currency: "USD" };
+      const fxRate = FX_TO_USD[companyInfo.currency] || 1.0;
 
-      // Skip balance sheet fetch for now - use simple mNAV (marketCap / NAV)
-      // TODO: Add debt/cash to holdings-history for EV-based mNAV
-      const totalDebt = 0;
-      const cash = 0;
+      // Use stored market cap or calculate from price × shares, then convert to USD
+      const marketCapLocal = holdings.marketCap || (stockPrice * holdings.sharesOutstandingDiluted);
+      const marketCap = marketCapLocal * fxRate;
 
-      // Calculate EV and mNAV
-      const enterpriseValue = marketCap + totalDebt - cash;
+      // Use debt/cash from holdings-history for EV-based mNAV
+      // Fall back to companies.ts current values if not in holdings snapshot
+      // Note: companies.ts debt values are already in USD
+      const totalDebt = (holdings as any).totalDebt ?? companyInfo.totalDebt;
+      const preferredEquity = (holdings as any).preferredEquity ?? companyInfo.preferredEquity;
+      const cash = (holdings as any).cash ?? companyInfo.cash;
+
+      // Calculate EV: Market Cap + Total Debt + Preferred Equity - Cash
+      const enterpriseValue = marketCap + totalDebt + preferredEquity - cash;
       const cryptoNav = holdings.holdings * cryptoPrice;
 
       if (cryptoNav <= 0) continue;
@@ -527,9 +561,9 @@ async function generateHistoricalMNAV(): Promise<void> {
       console.log(`  ${ticker}: ${mnav.toFixed(2)}x mNAV`);
     }
 
-    // Require minimum 3 companies for reliable median
-    if (companies.length < 3) {
-      console.log(`  Only ${companies.length} companies for ${targetDate} - need at least 3`);
+    // Require minimum 1 company (was 3 - too restrictive for daily data)
+    if (companies.length < 1) {
+      console.log(`  No valid companies for ${targetDate}`);
       continue;
     }
 

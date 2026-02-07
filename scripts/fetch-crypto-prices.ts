@@ -9,7 +9,8 @@ import * as path from "path";
 // CryptoCompare symbols
 const CRYPTO_SYMBOLS = [
   "BTC", "ETH", "SOL", "TAO", "LTC", "ZEC", "LINK", 
-  "SUI", "AVAX", "DOGE", "TRX", "XRP", "BNB", "HBAR", "ADA"
+  "SUI", "AVAX", "DOGE", "TRX", "XRP", "BNB", "HBAR", "ADA",
+  "HYPE"  // Hyperliquid - needed for PURR, HYPD
 ];
 
 interface PriceData {

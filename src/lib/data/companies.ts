@@ -668,10 +668,10 @@ export const btcCompanies: Company[] = [
     ticker: "ASST",
     asset: "BTC",
     tier: 1,
-    holdings: 12_798,  // SEC 8-K Jan 16, 2026 (12,797.9 rounded)
-    holdingsLastUpdated: "2026-01-16",
+    holdings: 13_132,  // SEC 8-K Jan 28, 2026: "now holds 13,131.82 Bitcoin as of January 28, 2026"
+    holdingsLastUpdated: "2026-01-28",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=8-K&dateb=&owner=include&count=40",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/",
     datStartDate: "2024-05-01",
     secCik: "0001920406",
     // costBasisAvg removed - needs SEC verification
