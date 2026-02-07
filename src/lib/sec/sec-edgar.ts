@@ -24,6 +24,8 @@ import { fetchWithRateLimit, waitForRateLimit, recordSuccess } from './rate-limi
 export const TICKER_TO_CIK: Record<string, string> = {
   // BTC
   "MSTR": "0001050446",  // Strategy (fka MicroStrategy)
+  "FUFU": "0001921158",  // Bitfufu Inc.
+  "FLD": "0001889123",   // Fold Holdings, Inc.
   "MARA": "0001507605",  // MARA Holdings
   "RIOT": "0001167419",  // Riot Platforms
   "CLSK": "0000827876",  // CleanSpark
@@ -72,6 +74,8 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "BTOG": "0001735556",  // Bit Origin
   // AVAX
   "AVX": "0001826397",   // AVAX One Technology (fka AgriFORCE)
+  // ZEC
+  "CYPH": "0001509745",  // Cypherpunk Technologies Inc.
   // HBAR (OTC)
   "IHLDF": "0001905459", // IHLDF
   // BNB
