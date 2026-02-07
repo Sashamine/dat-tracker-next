@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getQuarterlyYieldLeaderboard, getAvailableQuarters, getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
+import { MinersComparison } from "@/components/miners-comparison";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 type MetricType = "median" | "average";
@@ -544,6 +545,24 @@ export default function MNAVPage() {
         <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
           <p>Dashed line = Fair Value (1.0x mNAV)</p>
         </div>
+
+        {/* Miners Section */}
+        {miners.length > 0 && (
+          <div className="mt-12">
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                <span>⛏️</span> Miners HPS Growth
+              </h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Holdings per share (HPS) growth shows whether miners are accumulating faster than dilution.
+                Miners add BTC through mining + purchases, so should theoretically outpace pure treasuries.
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <MinersComparison companies={allCompanies} prices={prices} />
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

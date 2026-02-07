@@ -5,7 +5,7 @@ import Link from "next/link";
 import { DataTable } from "@/components/data-table";
 import { FilterSidebar } from "@/components/filter-sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { OverviewSidebar } from "@/components/overview-sidebar";
+// OverviewSidebar removed - redundant with left sidebar
 import { MobileHeader } from "@/components/mobile-header";
 import { MobileFilterSheet, MobileFilterButton } from "@/components/mobile-filter-sheet";
 import { PullToRefresh } from "@/components/pull-to-refresh";
@@ -92,7 +92,7 @@ function HomeContent() {
       </Suspense>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 lg:mr-72">
+      <main className="flex-1 lg:ml-64">
         <div className="px-3 py-4 lg:px-4 lg:py-6 max-w-full">
           {/* Header - Desktop only */}
           <div className="mb-4 lg:mb-6 hidden lg:flex items-center justify-between">
@@ -212,16 +212,7 @@ function HomeContent() {
         </div>
       </main>
 
-      {/* Right Sidebar - Overview */}
-      <OverviewSidebar
-        assetStats={assetStats}
-        mnavStats={mnavStats}
-        totalCompanies={totalCompanies}
-        totalValue={totalValue}
-        companies={companies}
-        prices={prices ?? undefined}
-        className="hidden lg:block fixed right-0 top-0 h-full"
-      />
+      {/* Right Sidebar removed - stats now in left sidebar / sector pages */}
 
       {/* Mobile Filter Sheet */}
       <MobileFilterSheet isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
