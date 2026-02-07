@@ -1,137 +1,56 @@
 import { NextResponse } from "next/server";
-import { allCompanies } from "@/lib/data/companies";
-import { formatHoldingsSource } from "@/lib/holdings-verification";
+import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 
-// Cache for SEC filings
-let secFilingsCache: { data: any[]; timestamp: number } | null = null;
-const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+export const dynamic = "force-dynamic";
 
-/**
- * Fetch recent 8-K filings from SEC EDGAR
- */
-async function fetchRecentSECFilings(): Promise<any[]> {
-  if (secFilingsCache && Date.now() - secFilingsCache.timestamp < CACHE_TTL) {
-    return secFilingsCache.data;
-  }
-
-  try {
-    const tickersWithCik: Record<string, string> = {
-      "MSTR": "0001050446",
-      "MARA": "0001507605",
-      "RIOT": "0001167419",
-      "CLSK": "0001785459",
-      "COIN": "0001679788",
-      "ASST": "0001920406",
-      "KULR": "0001662684",
-      "DJT": "0001849635",
-      // "HUT" removed - pivoted to AI/HPC, not a DAT company
-      "CORZ": "0001878848",
-    };
-
-    const filings: any[] = [];
-
-    for (const [ticker, cik] of Object.entries(tickersWithCik)) {
-      try {
-        const url = `https://data.sec.gov/submissions/CIK${cik.padStart(10, '0')}.json`;
-        const response = await fetch(url, {
-          headers: {
-            "User-Agent": "DAT-Tracker contact@example.com",
-            "Accept": "application/json"
-          }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const recentFilings = data.filings?.recent;
-
-          if (recentFilings) {
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-            for (let i = 0; i < Math.min(20, recentFilings.form?.length || 0); i++) {
-              if (recentFilings.form[i] === "8-K") {
-                const filingDate = new Date(recentFilings.filingDate[i]);
-                if (filingDate >= thirtyDaysAgo) {
-                  filings.push({
-                    ticker,
-                    cik,
-                    form: "8-K",
-                    filingDate: recentFilings.filingDate[i],
-                    accessionNumber: recentFilings.accessionNumber[i],
-                    primaryDocument: recentFilings.primaryDocument[i],
-                    description: recentFilings.primaryDocDescription?.[i] || "",
-                  });
-                }
-              }
-            }
-          }
-        }
-      } catch (e) {
-        console.error(`Error fetching SEC filings for ${ticker}:`, e);
-      }
-    }
-
-    secFilingsCache = { data: filings, timestamp: Date.now() };
-    return filings;
-  } catch (error) {
-    console.error("SEC filings fetch error:", error);
-    return secFilingsCache?.data || [];
-  }
+interface DataPoint {
+  ticker: string;
+  asset: string;
+  date: string;
+  holdings: number;
+  sharesOutstanding: number;
+  holdingsPerShare: number;
+  source: string;
+  sourceUrl: string | null;
+  sourceType: string;
+  verified?: boolean;
 }
 
 export async function GET() {
-  try {
-    const secFilings = await fetchRecentSECFilings();
+  const dataPoints: DataPoint[] = [];
 
-    // Simple company report - just date and source
-    const companiesReport = allCompanies.map(company => ({
-      ticker: company.ticker,
-      name: company.name,
-      asset: company.asset,
-      holdings: company.holdings,
-      lastUpdated: company.holdingsLastUpdated || null,
-      source: company.holdingsSource || "unknown",
-      sourceLabel: formatHoldingsSource(company.holdingsSource),
-      sourceUrl: company.holdingsSourceUrl || null,
-    })).sort((a, b) => {
-      // Sort by last updated (most recent first), nulls last
-      if (!a.lastUpdated) return 1;
-      if (!b.lastUpdated) return -1;
-      return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime();
-    });
-
-    // Filter SEC filings that mention crypto
-    const relevantFilings = secFilings.filter(f =>
-      f.description?.toLowerCase().includes("bitcoin") ||
-      f.description?.toLowerCase().includes("btc") ||
-      f.description?.toLowerCase().includes("crypto") ||
-      f.description?.toLowerCase().includes("digital asset")
-    );
-
-    return NextResponse.json({
-      summary: {
-        totalCompanies: allCompanies.length,
-        recentSECFilings: relevantFilings.length,
-      },
-      companies: companiesReport,
-      recentFilings: relevantFilings,
-      externalSources: {
-        secEdgar: {
-          available: secFilings.length > 0,
-          recentFilings: secFilings.length,
-          relevantFilings: relevantFilings.length,
-          lastFetched: secFilingsCache?.timestamp
-            ? new Date(secFilingsCache.timestamp).toISOString()
-            : null
-        }
-      },
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    console.error("Holdings verification error:", error);
-    return NextResponse.json({
-      error: String(error),
-      timestamp: new Date().toISOString()
-    }, { status: 500 });
+  for (const [ticker, companyData] of Object.entries(HOLDINGS_HISTORY)) {
+    for (const entry of companyData.history) {
+      dataPoints.push({
+        ticker,
+        asset: companyData.asset,
+        date: entry.date,
+        holdings: entry.holdings,
+        sharesOutstanding: entry.sharesOutstandingDiluted,
+        holdingsPerShare: entry.holdingsPerShare,
+        source: entry.source || "Unknown",
+        sourceUrl: entry.sourceUrl || null,
+        sourceType: entry.sourceType || "unknown",
+        verified: false, // TODO: Load from database
+      });
+    }
   }
+
+  // Sort by ticker then date (newest first)
+  dataPoints.sort((a, b) => {
+    if (a.ticker !== b.ticker) return a.ticker.localeCompare(b.ticker);
+    return b.date.localeCompare(a.date);
+  });
+
+  return NextResponse.json({
+    dataPoints,
+    stats: {
+      total: dataPoints.length,
+      withSourceUrl: dataPoints.filter((d) => d.sourceUrl).length,
+      bySourceType: dataPoints.reduce((acc, d) => {
+        acc[d.sourceType] = (acc[d.sourceType] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>),
+    },
+  });
 }
