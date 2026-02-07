@@ -1,52 +1,79 @@
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import fs from "fs";
+import path from "path";
+import FilingViewer from "./FilingViewer";
 
 interface PageProps {
   params: Promise<{
     ticker: string;
     accession: string;
   }>;
+  searchParams: Promise<{
+    q?: string;
+  }>;
 }
 
-// Map tickers to CIKs for SEC EDGAR redirect
-const TICKER_CIKS: Record<string, string> = {
-  mstr: "0001050446",
-  mara: "0001507605",
-  riot: "0001167419",
-  clsk: "0001771485",
-  btbt: "0001710350",
-  kulr: "0001662684",
-  fufu: "0001921158",
-  naka: "0001946573",
-  abtc: "0001755953",
-  btcs: "0000827876",
-  bmnr: "0001946573",
-  game: "0001714562",
-  fgnx: "0001591890",
-  lits: "0001262104",
-  dfdv: "0001805526",
-  upxi: "0001903596",
-  hsdt: "0001959534",
-  tron: "0001956744",
-  cwd: "0001627282",
-  stke: "0001846839",
-  sqns: "0001383395",
-  twav: "0000746210",
-};
-
-export default async function FilingViewerPage({ params }: PageProps) {
-  const { ticker, accession } = await params;
-  
+// Try to load filing content from local storage
+async function getFilingContent(ticker: string, accession: string): Promise<{ content: string; source: string } | null> {
   const tickerLower = ticker.toLowerCase();
-  const cik = TICKER_CIKS[tickerLower];
+  const tickerUpper = ticker.toUpperCase();
   
-  if (!cik) {
-    // Fallback to SEC EDGAR search
-    redirect(`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=${ticker}&type=&dateb=&owner=include&count=40`);
+  // Normalize accession (remove dashes for comparison)
+  const accessionNoDashes = accession.replace(/-/g, "");
+  const accessionWithDashes = accession.includes("-") 
+    ? accession 
+    : `${accession.slice(0, 10)}-${accession.slice(10, 12)}-${accession.slice(12)}`;
+  
+  // Check multiple possible locations
+  const possiblePaths = [
+    // data/sec-content/[ticker]/[accession].txt
+    path.join(process.cwd(), "data", "sec-content", tickerLower, `${accessionWithDashes}.txt`),
+    path.join(process.cwd(), "data", "sec-content", tickerUpper, `${accessionWithDashes}.txt`),
+    // public/sec/[ticker]/[type]/[form]-[date].html - would need manifest lookup
+    // For now, try accession-based naming
+    path.join(process.cwd(), "public", "sec", tickerLower, `${accessionWithDashes}.html`),
+    path.join(process.cwd(), "public", "sec", tickerLower, `${accessionNoDashes}.html`),
+  ];
+  
+  for (const filePath of possiblePaths) {
+    try {
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, "utf-8");
+        return { content, source: filePath };
+      }
+    } catch {
+      continue;
+    }
   }
   
-  // Clean up accession number for SEC URL
-  const accessionClean = accession.replace(/-/g, "");
+  return null;
+}
+
+export default async function FilingViewerPage({ params, searchParams }: PageProps) {
+  const { ticker, accession } = await params;
+  const { q: searchQuery } = await searchParams;
   
-  // Redirect to SEC EDGAR filing
-  redirect(`https://www.sec.gov/Archives/edgar/data/${cik.replace(/^0+/, "")}/${accessionClean}/`);
+  const filing = await getFilingContent(ticker, accession);
+  
+  if (!filing) {
+    // Could redirect to SEC as fallback, but for now show not found
+    notFound();
+  }
+  
+  return (
+    <FilingViewer 
+      ticker={ticker.toUpperCase()}
+      accession={accession}
+      content={filing.content}
+      searchQuery={searchQuery}
+    />
+  );
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { ticker, accession } = await params;
+  return {
+    title: `${ticker.toUpperCase()} Filing ${accession} | DAT Tracker`,
+    description: `SEC filing ${accession} for ${ticker.toUpperCase()}`,
+  };
 }
