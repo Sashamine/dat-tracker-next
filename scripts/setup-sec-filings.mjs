@@ -20,6 +20,8 @@ const COMPANIES = {
   bmnr: { cik: '1829311', asset: 'ETH', fiscalYearEnd: '1231' },
   naka: { cik: '1946573', asset: 'BTC', fiscalYearEnd: '1231' },
   djt: { cik: '1849635', asset: 'BTC', fiscalYearEnd: '1231' },
+  lits: { cik: '1262104', asset: 'LTC', fiscalYearEnd: '1231' },
+  tron: { cik: '1956744', asset: 'TRX', fiscalYearEnd: '1231' },
 };
 
 const ticker = process.argv[2]?.toLowerCase();

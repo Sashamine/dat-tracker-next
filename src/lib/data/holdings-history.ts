@@ -647,7 +647,7 @@ const XTAIF_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
 const LITS_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-08-01", holdings: 450000, sharesOutstandingDiluted: 32_000_000, holdingsPerShare: 0.01406, source: "Initial LTC treasury 8-K", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 720000, sharesOutstandingDiluted: 33_500_000, holdingsPerShare: 0.02149, stockPrice: 302.96, source: "Q4 2024 10-K", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 720000, sharesOutstandingDiluted: 33_500_000, holdingsPerShare: 0.02149, stockPrice: 302.96, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/lits/10Q-2024-12-31#ltc-holdings" },
   // Q1 FY2026 (ended Sep 30, 2025): 929,548 LTC per 10-Q and dashboard
   { date: "2025-09-30", holdings: 929548, sharesOutstandingDiluted: 35_655_155, holdingsPerShare: 0.02607, stockPrice: 326.42, source: "Q1 FY2026 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001262104&type=10-Q", sourceType: "sec-filing" },
   // DEF 14A Record Date Dec 15, 2025: 36,769,677 shares (+1.1M since Sep 30)
@@ -770,7 +770,7 @@ const HYPD_HISTORY: HoldingsSnapshot[] = [
 const TRON_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-15", holdings: 365_096_845, sharesOutstandingDiluted: 27_425_983, holdingsPerShare: 13.313, source: "Initial TRX treasury (pre-warrant)", sourceType: "press-release" },
   { date: "2025-09-02", holdings: 677_596_945, sharesOutstandingDiluted: 257_115_400, holdingsPerShare: 2.636, source: "8-K: $110M warrant exercise added 312M TRX", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=8-K", sourceType: "sec-filing" },
-  { date: "2025-09-30", holdings: 677_596_945, sharesOutstandingDiluted: 257_115_400, holdingsPerShare: 2.636, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q balance sheet", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 677_596_945, sharesOutstandingDiluted: 257_115_400, holdingsPerShare: 2.636, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q balance sheet", sourceType: "sec-filing", sourceUrl: "/filings/tron/10Q-2025-09-30#trx-holdings" },
   { date: "2025-12-29", holdings: 677_000_000, sharesOutstandingDiluted: 274_382_064, holdingsPerShare: 2.468, source: "8-K: $18M Justin Sun investment", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/", sourceType: "sec-filing" },
   { date: "2026-01-23", holdings: 677_000_000, sharesOutstandingDiluted: 274_382_064, holdingsPerShare: 2.468, source: "8-K: Confirmed 677M+ TRX total", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/", sourceType: "sec-filing" },
 ];
