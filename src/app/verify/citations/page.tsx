@@ -15,12 +15,15 @@ interface DataPoint {
   verified?: boolean;
 }
 
+type UrlType = "sec-filing" | "sec-search" | "pdf" | "external" | "local-api" | "none";
+
 export default function CitationVerificationPage() {
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([]);
   const [selectedPoint, setSelectedPoint] = useState<DataPoint | null>(null);
   const [filter, setFilter] = useState<"all" | "unverified" | "verified">("all");
   const [tickerFilter, setTickerFilter] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [iframeError, setIframeError] = useState(false);
 
   useEffect(() => {
     fetch("/api/holdings-verification")
@@ -32,6 +35,11 @@ export default function CitationVerificationPage() {
       .catch(() => setLoading(false));
   }, []);
 
+  // Reset iframe error when selecting new point
+  useEffect(() => {
+    setIframeError(false);
+  }, [selectedPoint]);
+
   const filteredPoints = dataPoints.filter((dp) => {
     if (filter === "verified" && !dp.verified) return false;
     if (filter === "unverified" && dp.verified) return false;
@@ -41,12 +49,22 @@ export default function CitationVerificationPage() {
 
   const uniqueTickers = [...new Set(dataPoints.map((dp) => dp.ticker))].sort();
 
+  const getUrlType = (url: string | null): UrlType => {
+    if (!url) return "none";
+    if (url.startsWith("/filings/")) return "local-api";
+    if (url.includes("sec.gov/cgi-bin/browse-edgar")) return "sec-search";
+    if (url.includes("sec.gov/Archives/edgar")) return "sec-filing";
+    if (url.endsWith(".pdf")) return "pdf";
+    return "external";
+  };
+
   const getDocumentUrl = (point: DataPoint): string | null => {
     if (!point.sourceUrl) return null;
     
-    // If it's a local /filings/ URL, we need to redirect to SEC
-    if (point.sourceUrl.startsWith("/filings/")) {
-      // Extract ticker and accession from URL like /filings/mstr/0001050446-25-000123
+    const urlType = getUrlType(point.sourceUrl);
+    
+    // Local /filings/ URLs -> use our proxy API
+    if (urlType === "local-api") {
       const parts = point.sourceUrl.replace("/filings/", "").split("/");
       if (parts.length >= 2) {
         const ticker = parts[0];
@@ -55,7 +73,35 @@ export default function CitationVerificationPage() {
       }
     }
     
-    // External URL - use directly
+    // SEC direct filing URLs -> use our proxy API
+    if (urlType === "sec-filing") {
+      // Extract CIK and accession from URL like:
+      // https://www.sec.gov/Archives/edgar/data/1050446/000105044625000123/
+      const match = point.sourceUrl.match(/edgar\/data\/(\d+)\/(\d+)/);
+      if (match) {
+        return `/api/sec/fetch-filing?cik=${match[1]}&accessionRaw=${match[2]}`;
+      }
+    }
+    
+    // PDFs and external URLs - use directly
+    return point.sourceUrl;
+  };
+
+  const getOriginalUrl = (point: DataPoint): string | null => {
+    if (!point.sourceUrl) return null;
+    
+    const urlType = getUrlType(point.sourceUrl);
+    
+    if (urlType === "local-api") {
+      // Convert /filings/mstr/0001050446-25-000123 to SEC URL
+      const parts = point.sourceUrl.replace("/filings/", "").split("/");
+      if (parts.length >= 2) {
+        const accession = parts[1].split("#")[0].replace(/-/g, "");
+        // Just link to SEC search for the ticker
+        return `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=${parts[0]}&type=&dateb=&owner=include&count=40`;
+      }
+    }
+    
     return point.sourceUrl;
   };
 
@@ -63,6 +109,12 @@ export default function CitationVerificationPage() {
     if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + "M";
     if (n >= 1_000) return (n / 1_000).toFixed(1) + "K";
     return n.toLocaleString();
+  };
+
+  const canEmbed = (point: DataPoint): boolean => {
+    const urlType = getUrlType(point.sourceUrl);
+    // These types can potentially be embedded
+    return urlType === "local-api" || urlType === "sec-filing" || urlType === "pdf";
   };
 
   if (loading) {
@@ -181,7 +233,7 @@ export default function CitationVerificationPage() {
                   <div className="flex gap-2">
                     {selectedPoint.sourceUrl && (
                       <a
-                        href={selectedPoint.sourceUrl.startsWith("http") ? selectedPoint.sourceUrl : `https://www.sec.gov${selectedPoint.sourceUrl}`}
+                        href={getOriginalUrl(selectedPoint) || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 rounded text-sm"
@@ -191,7 +243,6 @@ export default function CitationVerificationPage() {
                     )}
                     <button
                       onClick={() => {
-                        // TODO: Mark as verified via API
                         setDataPoints(prev => prev.map(dp => 
                           dp.ticker === selectedPoint.ticker && dp.date === selectedPoint.date
                             ? { ...dp, verified: true }
@@ -231,15 +282,41 @@ export default function CitationVerificationPage() {
               </div>
 
               {/* Document Frame */}
-              <div className="flex-1 bg-white">
+              <div className="flex-1 bg-white relative">
                 {selectedPoint.sourceUrl ? (
-                  <iframe
-                    src={getDocumentUrl(selectedPoint) || ""}
-                    className="w-full h-full"
-                    title="Source Document"
-                  />
+                  canEmbed(selectedPoint) && !iframeError ? (
+                    <iframe
+                      src={getDocumentUrl(selectedPoint) || ""}
+                      className="w-full h-full"
+                      title="Source Document"
+                      onError={() => setIframeError(true)}
+                    />
+                  ) : (
+                    <div className="h-full flex items-center justify-center bg-gray-900 text-white">
+                      <div className="text-center max-w-md p-8">
+                        <div className="text-6xl mb-4">🔗</div>
+                        <div className="text-xl font-bold mb-2">External Source</div>
+                        <p className="text-gray-400 mb-4">
+                          This source cannot be embedded. Click below to open in a new tab.
+                        </p>
+                        <div className="space-y-2">
+                          <a
+                            href={getOriginalUrl(selectedPoint) || "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg text-lg"
+                          >
+                            Open Source Document ↗
+                          </a>
+                          <p className="text-xs text-gray-500 break-all">
+                            {selectedPoint.sourceUrl}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )
                 ) : (
-                  <div className="h-full flex items-center justify-center text-gray-500">
+                  <div className="h-full flex items-center justify-center text-gray-500 bg-gray-900">
                     <div className="text-center">
                       <div className="text-4xl mb-4">📄</div>
                       <div>No source URL available for this data point</div>

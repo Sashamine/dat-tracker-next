@@ -26,50 +26,81 @@ const TICKER_CIKS: Record<string, string> = {
   stke: "1846839",
   sqns: "1383395",
   twav: "746210",
+  asst: "1698113",
+  djt: "1849635",
+  xxi: "2015834",
+  fld: "1899287",
+  sbet: "1835567",
 };
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const ticker = searchParams.get("ticker")?.toLowerCase();
   const accession = searchParams.get("accession");
+  const cikParam = searchParams.get("cik");
+  const accessionRaw = searchParams.get("accessionRaw");
 
-  if (!ticker || !accession) {
-    return NextResponse.json({ error: "Missing ticker or accession" }, { status: 400 });
+  // Get CIK from ticker or direct param
+  let cik = cikParam;
+  if (!cik && ticker) {
+    cik = TICKER_CIKS[ticker];
   }
 
-  const cik = TICKER_CIKS[ticker];
-  if (!cik) {
-    return NextResponse.json({ error: "Unknown ticker" }, { status: 404 });
+  // Get accession from param or raw
+  let accessionClean = accession?.replace(/-/g, "").split("#")[0];
+  if (!accessionClean && accessionRaw) {
+    accessionClean = accessionRaw;
   }
 
-  // Clean accession number
-  const accessionClean = accession.replace(/-/g, "").split("#")[0];
-  
+  if (!cik || !accessionClean) {
+    return NextResponse.json(
+      { error: "Missing CIK or accession. Provide ticker+accession or cik+accessionRaw" },
+      { status: 400 }
+    );
+  }
+
   try {
     // First, get the filing index to find the primary document
     const indexUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/index.json`;
+    console.log("Fetching index:", indexUrl);
+    
     const indexRes = await fetch(indexUrl, {
       headers: { "User-Agent": "DAT-Tracker research@example.com" },
     });
 
     if (!indexRes.ok) {
-      // Try direct URL construction
+      // Fallback: redirect to SEC directly
       const directUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/`;
+      console.log("Index fetch failed, redirecting to:", directUrl);
       return NextResponse.redirect(directUrl);
     }
 
     const index = await indexRes.json();
     const items = index.directory?.item || [];
 
-    // Find the primary document (usually the largest .htm file that's not an exhibit)
-    const primaryDoc = items.find(
+    // Find the primary document - prefer specific patterns
+    let primaryDoc = items.find(
       (item: { name: string; size: string }) =>
         item.name.endsWith(".htm") &&
         !item.name.toLowerCase().includes("ex") &&
-        !item.name.includes("_")
-    ) || items.find(
-      (item: { name: string }) => item.name.endsWith(".htm")
+        !item.name.includes("_") &&
+        (item.name.includes("10q") || item.name.includes("10k") || item.name.includes("8k") || item.name.includes("6k"))
     );
+    
+    // Fallback: any HTM file that's not an exhibit
+    if (!primaryDoc) {
+      primaryDoc = items.find(
+        (item: { name: string }) =>
+          item.name.endsWith(".htm") &&
+          !item.name.toLowerCase().includes("ex") &&
+          !item.name.startsWith("R")
+      );
+    }
+    
+    // Final fallback: first HTM file
+    if (!primaryDoc) {
+      primaryDoc = items.find((item: { name: string }) => item.name.endsWith(".htm"));
+    }
 
     if (!primaryDoc) {
       const directUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/`;
@@ -78,6 +109,8 @@ export async function GET(request: NextRequest) {
 
     // Fetch the document
     const docUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/${primaryDoc.name}`;
+    console.log("Fetching document:", docUrl);
+    
     const docRes = await fetch(docUrl, {
       headers: { "User-Agent": "DAT-Tracker research@example.com" },
     });
@@ -90,10 +123,7 @@ export async function GET(request: NextRequest) {
 
     // Inject base tag so relative links work
     const baseUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/`;
-    html = html.replace(
-      /<head>/i,
-      `<head><base href="${baseUrl}">`
-    );
+    html = html.replace(/<head[^>]*>/i, `$&<base href="${baseUrl}">`);
 
     // Add some CSS to make it more readable
     html = html.replace(
@@ -101,23 +131,51 @@ export async function GET(request: NextRequest) {
       `<style>
         body { 
           font-family: system-ui, -apple-system, sans-serif !important;
-          max-width: 1000px;
+          max-width: 1200px;
           margin: 0 auto;
           padding: 20px;
           line-height: 1.6;
+          background: #fff;
+          color: #000;
         }
-        table { border-collapse: collapse; }
-        td, th { padding: 4px 8px; }
+        table { border-collapse: collapse; width: 100%; }
+        td, th { padding: 4px 8px; border: 1px solid #ddd; }
+        th { background: #f5f5f5; }
+        a { color: #0066cc; }
+        /* Highlight potential holdings data */
+        td:has(~ td:contains("BTC")), 
+        td:has(~ td:contains("bitcoin")),
+        td:has(~ td:contains("digital asset")) {
+          background: #fff3cd;
+        }
       </style></head>`
     );
 
     return new NextResponse(html, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
+        "X-Frame-Options": "SAMEORIGIN",
       },
     });
   } catch (error) {
     console.error("Error fetching SEC filing:", error);
-    return NextResponse.json({ error: "Failed to fetch filing" }, { status: 500 });
+    // Return a helpful error page
+    return new NextResponse(
+      `<!DOCTYPE html>
+      <html>
+        <head><title>Error Loading Filing</title></head>
+        <body style="font-family: system-ui; padding: 40px; text-align: center;">
+          <h1>⚠️ Error Loading SEC Filing</h1>
+          <p>Could not load the requested filing.</p>
+          <p>CIK: ${cik}, Accession: ${accessionClean}</p>
+          <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}" 
+             target="_blank" 
+             style="display: inline-block; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 4px;">
+            Search SEC EDGAR →
+          </a>
+        </body>
+      </html>`,
+      { headers: { "Content-Type": "text/html" } }
+    );
   }
 }
