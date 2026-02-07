@@ -16,6 +16,7 @@ interface ProvenanceMetricProps {
   subLabel?: string;
   tooltip?: string;
   className?: string;
+  ticker?: string;
 }
 
 /** Format number for display */
@@ -61,17 +62,19 @@ function getSourceLabel(source: XBRLSource | DocumentSource | DerivedSource): st
 }
 
 /** Get internal viewer URL */
-function getViewerUrl(source: XBRLSource | DocumentSource | DerivedSource): string | null {
+function getViewerUrl(source: XBRLSource | DocumentSource | DerivedSource, ticker: string = "mstr"): string | null {
   if (source.type === "xbrl") {
-    return `/filings/mstr/${source.accession}?tab=xbrl&fact=${encodeURIComponent(source.fact)}`;
+    return `/filings/${ticker}/${source.accession}?tab=xbrl&fact=${encodeURIComponent(source.fact)}`;
   } else if (source.type === "sec-document" && source.accession) {
-    const anchor = source.anchor ? `&anchor=${encodeURIComponent(source.anchor)}` : "";
-    return `/filings/mstr/${source.accession}?tab=document${anchor}`;
+    // Use the anchor text as search query to find and highlight in document
+    const searchTerm = source.anchor || source.quote?.slice(0, 50);
+    const query = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : "";
+    return `/filings/${ticker}/${source.accession}?tab=document${query}`;
   } else if (source.type === "derived") {
     // Link to first input's source
     const firstInput = Object.values(source.inputs)[0];
     if (firstInput) {
-      return getViewerUrl(firstInput.source);
+      return getViewerUrl(firstInput.source, ticker);
     }
   }
   return null;
@@ -83,10 +86,11 @@ export function ProvenanceMetric({
   format = "number",
   subLabel,
   tooltip,
-  className = ""
+  className = "",
+  ticker = "mstr"
 }: ProvenanceMetricProps) {
   const [showPopover, setShowPopover] = useState(false);
-  const viewerUrl = getViewerUrl(data.source);
+  const viewerUrl = getViewerUrl(data.source, ticker);
 
   return (
     <div className={`bg-gray-50 dark:bg-gray-900 rounded-lg p-4 relative ${className}`}>
