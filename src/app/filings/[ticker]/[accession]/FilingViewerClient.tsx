@@ -8,9 +8,10 @@ interface FilingViewerClientProps {
   ticker: string;
   accession: string;
   searchQuery?: string;
+  anchor?: string; // Section anchor like "btc-holdings" or "staking"
 }
 
-export default function FilingViewerClient({ ticker, accession, searchQuery }: FilingViewerClientProps) {
+export default function FilingViewerClient({ ticker, accession, searchQuery, anchor }: FilingViewerClientProps) {
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -117,6 +118,7 @@ export default function FilingViewerClient({ ticker, accession, searchQuery }: F
       accession={accession}
       content={content}
       searchQuery={searchQuery}
+      anchor={anchor}
     />
   );
 }

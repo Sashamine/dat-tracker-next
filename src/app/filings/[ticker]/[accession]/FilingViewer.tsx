@@ -8,23 +8,36 @@ interface FilingViewerProps {
   accession: string;
   content: string;
   searchQuery?: string;
+  anchor?: string; // Anchor text to find and highlight
 }
 
-export default function FilingViewer({ ticker, accession, content, searchQuery }: FilingViewerProps) {
+// Map anchor IDs to search terms
+const ANCHOR_KEYWORDS: Record<string, string[]> = {
+  "btc-holdings": ["bitcoin", "btc", "digital assets"],
+  "eth-holdings": ["ethereum", "eth", "ether"],
+  "staking": ["staking", "staked", "staking yield", "validator"],
+  "crypto-holdings": ["digital assets", "cryptocurrency", "crypto"],
+  "shares": ["shares outstanding", "common stock", "diluted shares"],
+  "debt": ["convertible notes", "senior secured", "debt", "borrowings"],
+};
+
+export default function FilingViewer({ ticker, accession, content, searchQuery, anchor }: FilingViewerProps) {
+  // If anchor is provided, use its keywords as the search query
+  const effectiveSearchQuery = searchQuery || (anchor ? ANCHOR_KEYWORDS[anchor]?.[0] : undefined);
   const contentRef = useRef<HTMLDivElement>(null);
   const [matchCount, setMatchCount] = useState(0);
   const [currentMatch, setCurrentMatch] = useState(0);
   const [processedContent, setProcessedContent] = useState(content);
   
   useEffect(() => {
-    if (!searchQuery || !contentRef.current) {
+    if (!effectiveSearchQuery || !contentRef.current) {
       setProcessedContent(content);
       setMatchCount(0);
       return;
     }
     
     // Escape special regex characters
-    const escaped = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escaped = effectiveSearchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     // Allow flexible whitespace matching
     const pattern = escaped.replace(/\s+/g, "\\s+");
     const regex = new RegExp(`(${pattern})`, "gi");
@@ -53,7 +66,7 @@ export default function FilingViewer({ ticker, accession, content, searchQuery }
     } else {
       setProcessedContent(content);
     }
-  }, [content, searchQuery]);
+  }, [content, effectiveSearchQuery]);
   
   const scrollToMatch = (index: number) => {
     const match = document.getElementById(`match-${index}`);
@@ -99,10 +112,11 @@ export default function FilingViewer({ ticker, accession, content, searchQuery }
             </div>
             
             {/* Search info bar */}
-            {searchQuery && (
+            {effectiveSearchQuery && (
               <div className="flex items-center gap-3 text-sm">
                 <span className="text-gray-600 dark:text-gray-400">
-                  Search: <code className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">{searchQuery}</code>
+                  Search: <code className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">{effectiveSearchQuery}</code>
+                  {anchor && <span className="text-xs text-gray-500 ml-1">(from #{anchor})</span>}
                 </span>
                 {matchCount > 0 ? (
                   <div className="flex items-center gap-2">
