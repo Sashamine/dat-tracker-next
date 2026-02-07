@@ -891,7 +891,7 @@ const BNC_HISTORY: HoldingsSnapshot[] = [
 const NA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-07-04", holdings: 74_315, sharesOutstandingDiluted: 17_000_000, holdingsPerShare: 4.371, source: "Initial $50M BNB purchase", sourceUrl: "https://www.coindesk.com/markets/2025/07/04/nano-labs-buys-50m-in-bnb-in-1b-plan-to-hold-up-to-10-of-supply", sourceType: "press-release" },
   { date: "2025-07-28", holdings: 128_000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 7.111, source: "128K BNB milestone", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/28/3122289/0/en/Nano-Labs-Further-Increases-BNB-Holdings-to-128-000-Tokens-Expanding-Strategic-Reserve-to-Over-US-100-Million-and-Upgrading-BNB-Reserve-Strategy.html", sourceType: "press-release" },
-  { date: "2025-12-31", holdings: 130_000, sharesOutstandingDiluted: 20_700_000, holdingsPerShare: 6.280, stockPrice: 155.61, source: "SEC 6-K Dec 31, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 130_000, sharesOutstandingDiluted: 23_627_224, holdingsPerShare: 5.502, stockPrice: 155.61, source: "SEC 6-K Dec 31, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K", sourceType: "sec-filing" },
 ];
 
 // ==================== ADDITIONAL BTC ====================
@@ -960,15 +960,15 @@ const DDC_HISTORY: HoldingsSnapshot[] = [
 // Remixpoint (3825.T) - Japanese multi-asset treasury (BTC, ETH, XRP, SOL, DOGE)
 // Source: Company website + TDnet filings
 const REMIXPOINT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-26", holdings: 500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.00001, source: "Initial BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
-  { date: "2026-02-02", holdings: 1_411, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.0000282, source: "Company website Feb 2026: 1,411.30 BTC", sourceType: "company-website", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
+  { date: "2024-09-26", holdings: 500, sharesOutstandingDiluted: 149_039_800, holdingsPerShare: 0.00000336, source: "Initial BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
+  { date: "2026-02-02", holdings: 1_411, sharesOutstandingDiluted: 149_039_800, holdingsPerShare: 0.00000947, source: "Company website Feb 2026: 1,411.30 BTC", sourceType: "company-website", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
 ];
 
 // ANAP Holdings (3189.T) - Japanese BTC treasury
 // Source: TDnet filings
 const ANAP_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-04-16", holdings: 100, sharesOutstandingDiluted: 8_000_000, holdingsPerShare: 0.0000125, source: "First BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/" },
-  { date: "2026-01-21", holdings: 1_417, sharesOutstandingDiluted: 8_000_000, holdingsPerShare: 0.000177, source: "TDnet Jan 21, 2026: 1,417.0341 BTC", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf" },
+  { date: "2025-04-16", holdings: 100, sharesOutstandingDiluted: 39_954_400, holdingsPerShare: 0.0000025, source: "First BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/" },
+  { date: "2026-01-21", holdings: 1_417, sharesOutstandingDiluted: 39_954_400, holdingsPerShare: 0.0000355, source: "TDnet Jan 21, 2026: 1,417.0341 BTC", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf" },
 ];
 
 // ZOOZ Power - Israeli BTC treasury
@@ -988,8 +988,8 @@ const BTCT_HISTORY: HoldingsSnapshot[] = [
 // Samara Asset Group (SRAG.DU) - German BTC treasury
 // Source: CEO Patrick Lowry X posts + Bundesanzeiger
 const SRAG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-01-01", holdings: 300, sharesOutstandingDiluted: 10_000_000, holdingsPerShare: 0.00003, source: "Initial holdings estimate", sourceType: "press-release", sourceUrl: "https://samara.ag/investor-relations/" },
-  { date: "2024-11-30", holdings: 525, sharesOutstandingDiluted: 10_000_000, holdingsPerShare: 0.0000525, source: "CEO Patrick Lowry X post", sourceType: "press-release", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
+  { date: "2024-01-01", holdings: 300, sharesOutstandingDiluted: 20_000_000, holdingsPerShare: 0.000015, source: "Initial holdings estimate", sourceType: "press-release", sourceUrl: "https://samara.ag/investor-relations/" },
+  { date: "2024-11-30", holdings: 525, sharesOutstandingDiluted: 20_000_000, holdingsPerShare: 0.00002625, source: "CEO Patrick Lowry X post", sourceType: "press-release", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
 ];
 
 // SWC (The Smarter Web Company) - UK BTC Treasury
