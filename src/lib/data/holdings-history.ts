@@ -602,7 +602,7 @@ const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Post reverse split (July 1, 2025)
   { date: "2025-06-30", holdings: 2200000, sharesOutstandingDiluted: 1_000_000, holdingsPerShare: 2.200, stockPrice: 404.23, source: "Q2 2025 10-Q (split-adj)", sourceType: "sec-filing", sourceUrl: "/filings/hsdt/10Q-2025-06-30#sol-holdings" },
   // Nov 2025: FD shares include pre-funded + penny warrants exercisable at $0.0001
-  { date: "2025-11-04", holdings: 2_300_000, sharesOutstandingDiluted: 84_130_257, holdingsPerShare: 0.02734, source: "Investor update", sharesSource: "Nov 4, 2025 investor update (incl. warrants)", sourceType: "press-release", sourceUrl: "https://ir.heliogen.com/press-releases" },
+  { date: "2025-11-04", holdings: 2_300_000, sharesOutstandingDiluted: 75_900_000, holdingsPerShare: 0.0303, source: "Investor update", sharesSource: "Q3 2025 10-Q: 75.9M common + pre-funded warrants", sourceType: "press-release", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025
@@ -761,7 +761,7 @@ const HYPD_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-15", holdings: 650000, sharesOutstandingDiluted: 12_000_000, holdingsPerShare: 0.0542, source: "HYPE conversion announcement", sourceType: "press-release", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=8-K" },
   { date: "2024-12-31", holdings: 1200000, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.0667, stockPrice: 302.96, source: "Q4 2024 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=10-K" },
   { date: "2025-06-30", holdings: 1700000, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.0773, stockPrice: 404.23, source: "Q2 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=10-Q" },
-  { date: "2025-09-30", holdings: 2100000, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.0840, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 1459615, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.0584, stockPrice: 326.42, source: "Q3 2025 10-Q: $37.95M digital assets / $26 HYPE price", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=10-Q", sourceType: "sec-filing" },
 ];
 
 // Tron Inc (TRON) - TRX treasury, formerly SRM Entertainment
@@ -868,6 +868,8 @@ const ASST_HISTORY: HoldingsSnapshot[] = [
   // Jan 16, 2026: Strive + Semler merger closed
   // Combined holdings: ~10,500 BTC (Strive) + ~2,300 BTC (Semler) = 12,798 BTC
   { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001026, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - SEC DEF 14C: 1.05B Class A + 198M Class B", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
+  // Jan 28, 2026: Additional BTC purchases
+  { date: "2026-01-28", holdings: 13132, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001053, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "SEC 8-K Jan 28, 2026: 13,131.82 BTC", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/", sourceType: "sec-filing" },
 ];
 
 // ==================== BNB COMPANIES ====================

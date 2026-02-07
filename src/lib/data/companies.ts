@@ -119,10 +119,10 @@ export const ethCompanies: Company[] = [
     secCik: "0002080334",
     asset: "ETH",
     tier: 1,
-    holdings: 495_362,
+    holdings: 590_000,
     holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=2080334&type=8-K",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://www.sedarplus.ca/landingpage/",
     datStartDate: "2025-10-01",
     // stakingPct removed - SPAC pending, needs verification
     stakingMethod: "Native staking",
@@ -1335,10 +1335,10 @@ export const btcCompanies: Company[] = [
     secCik: "0001755953",  // Post-merger CIK (was Gryphon Digital Mining)
     asset: "BTC",
     tier: 1,
-    holdings: 4_004,  // Nov 5, 2025 - verified PR Newswire
-    holdingsLastUpdated: "2025-11-05",
+    holdings: 5_098,  // Dec 14, 2025 - PR Newswire Top 20 milestone
+    holdingsLastUpdated: "2025-12-14",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
+    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
     datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
     // costBasisAvg removed - needs verification
     isMiner: true,
@@ -1721,7 +1721,7 @@ export const bnbCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225014503/",
     burnAsOf: "2025-07-31",
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 52_800_000,  // ~49.5M PIPE + 2.5M pre-existing + ~0.8M from warrant exercises (Jan 2026 dashboard implied)
+    sharesForMnav: 44_062_938,  // SEC 10-Q Dec 2025
     sharesSource: "SEC 10-Q (filed 2025-12-15): EntityCommonStockSharesOutstanding = 44,062,938 as of 2025-12-12",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/",
     sharesAsOf: "2025-12-12",
