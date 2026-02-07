@@ -288,7 +288,7 @@ const BTBT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 27350, sharesOutstandingDiluted: 182_435_019, holdingsPerShare: 0.000150, stockPrice: 302.96, totalDebt: 165_000_000, cash: 50_000_000, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10K-2024-12-31#eth-holdings" },
   { date: "2025-03-31", holdings: 85000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000409, stockPrice: 288.27, totalDebt: 207_000_000, cash: 60_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10Q-2025-03-31#eth-holdings" },
   { date: "2025-06-30", holdings: 120000, sharesOutstandingDiluted: 315_000_000, holdingsPerShare: 0.000381, stockPrice: 404.23, totalDebt: 207_000_000, cash: 80_000_000, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10Q-2025-06-30#eth-holdings" },
-  { date: "2025-09-30", holdings: 140000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000432, stockPrice: 326.42, totalDebt: 207_000_000, cash: 100_000_000, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 140000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000432, stockPrice: 326.42, totalDebt: 207_000_000, cash: 100_000_000, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted", sourceType: "sec-filing", sourceUrl: "/filings/btbt/0001213900-25-110383" },
   { date: "2025-12-31", holdings: 155_227, sharesOutstandingDiluted: 323_792_059, holdingsPerShare: 0.000479, stockPrice: 155.61, totalDebt: 207_000_000, cash: 100_000_000, source: "Jan 7, 2026 Press Release (Dec 2025 metrics)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release" },
 ];
 
@@ -395,7 +395,7 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
 // NAKA Debt: $210M Kraken loan (Dec 2025)
 const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-08-15", holdings: 1250, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000132, totalDebt: 0, cash: 10_000_000, source: "8-K ETH treasury", sourceUrl: "/filings/bmnr/0001493152-24-033579", sourceType: "sec-filing" },
-  { date: "2024-10-31", holdings: 2800, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.0000255, totalDebt: 0, cash: 15_000_000, source: "Q3 2024 filing", sourceType: "sec-filing" },
+  { date: "2024-10-31", holdings: 2800, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.0000255, totalDebt: 0, cash: 15_000_000, source: "Q3 2024 filing", sourceType: "sec-filing", sourceUrl: "/filings/naka/0001493152-24-044866" },
   { date: "2024-12-31", holdings: 4150, sharesOutstandingDiluted: 125_000_000, holdingsPerShare: 0.0000332, stockPrice: 302.96, totalDebt: 0, cash: 20_000_000, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/naka/10KA-2024-12-31#btc-holdings" },
   { date: "2025-03-31", holdings: 5398, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.0000386, stockPrice: 288.27, totalDebt: 0, cash: 25_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/naka/10Q-2025-03-31#btc-holdings" },
   { date: "2025-08-14", holdings: 21, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000001, totalDebt: 0, cash: 5_000_000, source: "Pre-merger", sourceType: "company-reported" },
@@ -812,7 +812,7 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 // Debt: $101M long-term debt (SEC XBRL Jun 2025)
 const FUFU_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-03-31", holdings: 500, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000033, stockPrice: 5.0, totalDebt: 80_000_000, cash: 20_000_000, source: "Q1 2024 6-K", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 750, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.0000048, stockPrice: 4.5, totalDebt: 90_000_000, cash: 25_000_000, source: "Q2 2024 6-K", sourceType: "sec-filing" },
+  { date: "2024-06-30", holdings: 750, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.0000048, stockPrice: 4.5, totalDebt: 90_000_000, cash: 25_000_000, source: "Q2 2024 6-K", sourceType: "sec-filing", sourceUrl: "/filings/fufu/0001213900-24-081168" },
   { date: "2024-09-30", holdings: 1000, sharesOutstandingDiluted: 158_000_000, holdingsPerShare: 0.0000063, stockPrice: 4.0, totalDebt: 95_000_000, cash: 30_000_000, source: "Q3 2024 6-K", sourceType: "sec-filing" },
   { date: "2024-12-31", holdings: 1250, sharesOutstandingDiluted: 160_000_000, holdingsPerShare: 0.0000078, stockPrice: 5.5, totalDebt: 100_000_000, cash: 35_000_000, source: "Q4 2024 6-K", sourceType: "sec-filing" },
   { date: "2025-06-30", holdings: 1500, sharesOutstandingDiluted: 164_131_946, holdingsPerShare: 0.0000091, stockPrice: 6.0, totalDebt: 101_301_000, cash: 40_000_000, source: "H1 2025 6-K", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/", sourceType: "sec-filing" },
