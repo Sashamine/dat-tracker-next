@@ -197,8 +197,13 @@ export default function MNAVPage() {
   const [selectedMetric, setSelectedMetric] = useState<MetricType>("median");
   const [selectedAsset, setSelectedAsset] = useState<AssetFilter>("ALL");
   const [growthPeriod, setGrowthPeriod] = useState<GrowthPeriod>("90d");
-  const [showTreasuryHPS, setShowTreasuryHPS] = useState(true);
-  const [showMinerHPS, setShowMinerHPS] = useState(true);
+  
+  // Collapsible section states - all default to collapsed
+  const [showHPSGrowth, setShowHPSGrowth] = useState(false);
+  const [showTreasuryHPS, setShowTreasuryHPS] = useState(false);
+  const [showMinerHPS, setShowMinerHPS] = useState(false);
+  const [showMNAV, setShowMNAV] = useState(false);
+  const [showMNAVChart, setShowMNAVChart] = useState(false);
 
   const { data: prices } = usePricesStream();
   const { data: companiesData, isLoading } = useCompanies();
@@ -373,12 +378,30 @@ export default function MNAVPage() {
         </div>
 
         {/* Holdings Growth Statistics */}
-        <div className="mb-8">
+        <div className="mb-4 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+          <button
+            onClick={() => setShowHPSGrowth(!showHPSGrowth)}
+            className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              📊 Holdings Per Share Growth (Treasuries)
+            </h2>
+            <svg
+              className={cn("w-5 h-5 text-gray-500 transition-transform", showHPSGrowth && "rotate-180")}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {showHPSGrowth && (
+          <div className="p-4 bg-white dark:bg-gray-950">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <div className="flex items-baseline gap-2">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Holdings Per Share Growth
-              </h2>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Summary Statistics
+              </span>
               {growthStats.insufficientData > 0 && (
                 <span className="text-xs text-amber-600 dark:text-amber-400">
                   {growthStats.insufficientData} of {growthStats.totalCompanies} lack history
@@ -455,6 +478,8 @@ export default function MNAVPage() {
               </div>
             </div>
           </StatTooltip>
+          </div>
+          )}
         </div>
 
         {/* HPS Growth Comparison Tables */}
@@ -513,94 +538,129 @@ export default function MNAVPage() {
         </div>
 
         {/* mNAV Statistics - Treasuries Only */}
-        <div className="mb-8">
-          <div className="flex items-baseline gap-2 mb-1">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV Valuation</h2>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Based on {mnavStats.count} of {treasuries.length} treasuries
-            </span>
-          </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
-            {mnavStats.contributors.length > 0 && (
-              <span>
-                Included: {mnavStats.contributors.map(c => `${c.ticker} (${c.mnav.toFixed(2)}x)`).join(", ")}
-              </span>
-            )}
-            {mnavStats.excluded.length > 0 && (
-              <span className="text-amber-600 dark:text-amber-400 ml-2">
-                • No data: {mnavStats.excluded.join(", ")}
-              </span>
-            )}
-          </p>
-          <div className="flex gap-4">
-            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
-              <p className="text-xs lg:text-sm text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Median</p>
-              <p className="text-2xl lg:text-3xl font-bold text-indigo-600">{mnavStats.median.toFixed(2)}x</p>
+        <div className="mb-4 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+          <button
+            onClick={() => setShowMNAV(!showMNAV)}
+            className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              💰 mNAV Valuation
+            </h2>
+            <svg
+              className={cn("w-5 h-5 text-gray-500 transition-transform", showMNAV && "rotate-180")}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {showMNAV && (
+          <div className="p-4 bg-white dark:bg-gray-950">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+              Based on {mnavStats.count} of {treasuries.length} treasuries.
+              {mnavStats.contributors.length > 0 && (
+                <span className="ml-1">
+                  Included: {mnavStats.contributors.map(c => `${c.ticker} (${c.mnav.toFixed(2)}x)`).join(", ")}
+                </span>
+              )}
+              {mnavStats.excluded.length > 0 && (
+                <span className="text-amber-600 dark:text-amber-400 ml-2">
+                  • No data: {mnavStats.excluded.join(", ")}
+                </span>
+              )}
+            </p>
+            <div className="flex gap-4">
+              <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
+                <p className="text-xs lg:text-sm text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Median</p>
+                <p className="text-2xl lg:text-3xl font-bold text-indigo-600">{mnavStats.median.toFixed(2)}x</p>
+              </div>
+              <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
+                <p className="text-xs lg:text-sm text-purple-600 dark:text-purple-400 uppercase tracking-wide">Average</p>
+                <p className="text-2xl lg:text-3xl font-bold text-purple-600">{mnavStats.average.toFixed(2)}x</p>
+              </div>
             </div>
-            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg px-4 py-3 lg:px-6 lg:py-4">
-              <p className="text-xs lg:text-sm text-purple-600 dark:text-purple-400 uppercase tracking-wide">Average</p>
-              <p className="text-2xl lg:text-3xl font-bold text-purple-600">{mnavStats.average.toFixed(2)}x</p>
-            </div>
           </div>
+          )}
         </div>
 
         {/* mNAV Chart */}
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">mNAV History</h2>
-        <div className="flex items-center justify-between mb-3">
-          {/* Time range buttons */}
-          <div className="flex gap-1">
-            {timeRangeOptions.map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={() => setTimeRange1(value)}
-                className={cn(
-                  "px-3 py-1.5 text-sm rounded-lg transition-colors",
-                  timeRange1 === value
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                )}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          {/* Metric toggle */}
-          <div className="flex gap-1">
-            <button
-              onClick={() => setSelectedMetric("median")}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-lg transition-colors",
-                selectedMetric === "median"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              )}
+        <div className="mb-4 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+          <button
+            onClick={() => setShowMNAVChart(!showMNAVChart)}
+            className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              📈 mNAV History Chart
+            </h2>
+            <svg
+              className={cn("w-5 h-5 text-gray-500 transition-transform", showMNAVChart && "rotate-180")}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              Median
-            </button>
-            <button
-              onClick={() => setSelectedMetric("average")}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-lg transition-colors",
-                selectedMetric === "average"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              )}
-            >
-              Average
-            </button>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {showMNAVChart && (
+          <div className="p-4 bg-white dark:bg-gray-950">
+            <div className="flex items-center justify-between mb-3">
+              {/* Time range buttons */}
+              <div className="flex gap-1">
+                {timeRangeOptions.map(({ value, label }) => (
+                  <button
+                    key={value}
+                    onClick={() => setTimeRange1(value)}
+                    className={cn(
+                      "px-3 py-1.5 text-sm rounded-lg transition-colors",
+                      timeRange1 === value
+                        ? "bg-indigo-600 text-white"
+                        : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {/* Metric toggle */}
+              <div className="flex gap-1">
+                <button
+                  onClick={() => setSelectedMetric("median")}
+                  className={cn(
+                    "px-3 py-1.5 text-sm rounded-lg transition-colors",
+                    selectedMetric === "median"
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  )}
+                >
+                  Median
+                </button>
+                <button
+                  onClick={() => setSelectedMetric("average")}
+                  className={cn(
+                    "px-3 py-1.5 text-sm rounded-lg transition-colors",
+                    selectedMetric === "average"
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  )}
+                >
+                  Average
+                </button>
+              </div>
+            </div>
+            <MNAVChart
+              mnavStats={mnavStats}
+              currentBTCPrice={prices?.crypto?.BTC?.price || 0}
+              timeRange={timeRange1}
+              metric={selectedMetric}
+              title="mNAV History"
+            />
+            {/* Legend */}
+            <div className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+              <p>Dashed line = Fair Value (1.0x mNAV)</p>
+            </div>
           </div>
-        </div>
-        <MNAVChart
-          mnavStats={mnavStats}
-          currentBTCPrice={prices?.crypto?.BTC?.price || 0}
-          timeRange={timeRange1}
-          metric={selectedMetric}
-          title="mNAV History"
-        />
-
-        {/* Legend */}
-        <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>Dashed line = Fair Value (1.0x mNAV)</p>
+          )}
         </div>
       </main>
     </div>
