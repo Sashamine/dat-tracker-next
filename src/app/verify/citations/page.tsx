@@ -36,10 +36,10 @@ export default function CitationVerificationPage() {
       })
       .catch(() => setLoading(false));
     
-    // Load available static files
-    fetch("/api/sec/list-files")
+    // Load available static files from pre-generated index
+    fetch("/sec/index.json")
       .then((res) => res.json())
-      .then((data) => setStaticFiles(data.files || {}))
+      .then((data) => setStaticFiles(data || {}))
       .catch(() => {});
   }, []);
 

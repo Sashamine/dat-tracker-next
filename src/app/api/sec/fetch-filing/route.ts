@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
 
 export const dynamic = "force-dynamic";
 
@@ -35,35 +33,6 @@ const TICKER_CIKS: Record<string, string> = {
   sbet: "1835567",
 };
 
-// Try to find a local file matching the accession number
-function findLocalFile(ticker: string, accession: string): string | null {
-  const tickerLower = ticker.toLowerCase();
-  const secDir = path.join(process.cwd(), "public", "sec", tickerLower);
-  
-  if (!fs.existsSync(secDir)) return null;
-  
-  // Search in all subdirectories (8k, 10k, 10q, 6k)
-  const types = ["8k", "10k", "10q", "6k"];
-  for (const type of types) {
-    const typeDir = path.join(secDir, type);
-    if (!fs.existsSync(typeDir)) continue;
-    
-    const files = fs.readdirSync(typeDir);
-    // Look for file containing the accession number (last part)
-    const accessionPart = accession.split("-").pop() || accession;
-    const matchingFile = files.find(f => 
-      f.includes(accessionPart) || 
-      f.includes(accession.replace(/-/g, ""))
-    );
-    
-    if (matchingFile) {
-      return `/sec/${tickerLower}/${type}/${matchingFile}`;
-    }
-  }
-  
-  return null;
-}
-
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const ticker = searchParams.get("ticker")?.toLowerCase();
@@ -83,15 +52,6 @@ export async function GET(request: NextRequest) {
     accessionClean = accessionRaw;
   }
 
-  // Try to find local file first
-  if (ticker && accession) {
-    const localPath = findLocalFile(ticker, accession);
-    if (localPath) {
-      // Redirect to static file
-      return NextResponse.redirect(new URL(localPath, request.url));
-    }
-  }
-
   if (!cik || !accessionClean) {
     return NextResponse.json(
       { error: "Missing CIK or accession. Provide ticker+accession or cik+accessionRaw" },
@@ -102,7 +62,6 @@ export async function GET(request: NextRequest) {
   try {
     // Fetch from SEC EDGAR
     const indexUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/index.json`;
-    console.log("Fetching index:", indexUrl);
     
     const indexRes = await fetch(indexUrl, {
       headers: { "User-Agent": "DAT-Tracker research@example.com" },
@@ -110,7 +69,6 @@ export async function GET(request: NextRequest) {
 
     if (!indexRes.ok) {
       const directUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/`;
-      console.log("Index fetch failed, redirecting to:", directUrl);
       return NextResponse.redirect(directUrl);
     }
 
@@ -145,7 +103,6 @@ export async function GET(request: NextRequest) {
     }
 
     const docUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/${primaryDoc.name}`;
-    console.log("Fetching document:", docUrl);
     
     const docRes = await fetch(docUrl, {
       headers: { "User-Agent": "DAT-Tracker research@example.com" },
