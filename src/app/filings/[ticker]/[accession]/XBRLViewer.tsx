@@ -213,26 +213,30 @@ export default function XBRLViewer({ ticker, cik, accession, highlightFact, high
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {sortedFacts.map((fact, i) => {
-              // Match fact name (exact match preferred, fallback to includes)
+              // Match fact name - EXACT match only when period is specified (more precise)
               const factNameClean = highlightFact?.toLowerCase().replace("us-gaap:", "").replace("dei:", "") || "";
-              const factMatches = highlightFact && (
-                fact.fact.toLowerCase().replace("us-gaap:", "").replace("dei:", "") === factNameClean ||
-                fact.fact.toLowerCase().includes(factNameClean)
-              );
+              const factRowClean = fact.fact.toLowerCase().replace("us-gaap:", "").replace("dei:", "");
+              
+              // When period is specified, require EXACT fact match (no substring)
+              // When no period, allow substring matching for search flexibility
+              const isExactFactMatch = factRowClean === factNameClean;
+              const isSubstringMatch = !highlightPeriod && factRowClean.includes(factNameClean);
+              const factMatches = highlightFact && (isExactFactMatch || isSubstringMatch);
               
               // Match period if specified
               const periodMatches = !highlightPeriod || fact.periodEnd === highlightPeriod;
               
-              // Only highlight if both fact AND period match (when period specified)
+              // Only highlight if both fact AND period match
               const isHighlighted = factMatches && periodMatches;
               const isPriority = PRIORITY_FACTS.some(pf => fact.fact.includes(pf));
               
               // Find first exact match for scrolling
               const isFirstHighlight = isHighlighted && sortedFacts.findIndex(f => {
-                const fNameClean = f.fact.toLowerCase().replace("us-gaap:", "").replace("dei:", "");
-                const fMatches = fNameClean === factNameClean || fNameClean.includes(factNameClean);
+                const fClean = f.fact.toLowerCase().replace("us-gaap:", "").replace("dei:", "");
+                const fExact = fClean === factNameClean;
+                const fSub = !highlightPeriod && fClean.includes(factNameClean);
                 const pMatches = !highlightPeriod || f.periodEnd === highlightPeriod;
-                return fMatches && pMatches;
+                return (fExact || fSub) && pMatches;
               }) === i;
               
               return (
