@@ -1,0 +1,550 @@
+<SEC-DOCUMENT>0001213900-25-097114.txt : 20251007
+<SEC-HEADER>0001213900-25-097114.hdr.sgml : 20251007
+<ACCEPTANCE-DATETIME>20251007172341
+ACCESSION NUMBER:		0001213900-25-097114
+CONFORMED SUBMISSION TYPE:	424B3
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20251007
+DATE AS OF CHANGE:		20251007
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Kindly MD, Inc.
+		CENTRAL INDEX KEY:			0001946573
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				843829824
+		STATE OF INCORPORATION:			UT
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B3
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-274606
+		FILM NUMBER:		251380676
+
+	BUSINESS ADDRESS:	
+		STREET 1:		5097 SOUTH 900 EAST
+		STREET 2:		SUITE 100
+		CITY:			SALT LAKE CITY
+		STATE:			UT
+		ZIP:			84117
+		BUSINESS PHONE:		(385) 388-8220
+
+	MAIL ADDRESS:	
+		STREET 1:		5097 SOUTH 900 EAST
+		STREET 2:		SUITE 100
+		CITY:			SALT LAKE CITY
+		STATE:			UT
+		ZIP:			84117
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B3
+<SEQUENCE>1
+<FILENAME>ea0260635-424b3_kindly.htm
+<DESCRIPTION>PROSPECTUS SUPPLEMENT
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; font-size: 10pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>PROSPECTUS&nbsp;SUPPLEMENT</B></FONT></TD>
+    <TD STYLE="width: 40%; text-align: right; font-size: 10pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Filed Pursuant to 424(b)(3)</B></FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; text-align: justify; font-size: 10pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>To Prospectus dated May 6, 2025</B></FONT></TD>
+    <TD STYLE="width: 40%; text-align: right; font-size: 10pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Registration No. 333-274606</B></FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>KINDLY MD, INC.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><IMG SRC="image_001.jpg" ALT=""></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>2,059,811 Shares of Common Stock Issuable Upon
+Exercise of Previously Issued Warrants</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>and</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>82,310 Shares of Common Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus supplement updates and supplements
+the information contained in the prospectus dated May 6, 2025 (as may be supplemented or amended from time to time, the &ldquo;Prospectus&rdquo;),
+which forms part of our registration statement on Form S-1 (File No. 333-274606), as amended, with the information contained in our Current
+Report on Form 8-K which was filed with the Securities and Exchange Commission on October 7, 2025 (the &ldquo;Current Report&rdquo;).
+Accordingly, we have attached the Current Report to this prospectus supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Prospectus and this prospectus supplement
+relate to the issuance by Kindly MD, Inc., a Utah corporation, of up to 2,059,811 shares of common stock underlying the tradeable warrants
+(the &ldquo;Tradeable Warrants&rdquo;), the non-tradeable warrants (the &ldquo;Non-tradeable Warrants&rdquo;) and the representative&rsquo;s
+warrants (the &ldquo;Representative&rsquo;s Warrants&rdquo; and, together with the Tradeable Warrants and the Non-tradeable Warrants,
+the &ldquo;Warrants&rdquo;) previously issued by us in our initial public offering that closed on June 3, 2024. We are not selling any
+shares of our common stock in this offering, and, as a result, we will not receive any proceeds from the sale of the common stock covered
+by this prospectus. All of the net proceeds from the sale of our common stock will go to the holders of the Warrants. Upon exercise of
+the Warrants, however, we will receive proceeds from the exercise of such Warrants if exercised for cash.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Prospectus and the prospectus supplement also
+relate to the resale from time to time by the selling stockholders named in the Prospectus (the &ldquo;Selling Stockholders&rdquo;) of
+82,310 shares of common stock. We will not receive any proceeds from the sale of shares of common stock by the Selling Stockholders pursuant
+to the Prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">You should read this prospectus supplement in
+conjunction with the Prospectus. This prospectus supplement is qualified by reference to the Prospectus except to the extent that the
+information in this prospectus supplement supersedes the information contained in the Prospectus. This prospectus supplement is not complete
+without, and may not be delivered or utilized except in connection with, the Prospectus. If there is any inconsistency between the information
+in the Prospectus and this prospectus supplement, you should rely on the information in this prospectus supplement. Terms used in this
+prospectus supplement but not defined herein shall have the meanings given to such terms in the Prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our common stock is listed on the Nasdaq Capital
+Market (&ldquo;Nasdaq&rdquo;) under the symbol &ldquo;NAKA.&rdquo; The last reported sale price of our common stock on Nasdaq on October
+7, 2025 was $1.02 per share. Our Tradeable Warrants, previously listed on Nasdaq under the symbol &ldquo;NAKAW,&rdquo; have been delisted
+from Nasdaq and are now quoted on the OTC Pink marketplace under the symbol &ldquo;NAKAW.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Investing in our securities involves a high
+degree of risk. See &ldquo;Risk Factors&rdquo; beginning on page 10 of the Prospectus and in the other documents that are incorporated
+by reference in the Prospectus.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Neither the Securities and Exchange Commission
+nor any state securities commission has approved or disapproved of the securities to be issued under the Prospectus or determined if the
+Prospectus or this prospectus supplement is truthful or complete. Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>The date of this prospectus supplement is October
+7, 2025.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>SECURITIES AND EXCHANGE
+COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>Washington, D.C. 20549</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>FORM 8-K</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>CURRENT REPORT</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>Pursuant to Section
+13 OR 15(d) of the Securities Exchange Act of 1934</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of
+earliest event reported): October 6, 2025</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>KINDLY MD, INC.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">(Exact name of registrant
+as specified in its charter)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <TR>
+    <TD STYLE="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Utah</B></FONT></TD>
+    <TD STYLE="padding-bottom: 1.5pt; vertical-align: top; width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>001-42103</B></FONT></TD>
+    <TD STYLE="padding-bottom: 1.5pt; vertical-align: top; width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>84-3829824</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(State or Other Jurisdiction<BR>
+of Incorporation)</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission File
+    Number)</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(IRS Employer<BR>
+Identification No.)</FONT></TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="border-bottom: Black 1.5pt solid; width: 49%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>5097 South 900 East, Suite 100, Salt Lake City, UT</B></FONT></TD>
+    <TD STYLE="padding-bottom: 1.5pt; width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; width: 49%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>84117</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Address of Principal Executive Offices)</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Zip Code)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>(385) 388-8220</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">(Registrant&#8217;s telephone
+number, including area code)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Check the appropriate
+box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following
+provisions (<FONT STYLE="text-decoration: underline">see</FONT> General Instruction A.2. below):</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 0.25in; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD STYLE="text-align: justify">&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD STYLE="text-align: justify">&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD STYLE="text-align: justify">&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Securities registered
+pursuant to Section 12(b) of the Act:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Title of Each Class</B></FONT></TD>
+    <TD STYLE="padding-bottom: 1.5pt; width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Trading Symbol(s)</B></FONT></TD>
+    <TD STYLE="padding-bottom: 1.5pt; width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Name of Each Exchange on Which Registered</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Common Stock, par value $0.001</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">NAKA</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The Nasdaq Stock Market LLC</FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: White">
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Tradeable Warrants to purchase shares of Common Stock, par value $0.001 per share</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">NAKAW</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">OTC Pink Market</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Indicate by check mark
+whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter)
+or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Emerging growth company
+&#9746;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">If an emerging growth
+company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or
+revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. &#9744;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><B>Item 1.01 - Entry
+into Material Agreement</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>&#160;</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>Antalpha Loan Agreement</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On October 6, 2025, Naka SPV 2, LLC (the
+&#8220;Company&#8221;), a Delaware limited liability company and wholly owned subsidiary of Kindly MD, Inc. ( &#8220;Kindly
+MD&#8221;), entered into a Master Loan Agreement, including a loan confirmation thereunder, with Antalpha Digital Pte. Ltd., a
+private company organized under the laws of Singapore (&#8220;Antalpha&#8221;) (such Master Loan Agreement being referred to as, the
+&#8220;Antalpha Loan Agreement&#8221;). The Antalpha Loan Agreement contemplates Antalpha extending a term loan facility in an
+aggregate principal amount of 206,000,000 USDT (the &#8220;Antalpha Loan&#8221;), bearing interest at a rate of 7.0% per annum. The
+Antalpha Loan will be advanced in separate tranches over a period of up to five days to allow for the transfer of collateral from
+Company to Lender. The first tranche of indebtedness will be equal to an aggregate amount of up to 150,000,000 USDT.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Antalpha Loan will mature thirty days after the date of the extension of the initial tranche. The Company has the option to extend the
+maturity date for an additional period of 30 days. Amounts advanced under the Antalpha Loan Agreement may not be prepaid during the initial
+thirty day period, however, should the Company elect to the extend the loan maturity date for an additional thirty days, the loan shall
+be prepayable without premium or penalty during such optional extension period. The obligations under the Antalpha Loan Agreement are
+secured solely by Bitcoin or other digital assets agreed to by the Company and Antalpha, and are subject to customary affirmative and
+negative covenants, loan-to-value requirements, representations and warranties, and events of default.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company intends to use the proceeds of the
+Antalpha Loan to satisfy its existing obligations in full under that certain Master Loan Agreement, dated as of September 30, 2025, between
+the Company and Two Prime Lending Limited, a limited company existing under the laws of the British Virgin Islands, and to pay for costs
+and expenses incurred in connection with the Antalpha Loan Agreement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing summary of the Antalpha Loan Agreement
+does not purport to be complete and is qualified in its entirety by reference to the full text of such agreement, a copy of which is filed
+as Exhibit 10.1 to this Current Report on Form 8-K and incorporated herein by reference.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item&#8201;2.03 - Creation of a Direct Financial
+Obligation or an Obligation under an&#160;Off-Balance&#160;Sheet Arrangement of a Registrant</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information set forth above in Item 1.01 of
+this Current Report with respect to the Antalpha Loan Agreement is hereby incorporated by reference into this Item 2.03.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 7.01 - Regulation FD Disclosure</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On October 7, 2025, Kindly MD issued a press release
+announcing the Company&#8217;s entry into the Antalpha Loan Agreement and, in connection therewith, its non-binding agreement to indicative
+terms with Antalpha for a potential issuance by the Company of up to $250,000,000 of secured convertible notes, subject in all respects
+to the negotiation and agreement of definitive documentation. A copy of the press release is attached as Exhibit 99.1 hereto.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information in this Item 7.01 to this Current
+Report on Form 8-K, and in Exhibit 99.1, furnished herewith, shall not be deemed to be &#8220;filed&#8221; for purposes of Section 18
+of the Securities Exchange Act of 1934, as amended (the &#8220;<B><I>Exchange Act</I></B>&#8221;), or otherwise subject to the liabilities
+of that section, nor shall such information be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended,
+or the Exchange Act, except as expressly set forth by specific reference in such a filing.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 9.01 Financial Statements and Exhibits</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(d) Exhibits.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="border-bottom: Black 1.5pt solid; vertical-align: top; width: 9%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Exhibit No.</B></FONT></TD>
+    <TD STYLE="padding-bottom: 1.5pt; vertical-align: bottom; width: 1%">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 90%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Description of Exhibit</B></FONT></TD></TR>
+  <TR STYLE="background-color: rgb(204,238,255)">
+    <TD STYLE="white-space: nowrap; vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.1</FONT></TD>
+    <TD STYLE="vertical-align: bottom">&#160;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><A HREF="https://www.sec.gov/Archives/edgar/data/1946573/000121390025096801/ea026040201ex10-1_kindly.htm">Loan Agreement dated October 6, 2025 by and between Antalpha Digital Pte. Ltd. and Naka 2 SPV, LLC.</A></FONT></TD></TR>
+  <TR STYLE="background-color: White">
+    <TD STYLE="white-space: nowrap; vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">99.1</FONT></TD>
+    <TD STYLE="vertical-align: bottom">&#160;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><A HREF="https://www.sec.gov/Archives/edgar/data/1946573/000121390025096801/ea026040201ex99-1_kindly.htm">Press Release dated October 7, 2025.</A></FONT></TD></TR>
+  <TR STYLE="background-color: rgb(204,238,255)">
+    <TD STYLE="white-space: nowrap; vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</FONT></TD>
+    <TD STYLE="vertical-align: bottom">&#160;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The cover page from this Current Report on Form 8-K, formatted in Inline XBRL.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><B>SIGNATURES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, hereunder
+duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD>&#160;</TD>
+    <TD COLSPAN="2"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">KINDLY MD, INC.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 62%; text-align: justify">&#160;</TD>
+    <TD STYLE="width: 3%">&#160;</TD>
+    <TD STYLE="width: 35%; text-align: justify">&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Dated: October 7, 2025</FONT></TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">By<I>:&#160; </I></FONT></TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ David Bailey</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">David Bailey</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Executive Officer</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 3; Options: Last -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>image_001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 image_001.jpg
+M_]C_X  02D9)1@ ! 0$ 8 !@  #_VP!#  @&!@<&!0@'!P<)"0@*#!0-# L+
+M#!D2$P\4'1H?'AT:'!P@)"XG("(L(QP<*#<I+# Q-#0T'R<Y/3@R/"XS-#+_
+MVP!# 0@)"0P+#!@-#1@R(1PA,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R
+M,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C+_P  1"  S -H# 2(  A$! Q$!_\0
+M'P   04! 0$! 0$           $" P0%!@<("0H+_\0 M1   @$# P($ P4%
+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
+M$444T3,J)IUE&^]+2!6SU$8S5M$4=%%%%4SGCN.11Z5)114'4%%%% !1110
+C4444 %%%% !1110 "BBB@ HHHH **** "BBB@ HHHH __]D!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

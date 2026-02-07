@@ -1,0 +1,267 @@
+<SEC-DOCUMENT>0001213900-25-109286.txt : 20251112
+<SEC-HEADER>0001213900-25-109286.hdr.sgml : 20251112
+<ACCEPTANCE-DATETIME>20251112164716
+ACCESSION NUMBER:		0001213900-25-109286
+CONFORMED SUBMISSION TYPE:	424B5
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20251112
+DATE AS OF CHANGE:		20251112
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Bitdeer Technologies Group
+		CENTRAL INDEX KEY:			0001899123
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				000000000
+		STATE OF INCORPORATION:			E9
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B5
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-283732
+		FILM NUMBER:		251473771
+
+	BUSINESS ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		08 KALLANG AVENUE, APERIA TOWER 1, #09-0
+		CITY:			SINGAPORE
+		PROVINCE COUNTRY:   	U0
+		BUSINESS PHONE:		65-62828220
+
+	MAIL ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		08 KALLANG AVENUE, APERIA TOWER 1, #09-0
+		CITY:			SINGAPORE
+		PROVINCE COUNTRY:   	U0
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B5
+<SEQUENCE>1
+<FILENAME>ea0265279-424b5_bitdeer.htm
+<DESCRIPTION>PROSPECTUS SUPPLEMENT
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Filed Pursuant to Rule 424(b)(5)<BR>
+Registration No. 333-283732</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Amendment No. 1, dated November 12, 2025<BR>
+</B>(To Prospectus Supplement dated January 3, 2025<BR>
+and Prospectus dated December 18, 2024)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">Up to US$750,000,000</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center"><IMG SRC="image_001.jpg" ALT=""></P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: bold 12pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">Bitdeer Technologies Group</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">Class A Ordinary Shares</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0.2pt 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">This prospectus supplement amendment No. 1 (this
+&ldquo;amendment&rdquo;) amends the prospectus supplement, dated January 3, 2025, filed pursuant to Rule 424(b)(5) of the Securities Act
+of 1933, as amended (File No. 333-283732) (the &ldquo;prospectus supplement&rdquo;). This amendment should be read in conjunction with
+the prospectus supplement and the accompanying prospectus, dated December 18, 2024 (the &ldquo;prospectus&rdquo;), and is qualified by
+reference thereto, except to the extent that the information herein amends or supersedes the information contained in the prospectus supplement
+and the prospectus. This amendment is not complete without, and may only be delivered or utilized in connection with, the prospectus supplement
+and the prospectus and any future amendments or supplements thereto.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">On January 3, 2025, we entered into an At Market
+Issuance Sales Agreement (the &ldquo;sales agreement&rdquo;) with Barclays Capital Inc. (&ldquo;Barclays&rdquo;), Cantor Fitzgerald &amp;
+Co. (&ldquo;Cantor&rdquo;), A.G.P./Alliance Global Partners (&ldquo;AGP&rdquo;), The Benchmark Company, LLC (&ldquo;Benchmark&rdquo;),
+B. Riley Securities, Inc. (&ldquo;B. Riley Securities&rdquo;), BTIG, LLC (&ldquo;BTIG&rdquo;), Keefe, Bruyette &amp; Woods, Inc. (&ldquo;KBW&rdquo;),
+Needham &amp; Company, LLC (&ldquo;Needham&rdquo;), Northland Securities, Inc. (&ldquo;Northland&rdquo;), Rosenblatt Securities Inc. (&ldquo;Rosenblatt&rdquo;),
+Roth Capital Partners, LLC (&ldquo;Roth&rdquo;) and StockBlock Securities LLC (&ldquo;StockBlock,&rdquo; and each of Barclays, Cantor,
+AGP, Benchmark, B. Riley Securities, BTIG, KBW, Needham, Northland, Rosenblatt, Roth and StockBlock, a &ldquo;Sales Agent&rdquo; and collectively,
+the &ldquo;Sales Agents&rdquo;), relating to the sale of our Class A ordinary shares, with a par value of US$0.0000001 each (the &ldquo;Class
+A ordinary shares&rdquo;), offered by the prospectus supplement and the accompanying prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We are filing this amendment to amend the prospectus
+supplement solely to reflect a reduction in the total aggregate offering price of Class A ordinary shares we may offer and sell under
+the prospectus supplement and the accompanying prospectus from US$1,000,000,000 to US$750,000,000. In accordance with the terms of the
+sales agreement, under the prospectus supplement, as amended by this amendment, we may offer and sell our Class A ordinary shares having
+an aggregate offering price of up to US$750,000,000 from time to time through or to the sales agents, as agent or principal. As of the
+date of this amendment, we have sold Class A ordinary shares pursuant to the sales agreement for aggregate gross proceeds of US$102.2
+million, which are included in the US$750,000,000 of our Class A ordinary shares we may offer and sell under the prospectus supplement
+and the accompanying prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Sales of our Class A ordinary shares, if any, under
+the prospectus supplement, as amended by this amendment, and the accompanying prospectus, may be made in negotiated transactions, including
+block trades, or transactions that are deemed to be &ldquo;at the market&rdquo; offerings as defined in&nbsp;Rule 415&nbsp;under the&nbsp;Securities
+Act of 1933, as amended (the &ldquo;Securities Act&rdquo;), including sales made by means of ordinary brokers&rsquo; transactions, including
+directly on The Nasdaq Capital Market (&ldquo;Nasdaq&rdquo;) or sales made to or through a market maker other than on an exchange at prevailing
+market prices, at prices related to prevailing market prices or at negotiated prices or by any other method permitted by law. Subject
+to the terms of the sales agreement, the Sales Agents are not required to sell any specific amount, but will act as our Sales Agents using
+commercially reasonable efforts consistent with their normal trading and sales practices. There is no arrangement for funds to be received
+in an escrow, trust or similar arrangement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The designated Sales Agent will be entitled to
+compensation at a commission rate of up to 3.0% of the gross sales price of any Class A ordinary shares sold under the sales agreement.
+In connection with the sale of Class A ordinary shares on our behalf, each Sales Agent will be deemed to be an &ldquo;underwriter&rdquo;
+within the meaning of the&nbsp;Securities Act&nbsp;and the compensation of the Sales Agents will be deemed to be underwriting commissions
+or discounts. We have also agreed to provide indemnification and contribution to the Sales Agents with respect to certain liabilities,
+including civil liabilities under the&nbsp;Securities Act. See &ldquo;Plan of Distribution&rdquo; beginning on page S-13&nbsp;of the prospectus
+supplement for additional information regarding the compensation to be paid to the Sales Agents.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our Class A ordinary shares are currently listed
+on Nasdaq under the symbol &ldquo;BTDR.&rdquo; On November 11, 2025, the last reported sales price of our Class A ordinary shares was
+US$15.02 per share.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><B>Investing in our securities involves a high
+degree of risk. See the &lsquo;&lsquo;<I>Risk Factors</I>&rdquo; section beginning on page S-8 of the prospectus supplement and any risk
+factors in our U.S. Securities and Exchange Commission filings that are incorporated by reference in the prospectus supplement.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><B>None of the U.S. Securities and Exchange Commission
+or any state securities commission has approved or disapproved of the securities or determined if the prospectus supplement or the accompanying
+prospectus is accurate or adequate. Any representation to the contrary is a criminal offense. </B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="font-size: 12pt">
+    <TD COLSPAN="3" STYLE="font-size: 12pt; vertical-align: top; text-align: center"><FONT STYLE="font-size: 12pt"><B>Barclays</B></FONT></TD>
+    <TD STYLE="font-size: 12pt; text-align: center"><FONT STYLE="font-size: 12pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="font-size: 12pt; vertical-align: top; text-align: center"><FONT STYLE="font-size: 12pt">&nbsp;</FONT></TD>
+    <TD STYLE="font-size: 12pt; text-align: center"><FONT STYLE="font-size: 12pt"><B>&ensp;</B></FONT></TD>
+    <TD COLSPAN="3" STYLE="font-size: 12pt; vertical-align: top; text-align: center"><FONT STYLE="font-size: 12pt"><B>Cantor</B></FONT></TD></TR>
+  <TR>
+    <TD COLSPAN="3" STYLE="vertical-align: top; text-align: center">&nbsp;</TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: center">&nbsp;</TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD COLSPAN="3" STYLE="vertical-align: top; text-align: center">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top; width: 19%; text-align: center"><FONT STYLE="font-size: 10pt"><B>A.G.P.</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; width: 19%; text-align: center"><FONT STYLE="font-size: 10pt"><B>The Benchmark Company</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; width: 19%; text-align: center"><FONT STYLE="font-size: 10pt"><B>B. Riley Securities</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; width: 19%; text-align: center"><FONT STYLE="font-size: 10pt"><B>BTIG</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; width: 20%">
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Keefe, Bruyette &amp; Woods</B></P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><I>A Stifel Company</I></P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top; text-align: center"><FONT STYLE="font-size: 10pt"><B>Needham &amp; Company</B></FONT></TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; text-align: center"><FONT STYLE="font-size: 10pt"><B>Northland Capital Markets</B></FONT></TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; text-align: center"><FONT STYLE="font-size: 10pt"><B>Rosenblatt</B></FONT></TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; text-align: center"><FONT STYLE="font-size: 10pt"><B>Roth Capital Partners</B></FONT></TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt"><B>&ensp;</B></FONT></TD>
+    <TD STYLE="vertical-align: top; text-align: center"><FONT STYLE="font-size: 10pt"><B>StockBlock</B></FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">This Amendment No. 1 to the Prospectus Supplement
+is dated November 12, 2025</P>
+
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>image_001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 image_001.jpg
+M_]C_X  02D9)1@ ! 0$ 8 !@  #_VP!#  @&!@<&!0@'!P<)"0@*#!0-# L+
+M#!D2$P\4'1H?'AT:'!P@)"XG("(L(QP<*#<I+# Q-#0T'R<Y/3@R/"XS-#+_
+MVP!# 0@)"0P+#!@-#1@R(1PA,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R
+M,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C+_P  1"  H ,X# 2(  A$! Q$!_\0
+M'P   04! 0$! 0$           $" P0%!@<("0H+_\0 M1   @$# P($ P4%
+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
+:5!-+\J1GBG9,]@***TJ485&G);$QFX['_]D!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

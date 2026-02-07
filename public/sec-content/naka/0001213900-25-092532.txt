@@ -1,0 +1,806 @@
+<SEC-DOCUMENT>0001213900-25-092532.txt : 20250929
+<SEC-HEADER>0001213900-25-092532.hdr.sgml : 20250929
+<ACCEPTANCE-DATETIME>20250926191243
+ACCESSION NUMBER:		0001213900-25-092532
+CONFORMED SUBMISSION TYPE:	424B3
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20250929
+DATE AS OF CHANGE:		20250926
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Kindly MD, Inc.
+		CENTRAL INDEX KEY:			0001946573
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				843829824
+		STATE OF INCORPORATION:			UT
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B3
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-274606
+		FILM NUMBER:		251351785
+
+	BUSINESS ADDRESS:	
+		STREET 1:		5097 SOUTH 900 EAST
+		STREET 2:		SUITE 100
+		CITY:			SALT LAKE CITY
+		STATE:			UT
+		ZIP:			84117
+		BUSINESS PHONE:		(385) 388-8220
+
+	MAIL ADDRESS:	
+		STREET 1:		5097 SOUTH 900 EAST
+		STREET 2:		SUITE 100
+		CITY:			SALT LAKE CITY
+		STATE:			UT
+		ZIP:			84117
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B3
+<SEQUENCE>1
+<FILENAME>ea025907102-424b3_kindly.htm
+<DESCRIPTION>PROSPECTUS SUPPLEMENT
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; font-size: 10pt"><FONT STYLE="font-family: Times New Roman, Times, Serif"><B>PROSPECTUS&nbsp;SUPPLEMENT</B></FONT></TD>
+    <TD STYLE="width: 40%; font-size: 10pt; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif"><B>Filed Pursuant to 424(b)(3)</B></FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; font-size: 10pt; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif"><B>To Prospectus dated May 6, 2025</B></FONT></TD>
+    <TD STYLE="width: 40%; font-size: 10pt; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif"><B>&nbsp;Registration No. 333-274606</B></FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>KINDLY MD, INC.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B></B>&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><IMG SRC="image_001.jpg" ALT=""></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>2,059,811 Shares of Common Stock Issuable Upon
+Exercise of Previously Issued Warrants</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>and</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>82,310 Shares of Common Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus supplement updates and supplements
+the information contained in the prospectus dated May 6, 2025 (as may be supplemented or amended from time to time, the &ldquo;Prospectus&rdquo;),
+which forms part of our registration statement on Form S-1 (File No. 333-274606), as amended, with the information contained in our Current
+Report on Form 8-K which was filed with the Securities and Exchange Commission on September 10, 2025 (the &ldquo;Current Report&rdquo;).
+Accordingly, we have attached the Current Report to this prospectus supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Prospectus and this prospectus supplement
+relate to the issuance by Kindly MD, Inc., a Utah corporation, of up to 2,059,811 shares of common stock underlying the tradeable warrants
+(the &ldquo;Tradeable Warrants&rdquo;), the non-tradeable warrants (the &ldquo;Non-tradeable Warrants&rdquo;) and the representative&rsquo;s
+warrants (the &ldquo;Representative&rsquo;s Warrants&rdquo; and, together with the Tradeable Warrants and the Non-tradeable Warrants,
+the &ldquo;Warrants&rdquo;) previously issued by us in our initial public offering that closed on June 3, 2024. We are not selling any
+shares of our common stock in this offering, and, as a result, we will not receive any proceeds from the sale of the common stock covered
+by this prospectus. All of the net proceeds from the sale of our common stock will go to the holders of the Warrants. Upon exercise of
+the Warrants, however, we will receive proceeds from the exercise of such Warrants if exercised for cash.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Prospectus and the prospectus supplement also
+relate to the resale from time to time by the selling stockholders named in the Prospectus (the &ldquo;Selling Stockholders&rdquo;) of
+82,310 shares of common stock. We will not receive any proceeds from the sale of shares of common stock by the Selling Stockholders pursuant
+to the Prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">You should read this prospectus supplement in
+conjunction with the Prospectus. This prospectus supplement is qualified by reference to the Prospectus except to the extent that the
+information in this prospectus supplement supersedes the information contained in the Prospectus. This prospectus supplement is not complete
+without, and may not be delivered or utilized except in connection with, the Prospectus. If there is any inconsistency between the information
+in the Prospectus and this prospectus supplement, you should rely on the information in this prospectus supplement. Terms used in this
+prospectus supplement but not defined herein shall have the meanings given to such terms in the Prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our common stock is listed on the Nasdaq Capital
+Market (&ldquo;Nasdaq&rdquo;) under the symbol &ldquo;NAKA.&rdquo; The last reported sale price of our common stock on Nasdaq on September
+26, 2025 was $1.15 per share. Our Tradeable Warrants, previously listed on Nasdaq under the symbol &ldquo;NAKAW,&rdquo; have been delisted
+from Nasdaq and are now quoted on the OTC Pink marketplace under the symbol &ldquo;NAKAW.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Investing in our securities involves a high
+degree of risk. See &ldquo;Risk Factors&rdquo; beginning on page 10 of the Prospectus and in the other documents that are incorporated
+by reference in the Prospectus.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Neither the Securities and Exchange Commission
+nor any state securities commission has approved or disapproved of the securities to be issued under the Prospectus or determined if the
+Prospectus or this prospectus supplement is truthful or complete. Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>The date of this prospectus supplement is September
+26, 2025.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SECURITIES AND EXCHANGE COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Washington, D.C.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>FORM 8-K</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>CURRENT REPORT<BR>
+PURSUANT TO SECTION 13 OR 15(d) OF<BR>
+THE SECURITIES EXCHANGE ACT OF 1934</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<B>September 9, 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Kindly MD, Inc.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 49%; text-align: center"><FONT STYLE="font-size: 10pt"><B>001-42103</B></FONT></TD>
+    <TD STYLE="width: 2%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 49%; text-align: center"><FONT STYLE="font-size: 10pt"><B>84-3829824</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">(Commission File Number)</FONT></TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">(IRS Employer Identification Number)</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: center">&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="border-bottom: black 1.5pt solid; text-align: center"><FONT STYLE="font-size: 10pt"><B>5097 South 900 East, Suite 100, Salt Lake City, UT</B></FONT></TD>
+    <TD>&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; text-align: center"><FONT STYLE="font-size: 10pt"><B>84117</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">(Address of Principal Executive Offices)</FONT></TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">(Zip Code)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>(385) 388-8220<BR>
+</B>(Registrant&#8217;s telephone number, including area code)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><FONT STYLE="text-decoration: underline">N/A<BR>
+</FONT></B>(Former name or former address, if changed since last report)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR240.14d-2(b))</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR240.13e-4(c))</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><FONT STYLE="font-size: 10pt"><B>Title of Each Class</B></FONT></TD>
+    <TD STYLE="width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><FONT STYLE="font-size: 10pt"><B>Trading Symbol(s)</B></FONT></TD>
+    <TD STYLE="width: 2%; text-align: center">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><FONT STYLE="font-size: 10pt"><B>Name of Each Exchange on Which Registered</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">Common Stock, par value $0.001</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">NAKA</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">The Nasdaq Stock Market LLC</FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: White">
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">Tradeable Warrants to purchase shares of Common Stock, par value $0.001 per share</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">NAKAW</FONT></TD>
+    <TD STYLE="text-align: center">&#160;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-size: 10pt">OTC Pink Market</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (17 CFR &#167;230.405) or Rule 12b-2 of the Securities
+Exchange Act of 1934 (17 CFR &#167;240.12b-2).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Emerging growth company <FONT STYLE="font-family: Times New Roman, Times, Serif">&#9746;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+
+<!-- Field: Page; Sequence: 2 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 1.01 Entry into a Material Definitive
+Agreement. </B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On September 9, 2025, Nakamoto Holdings, Inc., a Delaware corporation
+(&#8220;<B>Nakamoto</B>&#8221;) and wholly-owned subsidiary of Kindly MD, Inc., a Utah corporation (the &#8220;<B>Company</B>&#8221;),
+made a commitment to purchase up to $30 million of shares of common stock of Metaplanet Inc., a corporation organized under the laws of
+Japan, (TSE: 3350) (OTC:MTPLF) (&#8220;<B>Metaplanet</B>&#8221;), in connection with Metaplanet&#8217;s previously announced international
+equity financing (the &#8220;<B>International Offering</B>&#8221;).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The purchase price per share of Metaplanet&#8217;s common stock (the
+&#8220;<B>Metaplanet Stock</B>&#8221;) will be set at a discount of approximately 10% to the closing price of its Common Stock on the
+Tokyo Stock Exchange as September 9, 2025 (JPY 614 or approximately $4.17). The International Offering is expected to fund on September
+16, 2025, with a delivery of the Metaplanet Stock anticipated on September 17, 2025. The Metaplanet Stock will be acquired directly from Metaplanet in the International Offering, and payment will be made in
+U.S. dollars. No separate share purchase agreement or subscription document was required to be signed by the Company in connection with
+its commitment.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The audit committee of the Company&#8217;s board of directors approved
+the $30 million investment pursuant to the Company&#8217;s Related Person Transaction Policy. This approval was required because David
+Bailey, the Company&#8217;s Chief Executive Officer and Chairman of the Board, serves on the advisory board of Metaplanet; Tyler Evans,
+the Company&#8217;s Chief Investment Officer, is a director of Metaplanet; and Mark Yusko, a director of the Company, is a director of
+Metaplanet.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 7.01 Regulation FD Disclosure.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company issued a press release on September
+9, 2025 announcing the investment in the International Offering, a copy of which is attached hereto as Exhibit 99.1.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information furnished pursuant to this Item
+7.01, including Exhibit 99.1, will not be deemed to be &#8220;filed&#8221; for the purposes of Section 18 of the Securities Exchange Act
+of 1934, as amended, and will not be incorporated by reference into any filing under the Securities Act of 1933, as amended, unless specifically
+identified therein as being incorporated therein by reference.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 8.01 Other Events.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company is furnishing updated information
+regarding the beneficial ownership of its common stock by directors, executive officers, and holders of more than 5% of the Company&#8217;s
+outstanding shares. The following table sets forth, as of September 8, 2025, the beneficial ownership of the common stock by (i) each
+director, (ii) each executive officer, (iii) all current directors and executive officers as a group, and (iv) each stockholder known
+by the Company to own beneficially more than 5% of the Company&#8217;s outstanding common stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></P>
+
+<!-- Field: Page; Sequence: 3; Options: NewSection; Value: 1 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Beneficial ownership is determined in accordance
+with Rule 13d-3 under the Exchange Act. Unless otherwise indicated, each individual has sole voting and investment power with respect
+to the shares beneficially owned. Percentages are based on 376,146,058 shares of common stock outstanding as of September 9, 2025.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold"><FONT STYLE="font-size: 10pt"><B>Name and Address of Beneficial Owner<SUP>(1)</SUP></B></FONT></TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD COLSPAN="2" STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Number of Shares of Common Stock <BR> Beneficially Owned</TD><TD STYLE="padding-bottom: 1.5pt; font-weight: bold">&#160;</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD COLSPAN="2" STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Percent of Shares of <BR> Common Stock Outstanding</TD><TD STYLE="padding-bottom: 1.5pt; font-weight: bold">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font-weight: bold">Directors and Executive Officers</TD><TD>&#160;</TD>
+    <TD COLSPAN="2" STYLE="text-align: center">&#160;</TD><TD>&#160;</TD><TD>&#160;</TD>
+    <TD COLSPAN="2" STYLE="text-align: center">&#160;</TD><TD>&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 76%"><FONT STYLE="font-size: 10pt">David Bailey<SUP>(2)</SUP></FONT></TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 1%; text-align: left">&#160;</TD><TD STYLE="width: 9%; text-align: right">11,160,570</TD><TD STYLE="width: 1%; text-align: left">&#160;</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 1%; text-align: left">&#160;</TD><TD STYLE="width: 9%; text-align: right">2.97</TD><TD STYLE="width: 1%; text-align: left">%</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="text-align: left">Jared Barrera</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">15,842</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">*</FONT></TD><TD STYLE="text-align: left">%&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: left">Tyler Evans</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">2,410,865</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">*</FONT></TD><TD STYLE="text-align: left">%</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="text-align: left">Andrew Creighton</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">3,124,971</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">*</FONT></TD><TD STYLE="text-align: left">%</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: left">Amanda Fabiano</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD><FONT STYLE="font-size: 10pt">Tim Pickett<SUP>(2)</SUP></FONT></TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">2,985,769</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">*</FONT></TD><TD STYLE="text-align: left">%</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: left">Mark Yusko</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">2,100,000</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">*</FONT></TD><TD STYLE="text-align: left">%</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="text-align: left">Charles (Chad) Blackburn</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: left">Perianne Boring</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="text-align: left">Greg Xethalis</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: left">Eric Weiss</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#8212;</TD><TD STYLE="text-align: left">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="text-align: left">All officers &amp; directors as a group (11 individuals)</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">21,798,017</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">5.80</TD><TD STYLE="text-align: left">%</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font-weight: bold">5% Shareholders</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#160;</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">&#160;</TD><TD STYLE="text-align: left">&#160;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Verition Multi-Strategy Master Fund Ltd.<SUP>(3)</SUP></FONT></TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">37,781,847</TD><TD STYLE="text-align: left">&#160;</TD><TD>&#160;</TD>
+    <TD STYLE="text-align: left">&#160;</TD><TD STYLE="text-align: right">9.99</TD><TD STYLE="text-align: left">%</TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0in"></TD><TD STYLE="width: 0.25in; text-align: left">*</TD><TD STYLE="text-align: justify">Indicates beneficial ownership of less than 1% of the total
+issued and outstanding shares of common stock.</TD>
+</TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0in"></TD><TD STYLE="width: 0.25in; text-align: left">(1)</TD><TD STYLE="text-align: justify">Unless otherwise indicated, the business address of each of
+the following is 5097 South 900 East, Suite 100, Salt Lake City, UT 84117.</TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0in"></TD><TD STYLE="width: 0.25in; text-align: left">(2)</TD><TD STYLE="text-align: justify">Includes (i) 97,025 shares of common stock held directly by
+Tim Pickett and (ii) 2,886,744 shares of common stock owned by Wade Rivers, LLC. Mr. Pickett and his spouse serve as the co-investment&#160;trustees
+of The Wade Rivers Trust, which is the sole Member of Wade Rivers, LLC.</TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0in"></TD><TD STYLE="width: 0.25in; text-align: left">(3)</TD><TD STYLE="text-align: justify">Includes 35,920,429 shares
+                                            of common stock issued pursuant to the Subscription Agreements and (ii) 1,694,759 shares
+                                            of common stock issuable upon exercise of a prefunded warrant, dated August 14, 2025 (the
+                                            &#34;<B>Prefunded Warrant</B>&#34;), by and between the Company and Verition Multi-Strategy
+                                            Master Fund Ltd. (the &#34;<B>Fund</B>&#34;). Under the terms of the Prefunded Warrant, the
+                                            Fund may not exercise the Prefunded Warrant if such exercise would cause the Fund to beneficially
+                                            own more than 9.99% of the number of shares of common stock outstanding immediately after
+                                            giving effect to such exercise. Verition Fund Management LLC (&#34;<B>Verition</B>&#34;)
+                                            is the investment manager of the Fund and Nicholas Maounis is the managing member of Verition.
+                                            Verition and Mr. Maounis may be deemed to have voting and investment control over these securities,
+                                            however both disclaim beneficial ownership over these securities, except to the extent of
+                                            their respective pecuniary interests therein. The business address for the Fund is One American
+                                            Lane, Greenwich, CT, 06831.</TD>
+</TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.25in; text-indent: -0.25in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 9.01 Financial Statements and Exhibits.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(d) Exhibits.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR>
+    <TD STYLE="border-bottom: black 1.5pt solid; vertical-align: top; width: 9%"><FONT STYLE="font-size: 10pt"><B>Exhibit No.</B></FONT></TD>
+    <TD STYLE="vertical-align: bottom; width: 1%; padding-bottom: 1pt">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; vertical-align: bottom; width: 90%"><FONT STYLE="font-size: 10pt"><B>Description of Exhibit</B></FONT></TD></TR>
+  <TR STYLE="background-color: rgb(204,238,255)">
+    <TD STYLE="white-space: nowrap; vertical-align: top"><FONT STYLE="font-size: 10pt">99.1</FONT></TD>
+    <TD STYLE="vertical-align: bottom">&#160;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-size: 10pt"><A HREF="#a_001">Press Release, dated as of September 9, 2025.</A></FONT></TD></TR>
+  <TR STYLE="background-color: White">
+    <TD STYLE="white-space: nowrap; vertical-align: top"><FONT STYLE="font-size: 10pt">104</FONT></TD>
+    <TD STYLE="vertical-align: bottom">&#160;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-size: 10pt">The cover page from this Current Report on Form 8-K, formatted in Inline XBRL.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SIGNATURES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, hereunder
+duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD>&#160;</TD>
+    <TD COLSPAN="2"><FONT STYLE="font-size: 10pt">KINDLY MD, INC.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; text-align: justify">&#160;</TD>
+    <TD STYLE="width: 5%">&#160;</TD>
+    <TD STYLE="width: 35%; text-align: justify">&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">Dated: September 10, 2025</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">By<I>: </I></FONT></TD>
+    <TD STYLE="border-bottom: black 1.5pt solid"><FONT STYLE="font-size: 10pt">/s/ David Bailey</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">David Bailey</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&#160;</TD>
+    <TD>&#160;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">Chief Executive Officer</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 5 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 0pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><A NAME="a_001"></A><B>Exhibit 99.1</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>KindlyMD Subsidiary Nakamoto Announces $30 Million
+Investment in Metaplanet</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><I>Investment Supports Metaplanet&rsquo;s International
+Offering to Accelerate Bitcoin Accumulation and Expand BTC Net Asset Value</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Salt Lake City, UTAH &ndash; September 9, 2025 &ndash; KindlyMD, Inc.
+(NASDAQ:NAKA) (&ldquo;KindlyMD&rdquo;), a provider of integrated healthcare services and a Bitcoin treasury vehicle, today announced that
+its subsidiary, Nakamoto Holdings Inc. (&ldquo;Nakamoto&rdquo;), has made an up to $30 million commitment to invest in the recently announced
+international equity financing in common stock of Metaplanet Inc. (&ldquo;Metaplanet,&rdquo; and such financing, the &ldquo;International
+Offering&rdquo;), Japan&rsquo;s first and leading Bitcoin treasury company. This transaction would mark Nakamoto&rsquo;s largest single
+investment to date and its first in an Asian public company with a Bitcoin treasury strategy.</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The primary objective of the International Offering is to acquire a
+large amount of Bitcoin in a short period of time while significantly expanding Bitcoin net asset value. The Company&rsquo;s investment
+in the International Offering is expected to be funded on September 16, 2025, and the issuance and delivery of the common stock issued
+thereunder is expected to occur on September 17, 2025. The proceeds of the offering are expected to be allocated primarily to the purchase
+of Bitcoin.</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&ldquo;Metaplanet has established itself as a leader in Japan&rsquo;s
+Bitcoin landscape through its commitment to advancing financial innovation and driving the global adoption of Bitcoin,&rdquo; said David
+Bailey, Chairman and CEO of KindlyMD. &ldquo;By positioning Bitcoin as the cornerstone of its financial approach, Metaplanet has become
+one of Japan&rsquo;s leading public companies and a global leader in corporate Bitcoin strategies. We are proud to support their mission
+and believe this investment will further strengthen the global network of companies placing Bitcoin at the center of institutional finance.&rdquo;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">As Japan&rsquo;s first and leading Bitcoin treasury company, Metaplanet
+is dedicated to maximizing Bitcoin Yield while maintaining a sustainable and scalable capital structure. On September 1, 2025, Metaplanet
+shareholders authorized two classes of perpetual preferred shares, reflecting Metaplanet&rsquo;s intention to pioneer Japan&rsquo;s Bitcoin-backed
+fixed income market. Together with common equity issuance, these tools are designed to optimize long-term Bitcoin accumulation and align
+its corporate strategy with the world&rsquo;s most secure, decentralized monetary network.</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&zwj;About KindlyMD</B></P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">KindlyMD&reg; is a patient-first and healthcare data company redefining
+value-based care and patient-centered medical services. Formed in 2019, KindlyMD leverages data analysis to deliver evidence-based, personalized
+solutions in order to reduce opioid use, improve health outcomes faster, and provide value based, algorithmic guidance on the use of alternative
+medicine in healthcare. In August 2025, KindlyMD completed its merger with Nakamoto Holdings Inc., a Bitcoin-native holding company. This
+strategic partnership formed a public Bitcoin treasury strategy that unites KindlyMD&rsquo;s healthcare expertise with Nakamoto&rsquo;s vision of
+integrating Bitcoin into global capital markets, creating a diversified entity focused on both healthcare innovation and Bitcoin treasury
+management.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&zwj;Forward-Looking Statements</B></P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">All statements, other than statements of historical fact, included
+in this press release that address activities, events or developments that that the Company expects, believes or anticipates will or may
+occur in the future are forward-looking statements, as defined under U.S. federal securities laws, related to the Company. Forward-looking
+statements can be identified by the fact that they do not relate strictly to historical or current facts and often include statements
+about our future operations, business strategies, plans, objectives, expectations, intentions, goals, projections, prospects, future events,
+or performance, as well as underlying assumptions. These statements-covering matters such as expectations, plans, strategic outlooks,
+financial projections, market conditions, regulatory environments, Bitcoin-related strategies, Bitcoin treasury management activities,
+and the Company&rsquo;s anticipated holding of Bitcoin as part of its corporate treasury are inherently uncertain and involve numerous assumptions
+and risks.</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Forward-looking terms used may include, but are not limited to, &ldquo;estimate,&rdquo;
+&ldquo;project,&rdquo; &ldquo;predict,&rdquo; &ldquo;believe,&rdquo; &ldquo;expect,&rdquo; &ldquo;anticipate,&rdquo; &ldquo;potential,&rdquo; &ldquo;create,&rdquo;
+&ldquo;intend,&rdquo; &ldquo;could,&rdquo; &ldquo;would,&rdquo; &ldquo;may,&rdquo; &ldquo;plan,&rdquo; &ldquo;will,&rdquo; &ldquo;guidance,&rdquo; &ldquo;look,&rdquo;
+&ldquo;goal,&rdquo; &ldquo;future,&rdquo; &ldquo;build,&rdquo; &ldquo;focus,&rdquo; &ldquo;continue,&rdquo; &ldquo;strive,&rdquo; &ldquo;allow,&rdquo;
+&ldquo;seek,&rdquo; &ldquo;aim,&rdquo; &ldquo;target,&rdquo; or the negative of such terms or other variations thereof and words and terms of
+similar substance used in connection with any discussion of future plans, actions, or events identify forward-looking statements and similar
+expressions. However, the absence of these words does not mean that the statements are not forward-looking. These forward-looking statements
+include, but are not limited to, descriptions of the Company and its operations, strategies and plans, integration, debt levels and leverage
+ratio, capital expenditures, cash flows and anticipated uses thereof, including the purchase, custody, and potential sale or other use
+of Bitcoin, synergies, opportunities and anticipated future performance, including the management team and board of directors of the Company.
+These statements may also relate to broader macroeconomic trends, industry developments, technology adoption, competitive positioning,
+market expansion, product launches, research and development efforts, acquisitions or dispositions, legal or regulatory developments,
+and other initiatives that could affect our future business performance. There are a number of risks and uncertainties that could cause
+actual results to differ materially from the forward-looking statements included in this communication. These include risks relating to
+Bitcoin market volatility, cybersecurity and custody of digital assets, potential changes in laws or accounting standards relating to
+cryptocurrency, and regulatory developments affecting Bitcoin or other digital assets, as well as the risk that changes in the Company&rsquo;s
+capital structure and governance could have adverse effects on the market value of its securities; the ability of the Company to retain
+customers and retain and hire key personnel and maintain relationships with their suppliers and customers and on the Company operating
+results and business generally; the risk that the Company may be unable to reduce expenses or access financing or liquidity; the impact
+of any related economic downturn; the risk of changes in governmental regulations or enforcement practices; adverse impacts from geopolitical
+events, health crises, supply chain disruptions, changes to laws or accounting standards, cybersecurity threats or data breaches, intellectual
+property disputes, competitive pressures, or changes in consumer behavior; and other important factors that could cause actual results
+to differ materially from those projected. All such factors are difficult to predict and are beyond the Company&rsquo;s control, including those
+detailed in the Company&rsquo;s Annual Reports on Form 10-K, Quarterly Reports on Form 10- Q, Current Reports on Form 8-K, and such other documents
+of the Company filed, or to be filed, with the SEC that are or will be available on the Company&rsquo;s website at www.kindlymd.com and on the
+website of the SEC at www.sec.gov. All forward-looking statements are based on assumptions that the Company believes to be reasonable
+but that may not prove to be accurate. Any forward-looking statement speaks only as of the date on which such statement is made, and the
+Company does not undertake any obligation to correct or update any forward-looking statement, whether as a result of new information,
+future events or otherwise, except as required by applicable law. Readers are cautioned not to place undue reliance on these forward-looking
+statements, which speak only as of the date hereof. Nothing contained herein constitutes an offer to buy or sell securities of the Company
+or any other party, nor does it constitute a solicitation of any proxy or vote.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&zwj;<B>Contacts</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Investor Relations:</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Valter Pinto, Managing Director</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">KCSA Strategic Communications</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(212) 896-1254</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">KindlyMD@KCSA.com</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&zwj;<B>Media:</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Carissa Felger / Sam Cohen</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Gasthalter &amp; Co.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(212) 257-4170</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Nakamoto@gasthalter.com</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 2; Options: Last -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right; margin: 0pt 0">&nbsp;</P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>image_001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 image_001.jpg
+M_]C_X  02D9)1@ ! 0$ 8 !@  #_VP!#  @&!@<&!0@'!P<)"0@*#!0-# L+
+M#!D2$P\4'1H?'AT:'!P@)"XG("(L(QP<*#<I+# Q-#0T'R<Y/3@R/"XS-#+_
+MVP!# 0@)"0P+#!@-#1@R(1PA,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R
+M,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C+_P  1"  S -H# 2(  A$! Q$!_\0
+M'P   04! 0$! 0$           $" P0%!@<("0H+_\0 M1   @$# P($ P4%
+M! 0   %] 0(#  01!1(A,4$&$U%A!R)Q%#*!D:$((T*QP152T? D,V)R@@D*
+M%A<8&1HE)B<H*2HT-38W.#DZ0T1%1D=(24I35%565UA96F-D969G:&EJ<W1U
+M=G=X>7J#A(6&AXB)BI*3E)66EYB9FJ*CI*6FIZBIJK*SM+6VM[BYNL+#Q,7&
+MQ\C)RM+3U-76U]C9VN'BX^3EYN?HZ>KQ\O/T]?;W^/GZ_\0 'P$  P$! 0$!
+M 0$! 0        $" P0%!@<("0H+_\0 M1$  @$"! 0#! <%! 0  0)W  $"
+M Q$$!2$Q!A)!40=A<1,B,H$(%$*1H;'!"2,S4O 58G+1"A8D-.$E\1<8&1HF
+M)R@I*C4V-S@Y.D-$149'2$E*4U155E=865IC9&5F9VAI:G-T=79W>'EZ@H.$
+MA8:'B(F*DI.4E9:7F)F:HJ.DI::GJ*FJLK.TM;:WN+FZPL/$Q<;'R,G*TM/4
+MU=;7V-G:XN/DY>;GZ.GJ\O/T]?;W^/GZ_]H # ,!  (1 Q$ /P#W^BDR!W%-
+M$B-]UU/T- #L5#<SI;1-+(P5%&234H-<SXRE=-,C5"<.^#6=27+%LTI0]I-1
+M[E2Z\:E)66WMPR \,QZU<TKQ7#?2K#.GE2L<+SP:X,Y' Z4Z-F1U=>&!R"*\
+MF.+GS*^Q]'/+:2IZ+7O<]=!W<@FGU1LG:6S@9B0Q12?RJ]FO93NKGS,E9M"T
+M4A/O69J6N:;I3PI?7T-N\W$8D;&_Z4R;FEWI:KM-&D+2LX5 N2Q.!CUJCIFO
+MZ7J[R)I]_#<M%]_RFSM^M 76QKT57ANH+C<(9XY=AVML<'!]#BK% PHHS[TQ
+MCS0 [-%9=OKFFW>HRV%O?0R740R\*M\RX]:=I^M:=J<LT5E>Q7$D!Q*J-DJ?
+M>@GF1I4M)D>M(3TQTH*%HK);Q#H\>I_V:^HP+>YP("^&SZ5J!N.2,T"NAV:,
+MUEZAKNEZ7/%#?7\%O+*?D61\%OI2:EK^E:1Y7V^_AMO-^YYC8W?2@7,C4)H_
+M"N>@\:>'+J01PZS:%R< >9C/YUNQ2I(@=&5E(R&!R#^- *2>S)J*,T4%%*^)
+M6SN&'!$;8/X5\J1:SJEI.TD&H7$3AR<JY]?2OK&6,21R*>C*5_.OE#7].DTG
+MQ!?V,JE6BF8#/]W.1^E5$\_%W5FF=CX?^+FN:8ZQZD?[1MA@<@+(H^O?\:]8
+MLM8TKQQHS-83@MC)0GYXF]Q7S)WX.*U/#^O7OAS4X[^SE974C='GY9!Z&B<%
+M)6,</C)TY)MGL5UHM_:RLC6[L >&520:N:/X=N;JY66X0QP _P 0P3CTKJ-!
+MUZVU_0[?5("-DB_.N?N-W4_2N/\ %'C5WE>RTR0I$.))U/)/H/3ZUP1P<%*Y
+M[^+S]TJ.MM5TZG97OB#2=,7RY[N-6 QM!R?TJ+2/%.GZS>M;VOF%U7=EA@8K
+MQEI&:1G=BS,>6;DFN\^&]J6FO+LKP $4^O7-=R/D\-FM3$5U%+1GHX'->/?&
+M@?\ $Z\.'_;;G_@2U[""3S7CWQH4/JWAU&'!9P?S6FMSVZ^D"3QEXBO?$NI1
+M>#_#Q+$@"\G3[H'&1GT'>N[\/>%K#PSH1T^W0 -&?/F'#2'')KRV6*[^%WC)
+M;Z.)Y]&OA\S'J ><9]1G\:]EBO;:_P!*^U6DBRP30ED=3P010S.E9W<M_P!#
+MC/ ECH.@1:Q<:=K(O(!+OG8@@1 9Z^I]ZV6^(?A5(5E;6;;:Q(&"2>/:O/O
+MW_(J>,_]Y_\ V:IOAOX'T/6_"3WNH6@FGE9DW,Q^0#IBBQ*J2T2\SU?3=5L-
+M6M!=6%S'<0DXWQG/-96I^-_#FD71M[S5($F!PR Y*_7'2O,?AY=W&CVOBVWM
+MW)2UC9XQG^(9&:E^&/A/2/$6GW>J:LJWMR\N&25ON^I/UHL5[=M)):L?X"N8
+M+SXL:S=6TBR0RQR,CKT89%6OA3-';:[XMFE;;&D@9F] "V:I_#^T@L/BKJ]I
+M;+M@BCD1 #G R*O?"8*_B+Q4& (,J@@]_F:F94V[KU9Z/I/B'2==\TZ7?17/
+ME<.$/(I@\2Z,-9_L<ZA$;_=M\@9W ]:\GMF7X=_%&>.4[--O59@>@P>1^1K1
+M^&%FVN>*=:\47,9R\N(2WJ2<X^@ I6-E7;:BEK<Y7QW;7EU\3-1_L]2;F'$R
+M[>HVJ#D5Z1X5^(=C?^%);[49ECNK&,?:5. 2>Q ]\5SD2[_CW,I P000>XVT
+MOB'X5S77C",Z?F/2[U]]QLZ0XP2,=\]J&C"*G=M=SA=:OM2U_P 0VFO7T;+#
+M=7(2VW#@*K#@5W'QDB62[\.1L,J^Y2/8E:3XI6,&G7?A>SM8Q'#$VU5 ]"M2
+M?%\_\3#PT?\ :/\ -:J^PI)Q4D]7H;=W\'_#ES8$6L<UM.5RLGFE@#CN#6#\
+M/M1U+PSXUG\(ZC,98<D19Z*0,@CV(->LR7,5O9K--,D<2H"S.P  Q7CVE7"^
+M*/C6^H68WVEN<^:O0A5P#^)J;FDTHN/+N>WKTI:8&P33\U)VH:<\UY#\7O!\
+MEQCQ#8Q;FC3;=*HY*]F_"O8",U%+$DL;(ZAE(P0W((]Z:T(JTU4C9GQZ2,4#
+M@Y]*]H\7_"%;NYDOO#[I$SY9K5^%)_V3V^E>5ZEX>U?2)6COM-N(2.Y0E?SK
+M2Z9X]2A*#V-SP=XFN],L[[2HG/E70RO/W#W_ #%7VP.!7'Z2'&HPA%<L6Q@*
+M>:],TWPGJNJ.H6 PQD\O+Q@?2LWN>-C:5:I-1BFS*M+.>^NXK:W0R2R'  '3
+MW->TZ#I*:/I<-H@Y498^K'K53P[X8M=#BRH$MRP^>8CGZ#VKH=M![F69>\.N
+M>>[_  $&>,UQ'COP3=>*[W2Y[>ZBA%FS%@X)W9(/'Y5W.T4N :1[$H\RLS#U
+MK0+37]$?3;U R,@ /]U@.&%8'@KPEJ_A:VNK*XU"&ZLI ?*0*08VYZ>QS7<[
+M!C%&P>]!/LXWOU. \/>!+K1M(URQEO(I&U)F*,JG"9SU_.MCP5X;F\+^'5TV
+M:>.=P[.70$#FNF\M<YQ2[%IW)C32UL<'X6\!RZ%J6L7%W<PW$.H$C8JD8!)X
+M/YUSQ^%6MZ;J,[^']>-I:3-RIW!@OI[UZ]M% 4"BXG1B^AYMX,^'5WX8\0S:
+ME/J*74<D13&TAR3W.:HVGPVUO3?%DNH:?K*064MP)I$ .]ESG:17JVP4A0=>
+MXHNP]C&R1Y!\79M'U&SM(8+F.;5H[@0I%&V6YQD$?E7?>"]#/A_PM8V+ "4)
+MNE([N>35*V^'/A^V\0G61 [W)?S )&W*'Z[JZ_:/>B^@H4K3<F<+'X(ND^([
+M^)OM<1A(QY.#NZ8KN0!UIVT9S2X%!I&"CL<-XW\%7/BJ^TRX@NHH!9ON8.I.
+MX9!X_*H/'?@6[\6/IK6M[%;FT#9+@\YQC&/I7?X%(5!HN3*E%WOU/'3\)->O
+M L>I>)?,M\\J-S9'XUW.C>#+'P[HTMGI6Z.:51ON6/SL?>NJV+Z4;!1<(T8Q
+M=T8FC:=J%C+.U[J+W:OC8K+]SGU[UM8'M3MHHQ2-+"T444%#<#FHY(HY%*NB
+MLOH11131,RJFG6,;[TM(%;/41C-6U11T4"BBFS""U%50.U2445)TA1110 44
+E44 %%%% !1110 4444  HHHH **** "BBB@ HHHH **** /_V0$!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

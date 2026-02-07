@@ -1,0 +1,767 @@
+<SEC-DOCUMENT>0001213900-25-120736.txt : 20251211
+<SEC-HEADER>0001213900-25-120736.hdr.sgml : 20251211
+<ACCEPTANCE-DATETIME>20251211164535
+ACCESSION NUMBER:		0001213900-25-120736
+CONFORMED SUBMISSION TYPE:	8-K
+PUBLIC DOCUMENT COUNT:		2
+CONFORMED PERIOD OF REPORT:	20251205
+ITEM INFORMATION:		Entry into a Material Definitive Agreement
+ITEM INFORMATION:		Financial Statements and Exhibits
+FILED AS OF DATE:		20251211
+DATE AS OF CHANGE:		20251211
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Twenty One Capital, Inc.
+		CENTRAL INDEX KEY:			0002070457
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				000000000
+		STATE OF INCORPORATION:			TX
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		8-K
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	001-42997
+		FILM NUMBER:		251565551
+
+	BUSINESS ADDRESS:	
+		STREET 1:		CORPORATION SERVICE COMPANY
+		STREET 2:		211 EAST 7TH STREET, SUITE 620
+		CITY:			AUSTIN
+		STATE:			TX
+		ZIP:			78701-3218
+		BUSINESS PHONE:		206 552 9859
+
+	MAIL ADDRESS:	
+		STREET 1:		CORPORATION SERVICE COMPANY
+		STREET 2:		211 EAST 7TH STREET, SUITE 620
+		CITY:			AUSTIN
+		STATE:			TX
+		ZIP:			78701-3218
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>ea0269379-8k_twenty.htm
+<DESCRIPTION>CURRENT REPORT
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 2pt solid; border-bottom: Black 1pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SECURITIES AND EXCHANGE COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Washington, D.C. 20549</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>FORM 8-K</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>CURRENT REPORT</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>PURSUANT TO SECTION 13 OR 15(D) OF THE</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SECURITIES EXCHANGE ACT OF 1934</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+December 11, 2025 (December 5, 2025)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Twenty One Capital, Inc<FONT STYLE="text-transform: uppercase">.</FONT></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Texas</B></FONT></TD>
+    <TD STYLE="width: 2%; text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>001-42997</B></FONT></TD>
+    <TD STYLE="width: 2%; text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>39-2506682</B></FONT></TD></TR>
+  <TR>
+    <TD STYLE="border-top: black 1.5pt solid; vertical-align: top; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(State or other jurisdiction<BR>
+of incorporation)</FONT></TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="border-top: black 1.5pt solid; vertical-align: top; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission File Number)</FONT></TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="border-top: black 1.5pt solid; vertical-align: top; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(I.R.S. Employer<BR>
+Identification No.)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="vertical-align: bottom; width: 49%">
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>111 Congress Avenue, Suite 500</B></P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Austin, Texas</B></P></TD>
+    <TD STYLE="width: 2%; text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom; width: 49%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>78701</B></FONT></TD></TR>
+  <TR>
+    <TD STYLE="border-top: black 1.5pt solid; vertical-align: top; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Address of principal executive offices)</FONT></TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="border-top: black 1.5pt solid; vertical-align: top; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Zip Code)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(206) 552-9859</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&rsquo;s telephone number, including
+area code)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>- </B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or former address, if changed since
+last report)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Written communication pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9744;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencements communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Title of each class</B></FONT></TD>
+    <TD STYLE="width: 2%; text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Trading Symbols</B></FONT></TD>
+    <TD STYLE="width: 2%; text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom; width: 32%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Name of each exchange on which registered</B></FONT></TD></TR>
+  <TR STYLE="background-color: rgb(204,238,255)">
+    <TD STYLE="vertical-align: top; border-top: black 1.5pt solid; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Class A common stock, par value $0.01 per share</B></FONT></TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; border-top: black 1.5pt solid; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>XXI</B></FONT></TD>
+    <TD STYLE="text-align: center">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; border-top: black 1.5pt solid; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>The New York Stock Exchange</B></FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Indicate by check mark
+whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&sect;230.405 of this chapter)
+or Rule 12b-2 of the Securities Exchange Act of 1934 (&sect;240.12b-2 of this chapter).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">Emerging growth company &#9746;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">If an emerging growth
+company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or
+revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. &#9744;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1pt solid; border-bottom: Black 2pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 1.01. Entry into a Material Definitive
+Agreement.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Insider Letter Amendment</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><FONT STYLE="background-color: white">As previously
+disclosed, on April 22, 2025, contemporaneously with the execution of </FONT>the business combination agreement, dated as of April 22,
+2025 (as amended on July 26, 2025) by and among Cantor Equity Partners, Inc., a Cayman Islands exempted company (&ldquo;CEP&rdquo;), Twenty
+One Capital, Inc., a Texas corporation (the &ldquo;Company&rdquo;), Twenty One Merger Sub D, a Cayman Islands exempted company and wholly owned subsidiary
+of the Company, Twenty One Assets, LLC, a Delaware limited liability company, Tether Investments, S.A. de C.V., an El Salvador&nbsp;<I>sociedad
+an&oacute;nima de capital variable</I>, iFinex, Inc., a British Virgin Islands company and, solely for certain limited purposes, Stellar
+Beacon LLC, a Delaware limited liability company (the &ldquo;Business Combination Agreement&rdquo;)<FONT STYLE="background-color: white">,
+the Company, CEP and Cantor EP Holdings, LLC (the &ldquo;Sponsor&rdquo;) entered into the Sponsor Support Agreement (the &ldquo;Sponsor
+Support Agreement&rdquo;), where, among other things, the parties agreed to permit CEP and the Sponsor to amend, prior to Closing (as
+defined in the Business Combination Agreement), the letter agreement, dated as of August 12, 2024 by and among CEP, the Sponsor and the
+then current directors and executive officers of CEP (the &ldquo;Insider Letter&rdquo;), to shorten the lock-up&nbsp;period applicable
+to the Founder Shares (as defined in the Insider Letter) from one (1)&nbsp;year to six (6)&nbsp;months. </FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><FONT STYLE="background-color: white">On December
+5, 2025, pursuant to the Sponsor Support Agreement, CEP, the Sponsor and the Company entered into an amendment to the Insider Letter (the
+&ldquo;Insider Letter Amendment&rdquo;), pursuant to which the Insider Letter was amended to (a) add the Company as a party to the Insider Letter; (b) revise the terms of the Insider Letter
+to include Class&nbsp;A common stock of the Company, par value $0.01 per share, which pursuant to the Business Combination Agreement is
+issued in exchange for the CEP&rsquo;s Class A ordinary shares; and (c) shorten the lock-up&nbsp;period applicable to the Founder
+Shares from one (1)&nbsp;year to six (6)&nbsp;months and amend the terms of the lock-up set forth in Section 7 of the Insider Letter to
+reflect the terms of the lock-up agreements to be entered into pursuant to the Business Combination Agreement, at Closing.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As previously disclosed, on December 8, 2025,
+the Company consummated the transactions contemplated by the Business Combination Agreement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>The Insider Letter and Insider Letter Amendment
+are filed as Exhibits 10.1 and 10.2 to this Current Report on Form 8-K, respectively, and the foregoing description thereof is qualified
+in its entirety by reference to the full text of the Insider Letter and the Insider Letter Amendment and the terms of which are incorporated
+by reference herein.</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></P>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><B>Item 9.01 Financial Statements and Exhibits.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><B>(d) Exhibits </B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Exhibit Index</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; width: 9%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Exhibit&nbsp;No.</B></FONT></TD>
+    <TD STYLE="white-space: nowrap; width: 1%">&nbsp;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; text-align: center; width: 90%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Description</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: rgb(204,238,255)">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.1</FONT></TD>
+    <TD STYLE="white-space: nowrap">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><A HREF="http://www.sec.gov/Archives/edgar/data/1865602/000121390024069163/ea021135501ex10-1_cantor.htm">Insider Letter, dated August 14, 2024, by and among CEP, its then current officers and directors and the Sponsor (incorporated by reference to Exhibit 10.13 to the Company&rsquo;s Registration Statement on Form S-4, filed with the SEC on October 17, 2025).</A></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: White">
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.2</FONT></TD>
+    <TD STYLE="white-space: nowrap">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><A HREF="ea026937901ex10-2_twenty.htm"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Amendment to Insider Letter, dated December 5, 2025 by and among the Company, Sponsor and CEP.</FONT></A></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SIGNATURES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Dated: December 11, 2025</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD COLSPAN="2"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Twenty One Capital, Inc.</FONT></TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD COLSPAN="2">&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 5%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</FONT></TD>
+    <TD STYLE="width: 35%; border-bottom: black 1.5pt solid"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ James Cong Hoan Nguyen </FONT></TD>
+    <TD STYLE="width: 60%">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:&nbsp;</FONT></TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">James Cong Hoan Nguyen </FONT></TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title:</FONT></TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">General Counsel and Chief Compliance Officer </FONT></TD>
+    <TD>&nbsp;</TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">3</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>EX-10.2
+<SEQUENCE>2
+<FILENAME>ea026937901ex10-2_twenty.htm
+<DESCRIPTION>AMENDMENT TO INSIDER LETTER, DATED DECEMBER 5, 2025 BY AND AMONG THE COMPANY, SPONSOR AND CEP
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Exhibit 10.2</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>EXECUTION VERSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><U>AMENDMENT TO LETTER AGREEMENT </U></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">This <B>AMENDMENT TO LETTER
+AGREEMENT </B>(this &ldquo;<B><I>Amendment</I></B>&rdquo;) is made and entered into as of December 5, 2025, by and among (i) <B>Cantor
+Equity Partners, Inc., </B>a Cayman Islands exempted company (the &ldquo;<B><I>Company</I></B>&rdquo;), (ii) <B>Cantor EP Holdings, LLC</B>,
+a Delaware limited liability company (the &ldquo;<B><I>Sponsor</I></B>&rdquo;) and (iii) <B>Twenty One Capital, Inc.</B>, a Texas corporation
+(&ldquo;<B><I>Pubco</I></B>&rdquo;), and amends that certain letter agreement, dated as of August 12, 2024, by and among the Company,
+the Sponsor and the other parties thereto (the &ldquo;<B><I>Original Agreement</I></B>&rdquo; and, as amended by this Amendment, the &ldquo;<B><I>Letter
+Agreement</I></B>&rdquo;). Capitalized terms used but not otherwise defined herein shall have the respective meanings assigned to such
+terms in the Original Agreement and, if such term is not defined in the Original Agreement, then in the Business Combination Agreement
+(as defined below).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>RECITALS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>WHEREAS</B>, pursuant to
+the Original Agreement, the Sponsor agreed, among other matters, to certain transfer restrictions with respect to the Founder Shares;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>WHEREAS</B>, on April 22,
+2025, (a) the Company, (b) Pubco, (c) Twenty One Assets, LLC, a Delaware limited liability company (&ldquo;<B><I>Twenty One</I></B>&rdquo;),
+(d) Twenty One Merger D, a Cayman Islands exempted company and a wholly-owned subsidiary of Pubco (&ldquo;<B><I>SPAC Merger Sub</I></B>&rdquo;),
+(e) Tether Investments, S.A. de C.V., an El Salvador <I>sociedad an&oacute;nima de capital variable </I>(&ldquo;<B><I>Tether</I></B>&rdquo;),
+(f) iFinex, Inc., a British Virgin Islands company, and (g) solely for limited purposes, Stellar Beacon, a Delaware limited liability
+company (&ldquo;<B><I>SoftBank</I></B>&rdquo;), entered into that certain Business Combination Agreement (as amended from time to time
+in accordance with the terms thereof, including by Amendment No. 1, dated July 26, 2025, the &ldquo;<B><I>Business Combination Agreement</I></B>&rdquo;);</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>WHEREAS</B>, pursuant to
+the Business Combination Agreement, subject to the terms and conditions thereof, among other matters, upon the consummation of the transactions
+contemplated by the Business Combination Agreement (the &ldquo;<B><I>Closing</I></B>&rdquo;): (a) the Company will merge with and into
+SPAC Merger Sub, with SPAC Merger Sub continuing as the surviving entity (the &ldquo;<B><I>SPAC Merger</I></B>&rdquo;) and the Company&rsquo;s
+shareholders receiving one share of Pubco Class A Stock for each Class A ordinary share, par value $0.0001 per share, of the Company held
+by such shareholder; (b) Twenty One will merge with and into Company Merger Sub, with Company Merger Sub continuing as the surviving entity
+(the &ldquo;<B><I>Twenty One Merger</I></B>,&rdquo; and together with SPAC Merger, the &ldquo;<B><I>Mergers</I></B>&rdquo;) and members
+of Twenty One receiving shares of Pubco Stock in exchange for their membership interests of Twenty One in accordance with the Business
+Combination Agreement; and (c) as a result of the Mergers and the other transactions contemplated by the Business Combination Agreement
+(the &ldquo;<B><I>Transactions</I></B>&rdquo;), among other matters, SPAC Merger Sub and Company Merger Sub will become wholly-owned subsidiaries
+of Pubco and Pubco will become a publicly traded company;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>WHEREAS</B>, on October
+16, 2025, the Sponsor and Tether entered into that certain Sale and Purchase Agreement (&ldquo;<B><I>Cantor SPA</I></B>&rdquo;) where,
+subject to the terms and conditions thereof, Tether agreed to sell and the Sponsor agreed to purchase 500,000 shares of Pubco Class A
+Stock (&ldquo;<B><I>Cantor F&amp;F Shares</I></B>&rdquo;) at the Closing;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>WHEREAS</B>, the parties
+hereto desire to amend the Original Agreement (a) to add Pubco as a party to the Letter Agreement, (b) to revise the terms thereof in
+order to reflect the transactions contemplated by the Business Combination Agreement, including the issuance of Pubco Stock in exchange
+for the Company&rsquo;s ordinary shares, and (c) to amend the terms of the lock-up set forth in Section 7 of the Original Agreement; and</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>WHEREAS</B>, pursuant to
+paragraph 13 of the Original Agreement, the Original Agreement can be amended by a written instrument executed by all parties thereto.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>NOW, THEREFORE</B>, in
+consideration of the premises and the mutual promises herein made, and in consideration of the representations, warranties and covenants
+herein contained, and for other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, and intending
+to be legally bound hereby, the parties hereto agree as follows:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><U>1.&nbsp;Addition
+of Pubco as a Party to the Letter Agreement</U>. The parties hereto hereby agree to add Pubco as a party to the Letter Agreement. The
+parties further agree that, from and after the Closing, (a) all of the rights and obligations of the Company under the Letter Agreement
+shall be, and hereby are, assigned and delegated to Pubco as if it were the original &ldquo;Company&rdquo; party thereto, and (b) all
+references to the &ldquo;Company&rdquo; under the Letter Agreement relating to periods from and after the Closing shall instead be a reference
+to Pubco. By executing this Amendment, Pubco hereby agrees to be bound by and subject to all of the terms and conditions of the Letter
+Agreement from and after the Closing as if it were the original &ldquo;Company&rdquo; party thereto.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><U>2.&nbsp;Amendments
+to the Original Agreement</U>. The parties hereto hereby agree to the following amendments to the Original Agreement effective upon the
+Closing:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">(a)&nbsp;The
+defined terms in this Amendment, including in the preamble and recitals hereto, and the definitions incorporated by reference from the
+Business Combination Agreement, are hereby added to the Letter Agreement as if they were set forth herein.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">(b)&nbsp;From
+and after the Closing, (i) the terms &ldquo;Ordinary Shares&rdquo;, &ldquo;Class A Ordinary Shares&rdquo;, &ldquo;Class B Ordinary Shares&rdquo;
+and &ldquo;Founder Shares,&rdquo; as used in the Letter Agreement shall include any and all shares of Pubco Class A Stock into which any
+such securities shall convert in the SPAC Merger, and (ii) the term &ldquo;Private Placement Shares&rdquo; shall include any and all shares
+of Pubco Class A Stock into which such securities will convert in the SPAC Merger (in each case, together with any other securities of
+Pubco or any successor entity issued in consideration of, including as a stock split, dividend or distribution, or in exchange for, any
+of such securities).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">(c)&nbsp;Section
+7(a) of the Original Agreement is hereby deleted in its entirety and replaced with the following:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&ldquo;(a) The Sponsor
+agrees, that it shall not Transfer any Founder Shares or Cantor F&amp;F Shares during the period (the &ldquo;<B><I>Founder Shares Lock-up
+Period</I></B>&rdquo;) commencing from the Closing Date and ending on the earlier of (A) the six (6) month anniversary of the Closing
+Date the &ldquo;<B><I>Anniversary Release</I></B>&rdquo;); provided that, in the event the S-1 registration statement filed with the U.S.
+Securities and Exchange Commission (the &ldquo;<B><I>SEC</I></B>&rdquo;) by Pubco to register the sale of the Pubco Class A Stock underlying
+the convertible notes issued by Pubco at the Closing (the &ldquo;<B><I>Registration Statement</I></B>&rdquo;) has not been declared effective
+on or prior to the Anniversary Release, then the Anniversary Release will be deemed to be the date such Registration Statement is declared
+effective by the SEC and (B) the date on which Pubco consummates a liquidation, merger, capital stock exchange, reorganization or other
+similar transaction that results in all of its stockholders having the right to exchange their shares of Pubco Stock for cash, securities
+or other property.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">(d)&nbsp;Effective
+upon the Closing, Section 7(c) of the Original Agreement is hereby deleted in its entirety and replaced with the following:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 2 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&ldquo;(c)&nbsp;Notwithstanding
+the provisions set forth in Sections 7(a) and 7(b), Transfers of Founder Shares, Cantor F&amp;F Shares or Private Placement Shares (collectively,
+the &ldquo;<B><I>Restricted Securities</I></B>&rdquo;) that are held by the Sponsor (and that comply with this Section 7(c)) are permitted:
+(i) in the case of an entity, transfers (A) to another entity that is an Affiliate of the Sponsor, (B) as part of a distribution to members,
+partners or stockholders of the Sponsor and (C) to officers or directors of the Sponsor, any Affiliate or family member of any of the
+Sponsor&rsquo;s officers or directors, or to any members, officers, directors or employees of the Sponsor or any of its Affiliates; (ii)
+in the case of an individual, transfers by gift to members of the individual&rsquo;s immediate family or to a trust, the beneficiary of
+which is a member of one of the individual&rsquo;s immediate family, an Affiliate of such person; (iii) to a charitable organization;
+(iv) in the case of an individual, transfers by virtue of laws of descent and distribution upon death of the individual; (v) in the case
+of an individual, transfers pursuant to a qualified domestic relations order; (vi) in the case of an entity, transfers by virtue of the
+laws of the state of the entity&rsquo;s organization and the entity&rsquo;s organizational documents upon dissolution of the entity; (vii)
+transfers to satisfy any U.S. federal, state, or local income tax obligations of the Sponsor (or its direct or indirect owners) to the
+extent necessary to cover any tax liability as a direct result of the Transactions; or (viii) in the form of a pledge of Restricted Securities
+in a bona fide transaction as collateral to secure obligations pursuant to lending or other financing arrangements between the Sponsor
+(or its Affiliates), on the one hand, and a third party, on the other hand, for the benefit of the Sponsor and/or its Affiliates; provided,
+however, that during the Founder Share Lock-Up Period such third party shall not be permitted to foreclose upon such Restricted Securities
+or otherwise be entitled to enforce its rights or remedies with respect to the Restricted Securities, including, without limitation, the
+right to vote, transfer or take title to or ownership of such Restricted Securities; <U>provided</U>, <U>however</U>, that it shall be
+a condition to any transfer pursuant to clauses (i) through (viii) above that the permitted transferee executes and delivers to Pubco
+an agreement stating that the transferee is receiving and holding the Restricted Securities subject to the provisions of this Letter Agreement
+applicable to the Sponsor, and there shall be no further Transfer of such Restricted Securities except in accordance with the provisions
+of Section 7 of this Letter Agreement. The Sponsor further agrees to execute such agreements as may be reasonably requested by Pubco that
+are consistent with the foregoing or that are necessary to give further effect thereto. The restrictions set forth herein shall not restrict
+the Sponsor from making a request for inclusion of its Restricted Securities in any registration statement pursuant to any registration
+rights agreement between Pubco and the Sponsor, provided that no public filing or public disclosure relating to such sale of securities
+is made during the Founder Shares Lock-Up Period.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">(e)&nbsp;Effective
+upon the Closing, Section 7 of the Original Agreement is hereby amended to add the following new subsections (d), (e) and (f):</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&ldquo;(d)&nbsp;If any
+Transfer is made or attempted contrary to the provisions of this Letter Agreement, such purported Transfer shall be null and void ab initio,
+and Pubco shall refuse to recognize any such purported transferee of the Restricted Securities as one of its equity holders for any purpose.
+In order to enforce this Section 7, Pubco may impose stop-transfer instructions with respect to the Restricted Securities of the Sponsor
+(and any transferees and assigns thereof) until the end of the applicable Lock-up Periods.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">(e)&nbsp;During
+the applicable Lock-up Periods, each certificate or book entry evidencing any Restricted Securities shall be stamped or otherwise imprinted
+with a legend in substantially the following form, in addition to any other applicable legends:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify">&ldquo;THE SECURITIES REPRESENTED BY THIS
+CERTIFICATE ARE SUBJECT TO RESTRICTIONS ON TRANSFER SET FORTH IN A LETTER AGREEMENT, DATED AS OF AUGUST 12, 2024, AS AMENDED ON DECEMBER 5, 2025, BY AND AMONG
+THE ISSUER OF SUCH SECURITIES (THE &ldquo;ISSUER&rdquo;), AND THE ISSUER&rsquo;S SECURITY HOLDERS NAMED THEREIN, AS AMENDED. A COPY OF
+SUCH LETTER AGREEMENT WILL BE FURNISHED WITHOUT CHARGE BY THE ISSUER TO THE HOLDER HEREOF UPON WRITTEN REQUEST.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 3; Value: 2 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; text-indent: 1in">(f)&nbsp;For
+the avoidance of any doubt, the Sponsor shall retain all of its rights as a stockholder of Pubco during the Founder Shares Lock-Up Period,
+including the right to vote any Restricted Securities.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 1in">(f)&nbsp;Effective
+upon the Closing, Section 11 of the Original Agreement is hereby amended to add the following new sentence:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify; text-indent: 0.5in">&ldquo;Any reference
+to the term &ldquo;including&rdquo; (and with correlative meaning &ldquo;include&rdquo;) in the Letter Agreement means including without
+limiting the generality of any description preceding or succeeding such term and shall be deemed in each case to be followed by the words
+&ldquo;without limitation&rdquo;.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><U>3.&nbsp;Preferential
+Lock-Up</U>. In the event that (a) any of the terms of the Lock-Up Agreement to be entered into by and between Pubco and Tether (the &ldquo;<B><I>Tether
+Lock-Up Agreement</I></B>&rdquo;) are amended in a manner that is more favorable to Tether than the terms of this Agreement, or (b) any
+waiver is granted pursuant to the Tether Lock-Up Agreement, Pubco will provide written notice thereof to the Sponsor, and if the Sponsor
+so elects, this Agreement will be amended consistent with the amendments to the Tether Lock-Up Agreement or such waiver will be deemed
+granted <I>mutatis mutandis </I>for this Agreement (as applicable).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><U>4.&nbsp;Specific
+Performance</U>. Each party hereto acknowledges that the rights of each party to consummate the transactions contemplated hereby are unique,
+recognizes and affirms that in the event of a breach of the Letter Agreement by any party, money damages may be inadequate and the non-breaching
+parties may have not adequate remedy at law, and agree that irreparable damage would occur in the event that any of the provisions of
+the Letter Agreement were not performed by an applicable party in accordance with their specific terms or were otherwise breached. Accordingly,
+each party shall be entitled to seek an injunction or restraining order to prevent breaches of the Letter Agreement and to seek to enforce
+specifically the terms and provisions hereof, without the requirement to post any bond or other security or to prove that money damages
+would be inadequate, this being in addition to any other right or remedy to which such party may be entitled under the Letter Agreement,
+at law or in equity.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><U>5.&nbsp;Miscellaneous</U>.
+Except as expressly provided in this Amendment, all of the terms and provisions in the Original Agreement are and shall remain in full
+force and effect, on the terms and subject to the conditions set forth therein. This Amendment does not constitute, directly or by implication,
+an amendment or waiver of any provision of the Original Agreement, or any other right, remedy, power or privilege of any party thereto,
+except as expressly set forth herein. Any reference to the Letter Agreement in the Original Agreement or any other agreement, document,
+instrument or certificate entered into or issued in connection therewith shall hereinafter mean the Letter Agreement, as amended by this
+Amendment (or as the Letter Agreement may be further amended or modified in accordance with the terms thereof and hereof). The terms of
+this Amendment shall be governed by, enforced and construed and interpreted in a manner consistent with the provisions of the Original
+Agreement, including paragraph 18 thereof.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><I>&nbsp;</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><I>{Remainder of Page Intentionally Left Blank;
+Signature Pages Follow}</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 4; Value: 2 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><B>IN WITNESS WHEREOF</B>,
+each party hereto has signed or has caused to be signed by its representative thereunto duly authorized this Amendment to Letter Agreement
+as of the date first above written.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-size: 10pt"><I><U>The Company</U>:</I></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%">&nbsp;</TD>
+    <TD STYLE="text-align: justify; width: 5%">&nbsp;</TD>
+    <TD STYLE="text-align: justify; width: 35%">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-size: 10pt"><B>CANTOR EQUITY PARTNERS, INC.</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left">&nbsp;</TD>
+    <TD STYLE="text-align: left">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">By: </FONT></TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; text-align: left">/s/ Brandon Lutnick<FONT STYLE="font-size: 10pt">&nbsp;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Name:</FONT></TD>
+    <TD STYLE="text-align: left"> Brandon Lutnick</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Title:</FONT></TD>
+    <TD STYLE="text-align: left"> Chief Executive Officer</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-size: 10pt"><I><U>Sponsor</U>:</I></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-size: 10pt"><B>CANTOR EP HOLDINGS, LLC</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left">&nbsp;</TD>
+    <TD STYLE="text-align: left">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">By:</FONT></TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; text-align: left"><FONT STYLE="font-size: 10pt"> /s/ Brandon Lutnick</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Name:</FONT></TD>
+    <TD STYLE="text-align: left"> Brandon Lutnick</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Title:</FONT></TD>
+    <TD STYLE="text-align: left"> Chief Executive Officer</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-size: 10pt"><I><U>Pubco</U>:</I></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="text-align: justify"><FONT STYLE="font-size: 10pt"><B>TWENTY ONE CAPITAL, INC.</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left">&nbsp;</TD>
+    <TD STYLE="text-align: left">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">By:</FONT></TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; text-align: left"><FONT STYLE="font-size: 10pt"> /s/ Steven Meehan</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Name:</FONT></TD>
+    <TD STYLE="text-align: left"> Steven Meehan</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: left"><FONT STYLE="font-size: 10pt">Title:</FONT></TD>
+    <TD STYLE="text-align: left"> Secretary</TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

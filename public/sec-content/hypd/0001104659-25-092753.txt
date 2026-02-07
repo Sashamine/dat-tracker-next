@@ -1,0 +1,1862 @@
+<SEC-DOCUMENT>0001104659-25-092753.txt : 20250924
+<SEC-HEADER>0001104659-25-092753.hdr.sgml : 20250924
+<ACCEPTANCE-DATETIME>20250924072126
+ACCESSION NUMBER:		0001104659-25-092753
+CONFORMED SUBMISSION TYPE:	424B5
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20250924
+DATE AS OF CHANGE:		20250924
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			HYPERION DEFI, INC.
+		CENTRAL INDEX KEY:			0001682639
+		STANDARD INDUSTRIAL CLASSIFICATION:	PHARMACEUTICAL PREPARATIONS [2834]
+		ORGANIZATION NAME:           	03 Life Sciences
+		EIN:				471178401
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B5
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-282458
+		FILM NUMBER:		251335160
+
+	BUSINESS ADDRESS:	
+		STREET 1:		295 MADISON AVENUE
+		STREET 2:		SUITE 2400
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10017
+		BUSINESS PHONE:		833-393-6684
+
+	MAIL ADDRESS:	
+		STREET 1:		295 MADISON AVENUE
+		STREET 2:		SUITE 2400
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10017
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	EYENOVIA, INC.
+		DATE OF NAME CHANGE:	20160818
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B5
+<SEQUENCE>1
+<FILENAME>tm2526091d2_424b5.htm
+<DESCRIPTION>424B5
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right; color: red"><FONT STYLE="color: Black"><B>Filed
+Pursuant to Rule 424(b)(5)</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right; color: red"><FONT STYLE="color: Black"><B>Registration
+No. 333-282458</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>PROSPECTUS SUPPLEMENT AMENDMENT NO. 1</B><FONT STYLE="font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>(To prospectus supplement dated December 30, 2024</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>and accompanying prospectus dated October 8, 2024)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Up to $60,225,987</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; color: Red"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><IMG SRC="tm2526091d2_424b5img001.jpg" ALT=""></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Common Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">This prospectus supplement amendment no. 1 (the
+ &ldquo;amendment no. 1&rdquo;) amends the prospectus supplement dated December 30, 2024 (the &ldquo;original prospectus supplement&rdquo;).
+This amendment no. 1 should be read in conjunction with the original prospectus supplement and the accompanying prospectus, dated October
+8, 2024 (the &ldquo;accompanying prospectus&rdquo;), each of which are to be delivered with this amendment no. 1, and is qualified by
+reference thereto, except to the extent that this amendment no. 1 contains information that is different from or in addition to the information
+in the original prospectus supplement or the accompanying prospectus. Unless otherwise indicated, all other information included in the
+original prospectus supplement or the accompanying prospectus that is not inconsistent with the information set forth in this amendment
+no. 1 remains unchanged.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">On December 30, 2024, we entered into the Amended
+and Restated Sales Agreement (the &ldquo;Original Sales Agreement&rdquo;) with Chardan Capital Markets, LLC (&ldquo;Chardan&rdquo;), relating
+to the sale of shares of our common stock, $0.0001 par value per share, offered by the original prospectus supplement and the accompanying
+prospectus. On September 24, 2025, we entered into an amendment to the Original Sales Agreement (the &ldquo;Amendment&rdquo; and together
+with the Original Sales Agreement, the &ldquo;Sales Agreement&rdquo;) to increase the aggregate offering price of our common stock we
+may offer and sell pursuant to the Sales Agreement from up to $50,000,000 to up to $100,000,000. We are filing this amendment no. 1 to
+the original prospectus supplement to increase the aggregate dollar amount of shares of common stock that we may sell in accordance with
+the Sales Agreement. The original prospectus supplement authorized us to offer and sell shares of common stock having an aggregate offering
+price of up to $33,586,557. As of the date of this amendment no. 1, we have offered and sold 4,176,196 shares of our common stock pursuant
+to the Sales Agreement for gross proceeds of $28,996,998. This amendment no. 1 is increasing the dollar amount of common stock available
+to be sold from time to time hereunder to $60,225,987, which consists of $4,589,559 remaining as originally authorized under the original
+prospectus supplement and an additional $55,636,248, from and including the date hereof.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our common stock is listed on the Nasdaq Capital
+Market (&ldquo;Nasdaq&rdquo;) under the symbol &ldquo;HYPD&rdquo;. On September 22, 2025, the last reported sale price of our common stock
+on Nasdaq was $10.16 per share.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Sales of the common stock, if any, under this amendment
+no. 1 may be made in sales deemed to be an &ldquo;at the market offering&rdquo; as defined in Rule&nbsp;415(a)(4)&nbsp;promulgated under
+the&nbsp;Securities Act of 1933, as amended (the &ldquo;Securities Act&rdquo;). Chardan is not required to sell any specific amount of
+securities, but will act as our sales agent using commercially reasonable efforts consistent with its normal trading and sales practices,
+on mutually agreed terms between Chardan and us. There is no arrangement for funds to be received in any escrow, trust or similar arrangement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The compensation to Chardan for sales of our common
+stock will be 3.0% of the gross proceeds of any common stock sold under the Sales Agreement. See &ldquo;Plan of Distribution&rdquo; beginning
+on page&nbsp;S-14&nbsp;of this amendment no. 1 for additional information regarding the compensation to be paid to Chardan. In
+connection with the sale of the common stock on our behalf, Chardan will be deemed to be an &ldquo;underwriter&rdquo; within the meaning
+of the&nbsp;Securities Act&nbsp;and the compensation of Chardan will be deemed to be underwriting commissions. We have also agreed to
+provide indemnification and contribution to Chardan with respect to certain liabilities, including liabilities under the&nbsp;Securities
+Act.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We are a &ldquo;smaller reporting company&rdquo;
+under applicable Securities and Exchange Commission rules and are subject to reduced public company reporting requirements for this amendment
+no. 1 and future filings.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><B>INVESTING IN OUR COMMON STOCK INVOLVES A HIGH
+DEGREE OF RISK. YOU SHOULD REVIEW CAREFULLY THE RISKS AND UNCERTAINTIES DESCRIBED UNDER THE HEADING &ldquo;RISK FACTORS&rdquo; ON PAGE&nbsp;S-6</B>
+<B>OF THIS AMENDMENT NO. 1, AND UNDER SIMILAR HEADINGS IN THE DOCUMENTS THAT ARE INCORPORATED BY REFERENCE INTO THIS AMENDMENT NO. 1.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in"><B>Neither the Securities and Exchange Commission
+nor any state securities commission has approved or disapproved of these securities or determined if this amendment no. 1, the original
+prospectus supplement or the accompanying prospectus is truthful or complete. Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Chardan</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">The date of this amendment no. 1 is September
+24, 2025.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid">&nbsp;</DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>TABLE OF CONTENTS&nbsp;</B></P>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><I>&nbsp;</I></P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="width: 100%; font: 10pt Times New Roman, Times, Serif; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 91%"><A HREF="#a_001"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">ABOUT THIS AMENDMENT NO. 1</FONT></A></TD>
+    <TD STYLE="text-align: right; width: 9%"><A HREF="#a_001"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-1</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_002"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">AMENDMENT NO. 1 SUMMARY</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_002"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-2</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_003"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">THE OFFERING</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_003"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-5</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_004"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">RISK FACTORS</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_004"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-6</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_005"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">SPECIAL NOTE REGARDING FORWARD-LOOKING STATEMENTS</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_005"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-11</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_006"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">USE OF PROCEEDS</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_006"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-12</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_007"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">DILUTION</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_007"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-13</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_008"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">PLAN OF DISTRIBUTION</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_008"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-14</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_009"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">LEGAL MATTERS</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_009"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-15</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_010"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">EXPERTS</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_010"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-15</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><A HREF="#a_011"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">INCORPORATION OF CERTAIN INFORMATION BY REFERENCE</FONT></A></TD>
+    <TD STYLE="text-align: right"><A HREF="#a_011"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">S-15</FONT></A></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;&nbsp;</P>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<!-- Field: Page; Sequence: 2 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid">&nbsp;</DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_001"></A>ABOUT THIS AMENDMENT NO. 1</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">This amendment no. 1 describes the specific terms
+of this offering of common stock and updates the information contained in the original prospectus supplement, the accompanying prospectus
+and the documents incorporated by reference herein and therein. This amendment no. 1, the original prospectus supplement and the accompanying
+prospectus relate to a Registration Statement on Form S-3 (File No. 333-282458) that we filed with the Securities and Exchange Commission
+(the &ldquo;SEC&rdquo;) utilizing a &ldquo;shelf&rdquo; registration process.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Before buying any of the common stock that we are
+offering, we urge you to carefully read this amendment no. 1, the original prospectus supplement, the accompanying prospectus and all
+of the information incorporated by reference herein and therein, as well as the additional information described under the heading &ldquo;Incorporation
+of Certain Information by Reference.&rdquo; These documents contain important information that you should consider when making your investment
+decision.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">To the extent there is a conflict between the information
+contained in this amendment no. 1, on the one hand, and the information contained in the original prospectus supplement, the accompanying
+prospectus or any document incorporated by reference herein or therein, on the other hand, you should rely on the information in this
+amendment no. 1. If any statement in one of these documents is inconsistent with a statement in another document having a later date&mdash;for
+example, a document incorporated by reference in this amendment no. 1&mdash;the statement in the document having the later date modifies
+or supersedes the earlier statement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><B>We have not, and Chardan has not, authorized
+anyone to provide you with information that is different from or in addition to that contained or incorporated by reference in this amendment
+no. 1, the original prospectus supplement, the accompanying prospectus and in any related free writing prospectus filed by us with the
+SEC. Neither we nor Chardan takes any responsibility for, and can provide no assurance as to the reliability of, any information that
+others may give. We are not making an offer to sell or soliciting an offer to buy our securities under any circumstance in any jurisdiction
+where the offer or solicitation is not permitted. This amendment no. 1 does not constitute an offer to sell or the solicitation of an
+offer to buy any securities other than the securities described in this amendment no. 1 or an offer to sell or the solicitation of an
+offer to buy such securities in any circumstances in which such offer or solicitation is unlawful. You should assume that the information
+appearing in this amendment no. 1, the original prospectus supplement, the accompanying prospectus, the documents incorporated by reference
+herein and therein and any related free writing prospectus is accurate only as of their respective dates. Our business, financial condition,
+results of operations and prospects may have changed materially since those dates.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We further note that the representations, warranties
+and covenants made by us in any agreement that is filed as an exhibit to any document that is incorporated by reference in this amendment
+no. 1, the original prospectus supplement or the accompanying prospectus were made solely for the benefit of the parties to such agreement,
+including, in some cases, for the purpose of allocating risk among the parties to such agreements, and should not be deemed to be a representation,
+warranty or covenant to you. Moreover, such representations, warranties or covenants were accurate only as of the date when made. Accordingly,
+such representations, warranties and covenants should not be relied on as accurately representing the current state of our affairs.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">All brand names or trademarks appearing in this
+amendment no. 1 are the property of their respective holders. Use or display by us of other parties&rsquo; trademarks, trade dress, or
+products in this prospectus supplement no. 1 is not intended to, and does not, imply a relationship with, or endorsements or sponsorship
+of, us by the trademark or trade dress owners.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">All references in this amendment no. 1 to &ldquo;Hyperion
+DeFi,&rdquo; &ldquo;HYPD,&rdquo; &ldquo;the Company,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our,&rdquo; or similar references,
+refer to Hyperion DeFi, Inc., except where the context otherwise requires or as otherwise indicated.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 3 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<DIV STYLE="border: Black 1pt solid; padding: 0in 5pt; overflow: visible; width: 99%">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_002"></A>AMENDMENT NO. 1 SUMMARY</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><I>This summary highlights certain information
+about us, this offering and selected information contained elsewhere in or incorporated by reference into this amendment no. 1, the original
+prospectus supplement and the accompanying prospectus. This summary is not complete and does not contain all of the information that you
+should consider before deciding whether to invest in our securities. For a more complete understanding of the company and this offering,
+you should read and consider carefully the more detailed information in this amendment no. 1, the original prospectus supplement and the
+accompanying prospectus, including the information incorporated by reference herein and therein. If you invest in our securities, you
+are assuming a high degree of risk. See &ldquo;Risk Factors&rdquo; beginning on page S-6 of this amendment no. 1, on page S-6
+of the original prospectus supplement and on page 4 of the accompanying prospectus and in the documents incorporated by reference herein
+and therein. </I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Overview</B>&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Hyperion DeFi, Inc. (previously known as Eyenovia,
+Inc.) is the first U.S. publicly listed company building a long-term strategic treasury of Hyperliquid&rsquo;s native token, HYPE, as
+well as a pioneering digital ophthalmic technology company. Hyperion DeFi is working to provide its stockholders with simplified exposure
+to the Hyperliquid ecosystem, which we believe to be one of the fastest-growing, highest revenue-generating blockchains in the world,
+according to information provided by various blockchain data tracking sources, including Artemis Analytics and DefiLlama. At the same
+time, we continue to execute on our planned completion of development and registration of our Optejet ophthalmic liquid delivery device.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>HYPE Treasury</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Hyperliquid is a layer one (L1) Proof-of-Stake
+blockchain engineered for transparent high-frequency finance. Hyperliquid offers HyperCore, an exchange product built directly onchain,
+which hosts perpetual futures and spot order books, with every order, cancel, trade and liquidation occurring within 70 millisecond block
+times and offering up to 200,000 transactions per second, resulting in near-instant trade settlement. The Hyperliquid blockchain also
+hosts the HyperEVM, a general-purpose smart contract platform that, like Ethereum or Solana, supports permissionless decentralized financial
+applications, broadly known as decentralized finance (DeFi).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">On HyperCore, users start by funding their non-custodial
+accounts with deposits of USD Coin, a centralized cryptocurrency that is linked to the US dollar (&ldquo;USDC&rdquo;). The available USDC
+can be withdrawn at any time. Users can use their funds to purchase or sell spot token assets, or enter into a perpetuals trade on their
+desired token asset, with near-instant settlement. Hyperliquid supports non-custodial trading via its performant HyperCore order books,
+with spot and/or perpetual futures trading for a range of digital assets including Bitcoin (BTC), Ether (ETH), Ripple (XRP), Solana (SOL)
+and Sui (SUI) driving its utilization. Both type of transactions can be entered or exited at any time, with the users&rsquo; confirmation.
+When transactions are executed on HyperCore, they are recorded and settled in the order they were placed, and they are not reported to
+a broker-dealer or alternative trading system (ATS), as execution is fully managed onchain and there is no offering being made that requires
+a specific &ldquo;lifecycle&rdquo; for user onboarding, registration or settlement. The &ldquo;lifecycle&rdquo; of a transaction on HyperCore
+may be viewed as the duration of a user entering and exiting a trade.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Perpetual futures are a type of derivative contract
+that are blockchain-enabled and allows users to speculate on the price of an asset without owning the underlying asset itself. Unlike
+traditional futures contracts, perpetual futures have no expiration date, allowing users to hold positions indefinitely as long as they
+meet margin requirements. Hyperliquid utilizes a traditional order book system. This approach allows users to place bids and asks for
+various assets, more akin to a centralized cryptocurrency exchange than other decentralized exchanges that rely on automated market makers
+to fulfill orders. The Hyperliquid blockchain is available to any potential user with a compatible cryptocurrency wallet such as MetaMask,
+Phantom, and Coinbase Wallet. However, Hyperliquid interface operators can choose to block persons in certain jurisdictions or sanctioned
+wallets as required via solutions such as geoblocking and address screening.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">If desired, users can also transfer their assets
+to HyperEVM. On HyperEVM, a user can similarly swap, lend and borrow against their self-custodied assets on various Hyperliquid compatible
+smart-contract applications, with near-instant settlement. The lifecycle of a transaction varies here, as it is dependent on the user&rsquo;s
+intent with using various smart contract applications.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+</div>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<!-- Field: Page; Sequence: 4 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+<DIV STYLE="border: Black 1pt solid; padding: 0in 5pt; overflow: visible; width: 99%">
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">HYPE is the native token of Hyperliquid. On both
+HyperCore and HyperEVM, users can purchase the HYPE token. HYPE is also available through other platforms such as Binance US, Gate.io
+and Kucoin, and it is not the only spot asset available on the Hyperliquid network (e.g. BTC, ETH, and SOL are also available on the Hyperliquid
+network). The total supply of HYPE is 1 billion, with 31% of the supply being issued in November 2024. 38.88% of the total supply was
+reserved for future community emissions. As of September 10, 2025, 31.3% of the supply of HYPE, which was reported on DefiLlama to be
+approximately 313,2700,000, was circulating. The next major unlock event for the HYPE token will begin on November 29, 2025 with the unlock
+of approximately 9,920,000 HYPE tokens on a monthly basis for the core contributors, totaling up to approximately 238 million HYPE tokens
+over two years. HYPE serves multiple purposes: users can stake HYPE to reduce their trading fees, use it to conduct transactions on the
+HyperEVM, and even use it as collateral on various DeFi applications. In addition, Hyperliquid has a unique network mechanism that autonomously
+purchases and removes HYPE tokens from circulation. This is done by using the trading fees generated on the network&rsquo;s order books
+to buy back available HYPE: approximately 97% of daily fees are allocated to this mechanism, which serves as a consistent &ldquo;marginal
+buyer&rdquo; for the token. As of September 2025, more than 30 million HYPE has been removed from circulation and the token has become
+the 15th-largest cryptocurrency by market capitalization.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Additionally, HYPE has certain governance rights
+with respect to the Hyperliquid blockchain. The Hyperliquid L1 is a Proof-of-Stake blockchain, wherein validators that have staked the
+threshold number of HYPE are selected to produce blocks and will receive rewards when they successfully validate blocks. Holders of HYPE
+can delegate to validators who then are able to vote on certain decisions regarding the platform, such as the listing and de-listing of
+new markets. Any holder of HYPE can delegate HYPE to a validator to earn staking rewards, should the validator successfully participate
+in network consensus. To delegate HYPE to a validator, holders of HYPE must transfer their HYPE from their &ldquo;spot balance&rdquo;
+to the &ldquo;staking balance&rdquo;. Unstaking staked HYPE and transferring it back from the &ldquo;staking balance&rdquo; to the &ldquo;spot
+balance&rdquo; requires a 7-day unlocking period. As of June 30, 2025, none of our HYPE holdings were staked. The Company initialized
+the staking process on July 1, 2025, and as of September 10, 2025, it had 1,218,524.48 HYPE staked directly to the Kinetiq x Hyperion
+validator, described further below.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">As part of its broader onchain engagement strategy,
+the Company recently announced a co-branded Hyperliquid validator, Kinetiq x Hyperion, with Kinetiq, a liquid staking protocol built natively
+for the Hyperliquid ecosystem. Validator operations are further supported by infrastructure provided by Pier Two, an institutional staking
+services provider. We are currently in the process of finalizing a definitive co-validator agreement with Kinetiq and Pier Two, pursuant
+to which we will pay a percentage of validator commissions to each of Kinetiq and Pier Two. Kinetiq will provide validator operations
+support and infrastructure coordination while Pier Two will provide hosting and technical support services for the validator node. By
+running our own validator, the Company can directly access HYPE staking yield in addition to supporting Hyperliquid&rsquo;s network stability
+and security. Staked HYPE can be delegated to user accounts which reduces their trading fees or increases the revenue share from referring
+new users, both of which could serve as revenue opportunities for the Company. Specifically, the validator potentially enables the Company
+to create unique financial products built around the demand for these network benefits from those who do not have access to HYPE.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">HYPE can also be deployed into the HyperEVM for
+various strategies such as lending and liquidity provisioning. This is expected to enable the Company to support various applications
+built on Hyperliquid and in return, potentially earn yield that can be compounded into its overall HYPE acquisition strategy.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Anchorage Digital Bank National Association (&ldquo;Anchorage
+Digital&rdquo;), which recently rolled out full support asset custody on HyperEVM, provides custody and trade execution services for HYPE.
+Anchorage Digital is the only federally chartered cryptocurrency bank in the United States, serves as a custodian for digital assets,
+and is licensed and regulated by the Office of the Comptroller of the Currency. Anchorage Digital has institutional-grade security required
+by institutional investors and employs HSM (Hardware Security Module) for a unique security model for security digital assets. Anchorage
+Digital&rsquo;s public support for Hyperliquid by prioritizing development of infrastructure uniquely for Hyperliquid is a testament to
+the future prospect of the Hyperliquid ecosystem. Currently, Anchorage Digital provides only custodial services to the Company and does
+not use a sub-custodian.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+</div>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 5 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<DIV STYLE="border: Black 1pt solid; padding: 0in 5pt; overflow: visible; width: 99%">
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">By prudently building and deploying a treasury
+of HYPE, the Company believes that it can rapidly accelerate the growth of the Hyperliquid ecosystem and further its adoption, potentially
+creating a powerful flywheel effect that may drive platform usage, increase protocol value and strengthen the long-term position of both
+the Hyperliquid ecosystem and the Company.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>The Optejet</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Hyperion DeFi is also developing the proprietary
+Optejet User Filled Device (the &ldquo;Optejet UFD&rdquo;) that is designed to work with a variety of topical ophthalmic liquids, including
+artificial tears and lens rewetting products. The Optejet UFD is especially useful in chronic front-of-the-eye diseases due to its ease
+of use, enhanced safety and tolerability, and potential for superior compliance versus standard eye drops. Together, these benefits may
+result in higher treatment compliance and better outcomes for patients and providers.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The ergonomic and functional design of the Optejet
+UFD allows for horizontal drug delivery and eliminates the need to tilt the head back or the manual dexterity to squeeze a bottle to administer
+medications. Drug is delivered in a microscopic array of droplets that is comfortable and matches the amount of fluid that the front of
+the eye can hold. The precise delivery of a low-volume columnar spray by the Optejet UFD helps ensure instillation success while minimizing
+contamination risk with a non-protruding nozzle and self-closing shutter. In clinical trials, the Optejet UFD has demonstrated that its
+targeted delivery achieves a high rate of successful administration, with 98% of sprays being accurately delivered upon first attempt
+compared to the established rate reported with traditional eye drops of approximately 50%.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">A more physiologically appropriate volume of medication
+in the range of seven to ten microliters is delivered by the Optejet UFD, which is approximately one-fifth of the 35 to 50 microliter
+dose typically delivered in a single eye drop. Lower volume of medication exposes the ocular surface to less active ingredients and preservatives,
+potentially reducing ocular stress and surface damage and improving tolerability. The lower volume also minimizes the potential for drug
+to enter systemic circulation, with the goal of avoiding some common side effects that are related to overdosing of the eye.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We anticipate registering the second generation
+of the Optejet UFD as a liquid drug delivery device, based on our experience with MydCombi&reg;. MydCombi was the only Food and Drug Administration-approved
+fixed combination of the two leading mydriatic agents, tropicamide and phenylephrine, in the United States delivered with technology that
+is nearly identical to the first generation of the Optejet UFD.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Recent Developments</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><I>Leadership Updates</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">On September 2, 2025, Michael Rowe notified the
+Board of Directors (the &ldquo;Board&rdquo;) of the Company of his intent to resign from his position as Chief Executive Officer of the
+Company. Pending the effectiveness of Mr. Rowe&rsquo;s resignation, Hyunsu Jung, who is currently the Company&rsquo;s Chief Investment
+Officer and a member of the Board, will serve as Interim Chief Executive Officer, Principal Financial Officer, Treasurer and Secretary.
+In addition, on September 8, 2025, the Company expanded the size of the Board to six members and appointed Happy Walters as a member of
+the Board and the Nominating and Governance Committee of the Board, effective immediately.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><I>Nasdaq Compliance</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">As previously reported, on April 29, 2025, the
+Company received a notice from the staff (the &ldquo;Staff&rdquo;) of the Nasdaq Stock Market LLC stating that the Company&rsquo;s stockholders&rsquo;
+equity as reported in the Company&rsquo;s Annual Report on Form 10-K for the year ended December 31, 2024 was below the minimum $2,500,000
+required for continued listing under Listing Rule 5550(b)(1) (the &ldquo;Minimum Equity Requirement&rdquo;). On September 2, 2025, the
+Company received a notice from the Staff indicating that the Company has regained compliance with the Minimum Equity Requirement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+</div>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in; background-color: white">&nbsp;</P>
+
+<!-- Field: Page; Sequence: 6 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+<DIV STYLE="border: Black 1pt solid; padding: 0in 5pt; overflow: visible; width: 99%">
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Corporate Information</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We were organized as a corporation under the laws
+of the State of Florida on March&nbsp;12, 2014 under the name &ldquo;PGP Holdings V,&nbsp;Inc.&rdquo; On May&nbsp;5, 2014, we changed
+our name to Eyenovia,&nbsp;Inc. On October&nbsp;6, 2014, we reincorporated in the State of Delaware by merging into Eyenovia,&nbsp;Inc.,
+a Delaware corporation. On July&nbsp;1, 2025, we changed our name to Hyperion DeFi,&nbsp;Inc. Our principal executive office is located
+at 23461 S. Pointe Drive, Suite&nbsp;390, Laguna Hills, CA 92653, and our telephone number is (833) 393-6684. We maintain a website at
+www.hyperiondefi.com, to which we regularly post copies of our press releases as well as additional information about us. The information
+contained on, or that can be accessed through, our website is not a part of this amendment no. 1, the original prospectus supplement or
+the accompanying prospectus. We have included our website address in this amendment no. 1 solely as an inactive textual reference.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Implications of Being a Smaller Reporting Company</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We are a &ldquo;smaller reporting company&rdquo;
+as defined under the Securities Exchange Act of 1934, as amended (the &ldquo;Exchange Act&rdquo;). We may take advantage of certain of
+the scaled disclosures available to smaller reporting companies until the last day of the fiscal year in which (i)&nbsp;the market value
+of our common stock held by non-affiliates exceeds $250 million as of the end of that year&rsquo;s second fiscal quarter and our annual
+revenue exceeds $100 million during such completed fiscal year, or (ii)&nbsp;the market value of our common stock held by non-affiliates
+exceeds $700 million, regardless of our annual revenue, as of the end of that year&rsquo;s second fiscal quarter.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+</div>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 7 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid">&nbsp;</DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+<DIV STYLE="border: Black 1pt solid; padding: 0in 5pt; overflow: visible; width: 99%">
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_003"></A>THE OFFERING</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="width: 100%; font: 10pt Times New Roman, Times, Serif; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 34%; padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt"><B>Common stock offered by us</B>&nbsp;</FONT></TD>
+    <TD STYLE="width: 66%; padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Shares of our common stock having an aggregate offering price of up to $60,225,987.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt"><B>Common stock to be outstanding after this offering</B></FONT></TD>
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Up to 12,886,914 shares, assuming sales of 5,927,755 shares of common stock are made in this offering at an offering price of $10.16 per share, which was the last reported sale price of shares of our common stock on Nasdaq on September 22, 2025. The actual number of shares that may be issued will vary depending on the sales price under this offering. This information is illustrative only and we will not offer and sell shares that would result in a number of outstanding shares that exceeds our total authorized shares of common stock, which is 600,000,000 shares as of the date of this amendment no. 1.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt"><B>Manner of offering</B></FONT></TD>
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">&ldquo;At the market&rdquo; offering that may be made from time to time on Nasdaq or other existing trading market for shares of our common stock through or to Chardan. See the section entitled &ldquo;Plan of Distribution&rdquo; on page S-14 of this amendment no. 1.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt"><B>Use of proceeds</B>&nbsp;</FONT></TD>
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">We intend to use the net proceeds from this offering for working capital and general corporate purposes which may include the&nbsp;partial repayment of amounts outstanding under the Loan and Security Agreement (as defined herein) and building the Company&rsquo;s reserve of the HYPE token. See the section titled &ldquo;Use of Proceeds&rdquo; on page S-12 of this amendment no. 1.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt"><B>Risk factors</B>&nbsp;</FONT></TD>
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Investing in our common stock involves a high degree of risk. See &ldquo;Risk Factors&rdquo; beginning on page S-6 of this prospectus supplement amendment no. 1 and the other information included in, or incorporated by reference into, this amendment no. 1 for a discussion of certain factors you should carefully consider before deciding to invest in shares of our common stock.</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt"><B>The Nasdaq Capital Market symbol</B></FONT></TD>
+    <TD STYLE="padding-top: 6pt; padding-right: 5.4pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Our shares of common stock are traded on Nasdaq under the symbol &ldquo;HYPD&rdquo;.</FONT></TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in">The number of shares of common stock outstanding
+immediately after this offering is based on 6,959,159 shares of common stock outstanding as of September 19, 2025.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">This number excludes:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>51,936 shares of our common stock underlying outstanding options to purchase common stock under our 2014 Equity Incentive Plan, as amended (the &ldquo;2014 Plan&rdquo;) and our Amended and Restated 2018 Omnibus Stock Incentive Plan (the &ldquo;2018 Plan&rdquo;) with a weighted average exercise price of $222.61 per share as of September 10, 2025;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>386,651 shares of our common stock issuable in connection with restricted stock units under the 2014 Plan and the 2018 Plan as of September 10, 2025;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>5,001,777 shares of our common stock reserved for future issuance under the 2014 Plan and the 2018 Plan as of September 10, 2025;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">warrants to purchase 33,820,785 shares of our common stock, with a weighted average exercise price
+    of $3.54 per share as of September 10, 2025; and&nbsp;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">500,000 shares of our common stock issuable in connection with restricted stock units to be granted as an inducement award outside of the 2014 Plan and the 2018 Plan.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.25in; text-indent: 0.25in">Unless otherwise noted, the information
+in this amendment no. 1 reflects and assumes no exercise of outstanding options or warrants.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0">&nbsp;</P>
+</div>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0">&nbsp;</P>
+
+
+
+
+<!-- Field: Page; Sequence: 8 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_004"></A>RISK FACTORS</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>&nbsp;</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"><I>Investing in our securities involves a high
+degree of risk. You should consider carefully the risks and uncertainties, as well as other information, in this amendment no. 1, the
+original prospectus supplement and the accompanying prospectus, including the risks described under &ldquo;Risk Factors&rdquo; in our
+Annual Report on Form 10-K for the year ended December 31, 2024, as amended by Amendment No. 1 thereto, which is incorporated herein by
+reference, and as updated by any other document that we subsequently file with the SEC and that are incorporated by reference into this
+amendment no. 1, the original prospectus supplement and the accompanying prospectus. The risks set forth in this amendment no. 1, the
+original prospectus supplement and the accompanying prospectus and incorporated herein and therein by reference are those which we believe
+are the material risks that we face. These risks are not the only ones facing us and there may be additional matters that we are unaware
+of or that we currently consider immaterial. The occurrence of any of such risks may materially and adversely affect our business, financial
+condition, results of operations and future prospects. In such an event, the market price of our common stock could decline, and you could
+lose part or all of your investment.</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Risks Related to the Offering</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>If you purchase shares of common stock in this offering, you
+will experience immediate and substantial dilution. </I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The offering price per share of common stock in
+this offering may exceed the net tangible book value per share of our common stock outstanding prior to this offering. Assuming the sale
+of an aggregate of 5,927,755 shares of our common stock at a price of $10.16 per share, the last reported sale price of our common stock
+on Nasdaq on September 22, 2025, if you purchase shares of common stock in this offering, you would experience immediate dilution of $4.58
+per share, representing the difference between the price paid in this offering per share and our pro forma as adjusted net tangible book
+value per share as of June 30, 2025 after giving effect to this offering. This information is illustrative only and we will not offer
+and sell shares that would result in a number of outstanding shares that exceeds our total authorized amount of shares of common stock,
+which is 600,000,000 as of the date of this amendment no. 1. The exercise of outstanding stock options and warrants will result in further
+dilution of your investment. See the section titled &ldquo;Dilution&rdquo; below for a more detailed illustration of the dilution you
+would incur if you participate in this offering.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>You may experience future dilution as a result of future equity
+offerings.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">In order to raise additional capital, we may in
+the future offer additional shares of our common stock or other securities convertible into or exchangeable for our common stock at prices
+that may not be the same as the price per share paid by any investor in this offering. We may sell shares or other securities in any other
+offering at a price per share that is less than the price per share paid by investors in this offering, and investors purchasing shares
+or other securities in the future could have rights superior to existing stockholders. The price per share at which we sell additional
+shares of our common stock, or securities convertible or exchangeable into common stock, in future transactions may be higher or lower
+than the price per share paid by investors in this offering.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>If securities or industry analysts do not publish research or
+reports about our business, or publish negative reports about our business, our stock price and trading volume could decline.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The trading market for our common stock will be
+influenced by the research and reports that securities or industry analysts publish about us or our business. We do not have any control
+over these analysts. If one or more of the analysts who cover us downgrade our stock or change their opinion of our stock in a negative
+manner, our stock price would likely decline. If one or more of these analysts cease coverage of our company or fail to regularly publish
+reports on us, we could lose visibility in the financial markets, which could cause our stock price or trading volume to decline.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>We will be required to raise additional capital, which may include
+issuing new securities with terms or rights superior to those of our existing securityholders, which could adversely affect your investment
+in our company, the market price of shares of our common stock and our business.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We will require additional financing to fund future
+operations. We may not be able to obtain financing on favorable terms, if at all. If we raise additional funds by issuing equity securities,
+the percentage ownership of our then current stockholders will be reduced, and the holders of the new equity securities may have rights
+superior to those of our then existing securityholders, which could adversely affect the market price of our common stock and the voting
+power of shares of our common stock. If we raise additional funds by issuing debt securities, the holders of these debt securities would
+similarly have some rights senior to those of our then existing securityholders, and the terms of these debt securities could impose restrictions
+on operations and create a significant interest expense for us which could have a materially adverse effect on our business.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"></P>
+
+<!-- Field: Page; Sequence: 9 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->6<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>Delisting of our common stock from Nasdaq could prevent us from
+maintaining an active, liquid and orderly trading market for our common stock.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our ability to publicly or privately sell equity
+securities and the liquidity of our common stock would be adversely affected if we are delisted from Nasdaq or if we are unable to transfer
+our listing to another stock market. On September&nbsp;18, 2024, we were notified by The Nasdaq Stock Market LLC (the &ldquo;Nasdaq Stock
+Market&rdquo;) that we were in breach of Listing Rule&nbsp;5550(a)(2) (the &ldquo;Minimum Bid Price Requirement&rdquo;), for continued
+listing on Nasdaq because the minimum bid price of our listed securities for 30 consecutive business days had been less than $1 per share.
+On December&nbsp;12, 2024, we received a letter from the Nasdaq Stock Market notifying us that, because the closing bid price for our
+common stock was below $0.10 per share for 10 consecutive trading days, we were in breach of Listing Rule&nbsp;5810(c)(3)(A)(iii). On
+January&nbsp;31, 2025, we executed an 80-for-1 reverse stock split, following which we were notified by the Nasdaq Stock Market that we
+had regained compliance with the Minimum Bid Price Requirement. Nasdaq Stock Market Listing Rule&nbsp;5810(c)(3)(A)(iv)&nbsp;states that
+any listed company that fails to meet the Minimum Bid Price Requirement&nbsp;and has effected a reverse stock split over the prior one-year
+period, or has effected one or more reverse stock splits over the prior two-year period with a cumulative ratio of 250 shares or more
+to one, will not be eligible for an automatic 180-day grace compliance period and the Nasdaq Listing Qualifications Department is obligated
+to immediately issue a delisting determination. Therefore, if we were to fall out of compliance with the Minimum Bid Price Requirement
+prior to January&nbsp;31, 2026, we would not be able to effect a reverse stock split and would immediately be issued a delisting determination.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">On April&nbsp;29, 2025, we received a notice from
+the Staff of the Nasdaq Stock Market stating that the Company&rsquo;s stockholders&rsquo; equity as reported in the Company&rsquo;s Annual
+Report on Form&nbsp;10-K for the year ended December&nbsp;31, 2024 was below the Minimum Equity Requirement. On September 2, 2025, we
+received a notice from the Staff indicating that the Company has regained compliance with the Minimum Equity Requirement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Although we have regained compliance with the Minimum
+Bid Price Requirement and the Minimum Equity Requirement, there can be no assurance that we will continue to satisfy those or any other
+continued listing requirements and maintain the listing of our common stock on Nasdaq. If our common stock is delisted by the Nasdaq Stock
+Market, it could lead to a number of negative implications, including an adverse effect on the price of our common stock, deterring broker-dealers
+from making a market in or otherwise seeking or generating interest in our common stock, increased volatility in our common stock, reduced
+liquidity in our common stock, the loss of federal preemption of state securities laws and greater difficulty in obtaining financing.
+Delisting could also cause a loss of confidence of our customers, collaborators, vendors, suppliers and employees, which could harm our
+business and future prospects.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">If our common stock is delisted by the Nasdaq Stock
+Market, the price of our common stock may decline, and although our common stock may be eligible to trade on the OTC Bulletin Board, another
+over-the-counter quotation system, or on the pink sheets, an investor may find it more difficult to dispose of their common stock or obtain
+accurate quotations as to the market value of our common stock. If our common stock is delisted from Nasdaq, trading in our securities
+may be subject to the SEC&rsquo;s &ldquo;penny stock&rdquo; rules. These &ldquo;penny stock&rdquo; rules&nbsp;will require brokers trading
+in our common stock to adhere to more stringent rules&nbsp;and possibly result in a reduced level of trading activity in the secondary
+trading market for our common stock. The additional burdens imposed upon broker-dealers by these requirements may discourage broker-dealers
+from recommending transactions in our securities, which could severely limit the liquidity of our securities and consequently adversely
+affect the market price for our securities.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Further, if our common stock is delisted, we would
+incur additional costs under state blue sky laws in connection with any sales of our securities. These requirements could severely limit
+the market liquidity of our common stock and the ability of our stockholders to sell our common stock in the secondary market.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 10 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->7<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;<BR>
+</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>Sales of our common stock in this offering, or the perception
+that such sales may occur, could cause the market price of our common stock to fall.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We may issue and sell up to $60,225,987 of our
+common stock from time to time in connection with this offering. The actual number of shares of common stock that may be issued and sold
+in this offering, as well as the timing of any such sales, will depend on a number of factors, including, among others, the prices at
+which any shares are actually sold in this offering (which may be influenced by market conditions, the trading price of our common stock
+and other factors) and our determinations as to the appropriate timing, sources and amounts of funding we need. The issuance and sale
+from time to time of these new shares of common stock, or the mere fact that we are able to issue and sell these shares in this offering,
+could cause the market price of our common stock to decline.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B><I>&nbsp;</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B><I>It is not possible to predict the actual
+number of shares of common stock we will sell under the Sales Agreement, or the gross proceeds resulting from those sales.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Subject to certain limitations in the Sales Agreement
+and compliance with applicable law, we have the discretion to deliver a placement notice to Chardan at any time throughout the term of
+the Sales Agreement. The number of shares that are sold through Chardan after the delivery of a placement notice will fluctuate based
+on a number of factors, including the market price of our common stock during the sales period, the limits we set with Chardan in any
+applicable placement notice, and the demand for our common stock during the sales period. Because the price per share will fluctuate during
+this offering, it is not currently possible to predict the number of shares that will be sold or the gross proceeds to be raised in connection
+with those sales.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>The common stock offered hereby will be sold in &ldquo;at-the-market
+offerings&rdquo; and investors who buy shares at different times will likely pay different prices.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Investors who purchase shares in this offering
+at different times will likely pay different prices, and accordingly may experience different levels of dilution and different outcomes
+in their investment results. We will have discretion, subject to market demand, to vary the timing, prices and number of shares sold in
+this offering. Investors may experience a decline in the value of the shares they purchase in this offering as a result of sales made
+at prices lower than the prices they paid.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B><I>We have broad discretion in the use of the
+net proceeds from this offering and may not use them effectively.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our management will have broad discretion in the
+application of the net proceeds from this offering and could spend the proceeds in ways that do not improve our business, financial condition
+or results of operations or enhance the value of our common stock. See &ldquo;Use of Proceeds&rdquo; on page&nbsp;S-12 of this
+amendment no. 1 for a description of our proposed use of proceeds from this offering.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The failure by our management to apply these funds
+effectively could result in financial losses that could harm our business, cause the price of our common stock to decline and delay the
+development of our product candidates. Pending their use, we may invest the net proceeds from this offering in a manner that does not
+produce income or that loses value.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>General Risk Factors</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>We may need to raise&nbsp;additional capital in the future, which
+may not be available on reasonable terms, or at all.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We require significant capital resources in order
+to continue to operate our business. As of June 30, 2025, we had cash and cash equivalents of $7.5 million and an accumulated deficit
+of approximately $207.5 million. Also as of June 30, 2025, we owed $8.2 million in principal and accrued interest under the Loan and Security
+Agreement (as defined herein). We expect to continue to incur cash outflows from operations for the near future. Implementation of our
+plans will depend on many factors, including our ability to successfully commercialize our products and services, competing technological
+and market developments, and the need to enter into collaborations with other companies.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Also, it is very difficult to project our current
+monthly cash burn rate, and we may expend our resources sooner than we anticipate. Although we have the ability to liquidate HYPE tokens
+to fund our operations, any required additional capital may not be available on reasonable terms, if at all, due to a variety of factors,
+including volatile conditions in the economy and capital markets, due to inflation, questions about bank stability and other factors.
+If we are unsuccessful in our operations to secure additional financing, or if any such incremental financing is not sufficient to fund
+our operations, we may be required to take additional measures to reduce costs in order to conserve our cash.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 11 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->8<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We may not be able to obtain financing on favorable
+terms, if at all. If we raise additional funds by issuing equity securities, the percentage ownership of our then current stockholders
+will be reduced, and the holders of the new equity securities may have rights superior to those of our then existing securityholders,
+which could adversely affect the market price of our common stock and the voting power of shares of our common stock. If we raise additional
+funds by issuing debt securities or preferred stock, the holders of such securities may have rights that are senior to those of our then
+existing securityholders, and the terms of those securities could impose restrictions on operations and create a significant interest
+expense for us, which could have a materially adverse effect on our business.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>HYPE is a highly volatile asset, and fluctuations in the price
+of HYPE may influence our financial results and the market price of our listed securities.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our financial results and the market price of our
+listed securities would be adversely affected, and our business and financial condition would be negatively impacted, if the price of
+HYPE decreased substantially, including as a result of:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">decreased user and investor confidence in HYPE, including due to the various factors described herein;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">investment and trading activities such as (i)&nbsp;trading activities of highly active retail and institutional users, speculators and investors or (ii)&nbsp;actual or expected significant dispositions of HYPE by large holders, including the expected liquidation of digital assets seized by governments or associated with entities that have filed for bankruptcy protection, or associated with tokens vested by the Hyperliquid core team;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">negative publicity, media or social media coverage, or sentiment due
+    to events in or relating to, or perception of, HYPE, Hyperliquid or the broader digital assets industry;</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>changes in consumer preferences and the perceived value or prospects of HYPE or the utility of Hyperliquid;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">competition from other decentralized exchanges or digital assets that exhibit comparable or better speed, security, scalability or energy efficiency, that feature other more favored characteristics, that are backed by governments, including the U.S. government, or reserves of fiat currencies, or that represent ownership or security interests in physical assets;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">a decrease in the price of other digital assets, to the extent the decrease in the price of such other digital assets may cause a decrease in the price of HYPE or adversely affect investor confidence in digital assets generally;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">developments relating to the Hyperliquid blockchain, including (i)&nbsp;changes to the Hyperliquid blockchain that impact its security, speed, scalability, usability or value, such as changes to the cryptographic security protocol underpinning the Hyperliquid blockchain, changes to the maximum number of HYPE outstanding, changes to the mutability of transactions, changes relating to the size of blockchain blocks, and similar changes; (ii)&nbsp;failures to make upgrades to the Hyperliquid blockchain and the Hyperliquid interface to adapt to security, technological, legal or other challenges; and (iii)&nbsp;changes to the Hyperliquid blockchain that introduce software bugs, security risks or other elements that adversely affect HYPE;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">disruptions, failures, unavailability, or interruptions in services of trading venues for HYPE;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">the filing for bankruptcy protection by, liquidation of, or market concerns about the financial viability of digital asset custodians, trading venues, lending platforms, investment funds, or other digital asset industry participants;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 12 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->9<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">regulatory, legislative, enforcement and judicial actions that adversely affect access to, functionality of or performance of Hyperliquid and its associated products such as cryptocurrency perpetual futures, the price, ownership, transferability, trading volumes, legality or public perception of, HYPE or other L1 blockchains, or that adversely affect the operations of or otherwise prevent digital asset custodians, trading venues, lending platforms or other digital assets industry participants from accessing the Hyperliquid decentralized exchange and its associated products or operating in a manner that allows them to continue to deliver services to the digital assets industry;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">transaction congestion and fees associated with processing transactions on the Hyperliquid network;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">macroeconomic changes, such as changes in the level of interest rates and inflation, fiscal and monetary policies of governments, trade restrictions and fiat currency devaluations;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">developments in mathematics or technology, including in digital computing, algebraic geometry and quantum computing, that could result in the cryptography used by the Hyperliquid blockchain becoming insecure or ineffective; and</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 98%">changes in national and international economic and political conditions, including, without limitation, federal government policies, trade tariffs and trade disputes, and the adverse impacts attributable to global conflicts, including those between Russia and Ukraine and in the Middle East.</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Moreover, the price of our listed securities has
+been and is likely to continue to be volatile, and with the adoption of our new cryptocurrency treasury strategy, we expect to see additional
+volatility in our stock price. In addition, if investors view the value of our listed securities as dependent upon or linked to the value
+or change in the value of our HYPE holdings, the price of HYPE may significantly influence the market price of our listed securities.
+The price of HYPE has historically been, and is likely to continue to be, volatile.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B><I>If we are unable to raise sufficient additional capital on acceptable
+terms, we may be unable to expand or maintain our HYPE reserve, which could adversely affect our liquidity, financial condition and growth
+prospects.</I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We completed the Private Placement on June 20,
+2025 pursuant to the Securities Purchase Agreement, the net proceeds of which have been used for our HYPE treasury strategy. To the extent
+holders exercise the warrants sold pursuant to the Securities Purchase Agreement, we may acquire additional HYPE at market prices, which
+could magnify our exposure to HYPE price volatility. If we are unable to raise sufficient additional capital through warrant exercises,
+our at-the-market facility or other equity financings on acceptable terms, we may be unable to expand or maintain our HYPE reserve, which
+could adversely affect our liquidity, financial condition and growth prospects.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 13 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->10<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;<FONT STYLE="font-weight: normal">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_005"></A>SPECIAL NOTE REGARDING FORWARD-LOOKING STATEMENTS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">This amendment no. 1, the original prospectus supplement,
+the accompanying prospectus, and the documents we have filed with the SEC that are incorporated by reference herein and therein, and any
+free writing prospectus that we may authorize for use in connection with this offering may contain &ldquo;forward-looking statements&rdquo;
+within the meaning of Section&nbsp;27A of the Securities Act and Section&nbsp;21E of the Exchange Act. These statements relate to future
+events or to our future operating or financial performance and involve known and unknown risks, uncertainties and other factors that may
+cause our actual results, performance or achievements to be materially different from any future results, performances or achievements
+expressed or implied by the forward-looking statements. Forward-looking statements may include, but are not limited to, statements about:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our estimates regarding expenses, future revenue, timing of any future revenue, capital requirements and needs for additional financing;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>the viability of, and risks associated with, our new cryptocurrency treasury strategy;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our ability to make payments on our debt;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our expectations related to the use of proceeds from our financings;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our intellectual property position;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our ability to attract and retain key personnel;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>the impact of government laws and regulations;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our competitive position;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>developments relating to our competitors and our industry;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>our ability to maintain and establish collaborations;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>general or regional economic conditions;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>changes in U.S. GAAP; and</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD>changes in the legal, regulatory and legislative environments in the markets in which we operate, and the impact of these changes on our ability to obtain regulatory approval for our products.</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">In some cases, you can identify forward-looking
+statements by terms such as &ldquo;anticipate,&rdquo; &ldquo;believe,&rdquo; &ldquo;can,&rdquo; &ldquo;continue,&rdquo; &ldquo;could,&rdquo;
+ &ldquo;estimate,&rdquo; &ldquo;expect,&rdquo; &ldquo;intend,&rdquo; &ldquo;may,&rdquo; &ldquo;might,&rdquo; &ldquo;plan,&rdquo; &ldquo;potential,&rdquo;
+ &ldquo;project,&rdquo; &ldquo;seek,&rdquo; &ldquo;should,&rdquo; &ldquo;target,&rdquo; &ldquo;will,&rdquo; &ldquo;would&rdquo; and similar
+expressions or variations intended to identify forward- looking statements. These statements reflect our current views with respect to
+future events, are based on assumptions and are subject to risks and uncertainties. Given these uncertainties, you should not place undue
+reliance on these forward-looking statements. More information on factors that could cause actual results to differ materially from those
+anticipated is included from time to time in our reports filed with the SEC, including, but not limited to, those described in the section
+titled &ldquo;Risk Factors&rdquo; in our Annual Report on Form&nbsp;10-K for our most recent fiscal year, as updated by our subsequent
+filings under the Exchange Act, which are incorporated herein by reference, and as may be updated or superseded by the risks and uncertainties
+described under similar headings in the other documents that are filed after the date hereof and incorporated by reference into this amendment
+no. 1. Also, these forward-looking statements represent our estimates and assumptions only as of the date of the document containing the
+applicable statement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">You should read this prospectus supplement no.
+1, the original prospectus supplement, the accompanying prospectus and the documents we have filed with the SEC that are incorporated
+by reference herein and therein completely and with the understanding that our actual future results may be materially different from
+what we expect. We qualify all of the forward-looking statements in the foregoing documents by these cautionary statements.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Unless required by law, we undertake no obligation
+to update or revise any forward-looking statements to reflect new information or future events or developments. Thus, you should not assume
+that our silence over time means that actual events are bearing out as expressed or implied in such forward-looking statements.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 14 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->11<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_006"></A>USE OF PROCEEDS</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We may issue and sell up to $60,225,987 of our
+common stock from time to time pursuant to this amendment no. 1. Because there is no minimum offering amount required to be sold under
+the Sales Agreement, the actual total public offering amount, commissions and proceeds to us, if any, are not determinable at this time.
+There can be no assurance that we will sell any shares under or fully utilize the Sales Agreement with Chardan as a source of financing.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We currently intend to use the net proceeds from
+the sale of securities in this offering for working capital and general corporate purposes which may include the repayment of amounts
+outstanding under the Loan and Security Agreement, dated November&nbsp;22, 2022 (the &ldquo;Loan and Security Agreement&rdquo;) with Avenue
+Capital Management II, L.P., as administrative agent and collateral agent, Avenue Venture Opportunities Fund, L.P., as a lender and Avenue
+Venture Opportunities Fund II, L.P., as a lender, and building the Company&rsquo;s reserve of the HYPE token. The loan pursuant to the
+Loan and Security Agreement currently bears interest at an annual rate of 8.0%, and the maturity date is July 1, 2028.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">As of the date of this amendment no. 1, we cannot
+specify with certainty any of the particular uses of the proceeds, if any, from this offering. Accordingly, we will retain broad discretion
+over the use of any such proceeds. Pending the use of the net proceeds, if any, from this offering as described above, we intend to invest
+the net proceeds in investment-grade, interest-bearing instruments.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 15 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->12<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_007"></A>DILUTION</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">If you invest in our common stock in this offering,
+your ownership interest will be diluted to the extent of the difference between the offering price per share of common stock paid by the
+purchasers in this offering and our pro forma as adjusted net tangible book value per share immediately after this offering.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our historical net tangible book deficit as of
+June 30, 2025 was approximately $(8.1) million, or $(1.68) per share of common stock. We calculate tangible book value (deficit) per share
+by dividing our total tangible assets, less total liabilities, by the number of shares of our common stock outstanding as of June 30,
+2025.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Our pro forma net tangible book value as of June
+30, 2025 was approximately $13.6 million, or $1.96 per share of common stock. We calculate pro forma net tangible book value per share
+by dividing (a) the sum of (i) our historical net tangible book value, (ii) the proceeds received upon the exercise of outstanding warrants
+after June 30, 2025 and (iii) the proceeds received in connection with our ATM program after June 30, 2025, by (b) the sum of (i) the
+total number of shares of our common stock outstanding as of June 30, 2025, (ii) 250,125 shares of common stock issued in connection with
+the exercise of outstanding warrants after June 30, 2025, (iii) 1,725,707 shares of common stock issued to in connection with the ATM
+program after June 30, 2025 and (iv) 128,500 shares of common stock issued in connection with restricted stock units issued to employees
+and contractors.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">After giving further effect to the sale by us of
+shares of our common stock in this offering in the aggregate amount of $60,225,987, at an assumed public offering price of $10.16 per
+share of common stock, the last reported sale price of our common stock on Nasdaq on September 22, 2025, and after deducting the fees
+of Chardan and estimated offering expenses payable by us, our pro forma as adjusted net tangible book value as of June 30, 2025 would
+have been approximately $72.0 million, or $5.58 per share. This represents an immediate increase in pro forma as adjusted net tangible
+book value of $3.62 per share to existing stockholders and immediate dilution of $4.58 per share to new investors in this offering at
+the offering price. The following table illustrates this dilution on a per share basis. The pro forma as adjusted information is illustrative
+only and will adjust based on the actual price to the public, the actual number of shares sold and other terms of the offering determined
+at the time shares of our common stock are sold pursuant to this amendment no. 1. The shares sold in this offering, if any, will be sold
+from time to time at various prices. We will not offer and sell shares that would result in a number of outstanding shares that exceeds
+our total authorized amount of shares of common stock under our Third Amended and Restated Certificate of Incorporation, as amended, which
+is 600,000,000 shares as of the date of this amendment no. 1.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom; background-color: #CCEEFF">
+    <TD STYLE="width: 74%; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Assumed offering price per share of common stock</FONT></TD>
+    <TD STYLE="width: 1%">&nbsp;</TD>
+    <TD STYLE="width: 1%">&nbsp;</TD>
+    <TD STYLE="width: 10%">&nbsp;</TD>
+    <TD STYLE="width: 1%">&nbsp;</TD>
+    <TD STYLE="width: 1%">&nbsp;</TD>
+    <TD STYLE="width: 1%"><FONT STYLE="font-size: 10pt">$</FONT></TD>
+    <TD STYLE="width: 10%; text-align: right"><FONT STYLE="font-size: 10pt">10.16</FONT></TD>
+    <TD STYLE="width: 1%">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: white">
+    <TD STYLE="padding-left: 5.4pt; text-indent: 25.5pt"><FONT STYLE="font-size: 10pt">Historical net tangible book deficit per share as of June 30, 2025</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">(1.68</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">)</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: #CCEEFF">
+    <TD STYLE="padding-left: 5.4pt; text-indent: 25.5pt"><FONT STYLE="font-size: 10pt">Pro forma increase in net tangible book value per share</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">3.64</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: white">
+    <TD STYLE="padding-bottom: 1pt; padding-left: 5.4pt; text-indent: 25.5pt"><FONT STYLE="font-size: 10pt">Pro forma net tangible book value per share as of June 30, 2025</FONT></TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1pt solid">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1pt solid; text-align: right"><FONT STYLE="font-size: 10pt">1.96</FONT></TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: #CCEEFF">
+    <TD STYLE="padding-left: 5.4pt; text-indent: 25.5pt"><FONT STYLE="font-size: 10pt">Increase per share attributable to investors in this offering</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: right"><FONT STYLE="font-size: 10pt">3.62</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: white">
+    <TD STYLE="padding-bottom: 1pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Pro forma as adjusted net tangible book value per share after this offering</FONT></TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1pt solid">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1pt solid; text-align: right"><FONT STYLE="font-size: 10pt">5.58</FONT></TD>
+    <TD STYLE="padding-bottom: 1pt">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: #CCEEFF">
+    <TD STYLE="padding-bottom: 2.5pt; padding-left: 5.4pt"><FONT STYLE="font-size: 10pt">Dilution per share to investors in this offering</FONT></TD>
+    <TD STYLE="padding-bottom: 2.5pt">&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="padding-bottom: 2.5pt">&nbsp;</TD>
+    <TD STYLE="padding-bottom: 2.5pt">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 2.25pt double"><FONT STYLE="font-size: 10pt">$</FONT></TD>
+    <TD STYLE="border-bottom: black 2.25pt double; text-align: right"><FONT STYLE="font-size: 10pt">4.58</FONT></TD>
+    <TD STYLE="padding-bottom: 2.5pt">&nbsp;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;&nbsp;&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in">The number of shares of common stock outstanding
+immediately after this offering is based on 4,854,827 shares of common stock outstanding as of June 30, 2025.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">This number excludes:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">53,602 shares of our common stock underlying outstanding options to purchase common stock under our 2014 Equity Incentive Plan, as amended (the &ldquo;2014 Plan&rdquo;) and our Amended and Restated 2018 Omnibus Stock Incentive Plan (the &ldquo;2018 Plan&rdquo;) with a weighted average exercise price of $221.91 per share as of June 30, 2025;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">315,151 shares of our common stock issuable in connection with restricted stock units under the 2014 Plan and the 2018 Plan as of September 10, 2025;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">27,177 shares of our common stock reserved for future issuance under the 2014 Plan and the 2018 Plan as of June 30, 2025;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">warrants to purchase 34,070,910 shares of our common stock, with a weighted average exercise price of $3.57 per share as of June 30, 2025; and&nbsp;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD>
+    <TD><FONT STYLE="font-size: 10pt">500,000 shares of our common stock issuable in connection with restricted stock units to be granted as an inducement award outside of the 2014 Plan and the 2018 Plan.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in">In addition, the amounts in the table above assume
+no exercise of outstanding options or warrants.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.25in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 16 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->13<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_008"></A>PLAN OF DISTRIBUTION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We have entered into the Sales Agreement with Chardan,
+pursuant to which we may issue and sell shares of common stock having an aggregate offering price of up to $100,000,000 from time to time
+through Chardan as our sales agent. The Amendment amended the Original Sales Agreement in order to, among other things, increase the aggregate
+offering price from up to $50,000,000 to up to $100,000,000. As of the date of this prospectus supplement amendment no. 1, we have offered
+and sold 4,176,196 shares of our common stock pursuant to the Sales Agreement for gross proceeds of $28,996,998. Up to $60,225,987 of
+shares of common stock may be sold pursuant to this amendment no. 1 through Chardan as our sales agent. Sales of shares of common stock,
+if any, under this amendment no. 1 will be made at market prices by any method that is deemed to be an &ldquo;at-the-market&rdquo; offering,
+as defined in Rule 415 under the Securities Act, including sales made directly on Nasdaq or any other trading market for our common stock.
+If authorized by us in writing, Chardan may purchase shares of our common stock as principal.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Chardan will offer shares of our common stock subject
+to the terms and conditions of the Sales Agreement on a daily basis or as otherwise agreed upon by us and Chardan. We will designate the
+maximum amount of common stock to be sold through Chardan on a daily basis or otherwise determine such maximum amount together with Chardan.
+Subject to the terms and conditions of the Sales Agreement, Chardan will use its commercially reasonable efforts consistent with its normal
+trading and sales practices to sell on our behalf all of the shares of common stock requested to be sold by us. We may instruct Chardan
+not to sell shares of common stock if the sales cannot be effected at or above the price designated by us in any such instruction. Chardan
+or we may suspend the offering of shares of our common stock being made through Chardan under the Sales Agreement upon proper notice to
+the other party. Chardan and we each have the right, by giving written notice as specified in the Sales Agreement, to terminate the Sales
+Agreement in each party&rsquo;s sole discretion at any time. The offering of shares of our common stock pursuant to the Sales Agreement
+will otherwise terminate upon the termination of the Sales Agreement as provided therein.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The aggregate compensation payable to Chardan as
+sales agent will be an amount equal to 3.0% of the gross proceeds of any shares sold through it pursuant to the Sales Agreement. We have
+agreed to reimburse Chardan $75,000 of Chardan&rsquo;s actual outside legal expenses incurred by Chardan in connection with entry into
+the Sales Agreement. We have also agreed to reimburse Chardan for certain ongoing fees of its legal counsel. We estimate that the total
+expenses of the offering payable by us, excluding commissions and reimbursable expenses payable to Chardan under the Sales Agreement,
+will be approximately $50,000.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Chardan will provide written confirmation to us
+following the close of trading on Nasdaq on each day in which shares of common stock are sold through it as sales agent under the Sales
+Agreement. Each confirmation will include the number of shares of common stock sold through it as sales agent on that day, the volume
+weighted average price of the shares of common stock sold, the percentage of the daily trading volume and the net proceeds to us.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Settlement for sales of shares of common stock
+will occur, unless the parties agree otherwise, on the first business day that is also a trading day following the date on which any sales
+were made in return for payment of the net proceeds to us. There is no arrangement for funds to be received in an escrow, trust or similar
+arrangement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We will report at least quarterly the number of
+shares of common stock sold through Chardan under the Sales Agreement and the net proceeds to us in connection with the sales of shares
+of common stock during the relevant period.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">In connection with the sales of shares of common
+stock on our behalf, Chardan may be deemed to be an &ldquo;underwriter&rdquo; within the meaning of the Securities Act, and the compensation
+paid to Chardan may be deemed to be underwriting commissions or discounts. We have agreed in the Sales Agreement to provide indemnification
+and contribution to Chardan against certain liabilities, including liabilities under the Securities Act. As sales agent, Chardan will
+not engage in any transactions that stabilize our common stock.<FONT STYLE="background-color: yellow"><BR STYLE="clear: both">
+</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in"></P>
+
+<!-- Field: Page; Sequence: 17 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->14<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_009"></A>LEGAL MATTERS</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The validity of the common stock offered hereby
+will be passed upon for us by Covington &amp; Burling LLP, Boston, Massachusetts. Goodwin Procter LLP, New York, New York, is representing
+Chardan in connection with this offering.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_010"></A>EXPERTS</P>
+
+<P STYLE="font: bold 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The financial statements of Hyperion DeFi, Inc.
+as of December 31, 2024 and 2023 and for each of the two years in the period ended December 31, 2024, have been audited by Marcum LLP,
+independent registered public accounting firm, as stated in their report, which includes an explanatory paragraph as to the Company&rsquo;s
+ability to continue as a going concern, which is incorporated herein by reference. Such financial statements of Hyperion DeFi, Inc. are
+incorporated in this amendment no. 1 by reference in reliance on the report of such firm given upon their authority as experts in accounting
+and auditing.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: center; text-indent: -0.5in"><A NAME="a_011"></A><B>INCORPORATION
+OF CERTAIN INFORMATION BY REFERENCE</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: center; text-indent: -0.5in">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The SEC allows us to &ldquo;incorporate by reference&rdquo;
+information that we file with them. Incorporation by reference allows us to disclose important information to you by referring you to
+those other documents. The information incorporated by reference is an important part of this amendment no. 1, and information that we
+file later with the SEC will automatically update and supersede this information. We filed a registration statement on Form&nbsp;S-3 under
+the Securities Act, with the SEC with respect to the securities we may offer pursuant to this amendment no. 1. This amendment no. 1 omits
+certain information contained in the registration statement, as permitted by the SEC. You should refer to the registration statement,
+including the exhibits, for further information about us and the securities we may offer pursuant to this amendment no. 1. Statements
+in this amendment no. 1 regarding the provisions of certain documents filed with, or incorporated by reference in, the registration statement
+are not necessarily complete and each statement is qualified in all respects by that reference. Copies of all or any part of the registration
+statement, including the documents incorporated by reference or the exhibits, may be accessed on the SEC website as noted above in &ldquo;Where
+You Can Find More Information.&rdquo; The documents we are incorporating by reference are:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px; font-size: 10pt"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="font-size: 10pt"><A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000141057825000743/eyen-20241231x10k.htm">our Annual Report on Form&nbsp;10-K for the fiscal year ended December&nbsp;31, 2024 that we filed with the SEC on April&nbsp;15, 2025</A>, as <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000141057825001047/eyen-20241231x10ka.htm">amended on April&nbsp;30, 2025</A>;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px; font-size: 10pt"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="font-size: 10pt"><A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000141057825001361/eyen-20250331x10q.htm">our Quarterly Report on Form&nbsp;10-Q for the three months ended March&nbsp;31, 2025 that we filed with the SEC on May&nbsp;19, 2025</A>;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px; font-size: 10pt"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="font-size: 10pt"><A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000141057825001740/hypd-20250630x10q.htm">our Quarterly Report on Form 10-Q for the three months ended June 30, 2025 that we filed with the SEC on August 13, 2025</A>;</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px; font-size: 10pt"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="font-size: 10pt">our Current Reports on Form&nbsp;8-K that we filed with the SEC on <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925004007/tm253514d1_8k.htm">January&nbsp;16, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925005978/tm254246d1_8k.htm">January&nbsp;24, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925006697/tm254557d1_8k.htm">January&nbsp;28, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925008090/tm254752d1_8k.htm">January&nbsp;31, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925016375/tm257380d1_8k.htm">February&nbsp;24, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925016919/tm257599d1_8k.htm">February&nbsp;25, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925026120/tm259898d1_8k.htm">March&nbsp;20, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925044223/tm2513612d1_8k.htm">May&nbsp;2, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925044238/tm2513849d1_8k.htm">May&nbsp;2, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925056679/tm2517193d1_8k.htm">June&nbsp;5, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925062095/tm2518559d1_8k.htm">June&nbsp;24, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925063687/tm2519021d1_8k.htm">June&nbsp;27, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925065294/tm2519676d1_8k.htm">July&nbsp;2, 2025</A><A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925080998/tm2523917d1_8k.htm">, August 21, 2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/0001682639/000110465925088248/tm2525486d1_8k.htm">September 8, 2025</A> and <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1682639/000110465925092748/tm2526091d1_8k.htm">September 24, 2025</A> (in all cases, except for the information furnished under Items 2.02 or 7.01 and the exhibits furnished thereto);</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px; font-size: 10pt"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="font-size: 10pt">the description of our common stock contained in <A HREF="https://www.sec.gov/Archives/edgar/data/1682639/000141057825000743/eyen-20241231xex4d1.htm">Exhibit&nbsp;4.1</A> of our Annual Report on Form&nbsp;10-K for the fiscal year ended December&nbsp;31, 2024 that we filed with the SEC on April&nbsp;15, 2025; and</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px; font-size: 10pt"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="font-size: 10pt">all reports and other documents subsequently filed by us pursuant to Sections 13(a), 13(c), 14 and 15(d)&nbsp;of the Exchange Act after the date of this amendment no. 1 and prior to the termination or completion of the offering of securities under this amendment no. 1 shall be deemed to be incorporated by reference in this amendment no. 1 and to be a part hereof from the date of filing such reports and other documents.</TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 18 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->15<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">The SEC file number for each of the documents listed
+above is 001-38365.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">In addition, any future filings (other than current
+reports furnished under Item 2.02 or Item 7.01 of Form 8-K and exhibits filed on such form that are related to such items unless such
+Form 8-K expressly provides to the contrary) made with the SEC pursuant to Sections 13(a), 13(c), 14 or 15(d) of the Exchange Act, prior
+to the termination of this offering, will be deemed incorporated by reference into this amendment no. 1 such future filings updates and
+supplements the information provided in this amendment no. 1.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">You may access our Annual Report on Form 10-K,
+Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, proxy statements, and other information, if any, we file with or furnish
+to the SEC free of charge at the SEC&rsquo;s website (www.sec.gov) or our website (www.hyperiondefi.com) as soon as reasonably practicable
+after such material is electronically filed with, or furnished to, the SEC. The information contained on, or that can be accessed through,
+our website is not a part of this amendment no. 1, the original prospectus supplement or the accompanying prospectus. We have included
+our website address in this amendment no. 1 solely as an inactive textual reference.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">We will furnish without charge to you, on written
+or oral request, a copy of any filing or report incorporated by reference, including exhibits to the document. You should direct any requests
+for documents to Hyperion DeFi, Inc., 23461 S. Pointe Drive, Suite 390, Laguna Hills, CA 92653, (833) 393-6684, Attention: Corporate Secretary.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&nbsp;</P>
+
+
+<!-- Field: Page; Sequence: 19 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->16<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;<B>&nbsp;&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Up to $60,225,987</B></P>
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center; color: Red"></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;<IMG SRC="tm2526091d2_424b5img001.jpg" ALT=""></B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Common Stock</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><FONT STYLE="text-transform: uppercase"><B>Prospectus
+supplement AMENDMENT NO. 1</B></FONT></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 18pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Chardan</B></P>
+
+<P STYLE="font: 18pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 14pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>September 24, 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 20; Options: Last -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 33%">&nbsp;</TD><TD STYLE="width: 34%; text-align: center">S-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->17<!-- Field: /Sequence --></TD><TD STYLE="width: 33%; text-align: right">&nbsp;</TD></TR></TABLE></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>tm2526091d2_424b5img001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 tm2526091d2_424b5img001.jpg
+M_]C_X  02D9)1@ ! 0$ 8 !@  #_VP!#  @&!@<&!0@'!P<)"0@*#!0-# L+
+M#!D2$P\4'1H?'AT:'!P@)"XG("(L(QP<*#<I+# Q-#0T'R<Y/3@R/"XS-#+_
+MVP!# 0@)"0P+#!@-#1@R(1PA,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R
+M,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C+_P  1"  E ,,# 2(  A$! Q$!_\0
+M'P   04! 0$! 0$           $" P0%!@<("0H+_\0 M1   @$# P($ P4%
+M! 0   %] 0(#  01!1(A,4$&$U%A!R)Q%#*!D:$((T*QP152T? D,V)R@@D*
+M%A<8&1HE)B<H*2HT-38W.#DZ0T1%1D=(24I35%565UA96F-D969G:&EJ<W1U
+M=G=X>7J#A(6&AXB)BI*3E)66EYB9FJ*CI*6FIZBIJK*SM+6VM[BYNL+#Q,7&
+MQ\C)RM+3U-76U]C9VN'BX^3EYN?HZ>KQ\O/T]?;W^/GZ_\0 'P$  P$! 0$!
+M 0$! 0        $" P0%!@<("0H+_\0 M1$  @$"! 0#! <%! 0  0)W  $"
+M Q$$!2$Q!A)!40=A<1,B,H$(%$*1H;'!"2,S4O 58G+1"A8D-.$E\1<8&1HF
+M)R@I*C4V-S@Y.D-$149'2$E*4U155E=865IC9&5F9VAI:G-T=79W>'EZ@H.$
+MA8:'B(F*DI.4E9:7F)F:HJ.DI::GJ*FJLK.TM;:WN+FZPL/$Q<;'R,G*TM/4
+MU=;7V-G:XN/DY>;GZ.GJ\O/T]?;W^/GZ_]H # ,!  (1 Q$ /P#W^BBB@#G?
+M&_BR'P9X8GU>6$SNK+'#"#C?(W0$]AU)^E<'X(^(_C/Q)<_:KG0K#^QR^UIU
+M=HB/79DG>1]/Q%:/QNM7U'PMI6FQ9,UYJL,,:CJ20PK5@MH+&VBL[5%2WMT$
+M42KT"KQ5)7.>M4<-CIK77=/N[P6:S&.Y(++%*I1G ZE<_>_"M*O,?%A\KPO?
+M7BOY<]E&;JWE'6.1.5(_E[@D5Z-87#76G6UPZ['EB1V7T) .*35BJ-3G6I8H
+MKR[3/%ND>'/'GC7^V=3$'F75OY$3;G9@(>=JC)QTZ"NWTKQ=H.MZ9<ZCIVI1
+M3VUJ"9R,AHL#)W*1D< ]J1JF;5%5M/O[75-/M[^RE$MK<1B2*0 C<I&0>:S'
+M\8>'X]'FU>358(["&9K=YG)4"13@J,\DY':@9N45S&E?$/PKK6H)8V6KQFZD
+MXCCE1XS)_N[@,_A6AKWBC1?#,4<FKZA%;>:<1H<L[G_94 D_E0*YKT5D:#XH
+MT7Q-#+)I&H1W/E'$B %70_[2D C\JSF^(OA0:LNEIJ\<MVTHAVPH\BAR<8+*
+M"!S[T!<ZBBL#0=8%Q9:K<WFK65S%:7LT32Q(8E@5#]Q]W4KW/2J-M\3O!MW>
+MI:Q:Y!OD;9&[HZQNWH'("G\Z N=;163KOB;1?#4$<VL:A#:+*=L8?)9S_LJ,
+MD_@*IZ)X[\->(;TV6FZFDEWM+""1&C<CU 8#/X4#N=%117+ZE\1O"6DZA)87
+M>M0K<Q'$JHK2>6?1BH('XT =117GOPUU2VN+/Q7J)ODDL3K5Q*EPTGR>7M4Y
+M!/08K7LOB5X0U#4([*VUN%II6V1%D9$D;T5B I_.@29U=%>6_$KQIIJZEIWA
+MQ==DL4>[ U62WW+)%"$W8# <;C@<9-;.GZKI=CH?A]?#^OQ_V;/J'V<27HDF
+M>XSN)C5CR&ST)X&* N=S1110,\Q^*&N>,X-1LM(\(VTVYX3/<7,<:D@;L!=S
+M<#H3ZUD:!\1/B#: 6&L^"KW4)U'%Q$ODY'JQP4_$$5V_B:>ZL=42XEMKJ>P>
+M$*'MXC+Y3@G.Y5YP01SCM@UX_P#$3XB33:1+X?TR5T2XDWW!#?,L8  C..A8
+MY)'88!ZD4[:'.YR4VNAOO\1+2[\3PZGK-O+J%UIP8VFEZ/&;B.V9AAI))> S
+MXX&W@<]Z;_PM/1)[R5[-C$KL6:TU#,#1MWVR ,I&>S8QZUZ3\/\ PS;>%O!V
+MGV<4"I</$LMRX'S/(PR<_3.!]*H^-?AAH?C-3.Z?8M2 ^6\@49;V<=&'Z^]"
+M=BY0YEJ>5ZYXWAUJXM+"5K9[:2XC'V"TF,K7+;AM$LF JIGDJN2>G%?1(
+M P!Z5XSX-^!T^B>)[?5-7U*WNH;1_,AA@1AO<?=+9Z =<#/->ST,=./*K' ^
+M#H(F^(_CJ9HD,JW-LJN5&X Q<@&LO7X([/XDZ\+:,1_;/"LTDX48\QU8@,??
+M'%=MH_AQ=(U_7=56Y:4ZM+%(8RN/*V)MP#WSUILWAB*?QG_PD,DY8'3FL&MB
+M@VL"^XMG],4%6T*WPY(/PX\.X.?] B_]!%>7::BR:-X;21%93XTFRK#(/S/V
+MKN[+X?:MI$1T_1_&5_9:/N)CM/L\<CPJ3DJDC<@<\<<5YU9V<LWA+P]8PWL\
+M$K>+IHDNQAI$.7 ?G@GO0)GI7Q:M+:7X<:I=2*JSV2+<6TO1HI%8;2I['M^-
+M<K:W/B2]^)^IWNG:=IU[>6^F6:J+^9H_)5TW,4P#U;.?I73S> =5UJ:WC\4>
+M*9M4TZ"191916J6ZS,O(\PJ26&>W%:/B#P:^HZQ!KFCZK+H^L11>09XXQ(DT
+M><A'0\$ ]/2D.QAZ=HOBV?Q_:^(=3T[2K"%;26VNC9W#.TZD93<"HSAA^M6_
+M@]&B_#73BJ*"TDQ8@=3YK<FM71=!U^UU$WFL^*9M17RRBVT=JD$0S_$0,DG\
+M:N>%/#L?A7PY;:/%</<) 7(D=0"=S%N@^M ):GD=Q^]\&:A92,5M+WQJ;>ZP
+M< Q&0$@^Q(%>L^)](TV[\&:E87-M"+);23"; %CPI((],8S6='\/M-;P]K&B
+MW<TMQ;ZG>RWI; 5HG<AAM([J0,&L^?P)XAU*S_LO5_&MU=:00%EBCM$BFF3^
+MZ\H.<'O@<T!8YKPU/-J/B'X:W%]^]F;1;ABT@R20J@'ZXQS72_$*&-/$/@F[
+M5%%RNM)$)0/FV,C97/H:WG\)VO\ PDFC:O!(8$TJUDM8K9%&TJX '/; %2Z_
+MX<CUZZT>>2Y>$Z9?+>*%4'S"H(VGT'/6@+:%W69IK;0M0GM\^=';2/'C^\%)
+M'ZUR_P *;&S@^&VD2PQH7NX?/N)",M+(Q)8L>YSQ^%=J0&!! (/!!KA8/ FL
+MZ(TT'ACQ5)INF2R-(MG-9I<+"6.2(R2"!GL<T#9Y]JHDC\'>);.UCC$5QXQ^
+MSO$3LC9"R_*Q'120 ?:NMU_2O'6O^'+C1)_#GAR.WDCV1E+Q_P!R1]UE&S@@
+MX(KH+/X>Z;'X5U#0[^XN+_\ M*9KF[NI"%=YF(.]<<*00",>E58_"/C!(!9_
+M\)]<?9%&T/\ V?']HV^AD)Z^^*9-C.\16]S#K/PWBU#8]ZMT4N&'(9Q 0QSW
+MYJ[\1U5;[P8%  &O0\ ?[+5OZGX9CU34- O);R7?H\QF7(!,Q*;?F/;UXI_B
+M'PW%X@GTB62Y>$Z;?)>J%4'>5!&T^@YZTAV-NBBB@H*X!_@YX0?Q$NL"TF0B
+M3S3:I)B OG.=N.F><9Q110)JYW]%%% PHHHH **** "L>/PKH<4<$::;"J6]
+MV;Z(#/R3DDEQSUY-%% &Q1110 4444 %%%% !1110 4444 %%%% !1110 44
+%44 ?_]D!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

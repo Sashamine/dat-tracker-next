@@ -1,0 +1,416 @@
+<SEC-DOCUMENT>0001213900-25-109593.txt : 20251113
+<SEC-HEADER>0001213900-25-109593.hdr.sgml : 20251113
+<ACCEPTANCE-DATETIME>20251113081516
+ACCESSION NUMBER:		0001213900-25-109593
+CONFORMED SUBMISSION TYPE:	424B5
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20251113
+DATE AS OF CHANGE:		20251113
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Bitdeer Technologies Group
+		CENTRAL INDEX KEY:			0001899123
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				000000000
+		STATE OF INCORPORATION:			E9
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B5
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-283732
+		FILM NUMBER:		251475550
+
+	BUSINESS ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		08 KALLANG AVENUE, APERIA TOWER 1, #09-0
+		CITY:			SINGAPORE
+		PROVINCE COUNTRY:   	U0
+		BUSINESS PHONE:		65-62828220
+
+	MAIL ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		08 KALLANG AVENUE, APERIA TOWER 1, #09-0
+		CITY:			SINGAPORE
+		PROVINCE COUNTRY:   	U0
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B5
+<SEQUENCE>1
+<FILENAME>ea0265489-424b5_bitdeer.htm
+<DESCRIPTION>PROSPECTUS SUPPLEMENT
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="text-align: right; margin: 0"><B>Filed Pursuant to Rule 424(b)(5)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Registration No. 333-283732</B></P>
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>PROSPECTUS SUPPLEMENT NO. 1</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>(to Preliminary Prospectus Supplement, dated November 12, 2025)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>10,661,140 Class A Ordinary Shares</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><IMG SRC="image_001.jpg" ALT=""></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Bitdeer Technologies Group</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus supplement no. 1 (this &ldquo;prospectus
+supplement&rdquo;) amends and supplements our preliminary prospectus supplement, dated November 12, 2025 (the &ldquo;preliminary prospectus
+supplement&rdquo;), which is in respect of our offering (the &ldquo;Class A ordinary shares offering&rdquo;) of our Class A ordinary shares,
+par value US$0.0000001 per share (the &ldquo;Class A ordinary shares&rdquo;), and supplements our prospectus, dated December 18, 2024
+(the &ldquo;base prospectus&rdquo; and as supplemented by the preliminary prospectus supplement, the &ldquo;preliminary prospectus&rdquo;),
+that forms a part of our Registration Statement on Form S-3 (Registration Statement No. 333-283732). This prospectus supplement is being
+filed to update and supplement the preliminary prospectus with pricing terms for the Class A ordinary shares offering and certain other
+material information with respect to our concurrent notes transactions referred to in the preliminary prospectus. Accordingly, we have
+attached such pricing terms and other material information in a term sheet attached to this prospectus supplement. Terms used but not
+defined in this prospectus supplement have the respective meanings as set forth in the preliminary prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus supplement updates and supplements
+the information in the preliminary prospectus and is not complete without, and may not be delivered or utilized except in combination
+with, the preliminary prospectus, including the documents incorporated by reference therein and any amendments or supplements thereto.
+This prospectus supplement should be read in conjunction with the preliminary prospectus and if there is any inconsistency between the
+information in the preliminary prospectus and this prospectus supplement, you should rely on the information in this prospectus supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our Class A ordinary shares are listed on The
+Nasdaq Capital Market (&ldquo;Nasdaq&rdquo;) under the symbol &ldquo;BTDR.&rdquo; On November 12, 2025, the last reported sales price
+of our Class A ordinary shares was US$13.94 per share.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Investing in our Class A ordinary shares involves
+a high degree of risk. See &ldquo;Risk Factors&rdquo; beginning on page S-7 of the preliminary prospectus supplement and in our U.S. Securities
+and Exchange Commission (&ldquo;SEC&rdquo;) filings that are incorporated by reference into the preliminary prospectus supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>None of the SEC or any state securities commission
+has approved or disapproved of the securities or passed upon the adequacy or accuracy of this prospectus supplement or the preliminary
+prospectus. Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><I>Sole Placement Agent</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Barclays</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center; background-color: white">The date of
+this prospectus supplement No. 1 is November&nbsp;12, 2025</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center; background-color: white">&nbsp;</P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: center; background-color: white">&nbsp;</P>
+
+
+
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 50%">
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>PRICING TERM SHEET </B></P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>DATED NOVEMBER 12, 2025</B></P></TD>
+    <TD STYLE="width: 50%; text-align: right; font-size: 10pt"><B>CONFIDENTIAL</B></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Bitdeer Technologies Group<BR>
+Offering of 10,661,140 Class A Ordinary Shares</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><I>The information in this pricing
+term sheet supplements Bitdeer Technologies Group&rsquo;s preliminary prospectus supplement, dated November 12, 2025 (the &ldquo;preliminary
+prospectus supplement&rdquo;), including the documents incorporated by reference therein, which is in respect of our offering (the &ldquo;Class
+A ordinary shares offering&rdquo;) of our Clas A ordinary shares, par value US$0.0000001 per share (the &ldquo;Class A ordinary shares&rdquo;),
+and supplements our prospectus, dated December 18, 2024 (the &ldquo;base prospectus&rdquo; and, as supplemented by the preliminary prospectus
+supplement, the &ldquo;preliminary prospectus&rdquo;), that forms a part of our Registration Statement on Form S-3 (Registration Statement
+No. 333-283732). The information in this communication supersedes the information in the preliminary prospectus to the extent inconsistent
+with the information in the preliminary prospectus. Terms used herein but not defined herein shall have the respective meanings as set
+forth in the preliminary prospectus. All references to dollar amounts are references to U.S. dollars. References to &ldquo;we,&rdquo;
+&ldquo;our&rdquo; and &ldquo;us&rdquo; refer to Bitdeer Technologies Group and not to its subsidiaries.</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="width: 100%; font: 10pt Times New Roman, Times, Serif; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 50%; text-align: justify"><B>Issuer</B>:</TD>
+    <TD STYLE="width: 50%; text-align: justify">Bitdeer Technologies Group, a Cayman Islands exempted company</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><B>Ticker / Exchange for Class A ordinary shares</B>:</TD>
+    <TD STYLE="text-align: justify">BTDR / Nasdaq Capital Market (&ldquo;Nasdaq&rdquo;)</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><B>Number of Shares Offered</B>:</TD>
+    <TD STYLE="text-align: justify">10,661,140 Class A ordinary shares</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><B>Trade Date</B>:</TD>
+    <TD STYLE="text-align: justify">November 13, 2025</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><B>Settlement Date</B>:</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-size: 10pt">November 19, 2025 (T+4)<FONT STYLE="font-family: Times New Roman, Times, Serif"><SUP>1</SUP></FONT></FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><B>Nasdaq Last Reported Sale Price of Class A ordinary shares on November 12, 2025</B>:</TD>
+    <TD STYLE="text-align: justify">$13.94 per Class A ordinary share</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><B>Offering Price</B>:</TD>
+    <TD STYLE="text-align: justify">$13.94 per Class A ordinary share</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify"><B>Use of Proceeds:</B></TD>
+    <TD>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">We estimate that the net proceeds from the offering of our Class A
+    ordinary shares will be approximately US$148.4 million, after deducting our estimated offering expenses payable by us. We estimate that
+    the net proceeds from the Concurrent Note Offering (as defined below) will be approximately US$388.0 million (or approximately US$446.4
+    million if the initial purchasers in the Concurrent Note Offering exercise their option to purchase additional New Convertible Notes in
+    full), after deducting initial purchasers&rsquo; discounts and estimated offering expenses payable by us.</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">We intend to use the net proceeds from this offering and the Concurrent
+    Note Offering: (i) to pay the approximately US$35.4 million cost of the capped call transactions referred to in the preliminary prospectus
+    that we entered into with the option counterparties; and (ii) to pay the approximately US$267.9&nbsp;million cost of repurchasing for
+    cash approximately US$200.0&nbsp;million aggregate principal amount of the November 2029 notes in the Concurrent Note Repurchases. We
+    intend to use the remaining net proceeds from this offering and the Concurrent Note Offering for datacenter expansion, ASIC-based mining
+    rig development and manufacture, expansion of our HPC and AI cloud business, as well as working capital and other general corporate purposes.</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">If the initial purchasers in the Concurrent Note Offering exercise
+    their option to purchase additional New Convertible Notes (as defined below), we intend to use net proceeds from the sale of the additional
+    New Convertible Notes to enter into additional capped call transactions with the option counterparties and the remaining net proceeds
+    for datacenter expansion, ASIC-based mining rig development and manufacture, expansion of our HPC and AI cloud business, as well as working
+    capital and other general corporate purposes as described above.</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">See &ldquo;Use of Proceeds&rdquo; in the preliminary prospectus
+for additional information.</P></TD></TR>
+</TABLE>
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 25%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="margin: 0"></P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Times New Roman, Times, Serif"><SUP>1</SUP></FONT></TD><TD STYLE="text-align: justify">Under Rule 15c6-1 under the Securities Exchange Act of 1934,
+as amended (the &ldquo;Exchange Act&rdquo;), trades in the secondary market generally are required to settle in one business day, unless
+the parties to any such trade expressly agree otherwise. Accordingly, purchasers who wish to trade the Class A ordinary shares prior
+to the business day preceding the settlement date will be required, by virtue of the fact that the notes initially will settle T+4, to
+specify an alternate settlement cycle at the time of any such trade to prevent a failed settlement. Purchasers of the Class A ordinary
+shares who wish to trade the shares prior to the business day preceding the settlement date should consult their own advisors.</TD>
+</TR></TABLE>
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<!-- Field: Page; Sequence: 2 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="width: 100%; font: 10pt Times New Roman, Times, Serif; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify; width: 50%"><B>Concurrent Convertible Notes Offering</B>:</TD>
+    <TD STYLE="width: 50%">
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0pt 0">Concurrently with the offering of Class A ordinary shares, we are offering
+    (the &ldquo;Concurrent Note Offering&rdquo;) US$400,000,000 aggregate principal amount of 4.00% convertible senior notes due 2031 (the
+    &ldquo;New Convertible Notes&rdquo;) (or up to US$460,000,000 aggregate principal amount of New Convertible Notes if the initial purchasers
+    in such offering exercise in full their option to purchase additional New Convertible Notes). The Concurrent Note Offering is being made
+    pursuant to a confidential offering memorandum (and not pursuant to the prospectus supplement or this pricing term sheet) only to persons
+    reasonably believed to be qualified institutional buyers (as defined in Rule 144A under the Securities Act) in transactions that are exempt
+    from the registration and prospectus-delivery requirements of the Securities Act. The prospectus supplement and this pricing term sheet
+    do not constitute an offer to sell, or the solicitation of an offer to buy, any of the New Convertible Notes, or the Class A ordinary
+    shares, if any, issuable upon conversion of the New Convertible Notes. The completion of the offering of Class A ordinary shares is contingent
+    on the completion of the Concurrent Note Offering.</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Subject to satisfaction of certain conditions and during certain periods,
+    the New Convertible Notes may be converted at an initial conversion rate of 56.2635 Class A ordinary shares per US$1,000 principal amount
+    of New Convertible Notes (equivalent to an initial conversion price of approximately US$17.77 per Class A ordinary share). The conversion
+    rate is subject to adjustment if certain events occur. Notwithstanding anything to the contrary, in no event will the conversion rate
+    be increased to an amount that exceeds 71.7360 Class A ordinary shares per $1,000 principal amount of New Convertible Notes, which amount
+    is subject to adjustment in the same manner as, and at the same time and for the same events for which, the conversion rate is required
+    to be adjusted pursuant to the indenture governing the notes.</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><B>Concurrent Note Repurchase Transactions</B>:</TD>
+    <TD>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Concurrently with the offering of Class A ordinary shares, we entered
+    into privately negotiated transactions with certain holders of our November 2029 notes to repurchase for cash approximately US$200.0 million
+    in aggregate principal amount of the November 2029 notes for approximately US$267.9 million (including accrued and unpaid interest).</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+    <P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">In connection with the concurrent note repurchase transactions, we
+    expect that holders of the November 2029 notes who have agreed to have their November 2029 notes repurchased and who have hedged their
+    equity price risk with respect to such notes (the &ldquo;hedged holders&rdquo;) will unwind all or part of their hedge positions by buying
+    our Class A ordinary shares and/or entering into or unwinding various derivative transactions with respect to our Class A ordinary shares.
+    The amount of our Class A ordinary shares to be purchased by the hedged holders or in connection with such derivative transactions may
+    be substantial in relation to the historic average daily trading volume of our Class A ordinary shares. This activity by the hedged holders
+    could increase (or reduce the size of any decrease in) the market price of our Class A ordinary shares, including concurrently with the
+    pricing of the notes. We cannot predict the magnitude of such market activity or the overall effect it will have on the price of the notes
+    offered hereby or our Class A ordinary shares. See the section titled &ldquo;Risk Factors&mdash;Risks Related to the Concurrent Notes
+    Offering and the Existing Notes&mdash;Any repurchases of the November 2029 notes may affect the value of our Class A ordinary shares.&rdquo;
+    Each of the prospectus supplement and this pricing term sheet does not constitute an offer to buy, or the solicitation of an offer to
+    sell, any of our November 2029 notes. The completion of the concurrent note repurchase transactions is contingent upon the completion
+    of the offering of Class A ordinary shares and the Concurrent Note Offering.</P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><B>Cap Price:</B></TD>
+    <TD STYLE="text-align: justify">The cap price of the capped call transactions referred to in the preliminary prospectus that we entered into with the option counterparties will initially be US$27.88 per share, which represents a premium of 100% above the offering price per share in the offering of our Class A ordinary shares.</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<!-- Field: Page; Sequence: 3 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>THE ISSUER HAS FILED A REGISTRATION STATEMENT (INCLUDING A PROSPECTUS)
+WITH THE SEC FOR THE OFFERING TO WHICH THIS COMMUNICATION RELATES. BEFORE YOU INVEST, YOU SHOULD READ THE PROSPECTUS IN THAT REGISTRATION
+STATEMENT AND OTHER DOCUMENTS THE ISSUER HAS FILED WITH THE SEC FOR MORE COMPLETE INFORMATION ABOUT THE ISSUER AND THE OFFERING. YOU MAY
+GET THESE DOCUMENTS FOR FREE BY VISITING EDGAR ON THE SEC WEBSITE AT <U STYLE="text-decoration: none">WWW.SEC.GOV</U>.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>ANY DISCLAIMERS OR OTHER NOTICES THAT MAY APPEAR BELOW ARE NOT APPLICABLE
+TO THIS COMMUNICATION AND SHOULD BE DISREGARDED. SUCH DISCLAIMERS OR OTHER NOTICES WERE AUTOMATICALLY GENERATED AS A RESULT OF THIS COMMUNICATION
+BEING SENT VIA BLOOMBERG OR ANOTHER EMAIL SYSTEM.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+
+
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: Black 1.5pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>image_001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 image_001.jpg
+M_]C_X  02D9)1@ ! 0$ 8 !@  #_VP!#  @&!@<&!0@'!P<)"0@*#!0-# L+
+M#!D2$P\4'1H?'AT:'!P@)"XG("(L(QP<*#<I+# Q-#0T'R<Y/3@R/"XS-#+_
+MVP!# 0@)"0P+#!@-#1@R(1PA,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C(R
+M,C(R,C(R,C(R,C(R,C(R,C(R,C(R,C+_P  1"  N .,# 2(  A$! Q$!_\0
+M'P   04! 0$! 0$           $" P0%!@<("0H+_\0 M1   @$# P($ P4%
+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
+!V0$!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

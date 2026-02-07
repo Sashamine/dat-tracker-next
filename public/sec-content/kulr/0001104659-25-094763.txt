@@ -1,0 +1,292 @@
+<SEC-DOCUMENT>0001104659-25-094763.txt : 20250930
+<SEC-HEADER>0001104659-25-094763.hdr.sgml : 20250930
+<ACCEPTANCE-DATETIME>20250930083024
+ACCESSION NUMBER:		0001104659-25-094763
+CONFORMED SUBMISSION TYPE:	424B5
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20250930
+DATE AS OF CHANGE:		20250930
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			KULR Technology Group, Inc.
+		CENTRAL INDEX KEY:			0001662684
+		STANDARD INDUSTRIAL CLASSIFICATION:	ELECTRONIC COMPONENTS & ACCESSORIES [3670]
+		ORGANIZATION NAME:           	04 Manufacturing
+		EIN:				811004273
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B5
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-287576
+		FILM NUMBER:		251358220
+
+	BUSINESS ADDRESS:	
+		STREET 1:		555 FORGE RIVER ROAD
+		CITY:			WEBSTER
+		STATE:			TX
+		ZIP:			77598
+		BUSINESS PHONE:		408-663-5247
+
+	MAIL ADDRESS:	
+		STREET 1:		555 FORGE RIVER ROAD
+		CITY:			WEBSTER
+		STATE:			TX
+		ZIP:			77598
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	KT High-Tech Marketing Inc.
+		DATE OF NAME CHANGE:	20160420
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	Grant Hill Acquisition Corp
+		DATE OF NAME CHANGE:	20151231
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B5
+<SEQUENCE>1
+<FILENAME>tm2526981d1_424b5.htm
+<DESCRIPTION>424B5
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Filed Pursuant to Rule 424(b)(5)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Registration No. 333-287576</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><FONT STYLE="text-transform: uppercase"><B>PROSPECTUS SUPPLEMENt NO.
+1</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(To Prospectus Supplement dated June 9, 2025</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">and Prospectus dated June 5, 2025<FONT STYLE="text-transform: uppercase">)</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Up to $150,000,000</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><IMG SRC="image_001.jpg" ALT="" STYLE="height: 96px; width: 150px"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Common Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus supplement (&ldquo;Prospectus
+Supplement&rdquo;) amends and supplements the information in the prospectus supplement dated June 9, 2025, and the accompanying prospectus
+dated June 5, 2025 (together, the &ldquo;ATM Prospectus&rdquo;), relating to the offer and sale of shares of our common stock, par value
+$0.0001 per share, pursuant to the terms of that certain&nbsp;Controlled Equity Offering<SUP>SM</SUP> Sales Agreement, dated as of June
+9, 2025 (the &ldquo;Sales Agreement&rdquo;), with Cantor Fitzgerald &amp; Co. (&ldquo;Cantor&rdquo;) and Craig-Hallum Capital Group LLC
+(&ldquo;Craig-Hallum&rdquo;) (each a &ldquo;Sales Agent&rdquo; and together the &ldquo;Sales Agents&rdquo;). This Prospectus Supplement
+should be read in conjunction with the ATM Prospectus, and is qualified by reference thereto, except to the extent that the information
+herein amends or supersedes the information contained in the ATM Prospectus. This Prospectus Supplement is not complete without, and may
+only be delivered or utilized in connection with, the ATM Prospectus, and any future amendments or supplements thereto.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We are filing this Prospectus Supplement to supplement
+the ATM Prospectus to decrease the aggregate offering amount we intend to sell pursuant to the Sales Agreement. Under the ATM Prospectus,
+we initially registered up to $300,000,000 of our common stock for offer and sale pursuant to the Sales Agreement. Pursuant to this Prospectus
+Supplement, we are decreasing the aggregate offering amount of common stock that we are offering pursuant to the Sales Agreement, such
+that we will offer up to an aggregate of $150,000,000 of our common stock for sale under the Sales Agreement, including the shares of
+common stock previously sold pursuant to the Sales Agreement. Since our entry into the Sales Agreement, we have offered and sold <FONT>3,936,578
+shares</FONT> of common stock for gross proceeds of <FONT>$22,997,761 </FONT>pursuant &nbsp;to the Sales
+Agreement. Except as modified by this Prospectus Supplement, the ATM Prospectus and the Sales Agreement remain in full force and effect
+as is.</P>
+
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our common stock is listed and traded on the NYSE
+American LLC (&ldquo;NYSE American&rdquo;) under the symbol &ldquo;KULR.&rdquo; On September 29, 2025, the last reported sale price of
+our common stock on NYSE American was $4.22 per share.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Sales of our common stock, if any, under this
+prospectus supplement will be made in sales deemed to be an &ldquo;at the market offering&rdquo; as defined in Rule 415(a)(4) promulgated
+under the Securities Act of 1933, as amended (the &ldquo;Securities Act&rdquo;). Cantor is not required to sell any specific amount of
+securities but will act as our sales agent using commercially reasonable efforts consistent with its normal trading and sales practices,
+on mutually agreed terms between Cantor and us. There is no arrangement for funds to be received in any escrow, trust or similar arrangement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We will pay the Sales Agents a commission, in
+cash, at a rate of up to 3.0% of the gross sales price per share sold through the Sales Agreement. In connection with the sale of common
+stock on our behalf, the Sales Agents will be deemed to be &ldquo;underwriters&rdquo; within the meaning of the Securities Act and their
+compensation will be deemed to be underwriting commissions or discounts. We have also agreed to provide indemnification and contribution
+to the sales agents against certain civil liabilities, including liabilities under the Securities Act.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Our business and an investment in our common
+stock involve significant risks. These risks are described under the caption &ldquo;Risk Factors&rdquo; of the ATM Prospectus.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 1; Options: NewSection -->
+    <DIV STYLE="margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Neither the Securities and Exchange Commission
+nor any state securities commission has approved or disapproved of these securities or passed upon the accuracy or adequacy of this prospectus
+supplement. Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 1pt; margin-bottom: 1pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: black 1pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Cantor</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><FONT STYLE="font-size: 10pt">&#8239;&#8239;&#8239;</FONT><B>Craig-Hallum
+</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 1pt; margin-bottom: 1pt; width: 100%"><DIV STYLE="font-size: 1pt; border-top: black 1pt solid">&nbsp;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>The date of this prospectus supplement is September
+30, 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B></B></P>
+
+<!-- Field: Page; Sequence: 2; Options: Last -->
+    <DIV STYLE="margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>image_001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 image_001.jpg
+M_]C_X  02D9)1@ ! 0$ 8 !@  #_VP!#  H'!PD'!@H)" D+"PH,#QD0#PX.
+M#QX6%Q(9)" F)2,@(R(H+3DP*"HV*R(C,D0R-CL]0$! )C!&2T4^2CD_0#W_
+MVP!# 0L+"P\-#QT0$!T]*2,I/3T]/3T]/3T]/3T]/3T]/3T]/3T]/3T]/3T]
+M/3T]/3T]/3T]/3T]/3T]/3T]/3T]/3W_P  1" !@ )8# 2(  A$! Q$!_\0
+M'P   04! 0$! 0$           $" P0%!@<("0H+_\0 M1   @$# P($ P4%
+M! 0   %] 0(#  01!1(A,4$&$U%A!R)Q%#*!D:$((T*QP152T? D,V)R@@D*
+M%A<8&1HE)B<H*2HT-38W.#DZ0T1%1D=(24I35%565UA96F-D969G:&EJ<W1U
+M=G=X>7J#A(6&AXB)BI*3E)66EYB9FJ*CI*6FIZBIJK*SM+6VM[BYNL+#Q,7&
+MQ\C)RM+3U-76U]C9VN'BX^3EYN?HZ>KQ\O/T]?;W^/GZ_\0 'P$  P$! 0$!
+M 0$! 0        $" P0%!@<("0H+_\0 M1$  @$"! 0#! <%! 0  0)W  $"
+M Q$$!2$Q!A)!40=A<1,B,H$(%$*1H;'!"2,S4O 58G+1"A8D-.$E\1<8&1HF
+M)R@I*C4V-S@Y.D-$149'2$E*4U155E=865IC9&5F9VAI:G-T=79W>'EZ@H.$
+MA8:'B(F*DI.4E9:7F)F:HJ.DI::GJ*FJLK.TM;:WN+FZPL/$Q<;'R,G*TM/4
+MU=;7V-G:XN/DY>;GZ.GJ\O/T]?;W^/GZ_]H # ,!  (1 Q$ /P!]>F^'2#X>
+MLN_[H4O_  C^E$<V$'_?-7;>%((EBA4)&@PJCH*VJUE41A1HNFSPOQ_XY\4:
+M5XVU*RT[4IXK6)U$:+&I &T'N*Y[_A97C3_H+W7_ 'Z7_P")KZ9$2]U4GUQ2
+M^6G]Q?RK$W/F7_A97C3_ *"]U_WZ7_XFC_A97C3_ *"]U_WZ7_XFOIGRT_N+
+M^5'EI_<7\J!GS-_PLKQI_P!!>Z_[]+_\31_PLKQI_P!!>Z_[]+_\37TSY:?W
+M%_*CRT_N+^5 'S-_PLKQI_T%[K_OTO\ \31_PLKQI_T%[K_OTO\ \37TSY:?
+MW%_*CRT_N+^5 'S-_P +*\:?]!>Z_P"_2_\ Q-'_  LKQI_T%[K_ +]+_P#$
+MU],^6G]Q?RH\M/[B_E0!\S?\+*\:?]!>Z_[]+_\ $T?\+*\:?]!>Z_[]+_\
+M$U],^6G]Q?RH\M/[B_E0!\S?\+*\:?\ 07NO^_2__$T?\+*\:?\ 07NO^_2_
+M_$U],^6G]Q?RH\M/[B_E0!\S?\+*\:?]!>Z_[]+_ /$T?\+*\:?]!>Z_[]+_
+M /$U],^6G]Q?RJOJ$:_V;=?(O^I?M_LF@#YK_P"%H>+_ /H-S_\ ?"?X45RA
+MZT4 >F^//'?B32O'FHV-CJT\-K%*JI&H7"C:#Z>]>]0_ZE#W*@U\R_$S_DIF
+MK?\ 7=/_ $%:^FH?]3'_ +H_E0(?2'/:EKQ[XVWUU::OI*VUU<0*T$FX12LF
+M?F'7!I#/7\GTQ1N/89KS/P+XHAT/X6MJFK7,DNRXE5=[EGD;/RJ,\_X5P4.H
+M>)?B%XK*6MU<PR3G)6*5EBMH_?'8?F33 ^B=U+D^E>>^.M/_ .$;^%<EM9W5
+MR9(GBW7#2MYCL7&23G//I7-_!:^N[SQ'J*75U<3J+0$"65F .\>II"/9=U+G
+MVKCOBK-+;> +R6"62*0218>-BI'SCN*XWX*W]W=^(-22YN[B95M5(665F .[
+MW- 'L63VI1TKP/XKZE?6OCZ\CM[VZAC$,1"QS,H'R^@->T>%W:3PKI+R,S.U
+MI$2S'))VCDFF,U324M?-OC;5=0A\;:U'%?W<<:W3!52=@ /89I ?2)S2CFOF
+M]]$\<VUO]J:#6EB4;_,69C@>N V?TKH/AY\2-5CUNUTO5KIKNTNG\I))>7B8
+M].>XSQS3 ]PJOJ'_ "#;K_KD_P#(U8JOJ'_(-NO^N3_R-(#X][T4=Z*8'6_$
+MS_DIFK?]=T_]!6OIJ'_4Q_[H_E7S+\3/^2F:M_UW3_T%:^FH?]3'_NC^5 #Z
+M\7^.G_(8TC_KA)_Z$*]HKQ;XZD#6=(R0/W$G7_>% 'FLE]/-9V]G)*QM[<LT
+M<?92QRQ^I]:]E^"E[I3:)=6L$2Q:G&^ZY8G)E7^%A[#ICM^-4OAUX0TSQ!\-
+M;M+B%/M%[,ZFX'+(5/R$'V]*\\MKC4O 7BX,PV7EE)M="<+*AZCZ,.E 'M'Q
+M=(/P]O,?\]8O_0Q7#_ _CQ-J6?\ GT'_ *&*]$U);3X@^ 9QI\H*7L.Z)C_!
+M(.0#Z$$8->%:7JNJ^"/$)E1/L][#F.6"8<,O=2.XZ8(]J!'M/Q;8#X>7F2.9
+M(@/^^Q7%_ Y3_P )#JC8X%JHS_P*N:\6_$/5/%MM%:W:6]O;(P?RH<_.W8DG
+MGCTKT?X/>&;C1]+NM3OHFAEOBHCC<881KG!(]R<T@.!^+W_)0KW_ *X1?^@U
+M[AX4_P"11T?_ *\XO_0!7AWQ=8?\+#O,G'[F+_T&I[#XQ:YIVGV]G#!IYBMX
+MUB0LK9PHP,\TQGO^17S)X[&?'.N#UNWKU+X;_$+4_%VMW-IJ$=HD<4'FJ85(
+M.=P'<GUKRSQXP'CG7/FP?M;?ATH [\_&^&+3TBM]&F\](PJL\PVY QDXYQ7&
+M> ]"O/$7C&UE2(F&"<7-S*!A5 .<9]2> *[+Q[\.;-/"]OJN@6:PS6\0>XBC
+MS^]0@9;ZCK],UG_"#QG'I]X=!OI$6VN6W6SD_=D/52?]KM[_ %H ]OJOJ'_(
+M-NO^N3_R-6*KZA_R#;K_ *Y/_(T@/CWO11WHI@=;\3/^2F:M_P!=T_\ 05KZ
+M:A_U,?\ NC^5?,OQ,_Y*9JW_ %W3_P!!6OIJ'_4Q_P"Z/Y4 /JG>:18:BZO?
+M65O<L@PIFB5]H]LU<HI 5[6PMK&'R;."*WBR3LB0*N3U.!4%UH>F7TOFWFGV
+MMQ+C;OEA5FQZ9(J_10!6L]/M=/A,5E;Q6\9.XI$@49]<"H-2T'2]9 &I6%O=
+M8Z&6,$C\>M:%% &+8^#?#^F2B2ST>SBD'(?RP2/Q-;&P9SWIU% %"XT+2[R8
+MS76G6D\I&"\L*LQ_$BHO^$8T/_H#Z?\ ^ R?X5J44 4K31M.T^5I+*QMK>1A
+MM+11*I(],@5%-X=T>XE>6?2[*25SEG>!2S'U)Q6E10 SR4\L)@;,8VXXQZ5G
+M#PQH@.1I%@"#D$6Z#!_*M2B@ JOJ'_(-NO\ KD_\C5BJ^H?\@VZ_ZY/_ "-
+M'Q[WHH[T4P.L^)QV_$G6&])5/_CJUTB_'G6D4 :9IW Q_'_\57K=]X&\.ZG>
+MR7=]I%K/<2G,DCJ<L??FH/\ A7'A/_H!6?\ WR?\: /+?^%^:W_T"]._\?\
+M_BJ/^%^:W_T"]._\?_\ BJ]2_P"%<>$_^@%9_P#?)_QH_P"%<^$\X_L&S_[Y
+M/^- CRW_ (7YK?\ T"]._P#'_P#XJC_A?FM_] O3O_'_ /XJO4O^%<>$_P#H
+M!6?_ 'R?\:/^%<>$_P#H!6?_ 'R?\: /+?\ A?FM_P#0+T[_ ,?_ /BJ/^%^
+M:W_T"]._\?\ _BJ]2_X5QX3_ .@%9_\ ?)_QI/\ A77A/./[!L_^^3_C0!Y=
+M_P +\UO_ *!>G?\ C_\ \51_POS6_P#H%Z=_X_\ _%5ZC_PKKPG_ - &S_[Y
+M/^-'_"N_"?\ T ;/Z[3_ (T >7?\+\UO_H%Z=_X__P#%4?\ "_-;_P"@7IW_
+M (__ /%5ZC_PKKPF#_R ;/\ [Y/^-+_PKGPG_P! &S_[Y/\ C0!Y;_POS6_^
+M@7IW_C__ ,51_P +\UO_ *!>G?\ C_\ \57J7_"N/"?_ $ K/_OD_P"-'_"N
+M/"?_ $ K/_OD_P"- 'EO_"_-;_Z!>G?^/_\ Q5'_  OS6_\ H%Z=_P"/_P#Q
+M5>I?\*X\)_\ 0"L_^^3_ (T?\*X\)_\ 0"L_^^3_ (T >6_\+\UO_H%Z=_X_
+M_P#%4R;X[:S<021/IFGA70J2-_<8]:]4'P[\)D_\@"T_[X/^-+_PKCPG_P!
+M*S_[Y/\ C0!\MG':BOJ3_A7'A/\ Z 5G_P!\G_&B@9J:SK"Z/:I(86FEFE6&
+M&%.#([=!D\#N2?053DUZ^AEM;.33$_M&Y+LD*W *"-<98OCW QBKFL:4FL6B
+MPO+)#)'(LL,T?WHW7D$?X'K5*70+N9[:ZDU23^T;8L([D0* 4;&4*=". ?7-
+M("&+Q;)<F&VM]/8ZB\TD,EN\@ B,>-[%^XY7&!SN%4I]>-]J^BNRR6KPWL\%
+MW#OR RQ$GD<,.A!J\OA00QPRVM]/%J$<LDINRBL9#)]\,O3!P,#M@4^#PG!$
+M]K*]S+++%<2W,SN!F=Y$*MG'08/0>E %*T\?V]VZX@CV312RPA9U9_D4MAU'
+MW<@<=?2MO0=4N-8TV.]GLC:),H>)&D#,5(!!..G7I5&U\.RVEI)9#49'LFA:
+M".)H5W(",#Y^IP#QFM?3K06&GVUHK%UMXEB#'JVT 9_2@".+589=8FTT+*)X
+M8EE9BA"%6.!ANA/%9NOR/'K_ (=5)'59+J0. Q 8>4W!'>M_ K/U#3$OK_3[
+MEI&5K&5I54#[V5*X/YT 86D^(YY;+3[:RM9[Z\N(GG;[1,JE(PY7+-CDYX
+MJJWB"ZU+6-"NK"UD)FCNU^S-,%4E2%RQZ<8/8]:FN-%.A1Z>;$ZFTT$3P>=:
+MQ(Y=&;=M93P.3P>U6/#7AJ2RMM(GO'=+JS2?,9(;_6MG#-W(]N^: (&\5:C>
+M7>D#3[% MQ+-#<Q2R@$21@@J#@\#&<CKTJ>+QU:RZC% BQ-#)=?90PF!EW9Q
+MN\OJ%R,9S[XJPOA983 ]O>RQ3P7DMTLFQ3_K"=R$'M@XJ6RT"33;LM97K)9F
+M5I?LK0J<%CD@/U R<XH$3:#K<NMQRS&S-O KM&CM("9"K%6X[#BK,NJPPZQ!
+MIK)*9YXVE5@A* +URW0'FDTC3$TFP2T1S(%=VW, #\S%OZU>P*!F;KVLC0]-
+M-TT)D&]4Y.U5W'&YF[*.YJCJ7B:73=/ANG@LVWQ-(5^V ;L<X0X^?CGM6KJ5
+MM-=6IBMKG[,Y_C\L2#'<%3P<USZ^"(X4B2UU":+%N]M*VQ6+([%CMR,(<D].
+MWTH I76M>9XE?4+B*4Z79:?'>1[9RI&[)W%!]XD@+@G ZU:_X3^*.VNWDMHY
+M)8(5G$=O<++N4L%*Y X8$CCO5\>%;7RYHYI9)8I;&.R9>A"IG# ^O/Z4V7PY
+M/>:1<Z?>ZE),DP0*X@160*P/..I.* -JQFGN+5)+J 6\K<F,/NV_C14RT4 ?
+"_]D!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

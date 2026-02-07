@@ -1,0 +1,961 @@
+<SEC-DOCUMENT>0001213900-25-118048.txt : 20251204
+<SEC-HEADER>0001213900-25-118048.hdr.sgml : 20251204
+<ACCEPTANCE-DATETIME>20251204062424
+ACCESSION NUMBER:		0001213900-25-118048
+CONFORMED SUBMISSION TYPE:	424B3
+PUBLIC DOCUMENT COUNT:		1
+FILED AS OF DATE:		20251204
+DATE AS OF CHANGE:		20251204
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Twenty One Capital, Inc.
+		CENTRAL INDEX KEY:			0002070457
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				000000000
+		STATE OF INCORPORATION:			TX
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B3
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-290246
+		FILM NUMBER:		251548218
+
+	BUSINESS ADDRESS:	
+		STREET 1:		CORPORATION SERVICE COMPANY
+		STREET 2:		211 EAST 7TH STREET, SUITE 620
+		CITY:			AUSTIN
+		STATE:			TX
+		ZIP:			78701-3218
+		BUSINESS PHONE:		206 552 9859
+
+	MAIL ADDRESS:	
+		STREET 1:		CORPORATION SERVICE COMPANY
+		STREET 2:		211 EAST 7TH STREET, SUITE 620
+		CITY:			AUSTIN
+		STATE:			TX
+		ZIP:			78701-3218
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B3
+<SEQUENCE>1
+<FILENAME>ea0268415-424b3_twentyone.htm
+<DESCRIPTION>PROSPECTUS SUPPLEMENT
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="text-align: right; margin: 0"><B>Filed Pursuant to Rule 424(b)(3)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Registration No. 333-290246</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt"><B>Proxy Statement Supplement No. 2</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt"><B>(To Proxy Statement dated November 6, 2025)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>TWENTY ONE CAPITAL, INC.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Up to 315,116,673 Shares of Class A Common Stock
+of Twenty One Capital, Inc.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt; text-align: justify">This Proxy Statement supplement no.
+2 (this &ldquo;Proxy Statement Supplement&rdquo;) amends and supplements the proxy statement/prospectus dated November 6, 2025 (as supplemented
+or amended from time to time, the &ldquo;Proxy Statement&rdquo;) which forms part of our Registration Statement on Form S-4 (Registration
+Statement No. 333-290246). This Proxy Statement Supplement is being filed to update and supplement the information included or incorporated
+by reference in the Proxy Statement with the information contained in the Current Report on Form&nbsp;8-K&nbsp;filed by Cantor Equity
+Partners, Inc. with the Securities and Exchange Commission (the &ldquo;SEC&rdquo;) on December 4, 2025 (the &ldquo;Current Report&rdquo;).
+Accordingly, we have attached the Current Report to this Proxy Statement Supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt; text-align: justify">This Proxy Statement Supplement updates
+and supplements the information in the Proxy Statement and is not complete without, and may not be delivered or utilized except in combination
+with, the Proxy Statement, including any amendments or supplements thereto. This Proxy Statement Supplement should be read in conjunction
+with the Proxy Statement, and if there is any inconsistency between the information in the Proxy Statement and this Proxy Statement Supplement,
+you should rely on this Proxy Statement Supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt; text-align: justify"><B>Upon consummation of the Business
+Combination, we will be an &ldquo;emerging growth company&rdquo; under applicable federal securities laws and will be subject to reduced
+public company reporting requirements.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt; text-align: justify"><B>Investing in our securities involves
+a high degree of risk. Before buying any securities, you should carefully read the discussion of the risks of investing in our securities
+in &ldquo;Risk Factors&rdquo; beginning on page 46 of the Proxy Statement.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt; text-align: justify"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.3pt; text-align: justify"><B>Neither the Securities and Exchange
+Commission nor any state securities commission has approved or disapproved of the securities to be issued under the Proxy Statement or
+determined if the Proxy Statement is truthful or complete. Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>The date of this Proxy Statement Supplement
+is December 4, 2025.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>UNITED STATES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>SECURITIES AND EXCHANGE COMMISSION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Washington, D.C. 20549</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>FORM 8-K</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>CURRENT REPORT</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>PURSUANT TO SECTION 13 OR 15(d) OF THE</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>SECURITIES EXCHANGE ACT OF 1934</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Date of Report (Date of earliest event reported):
+<B>December 3, 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>CANTOR EQUITY PARTNERS, INC.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(Exact name of registrant as specified in its charter)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 32%"><B>Cayman Islands</B></TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt; width: 2%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 32%"><B>001-42250</B></TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt; width: 2%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 32%"><B>98-1576482</B></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">(State or other jurisdiction<BR>
+of incorporation)</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">(Commission File Number)</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">(IRS Employer<BR>
+Identification No.)</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 49%"><B>110 East 59th Street, New York, NY</B></TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt; width: 2%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 49%"><B>10022</B></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">(Address of principal executive offices)</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">(Zip Code)</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Registrant&#8217;s telephone number, including
+area code: <B>(212) 938-5000</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><B>Not Applicable</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(Former name or former address, if changed since
+last report)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></TD>
+    <TD>Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&#160;</TD>
+    <TD>&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></TD>
+    <TD>Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&#160;</TD>
+    <TD>&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></TD>
+    <TD>Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&#160;</TD>
+    <TD>&#160;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></TD>
+    <TD>Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 32%"><B>Title of each class</B></TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt; width: 2%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 32%"><B>Trading Symbol(s)</B></TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt; width: 2%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; text-align: center; text-indent: 0pt; width: 32%"><B>Name of each exchange on which registered</B></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: #CCEEFF">
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">Class A ordinary shares, par value $0.0001 per share</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">CEP</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; text-align: center; text-indent: 0pt">The Nasdaq Stock Market LLC</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company <FONT STYLE="font-family: Times New Roman, Times, Serif">&#9746;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <FONT STYLE="font-family: Times New Roman, Times, Serif">&#9744;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</P>
+
+<!-- Field: Rule-Page --><DIV STYLE="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><DIV STYLE="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</DIV></DIV><!-- Field: /Rule-Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 2 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 5.07 Submission of Matters to a Vote of
+Security Holders</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.45in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On December 3, 2025, Cantor Equity Partners, Inc.
+(&#8220;CEP&#8221;) held an extraordinary general meeting of its shareholders (the &#8220;Meeting&#8221;), at which the following proposals
+were submitted to a vote of CEP shareholders. The proposals listed below are described in more detail in CEP&#8217;s definitive proxy
+statement filed with the Securities and Exchange Commission on November 6, 2025, as amended (the &#8220;Definitive Proxy Statement&#8221;).
+Capitalized terms used but not otherwise defined herein shall have the meanings ascribed to them in the Definitive Proxy Statement, as
+applicable.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Only CEP shareholders of record as of the close
+of business on October 20, 2025, the record date for the Meeting, were entitled to vote at the Meeting. As of the record date, 12,800,000
+ordinary shares of CEP were outstanding and entitled to vote at the Meeting. The final voting results for each matter submitted to a vote
+of CEP shareholders at the Meeting are as follows:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Proposal 1 &#8211; The Business Combination
+Proposal </B>&#8211; to approve and adopt the Business Combination Agreement (as amended, restated or otherwise modified from time to
+time, the &#8220;Business Combination Agreement&#8221;), dated as of April 22, 2025, by and among CEP, Twenty One Capital, Inc., a Texas
+corporation (&#8220;Pubco&#8221;), Twenty One Merger Sub D, a Cayman Islands exempted company and wholly owned subsidiary of Pubco (&#8220;CEP
+Merger Sub&#8221;), Twenty One Assets, LLC, a Delaware limited liability company (&#8220;Twenty One&#8221;), Tether Investments, S.A.
+de C.V., an El Salvador sociedad an&#243;nima de capital variable (&#8220;Tether&#8221;), iFinex, Inc., a British Virgin Islands company
+(&#8220;Bitfinex&#8221; and, together with Tether, the &#8220;Sellers&#8221;) and, solely for certain limited purposes, Stellar Beacon
+LLC, a Delaware limited liability company (&#8220;SoftBank&#8221;), pursuant to which (a) CEP will merge with and into CEP Merger Sub,
+with CEP Merger Sub continuing as the surviving company (the &#8220;CEP Merger&#8221;), and (b) at least two hours after the CEP Merger,
+Twenty One will merge with and into CEP Merger Sub C, Inc., a Delaware corporation and an indirect subsidiary of CEP (&#8220;Company Merger
+Sub&#8221;), with Company Merger Sub continuing as the surviving company (the &#8220;Company Merger,&#8221; and together with the CEP
+Merger, the &#8220;Mergers,&#8221; and together with the transaction contemplated by the Business Combination Agreement and the Ancillary
+Agreements (the &#8220;Business Combination&#8221;).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center"><B>For</B><FONT STYLE="font-size: 10pt">&#160;</FONT></TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,158,609</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">16,069</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">494,354</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Proposal 2 - The Merger Proposal </B>&#8211;&#160;to
+approve and authorize the CEP Merger and the plan of merger for the CEP Merger to be entered into by CEP Merger Sub, CEP and Pubco (the
+&#8220;CEP Plan of Merger&#8221;).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,159,090</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">15,809</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">494,133</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Proposal 3 - The NTA Proposal &#8211; </B>to
+approve an amendment (the &#8220;NTA Amendment&#8221;) to the Amended and Restated Memorandum and Articles of Association of CEP (the
+&#8220;CEP Memorandum and Articles&#8221;), which shall be effective upon the consummation of the Business Combination, to remove from
+the CEP Memorandum and Articles the limitation that CEP shall not consummate an initial business combination if it would cause its net
+tangible assets to be less than $5,000,001 either immediately prior to or upon the consummation of an initial business combination.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,122,087</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">27,156</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">519,789</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B></B></P>
+
+<!-- Field: Page; Sequence: 3; Options: NewSection -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Proposal 4 - The Organizational Documents Proposals
+</B>&#8211; to consider and vote, on a non-binding advisory basis, upon separate proposals to approve the material differences between
+the CEP Memorandum and Articles and the Amended and Restated Pubco Charter and Pubco&#8217;s Amended and Restated Bylaws (the &#8220;Proposed
+Organizational Documents&#8221;), specifically to approve:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal A: to change the size and composition
+of the board of directors to seven (7) directors, whose composition will be governed by the terms and conditions of the Governance Agreement
+to include four (4) directors initially designated by Tether, with at least two (2) qualifying as independent directors under the rules
+of the New York Stock Exchange (the &#8220;NYSE&#8221;) or any other national securities exchange, two (2) directors initially designated
+by SoftBank, with at least one (1) qualifying as an independent director under the rules of the NYSE or any other national securities
+exchange; and the Chief Executive Officer of Pubco.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,130,151</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">16,897</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">521,984</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal B: the Proposed Organizational Documents
+will provide for an unclassified board of directors of Pubco (the &#8220;Pubco Board&#8221;).&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,121,991</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">21,447</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">525,594</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal C: the Proposed Organizational Documents
+will require that the Pubco Board is elected by a plurality of the votes cast by holders of shares of Pubco Class B Stock (being all the
+shares entitled to vote at the election of directors, until all shares of Pubco Class B Stock are canceled) at a meeting of the shareholders
+at which a quorum is present.&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">4,681,618</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">465,367</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">522,047</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal D: the Proposed Organizational Documents
+will provide that special meetings of the shareholders may be called at any time by the President of Pubco, by the Pubco Board, or by
+the holders of at least thirty percent (30%) of shares of Pubco Class B Stock (being all the shares entitled to vote at the election of
+directors, until all shares of Pubco Class B Stock are canceled).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">4,682,120</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">464,454</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">522,458</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal&#160;E: the Proposed Organizational Documents
+will provide that a quorum of the Pubco Board shall be the presence of a majority of directors, whose composition will be governed by
+the terms and conditions of the Governance Agreement, including: (a)(i)&#160;at least two (2)&#160;directors appointed by Tether, if Tether
+and Bitfinex are entitled to designate for nomination at least two (2)&#160;individuals to the Pubco Board or (ii)&#160;one (1)&#160;director
+appointed by Tether, if Tether and Bitfinex are entitled to designate for nomination at least one (1)&#160;individual to the Pubco Board;
+(b) one&#160;(1)&#160;director by SoftBank, if SoftBank is entitled to designate for nomination one (1)&#160;or more individuals to the
+Pubco Board; and (c)&#160;one (1)&#160;independent director (who, for the avoidance of doubt, may also be a director appointed by Tether
+or SoftBank included for the purposes of prongs (a) and (b), as applicable). The act of such directors present at a meeting shall be the
+act of the Pubco Board. In the event that a quorum of the Pubco Board is not met, Pubco shall take all necessary action to adjourn the
+meeting of the Pubco Board to no later than seven (7) calendar days after the date on which the meeting was initially scheduled to be
+held. If a quorum is not met at such second board meeting, Pubco shall take all necessary action to adjourn the meeting of the Pubco Board
+for an additional seven (7) calendar days, provided that any number of directors present at such third board meeting shall constitute
+a valid quorum; provided, further, that the directors at such third board meeting represent a majority of members of the Pubco Board.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,126,440</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">16,822</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">525,770</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<!-- Field: Page; Sequence: 4 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal F: the Proposed Organizational Documents
+will provide that (a)&#160;Pubco must give written notice to shareholders entitled to vote at a meeting not less than ten&#160;(10)&#160;and
+not more than sixty (60)&#160;days before the date of such meeting, with such notice complying with any other requirements set by law;
+and regarding a fundamental business transaction, as defined by Texas law, not later than twenty-one (21)&#160;days prior to the meeting,
+and (b)&#160;at an annual meeting of the shareholders, shareholder proposals must be brought, among other things, (i)&#160;pursuant to
+Pubco&#8217;s proxy materials with respect to such meeting; (ii)&#160;by or at the direction of the Pubco Board; or (iii)&#160;by a shareholder
+of Pubco who (A)&#160;is a shareholder of record at the time of the giving of the notice, (B)&#160;is entitled to vote at such meeting
+and (C)&#160;has timely complied in proper written form with the notice procedures set forth in Pubco&#8217;s Amended and Restated Bylaws.
+Additionally, at an annual meeting, a shareholder&#8217;s notice must be timely received by the secretary of Pubco in compliance with
+the procedures as set forth in the Amended and Restated Bylaws.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,127,509</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">14,375</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">527,148</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal G: the Proposed Organizational Documents
+will provide for an exclusive forum for any filing, adjudication and trial of any action as set forth in the Amended and Restated Certificate
+of Formation, of the Business Court in the First Business Court Division of the State of Texas (provided that if the Business Court determines
+that it lacks jurisdiction, the United&#160;States District Court for the Northern District of Texas, Dallas Division or, if the such
+federal court lacks jurisdiction, the state district court of Dallas County, Texas); provided that this exclusive forum shall not apply
+to direct claims under the Securities Act, as amended, or the Exchange Act, as amended, or the rules and regulations thereunder.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">4,670,535</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">470,058</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">528,439</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Proposal H: the Proposed Organizational Documents
+will provide for a jury trial waiver for &#8220;internal entity claims&#8221; as defined in Section 2.115 of the Texas Business Organizations
+Code (&#8220;TBOC&#8221;). Pubco and each shareholder, director, and officer of Pubco irrevocably and unconditionally waives any right
+that Pubco or such person may have to a trial by jury in any legal action, proceeding, cause of action, counterclaim, cross-claim or third-party
+claim arising out of or relating to any &#8220;internal entity claim&#8221; as that term is defined in section 2.115 of the TBOC, and
+each shareholder of Pubco agrees that such shareholder&#8217;s holding or acquisition of shares of stock of Pubco or, to the extent permitted
+by law, options or rights to acquire shares of stock of Pubco following the adoption of the Amended and Restated Certificate of Formation
+of Pubco constitutes such shareholder&#8217;s intentional and knowing waiver of any right to trial by jury with respect to such claims.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">4,664,777</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">472,396</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">531,859</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Proposal 5 - The Nasdaq Proposal </B>&#8211;
+to approve a proposal for the purposes of complying with the applicable provisions of Nasdaq Rule 5635, the issuance of (i) shares of
+Pubco Stock in connection with the Business Combination, (ii) CEP Class A Ordinary Shares issuable in repayment of the Sponsor Loan, (iii)
+Equity PIPE Shares, and (iv) additional shares of Pubco Stock that will, upon Closing, be reserved for issuance (a) upon conversion of
+the Convertible Notes issued pursuant to the Convertible Notes Subscription Agreements, the Sponsor Convertible Notes Subscription Agreement,
+the Securities Exchange Agreement and the PIPE Engagement Letter and (b) pursuant to the Incentive Plan, to the extent such issuances
+would require shareholder approval under Nasdaq Rule 5635.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">For</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Against</TD><TD STYLE="font-weight: bold; padding-bottom: 1.5pt">&#160;</TD>
+    <TD STYLE="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Abstain</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 33%; text-align: center">5,136,508</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 33%; text-align: center">18,310</TD><TD STYLE="width: 1%">&#160;</TD>
+    <TD STYLE="width: 32%; text-align: center">514,214</TD></TR>
+  </TABLE>
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As there were sufficient votes at the time of
+the Meeting to approve each of the above proposals, the &#8220;Adjournment Proposal&#8221; described in the Definitive Proxy Statement
+was not presented to CEP shareholders.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"></P>
+
+<!-- Field: Page; Sequence: 5 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with the Meeting, CEP shareholders
+holding 1,596 Public Shares exercised their rights to redeem such shares for a pro rata portion of the funds in the trust account of CEP
+(the &#8220;Trust Account&#8221;). As a result, approximately $17,158.06 (approximately $10.75 per share, inclusive of the $0.15 per
+share to be funded by the Sponsor pursuant to the Sponsor Note) will be removed from the Trust Account to pay such shareholders. Following
+such redemptions, CEP will have 9,998,404 Public Shares outstanding.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In light of receipt of the requisite approvals
+by CEP shareholders described above, CEP expects the Business Combination to be completed promptly following the satisfaction or waiver
+of the other conditions to the consummation of the Business Combination.&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Item 8.01 Other Events.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On December 3, 2025, CEP and Pubco announced that, CEP shareholders voted to approve the Business Combination and other proposals related to the
+Business Combination at the Meeting, the anticipated closing date of the Business Combination and the anticipated listing date of
+Pubco Class A Stock on the NYSE. A copy of the press release is attached hereto as Exhibit 99.1 and incorporated herein by
+reference.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><B><I>Forward-Looking
+Statements </I></B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This Current Report on Form 8-K (this &#8220;Report&#8221;)
+contains certain forward-looking statements within the meaning of the U.S. federal securities laws, including expectations, intentions,
+plans, prospects regarding CEP, Pubco and the Business Combination and the related convertible senior secured notes offering and common
+equity PIPE financings (the &#8220;PIPE Offerings&#8221; and, together with the Business Combination, the &#8220;Proposed Transactions&#8221;)
+and statements regarding the expected closing date of the Proposed Transactions, the anticipated commencement of trading on the NYSE and
+Pubco&#8217;s vision and business strategy. These forward-looking statements are generally are identified by the words &#8220;believe,&#8221;
+&#8220;project,&#8221; &#8220;expect,&#8221; &#8220;anticipate,&#8221; &#8220;estimate,&#8221; &#8220;intend,&#8221; &#8220;strategy,&#8221;
+&#8220;future,&#8221; &#8220;opportunity,&#8221; &#8220;potential,&#8221; &#8220;plan,&#8221; &#8220;may,&#8221; &#8220;should,&#8221;
+&#8220;will,&#8221; &#8220;would,&#8221; &#8220;will be,&#8221; &#8220;will continue,&#8221; &#8220;will likely result,&#8221; and similar
+expressions. Forward-looking statements are predictions, projections and other statements about future events or conditions that are based
+on current expectations and assumptions and, as a result, are subject to risks and uncertainties. Many factors could cause actual future
+events to differ materially from the forward-looking statements in this Report, including, but not limited to, the risk that the Proposed
+Transactions may not be completed in a timely manner or at all; the failure by the parties to satisfy the conditions to the consummation
+of the Proposed Transactions; the failure of Pubco to maintain the listing of its shares of Pubco lass A Stock; costs related to the Proposed
+Transactions and as a result of becoming a public company; changes in business, market, financial, political and regulatory conditions;
+risks relating to Pubco&#8217;s anticipated operations and business; the risk that the anticipated benefits of the Business Combination
+may not be realized, the highly volatile nature of the price of Bitcoin; risks related to increased competition in the industries in which
+Pubco will operate; risks relating to significant legal, commercial, regulatory and technical uncertainty regarding Bitcoin; risks relating
+to the treatment of crypto assets for U.S. and foreign tax purposes; risks that after consummation of the Proposed Transactions, Pubco
+experiences difficulties managing its growth and expanding operations; the risks that growing Pubco&#8217;s learning programs and educational
+content could be difficult; challenges in implementing Pubco&#8217;s business plan including Bitcoin-related financial and advisory services,
+due to operational challenges, significant competition and regulation; the outcome of any potential legal proceedings that may be instituted
+against CEP, Pubco or others following the closing of the Business Combination, and other risks and uncertainties described in the filings
+of CEP and Pubco with the SEC. The inclusion of any statement in this Report does not constitute an admission by CEP, Pubco or any other
+person that the events or circumstances described in such statement are material.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></P>
+
+<!-- Field: Page; Sequence: 6 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing list of risk factors is not exhaustive.
+You should carefully consider the foregoing factors and the other risks and uncertainties described in the &#8220;Risk Factors&#8221;
+section of the Definitive Proxy Statement and the final prospectus of Pubco, dated as of November 6, 2025 and as further supplemented,
+and other documents filed by CEP and Pubco from time to time with the SEC. These filings do or will identify and address other important
+risks and uncertainties that could cause actual events and results to differ materially from those contained in the forward-looking statements.
+There may be additional risks that neither CEP nor Pubco presently know or that CEP and Pubco currently believe are immaterial that could
+also cause actual results to differ from those contained in the forward-looking statements.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Forward-looking statements speak only as of the
+date they are made. Readers are cautioned not to put undue reliance on forward-looking statements, and each of CEP and Pubco assumes no
+obligation and does not intend to update or revise these forward-looking statements, whether as a result of new information, future events,
+or otherwise. Neither CEP nor Pubco gives any assurance that either CEP or Pubco will achieve its expectations. The inclusion of any statement
+in this Report does not constitute an admission by CEP or Pubco or any other person that the events or circumstances described in such
+statement are material.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Item 9.01 Financial Statements and Exhibits.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(d) Exhibits.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding-top: 0pt; vertical-align: top; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt; width: 9%"><B>Exhibit No.</B></TD>
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt; width: 1%">&#160;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding-top: 0pt; vertical-align: bottom; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt; width: 90%"><B>Description</B></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: rgb(204,238,255)">
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt">99.1</TD>
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt"><A HREF="#ex99-1">Press Release, dated December 3, 2025.</A></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: White">
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt">104</TD>
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding-top: 0pt; padding-right: 0pt; padding-left: 0pt; text-indent: 0pt">Cover Page Interactive Data File (embedded within the Inline XBRL document)</TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+
+<!-- Field: Page; Sequence: 7 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&#160;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>SIGNATURE</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&#160;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dated: December 3, 2025</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="padding: 0pt; text-indent: 0pt">&#160;</TD>
+    <TD COLSPAN="2" STYLE="padding: 0pt; text-indent: 0pt"><B>CANTOR EQUITY PARTNERS, INC.</B></TD></TR>
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="padding: 0pt; text-indent: 0pt">&#160;</TD>
+    <TD COLSPAN="2" STYLE="padding: 0pt; text-indent: 0pt">&#160;</TD></TR>
+  <TR>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; width: 60%; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; width: 5%; text-indent: 0pt">By:</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; padding: 0pt; vertical-align: bottom; width: 35%; text-indent: 0pt">/s/ Brandon Lutnick</TD>
+    </TR>
+  <TR>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; text-indent: 0pt">Name: </TD>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; text-indent: 0pt">Brandon Lutnick</TD>
+    </TR>
+  <TR>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; text-indent: 0pt">&#160;</TD>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; text-indent: 0pt">Title:</TD>
+    <TD STYLE="padding: 0pt; vertical-align: bottom; text-indent: 0pt">Chief Executive Officer</TD>
+    </TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</P>
+
+<!-- Field: Page; Sequence: 8 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->6<!-- Field: /Sequence --></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 0pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: right"><B><A NAME="ex99-1"></A>Exhibit 99.1</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><B>Twenty One Capital and Cantor Equity Partners Announce
+Expected Closing of Business Combination and NYSE Listing</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><B>Expected Closing December 8, 2025; Combined Company
+Expected to Begin Trading on NYSE Under Ticker &ldquo;XXI&rdquo; on December 9, 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">December 3, 2025</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">AUSTIN, Texas--(BUSINESS WIRE)--Twenty One Capital, Inc. (&ldquo;Twenty
+One&rdquo;), the first-ever Bitcoin-native company that expects to be publicly listed, and Cantor Equity Partners, Inc. (&ldquo;CEP&rdquo;)
+(Nasdaq: CEP) today announced that, at the Extraordinary General Meeting of CEP&rsquo;s shareholders (the &ldquo;Meeting&rdquo;) held
+today, CEP&rsquo;s shareholders approved the previously announced proposed business combination between the parties (the &ldquo;Business
+Combination&rdquo;), as well as all other proposals related to the Business Combination.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">The final voting results for the Meeting will be included in a Current
+Report on Form 8-K to be filed with the Securities and Exchange Commission (the &ldquo;SEC&rdquo;) by CEP.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">Based on today&rsquo;s shareholder approval and subject to the satisfaction
+or waiver of certain other closing conditions as described in CEP&rsquo;s definitive proxy statement and Twenty One&rsquo;s final prospectus,
+the Business Combination and related PIPE financings are expected to be consummated on or about December 8, 2025. Following the consummation
+of such transactions, the combined company will operate as Twenty One Capital, Inc. and its shares of Class A common stock are expected
+to trade on the New York Stock Exchange (&ldquo;NYSE&rdquo;) beginning on December 9, 2025 under the symbol &ldquo;XXI.&rdquo;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>About Twenty One Capital, Inc.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">At closing, Twenty One will be a newly formed operating company focused
+exclusively on Bitcoin-related business lines that, among other things, offer shareholders a differentiated opportunity to gain exposure
+to Bitcoin through the equity markets. With a Bitcoin-native operating structure and a strategy designed to deliver long-term value, Twenty
+One intends to become a leading vehicle for capital-efficient Bitcoin accumulation and related business development.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>About Cantor Equity Partners, Inc.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">Cantor Equity Partners, Inc. is a special purpose acquisition company formed
+for the purpose of effecting a merger, share exchange, asset acquisition, share purchase, reorganization, or other similar business combination
+with one or more businesses or entities. CEP is led by Chairman and Chief Executive Officer Brandon Lutnick and sponsored by an affiliate
+of Cantor Fitzgerald.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>About Cantor Fitzgerald, L.P.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">Cantor Fitzgerald, with more than 14,000 employees, is a leading global
+financial services and real estate services holding company and a proven and resilient leader for more than 79 years. Its diverse group
+of global companies provides a wide range of products and services, including investment banking, asset and investment management, capital
+markets, prime services, research, digital assets, data, financial and commodities brokerage, trade execution, clearing, settlement, advisory,
+financial technology, custodial, commercial real estate advisory and servicing, and more.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>Forward-Looking Statements</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">This press release contains certain forward-looking statements within the
+meaning of the U.S. federal securities laws, including expectations, intentions, plans, prospects regarding CEP, Twenty One and the Business
+Combination and the related convertible senior secured notes offering and common equity PIPE financings (the &ldquo;PIPE Offerings&rdquo;
+and, together with the Business Combination, the &ldquo;Proposed Transactions&rdquo;) and statements regarding the expected closing date
+of the Proposed Transactions, the anticipated commencement of trading on the NYSE and Twenty One&rsquo;s vision and business strategy.
+These forward-looking statements are generally are identified by the words &ldquo;believe,&rdquo; &ldquo;project,&rdquo; &ldquo;expect,&rdquo;
+&ldquo;anticipate,&rdquo; &ldquo;estimate,&rdquo; &ldquo;intend,&rdquo; &ldquo;strategy,&rdquo; &ldquo;future,&rdquo; &ldquo;opportunity,&rdquo;
+&ldquo;potential,&rdquo; &ldquo;plan,&rdquo; &ldquo;may,&rdquo; &ldquo;should,&rdquo; &ldquo;will,&rdquo; &ldquo;would,&rdquo; &ldquo;will
+be,&rdquo; &ldquo;will continue,&rdquo; &ldquo;will likely result,&rdquo; and similar expressions. Forward-looking statements are predictions,
+projections and other statements about future events or conditions that are based on current expectations and assumptions and, as a result,
+are subject to risks and uncertainties. Many factors could cause actual future events to differ materially from the forward-looking statements
+in this press release, including, but not limited to, the risk that the Proposed Transactions may not be completed in a timely manner
+or at all; the failure by the parties to satisfy the conditions to the consummation of the Proposed Transactions; the failure of Twenty
+One to maintain the listing of its shares of Class A common stock; costs related to the Proposed Transactions and as a result of becoming
+a public company; changes in business, market, financial, political and regulatory conditions; risks relating to Twenty One&rsquo;s anticipated
+operations and business; the risk that the anticipated benefits of the Business Combination may not be realized, the highly volatile nature
+of the price of Bitcoin; risks related to increased competition in the industries in which Twenty One will operate; risks relating to
+significant legal, commercial, regulatory and technical uncertainty regarding Bitcoin; risks relating to the treatment of crypto assets
+for U.S. and foreign tax purposes; risks that after consummation of the Proposed Transactions, Twenty One experiences difficulties managing
+its growth and expanding operations; the risks that growing Twenty One&rsquo;s learning programs and educational content could be difficult;
+challenges in implementing Twenty One&rsquo;s business plan including Bitcoin-related financial and advisory services, due to operational
+challenges, significant competition and regulation; the outcome of any potential legal proceedings that may be instituted against CEP,
+Twenty One or others following the closing of the Business Combination, and other risks and uncertainties described in the filings of
+CEP and Twenty One with the SEC. The inclusion of any statement in this press release does not constitute an admission by CEP, Twenty
+One or any other person that the events or circumstances described in such statement are material.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">The foregoing list of risk factors is not exhaustive. You should carefully
+consider the foregoing factors and the other risks and uncertainties described in the &ldquo;Risk Factors&rdquo; section of the definitive
+proxy statement of CEP and final prospectus of Twenty One, each dated as of November 6, 2025 and as further supplemented, and other documents
+filed by CEP and Twenty One from time to time with the SEC. These filings do or will identify and address other important risks and uncertainties
+that could cause actual events and results to differ materially from those contained in the forward-looking statements. There may be additional
+risks that neither CEP nor Twenty One presently know or that CEP and Twenty One currently believe are immaterial that could also cause
+actual results to differ from those contained in the forward-looking statements.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">Forward-looking statements speak only as of the date they are made. Readers
+are cautioned not to put undue reliance on forward-looking statements, and each of CEP and Twenty One assumes no obligation and does not
+intend to update or revise these forward-looking statements, whether as a result of new information, future events, or otherwise. Neither
+CEP nor Twenty One gives any assurance that either CEP or Twenty One will achieve its expectations. The inclusion of any statement in
+this press release does not constitute an admission by CEP or Twenty One or any other person that the events or circumstances described
+in such statement are material.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>Contacts</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>MEDIA CONTACTS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0"><B>Twenty One</B><BR>
+press@xxi.money</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0">&nbsp;</P>
+
+
+
+<!-- Field: Page; Sequence: 2; Options: Last -->
+    <DIV STYLE="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&nbsp;</P>
+
+
+
+
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

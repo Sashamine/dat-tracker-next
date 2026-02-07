@@ -1,0 +1,358 @@
+<SEC-DOCUMENT>0001493152-25-024619.txt : 20251121
+<SEC-HEADER>0001493152-25-024619.hdr.sgml : 20251121
+<ACCEPTANCE-DATETIME>20251121160537
+ACCESSION NUMBER:		0001493152-25-024619
+CONFORMED SUBMISSION TYPE:	424B3
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20251121
+DATE AS OF CHANGE:		20251121
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Kindly MD, Inc.
+		CENTRAL INDEX KEY:			0001946573
+		STANDARD INDUSTRIAL CLASSIFICATION:	FINANCE SERVICES [6199]
+		ORGANIZATION NAME:           	09 Crypto Assets
+		EIN:				843829824
+		STATE OF INCORPORATION:			UT
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B3
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-274606
+		FILM NUMBER:		251507933
+
+	BUSINESS ADDRESS:	
+		STREET 1:		5097 SOUTH 900 EAST
+		STREET 2:		SUITE 100
+		CITY:			SALT LAKE CITY
+		STATE:			UT
+		ZIP:			84117
+		BUSINESS PHONE:		(385) 388-8220
+
+	MAIL ADDRESS:	
+		STREET 1:		5097 SOUTH 900 EAST
+		STREET 2:		SUITE 100
+		CITY:			SALT LAKE CITY
+		STATE:			UT
+		ZIP:			84117
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B3
+<SEQUENCE>1
+<FILENAME>form424b3.htm
+<DESCRIPTION>424B3
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="font: 10pt Times New Roman, Times, Serif; vertical-align: top">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; width: 50%"><P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>PROSPECTUS
+    SUPPLEMENT</B></FONT></P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>To
+    Prospectus dated May 6, 2025</B></FONT></P></TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; width: 50%"><P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Filed
+    Pursuant to 424(b)(3)</B></FONT></P>
+    <P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Registration
+    No. 333-274606</B></FONT></P></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>KINDLY
+MD, INC.</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><IMG SRC="form424b3_001.jpg" ALT="" STYLE="height: 70px; width: 320px"></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>2,059,811
+Shares of Common Stock Issuable Upon Exercise of Previously Issued Warrants </B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>and</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>82,310
+Shares of Common Stock</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">This
+prospectus supplement updates and supplements the information contained in the prospectus dated May 6, 2025 (as may be supplemented or
+amended from time to time, the &ldquo;Prospectus&rdquo;), which forms part of our registration statement on Form S-1 (File No. 333-274606),
+as amended, with the information contained in our Quarterly Report on Form 10-Q which was filed with the Securities and Exchange Commission
+on November 19, 2025 (the &ldquo;Quarterly Report&rdquo;). Accordingly, we have attached the Quarterly Report to this prospectus supplement.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The
+Prospectus and this prospectus supplement relate to the issuance by Kindly MD, Inc., a Utah corporation, of up to 2,059,811 shares of
+common stock underlying the tradeable warrants (the &ldquo;Tradeable Warrants&rdquo;), the non-tradeable warrants (the &ldquo;Non-tradeable
+Warrants&rdquo;) and the representative&rsquo;s warrants (the &ldquo;Representative&rsquo;s Warrants&rdquo; and, together with the Tradeable
+Warrants and the Non-tradeable Warrants, the &ldquo;Warrants&rdquo;) previously issued by us in our initial public offering that closed
+on June 3, 2024. We are not selling any shares of our common stock in this offering, and, as a result, we will not receive any proceeds
+from the sale of the common stock covered by this prospectus. All of the net proceeds from the sale of our common stock will go to the
+holders of the Warrants. Upon exercise of the Warrants, however, we will receive proceeds from the exercise of such Warrants if exercised
+for cash.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The
+Prospectus and the prospectus supplement also relate to the resale from time to time by the selling stockholders named in the Prospectus
+(the &ldquo;Selling Stockholders&rdquo;) of 82,310 shares of common stock. We will not receive any proceeds from the sale of shares of
+common stock by the Selling Stockholders pursuant to the Prospectus.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">You
+should read this prospectus supplement in conjunction with the Prospectus. This prospectus supplement is qualified by reference to the
+Prospectus except to the extent that the information in this prospectus supplement supersedes the information contained in the Prospectus.
+This prospectus supplement is not complete without, and may not be delivered or utilized except in connection with, the Prospectus. If
+there is any inconsistency between the information in the Prospectus and this prospectus supplement, you should rely on the information
+in this prospectus supplement. Terms used in this prospectus supplement but not defined herein shall have the meanings given to such
+terms in the Prospectus.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Our
+common stock is listed on the Nasdaq Capital Market (&ldquo;Nasdaq&rdquo;) under the symbol &ldquo;NAKA&rdquo; and our Tradeable Warrants
+are listed under the symbol &ldquo;NAKAW.&rdquo; The last reported sale price of our common stock on Nasdaq on November 20, 2025 was
+$0.48 per share and the last reported sale price of our Tradeable Warrants on Nasdaq on November 20, 2025 was $1.49 per warrant.</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Investing
+in our securities involves a high degree of risk. See &ldquo;Risk Factors&rdquo; beginning on page 20 of the Prospectus and in the other
+documents that are incorporated by reference in the Prospectus.</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Neither
+the Securities and Exchange Commission nor any state securities commission has approved or disapproved of the securities to be issued
+under the Prospectus or determined if the Prospectus or this prospectus supplement is truthful or complete. Any representation to the
+contrary is a criminal offense.</B></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 24pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>The date of this prospectus supplement is November 21, 2025.</B></FONT></P>
+
+
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&nbsp;</FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"></P>
+
+<!-- Field: Page; Sequence: 1; Options: Last -->
+    <DIV STYLE="margin-bottom: 6pt; border-bottom: Black 1pt solid"><TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font-size: 10pt"><TR STYLE="vertical-align: top; text-align: left"><TD STYLE="width: 100%">&nbsp;</TD></TR></TABLE></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt"></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>GRAPHIC
+<SEQUENCE>2
+<FILENAME>form424b3_001.jpg
+<DESCRIPTION>GRAPHIC
+<TEXT>
+begin 644 form424b3_001.jpg
+M_]C_X  02D9)1@ ! 0$ 9 !D  #_X0'X:'1T<#HO+VYS+F%D;V)E+F-O;2]X
+M87 O,2XP+P \/WAP86-K970@8F5G:6X])^^[OR<@:60])U<U33!-<$-E:&E(
+M>G)E4WI.5&-Z:V,Y9"<_/@T*/'@Z>&UP;65T82!X;6QN<SIX/2)A9&]B93IN
+M<SIM971A+R(^/')D9CI21$8@>&UL;G,Z<F1F/2)H='1P.B\O=W=W+G<S+F]R
+M9R\Q.3DY+S R+S(R+7)D9BUS>6YT87@M;G,C(CX\<F1F.D1E<V-R:7!T:6]N
+M(')D9CIA8F]U=#TB=75I9#IF868U8F1D-2UB83-D+3$Q9&$M860S,2UD,S-D
+M-S4Q.#)F,6(B('AM;&YS.F1C/2)H='1P.B\O<'5R;"YO<F<O9&,O96QE;65N
+M=',O,2XQ+R(^/&1C.G)I9VAT<SX\<F1F.D%L="!X;6QN<SIR9&8](FAT=' Z
+M+R]W=W<N=S,N;W)G+S$Y.3DO,#(O,C(M<F1F+7-Y;G1A>"UN<R,B/CQR9&8Z
+M;&D@>&UL.FQA;F<](G@M9&5F875L="(^/"]R9&8Z;&D^/"]R9&8Z06QT/@T*
+M"0D)/"]D8SIR:6=H=',^/"]R9&8Z1&5S8W)I<'1I;VX^/"]R9&8Z4D1&/CPO
+M>#IX;7!M971A/@T*/#]X<&%C:V5T(&5N9#TG=R<_/O_A ")%>&EF  !-30 J
+M    "  !@I@  @    $          /_; $,  P(" P(" P,# P0# P0%" 4%
+M! 0%"@<'!@@,"@P,"PH+"PT.$A -#A$."PL0%A 1$Q05%14,#Q<8%A08$A05
+M%/_; $,! P0$!00%"04%"10-"PT4%!04%!04%!04%!04%!04%!04%!04%!04
+M%!04%!04%!04%!04%!04%!04%!04%!04%/_  !$( $8!0 ,!(@ "$0$#$0'_
+MQ  ?   !!0$! 0$! 0           0(#! 4&!P@)"@O_Q "U$  " 0,# @0#
+M!04$!    7T! @, !!$%$B$Q008346$'(G$4,H&1H0@C0K'!%5+1\"0S8G*"
+M"0H6%Q@9&B4F)R@I*C0U-C<X.3I#1$5&1TA)2E-455976%E:8V1E9F=H:6IS
+M='5V=WAY>H.$A8:'B(F*DI.4E9:7F)F:HJ.DI::GJ*FJLK.TM;:WN+FZPL/$
+MQ<;'R,G*TM/4U=;7V-G:X>+CY.7FY^CIZO'R\_3U]O?X^?K_Q  ? 0 # 0$!
+M 0$! 0$!         0(#! 4&!P@)"@O_Q "U$0 " 0($! ,$!P4$!  ! G<
+M 0(#$00%(3$&$D%1!V%Q$R(R@0@40I&AL<$)(S-2\!5B<M$*%B0TX27Q%Q@9
+M&B8G*"DJ-38W.#DZ0T1%1D=(24I35%565UA96F-D969G:&EJ<W1U=G=X>7J"
+M@X2%AH>(B8J2DY25EI>8F9JBHZ2EIJ>HJ:JRL[2UMK>XN;K"P\3%QL?(R<K2
+MT]35UM?8V=KBX^3EYN?HZ>KR\_3U]O?X^?K_V@ , P$  A$#$0 _ /U3HHHH
+M ***2@#SSXM_%2W^'.E)Y4:76K70(MK=C@#'5W_V1Q]3QZD?*_B+QMKOBRY>
+M;5=4N+K<>(MY6)?8(/E'^>M;OQKUJ36OB9K3.Y,=M(+2)2?NJ@P1_P!];C^-
+M<17YKFF/J8BM*FG:*=K'[GP[D^'P>%A7E%.I)7N^E^B+FEZYJ.ASK-I]_<V,
+MJG(:WE9/SQU_&OHOX*_&^7Q5=)H6NE!J94FWNU4*+C R58#@/CGC@\]*^:*F
+MLM0GTF]M[ZV?9<VLBS1MZ,I!'ZBN7 XZKA*B:?N]4>AG&3X?,J$N:/OVT?6Y
+M]_K\R@]:6J]C<B\LK>=>%EC5Q^(S4]?J:=U<_GUJSLQ:***8@HHIF\4 /HIH
+M8&@L <4 .HINX4;L8S0 ZBDW<XI: "BBB@ HHI&;% "TE)NXS2>8* 'T4T-2
+MT +1110 44Q9,]J7?EL=Z '44E(SA>M #J*89!QWIV[B@!:*3=2;A0 ZBDZ\
+MTM 'P[>?\%4/"NF:]J%C=>!M:>"TNI;<7-K<P2>8$<KO"L5X.,]>]>B>!_\
+M@HM\%_&,T4%SK5YX7N9#M6/7;)HD_&6/?&H]V85^0\WF?:)1+N\W>V_=UW9Y
+MS[YIM=GLHGY]'/,5&7O6:]#^@70?$FF>*-+AU+1]2L]6TZ<9AO+&=9HI!ZJZ
+MD@_@:T5;<N?6OP3^'/Q6\7_"'6O[4\'>(+W0+MB#(+5@8IL=!+$P*2#V937Z
+M._LP?\%$M&^)EU9^&OB#';>%O$LN(K?4(R5T^^<G 7+9,#GH%8E6/1LD+6$J
+M3CJ?18/.*.):A/W9?@6?CIX?DT'XDZFS(5@OR+N)NS;@ WX[@WYBN!K[/^)'
+MPYL/B1HOV2Y)M[N E[:["Y:)B/3NIXR/Z\U\Q^)/@[XM\,W+I+I$]] #\MS8
+M*9D8?0?,/Q%?FV:9;5IUI5::O%ZZ']%</9]AJ^%AAZTU&<5;72]MK'&5;TC1
+M[CQ#JUGIEJI:XO)5A3VR<9^@&2?85LZ3\-?%>MS+%:^'[_).-\T)A0?\"? K
+MZ&^#_P %X? ;'4]2DCO-;=2@://EVZGJ$SC)/=OP'?/+@<LK8FHKQM'JST,W
+MS["8'#RY)J4VM$G?7S/5;.!;6UAA0?)&BJ/H!BIOQKDO%_Q*\.?#^V2?Q!K5
+MKI:,"4CF?]Y)CLJ#+,?H#7C?B#]N+P?8RM'I6G:KJQ!P)1$D$9_[[.[_ ,=K
+M].4;*Q_->,SK 8%OZS6C%]KZ_<M3Z1HKR'X"_'Y?C=<:XJ:*^D+IJP-EKD2^
+M9YAD]%&,>7[]:]?H.["8NCCJ*Q&'ES1>S$KX?_X*)?M ?$+X*Z]X"A\$>)9-
+M BU&VO7NTCM+>;S61H A/FQOC =NF.M?<!K\W?\ @K'_ ,C)\,/^O34?_0[:
+MM*?Q')FDY4\+*4'9GV%^R7XVUOXB?L]^#?$GB34&U36[^WE>YO'B2,R,)Y%!
+MVHJJ/E51P!TKR?\ ;E_;"/P/T=/"OA"[C/C_ %",.9@JR+I5N?\ EJRL"ID;
+MHBD$8RQ& H;C/ _[3&F?LW?L*?#^^VQ7WBC4;2YBT?2Y&XED%Q+F60#D11Y4
+MMC&254$%LCPW]DC]F36?VJ/'M]\1OB'+<7WA<7K3W5Q<';)K=T",Q+C&(5.
+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
+M"G@_2?BIJGQ&M=%AB\7:E:)9W%^&/S(N!D+G 8A44L!DA%';G _:Q_Y-E^*
+M'_0NWO\ Z):H<N9JQOA\O6$IU)2=W9V\D?#/_!*__DL_BW_L!'_THBKR#]O;
+M_D[;XC_]=;+_ --]M7KO_!*YO^+S>+/^P"?_ $HAKR/]O16;]K;XC@ D^;9=
+M/^P=;5K]L\&?_(MI_P"(_9N+I3)W2-2[E551EF8X '<UX1-^W5\"[6W:9OB!
+M:,H'_+*SNI&_[Y6(FOE/]JW_ (*)VGCKPKJ?@WX:V]W!9:C&UM?>(+V/R7:
+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
+M "BBB@ HHHH **** "BBB@!O&WIQ1M'I110 HQBBBB@!:*** "BBB@ HHHH
+***** "BBB@#_V0$!
+
+end
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

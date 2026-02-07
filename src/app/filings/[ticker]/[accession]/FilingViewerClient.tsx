@@ -30,9 +30,20 @@ export default function FilingViewerClient({ ticker, accession, searchQuery }: F
       // R2 bucket for SEC filings (primary), SEC EDGAR (fallback)
       const r2Base = "https://pub-1e4356c7aea34102aad6e3493b0c62f1.r2.dev";
       
+      // Ticker to batch mapping
+      const tickerBatches: Record<string, number> = {
+        abtc: 1, asst: 1, avx: 1, bmnr: 1, bnc: 1, btbt: 1, btcs: 1, btdr: 1, btog: 1, cepo: 1, clsk: 1,
+        corz: 2, cwd: 2, cyph: 2, dfdv: 2, djt: 2, ethm: 2, fgnx: 2, fwdi: 2,
+        game: 3, hsdt: 3, hypd: 3, kulr: 3, lits: 3, mara: 3, mstr: 3, na: 3,
+        naka: 4, nxtt: 4, purr: 4, riot: 4, sbet: 4, stke: 4, suig: 4,
+        taox: 5, tbh: 5, tron: 5, twav: 5, upxi: 5, xrpn: 5, xxi: 5,
+        zone: 6,
+      };
+      const batch = tickerBatches[tickerLower] || 1;
+      
       // Try R2 first, then fall back to fetching from SEC via our API
       const urls = [
-        `${r2Base}/sec-content/${tickerLower}/${accessionWithDashes}.txt`,
+        `${r2Base}/batch${batch}/${tickerLower}/${accessionWithDashes}.txt`,
         `/api/sec/fetch-content?ticker=${tickerLower}&accession=${accessionWithDashes}`,
       ];
       

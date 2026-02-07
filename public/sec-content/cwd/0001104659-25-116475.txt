@@ -1,0 +1,2029 @@
+<SEC-DOCUMENT>0001104659-25-116475.txt : 20251126
+<SEC-HEADER>0001104659-25-116475.hdr.sgml : 20251126
+<ACCEPTANCE-DATETIME>20251126170051
+ACCESSION NUMBER:		0001104659-25-116475
+CONFORMED SUBMISSION TYPE:	424B3
+PUBLIC DOCUMENT COUNT:		1
+FILED AS OF DATE:		20251126
+DATE AS OF CHANGE:		20251126
+
+FILER:
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			CaliberCos Inc.
+		CENTRAL INDEX KEY:			0001627282
+		STANDARD INDUSTRIAL CLASSIFICATION:	REAL ESTATE [6500]
+		ORGANIZATION NAME:           	05 Real Estate & Construction
+		EIN:				000000000
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		424B3
+		SEC ACT:		1933 Act
+		SEC FILE NUMBER:	333-290640
+		FILM NUMBER:		251531224
+
+	BUSINESS ADDRESS:	
+		STREET 1:		8901 E. MOUNTAIN VIEW RD.
+		STREET 2:		SUITE 150
+		CITY:			SCOTTSDALE
+		STATE:			AZ
+		ZIP:			85258
+		BUSINESS PHONE:		480-295-7600
+
+	MAIL ADDRESS:	
+		STREET 1:		8901 E. MOUNTAIN VIEW RD.
+		STREET 2:		SUITE 150
+		CITY:			SCOTTSDALE
+		STATE:			AZ
+		ZIP:			85258
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	CaliberCo Inc.
+		DATE OF NAME CHANGE:	20141205
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>424B3
+<SEQUENCE>1
+<FILENAME>tm2532122d1_424b3.htm
+<DESCRIPTION>424B3
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<P STYLE="text-align: right; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><B>Filed pursuant to Rule 424(b)(3)</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Registration No.&nbsp;333-290640</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>PROSPECTUS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>CALIBERCOS INC.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>255,385 Shares of Class&nbsp;A Common Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus relates to the resale by the selling
+stockholders named herein (the &ldquo;Selling Stockholders&rdquo;), or their respective transferees, pledgees, donees or other successors-in-interest,
+from time to time, of up to 255,385 shares of Class&nbsp;A common stock, par value $0.001 per share, of CaliberCos Inc. held by the Selling
+Stockholders consisting of 15,385 shares of Class&nbsp;A common stock (the &ldquo;Common Stock Shares&rdquo;) and 240,000 shares of Class&nbsp;A
+common stock issuable upon the exercise of the warrants (the &ldquo;Warrant Shares&rdquo;, together with the Common Stock Shares, the
+ &ldquo;Shares&rdquo;). We are registering the Shares on behalf of the Selling Stockholders, to be offered and sold from time to time,
+to satisfy certain registration rights that we have granted to the Selling Stockholders.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders may resell or
+dispose of the Shares, or interests therein, at fixed prices, at prevailing market prices at the time of sale or at prices
+negotiated with purchasers, to or through underwriters, broker-dealers, agents, or through any other means described under the
+heading &ldquo;Plan of Distribution&rdquo; beginning on page&nbsp;17 of this prospectus. The Selling Stockholders will bear its
+respective commissions and discounts, if any, attributable to the sale or disposition of the Shares, or interests therein, held by
+the Selling Stockholders. We will bear all costs, expenses and fees in connection with the registration of the Shares. We will not
+receive any of the proceeds from the sale of the Shares by the Selling Stockholders. However, we will receive proceeds from the
+exercise of the warrants if the warrants are exercised and the holder of such warrants pay the exercise price in cash upon such
+exercise.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our Class&nbsp;A common stock is listed on the
+Nasdaq Capital Market under the symbol &ldquo;CWD.&rdquo; On September&nbsp;29, 2025, the last reported sale price for our Class&nbsp;A
+common stock on the Nasdaq Capital Market was $4.80 per share.</P>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Investing in our securities involves a
+high degree of risk. You should review carefully the risks and uncertainties described under the heading &ldquo;Risk Factors&rdquo;
+beginning on page 5 of this prospectus, contained in the applicable prospectus supplement and in any related free writing
+prospectus, and under similar headings in the other documents that are incorporated by reference into this prospectus or any
+prospectus supplement before making a decision to purchase our securities.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Neither the Securities and Exchange Commission
+nor any state securities commission has approved or disapproved of these securities or determined if this prospectus is truthful or complete.
+Any representation to the contrary is a criminal offense.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>The date of this prospectus November 26,
+2025.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>TABLE OF CONTENTS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font-size: 10pt">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Page</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_001">About This Prospectus</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_001"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">ii</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_002">Special Note Regarding Forward-Looking Statements</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_002"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">iii</FONT></A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; width: 87%; text-align: left"><A HREF="#a_003">Prospectus Summary</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; width: 2%">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; width: 10%; text-align: center"><A HREF="#a_003">1</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_004">The Offering</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_004">4</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_005">Risk Factors</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_005">5</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif"><A HREF="#a_006">Use of Proceeds</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_006">6</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_007">Selling Stockholders</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_007">7</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_008">Description of Capital Stock</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_008">8</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif"><A HREF="#a_009">Plan of Distribution</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_009">17</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_010">Legal Matters</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_010">19</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif"><A HREF="#a_011">Experts</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_011">19</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_012">Where You Can Find More Information</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_012">19</A></TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left"><A HREF="#a_013">Incorporation of Certain Information by Reference</A></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center"><A HREF="#a_013">20</A></TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>You should rely only on the information contained
+in this prospectus. Neither we nor the Selling Stockholders have authorized any other person to provide you with information different
+from or in addition to that contained in this prospectus. If anyone provides you with different or inconsistent information, you should
+not rely on it. The Selling Stockholders are not making an offer to sell these securities in any jurisdiction where an offer or sale is
+not permitted. You should assume that the information appearing in this prospectus is accurate only as of the date on the front cover
+of this prospectus. Our business, financial condition, results of operations and prospects may have changed since that date.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>We further note that the representations, warranties
+and covenants made by us in any document that is filed as an exhibit to the registration statement of which this prospectus is a part
+and in any document that is incorporated by reference herein were made solely for the benefit of the parties to such agreement, including,
+in some cases, for the purpose of allocating risk among the parties to such agreements, and should not be deemed to be a representation,
+warranty or covenant to you. Moreover, such representations, warranties or covenants were accurate only as of the date when made. Accordingly,
+such representations, warranties and covenants should not be relied on as accurately representing the current state of our affairs.</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: LowerRoman; Name: PageNo -->i<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_001"></A>ABOUT THIS PROSPECTUS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus is part of a registration statement
+on Form&nbsp;S-3 that CaliberCos Inc. (&ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;Caliber,&rdquo; or the &ldquo;Company&rdquo;) filed
+with the Securities and Exchange Commission (the &ldquo;SEC&rdquo;). The selling stockholders (the &ldquo;Selling Stockholders&rdquo;)
+may sell up to 255,385 shares of Class&nbsp;A common stock, consisting of 15,385 shares of Class&nbsp;A common stock (the &ldquo;Common
+Stock Shares&rdquo;) and 240,000 shares of Class&nbsp;A common stock issuable upon the exercise of the warrants (the &ldquo;Warrant Shares&rdquo;,
+together with the Common Stock Shares, the &ldquo;Shares&rdquo;) as described in this prospectus. We will not receive any proceeds from
+the sale by the Selling Stockholders of the Shares offered pursuant to this prospectus. However, we will receive proceeds from the exercise
+of the warrants if the warrants are exercised and the holders of such warrants pay the exercise price in cash upon such exercise.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We may also file a prospectus supplement or post-effective
+amendment to the Registration Statement on Form&nbsp;S-3 of which this prospectus forms a part (the &ldquo;Registration Statement&rdquo;)
+that may contain material information relating to the offering. The prospectus supplement or post-effective amendment may also add, update
+or change information contained in this prospectus with respect to the offering. If there is any inconsistency between the information
+in this prospectus and the applicable prospectus supplement or post-effective amendment, you should rely on the prospectus supplement
+or post-effective amendment, as applicable. Before purchasing any Shares, you should carefully read this prospectus, any post-effective
+amendment, and any applicable prospectus supplement, together with the additional information described under the headings &ldquo;Where
+You Can Find More Information&rdquo; beginning on page&nbsp;19 and &ldquo;Incorporation of Certain Information by Reference&rdquo; beginning
+on page&nbsp;20.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Neither we, nor the Selling Stockholders, have
+authorized anyone to provide you with any information or to make any representations other than those contained or incorporated by reference
+in this prospectus, any post-effective amendment, or any applicable prospectus supplement prepared by or on behalf of us or to which we
+have referred you. We and the Selling Stockholders take no responsibility for and can provide no assurance as to the reliability of any
+other information that others may give you. We and the Selling Stockholders will not make an offer to sell these Shares in any jurisdiction
+where the offer or sale is not permitted. You should assume that the information appearing in this prospectus, any post-effective amendment
+and any applicable prospectus supplement to this prospectus is accurate only as of the date on its respective cover. Our business, financial
+condition, results of operations and prospects may have changed since those dates. This prospectus incorporates by reference, and any
+post-effective amendment or any prospectus supplement may contain or incorporate by reference, market data and industry statistics and
+forecasts that are based on independent industry publications and other publicly available information. Although we believe these sources
+are reliable, we do not guarantee the accuracy or completeness of this information and we have not independently verified this information.
+In addition, the market and industry data and forecasts that may be incorporated by reference in this prospectus, any post-effective amendment
+or any prospectus supplement may involve estimates, assumptions and other risks and uncertainties and are subject to change based on various
+factors, including those discussed under the heading &ldquo;Risk Factors&rdquo; incorporated by reference in this prospectus, any post-effective
+amendment and any applicable prospectus supplement. Accordingly, investors should not place undue reliance on this information.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We further note that the representations, warranties
+and covenants made by us in any agreement that is filed as an exhibit to any document that is incorporated by reference in this prospectus
+were made solely for the benefit of the parties to such agreement, including, in some cases, for the purpose of allocating risk among
+the parties to such agreements, and should not be deemed to be a representation, warranty or covenant to you. Moreover, such representations,
+warranties or covenants were accurate only as of the date when made. Accordingly, such representations, warranties and covenants should
+not be relied on as accurately representing the current state of our affairs.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Except where the context otherwise requires or
+where otherwise indicated, the terms &ldquo;Caliber,&rdquo; &ldquo;CWD,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; &ldquo;our,&rdquo;
+ &ldquo;our company,&rdquo; &ldquo;Company&rdquo; and &ldquo;our business&rdquo; refer to CaliberCos Inc.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: LowerRoman; Name: PageNo -->ii<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_002"></A>SPECIAL NOTE REGARDING FORWARD-LOOKING STATEMENTS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This prospectus and the documents incorporated
+by reference in this prospectus include forward-looking statements, which involve risks and uncertainties. These forward-looking statements
+can be identified by the use of forward-looking terminology, including the terms &ldquo;believe,&rdquo; &ldquo;estimate,&rdquo; &ldquo;project,&rdquo;
+ &ldquo;anticipate,&rdquo; &ldquo;expect,&rdquo; &ldquo;seek,&rdquo; &ldquo;predict,&rdquo; &ldquo;continue,&rdquo; &ldquo;possible,&rdquo;
+ &ldquo;intend,&rdquo; &ldquo;may,&rdquo; &ldquo;might,&rdquo; &ldquo;will,&rdquo; &ldquo;could,&rdquo; would&rdquo; or &ldquo;should&rdquo;
+or, in each case, their negative, or other variations or comparable terminology. These forward-looking statements include all matters
+that are not historical facts. They appear in a number of places throughout this prospectus and the documents incorporated by reference
+in this prospectus, and include statements regarding our intentions, beliefs or current expectations concerning, among other things, development,
+manufacturing and sales of our vehicles, our operations, prospects, strategies, and the industry in which we operate. We derive many of
+our forward-looking statements from our operating budgets and forecasts, which are based upon many detailed assumptions. While we believe
+that our assumptions are reasonable, we caution that it is very difficult to predict the impact of known factors, and, of course, it is
+impossible for us to anticipate all factors that could affect our actual results. Forward-looking statements should not be read as a guarantee
+of future performance or results and may not be accurate indications of when such performance or results will be achieved. In light of
+these risks and uncertainties, the forward-looking events and circumstances discussed in this prospectus may not occur and actual results
+could differ materially from those anticipated or implied in the forward-looking statements.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Forward-looking statements speak only as of the
+date of this prospectus. You should not put undue reliance on any forward-looking statements. We assume no obligation to update forward-looking
+statements to reflect actual results, changes in assumptions or changes in other factors affecting forward-looking information, except
+to the extent required by applicable laws. If we update one or more forward-looking statements, no inference should be drawn that we will
+make additional updates with respect to those or other forward-looking statements. You should read this prospectus, the documents incorporated
+by reference in this prospectus, and the documents that we reference in this prospectus and have filed with the SEC as exhibits to the
+registration statement of which this prospectus is a part with the understanding that our actual future results, levels of activity, performance
+and events and circumstances may be materially different from what we expect. All forward-looking statements are based upon information
+available to us on the date of this prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">By their nature, forward-looking statements involve
+risks and uncertainties because they relate to events and depend on circumstances that may or may not occur in the future. We caution
+you that forward-looking statements are not guarantees of future performance and that our actual results of operations, financial condition,
+business and prospects may differ materially from those made in or suggested by the forward-looking statements contained in this prospectus.
+In addition, even if our results of operations, financial condition, business and prospects are consistent with the forward-looking statements
+contained (or incorporated by reference) in this prospectus, those results may not be indicative of results in subsequent periods.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Forward-looking statements necessarily involve
+risks and uncertainties, and our actual results could differ materially from those anticipated in the forward-looking statements due to
+several factors, including those set forth under the heading &ldquo;Risk Factors&rdquo; in our most recent Annual Report on Form&nbsp;10-K
+filed with the SEC, as such risk factors may be amended, supplemented, or superseded from time to time by other reports we file with the
+SEC, including subsequent Annual Reports on Form&nbsp;10-K and Quarterly Reports on Form&nbsp;10-Q, and the risk factors described under
+the caption &ldquo;Risk Factors&rdquo; in any applicable prospectus supplement. See &ldquo;Where You Can Find More Information&rdquo;
+and &ldquo;Information Incorporated by Reference.&rdquo; The factors set forth below under &ldquo;Risk Factors&rdquo; and other cautionary
+statements made in this prospectus should be read and understood as being applicable to all related forward-looking statements wherever
+they appear in this prospectus. The forward-looking statements contained in this prospectus represent our judgment as of the date of this
+prospectus. We caution readers not to place undue reliance on such statements. Except as required by law, we undertake no obligation to
+update publicly any forward-looking statements for any reason, even if new information becomes available or other events occur in the
+future. All subsequent written and oral forward-looking statements attributable to us or persons acting on our behalf are expressly qualified
+in their entirety by the cautionary statements contained above and throughout this prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">You should read this prospectus, the documents
+incorporated by reference in this prospectus, and the documents that we reference in this prospectus and have filed as exhibits to the
+registration statement of which this prospectus is a part completely and with the understanding that our actual future results may be
+materially different from what we expect. We qualify all of our forward-looking statements by these cautionary statements.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: LowerRoman; Name: PageNo -->iii<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_003"></A>PROSPECTUS SUMMARY</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>The following summary highlights information
+contained elsewhere in this prospectus and in documents incorporated by reference. This summary is not complete and may not contain all
+the information you should consider before investing in our securities. You should read this entire prospectus and the documents incorporated
+by reference in this prospectus carefully, especially the risks of investing in our securities discussed under the heading &ldquo;Risk
+Factors,&rdquo; and our financial statements and related notes incorporated by reference in this prospectus before making an investment
+decision. Except as otherwise indicated herein or as the context otherwise requires, references in this prospectus and the documents incorporated
+by reference in this prospectus to, the &ldquo;Company&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;, &ldquo;Caliber&rdquo;
+refer to CaliberCos Inc., a Delaware corporation, and its consolidated subsidiaries. This prospectus includes forward-looking statements
+that involve risks and uncertainties. See &ldquo;Cautionary Note Regarding Forward-Looking Statements.&rdquo; This prospectus includes
+trademarks, service marks and trade names owned by us or other companies. All trademarks, service marks and trade names included in this
+prospectus are the property of their respective owners.</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Our Company</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Over the past 16 years, Caliber has emerged as
+a leading real estate asset management firm, with more than $2.9 billion in Managed Assets. Caliber&rsquo;s business is focused on a singular
+objective, to make money in all market conditions by managing and developing attractive multi-family residential, hospitality, and multi-tenant
+industrial assets. Caliber serves financial professionals, family office investors, and high net worth investors, through its real estate
+fund products focused on generating value growth, income, and tax advantages. Caliber competes in the broad market for alternative investments,
+a fast-growing segment of the global investment market.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">For Multi-Family Residential&nbsp;&amp; Multi-Tenant
+Industrial assets, Caliber is regionally focused on growth-oriented markets; namely Arizona, Colorado&nbsp;&amp; Texas. For its Hospitality
+platform, Caliber is investing through the United States with a specific focus on markets that have experience population growth and job
+growth in the last 5 years.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our competitive advantage is driven by several
+elements of the Caliber platform:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.5in">1.</TD><TD STYLE="text-align: justify">The combination of an institutional-grade investment management platform combined with boutique, middle-market
+fund sizes and real estate projects.</TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.5in">2.</TD><TD STYLE="text-align: justify">Our in-house shared services group, which offers Caliber greater control over our real estate and visibility
+to find future investment opportunities</TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.5in">3.</TD><TD STYLE="text-align: justify">Our in-house fundraising infrastructure, allowing Caliber to serve a broad range of investors and institutions.</TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Caliber defines middle-market in two ways. The
+first, by the size of the investments, we typically pursue - projects between $5.0 million and $50.0 million per asset. The second, by
+the size of the investment funds. We offer, typically $200.0 million for a multi-asset discretionary fund and $5.0 million to $20 million
+for a syndication. In addition, Caliber is building the Caliber Hospitality Trust (CHT), a middle-market hotel investment company utilizing
+the UPREIT strategy with expectations that CHT will become a listed company when its assets under management (&ldquo;AUM&rdquo;) exceeds
+$1.0 billion.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As an alternative asset manager, we offer a full
+suite of support services and employ a vertically integrated approach to investment management. Our asset management activities are complemented
+with transaction and advisory services including development and construction management, acquisition and disposition expertise, and fund
+formation, which we believe differentiate us from other asset management firms. We earn the following fees from providing these services
+under our asset management platform (the &ldquo;Platform&rdquo;):</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Asset Management Revenues</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">Organizational&nbsp;&amp; Offering (&ldquo;O&amp;O&rdquo;)
+fees include fund set-up fees and are a one-time fee earned during the initial formation, administration, and set-up of fund products
+we distribute and manage. These fees are recognized at the point in time when the performance under the contract is complete.</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">Fund management fees are generally based on 1.0%
+to 1.5% of the unreturned capital contributions in a particular fund and include reimbursement for costs incurred on behalf of the fund,
+including an allocation of certain overhead costs. These customer contracts require the Company to provide management services, representing
+a performance obligation that the Company satisfies over time. With respect to the Caliber Hospitality Trust (as defined in Note 3 - VIEs),
+the Company earns a fund management fee of 0.7% of the Caliber Hospitality Trust&rsquo;s enterprise value and is reimbursed for certain
+costs incurred on behalf of the Caliber Hospitality Trust.</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">Financing fees are earned for services the Company
+performs in securing third-party financing on behalf of our private equity real estate funds. These fees are recognized at the point in
+time when the performance under the contract is complete, which is essentially upon closing of a loan. In addition, the Company earns
+fees for guaranteeing certain loans, representing a performance obligation that the Company satisfies over time.</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">Real estate development revenues are generally
+based on two fee-based contracts, which are up to 6% on a combined basis. The first, a real estate development contract that provides
+for up to 4.0% of the total expected costs of the development and is paid for services performed by Caliber Development, LLC as the principal
+developer of Caliber projects. These services may include obtaining new entitlements or zoning changes and managing and supervising third-party
+developers. The second, a construction management contract that provides for up to 4.0% of the total expected costs of the construction
+project for services provided managing general contractors with respect to the construction of the properties owned by the funds. Prior
+to the commencement of construction, development fee revenue is recognized at a point in time as the related performance obligations are
+satisfied and the customer obtains control of the promised service, including negotiation, due diligence, entitlements, planning, and
+design activities. During the construction period, construction management fee revenue is recognized over time as the performance obligations
+are satisfied.</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">Brokerage fees are earned at a point in time
+at fixed rates for services performed related to acquisitions, dispositions, leasing, and financing transactions.</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 5; Options: NewSection; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Performance Allocations</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">Performance allocations are an arrangement in
+which we are entitled to an allocation of investment returns, generated within the investment funds which we manage, based on a contractual
+formula. We typically receive 15.0% to 35.0% of all cash distributions from (i)&nbsp;the operating cash flow of each fund, after payment
+to the related fund investors of any accumulated and unpaid priority preferred returns and repayment of preferred capital contributions;
+and (ii)&nbsp;the cash flow resulting from the sale or refinance of any real estate assets held by each fund, after payment to the related
+fund investors of any accumulated and unpaid priority preferred returns and repayment of initial preferred capital contributions. Our
+funds&rsquo; preferred returns range from 6.0% to 12.0%, typically 6.0% for common equity or 10.0% to 12.0% for preferred equity, which
+does not participate in profits. Performance allocations are related to services which have been provided and are recognized when it is
+determined that they are no longer probable of significant reversal, which is generally satisfied when an underlying fund investment is
+realized or sold.</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have $2.9 billion in Managed Assets, which
+is comprised of AUM and Assets Under Development (&ldquo;AUD&rdquo;). We have a number of development, redevelopment, construction, and
+entitlement projects that are underway or are in the planning stages, which we define as AUD. This category includes projects to be built
+on undeveloped land and projects to be built and constructed on undeveloped lands, which are not yet owned by our funds but are under
+contract to purchase. Completing these development activities may ultimately result in income-producing assets, assets we may sell to
+third parties, or both. If we complete all AUD at December&nbsp;31, 2024, up through sale, we estimate the Company could earn $89.0 million
+in performance allocations. As of December&nbsp;31, 2024, we are actively developing 1,796 multifamily units, 697 single family units,
+3.7 million square feet of commercial and industrial, and 3.5 million square feet of office and retail. If all of these projects are brought
+to completion, the total cost capitalized to these projects, which represents total current estimated costs to complete the development
+and construction of such projects by us or a third party, is $2.1 billion, which we expect would be funded through a combination of undeployed
+fund cash, third-party equity, project sales, tax credit financing and similar incentives, and secured debt financing.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We are under no obligation to complete these projects
+and may dispose of any such assets at any time. There can be no assurance that AUD will ultimately be developed or constructed because
+of the nature of the cost of the approval and development process and market demand for a particular use. In addition, the mix of residential
+and commercial assets under development may change prior to final development. The development of these assets will require significant
+additional financing or other sources of funding, which may not be available. Similarly, there can be no assurance that performance allocations
+associated with our Managed Assets will be realized because our total costs to complete a project could change. In addition, the price
+we might obtain upon selling the investment at some point in the future could be different than our projections.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><I>The LINK Strategy</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our Board of Directors has adopted a treasury
+policy under which the principal holding in our treasury reserve on the balance sheet will be allocated to digital assets, starting with
+Chainlink (LINK) by applying a public-market treasury model to an asset that&rsquo;s earlier in its lifecycle, structurally reflexive,
+and vastly underexposed as compared to Bitcoins. The Board approved our new treasury policy on August&nbsp;25, 2025, authorizing long-term
+accumulation of LINK.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We will explore acquiring Chainlink validators
+and aims to acquire and stake LINK through them. The validator business seeks to acquire outside stake and use the corresponding revenue
+to acquire more LINK. Validators are blockchain nodes on the network with core functions including validating transactions and maintaining
+network consensus. To operate a validator on Chainlink, one must commit or &lsquo;stake&rsquo; a certain amount of LINK. In return, validator
+operators are rewarded with more LINK tokens.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We will continue operating our existing core operating
+business in addition to our focus on our aforementioned treasury policy.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>Recent Financing</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On September&nbsp;11, 2025, we sold 15,868 shares
+of our Series&nbsp;B Preferred Stock, $0.001 par value, to Mast Hill Fund, L.P. at a per share price of $1,000. The shares are convertible
+into shares of our Class&nbsp;A common stock at a conversion price of $250.00, with beneficial ownership restrictions and share cap limitations,
+as set forth in the Series&nbsp;B Certificate of Designation. See &ldquo;Description of Securities &ndash; Series&nbsp;B Preferred Stock&rdquo;.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 6; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Implications of Being an &ldquo;Emerging Growth
+Company&rdquo;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We are an &ldquo;emerging growth company&rdquo;
+as defined under the federal securities laws. For so long as we remain an emerging growth company, we are permitted to rely on exemptions
+from specified disclosure requirements that are applicable to other public companies that are not emerging growth companies. These exemptions
+include the following:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 2%">&nbsp;</TD>
+    <TD STYLE="width: 2%"><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="width: 96%; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">not being required to comply with the auditor attestation requirements in the assessment of our internal controls over financial reporting;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">not being required to comply with any requirement that may be adopted by the Public Company Accounting Oversight Board regarding mandatory audit firm rotation or a supplement to the auditor&rsquo;s report providing additional information about the audit and the financial statements;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">reduced disclosure obligations regarding executive compensation; and</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Symbol">&middot;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">exemptions from the requirements of holding a nonbinding advisory vote on executive compensation and shareholder approval of any golden parachute payments not previously approved.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">An emerging growth company may delay the adoption
+of certain accounting standards until those standards would otherwise apply to private companies. We have irrevocably elected not to take
+advantage of the extended transition period for complying with new or revised accounting standards provided to emerging growth companies.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We will remain an emerging growth company until
+the earliest of (i)&nbsp;the last day of the fiscal year following the fifth anniversary of the completion of our IPO, (ii)&nbsp;the last
+day of the first fiscal year in which our annual gross revenues exceed $1.235 billion, (iii)&nbsp;the date on which we have, during the
+immediately preceding three-year period, issued more than $1.0 billion in non-convertible debt securities and (iv)&nbsp;the end of any
+fiscal year in which the market value of our common stock held by non-affiliates exceeds $700 million as of the end of the second quarter
+of that fiscal year.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Implications of Being a Smaller Reporting Company</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We are a &ldquo;smaller reporting company&rdquo;
+as defined in Rule&nbsp;10(f)(1)&nbsp;of Regulation S-K. Smaller reporting companies may take advantage of certain reduced disclosure
+obligations, including, among other things, providing only two years of audited financial statements. We will remain a smaller reporting
+company until the last day of the fiscal year in which (1)&nbsp;the market value of our shares held by non-affiliates equals or exceeds
+$250 million as of the prior June&nbsp;30th, or (2)&nbsp;our annual revenues equaled or exceeded $100 million during such completed fiscal
+year and the market value of our shares held by non-affiliates equals or exceeds $700 million as of the prior June&nbsp;30th. Such reduced
+disclosure and corporate governance obligations may make it more challenging for investors to analyze our results of operations and financial
+prospects.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Corporate Information</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our principal executive offices are located at
+8901 E. Mountain View Rd. Ste. 150, Scottsdale, AZ 85258 and our telephone number is (602) 295-7600. We maintain a website at www.calibercos.com.
+Information available on our website is not incorporated by reference in and is not deemed a part of this offering circular.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Other Information</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">For a complete description of our business, financial
+condition, results of operations and other important information, we refer you to our filings with the Securities and Exchange Commission
+(the &ldquo;SEC&rdquo;) that are incorporated by reference in this prospectus, including&nbsp;<A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm" STYLE="-sec-extract: exhibit">our
+Annual Report on Form&nbsp;10-K for the year ended December&nbsp;31, 2024</A>. For instructions on how to find copies of these documents,
+please see the section titled &ldquo;<I>Incorporation of Certain Information by reference</I>&rdquo; beginning on page&nbsp;20 of this
+prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 7; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_004"></A>THE OFFERING</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR>
+    <TD STYLE="vertical-align: top; width: 25%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Securities to be Offered</B></FONT></TD>
+    <TD STYLE="vertical-align: bottom; width: 1%">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; width: 74%; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Up to an aggregate of 255,385 shares of Class&nbsp;A common stock, consisting of 15,385 shares of Class&nbsp;A common stock (the &ldquo;Common Stock Shares&rdquo;) and 240,000 shares of Class&nbsp;A common stock issuable upon the exercise of the warrants (the &ldquo;Warrant Shares&rdquo;, together with the Common Stock Shares, the &ldquo;Shares&rdquo;).</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Terms of the offering</B></FONT></TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The Selling Stockholders will determine when and how they will sell the Shares offered in this prospectus, as described in the &ldquo;Plan of Distribution.&rdquo;</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Shares of Class&nbsp;A Common Stock outstanding prior to this offering <SUP>(1)</SUP></B></FONT></TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">4,598,509 &nbsp;shares of Class&nbsp;A common stock.</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Common Stock Outstanding after completion of this offering <SUP>(1)</SUP></B></FONT></TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">4,613,894 shares of Class&nbsp;A common stock.</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Use of Proceeds:</B></FONT></TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">We will not receive any proceeds from the sale of the Shares by the Selling Stockholders. However, upon any exercise of the warrants by payment of cash, we will receive the exercise price of $0.4125 per Warrant Share issued. Any proceeds received by us from the exercise of the warrants will be used for general corporate purposes.</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Listing of Securities:</B></FONT></TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Our shares of Class&nbsp;A common stock are listed on the NASDAQ Capital Market under the symbol &ldquo;CWD.&rdquo;</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top">&nbsp;</TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Risk Factors:</B></FONT></TD>
+    <TD STYLE="vertical-align: bottom">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">An investment in our shares of Class&nbsp;A common stock is highly speculative and involves a significant degree of risk. See &ldquo;Risk Factors&rdquo; and other information included in this prospectus for a discussion of factors you should carefully consider before deciding to invest in shares of our Class&nbsp;A common stock.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">(1)&nbsp;Based on 4,598,509
+shares of Class&nbsp;A common stock issued and outstanding as of September&nbsp;23, 2025 and excludes as of that date:</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">18,761
+shares of Class&nbsp;A common stock underlying the Series&nbsp;A Preferred Stock;</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">63,472
+shares of Class&nbsp;A common stock underlying the Series&nbsp;B Preferred Stock;</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">136,327
+shares of Class&nbsp;A common stock issuable upon exercise of outstanding stock options;</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">186,904
+shares of Class&nbsp;A common stock issuable upon vesting of restricted stock units (&ldquo;RSUs&rdquo;);</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">129,040
+shares of Class&nbsp;A common stock issuable upon exercise of outstanding warrants;</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">6,078
+shares of Class&nbsp;A common stock issuable upon conversion of outstanding convertible debt securities;</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Shares
+of Class&nbsp;A common stock issuable pursuant to a $25 million Equity Purchase Agreement;</FONT></TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify">120,000 Rights to acquire up to
+1.200 shares of our Class&nbsp;A common stock (see &ldquo;Description of Securities&rdquo; for further information regarding the&nbsp;Rights);
+and</TD>
+</TR></TABLE>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="font-size: 10pt; margin-top: 0; margin-bottom: 0; width: 100%"><TR STYLE="vertical-align: top; text-align: justify">
+<TD STYLE="width: 0.5in"></TD><TD STYLE="width: 0.25in; text-align: left"><FONT STYLE="font-family: Symbol; font-size: 10pt">&middot;</FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">12,632
+shares of Class&nbsp;A common stock reserved for future issuance under our 2024 Equity Incentive Plan.</FONT></TD>
+</TR></TABLE>
+
+
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<P STYLE="margin: 0"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The number of shares of Class&nbsp;A common stock referenced above assume that no outstanding stock options or warrants are exercised, no outstanding shares of Series&nbsp;A Preferred Stock, Series&nbsp;AA Preferred Stock or Series&nbsp;B Preferred Stock are converted, no outstanding convertible notes or Rights are converted, and new stock options or warrants are issued.</FONT></P>
+
+
+<P STYLE="margin: 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></P>
+
+<!-- Field: Page; Sequence: 8; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_005"></A>RISK FACTORS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>Investing in our securities involves a high
+degree of risk. In addition to the other information contained in this prospectus supplement, and in the documents we incorporate by reference,
+you should carefully consider the risks discussed under the heading &ldquo;Risk Factors&rdquo; in <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm" STYLE="-sec-extract: exhibit">our Annual Report on Form&nbsp;10-K for the fiscal year ended December&nbsp;31, 2024</A> before making a decision about investing in our securities. The risks and uncertainties
+discussed in our <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm" STYLE="-sec-extract: exhibit">Annual Report on Form&nbsp;10-K for the fiscal year ended December&nbsp;31, 2024</A> are not the only ones facing us. Additional
+risks and uncertainties not presently known to us may also harm our business. If any of these risks occur, our business, financial condition
+and operating results could be harmed, the trading price of our Class&nbsp;A common stock could decline and you could lose part or all
+of your investment.</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 9; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_006"></A>USE OF PROCEEDS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We will not receive any of the proceeds from the
+sale of the Shares by the Selling Stockholders pursuant to this prospectus. However, upon any exercise of the warrants by payment of cash,
+we will receive the exercise price of $0.4125 per Warrant Share issued. Any proceeds received by us from the exercise of the warrants
+will be used for general corporate purposes.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders will pay any agent&rsquo;s
+commissions and expenses they incur for brokerage, accounting, tax or legal services or any other expenses that they incur in disposing
+of the shares of Class&nbsp;A common stock. We will bear all other costs, fees and expenses incurred in effecting the registration of
+the shares of Class&nbsp;A common stock covered by this prospectus and any prospectus supplement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 10; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->6<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_007"></A>SELLING STOCKHOLDERS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have prepared this prospectus to allow the
+Selling Stockholders or their pledgees, donees, transferees or other successors in interest, to sell or otherwise dispose of, from time
+to time, up to 255,385 shares of Class&nbsp;A common stock, consisting of 15,385 shares of Class&nbsp;A common stock and 240,000 shares
+of Class&nbsp;A common stock issuable upon the exercise of the warrants.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with certain registration rights
+that we granted to the Selling Stockholders, we filed with the SEC the Registration Statement, with respect to the resale or other disposition
+of the Shares offered by this prospectus from time to time on Nasdaq Capital Market, in privately negotiated transactions or otherwise.
+Under the Registration Rights Agreement we entered into with the Selling Stockholders, we agreed to keep such registration statement effective
+and to keep this prospectus available for use by the Selling Stockholders until all of the securities covered by the registration statement
+have been sold or may be sold without restriction under Rule&nbsp;144.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The following table sets forth the name of the
+Selling Stockholders and the aggregate number of Shares that the Selling Stockholders may offer and sell pursuant to this prospectus,
+as well as other information regarding the beneficial ownership (as determined under Section&nbsp;13(d)&nbsp;of the Exchange Act and the
+rules&nbsp;and regulations thereunder) of the shares of Class&nbsp;A common stock of the Company held by the Selling Stockholders.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders may sell some, all or
+none of the Shares. We do not know how long the Selling Stockholders will hold the Shares before selling them, and we currently have
+no agreements, arrangements or understandings with the Selling Stockholders regarding the sale or other disposition of any of the Shares.
+The Shares may be offered and sold from time to time by the Selling Stockholders pursuant to this prospectus. The information below assumes
+the offer and sale of all Shares beneficially owned by the Selling Stockholders and available for sale under this prospectus and assumes
+no further acquisitions or dispositions of Shares by the Selling Stockholders. The information set forth below is based upon information
+obtained from the Selling Stockholders. The percentages of shares owned after the offering are based on 4,598,509 shares of Class&nbsp;A
+common stock outstanding as of September&nbsp;23, 2025.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" STYLE="border-collapse: collapse; width: 100%; font: 10pt Times New Roman, Times, Serif">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font-size: 10pt">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Number of Shares of</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Maximum Number of</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font-size: 10pt">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font-size: 10pt">&nbsp;</TD><TD STYLE="font-size: 10pt">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font-size: 10pt">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Common Stock</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares of Common</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Number of Shares of</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Name of</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Beneficially Owned</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Stock to be Offered</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Common Stock Owned</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Selling</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Prior to Offering</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center">Pursuant to this</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="6" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>After Offering<SUP>(1)</SUP></B></FONT></TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Stockholder</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Number</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Percent</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Prospectus</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Number</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD><TD STYLE="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&nbsp;</TD>
+    <TD COLSPAN="2" STYLE="font: bold 10pt Times New Roman, Times, Serif; text-align: center; border-bottom: Black 1pt solid">Percent</TD><TD STYLE="padding-bottom: 1pt; font: bold 10pt Times New Roman, Times, Serif">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="width: 20%; font: 10pt Times New Roman, Times, Serif"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Stephen Kiront<SUP>(2)</SUP></FONT></TD><TD STYLE="width: 2%; font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 10%; font: 10pt Times New Roman, Times, Serif; text-align: right">3,846</TD><TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 2%; font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 10%; font: 10pt Times New Roman, Times, Serif; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">*</FONT></TD><TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 2%; font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 20%; font: 10pt Times New Roman, Times, Serif; text-align: right">51,846</TD><TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 2%; font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 10%; font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 2%; font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="width: 10%; font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="width: 1%; font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Barry Kiront<SUP>(3)</SUP></FONT></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">3,846</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">*</FONT></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">51,846</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">CJ Hiller<SUP>(4)</SUP></FONT></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">3,846</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">*</FONT></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">51,846</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: bottom; background-color: White">
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Mackey Alligood<SUP>(5)</SUP></FONT></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">3,847</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">*</FONT></TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">51,847</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif">&nbsp;</TD>
+    <TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: right">-</TD><TD STYLE="font: 10pt Times New Roman, Times, Serif; text-align: left">&nbsp;</TD></TR>
+  </TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">* Less than 1%</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(1)&nbsp;Assumes the sale of all shares of Class&nbsp;A
+common stock being offered pursuant to this prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(2)&nbsp;Applicable percentage ownership is based
+on 4,598,509 shares of Class&nbsp;A common stock outstanding as of September&nbsp;23, 2025, 3,846 shares of Class&nbsp;A common stock held
+by the Selling Shareholder and 48,000 shares of Class&nbsp;A common stock issuable upon full exercise of the warrants. The address for
+Stephen Kiront is 377 Oak Street Lower Concourse STE C2, Garden City, NY 11530 USA.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(3)&nbsp;Applicable percentage ownership is based
+on 4,598,509 shares of Class&nbsp;A common stock outstanding as of September&nbsp;23, 2025, 3,846 shares of Class&nbsp;A common stock held
+by the Selling Shareholder and 48,000 shares of Class&nbsp;A common stock issuable upon full exercise of the warrants. The address for
+Barry Kiront is 377 Oak Street Lower Concourse STE C2, Garden City, NY 11530 USA.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(4)&nbsp;Applicable percentage ownership is based
+on 4,598,509 shares of Class&nbsp;A common stock outstanding as of September&nbsp;23, 2025, 3,846 shares of Class&nbsp;A common stock held
+by the Selling Shareholder and 48,000 shares of Class&nbsp;A common stock issuable upon full exercise of the warrants. The address for
+CJ Hiller is 377 Oak Street Lower Concourse STE C2, Garden City, NY 11530 USA.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(5)&nbsp;Applicable percentage ownership is based
+on 4,598,509 shares of Class&nbsp;A common stock outstanding as of September&nbsp;23, 2025, 3,847 shares of Class&nbsp;A common stock held
+by the Selling Shareholder and 48,000 shares of Class&nbsp;A common stock issuable upon full exercise of the warrants. The address for
+Mackey Alligood is 377 Oak Street Lower Concourse STE C2, Garden City, NY 11530 USA.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 11; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->7<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_008"></A><B>DESCRIPTION OF SECURITIES</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><I>The following descriptions are summaries of
+the material terms of our third amended and restated certificate of incorporation and amended and restated bylaws. We refer in this section
+to our third amended and restated certificate of incorporation as our certificate of incorporation, and we refer to our amended and restated
+bylaws as our bylaws.</I></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>General</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The following description summarizes important
+terms of the classes of our capital stock. The descriptions in this prospectus of our securities and our organizational documents do not
+purport to be complete and are subject to, and qualified in their entirety by reference to, our organizational documents, copies of which
+have been or will be filed or incorporated by reference as exhibits to the registration statement of which this prospectus form a part.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We are authorized to issue up to 137,500,000 shares
+of capital stock, of which (i)&nbsp;100,000,000 shares are Class&nbsp;A common stock with a par value $0.001 per share; (ii)&nbsp;15,000,000
+shares are Class&nbsp;B common stock with a par value $0.001 per share; and (iii)&nbsp;22,500,000 shares are preferred stock with a par
+value of&thinsp;$0.001 per share of which 750,000, 800,000 and 50,000 shares have been designated as Series&nbsp;A Preferred Stock with
+a par value of&thinsp;$0.001 per share, Series&nbsp;AA Preferred Stock with a par value of&thinsp;$0.001 per share and Series&nbsp;B Preferred
+Stock with a par value of&thinsp;$0.001 per share, respectively. As of September&nbsp;23, 2025, there were 4,598,509 shares of Class&nbsp;A
+common stock, 370,822 shares of Class&nbsp;B common stock,875 shares of Series&nbsp;A Preferred Stock, 137,819 shares of Series&nbsp;AA
+Preferred Stock and 15,868 shares of Series&nbsp;B Preferred Stock issued and outstanding.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Class&nbsp;A common stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Voting. The holders of the Class&nbsp;A common
+stock are entitled to one (1)&nbsp;vote for each share of Class&nbsp;A common stock held at all meetings of stockholders (and written
+actions in lieu of meetings). The Class&nbsp;A common stock is not subject to cumulative voting. The Class&nbsp;A common stock and Class&nbsp;B
+common stock vote together as a single class on all matters submitted to a vote of our stockholders, except as may otherwise be required
+by law.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dividends. Subject to the preferences applicable
+to the Preferred Stock, the holders of the Class&nbsp;A common stock are entitled to, on an equal basis with the holders of Class&nbsp;B
+common stock, receive dividends when and if declared by the Company&rsquo;s board of directors out of funds legally available therefor,
+subject to any statutory or contractual restrictions on the payment of dividends and to any restrictions on the payment of dividends imposed
+by the terms of any outstanding preferred stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Class&nbsp;B common stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Voting. The holders of the Class&nbsp;B common
+stock are entitled to ten (10)&nbsp;votes for each share of Class&nbsp;B common stock held at all meetings of stockholders (and written
+actions in lieu of meetings). The Class&nbsp;B common stock is not subject to cumulative voting. The Class&nbsp;A common stock and Class&nbsp;B
+common stock vote together as a single class on all matters submitted to a vote of our stockholders, except as may otherwise be required
+by law.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dividends. Subject to the preferences applicable
+to the preferred stock, the holders of the Class&nbsp;B common stock are entitled to, on an equal basis with the holders of Class&nbsp;A
+common stock, receive dividends when and if declared by the Company&rsquo;s board of directors out of funds legally available therefor,
+subject to any statutory or contractual restrictions on the payment of dividends and to any restrictions on the payment of dividends imposed
+by the terms of any outstanding preferred stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Class&nbsp;B common stock is convertible at
+any time by the holder into shares of Class&nbsp;A common stock on a share-for-share basis.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 12; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->8<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Preferred Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Series&nbsp;A Preferred Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On November&nbsp;26, 2024, we filed the Series&nbsp;A
+Certificate of Designation with the Secretary of State of the State of Delaware to establish the preferences, voting powers, limitations
+as to dividends or other distributions, qualifications, terms and conditions of redemption and other terms and conditions of the Company&rsquo;s
+Series&nbsp;A Preferred Stock. The Series&nbsp;A Preferred Stock is subject to certain rights, preferences, privileges, and obligations,
+including voluntary and mandatory conversion provisions, as well as beneficial ownership restrictions and share cap limitations, as set
+forth in the Series&nbsp;A Certificate of Designation. The following is a summary description of the terms and the general effect of the
+issuance of the shares of Series&nbsp;A Preferred Stock on the Company&rsquo;s other classes of registered securities.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stated Value. Each share of Series&nbsp;A Preferred
+Stock has an initial stated value of $400.00, subject to appropriate adjustment in relation to certain events, such as recapitalizations,
+stock dividends, stock splits, stock combinations, reclassifications or similar events affecting our Series&nbsp;A Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dividends. The holders of the shares of Series&nbsp;A
+Preferred Stock will be entitled to receive a twelve percent (12%) annual, non-cumulative dividend payable annually, at the Company&rsquo;s
+option, (i)&nbsp;in cash or (ii)&nbsp;in shares of the Company&rsquo;s Class&nbsp;A common stock, at a price per share of Class&nbsp;A
+Common Stock equal to the lower of (A)&nbsp;the average closing price of Class&nbsp;A Common Stock as quoted on the principal trading
+market, if any, in which the shares of Class&nbsp;A Common Stock then trade (&ldquo;Principal Market&rdquo;) for the five trading days
+immediately preceding the date of issuance, or (B)&nbsp;the closing price of the Class&nbsp;A Common Stock as quoted on the Principal
+Market on the trading day prior to the date of issuance, but in no event less than $20.00 per share.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Optional Conversion. At any time and from time
+to time, a holder of the shares of Series&nbsp;A Preferred Stock may, at its option, convert (i)&nbsp;up to twenty-five percent (25%)
+of the holder&rsquo;s total shares of Series&nbsp;A Preferred Stock (the &ldquo;First Tranche Convertible Shares&rdquo;) at a rate equal
+to the stated value divided by $10.228 (the &ldquo;First Tranche Conversion Rate&rdquo;), (ii)&nbsp;up to twenty-five percent (25%) of
+the holder&rsquo;s total shares of Series&nbsp;A Preferred Stock (the &ldquo;Second Tranche Convertible Shares&rdquo;) at a rate equal
+to the stated value divided by $15.342 (the &ldquo;Second Tranche Conversion Rate&rdquo;), (iii)&nbsp;up to twenty-five percent (25%)
+of the holder&rsquo;s total shares of Series&nbsp;A Preferred Stock (the &ldquo;Third Tranche Convertible Shares&rdquo;) at a rate equal
+to the stated value divided by $20.456 (the &ldquo;Third Tranche Conversion Rate&rdquo;), and (iv)&nbsp;up to twenty-five percent (25%)
+of the holder&rsquo;s total shares of Series&nbsp;A Preferred Stock (the &ldquo;Fourth Tranche Convertible Shares&rdquo;) at a rate equal
+to the stated value divided by $25.57 (the &ldquo;Fourth Tranche Conversion Rate&rdquo;).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Mandatory Conversion. The shares of Series&nbsp;A
+Preferred Stock will mandatorily convert into shares of Class&nbsp;A Common Stock as follows:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">i. On the first trading day following the first
+date on which the closing price of the Class&nbsp;A Common Stock on the Principal Market is 200% higher than $10.228 for twenty (20) of
+thirty (30) consecutive trading days, all of the First Tranche Convertible Shares shall convert at the First Tranche Conversion Rate;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">ii. On the first trading day following the first
+date on which the closing price of the Class&nbsp;A Common Stock on the Principal Market is 200% higher than the $15.342 for twenty (20)
+of thirty (30) consecutive trading days, all the Second Tranche Convertible Shares shall convert at the Second Tranche Conversion Rate;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">iii. On the first trading day following the first
+date on which the closing price of the Class&nbsp;A Common Stock on the Principal Market is 200% higher than $20.456 for twenty (20) of
+thirty (30) consecutive trading days the Third Tranche Convertible Shares shall convert at the Third Tranche Conversion Rate; and</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">iv. On the first trading day following the first
+date on which the closing price of the Class&nbsp;A Common Stock on the Principal Market is 200% higher than the $25.57 for twenty (20)
+of thirty (30) consecutive trading days the Fourth Tranche Convertible Shares shall convert at the Fourth Tranche Conversion Rate.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 13; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->9<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Voting Rights. The Series&nbsp;A Preferred Stock
+will have no voting rights relative to matters submitted to a vote of our stockholders (other than as required by law). However, we may
+not, without the affirmative vote or written consent of the holders of a majority of the then issued and outstanding Series&nbsp;A Preferred
+Stock: (i)&nbsp;amend or waive any provision of the certificate of designation or otherwise take any action that modifies any powers,
+rights, preferences, privileges or restrictions of the Series&nbsp;A Preferred Stock (other than an amendment solely for the purpose of
+changing the number of shares of Series&nbsp;A Preferred Stock designated for issuance as provided in the certificate of designation);
+(ii)&nbsp;authorize, create or issue shares of any class of stock having rights, preferences or privileges as to dividends or distributions
+upon a liquidation that are superior to the Series&nbsp;A Preferred Stock; or (iii)&nbsp;amend our certificate of incorporation in a manner
+that adversely and materially affects the rights of the Series&nbsp;A Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Liquidation. In the event of any voluntary or
+involuntary liquidation, dissolution or winding up of the Company, the holders of shares of the Series&nbsp;A Preferred Stock then outstanding
+will be entitled to receive in cash out of the assets of the Company, whether from capital or from earnings available for distribution
+to its stockholders, before any amount will be paid to the holders of any of the capital stock of the Company of any class junior in rank
+to the Series&nbsp;A Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Ranking. The Series&nbsp;A Preferred Stock ranks
+senior to our Series&nbsp;B Preferred Stock, Class&nbsp;A Common Stock and Class&nbsp;B common stock and pari passu with our Series&nbsp;AA
+Preferred Stock, with respect to the preferences provided for in the Certificate of Designation as to distributions and payments upon
+the liquidation, dissolution and winding up of the Company.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Redemption. The Company has the right to redeem
+the outstanding shares of the Series&nbsp;A Preferred Stock at an amount equal to the Liquidation Preference, provided that the holders
+of Series&nbsp;A Preferred Stock are granted thirty (30) calendar days to first exercise their conversion rights. &ldquo;Liquidation Preference&rdquo;
+means, with respect to each outstanding share of Series&nbsp;A Preferred Stock, the sum of: (i)&nbsp;the amount of all accrued but unpaid
+dividends on such share; plus (ii)&nbsp;the product of the stated value multiplied by 120%.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Amendments. The Certificate of Designation may
+be amended by obtaining the affirmative vote of a majority of the outstanding shares of Series&nbsp;A Preferred Stock, voting separately
+as a single class.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Series&nbsp;AA Preferred Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March&nbsp;5, 2025, we filed a certificate
+of designation with the Delaware Secretary of State to establish our Series&nbsp;AA Preferred Stock which we designated as &ldquo;Series&nbsp;AA
+Cumulative Redeemable Preferred Stock.&rdquo; Our Series&nbsp;AA Preferred Stock has the following voting powers, designations, preferences
+and relative rights, qualifications, limitations, or restrictions:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Ranking. The Series&nbsp;AA Preferred Stock ranks,
+as to dividend rights and rights upon our liquidation, dissolution, or winding up, senior to our Series&nbsp;B Preferred Stock, Class&nbsp;A
+Common Stock and Class&nbsp;B common stock and pari passu with our Series&nbsp;A Preferred Stock. The terms of the Series&nbsp;AA Preferred
+Stock do not limit our ability to (i)&nbsp;incur indebtedness or (ii)&nbsp;issue additional equity securities that are equal or junior
+in rank to the shares of our Series&nbsp;AA Preferred Stock as to distribution rights and rights upon our liquidation, dissolution or
+winding up.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stated Value. Each share of Series&nbsp;AA Preferred
+Stock has an initial stated value of $25.00, which is equal to the offering price per share, subject to appropriate adjustment in relation
+to certain events, such as recapitalizations, stock dividends, stock splits, stock combinations, reclassifications or similar events affecting
+our Series&nbsp;AA Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 14; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->10<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dividend Rate and Payment Dates. Dividends on
+the Series&nbsp;AA Preferred Stock are cumulative and payable monthly in arrears to all holders of record on the applicable record date.
+Holders of our Series&nbsp;AA Preferred Stock are entitled to receive cumulative monthly cash dividends at a per annum rate of 9.5% of
+the stated value (or $0.198 per share each month based on the initial stated value). Dividends on each share begin accruing on, and are
+cumulative from, the date of issuance and regardless of whether our board of directors declares and pays such dividends. Our board of
+directors will not authorize, pay or set apart for payment by us any dividend on the Series&nbsp;AA Preferred Stock at any time that:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">the terms and provisions of any of our agreements,
+including any agreement relating to our indebtedness, prohibits such authorization, payment or setting apart for payment;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">the terms and provisions of any of our agreements,
+including any agreement relating to our indebtedness, provides that such authorization, payment or setting apart for payment thereof would
+constitute a breach of, or a default under, such agreement; or</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">the law restricts or prohibits the authorization
+or payment.</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dividends on shares of our Series&nbsp;AA Preferred
+Stock will continue to accrue even if</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">the terms and provisions of any of our agreements
+relating to our indebtedness prohibit such authorization, payment or setting apart for payment;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">we have earnings;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">there are funds legally available for the payment
+of the dividends; and</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">the dividends are authorized.</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In the event the monthly payment of dividends
+is not made within 30 days of the due date, dividends will accrue from the due date of such monthly payment at the rate of 18% until such
+default is cured.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Liquidation Preference. Upon a liquidation, dissolution
+or winding up of our company, holders of shares of our Series&nbsp;AA Preferred Stock are entitled to receive, before any payment or distribution
+is made to the holders of our Common Stock and on a pari passu basis with holders of our Series&nbsp;AA Preferred Stock and Series&nbsp;A
+Preferred Stock, a liquidation preference equal to the stated value per share, plus accrued but unpaid dividends thereon.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Redemption Request at the Option of a Holder.
+Once per calendar quarter, a holder will have the opportunity to request that we redeem that holder&rsquo;s Series&nbsp;AA Preferred Stock.
+Our board of directors may, however, suspend cash redemptions at any time in its discretion if it determines that it would not be in the
+best interests of our company to effectuate cash redemptions at a given time because we do not have sufficient cash, including because
+our board believes that our cash on hand should be utilized for other business purposes. Redemptions will be limited to four percent (4%)
+of the total outstanding Series&nbsp;AA Preferred Stock per quarter and any redemptions in excess of such limit or to the extent suspended,
+shall be redeemed in subsequent quarters on a first come, first served, basis. We will redeem shares at a redemption price equal to the
+stated value of such redeemed shares, plus any accrued but unpaid dividends thereon, less the applicable redemption fee (if any). As a
+percentage of the aggregate redemption price of a holder&rsquo;s shares to be redeemed, the redemption fee shall be:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">10% if the redemption is requested on or before
+the first anniversary of the original issuance of such shares;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">8% if the redemption is requested after the first
+anniversary and on or before the second anniversary of the original issuance of such shares; and</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">6% if the redemption is requested after the second
+anniversary and on or before the third anniversary of the original issuance of such shares.</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Please see the certificate of designation, which
+has been filed as an exhibit to the offering statement of which this offering circular forms a part, for the procedures to request a redemption.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Optional Redemption by our company. We have the
+right (but not the obligation) to redeem shares of Series&nbsp;AA Preferred Stock at a redemption price equal to the stated value of such
+redeemed shares, plus any accrued but unpaid dividends thereon.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 15; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->11<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Mandatory Redemption by our company. We are required
+to redeem the outstanding shares of Series&nbsp;AA Preferred Stock on the third (3rd) anniversary of their issuance at a redemption price
+equal to the stated value of such redeemed shares, plus any accrued but unpaid dividends thereon.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Optional Repurchase Upon Death, Disability or
+Bankruptcy of a Holder. Subject to certain restrictions and conditions, we will also repurchase shares of Series&nbsp;AA Preferred Stock
+of a holder who is a natural person (including an individual beneficial holder who holds shares through a custodian or nominee, such as
+a broker-dealer) upon his or her death, total disability or bankruptcy, within sixty (60) days of our receipt of a written request from
+the holder or the holder&rsquo;s estate at a repurchase price equal to the stated value, plus accrued and unpaid dividends thereon. A
+ &ldquo;total disability&rdquo; means a determination by a physician approved by us that a holder, who was gainfully employed and working
+at least forty (40) hours per week as of the date on which his or her shares were purchased, has been unable to work forty (40) or more
+hours per week for at least twenty-four (24) consecutive months. Please see the certificate of designation, the form of which has been
+filed as an exhibit to the offering statement of which this offering circular forms a part, for the procedures to request a repurchase.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Restrictions on Redemption and Repurchase. We
+are not obligated to redeem or repurchase shares of Series&nbsp;AA Preferred Stock if we are restricted by applicable law or our articles
+of incorporation from making such redemption or repurchase or to the extent any such redemption or repurchase would cause or constitute
+a default under any borrowing agreements to which we or any of our subsidiaries are a party or otherwise bound. In addition, we have no
+obligation to redeem shares in connection with a redemption request made by a holder if we determine, as of the redemption date, that
+we do not have sufficient funds available to fund that redemption. In this regard, we will have complete discretion under the certificate
+of designation for the Series&nbsp;AA Preferred Stock to determine whether we are in possession of &ldquo;sufficient funds&rdquo; to fund
+a redemption request. To the extent we are unable to complete redemptions we may have earlier agreed to make, we will complete those redemptions
+promptly after we become able to do so, with all such deferred redemptions being satisfied on a first come, first served, basis.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Voting Rights. The Series&nbsp;AA Preferred Stock
+has no voting rights relative to matters submitted to a vote of our stockholders (other than as required by law). However, we may not,
+without the affirmative vote or written consent of the holders of a majority of the then issued and outstanding Series&nbsp;AA Preferred
+Stock: (i)&nbsp;amend or waive any provision of the certificate of designation or otherwise take any action that modifies any powers,
+rights, preferences, privileges or restrictions of the Series&nbsp;AA Preferred Stock (other than an amendment solely for the purpose
+of changing the number of shares of Series&nbsp;AA Preferred Stock designated for issuance as provided in the certificate of designation);
+(ii)&nbsp;authorize, create or issue shares of any class of stock having rights, preferences or privileges as to dividends or distributions
+upon a liquidation that are superior to the Series&nbsp;AA Preferred Stock; or (iii)&nbsp;amend our certificate of incorporation in a
+manner that adversely and materially affects the rights of the Series&nbsp;AA Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Conversion Right. At the third anniversary of
+the issuance date of a share of Series&nbsp;AA Preferred Stock, a holder may elect, with the prior written consent of the Company, which
+consent may be unreasonably withheld, to convert all or any portion of such then outstanding shares of Series&nbsp;AA Preferred Stock
+held by it into that number of shares of our Class&nbsp;A Common Stock determined by dividing the then Stated Value of such shares by
+the closing price of our Class&nbsp;A Common Stock as quoted on the Nasdaq Capital Market (the &ldquo;NCM&rdquo;) on the day prior to
+such date but in no event less than the closing price of our Class&nbsp;A Common Stock as quoted on the NCM on the day prior to the initial
+Closing Date.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Series&nbsp;B Preferred Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On September&nbsp;11, 2025, we filed the Series&nbsp;B
+Certificate of Designation with the Secretary of State of the State of Delaware to establish the preferences, voting powers, limitations
+as to dividends or other distributions, qualifications, terms and conditions of redemption and other terms and conditions of the Company&rsquo;s
+Series&nbsp;B Preferred Stock. The Series&nbsp;B Preferred Stock is subject to certain rights, preferences, privileges, and obligations,
+including voluntary conversion provisions, as well as beneficial ownership restrictions and share cap limitations, as set forth in the
+Series&nbsp;B Certificate of Designation. The following is a summary description of the terms and the general effect of the issuance of
+the shares of Series&nbsp;B Preferred Stock on the Company&rsquo;s other classes of registered securities.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 16; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->12<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stated Value. Each share of Series&nbsp;B Preferred
+Stock has an initial stated value of $1,000.00, subject to appropriate adjustment in relation to certain events, such as recapitalizations,
+stock dividends, stock splits, stock combinations, reclassifications or similar events affecting our Series&nbsp;B Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Optional Conversion. At any time and from time
+to time, a holder of the shares of Series&nbsp;B Preferred Stock may, at its option, convert the holder&rsquo;s shares of Series&nbsp;B
+Preferred Stock at a rate equal to the stated value divided by $250.00.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Voting Rights. The Series&nbsp;B Preferred Stock
+will have no voting rights relative to matters submitted to a vote of our stockholders (other than as required by law). However, we may
+not, without the affirmative vote or written consent of the holders of a majority of the then issued and outstanding Series&nbsp;B Preferred
+Stock: (i)&nbsp;amend or waive any provision of the certificate of designation or otherwise take any action that modifies any powers,
+rights, preferences, privileges or restrictions of the Series&nbsp;B Preferred Stock (other than an amendment solely for the purpose of
+changing the number of shares of Series&nbsp;B Preferred Stock designated for issuance as provided in the certificate of designation);
+(ii)&nbsp;authorize, create or issue shares of any class of stock having rights, preferences or privileges as to dividends or distributions
+upon a liquidation that are superior to the Series&nbsp;B Preferred Stock; or (iii)&nbsp;amend our certificate of incorporation in a manner
+that adversely and materially affects the rights of the Series&nbsp;B Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Liquidation. In the event of any voluntary or
+involuntary liquidation, dissolution or winding up of the Company, the holders of shares of the Series&nbsp;B Preferred Stock then outstanding
+will be entitled to receive in cash out of the assets of the Company, whether from capital or from earnings available for distribution
+to its stockholders, before any amount will be paid to the holders of any of the capital stock of the Company of any class junior in rank
+to the Series&nbsp;B Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Ranking. The Series&nbsp;B Preferred Stock ranks
+senior to our Class&nbsp;A Common Stock and Class&nbsp;B common stock, junior to our Series&nbsp;A Preferred Stock and Series&nbsp;AA
+Preferred Stock and pari passu with any other class of preferred stock created with rights, preferences and privileges substantially similar
+to that of the Series&nbsp;B Preferred Stock with respect to the preferences provided for in the Certificate of Designation as to distributions
+and payments upon the liquidation, dissolution and winding up of the Company.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Amendments. The Certificate of Designation may
+be amended by obtaining the affirmative vote of a majority of the outstanding shares of Series&nbsp;B Preferred Stock, voting separately
+as a single class.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Rights</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with a public offering of shares
+of our Class&nbsp;A Common stock in April&nbsp;2025, we issued an aggregate of 120,000 (the &ldquo;Rights&rdquo;). Upon such date as the
+closing price of our Class&nbsp;A common stock on the Nasdaq Capital Market equals or exceeds $25.00 (the &ldquo;Trigger Price&rdquo;)
+for three consecutive trading days (the &ldquo;Rights Trigger Event&rdquo;), each Right will automatically convert into one-one hundredth
+(1/100) of one share of Class&nbsp;A common stock. No additional consideration will be required to be paid by a holder of Rights in order
+to receive its additional shares upon the occurrence of the Rights Trigger Event, as the consideration related thereto has been included
+in the Unit purchase price paid for by investors in this offering. If we enter into a definitive agreement for a business combination
+in which we will not be the surviving entity, the definitive agreement will provide for the holders of Rights to receive the same per
+share consideration the holders of the Class&nbsp;A common stock will receive in the transaction on an as-converted into ordinary share
+basis, and each holder of a right will be required to affirmatively convert its rights in order to receive the 1/100 share underlying
+each Right (without paying any additional consideration) upon consummation of the business combination. More specifically, the Right holder
+will be required to indicate its election to convert the rights into underlying shares as well as to return the original rights certificates
+to us. The Rights expire on January&nbsp;17, 2026.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As soon as practicable upon the occurrence of
+the Rights Trigger Event, we will direct registered holders of the Rights to return their Rights to our rights agent. Upon receipt of
+the Rights, the rights agent will issue to the registered holder of such Rights the number of full Class&nbsp;A common shares to which
+it is entitled. We will notify registered holders of the Rights to deliver their Rights to the rights agent promptly upon the occurrence
+of the Rights Trigger Event and have been informed by the rights agent that the process of exchanging their rights for Class&nbsp;A common
+shares should take no more than a matter of days. The foregoing exchange of Rights is solely ministerial in nature and is not intended
+to provide us with any means of avoiding our obligation to issue the shares underlying the Rights upon the occurrence of the Rights Trigger
+Event. Other than confirming that the Rights delivered by a registered holder are valid, we will have no ability to avoid delivery of
+the shares underlying the Rights.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 17; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->13<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The shares issuable upon conversion of the Rights
+will be freely tradable (except to the extent held by affiliates of ours). We will not issue fractional shares upon conversion of the
+Rights. Fractional shares will either be rounded down to the nearest whole share or otherwise addressed in accordance with the applicable
+provisions of Delaware law. As a result, a Right holder must hold Rights in multiples of 100 in order to receive shares for all of a holder&rsquo;s
+Rights upon the occurrence of the Rights Trigger Event. Further, there are no contractual penalties for failure to deliver securities
+to the holders of the Rights upon the occurrence of the Rights Trigger Event.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have agreed that, subject to applicable law,
+any action, proceeding or claim against us arising out of or relating in any way to the rights agreement governing the Rights will be
+brought and enforced in the courts of the State of New York or the United States District Court for the Southern District of New York,
+and we irrevocably submit to such jurisdiction, which jurisdiction will be the exclusive forum for any such action, proceeding or claim.
+This provision applies to claims under the Securities Act but does not apply to claims under the Exchange Act or any claim for which the
+federal district courts of the United States of America are the sole and exclusive forum. We note, however, that there is uncertainty
+as to whether a court would enforce this provision and that investors cannot waive compliance with the federal securities laws and the
+rules&nbsp;and regulations thereunder.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Anti-Takeover Provisions</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Certificate of Incorporation and Bylaws and Class&nbsp;B
+Common Stock</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Because our stockholders do not have cumulative
+voting rights, our stockholders holding a majority of the outstanding shares of common stock outstanding will be able to elect all of
+our directors.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing provisions will make it more difficult
+for our existing stockholders to replace our Board of Directors as well as for another party to obtain control of us by replacing our
+Board of Directors. Since our board of directors has the power to retain and discharge our officers, these provisions could also make
+it more difficult for existing stockholders or another party to effect a change in management. In addition, the authorization of undesignated
+preferred stock makes it possible for our Board of Directors to issue preferred stock with voting or other rights or preferences that
+could impede the success of any attempt to change our control.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">These provisions are intended to enhance the likelihood
+of continued stability in the composition of our Board of Directors and its policies and to discourage certain types of transactions that
+may involve an actual or threatened acquisition of us. These provisions are also designed to reduce our vulnerability to an unsolicited
+acquisition proposal and to discourage certain tactics that may be used in proxy fights. However, such provisions could have the effect
+of discouraging others from making tender offers for our shares and may have the effect of deterring hostile takeovers or delaying changes
+in our control or management.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In addition, the control vested in our founders
+by virtue of their holding of Class&nbsp;B common stock may discourage or impede takeover activities.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Section&nbsp;203 of the Delaware General Corporation
+Law</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We are subject to Section&nbsp;203 of the Delaware
+General Corporation Law, which prohibits a Delaware corporation from engaging in any business combination with any interested stockholder
+for a period of three years after the date that such stockholder became an interested stockholder, with the following exceptions:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">before such date, the board of directors of the
+corporation approved either the business combination or the transaction that resulted in the stockholder becoming an interested stockholder;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">upon closing of the transaction that resulted
+in the stockholder becoming an interested stockholder, the interested stockholder owned at least 85% of the voting stock of the corporation
+outstanding at the time the transaction began, excluding for purposes of determining the voting stock outstanding (but not the outstanding
+voting stock owned by the interested stockholder) those shares owned by (i)&nbsp;persons who are directors and also officers and (ii)&nbsp;employee
+stock plans in which employee participants do not have the right to determine confidentially whether shares held subject to the plan will
+be tendered in a tender or exchange offer; or</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 18; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->14<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLPADDING="0" CELLSPACING="0" WIDTH="100%" STYLE="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">on or after such date, the business combination
+is approved by the board of directors and authorized at an annual or special meeting of the stockholders, and not by written consent,
+by the affirmative vote of at least 66 2/3% of the outstanding voting stock that is not owned by the interested stockholder.</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">In general, Section&nbsp;203 defines business
+combination to include the following:</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">any merger or consolidation involving the corporation
+and the interested stockholder;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">any sale, transfer, pledge or other disposition
+of 10% or more of the assets of the corporation involving the interested stockholder;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">subject to certain exceptions, any transaction
+that results in the issuance or transfer by the corporation of any stock of the corporation to the interested stockholder;</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">any transaction involving the corporation that
+has the effect of increasing the proportionate share of the stock or any class or series of the corporation beneficially owned by the
+interested stockholder; or</FONT></TD></TR>
+<TR STYLE="vertical-align: top">
+<TD STYLE="width: 0.25in"></TD><TD STYLE="width: 0.25in"><FONT STYLE="font-family: Times New Roman, Times, Serif"><FONT STYLE="font-family: Symbol">&middot;</FONT></FONT></TD><TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif">the receipt by the interested stockholder of
+the benefit of any loss, advances, guarantees, pledges or other financial benefits by or through the corporation.</FONT></TD></TR></TABLE>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In general, Section&nbsp;203 defines an &ldquo;interested
+stockholder&rdquo; as an entity or person who, together with the person&rsquo;s affiliates and associates, beneficially owns, or within
+three years prior to the time of determination of interested stockholder status did own, 15% or more of the outstanding voting stock of
+the corporation.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Exclusive forum for adjudication of disputes provision
+which limits the forum to the Delaware Court of Chancery for certain stockholder litigation matters actions against the Company, which
+may limit an investor&rsquo;s ability to obtain a favorable judicial forum for disputes with the Company or its directors, officers, employees
+or stockholders.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Section&nbsp;7.06(a)&nbsp;of Article&nbsp;VII
+of our Bylaws dictates that, unless we consent in writing to the selection of an alternative forum, the Delaware Court of Chancery (or,
+if the Delaware Court of Chancery does not have jurisdiction, the federal district court for the State of Delaware) is, to the fullest
+extent permitted by law, the sole and exclusive forum for certain actions including derivative action or proceeding brought on behalf
+of the Company; an action asserting a breach of fiduciary duty owed by an officer, director, employee or to the stockholders of the Company;
+any claim arising under Delaware corporate law, our amended and restated certificate of incorporation or our amended and restated bylaws;
+and any action asserting a claim governed by the internal affairs doctrine. Any person or entity purchasing or otherwise acquiring any
+interest in shares of capital stock of the Company shall be deemed to have notice of and consented to the provisions of Section&nbsp;7.06
+of Article&nbsp;VII of our Bylaws.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">However, Section&nbsp;7.06(a)&nbsp;of Article&nbsp;VII
+of our Bylaws will not apply to suits brought to enforce any liability or duty created by the Exchange Act or any other claim for which
+the federal courts have exclusive jurisdiction. To the extent that any such claims may be based upon federal law claims, Section&nbsp;27
+of the Exchange Act creates exclusive federal jurisdiction over all suits brought to enforce any duty or liability created by the Exchange
+Act or the rules&nbsp;and regulations thereunder.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Furthermore, unless the Company consents in writing
+to the selection of an alternative forum, the federal district courts of the United States of America will be the exclusive forum for
+the resolution of any complaint asserting a cause of action arising under the Securities Act, or the rules&nbsp;and regulations promulgated
+thereunder. We note, however, that Section&nbsp;22 of the Securities Act creates concurrent jurisdiction for federal and state courts
+over all suits brought to enforce any duty or liability created by the Securities Act or the rules&nbsp;and regulations thereunder. There
+is uncertainty as to whether a court would enforce this provision and that investors cannot waive compliance with the federal securities
+laws and the rules&nbsp;and regulations thereunder.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 19; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->15<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">A Delaware corporation is allowed to mandate in
+its corporate governance documents a chosen forum for the resolution of state law-based stockholder class actions, derivative suits and
+other intra-corporate disputes. With respect to such state law claims, the Company&rsquo;s management believes limiting state law based
+claims to Delaware will provide the most appropriate outcomes as the risk of another forum misapplying Delaware law is avoided, Delaware
+courts have a well-developed body of case law and limiting the forum will preclude costly and duplicative litigation and avoids the risk
+of inconsistent outcomes. Additionally, Delaware Chancery Courts can typically resolve disputes on an accelerated schedule when compared
+to other forums.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The choice of forum provisions contained in the
+Company&rsquo;s Bylaws may limit a stockholder&rsquo;s ability to bring a claim in a judicial forum that it finds favorable for disputes
+with the Company or any of its directors, officers, other employees or stockholders, which may discourage lawsuits with respect to such
+claims. Alternatively, the enforceability of similar choice of forum provisions in other issuers&rsquo; bylaws and certificates of incorporation
+has been challenged in legal proceedings, and it is possible that in connection with any applicable action brought against the Company,
+a court could find the choice of forum provisions contained in the Company&rsquo;s Bylaws to be inapplicable or unenforceable in such
+action. As a result, the Company could incur additional costs associated with resolving such actions in other jurisdictions, which could
+harm the Company&rsquo;s business, operating results and financial condition.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Transfer Agent and Registrar</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">ClearTrust LLC , telephone 813-235-4490, is the
+transfer agent for our Class&nbsp;A common stock. ClearTrust LLC is the transfer agent for the Series&nbsp;AA Preferred Stock.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><B>Trading Symbol and Market</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Our shares of Class&nbsp;A common stock are listed on the Nasdaq Capital
+Market under the symbol &ldquo;CWD&rdquo;.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 20; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->16<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_009"></A><B>PLAN OF DISTRIBUTION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders, which as used herein
+includes donees, pledgees, transferees or other successors-in-interest selling shares of Class&nbsp;A common stock or interests in shares
+of Class&nbsp;A common stock received after the date of this prospectus from the Selling Stockholders as a gift, pledge, partnership distribution
+or other transfer, may, from time to time, sell, transfer or otherwise dispose of any or all of their shares of Class&nbsp;A common stock
+or interests in shares of Class&nbsp;A common stock on any stock exchange, market or trading facility on which the shares are traded or
+in private transactions. These dispositions may be at fixed prices, at prevailing market prices at the time of sale, at prices related
+to the prevailing market price, at varying prices determined at the time of sale, or at negotiated prices.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders may use any one or more
+of the following methods when disposing of shares or interests therein:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 24px">&nbsp;</TD>
+    <TD STYLE="width: 24px"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">ordinary brokerage transactions and transactions in which the broker-dealer solicits purchasers;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">block trades in which the broker-dealer will attempt to sell the shares as agent, but may position and resell a portion of the block as principal to facilitate the transaction;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">purchases by a broker-dealer as principal and resale by the broker-dealer for its account;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">an exchange distribution in accordance with the rules&nbsp;of the applicable exchange;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">privately negotiated transactions;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">short sales effected after the date the registration statement of which this Prospectus is a part is declared effective by the SEC;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">through the writing or settlement of options, forward sales or other hedging transactions, whether through an options exchange or otherwise;</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">broker-dealers may agree with the selling stockholders to sell a specified number of such shares at a stipulated price per share; and</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD>&nbsp;</TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#9679;</FONT></TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">a combination of any such methods of sale.</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders may, from time to time,
+pledge or grant a security interest in some or all of the shares of Class&nbsp;A common stock owned by it and, if it defaults in the performance
+of its secured obligations, the pledgees or secured parties may offer and sell the shares of Class&nbsp;A common stock, from time to time,
+under this prospectus, or under an amendment to this prospectus under Rule&nbsp;424(b)(3)&nbsp;or other applicable provision of the Securities
+Act amending the list of selling stockholders to include the pledgee, transferee or other successors in interest as selling stockholders
+under this prospectus. The Selling Stockholders also may transfer the shares of Class&nbsp;A common stock in other circumstances, in which
+case the transferees, pledgees or other successors in interest will be the selling beneficial owners for purposes of this prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with the sale of our Class&nbsp;A
+common stock or interests therein, the Selling Stockholders may enter into hedging transactions with broker-dealers or other financial
+institutions, which may in turn engage in short sales of the Class&nbsp;A common stock in the course of hedging the positions they assume.
+The Selling Stockholders may also sell shares of our Class&nbsp;A common stock short and deliver these securities to close out their short
+positions, or loan or pledge the Class&nbsp;A common stock to broker-dealers that in turn may sell these securities. The Selling Stockholders
+may also enter into option or other transactions with broker-dealers or other financial institutions or the creation of one or more derivative
+securities which require the delivery to such broker-dealer or other financial institution of shares offered by this prospectus, which
+shares such broker-dealer or other financial institution may resell pursuant to this prospectus (as supplemented or amended to reflect
+such transaction).</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The aggregate proceeds to the Selling Stockholders
+from the sale of the Class&nbsp;A common stock offered by them will be the purchase price of the Class&nbsp;A common stock less discounts
+or commissions, if any. The Selling Stockholders reserves the right to accept and, together with their agents from time to time, to reject,
+in whole or in part, any proposed purchase of Class&nbsp;A common stock to be made directly or through agents. We will not receive any
+of the proceeds from this offering. However, upon any exercise of the warrants by payment of cash, we will receive the exercise price
+of $0.46822 per Warrant Share issued.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 21; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->17<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders also may resell all or
+a portion of the shares in open market transactions in reliance upon Rule&nbsp;144 under the Securities Act of 1933, provided that they
+meet the criteria and conform to the requirements of that rule.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Selling Stockholders and any underwriters,
+broker-dealers or agents that participate in the sale of the Class&nbsp;A common stock or interests therein may be &ldquo;underwriters&rdquo;
+within the meaning of Section&nbsp;2(a)(11) of the Securities Act. Any discounts, commissions, concessions or profit they earn on any
+resale of the shares may be underwriting discounts and commissions under the Securities Act. Selling stockholders who are &ldquo;underwriters&rdquo;
+within the meaning of Section&nbsp;2(a)(11) of the Securities Act will be subject to the prospectus delivery requirements of the Securities
+Act.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">To the extent required, the shares of our Class&nbsp;A
+common stock to be sold, the names of the Selling Stockholders, the respective purchase prices and public offering prices, the names of
+any agents, dealer or underwriter, any applicable commissions or discounts with respect to a particular offer will be set forth in an
+accompanying prospectus supplement or, if appropriate, a post-effective amendment to the registration statement that includes this prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In order to comply with the securities laws of
+some states, if applicable, the Class&nbsp;A common stock may be sold in these jurisdictions only through registered or licensed brokers
+or dealers. In addition, in some states the Class&nbsp;A common stock may not be sold unless it has been registered or qualified for sale
+or an exemption from registration or qualification requirements is available and is complied with.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have advised the Selling Stockholders that
+the anti-manipulation rules&nbsp;of Regulation M under the Exchange Act may apply to sales of shares in the market and to the activities
+of the Selling Stockholders and its affiliates. In addition, to the extent applicable we will make copies of this prospectus (as it may
+be supplemented or amended from time to time) available to the Selling Stockholders for the purpose of satisfying the prospectus delivery
+requirements of the Securities Act. The Selling Stockholders may indemnify any broker-dealer that participates in transactions involving
+the sale of the shares against certain liabilities, including liabilities arising under the Securities Act.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have agreed to indemnify the Selling Stockholders
+against liabilities, including liabilities under the Securities Act and state securities laws, relating to the registration of the shares
+offered by this prospectus.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have agreed with the Selling Stockholders to
+keep the registration statement of which this prospectus constitutes a part effective until the earlier of (1)&nbsp;such time as all of
+the shares covered by this prospectus have been disposed of pursuant to and in accordance with the registration statement or (2)&nbsp;the
+date on which the shares may be sold without restriction pursuant to Rule&nbsp;144 of the Securities Act.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 22; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->18<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_010"></A><B>LEGAL MATTERS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The validity of the Class&nbsp;A common stock
+offered hereby will be passed upon for us by Manatt, Phelps&nbsp;&amp; Phillips, LLP, Costa Mesa, California.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><A NAME="a_011"></A><B>EXPERTS</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The financial statements of CaliberCos Inc. incorporated
+by reference in this Prospectus, have been audited by Deloitte&nbsp;&amp; Touche LLP, an independent registered public accounting firm,
+as stated in their report. Such financial statements are incorporated by reference in reliance upon the report of such firm given their
+authority as experts in auditing and accounting.</P>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><FONT STYLE="background-color: white"></FONT></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_012"></A>WHERE YOU CAN FIND MORE INFORMATION</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">We have filed with the SEC a registration statement
+on Form&nbsp;S-3 under the Securities Act with respect to the shares of Class&nbsp;A common stock offered by this prospectus. This prospectus,
+which constitutes a part of the registration statement, does not contain all the information set forth in the registration statement,
+some of which is contained in exhibits to the registration statement as permitted by the rules&nbsp;and regulations of the SEC. For further
+information with respect to us and our Class&nbsp;A common stock, we refer you to the registration statement, including the exhibits filed
+as a part of the registration statement. Statements contained in this prospectus concerning the contents of any contract or any other
+document are not necessarily complete. If a contract or document has been filed as an exhibit to the registration statement, please see
+the copy of the contract or document that has been filed. Each statement in this prospectus relating to a contract or document filed as
+an exhibit is qualified in all respects by the filed exhibit. The SEC maintains an internet website that contains reports and other information
+about issuers, like us, that file electronically with the SEC. The address of that website is http://www.sec.gov.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">You may inspect our offering statement and the
+attached exhibits and schedules without charge at the public reference facilities maintained by the SEC at 100 F Street, N.E., Washington,
+D.C. 20549. You can also request copies of those documents, upon payment of a duplicating fee, by writing to the SEC. Please call the
+SEC at 1-800-SEC-0330 for further information on the operation of the public reference rooms.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Our SEC filings, including the registration statement
+on Form&nbsp;S-3 and the exhibits filed with the offering statement, are also available from the SEC&rsquo;s website at www.sec.gov, which
+contains reports, proxy and information statements and other information regarding issuers that file electronically with the SEC. Additionally,
+we will make these filings available, free of charge, on our website at www.caliberco.com as soon as reasonably practicable after we electronically
+file such materials with, or furnish them to, the SEC. The information on our website, other than these filings, is not, and should not
+be, considered part of this prospectus and is not incorporated by reference into this document.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 23; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->19<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B><A NAME="a_013"></A>INCORPORATION OF CERTAIN INFORMATION BY REFERENCE</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.25in">The SEC allows us to &ldquo;incorporate
+by reference&rdquo; the information we file with it, which means that we can disclose important information to you by referring you to
+those documents. The information incorporated by reference is considered to be part of this prospectus and information we file later with
+the SEC will automatically update and supersede this information. We incorporate by reference into this prospectus the documents listed
+below and any future filings made by us with the SEC under Sections 13(a), 13(c), 14 or 15(d)&nbsp;of the Exchange Act (1)&nbsp;after
+the date of this prospectus and prior to the time that we sell all of the securities offered by this prospectus or the earlier termination
+of the offering, and (2)&nbsp;after the date of the initial registration statement of which this prospectus forms a part and prior to
+the effectiveness of the registration statement (except in each case the information contained in such documents to the extent &ldquo;furnished&rdquo;
+and not &ldquo;filed&rdquo;). The documents we are incorporating by reference as of their respective dates of filing are:</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify"><FONT STYLE="background-color: white">&#9679;
+</FONT><A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm" STYLE="-sec-extract: exhibit">our Annual on Form&nbsp;10-K for the fiscal year ended December&nbsp;31, 2024, as filed with the Commission on March&nbsp;31, 2025;</A></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify">&#9679; our Quarterly Report on Form&nbsp;10-Q
+for the quarters ended March&nbsp;31, 2025 and June&nbsp;30, 2025, filed with the Commission on <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000059/cwd-20250331.htm" STYLE="-sec-extract: exhibit">May&nbsp;15, 2025</A> and <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000100/cwd-20250630.htm" STYLE="-sec-extract: exhibit">August&nbsp;14, 2025</A>, respectively;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify">&#9679; our Current Reports on
+Form&nbsp;8-K filed with the SEC on <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925034317/tm2512134d1_8k.htm" STYLE="-sec-extract: exhibit">April&nbsp;14,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925035972/tm2512544d2_8k.htm" STYLE="-sec-extract: exhibit">April&nbsp;17,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000048/cwd-20250421.htm" STYLE="-sec-extract: exhibit">April&nbsp;25,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000063/cwd-20250516.htm" STYLE="-sec-extract: exhibit">May&nbsp;16,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000072/cwd-20250613.htm" STYLE="-sec-extract: exhibit">June&nbsp;16,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000079/cwd-20250616.htm" STYLE="-sec-extract: exhibit">June&nbsp;20,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000082/cwd-20250701.htm" STYLE="-sec-extract: exhibit">July&nbsp;8,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000087/cwd-20250710.htm" STYLE="-sec-extract: exhibit">July&nbsp;15,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000093/cwd-20250801.htm" STYLE="-sec-extract: exhibit">August&nbsp;6,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925084125/tm2524335d3_8k.htm" STYLE="-sec-extract: exhibit">August&nbsp;28,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925084217/tm2524335d2_8k.htm" STYLE="-sec-extract: exhibit">August&nbsp;28,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925088692/tm2525700d1_8k.htm" STYLE="-sec-extract: exhibit">September&nbsp;10,
+2025</A>, <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925090624/tm2526187d1_8k.htm" STYLE="-sec-extract: exhibit">September&nbsp;17,
+2025</A> and <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000110465925093943/tm2527018d1_8k.htm">September 26, 2025</A> (except for the information furnished under Items 2.02 or 7.01 and the exhibits thereto); and</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify">&#9679; <A HREF="https://www.sec.gov/ix?doc=/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm" STYLE="-sec-extract: exhibit">the description of our securities, which is contained in the Company&rsquo;s Annual Report on Form&nbsp;10-K for the fiscal year ended December&nbsp;31, 2024 filed on March&nbsp;31, 2025, including any amendments or supplements thereto.</A></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.25in">In addition, all reports
+and other documents filed by us pursuant to the Exchange Act after the date of the initial registration statement and prior to effectiveness
+of the registration statement shall be deemed to be incorporated by reference into this prospectus and deemed to be a part of this prospectus
+from the date of filing of such reports and documents. Notwithstanding the foregoing, we are not incorporating by reference any documents
+or portions thereof that are not deemed &ldquo;filed&rdquo; with the SEC, including any information furnished pursuant to Items 2.02 or
+7.01 of Form&nbsp;8-K or related exhibits furnished pursuant to Item 9.01 of Form&nbsp;8-K. Any statement contained in a document incorporated
+or deemed to be incorporated by reference herein shall be deemed to be modified or superseded for purposes of the registration statement
+of which this prospectus forms a part to the extent that a statement contained in any subsequently filed document, which also is deemed
+to be incorporated by reference herein, modifies or supersedes such statement.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.25in">You may request, orally or
+in writing, a copy of any or all of the documents incorporated herein by reference. These documents will be provided to you at no cost,
+by calling us at (480) 295-7600 or by contacting: 8901 E. Mountain View Rd. Ste. 150, Scottsdale AZ 85258, Attn: Corporate Secretary.
+In addition, copies of any or all of the documents incorporated herein by reference may be accessed at our website at <I>www.caliberco.com</I>.
+The information contained on, or that can be accessed through, our website is not a part of this prospectus, and our reference to the
+address for our website is intended to be an inactive textual reference only.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 24; Value: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->20<!-- Field: /Sequence -->&nbsp;</P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">CALIBERCOS INC.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>255,385 Shares of Class&nbsp;A Common Stock</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>Prospectus</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>November 26, 2025</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+<!-- Field: Page; Sequence: 25; Options: Last -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1pt solid"><P STYLE="margin: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
