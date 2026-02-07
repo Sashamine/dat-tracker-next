@@ -5,15 +5,19 @@ import Link from "next/link";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { Company } from "@/lib/types";
 
-interface MinersComparisonProps {
+type CompanyType = "miners" | "treasuries" | "all";
+
+interface HPSComparisonProps {
   companies: Company[];
   prices?: any;
   compact?: boolean;
+  type?: CompanyType;  // Filter by company type
 }
 
-interface MinerStats {
+interface CompanyStats {
   ticker: string;
   name: string;
+  isMiner: boolean;
   currentHPS: number;
   hps30dAgo: number;
   hps90dAgo: number;
@@ -43,7 +47,7 @@ function getHPSAtDate(ticker: string, targetDate: Date): number | null {
   return null;
 }
 
-function calculateMinerStats(company: Company): MinerStats | null {
+function calculateCompanyStats(company: Company): CompanyStats | null {
   const history = HOLDINGS_HISTORY[company.ticker]?.history;
   if (!history || history.length === 0) return null;
 
@@ -66,6 +70,7 @@ function calculateMinerStats(company: Company): MinerStats | null {
   return {
     ticker: company.ticker,
     name: company.name,
+    isMiner: company.isMiner || false,
     currentHPS,
     hps30dAgo,
     hps90dAgo,
@@ -79,20 +84,28 @@ function calculateMinerStats(company: Company): MinerStats | null {
   };
 }
 
-export function MinersComparison({ companies, prices, compact }: MinersComparisonProps) {
-  const minerStats = useMemo(() => {
-    const miners = companies.filter(c => c.isMiner);
-    return miners
-      .map(calculateMinerStats)
-      .filter((s): s is MinerStats => s !== null)
+export function HPSComparison({ companies, prices, compact, type = "all" }: HPSComparisonProps) {
+  const stats = useMemo(() => {
+    // Filter by type
+    let filtered = companies;
+    if (type === "miners") {
+      filtered = companies.filter(c => c.isMiner);
+    } else if (type === "treasuries") {
+      filtered = companies.filter(c => !c.isMiner);
+    }
+    
+    return filtered
+      .map(calculateCompanyStats)
+      .filter((s): s is CompanyStats => s !== null)
       .sort((a, b) => (b.growth1y || 0) - (a.growth1y || 0));
-  }, [companies]);
+  }, [companies, type]);
 
-  if (minerStats.length === 0) {
-    // Debug: show message if no miners found
+  const typeLabel = type === "miners" ? "miner" : type === "treasuries" ? "treasury" : "company";
+
+  if (stats.length === 0) {
     return (
       <div className="text-xs text-gray-400 p-2">
-        No miner HPS data available
+        No {typeLabel} HPS data available
       </div>
     );
   }
@@ -115,21 +128,21 @@ export function MinersComparison({ companies, prices, compact }: MinersCompariso
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 px-1">
-          <span>Miner</span>
+          <span>Company</span>
           <span>HPS Growth (1Y)</span>
         </div>
-        {minerStats.slice(0, 5).map((miner) => (
+        {stats.slice(0, 5).map((company) => (
           <Link
-            key={miner.ticker}
-            href={`/company/${miner.ticker.toLowerCase()}`}
+            key={company.ticker}
+            href={`/company/${company.ticker.toLowerCase()}`}
             className="flex items-center justify-between p-2 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
           >
             <div>
-              <span className="font-medium text-gray-900 dark:text-gray-100">{miner.ticker}</span>
-              <span className="text-xs text-gray-500 ml-1">⛏️</span>
+              <span className="font-medium text-gray-900 dark:text-gray-100">{company.ticker}</span>
+              {company.isMiner && <span className="text-xs text-gray-500 ml-1">⛏️</span>}
             </div>
-            <span className={`text-sm font-semibold ${getGrowthColor(miner.growth1y)}`}>
-              {formatGrowth(miner.growth1y)}
+            <span className={`text-sm font-semibold ${getGrowthColor(company.growth1y)}`}>
+              {formatGrowth(company.growth1y)}
             </span>
           </Link>
         ))}
@@ -143,7 +156,7 @@ export function MinersComparison({ companies, prices, compact }: MinersCompariso
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-200 dark:border-gray-700">
-            <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400 font-medium">Miner</th>
+            <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400 font-medium">Company</th>
             <th className="text-right py-2 px-3 text-gray-500 dark:text-gray-400 font-medium">Holdings</th>
             <th className="text-right py-2 px-3 text-gray-500 dark:text-gray-400 font-medium">HPS</th>
             <th className="text-right py-2 px-3 text-gray-500 dark:text-gray-400 font-medium">30D</th>
@@ -152,31 +165,31 @@ export function MinersComparison({ companies, prices, compact }: MinersCompariso
           </tr>
         </thead>
         <tbody>
-          {minerStats.map((miner) => (
+          {stats.map((company) => (
             <tr 
-              key={miner.ticker}
+              key={company.ticker}
               className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50"
             >
               <td className="py-2 px-3">
-                <Link href={`/company/${miner.ticker.toLowerCase()}`} className="hover:underline">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">{miner.ticker}</span>
-                  <span className="text-xs text-gray-500 ml-1">⛏️</span>
+                <Link href={`/company/${company.ticker.toLowerCase()}`} className="hover:underline">
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{company.ticker}</span>
+                  {company.isMiner && <span className="text-xs text-gray-500 ml-1">⛏️</span>}
                 </Link>
               </td>
               <td className="text-right py-2 px-3 text-gray-900 dark:text-gray-100">
-                {miner.currentHoldings.toLocaleString()}
+                {company.currentHoldings.toLocaleString()}
               </td>
               <td className="text-right py-2 px-3 font-mono text-gray-600 dark:text-gray-400">
-                {(miner.currentHPS * 1000000).toFixed(1)}
+                {(company.currentHPS * 1000000).toFixed(1)}
               </td>
-              <td className={`text-right py-2 px-3 font-semibold ${getGrowthColor(miner.growth30d)}`}>
-                {formatGrowth(miner.growth30d)}
+              <td className={`text-right py-2 px-3 font-semibold ${getGrowthColor(company.growth30d)}`}>
+                {formatGrowth(company.growth30d)}
               </td>
-              <td className={`text-right py-2 px-3 font-semibold ${getGrowthColor(miner.growth90d)}`}>
-                {formatGrowth(miner.growth90d)}
+              <td className={`text-right py-2 px-3 font-semibold ${getGrowthColor(company.growth90d)}`}>
+                {formatGrowth(company.growth90d)}
               </td>
-              <td className={`text-right py-2 px-3 font-semibold ${getGrowthColor(miner.growth1y)}`}>
-                {formatGrowth(miner.growth1y)}
+              <td className={`text-right py-2 px-3 font-semibold ${getGrowthColor(company.growth1y)}`}>
+                {formatGrowth(company.growth1y)}
               </td>
             </tr>
           ))}
@@ -188,3 +201,6 @@ export function MinersComparison({ companies, prices, compact }: MinersCompariso
     </div>
   );
 }
+
+// Backwards compatibility alias
+export const MinersComparison = HPSComparison;

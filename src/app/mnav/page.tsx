@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getQuarterlyYieldLeaderboard, getAvailableQuarters, getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
-import { MinersComparison } from "@/components/miners-comparison";
+import { HPSComparison } from "@/components/miners-comparison";
 
 type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 type MetricType = "median" | "average";
@@ -546,23 +546,42 @@ export default function MNAVPage() {
           <p>Dashed line = Fair Value (1.0x mNAV)</p>
         </div>
 
-        {/* Miners Section */}
-        {miners.length > 0 && (
-          <div className="mt-12">
+        {/* HPS Growth Sections */}
+        <div className="mt-12 space-y-8">
+          {/* Treasuries HPS Growth */}
+          <div>
             <div className="mb-4">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                <span>⛏️</span> Miners HPS Growth
+                <span>🏦</span> Treasury HPS Growth
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Holdings per share (HPS) growth shows whether miners are accumulating faster than dilution.
-                Miners add BTC through mining + purchases, so should theoretically outpace pure treasuries.
+                Holdings per share (HPS) growth for pure treasury companies (non-miners).
+                Positive growth = accumulating crypto faster than share dilution.
               </p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <MinersComparison companies={allCompanies} prices={prices} />
+              <HPSComparison companies={allCompanies} prices={prices} type="treasuries" />
             </div>
           </div>
-        )}
+
+          {/* Miners HPS Growth */}
+          {miners.length > 0 && (
+            <div>
+              <div className="mb-4">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                  <span>⛏️</span> Miner HPS Growth
+                </h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  Miners add crypto through mining + purchases.
+                  Should theoretically outpace pure treasuries when adjusted for dilution.
+                </p>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                <HPSComparison companies={allCompanies} prices={prices} type="miners" />
+              </div>
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
