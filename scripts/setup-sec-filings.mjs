@@ -22,6 +22,7 @@ const COMPANIES = {
   djt: { cik: '1849635', asset: 'BTC', fiscalYearEnd: '1231' },
   lits: { cik: '1262104', asset: 'LTC', fiscalYearEnd: '1231' },
   tron: { cik: '1956744', asset: 'TRX', fiscalYearEnd: '1231' },
+  ethm: { cik: '2080334', asset: 'ETH', fiscalYearEnd: '1231' },
 };
 
 const ticker = process.argv[2]?.toLowerCase();

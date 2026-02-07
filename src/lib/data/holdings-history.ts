@@ -357,14 +357,14 @@ const SQNS_HISTORY: HoldingsSnapshot[] = [
 // Quarterly data from H1 2025 HKEX Interim Results - BTC Yield table (page 16-17)
 // Share counts corrected per official filing (previously had ~660M, actual is ~709-710M)
 const BOYAA_HISTORY: HoldingsSnapshot[] = [
-  // Official quarterly snapshots from H1 2025 filing BTC Yield table
-  { date: "2023-12-31", holdings: 5, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.000000007, stockPrice: 63.16, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
-  { date: "2024-03-31", holdings: 1_194, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000168, stockPrice: 163.67, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
-  { date: "2024-06-30", holdings: 2_079, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000293, stockPrice: 137.75, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
-  { date: "2024-09-30", holdings: 2_635, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000371, stockPrice: 168.6, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
-  { date: "2024-12-31", holdings: 3_274, sharesOutstandingDiluted: 710_183_730, holdingsPerShare: 0.00000461, stockPrice: 302.96, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
-  { date: "2025-03-31", holdings: 3_351, sharesOutstandingDiluted: 710_183_730, holdingsPerShare: 0.00000472, stockPrice: 288.27, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing" },
-  { date: "2025-06-30", holdings: 3_353, sharesOutstandingDiluted: 710_698_730, holdingsPerShare: 0.00000472, stockPrice: 404.23, source: "H1 2025 HKEX Filing - BTC Yield Table (avg cost $58,695)", sourceType: "regulatory-filing" },
+  // Official quarterly snapshots from HKEX filings BTC Yield table
+  { date: "2023-12-31", holdings: 5, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.000000007, stockPrice: 63.16, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
+  { date: "2024-03-31", holdings: 1_194, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000168, stockPrice: 163.67, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
+  { date: "2024-06-30", holdings: 2_079, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000293, stockPrice: 137.75, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
+  { date: "2024-09-30", holdings: 2_635, sharesOutstandingDiluted: 709_576_301, holdingsPerShare: 0.00000371, stockPrice: 168.6, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
+  { date: "2024-12-31", holdings: 3_274, sharesOutstandingDiluted: 710_183_730, holdingsPerShare: 0.00000461, stockPrice: 302.96, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
+  { date: "2025-03-31", holdings: 3_351, sharesOutstandingDiluted: 710_183_730, holdingsPerShare: 0.00000472, stockPrice: 288.27, source: "H1 2025 HKEX Filing - BTC Yield Table", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
+  { date: "2025-06-30", holdings: 3_353, sharesOutstandingDiluted: 710_698_730, holdingsPerShare: 0.00000472, stockPrice: 404.23, source: "H1 2025 HKEX Filing - BTC Yield Table (avg cost $58,695)", sourceType: "regulatory-filing", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf" },
   // Post H1 2025 updates from Q3 report and subsequent filings
   { date: "2025-11-17", holdings: 4_091, sharesOutstandingDiluted: 768_004_730, holdingsPerShare: 0.00000533, source: "Q3 2025 results (Sep 2025 ~60M share placement)", sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf", sourceType: "regulatory-filing" },
 ];
@@ -963,17 +963,17 @@ const SWC_HISTORY: HoldingsSnapshot[] = [
 const DCC_HISTORY: HoldingsSnapshot[] = [
   // BTC Treasury Strategy launched July 2025 - $20.7M raise from UTXO, ParaFi, Animoca
   { date: "2025-07-01", holdings: 258.03, sharesOutstandingDiluted: 1_310_000_000, holdingsPerShare: 0.000000197, source: "Initial BTC purchase - treasury.digitalx.com", sourceUrl: "https://treasury.digitalx.com/", sourceType: "company-dashboard" },
-  { date: "2025-07-11", holdings: 367.3, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000232, source: "+109.3 BTC @ $118,000", sourceType: "company-dashboard" },
-  { date: "2025-07-17", holdings: 425.1, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000269, source: "+57.46 BTC @ $118,275", sourceType: "company-dashboard" },
-  { date: "2025-07-22", holdings: 499.8, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "+74.73 BTC @ $117,293", sourceType: "company-dashboard" },
+  { date: "2025-07-11", holdings: 367.3, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000232, source: "+109.3 BTC @ $118,000", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-07-17", holdings: 425.1, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000269, source: "+57.46 BTC @ $118,275", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-07-22", holdings: 499.8, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "+74.73 BTC @ $117,293", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
   // Aug-Sep: Holdings stable at ~500 BTC
-  { date: "2025-08-31", holdings: 500, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - August 2025", sourceType: "regulatory-filing" },
-  { date: "2025-09-30", holdings: 500, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, stockPrice: 326.42, source: "ASX Treasury Information - September 2025", sourceType: "regulatory-filing" },
+  { date: "2025-08-31", holdings: 500, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - August 2025", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-09-30", holdings: 500, sharesOutstandingDiluted: 1_580_000_000, holdingsPerShare: 0.000000316, stockPrice: 326.42, source: "ASX Treasury Information - September 2025", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
   // Oct 2025: Small addition
   { date: "2025-10-21", holdings: 504, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "+2 BTC @ $108,430", sourceUrl: "https://treasury.digitalx.com/", sourceType: "company-dashboard" },
-  { date: "2025-10-31", holdings: 504, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - October 2025", sourceType: "regulatory-filing" },
+  { date: "2025-10-31", holdings: 504, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - October 2025", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
   // Nov-Dec: Stable holdings, includes ~194.85 BTC via BTXX ETF
-  { date: "2025-11-30", holdings: 503.2, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - November 2025 (308.8 direct + 194.4 ETF)", sourceType: "regulatory-filing" },
+  { date: "2025-11-30", holdings: 503.2, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, source: "ASX Treasury Information - November 2025 (308.8 direct + 194.4 ETF)", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
   { date: "2025-12-31", holdings: 503.7, sharesOutstandingDiluted: 1_730_000_000, holdingsPerShare: 0.000000291, stockPrice: 155.61, source: "ASX Treasury Information - December 2025 (308.8 direct + 194.85 ETF)", sourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html", sourceType: "regulatory-filing" },
   // Jan 2026: Updated share count from ASX (ISIN: AU000000DCC9)
   { date: "2026-01-30", holdings: 504, sharesOutstandingDiluted: 1_488_510_854, holdingsPerShare: 0.000000339, source: "ASX share registry update", sourceUrl: "https://asx.com.au", sourceType: "regulatory-filing" },
