@@ -1,250 +1,52 @@
-import { notFound } from "next/navigation";
-import * as fs from "fs";
-import * as path from "path";
+import { redirect } from "next/navigation";
 
 interface PageProps {
   params: Promise<{
     ticker: string;
     accession: string;
   }>;
-  searchParams: Promise<{
-    highlight?: string;
-    anchor?: string;  // e.g., "btc-holdings", "operating-burn"
-    type?: string;    // e.g., "8-k", "10-q", "10-k" - prioritizes this filing type
-  }>;
 }
 
-// Filing types to search, in priority order
-const FILING_TYPES = ["8k", "10k", "10q"] as const;
-type FilingType = typeof FILING_TYPES[number];
-
-const FILING_TYPE_LABELS: Record<FilingType, string> = {
-  "8k": "Form 8-K",
-  "10k": "Form 10-K (Annual Report)",
-  "10q": "Form 10-Q (Quarterly Report)",
+// Map tickers to CIKs for SEC EDGAR redirect
+const TICKER_CIKS: Record<string, string> = {
+  mstr: "0001050446",
+  mara: "0001507605",
+  riot: "0001167419",
+  clsk: "0001771485",
+  btbt: "0001710350",
+  kulr: "0001662684",
+  fufu: "0001921158",
+  naka: "0001946573",
+  abtc: "0001755953",
+  btcs: "0000827876",
+  bmnr: "0001946573",
+  game: "0001714562",
+  fgnx: "0001591890",
+  lits: "0001262104",
+  dfdv: "0001805526",
+  upxi: "0001903596",
+  hsdt: "0001959534",
+  tron: "0001956744",
+  cwd: "0001627282",
+  stke: "0001846839",
+  sqns: "0001383395",
+  twav: "0000746210",
 };
 
-export default async function FilingViewerPage({ params, searchParams }: PageProps) {
+export default async function FilingViewerPage({ params }: PageProps) {
   const { ticker, accession } = await params;
-  const { highlight, anchor, type: preferredType } = await searchParams;
   
-  const tickerUpper = ticker.toUpperCase();
   const tickerLower = ticker.toLowerCase();
+  const cik = TICKER_CIKS[tickerLower];
   
-  let filingContent = "";
-  let filingDate = "";
-  let filingFile = "";
-  let filingType: FilingType = "8k";
-  let foundFilingDir = "";
-  
-  try {
-    // Reorder filing types to prioritize the preferred type (from ?type= param)
-    let searchOrder = [...FILING_TYPES];
-    if (preferredType) {
-      const normalized = preferredType.toLowerCase().replace('-', '') as FilingType;
-      if (FILING_TYPES.includes(normalized)) {
-        searchOrder = [normalized, ...FILING_TYPES.filter(t => t !== normalized)];
-      }
-    }
-    
-    // Search all filing type folders for matching file
-    for (const type of searchOrder) {
-      const dataDir = path.join(process.cwd(), "data", "sec", tickerLower, type);
-      
-      // Skip if directory doesn't exist
-      if (!fs.existsSync(dataDir)) continue;
-      
-      const files = fs.readdirSync(dataDir);
-      
-      // Look for file matching the accession
-      let matchingFile = files.find(f => f.includes(accession) && f.endsWith(".html"));
-      
-      if (!matchingFile) {
-        // Try to find by date pattern in accession (e.g., "2025-09-30")
-        const dateMatch = accession.match(/(\d{4}-\d{2}-\d{2})/);
-        if (dateMatch) {
-          matchingFile = files.find(f => f.includes(dateMatch[1]) && f.endsWith(".html"));
-        }
-      }
-      
-      if (matchingFile) {
-        filingFile = matchingFile;
-        filingType = type;
-        foundFilingDir = dataDir;
-        break;
-      }
-    }
-    
-    if (!filingFile || !foundFilingDir) {
-      return notFound();
-    }
-    
-    // Extract date from filename (handles 8k-DATE, 10k-DATE, 10q-DATE patterns)
-    const dateExtract = filingFile.match(/(?:8k|10k|10q)-(\d{4}-\d{2}-\d{2})/i);
-    filingDate = dateExtract ? dateExtract[1] : "Unknown";
-    
-    // Read the file
-    const filePath = path.join(foundFilingDir, filingFile);
-    filingContent = fs.readFileSync(filePath, "utf-8");
-    
-    // If highlight param exists, find and highlight the relevant section
-    if (highlight) {
-      const highlightText = decodeURIComponent(highlight);
-      const numMatch = highlightText.match(/[\d,]+/);
-      const searchNum = numMatch ? numMatch[0] : highlightText;
-      
-      // For table-format filings, highlight the cell containing the number
-      if (filingContent.includes(searchNum)) {
-        // Add highlight style to the number itself (in table cells)
-        filingContent = filingContent.replace(
-          new RegExp(`(>\\s*)(${searchNum.replace(/,/g, ',')})(\\s*<)`, 'g'),
-          '$1<span id="highlight" style="background-color: #fef08a; padding: 2px 6px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 0 3px #eab308;">$2</span>$3'
-        );
-        
-        // Also try to highlight prose mentions like "acquired X bitcoins"
-        const prosePattern = new RegExp(`(acquired[^.]*${searchNum}[^.]*\\.)`, 'gi');
-        filingContent = filingContent.replace(prosePattern, 
-          '<div style="background: linear-gradient(to right, #fef08a, #fde047); padding: 16px; margin: 16px 0; border-left: 4px solid #eab308; border-radius: 4px;">$1</div>'
-        );
-      }
-    }
-    
-    // Inject scroll-to-highlight/anchor script
-    const scrollScript = (highlight || anchor) ? `
-      <script>
-        window.addEventListener('load', function() {
-          // Try anchor first (e.g., btc-holdings, operating-burn)
-          ${anchor ? `
-          const anchorEl = document.getElementById('${anchor}');
-          if (anchorEl) {
-            anchorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Add highlight styling
-            anchorEl.style.background = 'linear-gradient(to right, #fef08a, #fde047)';
-            anchorEl.style.outline = '3px solid #eab308';
-            anchorEl.style.outlineOffset = '2px';
-            anchorEl.style.borderRadius = '4px';
-            return;
-          }
-          ` : ''}
-          // Fall back to highlight ID
-          const highlight = document.getElementById('highlight');
-          if (highlight) {
-            highlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        });
-      </script>
-    ` : "";
-    
-    const filingLabel = FILING_TYPE_LABELS[filingType];
-    
-    // Wrap content with our styling
-    const styledContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>${tickerUpper} ${filingLabel} - ${filingDate}</title>
-        <style>
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f9fafb;
-          }
-          .filing-header {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-          }
-          .filing-header h1 {
-            margin: 0 0 8px 0;
-            font-size: 18px;
-            color: #111827;
-          }
-          .filing-header p {
-            margin: 0;
-            font-size: 14px;
-            color: #6b7280;
-          }
-          .filing-header a {
-            color: #4f46e5;
-            text-decoration: none;
-          }
-          .filing-header a:hover {
-            text-decoration: underline;
-          }
-          .filing-type-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 8px;
-          }
-          .badge-8k { background: #dbeafe; color: #1d4ed8; }
-          .badge-10k { background: #dcfce7; color: #16a34a; }
-          .badge-10q { background: #fef3c7; color: #d97706; }
-          /* Highlight anchor targets (btc-holdings, operating-burn, etc.) */
-          :target {
-            background: linear-gradient(to right, #fef08a, #fde047) !important;
-            outline: 3px solid #eab308;
-            outline-offset: 2px;
-            border-radius: 4px;
-            animation: pulse-highlight 2s ease-in-out;
-          }
-          @keyframes pulse-highlight {
-            0%, 100% { outline-color: #eab308; }
-            50% { outline-color: #facc15; }
-          }
-          .filing-content {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 20px;
-          }
-          mark {
-            background-color: #fef08a !important;
-            padding: 2px 4px;
-            border-radius: 2px;
-          }
-        </style>
-        ${scrollScript}
-      </head>
-      <body>
-        <div class="filing-header">
-          <h1>
-            ${tickerUpper} ${filingLabel} - ${filingDate}
-            <span class="filing-type-badge badge-${filingType}">${filingType.toUpperCase()}</span>
-          </h1>
-          <p>
-            <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${tickerLower}&type=${filingType}" target="_blank">View all ${filingType.toUpperCase()} filings on SEC EDGAR →</a>
-            ${highlight ? ' | <span style="color: #d97706;">Highlighted text below</span>' : ''}
-          </p>
-        </div>
-        <div class="filing-content">
-          ${filingContent}
-        </div>
-      </body>
-      </html>
-    `;
-    
-    return (
-      <iframe
-        srcDoc={styledContent}
-        className="w-full h-screen border-0"
-        title={`${tickerUpper} ${filingLabel} - ${filingDate}`}
-      />
-    );
-    
-  } catch (error) {
-    console.error("Error loading filing:", error);
-    return notFound();
+  if (!cik) {
+    // Fallback to SEC EDGAR search
+    redirect(`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=${ticker}&type=&dateb=&owner=include&count=40`);
   }
+  
+  // Clean up accession number for SEC URL
+  const accessionClean = accession.replace(/-/g, "");
+  
+  // Redirect to SEC EDGAR filing
+  redirect(`https://www.sec.gov/Archives/edgar/data/${cik.replace(/^0+/, "")}/${accessionClean}/`);
 }
