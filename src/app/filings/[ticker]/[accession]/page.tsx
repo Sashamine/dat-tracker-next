@@ -11,6 +11,7 @@ interface PageProps {
     type?: string;
     tab?: string;
     fact?: string;
+    period?: string;  // XBRL period end date to match specific row
   }>;
 }
 
@@ -49,7 +50,7 @@ function parseDateFormat(accession: string, typeParam?: string): { type: string;
 
 export default async function FilingViewerPage({ params, searchParams }: PageProps) {
   const { ticker, accession: rawAccession } = await params;
-  const { q: searchQuery, anchor, type, tab, fact } = await searchParams;
+  const { q: searchQuery, anchor, type, tab, fact, period } = await searchParams;
   
   let accession = rawAccession;
   let resolvedAnchor = anchor;
@@ -128,6 +129,7 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
       anchor={resolvedAnchor}
       initialTab={tab === "xbrl" ? "xbrl" : "document"}
       highlightFact={fact}
+      highlightPeriod={period}
     />
   );
 }

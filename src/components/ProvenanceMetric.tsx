@@ -64,7 +64,9 @@ function getSourceLabel(source: XBRLSource | DocumentSource | DerivedSource): st
 /** Get internal viewer URL */
 function getViewerUrl(source: XBRLSource | DocumentSource | DerivedSource, ticker: string = "mstr"): string | null {
   if (source.type === "xbrl") {
-    return `/filings/${ticker}/${source.accession}?tab=xbrl&fact=${encodeURIComponent(source.fact)}`;
+    // Include period to match specific row
+    const period = source.periodEnd ? `&period=${encodeURIComponent(source.periodEnd)}` : "";
+    return `/filings/${ticker}/${source.accession}?tab=xbrl&fact=${encodeURIComponent(source.fact)}${period}`;
   } else if (source.type === "sec-document" && source.accession) {
     // Use the anchor text as search query to find and highlight in document
     const searchTerm = source.anchor || source.quote?.slice(0, 50);

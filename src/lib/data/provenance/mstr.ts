@@ -119,14 +119,21 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   }), "Quarterly average - actual quarters may vary"),
 
   // =========================================================================
-  // SHARES OUTSTANDING - from XBRL + 8-K ATM updates
+  // SHARES OUTSTANDING - from XBRL (baseline) + note about ATM updates
+  // Note: This is Q3 2025 baseline. Current shares higher due to ATM issuances.
+  // For real-time, see strategy.com/shares which aggregates 8-K ATM disclosures.
   // =========================================================================
-  sharesOutstanding: pv(332_431_000, docSource({
-    type: "company-website",
-    url: "https://www.strategy.com/shares",
-    quote: "332,431,000 basic shares outstanding",
-    documentDate: "2026-02-03",
-  }), "Aggregated from SEC 10-Q baseline + weekly 8-K ATM disclosures"),
+  sharesOutstanding: pv(267_517_573, xbrlSource({
+    fact: "dei:EntityCommonStockSharesOutstanding",
+    rawValue: 267_517_573,
+    unit: "shares",
+    periodType: "instant",
+    periodEnd: "2025-10-29",
+    cik: MSTR_CIK,
+    accession: Q3_2025_10Q,
+    filingType: "10-Q",
+    filingDate: Q3_2025_FILED,
+  }), "Q3 2025 baseline. Current ~332M after ATM issuances (see strategy.com/shares)."),
 
   // =========================================================================
   // TOTAL DEBT - from XBRL (LongTermDebt)

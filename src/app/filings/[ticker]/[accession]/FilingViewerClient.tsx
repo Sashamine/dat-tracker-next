@@ -22,9 +22,10 @@ interface FilingViewerClientProps {
   anchor?: string; // Section anchor like "btc-holdings" or "staking"
   initialTab?: "document" | "xbrl"; // Which tab to show initially
   highlightFact?: string; // XBRL fact to highlight
+  highlightPeriod?: string; // XBRL period end date to match
 }
 
-export default function FilingViewerClient({ ticker, accession, searchQuery, anchor, initialTab, highlightFact }: FilingViewerClientProps) {
+export default function FilingViewerClient({ ticker, accession, searchQuery, anchor, initialTab, highlightFact, highlightPeriod }: FilingViewerClientProps) {
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -191,6 +192,7 @@ export default function FilingViewerClient({ ticker, accession, searchQuery, anc
               cik={cik}
               accession={accession}
               highlightFact={highlightFact}
+              highlightPeriod={highlightPeriod}
             />
           ) : (
             <div className="text-center py-8 text-gray-500">

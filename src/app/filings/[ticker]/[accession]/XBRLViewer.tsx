@@ -17,6 +17,7 @@ interface XBRLViewerProps {
   cik: string;
   accession: string;
   highlightFact?: string; // Fact to highlight/scroll to
+  highlightPeriod?: string; // Period end date to match (YYYY-MM-DD)
 }
 
 // Key financial facts we care about for treasury companies
@@ -55,7 +56,7 @@ const PRIORITY_FACTS = [
   "Liabilities",
 ];
 
-export default function XBRLViewer({ ticker, cik, accession, highlightFact }: XBRLViewerProps) {
+export default function XBRLViewer({ ticker, cik, accession, highlightFact, highlightPeriod }: XBRLViewerProps) {
   const [facts, setFacts] = useState<XBRLFact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -212,11 +213,27 @@ export default function XBRLViewer({ ticker, cik, accession, highlightFact }: XB
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {sortedFacts.map((fact, i) => {
-              const isHighlighted = highlightFact && fact.fact.toLowerCase().includes(highlightFact.toLowerCase().replace("us-gaap:", ""));
+              // Match fact name (exact match preferred, fallback to includes)
+              const factNameClean = highlightFact?.toLowerCase().replace("us-gaap:", "").replace("dei:", "") || "";
+              const factMatches = highlightFact && (
+                fact.fact.toLowerCase().replace("us-gaap:", "").replace("dei:", "") === factNameClean ||
+                fact.fact.toLowerCase().includes(factNameClean)
+              );
+              
+              // Match period if specified
+              const periodMatches = !highlightPeriod || fact.periodEnd === highlightPeriod;
+              
+              // Only highlight if both fact AND period match (when period specified)
+              const isHighlighted = factMatches && periodMatches;
               const isPriority = PRIORITY_FACTS.some(pf => fact.fact.includes(pf));
-              const isFirstHighlight = isHighlighted && sortedFacts.findIndex(f => 
-                highlightFact && f.fact.toLowerCase().includes(highlightFact.toLowerCase().replace("us-gaap:", ""))
-              ) === i;
+              
+              // Find first exact match for scrolling
+              const isFirstHighlight = isHighlighted && sortedFacts.findIndex(f => {
+                const fNameClean = f.fact.toLowerCase().replace("us-gaap:", "").replace("dei:", "");
+                const fMatches = fNameClean === factNameClean || fNameClean.includes(factNameClean);
+                const pMatches = !highlightPeriod || f.periodEnd === highlightPeriod;
+                return fMatches && pMatches;
+              }) === i;
               
               return (
                 <tr 
