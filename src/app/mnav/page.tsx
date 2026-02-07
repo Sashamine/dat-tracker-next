@@ -197,6 +197,8 @@ export default function MNAVPage() {
   const [selectedMetric, setSelectedMetric] = useState<MetricType>("median");
   const [selectedAsset, setSelectedAsset] = useState<AssetFilter>("ALL");
   const [growthPeriod, setGrowthPeriod] = useState<GrowthPeriod>("90d");
+  const [showTreasuryHPS, setShowTreasuryHPS] = useState(true);
+  const [showMinerHPS, setShowMinerHPS] = useState(true);
 
   const { data: prices } = usePricesStream();
   const { data: companiesData, isLoading } = useCompanies();
@@ -456,26 +458,56 @@ export default function MNAVPage() {
         </div>
 
         {/* HPS Growth Comparison Tables */}
-        <div className="mb-8 space-y-6">
+        <div className="mb-8 space-y-4">
           {/* Treasury HPS Growth Table */}
-          <div>
-            <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2 mb-3">
-              <span>🏦</span> Treasury HPS Leaderboard
-            </h3>
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <HPSComparison companies={allCompanies} prices={prices} type="treasuries" />
-            </div>
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+            <button
+              onClick={() => setShowTreasuryHPS(!showTreasuryHPS)}
+              className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                <span>🏦</span> Treasury HPS Leaderboard
+              </h3>
+              <svg
+                className={cn("w-5 h-5 text-gray-500 transition-transform", showTreasuryHPS && "rotate-180")}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {showTreasuryHPS && (
+              <div className="p-4 bg-white dark:bg-gray-950">
+                <HPSComparison companies={allCompanies} prices={prices} type="treasuries" />
+              </div>
+            )}
           </div>
 
           {/* Miner HPS Growth Table */}
           {miners.length > 0 && (
-            <div>
-              <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2 mb-3">
-                <span>⛏️</span> Miner HPS Leaderboard
-              </h3>
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <HPSComparison companies={allCompanies} prices={prices} type="miners" />
-              </div>
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+              <button
+                onClick={() => setShowMinerHPS(!showMinerHPS)}
+                className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                  <span>⛏️</span> Miner HPS Leaderboard
+                </h3>
+                <svg
+                  className={cn("w-5 h-5 text-gray-500 transition-transform", showMinerHPS && "rotate-180")}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {showMinerHPS && (
+                <div className="p-4 bg-white dark:bg-gray-950">
+                  <HPSComparison companies={allCompanies} prices={prices} type="miners" />
+                </div>
+              )}
             </div>
           )}
         </div>
