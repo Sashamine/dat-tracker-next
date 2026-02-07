@@ -201,16 +201,44 @@ export function ProvenanceMetric({
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-600 dark:text-gray-400 text-xs">Inputs</div>
-                    <div className="space-y-1 mt-1">
-                      {Object.entries(data.source.inputs).map(([key, input]) => (
-                        <div key={key} className="flex justify-between text-xs">
-                          <span className="font-mono text-gray-600 dark:text-gray-400">{key}:</span>
-                          <span className="font-mono text-gray-900 dark:text-gray-100">
-                            {input.value.toLocaleString()}
-                          </span>
-                        </div>
-                      ))}
+                    <div className="text-gray-600 dark:text-gray-400 text-xs mb-2">Inputs (click to view source)</div>
+                    <div className="space-y-2">
+                      {Object.entries(data.source.inputs).map(([key, input]) => {
+                        const inputUrl = getViewerUrl(input.source, ticker);
+                        const sourceLabel = getSourceLabel(input.source);
+                        return (
+                          <div key={key} className="bg-gray-50 dark:bg-gray-900 p-2 rounded text-xs">
+                            <div className="flex justify-between items-center">
+                              <span className="font-mono text-gray-600 dark:text-gray-400">{key}</span>
+                              <span className="text-xs px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
+                                {sourceLabel}
+                              </span>
+                            </div>
+                            <div className="font-mono text-gray-900 dark:text-gray-100 mt-1">
+                              {input.value.toLocaleString()}
+                            </div>
+                            {inputUrl && (
+                              <Link
+                                href={inputUrl}
+                                className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
+                                onClick={() => setShowPopover(false)}
+                              >
+                                View Source →
+                              </Link>
+                            )}
+                            {!inputUrl && input.source.type === "company-website" && (
+                              <a
+                                href={(input.source as DocumentSource).url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
+                              >
+                                View on Company Site ↗
+                              </a>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </>
