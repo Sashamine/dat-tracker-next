@@ -153,9 +153,40 @@ export default function CitationVerificationPage() {
   };
 
   const canEmbed = (point: DataPoint): boolean => {
-    const urlType = getUrlType(point.sourceUrl);
+    // Check for local static file first - always embeddable
     const hasStaticFile = !!findStaticFile(point);
-    return hasStaticFile || urlType === "local-api" || urlType === "local-static" || urlType === "sec-filing" || urlType === "pdf";
+    if (hasStaticFile) return true;
+    
+    const urlType = getUrlType(point.sourceUrl);
+    const url = point.sourceUrl || "";
+    
+    // External URLs that block iframe embedding
+    const blockedDomains = [
+      "hkexnews.hk",    // HKEX filings (X-Frame-Options)
+      "metaplanet.jp",  // TDnet filings
+      "tdnet.info",     // TDnet
+      "disclosure.edinet", // Japanese EDINET
+    ];
+    
+    if (blockedDomains.some(d => url.includes(d))) {
+      return false;
+    }
+    
+    // External PDFs generally can't be embedded due to CORS
+    if (urlType === "pdf" && (url.startsWith("http://") || url.startsWith("https://"))) {
+      return false;
+    }
+    
+    return urlType === "local-api" || urlType === "local-static" || urlType === "sec-filing";
+  };
+  
+  const getSourceLabel = (point: DataPoint): string => {
+    const url = point.sourceUrl || "";
+    if (url.includes("sec.gov")) return "SEC";
+    if (url.includes("hkexnews.hk")) return "HKEX";
+    if (url.includes("metaplanet.jp") || url.includes("tdnet")) return "TDnet";
+    if (url.includes("sedar")) return "SEDAR";
+    return "Source";
   };
 
   if (loading) {
@@ -286,12 +317,12 @@ export default function CitationVerificationPage() {
                   <div className="flex gap-2">
                     {selectedPoint.sourceUrl && (
                       <a
-                        href={getOriginalUrl(selectedPoint) || "#"}
+                        href={selectedPoint.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 rounded text-sm"
                       >
-                        Open SEC ↗
+                        Open {getSourceLabel(selectedPoint)} ↗
                       </a>
                     )}
                     <button
@@ -347,23 +378,42 @@ export default function CitationVerificationPage() {
                   ) : (
                     <div className="h-full flex items-center justify-center bg-gray-900 text-white">
                       <div className="text-center max-w-md p-8">
-                        <div className="text-6xl mb-4">🔗</div>
-                        <div className="text-xl font-bold mb-2">External Source</div>
+                        <div className="text-6xl mb-4">📄</div>
+                        <div className="text-xl font-bold mb-2">
+                          {getSourceLabel(selectedPoint)} Filing
+                        </div>
                         <p className="text-gray-400 mb-4">
-                          This source cannot be embedded. Click below to open in a new tab.
+                          {selectedPoint.sourceUrl?.includes(".pdf") 
+                            ? "This PDF cannot be embedded. Click below to open in a new tab."
+                            : "This source cannot be embedded due to security restrictions. Click below to open in a new tab."}
                         </p>
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           <a
-                            href={getOriginalUrl(selectedPoint) || "#"}
+                            href={selectedPoint.sourceUrl || "#"}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="block px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg text-lg"
                           >
-                            Open Source Document ↗
+                            Open {getSourceLabel(selectedPoint)} Filing ↗
                           </a>
-                          <p className="text-xs text-gray-500 break-all">
+                          <p className="text-xs text-gray-500 break-all mt-2">
                             {selectedPoint.sourceUrl}
                           </p>
+                        </div>
+                        
+                        {/* Quick verification info */}
+                        <div className="mt-6 p-4 bg-gray-800 rounded-lg text-left text-sm">
+                          <div className="text-gray-400 mb-2">Look for in filing:</div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <span className="text-gray-500">Holdings:</span>
+                              <span className="text-white ml-2">{selectedPoint.holdings.toLocaleString()} {selectedPoint.asset}</span>
+                            </div>
+                            <div>
+                              <span className="text-gray-500">Date:</span>
+                              <span className="text-white ml-2">{selectedPoint.date}</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
