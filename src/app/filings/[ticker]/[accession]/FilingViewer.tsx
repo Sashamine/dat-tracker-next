@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 
 interface FilingViewerProps {
   ticker: string;
@@ -101,65 +100,48 @@ export default function FilingViewer({ ticker, accession, content, searchQuery, 
   const isHtml = content.trim().startsWith("<") || content.includes("<html") || content.includes("<HTML");
   
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-4">
-              <Link 
-                href={`/company/${ticker.toLowerCase()}`}
-                className="text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                ← {ticker}
-              </Link>
-              <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Filing: {accession}
-              </h1>
-            </div>
-            
-            {/* Search info bar */}
-            {effectiveSearchQuery && (
-              <div className="flex items-center gap-3 text-sm">
-                <span className="text-gray-600 dark:text-gray-400">
-                  Search: <code className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">{effectiveSearchQuery}</code>
-                  {anchor && <span className="text-xs text-gray-500 ml-1">(from #{anchor})</span>}
+    <div>
+      {/* Search bar (if searching) */}
+      {effectiveSearchQuery && (
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3 text-sm">
+            <span className="text-gray-600 dark:text-gray-400">
+              Search: <code className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">{effectiveSearchQuery}</code>
+              {anchor && <span className="text-xs text-gray-500 ml-1">(from #{anchor})</span>}
+            </span>
+            {matchCount > 0 ? (
+              <div className="flex items-center gap-2">
+                <span className="text-green-600 dark:text-green-400 font-medium">
+                  {matchCount} match{matchCount !== 1 ? "es" : ""}
                 </span>
-                {matchCount > 0 ? (
-                  <div className="flex items-center gap-2">
-                    <span className="text-green-600 dark:text-green-400 font-medium">
-                      {matchCount} match{matchCount !== 1 ? "es" : ""}
-                    </span>
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={prevMatch}
-                        className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
-                        title="Previous match"
-                      >
-                        ↑
-                      </button>
-                      <span className="text-gray-500 dark:text-gray-400 min-w-[3rem] text-center">
-                        {currentMatch + 1}/{matchCount}
-                      </span>
-                      <button
-                        onClick={nextMatch}
-                        className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
-                        title="Next match"
-                      >
-                        ↓
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <span className="text-red-600 dark:text-red-400">
-                    No matches found
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={prevMatch}
+                    className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+                    title="Previous match"
+                  >
+                    ↑
+                  </button>
+                  <span className="text-gray-500 dark:text-gray-400 min-w-[3rem] text-center">
+                    {currentMatch + 1}/{matchCount}
                   </span>
-                )}
+                  <button
+                    onClick={nextMatch}
+                    className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+                    title="Next match"
+                  >
+                    ↓
+                  </button>
+                </div>
               </div>
+            ) : (
+              <span className="text-red-600 dark:text-red-400">
+                No matches found
+              </span>
             )}
           </div>
         </div>
-      </div>
+      )}
       
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 py-6">
