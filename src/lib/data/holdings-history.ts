@@ -950,6 +950,48 @@ const IHLDF_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-31", holdings: 48000000, sharesOutstandingDiluted: 65_000_000, holdingsPerShare: 0.738, stockPrice: 155.61, source: "Q4 2025 filing", sourceUrl: "https://www.sedarplus.ca", sourceType: "regulatory-filing" },
 ];
 
+// DDC Enterprise - BTC treasury company
+// Source: treasury.ddc.xyz dashboard
+const DDC_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-02-21", holdings: 100, sharesOutstandingDiluted: 20_000_000, holdingsPerShare: 0.000005, source: "Initial BTC treasury", sourceType: "press-release", sourceUrl: "https://treasury.ddc.xyz" },
+  { date: "2026-01-29", holdings: 1_783, sharesOutstandingDiluted: 23_310_000, holdingsPerShare: 0.0000765, source: "treasury.ddc.xyz Jan 2026", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
+];
+
+// Remixpoint (3825.T) - Japanese multi-asset treasury (BTC, ETH, XRP, SOL, DOGE)
+// Source: Company website + TDnet filings
+const REMIXPOINT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-09-26", holdings: 500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.00001, source: "Initial BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
+  { date: "2026-02-02", holdings: 1_411, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.0000282, source: "Company website Feb 2026: 1,411.30 BTC", sourceType: "company-website", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
+];
+
+// ANAP Holdings (3189.T) - Japanese BTC treasury
+// Source: TDnet filings
+const ANAP_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-04-16", holdings: 100, sharesOutstandingDiluted: 8_000_000, holdingsPerShare: 0.0000125, source: "First BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/" },
+  { date: "2026-01-21", holdings: 1_417, sharesOutstandingDiluted: 8_000_000, holdingsPerShare: 0.000177, source: "TDnet Jan 21, 2026: 1,417.0341 BTC", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf" },
+];
+
+// ZOOZ Power - Israeli BTC treasury
+// Source: treasury.zoozpower.com dashboard
+const ZOOZ_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-09-28", holdings: 100, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.00000067, source: "Initial BTC treasury", sourceType: "press-release", sourceUrl: "https://treasury.zoozpower.com" },
+  { date: "2026-02-02", holdings: 1_047, sharesOutstandingDiluted: 162_000_000, holdingsPerShare: 0.00000646, source: "treasury.zoozpower.com Feb 2026", sourceType: "company-website", sourceUrl: "https://treasury.zoozpower.com" },
+];
+
+// Bitcoin Treasury Corp (BTCT.V) - Canadian BTC treasury
+// Source: btctcorp.com + SEDAR+
+const BTCT_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-06-30", holdings: 100, sharesOutstandingDiluted: 10_000_000, holdingsPerShare: 0.00001, source: "TSX Venture listing", sourceType: "regulatory-filing", sourceUrl: "https://btctcorp.com" },
+  { date: "2026-02-02", holdings: 771, sharesOutstandingDiluted: 12_158_413, holdingsPerShare: 0.0000634, source: "btctcorp.com Feb 2026: 771.37 BTC", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
+];
+
+// Samara Asset Group (SRAG.DU) - German BTC treasury
+// Source: CEO Patrick Lowry X posts + Bundesanzeiger
+const SRAG_HISTORY: HoldingsSnapshot[] = [
+  { date: "2024-01-01", holdings: 300, sharesOutstandingDiluted: 10_000_000, holdingsPerShare: 0.00003, source: "Initial holdings estimate", sourceType: "press-release", sourceUrl: "https://samara.ag/investor-relations/" },
+  { date: "2024-11-30", holdings: 525, sharesOutstandingDiluted: 10_000_000, holdingsPerShare: 0.0000525, source: "CEO Patrick Lowry X post", sourceType: "press-release", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
+];
+
 // SWC (The Smarter Web Company) - UK BTC Treasury
 // Source: AQUIS RNS announcements
 const SWC_HISTORY: HoldingsSnapshot[] = [
@@ -1003,10 +1045,19 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   ABTC: { ticker: "ABTC", asset: "BTC", history: ABTC_HISTORY },
   // NXTT removed - history of false financial reports
   ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
+  ALCPB: { ticker: "ALCPB", asset: "BTC", history: ALTBG_HISTORY },  // Rebranded from ALTBG
   "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },
   "DCC.AX": { ticker: "DCC.AX", asset: "BTC", history: DCC_HISTORY },
   FUFU: { ticker: "FUFU", asset: "BTC", history: FUFU_HISTORY },
   FLD: { ticker: "FLD", asset: "BTC", history: FLD_HISTORY },
+  
+  // Additional BTC - International/Newer
+  DDC: { ticker: "DDC", asset: "BTC", history: DDC_HISTORY },
+  "3825.T": { ticker: "3825.T", asset: "MULTI", history: REMIXPOINT_HISTORY },
+  "3189.T": { ticker: "3189.T", asset: "BTC", history: ANAP_HISTORY },
+  ZOOZ: { ticker: "ZOOZ", asset: "BTC", history: ZOOZ_HISTORY },
+  "BTCT.V": { ticker: "BTCT.V", asset: "BTC", history: BTCT_HISTORY },
+  "SRAG.DU": { ticker: "SRAG.DU", asset: "BTC", history: SRAG_HISTORY },
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },
