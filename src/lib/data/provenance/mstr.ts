@@ -35,12 +35,13 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   
   // =========================================================================
   // BTC HOLDINGS - from 8-K announcement
+  // Section: "BTC Update" table, Column: "Aggregate BTC Holdings"
   // =========================================================================
   holdings: pv(713_502, docSource({
     type: "sec-document",
     url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
-    quote: "Aggregate BTC Holdings: 713,502",
-    anchor: "Aggregate BTC Holdings",
+    quote: "713,502",
+    anchor: "Aggregate BTC Holdings",  // Column header - consistent across 8-Ks
     cik: MSTR_CIK,
     accession: FEB_2026_8K,
     filingType: "8-K",
@@ -64,45 +65,30 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   })),
 
   // =========================================================================
-  // COST BASIS - DERIVED from 8-K (total cost / holdings)
+  // COST BASIS - directly from 8-K table
+  // Section: "BTC Update" table, Column: "Average Purchase Price"
   // =========================================================================
-  costBasisAvg: pv(76_052, derivedSource({
-    derivation: "Total acquisition cost ÷ total BTC holdings",
-    formula: "totalCost / holdings",
-    inputs: {
-      totalCost: pv(54_260_000_000, docSource({
-        type: "sec-document",
-        url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
-        quote: "Aggregate Purchase Price: approximately $54.26 billion",
-        anchor: "Aggregate Purchase Price",
-        cik: MSTR_CIK,
-        accession: FEB_2026_8K,
-        filingType: "8-K",
-        filingDate: FEB_2026_8K_FILED,
-        documentDate: "2026-02-01",
-      })),
-      holdings: pv(713_502, docSource({
-        type: "sec-document",
-        url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
-        quote: "Aggregate BTC Holdings: 713,502",
-        anchor: "Aggregate BTC Holdings",
-        cik: MSTR_CIK,
-        accession: FEB_2026_8K,
-        filingType: "8-K",
-        filingDate: FEB_2026_8K_FILED,
-        documentDate: "2026-02-01",
-      })),
-    },
+  costBasisAvg: pv(76_052, docSource({
+    type: "sec-document",
+    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
+    quote: "$76,052",
+    anchor: "Average Purchase Price",  // Column header - consistent across 8-Ks
+    cik: MSTR_CIK,
+    accession: FEB_2026_8K,
+    filingType: "8-K",
+    filingDate: FEB_2026_8K_FILED,
+    documentDate: "2026-02-01",
   })),
 
   // =========================================================================
-  // TOTAL COST BASIS - from 8-K
+  // TOTAL COST BASIS - from 8-K table
+  // Section: "BTC Update" table, Column: "Aggregate Purchase Price (in billions)"
   // =========================================================================
   totalCostBasis: pv(54_260_000_000, docSource({
     type: "sec-document",
     url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
-    quote: "Aggregate Purchase Price: approximately $54.26 billion",
-    anchor: "Aggregate Purchase Price",
+    quote: "$54.26",
+    anchor: "Aggregate Purchase Price",  // Column header - value shown in billions
     cik: MSTR_CIK,
     accession: FEB_2026_8K,
     filingType: "8-K",
@@ -158,13 +144,14 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   })),
 
   // =========================================================================
-  // CASH RESERVES - from 8-K (USD Reserve)
+  // CASH RESERVES - from 8-K (USD Reserve for dividends/interest)
+  // Note: This value comes from periodic 8-K updates about cash position
   // =========================================================================
   cashReserves: pv(2_250_000_000, docSource({
     type: "sec-document",
     url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${JAN_2026_8K.replace(/-/g, "")}/`,
-    quote: "USD Reserve was $2.25 billion",
-    anchor: "USD Reserve",
+    quote: "$2.25 billion",
+    anchor: "USD Reserve",  // Search term to find cash position section
     cik: MSTR_CIK,
     accession: JAN_2026_8K,
     filingType: "8-K",
