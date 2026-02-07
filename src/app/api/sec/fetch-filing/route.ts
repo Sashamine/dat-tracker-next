@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import * as fs from "fs";
+import * as path from "path";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +35,35 @@ const TICKER_CIKS: Record<string, string> = {
   sbet: "1835567",
 };
 
+// Try to find a local file matching the accession number
+function findLocalFile(ticker: string, accession: string): string | null {
+  const tickerLower = ticker.toLowerCase();
+  const secDir = path.join(process.cwd(), "public", "sec", tickerLower);
+  
+  if (!fs.existsSync(secDir)) return null;
+  
+  // Search in all subdirectories (8k, 10k, 10q, 6k)
+  const types = ["8k", "10k", "10q", "6k"];
+  for (const type of types) {
+    const typeDir = path.join(secDir, type);
+    if (!fs.existsSync(typeDir)) continue;
+    
+    const files = fs.readdirSync(typeDir);
+    // Look for file containing the accession number (last part)
+    const accessionPart = accession.split("-").pop() || accession;
+    const matchingFile = files.find(f => 
+      f.includes(accessionPart) || 
+      f.includes(accession.replace(/-/g, ""))
+    );
+    
+    if (matchingFile) {
+      return `/sec/${tickerLower}/${type}/${matchingFile}`;
+    }
+  }
+  
+  return null;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const ticker = searchParams.get("ticker")?.toLowerCase();
@@ -52,6 +83,15 @@ export async function GET(request: NextRequest) {
     accessionClean = accessionRaw;
   }
 
+  // Try to find local file first
+  if (ticker && accession) {
+    const localPath = findLocalFile(ticker, accession);
+    if (localPath) {
+      // Redirect to static file
+      return NextResponse.redirect(new URL(localPath, request.url));
+    }
+  }
+
   if (!cik || !accessionClean) {
     return NextResponse.json(
       { error: "Missing CIK or accession. Provide ticker+accession or cik+accessionRaw" },
@@ -60,7 +100,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // First, get the filing index to find the primary document
+    // Fetch from SEC EDGAR
     const indexUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/index.json`;
     console.log("Fetching index:", indexUrl);
     
@@ -69,7 +109,6 @@ export async function GET(request: NextRequest) {
     });
 
     if (!indexRes.ok) {
-      // Fallback: redirect to SEC directly
       const directUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/`;
       console.log("Index fetch failed, redirecting to:", directUrl);
       return NextResponse.redirect(directUrl);
@@ -78,7 +117,7 @@ export async function GET(request: NextRequest) {
     const index = await indexRes.json();
     const items = index.directory?.item || [];
 
-    // Find the primary document - prefer specific patterns
+    // Find the primary document
     let primaryDoc = items.find(
       (item: { name: string; size: string }) =>
         item.name.endsWith(".htm") &&
@@ -87,7 +126,6 @@ export async function GET(request: NextRequest) {
         (item.name.includes("10q") || item.name.includes("10k") || item.name.includes("8k") || item.name.includes("6k"))
     );
     
-    // Fallback: any HTM file that's not an exhibit
     if (!primaryDoc) {
       primaryDoc = items.find(
         (item: { name: string }) =>
@@ -97,7 +135,6 @@ export async function GET(request: NextRequest) {
       );
     }
     
-    // Final fallback: first HTM file
     if (!primaryDoc) {
       primaryDoc = items.find((item: { name: string }) => item.name.endsWith(".htm"));
     }
@@ -107,7 +144,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(directUrl);
     }
 
-    // Fetch the document
     const docUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/${primaryDoc.name}`;
     console.log("Fetching document:", docUrl);
     
@@ -121,11 +157,11 @@ export async function GET(request: NextRequest) {
 
     let html = await docRes.text();
 
-    // Inject base tag so relative links work
+    // Inject base tag for relative links
     const baseUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionClean}/`;
     html = html.replace(/<head[^>]*>/i, `$&<base href="${baseUrl}">`);
 
-    // Add some CSS to make it more readable
+    // Add CSS for readability
     html = html.replace(
       "</head>",
       `<style>
@@ -142,12 +178,6 @@ export async function GET(request: NextRequest) {
         td, th { padding: 4px 8px; border: 1px solid #ddd; }
         th { background: #f5f5f5; }
         a { color: #0066cc; }
-        /* Highlight potential holdings data */
-        td:has(~ td:contains("BTC")), 
-        td:has(~ td:contains("bitcoin")),
-        td:has(~ td:contains("digital asset")) {
-          background: #fff3cd;
-        }
       </style></head>`
     );
 
@@ -159,7 +189,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error fetching SEC filing:", error);
-    // Return a helpful error page
     return new NextResponse(
       `<!DOCTYPE html>
       <html>

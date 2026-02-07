@@ -1,0 +1,632 @@
+﻿[
+    {
+        "filingDate":  "2020-08-11",
+        "filename":  "8k-2020-08-11-215604.html",
+        "accession":  "215604",
+        "btcAcquired":  21454,
+        "avgPriceUsd":  null,
+        "totalSpentUsd":  null,
+        "totalHoldings":  null,
+        "snippet":  null
+    },
+    {
+        "filingDate":  "2020-09-15",
+        "filename":  "8k-2020-09-15-245835.html",
+        "accession":  "245835",
+        "btcAcquired":  21454,
+        "avgPriceUsd":  null,
+        "totalSpentUsd":  null,
+        "totalHoldings":  null,
+        "snippet":  null
+    },
+    {
+        "filingDate":  "2022-04-05",
+        "filename":  "8k-2022-04-05-095632.html",
+        "accession":  "095632",
+        "btcAcquired":  4167,
+        "avgPriceUsd":  45714,
+        "totalSpentUsd":  190500000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 4,167 bitcoins for approximately $190.5 million in cash, at an average price of approximately $45,714"
+    },
+    {
+        "filingDate":  "2022-06-29",
+        "filename":  "8k-2022-06-29-184423.html",
+        "accession":  "184423",
+        "btcAcquired":  480,
+        "avgPriceUsd":  20817,
+        "totalSpentUsd":  10000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 480 bitcoins for approximately $10.0 million in cash, at an average price of approximately $20,817"
+    },
+    {
+        "filingDate":  "2022-09-20",
+        "filename":  "8k-2022-09-20-247427.html",
+        "accession":  "247427",
+        "btcAcquired":  301,
+        "avgPriceUsd":  19851,
+        "totalSpentUsd":  6000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 301 bitcoins for approximately $6.0 million in cash, at an average price of approximately $19,851"
+    },
+    {
+        "filingDate":  "2022-12-28",
+        "filename":  "8k-2022-12-28-313098.html",
+        "accession":  "313098",
+        "btcAcquired":  2395,
+        "avgPriceUsd":  17871,
+        "totalSpentUsd":  42800000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 2,395 bitcoins for approximately $42.8 million in cash, at an average price of approximately $17,871"
+    },
+    {
+        "filingDate":  "2023-03-27",
+        "filename":  "8k-2023-03-27-079839.html",
+        "accession":  "079839",
+        "btcAcquired":  6455,
+        "avgPriceUsd":  23238,
+        "totalSpentUsd":  150000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 6,455 bitcoins for approximately $150.0 million in cash, at an average price of approximately $23,238"
+    },
+    {
+        "filingDate":  "2023-04-05",
+        "filename":  "8k-2023-04-05-091616.html",
+        "accession":  "091616",
+        "btcAcquired":  1045,
+        "avgPriceUsd":  28016,
+        "totalSpentUsd":  29300000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 1,045 bitcoins for approximately $29.3 million in cash, at an average price of approximately $28,016"
+    },
+    {
+        "filingDate":  "2023-06-28",
+        "filename":  "8k-2023-06-28-176793.html",
+        "accession":  "176793",
+        "btcAcquired":  12333,
+        "avgPriceUsd":  28136,
+        "totalSpentUsd":  347000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 12,333 bitcoins for approximately $347.0 million in cash, at an average price of approximately $28,136"
+    },
+    {
+        "filingDate":  "2023-09-25",
+        "filename":  "8k-2023-09-25-240932.html",
+        "accession":  "240932",
+        "btcAcquired":  5445,
+        "avgPriceUsd":  27053,
+        "totalSpentUsd":  147300000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 5,445 bitcoins for approximately $147.3 million in cash, at an average price of approximately $27,053"
+    },
+    {
+        "filingDate":  "2023-11-30",
+        "filename":  "8k-2023-11-30-285756.html",
+        "accession":  "285756",
+        "btcAcquired":  16130,
+        "avgPriceUsd":  36785,
+        "totalSpentUsd":  593300000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 16,130 bitcoins for approximately $593.3 million in cash, at an average price of approximately $36,785"
+    },
+    {
+        "filingDate":  "2023-12-27",
+        "filename":  "8k-2023-12-27-303488.html",
+        "accession":  "303488",
+        "btcAcquired":  14620,
+        "avgPriceUsd":  42110,
+        "totalSpentUsd":  615700000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 14,620 bitcoins for approximately $615.7 million in cash, at an average price of approximately $42,110"
+    },
+    {
+        "filingDate":  "2024-02-26",
+        "filename":  "8k-2024-02-26-045396.html",
+        "accession":  "045396",
+        "btcAcquired":  3000,
+        "avgPriceUsd":  51813,
+        "totalSpentUsd":  155400000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 3,000 bitcoins for approximately $155.4 million in cash, at an average price of approximately $51,813"
+    },
+    {
+        "filingDate":  "2024-03-11",
+        "filename":  "8k-2024-03-11-064331.html",
+        "accession":  "064331",
+        "btcAcquired":  12000,
+        "avgPriceUsd":  68477,
+        "totalSpentUsd":  821700000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 12,000 bitcoins for approximately $821.7 million in cash, using $781.1 million of proceeds from the Offering and $40.6 million of Excess Cash (defined in our annual report on Form 10-K for the fiscal year ended December 31, 2023), at an average price of approximately $68,477"
+    },
+    {
+        "filingDate":  "2024-03-19",
+        "filename":  "8k-2024-03-19-070801.html",
+        "accession":  "070801",
+        "btcAcquired":  9245,
+        "avgPriceUsd":  67382,
+        "totalSpentUsd":  623000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 9,245 bitcoins for approximately $623.0 million in cash, using $592.3 million of proceeds from the Offering and $30.7 million of Excess Cash (defined in our annual report on Form 10-K for the fiscal year ended December 31, 2023), at an average price of approximately $67,382"
+    },
+    {
+        "filingDate":  "2024-06-20",
+        "filename":  "8k-2024-06-20-164014.html",
+        "accession":  "164014",
+        "btcAcquired":  11931,
+        "avgPriceUsd":  65883,
+        "totalSpentUsd":  786000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 11,931 bitcoins for approximately $786.0 million in cash, using proceeds from the Offering and Excess Cash (defined in our quarterly report on Form 10-Q for the three months ended March 31, 2024), at an average price of approximately $65,883"
+    },
+    {
+        "filingDate":  "2024-09-13",
+        "filename":  "8k-2024-09-13-218462.html",
+        "accession":  "218462",
+        "btcAcquired":  18300,
+        "avgPriceUsd":  60408,
+        "totalSpentUsd":  1110000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 18,300 bitcoins for approximately $1.11 billion in cash, at an average price of approximately $60,408"
+    },
+    {
+        "filingDate":  "2024-09-20",
+        "filename":  "8k-2024-09-20-222498.html",
+        "accession":  "222498",
+        "btcAcquired":  7420,
+        "avgPriceUsd":  61750,
+        "totalSpentUsd":  458200000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 7,420 bitcoins for approximately $458.2 million in cash, using proceeds from the Offering, at an average price of approximately $61,750"
+    },
+    {
+        "filingDate":  "2024-11-12",
+        "filename":  "8k-2024-11-12-255184.html",
+        "accession":  "255184",
+        "btcAcquired":  27200,
+        "avgPriceUsd":  74463,
+        "totalSpentUsd":  2030000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 27,200 bitcoins for approximately $2.03 billion in cash, at an average price of approximately $74,463"
+    },
+    {
+        "filingDate":  "2024-11-18",
+        "filename":  "8k-2024-11-18-260452.html",
+        "accession":  "260452",
+        "btcAcquired":  51780,
+        "avgPriceUsd":  88627,
+        "totalSpentUsd":  4600000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 51,780 bitcoins for approximately $4.6 billion in cash, at an average price of approximately $ 88,627"
+    },
+    {
+        "filingDate":  "2024-11-25",
+        "filename":  "8k-2024-11-25-264733.html",
+        "accession":  "264733",
+        "btcAcquired":  55500,
+        "avgPriceUsd":  97862,
+        "totalSpentUsd":  5400000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 55,500 bitcoins for approximately $5.4 billion in cash, at an average price of approximately $97,862"
+    },
+    {
+        "filingDate":  "2024-12-02",
+        "filename":  "8k-2024-12-02-268429.html",
+        "accession":  "268429",
+        "btcAcquired":  15400,
+        "avgPriceUsd":  95976,
+        "totalSpentUsd":  1500000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 15,400 bitcoins for approximately $1.5 billion in cash, at an average price of approximately $95,976"
+    },
+    {
+        "filingDate":  "2024-12-09",
+        "filename":  "8k-2024-12-09-272923.html",
+        "accession":  "272923",
+        "btcAcquired":  21550,
+        "avgPriceUsd":  98783,
+        "totalSpentUsd":  2100000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 21,550 bitcoins for approximately $2.1 billion in cash, at an average price of approximately $98,783"
+    },
+    {
+        "filingDate":  "2024-12-16",
+        "filename":  "8k-2024-12-16-279044.html",
+        "accession":  "279044",
+        "btcAcquired":  15350,
+        "avgPriceUsd":  100386,
+        "totalSpentUsd":  1500000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 15,350 bitcoins for approximately $1.5 billion in cash, at an average price of approximately $100,386"
+    },
+    {
+        "filingDate":  "2024-12-23",
+        "filename":  "8k-2024-12-23-283686.html",
+        "accession":  "283686",
+        "btcAcquired":  5262,
+        "avgPriceUsd":  106662,
+        "totalSpentUsd":  561000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 5,262 bitcoins for approximately $561 million in cash, at an average price of approximately $106,662"
+    },
+    {
+        "filingDate":  "2024-12-30",
+        "filename":  "8k-2024-12-30-286217.html",
+        "accession":  "286217",
+        "btcAcquired":  2138,
+        "avgPriceUsd":  97837,
+        "totalSpentUsd":  209000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 2,138 bitcoins for approximately $209 million in cash, at an average price of approximately $97,837"
+    },
+    {
+        "filingDate":  "2025-01-06",
+        "filename":  "8k-2025-01-06-001854.html",
+        "accession":  "001854",
+        "btcAcquired":  1070,
+        "avgPriceUsd":  94004,
+        "totalSpentUsd":  101000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 1,070 bitcoins for approximately $101 million in cash, at an average price of approximately $94,004"
+    },
+    {
+        "filingDate":  "2025-01-13",
+        "filename":  "8k-2025-01-13-005000.html",
+        "accession":  "005000",
+        "btcAcquired":  2530,
+        "avgPriceUsd":  95972,
+        "totalSpentUsd":  243000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 2,530 bitcoins for approximately $243 million in cash, at an average price of approximately $95,972"
+    },
+    {
+        "filingDate":  "2025-01-21",
+        "filename":  "8k-2025-01-21-009102.html",
+        "accession":  "009102",
+        "btcAcquired":  11000,
+        "avgPriceUsd":  101191,
+        "totalSpentUsd":  1100000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 11,000 bitcoins for approximately $1.1 billion in cash, at an average price of approximately $101,191"
+    },
+    {
+        "filingDate":  "2025-01-27",
+        "filename":  "8k-2025-01-27-012671.html",
+        "accession":  "012671",
+        "btcAcquired":  10107,
+        "avgPriceUsd":  105596,
+        "totalSpentUsd":  1100000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 10,107 bitcoins for approximately $1.1 billion in cash, at an average price of approximately $105,596"
+    },
+    {
+        "filingDate":  "2025-02-10",
+        "filename":  "8k-2025-02-10-023183.html",
+        "accession":  "023183",
+        "btcAcquired":  7633,
+        "avgPriceUsd":  97255,
+        "totalSpentUsd":  742400000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 7,633 bitcoins for approximately $742.4 million in cash, at an average price of approximately $97,255"
+    },
+    {
+        "filingDate":  "2025-02-24",
+        "filename":  "8k-2025-02-24-025233.html",
+        "accession":  "025233",
+        "btcAcquired":  20356,
+        "avgPriceUsd":  97514,
+        "totalSpentUsd":  1990000000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 20,356 bitcoins for approximately $1.99 billion in cash, at an average price of approximately $97,514"
+    },
+    {
+        "filingDate":  "2025-03-17",
+        "filename":  "8k-2025-03-17-039835.html",
+        "accession":  "039835",
+        "btcAcquired":  130,
+        "avgPriceUsd":  82981,
+        "totalSpentUsd":  10700000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 130 bitcoins for approximately $10.7 million in cash, at an average price of approximately $82,981"
+    },
+    {
+        "filingDate":  "2025-03-24",
+        "filename":  "8k-2025-03-24-043494.html",
+        "accession":  "043494",
+        "btcAcquired":  6911,
+        "avgPriceUsd":  84529,
+        "totalSpentUsd":  584100000,
+        "totalHoldings":  null,
+        "snippet":  "acquired approximately 6,911 bitcoins for approximately $584.1 million in cash, at an average price of approximately $84,529"
+    },
+    {
+        "filingDate":  "2025-06-09",
+        "filename":  "8k-2025-06-09-083448.html",
+        "accession":  "083448",
+        "btcAcquired":  1045,
+        "avgPriceUsd":  105426,
+        "totalSpentUsd":  110,
+        "totalHoldings":  null,
+        "snippet":  "Period: e 2, 2025 to e 8, 2025"
+    },
+    {
+        "filingDate":  "2025-06-16",
+        "filename":  "8k-2025-06-16-086545.html",
+        "accession":  "086545",
+        "btcAcquired":  10100,
+        "avgPriceUsd":  104080,
+        "totalSpentUsd":  1051,
+        "totalHoldings":  null,
+        "snippet":  "Period: e 9, 2025 to e 15, 2025"
+    },
+    {
+        "filingDate":  "2025-06-23",
+        "filename":  "8k-2025-06-23-088711.html",
+        "accession":  "088711",
+        "btcAcquired":  245,
+        "avgPriceUsd":  105856,
+        "totalSpentUsd":  26,
+        "totalHoldings":  null,
+        "snippet":  "Period: e 16, 2025 to e 22, 2025"
+    },
+    {
+        "filingDate":  "2025-06-30",
+        "filename":  "8k-2025-06-30-091211.html",
+        "accession":  "091211",
+        "btcAcquired":  4980,
+        "avgPriceUsd":  106801,
+        "totalSpentUsd":  532,
+        "totalHoldings":  null,
+        "snippet":  "Period: e 23, 2025 to e 29, 2025"
+    },
+    {
+        "filingDate":  "2025-07-14",
+        "filename":  "8k-2025-07-14-095461.html",
+        "accession":  "095461",
+        "btcAcquired":  4225,
+        "avgPriceUsd":  111827,
+        "totalSpentUsd":  472,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 7, 2025 to y 13, 2025"
+    },
+    {
+        "filingDate":  "2025-07-21",
+        "filename":  "8k-2025-07-21-097081.html",
+        "accession":  "097081",
+        "btcAcquired":  6220,
+        "avgPriceUsd":  118940,
+        "totalSpentUsd":  740,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 14, 2025 to y 20, 2025"
+    },
+    {
+        "filingDate":  "2025-08-04",
+        "filename":  "8k-2025-08-04-101634.html",
+        "accession":  "101634",
+        "btcAcquired":  21021,
+        "avgPriceUsd":  117256,
+        "totalSpentUsd":  2,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 28, 2025 to t 3, 2025"
+    },
+    {
+        "filingDate":  "2025-08-11",
+        "filename":  "8k-2025-08-11-106241.html",
+        "accession":  "106241",
+        "btcAcquired":  155,
+        "avgPriceUsd":  116401,
+        "totalSpentUsd":  18,
+        "totalHoldings":  null,
+        "snippet":  "Period: t 4, 2025 to t 10, 2025"
+    },
+    {
+        "filingDate":  "2025-08-18",
+        "filename":  "8k-2025-08-18-109566.html",
+        "accession":  "109566",
+        "btcAcquired":  430,
+        "avgPriceUsd":  119666,
+        "totalSpentUsd":  51,
+        "totalHoldings":  null,
+        "snippet":  "Period: t 11, 2025 to t 17, 2025"
+    },
+    {
+        "filingDate":  "2025-08-25",
+        "filename":  "8k-2025-08-25-111093.html",
+        "accession":  "111093",
+        "btcAcquired":  3081,
+        "avgPriceUsd":  115829,
+        "totalSpentUsd":  357,
+        "totalHoldings":  null,
+        "snippet":  "Period: t 18, 2025 to t 24, 2025"
+    },
+    {
+        "filingDate":  "2025-09-02",
+        "filename":  "8k-2025-09-02-000008.html",
+        "accession":  "000008",
+        "btcAcquired":  4048,
+        "avgPriceUsd":  110981,
+        "totalSpentUsd":  449,
+        "totalHoldings":  null,
+        "snippet":  "Period: t 26, 2025 to r 1, 2025"
+    },
+    {
+        "filingDate":  "2025-09-08",
+        "filename":  "8k-2025-09-08-113360.html",
+        "accession":  "113360",
+        "btcAcquired":  1955,
+        "avgPriceUsd":  111196,
+        "totalSpentUsd":  217,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 2, 2025 to r 7, 2025"
+    },
+    {
+        "filingDate":  "2025-09-15",
+        "filename":  "8k-2025-09-15-202827.html",
+        "accession":  "202827",
+        "btcAcquired":  525,
+        "avgPriceUsd":  114562,
+        "totalSpentUsd":  60,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 8, 2025 to r 14, 2025"
+    },
+    {
+        "filingDate":  "2025-09-22",
+        "filename":  "8k-2025-09-22-210048.html",
+        "accession":  "210048",
+        "btcAcquired":  850,
+        "avgPriceUsd":  117344,
+        "totalSpentUsd":  100,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 15, 2025 to r 21, 2025"
+    },
+    {
+        "filingDate":  "2025-09-29",
+        "filename":  "8k-2025-09-29-221772.html",
+        "accession":  "221772",
+        "btcAcquired":  196,
+        "avgPriceUsd":  113048,
+        "totalSpentUsd":  22,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 22, 2025 to r 28, 2025"
+    },
+    {
+        "filingDate":  "2025-10-20",
+        "filename":  "8k-2025-10-20-243049.html",
+        "accession":  "243049",
+        "btcAcquired":  168,
+        "avgPriceUsd":  112051,
+        "totalSpentUsd":  19,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 13, 2025 to r 19, 2025"
+    },
+    {
+        "filingDate":  "2025-10-27",
+        "filename":  "8k-2025-10-27-250751.html",
+        "accession":  "250751",
+        "btcAcquired":  390,
+        "avgPriceUsd":  111117,
+        "totalSpentUsd":  43,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 20, 2025 to r 26, 2025"
+    },
+    {
+        "filingDate":  "2025-11-03",
+        "filename":  "8k-2025-11-03-261714.html",
+        "accession":  "261714",
+        "btcAcquired":  397,
+        "avgPriceUsd":  114771,
+        "totalSpentUsd":  46,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 27, 2025 to r 2, 2025"
+    },
+    {
+        "filingDate":  "2025-11-10",
+        "filename":  "8k-2025-11-10-273310.html",
+        "accession":  "273310",
+        "btcAcquired":  487,
+        "avgPriceUsd":  102557,
+        "totalSpentUsd":  50,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 3, 2025 to r 9, 2025"
+    },
+    {
+        "filingDate":  "2025-11-17",
+        "filename":  "8k-2025-11-17-283991.html",
+        "accession":  "283991",
+        "btcAcquired":  8178,
+        "avgPriceUsd":  102171,
+        "totalSpentUsd":  836,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 10, 2025 to r 16, 2025"
+    },
+    {
+        "filingDate":  "2025-12-01",
+        "filename":  "8k-2025-12-01-303157.html",
+        "accession":  "303157",
+        "btcAcquired":  130,
+        "avgPriceUsd":  89960,
+        "totalSpentUsd":  12,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 17, 2025 to r 30, 2025"
+    },
+    {
+        "filingDate":  "2025-12-08",
+        "filename":  "8k-2025-12-08-310607.html",
+        "accession":  "310607",
+        "btcAcquired":  10624,
+        "avgPriceUsd":  90615,
+        "totalSpentUsd":  963,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 1, 2025 to r 7, 2025"
+    },
+    {
+        "filingDate":  "2025-12-15",
+        "filename":  "8k-2025-12-15-318468.html",
+        "accession":  "318468",
+        "btcAcquired":  10645,
+        "avgPriceUsd":  92098,
+        "totalSpentUsd":  980,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 8, 2025 to r 14, 2025"
+    },
+    {
+        "filingDate":  "2025-12-29",
+        "filename":  "8k-2025-12-29-332296.html",
+        "accession":  "332296",
+        "btcAcquired":  1229,
+        "avgPriceUsd":  88568,
+        "totalSpentUsd":  109,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 22, 2025 to r 28, 2025"
+    },
+    {
+        "filingDate":  "2026-01-05",
+        "filename":  "8k-2026-01-05-001550.html",
+        "accession":  "001550",
+        "btcAcquired":  3,
+        "avgPriceUsd":  88210,
+        "totalSpentUsd":  0,
+        "totalHoldings":  null,
+        "snippet":  "Period: r 29, 2025 to r 31, 2025"
+    },
+    {
+        "filingDate":  "2026-01-12",
+        "filename":  "8k-2026-01-12-009811.html",
+        "accession":  "009811",
+        "btcAcquired":  13627,
+        "avgPriceUsd":  91519,
+        "totalSpentUsd":  1247,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 5, 2026 to y 11, 2026"
+    },
+    {
+        "filingDate":  "2026-01-20",
+        "filename":  "8k-2026-01-20-016002.html",
+        "accession":  "016002",
+        "btcAcquired":  22305,
+        "avgPriceUsd":  95284,
+        "totalSpentUsd":  2125,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 12, 2026 to y 19, 2026"
+    },
+    {
+        "filingDate":  "2026-01-26",
+        "filename":  "8k-2026-01-26-021726.html",
+        "accession":  "021726",
+        "btcAcquired":  2932,
+        "avgPriceUsd":  90061,
+        "totalSpentUsd":  264,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 20, 2026 to y 25, 2026"
+    },
+    {
+        "filingDate":  "2026-02-02",
+        "filename":  "8k-2026-02-02-032731.html",
+        "accession":  "032731",
+        "btcAcquired":  855,
+        "avgPriceUsd":  87974,
+        "totalSpentUsd":  75,
+        "totalHoldings":  null,
+        "snippet":  "Period: y 26, 2026 to y 1, 2026"
+    }
+]

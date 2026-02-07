@@ -15,7 +15,7 @@ interface DataPoint {
   verified?: boolean;
 }
 
-type UrlType = "sec-filing" | "sec-search" | "pdf" | "external" | "local-api" | "none";
+type UrlType = "local-static" | "local-api" | "sec-search" | "sec-filing" | "pdf" | "external" | "none";
 
 export default function CitationVerificationPage() {
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([]);
@@ -24,8 +24,10 @@ export default function CitationVerificationPage() {
   const [tickerFilter, setTickerFilter] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [iframeError, setIframeError] = useState(false);
+  const [staticFiles, setStaticFiles] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
+    // Load data points
     fetch("/api/holdings-verification")
       .then((res) => res.json())
       .then((data) => {
@@ -33,6 +35,12 @@ export default function CitationVerificationPage() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
+    
+    // Load available static files
+    fetch("/api/sec/list-files")
+      .then((res) => res.json())
+      .then((data) => setStaticFiles(data.files || {}))
+      .catch(() => {});
   }, []);
 
   // Reset iframe error when selecting new point
@@ -51,6 +59,7 @@ export default function CitationVerificationPage() {
 
   const getUrlType = (url: string | null): UrlType => {
     if (!url) return "none";
+    if (url.startsWith("/sec/")) return "local-static";
     if (url.startsWith("/filings/")) return "local-api";
     if (url.includes("sec.gov/cgi-bin/browse-edgar")) return "sec-search";
     if (url.includes("sec.gov/Archives/edgar")) return "sec-filing";
@@ -58,12 +67,49 @@ export default function CitationVerificationPage() {
     return "external";
   };
 
+  // Try to find a matching static file for this data point
+  const findStaticFile = (point: DataPoint): string | null => {
+    const ticker = point.ticker.toLowerCase();
+    const tickerFiles = staticFiles[ticker];
+    if (!tickerFiles) return null;
+    
+    // Try to match by date and accession
+    const dateStr = point.date;
+    
+    // Look for files matching the date
+    const matchingFile = tickerFiles.find(f => f.includes(dateStr));
+    if (matchingFile) return matchingFile;
+    
+    // If sourceUrl has accession, try matching that
+    if (point.sourceUrl) {
+      const accessionMatch = point.sourceUrl.match(/(\d{6})(?:#|$)/);
+      if (accessionMatch) {
+        const accPart = accessionMatch[1];
+        const fileByAcc = tickerFiles.find(f => f.includes(accPart));
+        if (fileByAcc) return fileByAcc;
+      }
+    }
+    
+    return null;
+  };
+
   const getDocumentUrl = (point: DataPoint): string | null => {
     if (!point.sourceUrl) return null;
     
     const urlType = getUrlType(point.sourceUrl);
     
-    // Local /filings/ URLs -> use our proxy API
+    // Already a static URL
+    if (urlType === "local-static") {
+      return point.sourceUrl;
+    }
+    
+    // Try to find a static file first
+    const staticFile = findStaticFile(point);
+    if (staticFile) {
+      return staticFile;
+    }
+    
+    // Local /filings/ URLs -> use proxy API
     if (urlType === "local-api") {
       const parts = point.sourceUrl.replace("/filings/", "").split("/");
       if (parts.length >= 2) {
@@ -73,10 +119,8 @@ export default function CitationVerificationPage() {
       }
     }
     
-    // SEC direct filing URLs -> use our proxy API
+    // SEC direct filing URLs -> use proxy API
     if (urlType === "sec-filing") {
-      // Extract CIK and accession from URL like:
-      // https://www.sec.gov/Archives/edgar/data/1050446/000105044625000123/
       const match = point.sourceUrl.match(/edgar\/data\/(\d+)\/(\d+)/);
       if (match) {
         return `/api/sec/fetch-filing?cik=${match[1]}&accessionRaw=${match[2]}`;
@@ -92,12 +136,9 @@ export default function CitationVerificationPage() {
     
     const urlType = getUrlType(point.sourceUrl);
     
-    if (urlType === "local-api") {
-      // Convert /filings/mstr/0001050446-25-000123 to SEC URL
-      const parts = point.sourceUrl.replace("/filings/", "").split("/");
-      if (parts.length >= 2) {
-        const accession = parts[1].split("#")[0].replace(/-/g, "");
-        // Just link to SEC search for the ticker
+    if (urlType === "local-api" || urlType === "local-static") {
+      const parts = point.sourceUrl.replace("/filings/", "").replace("/sec/", "").split("/");
+      if (parts.length >= 1) {
         return `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=${parts[0]}&type=&dateb=&owner=include&count=40`;
       }
     }
@@ -113,8 +154,8 @@ export default function CitationVerificationPage() {
 
   const canEmbed = (point: DataPoint): boolean => {
     const urlType = getUrlType(point.sourceUrl);
-    // These types can potentially be embedded
-    return urlType === "local-api" || urlType === "sec-filing" || urlType === "pdf";
+    const hasStaticFile = !!findStaticFile(point);
+    return hasStaticFile || urlType === "local-api" || urlType === "local-static" || urlType === "sec-filing" || urlType === "pdf";
   };
 
   if (loading) {
@@ -134,6 +175,7 @@ export default function CitationVerificationPage() {
             <h1 className="text-2xl font-bold">Citation Verification</h1>
             <p className="text-gray-400 text-sm">
               {dataPoints.length} data points • {dataPoints.filter(d => d.verified).length} verified
+              {Object.keys(staticFiles).length > 0 && ` • ${Object.values(staticFiles).flat().length} local files`}
             </p>
           </div>
           <div className="flex gap-4">
@@ -165,55 +207,63 @@ export default function CitationVerificationPage() {
         {/* Left Panel - Data Points */}
         <div className="w-1/3 border-r border-gray-800 overflow-y-auto">
           <div className="p-2 space-y-1">
-            {filteredPoints.map((point, idx) => (
-              <button
-                key={`${point.ticker}-${point.date}-${idx}`}
-                onClick={() => setSelectedPoint(point)}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
-                  selectedPoint?.ticker === point.ticker && selectedPoint?.date === point.date
-                    ? "bg-blue-900/50 border border-blue-500"
-                    : "bg-gray-900 hover:bg-gray-800 border border-transparent"
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-mono font-bold text-blue-400">{point.ticker}</span>
-                  <span className="text-xs text-gray-500">{point.date}</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <span className="text-gray-500">Holdings:</span>{" "}
-                    <span className="text-white">{formatNumber(point.holdings)} {point.asset}</span>
+            {filteredPoints.map((point, idx) => {
+              const hasLocal = !!findStaticFile(point);
+              return (
+                <button
+                  key={`${point.ticker}-${point.date}-${idx}`}
+                  onClick={() => setSelectedPoint(point)}
+                  className={`w-full text-left p-3 rounded-lg transition-colors ${
+                    selectedPoint?.ticker === point.ticker && selectedPoint?.date === point.date
+                      ? "bg-blue-900/50 border border-blue-500"
+                      : "bg-gray-900 hover:bg-gray-800 border border-transparent"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-mono font-bold text-blue-400">{point.ticker}</span>
+                    <span className="text-xs text-gray-500">{point.date}</span>
                   </div>
-                  <div>
-                    <span className="text-gray-500">Shares:</span>{" "}
-                    <span className="text-white">{formatNumber(point.sharesOutstanding)}</span>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <span className="text-gray-500">Holdings:</span>{" "}
+                      <span className="text-white">{formatNumber(point.holdings)} {point.asset}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Shares:</span>{" "}
+                      <span className="text-white">{formatNumber(point.sharesOutstanding)}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-1 text-xs text-gray-400 truncate">
-                  {point.source}
-                </div>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className={`text-xs px-2 py-0.5 rounded ${
-                    point.sourceType === "sec-filing" ? "bg-green-900/50 text-green-400" :
-                    point.sourceType === "regulatory-filing" ? "bg-yellow-900/50 text-yellow-400" :
-                    point.sourceType === "press-release" ? "bg-purple-900/50 text-purple-400" :
-                    "bg-gray-800 text-gray-400"
-                  }`}>
-                    {point.sourceType}
-                  </span>
-                  {point.verified && (
-                    <span className="text-xs px-2 py-0.5 rounded bg-green-900/50 text-green-400">
-                      ✓ Verified
+                  <div className="mt-1 text-xs text-gray-400 truncate">
+                    {point.source}
+                  </div>
+                  <div className="mt-1 flex items-center gap-2 flex-wrap">
+                    <span className={`text-xs px-2 py-0.5 rounded ${
+                      point.sourceType === "sec-filing" ? "bg-green-900/50 text-green-400" :
+                      point.sourceType === "regulatory-filing" ? "bg-yellow-900/50 text-yellow-400" :
+                      point.sourceType === "press-release" ? "bg-purple-900/50 text-purple-400" :
+                      "bg-gray-800 text-gray-400"
+                    }`}>
+                      {point.sourceType}
                     </span>
-                  )}
-                  {!point.sourceUrl && (
-                    <span className="text-xs px-2 py-0.5 rounded bg-red-900/50 text-red-400">
-                      No URL
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))}
+                    {hasLocal && (
+                      <span className="text-xs px-2 py-0.5 rounded bg-blue-900/50 text-blue-400">
+                        📄 Local
+                      </span>
+                    )}
+                    {point.verified && (
+                      <span className="text-xs px-2 py-0.5 rounded bg-green-900/50 text-green-400">
+                        ✓ Verified
+                      </span>
+                    )}
+                    {!point.sourceUrl && (
+                      <span className="text-xs px-2 py-0.5 rounded bg-red-900/50 text-red-400">
+                        No URL
+                      </span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -229,6 +279,9 @@ export default function CitationVerificationPage() {
                       {selectedPoint.ticker} - {selectedPoint.date}
                     </h2>
                     <p className="text-sm text-gray-400">{selectedPoint.source}</p>
+                    {findStaticFile(selectedPoint) && (
+                      <p className="text-xs text-blue-400 mt-1">📄 Loading from local file</p>
+                    )}
                   </div>
                   <div className="flex gap-2">
                     {selectedPoint.sourceUrl && (
@@ -238,7 +291,7 @@ export default function CitationVerificationPage() {
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 rounded text-sm"
                       >
-                        Open Original ↗
+                        Open SEC ↗
                       </a>
                     )}
                     <button
@@ -283,7 +336,7 @@ export default function CitationVerificationPage() {
 
               {/* Document Frame */}
               <div className="flex-1 bg-white relative">
-                {selectedPoint.sourceUrl ? (
+                {selectedPoint.sourceUrl || findStaticFile(selectedPoint) ? (
                   canEmbed(selectedPoint) && !iframeError ? (
                     <iframe
                       src={getDocumentUrl(selectedPoint) || ""}

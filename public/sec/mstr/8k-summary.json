@@ -1,0 +1,231 @@
+{
+  "company": "MSTR",
+  "cik": "0001050446",
+  "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
+  "baseline": {
+    "source": "SEC 10-Q Q3 2025",
+    "accession": "0001193125-25-262568",
+    "filedDate": "2025-11-03",
+    "asOf": "2025-09-30",
+    "sharesOutstandingBasic": 267713485,
+    "sharesOutstandingDiluted": 315390000,
+    "btcHoldings": 640808,
+    "totalDebt": 8173903000,
+    "preferredProceeds": 5890000000
+  },
+  "8k_filings": [
+    {
+      "filingDate": "2025-10-01",
+      "accession": "0001193125-25-225904",
+      "type": "Other",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null
+    },
+    {
+      "filingDate": "2025-10-06",
+      "accession": "0001193125-25-230977",
+      "type": "Capital Structure Update",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": 603750,
+      "notes": "Comprehensive capital update. Preferred issuances: STRF 8.5M shares, STRC 28M shares, STRK 13.6M shares, STRD 12.3M shares"
+    },
+    {
+      "filingDate": "2025-10-14",
+      "accession": "0001193125-25-238132",
+      "type": "Other",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null
+    },
+    {
+      "filingDate": "2025-10-20",
+      "accession": "0001193125-25-243049",
+      "type": "BTC Update",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": 640418
+    },
+    {
+      "filingDate": "2025-10-27",
+      "accession": "0001193125-25-250751",
+      "type": "BTC Update",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": 640808
+    },
+    {
+      "filingDate": "2025-10-30",
+      "accession": "0001193125-25-258690",
+      "type": "Other",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null
+    },
+    {
+      "filingDate": "2025-11-03",
+      "accession": "0001193125-25-262819",
+      "type": "Other",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null,
+      "notes": "Same day as 10-Q filing"
+    },
+    {
+      "filingDate": "2025-11-03",
+      "accession": "0001193125-25-261714",
+      "type": "BTC Update",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": 641205
+    },
+    {
+      "filingDate": "2025-11-04",
+      "accession": "0001193125-25-263914",
+      "type": "Other",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null
+    },
+    {
+      "filingDate": "2025-11-07",
+      "accession": "0001193125-25-271105",
+      "type": "Other",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null
+    },
+    {
+      "filingDate": "2025-11-10",
+      "accession": "0001193125-25-273310",
+      "type": "BTC Update",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": 641692
+    },
+    {
+      "filingDate": "2025-11-13",
+      "accession": "0001193125-25-280178",
+      "type": "STRE Preferred Issuance",
+      "downloaded": true,
+      "atmSharesSold": null,
+      "btcHoldings": null,
+      "preferredIssued": {
+        "ticker": "STRE",
+        "amount": "EUR 620M",
+        "usdEquiv": 717000000
+      },
+      "notes": "10% Series A Perpetual Stream Preferred Stock (EUR denominated)"
+    },
+    {
+      "filingDate": "2025-11-17",
+      "accession": "0001193125-25-283991",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 1313641,
+      "btcHoldings": 649870,
+      "period": "Nov 10-16, 2025"
+    },
+    {
+      "filingDate": "2025-12-01",
+      "accession": "0001193125-25-303157",
+      "type": "Weekly ATM + USD Reserve",
+      "downloaded": true,
+      "atmSharesSold": 8214000,
+      "btcHoldings": 650000,
+      "usdReserve": 1440000000,
+      "period": "Nov 17-30, 2025",
+      "notes": "First USD Reserve disclosure ($1.44B)"
+    },
+    {
+      "filingDate": "2025-12-08",
+      "accession": "0001193125-25-310607",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 5127684,
+      "btcHoldings": 660624,
+      "period": "Nov 24-30, 2025"
+    },
+    {
+      "filingDate": "2025-12-15",
+      "accession": "0001193125-25-318468",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 1029202,
+      "btcHoldings": 671268,
+      "period": "Dec 1-7, 2025"
+    },
+    {
+      "filingDate": "2025-12-22",
+      "accession": "0001193125-25-327598",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 4535000,
+      "btcHoldings": 671268,
+      "period": "Dec 8-14, 2025"
+    },
+    {
+      "filingDate": "2026-01-05",
+      "accession": "0001193125-26-001550",
+      "type": "Weekly ATM + USD Reserve",
+      "downloaded": true,
+      "atmSharesSold": 1990911,
+      "btcHoldings": 673783,
+      "usdReserve": 2250000000,
+      "period": "Dec 29-Jan 4, 2026",
+      "notes": "Two periods combined. Shares: 1,255,911 + 735,000. USD Reserve updated to $2.25B"
+    },
+    {
+      "filingDate": "2026-01-12",
+      "accession": "0001193125-26-009811",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 1192262,
+      "btcHoldings": 687410,
+      "period": "Jan 5-11, 2026"
+    },
+    {
+      "filingDate": "2026-01-20",
+      "accession": "0001193125-26-016002",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 2945371,
+      "btcHoldings": 709715,
+      "period": "Jan 12-18, 2026"
+    },
+    {
+      "filingDate": "2026-01-26",
+      "accession": "0001193125-26-021726",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 1569770,
+      "btcHoldings": 712647,
+      "period": "Jan 19-25, 2026"
+    },
+    {
+      "filingDate": "2026-02-02",
+      "accession": "0001193125-26-032731",
+      "type": "Weekly ATM Update",
+      "downloaded": true,
+      "atmSharesSold": 673527,
+      "btcHoldings": 713502,
+      "period": "Jan 26-Feb 1, 2026"
+    }
+  ],
+  "calculated": {
+    "totalAtmSharesSoldFromWeekly8Ks": 28591368,
+    "baselineShares": 267713485,
+    "calculatedCurrentShares": 296304853,
+    "strategyDotComShares": 332431000,
+    "gap": 36126147,
+    "gapExplanation": "Gap likely from: (1) Oct-Nov 2025 ATM sales not in weekly format, (2) stock compensation ~2-3M/quarter, (3) warrant/option exercises. Weekly 8-K ATM format began Nov 17, 2025."
+  },
+  "dataQuality": {
+    "totalFilesDownloaded": 22,
+    "filesWithAtmData": 11,
+    "filesWithBtcData": 14,
+    "missingPeriods": ["Oct 1 - Nov 16, 2025 (pre-weekly format)", "Dec 15-28, 2025 (parsing issues)"]
+  },
+  "lastUpdated": "2026-02-03T19:35:00Z"
+}
