@@ -5,6 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
 import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
+import { MinersComparison } from "@/components/miners-comparison";
 import { Company } from "@/lib/types";
 
 interface AssetStat {
@@ -133,6 +134,16 @@ export function OverviewSidebar({
               );
             })}
           </div>
+        </div>
+
+        <hr className="border-gray-200 dark:border-gray-700" />
+
+        {/* Miners HPS Growth */}
+        <div>
+          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+            <span>⛏️ Miners HPS Growth</span>
+          </h3>
+          <MinersComparison companies={companies} prices={prices} compact />
         </div>
 
         <hr className="border-gray-200 dark:border-gray-700" />
