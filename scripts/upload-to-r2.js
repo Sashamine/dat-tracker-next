@@ -1,105 +1,142 @@
+#!/usr/bin/env node
 /**
- * Upload SEC content files to Cloudflare R2
- * 
- * Prerequisites:
- *   npm install @aws-sdk/client-s3
+ * Upload SEC filings to Cloudflare R2 with organized structure
  * 
  * Usage:
- *   R2_ACCESS_KEY_ID=xxx R2_SECRET_ACCESS_KEY=xxx node scripts/upload-to-r2.js
+ *   wrangler login                    # First time only
+ *   node scripts/upload-to-r2.js      # Upload all local SEC files
  * 
- * Or set env vars in .env.local
+ * Structure: {ticker}/{type}/{form}-{date}-{accession}.html
+ * Example:   mstr/8k/8k-2026-01-26.html
  */
 
-const { S3Client, PutObjectCommand, ListObjectsV2Command } = require("@aws-sdk/client-s3");
-const fs = require("fs");
-const path = require("path");
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
-// R2 Configuration
-const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID || "ddc5d0242287a3d94e62f99567e21534"; // from S3 endpoint
-const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
-const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
-const BUCKET_NAME = "dat-tracker-filings";
+// =============================================================================
+// CONFIGURATION - Change SEC_BASE_URL when custom domain is ready
+// =============================================================================
+const R2_BUCKET = 'dat-tracker-filings';
+const SEC_BASE_URL = 'https://pub-1e4356c7aea34102aad6e3493b0c62f1.r2.dev';
+// Future: const SEC_BASE_URL = 'https://sec.datcap.io';
 
-if (!R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
-  console.error("Missing R2_ACCESS_KEY_ID or R2_SECRET_ACCESS_KEY environment variables");
-  console.error("Usage: R2_ACCESS_KEY_ID=xxx R2_SECRET_ACCESS_KEY=xxx node scripts/upload-to-r2.js");
-  process.exit(1);
-}
+const LOCAL_SEC_DIR = path.join(__dirname, '..', 'public', 'sec');
+// =============================================================================
 
-// Create S3 client for R2
-const r2 = new S3Client({
-  region: "auto",
-  endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: R2_ACCESS_KEY_ID,
-    secretAccessKey: R2_SECRET_ACCESS_KEY,
-  },
-});
-
-// Source directory
-const SOURCE_DIR = path.join(__dirname, "..", "public", "sec-content");
-
-async function uploadFile(filePath, key) {
-  const content = fs.readFileSync(filePath);
-  const contentType = filePath.endsWith(".html") ? "text/html" : "text/plain";
-  
-  await r2.send(new PutObjectCommand({
-    Bucket: BUCKET_NAME,
-    Key: key,
-    Body: content,
-    ContentType: contentType,
-  }));
-}
-
-async function uploadDirectory(dirPath, prefix = "") {
-  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-  let uploaded = 0;
-  let errors = 0;
-  
-  for (const entry of entries) {
-    const fullPath = path.join(dirPath, entry.name);
-    const key = prefix ? `${prefix}/${entry.name}` : entry.name;
-    
-    if (entry.isDirectory()) {
-      const result = await uploadDirectory(fullPath, key);
-      uploaded += result.uploaded;
-      errors += result.errors;
-    } else if (entry.isFile()) {
-      try {
-        process.stdout.write(`Uploading ${key}...`);
-        await uploadFile(fullPath, key);
-        console.log(" ✓");
-        uploaded++;
-      } catch (err) {
-        console.log(` ✗ ${err.message}`);
-        errors++;
-      }
+function getAllFiles(dir, files = []) {
+  const items = fs.readdirSync(dir);
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    if (fs.statSync(fullPath).isDirectory()) {
+      getAllFiles(fullPath, files);
+    } else if (item.endsWith('.html')) {
+      files.push(fullPath);
     }
   }
-  
-  return { uploaded, errors };
+  return files;
+}
+
+function getR2Key(localPath) {
+  // Convert local path to R2 key
+  // From: C:\...\public\sec\mstr\8k\8k-2026-01-26.html
+  // To:   mstr/8k/8k-2026-01-26.html
+  const relativePath = path.relative(LOCAL_SEC_DIR, localPath);
+  return relativePath.replace(/\\/g, '/');
+}
+
+function uploadFile(localPath, r2Key) {
+  // IMPORTANT: --remote flag required to upload to actual R2, not local emulator
+  const cmd = `wrangler r2 object put "${R2_BUCKET}/${r2Key}" --file="${localPath}" --content-type="text/html" --remote`;
+  try {
+    execSync(cmd, { stdio: 'pipe' });
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}
+
+function checkFile(r2Key) {
+  // IMPORTANT: --remote flag required to check actual R2, not local emulator
+  const cmd = `wrangler r2 object head "${R2_BUCKET}/${r2Key}" --remote 2>&1`;
+  try {
+    execSync(cmd, { stdio: 'pipe' });
+    return true; // File exists
+  } catch {
+    return false; // File doesn't exist
+  }
 }
 
 async function main() {
-  console.log("=== Cloudflare R2 Upload ===\n");
-  console.log(`Source: ${SOURCE_DIR}`);
-  console.log(`Bucket: ${BUCKET_NAME}`);
-  console.log(`Prefix: sec-content/\n`);
-  
-  if (!fs.existsSync(SOURCE_DIR)) {
-    console.error(`Source directory not found: ${SOURCE_DIR}`);
+  console.log('='.repeat(60));
+  console.log('R2 SEC Filing Uploader');
+  console.log('='.repeat(60));
+  console.log(`Bucket: ${R2_BUCKET}`);
+  console.log(`Base URL: ${SEC_BASE_URL}`);
+  console.log(`Local dir: ${LOCAL_SEC_DIR}\n`);
+
+  // Check wrangler auth
+  try {
+    execSync('wrangler whoami', { stdio: 'pipe' });
+  } catch {
+    console.error('ERROR: Not logged in to wrangler. Run: wrangler login');
     process.exit(1);
   }
+
+  // Get all local HTML files
+  const files = getAllFiles(LOCAL_SEC_DIR);
+  console.log(`Found ${files.length} local files\n`);
+
+  // Group by ticker for summary
+  const byTicker = {};
+  for (const f of files) {
+    const r2Key = getR2Key(f);
+    const ticker = r2Key.split('/')[0];
+    byTicker[ticker] = (byTicker[ticker] || 0) + 1;
+  }
+  console.log('By ticker:');
+  for (const [ticker, count] of Object.entries(byTicker).sort()) {
+    console.log(`  ${ticker}: ${count}`);
+  }
+  console.log('');
+
+  // Upload files
+  let uploaded = 0;
+  let skipped = 0;
+  let errors = 0;
+
+  for (let i = 0; i < files.length; i++) {
+    const localPath = files[i];
+    const r2Key = getR2Key(localPath);
+    
+    process.stdout.write(`[${i + 1}/${files.length}] ${r2Key}... `);
+
+    // Check if already exists
+    if (checkFile(r2Key)) {
+      console.log('exists, skipping');
+      skipped++;
+      continue;
+    }
+
+    const result = uploadFile(localPath, r2Key);
+    if (result.success) {
+      console.log('uploaded');
+      uploaded++;
+    } else {
+      console.log(`ERROR: ${result.error}`);
+      errors++;
+    }
+  }
+
+  console.log('\n' + '='.repeat(60));
+  console.log(`Done! Uploaded: ${uploaded}, Skipped: ${skipped}, Errors: ${errors}`);
+  console.log('='.repeat(60));
   
-  const start = Date.now();
-  const result = await uploadDirectory(SOURCE_DIR, "sec-content");
-  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-  
-  console.log(`\n=== Complete ===`);
-  console.log(`Uploaded: ${result.uploaded} files`);
-  console.log(`Errors: ${result.errors}`);
-  console.log(`Time: ${elapsed}s`);
-  console.log(`\nFiles available at: https://pub-1e4356c7aea34102aad6e3493b0c62f1.r2.dev/sec-content/`);
+  if (uploaded > 0) {
+    console.log(`\nExample URL:`);
+    const exampleKey = getR2Key(files[0]);
+    console.log(`${SEC_BASE_URL}/${exampleKey}`);
+  }
 }
 
 main().catch(console.error);
