@@ -5,7 +5,7 @@
 
 import type { HoldingsSource } from '../types';
 import { getMSTRVerifiedHistory, type VerifiedFinancialSnapshot } from './mstr-verified-financials';
-import { getBMNRVerifiedHistory, type BMNRVerifiedFinancialSnapshot } from './bmnr-verified-financials';
+// Note: BMNR uses static array for now - verified-financials integration WIP
 
 export interface HoldingsSnapshot {
   date: string; // YYYY-MM-DD
@@ -70,27 +70,6 @@ function transformVerifiedToHoldingsSnapshot(verified: VerifiedFinancialSnapshot
 }
 
 const MSTR_HISTORY: HoldingsSnapshot[] = getMSTRVerifiedHistory().map(transformVerifiedToHoldingsSnapshot);
-
-// BMNR transformation function - converts BMNRVerifiedFinancialSnapshot to HoldingsSnapshot
-function transformBMNRToHoldingsSnapshot(verified: BMNRVerifiedFinancialSnapshot): HoldingsSnapshot {
-  return {
-    date: verified.date,
-    holdings: verified.holdings.value,
-    sharesOutstandingDiluted: verified.shares.value,
-    sharesOutstandingBasic: verified.shares.basic,
-    holdingsPerShare: verified.holdingsPerShare || verified.holdings.value / verified.shares.value,
-    totalDebt: verified.debt?.value,
-    cash: verified.cash?.value,
-    source: `${verified.holdings.source} via bmnr-verified-financials`,
-    sharesSource: verified.shares.source,
-    sourceUrl: verified.holdings.accession 
-      ? `https://www.sec.gov/Archives/edgar/data/1829311/${verified.holdings.accession.replace(/-/g, '')}-index.html`
-      : verified.shares.sourceUrl,
-    sourceType: "sec-filing",
-    methodology: verified.shares.methodology,
-    confidence: verified.balanceSheetStale ? "medium" : "high",
-  };
-}
 
 // MARA Holdings - Largest US public miner
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
@@ -369,12 +348,34 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
-// Now sourced from bmnr-verified-financials.ts (single source of truth)
 // SEC EDGAR CIK: 1829311
 // FY end: August 31 | 1:20 reverse split May 15, 2025
 // ETH treasury strategy launched July 2025
 // Debt history: Had ~$2-2.6M debt FY2024-Q2 FY2025, debt-free since FY2025 10-K
-const BMNR_HISTORY: HoldingsSnapshot[] = getBMNRVerifiedHistory().map(transformBMNRToHoldingsSnapshot);
+// Updated: 2026-02-09 - Backfilled Sep-Nov 2025 gap from SEC 8-K filings
+const BMNR_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-07-17", holdings: 300657, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.006013, source: "SEC 8-K $1B milestone", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-011270-index.html", sourceType: "sec-filing" },
+  { date: "2025-08-10", holdings: 1150263, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.007668, source: "SEC 8-K Aug 11, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-011799-index.html", sourceType: "sec-filing" },
+  { date: "2025-08-17", holdings: 1523373, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.008463, source: "SEC 8-K Aug 18, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-012109-index.html", sourceType: "sec-filing" },
+  { date: "2025-08-24", holdings: 1713899, sharesOutstandingDiluted: 221_515_180, holdingsPerShare: 0.007738, source: "SEC 8-K Aug 25, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-012298-index.html", sourceType: "sec-filing" },
+  { date: "2025-08-31", holdings: 1800000, sharesOutstandingDiluted: 234_712_310, holdingsPerShare: 0.00767, totalDebt: 0, cash: 511_999_000, source: "SEC 10-K FY2025 XBRL", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-024679-index.html", sourceType: "sec-filing" },
+  { date: "2025-09-07", holdings: 2069443, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.007959, source: "SEC 8-K 2M ETH milestone", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-012776-index.html", sourceType: "sec-filing" },
+  // Backfilled Sep-Nov 2025 gap
+  { date: "2025-09-29", holdings: 2650900, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.009467, source: "SEC 8-K Sep 29, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-015879-index.html", sourceType: "sec-filing" },
+  { date: "2025-10-06", holdings: 2830151, sharesOutstandingDiluted: 295_000_000, holdingsPerShare: 0.009594, source: "SEC 8-K Oct 6, 2025 (2% ETH supply)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-017019-index.html", sourceType: "sec-filing" },
+  { date: "2025-10-20", holdings: 3236014, sharesOutstandingDiluted: 320_000_000, holdingsPerShare: 0.010113, source: "SEC 8-K Oct 20, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-018577-index.html", sourceType: "sec-filing" },
+  { date: "2025-10-27", holdings: 3313069, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.010040, source: "SEC 8-K Oct 27, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-019644-index.html", sourceType: "sec-filing" },
+  { date: "2025-11-03", holdings: 3395422, sharesOutstandingDiluted: 340_000_000, holdingsPerShare: 0.009986, source: "SEC 8-K Nov 3, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-020545-index.html", sourceType: "sec-filing" },
+  { date: "2025-11-09", holdings: 3505723, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.010016, source: "SEC 8-K Nov 10, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-021429-index.html", sourceType: "sec-filing" },
+  { date: "2025-11-20", holdings: 3559879, sharesOutstandingDiluted: 384_067_823, holdingsPerShare: 0.009269, source: "SEC 8-K FY2025 earnings", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-024679-index.html", sourceType: "sec-filing" },
+  { date: "2025-11-30", holdings: 3726499, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.009316, source: "SEC 10-Q Q1 FY2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-26-002084-index.html", sourceType: "sec-filing" },
+  { date: "2025-12-14", holdings: 3967210, sharesOutstandingDiluted: 410_000_000, holdingsPerShare: 0.009676, source: "SEC 8-K Dec 15, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-027660-index.html", sourceType: "sec-filing" },
+  { date: "2025-12-28", holdings: 4110525, sharesOutstandingDiluted: 425_000_000, holdingsPerShare: 0.009672, source: "SEC 8-K Dec 29, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-25-029437-index.html", sourceType: "sec-filing" },
+  { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, source: "SEC 8-K Jan 5, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-26-000274-index.html", sourceType: "sec-filing" },
+  { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, stockPrice: 160.23, source: "SEC 8-K Jan 20, 2026", sharesSource: "Jan 15 shareholder vote (454.9M)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-26-002762-index.html", sourceType: "sec-filing" },
+  { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009325, source: "SEC 8-K Jan 26, 2026 (+40,302 ETH)", sharesSource: "455M diluted (unchanged from Jan 20)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-26-003536-index.html", sourceType: "sec-filing" },
+  { date: "2026-02-01", holdings: 4285125, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009418, stockPrice: 149.71, source: "SEC 8-K Feb 2, 2026 (+41,788 ETH)", sharesSource: "455M diluted", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001493152-26-004658-index.html", sourceType: "sec-filing" },
+];
 
 // Nakamoto Inc. (NAKA) - Rebranded from KindlyMD Jan 21, 2026
 // SEC CIK: 0001946573
