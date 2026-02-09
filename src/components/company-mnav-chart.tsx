@@ -41,9 +41,10 @@ export function CompanyMNAVChart({
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
 
   const isMstr = ticker.toUpperCase() === "MSTR";
+  const hasCompanyData = !!companyData; // Can calculate intraday mNAV if we have company data
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
 
-  // Use the mNAV history hook for MSTR (pass company data for intraday calculation)
+  // Use the mNAV history hook - works for any company with companyData (not just MSTR)
   const { data: mnavData, isLoading: isLoadingMnav } = useMnavHistory(ticker, timeRange, interval, companyData);
 
   // Get mNAV history - use hook data for MSTR, pre-calculated for others
@@ -65,7 +66,8 @@ export function CompanyMNAVChart({
         });
         points.set(point.time, point);
       }
-    } else if (!isMstr) {
+    } else if (!hasCompanyData) {
+      // Fallback: use pre-calculated data for companies without companyData
       // Calculate start date for filtering based on time range
       let startDate: Date;
       switch (timeRange) {
@@ -126,7 +128,7 @@ export function CompanyMNAVChart({
     }
 
     return { mnavHistory: result, dataPoints: points };
-  }, [ticker, timeRange, currentMNAV, isMstr, mnavData, isIntraday]);
+  }, [ticker, timeRange, currentMNAV, hasCompanyData, mnavData, isIntraday]);
 
   const isLoading = isLoadingMnav;
   const hasData = mnavHistory.length > 0;
@@ -223,7 +225,7 @@ export function CompanyMNAVChart({
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasData, mnavHistory, isMstr, dataPoints]);
+  }, [hasData, mnavHistory, hasCompanyData, dataPoints]);
 
   // Calculate current and change stats
   const stats = useMemo(() => {
@@ -258,7 +260,7 @@ export function CompanyMNAVChart({
         <div>
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             mNAV History
-            {isMstr && (
+            {hasCompanyData && (
               <span
                 className={cn(
                   "ml-2 text-xs font-normal px-2 py-0.5 rounded",
@@ -272,8 +274,8 @@ export function CompanyMNAVChart({
             )}
           </h2>
           <p className="text-sm text-gray-500">
-            {isMstr
-              ? "Enterprise Value / Crypto NAV (fully diluted)"
+            {hasCompanyData
+              ? "Enterprise Value / Crypto NAV"
               : "Market Cap / Net Asset Value over time"}
           </p>
         </div>
@@ -310,8 +312,8 @@ export function CompanyMNAVChart({
         </div>
       ) : hasData ? (
         <>
-          {/* Show note for non-MSTR on short timeframes */}
-          {!isMstr && (timeRange === "1d" || timeRange === "7d") && (
+          {/* Show note for companies without provenance data on short timeframes */}
+          {!hasCompanyData && (timeRange === "1d" || timeRange === "7d") && (
             <div className="mb-2 px-3 py-2 bg-amber-50 dark:bg-amber-900/20 rounded text-xs text-amber-700 dark:text-amber-300 flex items-center gap-2">
               <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -321,8 +323,8 @@ export function CompanyMNAVChart({
           )}
           <div ref={chartContainerRef} className="w-full h-[300px]" />
 
-          {/* Point info panel for MSTR - shows on hover */}
-          {isMstr && selectedPoint && (
+          {/* Point info panel for provenance companies - shows on hover */}
+          {hasCompanyData && selectedPoint && (
             <div className="mt-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-xs">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-gray-900 dark:text-gray-100">
@@ -359,8 +361,8 @@ export function CompanyMNAVChart({
             </div>
           )}
 
-          {/* Default attribution for MSTR when not hovering */}
-          {isMstr && !selectedPoint && (
+          {/* Default attribution for provenance companies when not hovering */}
+          {hasCompanyData && !selectedPoint && (
             <div className="mt-2 text-xs text-gray-500 flex items-center gap-1">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

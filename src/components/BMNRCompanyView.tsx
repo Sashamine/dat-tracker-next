@@ -431,6 +431,15 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
               currentCryptoPrice={ethPrice}
               timeRange={mnavTimeRange}
               interval={mnavInterval}
+              companyData={{
+                holdings: metrics.holdings,
+                sharesForMnav: metrics.sharesOutstanding,
+                totalDebt: metrics.totalDebt,
+                preferredEquity: metrics.preferredEquity,
+                cashReserves: metrics.cashReserves,
+                restrictedCash: 0,
+                asset: "ETH",
+              }}
             />
           </div>
         </details>
