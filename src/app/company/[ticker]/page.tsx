@@ -1384,56 +1384,6 @@ export default function CompanyPage() {
           </div>
         </details>
 
-        {/* Press Releases */}
-        {intel?.pressReleases && intel.pressReleases.length > 0 && (
-          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 group">
-            <summary className="p-6 cursor-pointer flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Recent Press Releases
-              </h3>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-500">
-                  {intel.pressReleases.length} releases
-                </span>
-                <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </summary>
-            <div className="px-6 pb-6 space-y-3">
-              {intel.pressReleases.slice(0, 8).map((pr, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-4 p-3 bg-white dark:bg-gray-800 rounded-lg"
-                >
-                  <div className="flex-shrink-0 text-sm text-gray-500 font-mono w-24">
-                    {pr.date}
-                  </div>
-                  <div className="flex-1">
-                    {pr.url ? (
-                      <a
-                        href={pr.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
-                      >
-                        {pr.title}
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                    ) : (
-                      <p className="font-medium text-gray-900 dark:text-gray-100">{pr.title}</p>
-                    )}
-                    {pr.summary && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{pr.summary}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </details>
-        )}
           </>
         )}
 
