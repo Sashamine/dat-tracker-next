@@ -2,7 +2,7 @@
   "ticker": "ASST",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-09T14:45:01.848Z",
+  "lastUpdated": "2026-02-09T15:00:02.932Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4571,6 +4571,15 @@
       "low": 10.31,
       "close": 10.585,
       "volume": 764748
+    },
+    {
+      "date": "2026-02-09",
+      "time": "08:00",
+      "open": 11.31,
+      "high": 11.32,
+      "low": 10.31,
+      "close": 10.604,
+      "volume": 981473
     }
   ]
 }
