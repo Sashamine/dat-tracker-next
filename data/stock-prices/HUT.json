@@ -2,7 +2,7 @@
   "ticker": "HUT",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-09T18:56:47.631Z",
+  "lastUpdated": "2026-02-09T22:45:02.306Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4670,6 +4670,15 @@
       "low": 52.18,
       "close": 56.665,
       "volume": 3612690
+    },
+    {
+      "date": "2026-02-09",
+      "time": "15:45",
+      "open": 52.86,
+      "high": 57.31,
+      "low": 52.18,
+      "close": 56.89,
+      "volume": 5147227
     }
   ]
 }
