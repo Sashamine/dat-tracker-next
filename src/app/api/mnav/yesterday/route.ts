@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { allCompanies } from "@/lib/data/companies";
 import { Company } from "@/lib/types";
 import { getCompanyMNAV } from "@/lib/utils/mnav-calculation";
@@ -26,7 +26,9 @@ interface YesterdayMnavResult {
 let cache: { data: YesterdayMnavResult; timestamp: number } | null = null;
 const CACHE_TTL = 5 * 60 * 1000;
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // Get base URL from request (works on Vercel)
+  const { origin } = new URL(request.url);
   // Check cache
   if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
     return NextResponse.json(cache.data);
@@ -42,7 +44,7 @@ export async function GET() {
     for (const asset of assets) {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/crypto/${asset}/history?range=7d`,
+          `${origin}/api/crypto/${asset}/history?range=7d`,
           { cache: 'no-store' }
         );
         if (res.ok) {
@@ -76,7 +78,7 @@ export async function GET() {
     for (const ticker of tickers) {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/stocks/${ticker}/history?range=7d&interval=1h`,
+          `${origin}/api/stocks/${ticker}/history?range=7d&interval=1h`,
           { cache: 'no-store' }
         );
         if (res.ok) {
@@ -108,7 +110,7 @@ export async function GET() {
     let forexRates: Record<string, number> = {};
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/prices`,
+        `${origin}/api/prices`,
         { cache: 'no-store' }
       );
       if (res.ok) {
