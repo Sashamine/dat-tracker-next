@@ -2,15 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { allCompanies } from "@/lib/data/companies";
 import { Company } from "@/lib/types";
 import { getCompanyMNAV } from "@/lib/utils/mnav-calculation";
+import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
+import { BMNR_PROVENANCE } from "@/lib/data/provenance/bmnr";
+import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 
 /**
  * GET /api/mnav/yesterday
  * 
  * Returns yesterday's mNAV for all companies by:
  * 1. Fetching yesterday's stock and crypto prices
- * 2. Calculating mNAV using the same getCompanyMNAV function
+ * 2. For MSTR/BMNR: Using provenance data (same as company pages)
+ * 3. For others: Using getCompanyMNAV function
  * 
- * This ensures 24h mNAV change is measured (not estimated).
+ * This ensures 24h mNAV change uses the same calculation as company pages.
  */
 
 interface YesterdayMnavResult {
@@ -26,9 +30,62 @@ interface YesterdayMnavResult {
 let cache: { data: YesterdayMnavResult; timestamp: number } | null = null;
 const CACHE_TTL = 5 * 60 * 1000;
 
+/**
+ * Calculate mNAV using provenance data (same formula as company pages)
+ */
+function calculateProvenanceMnav(
+  ticker: string,
+  stockPrice: number,
+  cryptoPrice: number
+): number | null {
+  if (ticker === "MSTR") {
+    if (!MSTR_PROVENANCE.holdings || !MSTR_PROVENANCE.totalDebt || !MSTR_PROVENANCE.cashReserves) {
+      return null;
+    }
+    
+    const holdings = MSTR_PROVENANCE.holdings.value;
+    const totalDebt = MSTR_PROVENANCE.totalDebt.value;
+    const cashReserves = MSTR_PROVENANCE.cashReserves.value;
+    const preferredEquity = MSTR_PROVENANCE.preferredEquity?.value || 0;
+    const sharesOutstanding = MSTR_PROVENANCE.sharesOutstanding?.value || 0;
+    
+    // ITM convertible adjustment (same as MSTRCompanyView)
+    const effectiveShares = getEffectiveShares("MSTR", sharesOutstanding, stockPrice);
+    const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
+    const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
+    
+    const cryptoNav = holdings * cryptoPrice;
+    const marketCap = sharesOutstanding * stockPrice;
+    const ev = marketCap + adjustedDebt + preferredEquity - cashReserves;
+    
+    return cryptoNav > 0 ? ev / cryptoNav : null;
+  }
+  
+  if (ticker === "BMNR") {
+    if (!BMNR_PROVENANCE.holdings || !BMNR_PROVENANCE.cashReserves) {
+      return null;
+    }
+    
+    const holdings = BMNR_PROVENANCE.holdings.value;
+    const totalDebt = BMNR_PROVENANCE.totalDebt?.value || 0;
+    const cashReserves = BMNR_PROVENANCE.cashReserves.value;
+    const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value || 0;
+    const sharesOutstanding = BMNR_PROVENANCE.sharesOutstanding?.value || 0;
+    
+    const cryptoNav = holdings * cryptoPrice;
+    const marketCap = sharesOutstanding * stockPrice;
+    const ev = marketCap + totalDebt + preferredEquity - cashReserves;
+    
+    return cryptoNav > 0 ? ev / cryptoNav : null;
+  }
+  
+  return null;
+}
+
 export async function GET(request: NextRequest) {
   // Get base URL from request (works on Vercel)
   const { origin } = new URL(request.url);
+  
   // Check cache
   if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
     return NextResponse.json(cache.data);
@@ -139,19 +196,22 @@ export async function GET(request: NextRequest) {
         continue;
       }
 
-      // Build prices object for yesterday
-      const yesterdayPrices = {
-        crypto: {
-          [company.asset]: { price: cryptoPrice, change24h: 0 },
-        },
-        stocks: {
-          [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 },
-        },
-        forex: forexRates,
-      };
-
-      // Calculate mNAV using same function as current
-      const mnav = getCompanyMNAV(company, yesterdayPrices);
+      // Try provenance-based calculation first (for MSTR, BMNR)
+      let mnav = calculateProvenanceMnav(company.ticker, stockPrice, cryptoPrice);
+      
+      // Fall back to getCompanyMNAV for other companies
+      if (mnav === null) {
+        const yesterdayPrices = {
+          crypto: {
+            [company.asset]: { price: cryptoPrice, change24h: 0 },
+          },
+          stocks: {
+            [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 },
+          },
+          forex: forexRates,
+        };
+        mnav = getCompanyMNAV(company, yesterdayPrices);
+      }
 
       result[company.ticker] = {
         mnav,
