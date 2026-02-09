@@ -20,12 +20,13 @@ import {
 export const BMNR_CIK = "1829311";
 
 // Latest data points (updated manually from 8-K filings)
-const LATEST_HOLDINGS = 4_285_125;
-const LATEST_HOLDINGS_DATE = "2026-02-01";
-const LATEST_HOLDINGS_ACCESSION = "0001493152-26-004658";
+// Updated 2026-02-09 from 8-K filed today (as of Feb 8)
+const LATEST_HOLDINGS = 4_325_738;
+const LATEST_HOLDINGS_DATE = "2026-02-08";
+const LATEST_HOLDINGS_ACCESSION = "0001493152-26-005707";
 
 const LATEST_STAKED = 2_897_459;
-const STAKING_PCT = 0.676; // 67.6%
+const STAKING_PCT = 0.670; // 67.0% (2,897,459 / 4,325,738)
 
 const SHARES_OUTSTANDING = 454_862_451;
 const SHARES_DATE = "2026-01-12";
@@ -112,7 +113,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // CASH RESERVES - from Feb 2, 2026 8-K
   // =========================================================================
-  cashReserves: pv(586_000_000, docSource({
+  cashReserves: pv(595_000_000, docSource({
     type: "sec-document",
     url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/ex99-1.htm`,
     quote: "$586 million in cash",

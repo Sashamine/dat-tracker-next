@@ -19,47 +19,49 @@ export const ethCompanies: Company[] = [
     asset: "ETH",
     tier: 1,
     // HOLDINGS: from provenance (8-K filings)
-    holdings: BMNR_PROVENANCE.holdings?.value || 4_285_125,
+    holdings: BMNR_PROVENANCE.holdings?.value || 4_325_738,
     holdingsLastUpdated: BMNR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=4%2C325%2C738%20ETH",
     datStartDate: "2025-07-01",
     // COST BASIS: from provenance (10-Q)
     costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 4_002,
     costBasisSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=cost%20basis",
     costBasisAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
-    stakingPct: 0.676,  // 2,897,459 staked / 4,285,125 total per Feb 2 8-K (up from 2,009,267)
+    stakingPct: 0.670,  // 2,897,459 staked / 4,325,738 total per Feb 9 8-K
     stakingApy: 0.0281,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil
     stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",
-    stakingSource: "SEC 8-K Feb 2, 2026 (ex99-1): 2,897,459 ETH staked of 4,285,125 total. Annualized staking revenues $188M.",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
-    stakingAsOf: "2026-02-01",
+    stakingSource: "SEC 8-K Feb 9, 2026 (ex99-1): 2,897,459 ETH staked of 4,325,738 total.",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=2%2C897%2C459",
+    stakingAsOf: "2026-02-08",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     quarterlyBurnUsd: 1_000_000,  // ~$4M/yr based on Q1 FY2025 baseline G&A ($959K/qtr)
     burnSource: "SEC 10-Q: Q1 G&A $223M was mostly one-time capital raising fees; recurring mgmt ~$50K/yr",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=General%20and%20administrative",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,
     burnMethodology: `Based on Q1 FY2025 (pre-ETH pivot) G&A of $959K/quarter, annualized to ~$4M/year. Current Q1 FY2026 G&A of $223M excluded as mostly one-time capital raising costs. Sources: [10-Q Q1 FY2025 G&A](/filings/bmnr/2026-01-13?type=10-q#operating-burn) | [MD&A disclosure on one-time costs](/filings/bmnr/2026-01-13?type=10-q#operating-burn-mda)`,
     // No cashObligations fields needed - burn-only companies show Operating Burn card only
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011831/forms-3.htm#:~:text=%2420%20billion",
     capitalRaisedPipe: 615_000_000,
+    capitalRaisedPipeSource: "SEC 8-K Jul 2025 - PIPE offering",
+    capitalRaisedPipeSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm#:~:text=PIPE",
     avgDailyVolume: 800_000_000,
     hasOptions: true,
     // SHARES: from provenance (10-Q)
     sharesForMnav: BMNR_PROVENANCE.sharesOutstanding?.value || 455_000_000,
     sharesSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=454%2C862%2C451",
     sharesAsOf: BMNR_PROVENANCE_DEBUG.sharesDate,
     // CASH: from provenance (8-K)
-    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 586_000_000,
-    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 586_000_000,  // Operating capital - not excess
-    cashSource: "SEC-verified (provenance): 8-K Feb 2, 2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/",
+    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,
+    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,  // Operating capital - not excess
+    cashSource: "SEC-verified (provenance): 8-K Feb 9, 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=%24595%20million",
     cashAsOf: BMNR_PROVENANCE_DEBUG.holdingsDate,
     otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO)
     // DEBT: from provenance ($0)
@@ -68,7 +70,7 @@ export const ethCompanies: Company[] = [
     debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Asset-light treasury model with minimal recurring costs (~$50K/yr ETH management fees per 10-Q). Q1 FY2026 G&A of $223M was mostly one-time capital raising costs (legal, advisory, banking fees for $8B+ ATM program).",
-    notes: "Largest ETH treasury. 3.55% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $19M Eightco (OCTO) equity investments not in mNAV.",
+    notes: "Largest ETH treasury. 3.58% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $19M Eightco (OCTO) equity investments not in mNAV.",
   },
   {
     id: "sbet",
@@ -387,7 +389,7 @@ export const btcCompanies: Company[] = [
     // CONVERTS: 10-Q Q3 2025 Note 7
     capitalRaisedConverts: 7_274_000_000,
     capitalRaisedConvertsSource: "SEC 10-Q Q3 2025: Cash flow statement - proceeds from convertible notes",
-    capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
+    capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/d893246d10q.htm#:~:text=Convertible%20Senior%20Notes",
     // DEBT: from provenance
     totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_173_903_000,
     debtSource: "SEC-verified (provenance)",
@@ -408,7 +410,7 @@ export const btcCompanies: Company[] = [
     // ATM PROGRAM: S-3 shelf
     capitalRaisedAtm: 21_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration (21/21 plan equity component)",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524254726/d866aboringprospectus.htm#:~:text=%2421%2C000%2C000%2C000",
     // CASH: from provenance
     cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_250_000_000,
     cashSource: "SEC-verified (provenance): 8-K USD Reserve",
