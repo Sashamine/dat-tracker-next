@@ -50,6 +50,7 @@ import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { MSTRCompanyView } from "@/components/MSTRCompanyView";
+import { BMNRCompanyView } from "@/components/BMNRCompanyView";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -430,9 +431,11 @@ export default function CompanyPage() {
           </div>
         )}
 
-        {/* MSTR: Use fully provenance-tracked view */}
+        {/* MSTR/BMNR: Use fully provenance-tracked views */}
         {displayCompany.ticker === "MSTR" ? (
           <MSTRCompanyView company={displayCompany} />
+        ) : displayCompany.ticker === "BMNR" ? (
+          <BMNRCompanyView company={displayCompany} />
         ) : (
           <>
         {/* Key Valuation Metrics */}
