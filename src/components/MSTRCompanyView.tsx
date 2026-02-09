@@ -1,0 +1,628 @@
+"use client";
+
+import { useMemo } from "react";
+import Link from "next/link";
+import { usePricesStream } from "@/lib/hooks/use-prices-stream";
+import { ProvenanceMetric } from "./ProvenanceMetric";
+import { MSTR_PROVENANCE, MSTR_CIK } from "@/lib/data/provenance/mstr";
+import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
+import { StockChart } from "./stock-chart";
+import { CompanyMNAVChart } from "./company-mnav-chart";
+import { HoldingsPerShareChart } from "./holdings-per-share-chart";
+import { HoldingsHistoryTable } from "./holdings-history-table";
+import { ScheduledEvents } from "./scheduled-events";
+import { StockPriceCell } from "./price-cell";
+import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
+import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
+import { formatLargeNumber } from "@/lib/calculations";
+import { cn } from "@/lib/utils";
+import type { Company } from "@/lib/types";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import {
+  useStockHistory,
+  TimeRange,
+  ChartInterval,
+  VALID_INTERVALS,
+  DEFAULT_INTERVAL,
+  INTERVAL_LABELS,
+} from "@/lib/hooks/use-stock-history";
+import { useState } from "react";
+
+interface MSTRCompanyViewProps {
+  company: Company;
+  className?: string;
+}
+
+/**
+ * MSTR-specific company view with full provenance tracking
+ * 
+ * Every metric is either:
+ * 1. Directly from SEC filings (click to verify)
+ * 2. Derived from SEC-filed inputs + live prices (click to see formula)
+ */
+export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProps) {
+  const { data: prices } = usePricesStream();
+  
+  // Chart state
+  const [timeRange, setTimeRange] = useState<TimeRange>("1y");
+  const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
+  const { data: history, isLoading: historyLoading } = useStockHistory("MSTR", timeRange, interval);
+  
+  const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1y");
+  const [mnavInterval, setMnavInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
+
+  // Live prices
+  const btcPrice = prices?.crypto.BTC?.price || 0;
+  const stockData = prices?.stocks.MSTR;
+  const stockPrice = stockData?.price || 0;
+  const stockChange = stockData?.change24h;
+  
+  // Get market cap
+  const { marketCap } = getMarketCapForMnavSync(company, stockData, prices?.forex);
+
+  // =========================================================================
+  // PROVENANCE-TRACKED METRICS
+  // =========================================================================
+  
+  // Get ITM convertible adjustment (same as overview page)
+  const effectiveShares = useMemo(() => {
+    if (!stockPrice) return null;
+    // getEffectiveShares(ticker, basicShares, stockPrice)
+    return getEffectiveShares("MSTR", company.sharesForMnav || 0, stockPrice);
+  }, [stockPrice, company.sharesForMnav]);
+  
+  const metrics = useMemo(() => {
+    if (!MSTR_PROVENANCE.holdings || !MSTR_PROVENANCE.totalDebt || !MSTR_PROVENANCE.cashReserves) {
+      return null;
+    }
+
+    const holdings = MSTR_PROVENANCE.holdings.value;
+    const totalDebt = MSTR_PROVENANCE.totalDebt.value;
+    const cashReserves = MSTR_PROVENANCE.cashReserves.value;
+    const preferredEquity = MSTR_PROVENANCE.preferredEquity?.value || 0;
+    const sharesOutstanding = MSTR_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+    
+    // ITM convertible adjustment: subtract face value of ITM converts from debt
+    // This avoids double-counting (ITM converts are in diluted shares AND debt)
+    const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
+    const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
+
+    // Crypto NAV = Holdings × BTC Price
+    const cryptoNav = holdings * btcPrice;
+    
+    // Net debt = Adjusted Debt - Cash (using adjusted debt)
+    const netDebt = Math.max(0, adjustedDebt - cashReserves);
+    
+    // EV = Market Cap + Adjusted Debt + Preferred - Cash
+    // Using adjusted debt to match overview page methodology
+    const ev = marketCap + adjustedDebt + preferredEquity - cashReserves;
+    
+    // mNAV = EV / Crypto NAV
+    const mNav = cryptoNav > 0 ? ev / cryptoNav : null;
+    
+    // Leverage = Net Debt / Crypto NAV (using adjusted debt)
+    const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
+    
+    // Equity NAV = Crypto NAV + Cash - Adjusted Debt - Preferred
+    const equityNav = cryptoNav + cashReserves - adjustedDebt - preferredEquity;
+    
+    // Equity NAV per Share
+    const equityNavPerShare = sharesOutstanding > 0 ? equityNav / sharesOutstanding : 0;
+    
+    // Holdings per share
+    const holdingsPerShare = sharesOutstanding > 0 ? holdings / sharesOutstanding : 0;
+
+    // Create derived provenance values
+    const cryptoNavPv: ProvenanceValue<number> = pv(cryptoNav, derivedSource({
+      derivation: "BTC Holdings × BTC Price",
+      formula: "holdings × btcPrice",
+      inputs: {
+        holdings: MSTR_PROVENANCE.holdings,
+      },
+    }), `Using live BTC price: $${btcPrice.toLocaleString()}`);
+
+    const mNavPv: ProvenanceValue<number> | null = mNav !== null ? pv(mNav, derivedSource({
+      derivation: "Enterprise Value ÷ Crypto NAV (adjusted for ITM converts)",
+      formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
+      inputs: {
+        debt: MSTR_PROVENANCE.totalDebt,
+        preferred: MSTR_PROVENANCE.preferredEquity!,
+        cash: MSTR_PROVENANCE.cashReserves,
+        holdings: MSTR_PROVENANCE.holdings,
+      },
+    }), `Adjusted Debt: ${formatLargeNumber(adjustedDebt)} (raw ${formatLargeNumber(totalDebt)} - ITM converts ${formatLargeNumber(inTheMoneyDebtValue)})`) : null;
+
+    const leveragePv: ProvenanceValue<number> = pv(leverage, derivedSource({
+      derivation: "Net Debt ÷ Crypto NAV (adjusted for ITM converts)",
+      formula: "(adjustedDebt - cash) / cryptoNav",
+      inputs: {
+        debt: MSTR_PROVENANCE.totalDebt,
+        cash: MSTR_PROVENANCE.cashReserves,
+        holdings: MSTR_PROVENANCE.holdings,
+      },
+    }), `Net Debt: ${formatLargeNumber(netDebt)} (adjusted)`);
+
+    const equityNavPv: ProvenanceValue<number> = pv(equityNav, derivedSource({
+      derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
+      formula: "(holdings × btcPrice) + cash - adjustedDebt - preferred",
+      inputs: {
+        holdings: MSTR_PROVENANCE.holdings,
+        cash: MSTR_PROVENANCE.cashReserves,
+        debt: MSTR_PROVENANCE.totalDebt,
+        preferred: MSTR_PROVENANCE.preferredEquity!,
+      },
+    }), `Debt adjusted for ITM converts: ${formatLargeNumber(adjustedDebt)}`);
+
+    const equityNavPerSharePv: ProvenanceValue<number> = pv(equityNavPerShare, derivedSource({
+      derivation: "Equity NAV ÷ Shares Outstanding",
+      formula: "equityNav / shares",
+      inputs: {
+        holdings: MSTR_PROVENANCE.holdings,
+        shares: MSTR_PROVENANCE.sharesOutstanding!,
+        debt: MSTR_PROVENANCE.totalDebt,
+        cash: MSTR_PROVENANCE.cashReserves,
+        preferred: MSTR_PROVENANCE.preferredEquity!,
+      },
+    }), `Uses adjusted debt (ITM converts treated as equity)`);
+
+    return {
+      holdings,
+      cryptoNav,
+      cryptoNavPv,
+      mNav,
+      mNavPv,
+      leverage,
+      leveragePv,
+      equityNav,
+      equityNavPv,
+      equityNavPerShare,
+      equityNavPerSharePv,
+      holdingsPerShare,
+      netDebt,
+      totalDebt,
+      adjustedDebt,
+      inTheMoneyDebtValue,
+      cashReserves,
+      preferredEquity,
+      sharesOutstanding,
+    };
+  }, [btcPrice, marketCap, company.sharesForMnav, effectiveShares]);
+
+  const handleTimeRangeChange = (newRange: TimeRange) => {
+    setTimeRange(newRange);
+    setInterval(DEFAULT_INTERVAL[newRange]);
+  };
+
+  const handleMnavTimeRangeChange = (newRange: TimeRange) => {
+    setMnavTimeRange(newRange);
+    setMnavInterval(DEFAULT_INTERVAL[newRange]);
+  };
+
+  if (!metrics || !MSTR_PROVENANCE.holdings) {
+    return <div className="text-center py-8 text-gray-500">Loading provenance data...</div>;
+  }
+
+  return (
+    <div className={className}>
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* KEY VALUATION METRICS - All derived with click-to-verify */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <div className="mb-4 flex items-center gap-2">
+        <span className="text-lg">📊</span>
+        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          Key Metrics
+        </h2>
+        <span className="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded ml-auto">
+          Click any value for source
+        </span>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        {/* mNAV */}
+        {metrics.mNavPv && (
+          <ProvenanceMetric
+            label="mNAV"
+            data={metrics.mNavPv}
+            format="mnav"
+            subLabel="EV / Crypto NAV"
+            tooltip="How much you pay per dollar of BTC exposure"
+            ticker="mstr"
+          />
+        )}
+
+        {/* Leverage */}
+        <ProvenanceMetric
+          label="Leverage"
+          data={metrics.leveragePv}
+          format="mnav"
+          subLabel="Net Debt / Crypto NAV"
+          tooltip="Debt exposure relative to BTC holdings"
+          ticker="mstr"
+        />
+
+        {/* Equity NAV/Share */}
+        <ProvenanceMetric
+          label="Equity NAV/Share"
+          data={metrics.equityNavPerSharePv}
+          format="currency"
+          subLabel="What each share is 'worth'"
+          tooltip="Net assets per share after debt"
+          ticker="mstr"
+        />
+
+        {/* BTC Holdings */}
+        <ProvenanceMetric
+          label="BTC Holdings"
+          data={MSTR_PROVENANCE.holdings}
+          format="btc"
+          subLabel="From SEC 8-K"
+          tooltip="Total bitcoin held"
+          ticker="mstr"
+        />
+
+        {/* Cost Basis */}
+        {MSTR_PROVENANCE.costBasisAvg && (
+          <ProvenanceMetric
+            label="Avg Cost Basis"
+            data={MSTR_PROVENANCE.costBasisAvg}
+            format="currency"
+            subLabel="Per BTC"
+            tooltip="Average purchase price"
+            ticker="mstr"
+          />
+        )}
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* BALANCE SHEET - All SEC-sourced with click-to-verify */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <summary className="p-4 cursor-pointer flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Balance Sheet
+          </h2>
+          <div className="flex items-center gap-3">
+            <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+              {formatLargeNumber(metrics.equityNav)} Equity NAV
+            </span>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </summary>
+        
+        <div className="px-4 pb-4">
+          {/* Equation visualization */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 mb-4">
+            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+              Equity NAV Formula
+            </p>
+            <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
+              <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(metrics.cryptoNav)}</span>
+              <span className="text-gray-400"> BTC</span>
+              <span className="text-green-600"> + {formatLargeNumber(metrics.cashReserves)}</span>
+              <span className="text-gray-400"> cash</span>
+              <span className="text-red-600"> − {formatLargeNumber(metrics.totalDebt)}</span>
+              <span className="text-gray-400"> debt</span>
+              <span className="text-red-600"> − {formatLargeNumber(metrics.preferredEquity)}</span>
+              <span className="text-gray-400"> preferred</span>
+              <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(metrics.equityNav)}</span>
+            </p>
+          </div>
+
+          {/* Balance sheet grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Crypto NAV */}
+            <ProvenanceMetric
+              label="Crypto NAV"
+              data={metrics.cryptoNavPv}
+              format="currency"
+              subLabel={`${metrics.holdings.toLocaleString()} BTC`}
+              tooltip="BTC holdings at current market price"
+              ticker="mstr"
+            />
+
+            {/* Cash */}
+            {MSTR_PROVENANCE.cashReserves && (
+              <ProvenanceMetric
+                label="Cash Reserves"
+                data={MSTR_PROVENANCE.cashReserves}
+                format="currency"
+                subLabel="From SEC 10-Q"
+                tooltip="Cash and equivalents"
+                ticker="mstr"
+              />
+            )}
+
+            {/* Debt */}
+            {MSTR_PROVENANCE.totalDebt && (
+              <ProvenanceMetric
+                label="Total Debt"
+                data={MSTR_PROVENANCE.totalDebt}
+                format="currency"
+                subLabel="Convertible notes"
+                tooltip="Long-term debt obligations"
+                ticker="mstr"
+              />
+            )}
+
+            {/* Preferred */}
+            {MSTR_PROVENANCE.preferredEquity && (
+              <ProvenanceMetric
+                label="Preferred Equity"
+                data={MSTR_PROVENANCE.preferredEquity}
+                format="currency"
+                subLabel="STRK/STRF/etc"
+                tooltip="Perpetual preferred stock"
+                ticker="mstr"
+              />
+            )}
+          </div>
+
+          {/* Shares and Operating Info */}
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
+              Shares & Operations
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {MSTR_PROVENANCE.sharesOutstanding && (
+                <ProvenanceMetric
+                  label="Shares Outstanding"
+                  data={MSTR_PROVENANCE.sharesOutstanding}
+                  format="shares"
+                  subLabel="Basic shares"
+                  tooltip="Common shares outstanding"
+                  ticker="mstr"
+                />
+              )}
+
+              {MSTR_PROVENANCE.quarterlyBurn && (
+                <ProvenanceMetric
+                  label="Quarterly Burn"
+                  data={MSTR_PROVENANCE.quarterlyBurn}
+                  format="currency"
+                  subLabel="Operating expenses"
+                  tooltip="Cash used per quarter"
+                  ticker="mstr"
+                />
+              )}
+
+              {MSTR_PROVENANCE.totalCostBasis && (
+                <ProvenanceMetric
+                  label="Total Cost Basis"
+                  data={MSTR_PROVENANCE.totalCostBasis}
+                  format="currency"
+                  subLabel="All BTC purchases"
+                  tooltip="Total spent on bitcoin"
+                  ticker="mstr"
+                />
+              )}
+
+              {/* P&L from cost basis */}
+              {MSTR_PROVENANCE.costBasisAvg && btcPrice > 0 && (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Unrealized P&L</p>
+                  <p className={cn(
+                    "text-2xl font-bold",
+                    btcPrice > MSTR_PROVENANCE.costBasisAvg.value ? "text-green-600" : "text-red-600"
+                  )}>
+                    {btcPrice > MSTR_PROVENANCE.costBasisAvg.value ? "+" : ""}
+                    {(((btcPrice - MSTR_PROVENANCE.costBasisAvg.value) / MSTR_PROVENANCE.costBasisAvg.value) * 100).toFixed(1)}%
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    vs ${MSTR_PROVENANCE.costBasisAvg.value.toLocaleString()} avg cost
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </details>
+
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* CHARTS */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <div className="mb-4 flex items-center gap-2">
+        <span className="text-lg">📈</span>
+        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Charts</h2>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
+
+      {/* Stock Price Chart */}
+      <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <summary className="p-4 cursor-pointer flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
+          <div className="flex items-center gap-3">
+            <StockPriceCell price={stockPrice} change24h={stockChange} className="text-lg" />
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </summary>
+        <div className="px-4 pb-4">
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            <div className="flex gap-1">
+              {([
+                { value: "1d", label: "24H" },
+                { value: "7d", label: "7D" },
+                { value: "1mo", label: "1M" },
+                { value: "1y", label: "1Y" },
+                { value: "all", label: "ALL" },
+              ] as const).map(({ value, label }) => (
+                <button
+                  key={value}
+                  onClick={() => handleTimeRangeChange(value)}
+                  className={cn(
+                    "px-3 py-1 text-sm rounded-md transition-colors",
+                    timeRange === value
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                  )}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            {VALID_INTERVALS[timeRange].length > 1 && (
+              <>
+                <span className="text-gray-400 text-sm hidden sm:inline">|</span>
+                <div className="flex gap-1">
+                  {VALID_INTERVALS[timeRange].map((int) => (
+                    <button
+                      key={int}
+                      onClick={() => setInterval(int)}
+                      className={cn(
+                        "px-2 py-1 text-xs rounded transition-colors",
+                        interval === int
+                          ? "bg-gray-600 text-white"
+                          : "bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-300"
+                      )}
+                    >
+                      {INTERVAL_LABELS[int]}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          {historyLoading ? (
+            <div className="h-[400px] flex items-center justify-center text-gray-500">
+              Loading chart...
+            </div>
+          ) : history && history.length > 0 ? (
+            <StockChart data={history} />
+          ) : (
+            <div className="h-[400px] flex items-center justify-center text-gray-500">
+              No historical data available
+            </div>
+          )}
+        </div>
+      </details>
+
+      {/* mNAV History Chart */}
+      {metrics.mNav && stockPrice > 0 && btcPrice > 0 && (
+        <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV History</h2>
+            <div className="flex items-center gap-3">
+              <span className="text-lg font-bold text-gray-900 dark:text-gray-100">{metrics.mNav.toFixed(2)}x</span>
+              <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </summary>
+          <div className="px-4 pb-4">
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="flex gap-1">
+                {([
+                  { value: "1d", label: "24H" },
+                  { value: "7d", label: "7D" },
+                  { value: "1mo", label: "1M" },
+                  { value: "1y", label: "1Y" },
+                  { value: "all", label: "ALL" },
+                ] as const).map(({ value, label }) => (
+                  <button
+                    key={value}
+                    onClick={() => handleMnavTimeRangeChange(value)}
+                    className={cn(
+                      "px-3 py-1 text-sm rounded-md transition-colors",
+                      mnavTimeRange === value
+                        ? "bg-indigo-600 text-white"
+                        : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <CompanyMNAVChart
+              ticker="MSTR"
+              asset="BTC"
+              currentMNAV={metrics.mNav}
+              currentStockPrice={stockPrice}
+              currentCryptoPrice={btcPrice}
+              timeRange={mnavTimeRange}
+              interval={mnavInterval}
+              companyData={{
+                holdings: metrics.holdings,
+                sharesForMnav: metrics.sharesOutstanding,
+                totalDebt: metrics.adjustedDebt,  // Use adjusted debt (ITM converts treated as equity)
+                preferredEquity: metrics.preferredEquity,
+                cashReserves: metrics.cashReserves,
+                restrictedCash: 0,
+                asset: "BTC",
+                currency: "USD",
+              }}
+            />
+          </div>
+        </details>
+      )}
+
+      {/* Holdings Per Share Chart */}
+      <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <summary className="p-4 cursor-pointer flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">BTC/Share Growth</h2>
+          <div className="flex items-center gap-3">
+            <span className="text-lg font-mono text-gray-900 dark:text-gray-100">
+              {metrics.holdingsPerShare.toFixed(6)}
+            </span>
+            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </summary>
+        <div className="px-4 pb-4">
+          <HoldingsPerShareChart
+            ticker="MSTR"
+            asset="BTC"
+            currentHoldingsPerShare={metrics.holdingsPerShare}
+          />
+        </div>
+      </details>
+
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* DATA */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <div className="mb-4 mt-8 flex items-center gap-2">
+        <span className="text-lg">📁</span>
+        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Data</h2>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
+
+      {/* Holdings History */}
+      <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <summary className="p-4 cursor-pointer flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Holdings History</h3>
+          <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div className="px-4 pb-4">
+          <HoldingsHistoryTable ticker="MSTR" asset="BTC" />
+        </div>
+      </details>
+
+      {/* Scheduled Events */}
+      <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <summary className="p-4 cursor-pointer flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Scheduled Events</h3>
+          <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div className="px-4 pb-4">
+          <ScheduledEvents ticker="MSTR" stockPrice={stockPrice} />
+        </div>
+      </details>
+
+      {/* Data freshness note */}
+      <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg text-sm text-gray-500 dark:text-gray-400">
+        <strong>Data Provenance:</strong> All values are sourced from SEC EDGAR filings (XBRL data or document text). 
+        Click any metric to see its exact source and verify it yourself. Derived values show the formula and 
+        link to their SEC-filed inputs.
+      </div>
+    </div>
+  );
+}

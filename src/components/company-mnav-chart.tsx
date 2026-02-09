@@ -104,11 +104,24 @@ export function CompanyMNAVChart({
       }
     }
 
-    // Always add current mNAV as the latest point if available and not intraday
-    if (currentMNAV && !isIntraday) {
-      const lastPoint = result[result.length - 1];
-      if (!lastPoint || lastPoint.time !== today) {
-        result.push({ time: today as Time, value: currentMNAV });
+    // Ensure chart endpoint matches headline mNAV (single source of truth)
+    if (currentMNAV && result.length > 0) {
+      if (isIntraday) {
+        // For intraday: update the last point's value to match headline
+        // This ensures the chart endpoint always equals the live mNAV
+        result[result.length - 1] = {
+          ...result[result.length - 1],
+          value: currentMNAV,
+        };
+      } else {
+        // For daily (1Y/ALL): add today's point with headline mNAV
+        const lastPoint = result[result.length - 1];
+        if (!lastPoint || lastPoint.time !== today) {
+          result.push({ time: today as Time, value: currentMNAV });
+        } else {
+          // Update existing today point to match headline
+          result[result.length - 1] = { ...lastPoint, value: currentMNAV };
+        }
       }
     }
 

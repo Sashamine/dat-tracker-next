@@ -46,24 +46,43 @@ interface StockHistoryPoint {
 }
 
 // Align intraday timestamps to nearest interval
+// Uses last known closing price when stock market is closed (weekends/after hours)
+// Filters out future timestamps (can happen due to UTC vs local timezone)
 function alignTimestamps(
   btcData: CryptoHistoryPoint[],
   stockData: StockHistoryPoint[],
   intervalMs: number
 ): { time: string; btcPrice: number; stockPrice: number }[] {
   const result: { time: string; btcPrice: number; stockPrice: number }[] = [];
+  const now = Date.now();
+
+  // Create a sorted list of stock prices with timestamps
+  const stockPrices: { ts: number; close: number }[] = [];
+  for (const point of stockData) {
+    const ts = parseInt(point.time) * 1000;
+    stockPrices.push({ ts, close: point.close });
+  }
+  stockPrices.sort((a, b) => a.ts - b.ts);
 
   // Create a map of stock prices by aligned timestamp
   const stockByTime = new Map<number, number>();
-  for (const point of stockData) {
-    const ts = parseInt(point.time) * 1000;
+  for (const { ts, close } of stockPrices) {
     const aligned = Math.floor(ts / intervalMs) * intervalMs;
-    stockByTime.set(aligned, point.close);
+    stockByTime.set(aligned, close);
   }
 
-  // For each BTC price point, find matching stock price
+  // Get the last known stock close price for fallback
+  const lastStockClose = stockPrices.length > 0 
+    ? stockPrices[stockPrices.length - 1].close 
+    : null;
+
+  // For each BTC price point, find matching stock price or use last close
   for (const btc of btcData) {
     const ts = parseInt(btc.time) * 1000;
+    
+    // Skip future timestamps (can happen due to UTC vs local timezone)
+    if (ts > now) continue;
+    
     const aligned = Math.floor(ts / intervalMs) * intervalMs;
 
     // Find closest stock price (within interval)
@@ -71,6 +90,18 @@ function alignTimestamps(
     if (!stockPrice) {
       // Try adjacent intervals
       stockPrice = stockByTime.get(aligned - intervalMs) || stockByTime.get(aligned + intervalMs);
+    }
+    if (!stockPrice) {
+      // Find the most recent stock price before this timestamp
+      let mostRecent: number | null = null;
+      for (const { ts: stockTs, close } of stockPrices) {
+        if (stockTs <= ts) {
+          mostRecent = close;
+        } else {
+          break;
+        }
+      }
+      stockPrice = mostRecent || lastStockClose || undefined;
     }
 
     if (stockPrice) {
@@ -156,7 +187,9 @@ async function fetchIntradayMnav(
   const stockData: StockHistoryPoint[] = await stockRes.json();
 
   if (btcData.length === 0 || stockData.length === 0) {
-    return [];
+    // Fall back to daily data when no intraday data available
+    console.log("[mnavHistory] No intraday data, falling back to daily");
+    return getDailyMnav(range === "1d" ? "7d" : range === "7d" ? "1mo" : "1y");
   }
 
   // Interval in milliseconds for alignment (use optimal interval)
@@ -168,6 +201,39 @@ async function fetchIntradayMnav(
 
   // Align timestamps and pair prices
   const aligned = alignTimestamps(btcData, stockData, intervalMs);
+
+  // If no overlapping data (e.g., weekend/after hours), try longer intraday range first
+  if (aligned.length === 0) {
+    console.log("[mnavHistory] No overlapping intraday data (market closed?), trying 7d intraday");
+    // For 24H on weekends, fetch 7D intraday but show only the last trading day
+    if (range === "1d") {
+      const [btc7d, stock7d] = await Promise.all([
+        fetch(`/api/crypto/BTC/history?range=7d`),
+        fetch(`/api/stocks/MSTR/history?range=7d&interval=1h`),
+      ]);
+      if (btc7d.ok && stock7d.ok) {
+        const btcData7d: CryptoHistoryPoint[] = await btc7d.json();
+        const stockData7d: StockHistoryPoint[] = await stock7d.json();
+        const aligned7d = alignTimestamps(btcData7d, stockData7d, 60 * 60 * 1000);
+        if (aligned7d.length > 0) {
+          // Filter to only the last trading day (most recent 24h of data)
+          const lastTimestamp = parseInt(aligned7d[aligned7d.length - 1].time);
+          const oneDayAgo = lastTimestamp - 24 * 60 * 60;
+          const lastDayData = aligned7d.filter(d => parseInt(d.time) >= oneDayAgo);
+          
+          const today = new Date().toISOString().split("T")[0];
+          return lastDayData.map(({ time, btcPrice, stockPrice }) => ({
+            time,
+            btcPrice,
+            stockPrice,
+            mnav: calculateIntradayMnav(btcPrice, stockPrice, company, today),
+          }));
+        }
+      }
+    }
+    // Final fallback to daily data
+    return getDailyMnav(range === "1d" ? "1mo" : range === "7d" ? "1mo" : "1y");
+  }
 
   // Calculate mNAV for each point using company data (same as website)
   const today = new Date().toISOString().split("T")[0];
@@ -219,7 +285,9 @@ async function fetchCompanyIntradayMnav(
   }
 
   if (cryptoData.length === 0 || stockData.length === 0) {
-    return [];
+    // Fall back to daily data when no intraday data available
+    console.log(`[mnavHistory] No intraday data for ${ticker}, falling back to daily`);
+    return getCompanyDailyMnav(ticker, range === "1d" ? "7d" : range === "7d" ? "1mo" : "1y", company);
   }
 
   // Interval in milliseconds for alignment
@@ -231,6 +299,12 @@ async function fetchCompanyIntradayMnav(
 
   // Align timestamps and pair prices
   const aligned = alignTimestamps(cryptoData, stockData, intervalMs);
+
+  // If no overlapping data (e.g., weekend/after hours), fall back to daily
+  if (aligned.length === 0) {
+    console.log(`[mnavHistory] No overlapping intraday data for ${ticker} (market closed?), falling back to daily`);
+    return getCompanyDailyMnav(ticker, range === "1d" ? "7d" : range === "7d" ? "1mo" : "1y", company);
+  }
 
   // Calculate mNAV using simple formula (no dilution adjustments)
   return aligned.map(({ time, btcPrice: cryptoPrice, stockPrice }) => {
@@ -256,6 +330,15 @@ function getDailyMnav(range: TimeRange): MnavDataPoint[] {
   let startDate: Date;
 
   switch (range) {
+    case "1d":
+      startDate = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
+      break;
+    case "7d":
+      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      break;
+    case "1mo":
+      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      break;
     case "1y":
       startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
       break;
@@ -263,7 +346,7 @@ function getDailyMnav(range: TimeRange): MnavDataPoint[] {
       startDate = new Date("2020-01-01");
       break;
     default:
-      startDate = new Date("2020-01-01");
+      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // Default to 1mo
   }
 
   return MSTR_DAILY_MNAV
@@ -278,6 +361,78 @@ function getDailyMnav(range: TimeRange): MnavDataPoint[] {
       totalDebt: s.totalDebt,
       btcPerShare: s.btcPerShare,
     }));
+}
+
+// Fetch daily mNAV for MSTR using current balance sheet + historical prices
+// This ensures consistency with intraday calculation across all timeframes
+async function fetchMstrDailyMnav(
+  range: TimeRange,
+  company: MnavCompanyData
+): Promise<MnavDataPoint[]> {
+  const fetchRange = range === "all" ? "5y" : "1y";
+  
+  const [btcRes, stockRes] = await Promise.all([
+    fetch(`/api/crypto/BTC/history?range=${fetchRange}&interval=1d`),
+    fetch(`/api/stocks/MSTR/history?range=${fetchRange}&interval=1d`),
+  ]);
+
+  if (!btcRes.ok || !stockRes.ok) {
+    console.warn("[mnavHistory] Failed to fetch daily history for MSTR");
+    return [];
+  }
+
+  const btcData: CryptoHistoryPoint[] = await btcRes.json();
+  const stockData: StockHistoryPoint[] = await stockRes.json();
+
+  if (btcData.length === 0 || stockData.length === 0) {
+    return [];
+  }
+
+  // Build a map of stock prices by date (YYYY-MM-DD)
+  // Daily data uses date strings, NOT Unix timestamps
+  const stockPriceMap = new Map<string, number>();
+  for (const point of stockData) {
+    stockPriceMap.set(point.time, point.close);
+  }
+
+  // Determine date range filter
+  const now = new Date();
+  let startDate: Date;
+  switch (range) {
+    case "1y":
+      startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+      break;
+    case "all":
+      startDate = new Date("2020-01-01");
+      break;
+    default:
+      startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+  }
+  const startDateStr = startDate.toISOString().split("T")[0];
+
+  // Calculate mNAV for each BTC data point where we have stock data
+  const result: MnavDataPoint[] = [];
+  for (const btcPoint of btcData) {
+    const date = btcPoint.time; // YYYY-MM-DD format
+    
+    // Skip dates before our range
+    if (date < startDateStr) continue;
+    
+    const stockPrice = stockPriceMap.get(date);
+    if (!stockPrice) continue; // No stock data for this date (weekend/holiday)
+    
+    const btcPrice = btcPoint.price;
+    const mnav = calculateIntradayMnav(btcPrice, stockPrice, company, date);
+    
+    result.push({
+      time: date, // Keep as YYYY-MM-DD string for daily data
+      btcPrice,
+      stockPrice,
+      mnav,
+    });
+  }
+
+  return result;
 }
 
 // Calculate daily mNAV for companies with holdings history
@@ -417,16 +572,18 @@ export function useMnavHistory(
   return useQuery({
     queryKey: ["mnavHistory", ticker, range, effectiveInterval, isShortRange, companyData?.holdings, companyData?.currency, hasHistory],
     queryFn: async (): Promise<MnavDataPoint[]> => {
-      // MSTR has its own optimized path
+      // MSTR: use same calculation for all ranges (current balance sheet + historical prices)
+      // This ensures consistency across timeframes
       if (isMstr) {
+        if (!companyData) {
+          console.warn("useMnavHistory: companyData required for mNAV calculation");
+          return [];
+        }
         if (isShortRange) {
-          if (!companyData) {
-            console.warn("useMnavHistory: companyData required for intraday mNAV");
-            return [];
-          }
           return fetchIntradayMnav(range, effectiveInterval, companyData);
         } else {
-          return getDailyMnav(range);
+          // For 1Y/ALL, use daily prices with current balance sheet (consistent with intraday)
+          return fetchMstrDailyMnav(range, companyData);
         }
       }
 

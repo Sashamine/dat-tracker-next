@@ -13,7 +13,6 @@ import { Badge } from "@/components/ui/badge";
 import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
-  calculateMNAVChange,
   formatMNAV,
 } from "@/lib/calculations";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
@@ -33,10 +32,20 @@ interface PriceData {
   marketOpen?: boolean;
 }
 
+interface YesterdayMnavData {
+  [ticker: string]: {
+    mnav: number | null;
+    stockPrice: number;
+    cryptoPrice: number;
+    date: string;
+  };
+}
+
 interface DataTableProps {
   companies: Company[];
   prices?: PriceData;
   showFilters?: boolean;
+  yesterdayMnav?: YesterdayMnavData;
 }
 
 // Format large numbers (e.g., 1,234,567 -> 1.23M)
@@ -79,7 +88,7 @@ const assetColors: Record<string, string> = {
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
-export function DataTable({ companies, prices, showFilters = true }: DataTableProps) {
+export function DataTable({ companies, prices, showFilters = true, yesterdayMnav }: DataTableProps) {
   const router = useRouter();
   const {
     minMarketCap,
@@ -127,14 +136,24 @@ export function DataTable({ companies, prices, showFilters = true }: DataTablePr
       }
     }
 
-    // Leverage ratio = Net Debt / Crypto NAV (net debt = total debt - cash)
-    const netDebt = Math.max(0, totalDebt - cashReserves);
+    // Adjust debt for ITM convertibles (same as mNAV calculation)
+    // ITM converts are counted in diluted shares, so subtract their face value from debt
+    const adjustedDebt = Math.max(0, totalDebt - (marketCapResult.inTheMoneyDebtValue || 0));
+
+    // Leverage ratio = Net Debt / Crypto NAV (using adjusted debt for consistency with company page)
+    const netDebt = Math.max(0, adjustedDebt - cashReserves);
     const leverageRatio = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
     // mNAV uses shared calculation for consistency across all pages
     const mNAV = getCompanyMNAV(company, prices);
-    // mNAV change accounts for EV-based calculation (debt/preferred don't move with stock price)
-    const mNAVChange = calculateMNAVChange(stockChange, cryptoChange, marketCap, totalDebt, preferredEquity, cashReserves);
+    
+    // Calculate ACTUAL mNAV change using yesterday's measured mNAV
+    // Uses same getCompanyMNAV function with historical prices (from API)
+    let mNAVChange: number | null = null;
+    const yesterday = yesterdayMnav?.[company.ticker];
+    if (mNAV && yesterday?.mnav && yesterday.mnav > 0) {
+      mNAVChange = ((mNAV / yesterday.mnav) - 1) * 100;
+    }
 
     // Determine company type
     const companyType = company.isMiner ? "Miner" : "Treasury";

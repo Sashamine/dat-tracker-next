@@ -127,7 +127,7 @@ async function fetchSECFilings(ticker: string): Promise<{ filings: Filing[]; isP
     let hasFormD = false;
 
     if (recentFilings && recentFilings.form) {
-      const count = Math.min(recentFilings.form.length, 40);
+      const count = Math.min(recentFilings.form.length, 100);  // Process more to get 50 filtered
 
       for (let i = 0; i < count; i++) {
         const formType = recentFilings.form[i];
@@ -162,8 +162,8 @@ async function fetchSECFilings(ticker: string): Promise<{ filings: Filing[]; isP
           url: `https://www.sec.gov/Archives/edgar/data/${cikNum}/${accessionNumber}/${primaryDoc}`,
         });
 
-        // Limit to 20 filings for display
-        if (filings.length >= 20) break;
+        // Limit to 50 filings for display (MSTR has many weekly 8-Ks)
+        if (filings.length >= 50) break;
       }
     }
 

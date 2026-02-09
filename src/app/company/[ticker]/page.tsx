@@ -49,7 +49,7 @@ import { getCompanyIntel } from "@/lib/data/company-intel";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
-import { MSTRProvenanceSection } from "@/components/MSTRProvenanceSection";
+import { MSTRCompanyView } from "@/components/MSTRCompanyView";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -430,6 +430,11 @@ export default function CompanyPage() {
           </div>
         )}
 
+        {/* MSTR: Use fully provenance-tracked view */}
+        {displayCompany.ticker === "MSTR" ? (
+          <MSTRCompanyView company={displayCompany} />
+        ) : (
+          <>
         {/* Key Valuation Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
@@ -680,11 +685,6 @@ export default function CompanyPage() {
             </div>
           </div>
         </details>
-
-        {/* MSTR Provenance Section - Verified Financial Data */}
-        {displayCompany.ticker === "MSTR" && (
-          <MSTRProvenanceSection />
-        )}
 
         {/* Equity Value - Balance Sheet Summary */}
         {(otherAssets > 0 || cryptoHoldingsValue > 0) && (
@@ -1652,6 +1652,8 @@ export default function CompanyPage() {
             />
           </div>
         </details>
+          </>
+        )}
 
       </main>
 

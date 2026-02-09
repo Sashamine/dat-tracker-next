@@ -12,7 +12,7 @@ import type {
 interface ProvenanceMetricProps {
   label: string;
   data: ProvenanceValue<number>;
-  format?: "currency" | "number" | "btc" | "shares";
+  format?: "currency" | "number" | "btc" | "shares" | "mnav";
   subLabel?: string;
   tooltip?: string;
   className?: string;
@@ -39,6 +39,8 @@ function formatValue(value: number, format: string): string {
       return `${(value / 1e6).toFixed(1)}M`;
     }
     return value.toLocaleString();
+  } else if (format === "mnav") {
+    return `${value.toFixed(2)}x`;
   }
   return value.toLocaleString();
 }
@@ -281,7 +283,7 @@ interface ProvenanceMetricsGridProps {
   metrics: Array<{
     label: string;
     data: ProvenanceValue<number>;
-    format?: "currency" | "number" | "btc" | "shares";
+    format?: "currency" | "number" | "btc" | "shares" | "mnav";
     subLabel?: string;
     tooltip?: string;
   }>;

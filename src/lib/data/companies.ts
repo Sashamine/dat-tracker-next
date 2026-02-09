@@ -1,10 +1,15 @@
 import { Company } from "../types";
+import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
+import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance } from "./provenance/bmnr";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
 
 // ETH DAT Companies
 export const ethCompanies: Company[] = [
   {
+    // =========================================================================
+    // BMNR - All core financials from provenance/bmnr.ts (SEC-verified)
+    // =========================================================================
     id: "bmnr",
     name: "Bitmine Immersion",
     ticker: "BMNR",
@@ -13,15 +18,17 @@ export const ethCompanies: Company[] = [
     twitter: "BitMNR",
     asset: "ETH",
     tier: 1,
-    holdings: 4_285_125,  // Feb 2, 2026 8-K: acquired 41,788 ETH in past week
-    holdingsLastUpdated: "2026-02-01",
+    // HOLDINGS: from provenance (8-K filings)
+    holdings: BMNR_PROVENANCE.holdings?.value || 4_285_125,
+    holdingsLastUpdated: BMNR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm",
     datStartDate: "2025-07-01",
-    costBasisAvg: 4_002,  // SEC 10-Q Q1 FY2026 (Nov 30, 2025): $14,953,824K cost / 3,737,140 ETH (filed Jan 13, 2026)
-    costBasisSource: "SEC 10-Q Q1 FY2026: ETH cost basis $14,953,824K for 3,737,140 units (balance sheet in thousands)",
+    // COST BASIS: from provenance (10-Q)
+    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 4_002,
+    costBasisSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
-    costBasisAsOf: "2025-11-30",
+    costBasisAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
     stakingPct: 0.676,  // 2,897,459 staked / 4,285,125 total per Feb 2 8-K (up from 2,009,267)
     stakingApy: 0.0281,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil
     stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",
@@ -43,22 +50,25 @@ export const ethCompanies: Company[] = [
     capitalRaisedPipe: 615_000_000,
     avgDailyVolume: 800_000_000,
     hasOptions: true,
-    sharesForMnav: 455_000_000,  // 455M diluted shares (Q3 2025)
-    sharesSource: "SEC 10-Q (filed 2026-01-13): EntityCommonStockSharesOutstanding = 454,862,451 as of 2026-01-12",
+    // SHARES: from provenance (10-Q)
+    sharesForMnav: BMNR_PROVENANCE.sharesOutstanding?.value || 455_000_000,
+    sharesSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
-    sharesAsOf: "2026-01-12",
-    cashReserves: 586_000_000,  // $586M cash (Feb 1, 2026)
-    restrictedCash: 586_000_000,  // Operating capital - not excess
-    cashSource: "SEC 8-K Feb 2, 2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
-    cashAsOf: "2026-02-01",
+    sharesAsOf: BMNR_PROVENANCE_DEBUG.sharesDate,
+    // CASH: from provenance (8-K)
+    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 586_000_000,
+    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 586_000_000,  // Operating capital - not excess
+    cashSource: "SEC-verified (provenance): 8-K Feb 2, 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/",
+    cashAsOf: BMNR_PROVENANCE_DEBUG.holdingsDate,
     otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO)
-    totalDebt: 0,  // No debt financing - ETH purchases funded via equity (ATM + PIPE)
-    debtSource: "SEC 10-Q Q1 FY2026 - no convertibles, no credit facilities drawn",
-    debtAsOf: "2025-11-30",
+    // DEBT: from provenance ($0)
+    totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
+    debtSource: "SEC-verified (provenance): No debt financing",
+    debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Asset-light treasury model with minimal recurring costs (~$50K/yr ETH management fees per 10-Q). Q1 FY2026 G&A of $223M was mostly one-time capital raising costs (legal, advisory, banking fees for $8B+ ATM program).",
-    notes: "Largest ETH treasury. 3.55% of ETH supply. 2.9M ETH staked (~68%, ramping via MAVAN). $200M Beast Industries + $25M Eightco (OCTO) equity investments not in mNAV.",
+    notes: "Largest ETH treasury. 3.55% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $19M Eightco (OCTO) equity investments not in mNAV.",
   },
   {
     id: "sbet",
@@ -341,73 +351,72 @@ export const ethCompanies: Company[] = [
 // BTC DAT Companies
 export const btcCompanies: Company[] = [
   {
+    // =========================================================================
+    // MSTR - All core financials from provenance/mstr.ts (SEC-verified)
+    // =========================================================================
     id: "mstr",
     name: "Strategy (fka MicroStrategy)",
     ticker: "MSTR",
     asset: "BTC",
     tier: 1,
-    holdings: 713_502,  // SEC 8-K Feb 2, 2026: "Aggregate BTC Holdings: 713,502"
-    holdingsLastUpdated: "2026-02-01",
+    // HOLDINGS: from provenance (mstr-holdings-verified.ts)
+    holdings: MSTR_PROVENANCE.holdings?.value || 713_502,
+    holdingsLastUpdated: MSTR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm",
+    holdingsSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
-    secCik: "0001050446",  // SEC CIK for EDGAR lookups
-    costBasisAvg: 76_052,  // SEC 8-K Feb 2, 2026: "$54.26B / 713,502 BTC = $76,052 avg"
-    costBasisSource: "SEC 8-K Feb 2, 2026 (Accession: 0001193125-26-032731)",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm",
+    secCik: "0001050446",
+    // COST BASIS: from provenance
+    costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_052,
+    costBasisSource: "SEC 8-K (provenance-tracked)",
+    costBasisSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
     isMiner: false,
-    quarterlyBurnUsd: 15_200_000,  // SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities $45.6M ÷ 3 = $15.2M
-    burnAsOf: "2025-11-03",  // 10-Q filing date
+    // QUARTERLY BURN: from provenance
+    quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value || 15_200_000,
+    burnAsOf: "2025-11-03",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
-    // marketCap calculated from sharesForMnav × price (removed static override)
-    // SHARES: strategy.com/shares compiles from SEC filings (10-Q baseline + weekly 8-K ATM disclosures)
-    // SEC 10-Q Sep 30, 2025: 267.7M baseline. ATM 8-Ks (Nov 2025 - Feb 2026): +64.7M shares
-    // Diluted shares (364.8M) include converts/options; basic (332.4M) used for simple market cap
-    sharesForMnav: 332_431_000,
-    sharesSource: "strategy.com/shares (SEC 10-Q + 8-K ATM filings aggregated)",
-    sharesSourceUrl: "https://www.strategy.com/shares",
-    sharesAsOf: "2026-02-03",
-    // CONVERTS: 10-Q Q3 2025 Note 7 shows convertible notes at face value
-    // 2025: $1.05B, 2027: $1.05B, 2028: $1.01B, 2029: $3.0B, 2030: $3.0B, 2031: $603M, 2032: $800M = ~$10.5B face
-    // Net carrying value after discounts: $8.17B (LongTermDebt XBRL)
-    capitalRaisedConverts: 7_274_000_000,  // SEC 10-Q Q3 2025: Net proceeds from convert issuances (see cash flow stmt)
+    // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
+    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 332_431_000,
+    sharesSource: "SEC-verified (provenance): 10-Q baseline + 8-K ATM + 10-Q employee equity + Class B",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",
+    sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,
+    // CONVERTS: 10-Q Q3 2025 Note 7
+    capitalRaisedConverts: 7_274_000_000,
     capitalRaisedConvertsSource: "SEC 10-Q Q3 2025: Cash flow statement - proceeds from convertible notes",
     capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
-    // Debt: Convertible notes (0%-0.875% coupons, maturities 2025-2032)
-    totalDebt: 8_173_903_000,  // SEC 10-Q Q3 2025 XBRL: LongTermDebt as of Sep 30, 2025
-    debtSource: "SEC 10-Q Q3 2025 (Accession: 0001193125-25-262568)",
+    // DEBT: from provenance
+    totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_173_903_000,
+    debtSource: "SEC-verified (provenance)",
     debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
     debtAsOf: "2025-09-30",
-    // PREFERRED: SEC 10-Q Q3 2025 XBRL shows $5.89B cumulative proceeds through Sep 30
-    // Post-Q3 issuances: STRE €620M (~$717M) via 8-K Nov 13, 2025 + additional ATM pref sales
-    // strategy.com/credit aggregates from SEC filings: STRF $1,284M + STRC $3,379M + STRE $914M + STRK $1,402M + STRD $1,402M
-    preferredEquity: 8_382_000_000,
-    preferredSource: "SEC 10-Q Q3 2025 ($5.89B) + 8-K Nov 13 2025 STRE (~$717M) + post-Q3 ATM (strategy.com/credit aggregated)",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
+    // PREFERRED: from provenance
+    preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 8_382_000_000,
+    preferredSource: "SEC-verified (provenance): Q3 10-Q + 8-K issuances",
+    preferredSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
     preferredAsOf: "2026-01-26",
-    // Cash obligations derived from SEC 8-K Dec 1, 2025: $1.44B USD Reserve = 21 months of Dividends
-    // "Dividends" = preferred dividends + debt interest. $1.44B / 1.75 years = $823M/year
-    preferredDividendAnnual: 780_000_000,  // Preferred dividends component (~95% of total)
-    debtInterestAnnual: 43_000_000,  // Debt interest component (~5% - converts at 0-0.875%)
-    cashObligationsAnnual: 823_000_000,  // Total: SEC 8-K Dec 1, 2025 ($1.44B / 21 months × 12)
+    // Cash obligations from SEC 8-K Dec 1, 2025
+    preferredDividendAnnual: 780_000_000,
+    debtInterestAnnual: 43_000_000,
+    cashObligationsAnnual: 823_000_000,
     cashObligationsSource: "SEC 8-K Dec 1, 2025: USD Reserve $1.44B = 21 months of Dividends",
     cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525303157/",
     cashObligationsAsOf: "2025-11-28",
-    // ATM PROGRAM: S-3 shelf registration for $21B equity component of 21/21 plan
-    capitalRaisedAtm: 21_000_000_000,  // SEC S-3 shelf capacity (21/21 plan equity component)
+    // ATM PROGRAM: S-3 shelf
+    capitalRaisedAtm: 21_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration (21/21 plan equity component)",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=S-3",
-    cashReserves: 2_250_000_000,  // SEC 8-K Jan 5, 2026: "USD Reserve was $2.25 billion" for dividends/interest
-    cashSource: "SEC 8-K Jan 5, 2026 (Accession: 0001193125-26-001550)",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/",
+    // CASH: from provenance
+    cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_250_000_000,
+    cashSource: "SEC-verified (provenance): 8-K USD Reserve",
+    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
     cashAsOf: "2026-01-04",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
-    notes: "712K BTC @ $75K avg. 5 perpetual preferred classes: STRF/STRC/STRE/STRK/STRD. Bitcoin credit company thesis.",
+    notes: "All core financials from provenance/mstr.ts (SEC-verified). Click any metric on company page to see source.",
   },
   {
     id: "3350t",

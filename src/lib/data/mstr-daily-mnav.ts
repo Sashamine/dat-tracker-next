@@ -3,7 +3,7 @@
  * =======================
  *
  * Daily mNAV calculations with full balance sheet data.
- * Auto-generated: 2026-01-27T19:12:54.020Z
+ * Auto-generated: 2026-02-09T12:46:06.550Z
  *
  * Date range: 2020-09-30 to 2026-01-26
  * Total entries: 1336

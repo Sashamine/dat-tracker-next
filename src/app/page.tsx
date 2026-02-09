@@ -16,6 +16,7 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
+import { useYesterdayMnav } from "@/lib/hooks/use-yesterday-mnav";
 
 // Get unique assets and count companies
 function getAssetStats(companies: Company[], prices: any) {
@@ -75,6 +76,9 @@ function HomeContent() {
 
   // Use shared mNAV stats hook - single source of truth
   const mnavStats = useMNAVStats(companies, prices);
+
+  // Fetch yesterday's mNAV for actual 24h change measurement
+  const { data: yesterdayMnav } = useYesterdayMnav();
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
@@ -192,12 +196,12 @@ function HomeContent() {
                   {/* Mobile: Pull to refresh wrapper */}
                   <div className="lg:hidden">
                     <PullToRefresh onRefresh={handleRefresh}>
-                      <DataTable companies={companies} prices={prices ?? undefined} />
+                      <DataTable companies={companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
                     </PullToRefresh>
                   </div>
                   {/* Desktop: No pull to refresh */}
                   <div className="hidden lg:block">
-                    <DataTable companies={companies} prices={prices ?? undefined} />
+                    <DataTable companies={companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
                   </div>
                 </>
               )}

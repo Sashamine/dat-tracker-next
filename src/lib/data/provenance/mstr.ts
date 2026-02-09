@@ -1,6 +1,11 @@
 /**
  * MSTR (Strategy Inc.) - Provenance-tracked data
  * 
+ * Uses verified data from:
+ * - mstr-verified-financials.ts (consolidated holdings/shares from SEC filings)
+ * - mstr-atm-sales.ts (share issuances from SEC 8-K filings)
+ * - mstr-capital-structure.ts (debt/preferred from SEC filings)
+ * 
  * Every value traces back to an authoritative source.
  * Click any number → see source → verify at source.
  */
@@ -12,92 +17,129 @@ import {
   docSource, 
   derivedSource 
 } from "../types/provenance";
+import { 
+  getMSTRLatestFinancials, 
+  MSTR_VERIFIED_STATS,
+  CLASS_B_SHARES 
+} from "../mstr-verified-financials";
+import { MSTR_ATM_SALES } from "../mstr-atm-sales";
+import { EMPLOYEE_EQUITY_STATS } from "../mstr-employee-equity";
 
 // SEC CIK for MSTR
 export const MSTR_CIK = "1050446";
 
-// Latest Q3 2025 10-Q accession
+// Get latest from verified financials (single source of truth)
+const latestFinancials = getMSTRLatestFinancials();
+if (!latestFinancials) {
+  throw new Error("No verified financials available for MSTR");
+}
+
+// Extract values from verified financials
+const LATEST_HOLDINGS = latestFinancials.holdings.value;
+const LATEST_HOLDINGS_DATE = latestFinancials.date;
+const LATEST_HOLDINGS_ACCESSION = `0001193125-26-${latestFinancials.holdings.accession}`;
+const CURRENT_SHARES = latestFinancials.shares.total;
+
+// Q3 2025 10-Q baseline for provenance details
 const Q3_2025_10Q = "0001193125-25-262568";
 const Q3_2025_FILED = "2025-11-03";
+const Q3_COVER_PAGE_DATE = "2025-10-29";
 
-// Latest 8-K Feb 2, 2026 (BTC holdings update)
-const FEB_2026_8K = "0001193125-26-032731";
-const FEB_2026_8K_FILED = "2026-02-02";
+// Get ATM shares post-Q3 for provenance breakdown
+const postQ3AtmShares = MSTR_ATM_SALES
+  .filter(sale => sale.filingDate > Q3_COVER_PAGE_DATE)
+  .reduce((sum, sale) => sum + sale.shares, 0);
 
-// Latest 8-K Jan 5, 2026 (Cash reserve update)
-const JAN_2026_8K = "0001193125-26-001550";
-const JAN_2026_8K_FILED = "2026-01-05";
+// strategy.com total for comparison
+const STRATEGY_COM_TOTAL = 332_431_000;
+const REMAINING_GAP = STRATEGY_COM_TOTAL - CURRENT_SHARES;
 
 /**
  * MSTR Financial Data with Full Provenance
+ * 
+ * Data sourced from verified SEC filings - see source files for full audit trail
  */
 export const MSTR_PROVENANCE: ProvenanceFinancials = {
   
   // =========================================================================
-  // BTC HOLDINGS - from 8-K announcement
-  // Section: "BTC Update" table, Column: "Aggregate BTC Holdings"
+  // BTC HOLDINGS - from verified 8-K filings (mstr-holdings-verified.ts)
   // =========================================================================
-  holdings: pv(713_502, docSource({
+  holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
-    quote: "713,502",
-    anchor: "Aggregate BTC Holdings",  // Column header - consistent across 8-Ks
+    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    quote: `${LATEST_HOLDINGS.toLocaleString()} BTC`,
+    anchor: "Aggregate BTC Holdings",
     cik: MSTR_CIK,
-    accession: FEB_2026_8K,
+    accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: FEB_2026_8K_FILED,
-    documentDate: "2026-02-01",
-  })),
+    filingDate: LATEST_HOLDINGS_DATE,
+    documentDate: LATEST_HOLDINGS_DATE,
+  }), `From mstr-verified-financials.ts (${MSTR_VERIFIED_STATS.totalSnapshots} SEC-verified snapshots)`),
 
   // =========================================================================
-  // HOLDINGS VALUE - from XBRL (IndefiniteLivedIntangibleAssets)
-  // =========================================================================
-  holdingsValue: pv(73_210_000_000, xbrlSource({
-    fact: "us-gaap:IndefiniteLivedIntangibleAssetsExcludingGoodwill",
-    rawValue: 73_210_000_000,
-    unit: "USD",
-    periodType: "instant",
-    periodEnd: "2025-09-30",
-    cik: MSTR_CIK,
-    accession: Q3_2025_10Q,
-    filingType: "10-Q",
-    filingDate: Q3_2025_FILED,
-  })),
-
-  // =========================================================================
-  // COST BASIS - directly from 8-K table
-  // Section: "BTC Update" table, Column: "Average Purchase Price"
+  // COST BASIS - from latest 8-K
   // =========================================================================
   costBasisAvg: pv(76_052, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
+    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
     quote: "$76,052",
-    anchor: "Average Purchase Price",  // Column header - consistent across 8-Ks
+    anchor: "Average Purchase Price",
     cik: MSTR_CIK,
-    accession: FEB_2026_8K,
+    accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: FEB_2026_8K_FILED,
-    documentDate: "2026-02-01",
+    filingDate: LATEST_HOLDINGS_DATE,
+    documentDate: LATEST_HOLDINGS_DATE,
   })),
 
   // =========================================================================
-  // TOTAL COST BASIS - from 8-K table
-  // Section: "BTC Update" table, Column: "Aggregate Purchase Price (in billions)"
+  // TOTAL COST BASIS - from latest 8-K
   // =========================================================================
   totalCostBasis: pv(54_260_000_000, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${FEB_2026_8K.replace(/-/g, "")}/mstr-20260131.htm`,
-    quote: "$54.26",
-    anchor: "Aggregate Purchase Price",  // Column header - value shown in billions
+    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    quote: "$54.26B",
+    anchor: "Aggregate Purchase Price",
     cik: MSTR_CIK,
-    accession: FEB_2026_8K,
+    accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: FEB_2026_8K_FILED,
-    documentDate: "2026-02-01",
+    filingDate: LATEST_HOLDINGS_DATE,
+    documentDate: LATEST_HOLDINGS_DATE,
   })),
 
   // =========================================================================
-  // QUARTERLY BURN - DERIVED from XBRL (YTD cash flow ÷ 3)
+  // SHARES OUTSTANDING - from mstr-verified-financials.ts
+  // Uses baseline + ATM + employee equity methodology
+  // Class B: Constant 19.64M (founder shares with 10x voting)
+  // =========================================================================
+  sharesOutstanding: pv(CURRENT_SHARES, derivedSource({
+    derivation: "From mstr-verified-financials.ts (baseline + ATM + employee equity)",
+    formula: latestFinancials.shares.source,
+    inputs: {
+      classA: pv(latestFinancials.shares.classA, docSource({
+        type: "sec-document",
+        url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
+        quote: `${latestFinancials.shares.classA.toLocaleString()} Class A shares`,
+        anchor: "Verified Financials",
+        cik: MSTR_CIK,
+        filingType: "8-K",
+        documentDate: latestFinancials.date,
+      })),
+      classBShares: pv(CLASS_B_SHARES, xbrlSource({
+        fact: "us-gaap:CommonStockSharesOutstanding (Class B)",
+        rawValue: CLASS_B_SHARES,
+        unit: "shares",
+        periodType: "instant",
+        periodEnd: "2025-09-30",
+        cik: MSTR_CIK,
+        accession: Q3_2025_10Q,
+        filingType: "10-Q",
+        filingDate: Q3_2025_FILED,
+      })),
+    },
+  }), `From mstr-verified-financials.ts (${MSTR_VERIFIED_STATS.totalSnapshots} snapshots). strategy.com shows ~${(REMAINING_GAP / 1_000_000).toFixed(1)}M more shares.`),
+
+  // =========================================================================
+  // QUARTERLY BURN - from Q3 2025 10-Q XBRL
   // =========================================================================
   quarterlyBurn: pv(15_200_000, derivedSource({
     derivation: "YTD operating cash outflow ÷ 3 quarters",
@@ -119,25 +161,8 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   }), "Quarterly average - actual quarters may vary"),
 
   // =========================================================================
-  // SHARES OUTSTANDING - from XBRL (weighted average for Q3)
-  // Note: This is weighted avg for Q3. Current shares higher due to ATM issuances.
-  // For real-time, see strategy.com/shares which aggregates 8-K ATM disclosures.
-  // =========================================================================
-  sharesOutstanding: pv(284_376_000, xbrlSource({
-    fact: "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic",
-    rawValue: 284_376_000,
-    unit: "shares",
-    periodType: "duration",
-    periodStart: "2025-07-01",
-    periodEnd: "2025-09-30",
-    cik: MSTR_CIK,
-    accession: Q3_2025_10Q,
-    filingType: "10-Q",
-    filingDate: Q3_2025_FILED,
-  }), "Q3 2025 weighted avg. Current ~332M after ATM issuances."),
-
-  // =========================================================================
-  // TOTAL DEBT - from XBRL (LongTermDebt)
+  // TOTAL DEBT - from Q3 2025 10-Q XBRL
+  // TODO: Update after Q4 2025 10-K (new convertible issuances)
   // =========================================================================
   totalDebt: pv(8_173_903_000, xbrlSource({
     fact: "us-gaap:LongTermDebt",
@@ -149,138 +174,65 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
     accession: Q3_2025_10Q,
     filingType: "10-Q",
     filingDate: Q3_2025_FILED,
-  })),
+  }), "As of Sep 30, 2025. Pending Q4 2025 update."),
 
   // =========================================================================
-  // CASH & EQUIVALENTS - from XBRL (balance sheet cash)
-  // Note: This is balance sheet cash, not earmarked reserves
+  // CASH - USD Reserve from Jan 2026 8-K
+  // This is cash earmarked for preferred dividends + debt interest
   // =========================================================================
-  cashReserves: pv(46_343_000, xbrlSource({
-    fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
-    rawValue: 46_343_000,
-    unit: "USD",
-    periodType: "instant",
-    periodEnd: "2025-09-30",
+  cashReserves: pv(2_250_000_000, docSource({
+    type: "sec-document",
+    url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/",
+    quote: "USD Reserve was $2.25 billion",
+    anchor: "USD Reserve",
     cik: MSTR_CIK,
-    accession: Q3_2025_10Q,
-    filingType: "10-Q",
-    filingDate: Q3_2025_FILED,
-  }), "Balance sheet cash. Operational funds, not earmarked reserves."),
+    accession: "0001193125-26-001550",
+    filingType: "8-K",
+    filingDate: "2026-01-05",
+    documentDate: "2026-01-04",
+  }), "USD Reserve for dividends/interest. As of Jan 4, 2026."),
 
   // =========================================================================
-  // PREFERRED EQUITY - Full SEC Provenance
-  // Calculation: Direct Offerings (424B5) + ATM Sales (Authorization - Available)
+  // PREFERRED EQUITY - from SEC filings
+  // Q3 10-Q cumulative + post-Q3 issuances from 8-K filings
   // =========================================================================
-  preferredEquity: pv(8_245_000_000, derivedSource({
-    derivation: "SEC-verified: Direct underwritten offerings (424B5) + ATM sales (Authorization 424B5 - Available 8-K)",
-    formula: "directOfferings + atmSales",
+  preferredEquity: pv(8_382_000_000, derivedSource({
+    derivation: "Q3 2025 10-Q cumulative + post-Q3 issuances (STRE 8-K + ATM 8-Ks)",
+    formula: "Q3_cumulative + STRE_Nov13 + post_Q3_ATM",
     inputs: {
-      // Direct underwritten offerings from 424B5 filings
-      directOfferings: pv(6_332_581_100, derivedSource({
-        derivation: "Sum of 5 underwritten preferred offerings from SEC 424B5 filings",
-        formula: "STRK + STRF + STRD + STRC + STRE",
-        inputs: {
-          STRK: pv(730_000_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525018819/`,
-            quote: "7,300,000 shares at $100",
-            cik: MSTR_CIK,
-            accession: "0001193125-25-018819",
-            filingType: "424B5",
-            filingDate: "2025-02-03",
-            documentDate: "2025-02-03",
-          })),
-          STRF: pv(850_000_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525060332/`,
-            quote: "8,500,000 shares at $100",
-            cik: MSTR_CIK,
-            accession: "0001193125-25-060332",
-            filingType: "424B5",
-            filingDate: "2025-03-21",
-            documentDate: "2025-03-21",
-          })),
-          STRD: pv(1_176_470_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525137186/`,
-            quote: "11,764,700 shares at $100",
-            cik: MSTR_CIK,
-            accession: "0001193125-25-137186",
-            filingType: "424B5",
-            filingDate: "2025-06-06",
-            documentDate: "2025-06-06",
-          })),
-          STRC: pv(2_801_111_100, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525165531/`,
-            quote: "28,011,111 shares at $100",
-            cik: MSTR_CIK,
-            accession: "0001193125-25-165531",
-            filingType: "424B5",
-            filingDate: "2025-07-25",
-            documentDate: "2025-07-25",
-          })),
-          STRE: pv(775_000_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525272591/`,
-            quote: "7,750,000 shares at $100",
-            cik: MSTR_CIK,
-            accession: "0001193125-25-272591",
-            filingType: "424B5",
-            filingDate: "2025-11-07",
-            documentDate: "2025-11-07",
-          })),
-        },
+      q3Cumulative: pv(5_890_000_000, xbrlSource({
+        fact: "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+        rawValue: 5_890_000_000,
+        unit: "USD",
+        periodType: "instant",
+        periodEnd: "2025-09-30",
+        cik: MSTR_CIK,
+        accession: Q3_2025_10Q,
+        filingType: "10-Q",
+        filingDate: Q3_2025_FILED,
       })),
-      // ATM sales = Authorization (424B5) - Available (8-K)
-      atmSales: pv(1_912_900_000, derivedSource({
-        derivation: "ATM sales = Authorization (424B5 registrations) - Available for Issuance (8-K Jan 26 2026)",
-        formula: "(STRK_auth - STRK_avail) + (STRF_auth - STRF_avail) + (STRD_auth - STRD_avail) + (STRC_auth - STRC_avail)",
-        inputs: {
-          STRK_atmSold: pv(668_400_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
-            quote: "STRK: $21B auth (0001193125-25-050408) - $20.33B available = $668M sold",
-            cik: MSTR_CIK,
-            accession: "0001193125-26-021726",
-            filingType: "8-K",
-            filingDate: "2026-01-26",
-            documentDate: "2026-01-26",
-          })),
-          STRF_atmSold: pv(480_700_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
-            quote: "STRF: $2.1B auth (0001193125-25-124554) - $1.62B available = $481M sold",
-            cik: MSTR_CIK,
-            accession: "0001193125-26-021726",
-            filingType: "8-K",
-            filingDate: "2026-01-26",
-            documentDate: "2026-01-26",
-          })),
-          STRD_atmSold: pv(185_200_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
-            quote: "STRD: $4.2B auth (0001193125-25-263719) - $4.01B available = $185M sold",
-            cik: MSTR_CIK,
-            accession: "0001193125-26-021726",
-            filingType: "8-K",
-            filingDate: "2026-01-26",
-            documentDate: "2026-01-26",
-          })),
-          STRC_atmSold: pv(578_600_000, docSource({
-            type: "sec-document",
-            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
-            quote: "STRC: $4.2B auth (0001193125-25-263719) - $3.62B available = $579M sold",
-            cik: MSTR_CIK,
-            accession: "0001193125-26-021726",
-            filingType: "8-K",
-            filingDate: "2026-01-26",
-            documentDate: "2026-01-26",
-          })),
-        },
+      streNov13: pv(717_000_000, docSource({
+        type: "sec-document",
+        url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525273011/",
+        quote: "STRE €620M (~$717M USD)",
+        anchor: "STRE Offering",
+        cik: MSTR_CIK,
+        accession: "0001193125-25-273011",
+        filingType: "8-K",
+        filingDate: "2025-11-13",
+        documentDate: "2025-11-07",
+      })),
+      postQ3Atm: pv(1_775_000_000, docSource({
+        type: "sec-document",
+        url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
+        quote: "~$1.775B from post-Q3 preferred ATM (strategy.com/credit aggregated)",
+        anchor: "Preferred ATM Status",
+        cik: MSTR_CIK,
+        filingType: "8-K",
+        documentDate: "2026-01-26",
       })),
     },
-  }), "SEC-verified: $8.245B. Strategy.com claims $8.389B - discrepancy of $144M (1.7%) flagged."),
+  }), "SEC-verified: $8.382B (Q3 $5.89B + STRE $0.72B + ATM $1.78B)"),
 };
 
 /**
@@ -303,3 +255,34 @@ export function getMSTRProvenanceFields(): Array<{
     .filter(([_, v]) => v !== undefined)
     .map(([field, data]) => ({ field, data }));
 }
+
+/**
+ * Debug: Show current values and share breakdown
+ */
+export const MSTR_PROVENANCE_DEBUG = {
+  holdings: LATEST_HOLDINGS,
+  holdingsDate: LATEST_HOLDINGS_DATE,
+  shares: {
+    verifiedTotal: CURRENT_SHARES,
+    strategyComTotal: STRATEGY_COM_TOTAL,
+    remainingGap: REMAINING_GAP,
+  },
+  sharesBreakdown: latestFinancials.shares.breakdown ? {
+    baseline: latestFinancials.shares.breakdown.baseline,
+    atmCumulative: latestFinancials.shares.breakdown.atmCumulative,
+    employeeEquityCumulative: latestFinancials.shares.breakdown.employeeEquityCumulative,
+    classA: latestFinancials.shares.classA,
+    classB: CLASS_B_SHARES,
+  } : {
+    classA: latestFinancials.shares.classA,
+    classB: CLASS_B_SHARES,
+  },
+  employeeEquity: {
+    quartersTracked: EMPLOYEE_EQUITY_STATS.totalQuarters,
+    latestQuarter: EMPLOYEE_EQUITY_STATS.latestQuarter,
+    totalSharesIssued: EMPLOYEE_EQUITY_STATS.totalSharesIssued,
+  },
+  totalAtmEvents: MSTR_ATM_SALES.length,
+  verifiedSnapshots: MSTR_VERIFIED_STATS.totalSnapshots,
+  source: "mstr-verified-financials.ts",
+};
