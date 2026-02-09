@@ -402,18 +402,24 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
           </summary>
           <div className="px-4 pb-4">
             <div className="flex flex-wrap gap-2 mb-4">
-              {(["1mo", "1y", "all"] as const).map((range) => (
+              {([
+                { value: "1d", label: "24H" },
+                { value: "7d", label: "7D" },
+                { value: "1mo", label: "1M" },
+                { value: "1y", label: "1Y" },
+                { value: "all", label: "ALL" },
+              ] as const).map(({ value, label }) => (
                 <button
-                  key={range}
-                  onClick={() => handleMnavTimeRangeChange(range)}
+                  key={value}
+                  onClick={() => handleMnavTimeRangeChange(value)}
                   className={cn(
                     "px-3 py-1 text-sm rounded-md transition-colors",
-                    mnavTimeRange === range
+                    mnavTimeRange === value
                       ? "bg-indigo-600 text-white"
                       : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
                   )}
                 >
-                  {range === "1mo" ? "1M" : range === "1y" ? "1Y" : "ALL"}
+                  {label}
                 </button>
               ))}
             </div>
