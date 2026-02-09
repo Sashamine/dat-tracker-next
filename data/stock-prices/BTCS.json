@@ -2,7 +2,7 @@
   "ticker": "BTCS",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-09T22:45:02.306Z",
+  "lastUpdated": "2026-02-09T23:00:02.543Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4674,6 +4674,15 @@
     {
       "date": "2026-02-09",
       "time": "15:45",
+      "open": 1.73,
+      "high": 1.795,
+      "low": 1.67,
+      "close": 1.79,
+      "volume": 995002
+    },
+    {
+      "date": "2026-02-09",
+      "time": "16:00",
       "open": 1.73,
       "high": 1.795,
       "low": 1.67,
