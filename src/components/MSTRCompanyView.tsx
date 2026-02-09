@@ -11,7 +11,9 @@ import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
 import { ScheduledEvents } from "./scheduled-events";
+import { CompanyFilings } from "./company-filings";
 import { StockPriceCell } from "./price-cell";
+import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
@@ -614,6 +616,87 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
         </summary>
         <div className="px-4 pb-4">
           <ScheduledEvents ticker="MSTR" stockPrice={stockPrice} />
+        </div>
+      </details>
+
+      {/* ═══════════════════════════════════════════════════════════════════════ */}
+      {/* RESEARCH SECTION */}
+      <div className="mb-4 mt-8 flex items-center gap-2">
+        <span className="text-lg">📰</span>
+        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Research & Filings</h2>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
+
+      {/* Strategy & Overview */}
+      <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 group">
+        <summary className="p-6 cursor-pointer flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Strategy & Overview
+          </h3>
+          <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div className="px-6 pb-6">
+          <div className="flex items-center gap-3 mb-6">
+            {company.website && (
+              <a
+                href={company.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+                Website
+              </a>
+            )}
+            {company.twitter && (
+              <a
+                href={`https://twitter.com/${company.twitter.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Twitter
+              </a>
+            )}
+          </div>
+
+          {/* Strategy */}
+          {company.strategy && (
+            <div className="mb-4">
+              <p className="text-gray-700 dark:text-gray-300 mb-2">
+                <span className="font-medium">Strategy:</span> {company.strategy}
+              </p>
+            </div>
+          )}
+
+          {/* Notes */}
+          {company.notes && (
+            <p className="text-gray-600 dark:text-gray-400 text-sm">{company.notes}</p>
+          )}
+        </div>
+      </details>
+
+      {/* SEC / Regulatory Filings */}
+      <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+        <summary className="p-4 cursor-pointer flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">SEC / Regulatory Filings</h3>
+          <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div className="px-4 pb-4">
+          <CompanyFilings
+            ticker="MSTR"
+            companyName={company.name}
+            className=""
+          />
         </div>
       </details>
 
