@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MARA 8-K August 14, 2024 - BTC Treasury Purchase</title>
+  <meta name="sec-accession" content="0001493152-24-032433">
+  <meta name="sec-cik" content="1507605">
+  <meta name="filing-date" content="2024-08-14">
+  <meta name="items" content="1.01, 2.03, 3.02, 8.01, 9.01">
+</head>
+<body>
+  <h1>MARA Holdings, Inc. - Form 8-K</h1>
+  <h2>August 14, 2024 - Bitcoin Treasury Purchase Announcement</h2>
+  
+  <section id="filing-info">
+    <p><strong>SEC Accession Number:</strong> 0001493152-24-032433</p>
+    <p><strong>Filing Date:</strong> August 14, 2024</p>
+    <p><strong>Period of Report:</strong> August 14, 2024</p>
+    <p><strong>Source:</strong> <a href="https://www.sec.gov/Archives/edgar/data/1507605/000149315224032433/ex99-1.htm">SEC EDGAR EX-99.1</a></p>
+  </section>
+
+  <section id="summary">
+    <h3>Summary</h3>
+    <p>Marathon Digital Holdings, Inc. announced the closing of its $300 million offering of 2.125% 
+    convertible senior notes due 2031 and the use of proceeds to purchase bitcoin.</p>
+  </section>
+
+  <section id="holdings">
+    <h3>Bitcoin Purchase Details</h3>
+    <p><strong>Purchase Period:</strong> August 12, 2024 to August 14, 2024</p>
+    <p><strong>Bitcoin Acquired:</strong> Approximately <strong>4,144 BTC</strong></p>
+    <p><strong>Total Cost:</strong> Approximately <strong>$249 million</strong> in cash</p>
+    <p><strong>Average Price:</strong> Approximately <strong>$59,500 per bitcoin</strong> (inclusive of fees and expenses)</p>
+    <p><strong>Source of Funds:</strong> Proceeds from the sale of 2.125% convertible senior notes due 2031</p>
+    
+    <p><em>From the 8-K: "On August 14, 2024, MARA also announced that, during the period between 
+    August 12, 2024 and August 14, 2024, MARA acquired approximately 4,144 bitcoin for approximately 
+    $249 million in cash, using proceeds from the sale of the notes, at an average price of 
+    approximately $59,500 per bitcoin, inclusive of fees and expenses."</em></p>
+  </section>
+
+  <section id="context">
+    <h3>Treasury Strategy Context</h3>
+    <p>This filing marks the beginning of MARA's aggressive bitcoin treasury strategy. Prior to this 
+    purchase, MARA held approximately 18,488 BTC as of June 30, 2024 (per Q2 2024 10-Q). After this 
+    purchase, holdings increased to approximately 22,632 BTC.</p>
+    <p>MARA stated: "MARA intends to use the remaining net proceeds from the sale of the notes to 
+    acquire additional bitcoin and for general corporate purposes, which may include working capital, 
+    strategic acquisitions, expansion of existing assets, and repayment of debt and other outstanding 
+    obligations."</p>
+  </section>
+
+  <section id="notes-details">
+    <h3>Convertible Notes Details</h3>
+    <ul>
+      <li><strong>Principal Amount:</strong> $300 million (includes $50M from option exercise)</li>
+      <li><strong>Interest Rate:</strong> 2.125% per annum, payable semi-annually</li>
+      <li><strong>Maturity:</strong> September 1, 2031</li>
+      <li><strong>Initial Conversion Price:</strong> Approximately $18.89 per share</li>
+      <li><strong>Net Proceeds:</strong> Approximately $292.5 million</li>
+    </ul>
+  </section>
+</body>
+</html>

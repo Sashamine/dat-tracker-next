@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BMNR 8-K 2025-09-07 - ETH Holdings</title>
+  <style>
+    body { font: 10pt Times New Roman, Times, Serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    #holdings { background: #fffde7; padding: 10px; border-left: 4px solid #ffc107; }
+  </style>
+</head>
+<body>
+<p style="text-align: right"><b>Exhibit 99.1</b></p>
+<p style="text-align: center"><b>BitMine Crypto + Cash Holdings Exceed $9.211 billion, including 2.069 million ETH Tokens</b></p>
+<p id="holdings">LAS VEGAS, September 8th, 2025 /PRNewswire/ — (NYSE AMERICAN: BMNR) BitMine Immersion Technologies ("BitMine" or the "Company") today announced crypto + cash holdings exceeding $9.21 billion. As of September 7th at 8:30pm ET, the Company's crypto holdings are comprised of <b>2,069,443 ETH</b> at $4,312 per ETH (Bloomberg), 192 Bitcoin (BTC) and unencumbered cash of $266 million.</p>
+<p><b>Source:</b> <a href="https://www.sec.gov/Archives/edgar/data/1829311/000149315225012776/ex99-1.htm">SEC EDGAR</a></p>
+</body>
+</html>

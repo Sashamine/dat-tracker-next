@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MARA 10-Q 2024-09-30 - BTC Holdings</title>
+  <style>
+    body { font: 10pt Times New Roman, Times, Serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    #holdings { background: #fffde7; padding: 10px; border-left: 4px solid #ffc107; }
+  </style>
+</head>
+<body>
+<p style="text-align: right"><b>10-Q - Quarter Ended September 30, 2024</b></p>
+<h3>Digital Assets</h3>
+<p id="holdings">Total digital assets held as of September 30, 2024: <b>26,747 bitcoin</b> with a cost basis of $1,256,486 thousand and fair value of $1,693,122 thousand.</p>
+<p><b>Source:</b> <a href="https://www.sec.gov/Archives/edgar/data/1507605/000162828024047148/mara-20240930.htm">SEC EDGAR</a></p>
+</body>
+</html>

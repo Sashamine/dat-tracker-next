@@ -1,6 +1,9 @@
 const config = {
   plugins: {
-    "@tailwindcss/postcss": {},
+    "@tailwindcss/postcss": {
+      // Only scan src folder, not public/sec
+      base: "./src",
+    },
   },
 };
 

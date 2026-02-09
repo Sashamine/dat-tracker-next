@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BMNR 8-K 2025-07-17 - ETH Holdings</title>
+  <style>
+    body { font: 10pt Times New Roman, Times, Serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    #holdings { background: #fffde7; padding: 10px; border-left: 4px solid #ffc107; }
+  </style>
+</head>
+<body>
+<p style="text-align: right"><b>Exhibit 99.1</b></p>
+<p style="text-align: center"><b>BitMine Immersion Now Holds Approximately $1 Billion of Ethereum<sup>1</sup> to Advance its Ethereum Treasury Strategy</b></p>
+<p style="text-align: center"><i>Company's current total of approximately $1 billion of ETH<sup>1</sup> exceeds the initial $250 million PIPE proceeds by over 300%</i></p>
+<p style="text-align: center"><i>BitMine's ETH<sup>1</sup> holdings exceed 300,000</i></p>
+<p style="text-align: center"><i>Company's Ethereum treasury strategy to strengthen broader Ethereum ecosystem</i></p>
+
+<p id="holdings">LAS VEGAS, July 17, 2025 /PRNewswire/ — (NYSE AMERICAN: BMNR) ("BitMine" or the "Company") today announced holdings of ETH and ETH equivalents<sup>1</sup> exceeding $1 billion. The Company closed on its initial private placement of $250 million on July 8th in furtherance of its asset light treasury strategy. <b>As of July 17th at 3:45am ET, the company's ETH holdings<sup>1</sup> total 300,657</b> at $3,461.89 per ETH (Bloomberg).</p>
+
+<p>"At BitMine, we have surpassed $1 billion in Ethereum holdings<sup>1</sup>, just seven days after closing on the initial $250 million private placement," said Thomas "Tom" Lee of Fundstrat, Chairman of BitMine's Board of Directors.</p>
+
+<hr>
+<p><sup>1.</sup> 60,000 ETH, representing approximately $200MM notional value of Ethereum, are held through in-the-money options. This amount is backed 1:1 with approximately $200MM of unencumbered cash.</p>
+
+<p><b>Source:</b> <a href="https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm">SEC EDGAR</a></p>
+</body>
+</html>

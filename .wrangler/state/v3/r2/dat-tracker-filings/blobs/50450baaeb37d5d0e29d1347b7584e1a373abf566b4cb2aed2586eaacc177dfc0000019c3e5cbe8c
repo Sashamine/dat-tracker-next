@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BMNR 8-K 2026-01-20 - ETH Holdings</title>
+  <style>
+    body { font: 10pt Times New Roman, Times, Serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    #holdings { background: #fffde7; padding: 10px; border-left: 4px solid #ffc107; }
+  </style>
+</head>
+<body>
+<p style="text-align: right"><b>Exhibit 99.1</b></p>
+<p style="text-align: center"><b>Bitmine Immersion Technologies (BMNR) Announces ETH Holdings Reach 4.203 Million Tokens, and Total Crypto and Total Cash Holdings of $14.5 Billion</b></p>
+<p id="holdings">As of January 19th at 5:00pm ET, the Company's crypto holdings are comprised of <b>4,203,036 ETH</b> at $3,211 per ETH (Coinbase), 193 Bitcoin (BTC), $22 million stake in Eightco Holdings (NASDAQ: ORBS) ("moonshots") and total cash of $979 million. Bitmine's ETH holdings are 3.48% of the ETH supply (of 120.7 million ETH).</p>
+<p><b>Source:</b> <a href="https://www.sec.gov/Archives/edgar/data/1829311/000149315226002762/ex99-1.htm">SEC EDGAR</a></p>
+</body>
+</html>

@@ -152,48 +152,135 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   })),
 
   // =========================================================================
-  // CASH RESERVES - from 8-K (USD Reserve for dividends/interest)
-  // Note: This value comes from periodic 8-K updates about cash position
+  // CASH & EQUIVALENTS - from XBRL (balance sheet cash)
+  // Note: This is balance sheet cash, not earmarked reserves
   // =========================================================================
-  cashReserves: pv(2_250_000_000, docSource({
-    type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${JAN_2026_8K.replace(/-/g, "")}/`,
-    quote: "$2.25 billion",
-    anchor: "USD Reserve",  // Search term to find cash position section
+  cashReserves: pv(46_343_000, xbrlSource({
+    fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+    rawValue: 46_343_000,
+    unit: "USD",
+    periodType: "instant",
+    periodEnd: "2025-09-30",
     cik: MSTR_CIK,
-    accession: JAN_2026_8K,
-    filingType: "8-K",
-    filingDate: JAN_2026_8K_FILED,
-    documentDate: "2026-01-04",
-  })),
+    accession: Q3_2025_10Q,
+    filingType: "10-Q",
+    filingDate: Q3_2025_FILED,
+  }), "Balance sheet cash. Operational funds, not earmarked reserves."),
 
   // =========================================================================
-  // PREFERRED EQUITY - from XBRL + post-Q3 8-Ks
+  // PREFERRED EQUITY - Full SEC Provenance
+  // Calculation: Direct Offerings (424B5) + ATM Sales (Authorization - Available)
   // =========================================================================
-  preferredEquity: pv(8_382_000_000, derivedSource({
-    derivation: "Q3 2025 XBRL cumulative proceeds + post-Q3 issuances from 8-Ks",
-    formula: "xbrlPreferredProceeds + postQ3Issuances",
+  preferredEquity: pv(8_245_000_000, derivedSource({
+    derivation: "SEC-verified: Direct underwritten offerings (424B5) + ATM sales (Authorization 424B5 - Available 8-K)",
+    formula: "directOfferings + atmSales",
     inputs: {
-      xbrlPreferredProceeds: pv(5_890_000_000, xbrlSource({
-        fact: "us-gaap:ProceedsFromIssuanceOfPreferredStockAndPreferenceStock",
-        rawValue: 5_890_000_000,
-        unit: "USD",
-        periodType: "duration",
-        periodStart: "2025-01-01",
-        periodEnd: "2025-09-30",
-        cik: MSTR_CIK,
-        accession: Q3_2025_10Q,
-        filingType: "10-Q",
-        filingDate: Q3_2025_FILED,
+      // Direct underwritten offerings from 424B5 filings
+      directOfferings: pv(6_332_581_100, derivedSource({
+        derivation: "Sum of 5 underwritten preferred offerings from SEC 424B5 filings",
+        formula: "STRK + STRF + STRD + STRC + STRE",
+        inputs: {
+          STRK: pv(730_000_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525018819/`,
+            quote: "7,300,000 shares at $100",
+            cik: MSTR_CIK,
+            accession: "0001193125-25-018819",
+            filingType: "424B5",
+            filingDate: "2025-02-03",
+            documentDate: "2025-02-03",
+          })),
+          STRF: pv(850_000_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525060332/`,
+            quote: "8,500,000 shares at $100",
+            cik: MSTR_CIK,
+            accession: "0001193125-25-060332",
+            filingType: "424B5",
+            filingDate: "2025-03-21",
+            documentDate: "2025-03-21",
+          })),
+          STRD: pv(1_176_470_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525137186/`,
+            quote: "11,764,700 shares at $100",
+            cik: MSTR_CIK,
+            accession: "0001193125-25-137186",
+            filingType: "424B5",
+            filingDate: "2025-06-06",
+            documentDate: "2025-06-06",
+          })),
+          STRC: pv(2_801_111_100, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525165531/`,
+            quote: "28,011,111 shares at $100",
+            cik: MSTR_CIK,
+            accession: "0001193125-25-165531",
+            filingType: "424B5",
+            filingDate: "2025-07-25",
+            documentDate: "2025-07-25",
+          })),
+          STRE: pv(775_000_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312525272591/`,
+            quote: "7,750,000 shares at $100",
+            cik: MSTR_CIK,
+            accession: "0001193125-25-272591",
+            filingType: "424B5",
+            filingDate: "2025-11-07",
+            documentDate: "2025-11-07",
+          })),
+        },
       })),
-      postQ3Issuances: pv(2_492_000_000, docSource({
-        type: "company-website",
-        url: "https://www.strategy.com/credit",
-        quote: "Post-Q3 preferred issuances aggregated from strategy.com/credit",
-        documentDate: "2026-01-26",
+      // ATM sales = Authorization (424B5) - Available (8-K)
+      atmSales: pv(1_912_900_000, derivedSource({
+        derivation: "ATM sales = Authorization (424B5 registrations) - Available for Issuance (8-K Jan 26 2026)",
+        formula: "(STRK_auth - STRK_avail) + (STRF_auth - STRF_avail) + (STRD_auth - STRD_avail) + (STRC_auth - STRC_avail)",
+        inputs: {
+          STRK_atmSold: pv(668_400_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
+            quote: "STRK: $21B auth (0001193125-25-050408) - $20.33B available = $668M sold",
+            cik: MSTR_CIK,
+            accession: "0001193125-26-021726",
+            filingType: "8-K",
+            filingDate: "2026-01-26",
+            documentDate: "2026-01-26",
+          })),
+          STRF_atmSold: pv(480_700_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
+            quote: "STRF: $2.1B auth (0001193125-25-124554) - $1.62B available = $481M sold",
+            cik: MSTR_CIK,
+            accession: "0001193125-26-021726",
+            filingType: "8-K",
+            filingDate: "2026-01-26",
+            documentDate: "2026-01-26",
+          })),
+          STRD_atmSold: pv(185_200_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
+            quote: "STRD: $4.2B auth (0001193125-25-263719) - $4.01B available = $185M sold",
+            cik: MSTR_CIK,
+            accession: "0001193125-26-021726",
+            filingType: "8-K",
+            filingDate: "2026-01-26",
+            documentDate: "2026-01-26",
+          })),
+          STRC_atmSold: pv(578_600_000, docSource({
+            type: "sec-document",
+            url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/000119312526021726/`,
+            quote: "STRC: $4.2B auth (0001193125-25-263719) - $3.62B available = $579M sold",
+            cik: MSTR_CIK,
+            accession: "0001193125-26-021726",
+            filingType: "8-K",
+            filingDate: "2026-01-26",
+            documentDate: "2026-01-26",
+          })),
+        },
       })),
     },
-  })),
+  }), "SEC-verified: $8.245B. Strategy.com claims $8.389B - discrepancy of $144M (1.7%) flagged."),
 };
 
 /**
