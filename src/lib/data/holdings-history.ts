@@ -395,7 +395,7 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-20", holdings: 4203036, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009237, stockPrice: 160.23, source: "SEC 8-K Jan 20, 2026", sharesSource: "Jan 15 shareholder vote (454.9M)", sourceUrl: "/filings/bmnr/2026-01-20#holdings", sourceType: "sec-filing" },
   { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009325, source: "SEC 8-K Jan 26, 2026 (+40,302 ETH)", sharesSource: "455M diluted (unchanged from Jan 20)", sourceUrl: "/filings/bmnr/2026-01-25#holdings", sourceType: "sec-filing" },
   { date: "2026-02-01", holdings: 4285125, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009418, stockPrice: 149.71, source: "SEC 8-K Feb 2, 2026 (+41,788 ETH)", sharesSource: "455M diluted", sourceUrl: "/filings/bmnr/2026-02-01#holdings", sourceType: "sec-filing" },
-  { date: "2026-02-08", holdings: 4326000, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009508, source: "SEC 8-K Feb 9, 2026 (+40,875 ETH)", sharesSource: "455M diluted", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm", sourceType: "sec-filing" },
+  { date: "2026-02-08", holdings: 4325738, sharesOutstandingDiluted: 455_000_000, holdingsPerShare: 0.009507, source: "SEC 8-K Feb 9, 2026 (+40,613 ETH)", sharesSource: "455M diluted", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm", sourceType: "sec-filing" },
 ];
 
 // Nakamoto Inc. (NAKA) - Rebranded from KindlyMD Jan 21, 2026
