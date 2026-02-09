@@ -46,7 +46,7 @@ export const ethCompanies: Company[] = [
     // No cashObligations fields needed - burn-only companies show Operating Burn card only
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011831/forms-3.htm#:~:text=%2420%20billion",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1829311&type=S-3",
     capitalRaisedPipe: 615_000_000,
     capitalRaisedPipeSource: "SEC 8-K Jul 2025 - PIPE offering",
     capitalRaisedPipeSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm#:~:text=PIPE",
