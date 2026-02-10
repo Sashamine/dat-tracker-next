@@ -87,62 +87,65 @@ function isExtendedHours(): boolean {
   return isWeekday && (isPreMarket || isAfterHours);
 }
 
-// Binance symbols for crypto prices (free, no API key, no rate limits)
-const BINANCE_SYMBOLS: Record<string, string> = {
-  BTC: "BTCUSDT",
-  ETH: "ETHUSDT",
-  SOL: "SOLUSDT",
-  XRP: "XRPUSDT",
-  BNB: "BNBUSDT",
-  DOGE: "DOGEUSDT",
-  ADA: "ADAUSDT",
-  AVAX: "AVAXUSDT",
-  LINK: "LINKUSDT",
-  SUI: "SUIUSDT",
-  LTC: "LTCUSDT",
-  HBAR: "HBARUSDT",
-  TAO: "TAOUSDT",
+// Kraken pairs for crypto prices (free, no API key, no rate limits, US-friendly)
+const KRAKEN_PAIRS: Record<string, string> = {
+  BTC: "XXBTZUSD",
+  ETH: "XETHZUSD",
+  SOL: "SOLUSD",
+  XRP: "XXRPZUSD",
+  DOGE: "XDGUSD",
+  ADA: "ADAUSD",
+  AVAX: "AVAXUSD",
+  LINK: "LINKUSD",
+  SUI: "SUIUSD",
+  LTC: "XLTCZUSD",
+  TAO: "TAOUSD",
 };
 
-// Fetch crypto from Binance (primary - no rate limits)
-async function fetchCryptoPricesFromBinance(): Promise<Record<string, { price: number; change24h: number }>> {
+// Fetch crypto from Kraken (primary - no rate limits, US-friendly)
+async function fetchCryptoPricesFromKraken(): Promise<Record<string, { price: number; change24h: number }>> {
   try {
-    const symbols = Object.values(BINANCE_SYMBOLS);
-    const url = `https://api.binance.com/api/v3/ticker/24hr?symbols=${JSON.stringify(symbols)}`;
+    const pairs = Object.values(KRAKEN_PAIRS).join(",");
+    const url = `https://api.kraken.com/0/public/Ticker?pair=${pairs}`;
     const response = await fetch(url, { cache: "no-store" });
     
     if (!response.ok) {
-      console.error("Binance error:", response.status);
+      console.error("Kraken error:", response.status);
       return {};
     }
     
     const data = await response.json();
+    if (data.error?.length > 0) {
+      console.error("Kraken API error:", data.error);
+      return {};
+    }
+    
     const result: Record<string, { price: number; change24h: number }> = {};
     
-    for (const [symbol, binanceSymbol] of Object.entries(BINANCE_SYMBOLS)) {
-      const ticker = data.find((t: { symbol: string }) => t.symbol === binanceSymbol);
+    for (const [symbol, krakenPair] of Object.entries(KRAKEN_PAIRS)) {
+      const ticker = data.result?.[krakenPair];
       if (ticker) {
-        result[symbol] = {
-          price: parseFloat(ticker.lastPrice) || 0,
-          change24h: parseFloat(ticker.priceChangePercent) || 0,
-        };
+        const price = parseFloat(ticker.c?.[0]) || 0; // c = last trade closed [price, lot volume]
+        const open = parseFloat(ticker.o) || price;   // o = today's opening price
+        const change24h = open > 0 ? ((price - open) / open) * 100 : 0;
+        result[symbol] = { price, change24h };
       }
     }
     
     return result;
   } catch (error) {
-    console.error("Binance fetch error:", error);
+    console.error("Kraken fetch error:", error);
     return {};
   }
 }
 
 // Fetch crypto from CoinGecko (fallback)
 async function fetchCryptoPrices(): Promise<Record<string, { price: number; change24h: number }>> {
-  // Try Binance first (no rate limits)
-  const binanceData = await fetchCryptoPricesFromBinance();
-  if (Object.keys(binanceData).length > 0) {
-    geckoCache = { data: binanceData, timestamp: Date.now() };
-    return binanceData;
+  // Try Kraken first (no rate limits, US-friendly)
+  const krakenData = await fetchCryptoPricesFromKraken();
+  if (Object.keys(krakenData).length > 0) {
+    geckoCache = { data: krakenData, timestamp: Date.now() };
+    return krakenData;
   }
   
   // Fall back to CoinGecko if Binance fails
