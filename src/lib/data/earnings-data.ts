@@ -119,7 +119,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Strategy (MSTR) ==========
   // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Upcoming earnings (prelim data from 8-K)
+  // Q4 2025 - Upcoming earnings (uses verified financials for consistency with chart)
   {
     ticker: "MSTR",
     fiscalYear: 2025,
@@ -128,9 +128,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-04",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 712647, // Jan 25, 2026 8-K (latest in Q4)
-    sharesAtQuarterEnd: 277_936_548, // Q3 267.5M + Q4 ATM 10.5M shares (estimated from ATM sales)
-    holdingsPerShare: 0.002564, // Preliminary from 8-K filings; final 10-K due Feb 2026
+    ...getMSTRQuarterData(2025, 4),
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/0001193125-26-021726-index.htm",
     status: "upcoming",
