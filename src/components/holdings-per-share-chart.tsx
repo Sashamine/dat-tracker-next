@@ -339,7 +339,12 @@ export function HoldingsPerShareChart({
       )}
 
       <div className="mt-4 text-xs text-gray-500 space-y-1">
-        {ticker === "3350.T" ? (
+        {ticker === "MSTR" ? (
+          <p>
+            Source: SEC 8-K weekly filings with midpoint interpolation for chart smoothness (~3.5 day granularity).
+            {" "}{asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
+          </p>
+        ) : ticker === "3350.T" ? (
           <p>
             Source: TDnet regulatory filings (TSE disclosure system). All data split-adjusted.
             {" "}{asset}/share = Total {asset} Holdings ÷ Diluted Shares Outstanding
