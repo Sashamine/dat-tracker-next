@@ -17,6 +17,7 @@ export type HoldingsSource =
   | "company-dashboard"  // Official company dashboard/tracker (real-time)
   | "company-reported"   // Company-reported data (not SEC-verified)
   | "aggregator"         // bitbo.io, bitcointreasuries.net, etc.
+  | "interpolated"       // Interpolated between verified data points (chart smoothing)
   | "manual";            // Manual entry (needs verification)
 
 // Data warning types for tracking pending filings/events

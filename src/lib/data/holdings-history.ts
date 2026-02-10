@@ -1095,8 +1095,9 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
   const upperTicker = ticker.toUpperCase();
   
   // Use verified financials for MSTR (has 85 weekly data points vs sparse quarterly)
+  // Add midpoint interpolation for chart smoothness (~170 points)
   if (upperTicker === "MSTR") {
-    const history: HoldingsSnapshot[] = MSTR_VERIFIED_FINANCIALS.map(snap => ({
+    const rawHistory: HoldingsSnapshot[] = MSTR_VERIFIED_FINANCIALS.map(snap => ({
       date: snap.date,
       holdings: snap.holdings.value,
       sharesOutstandingDiluted: snap.shares.total,
@@ -1112,7 +1113,32 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
       methodology: snap.shares.methodology,
     }));
     
-    return { ticker: "MSTR", asset: "BTC", history };
+    // Add midpoint interpolation between each pair of snapshots
+    // This creates ~3.5 day granularity instead of 7 days
+    const interpolatedHistory: HoldingsSnapshot[] = [];
+    for (let i = 0; i < rawHistory.length; i++) {
+      const current = rawHistory[i];
+      interpolatedHistory.push(current);
+      
+      // Add midpoint between current and next (if there is a next)
+      if (i < rawHistory.length - 1) {
+        const next = rawHistory[i + 1];
+        const currentDate = new Date(current.date);
+        const nextDate = new Date(next.date);
+        const midDate = new Date((currentDate.getTime() + nextDate.getTime()) / 2);
+        const midDateStr = midDate.toISOString().split('T')[0];
+        
+        // Midpoint uses current values (holdings stay flat until next 8-K)
+        interpolatedHistory.push({
+          ...current,
+          date: midDateStr,
+          source: `Interpolated (${current.source})`,
+          sourceType: "interpolated" as HoldingsSource,
+        });
+      }
+    }
+    
+    return { ticker: "MSTR", asset: "BTC", history: interpolatedHistory };
   }
   
   return HOLDINGS_HISTORY[upperTicker] || null;
