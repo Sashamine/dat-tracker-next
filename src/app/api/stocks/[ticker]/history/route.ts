@@ -76,8 +76,9 @@ export async function GET(
 
   // Determine if intraday (affects timestamp format)
   const intraday = interval !== "1d";
-  // Filter to last day only for "1d" range with intraday intervals
-  const filterToLastDay = range === "1d" && intraday;
+  // For "1d" range, show last 24 hours of trading (not just today's market hours)
+  // This includes yesterday afternoon + today morning for a true 24H view
+  const filterToLast24Hours = range === "1d" && intraday;
 
   // Cache key includes range and interval
   const cacheKey = `${ticker}-${range}-${interval}`;
@@ -109,11 +110,20 @@ export async function GET(
     }
 
     // Use Yahoo Finance for historical data
-    let yahooData = await fetchFromYahoo(ticker, days, interval, intraday, filterToLastDay);
+    let yahooData = await fetchFromYahoo(ticker, days, interval, intraday, false);
     if (yahooData.length > 0) {
       // Filter out corrupt old data for problem tickers
       if (hasYahooProblems && !intraday) {
         yahooData = yahooData.filter(p => p.time >= minDateStr);
+      }
+      // For 24H view, filter to last 24 hours of trading data
+      if (filterToLast24Hours && yahooData.length > 0) {
+        const now = Date.now();
+        const twentyFourHoursAgo = now - 24 * 60 * 60 * 1000;
+        yahooData = yahooData.filter(p => {
+          const timestamp = parseInt(p.time, 10) * 1000;
+          return timestamp >= twentyFourHoursAgo;
+        });
       }
       // Apply split adjustments if needed (Yahoo sometimes doesn't adjust properly)
       if (needsSplitAdjustment) {

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
-import { BMNR_PROVENANCE, BMNR_CIK } from "@/lib/data/provenance/bmnr";
+import { BMNR_PROVENANCE, BMNR_CIK, BMNR_STAKING_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
@@ -72,14 +72,20 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
     const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value || 0;
     const sharesOutstanding = BMNR_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
     
+    // Use estimated shares for market cap (more current than API/10-Q)
+    const shareEstimateForMcap = estimateBMNRShares();
+    const estimatedShares = shareEstimateForMcap.totalEstimated;
+    const stockPrice = marketCap / (company.sharesForMnav || 1); // Back out stock price from API market cap
+    const estimatedMarketCap = stockPrice * estimatedShares;
+    
     // Crypto NAV = Holdings × ETH Price
     const cryptoNav = holdings * ethPrice;
     
     // Net debt = Debt - Cash (BMNR has no debt, so this is negative = net cash)
     const netDebt = Math.max(0, totalDebt - cashReserves);
     
-    // EV = Market Cap + Debt + Preferred - Cash
-    const ev = marketCap + totalDebt + preferredEquity - cashReserves;
+    // EV = Market Cap + Debt + Preferred - Cash (using estimated market cap)
+    const ev = estimatedMarketCap + totalDebt + preferredEquity - cashReserves;
     
     // mNAV = EV / Crypto NAV
     const mNav = cryptoNav > 0 ? ev / cryptoNav : null;
@@ -90,11 +96,11 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
     // Equity NAV = Crypto NAV + Cash - Debt - Preferred
     const equityNav = cryptoNav + cashReserves - totalDebt - preferredEquity;
     
-    // Equity NAV per Share
-    const equityNavPerShare = sharesOutstanding > 0 ? equityNav / sharesOutstanding : 0;
+    // Equity NAV per Share (using estimated current shares)
+    const equityNavPerShare = estimatedShares > 0 ? equityNav / estimatedShares : 0;
     
-    // Holdings per share
-    const holdingsPerShare = sharesOutstanding > 0 ? holdings / sharesOutstanding : 0;
+    // Holdings per share (using estimated current shares)
+    const holdingsPerShare = estimatedShares > 0 ? holdings / estimatedShares : 0;
 
     // Create derived provenance values
     const cryptoNavPv: ProvenanceValue<number> = pv(cryptoNav, derivedSource({
@@ -105,19 +111,30 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
       },
     }), `Using live ETH price: $${ethPrice.toLocaleString()}`);
 
+    // Create provenance for estimated shares - links to on-page section
+    const estimatedSharesPv = pv(estimatedShares, docSource({
+      type: "sec-document",
+      url: "#share-estimation",
+      quote: `${(estimatedShares / 1_000_000).toFixed(1)}M estimated`,
+      anchor: "See Estimated Shares below",
+    }), shareEstimateForMcap.methodology);
+
     const mNavPv: ProvenanceValue<number> | null = mNav !== null ? pv(mNav, derivedSource({
       derivation: "Enterprise Value ÷ Crypto NAV",
-      formula: "(marketCap + debt + preferred - cash) / cryptoNav",
+      formula: "EV / CryptoNAV where EV = (price × shares) + debt - cash",
       inputs: {
-        cash: BMNR_PROVENANCE.cashReserves,
         holdings: BMNR_PROVENANCE.holdings,
+        cash: BMNR_PROVENANCE.cashReserves,
+        ...(BMNR_PROVENANCE.totalDebt && { debt: BMNR_PROVENANCE.totalDebt }),
+        shares: estimatedSharesPv,
       },
-    }), `BMNR has no debt - EV = Market Cap - Cash`) : null;
+    }), `Live: ETH $${ethPrice.toLocaleString()}, Stock $${stockPrice.toFixed(2)}`) : null;
 
     const leveragePv: ProvenanceValue<number> = pv(leverage, derivedSource({
       derivation: "Net Debt ÷ Crypto NAV",
       formula: "(debt - cash) / cryptoNav",
       inputs: {
+        ...(BMNR_PROVENANCE.totalDebt && { debt: BMNR_PROVENANCE.totalDebt }),
         cash: BMNR_PROVENANCE.cashReserves,
         holdings: BMNR_PROVENANCE.holdings,
       },
@@ -129,18 +146,19 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
       inputs: {
         holdings: BMNR_PROVENANCE.holdings,
         cash: BMNR_PROVENANCE.cashReserves,
+        ...(BMNR_PROVENANCE.totalDebt && { debt: BMNR_PROVENANCE.totalDebt }),
+        ...(BMNR_PROVENANCE.preferredEquity && { preferred: BMNR_PROVENANCE.preferredEquity }),
       },
     }), `No debt or preferred - Equity NAV = Crypto NAV + Cash`);
 
     const equityNavPerSharePv: ProvenanceValue<number> = pv(equityNavPerShare, derivedSource({
-      derivation: "Equity NAV ÷ Shares Outstanding",
-      formula: "equityNav / shares",
+      derivation: "Equity NAV ÷ Estimated Shares",
+      formula: "equityNav / estimatedShares",
       inputs: {
         holdings: BMNR_PROVENANCE.holdings,
-        shares: BMNR_PROVENANCE.sharesOutstanding!,
         cash: BMNR_PROVENANCE.cashReserves,
       },
-    }), `Basic shares from 10-Q cover page`);
+    }), `Using estimated ${(estimatedShares / 1_000_000).toFixed(0)}M shares (10-Q baseline + ATM estimate)`);
 
     return {
       holdings,
@@ -160,6 +178,8 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
       cashReserves,
       preferredEquity,
       sharesOutstanding,
+      estimatedShares,
+      shareEstimate: shareEstimateForMcap,
     };
   }, [ethPrice, marketCap, company.sharesForMnav]);
 
@@ -236,16 +256,22 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
           ticker="bmnr"
         />
 
-        {/* Cost Basis */}
+        {/* Cost Basis - STALE (from Q1 10-Q, excludes recent purchases) */}
         {BMNR_PROVENANCE.costBasisAvg && (
-          <ProvenanceMetric
-            label="Avg Cost Basis"
-            data={BMNR_PROVENANCE.costBasisAvg}
-            format="currency"
-            subLabel="Per ETH"
-            tooltip="Average purchase price"
-            ticker="bmnr"
-          />
+          <div className="relative">
+            <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-[10px] font-medium bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded z-10">
+              STALE
+            </span>
+            <ProvenanceMetric
+              label="Avg Cost Basis"
+              data={BMNR_PROVENANCE.costBasisAvg}
+              format="currency"
+              subLabel="Per ETH (Nov 2025)"
+              tooltip="From Q1 10-Q only - excludes recent purchases"
+              ticker="bmnr"
+              className="border-2 border-amber-300 dark:border-amber-700"
+            />
+          </div>
         )}
       </div>
 
@@ -307,30 +333,53 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
               />
             )}
 
-            {/* Staking */}
-            {company.stakingPct && company.stakingPct > 0 && (
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                <p className="text-sm text-gray-500 dark:text-gray-400">Staking</p>
-                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                  {(company.stakingPct * 100).toFixed(0)}%
-                </p>
-                <p className="text-xs text-gray-400">
-                  {Math.round(metrics.holdings * company.stakingPct).toLocaleString()} ETH staked
-                </p>
-              </div>
+            {/* Staking - with provenance */}
+            {BMNR_STAKING_PROVENANCE.stakedAmount && (
+              <ProvenanceMetric
+                label="ETH Staked"
+                data={BMNR_STAKING_PROVENANCE.stakedAmount}
+                format="eth"
+                subLabel={`${(BMNR_STAKING_PROVENANCE.stakingPct.value * 100).toFixed(1)}% of holdings`}
+                tooltip="ETH staked through validators"
+                ticker="bmnr"
+              />
             )}
 
-            {/* Shares */}
+            {/* Shares - Verified */}
             {BMNR_PROVENANCE.sharesOutstanding && (
               <ProvenanceMetric
-                label="Shares Outstanding"
+                label="Verified Shares"
                 data={BMNR_PROVENANCE.sharesOutstanding}
                 format="shares"
-                subLabel="Basic shares"
+                subLabel="From 10-Q (Jan 12)"
                 tooltip="From 10-Q cover page"
                 ticker="bmnr"
               />
             )}
+
+            {/* Shares - Estimated Current */}
+            <div id="share-estimation" className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-gray-500 dark:text-gray-400">Est. Current Shares</p>
+                <span className="px-1.5 py-0.5 text-xs font-medium bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded">
+                  ESTIMATED
+                </span>
+              </div>
+              <p className="text-2xl font-bold">
+                {(metrics.shareEstimate.totalEstimated / 1_000_000).toFixed(1)}M
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                +{(metrics.shareEstimate.estimatedNewShares / 1_000_000).toFixed(1)}M from ATM
+              </p>
+              <details className="mt-2">
+                <summary className="text-xs text-amber-600 dark:text-amber-400 cursor-pointer hover:underline">
+                  Methodology
+                </summary>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                  {metrics.shareEstimate.methodology}
+                </p>
+              </details>
+            </div>
           </div>
         </div>
       </details>
@@ -433,7 +482,7 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
               interval={mnavInterval}
               companyData={{
                 holdings: metrics.holdings,
-                sharesForMnav: metrics.sharesOutstanding,
+                sharesForMnav: metrics.estimatedShares,
                 totalDebt: metrics.totalDebt,
                 preferredEquity: metrics.preferredEquity,
                 cashReserves: metrics.cashReserves,
@@ -463,6 +512,12 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
             ticker="BMNR"
             asset="ETH"
             currentHoldingsPerShare={metrics.holdingsPerShare}
+            currentProvenance={{
+              holdings: metrics.holdings,
+              shares: metrics.estimatedShares,
+              sharesSource: "estimated",
+              methodology: metrics.shareEstimate.methodology,
+            }}
           />
         </div>
       </details>

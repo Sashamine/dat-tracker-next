@@ -52,16 +52,27 @@ export function CompanyMNAVChart({
     const result: { time: Time; value: number }[] = [];
     const points: Map<string, MnavDataPoint> = new Map();
     const now = new Date();
-    const today = now.toISOString().split("T")[0];
+    // Use local timezone for "today" check, not UTC
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+    // Helper to convert UTC date string to local date string
+    const utcToLocalDate = (utcDateStr: string): string => {
+      // Parse UTC date and get local date components
+      const utcDate = new Date(utcDateStr + 'T12:00:00Z'); // Noon UTC to avoid edge cases
+      return `${utcDate.getFullYear()}-${String(utcDate.getMonth() + 1).padStart(2, '0')}-${String(utcDate.getDate()).padStart(2, '0')}`;
+    };
 
     if (mnavData && mnavData.length > 0) {
       // Use data from hook (works for MSTR and companies with holdings history like 3189.T)
       for (const point of mnavData) {
         // For intraday data, time is a Unix timestamp string - convert to number
-        // For daily data, time is YYYY-MM-DD string - keep as string
+        // For daily data, time is YYYY-MM-DD string - convert to local date
         const isTimestamp = /^\d+$/.test(point.time);
+        const displayTime = isTimestamp 
+          ? parseInt(point.time, 10) 
+          : utcToLocalDate(point.time);
         result.push({
-          time: (isTimestamp ? parseInt(point.time, 10) : point.time) as Time,
+          time: displayTime as Time,
           value: point.mnav,
         });
         points.set(point.time, point);
@@ -162,6 +173,17 @@ export function CompanyMNAVChart({
         borderVisible: false,
         timeVisible: true,
         secondsVisible: false,
+      },
+      localization: {
+        timeFormatter: (time: number | string) => {
+          // Handle both Unix timestamps (intraday) and date strings (daily)
+          if (typeof time === 'number') {
+            const date = new Date(time * 1000);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          }
+          // For date strings, just return formatted date
+          return new Date(time + 'T12:00:00').toLocaleDateString([], { month: 'short', day: 'numeric' });
+        },
       },
       crosshair: {
         horzLine: {

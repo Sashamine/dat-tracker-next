@@ -5,7 +5,7 @@ import { TimeRange, ChartInterval, DEFAULT_INTERVAL } from "./use-stock-history"
 import { MSTR_DAILY_MNAV, type DailyMnavSnapshot } from "@/lib/data/mstr-daily-mnav";
 import { getEffectiveSharesAt } from "@/lib/data/dilutive-instruments";
 import { getHistoricalHoldings } from "@/lib/data/company-holdings-history";
-import { getHoldingsHistory, getHoldingsAtDate } from "@/lib/data/holdings-history";
+import { getHoldingsHistory, getHoldingsAtDate, getSnapshotAtDate, getSharesAtDate } from "@/lib/data/holdings-history";
 
 interface MnavDataPoint {
   time: string; // Unix timestamp (seconds) for intraday, YYYY-MM-DD for daily
@@ -157,8 +157,8 @@ function calculateIntradayMnav(
 // Optimal intervals for each time range to maximize granularity
 // These match what CoinGecko and Yahoo Finance provide
 const OPTIMAL_INTERVALS: Record<TimeRange, ChartInterval> = {
-  "1d": "5m",   // 5-minute data for both
-  "7d": "1h",   // Hourly data for both
+  "1d": "5m",   // 5-minute data (Yahoo minimum for intraday)
+  "7d": "15m",  // 15-minute data for more granularity
   "1mo": "1h",  // Hourly data for both (Yahoo supports 1h for 1mo)
   "1y": "1d",   // Daily data
   "all": "1d",  // Daily data
@@ -369,7 +369,7 @@ async function fetchMstrDailyMnav(
   range: TimeRange,
   company: MnavCompanyData
 ): Promise<MnavDataPoint[]> {
-  const fetchRange = range === "all" ? "5y" : "1y";
+  const fetchRange = range === "all" ? "all" : "1y";
   
   const [btcRes, stockRes] = await Promise.all([
     fetch(`/api/crypto/BTC/history?range=${fetchRange}&interval=1d`),
@@ -472,7 +472,7 @@ async function getCompanyDailyMnav(
   const needsForexConversion = currency !== "USD";
   
   // Use max available data for "all" range, otherwise 1y
-  const fetchRange = range === "all" ? "5y" : "1y";
+  const fetchRange = range === "all" ? "all" : "1y";
   
   // Fetch data - include forex rates if needed for non-USD stocks
   const fetchPromises: Promise<Response>[] = [
@@ -527,18 +527,24 @@ async function getCompanyDailyMnav(
     
     if (!stockPrice) continue;
     
-    // Get historical holdings for this date
-    // Try dedicated lookup function first, then general holdings history, then fall back to current
-    const holdings = getHistoricalHoldings(ticker, date) 
+    // Get historical snapshot for this date (includes holdings, shares, debt, etc.)
+    const snapshot = getSnapshotAtDate(ticker, date);
+    
+    // Use historical values where available, fall back to current companyData
+    const holdings = snapshot?.holdings 
+      ?? getHistoricalHoldings(ticker, date) 
       ?? getHoldingsAtDate(ticker, date) 
       ?? companyData.holdings;
+    const shares = snapshot?.sharesOutstandingDiluted ?? companyData.sharesForMnav;
+    const debt = snapshot?.totalDebt ?? companyData.totalDebt ?? 0;
+    const cash = snapshot?.cash ?? companyData.cashReserves ?? 0;
     
-    // Calculate market cap and mNAV
+    // Calculate market cap and mNAV using HISTORICAL values
     // Convert stock price to USD if needed (forexRate = units of foreign currency per USD)
     const stockPriceUsd = stockPrice / forexRate;
-    const marketCap = stockPriceUsd * companyData.sharesForMnav;
+    const marketCap = stockPriceUsd * shares;  // Now uses historical shares!
     const cryptoNav = holdings * cryptoPrice;
-    const enterpriseValue = marketCap + (companyData.totalDebt || 0) - (companyData.cashReserves || 0);
+    const enterpriseValue = marketCap + debt - cash;
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
     
     result.push({

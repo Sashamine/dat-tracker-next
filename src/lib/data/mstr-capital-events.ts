@@ -169,7 +169,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2020-12-11",
     accessionNumber: "0001193125-20-315971",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315971/0001193125-20-315971-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315971/d225117dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Entry into a Material Definitive Agreement",
@@ -234,11 +234,11 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     notes: "SEC verified.",
   },
   {
-    date: "2021-02-17",
-    filedDate: "2021-02-17",
-    accessionNumber: "0001193125-21-046498",
+    date: "2021-02-19",
+    filedDate: "2021-02-19",
+    accessionNumber: "0001193125-21-048555",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521046498/0001193125-21-046498-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521048555/d130600dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Entry into a Material Definitive Agreement",
@@ -365,9 +365,9 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
   {
     date: "2021-06-14",
     filedDate: "2021-06-14",
-    accessionNumber: "0001193125-21-188006",
+    accessionNumber: "0001193125-21-189600",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521188006/0001193125-21-188006-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521189600/d148411dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Term Loan Agreement",
@@ -497,7 +497,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-03-29",
     accessionNumber: "0001193125-22-087494",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522087494/0001193125-22-087494-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522087494/d312252dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Credit and Security Agreement",
@@ -745,11 +745,11 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     notes: "SEC verified. Feb 15-25 period. First 2024 purchase.",
   },
   {
-    date: "2024-03-08",
-    filedDate: "2024-03-08",
-    accessionNumber: "0001193125-24-063586",
+    date: "2024-03-11",
+    filedDate: "2024-03-11",
+    accessionNumber: "0001193125-24-064321",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524063586/0001193125-24-063586-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064321/d749312dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -778,11 +778,11 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     notes: "SEC verified. Feb 26 - Mar 10 period. Funded by $800M convertible.",
   },
   {
-    date: "2024-03-18",
-    filedDate: "2024-03-18",
-    accessionNumber: "0001193125-24-072548",
+    date: "2024-03-19",
+    filedDate: "2024-03-19",
+    accessionNumber: "0001193125-24-070793",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524072548/0001193125-24-072548-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524070793/d792323dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -812,11 +812,11 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
   },
   // Q2 2024
   {
-    date: "2024-06-13",
-    filedDate: "2024-06-13",
-    accessionNumber: "0001193125-24-163274",
+    date: "2024-06-20",
+    filedDate: "2024-06-20",
+    accessionNumber: "0001193125-24-164009",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524163274/0001193125-24-163274-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524164009/d857957dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -876,11 +876,11 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     notes: "SEC verified. Aug 6 - Sep 12 period. First post-split BTC purchase.",
   },
   {
-    date: "2024-09-16",
-    filedDate: "2024-09-16",
-    accessionNumber: "0001193125-24-225195",
+    date: "2024-09-20",
+    filedDate: "2024-09-20",
+    accessionNumber: "0001193125-24-222462",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524225195/0001193125-24-225195-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524222462/d887785dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -960,7 +960,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-11-21",
     accessionNumber: "0001193125-24-263404",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263404/0001193125-24-263404-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263404/d905221dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -1134,7 +1134,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-02-24",
     accessionNumber: "0001193125-25-032800",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525032800/0001193125-25-032800-index.htm",
+      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525032800/d851880dex41.htm",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -2066,6 +2066,23 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     atmPrefSales: [{ ticker: "STRC", shares: 70_201, proceeds: 7_000_000 }],
     atmTotalProceeds: 264_000_000,
     notes: "Most recent filing as of Jan 26, 2026",
+  },
+  {
+    date: "2026-02-08",
+    filedDate: "2026-02-09",
+    accessionNumber: "0001193125-26-041944",
+    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526041944/d947535d8k.htm",
+    type: "BTC",
+    item: "8.01",
+    section: "BTC Update",
+    description: "Weekly BTC Update - 7,633 BTC for $742.3M",
+    btcAcquired: 7633,
+    btcCost: 742300000,
+    btcAvgPrice: 97255,
+    btcTotal: 721135,
+    atmCommonShares: 516413,
+    atmCommonProceeds: 179300000,
+    notes: "Auto-ingested, manually corrected",
   },
 ];
 

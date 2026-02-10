@@ -75,11 +75,6 @@ function CompanyJsonLd({ ticker }: { ticker: string }) {
         name: "Treasury Asset",
         value: company.asset,
       },
-      {
-        "@type": "PropertyValue",
-        name: "Data Quality Tier",
-        value: company.tier,
-      },
       ...(latestHoldings
         ? [
             {

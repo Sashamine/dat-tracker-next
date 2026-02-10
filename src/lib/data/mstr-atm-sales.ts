@@ -469,6 +469,24 @@ export const MSTR_ATM_SALES: ATMSaleEvent[] = [
     accessionNumber: "0001193125-26-032731",
     secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm",
   },
+  {
+    filingDate: "2026-02-09",
+    shares: 516413,
+    proceeds: 179300000,
+    format: "table",
+    sharesByProgram: {"MSTR ATM": 516413},
+    accessionNumber: "0001193125-26-041944",
+    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526041944/d947535d8k.htm",
+  },
+  {
+    filingDate: "2026-01-02",
+    shares: 1000,
+    proceeds: 1000,
+    format: "table",
+    sharesByProgram: {"MSTR ATM": 1000},
+    accessionNumber: "0001193125-26-000264",
+    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526000264/mstr-20251117.htm",
+  },
 ];
 
 export const ATM_TOTAL_SHARES = 141922366;  // Includes early ATM

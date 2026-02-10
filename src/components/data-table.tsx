@@ -114,7 +114,11 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
     // This ensures tooltip EV matches the actual mNAV calculation
     const marketCapResult = getMarketCapForMnavSync(company, stockData, prices?.forex);
     const marketCap = marketCapResult.marketCap;
-    const stockChange = stockData?.change24h;
+    // True 24hr change using yesterday's price (not Yahoo's "from previous close")
+    const yesterdayData = yesterdayMnav?.[company.ticker];
+    const stockChange = yesterdayData?.stockPrice && stockPrice && yesterdayData.stockPrice > 0
+      ? ((stockPrice - yesterdayData.stockPrice) / yesterdayData.stockPrice) * 100
+      : stockData?.change24h; // fallback to Yahoo if no yesterday data
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
     // Pending merger companies don't actually have the holdings yet - use 0 for sorting
     const holdingsValue = company.pendingMerger ? 0 : company.holdings * cryptoPrice;

@@ -4,6 +4,7 @@
 // NOTE: Share counts use DILUTED figures from SEC filings for accurate market cap calculation
 
 import type { HoldingsSource } from '../types';
+import { MSTR_VERIFIED_FINANCIALS } from './mstr-verified-financials';
 
 export interface HoldingsSnapshot {
   date: string; // YYYY-MM-DD
@@ -1131,8 +1132,32 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
 };
 
 // Get history for a specific company
+// MSTR uses MSTR_VERIFIED_FINANCIALS for granular weekly data (85 points vs sparse quarterly)
 export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | null {
-  return HOLDINGS_HISTORY[ticker.toUpperCase()] || null;
+  const upperTicker = ticker.toUpperCase();
+  
+  // Use verified financials for MSTR (has 85 weekly data points vs sparse quarterly)
+  if (upperTicker === "MSTR") {
+    const history: HoldingsSnapshot[] = MSTR_VERIFIED_FINANCIALS.map(snap => ({
+      date: snap.date,
+      holdings: snap.holdings.value,
+      sharesOutstandingDiluted: snap.shares.total,
+      holdingsPerShare: snap.holdingsPerShare || (snap.holdings.value / snap.shares.total),
+      totalDebt: snap.debt?.value,
+      preferredEquity: snap.preferredEquity?.value,
+      cash: snap.cash?.value,
+      source: snap.holdings.source === "8-K" 
+        ? `SEC 8-K ${snap.date}` 
+        : `SEC ${snap.holdings.source} ${snap.baselineFiling || ""}`,
+      sourceUrl: `/filings/mstr/${snap.holdings.accession}#dat-btc-holdings`,
+      sourceType: "sec-filing" as HoldingsSource,
+      methodology: snap.shares.methodology,
+    }));
+    
+    return { ticker: "MSTR", asset: "BTC", history };
+  }
+  
+  return HOLDINGS_HISTORY[upperTicker] || null;
 }
 
 /**
@@ -1187,6 +1212,57 @@ export function getHoldingsAtDate(ticker: string, date: string): number | undefi
   }
 
   return bestMatch?.holdings;
+}
+
+/**
+ * Get the full snapshot at a specific date (including shares, debt, etc.)
+ * Returns the most recent snapshot on or before that date.
+ */
+export function getSnapshotAtDate(ticker: string, date: string): HoldingsSnapshot | undefined {
+  // Handle MSTR specially - uses verified financials
+  if (ticker.toUpperCase() === "MSTR") {
+    const history = getHoldingsHistory("MSTR");
+    if (!history || history.history.length === 0) return undefined;
+    
+    const targetDate = new Date(date).getTime();
+    let bestMatch: HoldingsSnapshot | undefined;
+    
+    for (const snapshot of history.history) {
+      const snapshotDate = new Date(snapshot.date).getTime();
+      if (snapshotDate <= targetDate) {
+        bestMatch = snapshot;
+      } else {
+        break;
+      }
+    }
+    return bestMatch;
+  }
+  
+  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  if (!companyHistory || companyHistory.history.length === 0) return undefined;
+
+  const targetDate = new Date(date).getTime();
+  let bestMatch: HoldingsSnapshot | undefined;
+
+  for (const snapshot of companyHistory.history) {
+    const snapshotDate = new Date(snapshot.date).getTime();
+    if (snapshotDate <= targetDate) {
+      bestMatch = snapshot;
+    } else {
+      break;
+    }
+  }
+
+  return bestMatch;
+}
+
+/**
+ * Get shares outstanding at a specific date.
+ * Returns the diluted shares from the most recent snapshot on or before that date.
+ */
+export function getSharesAtDate(ticker: string, date: string): number | undefined {
+  const snapshot = getSnapshotAtDate(ticker, date);
+  return snapshot?.sharesOutstandingDiluted;
 }
 
 /**

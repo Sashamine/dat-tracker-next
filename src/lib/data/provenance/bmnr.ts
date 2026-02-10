@@ -64,30 +64,30 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     derivation: "Total ETH cost / Total ETH holdings",
     formula: "$14,953,824,000 / 3,737,140 ETH = $4,002/ETH",
     inputs: {
-      totalCost: pv(14_953_824_000, xbrlSource({
-        fact: "us-gaap:CryptoAssetHoldingsAtCost",
-        rawValue: 14_953_824_000,
-        unit: "USD",
-        periodType: "instant",
-        periodEnd: Q1_FY2026_PERIOD_END,
+      totalCost: pv(14_953_824_000, docSource({
+        type: "sec-document",
+        url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
+        quote: "digital assets at cost of $14,953,824",
+        anchor: "digital assets at cost",
         cik: BMNR_CIK,
         accession: Q1_FY2026_10Q,
         filingType: "10-Q",
         filingDate: Q1_FY2026_FILED,
+        documentDate: Q1_FY2026_PERIOD_END,
       })),
-      totalHoldings: pv(3_737_140, xbrlSource({
-        fact: "us-gaap:CryptoAssetNumberOfUnits",
-        rawValue: 3_737_140,
-        unit: "pure",
-        periodType: "instant",
-        periodEnd: Q1_FY2026_PERIOD_END,
+      totalHoldings: pv(3_737_140, docSource({
+        type: "sec-document",
+        url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
+        quote: "3,737,140 Ether",
+        anchor: "3,737,140 Ether",
         cik: BMNR_CIK,
         accession: Q1_FY2026_10Q,
         filingType: "10-Q",
         filingDate: Q1_FY2026_FILED,
+        documentDate: Q1_FY2026_PERIOD_END,
       })),
     },
-  }), "Cost basis as of Nov 30, 2025 (Q1 FY2026 10-Q). Subsequent purchases may have different basis."),
+  }), "⚠️ STALE: As of Nov 30, 2025 only. Excludes ~590K ETH purchased since then at $2,100-$3,200. Actual current basis likely lower."),
 
   // =========================================================================
   // SHARES OUTSTANDING - from 10-Q cover page
@@ -102,6 +102,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     accession: SHARES_ACCESSION,
     filingType: "10-Q",
     filingDate: Q1_FY2026_FILED,
+    documentAnchor: "shares outstanding of the registrant",
   }), "Basic shares. Add ~4.4M dilutive shares (warrants + RSUs) for fully diluted."),
 
   // =========================================================================
@@ -158,6 +159,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     accession: Q1_FY2026_10Q,
     filingType: "10-Q",
     filingDate: Q1_FY2026_FILED,
+    documentAnchor: "LIABILITIES",
   }), "No debt financing. All ETH purchases funded via equity (ATM + PIPE)."),
 
   // =========================================================================
@@ -173,6 +175,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     accession: Q1_FY2026_10Q,
     filingType: "10-Q",
     filingDate: Q1_FY2026_FILED,
+    documentAnchor: "A and B Convertible Preferred Stock",
   }), "No preferred equity issued."),
 
   // =========================================================================
@@ -181,6 +184,102 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // Excluded from mNAV (not crypto-correlated equity investments)
   // =========================================================================
 };
+
+// =========================================================================
+// STAKING PROVENANCE (not in ProvenanceFinancials type, tracked separately)
+// =========================================================================
+
+/** Staking data with provenance - from weekly 8-K filings */
+export const BMNR_STAKING_PROVENANCE = {
+  stakedAmount: pv(LATEST_STAKED, docSource({
+    type: "sec-document",
+    url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
+    quote: "2,897,459 ETH (67.6%) are currently staked through 3 staking providers",
+    anchor: "staking",
+    cik: BMNR_CIK,
+    accession: "0001493152-26-004960",
+    filingType: "8-K",
+    filingDate: "2026-02-02",
+    documentDate: "2026-02-01",
+  }), "Staking data from weekly 8-K filing."),
+
+  stakingPct: pv(STAKING_PCT, docSource({
+    type: "sec-document",
+    url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
+    quote: "67.6%",
+    anchor: "staking",
+    cik: BMNR_CIK,
+    accession: "0001493152-26-004960",
+    filingType: "8-K",
+    filingDate: "2026-02-02",
+    documentDate: "2026-02-01",
+  })),
+
+  annualizedRevenue: pv(188_000_000, docSource({
+    type: "sec-document",
+    url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
+    quote: "Annualized staking revenues are approximately $188 million",
+    anchor: "staking",
+    cik: BMNR_CIK,
+    accession: "0001493152-26-004960",
+    filingType: "8-K",
+    filingDate: "2026-02-02",
+    documentDate: "2026-02-01",
+  })),
+};
+
+// =========================================================================
+// SHARE ESTIMATION (for periods between 10-Q filings)
+// =========================================================================
+
+/**
+ * Estimate shares issued since last SEC filing using ETH acquisition methodology
+ * Formula: shares_issued = (ETH_acquired × ETH_price) / stock_price
+ * 
+ * Inputs (all from SEC 8-Ks):
+ * - ETH_acquired: Change in holdings from consecutive 8-Ks
+ * - ETH_price: Stated in 8-K filing
+ * - stock_price: Market data at filing date
+ * 
+ * See: clawd/bmnr-audit/METHODOLOGY.md
+ */
+export interface ShareEstimate {
+  date: string;
+  baselineShares: number;    // From last 10-Q
+  estimatedNewShares: number; // Sum of estimated issuances
+  totalEstimated: number;     // baseline + estimated
+  confidence: "high" | "medium" | "low";
+  methodology: string;
+}
+
+/**
+ * Estimate current shares outstanding
+ * Uses Q1 FY2026 10-Q baseline + estimated ATM issuances
+ */
+export function estimateBMNRShares(): ShareEstimate {
+  // Baseline from Q1 FY2026 10-Q (filed Jan 13, 2026)
+  const baselineShares = SHARES_OUTSTANDING; // 454,862,451
+  const baselineDate = SHARES_DATE; // "2026-01-12"
+  
+  // ETH acquisitions since baseline
+  // From 8-K filings: Jan 12 holdings: 3,737,140 → Feb 8 holdings: 4,325,738
+  const ethAcquired = LATEST_HOLDINGS - 3_737_140; // 588,598 ETH
+  const avgEthPrice = 2_600; // Rough average ETH price in this period
+  const avgStockPrice = 22; // Rough average BMNR stock price
+  
+  // Estimate shares issued via ATM
+  const estimatedNewShares = Math.round((ethAcquired * avgEthPrice) / avgStockPrice);
+  // = (588,598 × $2,600) / $22 = ~69.5M new shares
+  
+  return {
+    date: LATEST_HOLDINGS_DATE,
+    baselineShares,
+    estimatedNewShares,
+    totalEstimated: baselineShares + estimatedNewShares,
+    confidence: "medium",
+    methodology: `Q1 FY2026 10-Q baseline (${baselineShares.toLocaleString()}) + estimated ATM (${estimatedNewShares.toLocaleString()} from ${ethAcquired.toLocaleString()} ETH × $${avgEthPrice} ÷ $${avgStockPrice})`,
+  };
+}
 
 // =========================================================================
 // DEBUG / STATS

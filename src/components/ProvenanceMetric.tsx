@@ -17,6 +17,8 @@ interface ProvenanceMetricProps {
   tooltip?: string;
   className?: string;
   ticker?: string;
+  /** Optional id for linking from other metrics */
+  id?: string;
 }
 
 /** Format number for display */
@@ -65,17 +67,40 @@ function getSourceLabel(source: XBRLSource | DocumentSource | DerivedSource): st
   }
 }
 
-/** Get internal viewer URL */
+/** Check if URL is external */
+function isExternalUrl(url: string | undefined): boolean {
+  return !!url && (url.startsWith("http://") || url.startsWith("https://"));
+}
+
+/** Check if URL is internal (starts with /) */
+function isInternalUrl(url: string | undefined): boolean {
+  return !!url && url.startsWith("/");
+}
+
+/** Get source URL - prefers external URL when available, falls back to internal viewer */
 function getViewerUrl(source: XBRLSource | DocumentSource | DerivedSource, ticker: string = "mstr"): string | null {
   if (source.type === "xbrl") {
-    // Include period to match specific row
+    // XBRL always uses internal viewer (we can render it)
     const period = source.periodEnd ? `&period=${encodeURIComponent(source.periodEnd)}` : "";
     return `/filings/${ticker}/${source.accession}?tab=xbrl&fact=${encodeURIComponent(source.fact)}${period}`;
-  } else if (source.type === "sec-document" && source.accession) {
-    // Use the anchor text as search query to find and highlight in document
-    const searchTerm = source.anchor || source.quote?.slice(0, 50);
-    const query = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : "";
-    return `/filings/${ticker}/${source.accession}?tab=document${query}`;
+  } else if (source.type === "sec-document" || source.type === "press-release" || 
+             source.type === "company-website" || source.type === "regulatory") {
+    const docSource = source as DocumentSource;
+    // Priority 1: Use external URL if available (most reliable for verification)
+    if (isExternalUrl(docSource.url)) {
+      return docSource.url!;
+    }
+    // Priority 2: Use internal URL if it's a local path
+    if (isInternalUrl(docSource.url)) {
+      return docSource.url!;
+    }
+    // Priority 3: Build internal viewer URL from accession (may not have the exhibit)
+    if (docSource.accession) {
+      const searchTerm = docSource.anchor || docSource.quote?.slice(0, 50);
+      const query = searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : "";
+      return `/filings/${ticker}/${docSource.accession}?tab=document${query}`;
+    }
+    return null;
   } else if (source.type === "derived") {
     // Link to first input's source
     const firstInput = Object.values(source.inputs)[0];
@@ -93,13 +118,14 @@ export function ProvenanceMetric({
   subLabel,
   tooltip,
   className = "",
-  ticker = "mstr"
+  ticker = "mstr",
+  id
 }: ProvenanceMetricProps) {
   const [showPopover, setShowPopover] = useState(false);
   const viewerUrl = getViewerUrl(data.source, ticker);
 
   return (
-    <div className={`bg-gray-50 dark:bg-gray-900 rounded-lg p-4 relative ${className}`}>
+    <div id={id} className={`bg-gray-50 dark:bg-gray-900 rounded-lg p-4 relative ${className}`}>
       <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
         {label}
         {tooltip && (
@@ -222,23 +248,25 @@ export function ProvenanceMetric({
                               {input.value.toLocaleString()}
                             </div>
                             {inputUrl && (
-                              <Link
-                                href={inputUrl}
-                                className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
-                                onClick={() => setShowPopover(false)}
-                              >
-                                View Source →
-                              </Link>
-                            )}
-                            {!inputUrl && input.source.type === "company-website" && (
-                              <a
-                                href={(input.source as DocumentSource).url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
-                              >
-                                View on Company Site ↗
-                              </a>
+                              isExternalUrl(inputUrl) ? (
+                                <a
+                                  href={inputUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
+                                  onClick={() => setShowPopover(false)}
+                                >
+                                  View on SEC ↗
+                                </a>
+                              ) : (
+                                <Link
+                                  href={inputUrl}
+                                  className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
+                                  onClick={() => setShowPopover(false)}
+                                >
+                                  {inputUrl.startsWith("#") ? "See below ↓" : "View Source →"}
+                                </Link>
+                              )
                             )}
                           </div>
                         );
@@ -257,13 +285,25 @@ export function ProvenanceMetric({
               
               {/* View source button */}
               {viewerUrl && (
-                <Link
-                  href={viewerUrl}
-                  className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
-                  onClick={() => setShowPopover(false)}
-                >
-                  View Source →
-                </Link>
+                isExternalUrl(viewerUrl) ? (
+                  <a
+                    href={viewerUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
+                    onClick={() => setShowPopover(false)}
+                  >
+                    View on SEC ↗
+                  </a>
+                ) : (
+                  <Link
+                    href={viewerUrl}
+                    className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
+                    onClick={() => setShowPopover(false)}
+                  >
+                    {viewerUrl.startsWith("#") ? "See below ↓" : "View Source →"}
+                  </Link>
+                )
               )}
               
               {/* Last verified */}

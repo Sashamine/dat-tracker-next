@@ -51,6 +51,7 @@ import { MobileHeader } from "@/components/mobile-header";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { MSTRCompanyView } from "@/components/MSTRCompanyView";
 import { BMNRCompanyView } from "@/components/BMNRCompanyView";
+import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -289,6 +290,11 @@ export default function CompanyPage() {
   // Phase determination
   const phase = determineDATPhase(navDiscount, false, null);
 
+  // Effective shares (for dilution tracking)
+  const effectiveSharesResult = stockPrice > 0 
+    ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav || 0, stockPrice)
+    : null;
+
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
@@ -317,9 +323,6 @@ export default function CompanyPage() {
               </h1>
               <Badge variant="outline" className={cn("font-medium", assetColors[displayCompany.asset] || assetColors.ETH)}>
                 {displayCompany.asset}
-              </Badge>
-              <Badge variant="outline" className={cn("font-medium", tierColors[displayCompany.tier])}>
-                T{displayCompany.tier}
               </Badge>
               {displayCompany.pendingMerger && (
                 <Badge variant="outline" className="font-medium bg-amber-500/10 text-amber-600 border-amber-500/30">
@@ -688,6 +691,45 @@ export default function CompanyPage() {
             </div>
           </div>
         </details>
+
+        {/* mNAV Calculation Card - Show formula breakdown */}
+        {!displayCompany.pendingMerger && (
+          <div className="mb-8">
+            <MnavCalculationCard
+              ticker={displayCompany.ticker}
+              asset={displayCompany.asset}
+              marketCap={marketCap}
+              totalDebt={totalDebt}
+              preferredEquity={preferredEquity}
+              cashReserves={cashReserves}
+              holdings={displayCompany.holdings}
+              cryptoPrice={cryptoPrice}
+              holdingsValue={cryptoHoldingsValue}
+              mNAV={mNAV}
+              sharesForMnav={displayCompany.sharesForMnav}
+              stockPrice={stockPrice}
+              hasDilutiveInstruments={!!effectiveSharesResult?.breakdown?.length}
+              basicShares={effectiveSharesResult?.basic}
+              itmDilutionShares={effectiveSharesResult ? effectiveSharesResult.diluted - effectiveSharesResult.basic : undefined}
+              itmDebtAdjustment={effectiveSharesResult?.inTheMoneyDebtValue}
+              sharesSourceUrl={displayCompany.sharesSourceUrl}
+              sharesSource={displayCompany.sharesSource}
+              sharesAsOf={displayCompany.sharesAsOf}
+              debtSourceUrl={displayCompany.debtSourceUrl}
+              debtSource={displayCompany.debtSource}
+              debtAsOf={displayCompany.debtAsOf}
+              cashSourceUrl={displayCompany.cashSourceUrl}
+              cashSource={displayCompany.cashSource}
+              cashAsOf={displayCompany.cashAsOf}
+              preferredSourceUrl={displayCompany.preferredSourceUrl}
+              preferredSource={displayCompany.preferredSource}
+              preferredAsOf={displayCompany.preferredAsOf}
+              holdingsSourceUrl={displayCompany.holdingsSourceUrl}
+              holdingsSource={displayCompany.holdingsSource}
+              holdingsAsOf={displayCompany.holdingsLastUpdated}
+            />
+          </div>
+        )}
 
         {/* Equity Value - Balance Sheet Summary */}
         {(otherAssets > 0 || cryptoHoldingsValue > 0) && (

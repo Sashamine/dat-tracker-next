@@ -1,6 +1,6 @@
 import { Company } from "../types";
 import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
-import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance } from "./provenance/bmnr";
+import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
 
@@ -52,11 +52,11 @@ export const ethCompanies: Company[] = [
     capitalRaisedPipeSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm#:~:text=PIPE",
     avgDailyVolume: 800_000_000,
     hasOptions: true,
-    // SHARES: from provenance (10-Q)
-    sharesForMnav: BMNR_PROVENANCE.sharesOutstanding?.value || 455_000_000,
-    sharesSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
+    // SHARES: estimated (10-Q baseline + ATM estimate)
+    sharesForMnav: estimateBMNRShares().totalEstimated,
+    sharesSource: "Estimated: 10-Q baseline + ATM (ETH × price ÷ stock price)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=454%2C862%2C451",
-    sharesAsOf: BMNR_PROVENANCE_DEBUG.sharesDate,
+    sharesAsOf: new Date().toISOString().split("T")[0], // Today (estimated)
     // CASH: from provenance (8-K)
     cashReserves: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,
     restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,  // Operating capital - not excess

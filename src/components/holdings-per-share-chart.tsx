@@ -12,6 +12,13 @@ interface HoldingsPerShareChartProps {
   asset: string;
   currentHoldingsPerShare: number | null;
   className?: string;
+  /** Provenance info for the current value */
+  currentProvenance?: {
+    holdings: number;
+    shares: number;
+    sharesSource: "verified" | "estimated";
+    methodology?: string;
+  };
 }
 
 export function HoldingsPerShareChart({
@@ -19,6 +26,7 @@ export function HoldingsPerShareChart({
   asset,
   currentHoldingsPerShare,
   className,
+  currentProvenance,
 }: HoldingsPerShareChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
@@ -117,11 +125,24 @@ export function HoldingsPerShareChart({
       },
     });
 
-    // Format data for chart
+    // Format data for chart - historical snapshots
     const chartData = filteredHistory.map((snapshot) => ({
       time: snapshot.date as Time,
       value: snapshot.holdingsPerShare,
     }));
+    
+    // Add current point with estimated shares (if provided and different from last snapshot)
+    if (currentHoldingsPerShare !== null && chartData.length > 0) {
+      const today = new Date().toISOString().split("T")[0] as Time;
+      const lastPoint = chartData[chartData.length - 1];
+      // Only add if today is after the last snapshot date
+      if (today > lastPoint.time) {
+        chartData.push({
+          time: today,
+          value: currentHoldingsPerShare,
+        });
+      }
+    }
 
     series.setData(chartData);
     chart.timeScale().fitContent();
@@ -146,7 +167,7 @@ export function HoldingsPerShareChart({
         chartRef.current = null;
       }
     };
-  }, [filteredHistory, asset]);
+  }, [filteredHistory, asset, currentHoldingsPerShare]);
 
   // If no historical data, show current value only
   if (!historyData || historyData.history.length < 2) {
@@ -240,9 +261,22 @@ export function HoldingsPerShareChart({
           </p>
         </div>
         <div className="text-left">
-          <p className="text-xs text-gray-500 uppercase tracking-wide">{asset}/Share</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xs text-gray-500 uppercase tracking-wide">{asset}/Share</p>
+            {currentProvenance?.sharesSource === "estimated" && (
+              <span className="px-1.5 py-0.5 text-[10px] font-medium bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded">
+                EST
+              </span>
+            )}
+          </div>
           <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
-            {lastSnapshot.holdingsPerShare >= 0.01
+            {currentHoldingsPerShare !== null
+              ? currentHoldingsPerShare >= 0.01
+                ? currentHoldingsPerShare.toFixed(4)
+                : currentHoldingsPerShare >= 0.0001
+                ? currentHoldingsPerShare.toFixed(6)
+                : currentHoldingsPerShare.toFixed(8)
+              : lastSnapshot.holdingsPerShare >= 0.01
               ? lastSnapshot.holdingsPerShare.toFixed(4)
               : lastSnapshot.holdingsPerShare >= 0.0001
               ? lastSnapshot.holdingsPerShare.toFixed(6)
@@ -255,6 +289,18 @@ export function HoldingsPerShareChart({
               ? firstSnapshot.holdingsPerShare.toFixed(6)
               : firstSnapshot.holdingsPerShare.toFixed(8)}
           </p>
+          {currentProvenance && (
+            <details className="mt-1">
+              <summary className="text-[10px] text-amber-600 dark:text-amber-400 cursor-pointer hover:underline">
+                {currentProvenance.holdings.toLocaleString()} {asset} ÷ {(currentProvenance.shares / 1_000_000).toFixed(0)}M shares
+              </summary>
+              {currentProvenance.methodology && (
+                <p className="text-[10px] text-gray-500 mt-1 leading-relaxed max-w-xs">
+                  {currentProvenance.methodology}
+                </p>
+              )}
+            </details>
+          )}
         </div>
         {growthMetrics && (
           <>

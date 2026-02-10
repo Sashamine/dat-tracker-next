@@ -66,7 +66,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20BTC`,
     quote: `${LATEST_HOLDINGS.toLocaleString()} BTC`,
     anchor: "Aggregate BTC Holdings",
     cik: MSTR_CIK,
@@ -81,7 +81,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   costBasisAvg: pv(76_052, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=average%20purchase`,
     quote: "$76,052",
     anchor: "Average Purchase Price",
     cik: MSTR_CIK,
@@ -96,7 +96,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalCostBasis: pv(54_260_000_000, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${MSTR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20purchase`,
     quote: "$54.26B",
     anchor: "Aggregate Purchase Price",
     cik: MSTR_CIK,
@@ -108,35 +108,45 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
 
   // =========================================================================
   // SHARES OUTSTANDING - from mstr-verified-financials.ts
-  // Uses baseline + ATM + employee equity methodology
-  // Class B: Constant 19.64M (founder shares with 10x voting)
+  // Q3 10-Q baseline + post-Q3 ATM 8-Ks + Class B (constant)
   // =========================================================================
   sharesOutstanding: pv(CURRENT_SHARES, derivedSource({
-    derivation: "From mstr-verified-financials.ts (baseline + ATM + employee equity)",
-    formula: latestFinancials.shares.source,
+    derivation: "Q3 2025 10-Q baseline + post-Q3 ATM 8-Ks + Class B",
+    formula: "q3ClassABaseline + postQ3Atm + classB",
     inputs: {
-      classA: pv(latestFinancials.shares.classA, docSource({
+      q3ClassABaseline: pv(latestFinancials.shares.breakdown?.baseline || 0, docSource({
         type: "sec-document",
-        url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
-        quote: `${latestFinancials.shares.classA.toLocaleString()} Class A shares`,
-        anchor: "Verified Financials",
-        cik: MSTR_CIK,
-        filingType: "8-K",
-        documentDate: latestFinancials.date,
-      })),
-      classBShares: pv(CLASS_B_SHARES, xbrlSource({
-        fact: "us-gaap:CommonStockSharesOutstanding (Class B)",
-        rawValue: CLASS_B_SHARES,
-        unit: "shares",
-        periodType: "instant",
-        periodEnd: "2025-09-30",
+        url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=267%2C468`,
+        quote: "267,468 shares (thousands) = 267.5M Class A",
+        anchor: "Class A common stock from Q3 10-Q",
         cik: MSTR_CIK,
         accession: Q3_2025_10Q,
         filingType: "10-Q",
         filingDate: Q3_2025_FILED,
+        documentDate: Q3_COVER_PAGE_DATE,
+      })),
+      postQ3Atm: pv(latestFinancials.shares.breakdown?.atmCumulative || 0, docSource({
+        type: "sec-document",
+        url: "/filings/mstr?type=8-K&after=2025-10-29",
+        quote: `${(latestFinancials.shares.breakdown?.atmCumulative || 0).toLocaleString()} shares from post-Q3 ATM`,
+        anchor: "Aggregated from weekly 8-K ATM filings",
+        cik: MSTR_CIK,
+        filingType: "8-K",
+        documentDate: latestFinancials.date,
+      })),
+      classB: pv(CLASS_B_SHARES, docSource({
+        type: "sec-document",
+        url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Class%20B`,
+        quote: `${CLASS_B_SHARES.toLocaleString()} Class B shares`,
+        anchor: "Class B common stock (constant)",
+        cik: MSTR_CIK,
+        accession: Q3_2025_10Q,
+        filingType: "10-Q",
+        filingDate: Q3_2025_FILED,
+        documentDate: Q3_COVER_PAGE_DATE,
       })),
     },
-  }), `From mstr-verified-financials.ts (${MSTR_VERIFIED_STATS.totalSnapshots} snapshots). strategy.com shows ~${(REMAINING_GAP / 1_000_000).toFixed(1)}M more shares.`),
+  }), `SEC-verified: Q3 baseline + ${((latestFinancials.shares.breakdown?.atmCumulative || 0) / 1e6).toFixed(1)}M post-Q3 ATM + 19.6M Class B`),
 
   // =========================================================================
   // QUARTERLY BURN - from Q3 2025 10-Q XBRL
@@ -156,6 +166,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
         accession: Q3_2025_10Q,
         filingType: "10-Q",
         filingDate: Q3_2025_FILED,
+        documentAnchor: "Net cash used in operating activities",
       })),
     },
   }), "Quarterly average - actual quarters may vary"),
@@ -174,6 +185,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
     accession: Q3_2025_10Q,
     filingType: "10-Q",
     filingDate: Q3_2025_FILED,
+    documentAnchor: "(5) Long-term Debt",
   }), "As of Sep 30, 2025. Pending Q4 2025 update."),
 
   // =========================================================================
@@ -182,7 +194,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   cashReserves: pv(2_250_000_000, docSource({
     type: "sec-document",
-    url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/",
+    url: "/filings/mstr/0001193125-26-001550?tab=document&q=USD%20Reserve",
     quote: "USD Reserve was $2.25 billion",
     anchor: "USD Reserve",
     cik: MSTR_CIK,
@@ -196,43 +208,43 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // PREFERRED EQUITY - from SEC filings
   // Q3 10-Q cumulative + post-Q3 issuances from 8-K filings
   // =========================================================================
-  preferredEquity: pv(8_382_000_000, derivedSource({
+  preferredEquity: pv(8_278_130_000, derivedSource({
     derivation: "Q3 2025 10-Q cumulative + post-Q3 issuances (STRE 8-K + ATM 8-Ks)",
     formula: "Q3_cumulative + STRE_Nov13 + post_Q3_ATM",
     inputs: {
-      q3Cumulative: pv(5_890_000_000, xbrlSource({
-        fact: "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
-        rawValue: 5_890_000_000,
-        unit: "USD",
-        periodType: "instant",
-        periodEnd: "2025-09-30",
+      q3Cumulative: pv(5_786_330_000, docSource({
+        type: "sec-document",
+        url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Total%20mezzanine`,
+        quote: "$5,786,330 (thousands) = $5.786B Total mezzanine equity",
+        anchor: "Total mezzanine equity",
         cik: MSTR_CIK,
         accession: Q3_2025_10Q,
         filingType: "10-Q",
         filingDate: Q3_2025_FILED,
+        documentDate: Q3_COVER_PAGE_DATE,
       })),
-      streNov13: pv(717_000_000, docSource({
+      streNov13: pv(716_800_000, docSource({
         type: "sec-document",
-        url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525273011/",
-        quote: "STRE €620M (~$717M USD)",
-        anchor: "STRE Offering",
+        url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525280178/d205736d8k.htm#:~:text=gross%20proceeds%20from%20the%20Offering%20were%20approximately",
+        quote: "gross proceeds ~€620.0M ($716.8M)",
+        anchor: "STRE Offering 8-K",
         cik: MSTR_CIK,
-        accession: "0001193125-25-273011",
+        accession: "0001193125-25-280178",
         filingType: "8-K",
         filingDate: "2025-11-13",
-        documentDate: "2025-11-07",
+        documentDate: "2025-11-12",
       })),
       postQ3Atm: pv(1_775_000_000, docSource({
         type: "sec-document",
-        url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
-        quote: "~$1.775B from post-Q3 preferred ATM (strategy.com/credit aggregated)",
-        anchor: "Preferred ATM Status",
+        url: "/filings/mstr?type=8-K&after=2025-10-29",
+        quote: "Sum of ~$1.775B from post-Q3 preferred ATM 8-Ks",
+        anchor: "Aggregated from multiple weekly 8-K filings",
         cik: MSTR_CIK,
         filingType: "8-K",
         documentDate: "2026-01-26",
       })),
     },
-  }), "SEC-verified: $8.382B (Q3 $5.89B + STRE $0.72B + ATM $1.78B)"),
+  }), "SEC-verified: $8.278B (Q3 $5.786B + STRE $0.717B + ATM $1.78B)"),
 };
 
 /**

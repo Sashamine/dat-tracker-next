@@ -58,6 +58,9 @@ export interface XBRLSource {
   
   /** Filing date */
   filingDate: string; // YYYY-MM-DD
+  
+  /** Optional: Text anchor to find this value's section in the document (for deep-linking to document tab) */
+  documentAnchor?: string;
 }
 
 // ============================================================================

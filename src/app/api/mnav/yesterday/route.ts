@@ -3,7 +3,7 @@ import { allCompanies } from "@/lib/data/companies";
 import { Company } from "@/lib/types";
 import { getCompanyMNAV } from "@/lib/utils/mnav-calculation";
 import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
-import { BMNR_PROVENANCE } from "@/lib/data/provenance/bmnr";
+import { BMNR_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 
 /**
@@ -70,7 +70,8 @@ function calculateProvenanceMnav(
     const totalDebt = BMNR_PROVENANCE.totalDebt?.value || 0;
     const cashReserves = BMNR_PROVENANCE.cashReserves.value;
     const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value || 0;
-    const sharesOutstanding = BMNR_PROVENANCE.sharesOutstanding?.value || 0;
+    // Use estimated shares (10-Q baseline + ATM estimate)
+    const sharesOutstanding = estimateBMNRShares().totalEstimated;
     
     const cryptoNav = holdings * cryptoPrice;
     const marketCap = sharesOutstanding * stockPrice;
@@ -96,7 +97,7 @@ export async function GET(request: NextRequest) {
     const assets: string[] = [...new Set(allCompanies.map((c: Company) => c.asset))];
     const tickers: string[] = allCompanies.map((c: Company) => c.ticker);
 
-    // Fetch yesterday's crypto prices (use 7d history, take yesterday)
+    // Fetch yesterday's crypto prices (use 7d history, find price from at least 24h ago)
     const cryptoPrices: Record<string, number> = {};
     for (const asset of assets) {
       try {
@@ -106,23 +107,23 @@ export async function GET(request: NextRequest) {
         );
         if (res.ok) {
           const data = await res.json();
-          // Find yesterday's price (data is sorted, find entry from ~24h ago)
           const now = Date.now();
           const oneDayAgo = now - 24 * 60 * 60 * 1000;
           
-          // Find closest price point to 24h ago
-          let closest = data[0];
-          let closestDiff = Infinity;
+          // Find the most recent price point that is AT LEAST 24h old
+          // This handles weekends/closures correctly (close price stands until next open)
+          let bestMatch = null;
           for (const point of data) {
             const ts = parseInt(point.time) * 1000;
-            const diff = Math.abs(ts - oneDayAgo);
-            if (diff < closestDiff) {
-              closestDiff = diff;
-              closest = point;
+            if (ts <= oneDayAgo) {
+              // This point is at least 24h old - keep the most recent one
+              if (!bestMatch || ts > parseInt(bestMatch.time) * 1000) {
+                bestMatch = point;
+              }
             }
           }
-          if (closest) {
-            cryptoPrices[asset] = closest.price;
+          if (bestMatch) {
+            cryptoPrices[asset] = bestMatch.price;
           }
         }
       } catch (e) {
@@ -143,19 +144,20 @@ export async function GET(request: NextRequest) {
           const now = Date.now();
           const oneDayAgo = now - 24 * 60 * 60 * 1000;
           
-          // Find closest price point to 24h ago
-          let closest = data[0];
-          let closestDiff = Infinity;
+          // Find the most recent price point that is AT LEAST 24h old
+          // This handles weekends/closures correctly (close price stands until next open)
+          let bestMatch = null;
           for (const point of data) {
             const ts = parseInt(point.time) * 1000;
-            const diff = Math.abs(ts - oneDayAgo);
-            if (diff < closestDiff) {
-              closestDiff = diff;
-              closest = point;
+            if (ts <= oneDayAgo) {
+              // This point is at least 24h old - keep the most recent one
+              if (!bestMatch || ts > parseInt(bestMatch.time) * 1000) {
+                bestMatch = point;
+              }
             }
           }
-          if (closest) {
-            stockPrices[ticker] = closest.close;
+          if (bestMatch) {
+            stockPrices[ticker] = bestMatch.close;
           }
         }
       } catch (e) {

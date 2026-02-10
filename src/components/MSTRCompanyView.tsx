@@ -11,6 +11,8 @@ import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
 import { ScheduledEvents } from "./scheduled-events";
+import { MnavCalculationCard } from "./mnav-calculation-card";
+import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
 import { StockPriceCell } from "./price-cell";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
@@ -51,6 +53,13 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
   
   const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1y");
   const [mnavInterval, setMnavInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
+  
+  // Track which calculation card is expanded
+  const [expandedCard, setExpandedCard] = useState<"mnav" | "leverage" | "equityNav" | null>(null);
+  
+  const toggleCard = (card: "mnav" | "leverage" | "equityNav") => {
+    setExpandedCard(expandedCard === card ? null : card);
+  };
 
   // Live prices
   const btcPrice = prices?.crypto.BTC?.price || 0;
@@ -122,12 +131,20 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
       },
     }), `Using live BTC price: $${btcPrice.toLocaleString()}`);
 
+    // Create local provenance for preferred that points to on-page section
+    const preferredPv = pv(preferredEquity, docSource({
+      type: "sec-document",
+      url: "#metric-preferred-equity",
+      quote: `$${(preferredEquity / 1e9).toFixed(2)}B preferred`,
+      anchor: "See Preferred Equity below",
+    }), "STRK + STRF + ATM preferred");
+
     const mNavPv: ProvenanceValue<number> | null = mNav !== null ? pv(mNav, derivedSource({
       derivation: "Enterprise Value ÷ Crypto NAV (adjusted for ITM converts)",
       formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
       inputs: {
         debt: MSTR_PROVENANCE.totalDebt,
-        preferred: MSTR_PROVENANCE.preferredEquity!,
+        preferred: preferredPv,
         cash: MSTR_PROVENANCE.cashReserves,
         holdings: MSTR_PROVENANCE.holdings,
       },
@@ -150,7 +167,7 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
         holdings: MSTR_PROVENANCE.holdings,
         cash: MSTR_PROVENANCE.cashReserves,
         debt: MSTR_PROVENANCE.totalDebt,
-        preferred: MSTR_PROVENANCE.preferredEquity!,
+        preferred: preferredPv,
       },
     }), `Debt adjusted for ITM converts: ${formatLargeNumber(adjustedDebt)}`);
 
@@ -162,7 +179,7 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
         shares: MSTR_PROVENANCE.sharesOutstanding!,
         debt: MSTR_PROVENANCE.totalDebt,
         cash: MSTR_PROVENANCE.cashReserves,
-        preferred: MSTR_PROVENANCE.preferredEquity!,
+        preferred: preferredPv,
       },
     }), `Uses adjusted debt (ITM converts treated as equity)`);
 
@@ -219,38 +236,62 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-        {/* mNAV */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
+        {/* mNAV - Clickable to expand formula */}
         {metrics.mNavPv && (
-          <ProvenanceMetric
-            label="mNAV"
-            data={metrics.mNavPv}
-            format="mnav"
-            subLabel="EV / Crypto NAV"
-            tooltip="How much you pay per dollar of BTC exposure"
-            ticker="mstr"
-          />
+          <div 
+            className={cn(
+              "cursor-pointer transition-all rounded-lg",
+              expandedCard === "mnav" && "ring-2 ring-indigo-500"
+            )}
+            onClick={() => toggleCard("mnav")}
+          >
+            <ProvenanceMetric
+              label="mNAV"
+              data={metrics.mNavPv}
+              format="mnav"
+              subLabel={<span className="flex items-center gap-1">EV / Crypto NAV <span className="text-indigo-500">{expandedCard === "mnav" ? "▼" : "▶"}</span></span>}
+              tooltip="How much you pay per dollar of BTC exposure. Click to see formula."
+              ticker="mstr"
+            />
+          </div>
         )}
 
-        {/* Leverage */}
-        <ProvenanceMetric
-          label="Leverage"
-          data={metrics.leveragePv}
-          format="mnav"
-          subLabel="Net Debt / Crypto NAV"
-          tooltip="Debt exposure relative to BTC holdings"
-          ticker="mstr"
-        />
+        {/* Leverage - Clickable to expand formula */}
+        <div 
+          className={cn(
+            "cursor-pointer transition-all rounded-lg",
+            expandedCard === "leverage" && "ring-2 ring-amber-500"
+          )}
+          onClick={() => toggleCard("leverage")}
+        >
+          <ProvenanceMetric
+            label="Leverage"
+            data={metrics.leveragePv}
+            format="mnav"
+            subLabel={<span className="flex items-center gap-1">Net Debt / Crypto NAV <span className="text-amber-500">{expandedCard === "leverage" ? "▼" : "▶"}</span></span>}
+            tooltip="Debt exposure relative to BTC holdings. Click to see formula."
+            ticker="mstr"
+          />
+        </div>
 
-        {/* Equity NAV/Share */}
-        <ProvenanceMetric
-          label="Equity NAV/Share"
-          data={metrics.equityNavPerSharePv}
-          format="currency"
-          subLabel="What each share is 'worth'"
-          tooltip="Net assets per share after debt"
-          ticker="mstr"
-        />
+        {/* Equity NAV/Share - Clickable to expand formula */}
+        <div 
+          className={cn(
+            "cursor-pointer transition-all rounded-lg",
+            expandedCard === "equityNav" && "ring-2 ring-indigo-500"
+          )}
+          onClick={() => toggleCard("equityNav")}
+        >
+          <ProvenanceMetric
+            label="Equity NAV/Share"
+            data={metrics.equityNavPerSharePv}
+            format="currency"
+            subLabel={<span className="flex items-center gap-1">What each share is 'worth' <span className="text-indigo-500">{expandedCard === "equityNav" ? "▼" : "▶"}</span></span>}
+            tooltip="Net assets per share after debt. Click to see formula."
+            ticker="mstr"
+          />
+        </div>
 
         {/* BTC Holdings */}
         <ProvenanceMetric
@@ -274,6 +315,84 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
           />
         )}
       </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* EXPANDABLE CALCULATION CARDS */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      
+      {/* mNAV Card - shown when mNAV metric is clicked */}
+      {expandedCard === "mnav" && (
+        <div className="mb-8">
+          <MnavCalculationCard
+          ticker="MSTR"
+          asset="BTC"
+          marketCap={marketCap}
+          totalDebt={metrics.adjustedDebt}
+          preferredEquity={metrics.preferredEquity}
+          cashReserves={metrics.cashReserves}
+          holdings={metrics.holdings}
+          cryptoPrice={btcPrice}
+          holdingsValue={metrics.cryptoNav}
+          mNAV={metrics.mNav}
+          sharesForMnav={metrics.sharesOutstanding}
+          stockPrice={stockPrice}
+          hasDilutiveInstruments={!!effectiveShares?.breakdown?.length}
+          basicShares={effectiveShares?.basic}
+          itmDilutionShares={effectiveShares ? effectiveShares.diluted - effectiveShares.basic : undefined}
+          itmDebtAdjustment={metrics.inTheMoneyDebtValue}
+          sharesSourceUrl={MSTR_PROVENANCE.sharesOutstanding?.source?.url}
+          sharesSource={MSTR_PROVENANCE.sharesOutstanding?.source?.type}
+          sharesAsOf={MSTR_PROVENANCE.sharesOutstanding?.source?.asOf}
+          debtSourceUrl={MSTR_PROVENANCE.totalDebt?.source?.url}
+          debtSource={MSTR_PROVENANCE.totalDebt?.source?.type}
+          debtAsOf={MSTR_PROVENANCE.totalDebt?.source?.asOf}
+          cashSourceUrl={MSTR_PROVENANCE.cashReserves?.source?.url}
+          cashSource={MSTR_PROVENANCE.cashReserves?.source?.type}
+          cashAsOf={MSTR_PROVENANCE.cashReserves?.source?.asOf}
+          holdingsSourceUrl={MSTR_PROVENANCE.holdings?.source?.url}
+          holdingsSource={MSTR_PROVENANCE.holdings?.source?.type}
+          holdingsAsOf={MSTR_PROVENANCE.holdings?.source?.asOf}
+        />
+        </div>
+      )}
+      
+      {/* Leverage Card - shown when Leverage metric is clicked */}
+      {expandedCard === "leverage" && (
+        <div className="mb-8">
+          <LeverageCalculationCard
+            rawDebt={metrics.totalDebt}
+            adjustedDebt={metrics.adjustedDebt}
+            itmDebtAdjustment={metrics.inTheMoneyDebtValue}
+            cashReserves={metrics.cashReserves}
+            cryptoNav={metrics.cryptoNav}
+            leverage={metrics.leverage}
+            debtSourceUrl={MSTR_PROVENANCE.totalDebt?.source?.url}
+            cashSourceUrl={MSTR_PROVENANCE.cashReserves?.source?.url}
+            holdingsSourceUrl={MSTR_PROVENANCE.holdings?.source?.url}
+          />
+        </div>
+      )}
+      
+      {/* Equity NAV/Share Card - shown when Equity NAV metric is clicked */}
+      {expandedCard === "equityNav" && (
+        <div className="mb-8">
+          <EquityNavPerShareCalculationCard
+            cryptoNav={metrics.cryptoNav}
+            cashReserves={metrics.cashReserves}
+            totalDebt={metrics.adjustedDebt}
+            preferredEquity={metrics.preferredEquity}
+            sharesOutstanding={metrics.sharesOutstanding}
+            equityNav={metrics.equityNav}
+            equityNavPerShare={metrics.equityNavPerShare}
+            stockPrice={stockPrice}
+            holdingsSourceUrl={MSTR_PROVENANCE.holdings?.source?.url}
+            cashSourceUrl={MSTR_PROVENANCE.cashReserves?.source?.url}
+            debtSourceUrl={MSTR_PROVENANCE.totalDebt?.source?.url}
+            preferredSourceUrl={MSTR_PROVENANCE.preferredEquity?.source?.url}
+            sharesSourceUrl={MSTR_PROVENANCE.sharesOutstanding?.source?.url}
+          />
+        </div>
+      )}
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* BALANCE SHEET - All SEC-sourced with click-to-verify */}
@@ -351,6 +470,7 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
             {/* Preferred */}
             {MSTR_PROVENANCE.preferredEquity && (
               <ProvenanceMetric
+                id="metric-preferred-equity"
                 label="Preferred Equity"
                 data={MSTR_PROVENANCE.preferredEquity}
                 format="currency"
@@ -369,6 +489,7 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {MSTR_PROVENANCE.sharesOutstanding && (
                 <ProvenanceMetric
+                  id="metric-shares-outstanding"
                   label="Shares Outstanding"
                   data={MSTR_PROVENANCE.sharesOutstanding}
                   format="shares"

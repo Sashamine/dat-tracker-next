@@ -109,11 +109,6 @@ function CompanyRow({
       >
         <div className="flex items-center gap-3 min-w-0">
           <span className={`text-xs px-1.5 py-0.5 rounded ${
-            company.tier === 1 ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-600"
-          }`}>
-            T{company.tier}
-          </span>
-          <span className={`text-xs px-1.5 py-0.5 rounded ${
             company.asset === "BTC" ? "bg-orange-100 text-orange-700" :
             company.asset === "ETH" ? "bg-purple-100 text-purple-700" :
             "bg-gray-100 text-gray-600"
@@ -422,7 +417,7 @@ export default function AdversarialComparePage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold text-gray-900">
-              Tier 1 Companies ({tier1.length})
+              Primary Companies ({tier1.length})
             </h2>
             <button
               onClick={() => queryAllInGroup(tier1)}
@@ -462,7 +457,7 @@ export default function AdversarialComparePage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold text-gray-900">
-              Tier 2 Companies ({tier2.length})
+              Secondary Companies ({tier2.length})
             </h2>
             <button
               onClick={() => queryAllInGroup(tier2)}

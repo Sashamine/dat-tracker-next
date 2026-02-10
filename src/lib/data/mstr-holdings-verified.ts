@@ -116,6 +116,7 @@ export const MSTR_HOLDINGS_VERIFIED: VerifiedHolding[] = [
   { date: "2026-01-20", holdings: 709715, filingType: "8K", accession: "016002", source: "8k-2026-01-20-016002.html" },
   { date: "2026-01-26", holdings: 712647, filingType: "8K", accession: "021726", source: "8k-2026-01-26-021726.html" },
   { date: "2026-02-02", holdings: 713502, filingType: "8K", accession: "032731", source: "8k-2026-02-02-032731.html" },
+  { date: "2026-02-08", holdings: 721135, filingType: "8K", accession: "041944", source: "8k-2026-02-09-041944.html" },
 ];
 
 // Helper to get holdings at a specific date
@@ -143,5 +144,5 @@ export const VERIFIED_STATS = {
     end: MSTR_HOLDINGS_VERIFIED[MSTR_HOLDINGS_VERIFIED.length - 1]?.date,
   },
   latestHoldings: MSTR_HOLDINGS_VERIFIED[MSTR_HOLDINGS_VERIFIED.length - 1]?.holdings,
-  generatedAt: "2026-02-08",
+  generatedAt: "2026-02-10",
 };
