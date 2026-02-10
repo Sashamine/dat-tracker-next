@@ -2,7 +2,7 @@
   "ticker": "SRAG.DU",
   "exchange": "XETRA",
   "currency": "EUR",
-  "lastUpdated": "2026-02-10T01:00:02.405Z",
+  "lastUpdated": "2026-02-10T01:15:19.039Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4811,6 +4811,15 @@
     {
       "date": "2026-02-10",
       "time": "18:00",
+      "open": 2.06,
+      "high": 2.06,
+      "low": 1.92,
+      "close": 1.92,
+      "volume": 0
+    },
+    {
+      "date": "2026-02-10",
+      "time": "18:15",
       "open": 2.06,
       "high": 2.06,
       "low": 1.92,
