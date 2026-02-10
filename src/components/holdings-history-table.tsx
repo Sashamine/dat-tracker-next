@@ -53,8 +53,10 @@ export function HoldingsHistoryTable({ ticker, asset, className }: HoldingsHisto
     return null;
   }
 
-  // Reverse to show most recent first
-  const history = [...historyData.history].reverse();
+  // Filter out interpolated entries (chart smoothing only) and reverse to show most recent first
+  const history = [...historyData.history]
+    .filter(s => s.sourceType !== "interpolated")
+    .reverse();
 
   return (
     <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-4", className)}>
