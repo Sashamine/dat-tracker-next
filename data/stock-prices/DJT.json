@@ -2,7 +2,7 @@
   "ticker": "DJT",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-10T18:00:01.678Z",
+  "lastUpdated": "2026-02-10T18:15:01.850Z",
   "prices": [
     {
       "date": "2025-01-02",
@@ -2852,6 +2852,15 @@
       "low": 11.21,
       "close": 11.37,
       "volume": 1402008
+    },
+    {
+      "date": "2026-02-10",
+      "time": "11:15",
+      "open": 11.29,
+      "high": 11.4486,
+      "low": 11.21,
+      "close": 11.29,
+      "volume": 1498264
     },
     {
       "date": "2026-02-10",
