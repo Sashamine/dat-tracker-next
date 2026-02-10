@@ -471,10 +471,10 @@ export const MSTR_ATM_SALES: ATMSaleEvent[] = [
   },
   {
     filingDate: "2026-02-09",
-    shares: 516413,
-    proceeds: 179300000,
+    shares: 616715,
+    proceeds: 89500000,
     format: "table",
-    sharesByProgram: {"MSTR ATM": 516413},
+    sharesByProgram: {"MSTR ATM": 616715},
     accessionNumber: "0001193125-26-041944",
     secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526041944/d947535d8k.htm",
   },
