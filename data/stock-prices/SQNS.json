@@ -2,7 +2,7 @@
   "ticker": "SQNS",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-10T18:45:01.677Z",
+  "lastUpdated": "2026-02-10T19:00:01.832Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4895,6 +4895,15 @@
       "low": 3.31,
       "close": 3.56,
       "volume": 65234
+    },
+    {
+      "date": "2026-02-10",
+      "time": "12:00",
+      "open": 3.52,
+      "high": 3.6095,
+      "low": 3.31,
+      "close": 3.54,
+      "volume": 67612
     },
     {
       "date": "2026-02-10",
