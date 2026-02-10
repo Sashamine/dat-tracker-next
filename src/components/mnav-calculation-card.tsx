@@ -41,6 +41,11 @@ interface MnavCalculationCardProps {
   holdingsSourceUrl?: string;
   holdingsSource?: string;
   holdingsAsOf?: string;
+  // Search terms for Ctrl+F verification
+  holdingsSearchTerm?: string;
+  debtSearchTerm?: string;
+  cashSearchTerm?: string;
+  sharesSearchTerm?: string;
 }
 
 function SourceLink({ 
@@ -92,6 +97,7 @@ function FormulaRow({
   sourceLabel,
   prefix = "",
   showZero = true,
+  searchTerm,
 }: {
   label: string;
   value: number;
@@ -102,14 +108,23 @@ function FormulaRow({
   sourceLabel?: string;
   prefix?: string;
   showZero?: boolean;
+  searchTerm?: string;
 }) {
   if (!showZero && value === 0) return null;
   
   return (
     <div className="flex justify-between items-center py-0.5">
       <span className="text-gray-400 text-sm">{prefix}{label}</span>
-      <span className={`font-mono text-sm ${color} flex items-center`}>
+      <span className={`font-mono text-sm ${color} flex items-center gap-1`}>
         {formatLargeNumber(value)}
+        {searchTerm && (
+          <span 
+            className="text-[9px] bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400 px-1 rounded cursor-help"
+            title={`Ctrl+F: ${searchTerm}`}
+          >
+            🔍{searchTerm}
+          </span>
+        )}
         <SourceLink 
           url={sourceUrl} 
           ticker={sourceTicker}
@@ -147,6 +162,10 @@ export function MnavCalculationCard({
   cashSourceUrl,
   cashSource,
   cashAsOf,
+  holdingsSearchTerm,
+  debtSearchTerm,
+  cashSearchTerm,
+  sharesSearchTerm,
   preferredSourceUrl,
   preferredSource,
   preferredAsOf,
@@ -232,6 +251,7 @@ export function MnavCalculationCard({
             sourceTicker={ticker}
             sourceDate={debtAsOf}
             sourceLabel={debtSource}
+            searchTerm={debtSearchTerm}
           />
           
           <FormulaRow 
@@ -256,6 +276,7 @@ export function MnavCalculationCard({
             sourceDate={cashAsOf}
             sourceLabel={cashSource}
             showZero={true}
+            searchTerm={cashSearchTerm}
           />
           
           <div className="flex justify-between items-center pt-1 border-t border-gray-200 dark:border-gray-700 mt-1">
@@ -278,8 +299,16 @@ export function MnavCalculationCard({
         </div>
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">
+            <span className="text-gray-400 text-sm flex items-center gap-1">
               {holdings.toLocaleString()} {asset} × ${cryptoPrice.toLocaleString()}
+              {holdingsSearchTerm && (
+                <span 
+                  className="text-[9px] bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400 px-1 rounded cursor-help"
+                  title={`Ctrl+F: ${holdingsSearchTerm}`}
+                >
+                  🔍{holdingsSearchTerm}
+                </span>
+              )}
             </span>
             <span className="font-mono text-sm text-gray-300 flex items-center">
               {formatLargeNumber(holdingsValue)}

@@ -339,6 +339,9 @@ export function MARACompanyView({ company, className = "" }: MARACompanyViewProp
             holdingsSourceUrl={MARA_PROVENANCE.holdings?.source?.url}
             holdingsSource={MARA_PROVENANCE.holdings?.source?.type}
             holdingsAsOf={MARA_PROVENANCE.holdings?.source?.asOf}
+            holdingsSearchTerm={(MARA_PROVENANCE.holdings?.source as any)?.searchTerm}
+            debtSearchTerm={(MARA_PROVENANCE.totalDebt?.source as any)?.searchTerm}
+            cashSearchTerm={(MARA_PROVENANCE.cashReserves?.source as any)?.searchTerm}
           />
         </div>
       )}
