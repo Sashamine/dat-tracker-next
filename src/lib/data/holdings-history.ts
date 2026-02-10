@@ -47,52 +47,10 @@ export interface CompanyHoldingsHistory {
 // Data compiled from 10-Q/10-K filings and 8-K announcements
 // NOTE: All share counts are SPLIT-ADJUSTED (10:1 split in Aug 2024)
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
-// MSTR CIK: 0001050446
-// Local filings: data/sec/mstr/ (8k, 10k, 10q folders)
-// Served via: /filings/mstr/[accession]
-const MSTR_HISTORY: HoldingsSnapshot[] = [
-  // 2020 - Initial purchases (split-adjusted: original * 10)
-  // Stock prices are split-adjusted (divide pre-split by 10)
-  { date: "2020-09-14", holdings: 38250, sharesOutstandingDiluted: 98_000_000, holdingsPerShare: 0.000390, stockPrice: 15.0, source: "8-K Initial BTC purchase", sourceUrl: "/filings/mstr/8k-2020-09-14-244732#btc-holdings", sourceType: "sec-filing" },
-  { date: "2020-12-21", holdings: 70470, sharesOutstandingDiluted: 103_000_000, holdingsPerShare: 0.000684, stockPrice: 35.0, source: "Q4 2020 10-K", sourceUrl: "/filings/mstr/10-K-2021-02-12#btc-holdings", sourceType: "sec-filing" },
-
-  // 2021 (split-adjusted)
-  { date: "2021-03-31", holdings: 91326, sharesOutstandingDiluted: 105_000_000, holdingsPerShare: 0.000870, stockPrice: 64.0, source: "Q1 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-04-29#btc-holdings", sourceType: "sec-filing" },
-  { date: "2021-06-30", holdings: 105085, sharesOutstandingDiluted: 109_000_000, holdingsPerShare: 0.000964, stockPrice: 63.0, source: "Q2 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-07-29#btc-holdings", sourceType: "sec-filing" },
-  { date: "2021-09-30", holdings: 114042, sharesOutstandingDiluted: 112_000_000, holdingsPerShare: 0.001018, stockPrice: 60.0, source: "Q3 2021 10-Q", sourceUrl: "/filings/mstr/10-Q-2021-10-28#btc-holdings", sourceType: "sec-filing" },
-  { date: "2021-12-31", holdings: 124391, sharesOutstandingDiluted: 115_000_000, holdingsPerShare: 0.001082, stockPrice: 55.0, source: "Q4 2021 10-K", sourceUrl: "/filings/mstr/10-K-2022-02-16#btc-holdings", sourceType: "sec-filing" },
-
-  // 2022 (split-adjusted) - Bear market
-  { date: "2022-03-31", holdings: 129218, sharesOutstandingDiluted: 117_000_000, holdingsPerShare: 0.001104, stockPrice: 44.0, source: "Q1 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-05-03#btc-holdings", sourceType: "sec-filing" },
-  { date: "2022-06-30", holdings: 129699, sharesOutstandingDiluted: 118_000_000, holdingsPerShare: 0.001099, stockPrice: 17.0, source: "Q2 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-08-02#btc-holdings", sourceType: "sec-filing" },
-  { date: "2022-09-30", holdings: 130000, sharesOutstandingDiluted: 119_000_000, holdingsPerShare: 0.001092, stockPrice: 21.0, source: "Q3 2022 10-Q", sourceUrl: "/filings/mstr/10-Q-2022-11-01#btc-holdings", sourceType: "sec-filing" },
-  { date: "2022-12-31", holdings: 132500, sharesOutstandingDiluted: 120_000_000, holdingsPerShare: 0.001104, stockPrice: 14.0, source: "Q4 2022 10-K", sourceUrl: "/filings/mstr/10-K-2023-02-16#btc-holdings", sourceType: "sec-filing" },
-
-  // 2023 (split-adjusted, SEC EDGAR data) - Recovery
-  { date: "2023-03-31", holdings: 140000, sharesOutstandingDiluted: 118_340_000, holdingsPerShare: 0.001183, stockPrice: 28.0, source: "Q1 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-05-01#btc-holdings", sourceType: "sec-filing" },
-  { date: "2023-06-30", holdings: 152800, sharesOutstandingDiluted: 117_390_000, holdingsPerShare: 0.001302, stockPrice: 34.0, source: "Q2 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-08-01#btc-holdings", sourceType: "sec-filing" },
-  { date: "2023-09-30", holdings: 158245, sharesOutstandingDiluted: 116_648_000, holdingsPerShare: 0.001357, stockPrice: 34.0, source: "Q3 2023 10-Q", sourceUrl: "/filings/mstr/10-Q-2023-11-01#btc-holdings", sourceType: "sec-filing" },
-  { date: "2023-12-31", holdings: 189150, sharesOutstandingDiluted: 136_706_000, holdingsPerShare: 0.001384, stockPrice: 63.0, source: "Q4 2023 10-K", sourceUrl: "/filings/mstr/10-K-2024-02-15#btc-holdings", sourceType: "sec-filing" },
-
-  // 2024 - Aggressive accumulation (SEC EDGAR diluted split-adjusted data)
-  // Diluted shares synced from XBRL-derived mstr-daily-mnav.ts for mNAV accuracy
-  { date: "2024-03-31", holdings: 214246, sharesOutstandingDiluted: 192_100_000, holdingsPerShare: 0.001115, stockPrice: 180.0, source: "Q1 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-05-01#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 226500, sharesOutstandingDiluted: 204_900_000, holdingsPerShare: 0.001105, stockPrice: 138.0, source: "Q2 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-08-06#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 252220, sharesOutstandingDiluted: 224_200_000, holdingsPerShare: 0.001125, stockPrice: 188.0, totalDebt: 4_204_237_000, preferredEquity: 0, cash: 46_340_000, source: "Q3 2024 10-Q", sourceUrl: "/filings/mstr/10-Q-2024-10-31#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-11-18", holdings: 331200, sharesOutstandingDiluted: 229_710_491, holdingsPerShare: 0.001442, stockPrice: 470.0, totalDebt: 4_204_237_000, preferredEquity: 0, cash: 46_340_000, source: "8-K Nov 2024 - mNAV peak ~3.4x", sourceUrl: "/filings/mstr/8k-2024-11-18#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 446400, sharesOutstandingDiluted: 272_848_491, holdingsPerShare: 0.001636, stockPrice: 330.0, totalDebt: 0, preferredEquity: 0, cash: 38_117_000, source: "Q4 2024 10-K", sourceUrl: "/filings/mstr/10-K-2025-02-18#btc-holdings", sourceType: "sec-filing" },
-
-  // 2025 - Continued 21/21 plan execution (synced from XBRL mstr-daily-mnav.ts)
-  { date: "2025-03-31", holdings: 528185, sharesOutstandingDiluted: 293_247_491, holdingsPerShare: 0.001801, stockPrice: 280.0, totalDebt: 8_132_645_000, preferredEquity: 593_196_000, cash: 60_242_000, source: "Q1 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-05-05#btc-holdings", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 597325, sharesOutstandingDiluted: 308_028_491, holdingsPerShare: 0.001939, stockPrice: 350.0, totalDebt: 8_137_427_000, preferredEquity: 1_040_394_000, cash: 50_095_000, source: "Q2 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-08-05#btc-holdings", sourceType: "sec-filing" },
-  { date: "2025-09-30", holdings: 640031, sharesOutstandingDiluted: 314_178_491, holdingsPerShare: 0.002037, stockPrice: 200.0, totalDebt: 8_137_427_000, preferredEquity: 1_093_662_000, cash: 53_814_000, source: "Q3 2025 10-Q", sourceUrl: "/filings/mstr/10-Q-2025-11-03#btc-holdings", sourceType: "sec-filing" },
-  // 2026 - Weekly 8-K filings (synced from XBRL mstr-daily-mnav.ts)
-  { date: "2025-12-31", holdings: 672282, sharesOutstandingDiluted: 302_801_978, holdingsPerShare: 0.002220, stockPrice: 280.0, totalDebt: 8_137_427_000, preferredEquity: 2_210_762_000, cash: 2_642_295_000, source: "XBRL sync", sourceUrl: "/filings/mstr/8k-2026-01-05#btc-holdings", sourceType: "sec-filing" },
-  { date: "2026-01-12", holdings: 687192, sharesOutstandingDiluted: 309_629_673, holdingsPerShare: 0.002219, stockPrice: 340.0, totalDebt: 8_137_427_000, preferredEquity: 2_425_632_000, cash: 4_079_610_000, source: "SEC 8-K Jan 12 (XBRL sync)", sourceUrl: "/filings/mstr/8k-2026-01-12#btc-holdings", sourceType: "sec-filing" },
-  { date: "2026-01-20", holdings: 709497, sharesOutstandingDiluted: 320_029_323, holdingsPerShare: 0.002217, stockPrice: 360.0, totalDebt: 8_137_427_000, preferredEquity: 2_624_648_000, cash: 5_597_780_000, source: "SEC 8-K Jan 20 (XBRL sync)", sourceUrl: "/filings/mstr/8k-2026-01-20#btc-holdings", sourceType: "sec-filing" },
-  { date: "2026-01-26", holdings: 712429, sharesOutstandingDiluted: 321_599_093, holdingsPerShare: 0.002215, stockPrice: 350.0, totalDebt: 8_137_427_000, preferredEquity: 2_624_648_000, cash: 5_597_780_000, source: "SEC 8-K Jan 26 (XBRL sync)", sourceUrl: "/filings/mstr/8k-2026-01-26#btc-holdings", sourceType: "sec-filing" },
-  { date: "2026-02-01", holdings: 713502, sharesOutstandingDiluted: 332_431_000, holdingsPerShare: 0.002147, stockPrice: 300.0, source: "SEC 8-K Feb 2, 2026", sharesSource: "strategy.com/shares (basic shares)", sourceUrl: "/filings/mstr/8k-2026-02-02#btc-holdings", sourceType: "sec-filing" },
-];
+// MSTR Holdings - Now managed via MSTR_VERIFIED_FINANCIALS (mstr-verified-financials.ts)
+// This provides granular weekly data with provenanced sources (85+ data points)
+// All MSTR data access goes through getHoldingsHistory("MSTR") which uses verified financials
+// CIK: 0001050446 | Filings: data/sec/mstr/ | Served via: /filings/mstr/[accession]
 
 // MARA Holdings - Largest US public miner
 // SEC EDGAR source: WeightedAverageNumberOfDilutedSharesOutstanding
@@ -1165,7 +1123,7 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
  * This is the primary source for share counts used in mNAV calculations.
  */
 export function getLatestDilutedShares(ticker: string): number | undefined {
-  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  const history = getHoldingsHistory(ticker);
   if (!history || history.history.length === 0) return undefined;
   const latest = history.history[history.history.length - 1];
   return latest.sharesOutstandingDiluted;
@@ -1175,7 +1133,7 @@ export function getLatestDilutedShares(ticker: string): number | undefined {
  * Get the latest holdings from holdings history.
  */
 export function getLatestHoldings(ticker: string): number | undefined {
-  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  const history = getHoldingsHistory(ticker);
   if (!history || history.history.length === 0) return undefined;
   const latest = history.history[history.history.length - 1];
   return latest.holdings;
@@ -1186,7 +1144,7 @@ export function getLatestHoldings(ticker: string): number | undefined {
  * Used by comparison engine to verify our data sources.
  */
 export function getLatestSnapshot(ticker: string): HoldingsSnapshot | undefined {
-  const history = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  const history = getHoldingsHistory(ticker);
   if (!history || history.history.length === 0) return undefined;
   return history.history[history.history.length - 1];
 }
@@ -1196,7 +1154,7 @@ export function getLatestSnapshot(ticker: string): HoldingsSnapshot | undefined 
  * Returns undefined if no snapshot exists before the given date.
  */
 export function getHoldingsAtDate(ticker: string, date: string): number | undefined {
-  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  const companyHistory = getHoldingsHistory(ticker);
   if (!companyHistory || companyHistory.history.length === 0) return undefined;
 
   const targetDate = new Date(date).getTime();
@@ -1219,26 +1177,7 @@ export function getHoldingsAtDate(ticker: string, date: string): number | undefi
  * Returns the most recent snapshot on or before that date.
  */
 export function getSnapshotAtDate(ticker: string, date: string): HoldingsSnapshot | undefined {
-  // Handle MSTR specially - uses verified financials
-  if (ticker.toUpperCase() === "MSTR") {
-    const history = getHoldingsHistory("MSTR");
-    if (!history || history.history.length === 0) return undefined;
-    
-    const targetDate = new Date(date).getTime();
-    let bestMatch: HoldingsSnapshot | undefined;
-    
-    for (const snapshot of history.history) {
-      const snapshotDate = new Date(snapshot.date).getTime();
-      if (snapshotDate <= targetDate) {
-        bestMatch = snapshot;
-      } else {
-        break;
-      }
-    }
-    return bestMatch;
-  }
-  
-  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  const companyHistory = getHoldingsHistory(ticker);
   if (!companyHistory || companyHistory.history.length === 0) return undefined;
 
   const targetDate = new Date(date).getTime();
@@ -1279,7 +1218,7 @@ export interface AcquisitionEvent {
 }
 
 export function getAcquisitionEvents(ticker: string): AcquisitionEvent[] {
-  const companyHistory = HOLDINGS_HISTORY[ticker.toUpperCase()];
+  const companyHistory = getHoldingsHistory(ticker);
   if (!companyHistory || companyHistory.history.length < 2) return [];
 
   const events: AcquisitionEvent[] = [];
