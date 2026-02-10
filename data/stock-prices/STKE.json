@@ -2,7 +2,7 @@
   "ticker": "STKE",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-10T19:30:01.627Z",
+  "lastUpdated": "2026-02-10T19:45:01.657Z",
   "prices": [
     {
       "date": "2025-08-11",
@@ -1706,6 +1706,15 @@
       "low": 1.32,
       "close": 1.33,
       "volume": 110278
+    },
+    {
+      "date": "2026-02-10",
+      "time": "12:45",
+      "open": 1.44,
+      "high": 1.44,
+      "low": 1.32,
+      "close": 1.335,
+      "volume": 112712
     },
     {
       "date": "2026-02-10",
