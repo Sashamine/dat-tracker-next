@@ -79,10 +79,10 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // COST BASIS - from latest 8-K
   // =========================================================================
-  costBasisAvg: pv(76_052, docSource({
+  costBasisAvg: pv(76_056, docSource({
     type: "sec-document",
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=average%20purchase`,
-    quote: "$76,052",
+    quote: "$76,056",
     anchor: "Average Purchase Price",
     cik: MSTR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
@@ -94,10 +94,10 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // TOTAL COST BASIS - from latest 8-K
   // =========================================================================
-  totalCostBasis: pv(54_260_000_000, docSource({
+  totalCostBasis: pv(54_350_000_000, docSource({
     type: "sec-document",
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20purchase`,
-    quote: "$54.26B",
+    quote: "$54.35B",
     anchor: "Aggregate Purchase Price",
     cik: MSTR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
