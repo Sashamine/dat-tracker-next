@@ -1091,8 +1091,41 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
 
 // Get history for a specific company
 // MSTR uses MSTR_VERIFIED_FINANCIALS for granular weekly data (85 points vs sparse quarterly)
+// BMNR uses inline data with interpolation for chart smoothness (weekly 8-K filings)
 export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | null {
   const upperTicker = ticker.toUpperCase();
+  
+  // BMNR interpolation - has weekly 8-K data (~24 points), add midpoints for smoother charts (~48 points)
+  if (upperTicker === "BMNR") {
+    const rawHistory = HOLDINGS_HISTORY["BMNR"]?.history || [];
+    
+    // Add midpoint interpolation between each pair of snapshots
+    // This creates ~3.5 day granularity instead of 7 days
+    const interpolatedHistory: HoldingsSnapshot[] = [];
+    for (let i = 0; i < rawHistory.length; i++) {
+      const current = rawHistory[i];
+      interpolatedHistory.push(current);
+      
+      // Add midpoint between current and next (if there is a next)
+      if (i < rawHistory.length - 1) {
+        const next = rawHistory[i + 1];
+        const currentDate = new Date(current.date);
+        const nextDate = new Date(next.date);
+        const midDate = new Date((currentDate.getTime() + nextDate.getTime()) / 2);
+        const midDateStr = midDate.toISOString().split('T')[0];
+        
+        // Midpoint uses current values (holdings stay flat until next 8-K)
+        interpolatedHistory.push({
+          ...current,
+          date: midDateStr,
+          source: `Interpolated (${current.source})`,
+          sourceType: "interpolated" as HoldingsSource,
+        });
+      }
+    }
+    
+    return { ticker: "BMNR", asset: "ETH", history: interpolatedHistory };
+  }
   
   // Use verified financials for MSTR (has 85 weekly data points vs sparse quarterly)
   // Add midpoint interpolation for chart smoothness (~170 points)
