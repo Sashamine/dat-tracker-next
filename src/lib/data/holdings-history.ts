@@ -1127,6 +1127,37 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
     return { ticker: "BMNR", asset: "ETH", history: interpolatedHistory };
   }
   
+  // MARA interpolation - has quarterly data (~12 points), add midpoints for smoother charts
+  if (upperTicker === "MARA") {
+    const rawHistory = HOLDINGS_HISTORY["MARA"]?.history || [];
+    
+    // Add midpoint interpolation between each pair of snapshots
+    const interpolatedHistory: HoldingsSnapshot[] = [];
+    for (let i = 0; i < rawHistory.length; i++) {
+      const current = rawHistory[i];
+      interpolatedHistory.push(current);
+      
+      // Add midpoint between current and next (if there is a next)
+      if (i < rawHistory.length - 1) {
+        const next = rawHistory[i + 1];
+        const currentDate = new Date(current.date);
+        const nextDate = new Date(next.date);
+        const midDate = new Date((currentDate.getTime() + nextDate.getTime()) / 2);
+        const midDateStr = midDate.toISOString().split('T')[0];
+        
+        // Midpoint uses current values (holdings stay flat until next filing)
+        interpolatedHistory.push({
+          ...current,
+          date: midDateStr,
+          source: `Interpolated (${current.source})`,
+          sourceType: "interpolated" as HoldingsSource,
+        });
+      }
+    }
+    
+    return { ticker: "MARA", asset: "BTC", history: interpolatedHistory };
+  }
+  
   // Use verified financials for MSTR (has 85 weekly data points vs sparse quarterly)
   // Add midpoint interpolation for chart smoothness (~170 points)
   if (upperTicker === "MSTR") {

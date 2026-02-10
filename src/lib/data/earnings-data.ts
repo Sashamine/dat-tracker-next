@@ -16,6 +16,7 @@ import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
 import { getBMNRQuarterEndData } from "./bmnr-holdings-history";
+import { getMARAQuarterEndDataForEarnings } from "./mara-holdings-history";
 
 /**
  * Derives calendar year/quarter directly from an XBRL period end date.
@@ -479,6 +480,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
   // Q3 2025
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2025,
@@ -491,13 +493,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     epsEstimate: 0.05,
     revenueActual: 131_600_000,
     revenueEstimate: 145_000_000,
-    holdingsAtQuarterEnd: 52850,
-    sharesAtQuarterEnd: 470_126_000,
-    holdingsPerShare: 0.0001124,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2025-09-30")!,
     status: "reported",
   },
   // Q2 2025
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2025,
@@ -511,13 +511,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 145_100_000,
     revenueEstimate: 157_000_000,
     netIncome: -199_700_000,
-    holdingsAtQuarterEnd: 46376,
-    sharesAtQuarterEnd: 350_000_000,
-    holdingsPerShare: 0.0001325,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2025-06-30")!,
     status: "reported",
   },
   // Q1 2025
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2025,
@@ -531,13 +529,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 213_900_000,
     revenueEstimate: 224_000_000,
     netIncome: -183_400_000,
-    holdingsAtQuarterEnd: 48137,
-    sharesAtQuarterEnd: 340_000_000,
-    holdingsPerShare: 0.0001416,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2025-03-31")!,
     status: "reported",
   },
   // Q4 2024
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2024,
@@ -551,13 +547,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 214_400_000,
     revenueEstimate: 232_000_000,
     netIncome: 528_200_000,
-    holdingsAtQuarterEnd: 44893,
-    sharesAtQuarterEnd: 302_000_000,
-    holdingsPerShare: 0.0001487,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2024-12-31")!,
     status: "reported",
   },
   // Q3 2024
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2024,
@@ -571,13 +565,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 131_600_000,
     revenueEstimate: 149_000_000,
     netIncome: -124_800_000,
-    holdingsAtQuarterEnd: 26747,
-    sharesAtQuarterEnd: 296_000_000,
-    holdingsPerShare: 0.0000903,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2024-09-30")!,
     status: "reported",
   },
   // Q2 2024
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2024,
@@ -591,13 +583,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 145_100_000,
     revenueEstimate: 163_000_000,
     netIncome: -199_700_000,
-    holdingsAtQuarterEnd: 20818,
-    sharesAtQuarterEnd: 277_000_000,
-    holdingsPerShare: 0.0000752,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2024-06-30")!,
     status: "reported",
   },
   // Q1 2024
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
   {
     ticker: "MARA",
     fiscalYear: 2024,
@@ -611,10 +601,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 165_200_000,
     revenueEstimate: 136_000_000,
     netIncome: 337_200_000,
-    holdingsAtQuarterEnd: 17631,
-    sharesAtQuarterEnd: 267_000_000,
-    holdingsPerShare: 0.0000660,
-    source: "sec-filing",
+    ...getMARAQuarterEndDataForEarnings("2024-03-31")!,
     status: "reported",
   },
 

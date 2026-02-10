@@ -366,6 +366,40 @@ export function getMARAQuarterEndData(date: string): HoldingsSnapshot | undefine
 }
 
 /**
+ * Get MARA quarter-end data in earnings-data.ts format.
+ * This is the SINGLE SOURCE OF TRUTH for MARA quarterly data used in the earnings page.
+ * 
+ * @param quarterEnd - Quarter-end date in YYYY-MM-DD format (e.g., "2025-09-30")
+ * @returns Snapshot data for earnings-data.ts or undefined if no data available
+ */
+export function getMARAQuarterEndDataForEarnings(quarterEnd: string): {
+  holdingsAtQuarterEnd: number;
+  sharesAtQuarterEnd: number;
+  holdingsPerShare: number;
+  source: "sec-filing" | "press-release";
+  sourceUrl: string;
+} | undefined {
+  const snapshot = MARA_HOLDINGS_HISTORY.find((s) => s.date === quarterEnd);
+  
+  if (!snapshot) {
+    return undefined;
+  }
+  
+  // Build full SEC URL from relative path
+  const sourceUrl = snapshot.sourceUrl?.startsWith("/filings/mara/")
+    ? `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q&accession=${snapshot.sourceUrl.split("/").pop()}`
+    : snapshot.sourceUrl || "";
+  
+  return {
+    holdingsAtQuarterEnd: snapshot.holdings,
+    sharesAtQuarterEnd: snapshot.sharesOutstandingDiluted,
+    holdingsPerShare: snapshot.holdingsPerShare,
+    source: snapshot.sourceType === "sec-filing" ? "sec-filing" : "press-release",
+    sourceUrl,
+  };
+}
+
+/**
  * Get MARA holdings at or before a given date
  */
 export function getMARAHoldingsAtDate(date: string): HoldingsSnapshot | undefined {
