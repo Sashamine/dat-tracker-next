@@ -233,11 +233,6 @@ export function MnavCalculationCard({
             sourceDate={debtAsOf}
             sourceLabel={debtSource}
           />
-          {itmDebtAdjustment && itmDebtAdjustment > 0 && (
-            <div className="text-[10px] text-green-500 pl-2 -mt-0.5 mb-1">
-              (−{formatLargeNumber(itmDebtAdjustment)} ITM converts removed)
-            </div>
-          )}
           
           <FormulaRow 
             label="Preferred" 
