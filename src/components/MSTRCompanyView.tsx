@@ -609,8 +609,11 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
             )}
           </div>
           {historyLoading ? (
-            <div className="h-[400px] flex items-center justify-center text-gray-500">
-              Loading chart...
+            <div className="h-[400px] flex items-center justify-center">
+              <div className="animate-pulse flex flex-col items-center gap-2">
+                <div className="w-8 h-8 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                <span className="text-sm text-gray-500">Loading chart...</span>
+              </div>
             </div>
           ) : history && history.length > 0 ? (
             <StockChart data={history} />
