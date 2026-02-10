@@ -24,9 +24,14 @@ export const BMNR_CIK = "1829311";
 const LATEST_HOLDINGS = 4_325_738;
 const LATEST_HOLDINGS_DATE = "2026-02-08";
 const LATEST_HOLDINGS_ACCESSION = "0001493152-26-005707";
+const LATEST_HOLDINGS_DOC = "ex99-1.htm"; // Press release with holdings data
 
 const LATEST_STAKED = 2_897_459;
 const STAKING_PCT = 0.670; // 67.0% (2,897,459 / 4,325,738)
+
+// Helper to build full SEC document URL
+const secDocUrl = (cik: string, accession: string, doc: string) =>
+  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
 
 const SHARES_OUTSTANDING = 454_862_451;
 const SHARES_DATE = "2026-01-12";
@@ -47,16 +52,16 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
-    // Direct link to filing index page
-    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    // Direct link to the actual document containing the data
+    url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: `${LATEST_HOLDINGS.toLocaleString()} ETH`,
-    anchor: `ex99-1 → "${LATEST_HOLDINGS.toLocaleString()}"`,
+    anchor: LATEST_HOLDINGS.toLocaleString(),
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K filing index. Open ex99-1.htm for holdings data."),
+  }), "Weekly 8-K press release (ex99-1.htm)."),
 
   // =========================================================================
   // COST BASIS - from Q1 FY2026 10-Q
@@ -117,16 +122,16 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   cashReserves: pv(595_000_000, docSource({
     type: "sec-document",
-    // Direct link to filing index page
-    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    // Direct link to the actual document containing the data
+    url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: "$595 million in cash",
-    anchor: `ex99-1 → "595"`,
+    anchor: "595",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K filing index. Open ex99-1.htm for cash data."),
+  }), "Weekly 8-K press release (ex99-1.htm)."),
 
   // =========================================================================
   // QUARTERLY BURN - estimated from Q1 FY2025 baseline
@@ -195,22 +200,22 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
 export const BMNR_STAKING_PROVENANCE = {
   stakedAmount: pv(LATEST_STAKED, docSource({
     type: "sec-document",
-    // Direct link to filing index page
-    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    // Direct link to the actual document containing the data
+    url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: "2,897,459 ETH (67.0%) are currently staked",
-    anchor: `ex99-1 → "staked"`,
+    anchor: "staked",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K filing index. Open ex99-1.htm for staking data."),
+  }), "Weekly 8-K press release (ex99-1.htm)."),
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: "67.0%",
-    anchor: `ex99-1 → "67.0%"`,
+    anchor: "67.0%",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
