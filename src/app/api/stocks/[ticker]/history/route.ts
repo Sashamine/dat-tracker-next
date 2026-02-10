@@ -95,21 +95,23 @@ export async function GET(
   const hasYahooProblems = !!minDateStr;
 
   try {
-    // For tickers with known Yahoo data issues, try FMP first (daily data only)
-    if (hasYahooProblems && !intraday && FMP_API_KEY) {
+    // Primary: Use FMP for daily data (more reliable, properly split-adjusted)
+    if (!intraday && FMP_API_KEY) {
       let fmpData = await fetchFromFMP(ticker, days);
       if (fmpData.length > 0) {
-        // Filter out data before the clean date
-        fmpData = fmpData.filter(p => p.time >= minDateStr);
+        // Filter out data before the clean date for problem tickers
+        if (hasYahooProblems) {
+          fmpData = fmpData.filter(p => p.time >= minDateStr);
+        }
         if (fmpData.length > 0) {
-          console.log(`[StockHistory] Using FMP for ${ticker}: ${fmpData.length} points (filtered from ${minDateStr})`);
+          console.log(`[StockHistory] Using FMP for ${ticker}: ${fmpData.length} points`);
           cache.set(cacheKey, { data: fmpData, timestamp: Date.now() });
           return NextResponse.json(fmpData);
         }
       }
     }
 
-    // Use Yahoo Finance for historical data
+    // Fallback: Yahoo Finance for intraday data or when FMP fails
     let yahooData = await fetchFromYahoo(ticker, days, interval, intraday, false);
     if (yahooData.length > 0) {
       // Filter out corrupt old data for problem tickers
