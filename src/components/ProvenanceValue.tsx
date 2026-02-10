@@ -212,9 +212,19 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
                 </div>
               )}
               
-              {/* Last verified */}
-              <div className="text-xs text-gray-500 dark:text-gray-500 text-center">
-                Last verified: {data.lastVerified}
+              {/* Source link + Last verified */}
+              <div className="text-xs text-gray-500 flex justify-between items-center border-t border-gray-100 dark:border-gray-700 pt-2 mt-2">
+                <span>Last verified: {data.lastVerified}</span>
+                {(internalUrl || secUrl) && (
+                  <a
+                    href={secUrl || internalUrl}
+                    target={secUrl ? "_blank" : undefined}
+                    rel={secUrl ? "noopener noreferrer" : undefined}
+                    className="text-blue-500 hover:text-blue-400"
+                  >
+                    {secUrl ? "SEC Filing ↗" : "View Filing →"}
+                  </a>
+                )}
               </div>
             </div>
           </div>
