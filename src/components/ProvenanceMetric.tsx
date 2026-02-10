@@ -284,6 +284,7 @@ export function ProvenanceMetric({
                       {Object.entries(data.source.inputs).map(([key, input]) => {
                         const inputUrl = getViewerUrl(input.source, ticker);
                         const sourceLabel = getSourceLabel(input.source);
+                        const inputSearchTerm = getSearchTerm(input.source);
                         return (
                           <div key={key} className="bg-gray-50 dark:bg-gray-900 p-2 rounded text-xs">
                             <div className="flex justify-between items-center">
@@ -292,8 +293,17 @@ export function ProvenanceMetric({
                                 {sourceLabel}
                               </span>
                             </div>
-                            <div className="font-mono text-gray-900 dark:text-gray-100 mt-1">
+                            <div className="font-mono text-gray-900 dark:text-gray-100 mt-1 flex items-center gap-2">
                               {input.value.toLocaleString()}
+                              {inputSearchTerm && (
+                                <span 
+                                  className="text-[10px] bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400 px-1.5 py-0.5 rounded cursor-pointer hover:bg-green-200 dark:hover:bg-green-800"
+                                  onClick={() => navigator.clipboard.writeText(inputSearchTerm)}
+                                  title={`Click to copy: ${inputSearchTerm}`}
+                                >
+                                  🔍 {inputSearchTerm}
+                                </span>
+                              )}
                             </div>
                             {inputUrl && (
                               isExternalUrl(inputUrl) ? (
