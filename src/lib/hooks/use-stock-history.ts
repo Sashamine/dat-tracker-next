@@ -14,20 +14,20 @@ export interface HistoricalPrice {
 export type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
 export type ChartInterval = "5m" | "15m" | "1h" | "1d";
 
-// Valid intervals per time range (daily preferred for FMP reliability)
+// Valid intervals per time range (based on Yahoo Finance limits)
 export const VALID_INTERVALS: Record<TimeRange, ChartInterval[]> = {
-  "1d": ["1d"],                   // Daily (FMP)
-  "7d": ["1d"],                   // Daily (FMP)
-  "1mo": ["1d"],                  // Daily (FMP)
-  "1y": ["1d"],                   // Daily (FMP)
-  "all": ["1d"],                  // Daily (FMP)
+  "1d": ["5m", "15m", "1h"],      // Intraday only
+  "7d": ["15m", "1h", "1d"],      // Mix of intraday and daily
+  "1mo": ["1h", "1d"],            // Hourly or daily
+  "1y": ["1d"],                   // Daily only
+  "all": ["1d"],                  // Daily only
 };
 
-// Default interval per time range (optimized for FMP compatibility)
+// Default interval per time range (optimized for readability)
 export const DEFAULT_INTERVAL: Record<TimeRange, ChartInterval> = {
-  "1d": "1d",   // Daily candles (FMP primary, intraday unreliable)
-  "7d": "1d",   // Daily candles 
-  "1mo": "1d",  // Daily candles
+  "1d": "5m",   // 5-minute candles (Yahoo minimum for intraday)
+  "7d": "15m",  // 15-minute candles for granular 7D view
+  "1mo": "1h",  // Hourly candles for 1-month view
   "1y": "1d",   // Daily candles
   "all": "1d",  // Daily candles
 };
