@@ -1,6 +1,7 @@
 import { Company } from "../types";
 import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
+import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
 
@@ -537,50 +538,57 @@ export const btcCompanies: Company[] = [
     notes: "SPAC merger pending (expected Q1 2026). 25K BTC from Adam Back + 5K from investors. Will trade as BSTR post-merger.",
   },
   {
+    // =========================================================================
+    // MARA - Core financials from provenance/mara.ts (SEC-verified)
+    // Largest US public Bitcoin miner with HODL strategy
+    // =========================================================================
     id: "mara",
     name: "MARA Holdings",
     ticker: "MARA",
     asset: "BTC",
     tier: 1,
-    holdings: 52_850,  // Sep 30, 2025 - Q3 2025 10-Q
-    holdingsLastUpdated: "2025-09-30",
+    // HOLDINGS: from provenance (10-Q filing)
+    holdings: MARA_PROVENANCE.holdings?.value || 52_850,
+    holdingsLastUpdated: MARA_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     datStartDate: "2024-01-01",
     website: "https://mara.com",
     twitter: "https://twitter.com/MARAHoldings",
     secCik: "0001507605",
-    costBasisAvg: 87_760,  // SEC 10-Q Q3 2025: $4,637,673K / 52,850 BTC
-    costBasisSource: "SEC 10-Q Q3 2025: CryptoAssetCost $4,637,673K for 52,850 BTC",
+    // COST BASIS: from provenance (10-Q)
+    costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value || 87_760,
+    costBasisSource: "SEC-verified (provenance): 10-Q Q3 2025",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
-    costBasisAsOf: "2025-09-30",
+    costBasisAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     isMiner: true,
-    // btcMinedAnnual removed - not citable from SEC filings (only in press releases)
-    quarterlyBurnUsd: 85_296_000,  // Q3 2025 G&A only (mining costs excluded - variable)
-    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $85,296,000 (2025-07-01 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q&dateb=&owner=include&count=40&search_text=",
-    burnAsOf: "2025-09-30",
+    // QUARTERLY BURN: from provenance (G&A only, mining COGS excluded)
+    quarterlyBurnUsd: MARA_PROVENANCE.quarterlyBurn?.value || 85_296_000,
+    burnSource: "SEC-verified (provenance): 10-Q Q3 2025 G&A (mining COGS excluded)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    burnAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     marketCap: 3_600_000_000,
-    sharesForMnav: 470_000_000,  // 470M diluted shares (Q3 2025)
-    sharesSource: "SEC 10-Q (filed 2025-11-04): EntityCommonStockSharesOutstanding = 378,184,353 as of 2025-10-28",
+    // SHARES: from provenance (basic shares, dilutives in dilutive-instruments.ts)
+    sharesForMnav: MARA_PROVENANCE_DEBUG.sharesBasic,
+    sharesSource: "SEC-verified (provenance): 10-Q Q3 2025 cover page",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
-    sharesAsOf: "2025-10-28",
-    cashReserves: 826_392_000,  // SEC 10-Q Q3 2025: $826,392K
+    sharesAsOf: MARA_PROVENANCE_DEBUG.sharesDate,
+    // CASH: from provenance (10-Q)
+    cashReserves: MARA_PROVENANCE.cashReserves?.value || 826_392_000,
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
-    cashAsOf: "2025-09-30",
+    cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    cashAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
-    // Debt: $350M line of credit + ~$2.9B convertible notes (0% 2030 + 2031 + 2032 series)
-    // Q3 2025: Issued additional ~$1B in 0% converts
-    totalDebt: 3_248_000_000,  // SEC 10-Q Q3 2025 XBRL: LongTermDebt
-    debtSource: "SEC 10-Q Q3 2025 XBRL",
-    debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
-    debtAsOf: "2025-09-30",
-    notes: "Largest US public miner. $350M credit facility + ~$2.9B in 0% convertible notes (2030 + 2031 + 2032 series). Q3 2025 issued ~$1B new converts.",
+    // DEBT: from provenance (~$3.25B in convertible notes)
+    totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_248_000_000,
+    debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    debtAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
+    notes: "Largest US public miner. Core financials from provenance/mara.ts. ~$3.25B in 0% convertible notes (2026, 2030, 2032 series). Dilutives (~81M from converts) in dilutive-instruments.ts.",
   },
   {
     id: "riot",
