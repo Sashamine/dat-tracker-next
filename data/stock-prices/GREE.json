@@ -2,7 +2,7 @@
   "ticker": "GREE",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-10T19:45:01.657Z",
+  "lastUpdated": "2026-02-10T21:30:20.326Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4931,6 +4931,15 @@
       "low": 1.1904,
       "close": 1.265,
       "volume": 71127
+    },
+    {
+      "date": "2026-02-10",
+      "time": "14:30",
+      "open": 1.26,
+      "high": 1.3,
+      "low": 1.1904,
+      "close": 1.25,
+      "volume": 75459
     },
     {
       "date": "2026-02-10",

@@ -2,7 +2,7 @@
   "ticker": "CEPO",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-10T19:45:01.657Z",
+  "lastUpdated": "2026-02-10T21:30:20.326Z",
   "prices": [
     {
       "date": "2025-01-07",
@@ -2891,6 +2891,15 @@
       "low": 10.395,
       "close": 10.425,
       "volume": 156631
+    },
+    {
+      "date": "2026-02-10",
+      "time": "14:30",
+      "open": 10.42,
+      "high": 10.4401,
+      "low": 10.39,
+      "close": 10.44,
+      "volume": 192511
     },
     {
       "date": "2026-02-10",
