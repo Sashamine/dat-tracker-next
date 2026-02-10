@@ -302,7 +302,7 @@ export function HoldingsPerShareChart({
             </details>
           )}
         </div>
-        {growthMetrics && (
+        {growthMetrics && filteredHistory && filteredHistory.length >= 2 && (
           <>
             <div className="text-left">
               <p className="text-xs text-gray-500 uppercase tracking-wide">Period Growth</p>
@@ -313,7 +313,7 @@ export function HoldingsPerShareChart({
                 {growthMetrics.totalGrowth >= 0 ? "+" : ""}{growthMetrics.totalGrowth.toFixed(1)}%
               </p>
               <p className="text-xs text-gray-400">
-                {filteredHistory ? filteredHistory.length : 0} data points
+                {new Date(filteredHistory[0].date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} → {new Date(filteredHistory[filteredHistory.length - 1].date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} ({growthMetrics.periodYears.toFixed(1)}y)
               </p>
             </div>
             <div className="text-left">
@@ -324,7 +324,7 @@ export function HoldingsPerShareChart({
               )}>
                 {growthMetrics.annualizedGrowth >= 0 ? "+" : ""}{growthMetrics.annualizedGrowth.toFixed(1)}%
               </p>
-              <p className="text-xs text-gray-400">annualized</p>
+              <p className="text-xs text-gray-400">{filteredHistory.length} data points</p>
             </div>
           </>
         )}
