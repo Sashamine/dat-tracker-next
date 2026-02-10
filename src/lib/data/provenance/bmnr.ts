@@ -47,15 +47,16 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/ex99-1.htm`,
+    // Use index page with search anchor (ex99-1.htm doesn't exist on SEC)
+    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#${LATEST_HOLDINGS.toLocaleString()}`,
     quote: `${LATEST_HOLDINGS.toLocaleString()} ETH`,
-    anchor: "Total ETH Holdings",
+    anchor: LATEST_HOLDINGS.toLocaleString(),
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-02",
+    filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K updates. Acquired 41,788 ETH in week ending Feb 1."),
+  }), "Weekly 8-K updates. Search for the holdings number in the latest 8-K."),
 
   // =========================================================================
   // COST BASIS - from Q1 FY2026 10-Q
@@ -112,19 +113,20 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
 
   // =========================================================================
-  // CASH RESERVES - from Feb 2, 2026 8-K
+  // CASH RESERVES - from Feb 9, 2026 8-K
   // =========================================================================
   cashReserves: pv(595_000_000, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/ex99-1.htm`,
-    quote: "$586 million in cash",
-    anchor: "Cash Position",
+    // Use index page with search anchor (ex99-1.htm doesn't exist on SEC)
+    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#595`,
+    quote: "$595 million in cash",
+    anchor: "595",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-02",
+    filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Operating capital. Treated as restricted (not excess cash for mNAV)."),
+  }), "Operating capital. Search for cash amount in latest 8-K."),
 
   // =========================================================================
   // QUARTERLY BURN - estimated from Q1 FY2025 baseline
@@ -193,26 +195,27 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
 export const BMNR_STAKING_PROVENANCE = {
   stakedAmount: pv(LATEST_STAKED, docSource({
     type: "sec-document",
-    url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
-    quote: "2,897,459 ETH (67.6%) are currently staked through 3 staking providers",
-    anchor: "staking",
+    // Use index page with search anchor (ex99-1.htm doesn't exist on SEC)
+    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#2,897,459`,
+    quote: "2,897,459 ETH (67.0%) are currently staked through 3 staking providers",
+    anchor: "2,897,459",
     cik: BMNR_CIK,
-    accession: "0001493152-26-004960",
+    accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-02",
-    documentDate: "2026-02-01",
-  }), "Staking data from weekly 8-K filing."),
+    filingDate: "2026-02-09",
+    documentDate: LATEST_HOLDINGS_DATE,
+  }), "Staking data from weekly 8-K filing. Search for staked amount."),
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",
-    url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
-    quote: "67.6%",
-    anchor: "staking",
+    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#67.0`,
+    quote: "67.0%",
+    anchor: "67.0",
     cik: BMNR_CIK,
-    accession: "0001493152-26-004960",
+    accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-02",
-    documentDate: "2026-02-01",
+    filingDate: "2026-02-09",
+    documentDate: LATEST_HOLDINGS_DATE,
   })),
 
   annualizedRevenue: pv(188_000_000, docSource({
