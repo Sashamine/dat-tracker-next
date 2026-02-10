@@ -286,7 +286,8 @@ export function ProvenanceMetric({
               {/* Source link + Last verified */}
               <div className="text-xs text-gray-500 flex justify-between items-center border-t border-gray-100 dark:border-gray-700 pt-2 mt-2">
                 <span>Last verified: {data.lastVerified}</span>
-                {viewerUrl && (
+                {/* Only show link for non-derived sources (derived has links on each input) */}
+                {viewerUrl && data.source.type !== "derived" && (
                   isExternalUrl(viewerUrl) ? (
                     <a
                       href={viewerUrl}
