@@ -117,7 +117,7 @@ export default function FilingsListPage() {
         ) : (
           <div className="space-y-2">
             {filteredFilings.map((filing, idx) => (
-              <FilingRow key={`${filing.accession}-${idx}`} filing={filing} ticker={ticker} />
+              <FilingRow key={`${filing.url}-${idx}`} filing={filing} ticker={ticker} />
             ))}
           </div>
         )}
