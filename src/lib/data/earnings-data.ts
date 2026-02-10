@@ -14,6 +14,7 @@ import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, Cal
 import { allCompanies } from "./companies";
 import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
+import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
 
 /**
  * Derives calendar year/quarter directly from an XBRL period end date.
@@ -81,8 +82,8 @@ function fiscalToCalendar(
 }
 
 /**
- * Helper: Get MSTR data from capital structure timeline for a specific quarter
- * Uses verified XBRL data from mstr-capital-structure.ts
+ * Helper: Get MSTR data from verified financials for a specific quarter
+ * Uses the same provenanced data source as the BTC/share chart
  */
 function getMSTRQuarterData(fiscalYear: number, fiscalQuarter: number): {
   holdingsAtQuarterEnd?: number;
@@ -91,24 +92,23 @@ function getMSTRQuarterData(fiscalYear: number, fiscalQuarter: number): {
 } {
   // Map fiscal year/quarter to period-end date (MSTR uses calendar year)
   const quarterEndMonth = fiscalQuarter * 3; // Q1=3, Q2=6, Q3=9, Q4=12
-  const periodEnd = `${fiscalYear}-${String(quarterEndMonth).padStart(2, '0')}-${
-    quarterEndMonth === 3 ? '31' : quarterEndMonth === 6 ? '30' : quarterEndMonth === 9 ? '30' : '31'
-  }`;
+  const quarterEndDay = quarterEndMonth === 3 ? '31' : quarterEndMonth === 6 ? '30' : quarterEndMonth === 9 ? '30' : '31';
+  const periodEnd = `${fiscalYear}-${String(quarterEndMonth).padStart(2, '0')}-${quarterEndDay}`;
 
-  const snapshot = getQuarterEndSnapshot(periodEnd);
+  // Find the snapshot closest to quarter end (on or before)
+  const snapshot = MSTR_VERIFIED_FINANCIALS
+    .filter(s => s.date <= periodEnd)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+
   if (!snapshot) {
     // No data available for this quarter
     return {};
   }
 
-  const holdingsAtQuarterEnd = snapshot.btcHoldings;
-  const sharesAtQuarterEnd = snapshot.commonSharesOutstanding;
-  const holdingsPerShare = holdingsAtQuarterEnd / sharesAtQuarterEnd;
-
   return {
-    holdingsAtQuarterEnd,
-    sharesAtQuarterEnd,
-    holdingsPerShare,
+    holdingsAtQuarterEnd: snapshot.holdings.value,
+    sharesAtQuarterEnd: snapshot.shares.total,
+    holdingsPerShare: snapshot.holdingsPerShare,
   };
 }
 
