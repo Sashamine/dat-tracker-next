@@ -15,6 +15,7 @@ import { allCompanies } from "./companies";
 import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
+import { getBMNRQuarterEndData } from "./bmnr-holdings-history";
 
 /**
  * Derives calendar year/quarter directly from an XBRL period end date.
@@ -1979,6 +1980,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // Calendar year company - data already normalized to calendar quarters
   // Note: Fiscal year ends Aug 31 but we store as calendar quarters for consistency
   // ETH treasury strategy launched Jul 2025.
+  //
+  // IMPORTANT: Holdings/shares data is derived from bmnr-holdings-history.ts
+  // which is the SINGLE SOURCE OF TRUTH for BMNR quarterly data.
+  // Do NOT hardcode holdings/shares here - use getBMNRQuarterEndData().
+  //
   // CY2026 Q1 (Jan-Mar) - Upcoming
   {
     ticker: "BMNR",
@@ -1992,6 +1998,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
   // CY2025 Q4 (Oct-Dec 2025)
+  // Data from bmnr-holdings-history.ts (closest snapshot to Dec 31)
   {
     ticker: "BMNR",
     fiscalYear: 2025,
@@ -2000,14 +2007,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-15",  // Expected ~45 days after Dec 31
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 4_110_525,  // Dec 28, 2025 press release
-    sharesAtQuarterEnd: 425_000_000,
-    holdingsPerShare: 0.009672,
-    source: "press-release",
-    sourceUrl: "https://bitmine.com/press-releases",
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    ...getBMNRQuarterEndData('2025-12-31')!,
     status: "reported",
   },
   // CY2025 Q3 (Jul-Sep 2025) - ETH strategy launched Jul 17
+  // Data from bmnr-holdings-history.ts (closest snapshot to Sep 30)
   {
     ticker: "BMNR",
     fiscalYear: 2025,
@@ -2016,11 +2021,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-09",  // ~40 days after Sep 30
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 2_069_443,  // Sep 7, 2025 (2M milestone)
-    sharesAtQuarterEnd: 260_000_000,
-    holdingsPerShare: 0.007959,
-    source: "press-release",
-    sourceUrl: "https://bitmine.com/press-releases",
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    ...getBMNRQuarterEndData('2025-09-30')!,
     status: "reported",
   },
   // CY2025 Q2 (Apr-Jun 2025) - Pre-ETH strategy

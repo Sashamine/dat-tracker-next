@@ -341,5 +341,57 @@ export const BMNR_STAKED_ETH: { date: string; stakedEth: number; percentStaked: 
   { date: '2026-02-08', stakedEth: 2_897_459, percentStaked: 67.0 },
 ];
 
+// EarningsSource type for compatibility with earnings-data.ts
+type EarningsSource = "sec-filing" | "regulatory-filing" | "press-release" | 
+  "investor-presentation" | "company-dashboard" | "estimated" | "manual";
+
+/**
+ * Get BMNR holdings data for a quarter-end date.
+ * This is the SINGLE SOURCE OF TRUTH for BMNR quarterly data.
+ * 
+ * @param quarterEnd - Quarter-end date in YYYY-MM-DD format (e.g., "2025-09-30")
+ * @returns Snapshot data for earnings-data.ts or undefined if no data available
+ */
+export function getBMNRQuarterEndData(quarterEnd: string): {
+  holdingsAtQuarterEnd: number;
+  sharesAtQuarterEnd: number;
+  holdingsPerShare: number;
+  source: EarningsSource;
+  sourceUrl: string;
+} | undefined {
+  // ETH strategy started Jul 17, 2025 - no data before that
+  if (quarterEnd < '2025-07-17') {
+    return undefined;
+  }
+  
+  // Find the closest snapshot on or before the quarter-end date
+  const snapshotsOnOrBefore = BMNR_HISTORY
+    .filter(s => s.date <= quarterEnd)
+    .sort((a, b) => b.date.localeCompare(a.date));
+  
+  const snapshot = snapshotsOnOrBefore[0];
+  if (!snapshot) {
+    return undefined;
+  }
+  
+  // Use the snapshot's share count (already interpolated from SHARE_ANCHORS)
+  // All BMNR 8-K filings are SEC filings
+  const source: EarningsSource = (snapshot.source && snapshot.source.includes('8-K')) ? 'sec-filing' : 'sec-filing';
+  return {
+    holdingsAtQuarterEnd: snapshot.holdings,
+    sharesAtQuarterEnd: snapshot.sharesOutstandingDiluted,
+    holdingsPerShare: snapshot.holdings / snapshot.sharesOutstandingDiluted,
+    source,
+    sourceUrl: snapshot.sourceUrl || '',
+  };
+}
+
+/**
+ * Get all SHARE_ANCHORS for reference (e.g., in tooltips or audit views)
+ */
+export function getBMNRShareAnchors() {
+  return SHARE_ANCHORS;
+}
+
 // Export for use in holdings-history.ts
 export default BMNR_HISTORY;
