@@ -66,6 +66,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
+    searchTerm: LATEST_HOLDINGS.toLocaleString(),
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20BTC`,
     quote: `${LATEST_HOLDINGS.toLocaleString()} BTC`,
     anchor: "Aggregate BTC Holdings",
@@ -81,6 +82,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   costBasisAvg: pv(76_056, docSource({
     type: "sec-document",
+    searchTerm: "76,056",
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=average%20purchase`,
     quote: "$76,056",
     anchor: "Average Purchase Price",
@@ -96,6 +98,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalCostBasis: pv(54_350_000_000, docSource({
     type: "sec-document",
+    searchTerm: "54.35",
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20purchase`,
     quote: "$54.35B",
     anchor: "Aggregate Purchase Price",
@@ -116,6 +119,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
     inputs: {
       q3ClassABaseline: pv(latestFinancials.shares.breakdown?.baseline || 0, docSource({
         type: "sec-document",
+        searchTerm: "267,468",
         url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=267%2C468`,
         quote: "267,468 shares (thousands) = 267.5M Class A",
         anchor: "Class A common stock from Q3 10-Q",
@@ -127,6 +131,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
       })),
       postQ3Atm: pv(latestFinancials.shares.breakdown?.atmCumulative || 0, docSource({
         type: "sec-document",
+        searchTerm: (latestFinancials.shares.breakdown?.atmCumulative || 0).toLocaleString(),
         url: "/filings/mstr?type=8-K&after=2025-10-29",
         quote: `${(latestFinancials.shares.breakdown?.atmCumulative || 0).toLocaleString()} shares from post-Q3 ATM`,
         anchor: "Aggregated from weekly 8-K ATM filings",
@@ -136,6 +141,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
       })),
       classB: pv(CLASS_B_SHARES, docSource({
         type: "sec-document",
+        searchTerm: "19,640,250",
         url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Class%20B`,
         quote: `${CLASS_B_SHARES.toLocaleString()} Class B shares`,
         anchor: "Class B common stock (constant)",
@@ -157,6 +163,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
     inputs: {
       ytdOperatingCashFlow: pv(-45_612_000, xbrlSource({
         fact: "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        searchTerm: "45,612",
         rawValue: -45_612_000,
         unit: "USD",
         periodType: "duration",
@@ -177,6 +184,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalDebt: pv(8_173_903_000, xbrlSource({
     fact: "us-gaap:LongTermDebt",
+    searchTerm: "8,173,903",
     rawValue: 8_173_903_000,
     unit: "USD",
     periodType: "instant",
@@ -194,6 +202,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   cashReserves: pv(2_250_000_000, docSource({
     type: "sec-document",
+    searchTerm: "2.25",
     url: "/filings/mstr/0001193125-26-001550?tab=document&q=USD%20Reserve",
     quote: "USD Reserve was $2.25 billion",
     anchor: "USD Reserve",
@@ -214,6 +223,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
     inputs: {
       q3Cumulative: pv(5_786_330_000, docSource({
         type: "sec-document",
+        searchTerm: "5,786,330",
         url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Total%20mezzanine`,
         quote: "$5,786,330 (thousands) = $5.786B Total mezzanine equity",
         anchor: "Total mezzanine equity",
@@ -225,6 +235,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
       })),
       streNov13: pv(716_800_000, docSource({
         type: "sec-document",
+        searchTerm: "716.8",
         url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525280178/d205736d8k.htm#:~:text=gross%20proceeds%20from%20the%20Offering%20were%20approximately",
         quote: "gross proceeds ~€620.0M ($716.8M)",
         anchor: "STRE Offering 8-K",
@@ -236,6 +247,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
       })),
       postQ3Atm: pv(1_775_000_000, docSource({
         type: "sec-document",
+        searchTerm: "1,775",
         url: "/filings/mstr?type=8-K&after=2025-10-29",
         quote: "Sum of ~$1.775B from post-Q3 preferred ATM 8-Ks",
         anchor: "Aggregated from multiple weekly 8-K filings",

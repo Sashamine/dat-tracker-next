@@ -29,6 +29,9 @@ export type SECFilingType = "10-K" | "10-Q" | "8-K" | "S-3" | "424B3" | "424B5" 
 export interface XBRLSource {
   type: "xbrl";
   
+  /** 🔍 Exact text to Ctrl+F in the source document (e.g., "4,325,738") */
+  searchTerm?: string;
+  
   /** The XBRL fact name (e.g., "us-gaap:NetCashProvidedByUsedInOperatingActivities") */
   fact: string;
   
@@ -70,6 +73,9 @@ export interface XBRLSource {
 /** Document-sourced data - text extraction from filings */
 export interface DocumentSource {
   type: "sec-document" | "press-release" | "company-website" | "regulatory";
+  
+  /** 🔍 Exact text to Ctrl+F in the source document (e.g., "4,325,738") */
+  searchTerm?: string;
   
   /** URL to the source document */
   url: string;

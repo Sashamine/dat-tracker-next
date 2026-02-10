@@ -52,6 +52,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
+    searchTerm: "4,325,738",
     // Direct link to the actual document containing the data
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: `${LATEST_HOLDINGS.toLocaleString()} ETH`,
@@ -72,6 +73,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     inputs: {
       totalCost: pv(14_953_824_000, docSource({
         type: "sec-document",
+        searchTerm: "14,953,824",
         url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
         quote: "digital assets at cost of $14,953,824",
         anchor: "digital assets at cost",
@@ -83,6 +85,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
       })),
       totalHoldings: pv(3_737_140, docSource({
         type: "sec-document",
+        searchTerm: "3,737,140",
         url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
         quote: "3,737,140 Ether",
         anchor: "3,737,140 Ether",
@@ -100,6 +103,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   sharesOutstanding: pv(SHARES_OUTSTANDING, xbrlSource({
     fact: "dei:EntityCommonStockSharesOutstanding",
+    searchTerm: "454,862,451",
     rawValue: SHARES_OUTSTANDING,
     unit: "shares",
     periodType: "instant",
@@ -122,6 +126,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   cashReserves: pv(595_000_000, docSource({
     type: "sec-document",
+    searchTerm: "595",
     // Direct link to the actual document containing the data
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: "$595 million in cash",
@@ -142,6 +147,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     inputs: {
       q1Fy2025Ga: pv(959_000, docSource({
         type: "sec-document",
+        searchTerm: "959",
         url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225015441/",
         quote: "G&A ~$959K",
         anchor: "General and Administrative",
@@ -158,6 +164,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalDebt: pv(0, xbrlSource({
     fact: "us-gaap:LongTermDebt",
+    searchTerm: "LIABILITIES",
     rawValue: 0,
     unit: "USD",
     periodType: "instant",
@@ -174,6 +181,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   preferredEquity: pv(0, xbrlSource({
     fact: "us-gaap:PreferredStockValue",
+    searchTerm: "Preferred Stock",
     rawValue: 0,
     unit: "USD",
     periodType: "instant",
@@ -200,6 +208,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
 export const BMNR_STAKING_PROVENANCE = {
   stakedAmount: pv(LATEST_STAKED, docSource({
     type: "sec-document",
+    searchTerm: "2,897,459",
     // Direct link to the actual document containing the data
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: "2,897,459 ETH (67.0%) are currently staked",
@@ -213,6 +222,7 @@ export const BMNR_STAKING_PROVENANCE = {
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",
+    searchTerm: "67.0%",
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: "67.0%",
     anchor: "67.0%",
@@ -225,6 +235,7 @@ export const BMNR_STAKING_PROVENANCE = {
 
   annualizedRevenue: pv(188_000_000, docSource({
     type: "sec-document",
+    searchTerm: "188",
     url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
     quote: "Annualized staking revenues are approximately $188 million",
     anchor: "staking",

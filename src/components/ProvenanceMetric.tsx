@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import type { 
   ProvenanceValue, 
@@ -65,6 +65,41 @@ function getSourceLabel(source: XBRLSource | DocumentSource | DerivedSource): st
     case "derived":
       return "Calculated";
   }
+}
+
+/** Get searchTerm from source (if available) */
+function getSearchTerm(source: XBRLSource | DocumentSource | DerivedSource): string | undefined {
+  if (source.type === "xbrl" || source.type === "sec-document" || 
+      source.type === "press-release" || source.type === "company-website" || 
+      source.type === "regulatory") {
+    return source.searchTerm;
+  }
+  return undefined;
+}
+
+/** Copy button component */
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  }, [text]);
+  
+  return (
+    <button
+      onClick={handleCopy}
+      className="ml-2 px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+      title="Copy to clipboard"
+    >
+      {copied ? "✓ Copied" : "Copy"}
+    </button>
+  );
 }
 
 /** Check if URL is external */
@@ -171,6 +206,19 @@ export function ProvenanceMetric({
                   {getSourceLabel(data.source)}
                 </span>
               </div>
+              
+              {/* Search Term - prominent at top */}
+              {getSearchTerm(data.source) && (
+                <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg p-3">
+                  <div className="text-xs text-green-700 dark:text-green-400 font-medium mb-1">🔍 Ctrl+F in document:</div>
+                  <div className="flex items-center justify-between">
+                    <code className="font-mono text-green-900 dark:text-green-100 font-bold text-lg">
+                      {getSearchTerm(data.source)}
+                    </code>
+                    <CopyButton text={getSearchTerm(data.source)!} />
+                  </div>
+                </div>
+              )}
               
               {/* Value */}
               <div className="border-t border-gray-100 dark:border-gray-700 pt-2">

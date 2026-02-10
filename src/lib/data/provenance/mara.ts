@@ -58,6 +58,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
+      searchTerm: "52,850",
       url: secDocUrl(MARA_CIK, Q3_2025_10Q_ACCESSION, "mara-20250930.htm"),
       quote: "35,493 + 17,357 = 52,850 BTC",
       anchor: "Digital assets",
@@ -84,6 +85,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
           COST_BASIS_TOTAL,
           xbrlSource({
             fact: "mara:CryptoAssetCost",
+            searchTerm: "4,637,673",
             rawValue: COST_BASIS_TOTAL,
             unit: "USD",
             periodType: "instant",
@@ -99,6 +101,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
           LATEST_HOLDINGS,
           docSource({
             type: "sec-document",
+            searchTerm: "52,850",
             url: secDocUrl(MARA_CIK, Q3_2025_10Q_ACCESSION, "mara-20250930.htm"),
             quote: "52,850 BTC",
             anchor: "Bitcoin holdings",
@@ -121,6 +124,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     COST_BASIS_TOTAL,
     xbrlSource({
       fact: "mara:CryptoAssetCost",
+      searchTerm: "4,637,673",
       rawValue: COST_BASIS_TOTAL,
       unit: "USD",
       periodType: "instant",
@@ -141,6 +145,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     SHARES_OUTSTANDING,
     xbrlSource({
       fact: "dei:EntityCommonStockSharesOutstanding",
+      searchTerm: "378,184,353",
       rawValue: SHARES_OUTSTANDING,
       unit: "shares",
       periodType: "instant",
@@ -162,6 +167,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     85_296_000,
     xbrlSource({
       fact: "us-gaap:GeneralAndAdministrativeExpense",
+      searchTerm: "85,296",
       rawValue: 85_296_000,
       unit: "USD",
       periodType: "duration",
@@ -184,6 +190,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     TOTAL_DEBT,
     xbrlSource({
       fact: "us-gaap:LongTermDebt",
+      searchTerm: "3,248,000",
       rawValue: TOTAL_DEBT,
       unit: "USD",
       periodType: "instant",
@@ -204,6 +211,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     CASH_RESERVES,
     xbrlSource({
       fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+      searchTerm: "826,392",
       rawValue: CASH_RESERVES,
       unit: "USD",
       periodType: "instant",
@@ -224,6 +232,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     0,
     xbrlSource({
       fact: "us-gaap:PreferredStockValue",
+      searchTerm: "Preferred stock",
       rawValue: 0,
       unit: "USD",
       periodType: "instant",
