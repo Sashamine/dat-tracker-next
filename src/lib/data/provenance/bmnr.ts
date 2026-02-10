@@ -47,16 +47,16 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
-    // Use index page with search anchor (ex99-1.htm doesn't exist on SEC)
-    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#${LATEST_HOLDINGS.toLocaleString()}`,
+    // Direct link to filing index page
+    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
     quote: `${LATEST_HOLDINGS.toLocaleString()} ETH`,
-    anchor: LATEST_HOLDINGS.toLocaleString(),
+    anchor: `ex99-1 → "${LATEST_HOLDINGS.toLocaleString()}"`,
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K updates. Search for the holdings number in the latest 8-K."),
+  }), "Weekly 8-K filing index. Open ex99-1.htm for holdings data."),
 
   // =========================================================================
   // COST BASIS - from Q1 FY2026 10-Q
@@ -117,16 +117,16 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   cashReserves: pv(595_000_000, docSource({
     type: "sec-document",
-    // Use index page with search anchor (ex99-1.htm doesn't exist on SEC)
-    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#595`,
+    // Direct link to filing index page
+    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
     quote: "$595 million in cash",
-    anchor: "595",
+    anchor: `ex99-1 → "595"`,
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Operating capital. Search for cash amount in latest 8-K."),
+  }), "Weekly 8-K filing index. Open ex99-1.htm for cash data."),
 
   // =========================================================================
   // QUARTERLY BURN - estimated from Q1 FY2025 baseline
@@ -195,22 +195,22 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
 export const BMNR_STAKING_PROVENANCE = {
   stakedAmount: pv(LATEST_STAKED, docSource({
     type: "sec-document",
-    // Use index page with search anchor (ex99-1.htm doesn't exist on SEC)
-    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#2,897,459`,
-    quote: "2,897,459 ETH (67.0%) are currently staked through 3 staking providers",
-    anchor: "2,897,459",
+    // Direct link to filing index page
+    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
+    quote: "2,897,459 ETH (67.0%) are currently staked",
+    anchor: `ex99-1 → "staked"`,
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Staking data from weekly 8-K filing. Search for staked amount."),
+  }), "Weekly 8-K filing index. Open ex99-1.htm for staking data."),
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",
-    url: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${BMNR_CIK}&type=8-K&dateb=&owner=include&count=10#67.0`,
+    url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/${LATEST_HOLDINGS_ACCESSION.replace(/-/g, "")}/`,
     quote: "67.0%",
-    anchor: "67.0",
+    anchor: `ex99-1 → "67.0%"`,
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
