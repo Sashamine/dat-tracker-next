@@ -164,7 +164,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalDebt: pv(0, xbrlSource({
     fact: "us-gaap:LongTermDebt",
-    searchTerm: "LIABILITIES",
+    // No searchTerm for zero values
     rawValue: 0,
     unit: "USD",
     periodType: "instant",
@@ -181,7 +181,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   preferredEquity: pv(0, xbrlSource({
     fact: "us-gaap:PreferredStockValue",
-    searchTerm: "Preferred Stock",
+    // No searchTerm for zero values
     rawValue: 0,
     unit: "USD",
     periodType: "instant",

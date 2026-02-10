@@ -232,7 +232,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     0,
     xbrlSource({
       fact: "us-gaap:PreferredStockValue",
-      searchTerm: "Preferred stock",
+      // No searchTerm for zero values
       rawValue: 0,
       unit: "USD",
       periodType: "instant",
