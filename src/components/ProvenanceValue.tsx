@@ -212,32 +212,6 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
                 </div>
               )}
               
-              {/* Verify buttons */}
-              <div className="flex gap-2">
-                {internalUrl && (
-                  <a
-                    href={internalUrl}
-                    className="flex-1 text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
-                  >
-                    View Source →
-                  </a>
-                )}
-                {secUrl && (
-                  <a
-                    href={secUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-center py-2 rounded text-sm font-medium ${
-                      internalUrl 
-                        ? "px-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
-                        : "flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                    }`}
-                  >
-                    {internalUrl ? "SEC ↗" : "View on SEC →"}
-                  </a>
-                )}
-              </div>
-              
               {/* Last verified */}
               <div className="text-xs text-gray-500 dark:text-gray-500 text-center">
                 Last verified: {data.lastVerified}

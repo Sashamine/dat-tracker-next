@@ -283,29 +283,6 @@ export function ProvenanceMetric({
                 </div>
               )}
               
-              {/* View source button */}
-              {viewerUrl && (
-                isExternalUrl(viewerUrl) ? (
-                  <a
-                    href={viewerUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
-                    onClick={() => setShowPopover(false)}
-                  >
-                    View on SEC ↗
-                  </a>
-                ) : (
-                  <Link
-                    href={viewerUrl}
-                    className="block w-full text-center py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
-                    onClick={() => setShowPopover(false)}
-                  >
-                    {viewerUrl.startsWith("#") ? "See below ↓" : "View Source →"}
-                  </Link>
-                )
-              )}
-              
               {/* Last verified */}
               <div className="text-xs text-gray-500 text-center">
                 Last verified: {data.lastVerified}
