@@ -1048,7 +1048,7 @@ const DCC_HISTORY: HoldingsSnapshot[] = [
 export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   // BTC Companies
   SWC: { ticker: "SWC", asset: "BTC", history: SWC_HISTORY },
-  MSTR: { ticker: "MSTR", asset: "BTC", history: MSTR_HISTORY },
+  // MSTR: Uses MSTR_VERIFIED_FINANCIALS via getHoldingsHistory() - DO NOT add here
   MARA: { ticker: "MARA", asset: "BTC", history: MARA_HISTORY },
   RIOT: { ticker: "RIOT", asset: "BTC", history: RIOT_HISTORY },
   CLSK: { ticker: "CLSK", asset: "BTC", history: CLSK_HISTORY },
