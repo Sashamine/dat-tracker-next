@@ -6,6 +6,7 @@ export interface Filing {
   title: string;          // Filing description
   date: string;           // Filing date (YYYY-MM-DD)
   url: string;            // Link to the filing
+  accession?: string;     // SEC accession number (for internal viewer)
 }
 
 export interface FilingsResponse {
