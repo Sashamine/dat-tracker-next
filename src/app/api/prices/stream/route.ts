@@ -87,8 +87,65 @@ function isExtendedHours(): boolean {
   return isWeekday && (isPreMarket || isAfterHours);
 }
 
-// Fetch crypto from CoinGecko
+// Binance symbols for crypto prices (free, no API key, no rate limits)
+const BINANCE_SYMBOLS: Record<string, string> = {
+  BTC: "BTCUSDT",
+  ETH: "ETHUSDT",
+  SOL: "SOLUSDT",
+  XRP: "XRPUSDT",
+  BNB: "BNBUSDT",
+  DOGE: "DOGEUSDT",
+  ADA: "ADAUSDT",
+  AVAX: "AVAXUSDT",
+  LINK: "LINKUSDT",
+  SUI: "SUIUSDT",
+  LTC: "LTCUSDT",
+  HBAR: "HBARUSDT",
+  TAO: "TAOUSDT",
+};
+
+// Fetch crypto from Binance (primary - no rate limits)
+async function fetchCryptoPricesFromBinance(): Promise<Record<string, { price: number; change24h: number }>> {
+  try {
+    const symbols = Object.values(BINANCE_SYMBOLS);
+    const url = `https://api.binance.com/api/v3/ticker/24hr?symbols=${JSON.stringify(symbols)}`;
+    const response = await fetch(url, { cache: "no-store" });
+    
+    if (!response.ok) {
+      console.error("Binance error:", response.status);
+      return {};
+    }
+    
+    const data = await response.json();
+    const result: Record<string, { price: number; change24h: number }> = {};
+    
+    for (const [symbol, binanceSymbol] of Object.entries(BINANCE_SYMBOLS)) {
+      const ticker = data.find((t: { symbol: string }) => t.symbol === binanceSymbol);
+      if (ticker) {
+        result[symbol] = {
+          price: parseFloat(ticker.lastPrice) || 0,
+          change24h: parseFloat(ticker.priceChangePercent) || 0,
+        };
+      }
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("Binance fetch error:", error);
+    return {};
+  }
+}
+
+// Fetch crypto from CoinGecko (fallback)
 async function fetchCryptoPrices(): Promise<Record<string, { price: number; change24h: number }>> {
+  // Try Binance first (no rate limits)
+  const binanceData = await fetchCryptoPricesFromBinance();
+  if (Object.keys(binanceData).length > 0) {
+    geckoCache = { data: binanceData, timestamp: Date.now() };
+    return binanceData;
+  }
+  
+  // Fall back to CoinGecko if Binance fails
   if (geckoCache && Date.now() - geckoCache.timestamp < GECKO_CACHE_TTL) {
     return geckoCache.data;
   }
