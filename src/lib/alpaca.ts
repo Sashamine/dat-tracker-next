@@ -29,6 +29,11 @@ export const CRYPTO_SYMBOLS: Record<string, string> = {
   // HYPE, BNB, TAO, TRX, ZEC, SUI, ADA, HBAR - check availability
 };
 
+// Check if a crypto symbol is available on Alpaca
+export function isAlpacaCrypto(symbol: string): boolean {
+  return symbol in CRYPTO_SYMBOLS;
+}
+
 // Stock tickers (must match companies.ts)
 export const STOCK_TICKERS = [
   // ETH
@@ -286,6 +291,51 @@ export async function getCryptoSnapshots(symbols: string[]): Promise<Record<stri
 
   const data = await response.json();
   return data.snapshots || {};
+}
+
+// Fetch historical crypto bars
+// timeframe: "1Min", "5Min", "15Min", "1Hour", "1Day"
+export interface CryptoBar {
+  t: string;  // timestamp (ISO 8601)
+  o: number;  // open
+  h: number;  // high
+  l: number;  // low
+  c: number;  // close
+  v: number;  // volume
+  vw: number; // volume weighted average price
+  n: number;  // number of trades
+}
+
+export async function getCryptoBars(
+  symbol: string,  // e.g., "BTC/USD"
+  timeframe: string,  // e.g., "5Min", "1Hour", "1Day"
+  start: string,  // ISO 8601 timestamp
+  end?: string  // ISO 8601 timestamp (optional, defaults to now)
+): Promise<CryptoBar[]> {
+  if (!ALPACA_API_KEY || !ALPACA_SECRET_KEY) {
+    throw new Error("Alpaca API keys not configured");
+  }
+
+  const encodedSymbol = encodeURIComponent(symbol);
+  let url = `${DATA_BASE_URL}/v1beta3/crypto/us/bars?symbols=${encodedSymbol}&timeframe=${timeframe}&start=${start}`;
+  if (end) {
+    url += `&end=${end}`;
+  }
+  url += "&limit=10000";  // Max limit
+
+  const response = await fetch(url, {
+    headers: getHeaders(),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.error(`Alpaca crypto bars failed: ${response.status}`);
+    return [];
+  }
+
+  const data = await response.json();
+  // Bars are returned as { bars: { "BTC/USD": [...] } }
+  return data.bars?.[symbol] || [];
 }
 
 // Check if US stock market is open (9:30 AM - 4:00 PM ET, Mon-Fri)

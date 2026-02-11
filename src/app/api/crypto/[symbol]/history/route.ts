@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCryptoBars, CRYPTO_SYMBOLS, isAlpacaCrypto } from "@/lib/alpaca";
 
 interface CryptoHistoryPoint {
   time: string;
   price: number;
 }
 
-// Map our asset symbols to CoinGecko IDs
+// Map our asset symbols to CoinGecko IDs (fallback for altcoins)
 const COINGECKO_IDS: Record<string, string> = {
   BTC: "bitcoin",
   ETH: "ethereum",
@@ -25,7 +26,7 @@ const COINGECKO_IDS: Record<string, string> = {
   HYPE: "hyperliquid",
 };
 
-// Map our asset symbols to Yahoo Finance tickers
+// Map our asset symbols to Yahoo Finance tickers (fallback)
 const YAHOO_TICKERS: Record<string, string> = {
   BTC: "BTC-USD",
   ETH: "ETH-USD",
@@ -51,23 +52,66 @@ const RANGE_DAYS: Record<string, number> = {
   "7d": 7,
   "1mo": 30,
   "1y": 365,
-  "all": 1825, // 5 years - Yahoo supports this
-};
-
-// Use Yahoo for all ranges (consistency across timeframes)
-const USE_YAHOO_FOR_RANGE: Record<string, boolean> = {
-  "1d": true,
-  "7d": true,
-  "1mo": true,
-  "1y": true,
-  "all": true,
+  "all": 1825, // 5 years
 };
 
 // Cache for historical data (5 minute TTL)
 const cache: Map<string, { data: CryptoHistoryPoint[]; timestamp: number }> = new Map();
 const CACHE_TTL = 5 * 60 * 1000;
 
-// Fetch from Yahoo Finance
+// Alpaca timeframe mapping
+const ALPACA_TIMEFRAMES: Record<string, string> = {
+  "1d": "5Min",
+  "7d": "15Min",
+  "1mo": "1Hour",
+  "1y": "1Day",
+  "all": "1Day",
+};
+
+// Fetch from Alpaca (primary for major cryptos like BTC, ETH, SOL)
+async function fetchFromAlpaca(symbol: string, range: string): Promise<CryptoHistoryPoint[]> {
+  const alpacaSymbol = CRYPTO_SYMBOLS[symbol.toUpperCase()];
+  if (!alpacaSymbol) return [];
+
+  const timeframe = ALPACA_TIMEFRAMES[range] || "1Day";
+  const days = RANGE_DAYS[range] || 365;
+  const useUnixTime = range === "1d" || range === "7d" || range === "1mo";
+
+  // Calculate start time
+  const now = new Date();
+  const start = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  const startISO = start.toISOString();
+
+  try {
+    const bars = await getCryptoBars(alpacaSymbol, timeframe, startISO);
+    
+    if (bars.length === 0) {
+      console.log(`[CryptoHistory] Alpaca returned no bars for ${symbol}`);
+      return [];
+    }
+
+    console.log(`[CryptoHistory] Alpaca returned ${bars.length} bars for ${symbol}`);
+
+    const prices: CryptoHistoryPoint[] = bars.map(bar => {
+      if (useUnixTime) {
+        // For intraday: use Unix timestamp in seconds
+        const ts = Math.floor(new Date(bar.t).getTime() / 1000);
+        return { time: String(ts), price: bar.c };
+      } else {
+        // For daily: use YYYY-MM-DD format
+        const date = new Date(bar.t).toISOString().split("T")[0];
+        return { time: date, price: bar.c };
+      }
+    });
+
+    return prices;
+  } catch (error) {
+    console.error("[CryptoHistory] Alpaca fetch error:", error);
+    return [];
+  }
+}
+
+// Fetch from Yahoo Finance (fallback)
 async function fetchFromYahoo(symbol: string, range: string): Promise<CryptoHistoryPoint[]> {
   const yahooTicker = YAHOO_TICKERS[symbol.toUpperCase()];
   if (!yahooTicker) return [];
@@ -204,8 +248,9 @@ export async function GET(
   const symbolUpper = symbol.toUpperCase();
   const coinId = COINGECKO_IDS[symbolUpper];
   const yahooTicker = YAHOO_TICKERS[symbolUpper];
+  const hasAlpaca = isAlpacaCrypto(symbolUpper);
   
-  if (!coinId && !yahooTicker) {
+  if (!coinId && !yahooTicker && !hasAlpaca) {
     return NextResponse.json({ error: "Unknown crypto symbol" }, { status: 400 });
   }
 
@@ -218,20 +263,29 @@ export async function GET(
   }
 
   let prices: CryptoHistoryPoint[] = [];
-  const useYahoo = USE_YAHOO_FOR_RANGE[range] ?? false;
   const days = RANGE_DAYS[range] || 365;
 
-  if (useYahoo && yahooTicker) {
-    // Use Yahoo for 1y/all ranges (better long-term history)
-    prices = await fetchFromYahoo(symbolUpper, range);
-    if (prices.length === 0 && coinId) {
-      // Fallback to CoinGecko if Yahoo fails
-      console.log(`[CryptoHistory] Yahoo failed for ${symbol}, trying CoinGecko`);
-      prices = await fetchFromCoinGecko(symbolUpper, Math.min(days, 365));
+  // Priority: Alpaca (major cryptos) > CoinGecko (altcoins) > Yahoo (fallback)
+  if (hasAlpaca) {
+    // Use Alpaca for major cryptos (BTC, ETH, SOL, etc.)
+    prices = await fetchFromAlpaca(symbolUpper, range);
+    
+    if (prices.length === 0) {
+      // Fallback to CoinGecko if Alpaca fails
+      console.log(`[CryptoHistory] Alpaca failed for ${symbol}, trying CoinGecko`);
+      if (coinId) {
+        prices = await fetchFromCoinGecko(symbolUpper, Math.min(days, 365));
+      }
     }
   } else if (coinId) {
-    // Use CoinGecko for short-term ranges (better intraday)
-    prices = await fetchFromCoinGecko(symbolUpper, days);
+    // Use CoinGecko for altcoins not on Alpaca
+    prices = await fetchFromCoinGecko(symbolUpper, Math.min(days, 365));
+  }
+
+  // Final fallback to Yahoo
+  if (prices.length === 0 && yahooTicker) {
+    console.log(`[CryptoHistory] Trying Yahoo fallback for ${symbol}`);
+    prices = await fetchFromYahoo(symbolUpper, range);
   }
 
   if (prices.length > 0) {
