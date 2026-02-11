@@ -49,6 +49,19 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
   // Get company intel once at top level
   const intel = useMemo(() => getCompanyIntel("SBET"), []);
   
+  // Memoize filings list to avoid recalculating on every render
+  const filingsList = useMemo(() => {
+    return getSBETFilingsList().map((f) => ({
+      date: f.periodDate,
+      filedDate: f.filedDate,
+      accession: f.accession,
+      formType: f.formType,
+      items: f.items,
+      url: f.url,
+      hasHoldingsUpdate: f.hasHoldingsUpdate,
+    })).sort((a, b) => new Date(b.filedDate).getTime() - new Date(a.filedDate).getTime());
+  }, []);
+  
   // Chart state
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
@@ -690,15 +703,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
         <SECFilingTimeline
           ticker="SBET"
           cik={SBET_CIK}
-          filings={getSBETFilingsList().map((f) => ({
-            date: f.periodDate,
-            filedDate: f.filedDate,
-            accession: f.accession,
-            formType: f.formType,
-            items: f.items,
-            url: f.url,
-            hasHoldingsUpdate: f.hasHoldingsUpdate,
-          })).sort((a, b) => new Date(b.filedDate).getTime() - new Date(a.filedDate).getTime())}
+          filings={filingsList}
           asset="ETH"
         />
       </div>
