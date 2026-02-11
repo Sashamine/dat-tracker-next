@@ -55,6 +55,13 @@ const YAHOO_PROBLEM_TICKERS: Record<string, string> = {
   'NXTT': '2025-10-01',  // 200:1 split Sep 2025 - needs split research
 };
 
+// International stock suffixes that don't have intraday data
+const INTERNATIONAL_SUFFIXES = ['.T', '.L', '.DE', '.PA', '.MI', '.AS', '.SW', '.HK', '.SS', '.SZ', '.TO', '.AX'];
+
+function isInternationalStock(ticker: string): boolean {
+  return INTERNATIONAL_SUFFIXES.some(suffix => ticker.toUpperCase().endsWith(suffix));
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ ticker: string }> }
@@ -67,10 +74,13 @@ export async function GET(
   // Get days for this range
   const days = RANGE_DAYS[range] || RANGE_DAYS["1y"];
 
+  // For international stocks, always use daily data (no intraday available)
+  const forceDaily = isInternationalStock(ticker);
+
   // Validate and select interval
   const validIntervals = VALID_INTERVALS[range] || ["1d"];
-  let interval = DEFAULT_INTERVAL[range] || "1d";
-  if (requestedInterval && validIntervals.includes(requestedInterval)) {
+  let interval = forceDaily ? "1d" : (DEFAULT_INTERVAL[range] || "1d");
+  if (!forceDaily && requestedInterval && validIntervals.includes(requestedInterval)) {
     interval = requestedInterval;
   }
 
@@ -253,6 +263,7 @@ async function fetchFromYahoo(
 /**
  * Fetch historical data from FMP (Financial Modeling Prep)
  * FMP provides properly split-adjusted data
+ * Updated to use /stable/ endpoints (Aug 2025+)
  */
 async function fetchFromFMP(
   ticker: string,
@@ -261,18 +272,22 @@ async function fetchFromFMP(
   if (!FMP_API_KEY) return [];
   
   try {
-    // FMP historical endpoint
-    const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?apikey=${FMP_API_KEY}`;
+    // FMP stable historical endpoint (new format as of Aug 2025)
+    const url = `https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=${ticker}&apikey=${FMP_API_KEY}`;
     
     const response = await fetch(url, {
       headers: { "User-Agent": "DAT-Tracker" },
       cache: "no-store",
     });
     
-    if (!response.ok) return [];
+    if (!response.ok) {
+      console.log(`[FMP] Failed for ${ticker}: ${response.status}`);
+      return [];
+    }
     
     const data = await response.json();
-    const historical = data.historical || [];
+    // New format returns array directly, not { historical: [...] }
+    const historical = Array.isArray(data) ? data : (data.historical || []);
     
     // FMP returns data in reverse chronological order, limit to requested days
     const prices: HistoricalPrice[] = [];
@@ -295,7 +310,8 @@ async function fetchFromFMP(
     
     // Reverse to chronological order
     return prices.reverse();
-  } catch {
+  } catch (e) {
+    console.error(`[FMP] Error for ${ticker}:`, e);
     return [];
   }
 }
