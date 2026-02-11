@@ -98,13 +98,15 @@ export const METAPLANET_PROVENANCE = {
   }), "Q3 balance sheet: ¥2.77B (~$18M USD at 155 JPY/USD)"),
 
   // Average Cost Basis (from company disclosure)
-  costBasisAvg: pv(107_607, tdnetSource({
+  // JPY cost: ¥15,945,691/BTC (¥559.726B / 35,102 BTC)
+  // USD conversion depends on forex rate
+  costBasisAvg: pv(102_875, tdnetSource({
     title: "Notice of Additional Purchase of Bitcoin",
     date: "2025-12-30",
     url: PDF_URLS.btcPurchaseDec30,
-    quote: "Average acquisition cost: $107,607 per BTC",
-    searchTerm: "107,607",
-  }), "Cumulative average from all purchases"),
+    quote: "Average Purchase Price: 15,945,691 yen per Bitcoin",
+    searchTerm: "15,945,691",
+  }), "¥15,945,691/BTC ÷ 155 JPY/USD = ~$102,875"),
 };
 
 // =============================================================================
