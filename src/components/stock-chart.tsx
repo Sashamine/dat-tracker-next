@@ -8,6 +8,7 @@ import {
   CandlestickSeries,
   LineSeries,
   AreaSeries,
+  HistogramSeries,
   CandlestickData,
   Time,
 } from "lightweight-charts";
@@ -38,6 +39,7 @@ function processData(data: HistoricalPrice[]) {
       low: d.low,
       close: d.close,
       value: d.close,
+      volume: d.volume || 0,
     }));
     return { processed, timeMap, isIntraday };
   }
@@ -68,6 +70,7 @@ function processData(data: HistoricalPrice[]) {
       low: d.low,
       close: d.close,
       value: d.close,
+      volume: d.volume || 0,
     };
   });
 
@@ -162,6 +165,32 @@ export function StockChart({ data }: StockChartProps) {
 
     chartRef.current = chart;
 
+    // Add volume histogram first (so it renders behind price)
+    const volumeSeries = chart.addSeries(HistogramSeries, {
+      color: "#3b82f6",
+      priceFormat: {
+        type: "volume",
+      },
+      priceScaleId: "volume",
+    });
+    
+    // Configure volume price scale (bottom 20% of chart)
+    chart.priceScale("volume").applyOptions({
+      scaleMargins: {
+        top: 0.85,
+        bottom: 0,
+      },
+      borderVisible: false,
+    });
+
+    volumeSeries.setData(
+      processed.map((d) => ({
+        time: d.time,
+        value: d.volume,
+        color: d.close >= d.open ? "rgba(34, 197, 94, 0.5)" : "rgba(239, 68, 68, 0.5)",
+      }))
+    );
+
     if (chartType === "candle") {
       const series = chart.addSeries(CandlestickSeries, {
         upColor: "#22c55e",
@@ -203,6 +232,14 @@ export function StockChart({ data }: StockChartProps) {
         }))
       );
     }
+    
+    // Adjust main price scale to leave room for volume
+    chart.priceScale("right").applyOptions({
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.2,
+      },
+    });
 
     chart.timeScale().fitContent();
 
