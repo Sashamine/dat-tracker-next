@@ -306,12 +306,30 @@ async function fetchCompanyIntradayMnav(
     return getCompanyDailyMnav(ticker, range === "1d" ? "7d" : range === "7d" ? "1mo" : "1y", company);
   }
 
-  // Calculate mNAV using simple formula (no dilution adjustments)
+  // Calculate mNAV with dilution adjustments (ITM warrants/converts)
+  const today = new Date().toISOString().split("T")[0];
   return aligned.map(({ time, btcPrice: cryptoPrice, stockPrice }) => {
     // Convert stock price to USD if needed
     const stockPriceUsd = stockPrice / forexRate;
-    const marketCap = stockPriceUsd * company.sharesForMnav;
-    const enterpriseValue = marketCap + (company.totalDebt || 0) - (company.cashReserves || 0);
+    
+    // Get diluted share count based on current stock price (ITM instruments)
+    const effectiveShares = getEffectiveSharesAt(
+      ticker,
+      company.sharesForMnav,
+      stockPriceUsd,
+      today
+    );
+    
+    // Use diluted shares for market cap (includes ITM warrants/converts)
+    const marketCap = stockPriceUsd * effectiveShares.diluted;
+    
+    // Adjust debt for ITM convertibles (avoid double-counting)
+    const adjustedDebt = Math.max(0, (company.totalDebt || 0) - effectiveShares.inTheMoneyDebtValue);
+    
+    // Free cash = total cash - restricted (operating) cash
+    const freeCash = (company.cashReserves || 0) - (company.restrictedCash || 0);
+    
+    const enterpriseValue = marketCap + adjustedDebt + (company.preferredEquity || 0) - freeCash;
     const cryptoNav = company.holdings * cryptoPrice;
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
 
