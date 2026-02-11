@@ -244,56 +244,27 @@ export function StockChart({ data }: StockChartProps) {
 
   return (
     <div className="relative">
-      {/* Chart type toggle */}
-      <div className="absolute top-1 right-12 z-10 flex gap-1 bg-gray-800/80 rounded p-0.5">
+      {/* Chart type toggle - text labels above chart */}
+      <div className="flex gap-4 mb-2">
         <button
           onClick={() => setChartType("area")}
-          className={`p-1 rounded text-xs transition-colors ${
-            chartType === "area"
-              ? "bg-gray-600 text-white"
-              : "text-gray-400 hover:text-gray-200"
+          className={`text-sm font-medium transition-colors ${
+            chartType === "area" || chartType === "candle"
+              ? "text-white"
+              : "text-gray-500 hover:text-gray-300"
           }`}
-          title="Line chart"
         >
-          {/* Line chart icon */}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <polyline points="1,12 4,7 7,9 10,4 15,6" />
-          </svg>
-        </button>
-        <button
-          onClick={() => setChartType("candle")}
-          className={`p-1 rounded text-xs transition-colors ${
-            chartType === "candle"
-              ? "bg-gray-600 text-white"
-              : "text-gray-400 hover:text-gray-200"
-          }`}
-          title="Candlestick chart"
-        >
-          {/* Candlestick icon */}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <line x1="4" y1="2" x2="4" y2="14" />
-            <rect x="2.5" y="5" width="3" height="5" fill="currentColor" />
-            <line x1="12" y1="1" x2="12" y2="13" />
-            <rect x="10.5" y="4" width="3" height="6" rx="0" />
-          </svg>
+          Price
         </button>
         <button
           onClick={() => setChartType("volume")}
-          className={`p-1 rounded text-xs transition-colors ${
+          className={`text-sm font-medium transition-colors ${
             chartType === "volume"
-              ? "bg-gray-600 text-white"
-              : "text-gray-400 hover:text-gray-200"
+              ? "text-white"
+              : "text-gray-500 hover:text-gray-300"
           }`}
-          title="Volume chart"
         >
-          {/* Volume bars icon */}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-            <rect x="1" y="10" width="2" height="5" />
-            <rect x="4" y="6" width="2" height="9" />
-            <rect x="7" y="8" width="2" height="7" />
-            <rect x="10" y="4" width="2" height="11" />
-            <rect x="13" y="7" width="2" height="8" />
-          </svg>
+          Volume
         </button>
       </div>
       <div ref={chartContainerRef} className="w-full" />
