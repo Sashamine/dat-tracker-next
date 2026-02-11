@@ -63,9 +63,9 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "31,500",
+      searchTerm: "43,514",
       url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0269460-8k_twenty.htm"),
-      quote: "31,500 BTC contributed + PIPE BTC purchases",
+      quote: "Total: 31,500 BTC (Tether+Bitfinex) + ~12,014 PIPE = 43,514 BTC",
       anchor: "Business Combination",
       cik: XXI_CIK,
       accession: MERGER_8K_ACCESSION,
