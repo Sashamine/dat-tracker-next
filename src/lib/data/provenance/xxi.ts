@@ -63,9 +63,9 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "31,500",
+      searchTerm: "24,500 Bitcoin",
       url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0269460-8k_twenty.htm"),
-      quote: "31,500 BTC contributed by Tether/Bitfinex (Ctrl+F this). Total 43,514 includes PIPE purchases.",
+      quote: "Tether and Bitfinex contributed 24,500 Bitcoin and 7,000 Bitcoin respectively",
       anchor: "Business Combination",
       cik: XXI_CIK,
       accession: MERGER_8K_ACCESSION,
@@ -127,9 +127,9 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     TOTAL_DEBT,
     docSource({
       type: "sec-document",
-      searchTerm: "486,500,000",
+      searchTerm: "$486.5 million",
       url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0269460-8k_twenty.htm"),
-      quote: "$486.5 million aggregate principal amount",
+      quote: "Pubco issued $486.5 million of Convertible Notes",
       anchor: "Convertible Notes",
       cik: XXI_CIK,
       accession: MERGER_8K_ACCESSION,
