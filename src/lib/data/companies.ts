@@ -454,8 +454,8 @@ export const btcCompanies: Company[] = [
     debtSource: "Metaplanet Analytics Dashboard",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
     debtAsOf: "2026-02-11",
-    cashReserves: 150_000_000,  // ~$150M estimated from Q3 FY2025 (¥23.4B cash / 156 JPY/USD) - ESTIMATED
-    restrictedCash: 150_000_000,  // Debt service reserves (zero-coupon bonds) - not excess
+    cashReserves: 18_000_000,  // Q3 FY2025: ¥2.77B (¥1,488M cash + ¥1,286M deposits) = ~$18M USD
+    restrictedCash: 0,  // No restricted cash indicated in Q3 filing
     cashSource: "TDnet Q3 FY2025 Financial Results",
     cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2025-09-30",
