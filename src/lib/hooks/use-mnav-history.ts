@@ -576,7 +576,7 @@ export function useMnavHistory(
   const hasCompanyData = !!companyData;
   
   return useQuery({
-    queryKey: ["mnavHistory", ticker, range, effectiveInterval, isShortRange, companyData?.holdings, companyData?.currency, hasHistory],
+    queryKey: ["mnavHistory", ticker, range, effectiveInterval, isShortRange, companyData?.holdings, companyData?.asset, companyData?.currency, hasHistory],
     queryFn: async (): Promise<MnavDataPoint[]> => {
       // MSTR: use same calculation for all ranges (current balance sheet + historical prices)
       // This ensures consistency across timeframes
