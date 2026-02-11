@@ -20,6 +20,7 @@ const SOURCE_LABELS: Record<HoldingsSource, string> = {
   "company-reported": "Company Reported",
   "aggregator": "Third-party Aggregator",
   "manual": "Manual Entry",
+  "interpolated": "Interpolated",
 };
 
 // Source type colors
@@ -33,6 +34,7 @@ const SOURCE_COLORS: Record<HoldingsSource, string> = {
   "company-reported": "text-teal-400",
   "aggregator": "text-orange-400",
   "manual": "text-gray-400",
+  "interpolated": "text-amber-400",
 };
 
 export interface CitationProps {

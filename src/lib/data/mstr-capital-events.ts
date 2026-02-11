@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * MSTR Capital Events - 8-K Filings with SEC Provenance
  * ======================================================

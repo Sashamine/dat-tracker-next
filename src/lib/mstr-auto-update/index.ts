@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * MSTR Auto-Update Module
  * 

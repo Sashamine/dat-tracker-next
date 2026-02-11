@@ -217,7 +217,7 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
                 <span>Last verified: {data.lastVerified}</span>
                 {(internalUrl || secUrl) && (
                   <a
-                    href={secUrl || internalUrl}
+                    href={secUrl || internalUrl || undefined}
                     target={secUrl ? "_blank" : undefined}
                     rel={secUrl ? "noopener noreferrer" : undefined}
                     className="text-blue-500 hover:text-blue-400"
