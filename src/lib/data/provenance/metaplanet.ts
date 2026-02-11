@@ -51,45 +51,56 @@ function tdnetSource(params: {
 // CURRENT HOLDINGS (as of Dec 30, 2025)
 // =============================================================================
 
+// Direct PDF URLs from xj-storage.jp (TDnet document hosting)
+const PDF_URLS = {
+  btcPurchaseDec30: "https://contents.xj-storage.jp/xcontents/33500/4a51c54b/ec98/4363/bc59/64c440d858e3/140120251229527957.pdf",
+  q3FinancialResults: "https://contents.xj-storage.jp/xcontents/33500/07d06a47/5b14/4ca6/a744/8415fa2bcc9e/140120251112597045.pdf",
+};
+
 export const METAPLANET_PROVENANCE = {
   // BTC Holdings (from Dec 30, 2025 TDnet disclosure)
   holdings: pv(35_102, tdnetSource({
     title: "Notice of Additional Purchase of Bitcoin",
     date: "2025-12-30",
+    url: PDF_URLS.btcPurchaseDec30,
     quote: "Total Bitcoin holdings: 35,102 BTC",
-    searchTerm: "Dec 30, 2025",  // Search this date on disclosures page
+    searchTerm: "35,102",
   }), "Dec 30 purchase brought total to 35,102 BTC"),
 
   // Shares Outstanding (from Q3 2025 Financial Results)
   sharesOutstanding: pv(1_142_264_340, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
+    url: PDF_URLS.q3FinancialResults,
     quote: "Total shares outstanding: 1,142,264,340",
-    searchTerm: "Nov 13, 2025",  // Search this date on disclosures page
-  }), "Q3 FY2025 filing"),
+    searchTerm: "1,142,264,340",
+  }), "Q3 FY2025 filing - page 1"),
 
   // Total Debt (from Q3 2025 Financial Results - zero-coupon bonds)
   totalDebt: pv(280_000_000, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
+    url: PDF_URLS.q3FinancialResults,
     quote: "Zero-coupon bonds approximately ¥44B (~$280M USD)",
-    searchTerm: "Nov 13, 2025",  // Search this date on disclosures page
+    searchTerm: "44",  // Search for ¥44B in the document
   }), "Zero-coupon yen bonds, no interest payments"),
 
   // Cash Reserves (from Q3 2025 Financial Results)
   cashReserves: pv(150_000_000, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
+    url: PDF_URLS.q3FinancialResults,
     quote: "Cash and equivalents: ¥23.4B (~$150M USD at 156 JPY/USD)",
-    searchTerm: "Nov 13, 2025",  // Search this date on disclosures page
+    searchTerm: "23",  // Search for ¥23B in the document
   }), "Estimated from Q3 balance sheet"),
 
   // Average Cost Basis (from company disclosure)
   costBasisAvg: pv(107_607, tdnetSource({
     title: "Notice of Additional Purchase of Bitcoin",
     date: "2025-12-30",
+    url: PDF_URLS.btcPurchaseDec30,
     quote: "Average acquisition cost: $107,607 per BTC",
-    searchTerm: "Dec 30, 2025",  // Search this date on disclosures page
+    searchTerm: "107,607",
   }), "Cumulative average from all purchases"),
 };
 
