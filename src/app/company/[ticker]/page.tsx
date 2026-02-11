@@ -455,8 +455,9 @@ export default function CompanyPage() {
           <XXICompanyView company={displayCompany} />
         ) : displayCompany.ticker === "3350.T" ? (
           <MetaplanetCompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "SBET" ? (
-          <SBETCompanyView company={displayCompany} />
+        // DISABLED: SBETCompanyView crashes dev server - needs debugging
+        // ) : displayCompany.ticker === "SBET" ? (
+        //   <SBETCompanyView company={displayCompany} />
         ) : (
           <>
         {/* Key Valuation Metrics */}
