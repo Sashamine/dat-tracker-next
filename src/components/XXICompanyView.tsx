@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
 import { XXI_PROVENANCE, XXI_CIK, XXI_PROVENANCE_DEBUG } from "@/lib/data/provenance/xxi";
-import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
+import { pv, derivedSource, docSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
@@ -325,18 +325,18 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
             basicShares={effectiveShares?.basic}
             itmDilutionShares={effectiveShares ? effectiveShares.diluted - effectiveShares.basic : undefined}
             itmDebtAdjustment={metrics.inTheMoneyDebtValue}
-            sharesSourceUrl={XXI_PROVENANCE.sharesOutstanding?.source?.url}
+            sharesSourceUrl={XXI_PROVENANCE.sharesOutstanding?.source ? getSourceUrl(XXI_PROVENANCE.sharesOutstanding.source) : undefined}
             sharesSource={XXI_PROVENANCE.sharesOutstanding?.source?.type}
-            sharesAsOf={XXI_PROVENANCE.sharesOutstanding?.source?.asOf}
-            debtSourceUrl={XXI_PROVENANCE.totalDebt?.source?.url}
+            sharesAsOf={XXI_PROVENANCE.sharesOutstanding?.source ? getSourceDate(XXI_PROVENANCE.sharesOutstanding.source) : undefined}
+            debtSourceUrl={XXI_PROVENANCE.totalDebt?.source ? getSourceUrl(XXI_PROVENANCE.totalDebt.source) : undefined}
             debtSource={XXI_PROVENANCE.totalDebt?.source?.type}
-            debtAsOf={XXI_PROVENANCE.totalDebt?.source?.asOf}
-            cashSourceUrl={XXI_PROVENANCE.cashReserves?.source?.url}
+            debtAsOf={XXI_PROVENANCE.totalDebt?.source ? getSourceDate(XXI_PROVENANCE.totalDebt.source) : undefined}
+            cashSourceUrl={XXI_PROVENANCE.cashReserves?.source ? getSourceUrl(XXI_PROVENANCE.cashReserves.source) : undefined}
             cashSource={XXI_PROVENANCE.cashReserves?.source?.type}
-            cashAsOf={XXI_PROVENANCE.cashReserves?.source?.asOf}
-            holdingsSourceUrl={XXI_PROVENANCE.holdings?.source?.url}
+            cashAsOf={XXI_PROVENANCE.cashReserves?.source ? getSourceDate(XXI_PROVENANCE.cashReserves.source) : undefined}
+            holdingsSourceUrl={XXI_PROVENANCE.holdings?.source ? getSourceUrl(XXI_PROVENANCE.holdings.source) : undefined}
             holdingsSource={XXI_PROVENANCE.holdings?.source?.type}
-            holdingsAsOf={XXI_PROVENANCE.holdings?.source?.asOf}
+            holdingsAsOf={XXI_PROVENANCE.holdings?.source ? getSourceDate(XXI_PROVENANCE.holdings.source) : undefined}
             holdingsSearchTerm={(XXI_PROVENANCE.holdings?.source as any)?.searchTerm}
             debtSearchTerm={(XXI_PROVENANCE.totalDebt?.source as any)?.searchTerm}
             cashSearchTerm={(XXI_PROVENANCE.cashReserves?.source as any)?.searchTerm}
@@ -354,9 +354,9 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
             cashReserves={metrics.cashReserves}
             cryptoNav={metrics.cryptoNav}
             leverage={metrics.leverage}
-            debtSourceUrl={XXI_PROVENANCE.totalDebt?.source?.url}
-            cashSourceUrl={XXI_PROVENANCE.cashReserves?.source?.url}
-            holdingsSourceUrl={XXI_PROVENANCE.holdings?.source?.url}
+            debtSourceUrl={XXI_PROVENANCE.totalDebt?.source ? getSourceUrl(XXI_PROVENANCE.totalDebt.source) : undefined}
+            cashSourceUrl={XXI_PROVENANCE.cashReserves?.source ? getSourceUrl(XXI_PROVENANCE.cashReserves.source) : undefined}
+            holdingsSourceUrl={XXI_PROVENANCE.holdings?.source ? getSourceUrl(XXI_PROVENANCE.holdings.source) : undefined}
           />
         </div>
       )}
@@ -373,11 +373,11 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
             equityNav={metrics.equityNav}
             equityNavPerShare={metrics.equityNavPerShare}
             stockPrice={stockPrice}
-            holdingsSourceUrl={XXI_PROVENANCE.holdings?.source?.url}
-            cashSourceUrl={XXI_PROVENANCE.cashReserves?.source?.url}
-            debtSourceUrl={XXI_PROVENANCE.totalDebt?.source?.url}
-            preferredSourceUrl={XXI_PROVENANCE.preferredEquity?.source?.url}
-            sharesSourceUrl={XXI_PROVENANCE.sharesOutstanding?.source?.url}
+            holdingsSourceUrl={XXI_PROVENANCE.holdings?.source ? getSourceUrl(XXI_PROVENANCE.holdings.source) : undefined}
+            cashSourceUrl={XXI_PROVENANCE.cashReserves?.source ? getSourceUrl(XXI_PROVENANCE.cashReserves.source) : undefined}
+            debtSourceUrl={XXI_PROVENANCE.totalDebt?.source ? getSourceUrl(XXI_PROVENANCE.totalDebt.source) : undefined}
+            preferredSourceUrl={XXI_PROVENANCE.preferredEquity?.source ? getSourceUrl(XXI_PROVENANCE.preferredEquity.source) : undefined}
+            sharesSourceUrl={XXI_PROVENANCE.sharesOutstanding?.source ? getSourceUrl(XXI_PROVENANCE.sharesOutstanding.source) : undefined}
           />
         </div>
       )}

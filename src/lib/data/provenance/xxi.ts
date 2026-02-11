@@ -168,6 +168,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       url: secDocUrl(XXI_CIK, Q4_2025_10Q_ACCESSION, "xxi-20250930.htm"),
+      quote: "No preferred stock authorized or issued",
       cik: XXI_CIK,
       accession: Q4_2025_10Q_ACCESSION,
       filingType: "10-Q",

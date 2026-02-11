@@ -13,7 +13,7 @@ interface ProvenanceMetricProps {
   label: string;
   data: ProvenanceValue<number>;
   format?: "currency" | "number" | "btc" | "eth" | "shares" | "mnav";
-  subLabel?: string;
+  subLabel?: string | React.ReactNode;
   tooltip?: string;
   className?: string;
   ticker?: string;

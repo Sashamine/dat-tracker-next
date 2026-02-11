@@ -19,7 +19,7 @@ export type SourceType =
   | "derived"        // Calculated from other provenance-tracked values
 
 /** SEC filing types */
-export type SECFilingType = "10-K" | "10-Q" | "8-K" | "S-3" | "424B3" | "424B5" | "DEF14A" | "6-K" | "20-F" | "40-F";
+export type SECFilingType = "10-K" | "10-Q" | "8-K" | "S-1" | "S-3" | "424B3" | "424B5" | "DEF14A" | "6-K" | "20-F" | "40-F";
 
 // ============================================================================
 // XBRL SOURCE
@@ -235,6 +235,28 @@ export function secEdgarUrl(cik: string, accession: string): string {
 /** Build URL to SEC XBRL API for company facts */
 export function xbrlApiUrl(cik: string): string {
   return `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10, "0")}.json`;
+}
+
+/** Get URL from any source type (XBRL builds from cik/accession, Document has direct URL, Derived has none) */
+export function getSourceUrl(source: XBRLSource | DocumentSource | DerivedSource): string | undefined {
+  if (source.type === "xbrl") {
+    return secEdgarUrl(source.cik, source.accession);
+  } else if (source.type === "derived") {
+    return undefined;
+  } else {
+    return source.url;
+  }
+}
+
+/** Get filing date or document date from any source type */
+export function getSourceDate(source: XBRLSource | DocumentSource | DerivedSource): string | undefined {
+  if (source.type === "xbrl") {
+    return source.filingDate;
+  } else if (source.type === "derived") {
+    return undefined;
+  } else {
+    return source.documentDate || source.filingDate;
+  }
 }
 
 // ============================================================================
