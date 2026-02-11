@@ -106,6 +106,10 @@ export default function CompanyPage() {
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
   const [stockChartMode, setStockChartMode] = useState<"price" | "volume">("price");
+  const handleChartModeChange = (mode: "price" | "volume") => {
+    console.log("Parent received mode change:", mode);
+    setStockChartMode(mode);
+  };
   
   // Time range labels - changes based on chart mode
   const timeRangeLabels = useMemo(() => ({
@@ -1027,7 +1031,7 @@ export default function CompanyPage() {
         {/* Chart with Time Range Selector */}
         <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price ({stockChartMode})</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -1083,7 +1087,7 @@ export default function CompanyPage() {
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={stockChartMode} onChartModeChange={setStockChartMode} />
+            <StockChart data={history} chartMode={stockChartMode} onChartModeChange={handleChartModeChange} />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               No historical data available

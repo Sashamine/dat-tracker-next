@@ -87,11 +87,11 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
   // Use controlled mode if provided, otherwise internal state
   const chartMode = controlledMode ?? internalMode;
   const setChartMode = (mode: "price" | "volume") => {
+    console.log("StockChart setChartMode called:", mode, "callback exists:", !!onChartModeChange);
     if (onChartModeChange) {
       onChartModeChange(mode);
-    } else {
-      setInternalMode(mode);
     }
+    setInternalMode(mode);
   };
 
   const { processed, timeMap, isIntraday } = useMemo(

@@ -48,6 +48,7 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
   // Chart state
   const [timeRange, setTimeRange] = useState<TimeRange>("1mo");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1mo"]);
+  const [stockChartMode, setStockChartMode] = useState<"price" | "volume">("price");
   const { data: history, isLoading: historyLoading } = useStockHistory("XXI", timeRange, interval);
   
   const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1mo");
@@ -555,26 +556,28 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <div className="flex flex-wrap items-center gap-2">
               <div className="flex gap-1">
-                {([
-                  { value: "1d", label: "24H" },
-                  { value: "7d", label: "7D" },
-                  { value: "1mo", label: "1M" },
-                  { value: "1y", label: "1Y" },
-                  { value: "all", label: "ALL" },
-                ] as const).map(({ value, label }) => (
-                  <button
-                    key={value}
-                    onClick={() => handleTimeRangeChange(value)}
-                    className={cn(
-                      "px-3 py-1 text-sm rounded-md transition-colors",
-                      timeRange === value
-                        ? "bg-indigo-600 text-white"
-                        : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                    )}
-                  >
-                    {label}
-                  </button>
-                ))}
+                {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
+                  const label = value === "1d" 
+                    ? (stockChartMode === "volume" ? "1D" : "24H")
+                    : value === "7d" ? "7D"
+                    : value === "1mo" ? "1M"
+                    : value === "1y" ? "1Y"
+                    : "ALL";
+                  return (
+                    <button
+                      key={value}
+                      onClick={() => handleTimeRangeChange(value)}
+                      className={cn(
+                        "px-3 py-1 text-sm rounded-md transition-colors",
+                        timeRange === value
+                          ? "bg-indigo-600 text-white"
+                          : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                      )}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -583,7 +586,7 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} />
+            <StockChart data={history} chartMode={stockChartMode} onChartModeChange={setStockChartMode} />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               Limited history — XXI launched Dec 2025
