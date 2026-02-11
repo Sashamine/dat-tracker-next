@@ -6,6 +6,10 @@
  * ETH Treasury company - holds native ETH + LsETH (Lido staked ETH)
  * 
  * Every value traces back to an SEC filing.
+ * 
+ * LAST VERIFIED: 2026-02-11
+ * LAST HOLDINGS UPDATE: 2025-12-17 (as of Dec 14, 2025)
+ * NO HOLDINGS 8-Ks FILED IN JAN/FEB 2026
  */
 
 import { pv, docSource, SECFilingType } from "../types/provenance";
@@ -18,7 +22,7 @@ export const SBET_CIK = "1981535";
 export const SBET_TICKER = "SBET";
 
 // =============================================================================
-// KEY SEC FILINGS
+// ALL 8-K FILINGS (Complete list Jun 2025 - Feb 2026)
 // =============================================================================
 
 interface SECFiling {
@@ -26,33 +30,419 @@ interface SECFiling {
   formType: SECFilingType;
   filedDate: string;
   periodDate: string;
+  items: string;
   url: string;
+  hasHoldingsUpdate: boolean;
 }
 
 const SEC_FILINGS: Record<string, SECFiling> = {
-  // Latest holdings update
+  // =========================================================================
+  // 2026 FILINGS
+  // =========================================================================
+  
+  // Name change - NO holdings update
+  name_change_feb_2026: {
+    accession: "0001493152-26-004839",
+    formType: "8-K",
+    filedDate: "2026-02-03",
+    periodDate: "2026-02-03",
+    items: "5.03, 7.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226004839/",
+    hasHoldingsUpdate: false,
+  },
+
+  // =========================================================================
+  // 2025 FILINGS (Dec → Jun, reverse chronological)
+  // =========================================================================
+  
+  // Dec 17, 2025 - LATEST HOLDINGS UPDATE
   holdings_dec_2025: {
     accession: "0001493152-25-028063",
     formType: "8-K",
     filedDate: "2025-12-17",
     periodDate: "2025-12-14",
+    items: "5.02, 5.03, 7.01, 8.01, 9.01",
     url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/",
+    hasHoldingsUpdate: true,
   },
-  // Q3 2025 10-Q (shares, cash, financials)
+
+  // Nov 13, 2025 - Amended earnings (corrected holdings)
+  holdings_nov_2025_amended: {
+    accession: "0001493152-25-022065",
+    formType: "8-K/A",
+    filedDate: "2025-11-13",
+    periodDate: "2025-11-09",
+    items: "2.02, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Nov 12, 2025 - Earnings (original)
+  earnings_q3_2025: {
+    accession: "0001493152-25-022012",
+    formType: "8-K",
+    filedDate: "2025-11-12",
+    periodDate: "2025-11-09",
+    items: "2.02, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022012/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Q3 2025 10-Q
   q3_2025_10q: {
     accession: "0001493152-25-021970",
     formType: "10-Q",
     filedDate: "2025-11-12",
     periodDate: "2025-09-30",
+    items: "10-Q",
     url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
+    hasHoldingsUpdate: true, // Has official quarter-end holdings
   },
-  // Name change
-  name_change_2026: {
-    accession: "0001493152-26-004839",
+
+  // Oct 28, 2025
+  filing_oct_28_2025: {
+    accession: "0001493152-25-019828",
     formType: "8-K",
-    filedDate: "2026-02-03",
-    periodDate: "2026-02-03",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226004839/",
+    filedDate: "2025-10-28",
+    periodDate: "2025-10-28",
+    items: "8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225019828/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Oct 21, 2025 - Holdings update
+  holdings_oct_2025: {
+    accession: "0001493152-25-018731",
+    formType: "8-K",
+    filedDate: "2025-10-21",
+    periodDate: "2025-10-19",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Oct 17, 2025
+  filing_oct_17_2025: {
+    accession: "0001493152-25-018379",
+    formType: "8-K",
+    filedDate: "2025-10-17",
+    periodDate: "2025-10-17",
+    items: "1.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018379/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Sep 25, 2025 (2 filings)
+  filing_sep_25_2025_a: {
+    accession: "0001493152-25-014949",
+    formType: "8-K",
+    filedDate: "2025-09-25",
+    periodDate: "2025-09-25",
+    items: "5.03, 5.07, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225014949/",
+    hasHoldingsUpdate: false,
+  },
+  filing_sep_25_2025_b: {
+    accession: "0001493152-25-014866",
+    formType: "8-K",
+    filedDate: "2025-09-25",
+    periodDate: "2025-09-25",
+    items: "8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225014866/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Sep 16, 2025 - Holdings update
+  holdings_sep_16_2025: {
+    accession: "0001493152-25-013634",
+    formType: "8-K",
+    filedDate: "2025-09-16",
+    periodDate: "2025-09-14",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Sep 9, 2025
+  filing_sep_09_2025: {
+    accession: "0001493152-25-012846",
+    formType: "8-K",
+    filedDate: "2025-09-09",
+    periodDate: "2025-09-09",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012846/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Sep 2, 2025 - Holdings update (Aug 31 period)
+  holdings_sep_02_2025: {
+    accession: "0001493152-25-012518",
+    formType: "8-K",
+    filedDate: "2025-09-02",
+    periodDate: "2025-08-31",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Aug 26, 2025 - Holdings update
+  holdings_aug_26_2025: {
+    accession: "0001641172-25-025469",
+    formType: "8-K",
+    filedDate: "2025-08-26",
+    periodDate: "2025-08-24",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Aug 22, 2025 (2 filings)
+  filing_aug_22_2025_a: {
+    accession: "0001641172-25-025235",
+    formType: "8-K",
+    filedDate: "2025-08-22",
+    periodDate: "2025-08-22",
+    items: "5.02, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025235/",
+    hasHoldingsUpdate: false,
+  },
+  filing_aug_22_2025_b: {
+    accession: "0001641172-25-025218",
+    formType: "8-K",
+    filedDate: "2025-08-22",
+    periodDate: "2025-08-22",
+    items: "1.01, 7.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025218/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Aug 20, 2025
+  filing_aug_20_2025: {
+    accession: "0001641172-25-024925",
+    formType: "8-K",
+    filedDate: "2025-08-20",
+    periodDate: "2025-08-20",
+    items: "1.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024925/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Aug 19, 2025 - Holdings update
+  holdings_aug_19_2025: {
+    accession: "0001641172-25-024734",
+    formType: "8-K",
+    filedDate: "2025-08-19",
+    periodDate: "2025-08-17",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Aug 15, 2025 - Q2 Earnings
+  earnings_q2_2025: {
+    accession: "0001641172-25-024278",
+    formType: "8-K",
+    filedDate: "2025-08-15",
+    periodDate: "2025-08-13",
+    items: "2.02, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024278/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Aug 12, 2025 - Holdings update
+  holdings_aug_12_2025: {
+    accession: "0001641172-25-023115",
+    formType: "8-K",
+    filedDate: "2025-08-12",
+    periodDate: "2025-08-10",
+    items: "1.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225023115/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Aug 8, 2025
+  filing_aug_08_2025: {
+    accession: "0001641172-25-022680",
+    formType: "8-K",
+    filedDate: "2025-08-08",
+    periodDate: "2025-08-08",
+    items: "1.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022680/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Aug 5, 2025 - Holdings update
+  holdings_aug_05_2025: {
+    accession: "0001641172-25-022149",
+    formType: "8-K",
+    filedDate: "2025-08-05",
+    periodDate: "2025-08-03",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jul 29, 2025 - Holdings update
+  holdings_jul_29_2025: {
+    accession: "0001641172-25-021266",
+    formType: "8-K",
+    filedDate: "2025-07-29",
+    periodDate: "2025-07-27",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jul 28, 2025 - Amendment
+  filing_jul_28_2025: {
+    accession: "0001641172-25-021111",
+    formType: "8-K/A",
+    filedDate: "2025-07-28",
+    periodDate: "2025-07-28",
+    items: "5.07",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021111/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Jul 25, 2025 (2 filings)
+  filing_jul_25_2025_a: {
+    accession: "0001641172-25-020953",
+    formType: "8-K",
+    filedDate: "2025-07-25",
+    periodDate: "2025-07-25",
+    items: "5.02, 5.03, 5.07, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020953/",
+    hasHoldingsUpdate: false,
+  },
+  filing_jul_25_2025_b: {
+    accession: "0001641172-25-020947",
+    formType: "8-K",
+    filedDate: "2025-07-25",
+    periodDate: "2025-07-25",
+    items: "5.02, 7.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020947/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Jul 22, 2025 - Holdings update
+  holdings_jul_22_2025: {
+    accession: "0001641172-25-020521",
+    formType: "8-K",
+    filedDate: "2025-07-22",
+    periodDate: "2025-07-20",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020521/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jul 17, 2025
+  filing_jul_17_2025: {
+    accession: "0001641172-25-020054",
+    formType: "8-K",
+    filedDate: "2025-07-17",
+    periodDate: "2025-07-17",
+    items: "1.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020054/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Jul 15, 2025 - Holdings update
+  holdings_jul_15_2025: {
+    accession: "0001641172-25-019635",
+    formType: "8-K",
+    filedDate: "2025-07-15",
+    periodDate: "2025-07-13",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225019635/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jul 11, 2025 - Ethereum Foundation purchase
+  eth_foundation_jul_2025: {
+    accession: "0001641172-25-018680",
+    formType: "8-K",
+    filedDate: "2025-07-11",
+    periodDate: "2025-07-11",
+    items: "1.01, 7.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018680/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jul 9, 2025
+  filing_jul_09_2025: {
+    accession: "0001641172-25-018312",
+    formType: "8-K",
+    filedDate: "2025-07-09",
+    periodDate: "2025-07-09",
+    items: "4.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018312/",
+    hasHoldingsUpdate: false,
+  },
+
+  // Jul 8, 2025 - Holdings update
+  holdings_jul_08_2025: {
+    accession: "0001641172-25-018094",
+    formType: "8-K",
+    filedDate: "2025-07-08",
+    periodDate: "2025-07-04",
+    items: "7.01, 8.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jul 1, 2025 - Holdings update (Jun 27 period)
+  holdings_jul_01_2025: {
+    accession: "0001641172-25-017278",
+    formType: "8-K",
+    filedDate: "2025-07-01",
+    periodDate: "2025-06-27",
+    items: "7.01, 8.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jun 24, 2025 - Holdings update
+  holdings_jun_24_2025: {
+    accession: "0001641172-25-016228",
+    formType: "8-K",
+    filedDate: "2025-06-24",
+    periodDate: "2025-06-20",
+    items: "7.01, 8.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jun 13, 2025 - First holdings update post-pivot
+  holdings_jun_13_2025: {
+    accession: "0001641172-25-014970",
+    formType: "8-K",
+    filedDate: "2025-06-13",
+    periodDate: "2025-06-12",
+    items: "7.01, 8.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/",
+    hasHoldingsUpdate: true,
+  },
+
+  // Jun 5, 2025 - Strategy launch announcement
+  strategy_launch_jun_2025: {
+    accession: "0001641172-25-013718",
+    formType: "8-K",
+    filedDate: "2025-06-05",
+    periodDate: "2025-06-02",
+    items: "8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225013718/",
+    hasHoldingsUpdate: false,
+  },
+
+  // May 30, 2025 - DAT pivot announcement
+  dat_pivot_may_2025: {
+    accession: "0001641172-25-013081",
+    formType: "8-K",
+    filedDate: "2025-05-30",
+    periodDate: "2025-05-30",
+    items: "1.01, 3.02, 5.02, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225013081/",
+    hasHoldingsUpdate: false,
   },
 };
 
@@ -145,10 +535,6 @@ export const SBET_PROVENANCE = {
   // COST BASIS (from Q3 2025 10-Q)
   // ---------------------------------------------------------------------------
   
-  // Cost basis calculated from Q3 10-Q balance sheet
-  // Native ETH: $2,304,908,135 for 580,841 units = $3,968/ETH
-  // LsETH: $717,419,123 for 236,906 units = $3,028/ETH
-  // Total: $3,022,327,258 for 817,747 units = $3,696/ETH weighted avg
   costBasisTotal: pv(3_022_327_258, secDoc(
     SEC_FILINGS.q3_2025_10q,
     "Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
@@ -164,139 +550,171 @@ export const SBET_PROVENANCE = {
 };
 
 // =============================================================================
-// HOLDINGS HISTORY - ETH Acquisitions by Date
+// HOLDINGS HISTORY - Complete list with SEC accession numbers
 // =============================================================================
 
-export interface SBETAcquisition {
-  date: string;           // YYYY-MM-DD (period date from filing)
-  filedDate: string;      // When the 8-K was filed
-  ethAcquired: number;    // ETH acquired in this period
-  runningTotal: number;   // Total ETH after this acquisition
+export interface SBETHoldingsSnapshot {
+  date: string;           // Period date (YYYY-MM-DD)
+  filedDate: string;      // When 8-K was filed
+  holdings: number;       // Total ETH (native + LsETH as-if-redeemed)
+  holdingsNative?: number;    // Native ETH (when disclosed separately)
+  holdingsLsETH?: number;     // LsETH as-if-redeemed (when disclosed)
+  stakingRewards?: number;    // Cumulative staking rewards (when disclosed)
   accession: string;      // SEC accession number
-  source: string;         // Brief description
+  url: string;            // Direct link to filing
 }
 
-// Holdings snapshots from 8-K filings (Item 7.01 / 8.01)
-// Traced from SEC filings Aug-Dec 2025
-export const SBET_HOLDINGS_HISTORY: SBETAcquisition[] = [
-  // Dec 2025 - Leadership transition, latest holdings
+// All holdings snapshots from 8-K filings (Items 7.01, 8.01)
+export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
+  // Dec 2025
   {
     date: "2025-12-14",
     filedDate: "2025-12-17",
-    ethAcquired: 3_571, // 863,424 - 859,853
-    runningTotal: 863_424,
+    holdings: 863_424,
+    holdingsNative: 639_241,
+    holdingsLsETH: 224_183,
+    stakingRewards: 9_241,
     accession: "0001493152-25-028063",
-    source: "8-K Ex 99.1: 639,241 native + 224,183 LsETH",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/",
   },
-  // Oct 2025 - First filing with native/LsETH breakdown
+  // Nov 2025 (corrected via 8-K/A)
+  {
+    date: "2025-11-09",
+    filedDate: "2025-11-13",
+    holdings: 861_251,
+    holdingsNative: 637_752,
+    holdingsLsETH: 223_499,
+    accession: "0001493152-25-022065",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/",
+  },
+  // Oct 2025
   {
     date: "2025-10-19",
     filedDate: "2025-10-21",
-    ethAcquired: 21_701, // 859,853 - 838,152
-    runningTotal: 859_853,
+    holdings: 859_853,
+    holdingsNative: 601_143,
+    holdingsLsETH: 258_710,
+    stakingRewards: 5_671,
     accession: "0001493152-25-018731",
-    source: "8-K Ex 99.1: 601,143 native + 258,710 LsETH. Staking rewards: 5,671 cumulative",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/",
+  },
+  // Q3 2025 10-Q (official quarter-end)
+  {
+    date: "2025-09-30",
+    filedDate: "2025-11-12",
+    holdings: 817_747,
+    holdingsNative: 580_841,
+    holdingsLsETH: 236_906,
+    accession: "0001493152-25-021970",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
   },
   // Sep 2025
   {
     date: "2025-09-14",
     filedDate: "2025-09-16",
-    ethAcquired: 922, // 838,152 - 837,230
-    runningTotal: 838_152,
-    accession: "0001493152-25-013634",
-    source: "8-K Ex 99.1: 838,152 ETH valued at $3.86B. Staking rewards: 3,240 cumulative",
-  },
-  // Aug 2025 - End of month
-  {
-    date: "2025-08-31",
-    filedDate: "2025-09-02",
-    ethAcquired: 39_526, // 837,230 - 797,704
-    runningTotal: 837_230,
-    accession: "0001493152-25-012518",
-    source: "8-K Ex 99.1: 837,230 ETH valued at $3.6B. Staking rewards: 2,318 cumulative",
-  },
-  // Aug 2025 - Mid-month
-  {
-    date: "2025-08-24",
-    filedDate: "2025-08-26",
-    ethAcquired: 200_904, // 797,704 - ~596,800 (prior week)
-    runningTotal: 797_704,
-    accession: "0001641172-25-025469",
-    source: "8-K Ex 99.1: 797,704 ETH valued at $3.7B. Staking rewards: 1,799 cumulative",
-  },
-];
-
-// =============================================================================
-// STAKING REWARDS HISTORY
-// =============================================================================
-
-export interface SBETStakingSnapshot {
-  date: string;           // Period end date
-  filedDate: string;      // When 8-K was filed
-  cumulativeRewards: number;  // Total ETH earned since Jun 2, 2025
-  periodRewards: number;  // ETH earned since last snapshot
-  holdings: number;       // Total holdings at this time
-  accession: string;
-}
-
-// Staking rewards from 8-K filings (cumulative since Jun 2, 2025 DAT launch)
-export const SBET_STAKING_HISTORY: SBETStakingSnapshot[] = [
-  {
-    date: "2025-12-14",
-    filedDate: "2025-12-17",
-    cumulativeRewards: 9_241,  // 3,350 native + 5,891 LsETH
-    periodRewards: 3_570,
-    holdings: 863_424,
-    accession: "0001493152-25-028063",
-  },
-  {
-    date: "2025-10-19",
-    filedDate: "2025-10-21",
-    cumulativeRewards: 5_671,
-    periodRewards: 2_431,
-    holdings: 859_853,
-    accession: "0001493152-25-018731",
-  },
-  {
-    date: "2025-09-14",
-    filedDate: "2025-09-16",
-    cumulativeRewards: 3_240,
-    periodRewards: 922,
     holdings: 838_152,
+    stakingRewards: 3_240,
     accession: "0001493152-25-013634",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/",
   },
+  // Aug 2025
   {
     date: "2025-08-31",
     filedDate: "2025-09-02",
-    cumulativeRewards: 2_318,
-    periodRewards: 519,
     holdings: 837_230,
+    stakingRewards: 2_318,
     accession: "0001493152-25-012518",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/",
   },
   {
     date: "2025-08-24",
     filedDate: "2025-08-26",
-    cumulativeRewards: 1_799,
-    periodRewards: 1_799,  // First disclosure
     holdings: 797_704,
+    stakingRewards: 1_799,
     accession: "0001641172-25-025469",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/",
+  },
+  {
+    date: "2025-08-17",
+    filedDate: "2025-08-19",
+    holdings: 740_760,
+    accession: "0001641172-25-024734",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/",
+  },
+  {
+    date: "2025-08-10",
+    filedDate: "2025-08-12",
+    holdings: 598_800,
+    accession: "0001641172-25-023115",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225023115/",
+  },
+  {
+    date: "2025-08-03",
+    filedDate: "2025-08-05",
+    holdings: 521_939,
+    accession: "0001641172-25-022149",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/",
+  },
+  // Jul 2025
+  {
+    date: "2025-07-27",
+    filedDate: "2025-07-29",
+    holdings: 438_190,
+    accession: "0001641172-25-021266",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/",
+  },
+  {
+    date: "2025-07-20",
+    filedDate: "2025-07-22",
+    holdings: 360_807,
+    accession: "0001641172-25-020521",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020521/",
+  },
+  {
+    date: "2025-07-13",
+    filedDate: "2025-07-15",
+    holdings: 280_706,
+    accession: "0001641172-25-019635",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225019635/",
+  },
+  // Jul 11 - Ethereum Foundation 10K ETH purchase
+  {
+    date: "2025-07-11",
+    filedDate: "2025-07-11",
+    holdings: 270_000, // Estimated - 10K ETH from EF added
+    accession: "0001641172-25-018680",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018680/",
+  },
+  {
+    date: "2025-07-04",
+    filedDate: "2025-07-08",
+    holdings: 205_634,
+    accession: "0001641172-25-018094",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/",
+  },
+  // Jun 2025
+  {
+    date: "2025-06-27",
+    filedDate: "2025-07-01",
+    holdings: 198_167,
+    accession: "0001641172-25-017278",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/",
+  },
+  {
+    date: "2025-06-20",
+    filedDate: "2025-06-24",
+    holdings: 188_478,
+    accession: "0001641172-25-016228",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/",
+  },
+  {
+    date: "2025-06-12",
+    filedDate: "2025-06-13",
+    holdings: 176_270,
+    accession: "0001641172-25-014970",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/",
   },
 ];
-
-// Calculated staking metrics
-export const SBET_STAKING_METRICS = {
-  // Total rewards Jun 2 - Dec 14, 2025 (~6.5 months)
-  totalRewards: 9_241,
-  periodDays: 195,  // Jun 2 to Dec 14
-  
-  // Annualized yield calculation
-  // 9,241 ETH / 195 days * 365 = ~17,300 ETH/year
-  // On average holdings of ~820,000 ETH = ~2.1% yield
-  annualizedYield: 0.021,
-  
-  // Note: The 2.8% displayed is the protocol rate, actual realized is lower
-  // due to ramping holdings and timing of staking deployment
-};
 
 // =============================================================================
 // COMPANY METADATA
@@ -306,14 +724,15 @@ export const SBET_METADATA = {
   name: "Sharplink, Inc.",
   formerName: "SharpLink Gaming, Inc.",
   nameChangeDate: "2026-02-03",
-  nameChangeSource: SEC_FILINGS.name_change_2026.url,
+  nameChangeAccession: "0001493152-26-004839",
   
-  datStartDate: "2025-06-02", // "formally launching its ETH treasury business on June 2, 2025"
+  datStartDate: "2025-06-02",
+  datAnnouncementAccession: "0001641172-25-013081",
   
   stakingStrategy: {
     description: "Native staking + Lido LsETH (liquid staking)",
-    stakingPct: 1.0, // "nearly 100%" / "substantially all"
-    annualYield: 0.028, // ~2.8% staking yield
+    stakingPct: 1.0,
+    annualYield: 0.028,
   },
   
   leader: "Joseph Chalom",
@@ -321,13 +740,18 @@ export const SBET_METADATA = {
   leaderBackground: "Former BlackRock executive",
   
   capitalPrograms: {
-    atmCapacity: 2_000_000_000, // $2B S-3 shelf registration
-    buybackProgram: 1_500_000_000, // $1.5B buyback authorization
+    atmCapacity: 2_000_000_000,
+    buybackProgram: 1_500_000_000,
   },
+  
+  // Last verification
+  lastVerified: "2026-02-11",
+  lastHoldingsUpdate: "2025-12-17",
+  nextExpectedUpdate: "Q4 2025 10-K (expected Mar 2026)",
 };
 
 // =============================================================================
-// EXPORT FOR USE IN COMPANY DATA
+// EXPORT HELPERS
 // =============================================================================
 
 export function getSBETCurrentHoldings() {
@@ -336,4 +760,12 @@ export function getSBETCurrentHoldings() {
 
 export function getSBETCurrentShares() {
   return SBET_PROVENANCE.sharesOutstanding.value;
+}
+
+export function getSBETFilingsList() {
+  return Object.values(SEC_FILINGS);
+}
+
+export function getSBETHoldingsFilings() {
+  return Object.values(SEC_FILINGS).filter(f => f.hasHoldingsUpdate);
 }

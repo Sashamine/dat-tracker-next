@@ -464,41 +464,56 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 //   - Jul 11, 2025: Purchased 10,000 ETH from Ethereum Foundation ($25.7M, $2,572/ETH)
 //   - Ongoing ATM share offerings to fund ETH purchases
 //   - Feb 3, 2026: Renamed from SharpLink Gaming to Sharplink Inc
+// SBET holdings history - sourced from provenance/sbet.ts
+// See provenance file for complete SEC accession numbers and filing details
+// Last verified: 2026-02-11 | Last holdings update: 2025-12-17 (no Jan/Feb 2026 updates)
 const SBET_HISTORY: HoldingsSnapshot[] = [
-  // Weekly 8-K filings — ETH totals include native ETH + LsETH "as-if redeemed"
-  // Shares outstanding interpolated between quarterly filings where not directly available
-  // Q2 2025: 145M shares (Jun 30) → Q3 2025: 180M shares (Sep 30) → Dec 2025: 196.7M shares
-  //
   // Jun 2025 — Initial accumulation phase (strategy launched Jun 2)
-  { date: "2025-06-12", holdings: 176270, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.001259, source: "8-K Jun 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-06-20", holdings: 188478, sharesOutstandingDiluted: 142_000_000, holdingsPerShare: 0.001327, source: "8-K Jun 24, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-06-27", holdings: 198167, sharesOutstandingDiluted: 144_000_000, holdingsPerShare: 0.001376, source: "8-K Jul 1, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/form8-k.htm", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-014970
+  { date: "2025-06-12", holdings: 176_270, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.001259, source: "8-K Jun 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-016228
+  { date: "2025-06-20", holdings: 188_478, sharesOutstandingDiluted: 142_000_000, holdingsPerShare: 0.001327, source: "8-K Jun 24, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-017278
+  { date: "2025-06-27", holdings: 198_167, sharesOutstandingDiluted: 144_000_000, holdingsPerShare: 0.001376, source: "8-K Jul 1, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/", sourceType: "sec-filing" },
   // Q2 2025 quarter-end (interpolated between Jun 27 and Jul 4 filings)
   { date: "2025-06-30", holdings: 200_000, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.001379, source: "Interpolated (Q2 end)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q", sourceType: "interpolated" as HoldingsSource },
-  //
+  
   // Jul 2025 — Rapid accumulation (inc. 10K ETH from Ethereum Foundation on Jul 11)
-  { date: "2025-07-04", holdings: 205634, sharesOutstandingDiluted: 146_000_000, holdingsPerShare: 0.001408, source: "8-K Jul 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-07-13", holdings: 280706, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.001871, source: "8-K Jul 15, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225019635/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-07-20", holdings: 360807, sharesOutstandingDiluted: 152_000_000, holdingsPerShare: 0.002374, source: "8-K Jul 22, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020521/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-07-27", holdings: 438190, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.002827, source: "8-K Jul 29, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/form8-k.htm", sourceType: "sec-filing" },
-  //
+  // Accession: 0001641172-25-018094
+  { date: "2025-07-04", holdings: 205_634, sharesOutstandingDiluted: 146_000_000, holdingsPerShare: 0.001408, source: "8-K Jul 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-019635
+  { date: "2025-07-13", holdings: 280_706, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.001871, source: "8-K Jul 15, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225019635/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-020521
+  { date: "2025-07-20", holdings: 360_807, sharesOutstandingDiluted: 152_000_000, holdingsPerShare: 0.002374, source: "8-K Jul 22, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020521/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-021266
+  { date: "2025-07-27", holdings: 438_190, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.002827, source: "8-K Jul 29, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/", sourceType: "sec-filing" },
+  
   // Aug 2025 — Massive buying spree
-  { date: "2025-08-03", holdings: 521939, sharesOutstandingDiluted: 158_000_000, holdingsPerShare: 0.003303, source: "8-K Aug 5, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-08-10", holdings: 598800, sharesOutstandingDiluted: 161_000_000, holdingsPerShare: 0.003719, source: "8-K Aug 12, 2025 (approx)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225023115/ex99-1.htm", sourceType: "sec-filing" },
-  { date: "2025-08-17", holdings: 740760, sharesOutstandingDiluted: 164_000_000, holdingsPerShare: 0.004517, source: "8-K Aug 19, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-08-24", holdings: 797704, sharesOutstandingDiluted: 167_000_000, holdingsPerShare: 0.004776, source: "8-K Aug 26, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2025-08-31", holdings: 837230, sharesOutstandingDiluted: 170_000_000, holdingsPerShare: 0.004925, source: "8-K Sep 2, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/form8-k.htm", sourceType: "sec-filing" },
-  //
-  // Sep 2025 — Accumulation slows, approaching 850K
-  { date: "2025-09-14", holdings: 838152, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.004789, source: "8-K Sep 16, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/form8-k.htm", sourceType: "sec-filing" },
-  // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH). Note: lower than Sep 14 due to LsETH conversion rate changes
-  { date: "2025-09-30", holdings: 817747, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004543, stockPrice: 326.42, source: "Q3 2025 10-Q (Nov 12)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/", sourceType: "sec-filing" },
-  //
-  // Oct-Dec 2025 — Stabilizing around 850-865K
-  { date: "2025-10-19", holdings: 859853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004661, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/form8-k.htm", sourceType: "sec-filing" },
-  // Nov 9: corrected from 842,084 to 861,251 per 8-K/A (637,752 native + 223,499 LsETH as-if-redeemed)
-  { date: "2025-11-09", holdings: 861251, sharesOutstandingDiluted: 189_000_000, holdingsPerShare: 0.004557, source: "8-K/A Nov 13, 2025 (corrected)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/ex99-1.htm", sourceType: "sec-filing" },
-  { date: "2025-12-14", holdings: 863424, sharesOutstandingDiluted: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-022149
+  { date: "2025-08-03", holdings: 521_939, sharesOutstandingDiluted: 158_000_000, holdingsPerShare: 0.003303, source: "8-K Aug 5, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-023115
+  { date: "2025-08-10", holdings: 598_800, sharesOutstandingDiluted: 161_000_000, holdingsPerShare: 0.003719, source: "8-K Aug 12, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225023115/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-024734
+  { date: "2025-08-17", holdings: 740_760, sharesOutstandingDiluted: 164_000_000, holdingsPerShare: 0.004517, source: "8-K Aug 19, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/", sourceType: "sec-filing" },
+  // Accession: 0001641172-25-025469
+  { date: "2025-08-24", holdings: 797_704, sharesOutstandingDiluted: 167_000_000, holdingsPerShare: 0.004776, source: "8-K Aug 26, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/", sourceType: "sec-filing" },
+  // Accession: 0001493152-25-012518
+  { date: "2025-08-31", holdings: 837_230, sharesOutstandingDiluted: 170_000_000, holdingsPerShare: 0.004925, source: "8-K Sep 2, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/", sourceType: "sec-filing" },
+  
+  // Sep 2025 — Accumulation slows
+  // Accession: 0001493152-25-013634
+  { date: "2025-09-14", holdings: 838_152, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.004789, source: "8-K Sep 16, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/", sourceType: "sec-filing" },
+  // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH). Lower than Sep 14 due to LsETH rate
+  // Accession: 0001493152-25-021970
+  { date: "2025-09-30", holdings: 817_747, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004543, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/", sourceType: "sec-filing" },
+  
+  // Oct-Dec 2025 — Stabilizing around 860K
+  // Accession: 0001493152-25-018731
+  { date: "2025-10-19", holdings: 859_853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004661, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/", sourceType: "sec-filing" },
+  // Accession: 0001493152-25-022065 (8-K/A corrected)
+  { date: "2025-11-09", holdings: 861_251, sharesOutstandingDiluted: 189_000_000, holdingsPerShare: 0.004557, source: "8-K/A Nov 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/", sourceType: "sec-filing" },
+  // Accession: 0001493152-25-028063 (LATEST)
+  { date: "2025-12-14", holdings: 863_424, sharesOutstandingDiluted: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/", sourceType: "sec-filing" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury
