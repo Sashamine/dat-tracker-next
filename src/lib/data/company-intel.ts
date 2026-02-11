@@ -10,12 +10,20 @@ export interface PressRelease {
   url?: string;
 }
 
+export interface StrategyDoc {
+  title: string;
+  date: string; // YYYY-MM-DD
+  description: string;
+  url: string;
+}
+
 export interface CompanyIntel {
   ticker: string;
   pressReleases: PressRelease[];
   strategySummary: string;
   recentDevelopments: string[];
   keyBackers?: string[];
+  strategyDocs?: StrategyDoc[];
   outlook2026?: string;
   lastResearched: string; // YYYY-MM-DD
 }
@@ -80,13 +88,13 @@ const METAPLANET_INTEL: CompanyIntel = {
     "Zero-coupon yen bonds (no interest, principal at maturity)",
   ],
   keyBackers: ["Simon Gerovich (CEO)", "Dylan LeClair (Strategic Advisor)"],
-  outlook2026: `**Key Strategy Documents:**
-• Q3 2025 Earnings Presentation (Nov 14, 2025) - Full strategy synthesis
-• Capital Allocation Policy (Oct 28, 2025) - mNAV decision framework
-• Phase II: Bitcoin Platform (Oct 1, 2025) - Income generation expansion
-• 2025-2027 BITCOIN PLAN (Jun 6, 2025) - 210K BTC target
-
-**Current Status:**
+  strategyDocs: [
+    { title: "Q3 2025 Earnings Presentation", date: "2025-11-14", description: "Full strategy synthesis", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf" },
+    { title: "Capital Allocation Policy", date: "2025-10-28", description: "mNAV decision framework", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+    { title: "Phase II: Bitcoin Platform", date: "2025-10-01", description: "Income generation expansion", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+    { title: "2025-2027 BITCOIN PLAN", date: "2025-06-06", description: "210K BTC target ('555 Million Plan')", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+  ],
+  outlook2026: `**Current Status:
 • 35,102 BTC held (as of Dec 30, 2025)
 • Q1 2026 BTC Yield: 0% (waiting for warrant proceeds)
 • mNAV ~1.22x - still above 1x
