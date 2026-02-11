@@ -53,6 +53,7 @@ import { MSTRCompanyView } from "@/components/MSTRCompanyView";
 import { BMNRCompanyView } from "@/components/BMNRCompanyView";
 import { MARACompanyView } from "@/components/MARACompanyView";
 import { XXICompanyView } from "@/components/XXICompanyView";
+import { MetaplanetCompanyView } from "@/components/MetaplanetCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 
 // Asset colors
@@ -437,7 +438,7 @@ export default function CompanyPage() {
           </div>
         )}
 
-        {/* MSTR/BMNR/MARA/XXI: Use fully provenance-tracked views */}
+        {/* MSTR/BMNR/MARA/XXI/Metaplanet: Use fully provenance-tracked views */}
         {displayCompany.ticker === "MSTR" ? (
           <MSTRCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "BMNR" ? (
@@ -446,6 +447,8 @@ export default function CompanyPage() {
           <MARACompanyView company={displayCompany} />
         ) : displayCompany.ticker === "XXI" ? (
           <XXICompanyView company={displayCompany} />
+        ) : displayCompany.ticker === "3350.T" ? (
+          <MetaplanetCompanyView company={displayCompany} />
         ) : (
           <>
         {/* Key Valuation Metrics */}
