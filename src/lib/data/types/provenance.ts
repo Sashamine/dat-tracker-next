@@ -211,6 +211,7 @@ const CIK_TICKERS: Record<string, string> = {
   "1652044": "dfdv", "1777319": "upxi", "1580063": "hsdt", "1956744": "tron",
   "1627282": "cwd", "1846839": "stke", "1849635": "djt", "1977303": "naka",
   "1903595": "tbh", "1879932": "fwdi", "1830131": "hypd", "1949556": "xxi",
+  "1981535": "sbet",
 };
 
 /** Build URL to our internal XBRL viewer */
