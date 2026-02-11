@@ -11,6 +11,7 @@ interface MnavCalculationCardProps {
   totalDebt: number;
   preferredEquity: number;
   cashReserves: number;
+  restrictedCash?: number;  // Cash earmarked for ops/crypto - not "excess"
   // CV components
   holdings: number;
   cryptoPrice: number;
@@ -129,6 +130,7 @@ export function MnavCalculationCard({
   totalDebt,
   preferredEquity,
   cashReserves,
+  restrictedCash,
   holdings,
   cryptoPrice,
   holdingsValue,
@@ -160,8 +162,10 @@ export function MnavCalculationCard({
   holdingsAsOf,
 }: MnavCalculationCardProps) {
   // Calculate EV
+  // Free cash = total cash minus restricted/operating cash
+  const freeCash = cashReserves - (restrictedCash || 0);
   const adjustedDebt = totalDebt - (itmDebtAdjustment || 0);
-  const ev = marketCap + adjustedDebt + preferredEquity - cashReserves;
+  const ev = marketCap + adjustedDebt + preferredEquity - freeCash;
   
   // Use calculated mNAV if not provided or null
   const mNAV = mNAVProp ?? (holdingsValue > 0 ? ev / holdingsValue : null);
@@ -251,14 +255,16 @@ export function MnavCalculationCard({
           />
           
           <FormulaRow 
-            label="Cash" 
-            value={cashReserves}
-            color={cashReserves > 0 ? "text-green-400" : "text-gray-500"}
+            label={restrictedCash && restrictedCash > 0 ? "Excess Cash" : "Cash"} 
+            value={freeCash}
+            color={freeCash > 0 ? "text-green-400" : "text-gray-500"}
             prefix="− "
             sourceUrl={cashSourceUrl}
             sourceTicker={ticker}
             sourceDate={cashAsOf}
-            sourceLabel={cashSource}
+            sourceLabel={restrictedCash && restrictedCash > 0 
+              ? `${cashSource || ''} (${formatLargeNumber(restrictedCash)} restricted)`.trim()
+              : cashSource}
             showZero={true}
             searchTerm={cashSearchTerm}
           />

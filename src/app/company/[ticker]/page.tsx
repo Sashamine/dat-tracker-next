@@ -712,6 +712,7 @@ export default function CompanyPage() {
               totalDebt={totalDebt}
               preferredEquity={preferredEquity}
               cashReserves={cashReserves}
+              restrictedCash={displayCompany.restrictedCash}
               holdings={displayCompany.holdings}
               cryptoPrice={cryptoPrice}
               holdingsValue={cryptoHoldingsValue}
