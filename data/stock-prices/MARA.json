@@ -2,7 +2,7 @@
   "ticker": "MARA",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T15:30:02.403Z",
+  "lastUpdated": "2026-02-11T15:45:01.962Z",
   "prices": [
     {
       "date": "2021-01-04",
@@ -11153,6 +11153,15 @@
       "low": 7.4168,
       "close": 7.52,
       "volume": 11197134
+    },
+    {
+      "date": "2026-02-11",
+      "time": "08:45",
+      "open": 7.63,
+      "high": 7.805,
+      "low": 7.415,
+      "close": 7.775,
+      "volume": 14531424
     },
     {
       "date": "2026-02-11",
