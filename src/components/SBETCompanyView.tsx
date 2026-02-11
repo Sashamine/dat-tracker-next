@@ -188,7 +188,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
               data={mNavPv}
               format="mnav"
               subLabel="EV / Crypto NAV"
-              tooltip="Click value for source details"
+              tooltip="Market premium/discount to ETH holdings. mNAV > 1 = premium, < 1 = discount"
               ticker="sbet"
             />
             <button 
