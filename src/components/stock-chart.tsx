@@ -14,7 +14,7 @@ import {
 } from "lightweight-charts";
 import { HistoricalPrice } from "@/lib/hooks/use-stock-history";
 
-type ChartType = "area" | "candle";
+type ChartType = "area" | "candle" | "volume";
 
 interface StockChartProps {
   data: HistoricalPrice[];
@@ -165,36 +165,23 @@ export function StockChart({ data }: StockChartProps) {
 
     chartRef.current = chart;
 
-    // Add volume histogram first (so it renders behind price)
-    const volumeSeries = chart.addSeries(HistogramSeries, {
-      color: "#3b82f6",
-      priceFormat: {
-        type: "volume",
-        precision: 0,
-      },
-      priceScaleId: "left",
-      lastValueVisible: false,
-    });
-    
-    // Configure volume price scale on left side (bottom 20% of chart)
-    chart.priceScale("left").applyOptions({
-      scaleMargins: {
-        top: 0.85,
-        bottom: 0,
-      },
-      borderVisible: false,
-      visible: true,
-    });
-
-    volumeSeries.setData(
-      processed.map((d) => ({
-        time: d.time,
-        value: d.volume,
-        color: d.close >= d.open ? "rgba(34, 197, 94, 0.5)" : "rgba(239, 68, 68, 0.5)",
-      }))
-    );
-
-    if (chartType === "candle") {
+    if (chartType === "volume") {
+      // Full volume chart
+      const volumeSeries = chart.addSeries(HistogramSeries, {
+        color: "#3b82f6",
+        priceFormat: {
+          type: "volume",
+          precision: 0,
+        },
+      });
+      volumeSeries.setData(
+        processed.map((d) => ({
+          time: d.time,
+          value: d.volume,
+          color: d.close >= d.open ? "#22c55e" : "#ef4444",
+        }))
+      );
+    } else if (chartType === "candle") {
       const series = chart.addSeries(CandlestickSeries, {
         upColor: "#22c55e",
         downColor: "#ef4444",
@@ -235,14 +222,6 @@ export function StockChart({ data }: StockChartProps) {
         }))
       );
     }
-    
-    // Adjust main price scale to leave room for volume
-    chart.priceScale("right").applyOptions({
-      scaleMargins: {
-        top: 0.1,
-        bottom: 0.2,
-      },
-    });
 
     chart.timeScale().fitContent();
 
@@ -296,6 +275,24 @@ export function StockChart({ data }: StockChartProps) {
             <rect x="2.5" y="5" width="3" height="5" fill="currentColor" />
             <line x1="12" y1="1" x2="12" y2="13" />
             <rect x="10.5" y="4" width="3" height="6" rx="0" />
+          </svg>
+        </button>
+        <button
+          onClick={() => setChartType("volume")}
+          className={`p-1 rounded text-xs transition-colors ${
+            chartType === "volume"
+              ? "bg-gray-600 text-white"
+              : "text-gray-400 hover:text-gray-200"
+          }`}
+          title="Volume chart"
+        >
+          {/* Volume bars icon */}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <rect x="1" y="10" width="2" height="5" />
+            <rect x="4" y="6" width="2" height="9" />
+            <rect x="7" y="8" width="2" height="7" />
+            <rect x="10" y="4" width="2" height="11" />
+            <rect x="13" y="7" width="2" height="8" />
           </svg>
         </button>
       </div>
