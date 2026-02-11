@@ -55,13 +55,6 @@ const YAHOO_PROBLEM_TICKERS: Record<string, string> = {
   'NXTT': '2025-10-01',  // 200:1 split Sep 2025 - needs split research
 };
 
-// International stock suffixes that don't have intraday data
-const INTERNATIONAL_SUFFIXES = ['.T', '.L', '.DE', '.PA', '.MI', '.AS', '.SW', '.HK', '.SS', '.SZ', '.TO', '.AX'];
-
-function isInternationalStock(ticker: string): boolean {
-  return INTERNATIONAL_SUFFIXES.some(suffix => ticker.toUpperCase().endsWith(suffix));
-}
-
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ ticker: string }> }
@@ -74,13 +67,10 @@ export async function GET(
   // Get days for this range
   const days = RANGE_DAYS[range] || RANGE_DAYS["1y"];
 
-  // For international stocks, always use daily data (no intraday available)
-  const forceDaily = isInternationalStock(ticker);
-
   // Validate and select interval
   const validIntervals = VALID_INTERVALS[range] || ["1d"];
-  let interval = forceDaily ? "1d" : (DEFAULT_INTERVAL[range] || "1d");
-  if (!forceDaily && requestedInterval && validIntervals.includes(requestedInterval)) {
+  let interval = DEFAULT_INTERVAL[range] || "1d";
+  if (requestedInterval && validIntervals.includes(requestedInterval)) {
     interval = requestedInterval;
   }
 
@@ -129,13 +119,19 @@ export async function GET(
         yahooData = yahooData.filter(p => p.time >= minDateStr);
       }
       // For 24H view, filter to last 24 hours of trading data
+      // But keep at least the most recent trading day's data (for markets in different time zones)
       if (filterToLast24Hours && yahooData.length > 0) {
         const now = Date.now();
         const twentyFourHoursAgo = now - 24 * 60 * 60 * 1000;
-        yahooData = yahooData.filter(p => {
+        const filtered = yahooData.filter(p => {
           const timestamp = parseInt(p.time, 10) * 1000;
           return timestamp >= twentyFourHoursAgo;
         });
+        // Only apply filter if it leaves us with data, otherwise show all recent data
+        if (filtered.length > 0) {
+          yahooData = filtered;
+        }
+        // else: keep all data from Yahoo (most recent trading session)
       }
       // Apply split adjustments if needed (Yahoo sometimes doesn't adjust properly)
       if (needsSplitAdjustment) {
