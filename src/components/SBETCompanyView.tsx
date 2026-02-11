@@ -248,13 +248,13 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
           ticker="sbet"
         />
 
-        {/* Cost Basis */}
-        {SBET_PROVENANCE.costBasisAvg && (
+        {/* Shares Outstanding */}
+        {SBET_PROVENANCE.sharesOutstanding && (
           <ProvenanceMetric
-            label="Avg Cost Basis"
-            data={SBET_PROVENANCE.costBasisAvg}
-            format="currency"
-            subLabel="Per ETH"
+            label="Shares"
+            data={SBET_PROVENANCE.sharesOutstanding}
+            format="shares"
+            subLabel="From Q3 10-Q"
             ticker="sbet"
           />
         )}
@@ -353,28 +353,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
         )}
       </div>
 
-      {/* Unrealized P&L Card */}
-      {costBasisTotal > 0 && ethPrice > 0 && (
-        <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-          <h3 className="text-lg font-semibold mb-4">Unrealized P&L</h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <p className="text-sm text-gray-500">Cost Basis</p>
-              <p className="text-xl font-bold">${(costBasisTotal / 1e9).toFixed(2)}B</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Current Value</p>
-              <p className="text-xl font-bold">${((holdings * ethPrice) / 1e9).toFixed(2)}B</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Unrealized P&L</p>
-              <p className={`text-xl font-bold ${unrealizedPnL >= 0 ? "text-green-600" : "text-red-600"}`}>
-                {unrealizedPnL >= 0 ? "+" : ""}{(unrealizedPnLPct).toFixed(1)}%
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Unrealized P&L removed - cost basis data is stale (Q3 2025 only, doesn't cover current 863k ETH) */}
 
       {/* CHARTS */}
       <div className="mb-4 flex items-center gap-2">

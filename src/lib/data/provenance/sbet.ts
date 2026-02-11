@@ -550,23 +550,21 @@ export const SBET_PROVENANCE = {
   // Note: Q3 10-Q shows 817,747 ETH (580,841 native + 236,906 LsETH), cost basis is from that date
   // ---------------------------------------------------------------------------
   
+  // ⚠️ STALE: Cost basis from Q3 2025 (817,747 ETH) - current holdings are 863,424 ETH
+  // Will be updated when Q4 2025 10-K is filed (expected Mar 2026)
   costBasisTotal: pv(3_022_327_258, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Digital assets - native Ethereum, at cost $2,304,908,135 (580,841 units) + Digital assets - Lido staked Ethereum, at cost $717,419,123 (236,906 units)",
+    "Digital assets at cost: Native ETH $2,304,908,135 (580,841) + LsETH $717,419,123 (236,906) = $3,022,327,258",
     "form10-q.htm",
     "2,304,908,135"
-  ), "Total cost basis from Q3 2025 balance sheet (Sep 30, 2025 holdings)"),
+  ), "Q3 2025 only - 817,747 ETH"),
 
-  // Note: Avg cost basis ($3,696) is CALCULATED from the 10-Q balance sheet
-  // Native ETH: $2,304,908,135 cost ÷ 580,841 units = $3,968/ETH
-  // LsETH: $717,419,123 cost ÷ 236,906 units = $3,028/ETH  
-  // Weighted avg: ~$3,696/ETH
   costBasisAvg: pv(3_696, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Native ETH at cost $2,304,908,135 (580,841 units) + LsETH at cost $717,419,123 (236,906 units) → Weighted avg $3,696/ETH",
+    "Calculated: $3,022,327,258 ÷ 817,747 ETH = $3,696 avg",
     "form10-q.htm",
-    "2,304,908,135"  // Search for native ETH cost basis (largest line item)
-  ), "Weighted average cost per ETH at Sep 30, 2025"),
+    "2,304,908,135"
+  ), "Q3 2025 avg - 817,747 ETH"),
 
 };
 
