@@ -253,29 +253,6 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
 
   return (
     <div className="relative">
-      {/* Chart mode toggle - centered radio buttons */}
-      <div className="flex justify-center gap-6 mb-3">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="chartMode"
-            checked={chartMode === "price"}
-            onChange={() => setChartMode("price")}
-            className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
-          />
-          <span className="text-base font-semibold text-gray-900 dark:text-white">Price</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="chartMode"
-            checked={chartMode === "volume"}
-            onChange={() => setChartMode("volume")}
-            className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
-          />
-          <span className="text-base font-semibold text-gray-900 dark:text-white">Volume</span>
-        </label>
-      </div>
       <div ref={chartContainerRef} className="w-full" />
     </div>
   );
