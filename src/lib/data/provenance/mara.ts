@@ -83,18 +83,17 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
       inputs: {
         totalCost: pv(
           COST_BASIS_TOTAL,
-          xbrlSource({
-            fact: "mara:CryptoAssetCost",
-            searchTerm: "4,637,673",
-            rawValue: COST_BASIS_TOTAL,
-            unit: "USD",
-            periodType: "instant",
-            periodEnd: Q3_2025_PERIOD_END,
+          docSource({
+            type: "sec-document",
+            searchTerm: "Total bitcoin holdings",
+            url: secDocUrl(MARA_CIK, Q3_2025_10Q_ACCESSION, "mara-20250930.htm"),
+            quote: "Total bitcoin holdings 52,850 $4,637,673",
+            anchor: "Note 5 - Digital Assets",
             cik: MARA_CIK,
             accession: Q3_2025_10Q_ACCESSION,
             filingType: "10-Q",
             filingDate: Q3_2025_10Q_FILED,
-            documentAnchor: "Digital assets at cost",
+            documentDate: Q3_2025_PERIOD_END,
           })
         ),
         totalHoldings: pv(
@@ -122,18 +121,17 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalCostBasis: pv(
     COST_BASIS_TOTAL,
-    xbrlSource({
-      fact: "mara:CryptoAssetCost",
-      searchTerm: "4,637,673",
-      rawValue: COST_BASIS_TOTAL,
-      unit: "USD",
-      periodType: "instant",
-      periodEnd: Q3_2025_PERIOD_END,
+    docSource({
+      type: "sec-document",
+      searchTerm: "Total bitcoin holdings",
+      url: secDocUrl(MARA_CIK, Q3_2025_10Q_ACCESSION, "mara-20250930.htm"),
+      quote: "Total bitcoin holdings 52,850 $4,637,673",
+      anchor: "Note 5 - Digital Assets",
       cik: MARA_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentAnchor: "Digital assets at cost",
+      documentDate: Q3_2025_PERIOD_END,
     })
   ),
 
