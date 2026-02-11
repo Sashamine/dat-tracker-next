@@ -117,6 +117,7 @@ export interface Company {
   sharesForMnav?: number;  // Share count for mNAV calculation (matches company's methodology)
   leader?: string;
   strategy?: string;
+  strategyVideo?: string;  // YouTube or other video explaining strategy
   notes?: string;
   description?: string;  // Longer company overview/history
   founded?: number;      // Year founded
