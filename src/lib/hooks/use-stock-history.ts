@@ -16,11 +16,11 @@ export type ChartInterval = "5m" | "15m" | "1h" | "1d";
 
 // Valid intervals per time range (based on Yahoo Finance limits)
 export const VALID_INTERVALS: Record<TimeRange, ChartInterval[]> = {
-  "1d": ["5m", "15m", "1h"],      // Intraday only
-  "7d": ["15m", "1h", "1d"],      // Mix of intraday and daily
-  "1mo": ["1h", "1d"],            // Hourly or daily
-  "1y": ["1d"],                   // Daily only
-  "all": ["1d"],                  // Daily only
+  "1d": ["5m", "15m", "1h", "1d"], // Intraday preferred, daily fallback for international
+  "7d": ["15m", "1h", "1d"],       // Mix of intraday and daily
+  "1mo": ["1h", "1d"],             // Hourly or daily
+  "1y": ["1d"],                    // Daily only
+  "all": ["1d"],                   // Daily only
 };
 
 // Default interval per time range (optimized for readability)

@@ -23,7 +23,7 @@ const RANGE_DAYS: Record<string, number> = {
 // Valid intervals per range (based on Yahoo Finance limits)
 // 5m/15m: 60 days max, 1h: 730 days max, 1d: unlimited
 const VALID_INTERVALS: Record<string, string[]> = {
-  "1d": ["5m", "15m", "1h"],
+  "1d": ["5m", "15m", "1h", "1d"],  // Include 1d for international stocks without intraday
   "7d": ["15m", "1h", "1d"],
   "1mo": ["1h", "1d"],
   "1y": ["1d"],
@@ -32,7 +32,7 @@ const VALID_INTERVALS: Record<string, string[]> = {
 
 // Default intervals per range (optimized for maximum granularity)
 const DEFAULT_INTERVAL: Record<string, string> = {
-  "1d": "5m",   // 5-minute candles (~288 per day)
+  "1d": "5m",   // 5-minute candles (~288 per day) - will fall back to 1d if no intraday
   "7d": "1h",   // Hourly candles (~168 per week)
   "1mo": "1h",  // Hourly candles (~720 per month) - Yahoo supports this
   "1y": "1d",   // Daily candles
@@ -133,6 +133,22 @@ export async function GET(
       }
       cache.set(cacheKey, { data: yahooData, timestamp: Date.now() });
       return NextResponse.json(yahooData);
+    }
+
+    // If intraday failed, fall back to daily data from FMP (for international stocks)
+    if (intraday && FMP_API_KEY) {
+      console.log(`[StockHistory] No intraday for ${ticker}, trying FMP daily fallback`);
+      let fmpData = await fetchFromFMP(ticker, days);
+      if (fmpData.length > 0) {
+        if (hasYahooProblems) {
+          fmpData = fmpData.filter(p => p.time >= minDateStr);
+        }
+        if (fmpData.length > 0) {
+          console.log(`[StockHistory] Using FMP daily fallback for ${ticker}: ${fmpData.length} points`);
+          cache.set(cacheKey, { data: fmpData, timestamp: Date.now() });
+          return NextResponse.json(fmpData);
+        }
+      }
     }
 
     // Fallback to static historical data for illiquid/international stocks
