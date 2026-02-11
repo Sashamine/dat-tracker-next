@@ -449,11 +449,11 @@ export const btcCompanies: Company[] = [
     sharesSource: "TDnet Q3 FY2025: 1,142,264,340 common shares - 23.6M Mercury convert adjustment",
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     sharesAsOf: "2025-09-30",
-    // Debt: Zero-coupon yen-denominated bonds (~¥44B, ~$280M) - no interest payments, principal at maturity
-    totalDebt: 280_000_000,  // $280M per TDnet Q3 FY2025 Financial Results (Nov 2025)
-    debtSource: "TDnet Q3 FY2025 Financial Results",
-    debtSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
-    debtAsOf: "2025-09-30",
+    // Debt: Zero-coupon yen-denominated bonds - no interest payments, principal at maturity
+    totalDebt: 355_000_000,  // $355M per Metaplanet analytics dashboard (Feb 2026)
+    debtSource: "Metaplanet Analytics Dashboard",
+    debtSourceUrl: "https://metaplanet.jp/en/analytics",
+    debtAsOf: "2026-02-11",
     cashReserves: 150_000_000,  // ~$150M estimated from Q3 FY2025 (¥23.4B cash / 156 JPY/USD) - ESTIMATED
     restrictedCash: 150_000_000,  // Debt service reserves (zero-coupon bonds) - not excess
     cashSource: "TDnet Q3 FY2025 Financial Results",
