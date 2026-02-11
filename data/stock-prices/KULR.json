@@ -2,7 +2,7 @@
   "ticker": "KULR",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T20:15:01.861Z",
+  "lastUpdated": "2026-02-11T20:30:01.713Z",
   "prices": [
     {
       "date": "2024-12-02",
@@ -3425,6 +3425,15 @@
       "low": 2.715,
       "close": 2.8125,
       "volume": 925077
+    },
+    {
+      "date": "2026-02-11",
+      "time": "13:30",
+      "open": 2.915,
+      "high": 2.915,
+      "low": 2.715,
+      "close": 2.815,
+      "volume": 967943
     },
     {
       "date": "2026-02-11",
