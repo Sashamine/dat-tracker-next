@@ -2,7 +2,7 @@
   "ticker": "AVX",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T15:00:02.251Z",
+  "lastUpdated": "2026-02-11T15:15:02.250Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -5111,6 +5111,15 @@
       "low": 0.69,
       "close": 0.7,
       "volume": 157312
+    },
+    {
+      "date": "2026-02-11",
+      "time": "08:15",
+      "open": 0.71,
+      "high": 0.742,
+      "low": 0.681,
+      "close": 0.681,
+      "volume": 476252
     },
     {
       "date": "2026-02-11",
