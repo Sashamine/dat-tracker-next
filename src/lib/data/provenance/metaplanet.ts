@@ -67,14 +67,16 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "35,102",
   }), "Dec 30 purchase brought total to 35,102 BTC"),
 
-  // Shares Outstanding (from Q3 2025 Financial Results)
-  sharesOutstanding: pv(1_142_264_340, tdnetSource({
+  // Shares Outstanding (from Q3 2025 Financial Results - page 2)
+  // Note: Q3 (Sep 30): 1,140,974,340 | Oct 28 ref: 1,142,248,401 (excl treasury)
+  // This is Q3 end value; needs update after warrant exercises
+  sharesOutstanding: pv(1_140_974_340, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
     url: PDF_URLS.q3FinancialResults,
-    quote: "Total shares outstanding: 1,142,264,340",
-    searchTerm: "1,142,264,340",
-  }), "Q3 FY2025 filing - page 1"),
+    quote: "Shares issued at end of period (including treasury stock) Q3 FY 2025: 1,140,974,340",
+    searchTerm: "1,140,974,340",
+  }), "Q3 FY2025 filing - page 2, section (4)"),
 
   // Total Debt (from Jan 30, 2026 Credit Facility Disclosure)
   // Credit facility: $500M limit, $355M drawn as of Jan 30, 2026
