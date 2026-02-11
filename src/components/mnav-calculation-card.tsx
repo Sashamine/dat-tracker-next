@@ -307,25 +307,11 @@ export function MnavCalculationCard({
         </div>
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm flex items-center gap-1">
+            <span className="text-gray-400 text-sm">
               {holdings.toLocaleString()} {asset} × ${cryptoPrice.toLocaleString()}
-              {holdingsSearchTerm && (
-                <span 
-                  className="text-[9px] bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400 px-1 rounded cursor-help"
-                  title={`Ctrl+F: ${holdingsSearchTerm}`}
-                >
-                  🔍{holdingsSearchTerm}
-                </span>
-              )}
             </span>
-            <span className="font-mono text-sm text-gray-300 flex items-center">
+            <span className="font-mono text-sm text-gray-300">
               {formatLargeNumber(holdingsValue)}
-              <SourceLink 
-                url={holdingsSourceUrl} 
-                ticker={ticker}
-                date={holdingsAsOf}
-                label={holdingsSource}
-              />
             </span>
           </div>
         </div>
