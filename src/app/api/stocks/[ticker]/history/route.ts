@@ -20,6 +20,15 @@ const RANGE_DAYS: Record<string, number> = {
   "all": 3650,  // ~10 years
 };
 
+// For international stocks (daily data only), show more days to make charts useful
+const RANGE_DAYS_INTERNATIONAL: Record<string, number> = {
+  "1d": 10,     // Show ~10 days when no intraday available
+  "7d": 21,     // Show ~3 weeks 
+  "1mo": 45,    // Buffer for month
+  "1y": 400,    // Same as US
+  "all": 3650,  // Same as US
+};
+
 // Valid intervals per range (based on Yahoo Finance limits)
 // 5m/15m: 60 days max, 1h: 730 days max, 1d: unlimited
 const VALID_INTERVALS: Record<string, string[]> = {
@@ -71,11 +80,12 @@ export async function GET(
   const range = searchParams.get("range") || "1y";
   const requestedInterval = searchParams.get("interval");
 
-  // Get days for this range
-  const days = RANGE_DAYS[range] || RANGE_DAYS["1y"];
-
   // For international stocks, always use daily data (no intraday available)
   const forceDaily = isInternationalStock(ticker);
+
+  // Get days for this range (international stocks get more days to compensate for daily-only data)
+  const daysConfig = forceDaily ? RANGE_DAYS_INTERNATIONAL : RANGE_DAYS;
+  const days = daysConfig[range] || daysConfig["1y"];
 
   // Validate and select interval
   const validIntervals = VALID_INTERVALS[range] || ["1d"];
