@@ -550,21 +550,22 @@ export const SBET_PROVENANCE = {
   // Note: Q3 10-Q shows 817,747 ETH (580,841 native + 236,906 LsETH), cost basis is from that date
   // ---------------------------------------------------------------------------
   
-  // ⚠️ STALE: Cost basis from Q3 2025 (817,747 ETH) - current holdings are 863,424 ETH
+  // ⚠️ STALE: Cost basis from Q3 2025 - current holdings are 863,424 ETH
+  // Q3 10-Q shows: Native ETH 580,841 units + LsETH 236,906 units = 817,747 total
   // Will be updated when Q4 2025 10-K is filed (expected Mar 2026)
   costBasisTotal: pv(3_022_327_258, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Digital assets at cost: Native ETH $2,304,908,135 (580,841) + LsETH $717,419,123 (236,906) = $3,022,327,258",
+    "Native ETH at cost $2,304,908,135 (580,841 units) + LsETH at cost $717,419,123 (236,906 units)",
     "form10-q.htm",
-    "2,304,908,135"
-  ), "Q3 2025 only - 817,747 ETH"),
+    "580,841"  // Native ETH units - search term to find cost basis section
+  ), "Q3 2025: 580,841 native + 236,906 LsETH = 817,747 total"),
 
   costBasisAvg: pv(3_696, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Calculated: $3,022,327,258 ÷ 817,747 ETH = $3,696 avg",
+    "Calculated: ($2,304,908,135 + $717,419,123) ÷ (580,841 + 236,906) = $3,696 avg",
     "form10-q.htm",
-    "2,304,908,135"
-  ), "Q3 2025 avg - 817,747 ETH"),
+    "580,841"
+  ), "Q3 2025 weighted avg"),
 
 };
 
