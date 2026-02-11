@@ -2,6 +2,12 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { 
   ProvenanceValue, 
   XBRLSource, 
@@ -164,10 +170,18 @@ export function ProvenanceMetric({
       <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
         {label}
         {tooltip && (
-          <span 
-            className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
-            title={tooltip}
-          >?</span>
+          <TooltipProvider delayDuration={100}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help">
+                  ?
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{tooltip}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </p>
       
