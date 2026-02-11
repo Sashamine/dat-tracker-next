@@ -169,8 +169,10 @@ export function HoldingsPerShareChart({
         size: 0.3,
       }));
 
-    // setMarkers is available but not in all type definitions
-    (series as any).setMarkers([...markers, ...interpolatedMarkers]);
+    // setMarkers is available on some series types - guard against missing method
+    if (typeof (series as any).setMarkers === "function") {
+      (series as any).setMarkers([...markers, ...interpolatedMarkers]);
+    }
     chart.timeScale().fitContent();
 
     // Handle resize
