@@ -384,6 +384,108 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* CHARTS */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <div className="mb-4 flex items-center gap-2">
+        <span className="text-lg">📈</span>
+        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Charts</h2>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
+
+      {/* Unified Chart Section */}
+      <div className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        {/* Chart type toggles */}
+        <div className="flex justify-center gap-6 mb-4">
+          {(["price", "volume", "mnav", "hps"] as const).map((mode) => (
+            <label key={mode} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="chartMode"
+                checked={chartMode === mode}
+                onChange={() => setChartMode(mode)}
+                className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
+              />
+              <span className="text-base font-semibold text-gray-900 dark:text-white">
+                {mode === "price" ? "Price" : mode === "volume" ? "Volume" : mode === "mnav" ? "mNAV" : "HPS"}
+              </span>
+            </label>
+          ))}
+        </div>
+        
+        {/* Time range selector */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <div className="flex gap-1">
+            {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
+              const label = value === "1d" 
+                ? (chartMode === "volume" ? "1D" : "24H")
+                : value === "7d" ? "7D"
+                : value === "1mo" ? "1M"
+                : value === "1y" ? "1Y"
+                : "ALL";
+              return (
+                <button
+                  key={value}
+                  onClick={() => chartMode === "mnav" ? handleMnavTimeRangeChange(value) : handleTimeRangeChange(value)}
+                  className={cn(
+                    "px-3 py-1 text-sm rounded-md transition-colors",
+                    (chartMode === "mnav" ? mnavTimeRange : timeRange) === value
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                  )}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        
+        {/* Chart content */}
+        {(chartMode === "price" || chartMode === "volume") && (
+          historyLoading ? (
+            <div className="h-[400px] flex items-center justify-center text-gray-500">
+              Loading chart...
+            </div>
+          ) : history && history.length > 0 ? (
+            <StockChart data={history} chartMode={chartMode === "volume" ? "volume" : "price"} onChartModeChange={(m) => setChartMode(m)} />
+          ) : (
+            <div className="h-[400px] flex items-center justify-center text-gray-500">
+              Limited history — XXI launched Dec 2025
+            </div>
+          )
+        )}
+        
+        {chartMode === "mnav" && metrics.mNav && stockPrice > 0 && btcPrice > 0 && (
+          <CompanyMNAVChart
+            ticker="XXI"
+            asset="BTC"
+            currentMNAV={metrics.mNav}
+            currentStockPrice={stockPrice}
+            currentCryptoPrice={btcPrice}
+            timeRange={mnavTimeRange}
+            interval={mnavInterval}
+            companyData={{
+              holdings: metrics.holdings,
+              sharesForMnav: metrics.sharesOutstanding,
+              totalDebt: metrics.totalDebt,
+              preferredEquity: metrics.preferredEquity,
+              cashReserves: metrics.cashReserves,
+              restrictedCash: 0,
+              asset: "BTC",
+            }}
+          />
+        )}
+        
+        {chartMode === "hps" && (
+          <HoldingsPerShareChart
+            ticker="XXI"
+            asset="BTC"
+            currentHoldingsPerShare={metrics.holdingsPerShare}
+          />
+        )}
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* BALANCE SHEET */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
       <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
@@ -531,109 +633,6 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
           </div>
         </div>
       </details>
-
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* CHARTS */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      <div className="mb-4 flex items-center gap-2">
-        <span className="text-lg">📈</span>
-        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Charts</h2>
-        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
-      </div>
-
-      {/* Stock Price Chart */}
-      {/* Unified Chart Section */}
-      <div className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-        {/* Chart type toggles */}
-        <div className="flex justify-center gap-6 mb-4">
-          {(["price", "volume", "mnav", "hps"] as const).map((mode) => (
-            <label key={mode} className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="chartMode"
-                checked={chartMode === mode}
-                onChange={() => setChartMode(mode)}
-                className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
-              />
-              <span className="text-base font-semibold text-gray-900 dark:text-white">
-                {mode === "price" ? "Price" : mode === "volume" ? "Volume" : mode === "mnav" ? "mNAV" : "HPS"}
-              </span>
-            </label>
-          ))}
-        </div>
-        
-        {/* Time range selector */}
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          <div className="flex gap-1">
-            {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
-              const label = value === "1d" 
-                ? (chartMode === "volume" ? "1D" : "24H")
-                : value === "7d" ? "7D"
-                : value === "1mo" ? "1M"
-                : value === "1y" ? "1Y"
-                : "ALL";
-              return (
-                <button
-                  key={value}
-                  onClick={() => chartMode === "mnav" ? handleMnavTimeRangeChange(value) : handleTimeRangeChange(value)}
-                  className={cn(
-                    "px-3 py-1 text-sm rounded-md transition-colors",
-                    (chartMode === "mnav" ? mnavTimeRange : timeRange) === value
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                  )}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-        
-        {/* Chart content */}
-        {(chartMode === "price" || chartMode === "volume") && (
-          historyLoading ? (
-            <div className="h-[400px] flex items-center justify-center text-gray-500">
-              Loading chart...
-            </div>
-          ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={chartMode === "volume" ? "volume" : "price"} onChartModeChange={(m) => setChartMode(m)} />
-          ) : (
-            <div className="h-[400px] flex items-center justify-center text-gray-500">
-              Limited history — XXI launched Dec 2025
-            </div>
-          )
-        )}
-        
-        {chartMode === "mnav" && metrics.mNav && stockPrice > 0 && btcPrice > 0 && (
-          <CompanyMNAVChart
-            ticker="XXI"
-            asset="BTC"
-            currentMNAV={metrics.mNav}
-            currentStockPrice={stockPrice}
-            currentCryptoPrice={btcPrice}
-            timeRange={mnavTimeRange}
-            interval={mnavInterval}
-            companyData={{
-              holdings: metrics.holdings,
-              sharesForMnav: metrics.sharesOutstanding,
-              totalDebt: metrics.totalDebt,
-              preferredEquity: metrics.preferredEquity,
-              cashReserves: metrics.cashReserves,
-              restrictedCash: 0,
-              asset: "BTC",
-            }}
-          />
-        )}
-        
-        {chartMode === "hps" && (
-          <HoldingsPerShareChart
-            ticker="XXI"
-            asset="BTC"
-            currentHoldingsPerShare={metrics.holdingsPerShare}
-          />
-        )}
-      </div>
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* DATA SECTION */}
