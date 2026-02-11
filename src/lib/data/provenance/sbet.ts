@@ -227,6 +227,78 @@ export const SBET_HOLDINGS_HISTORY: SBETAcquisition[] = [
 ];
 
 // =============================================================================
+// STAKING REWARDS HISTORY
+// =============================================================================
+
+export interface SBETStakingSnapshot {
+  date: string;           // Period end date
+  filedDate: string;      // When 8-K was filed
+  cumulativeRewards: number;  // Total ETH earned since Jun 2, 2025
+  periodRewards: number;  // ETH earned since last snapshot
+  holdings: number;       // Total holdings at this time
+  accession: string;
+}
+
+// Staking rewards from 8-K filings (cumulative since Jun 2, 2025 DAT launch)
+export const SBET_STAKING_HISTORY: SBETStakingSnapshot[] = [
+  {
+    date: "2025-12-14",
+    filedDate: "2025-12-17",
+    cumulativeRewards: 9_241,  // 3,350 native + 5,891 LsETH
+    periodRewards: 3_570,
+    holdings: 863_424,
+    accession: "0001493152-25-028063",
+  },
+  {
+    date: "2025-10-19",
+    filedDate: "2025-10-21",
+    cumulativeRewards: 5_671,
+    periodRewards: 2_431,
+    holdings: 859_853,
+    accession: "0001493152-25-018731",
+  },
+  {
+    date: "2025-09-14",
+    filedDate: "2025-09-16",
+    cumulativeRewards: 3_240,
+    periodRewards: 922,
+    holdings: 838_152,
+    accession: "0001493152-25-013634",
+  },
+  {
+    date: "2025-08-31",
+    filedDate: "2025-09-02",
+    cumulativeRewards: 2_318,
+    periodRewards: 519,
+    holdings: 837_230,
+    accession: "0001493152-25-012518",
+  },
+  {
+    date: "2025-08-24",
+    filedDate: "2025-08-26",
+    cumulativeRewards: 1_799,
+    periodRewards: 1_799,  // First disclosure
+    holdings: 797_704,
+    accession: "0001641172-25-025469",
+  },
+];
+
+// Calculated staking metrics
+export const SBET_STAKING_METRICS = {
+  // Total rewards Jun 2 - Dec 14, 2025 (~6.5 months)
+  totalRewards: 9_241,
+  periodDays: 195,  // Jun 2 to Dec 14
+  
+  // Annualized yield calculation
+  // 9,241 ETH / 195 days * 365 = ~17,300 ETH/year
+  // On average holdings of ~820,000 ETH = ~2.1% yield
+  annualizedYield: 0.021,
+  
+  // Note: The 2.8% displayed is the protocol rate, actual realized is lower
+  // due to ramping holdings and timing of staking deployment
+};
+
+// =============================================================================
 // COMPANY METADATA
 // =============================================================================
 
