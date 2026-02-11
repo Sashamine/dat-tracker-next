@@ -2,7 +2,7 @@
   "ticker": "SMLR",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T15:15:02.250Z",
+  "lastUpdated": "2026-02-11T15:30:02.403Z",
   "prices": [
     {
       "date": "2024-10-01",
@@ -3523,6 +3523,15 @@
     {
       "date": "2026-02-11",
       "time": "08:15",
+      "open": 20.33,
+      "high": 20.33,
+      "low": 20.33,
+      "close": 20.33,
+      "volume": 1624131
+    },
+    {
+      "date": "2026-02-11",
+      "time": "08:30",
       "open": 20.33,
       "high": 20.33,
       "low": 20.33,

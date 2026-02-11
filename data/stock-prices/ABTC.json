@@ -2,7 +2,7 @@
   "ticker": "ABTC",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T15:15:02.250Z",
+  "lastUpdated": "2026-02-11T15:30:02.403Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -5120,6 +5120,15 @@
       "low": 1.15,
       "close": 1.165,
       "volume": 2552731
+    },
+    {
+      "date": "2026-02-11",
+      "time": "08:30",
+      "open": 1.21,
+      "high": 1.228,
+      "low": 1.15,
+      "close": 1.16,
+      "volume": 3007981
     },
     {
       "date": "2026-02-11",

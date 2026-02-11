@@ -2,7 +2,7 @@
   "ticker": "BMNR",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T15:15:02.250Z",
+  "lastUpdated": "2026-02-11T15:30:02.403Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -4296,6 +4296,15 @@
       "low": 19.081,
       "close": 19.21,
       "volume": 9125217
+    },
+    {
+      "date": "2026-02-11",
+      "time": "08:30",
+      "open": 20.56,
+      "high": 20.56,
+      "low": 19.025,
+      "close": 19.1701,
+      "volume": 11485809
     },
     {
       "date": "2026-02-11",
