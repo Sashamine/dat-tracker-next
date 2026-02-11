@@ -521,7 +521,8 @@ export const SBET_PROVENANCE = {
   // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
   // ---------------------------------------------------------------------------
   
-  cashReserves: pv(11_100_000, secDoc(
+  // Using exact value from 10-Q balance sheet
+  cashReserves: pv(11_122_966, secDoc(
     SEC_FILINGS.q3_2025_10q,
     "Cash and cash equivalents $11,122,966",
     "form10-q.htm",
@@ -556,11 +557,13 @@ export const SBET_PROVENANCE = {
     "2,304,908,135"
   ), "Total cost basis from Q3 2025 balance sheet (Sep 30, 2025 holdings)"),
 
+  // Note: Avg cost basis is CALCULATED - not directly stated in filing
+  // SearchTerm points to native ETH cost basis (largest component)
   costBasisAvg: pv(3_696, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Calculated from balance sheet: ($2,304,908,135 + $717,419,123) / (580,841 + 236,906) = $3,696 per ETH",
+    "Calculated: Native ETH cost $2,304,908,135 ÷ 580,841 units = $3,968/ETH; LsETH cost $717,419,123 ÷ 236,906 units = $3,028/ETH; Weighted avg ~$3,696/ETH",
     "form10-q.htm",
-    "3,022,327,258"  // Sum of cost bases
+    "580,841"  // Search for native ETH units to find cost basis section
   ), "Weighted average cost per ETH at Sep 30, 2025"),
 
 };
