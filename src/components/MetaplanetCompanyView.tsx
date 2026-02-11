@@ -377,7 +377,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
       {(() => {
         const intel = getCompanyIntel("3350.T");
         return (
-          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group" open>
+          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 group">
             <summary className="p-6 cursor-pointer flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Strategy & Overview
