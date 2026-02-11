@@ -180,57 +180,63 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
-        {/* mNAV - with expand button */}
+        {/* mNAV - Clickable with ProvenanceMetric + expand button */}
         {mNavPv && (
-          <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-4 relative", expandedCard === "mnav" && "ring-2 ring-indigo-500")}>
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
-              <button 
-                onClick={() => toggleCard("mnav")}
-                className="text-indigo-500 hover:text-indigo-700 text-xs font-medium"
-              >
-                {expandedCard === "mnav" ? "▼ Hide" : "▶ Show calc"}
-              </button>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{mNav?.toFixed(2)}x</p>
-            <p className="text-xs text-gray-400">EV / Crypto NAV</p>
+          <div className={cn("relative", expandedCard === "mnav" && "ring-2 ring-indigo-500 rounded-lg")}>
+            <ProvenanceMetric
+              label="mNAV"
+              data={mNavPv}
+              format="mnav"
+              subLabel="EV / Crypto NAV"
+              tooltip="Click value for source details"
+              ticker="sbet"
+            />
+            <button 
+              onClick={() => toggleCard("mnav")}
+              className="absolute top-2 right-2 text-indigo-500 hover:text-indigo-700 text-xs font-medium bg-white dark:bg-gray-800 px-2 py-0.5 rounded shadow-sm"
+            >
+              {expandedCard === "mnav" ? "▼" : "▶"}
+            </button>
           </div>
         )}
 
-        {/* Leverage - with expand button */}
-        <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-4 relative", expandedCard === "leverage" && "ring-2 ring-amber-500")}>
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Leverage</p>
-            <button 
-              onClick={() => toggleCard("leverage")}
-              className="text-amber-500 hover:text-amber-700 text-xs font-medium"
-            >
-              {expandedCard === "leverage" ? "▼ Hide" : "▶ Show calc"}
-            </button>
-          </div>
-          <p className="text-2xl font-bold text-green-600">{leverage.toFixed(2)}x</p>
-          <p className="text-xs text-gray-400">Net Debt / Crypto NAV (debt-free)</p>
+        {/* Leverage - Clickable with ProvenanceMetric + expand button */}
+        <div className={cn("relative", expandedCard === "leverage" && "ring-2 ring-amber-500 rounded-lg")}>
+          <ProvenanceMetric
+            label="Leverage"
+            data={leveragePv}
+            format="mnav"
+            subLabel="Net Debt / Crypto NAV"
+            tooltip="SBET is debt-free"
+            ticker="sbet"
+          />
+          <button 
+            onClick={() => toggleCard("leverage")}
+            className="absolute top-2 right-2 text-amber-500 hover:text-amber-700 text-xs font-medium bg-white dark:bg-gray-800 px-2 py-0.5 rounded shadow-sm"
+          >
+            {expandedCard === "leverage" ? "▼" : "▶"}
+          </button>
         </div>
 
-        {/* Equity NAV/Share - with expand button */}
-        <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-4 relative", expandedCard === "equityNav" && "ring-2 ring-indigo-500")}>
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Equity NAV/Share</p>
-            <button 
-              onClick={() => toggleCard("equityNav")}
-              className="text-indigo-500 hover:text-indigo-700 text-xs font-medium"
-            >
-              {expandedCard === "equityNav" ? "▼ Hide" : "▶ Show calc"}
-            </button>
-          </div>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">${equityNavPerShare.toFixed(2)}</p>
-          <p className="text-xs text-gray-400">
-            {stockPrice > 0 && equityNavPerShare > 0 && (
+        {/* Equity NAV/Share - Clickable with ProvenanceMetric + expand button */}
+        <div className={cn("relative", expandedCard === "equityNav" && "ring-2 ring-indigo-500 rounded-lg")}>
+          <ProvenanceMetric
+            label="Equity NAV/Share"
+            data={equityNavPerSharePv}
+            format="currency"
+            subLabel={stockPrice > 0 && equityNavPerShare > 0 ? (
               <span className={equityNavPerShare > stockPrice ? "text-green-500" : "text-red-500"}>
-                {((equityNavPerShare / stockPrice - 1) * 100).toFixed(0)}% {equityNavPerShare > stockPrice ? "above" : "below"} stock price
+                {((equityNavPerShare / stockPrice - 1) * 100).toFixed(0)}% {equityNavPerShare > stockPrice ? "above" : "below"} price
               </span>
-            )}
-          </p>
+            ) : "Equity NAV ÷ Shares"}
+            ticker="sbet"
+          />
+          <button 
+            onClick={() => toggleCard("equityNav")}
+            className="absolute top-2 right-2 text-indigo-500 hover:text-indigo-700 text-xs font-medium bg-white dark:bg-gray-800 px-2 py-0.5 rounded shadow-sm"
+          >
+            {expandedCard === "equityNav" ? "▼" : "▶"}
+          </button>
         </div>
 
         {/* Holdings - from provenance */}

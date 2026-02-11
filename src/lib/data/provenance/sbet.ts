@@ -557,13 +557,15 @@ export const SBET_PROVENANCE = {
     "2,304,908,135"
   ), "Total cost basis from Q3 2025 balance sheet (Sep 30, 2025 holdings)"),
 
-  // Note: Avg cost basis is CALCULATED - not directly stated in filing
-  // SearchTerm points to native ETH cost basis (largest component)
+  // Note: Avg cost basis ($3,696) is CALCULATED from the 10-Q balance sheet
+  // Native ETH: $2,304,908,135 cost ÷ 580,841 units = $3,968/ETH
+  // LsETH: $717,419,123 cost ÷ 236,906 units = $3,028/ETH  
+  // Weighted avg: ~$3,696/ETH
   costBasisAvg: pv(3_696, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Calculated: Native ETH cost $2,304,908,135 ÷ 580,841 units = $3,968/ETH; LsETH cost $717,419,123 ÷ 236,906 units = $3,028/ETH; Weighted avg ~$3,696/ETH",
+    "Native ETH at cost $2,304,908,135 (580,841 units) + LsETH at cost $717,419,123 (236,906 units) → Weighted avg $3,696/ETH",
     "form10-q.htm",
-    "580,841"  // Search for native ETH units to find cost basis section
+    "2,304,908,135"  // Search for native ETH cost basis (largest line item)
   ), "Weighted average cost per ETH at Sep 30, 2025"),
 
 };
