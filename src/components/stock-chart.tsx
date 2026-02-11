@@ -172,12 +172,12 @@ export function StockChart({ data }: StockChartProps) {
         type: "volume",
         precision: 0,
       },
-      priceScaleId: "volume",
+      priceScaleId: "left",
       lastValueVisible: false,
     });
     
-    // Configure volume price scale (bottom 20% of chart, visible on left)
-    chart.priceScale("volume").applyOptions({
+    // Configure volume price scale on left side (bottom 20% of chart)
+    chart.priceScale("left").applyOptions({
       scaleMargins: {
         top: 0.85,
         bottom: 0,
