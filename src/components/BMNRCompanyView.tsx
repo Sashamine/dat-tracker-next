@@ -47,6 +47,7 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
   // Chart state
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
+  const [chartMode, setChartMode] = useState<"price" | "volume" | "mnav" | "hps">("price");
   const { data: history, isLoading: historyLoading } = useStockHistory("BMNR", timeRange, interval);
   
   const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1y");
@@ -385,6 +386,114 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* CHARTS */}
+      {/* ═══════════════════════════════════════════════════════════════════ */}
+      <div className="mb-4 flex items-center gap-2">
+        <span className="text-lg">📈</span>
+        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Charts</h2>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
+
+      {/* Unified Chart Section */}
+      <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+        {/* Chart type toggles */}
+        <div className="flex justify-center gap-6 mb-4">
+          {(["price", "volume", "mnav", "hps"] as const).map((mode) => (
+            <label key={mode} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="chartMode"
+                checked={chartMode === mode}
+                onChange={() => setChartMode(mode)}
+                className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
+              />
+              <span className="text-base font-semibold text-gray-900 dark:text-white">
+                {mode === "price" ? "Price" : mode === "volume" ? "Volume" : mode === "mnav" ? "mNAV" : "HPS"}
+              </span>
+            </label>
+          ))}
+        </div>
+        
+        {/* Time range selector */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <div className="flex gap-1">
+            {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
+              const label = value === "1d" 
+                ? (chartMode === "volume" ? "1D" : "24H")
+                : value === "7d" ? "7D"
+                : value === "1mo" ? "1M"
+                : value === "1y" ? "1Y"
+                : "ALL";
+              return (
+                <button
+                  key={value}
+                  onClick={() => chartMode === "mnav" ? handleMnavTimeRangeChange(value) : handleTimeRangeChange(value)}
+                  className={cn(
+                    "px-3 py-1 text-sm rounded-md transition-colors",
+                    (chartMode === "mnav" ? mnavTimeRange : timeRange) === value
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                  )}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        
+        {/* Chart content */}
+        {(chartMode === "price" || chartMode === "volume") && (
+          historyLoading ? (
+            <div className="h-[400px] flex items-center justify-center text-gray-500">
+              Loading chart...
+            </div>
+          ) : history && history.length > 0 ? (
+            <StockChart data={history} chartMode={chartMode === "volume" ? "volume" : "price"} onChartModeChange={(m) => setChartMode(m)} />
+          ) : (
+            <div className="h-[400px] flex items-center justify-center text-gray-500">
+              No historical data available
+            </div>
+          )
+        )}
+        
+        {chartMode === "mnav" && metrics.mNav !== null && stockPrice > 0 && ethPrice > 0 && (
+          <CompanyMNAVChart
+            ticker="BMNR"
+            asset="ETH"
+            currentMNAV={metrics.mNav}
+            currentStockPrice={stockPrice}
+            currentCryptoPrice={ethPrice}
+            timeRange={mnavTimeRange}
+            interval={mnavInterval}
+            companyData={{
+              holdings: metrics.holdings,
+              sharesForMnav: metrics.estimatedShares,
+              totalDebt: metrics.totalDebt,
+              preferredEquity: metrics.preferredEquity,
+              cashReserves: metrics.cashReserves,
+              restrictedCash: 0,
+              asset: "ETH",
+            }}
+          />
+        )}
+        
+        {chartMode === "hps" && (
+          <HoldingsPerShareChart
+            ticker="BMNR"
+            asset="ETH"
+            currentHoldingsPerShare={metrics.holdingsPerShare}
+            currentProvenance={{
+              holdings: metrics.holdings,
+              shares: metrics.estimatedShares,
+              sharesSource: "estimated",
+              methodology: metrics.shareEstimate.methodology,
+            }}
+          />
+        )}
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* BALANCE SHEET - All SEC-sourced with click-to-verify */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
       <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
@@ -490,144 +599,6 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
               </details>
             </div>
           </div>
-        </div>
-      </details>
-
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* CHARTS */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      <div className="mb-4 flex items-center gap-2">
-        <span className="text-lg">📈</span>
-        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Charts</h2>
-        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
-      </div>
-
-      {/* Stock Price Chart */}
-      <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
-        <summary className="p-4 cursor-pointer flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
-          <div className="flex items-center gap-3">
-            <StockPriceCell price={stockPrice} change24h={stockChange} />
-            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </summary>
-        <div className="px-4 pb-4">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {(["1d", "7d", "1mo", "1y", "all"] as const).map((range) => (
-              <button
-                key={range}
-                onClick={() => handleTimeRangeChange(range)}
-                className={cn(
-                  "px-3 py-1 text-sm rounded-md transition-colors",
-                  timeRange === range
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                )}
-              >
-                {range === "1d" ? "24H" : range === "7d" ? "7D" : range === "1mo" ? "1M" : range === "1y" ? "1Y" : "ALL"}
-              </button>
-            ))}
-          </div>
-          {historyLoading ? (
-            <div className="h-[400px] flex items-center justify-center text-gray-500">
-              Loading chart data...
-            </div>
-          ) : history && history.length > 0 ? (
-            <StockChart data={history} />
-          ) : (
-            <div className="h-[400px] flex items-center justify-center text-gray-500">
-              No historical data available
-            </div>
-          )}
-        </div>
-      </details>
-
-      {/* mNAV History */}
-      {metrics.mNav !== null && (
-        <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
-          <summary className="p-4 cursor-pointer flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">mNAV History</h2>
-            <div className="flex items-center gap-3">
-              <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
-                {metrics.mNav.toFixed(2)}x
-              </span>
-              <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </summary>
-          <div className="px-4 pb-4">
-            <div className="flex flex-wrap gap-2 mb-4">
-              {([
-                { value: "1d", label: "24H" },
-                { value: "7d", label: "7D" },
-                { value: "1mo", label: "1M" },
-                { value: "1y", label: "1Y" },
-                { value: "all", label: "ALL" },
-              ] as const).map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => handleMnavTimeRangeChange(value)}
-                  className={cn(
-                    "px-3 py-1 text-sm rounded-md transition-colors",
-                    mnavTimeRange === value
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                  )}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <CompanyMNAVChart
-              ticker="BMNR"
-              asset="ETH"
-              currentMNAV={metrics.mNav}
-              currentStockPrice={stockPrice}
-              currentCryptoPrice={ethPrice}
-              timeRange={mnavTimeRange}
-              interval={mnavInterval}
-              companyData={{
-                holdings: metrics.holdings,
-                sharesForMnav: metrics.estimatedShares,
-                totalDebt: metrics.totalDebt,
-                preferredEquity: metrics.preferredEquity,
-                cashReserves: metrics.cashReserves,
-                restrictedCash: 0,
-                asset: "ETH",
-              }}
-            />
-          </div>
-        </details>
-      )}
-
-      {/* ETH/Share Growth */}
-      <details open className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
-        <summary className="p-4 cursor-pointer flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">ETH/Share Growth</h2>
-          <div className="flex items-center gap-3">
-            <span className="text-lg font-mono text-gray-900 dark:text-gray-100">
-              {metrics.holdingsPerShare.toFixed(6)}
-            </span>
-            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </summary>
-        <div className="px-4 pb-4">
-          <HoldingsPerShareChart
-            ticker="BMNR"
-            asset="ETH"
-            currentHoldingsPerShare={metrics.holdingsPerShare}
-            currentProvenance={{
-              holdings: metrics.holdings,
-              shares: metrics.estimatedShares,
-              sharesSource: "estimated",
-              methodology: metrics.shareEstimate.methodology,
-            }}
-          />
         </div>
       </details>
 
