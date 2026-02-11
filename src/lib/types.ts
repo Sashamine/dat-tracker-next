@@ -118,6 +118,7 @@ export interface Company {
   leader?: string;
   strategy?: string;
   strategyVideo?: string;  // YouTube or other video explaining strategy
+  strategyDocs?: Array<{ title: string; date: string; url: string }>;  // Key strategy documents
   notes?: string;
   description?: string;  // Longer company overview/history
   founded?: number;      // Year founded

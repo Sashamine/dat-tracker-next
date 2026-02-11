@@ -460,8 +460,19 @@ export const btcCompanies: Company[] = [
     cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2025-09-30",
     leader: "Simon Gerovich (CEO)",
-    strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027. Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
-    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M credit facility secured by BTC. See: Capital Allocation Policy (Oct 28, 2025), 2025-2027 BITCOIN PLAN (Jun 6, 2025).",
+    strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
+    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M BTC-backed credit facility.",
+    // Key strategy documents (TDnet disclosures):
+    // - 2025-2027 BITCOIN PLAN (Jun 6, 2025): 210K BTC target, warrant framework
+    // - Phase II: Bitcoin Platform (Oct 1, 2025): BTC income generation for preferred dividends
+    // - Capital Allocation Policy (Oct 28, 2025): mNAV-based capital decisions, credit facility, buybacks
+    // - Q3 2025 Earnings Presentation (Nov 14, 2025): Synthesizes all strategies
+    strategyDocs: [
+      { title: "Q3 2025 Earnings Presentation", date: "2025-11-14", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf" },
+      { title: "Capital Allocation Policy", date: "2025-10-28", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+      { title: "Phase II: Bitcoin Platform", date: "2025-10-01", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+      { title: "2025-2027 BITCOIN PLAN", date: "2025-06-06", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+    ],
   },
   {
     id: "xxi",
