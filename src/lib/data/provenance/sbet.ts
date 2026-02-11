@@ -177,30 +177,53 @@ export interface SBETAcquisition {
 }
 
 // Holdings snapshots from 8-K filings (Item 7.01 / 8.01)
-// Build this by tracing each 8-K with holdings disclosures
+// Traced from SEC filings Aug-Dec 2025
 export const SBET_HOLDINGS_HISTORY: SBETAcquisition[] = [
-  // Latest - Dec 2025
+  // Dec 2025 - Leadership transition, latest holdings
   {
     date: "2025-12-14",
     filedDate: "2025-12-17",
-    ethAcquired: 0, // This was a leadership change filing, total disclosed
+    ethAcquired: 3_571, // 863,424 - 859,853
     runningTotal: 863_424,
     accession: "0001493152-25-028063",
     source: "8-K Ex 99.1: 639,241 native + 224,183 LsETH",
   },
-  // TODO: Trace earlier 8-Ks to build complete acquisition history
-  // Key filings to check:
-  // - 2025-10-28: Items 8.01, 9.01
-  // - 2025-10-21: Items 7.01, 8.01, 9.01
-  // - 2025-10-17: Items 1.01, 8.01, 9.01
-  // - 2025-09-25: Items 5.03, 5.07, 9.01
-  // - 2025-09-25: Items 8.01, 9.01
-  // - 2025-09-16: Items 7.01, 8.01, 9.01
-  // - 2025-09-09: Items 8.01, 9.01
-  // - 2025-09-02: Items 8.01, 9.01
-  // - 2025-08-26: Items 8.01, 9.01
-  // - 2025-08-22: Multiple 8-Ks
-  // - 2025-08-19/20: Multiple 8-Ks (early acquisitions)
+  // Oct 2025 - First filing with native/LsETH breakdown
+  {
+    date: "2025-10-19",
+    filedDate: "2025-10-21",
+    ethAcquired: 21_701, // 859,853 - 838,152
+    runningTotal: 859_853,
+    accession: "0001493152-25-018731",
+    source: "8-K Ex 99.1: 601,143 native + 258,710 LsETH. Staking rewards: 5,671 cumulative",
+  },
+  // Sep 2025
+  {
+    date: "2025-09-14",
+    filedDate: "2025-09-16",
+    ethAcquired: 922, // 838,152 - 837,230
+    runningTotal: 838_152,
+    accession: "0001493152-25-013634",
+    source: "8-K Ex 99.1: 838,152 ETH valued at $3.86B. Staking rewards: 3,240 cumulative",
+  },
+  // Aug 2025 - End of month
+  {
+    date: "2025-08-31",
+    filedDate: "2025-09-02",
+    ethAcquired: 39_526, // 837,230 - 797,704
+    runningTotal: 837_230,
+    accession: "0001493152-25-012518",
+    source: "8-K Ex 99.1: 837,230 ETH valued at $3.6B. Staking rewards: 2,318 cumulative",
+  },
+  // Aug 2025 - Mid-month
+  {
+    date: "2025-08-24",
+    filedDate: "2025-08-26",
+    ethAcquired: 200_904, // 797,704 - ~596,800 (prior week)
+    runningTotal: 797_704,
+    accession: "0001641172-25-025469",
+    source: "8-K Ex 99.1: 797,704 ETH valued at $3.7B. Staking rewards: 1,799 cumulative",
+  },
 ];
 
 // =============================================================================
