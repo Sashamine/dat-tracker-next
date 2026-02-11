@@ -1028,26 +1028,29 @@ export default function CompanyPage() {
             <div className="flex flex-wrap items-center gap-2">
               {/* Time Range Buttons */}
               <div className="flex gap-1">
-                {([
-                  { value: "1d", label: stockChartMode === "volume" ? "1D" : "24H" },
-                  { value: "7d", label: "7D" },
-                  { value: "1mo", label: "1M" },
-                  { value: "1y", label: "1Y" },
-                  { value: "all", label: "ALL" },
-                ] as const).map(({ value, label }) => (
-                  <button
-                    key={value}
-                    onClick={() => handleTimeRangeChange(value)}
-                    className={cn(
-                      "px-3 py-1 text-sm rounded-md transition-colors",
-                      timeRange === value
-                        ? "bg-indigo-600 text-white"
-                        : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                    )}
-                  >
-                    {label}
-                  </button>
-                ))}
+                {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
+                  // Show "1D" for volume view, "24H" for price view
+                  const label = value === "1d" 
+                    ? (stockChartMode === "volume" ? "1D" : "24H")
+                    : value === "7d" ? "7D"
+                    : value === "1mo" ? "1M"
+                    : value === "1y" ? "1Y"
+                    : "ALL";
+                  return (
+                    <button
+                      key={value}
+                      onClick={() => handleTimeRangeChange(value)}
+                      className={cn(
+                        "px-3 py-1 text-sm rounded-md transition-colors",
+                        timeRange === value
+                          ? "bg-indigo-600 text-white"
+                          : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                      )}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
               {/* Interval Buttons (only show if multiple options) */}
               {VALID_INTERVALS[timeRange].length > 1 && (
