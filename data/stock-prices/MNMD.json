@@ -2,7 +2,7 @@
   "ticker": "MNMD",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-11T00:15:01.772Z",
+  "lastUpdated": "2026-02-11T00:30:01.636Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -5079,6 +5079,15 @@
     {
       "date": "2026-02-11",
       "time": "17:15",
+      "open": 17,
+      "high": 17.32,
+      "low": 16.55,
+      "close": 17.19,
+      "volume": 20235
+    },
+    {
+      "date": "2026-02-11",
+      "time": "17:30",
       "open": 17,
       "high": 17.32,
       "low": 16.55,
