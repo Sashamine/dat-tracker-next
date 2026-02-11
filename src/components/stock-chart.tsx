@@ -80,8 +80,7 @@ function processData(data: HistoricalPrice[]) {
 export function StockChart({ data }: StockChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const [showPrice, setShowPrice] = useState(true);
-  const [showVolume, setShowVolume] = useState(true);
+  const [chartMode, setChartMode] = useState<"price" | "volume">("price");
 
   const { processed, timeMap, isIntraday } = useMemo(
     () => processData(data),
@@ -166,36 +165,39 @@ export function StockChart({ data }: StockChartProps) {
 
     chartRef.current = chart;
 
-    // Add volume if enabled (behind price)
-    if (showVolume) {
-      const volumeSeries = chart.addSeries(HistogramSeries, {
-        color: "#3b82f6",
+    if (chartMode === "volume") {
+      // Volume as area chart (same style as price)
+      const firstVolume = processed[0].volume;
+      const lastVolume = processed[processed.length - 1].volume;
+      const volumeUp = lastVolume >= firstVolume;
+      const volumeColor = volumeUp ? "#22c55e" : "#ef4444";
+      
+      const series = chart.addSeries(AreaSeries, {
+        lineColor: volumeColor,
+        lineWidth: 2,
+        topColor: volumeUp
+          ? "rgba(34, 197, 94, 0.3)"
+          : "rgba(239, 68, 68, 0.3)",
+        bottomColor: volumeUp
+          ? "rgba(34, 197, 94, 0.02)"
+          : "rgba(239, 68, 68, 0.02)",
+        crosshairMarkerVisible: true,
+        crosshairMarkerRadius: 4,
+        crosshairMarkerBorderColor: volumeColor,
+        crosshairMarkerBackgroundColor: "#ffffff",
         priceFormat: {
           type: "volume",
-          precision: 0,
-        },
-        priceScaleId: "volume",
-      });
-      
-      // Configure volume scale
-      chart.priceScale("volume").applyOptions({
-        scaleMargins: {
-          top: showPrice ? 0.8 : 0.1,
-          bottom: 0,
         },
       });
       
-      volumeSeries.setData(
+      series.setData(
         processed.map((d) => ({
           time: d.time,
           value: d.volume,
-          color: d.close >= d.open ? "rgba(34, 197, 94, 0.6)" : "rgba(239, 68, 68, 0.6)",
         }))
       );
-    }
-    
-    // Add price if enabled
-    if (showPrice) {
+    } else {
+      // Price as area chart
       const series = chart.addSeries(AreaSeries, {
         lineColor: lineColor,
         lineWidth: 2,
@@ -209,14 +211,6 @@ export function StockChart({ data }: StockChartProps) {
         crosshairMarkerRadius: 4,
         crosshairMarkerBorderColor: lineColor,
         crosshairMarkerBackgroundColor: "#ffffff",
-      });
-      
-      // Adjust price scale margins based on whether volume is shown
-      chart.priceScale("right").applyOptions({
-        scaleMargins: {
-          top: 0.1,
-          bottom: showVolume ? 0.25 : 0.1,
-        },
       });
       
       series.setData(
@@ -244,27 +238,29 @@ export function StockChart({ data }: StockChartProps) {
       window.removeEventListener("resize", handleResize);
       chart.remove();
     };
-  }, [processed, timeMap, isIntraday, showPrice, showVolume]);
+  }, [processed, timeMap, isIntraday, chartMode]);
 
   return (
     <div className="relative">
-      {/* Chart toggles - centered with checkboxes */}
+      {/* Chart mode toggle - centered radio buttons */}
       <div className="flex justify-center gap-6 mb-3">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
-            type="checkbox"
-            checked={showPrice}
-            onChange={(e) => setShowPrice(e.target.checked)}
-            className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
+            type="radio"
+            name="chartMode"
+            checked={chartMode === "price"}
+            onChange={() => setChartMode("price")}
+            className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
           />
           <span className="text-base font-medium text-gray-200">Price</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
           <input
-            type="checkbox"
-            checked={showVolume}
-            onChange={(e) => setShowVolume(e.target.checked)}
-            className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
+            type="radio"
+            name="chartMode"
+            checked={chartMode === "volume"}
+            onChange={() => setChartMode("volume")}
+            className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
           />
           <span className="text-base font-medium text-gray-200">Volume</span>
         </label>
