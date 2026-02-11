@@ -31,7 +31,6 @@ export function CompanyMNAVChart({
   companyData,
 }: CompanyMNAVChartProps) {
   // Silence unused variable warnings - these props are kept for API compatibility
-  void asset;
   void currentStockPrice;
   void currentCryptoPrice;
 
@@ -358,22 +357,22 @@ export function CompanyMNAVChart({
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-gray-600 dark:text-gray-400">
                 <div>
-                  <span className="text-gray-500">BTC Price:</span>{" "}
+                  <span className="text-gray-500">{asset} Price:</span>{" "}
                   <span className="font-medium">${selectedPoint.btcPrice.toLocaleString()}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500">MSTR:</span>{" "}
+                  <span className="text-gray-500">{ticker}:</span>{" "}
                   <span className="font-medium">${selectedPoint.stockPrice.toFixed(2)}</span>
                 </div>
                 {selectedPoint.btcHoldings && (
                   <div>
-                    <span className="text-gray-500">BTC:</span>{" "}
+                    <span className="text-gray-500">{asset}:</span>{" "}
                     <span className="font-medium">{selectedPoint.btcHoldings.toLocaleString()}</span>
                   </div>
                 )}
                 {selectedPoint.btcPerShare && (
                   <div>
-                    <span className="text-gray-500">BTC/Share:</span>{" "}
+                    <span className="text-gray-500">{asset}/Share:</span>{" "}
                     <span className="font-medium text-amber-600 dark:text-amber-400">
                       {selectedPoint.btcPerShare.toFixed(6)}
                     </span>
