@@ -193,6 +193,16 @@ export function enrichCompany(company: Company): Company {
     hasLiveBalanceSheet: false,
     // Official mNAV only if company has it in static data
     officialMnav: staticCompany?.officialMnav ?? company.officialMnav,
+    // Provenance tracking fields
+    provenanceFile: staticCompany?.provenanceFile ?? company.provenanceFile,
+    lastVerified: staticCompany?.lastVerified ?? company.lastVerified,
+    nextExpectedFiling: staticCompany?.nextExpectedFiling ?? company.nextExpectedFiling,
+    holdingsAccession: staticCompany?.holdingsAccession ?? company.holdingsAccession,
+    holdingsNative: staticCompany?.holdingsNative ?? company.holdingsNative,
+    holdingsLsETH: staticCompany?.holdingsLsETH ?? company.holdingsLsETH,
+    holdingsStaked: staticCompany?.holdingsStaked ?? company.holdingsStaked,
+    stakingRewardsCumulative: staticCompany?.stakingRewardsCumulative ?? company.stakingRewardsCumulative,
+    holdingsLastUpdated: staticCompany?.holdingsLastUpdated ?? company.holdingsLastUpdated,
   };
 
   return {
