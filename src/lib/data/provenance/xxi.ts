@@ -92,8 +92,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
       filingType: "S-1",
       filingDate: "2026-01-05",
       documentDate: MERGER_CLOSE_DATE,
-    }),
-    "Blended cost: ~42K at merger FV + PIPE purchases at market prices."
+    })
   ),
 
   // =========================================================================
@@ -114,8 +113,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
       filingType: "10-Q",
       filingDate: Q4_2025_10Q_FILED,
       documentAnchor: "shares of common stock outstanding",
-    }),
-    `Class A: ${CLASS_A_SHARES.toLocaleString()} + Class B: ${CLASS_B_SHARES.toLocaleString()} = ${TOTAL_SHARES.toLocaleString()} total`
+    })
   ),
 
   // =========================================================================
@@ -135,8 +133,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
       filingType: "8-K",
       filingDate: MERGER_8K_FILED,
       documentDate: MERGER_CLOSE_DATE,
-    }),
-    "1.00% Convertible Senior Secured Notes due 2030. Conversion rate: 72.0841 shares/$1,000 (~$13.87 strike). Collateralized by 16,116.32 BTC."
+    })
   ),
 
   // =========================================================================
@@ -155,8 +152,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
       filingType: "S-1",
       filingDate: "2026-01-05",
       documentDate: MERGER_CLOSE_DATE,
-    }),
-    "Estimated cash at merger close. Awaiting Q4 2025 10-K for verified figure."
+    })
   ),
 
   // =========================================================================
