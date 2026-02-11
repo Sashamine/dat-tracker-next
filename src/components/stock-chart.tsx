@@ -170,17 +170,20 @@ export function StockChart({ data }: StockChartProps) {
       color: "#3b82f6",
       priceFormat: {
         type: "volume",
+        precision: 0,
       },
       priceScaleId: "volume",
+      lastValueVisible: false,
     });
     
-    // Configure volume price scale (bottom 20% of chart)
+    // Configure volume price scale (bottom 20% of chart, visible on left)
     chart.priceScale("volume").applyOptions({
       scaleMargins: {
         top: 0.85,
         bottom: 0,
       },
       borderVisible: false,
+      visible: true,
     });
 
     volumeSeries.setData(
