@@ -106,6 +106,15 @@ export default function CompanyPage() {
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
   const [stockChartMode, setStockChartMode] = useState<"price" | "volume">("price");
+  
+  // Time range labels - changes based on chart mode
+  const timeRangeLabels = useMemo(() => ({
+    "1d": stockChartMode === "volume" ? "1D" : "24H",
+    "7d": "7D",
+    "1mo": "1M", 
+    "1y": "1Y",
+    "all": "ALL",
+  }), [stockChartMode]);
   const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange, interval);
 
   // mNAV chart timeframe (separate from stock price)
@@ -1028,29 +1037,20 @@ export default function CompanyPage() {
             <div className="flex flex-wrap items-center gap-2">
               {/* Time Range Buttons */}
               <div className="flex gap-1">
-                {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
-                  // Show "1D" for volume view, "24H" for price view
-                  const label = value === "1d" 
-                    ? (stockChartMode === "volume" ? "1D" : "24H")
-                    : value === "7d" ? "7D"
-                    : value === "1mo" ? "1M"
-                    : value === "1y" ? "1Y"
-                    : "ALL";
-                  return (
-                    <button
-                      key={value}
-                      onClick={() => handleTimeRangeChange(value)}
-                      className={cn(
-                        "px-3 py-1 text-sm rounded-md transition-colors",
-                        timeRange === value
-                          ? "bg-indigo-600 text-white"
-                          : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
-                      )}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
+                {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => (
+                  <button
+                    key={value}
+                    onClick={() => handleTimeRangeChange(value)}
+                    className={cn(
+                      "px-3 py-1 text-sm rounded-md transition-colors",
+                      timeRange === value
+                        ? "bg-indigo-600 text-white"
+                        : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
+                    )}
+                  >
+                    {timeRangeLabels[value]}
+                  </button>
+                ))}
               </div>
               {/* Interval Buttons (only show if multiple options) */}
               {VALID_INTERVALS[timeRange].length > 1 && (
