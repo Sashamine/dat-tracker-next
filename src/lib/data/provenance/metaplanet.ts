@@ -82,7 +82,7 @@ export const METAPLANET_PROVENANCE = {
     date: "2025-11-13",
     url: PDF_URLS.q3FinancialResults,
     quote: "Zero-coupon bonds approximately ¥44B (~$280M USD)",
-    searchTerm: "44",  // Search for ¥44B in the document
+    searchTerm: "44,000",  // ¥44B shown as 44,000 million yen
   }), "Zero-coupon yen bonds, no interest payments"),
 
   // Cash Reserves (from Q3 2025 Financial Results)
@@ -91,7 +91,7 @@ export const METAPLANET_PROVENANCE = {
     date: "2025-11-13",
     url: PDF_URLS.q3FinancialResults,
     quote: "Cash and equivalents: ¥23.4B (~$150M USD at 156 JPY/USD)",
-    searchTerm: "23",  // Search for ¥23B in the document
+    searchTerm: "23,400",  // ¥23.4B shown as 23,400 million yen
   }), "Estimated from Q3 balance sheet"),
 
   // Average Cost Basis (from company disclosure)
