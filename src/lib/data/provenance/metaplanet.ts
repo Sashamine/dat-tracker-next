@@ -84,12 +84,14 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "23.4",  // Search for ¥23.4B on disclosure page
   }), "Estimated from Q3 FY2025 at 156 JPY/USD"),
 
-  // Average Cost Basis
-  costBasisAvg: pv(107_607, derivedSource({
-    derivation: "Total acquisition cost / Total BTC",
-    formula: "$3.78B / 35,102 BTC = $107,607/BTC",
-    inputs: { totalCost: "$3.78B", holdings: 35102 },
-  }), "From Metaplanet analytics dashboard - search '107,607' on analytics page"),
+  // Average Cost Basis (from company analytics dashboard)
+  costBasisAvg: pv(107_607, {
+    type: "company-website" as const,
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "Average BTC Cost: $107,607",
+    searchTerm: "107,607",
+    documentDate: "2025-12-30",
+  }, "From Metaplanet analytics dashboard"),
 };
 
 // =============================================================================
