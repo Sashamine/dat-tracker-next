@@ -52,6 +52,7 @@ import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { MSTRCompanyView } from "@/components/MSTRCompanyView";
 import { BMNRCompanyView } from "@/components/BMNRCompanyView";
 import { MARACompanyView } from "@/components/MARACompanyView";
+import { XXICompanyView } from "@/components/XXICompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 
 // Asset colors
@@ -435,13 +436,15 @@ export default function CompanyPage() {
           </div>
         )}
 
-        {/* MSTR/BMNR/MARA: Use fully provenance-tracked views */}
+        {/* MSTR/BMNR/MARA/XXI: Use fully provenance-tracked views */}
         {displayCompany.ticker === "MSTR" ? (
           <MSTRCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "BMNR" ? (
           <BMNRCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "MARA" ? (
           <MARACompanyView company={displayCompany} />
+        ) : displayCompany.ticker === "XXI" ? (
+          <XXICompanyView company={displayCompany} />
         ) : (
           <>
         {/* Key Valuation Metrics */}
