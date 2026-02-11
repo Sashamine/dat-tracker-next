@@ -205,12 +205,16 @@ export function MnavCalculationCard({
 
       {/* EV Section */}
       <div className="mb-4">
-        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-          Enterprise Value (EV)
+        <div className="mb-2 flex items-center gap-2">
+          <span className="text-sm">🏢</span>
+          <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Enterprise Value (EV)
+          </h4>
           <span 
             className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-gray-200 dark:bg-gray-700 text-[9px] cursor-help"
             title="Market Cap + Debt + Preferred − Cash"
           >?</span>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
         </div>
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700 space-y-0.5">
           {/* Market Cap with share breakdown */}
@@ -290,12 +294,16 @@ export function MnavCalculationCard({
 
       {/* CV Section */}
       <div className="mb-4">
-        <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-          Crypto Value (CV)
+        <div className="mb-2 flex items-center gap-2">
+          <span className="text-sm">₿</span>
+          <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Crypto Value (CV)
+          </h4>
           <span 
             className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-gray-200 dark:bg-gray-700 text-[9px] cursor-help"
             title="Holdings × Current Price"
           >?</span>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
         </div>
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
@@ -324,6 +332,13 @@ export function MnavCalculationCard({
       </div>
 
       {/* Result */}
+      <div className="mb-2 flex items-center gap-2">
+        <span className="text-sm">📐</span>
+        <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          Result
+        </h4>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+      </div>
       <div className="bg-indigo-50 dark:bg-indigo-900/30 rounded p-3 border border-indigo-200 dark:border-indigo-700">
         <div className="flex justify-between items-center">
           <span className="text-indigo-700 dark:text-indigo-300 text-sm">
