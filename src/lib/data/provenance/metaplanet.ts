@@ -76,25 +76,24 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "1,142,264,340",
   }), "Q3 FY2025 filing - page 1"),
 
-  // Total Debt (from Q3 2025 Financial Results - zero-coupon bonds)
-  // Note: Exact figure requires reading Japanese GAAP balance sheet
-  totalDebt: pv(280_000_000, tdnetSource({
-    title: "Financial Results Summary for the Third Quarter",
-    date: "2025-11-13",
-    url: PDF_URLS.q3FinancialResults,
-    quote: "See balance sheet - total bonds/borrowings",
-    searchTerm: "社債",  // Japanese for "bonds"
-  }), "Zero-coupon yen bonds ~¥44B (~$280M USD at 156 JPY/USD)"),
+  // Total Debt (from Metaplanet analytics - live data)
+  totalDebt: pv(355_000_000, {
+    type: "company-website" as const,
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "Debt Outstanding: $355.00M",
+    searchTerm: "355",
+    documentDate: "2026-02-11",
+  }, "Zero-coupon yen bonds - live from analytics dashboard"),
 
-  // Cash Reserves (from Q3 2025 Financial Results)
-  // Note: Exact figure requires reading Japanese GAAP balance sheet
+  // Cash Reserves (estimated - analytics doesn't show cash separately)
+  // Using Q3 2025 estimate until we can verify
   cashReserves: pv(150_000_000, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
     url: PDF_URLS.q3FinancialResults,
-    quote: "See balance sheet - cash and deposits",
+    quote: "Cash from Q3 balance sheet (needs verification)",
     searchTerm: "現金",  // Japanese for "cash"
-  }), "Estimated ~¥23B (~$150M USD at 156 JPY/USD)"),
+  }), "Estimated ~$150M - needs verification from Q4 filing"),
 
   // Average Cost Basis (from company disclosure)
   costBasisAvg: pv(107_607, tdnetSource({
