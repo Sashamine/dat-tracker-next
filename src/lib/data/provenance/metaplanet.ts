@@ -77,22 +77,24 @@ export const METAPLANET_PROVENANCE = {
   }), "Q3 FY2025 filing - page 1"),
 
   // Total Debt (from Q3 2025 Financial Results - zero-coupon bonds)
+  // Note: Exact figure requires reading Japanese GAAP balance sheet
   totalDebt: pv(280_000_000, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
     url: PDF_URLS.q3FinancialResults,
-    quote: "Zero-coupon bonds approximately ¥44B (~$280M USD)",
-    searchTerm: "44,000",  // ¥44B shown as 44,000 million yen
-  }), "Zero-coupon yen bonds, no interest payments"),
+    quote: "See balance sheet - total bonds/borrowings",
+    searchTerm: "社債",  // Japanese for "bonds"
+  }), "Zero-coupon yen bonds ~¥44B (~$280M USD at 156 JPY/USD)"),
 
   // Cash Reserves (from Q3 2025 Financial Results)
+  // Note: Exact figure requires reading Japanese GAAP balance sheet
   cashReserves: pv(150_000_000, tdnetSource({
     title: "Financial Results Summary for the Third Quarter",
     date: "2025-11-13",
     url: PDF_URLS.q3FinancialResults,
-    quote: "Cash and equivalents: ¥23.4B (~$150M USD at 156 JPY/USD)",
-    searchTerm: "23,400",  // ¥23.4B shown as 23,400 million yen
-  }), "Estimated from Q3 balance sheet"),
+    quote: "See balance sheet - cash and deposits",
+    searchTerm: "現金",  // Japanese for "cash"
+  }), "Estimated ~¥23B (~$150M USD at 156 JPY/USD)"),
 
   // Average Cost Basis (from company disclosure)
   costBasisAvg: pv(107_607, tdnetSource({
