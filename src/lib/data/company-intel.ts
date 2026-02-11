@@ -62,22 +62,39 @@ const MSTR_INTEL: CompanyIntel = {
 
 const METAPLANET_INTEL: CompanyIntel = {
   ticker: "3350.T",
-  lastResearched: "2026-01-13",
+  lastResearched: "2026-02-11",
   pressReleases: [
-    { date: "2025-12-30", title: "Holdings lifted to 35,102 BTC", summary: "Treasury strategy delivered double-digit yield", url: "https://metaplanet.co.jp/en/ir/" },
-    { date: "2025-07-28", title: "Purchased 780 BTC", summary: "Holdings increased to 17,132 BTC", url: "https://metaplanet.co.jp/en/ir/" },
-    { date: "2025-06-01", title: "Secured $100M BTC-collateralized loan", summary: "For further accumulation", url: "https://metaplanet.co.jp/en/ir/" },
-    { date: "2025-05-01", title: "$500M credit line for share buybacks", summary: "Leveraging BTC holdings", url: "https://metaplanet.co.jp/en/ir/" },
+    { date: "2026-01-29", title: "New Share + 25th Series Warrant Issuance", summary: "Raising capital for BTC purchases via EVO FUND warrants", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+    { date: "2025-12-30", title: "Holdings lifted to 35,102 BTC", summary: "620 BTC purchased at $96,570 avg", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251230/20251229527957.pdf" },
+    { date: "2025-10-28", title: "Capital Allocation Policy Announced", summary: "mNAV-based framework: equity when >1x, preferred when ~1x", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+    { date: "2025-10-01", title: "Phase II: Bitcoin Platform", summary: "Expansion into BTC income generation for preferred dividends", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+    { date: "2025-06-06", title: "2025-2027 BITCOIN PLAN ('555 Million Plan')", summary: "Targeting 210,000 BTC by 2027", url: "https://metaplanet.jp/en/shareholders/disclosures" },
   ],
-  strategySummary: "Japan's Bitcoin treasury leader, now Asia's largest corporate BTC holder. Originally aimed for 10,000 BTC by end of 2025 and 21,000 by 2026 - exceeded both targets significantly. Leverages weak yen for structural financing advantage: borrow cheap yen, acquire BTC, repay in depreciating currency ('yen carry trade'). Core business combines hotel management with Bitcoin Treasury operations.",
+  strategySummary: "Japan's Bitcoin treasury leader targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants via EVO FUND for capital-efficient accumulation. Reports 'BTC Yield' (growth in BTC per fully-diluted share). Capital allocation governed by mNAV: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. Currently raising via 25th series warrants (Jan 2026) for BTC purchases. $355M BTC-backed credit facility provides additional flexibility.",
   recentDevelopments: [
-    "4th largest corporate Bitcoin treasury globally",
-    "Pioneering carry trade dynamic benefiting from Japan's monetary policy",
-    "Zero-interest bonds strategy for BTC acquisition",
-    "Reports 'BTC Yield' metric similar to MSTR",
+    "Currently in warrant cycle - 25th series issuance (Jan 29, 2026) pending exercise",
+    "No BTC purchases since Dec 30, 2025 while capital raise in progress",
+    "4th largest corporate Bitcoin treasury globally, largest in Asia",
+    "$355M drawn on $500M BTC-collateralized credit facility",
+    "Phase II: Bitcoin income generation via option premiums",
+    "Zero-coupon yen bonds (no interest, principal at maturity)",
   ],
-  keyBackers: ["Simon Gerovich (CEO)"],
-  outlook2026: "Targeting 100K BTC. Continuing to exploit yen weakness for accumulation advantage.",
+  keyBackers: ["Simon Gerovich (CEO)", "Dylan LeClair (Strategic Advisor)"],
+  outlook2026: `**Key Strategy Documents:**
+• Q3 2025 Earnings Presentation (Nov 14, 2025) - Full strategy synthesis
+• Capital Allocation Policy (Oct 28, 2025) - mNAV decision framework
+• Phase II: Bitcoin Platform (Oct 1, 2025) - Income generation expansion
+• 2025-2027 BITCOIN PLAN (Jun 6, 2025) - 210K BTC target
+
+**Current Status:**
+• 35,102 BTC held (as of Dec 30, 2025)
+• Q1 2026 BTC Yield: 0% (waiting for warrant proceeds)
+• mNAV ~1.22x - still above 1x
+
+**Catalysts:**
+• 25th series warrant exercises → BTC purchases resume
+• TSE approval for preferred share listing
+• Yen weakness continues to favor accumulation strategy`,
 };
 
 const XXI_INTEL: CompanyIntel = {
