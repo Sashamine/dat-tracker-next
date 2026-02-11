@@ -1027,7 +1027,7 @@ export default function CompanyPage() {
         {/* Chart with Time Range Selector */}
         <details open className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Price ({stockChartMode})</h2>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -1039,7 +1039,7 @@ export default function CompanyPage() {
               <div className="flex gap-1">
                 {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => (
                   <button
-                    key={value}
+                    key={`${value}-${stockChartMode}`}
                     onClick={() => handleTimeRangeChange(value)}
                     className={cn(
                       "px-3 py-1 text-sm rounded-md transition-colors",
@@ -1048,10 +1048,12 @@ export default function CompanyPage() {
                         : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300"
                     )}
                   >
-                    {timeRangeLabels[value]}
+                    {value === "1d" ? (stockChartMode === "volume" ? "1D" : "24H") : timeRangeLabels[value]}
                   </button>
                 ))}
               </div>
+              {/* Debug */}
+              <span className="text-xs text-red-500 ml-2">mode: {stockChartMode}</span>
               {/* Interval Buttons (only show if multiple options) */}
               {VALID_INTERVALS[timeRange].length > 1 && (
                 <>

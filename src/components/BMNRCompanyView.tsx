@@ -121,11 +121,10 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
     }), `Using live ETH price: $${ethPrice.toLocaleString()}`);
 
     // Create provenance for estimated shares - links to on-page section
-    const estimatedSharesPv = pv(estimatedShares, docSource({
-      type: "sec-document",
-      url: "#share-estimation",
-      quote: `${(estimatedShares / 1_000_000).toFixed(1)}M estimated`,
-      anchor: "See Estimated Shares below",
+    const estimatedSharesPv = pv(estimatedShares, derivedSource({
+      derivation: "Estimated from ATM activity",
+      formula: shareEstimateForMcap.methodology,
+      inputs: { anchor: "#share-estimation" },
     }), shareEstimateForMcap.methodology);
 
     const mNavPv: ProvenanceValue<number> | null = mNav !== null ? pv(mNav, derivedSource({
