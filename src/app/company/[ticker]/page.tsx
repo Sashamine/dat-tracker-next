@@ -106,10 +106,6 @@ export default function CompanyPage() {
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
   const [stockChartMode, setStockChartMode] = useState<"price" | "volume">("price");
-  const handleChartModeChange = (mode: "price" | "volume") => {
-    console.log("Parent received mode change:", mode);
-    setStockChartMode(mode);
-  };
   
   // Time range labels - changes based on chart mode
   const timeRangeLabels = useMemo(() => ({
@@ -1087,7 +1083,7 @@ export default function CompanyPage() {
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={stockChartMode} onChartModeChange={handleChartModeChange} />
+            <StockChart data={history} chartMode={stockChartMode} onChartModeChange={setStockChartMode} />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               No historical data available
