@@ -2,7 +2,7 @@
   "ticker": "3350.T",
   "exchange": "TSE",
   "currency": "JPY",
-  "lastUpdated": "2026-02-11T20:45:02.370Z",
+  "lastUpdated": "2026-02-11T23:18:58.083Z",
   "prices": [
     {
       "date": "2024-04-01",
@@ -4710,6 +4710,15 @@
     {
       "date": "2026-02-11",
       "time": "13:45",
+      "open": 360,
+      "high": 364,
+      "low": 349,
+      "close": 358,
+      "volume": 19601300
+    },
+    {
+      "date": "2026-02-11",
+      "time": "16:18",
       "open": 360,
       "high": 364,
       "low": 349,
