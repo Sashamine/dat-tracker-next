@@ -263,7 +263,7 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
             onChange={() => setChartMode("price")}
             className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
           />
-          <span className="text-base font-medium text-gray-200">Price</span>
+          <span className="text-base font-semibold text-gray-900 dark:text-white">Price</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
           <input
@@ -273,7 +273,7 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
             onChange={() => setChartMode("volume")}
             className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
           />
-          <span className="text-base font-medium text-gray-200">Volume</span>
+          <span className="text-base font-semibold text-gray-900 dark:text-white">Volume</span>
         </label>
       </div>
       <div ref={chartContainerRef} className="w-full" />
