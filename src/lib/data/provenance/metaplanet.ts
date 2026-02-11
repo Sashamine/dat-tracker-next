@@ -52,46 +52,52 @@ function tdnetSource(params: {
 // =============================================================================
 
 export const METAPLANET_PROVENANCE = {
-  // BTC Holdings
-  holdings: pv(35_102, tdnetSource({
-    title: "Notice of Additional Purchase of Bitcoin",
-    date: "2025-12-30",
-    quote: "Total Bitcoin holdings: 35,102 BTC",
+  // BTC Holdings (from live analytics dashboard)
+  holdings: pv(35_102, {
+    type: "company-website" as const,
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "BTC Holdings: ₿35,102",
     searchTerm: "35,102",
-  }), "Q4 2025 purchase of 4,279 BTC bringing total to 35,102"),
+    documentDate: "2025-12-30",
+  }, "Live from Metaplanet analytics - updates with each purchase"),
 
-  // Shares Outstanding  
-  sharesOutstanding: pv(1_142_264_340, tdnetSource({
-    title: "Q3 2025 Financial Results Summary",
-    date: "2025-11-13",
-    quote: "1,142,264,340 common shares outstanding",
-    searchTerm: "1,142,264,340",
-  }), "As of Q3 FY2025 filing"),
+  // Shares Outstanding (from Q3 2025 earnings presentation)
+  sharesOutstanding: pv(1_142_264_340, {
+    type: "company-website" as const,
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "Shares Outstanding: 1.14B",
+    searchTerm: "1.14",
+    documentDate: "2025-11-13",
+  }, "As of Q3 FY2025 - see 'Shares Outstanding' on analytics page"),
 
-  // Total Debt (zero-coupon bonds)
-  totalDebt: pv(280_000_000, tdnetSource({
-    title: "Q3 2025 Financial Results Summary",
-    date: "2025-11-13",
-    quote: "Approximately ¥44B in zero-coupon bonds (~$280M USD)",
-    searchTerm: "44",  // Search for ¥44B on disclosure page
-  }), "Zero-coupon yen-denominated bonds, no interest payments"),
+  // Total Debt (from analytics dashboard - Debt Outstanding section)
+  totalDebt: pv(280_000_000, {
+    type: "company-website" as const,
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "Debt Outstanding section shows bond totals",
+    searchTerm: "Debt Outstanding",
+    documentDate: "2025-11-13",
+  }, "Zero-coupon yen bonds ~¥44B (~$280M USD at 156 JPY/USD)"),
 
-  // Cash Reserves
-  cashReserves: pv(150_000_000, tdnetSource({
-    title: "Q3 2025 Financial Results Summary", 
-    date: "2025-11-13",
-    quote: "Cash and equivalents: ¥23.4B (~$150M USD)",
-    searchTerm: "23.4",  // Search for ¥23.4B on disclosure page
-  }), "Estimated from Q3 FY2025 at 156 JPY/USD"),
+  // Cash Reserves (estimated from Q3 financials)
+  cashReserves: pv(150_000_000, {
+    type: "regulatory" as const,
+    sourceName: "TDnet Q3 FY2025",
+    url: "https://metaplanet.jp/en/shareholders/disclosures",
+    quote: "Cash and equivalents from Q3 balance sheet",
+    searchTerm: "Q3 2025",
+    anchor: "Financial Results Summary for the Third Quarter",
+    documentDate: "2025-11-13",
+  }, "Estimated ¥23.4B (~$150M USD) - search 'Q3 2025' on disclosures page"),
 
   // Average Cost Basis (from company analytics dashboard)
   costBasisAvg: pv(107_607, {
     type: "company-website" as const,
     url: "https://metaplanet.jp/en/analytics",
-    quote: "Average BTC Cost: $107,607",
+    quote: "Avg BTC Cost: $107,607",
     searchTerm: "107,607",
     documentDate: "2025-12-30",
-  }, "From Metaplanet analytics dashboard"),
+  }, "Live from Metaplanet analytics dashboard"),
 };
 
 // =============================================================================
