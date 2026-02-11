@@ -461,8 +461,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027. Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
-    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M credit facility secured by BTC.",
-    strategyVideo: "https://www.youtube.com/watch?v=qCE8zJj73qA",  // Simon Gerovich & Dylan LeClair fireside chat (Bitcoin Magazine)
+    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M credit facility secured by BTC. See: Capital Allocation Policy (Oct 28, 2025), 2025-2027 BITCOIN PLAN (Jun 6, 2025).",
   },
   {
     id: "xxi",
