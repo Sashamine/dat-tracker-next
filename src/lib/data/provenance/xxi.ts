@@ -63,9 +63,9 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "43,514",
+      searchTerm: "31,500",
       url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0269460-8k_twenty.htm"),
-      quote: "Total: 31,500 BTC (Tether+Bitfinex) + ~12,014 PIPE = 43,514 BTC",
+      quote: "31,500 BTC contributed by Tether/Bitfinex (Ctrl+F this). Total 43,514 includes PIPE purchases.",
       anchor: "Business Combination",
       cik: XXI_CIK,
       accession: MERGER_8K_ACCESSION,
@@ -73,7 +73,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
       filingDate: MERGER_8K_FILED,
       documentDate: MERGER_CLOSE_DATE,
     }),
-    "Tether (24,500) + Bitfinex (7,000) = 31,500 contributed. Plus ~12,014 from PIPE (bitcoin + in-kind)."
+    "Total: Tether (24,500) + Bitfinex (7,000) = 31,500 contributed + ~12,014 PIPE = 43,514 BTC"
   ),
 
   // =========================================================================
