@@ -74,9 +74,8 @@ export function LeverageCalculationCard({
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700 space-y-1">
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">Total Debt</span>
-            <span className="font-mono text-sm text-red-400 flex items-center">
+            <span className="font-mono text-sm text-red-400">
               {formatLargeNumber(rawDebt)}
-              <SourceLink url={debtSourceUrl} />
             </span>
           </div>
           {hasItmAdjustment && (
@@ -89,9 +88,8 @@ export function LeverageCalculationCard({
           )}
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">− Cash</span>
-            <span className="font-mono text-sm text-green-400 flex items-center">
+            <span className="font-mono text-sm text-green-400">
               ({formatLargeNumber(cashReserves)})
-              <SourceLink url={cashSourceUrl} />
             </span>
           </div>
           <div className="flex justify-between items-center pt-1 border-t border-gray-200 dark:border-gray-700">
@@ -111,9 +109,8 @@ export function LeverageCalculationCard({
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">Holdings Value</span>
-            <span className="font-mono text-sm text-gray-300 flex items-center">
+            <span className="font-mono text-sm text-gray-300">
               {formatLargeNumber(cryptoNav)}
-              <SourceLink url={holdingsSourceUrl} />
             </span>
           </div>
         </div>
@@ -201,31 +198,27 @@ export function EquityNavPerShareCalculationCard({
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700 space-y-1">
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">Crypto NAV</span>
-            <span className="font-mono text-sm text-gray-300 flex items-center">
+            <span className="font-mono text-sm text-gray-300">
               {formatLargeNumber(cryptoNav)}
-              <SourceLink url={holdingsSourceUrl} />
             </span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">+ Cash</span>
-            <span className="font-mono text-sm text-green-400 flex items-center">
+            <span className="font-mono text-sm text-green-400">
               {formatLargeNumber(cashReserves)}
-              <SourceLink url={cashSourceUrl} />
             </span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">− Debt</span>
-            <span className="font-mono text-sm text-red-400 flex items-center">
+            <span className="font-mono text-sm text-red-400">
               ({formatLargeNumber(totalDebt)})
-              <SourceLink url={debtSourceUrl} />
             </span>
           </div>
           {preferredEquity > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-gray-400 text-sm">− Preferred</span>
-              <span className="font-mono text-sm text-red-400 flex items-center">
+              <span className="font-mono text-sm text-red-400">
                 ({formatLargeNumber(preferredEquity)})
-                <SourceLink url={preferredSourceUrl} />
               </span>
             </div>
           )}
@@ -246,9 +239,8 @@ export function EquityNavPerShareCalculationCard({
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm">Shares</span>
-            <span className="font-mono text-sm text-gray-300 flex items-center">
+            <span className="font-mono text-sm text-gray-300">
               {(sharesOutstanding / 1e6).toFixed(1)}M
-              <SourceLink url={sharesSourceUrl} />
             </span>
           </div>
         </div>

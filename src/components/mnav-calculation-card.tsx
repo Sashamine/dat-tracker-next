@@ -115,22 +115,8 @@ function FormulaRow({
   return (
     <div className="flex justify-between items-center py-0.5">
       <span className="text-gray-400 text-sm">{prefix}{label}</span>
-      <span className={`font-mono text-sm ${color} flex items-center gap-1`}>
+      <span className={`font-mono text-sm ${color}`}>
         {formatLargeNumber(value)}
-        {searchTerm && (
-          <span 
-            className="text-[9px] bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400 px-1 rounded cursor-help"
-            title={`Ctrl+F: ${searchTerm}`}
-          >
-            🔍{searchTerm}
-          </span>
-        )}
-        <SourceLink 
-          url={sourceUrl} 
-          ticker={sourceTicker}
-          date={sourceDate}
-          label={sourceLabel}
-        />
       </span>
     </div>
   );
@@ -220,14 +206,8 @@ export function MnavCalculationCard({
           {/* Market Cap with share breakdown */}
           <div className="flex justify-between items-center py-0.5">
             <span className="text-gray-400 text-sm">Market Cap</span>
-            <span className="font-mono text-sm text-gray-300 flex items-center">
+            <span className="font-mono text-sm text-gray-300">
               {formatLargeNumber(marketCap)}
-              <SourceLink 
-                url={sharesSourceUrl} 
-                ticker={ticker}
-                date={sharesAsOf}
-                label={sharesSource}
-              />
             </span>
           </div>
           {sharesForMnav && stockPrice && (
