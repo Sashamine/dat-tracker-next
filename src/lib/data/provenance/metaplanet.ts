@@ -52,52 +52,45 @@ function tdnetSource(params: {
 // =============================================================================
 
 export const METAPLANET_PROVENANCE = {
-  // BTC Holdings (from live analytics dashboard)
-  holdings: pv(35_102, {
-    type: "company-website" as const,
-    url: "https://metaplanet.jp/en/analytics",
-    quote: "BTC Holdings: ₿35,102",
-    searchTerm: "35,102",
-    documentDate: "2025-12-30",
-  }, "Live from Metaplanet analytics - updates with each purchase"),
+  // BTC Holdings (from Dec 30, 2025 TDnet disclosure)
+  holdings: pv(35_102, tdnetSource({
+    title: "Notice of Additional Purchase of Bitcoin",
+    date: "2025-12-30",
+    quote: "Total Bitcoin holdings: 35,102 BTC",
+    searchTerm: "Dec 30, 2025",  // Search this date on disclosures page
+  }), "Dec 30 purchase brought total to 35,102 BTC"),
 
-  // Shares Outstanding (from Q3 2025 earnings presentation)
-  sharesOutstanding: pv(1_142_264_340, {
-    type: "company-website" as const,
-    url: "https://metaplanet.jp/en/analytics",
-    quote: "Shares Outstanding: 1.14B",
-    searchTerm: "1.14",
-    documentDate: "2025-11-13",
-  }, "As of Q3 FY2025 - see 'Shares Outstanding' on analytics page"),
+  // Shares Outstanding (from Q3 2025 Financial Results)
+  sharesOutstanding: pv(1_142_264_340, tdnetSource({
+    title: "Financial Results Summary for the Third Quarter",
+    date: "2025-11-13",
+    quote: "Total shares outstanding: 1,142,264,340",
+    searchTerm: "Nov 13, 2025",  // Search this date on disclosures page
+  }), "Q3 FY2025 filing"),
 
-  // Total Debt (from analytics dashboard - Debt Outstanding section)
-  totalDebt: pv(280_000_000, {
-    type: "company-website" as const,
-    url: "https://metaplanet.jp/en/analytics",
-    quote: "Debt Outstanding section shows bond totals",
-    searchTerm: "Debt Outstanding",
-    documentDate: "2025-11-13",
-  }, "Zero-coupon yen bonds ~¥44B (~$280M USD at 156 JPY/USD)"),
+  // Total Debt (from Q3 2025 Financial Results - zero-coupon bonds)
+  totalDebt: pv(280_000_000, tdnetSource({
+    title: "Financial Results Summary for the Third Quarter",
+    date: "2025-11-13",
+    quote: "Zero-coupon bonds approximately ¥44B (~$280M USD)",
+    searchTerm: "Nov 13, 2025",  // Search this date on disclosures page
+  }), "Zero-coupon yen bonds, no interest payments"),
 
-  // Cash Reserves (estimated from Q3 financials)
-  cashReserves: pv(150_000_000, {
-    type: "regulatory" as const,
-    sourceName: "TDnet Q3 FY2025",
-    url: "https://metaplanet.jp/en/shareholders/disclosures",
-    quote: "Cash and equivalents from Q3 balance sheet",
-    searchTerm: "Q3 2025",
-    anchor: "Financial Results Summary for the Third Quarter",
-    documentDate: "2025-11-13",
-  }, "Estimated ¥23.4B (~$150M USD) - search 'Q3 2025' on disclosures page"),
+  // Cash Reserves (from Q3 2025 Financial Results)
+  cashReserves: pv(150_000_000, tdnetSource({
+    title: "Financial Results Summary for the Third Quarter",
+    date: "2025-11-13",
+    quote: "Cash and equivalents: ¥23.4B (~$150M USD at 156 JPY/USD)",
+    searchTerm: "Nov 13, 2025",  // Search this date on disclosures page
+  }), "Estimated from Q3 balance sheet"),
 
-  // Average Cost Basis (from company analytics dashboard)
-  costBasisAvg: pv(107_607, {
-    type: "company-website" as const,
-    url: "https://metaplanet.jp/en/analytics",
-    quote: "Avg BTC Cost: $107,607",
-    searchTerm: "107,607",
-    documentDate: "2025-12-30",
-  }, "Live from Metaplanet analytics dashboard"),
+  // Average Cost Basis (from company disclosure)
+  costBasisAvg: pv(107_607, tdnetSource({
+    title: "Notice of Additional Purchase of Bitcoin",
+    date: "2025-12-30",
+    quote: "Average acquisition cost: $107,607 per BTC",
+    searchTerm: "Dec 30, 2025",  // Search this date on disclosures page
+  }), "Cumulative average from all purchases"),
 };
 
 // =============================================================================
