@@ -314,7 +314,9 @@ export function ProvenanceMetric({
                                   className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
                                   onClick={() => setShowPopover(false)}
                                 >
-                                  View on SEC ↗
+                                  {input.source.type === "regulatory" && (input.source as DocumentSource).sourceName 
+                                    ? `View on ${(input.source as DocumentSource).sourceName} ↗`
+                                    : "View on SEC ↗"}
                                 </a>
                               ) : (
                                 <Link
@@ -353,7 +355,9 @@ export function ProvenanceMetric({
                       className="text-blue-500 hover:text-blue-400"
                       onClick={() => setShowPopover(false)}
                     >
-                      SEC Filing ↗
+                      {data.source.type === "regulatory" && (data.source as DocumentSource).sourceName 
+                        ? `View on ${(data.source as DocumentSource).sourceName} ↗`
+                        : "SEC Filing ↗"}
                     </a>
                   ) : (
                     <Link
