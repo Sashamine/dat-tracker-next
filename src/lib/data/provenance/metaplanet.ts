@@ -76,16 +76,16 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "1,142,264,340",
   }), "Q3 FY2025 filing - page 1"),
 
-  // Total Debt (from Q3 2025 Balance Sheet + post-Q3 borrowings)
-  // Q3 filing shows ¥4,500M bonds + $100M credit facility (Oct 2025) = ~$130M
-  // Analytics shows $355M (includes additional Q4 bond issuances)
+  // Total Debt (from Jan 30, 2026 Credit Facility Disclosure)
+  // Credit facility: $500M limit, $355M drawn as of Jan 30, 2026
+  // Note: 19th series bonds fully redeemed Dec 29, 2025
   totalDebt: pv(355_000_000, tdnetSource({
-    title: "Financial Results Summary for the Third Quarter",
-    date: "2025-11-13",
-    url: PDF_URLS.q3FinancialResults,
-    quote: "Current Portion of Bonds Payable: 4,500 (million JPY) + post-Q3 borrowings",
-    searchTerm: "4,500",  // Bonds Payable in balance sheet
-  }), "Q3: ¥4.5B bonds. Current $355M includes Q4 credit facility + new bonds"),
+    title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
+    date: "2026-01-30",
+    url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260130/20260130543874.pdf",
+    quote: "The credit facility has a borrowing limit of $500 million. Including this borrowing, we have currently drawn down $355 million.",
+    searchTerm: "355 million",
+  }), "Credit facility: $500M limit, $355M drawn (Jan 30, 2026)"),
 
   // Cash Reserves (from Q3 2025 Balance Sheet)
   cashReserves: pv(18_000_000, tdnetSource({
