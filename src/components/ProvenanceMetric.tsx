@@ -326,6 +326,12 @@ export function ProvenanceMetric({
                                 </Link>
                               )
                             )}
+                            {/* Input-level notes */}
+                            {input.notes && (
+                              <div className="text-[10px] text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-1.5 rounded mt-1">
+                                📝 {input.notes}
+                              </div>
+                            )}
                           </div>
                         );
                       })}
