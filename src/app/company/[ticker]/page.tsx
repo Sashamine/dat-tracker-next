@@ -54,6 +54,7 @@ import { BMNRCompanyView } from "@/components/BMNRCompanyView";
 import { MARACompanyView } from "@/components/MARACompanyView";
 import { XXICompanyView } from "@/components/XXICompanyView";
 import { MetaplanetCompanyView } from "@/components/MetaplanetCompanyView";
+import { SBETCompanyView } from "@/components/SBETCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
 import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
@@ -443,7 +444,7 @@ export default function CompanyPage() {
           </div>
         )}
 
-        {/* MSTR/BMNR/MARA/XXI/Metaplanet: Use fully provenance-tracked views */}
+        {/* MSTR/BMNR/MARA/XXI/Metaplanet/SBET: Use fully provenance-tracked views */}
         {displayCompany.ticker === "MSTR" ? (
           <MSTRCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "BMNR" ? (
@@ -454,6 +455,8 @@ export default function CompanyPage() {
           <XXICompanyView company={displayCompany} />
         ) : displayCompany.ticker === "3350.T" ? (
           <MetaplanetCompanyView company={displayCompany} />
+        ) : displayCompany.ticker === "SBET" ? (
+          <SBETCompanyView company={displayCompany} />
         ) : (
           <>
         {/* Key Valuation Metrics */}
