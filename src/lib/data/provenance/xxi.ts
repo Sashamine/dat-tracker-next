@@ -64,7 +64,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "31,500",
-      url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0228850-8k_twentyone.htm"),
+      url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0269460-8k_twenty.htm"),
       quote: "31,500 BTC contributed + PIPE BTC purchases",
       anchor: "Business Combination",
       cik: XXI_CIK,
@@ -128,7 +128,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "486,500,000",
-      url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0228850-8k_twentyone.htm"),
+      url: secDocUrl(XXI_CIK, MERGER_8K_ACCESSION, "ea0269460-8k_twenty.htm"),
       quote: "$486.5 million aggregate principal amount",
       anchor: "Convertible Notes",
       cik: XXI_CIK,
