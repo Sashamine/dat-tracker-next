@@ -334,13 +334,6 @@ export function ProvenanceMetric({
                 </>
               )}
               
-              {/* Notes */}
-              {data.notes && (
-                <div className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded">
-                  ⚠️ {data.notes}
-                </div>
-              )}
-              
               {/* Source link + Last verified */}
               <div className="text-xs text-gray-500 flex justify-between items-center border-t border-gray-100 dark:border-gray-700 pt-2 mt-2">
                 <span>Last verified: {data.lastVerified}</span>
@@ -367,6 +360,13 @@ export function ProvenanceMetric({
                   )
                 )}
               </div>
+              
+              {/* Notes - displayed near the link */}
+              {data.notes && (
+                <div className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded mt-2">
+                  📝 {data.notes}
+                </div>
+              )}
             </div>
           </div>
         </>
