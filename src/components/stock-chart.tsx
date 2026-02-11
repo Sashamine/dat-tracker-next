@@ -18,6 +18,8 @@ type ChartType = "area" | "candle" | "volume";
 
 interface StockChartProps {
   data: HistoricalPrice[];
+  chartMode?: "price" | "volume";
+  onChartModeChange?: (mode: "price" | "volume") => void;
 }
 
 /**
@@ -77,10 +79,20 @@ function processData(data: HistoricalPrice[]) {
   return { processed, timeMap, isIntraday };
 }
 
-export function StockChart({ data }: StockChartProps) {
+export function StockChart({ data, chartMode: controlledMode, onChartModeChange }: StockChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const [chartMode, setChartMode] = useState<"price" | "volume">("price");
+  const [internalMode, setInternalMode] = useState<"price" | "volume">("price");
+  
+  // Use controlled mode if provided, otherwise internal state
+  const chartMode = controlledMode ?? internalMode;
+  const setChartMode = (mode: "price" | "volume") => {
+    if (onChartModeChange) {
+      onChartModeChange(mode);
+    } else {
+      setInternalMode(mode);
+    }
+  };
 
   const { processed, timeMap, isIntraday } = useMemo(
     () => processData(data),

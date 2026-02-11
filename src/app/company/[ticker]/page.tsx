@@ -105,6 +105,7 @@ export default function CompanyPage() {
   // Stock price chart timeframe
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
+  const [stockChartMode, setStockChartMode] = useState<"price" | "volume">("price");
   const { data: history, isLoading: historyLoading } = useStockHistory(ticker, timeRange, interval);
 
   // mNAV chart timeframe (separate from stock price)
@@ -1028,7 +1029,7 @@ export default function CompanyPage() {
               {/* Time Range Buttons */}
               <div className="flex gap-1">
                 {([
-                  { value: "1d", label: "24H" },
+                  { value: "1d", label: stockChartMode === "volume" ? "1D" : "24H" },
                   { value: "7d", label: "7D" },
                   { value: "1mo", label: "1M" },
                   { value: "1y", label: "1Y" },
@@ -1077,7 +1078,7 @@ export default function CompanyPage() {
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} />
+            <StockChart data={history} chartMode={stockChartMode} onChartModeChange={setStockChartMode} />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               No historical data available
