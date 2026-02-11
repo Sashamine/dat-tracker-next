@@ -80,7 +80,8 @@ function processData(data: HistoricalPrice[]) {
 export function StockChart({ data }: StockChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const [chartType, setChartType] = useState<ChartType>("area");
+  const [showPrice, setShowPrice] = useState(true);
+  const [showVolume, setShowVolume] = useState(true);
 
   const { processed, timeMap, isIntraday } = useMemo(
     () => processData(data),
@@ -165,42 +166,36 @@ export function StockChart({ data }: StockChartProps) {
 
     chartRef.current = chart;
 
-    if (chartType === "volume") {
-      // Full volume chart
+    // Add volume if enabled (behind price)
+    if (showVolume) {
       const volumeSeries = chart.addSeries(HistogramSeries, {
         color: "#3b82f6",
         priceFormat: {
           type: "volume",
           precision: 0,
         },
+        priceScaleId: "volume",
       });
+      
+      // Configure volume scale
+      chart.priceScale("volume").applyOptions({
+        scaleMargins: {
+          top: showPrice ? 0.8 : 0.1,
+          bottom: 0,
+        },
+      });
+      
       volumeSeries.setData(
         processed.map((d) => ({
           time: d.time,
           value: d.volume,
-          color: d.close >= d.open ? "#22c55e" : "#ef4444",
+          color: d.close >= d.open ? "rgba(34, 197, 94, 0.6)" : "rgba(239, 68, 68, 0.6)",
         }))
       );
-    } else if (chartType === "candle") {
-      const series = chart.addSeries(CandlestickSeries, {
-        upColor: "#22c55e",
-        downColor: "#ef4444",
-        borderDownColor: "#ef4444",
-        borderUpColor: "#22c55e",
-        wickDownColor: "#ef4444",
-        wickUpColor: "#22c55e",
-      });
-      series.setData(
-        processed.map((d) => ({
-          time: d.time,
-          open: d.open,
-          high: d.high,
-          low: d.low,
-          close: d.close,
-        })) as CandlestickData<Time>[]
-      );
-    } else {
-      // Area chart (line with gradient fill) - like CoinMarketCap
+    }
+    
+    // Add price if enabled
+    if (showPrice) {
       const series = chart.addSeries(AreaSeries, {
         lineColor: lineColor,
         lineWidth: 2,
@@ -215,6 +210,15 @@ export function StockChart({ data }: StockChartProps) {
         crosshairMarkerBorderColor: lineColor,
         crosshairMarkerBackgroundColor: "#ffffff",
       });
+      
+      // Adjust price scale margins based on whether volume is shown
+      chart.priceScale("right").applyOptions({
+        scaleMargins: {
+          top: 0.1,
+          bottom: showVolume ? 0.25 : 0.1,
+        },
+      });
+      
       series.setData(
         processed.map((d) => ({
           time: d.time,
@@ -240,32 +244,30 @@ export function StockChart({ data }: StockChartProps) {
       window.removeEventListener("resize", handleResize);
       chart.remove();
     };
-  }, [processed, timeMap, isIntraday, chartType]);
+  }, [processed, timeMap, isIntraday, showPrice, showVolume]);
 
   return (
     <div className="relative">
-      {/* Chart type toggle - text labels above chart */}
-      <div className="flex gap-4 mb-2">
-        <button
-          onClick={() => setChartType("area")}
-          className={`text-sm font-medium transition-colors ${
-            chartType === "area" || chartType === "candle"
-              ? "text-white"
-              : "text-gray-500 hover:text-gray-300"
-          }`}
-        >
-          Price
-        </button>
-        <button
-          onClick={() => setChartType("volume")}
-          className={`text-sm font-medium transition-colors ${
-            chartType === "volume"
-              ? "text-white"
-              : "text-gray-500 hover:text-gray-300"
-          }`}
-        >
-          Volume
-        </button>
+      {/* Chart toggles - centered with checkboxes */}
+      <div className="flex justify-center gap-6 mb-3">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showPrice}
+            onChange={(e) => setShowPrice(e.target.checked)}
+            className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
+          />
+          <span className="text-base font-medium text-gray-200">Price</span>
+        </label>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showVolume}
+            onChange={(e) => setShowVolume(e.target.checked)}
+            className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
+          />
+          <span className="text-base font-medium text-gray-200">Volume</span>
+        </label>
       </div>
       <div ref={chartContainerRef} className="w-full" />
     </div>
