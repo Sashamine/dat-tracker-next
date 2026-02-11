@@ -203,16 +203,16 @@ export function MnavCalculationCard({
         </span>
       </div>
 
-      {/* EV Section */}
+      {/* Balance Sheet Section */}
       <div className="mb-4">
         <div className="mb-2 flex items-center gap-2">
-          <span className="text-sm">🏢</span>
+          <span className="text-sm">📊</span>
           <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-            Enterprise Value (EV)
+            Balance Sheet
           </h4>
           <span 
             className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-gray-200 dark:bg-gray-700 text-[9px] cursor-help"
-            title="Market Cap + Debt + Preferred − Cash"
+            title="Market Cap + Debt + Preferred − Cash = Enterprise Value"
           >?</span>
           <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
         </div>
@@ -292,16 +292,16 @@ export function MnavCalculationCard({
         </div>
       </div>
 
-      {/* CV Section */}
+      {/* Key Metrics Section */}
       <div className="mb-4">
         <div className="mb-2 flex items-center gap-2">
           <span className="text-sm">₿</span>
           <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-            Crypto Value (CV)
+            Key Metrics
           </h4>
           <span 
             className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-gray-200 dark:bg-gray-700 text-[9px] cursor-help"
-            title="Holdings × Current Price"
+            title="Holdings × Current Price = Crypto NAV"
           >?</span>
           <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
         </div>
