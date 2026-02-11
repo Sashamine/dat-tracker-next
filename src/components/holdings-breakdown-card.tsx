@@ -1,7 +1,6 @@
 "use client";
 
-import { Company, Asset } from "@/lib/types";
-import { getAssetConfig } from "@/lib/asset-configs";
+import { Company } from "@/lib/types";
 
 interface HoldingsBreakdownCardProps {
   company: Company;
@@ -15,8 +14,7 @@ export function HoldingsBreakdownCard({ company, assetPrice }: HoldingsBreakdown
     return null;
   }
 
-  const assetConfig = getAssetConfig(company.asset);
-  const symbol = assetConfig?.symbol || company.asset;
+  const symbol = company.asset;
   
   const formatNumber = (n: number) => n.toLocaleString();
   const formatUsd = (n: number) => {

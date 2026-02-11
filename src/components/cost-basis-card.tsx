@@ -1,7 +1,6 @@
 "use client";
 
 import { Company } from "@/lib/types";
-import { getAssetConfig } from "@/lib/asset-configs";
 
 interface CostBasisCardProps {
   company: Company;
@@ -15,8 +14,7 @@ export function CostBasisCard({ company, assetPrice }: CostBasisCardProps) {
     return null;
   }
 
-  const assetConfig = getAssetConfig(company.asset);
-  const symbol = assetConfig?.symbol || company.asset;
+  const symbol = company.asset;
   
   const formatUsd = (n: number) => {
     if (Math.abs(n) >= 1e9) return `$${(n / 1e9).toFixed(2)}B`;
