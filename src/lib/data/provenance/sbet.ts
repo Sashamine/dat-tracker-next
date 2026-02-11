@@ -521,13 +521,13 @@ export const SBET_PROVENANCE = {
   // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
   // ---------------------------------------------------------------------------
   
-  // Using exact value from 10-Q balance sheet
-  cashReserves: pv(11_122_966, secDoc(
+  // From Q3 2025 10-Q balance sheet (Sep 30, 2025)
+  cashReserves: pv(11_128_231, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Cash and cash equivalents $11,122,966",
+    "Cash $11,128,231",
     "form10-q.htm",
-    "11,122,966"
-  ), "Operating cash - not excess (restricted for operations)"),
+    "11,128,231"
+  ), "Operating cash from Q3 10-Q balance sheet"),
 
   totalDebt: pv(0, secDoc(
     SEC_FILINGS.q3_2025_10q,
@@ -536,13 +536,13 @@ export const SBET_PROVENANCE = {
     "Convertible promissory notes"
   ), "Debt-free as of Q3 2025"),
 
-  // USDC stablecoins (treated as other investments, not cash)
-  usdcHoldings: pv(26_700_000, secDoc(
+  // USDC stablecoins from Q3 2025 10-Q balance sheet
+  usdcHoldings: pv(26_707_482, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Digital assets - stablecoins $26,749,285 (USDC)",
+    "USDC stablecoin $26,707,482",
     "form10-q.htm",
-    "26,749,285"
-  ), "Stablecoin reserves"),
+    "26,707,482"
+  ), "Stablecoin reserves from Q3 10-Q"),
 
   // ---------------------------------------------------------------------------
   // COST BASIS (from Q3 2025 10-Q Balance Sheet)
