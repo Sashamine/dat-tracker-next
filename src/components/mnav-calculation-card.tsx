@@ -2,6 +2,7 @@
 
 import { formatLargeNumber } from "@/lib/calculations";
 import { FilingCite } from "@/components/wiki-citation";
+import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
 
 interface MnavCalculationCardProps {
   ticker: string;
@@ -113,9 +114,27 @@ function FormulaRow({
 }) {
   if (!showZero && value === 0) return null;
   
+  // Determine verification status
+  const isSEC = sourceUrl?.includes("sec.gov") || sourceLabel === "sec-filing";
+  const status = getVerificationStatus(
+    isSEC ? "sec-filing" : sourceLabel,
+    sourceUrl,
+    sourceDate
+  );
+  
   return (
     <div className="flex justify-between items-center py-0.5">
-      <span className="text-gray-400 text-sm">{prefix}{label}</span>
+      <span className="text-gray-400 text-sm flex items-center gap-1">
+        {prefix}{label}
+        {sourceUrl && (
+          <VerificationBadge 
+            status={status} 
+            sourceUrl={sourceUrl} 
+            asOf={sourceDate}
+            compact 
+          />
+        )}
+      </span>
       <span className={`font-mono text-sm ${color}`}>
         {formatLargeNumber(value)}
       </span>
@@ -293,8 +312,20 @@ export function MnavCalculationCard({
         </div>
         <div className="bg-white dark:bg-gray-800 rounded p-3 border border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center">
-            <span className="text-gray-400 text-sm">
+            <span className="text-gray-400 text-sm flex items-center gap-1">
               {holdings.toLocaleString()} {asset} × ${cryptoPrice.toLocaleString()}
+              {holdingsSourceUrl && (
+                <VerificationBadge 
+                  status={getVerificationStatus(
+                    holdingsSourceUrl?.includes("sec.gov") ? "sec-filing" : holdingsSource,
+                    holdingsSourceUrl,
+                    holdingsAsOf
+                  )} 
+                  sourceUrl={holdingsSourceUrl} 
+                  asOf={holdingsAsOf}
+                  compact 
+                />
+              )}
             </span>
             <span className="font-mono text-sm text-gray-300">
               {formatLargeNumber(holdingsValue)}

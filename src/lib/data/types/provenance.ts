@@ -19,7 +19,7 @@ export type SourceType =
   | "derived"        // Calculated from other provenance-tracked values
 
 /** SEC filing types */
-export type SECFilingType = "10-K" | "10-Q" | "8-K" | "S-1" | "S-3" | "424B3" | "424B5" | "DEF14A" | "6-K" | "20-F" | "40-F";
+export type SECFilingType = "10-K" | "10-Q" | "8-K" | "8-K/A" | "S-1" | "S-3" | "424B3" | "424B5" | "DEF14A" | "6-K" | "20-F" | "40-F";
 
 // ============================================================================
 // XBRL SOURCE

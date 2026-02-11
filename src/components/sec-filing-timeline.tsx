@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { formatDistanceToNow, parseISO, format } from "date-fns";
 
 interface SECFiling {
   date: string;
@@ -20,6 +19,15 @@ interface SECFilingTimelineProps {
   cik: string;
   filings: SECFiling[];
   asset: string;
+}
+
+// Format date as "MMM d, yyyy" without date-fns
+function formatDate(date: Date, includeYear = true): string {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = months[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+  return includeYear ? `${month} ${day}, ${year}` : `${month} ${day}`;
 }
 
 export function SECFilingTimeline({ ticker, cik, filings, asset }: SECFilingTimelineProps) {
@@ -57,10 +65,10 @@ export function SECFilingTimeline({ ticker, cik, filings, asset }: SECFilingTime
         
         {/* Filings */}
         <div className="space-y-4">
-          {displayFilings.map((filing, idx) => {
+          {displayFilings.map((filing) => {
             const isHoldingsUpdate = filing.hasHoldingsUpdate;
-            const filedDate = parseISO(filing.filedDate);
-            const periodDate = parseISO(filing.date);
+            const filedDate = new Date(filing.filedDate);
+            const periodDate = new Date(filing.date);
             
             return (
               <div key={filing.accession} className="relative pl-8">
@@ -87,9 +95,9 @@ export function SECFilingTimeline({ ticker, cik, filings, asset }: SECFilingTime
                         )}
                       </div>
                       <div className="text-xs text-muted-foreground mt-1">
-                        Filed {format(filedDate, "MMM d, yyyy")}
+                        Filed {formatDate(filedDate)}
                         {filing.date !== filing.filedDate && (
-                          <span> (period: {format(periodDate, "MMM d")})</span>
+                          <span> (period: {formatDate(periodDate, false)})</span>
                         )}
                       </div>
                       {filing.items && (

@@ -41,7 +41,7 @@ function tdnetSource(params: {
     documentDate: params.date,
     filingDate: params.date,
     url: params.url || "https://metaplanet.jp/en/shareholders/disclosures",
-    quote: params.quote,
+    quote: params.quote || params.title, // Default to title if no quote provided
     anchor: params.title,
     searchTerm: params.searchTerm,
   };

@@ -1,10 +1,25 @@
 "use client";
 
 import { Company } from "@/lib/types";
-import { formatDistanceToNow, parseISO } from "date-fns";
 
 interface DataFreshnessIndicatorProps {
   company: Company;
+}
+
+// Format relative time without date-fns
+function formatRelativeTime(date: Date): string {
+  const now = Date.now();
+  const diffMs = now - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) return "today";
+  if (diffDays === 1) return "yesterday";
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 14) return "1 week ago";
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  if (diffDays < 60) return "1 month ago";
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+  return `${Math.floor(diffDays / 365)} years ago`;
 }
 
 export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps) {
@@ -17,8 +32,8 @@ export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps)
     return null;
   }
 
-  const updatedDate = lastUpdated ? parseISO(lastUpdated) : null;
-  const verifiedDate = lastVerified ? parseISO(lastVerified) : null;
+  const updatedDate = lastUpdated ? new Date(lastUpdated) : null;
+  const verifiedDate = lastVerified ? new Date(lastVerified) : null;
   
   const daysSinceUpdate = updatedDate 
     ? Math.floor((Date.now() - updatedDate.getTime()) / (1000 * 60 * 60 * 24))
@@ -50,11 +65,11 @@ export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps)
       
       <div className="space-y-2 text-muted-foreground">
         {/* Last holdings update */}
-        {lastUpdated && (
+        {lastUpdated && updatedDate && (
           <div className="flex items-center justify-between">
             <span>Holdings Updated</span>
             <span className={`font-medium ${getFreshnessColor()}`}>
-              {getFreshnessIcon()} {formatDistanceToNow(updatedDate!, { addSuffix: true })}
+              {getFreshnessIcon()} {formatRelativeTime(updatedDate)}
             </span>
           </div>
         )}
@@ -75,11 +90,11 @@ export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps)
         )}
         
         {/* Last verified */}
-        {lastVerified && (
+        {lastVerified && verifiedDate && (
           <div className="flex items-center justify-between">
             <span>Verified</span>
             <span className="font-medium">
-              {verifiedDate?.toLocaleDateString()}
+              {verifiedDate.toLocaleDateString()}
             </span>
           </div>
         )}
@@ -96,7 +111,7 @@ export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps)
         {company.provenanceFile && (
           <div className="pt-2 border-t mt-2">
             <a 
-              href={`https://github.com/Sashamine/dat-tracker-next/blob/master/src/lib/data/${company.provenanceFile}`}
+              href={`https://github.com/reservelabs/dat-tracker-next/blob/master/src/lib/data/${company.provenanceFile}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"

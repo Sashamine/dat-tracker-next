@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useMemo, useState } from "react";
-import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, LineSeries, Time, SeriesMarker } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { getHoldingsHistory, calculateHoldingsGrowth } from "@/lib/data/holdings-history";
+import { VerificationDot } from "@/components/verification-badge";
 
 type TimeRange = "3mo" | "6mo" | "1y" | "all";
 
@@ -145,6 +146,31 @@ export function HoldingsPerShareChart({
     }
 
     series.setData(chartData);
+
+    // Add markers to distinguish SEC-verified vs interpolated data points
+    const markers: SeriesMarker<Time>[] = filteredHistory
+      .filter((snapshot) => snapshot.sourceType === "sec-filing" && !snapshot.methodology?.includes("interpolat"))
+      .map((snapshot) => ({
+        time: snapshot.date as Time,
+        position: "inBar" as const,
+        color: "#22c55e", // Green for SEC verified
+        shape: "circle" as const,
+        size: 0.5,
+      }));
+
+    // Add markers for interpolated/estimated points (different color)
+    const interpolatedMarkers: SeriesMarker<Time>[] = filteredHistory
+      .filter((snapshot) => snapshot.confidence === "medium" || snapshot.confidence === "low" || snapshot.methodology?.includes("interpolat"))
+      .map((snapshot) => ({
+        time: snapshot.date as Time,
+        position: "inBar" as const,
+        color: "#a855f7", // Purple for interpolated
+        shape: "circle" as const,
+        size: 0.3,
+      }));
+
+    // setMarkers is available but not in all type definitions
+    (series as any).setMarkers([...markers, ...interpolatedMarkers]);
     chart.timeScale().fitContent();
 
     // Handle resize
@@ -338,7 +364,18 @@ export function HoldingsPerShareChart({
         </div>
       )}
 
-      <div className="mt-4 text-xs text-gray-500 space-y-1">
+      <div className="mt-4 text-xs text-gray-500 space-y-2">
+        {/* Data point legend */}
+        <div className="flex flex-wrap gap-4 items-center">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-green-500" />
+            <span>SEC Verified</span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-purple-500" />
+            <span>Interpolated</span>
+          </span>
+        </div>
         {ticker === "MSTR" ? (
           <p>
             Source: SEC 8-K weekly filings with midpoint interpolation for chart smoothness (~3.5 day granularity).

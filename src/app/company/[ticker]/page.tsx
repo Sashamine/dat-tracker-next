@@ -58,6 +58,8 @@ import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
 import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
 import { CostBasisCard } from "@/components/cost-basis-card";
+import { SECFilingTimeline } from "@/components/sec-filing-timeline";
+import { getSBETFilingsList, SBET_CIK } from "@/lib/data/provenance/sbet";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -1135,13 +1137,13 @@ export default function CompanyPage() {
             )}
             
             {/* Holdings Breakdown (for multi-form treasuries like ETH+LsETH) */}
-            {(displayCompany.holdingsNative || displayCompany.holdingsLsETH || displayCompany.holdingsStaked) && assetPrice && (
-              <HoldingsBreakdownCard company={displayCompany} assetPrice={assetPrice} />
+            {(displayCompany.holdingsNative || displayCompany.holdingsLsETH || displayCompany.holdingsStaked) && cryptoPrice > 0 && (
+              <HoldingsBreakdownCard company={displayCompany} assetPrice={cryptoPrice} />
             )}
             
             {/* Cost Basis & Unrealized P/L */}
-            {displayCompany.costBasisAvg && assetPrice && (
-              <CostBasisCard company={displayCompany} assetPrice={assetPrice} />
+            {displayCompany.costBasisAvg && cryptoPrice > 0 && (
+              <CostBasisCard company={displayCompany} assetPrice={cryptoPrice} />
             )}
           </div>
         )}
@@ -1179,6 +1181,30 @@ export default function CompanyPage() {
             />
           </div>
         </details>
+
+        {/* SEC Filing Timeline - SBET has full provenance data */}
+        {displayCompany.ticker === "SBET" && displayCompany.secCik && (
+          <div className="mb-4">
+            <SECFilingTimeline
+              ticker={displayCompany.ticker}
+              cik={SBET_CIK}
+              filings={getSBETFilingsList().map((f, idx, arr) => {
+                // Calculate holdings change from previous filing
+                const prevFiling = idx > 0 ? arr[idx - 1] : null;
+                return {
+                  date: f.periodDate,
+                  filedDate: f.filedDate,
+                  accession: f.accession,
+                  formType: f.formType,
+                  items: f.items,
+                  url: f.url,
+                  hasHoldingsUpdate: f.hasHoldingsUpdate,
+                };
+              }).sort((a, b) => new Date(b.filedDate).getTime() - new Date(a.filedDate).getTime())}
+              asset={displayCompany.asset}
+            />
+          </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* RESEARCH SECTION */}
