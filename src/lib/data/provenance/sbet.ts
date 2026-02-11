@@ -447,7 +447,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
 };
 
 // Helper to create SEC document source reference
-function secDoc(filing: SECFiling, quote: string, exhibit?: string) {
+function secDoc(filing: SECFiling, quote: string, exhibit?: string, searchTerm?: string) {
   return docSource({
     type: "sec-document",
     cik: SBET_CIK,
@@ -457,6 +457,7 @@ function secDoc(filing: SECFiling, quote: string, exhibit?: string) {
     documentDate: filing.periodDate,
     url: filing.url + (exhibit || ""),
     quote,
+    searchTerm, // Exact text to Ctrl+F in the document
   });
 }
 
@@ -468,84 +469,99 @@ export const SBET_PROVENANCE = {
   
   // ---------------------------------------------------------------------------
   // ETH HOLDINGS (from Dec 17, 2025 8-K, Ex 99.1)
+  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm
   // ---------------------------------------------------------------------------
   
   // Total ETH holdings (native + LsETH as-if-redeemed)
   holdings: pv(863_424, secDoc(
     SEC_FILINGS.holdings_dec_2025,
     "Accumulated 863,424 ETH¹... ¹As of December 14, 2025, total ETH holdings were comprised of 639,241 native ETH and 224,183 ETH as-if redeemed from LsETH",
-    "ex99-1.htm"
+    "ex99-1.htm",
+    "863,424"  // Ctrl+F search term
   ), "Dec 14, 2025: 639,241 native + 224,183 LsETH"),
 
   // Breakdown: Native ETH
   holdingsNative: pv(639_241, secDoc(
     SEC_FILINGS.holdings_dec_2025,
     "639,241 native ETH",
-    "ex99-1.htm"
+    "ex99-1.htm",
+    "639,241"
   ), "Native ETH held directly"),
 
   // Breakdown: LsETH (Lido staked ETH) as-if-redeemed
   holdingsLsETH: pv(224_183, secDoc(
     SEC_FILINGS.holdings_dec_2025,
     "224,183 ETH as-if redeemed from LsETH",
-    "ex99-1.htm"
+    "ex99-1.htm",
+    "224,183"
   ), "Lido staked ETH, valued at redemption rate"),
 
   // Staking rewards earned
   stakingRewards: pv(9_241, secDoc(
     SEC_FILINGS.holdings_dec_2025,
     "earned 9,241 ETH² in staking rewards... ²As of December 14, 2025, total ETH rewards were comprised of 3,350 from native ETH and 5,891 from LsETH",
-    "ex99-1.htm"
+    "ex99-1.htm",
+    "9,241"
   ), "3,350 native rewards + 5,891 LsETH rewards"),
 
   // ---------------------------------------------------------------------------
   // SHARES OUTSTANDING (from Q3 2025 10-Q XBRL)
+  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
   // ---------------------------------------------------------------------------
   
   sharesOutstanding: pv(196_693_191, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "EntityCommonStockSharesOutstanding: 196,693,191",
-    "form10-q.htm"
+    "196,693,191 shares of common stock outstanding as of November 12, 2025",
+    "form10-q.htm",
+    "196,693,191"
   ), "Basic shares as of Nov 12, 2025 (cover page)"),
 
   // ---------------------------------------------------------------------------
   // CASH & FINANCIALS (from Q3 2025 10-Q)
+  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
   // ---------------------------------------------------------------------------
   
   cashReserves: pv(11_100_000, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Cash and cash equivalents: $11.1 million",
-    "form10-q.htm"
+    "Cash and cash equivalents $11,122,966",
+    "form10-q.htm",
+    "11,122,966"
   ), "Operating cash - not excess (restricted for operations)"),
 
   totalDebt: pv(0, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "No long-term debt outstanding",
-    "form10-q.htm"
+    "Total debt $0 (Convertible promissory notes - related party were paid off)",
+    "form10-q.htm",
+    "Convertible promissory notes"
   ), "Debt-free as of Q3 2025"),
 
   // USDC stablecoins (treated as other investments, not cash)
   usdcHoldings: pv(26_700_000, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Digital assets - stablecoins: $26.7 million USDC",
-    "form10-q.htm"
+    "Digital assets - stablecoins $26,749,285 (USDC)",
+    "form10-q.htm",
+    "26,749,285"
   ), "Stablecoin reserves"),
 
   // ---------------------------------------------------------------------------
-  // COST BASIS (from Q3 2025 10-Q)
+  // COST BASIS (from Q3 2025 10-Q Balance Sheet)
+  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
+  // Note: Q3 10-Q shows 817,747 ETH (580,841 native + 236,906 LsETH), cost basis is from that date
   // ---------------------------------------------------------------------------
   
   costBasisTotal: pv(3_022_327_258, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
-    "form10-q.htm"
-  ), "Total cost basis from Q3 2025 balance sheet"),
+    "Digital assets - native Ethereum, at cost $2,304,908,135 (580,841 units) + Digital assets - Lido staked Ethereum, at cost $717,419,123 (236,906 units)",
+    "form10-q.htm",
+    "2,304,908,135"
+  ), "Total cost basis from Q3 2025 balance sheet (Sep 30, 2025 holdings)"),
 
   costBasisAvg: pv(3_696, secDoc(
     SEC_FILINGS.q3_2025_10q,
-    "Calculated: $3,022,327,258 / 817,747 ETH-equivalent units",
-    "form10-q.htm"
-  ), "Weighted average cost per ETH"),
+    "Calculated from balance sheet: ($2,304,908,135 + $717,419,123) / (580,841 + 236,906) = $3,696 per ETH",
+    "form10-q.htm",
+    "3,022,327,258"  // Sum of cost bases
+  ), "Weighted average cost per ETH at Sep 30, 2025"),
 
 };
 
