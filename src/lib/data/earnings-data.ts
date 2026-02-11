@@ -604,6 +604,19 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     ...getMARAQuarterEndDataForEarnings("2024-03-31")!,
     status: "reported",
   },
+  // Q4 2023 (FY 2023)
+  // DO NOT HARDCODE - use getMARAQuarterEndDataForEarnings() as single source of truth
+  {
+    ticker: "MARA",
+    fiscalYear: 2023,
+    fiscalQuarter: 4,
+    calendarYear: 2023,
+    calendarQuarter: 4,
+    earningsDate: "2024-02-28",
+    earningsTime: "AMC",
+    ...getMARAQuarterEndDataForEarnings("2023-12-31")!,
+    status: "reported",
+  },
 
   // ========== Riot Platforms (RIOT) ==========
   // Calendar year company (fiscal = calendar)

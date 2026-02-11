@@ -338,19 +338,21 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // Twenty One Capital (XXI) - BTC treasury (Tether/SoftBank/Mallers)
-  // Verified 2026-01-28 via SEC S-1 (Jan 5, 2026)
+  // Verified 2026-02-10 via SEC 8-K (Dec 12, 2025) + 10-Q (Dec 19, 2025)
   // BTC sources: Tether/Bitfinex (31,500) + PIPE (10,500) + additional = ~43,514 BTC
+  // Shares: 651,390,912 (Class A: 346,548,153 + Class B: 304,842,759) per 10-Q XBRL
   XXI: [
     {
       type: "convertible",
-      strikePrice: 13.87,  // $486.5M / 35,068,912 shares = $13.87
-      potentialShares: 35_068_912,  // Per S-1 prospectus
+      strikePrice: 13.87, // $1,000 / 72.0841 conversion rate = $13.87
+      potentialShares: 35_068_912, // $486.5M × 72.0841 / 1000 = 35.07M shares
       faceValue: 486_500_000,
-      source: "S-1 Jan 2026",
+      source: "8-K Dec 12, 2025 (Indenture)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
-      expiration: "2030-12-09",
-      notes: "1.00% Convertible Senior Secured Notes due 2030, collateralized by ~16,116 BTC (~3:1 ratio)",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+      issuedDate: "2025-12-09",
+      expiration: "2030-12-01",
+      notes: "1.00% Convertible Senior Secured Notes due 2030, conversion rate 72.0841 shares/$1,000, collateralized by 16,116.32 BTC",
     },
   ],
 

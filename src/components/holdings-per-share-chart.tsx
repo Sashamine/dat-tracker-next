@@ -33,14 +33,14 @@ export function HoldingsPerShareChart({
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
 
   const historyData = useMemo(() => getHoldingsHistory(ticker), [ticker]);
-  
+
   // Filter history based on time range, extending if insufficient data
   const { filteredHistory, rangeExtended } = useMemo(() => {
     if (!historyData) return { filteredHistory: null, rangeExtended: false };
-    
+
     const now = new Date();
     let startDate: Date;
-    
+
     switch (timeRange) {
       case "3mo":
         startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
@@ -55,16 +55,16 @@ export function HoldingsPerShareChart({
       default:
         return { filteredHistory: historyData.history, rangeExtended: false };
     }
-    
+
     const filtered = historyData.history.filter(snapshot => new Date(snapshot.date) >= startDate);
-    
+
     // If fewer than 3 data points in range, extend to include more history for a meaningful chart
     if (filtered.length < 3 && historyData.history.length >= 3) {
       const minPoints = Math.min(historyData.history.length, Math.max(3, filtered.length + 2));
       const extended = historyData.history.slice(-minPoints);
       return { filteredHistory: extended, rangeExtended: true };
     }
-    
+
     return { filteredHistory: filtered, rangeExtended: false };
   }, [historyData, timeRange]);
 
@@ -118,9 +118,9 @@ export function HoldingsPerShareChart({
       priceFormat: {
         type: "custom",
         formatter: (price: number) => {
-          if (price >= 0.01) return price.toFixed(4);
-          if (price >= 0.0001) return price.toFixed(6);
-          return price.toFixed(8);
+          if (price >= 0.01) return price.toFixed(5);
+          if (price >= 0.0001) return price.toFixed(7);
+          return price.toFixed(9);
         },
       },
     });
@@ -130,7 +130,7 @@ export function HoldingsPerShareChart({
       time: snapshot.date as Time,
       value: snapshot.holdingsPerShare,
     }));
-    
+
     // Add current point with estimated shares (if provided and different from last snapshot)
     if (currentHoldingsPerShare !== null && chartData.length > 0) {
       const today = new Date().toISOString().split("T")[0] as Time;
@@ -187,11 +187,11 @@ export function HoldingsPerShareChart({
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 font-mono">
               {currentHoldingsPerShare
                 ? currentHoldingsPerShare >= 0.01
-                  ? currentHoldingsPerShare.toFixed(4)
+                  ? currentHoldingsPerShare.toFixed(5)
                   : currentHoldingsPerShare >= 0.0001
-                  ? currentHoldingsPerShare.toFixed(6)
-                  : currentHoldingsPerShare.toFixed(8)
-                : "—"}
+                  ? currentHoldingsPerShare.toFixed(7)
+                  : currentHoldingsPerShare.toFixed(9)
+                : "-"}
             </p>
           </div>
         </div>
@@ -250,12 +250,12 @@ export function HoldingsPerShareChart({
         <div className="text-left">
           <p className="text-xs text-gray-500 uppercase tracking-wide">Total {asset}</p>
           <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
-            {lastSnapshot.holdings >= 1000 
+            {lastSnapshot.holdings >= 1000
               ? lastSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 0 })
               : lastSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 2 })}
           </p>
           <p className="text-xs text-gray-400">
-            from {firstSnapshot.holdings >= 1000 
+            from {firstSnapshot.holdings >= 1000
               ? firstSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 0 })
               : firstSnapshot.holdings.toLocaleString(undefined, { maximumFractionDigits: 2 })}
           </p>
@@ -272,22 +272,22 @@ export function HoldingsPerShareChart({
           <p className="text-xl font-bold text-gray-900 dark:text-gray-100 font-mono">
             {currentHoldingsPerShare !== null
               ? currentHoldingsPerShare >= 0.01
-                ? currentHoldingsPerShare.toFixed(4)
+                ? currentHoldingsPerShare.toFixed(5)
                 : currentHoldingsPerShare >= 0.0001
-                ? currentHoldingsPerShare.toFixed(6)
-                : currentHoldingsPerShare.toFixed(8)
+                ? currentHoldingsPerShare.toFixed(7)
+                : currentHoldingsPerShare.toFixed(9)
               : lastSnapshot.holdingsPerShare >= 0.01
-              ? lastSnapshot.holdingsPerShare.toFixed(4)
+              ? lastSnapshot.holdingsPerShare.toFixed(5)
               : lastSnapshot.holdingsPerShare >= 0.0001
-              ? lastSnapshot.holdingsPerShare.toFixed(6)
-              : lastSnapshot.holdingsPerShare.toFixed(8)}
+              ? lastSnapshot.holdingsPerShare.toFixed(7)
+              : lastSnapshot.holdingsPerShare.toFixed(9)}
           </p>
           <p className="text-xs text-gray-400">
             from {firstSnapshot.holdingsPerShare >= 0.01
-              ? firstSnapshot.holdingsPerShare.toFixed(4)
+              ? firstSnapshot.holdingsPerShare.toFixed(5)
               : firstSnapshot.holdingsPerShare >= 0.0001
-              ? firstSnapshot.holdingsPerShare.toFixed(6)
-              : firstSnapshot.holdingsPerShare.toFixed(8)}
+              ? firstSnapshot.holdingsPerShare.toFixed(7)
+              : firstSnapshot.holdingsPerShare.toFixed(9)}
           </p>
           {currentProvenance && (
             <details className="mt-1">

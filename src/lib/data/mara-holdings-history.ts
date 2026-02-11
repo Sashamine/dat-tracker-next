@@ -22,49 +22,50 @@
 
 import type { HoldingsSnapshot } from "./holdings-history";
 
-// Share count anchors from SEC filings (verified)
+// Share count anchors from SEC filings - BASIC shares from cover page
+// ALL verified 2026-02-10 via SEC EDGAR (dei:EntityCommonStockSharesOutstanding)
 export const MARA_SHARE_ANCHORS: Record<
   string,
   { shares: number; source: string; accession: string }
 > = {
   "2023-12-31": {
-    shares: 310_890_000,
-    source: "10-K FY2023",
-    accession: "0001507605-24-000020",
+    shares: 267_639_590,
+    source: "10-K FY2023 cover (basic)",
+    accession: "0001628280-24-007680",
   },
   "2024-03-31": {
-    shares: 328_630_000,
-    source: "10-Q Q1 2024",
-    accession: "0001507605-24-000025",
+    shares: 272_956_165,
+    source: "10-Q Q1 2024 cover (basic)",
+    accession: "0001628280-24-022243",
   },
   "2024-06-30": {
-    shares: 356_800_000,
-    source: "10-Q Q2 2024",
-    accession: "0001507605-24-000030",
+    shares: 294_474_622,
+    source: "10-Q Q2 2024 cover (basic)",
+    accession: "0001628280-24-034196",
   },
   "2024-09-30": {
-    shares: 396_980_000,
-    source: "10-Q Q3 2024",
-    accession: "0001507605-24-000035",
+    shares: 321_831_487,
+    source: "10-Q Q3 2024 cover (basic)",
+    accession: "0001628280-24-047148",
   },
   "2024-12-31": {
-    shares: 430_000_000,
-    source: "10-K FY2024",
-    accession: "0001507605-25-000005",
+    shares: 345_816_827,
+    source: "10-K FY2024 cover (basic)",
+    accession: "0001507605-25-000003",
   },
   "2025-03-31": {
-    shares: 445_000_000,
-    source: "10-Q Q1 2025",
-    accession: "0001507605-25-000015",
+    shares: 351_927_748,
+    source: "10-Q Q1 2025 cover (basic)",
+    accession: "0001507605-25-000009",
   },
   "2025-06-30": {
-    shares: 458_000_000,
-    source: "10-Q Q2 2025",
-    accession: "0001507605-25-000022",
+    shares: 370_457_880,
+    source: "10-Q Q2 2025 cover (basic)",
+    accession: "0001507605-25-000018",
   },
   "2025-09-30": {
-    shares: 470_126_290,
-    source: "10-Q Q3 2025 (WeightedAverageNumberOfDilutedSharesOutstanding)",
+    shares: 378_184_353,
+    source: "10-Q Q3 2025 cover (basic)",
     accession: "0001507605-25-000028",
   },
 };
@@ -172,20 +173,21 @@ export function getMARASharesForDate(date: string): {
 
 /**
  * MARA Holdings History
- * Verified from SEC filings
+ * ALL share counts verified 2026-02-10 via SEC EDGAR (dei:EntityCommonStockSharesOutstanding - basic)
+ * Interim dates use linear interpolation for shares
  */
 export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   // FY 2023
   {
     date: "2023-12-31",
     holdings: 15126,
-    sharesOutstandingDiluted: 310_890_000,
-    holdingsPerShare: 0.0000487,
+    sharesOutstandingDiluted: 267_639_590,
+    holdingsPerShare: 0.0000565,
     stockPrice: 23.49,
     totalDebt: 751_500_000,
     cash: 368_000_000,
     source: "FY 2023 10-K",
-    sourceUrl: "/filings/mara/0001507605-24-000020",
+    sourceUrl: "/filings/mara/0001628280-24-007680",
     sourceType: "sec-filing",
     confidence: "high",
   },
@@ -194,13 +196,13 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-03-31",
     holdings: 17320,
-    sharesOutstandingDiluted: 328_630_000,
-    holdingsPerShare: 0.0000527,
+    sharesOutstandingDiluted: 272_956_165,
+    holdingsPerShare: 0.0000635,
     stockPrice: 20.0,
     totalDebt: 751_500_000,
     cash: 200_000_000,
     source: "Q1 2024 10-Q",
-    sourceUrl: "/filings/mara/0001507605-24-000025",
+    sourceUrl: "/filings/mara/0001628280-24-022243",
     sourceType: "sec-filing",
     confidence: "high",
   },
@@ -209,23 +211,23 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-06-30",
     holdings: 18488,
-    sharesOutstandingDiluted: 356_800_000,
-    holdingsPerShare: 0.0000518,
+    sharesOutstandingDiluted: 294_474_622,
+    holdingsPerShare: 0.0000628,
     stockPrice: 18.0,
     totalDebt: 751_500_000,
     cash: 250_000_000,
     source: "Q2 2024 10-Q",
-    sourceUrl: "/filings/mara/0001507605-24-000030",
+    sourceUrl: "/filings/mara/0001628280-24-034196",
     sourceType: "sec-filing",
     confidence: "high",
   },
 
-  // Aug 14, 2024: +4,144 BTC purchase at ~$59,500/BTC - First major treasury purchase
+  // Aug 14, 2024: +4,144 BTC purchase at ~$59,500/BTC - shares interpolated
   {
     date: "2024-08-14",
     holdings: 22632,
-    sharesOutstandingDiluted: 375_000_000,
-    holdingsPerShare: 0.0000604,
+    sharesOutstandingDiluted: 308_000_000,
+    holdingsPerShare: 0.0000735,
     stockPrice: 15.0,
     totalDebt: 1_000_000_000,
     cash: 250_000_000,
@@ -233,67 +235,67 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     sourceUrl: "/filings/mara/0001493152-24-032433",
     sourceType: "sec-filing",
     methodology:
-      "Q2 holdings (18,488) + purchase (4,144) = 22,632 BTC. First 8-K with specific purchase disclosure.",
-    confidence: "high",
+      "Q2 holdings (18,488) + purchase (4,144) = 22,632 BTC. Shares interpolated between Q2 and Q3.",
+    confidence: "medium",
   },
 
   // Q3 2024
   {
     date: "2024-09-30",
     holdings: 26747,
-    sharesOutstandingDiluted: 396_980_000,
-    holdingsPerShare: 0.0000674,
+    sharesOutstandingDiluted: 321_831_487,
+    holdingsPerShare: 0.0000831,
     stockPrice: 17.0,
     totalDebt: 1_000_000_000,
     cash: 300_000_000,
     source: "Q3 2024 10-Q",
-    sourceUrl: "/filings/mara/0001507605-24-000035",
+    sourceUrl: "/filings/mara/0001628280-24-047148",
     sourceType: "sec-filing",
     confidence: "high",
   },
 
-  // Dec 2024 BTC Yield 8-K filings (interim)
+  // Dec 2024 BTC Yield 8-K filings (interim) - shares interpolated
   {
     date: "2024-12-09",
     holdings: 40435,
-    sharesOutstandingDiluted: 460_260_000,
-    holdingsPerShare: 0.0000879,
+    sharesOutstandingDiluted: 340_000_000,
+    holdingsPerShare: 0.0001189,
     stockPrice: 25.0,
-    totalDebt: 2_600_000_000, // Post Dec 4 $850M convert issuance
+    totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "8-K BTC Yield (47.6% YTD)",
     sourceUrl: "/filings/mara/0001493152-24-048150",
     sourceType: "sec-filing",
-    methodology: "BTC Yield disclosure - interim holdings snapshot.",
-    confidence: "high",
+    methodology: "BTC Yield disclosure. Shares interpolated between Q3 and Q4 2024.",
+    confidence: "medium",
   },
 
   {
     date: "2024-12-18",
     holdings: 44394,
-    sharesOutstandingDiluted: 463_400_000,
-    holdingsPerShare: 0.0000958,
+    sharesOutstandingDiluted: 342_500_000,
+    holdingsPerShare: 0.0001296,
     stockPrice: 22.0,
     totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "8-K BTC Yield (60.9% YTD)",
     sourceUrl: "/filings/mara/0001493152-24-048535",
     sourceType: "sec-filing",
-    methodology: "BTC Yield disclosure - interim holdings snapshot.",
-    confidence: "high",
+    methodology: "BTC Yield disclosure. Shares interpolated between Q3 and Q4 2024.",
+    confidence: "medium",
   },
 
   // Q4 2024 / FY 2024
   {
     date: "2024-12-31",
     holdings: 44893,
-    sharesOutstandingDiluted: 430_000_000,
-    holdingsPerShare: 0.0001044,
+    sharesOutstandingDiluted: 345_816_827,
+    holdingsPerShare: 0.0001298,
     stockPrice: 16.77,
     totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "FY 2024 10-K",
-    sourceUrl: "/filings/mara/0001507605-25-000005",
+    sourceUrl: "/filings/mara/0001507605-25-000003",
     sourceType: "sec-filing",
     confidence: "high",
   },
@@ -302,13 +304,13 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-03-31",
     holdings: 47531,
-    sharesOutstandingDiluted: 445_000_000,
-    holdingsPerShare: 0.0001068,
+    sharesOutstandingDiluted: 351_927_748,
+    holdingsPerShare: 0.0001351,
     stockPrice: 17.0,
     totalDebt: 3_248_000_000,
     cash: 400_000_000,
     source: "Q1 2025 10-Q (33,263 custody + 14,269 receivable)",
-    sourceUrl: "/filings/mara/0001507605-25-000015",
+    sourceUrl: "/filings/mara/0001507605-25-000009",
     sourceType: "sec-filing",
     methodology:
       "BTC holdings = custody (33,263) + receivable from hosted mining (14,269).",
@@ -319,13 +321,13 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-06-30",
     holdings: 49951,
-    sharesOutstandingDiluted: 458_000_000,
-    holdingsPerShare: 0.0001091,
+    sharesOutstandingDiluted: 370_457_880,
+    holdingsPerShare: 0.0001348,
     stockPrice: 17.0,
     totalDebt: 3_248_000_000,
     cash: 400_000_000,
     source: "Q2 2025 10-Q (34,401 custody + 15,550 receivable)",
-    sourceUrl: "/filings/mara/0001507605-25-000022",
+    sourceUrl: "/filings/mara/0001507605-25-000018",
     sourceType: "sec-filing",
     methodology:
       "BTC holdings = custody (34,401) + receivable from hosted mining (15,550).",
@@ -336,13 +338,12 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-09-30",
     holdings: 52850,
-    sharesOutstandingDiluted: 470_126_290,
-    holdingsPerShare: 0.0001124,
+    sharesOutstandingDiluted: 378_184_353,
+    holdingsPerShare: 0.0001398,
     stockPrice: 10.0,
     totalDebt: 3_248_000_000,
     cash: 826_392_000,
     source: "Q3 2025 10-Q (35,493 custody + 17,357 receivable)",
-    sharesSource: "SEC WeightedAverageNumberOfDilutedSharesOutstanding",
     sourceUrl: "/filings/mara/0001507605-25-000028",
     sourceType: "sec-filing",
     methodology:

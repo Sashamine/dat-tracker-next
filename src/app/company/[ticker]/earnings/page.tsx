@@ -365,7 +365,7 @@ export default function CompanyEarningsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
                           {earning.holdingsPerShare !== undefined ? (
-                            earning.holdingsPerShare.toFixed(6)
+                            earning.holdingsPerShare.toFixed(7)
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}
@@ -432,7 +432,7 @@ export default function CompanyEarningsPage() {
                         <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Per Share</div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">
                           {earning.holdingsPerShare !== undefined ? (
-                            earning.holdingsPerShare.toFixed(6)
+                            earning.holdingsPerShare.toFixed(7)
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}
