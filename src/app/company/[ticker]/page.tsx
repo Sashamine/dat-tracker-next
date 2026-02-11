@@ -55,6 +55,9 @@ import { MARACompanyView } from "@/components/MARACompanyView";
 import { XXICompanyView } from "@/components/XXICompanyView";
 import { MetaplanetCompanyView } from "@/components/MetaplanetCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
+import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
+import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
+import { CostBasisCard } from "@/components/cost-basis-card";
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -1122,6 +1125,26 @@ export default function CompanyPage() {
           <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Data</h2>
           <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
         </div>
+
+        {/* Provenance Cards - only show if company has provenance data */}
+        {(displayCompany.provenanceFile || displayCompany.holdingsNative || displayCompany.costBasisAvg) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+            {/* Data Freshness Indicator */}
+            {displayCompany.provenanceFile && (
+              <DataFreshnessIndicator company={displayCompany} />
+            )}
+            
+            {/* Holdings Breakdown (for multi-form treasuries like ETH+LsETH) */}
+            {(displayCompany.holdingsNative || displayCompany.holdingsLsETH || displayCompany.holdingsStaked) && assetPrice && (
+              <HoldingsBreakdownCard company={displayCompany} assetPrice={assetPrice} />
+            )}
+            
+            {/* Cost Basis & Unrealized P/L */}
+            {displayCompany.costBasisAvg && assetPrice && (
+              <CostBasisCard company={displayCompany} assetPrice={assetPrice} />
+            )}
+          </div>
+        )}
 
         {/* Holdings History Table - shows each acquisition with SEC links */}
         <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">

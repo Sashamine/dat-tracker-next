@@ -161,6 +161,16 @@ export interface Company {
   holdingsSource?: HoldingsSource; // Where the holdings data came from
   holdingsSourceUrl?: string; // Direct link to the source (SEC filing, press release, etc.)
   secReferenced?: boolean; // True if non-SEC source is referenced in SEC filings (legal accountability)
+  
+  // Provenance tracking (detailed audit trail)
+  holdingsAccession?: string;     // SEC accession number for holdings source
+  holdingsNative?: number;        // Native asset holdings (for multi-form treasuries like ETH+LsETH)
+  holdingsLsETH?: number;         // Lido staked ETH as-if-redeemed (SBET specific)
+  holdingsStaked?: number;        // Staked portion of holdings (generic)
+  stakingRewardsCumulative?: number; // Total staking rewards earned since DAT start
+  provenanceFile?: string;        // Path to detailed provenance file (e.g., "provenance/sbet.ts")
+  lastVerified?: string;          // ISO date of last data verification audit
+  nextExpectedFiling?: string;    // Description of next expected SEC filing
 
   // Shares tracking (for mNAV calculation transparency)
   sharesAsOf?: string; // ISO date of share count

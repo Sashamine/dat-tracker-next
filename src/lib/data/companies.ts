@@ -83,6 +83,14 @@ export const ethCompanies: Company[] = [
     holdingsLastUpdated: "2025-12-14",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
+    // Provenance tracking (see provenance/sbet.ts for full audit trail)
+    holdingsAccession: "0001493152-25-028063",
+    holdingsNative: 639_241,      // Native ETH held directly
+    holdingsLsETH: 224_183,       // Lido staked ETH (as-if-redeemed)
+    stakingRewardsCumulative: 9_241,  // 3,350 native + 5,891 LsETH rewards
+    provenanceFile: "provenance/sbet.ts",
+    lastVerified: "2026-02-11",
+    nextExpectedFiling: "Q4 2025 10-K (Mar 2026)",
     datStartDate: "2025-05-01",
     costBasisAvg: 3_696,  // SEC Q3 2025 10-Q: $3.022B total cost / 817,747 ETH-equivalent units
     costBasisSource: "SEC 10-Q Q3 2025: Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
