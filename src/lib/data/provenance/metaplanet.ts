@@ -33,6 +33,7 @@ function tdnetSource(params: {
   date: string;  // YYYY-MM-DD
   quote?: string;
   url?: string;
+  searchTerm?: string;  // Exact text to Ctrl+F on source page
 }): DocumentSource {
   return {
     type: "regulatory",
@@ -42,6 +43,7 @@ function tdnetSource(params: {
     url: params.url || "https://metaplanet.jp/en/shareholders/disclosures",
     quote: params.quote,
     anchor: params.title,
+    searchTerm: params.searchTerm,
   };
 }
 
@@ -55,13 +57,15 @@ export const METAPLANET_PROVENANCE = {
     title: "Notice of Additional Purchase of Bitcoin",
     date: "2025-12-30",
     quote: "Total Bitcoin holdings: 35,102 BTC",
+    searchTerm: "35,102",
   }), "Q4 2025 purchase of 4,279 BTC bringing total to 35,102"),
 
-  // Shares Outstanding
+  // Shares Outstanding  
   sharesOutstanding: pv(1_142_264_340, tdnetSource({
     title: "Q3 2025 Financial Results Summary",
     date: "2025-11-13",
     quote: "1,142,264,340 common shares outstanding",
+    searchTerm: "1,142,264,340",
   }), "As of Q3 FY2025 filing"),
 
   // Total Debt (zero-coupon bonds)
@@ -69,6 +73,7 @@ export const METAPLANET_PROVENANCE = {
     title: "Q3 2025 Financial Results Summary",
     date: "2025-11-13",
     quote: "Approximately ¥44B in zero-coupon bonds (~$280M USD)",
+    searchTerm: "44",  // Search for ¥44B on disclosure page
   }), "Zero-coupon yen-denominated bonds, no interest payments"),
 
   // Cash Reserves
@@ -76,6 +81,7 @@ export const METAPLANET_PROVENANCE = {
     title: "Q3 2025 Financial Results Summary", 
     date: "2025-11-13",
     quote: "Cash and equivalents: ¥23.4B (~$150M USD)",
+    searchTerm: "23.4",  // Search for ¥23.4B on disclosure page
   }), "Estimated from Q3 FY2025 at 156 JPY/USD"),
 
   // Average Cost Basis
@@ -83,7 +89,7 @@ export const METAPLANET_PROVENANCE = {
     derivation: "Total acquisition cost / Total BTC",
     formula: "$3.78B / 35,102 BTC = $107,607/BTC",
     inputs: { totalCost: "$3.78B", holdings: 35102 },
-  }), "From Metaplanet analytics dashboard"),
+  }), "From Metaplanet analytics dashboard - search '107,607' on analytics page"),
 };
 
 // =============================================================================
@@ -112,6 +118,7 @@ export const METAPLANET_ACQUISITIONS: MetaplanetAcquisition[] = [
       title: "Notice of Additional Purchase of Bitcoin",
       date: "2025-12-30",
       quote: "Purchased 4,279 BTC at average price of $105,412",
+      searchTerm: "4,279",  // Search on analytics page or disclosure
     }),
   },
   // 2025 Q3
@@ -125,6 +132,7 @@ export const METAPLANET_ACQUISITIONS: MetaplanetAcquisition[] = [
       title: "Notice of Additional Purchase of Bitcoin",
       date: "2025-09-30",
       quote: "Purchased 5,268 BTC",
+      searchTerm: "5,268",
     }),
   },
   {
@@ -136,6 +144,7 @@ export const METAPLANET_ACQUISITIONS: MetaplanetAcquisition[] = [
     source: tdnetSource({
       title: "Notice of Additional Purchase of Bitcoin",
       date: "2025-09-22",
+      searchTerm: "5,419",
     }),
   },
   {

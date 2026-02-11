@@ -123,6 +123,14 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
               {/* XBRL-specific details */}
               {data.source.type === "xbrl" && (
                 <>
+                  {data.source.searchTerm && (
+                    <div>
+                      <div className="text-gray-600 dark:text-gray-400 text-xs">🔍 Search for (Ctrl+F)</div>
+                      <div className="font-mono text-xs text-blue-400 bg-gray-50 dark:bg-gray-900 p-2 rounded select-all">
+                        {data.source.searchTerm}
+                      </div>
+                    </div>
+                  )}
                   <div>
                     <div className="text-gray-600 dark:text-gray-400 text-xs">XBRL Fact</div>
                     <div className="font-mono text-xs text-gray-900 dark:text-gray-100 break-all">
@@ -157,6 +165,14 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
               {(data.source.type === "sec-document" || data.source.type === "press-release" || 
                 data.source.type === "company-website" || data.source.type === "regulatory") && (
                 <>
+                  {data.source.searchTerm && (
+                    <div>
+                      <div className="text-gray-600 dark:text-gray-400 text-xs">🔍 Search for (Ctrl+F)</div>
+                      <div className="font-mono text-xs text-blue-400 bg-gray-50 dark:bg-gray-900 p-2 rounded select-all">
+                        {data.source.searchTerm}
+                      </div>
+                    </div>
+                  )}
                   {data.source.quote && (
                     <div>
                       <div className="text-gray-600 dark:text-gray-400 text-xs">Source Quote</div>
