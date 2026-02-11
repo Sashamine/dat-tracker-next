@@ -2173,14 +2173,15 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     epsActual: 0.62,  // SEC XBRL EarningsPerShareDiluted (quarterly)
     revenueActual: 10_843_567,  // SEC XBRL Revenues (quarterly Jul-Sep)
     netIncome: 104_270_205,  // SEC XBRL NetIncomeLoss (quarterly Jul-Sep) - includes crypto gains
-    holdingsAtQuarterEnd: 861_251,  // Sep 30, 2025 (holdings-history.ts)
-    sharesAtQuarterEnd: 192_193_183,  // SEC XBRL CommonStockSharesOutstanding at Sep 30
-    holdingsPerShare: 0.004481,  // 861251 / 192193183
+    holdingsAtQuarterEnd: 817_747,  // SEC 10-Q: 580,841 native + 236,906 LsETH (as-if redeemed)
+    sharesAtQuarterEnd: 180_000_000,  // Interpolated from Aug 31 (170M) to Oct 19 (184.5M)
+    holdingsPerShare: 0.004543,  // 817747 / 180000000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
     status: "reported",
   },
   // Q2 2025 - ETH pivot initiated June 2025 (filed 2025-08-14)
+  // Note: Strategy launched Jun 2, 2025 - only ~4 weeks of accumulation in Q2
   {
     ticker: "SBET",
     fiscalYear: 2025,
@@ -2192,9 +2193,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     epsActual: -4.27,  // SEC XBRL EarningsPerShareBasic (quarterly Apr-Jun)
     revenueActual: 697_291,  // SEC XBRL RevenueFromContractWithCustomerExcludingAssessedTax (quarterly)
     netIncome: -103_422_727,  // SEC XBRL NetIncomeLoss (quarterly Apr-Jun) - crypto mark-to-market losses
-    holdingsAtQuarterEnd: 520_000,  // Jun 30, 2025 (holdings-history.ts)
-    sharesAtQuarterEnd: 66_154_792,  // SEC XBRL CommonStockSharesOutstanding at Jun 30
-    holdingsPerShare: 0.007860,  // 520000 / 66154792
+    holdingsAtQuarterEnd: 200_000,  // Jun 30, 2025 - interpolated from Jun 27 (198K) and Jul 4 (205K) 8-Ks
+    sharesAtQuarterEnd: 145_000_000,  // Interpolated from weekly ATM dilution
+    holdingsPerShare: 0.001379,  // 200000 / 145000000
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
     status: "reported",

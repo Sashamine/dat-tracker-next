@@ -473,6 +473,8 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-12", holdings: 176270, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.001259, source: "8-K Jun 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/form8-k.htm", sourceType: "sec-filing" },
   { date: "2025-06-20", holdings: 188478, sharesOutstandingDiluted: 142_000_000, holdingsPerShare: 0.001327, source: "8-K Jun 24, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/form8-k.htm", sourceType: "sec-filing" },
   { date: "2025-06-27", holdings: 198167, sharesOutstandingDiluted: 144_000_000, holdingsPerShare: 0.001376, source: "8-K Jul 1, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/form8-k.htm", sourceType: "sec-filing" },
+  // Q2 2025 quarter-end (interpolated between Jun 27 and Jul 4 filings)
+  { date: "2025-06-30", holdings: 200_000, sharesOutstandingDiluted: 145_000_000, holdingsPerShare: 0.001379, source: "Interpolated (Q2 end)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q", sourceType: "interpolated" as HoldingsSource },
   //
   // Jul 2025 — Rapid accumulation (inc. 10K ETH from Ethereum Foundation on Jul 11)
   { date: "2025-07-04", holdings: 205634, sharesOutstandingDiluted: 146_000_000, holdingsPerShare: 0.001408, source: "8-K Jul 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/form8-k.htm", sourceType: "sec-filing" },
