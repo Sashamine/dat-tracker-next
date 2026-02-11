@@ -542,6 +542,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
               cashReserves: metrics.cashReserves,
               restrictedCash: 0,
               asset: "BTC",
+              currency: "JPY",
             }}
           />
         )}
