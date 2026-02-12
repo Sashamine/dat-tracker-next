@@ -66,6 +66,12 @@ const MSTR_INTEL: CompanyIntel = {
 **Risks:**
 - Regulatory uncertainty around Bitcoin corporate holdings
 `.trim(),
+  strategyDocs: [
+    { title: "42/42 Plan Announcement", date: "2025-10-30", description: "Capital plan: $42B equity + $42B fixed income over 3 years", url: "https://www.strategy.com/press/microstrategy-announces-42-billion-capital-plan" },
+    { title: "Q4 2025 Earnings Presentation", date: "2026-02-05", description: "Latest quarterly strategy update and BTC metrics", url: "https://www.strategy.com/investor-relations" },
+    { title: "Bitcoin Treasury Reserve Policy", date: "2024-08-10", description: "Original corporate treasury strategy framework", url: "https://www.strategy.com/bitcoin" },
+    { title: "Preferred Stock Overview", date: "2025-11-12", description: "STRK, STRF, STRD, STRC, STRE - full preferred suite", url: "https://www.strategy.com/investor-relations/preferred-stock" },
+  ],
 };
 
 const METAPLANET_INTEL: CompanyIntel = {
