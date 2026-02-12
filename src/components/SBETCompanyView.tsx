@@ -4,13 +4,12 @@
 import { useMemo, useState } from "react";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
-import { SBET_PROVENANCE, SBET_CIK, getSBETFilingsList } from "@/lib/data/provenance/sbet";
+import { SBET_PROVENANCE, SBET_CIK } from "@/lib/data/provenance/sbet";
 import { pv, derivedSource } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
-import { SECFilingTimeline } from "./sec-filing-timeline";
 import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
@@ -94,19 +93,6 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
   const toggleCard = (card: "mnav" | "leverage" | "equityNav") => {
     setExpandedCard(expandedCard === card ? null : card);
   };
-
-  // Memoize filings list (static - no deps)
-  const filingsList = useMemo(() => {
-    return getSBETFilingsList().map((f) => ({
-      date: f.periodDate,
-      filedDate: f.filedDate,
-      accession: f.accession,
-      formType: f.formType,
-      items: f.items,
-      url: f.url,
-      hasHoldingsUpdate: f.hasHoldingsUpdate,
-    })).sort((a, b) => new Date(b.filedDate).getTime() - new Date(a.filedDate).getTime());
-  }, []);
 
   // Live prices
   const ethPrice = prices?.crypto.ETH?.price || 0;
@@ -515,22 +501,6 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
             currentHoldingsPerShare={holdingsPerShare}
           />
         )}
-      </div>
-
-      {/* SEC FILINGS */}
-      <div className="mb-4 flex items-center gap-2">
-        <span className="text-lg">📑</span>
-        <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">SEC Filings</h2>
-        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
-      </div>
-
-      <div className="mb-8">
-        <SECFilingTimeline
-          ticker="SBET"
-          cik={SBET_CIK}
-          filings={filingsList}
-          asset="ETH"
-        />
       </div>
 
       {/* DATA SECTION */}
