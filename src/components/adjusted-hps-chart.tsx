@@ -68,8 +68,9 @@ export function AdjustedHPSChart({
       const rawHPS = snapshot.holdingsPerShare;
       const mNav = getMNavAtDate(ticker, snapshot.date) ?? currentMNav;
       
-      // Adjusted HPS = what you actually own per share, accounting for the premium/discount
-      const adjustedHPS = rawHPS / mNav;
+      // Adjusted HPS = HPS / max(mNAV, 1.0)
+      // Only penalize premiums (mNAV > 1), don't reward discounts
+      const adjustedHPS = rawHPS / Math.max(mNav, 1.0);
       
       data.push({
         date: snapshot.date,

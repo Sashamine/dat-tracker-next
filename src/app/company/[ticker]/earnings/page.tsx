@@ -387,12 +387,13 @@ export default function CompanyEarningsPage() {
                       ? getMNavAtQuarterEnd(ticker, prevEarning.calendarYear, prevEarning.calendarQuarter)
                       : null;
                     
-                    // Adjusted HPS = HPS / mNAV (what you actually get per share after accounting for premium)
+                    // Adjusted HPS = HPS / max(mNAV, 1.0)
+                    // Only penalize premiums (mNAV > 1), don't reward discounts
                     const adjustedHPS = earning.holdingsPerShare !== undefined && mNav !== null
-                      ? earning.holdingsPerShare / mNav
+                      ? earning.holdingsPerShare / Math.max(mNav, 1.0)
                       : null;
                     const prevAdjustedHPS = prevEarning?.holdingsPerShare !== undefined && prevMNav !== null
-                      ? prevEarning.holdingsPerShare / prevMNav
+                      ? prevEarning.holdingsPerShare / Math.max(prevMNav, 1.0)
                       : null;
                     
                     // Adjusted growth
@@ -482,12 +483,13 @@ export default function CompanyEarningsPage() {
                   ? getMNavAtQuarterEnd(ticker, prevEarning.calendarYear, prevEarning.calendarQuarter)
                   : null;
                 
-                // Adjusted HPS = HPS / mNAV
+                // Adjusted HPS = HPS / max(mNAV, 1.0)
+                // Only penalize premiums (mNAV > 1), don't reward discounts
                 const adjustedHPS = earning.holdingsPerShare !== undefined && mNav !== null
-                  ? earning.holdingsPerShare / mNav
+                  ? earning.holdingsPerShare / Math.max(mNav, 1.0)
                   : null;
                 const prevAdjustedHPS = prevEarning?.holdingsPerShare !== undefined && prevMNav !== null
-                  ? prevEarning.holdingsPerShare / prevMNav
+                  ? prevEarning.holdingsPerShare / Math.max(prevMNav, 1.0)
                   : null;
                 
                 // Adjusted growth
