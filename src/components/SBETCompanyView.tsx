@@ -82,7 +82,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
   // Chart state
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
-  const [chartMode, setChartMode] = useState<"price" | "volume" | "mnav" | "hps">("price");
+  const [chartMode, setChartMode] = useState<"price" | "mnav" | "hps">("price");
   const { data: history, isLoading: historyLoading } = useStockHistory("SBET", timeRange, interval);
   
   const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1y");
@@ -444,7 +444,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
 
       <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
         <div className="flex justify-center gap-6 mb-4">
-          {(["price", "volume", "mnav", "hps"] as const).map((mode) => (
+          {(["price", "mnav", "hps"] as const).map((mode) => (
             <label key={mode} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -454,7 +454,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
                 className="w-4 h-4"
               />
               <span className="text-sm">
-                {mode === "price" ? "Price" : mode === "volume" ? "Volume" : mode === "mnav" ? "mNAV" : "HPS"}
+                {mode === "price" ? "Price" : mode === "mnav" ? "mNAV" : "HPS"}
               </span>
             </label>
           ))}
@@ -477,11 +477,11 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
           ))}
         </div>
 
-        {(chartMode === "price" || chartMode === "volume") && (
+        {chartMode === "price" && (
           historyLoading ? (
             <div className="h-[400px] flex items-center justify-center text-gray-500">Loading...</div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={chartMode === "volume" ? "volume" : "price"} />
+            <StockChart data={history} chartMode="price" />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">No data</div>
           )
