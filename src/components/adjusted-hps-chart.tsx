@@ -3,7 +3,8 @@
 import { useEffect, useRef, useMemo, useState } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
-import { getSBETHistoricalMetrics, SBETHistoricalPoint } from "@/lib/data/sbet-historical-metrics";
+import { getHoldingsHistory } from "@/lib/data/holdings-history";
+import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 
 type TimeRange = "3mo" | "6mo" | "1y" | "all";
 
@@ -23,6 +24,44 @@ interface ChartDataPoint {
   leverage: number;
 }
 
+// Get mNAV for a specific ticker at a specific date from MNAV_HISTORY
+function getMNavAtDate(ticker: string, targetDate: string): { mNav: number; leverage: number } | null {
+  const target = new Date(targetDate);
+  
+  // Find the closest snapshot on or before the target date
+  let closestSnapshot = null;
+  let closestDiff = Infinity;
+  
+  for (const snapshot of MNAV_HISTORY) {
+    const snapshotDate = new Date(snapshot.date);
+    const diff = target.getTime() - snapshotDate.getTime();
+    
+    // Only consider snapshots on or before target date
+    if (diff >= 0 && diff < closestDiff) {
+      // Check if this ticker is in the snapshot
+      const companyData = snapshot.companies.find(c => c.ticker === ticker);
+      if (companyData) {
+        closestSnapshot = { snapshot, companyData };
+        closestDiff = diff;
+      }
+    }
+  }
+  
+  if (!closestSnapshot) return null;
+  
+  const { companyData } = closestSnapshot;
+  
+  // Calculate leverage: (EV - MarketCap) / CryptoNav = Net Debt / CryptoNav
+  // EV = MarketCap + Debt - Cash, so Debt - Cash = EV - MarketCap
+  const netDebt = companyData.enterpriseValue - companyData.marketCap;
+  const leverage = companyData.cryptoNav > 0 ? Math.max(0, netDebt / companyData.cryptoNav) : 0;
+  
+  return {
+    mNav: companyData.mnav,
+    leverage,
+  };
+}
+
 export function AdjustedHPSChart({
   ticker,
   asset,
@@ -34,24 +73,37 @@ export function AdjustedHPSChart({
   const chartRef = useRef<IChartApi | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
 
-  // Get point-in-time historical data
+  // Get holdings history and match with mNAV history
   const chartData = useMemo(() => {
-    // For SBET, use the historical metrics with point-in-time mNAV
-    if (ticker.toUpperCase() === "SBET") {
-      const metrics = getSBETHistoricalMetrics();
-      return metrics.map((point: SBETHistoricalPoint) => ({
-        date: point.date,
-        rawHPS: point.hps,
-        adjustedHPS: point.adjustedHPS,
-        mNav: point.mNav,
-        leverage: point.leverage,
-      }));
+    const history = getHoldingsHistory(ticker);
+    if (!history) return [];
+
+    const data: ChartDataPoint[] = [];
+    
+    for (const snapshot of history.history) {
+      const rawHPS = snapshot.holdingsPerShare;
+      
+      // Get point-in-time mNAV and leverage from MNAV_HISTORY
+      const metrics = getMNavAtDate(ticker, snapshot.date);
+      
+      // Use historical data if available, fall back to current values
+      const mNav = metrics?.mNav ?? currentMNav;
+      const leverage = metrics?.leverage ?? currentLeverage;
+      
+      // Adjusted HPS = rawHPS / mNav * (1 - leverage)
+      const adjustedHPS = rawHPS / mNav * (1 - leverage);
+      
+      data.push({
+        date: snapshot.date,
+        rawHPS,
+        adjustedHPS,
+        mNav,
+        leverage,
+      });
     }
     
-    // For other tickers, fall back to current mNAV/leverage (less accurate)
-    // TODO: Add historical metrics for other companies
-    return [];
-  }, [ticker]);
+    return data;
+  }, [ticker, currentMNav, currentLeverage]);
 
   // Filter by time range
   const filteredData = useMemo(() => {
@@ -92,14 +144,22 @@ export function AdjustedHPSChart({
     const first = filteredData[0];
     const last = filteredData[filteredData.length - 1];
     
-    const rawGrowth = (last.rawHPS - first.rawHPS) / first.rawHPS;
-    const adjustedGrowth = (last.adjustedHPS - first.adjustedHPS) / first.adjustedHPS;
+    const rawGrowth = first.rawHPS > 0 ? (last.rawHPS - first.rawHPS) / first.rawHPS : 0;
+    const adjustedGrowth = first.adjustedHPS > 0 ? (last.adjustedHPS - first.adjustedHPS) / first.adjustedHPS : 0;
+    
+    // Calculate what raw growth would be after just mNAV adjustment
+    const avgMNav = (first.mNav + last.mNav) / 2;
+    const afterMNavOnly = rawGrowth / avgMNav;
     
     return {
       rawGrowth,
       adjustedGrowth,
-      mNavDrag: rawGrowth - (rawGrowth / last.mNav),
-      leverageDrag: (rawGrowth / last.mNav) - adjustedGrowth,
+      mNavDrag: rawGrowth - afterMNavOnly,
+      leverageDrag: afterMNavOnly - adjustedGrowth,
+      startMNav: first.mNav,
+      endMNav: last.mNav,
+      startLeverage: first.leverage,
+      endLeverage: last.leverage,
     };
   }, [filteredData]);
 
@@ -229,7 +289,8 @@ export function AdjustedHPSChart({
             Risk-Adjusted {asset}/Share
           </h3>
           <p className="text-sm text-gray-500">
-            Adjusted for mNAV premium ({currentMNav.toFixed(2)}x) and leverage ({(currentLeverage * 100).toFixed(0)}%)
+            Adjusted for mNAV ({growthMetrics ? `${growthMetrics.startMNav.toFixed(1)}x → ${growthMetrics.endMNav.toFixed(1)}x` : `${currentMNav.toFixed(1)}x`}) 
+            {" & leverage "}({growthMetrics ? `${(growthMetrics.startLeverage * 100).toFixed(0)}% → ${(growthMetrics.endLeverage * 100).toFixed(0)}%` : `${(currentLeverage * 100).toFixed(0)}%`})
           </p>
         </div>
         <div className="flex gap-1">
@@ -262,7 +323,7 @@ export function AdjustedHPSChart({
             <p className="text-xs text-gray-500 uppercase tracking-wide">Raw Growth</p>
             <p className={cn(
               "text-xl font-bold font-mono",
-              growthMetrics.rawGrowth >= 0 ? "text-gray-400" : "text-gray-400"
+              "text-gray-400"
             )}>
               {formatPct(growthMetrics.rawGrowth)}
             </p>
@@ -279,13 +340,13 @@ export function AdjustedHPSChart({
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wide">mNAV Drag</p>
             <p className="text-lg font-semibold font-mono text-amber-600">
-              {formatPct(-growthMetrics.mNavDrag)}
+              {formatPct(-Math.abs(growthMetrics.mNavDrag))}
             </p>
           </div>
           <div>
             <p className="text-xs text-gray-500 uppercase tracking-wide">Leverage Drag</p>
             <p className="text-lg font-semibold font-mono text-red-500">
-              {formatPct(-growthMetrics.leverageDrag)}
+              {formatPct(-Math.abs(growthMetrics.leverageDrag))}
             </p>
           </div>
         </div>
