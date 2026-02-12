@@ -318,20 +318,9 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
                 <span className="text-lg">🎯</span>
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Strategy & Overview</h2>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-3 text-sm">
-                  {company.website && (
-                    <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>Website</a>
-                  )}
-                  {company.twitter && (
-                    <a href={company.twitter.startsWith("http") ? company.twitter : `https://twitter.com/${company.twitter}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>Twitter</a>
-                  )}
-                  <a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${SBET_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>SEC Filings</a>
-                </div>
-                <svg className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
+              <svg className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </summary>
             <div className="px-6 pb-6 space-y-6">
               {/* Strategy Summary */}
