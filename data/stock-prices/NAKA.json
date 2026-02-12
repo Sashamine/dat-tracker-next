@@ -2,7 +2,7 @@
   "ticker": "NAKA",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-12T20:07:04.723Z",
+  "lastUpdated": "2026-02-12T20:22:04.209Z",
   "prices": [
     {
       "date": "2024-05-31",
@@ -4684,6 +4684,15 @@
       "low": 0.2613,
       "close": 0.2718,
       "volume": 3461770
+    },
+    {
+      "date": "2026-02-12",
+      "time": "13:22",
+      "open": 0.2789,
+      "high": 0.2813,
+      "low": 0.2613,
+      "close": 0.2715,
+      "volume": 3475600
     },
     {
       "date": "2026-02-12",
