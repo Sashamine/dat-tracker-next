@@ -447,7 +447,7 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={chart"price"} />
+            <StockChart data={history} chartMode="price" />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               Limited history — XXI launched Dec 2025

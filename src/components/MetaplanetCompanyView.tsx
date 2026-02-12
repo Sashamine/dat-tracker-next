@@ -549,7 +549,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={chart"price"} />
+            <StockChart data={history} chartMode="price" />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               No chart data available for 3350.T

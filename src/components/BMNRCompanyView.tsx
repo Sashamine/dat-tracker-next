@@ -449,7 +449,7 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={chart"price"} />
+            <StockChart data={history} chartMode="price" />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               No historical data available
