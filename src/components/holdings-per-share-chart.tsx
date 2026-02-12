@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useMemo, useState } from "react";
-import { createChart, ColorType, IChartApi, LineSeries, Time, SeriesMarker, createSeriesMarkers } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, LineSeries, Time, SeriesMarker } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { getHoldingsHistory, calculateHoldingsGrowth } from "@/lib/data/holdings-history";
 import { VerificationDot } from "@/components/verification-badge";
@@ -169,11 +169,8 @@ export function HoldingsPerShareChart({
         size: 0.3,
       }));
 
-    // v5 API: use createSeriesMarkers plugin
-    const allMarkers = [...markers, ...interpolatedMarkers];
-    if (allMarkers.length > 0) {
-      createSeriesMarkers(series, allMarkers);
-    }
+    // setMarkers is available but not in all type definitions
+    (series as any).setMarkers([...markers, ...interpolatedMarkers]);
     chart.timeScale().fitContent();
 
     // Handle resize
