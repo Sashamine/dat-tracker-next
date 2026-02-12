@@ -368,9 +368,6 @@ export default function CompanyEarningsPage() {
                     <th className="px-6 py-3 text-right text-xs font-medium text-purple-500 dark:text-purple-400 uppercase tracking-wider">
                       Adjusted
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-purple-500 dark:text-purple-400 uppercase tracking-wider">
-                      Adj. Growth
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
@@ -383,22 +380,11 @@ export default function CompanyEarningsPage() {
 
                     // Get mNAV at quarter end for adjusted calculation
                     const mNav = getMNavAtQuarterEnd(ticker, earning.calendarYear, earning.calendarQuarter);
-                    const prevMNav = prevEarning 
-                      ? getMNavAtQuarterEnd(ticker, prevEarning.calendarYear, prevEarning.calendarQuarter)
-                      : null;
                     
                     // Adjusted HPS = HPS / max(mNAV, 1.0)
                     // Only penalize premiums (mNAV > 1), don't reward discounts
                     const adjustedHPS = earning.holdingsPerShare !== undefined && mNav !== null
                       ? earning.holdingsPerShare / Math.max(mNav, 1.0)
-                      : null;
-                    const prevAdjustedHPS = prevEarning?.holdingsPerShare !== undefined && prevMNav !== null
-                      ? prevEarning.holdingsPerShare / Math.max(prevMNav, 1.0)
-                      : null;
-                    
-                    // Adjusted growth
-                    const adjustedGrowth = adjustedHPS !== null && prevAdjustedHPS !== null && prevAdjustedHPS > 0
-                      ? ((adjustedHPS - prevAdjustedHPS) / prevAdjustedHPS) * 100
                       : null;
 
                     return (
@@ -449,18 +435,6 @@ export default function CompanyEarningsPage() {
                             <span className="text-gray-400">—</span>
                           )}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right">
-                          {adjustedGrowth !== null ? (
-                            <span className={cn(
-                              "text-sm font-semibold",
-                              adjustedGrowth >= 0 ? "text-purple-600" : "text-red-600"
-                            )}>
-                              {adjustedGrowth >= 0 ? "+" : ""}{adjustedGrowth.toFixed(1)}%
-                            </span>
-                          ) : (
-                            <span className="text-sm text-gray-400">—</span>
-                          )}
-                        </td>
                       </tr>
                     );
                   })}
@@ -479,22 +453,11 @@ export default function CompanyEarningsPage() {
 
                 // Get mNAV at quarter end for adjusted calculation
                 const mNav = getMNavAtQuarterEnd(ticker, earning.calendarYear, earning.calendarQuarter);
-                const prevMNav = prevEarning 
-                  ? getMNavAtQuarterEnd(ticker, prevEarning.calendarYear, prevEarning.calendarQuarter)
-                  : null;
                 
                 // Adjusted HPS = HPS / max(mNAV, 1.0)
                 // Only penalize premiums (mNAV > 1), don't reward discounts
                 const adjustedHPS = earning.holdingsPerShare !== undefined && mNav !== null
                   ? earning.holdingsPerShare / Math.max(mNav, 1.0)
-                  : null;
-                const prevAdjustedHPS = prevEarning?.holdingsPerShare !== undefined && prevMNav !== null
-                  ? prevEarning.holdingsPerShare / Math.max(prevMNav, 1.0)
-                  : null;
-                
-                // Adjusted growth
-                const adjustedGrowth = adjustedHPS !== null && prevAdjustedHPS !== null && prevAdjustedHPS > 0
-                  ? ((adjustedHPS - prevAdjustedHPS) / prevAdjustedHPS) * 100
                   : null;
 
                 return (
@@ -556,32 +519,15 @@ export default function CompanyEarningsPage() {
                     </div>
 
                     {/* Adjusted section */}
-                    {(adjustedHPS !== null || adjustedGrowth !== null) && (
-                      <div className="grid grid-cols-2 gap-3 text-sm pt-3 border-t border-purple-200 dark:border-purple-800">
-                        <div>
-                          <div className="text-xs text-purple-500 dark:text-purple-400 mb-1">Adjusted</div>
-                          <div className="font-medium text-purple-600 dark:text-purple-400">
-                            {adjustedHPS !== null ? adjustedHPS.toFixed(7) : "—"}
-                          </div>
-                          {mNav !== null && (
-                            <div className="text-xs text-gray-400">@ {mNav.toFixed(2)}x</div>
-                          )}
+                    {adjustedHPS !== null && (
+                      <div className="text-sm pt-3 border-t border-purple-200 dark:border-purple-800">
+                        <div className="text-xs text-purple-500 dark:text-purple-400 mb-1">Adjusted</div>
+                        <div className="font-medium text-purple-600 dark:text-purple-400">
+                          {adjustedHPS.toFixed(7)}
                         </div>
-                        <div>
-                          <div className="text-xs text-purple-500 dark:text-purple-400 mb-1">Adj. Growth</div>
-                          <div className="font-medium">
-                            {adjustedGrowth !== null ? (
-                              <span className={cn(
-                                "font-semibold",
-                                adjustedGrowth >= 0 ? "text-purple-600" : "text-red-600"
-                              )}>
-                                {adjustedGrowth >= 0 ? "+" : ""}{adjustedGrowth.toFixed(1)}%
-                              </span>
-                            ) : (
-                              <span className="text-gray-400">—</span>
-                            )}
-                          </div>
-                        </div>
+                        {mNav !== null && (
+                          <div className="text-xs text-gray-400">@ {mNav.toFixed(2)}x mNAV</div>
+                        )}
                       </div>
                     )}
                   </div>
