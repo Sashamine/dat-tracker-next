@@ -14,6 +14,7 @@ import { SECFilingTimeline } from "./sec-filing-timeline";
 import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
+import { getCompanyIntel } from "@/lib/data/company-intel";
 import { cn } from "@/lib/utils";
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
@@ -307,6 +308,79 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
         </div>
       )}
 
+      {/* STRATEGY & OVERVIEW */}
+      {(() => {
+        const intel = getCompanyIntel("SBET");
+        return (
+          <div className="mb-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-xl p-6 border border-indigo-100 dark:border-indigo-900/50">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-lg">🎯</span>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Strategy & Overview</h2>
+              <div className="flex-1" />
+              <div className="flex items-center gap-3 text-sm">
+                {company.website && (
+                  <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">Website</a>
+                )}
+                {company.twitter && (
+                  <a href={company.twitter.startsWith("http") ? company.twitter : `https://twitter.com/${company.twitter}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">Twitter</a>
+                )}
+                <a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${SBET_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">SEC Filings</a>
+              </div>
+            </div>
+            
+            {/* Strategy Summary */}
+            {intel?.strategySummary && (
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{intel.strategySummary}</p>
+            )}
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Key Highlights */}
+              <div>
+                <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Key Highlights</h4>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> 100% staked for yield (native + Lido)</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> Debt-free - no convertibles</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> Weekly transparency via 8-K filings</li>
+                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> ~$26.7M USDC reserves</li>
+                </ul>
+              </div>
+              
+              {/* Recent Developments */}
+              {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
+                <div>
+                  <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Recent Developments</h4>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    {intel.recentDevelopments.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2"><span className="text-indigo-500">•</span> {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {/* Key Backers & Outlook */}
+              <div>
+                {intel?.keyBackers && intel.keyBackers.length > 0 && (
+                  <>
+                    <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Leadership</h4>
+                    <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      {intel.keyBackers.map((backer, i) => (
+                        <li key={i} className="flex items-start gap-2"><span className="text-amber-500">★</span> {backer}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {intel?.outlook2026 && (
+                  <>
+                    <h4 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">2026 Outlook</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{intel.outlook2026}</p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* HOLDINGS BREAKDOWN */}
       <div className="mb-4 flex items-center gap-2">
         <span className="text-lg">🏦</span>
@@ -472,40 +546,6 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
         </div>
       </details>
 
-      {/* Strategy & Overview - Collapsed */}
-      <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
-        <summary className="p-4 cursor-pointer flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Strategy & Overview</h3>
-          <svg className="w-5 h-5 text-gray-400 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </summary>
-        <div className="px-4 pb-4 space-y-4">
-          <div className="flex items-center gap-3">
-            {company.website && (
-              <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline">Website</a>
-            )}
-            {company.twitter && (
-              <a href={company.twitter.startsWith("http") ? company.twitter : `https://twitter.com/${company.twitter}`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline">Twitter</a>
-            )}
-            <a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${SBET_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline">SEC Filings</a>
-          </div>
-          <p className="text-gray-700 dark:text-gray-300">
-            Sharplink, Inc. (formerly SharpLink Gaming) pivoted to an Ethereum treasury strategy in June 2025. 
-            Holds native ETH + Lido staked ETH (LsETH) with 100% generating staking yield. 
-            Weekly 8-K filings with detailed holdings breakdown.
-          </p>
-          <div>
-            <h4 className="font-semibold mb-2">Key Highlights</h4>
-            <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
-              <li>✓ 100% staked for yield (native + Lido)</li>
-              <li>✓ Debt-free - no convertibles</li>
-              <li>✓ Weekly transparency via 8-K filings</li>
-              <li>✓ ~$26.7M USDC reserves</li>
-            </ul>
-          </div>
-        </div>
-      </details>
     </div>
   );
 }
