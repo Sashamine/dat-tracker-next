@@ -271,9 +271,12 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
             cashReserves={cashReserves}
             holdings={holdings}
             cryptoPrice={ethPrice}
-            mNav={mNav}
+            holdingsValue={cryptoNav}
+            mNAV={mNav}
             ticker="SBET"
             asset="ETH"
+            stockPrice={stockPrice}
+            sharesForMnav={sharesOutstanding}
           />
         </div>
       )}
