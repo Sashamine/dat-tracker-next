@@ -9,40 +9,8 @@ import { MobileHeader } from "@/components/mobile-header";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { getCompanyEarnings, getNextEarnings } from "@/lib/data/earnings-data";
-import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { formatLargeNumber, formatPercent, formatTokenAmountPrecise } from "@/lib/calculations";
 import type { EarningsRecord } from "@/lib/types";
-
-// Get mNAV for a ticker at a specific quarter end date
-function getMNavAtQuarterEnd(ticker: string, year: number, quarter: 1 | 2 | 3 | 4): number | null {
-  // Quarter end dates
-  const quarterEndDates: Record<number, string> = {
-    1: `${year}-03-31`,
-    2: `${year}-06-30`,
-    3: `${year}-09-30`,
-    4: `${year}-12-31`,
-  };
-  const targetDate = new Date(quarterEndDates[quarter]);
-  
-  let closestMNav = null;
-  let closestDiff = Infinity;
-  
-  for (const snapshot of MNAV_HISTORY) {
-    const snapshotDate = new Date(snapshot.date);
-    const diff = Math.abs(targetDate.getTime() - snapshotDate.getTime());
-    
-    // Find closest date within 7 days
-    if (diff < closestDiff && diff < 7 * 24 * 60 * 60 * 1000) {
-      const companyData = snapshot.companies.find(c => c.ticker === ticker);
-      if (companyData) {
-        closestMNav = companyData.mnav;
-        closestDiff = diff;
-      }
-    }
-  }
-  
-  return closestMNav;
-}
 
 // Asset colors
 const assetColors: Record<string, string> = {
@@ -365,9 +333,6 @@ export default function CompanyEarningsPage() {
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       {viewType === "quarterly" ? "QoQ" : "YoY"} Growth
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-purple-500 dark:text-purple-400 uppercase tracking-wider">
-                      Adjusted
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
@@ -376,15 +341,6 @@ export default function CompanyEarningsPage() {
                     const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
                     const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
                       ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
-                      : null;
-
-                    // Get mNAV at quarter end for adjusted calculation
-                    const mNav = getMNavAtQuarterEnd(ticker, earning.calendarYear, earning.calendarQuarter);
-                    
-                    // Adjusted HPS = HPS / max(mNAV, 1.0)
-                    // Only penalize premiums (mNAV > 1), don't reward discounts
-                    const adjustedHPS = earning.holdingsPerShare !== undefined && mNav !== null
-                      ? earning.holdingsPerShare / Math.max(mNav, 1.0)
                       : null;
 
                     return (
@@ -426,15 +382,6 @@ export default function CompanyEarningsPage() {
                             <span className="text-sm text-gray-400">—</span>
                           )}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-purple-600 dark:text-purple-400">
-                          {adjustedHPS !== null ? (
-                            <span title={`@ ${mNav?.toFixed(2)}x mNAV`}>
-                              {adjustedHPS.toFixed(7)}
-                            </span>
-                          ) : (
-                            <span className="text-gray-400">—</span>
-                          )}
-                        </td>
                       </tr>
                     );
                   })}
@@ -449,15 +396,6 @@ export default function CompanyEarningsPage() {
                 const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
                 const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
                   ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
-                  : null;
-
-                // Get mNAV at quarter end for adjusted calculation
-                const mNav = getMNavAtQuarterEnd(ticker, earning.calendarYear, earning.calendarQuarter);
-                
-                // Adjusted HPS = HPS / max(mNAV, 1.0)
-                // Only penalize premiums (mNAV > 1), don't reward discounts
-                const adjustedHPS = earning.holdingsPerShare !== undefined && mNav !== null
-                  ? earning.holdingsPerShare / Math.max(mNav, 1.0)
                   : null;
 
                 return (
@@ -517,19 +455,6 @@ export default function CompanyEarningsPage() {
                         </div>
                       </div>
                     </div>
-
-                    {/* Adjusted section */}
-                    {adjustedHPS !== null && (
-                      <div className="text-sm pt-3 border-t border-purple-200 dark:border-purple-800">
-                        <div className="text-xs text-purple-500 dark:text-purple-400 mb-1">Adjusted</div>
-                        <div className="font-medium text-purple-600 dark:text-purple-400">
-                          {adjustedHPS.toFixed(7)}
-                        </div>
-                        {mNav !== null && (
-                          <div className="text-xs text-gray-400">@ {mNav.toFixed(2)}x mNAV</div>
-                        )}
-                      </div>
-                    )}
                   </div>
                 );
               })}

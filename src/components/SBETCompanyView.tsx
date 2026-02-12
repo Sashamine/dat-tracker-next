@@ -12,7 +12,6 @@ import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
 import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
-import { AdjustedHPSChart } from "./adjusted-hps-chart";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { cn } from "@/lib/utils";
@@ -82,7 +81,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
   // Chart state
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
-  const [chartMode, setChartMode] = useState<"price" | "mnav" | "hps" | "adjusted">("price");
+  const [chartMode, setChartMode] = useState<"price" | "mnav" | "hps">("price");
   const { data: history, isLoading: historyLoading } = useStockHistory("SBET", timeRange, interval);
   
   const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1y");
@@ -431,7 +430,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
 
       <div className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
         <div className="flex justify-center gap-6 mb-4">
-          {(["price", "mnav", "hps", "adjusted"] as const).map((mode) => (
+          {(["price", "mnav", "hps"] as const).map((mode) => (
             <label key={mode} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -441,7 +440,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
                 className="w-4 h-4"
               />
               <span className="text-sm">
-                {mode === "price" ? "Price" : mode === "mnav" ? "mNAV" : mode === "hps" ? "HPS" : "Adjusted"}
+                {mode === "price" ? "Price" : mode === "mnav" ? "mNAV" : "HPS"}
               </span>
             </label>
           ))}
@@ -500,15 +499,6 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
             ticker="SBET"
             asset="ETH"
             currentHoldingsPerShare={holdingsPerShare}
-          />
-        )}
-
-        {chartMode === "adjusted" && mNav !== null && (
-          <AdjustedHPSChart
-            ticker="SBET"
-            asset="ETH"
-            currentMNav={mNav}
-            currentLeverage={leverage}
           />
         )}
       </div>
