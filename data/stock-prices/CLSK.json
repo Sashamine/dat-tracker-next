@@ -2,7 +2,7 @@
   "ticker": "CLSK",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-12T17:22:03.966Z",
+  "lastUpdated": "2026-02-12T17:37:06.145Z",
   "prices": [
     {
       "date": "2021-06-01",
@@ -10661,6 +10661,15 @@
       "low": 9.192,
       "close": 9.3892,
       "volume": 10515202
+    },
+    {
+      "date": "2026-02-12",
+      "time": "10:37",
+      "open": 9.67,
+      "high": 9.75,
+      "low": 9.192,
+      "close": 9.3537,
+      "volume": 11144187
     },
     {
       "date": "2026-02-12",
