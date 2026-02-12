@@ -3,7 +3,7 @@
 import { useEffect, useRef, useMemo, useState } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
-import { getHoldingsHistory } from "@/lib/data/holdings-history";
+import { getSBETHistoricalMetrics, SBETHistoricalPoint } from "@/lib/data/sbet-historical-metrics";
 
 type TimeRange = "3mo" | "6mo" | "1y" | "all";
 
@@ -34,58 +34,24 @@ export function AdjustedHPSChart({
   const chartRef = useRef<IChartApi | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
 
-  // Get holdings history and calculate adjusted HPS
+  // Get point-in-time historical data
   const chartData = useMemo(() => {
-    const history = getHoldingsHistory(ticker);
-    if (!history) return [];
-
-    const data: ChartDataPoint[] = [];
-    
-    for (const snapshot of history.history) {
-      const rawHPS = snapshot.holdingsPerShare;
-      
-      // Use point-in-time data if available, otherwise use current values
-      // For now, we'll use available data and fall back to current
-      const stockPrice = snapshot.stockPrice;
-      const debt = snapshot.totalDebt || 0;
-      const cash = snapshot.cash || 0;
-      
-      let mNav = currentMNav;
-      let leverage = currentLeverage;
-      
-      // If we have stock price, we can calculate historical mNAV
-      // We'd need crypto price too - for now approximate with current ratios
-      if (stockPrice && snapshot.holdings > 0) {
-        // Use the snapshot's market data if available
-        const marketCap = stockPrice * snapshot.sharesOutstandingDiluted;
-        // Estimate crypto NAV - we don't have historical crypto prices stored
-        // So we'll use a ratio approach: assume mNAV relationship holds
-        // This is imperfect but gives a reasonable approximation
-      }
-      
-      // Calculate leverage from debt data if available
-      if (snapshot.totalDebt !== undefined) {
-        // We need crypto NAV to calculate leverage properly
-        // For now, use the debt ratio as a proxy
-        const netDebt = Math.max(0, debt - cash);
-        // Approximate: if we had crypto NAV, leverage = netDebt / cryptoNav
-        // Without it, we'll scale based on current leverage ratio
-      }
-      
-      // Adjusted HPS = rawHPS / mNav * (1 - leverage)
-      const adjustedHPS = rawHPS / mNav * (1 - leverage);
-      
-      data.push({
-        date: snapshot.date,
-        rawHPS,
-        adjustedHPS,
-        mNav,
-        leverage,
-      });
+    // For SBET, use the historical metrics with point-in-time mNAV
+    if (ticker.toUpperCase() === "SBET") {
+      const metrics = getSBETHistoricalMetrics();
+      return metrics.map((point: SBETHistoricalPoint) => ({
+        date: point.date,
+        rawHPS: point.hps,
+        adjustedHPS: point.adjustedHPS,
+        mNav: point.mNav,
+        leverage: point.leverage,
+      }));
     }
     
-    return data;
-  }, [ticker, currentMNav, currentLeverage]);
+    // For other tickers, fall back to current mNAV/leverage (less accurate)
+    // TODO: Add historical metrics for other companies
+    return [];
+  }, [ticker]);
 
   // Filter by time range
   const filteredData = useMemo(() => {
