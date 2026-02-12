@@ -68,8 +68,7 @@ export function AdjustedHPSChart({
       const rawHPS = snapshot.holdingsPerShare;
       const mNav = getMNavAtDate(ticker, snapshot.date) ?? currentMNav;
       
-      // Adjusted HPS = what you actually own per share, accounting for the premium
-      // If mNAV is 2x, you paid 2x for each unit of crypto exposure
+      // Adjusted HPS = what you actually own per share, accounting for the premium/discount
       const adjustedHPS = rawHPS / mNav;
       
       data.push({
@@ -109,31 +108,18 @@ export function AdjustedHPSChart({
     return filtered.length >= 2 ? filtered : chartData;
   }, [chartData, timeRange]);
 
-  // Calculate growth metrics
-  const metrics = useMemo(() => {
-    if (filteredData.length < 2) return null;
-    
-    const first = filteredData[0];
+  // Get current values for display
+  const currentValues = useMemo(() => {
+    if (!filteredData.length) return null;
     const last = filteredData[filteredData.length - 1];
-    
-    const companyGrowth = first.rawHPS > 0 ? (last.rawHPS - first.rawHPS) / first.rawHPS : 0;
-    const yourGrowth = first.adjustedHPS > 0 ? (last.adjustedHPS - first.adjustedHPS) / first.adjustedHPS : 0;
-    
-    // Average mNAV over the period
-    const avgMNav = filteredData.reduce((sum, d) => sum + d.mNav, 0) / filteredData.length;
-    
     return {
-      companyGrowth,
-      yourGrowth,
-      difference: companyGrowth - yourGrowth,
-      avgMNav,
-      currentMNav: last.mNav,
-      startDate: first.date,
-      endDate: last.date,
+      rawHPS: last.rawHPS,
+      adjustedHPS: last.adjustedHPS,
+      mNav: last.mNav,
     };
   }, [filteredData]);
 
-  // Create chart - single line showing "Your Actual Exposure"
+  // Create chart
   useEffect(() => {
     if (!chartContainerRef.current || filteredData.length < 2) return;
 
@@ -152,7 +138,7 @@ export function AdjustedHPSChart({
         horzLines: { color: "rgba(156, 163, 175, 0.1)" },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 200,
+      height: 250,
       rightPriceScale: {
         borderVisible: false,
       },
@@ -164,7 +150,7 @@ export function AdjustedHPSChart({
 
     chartRef.current = chart;
 
-    // Single line: Your actual crypto exposure per share
+    // Single line: adjusted HPS
     const series = chart.addSeries(LineSeries, {
       color: "#8b5cf6",
       lineWidth: 2,
@@ -214,22 +200,22 @@ export function AdjustedHPSChart({
     );
   }
 
-  const formatPct = (n: number) => {
-    const pct = n * 100;
-    const sign = pct >= 0 ? "+" : "";
-    return `${sign}${pct.toFixed(0)}%`;
+  const formatHPS = (n: number) => {
+    if (n >= 0.01) return n.toFixed(5);
+    if (n >= 0.0001) return n.toFixed(7);
+    return n.toFixed(9);
   };
 
   return (
     <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-6", className)}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Your Actual {asset} Exposure
+            {asset} Exposure Per Share
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            What you really own per share, adjusted for the price premium
+            Adjusted for mNAV premium/discount at each point in time
           </p>
         </div>
         <div className="flex gap-1">
@@ -255,72 +241,32 @@ export function AdjustedHPSChart({
         </div>
       </div>
 
-      {/* Key Metrics - Plain English */}
-      {metrics && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {/* Company Performance */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-2xl">📈</span>
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Company Performance
-              </span>
-            </div>
-            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-              {formatPct(metrics.companyGrowth)}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">
-              {asset} per share growth
-            </p>
-          </div>
-
-          {/* Your Actual Growth */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-2 border-purple-500">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-2xl">💰</span>
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Your Actual Growth
-              </span>
-            </div>
-            <p className={cn(
-              "text-3xl font-bold",
-              metrics.yourGrowth >= 0 ? "text-purple-600" : "text-red-600"
-            )}>
-              {formatPct(metrics.yourGrowth)}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">
-              Adjusted for premium paid
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Explanation */}
-      {metrics && metrics.avgMNav > 1 && (
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
-          <p className="text-sm text-amber-800 dark:text-amber-200">
-            <strong>Why the difference?</strong> On average, you paid{" "}
-            <span className="font-semibold">{metrics.avgMNav.toFixed(1)}x</span> the value of the underlying {asset}.
-            {metrics.avgMNav > 1.5 && (
-              <> That premium reduces how much {asset} exposure each dollar actually buys you.</>
-            )}
-          </p>
+      {/* Current value */}
+      {currentValues && (
+        <div className="mb-4 flex items-baseline gap-3">
+          <span className="text-2xl font-bold text-purple-600 font-mono">
+            {formatHPS(currentValues.adjustedHPS)}
+          </span>
+          <span className="text-sm text-gray-500">
+            {asset}/share @ {currentValues.mNav.toFixed(2)}x mNAV
+          </span>
         </div>
       )}
 
       {/* Chart */}
       {filteredData.length >= 2 ? (
-        <div>
-          <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
-            Your {asset} exposure per share over time
-          </p>
-          <div ref={chartContainerRef} className="w-full" />
-        </div>
+        <div ref={chartContainerRef} className="w-full" />
       ) : (
-        <div className="h-[200px] flex items-center justify-center text-gray-500">
+        <div className="h-[250px] flex items-center justify-center text-gray-500">
           Not enough data points
         </div>
       )}
+
+      {/* Explanation */}
+      <p className="mt-4 text-xs text-gray-500">
+        Shows your actual {asset} exposure per share after accounting for the price premium or discount 
+        you paid relative to the underlying {asset} value (mNAV).
+      </p>
     </div>
   );
 }
