@@ -12,6 +12,7 @@ import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
 import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
+import { AdjustedHPSCard } from "./adjusted-hps-card";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { cn } from "@/lib/utils";
@@ -495,11 +496,24 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
         )}
 
         {chartMode === "hps" && (
-          <HoldingsPerShareChart
-            ticker="SBET"
-            asset="ETH"
-            currentHoldingsPerShare={holdingsPerShare}
-          />
+          <>
+            <HoldingsPerShareChart
+              ticker="SBET"
+              asset="ETH"
+              currentHoldingsPerShare={holdingsPerShare}
+            />
+            {/* Risk-Adjusted HPS Growth Card */}
+            {mNav !== null && (
+              <div className="mt-6">
+                <AdjustedHPSCard
+                  rawGrowth={0.10}  // TODO: Calculate from actual data
+                  mNav={mNav}
+                  leverage={leverage}
+                  period="Latest Quarter"
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
 
