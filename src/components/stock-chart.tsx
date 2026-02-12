@@ -237,20 +237,18 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
       
       // Add volume histogram bars at the bottom
       const volumeSeries = chart.addSeries(HistogramSeries, {
-        priceScaleId: 'volume',
+        priceScaleId: 'left',
         priceFormat: {
           type: 'volume',
         },
       });
       
-      // Configure volume scale on left side, bottom 20% of chart
-      chart.priceScale('volume').applyOptions({
+      // Configure left scale for volume - bottom 20% of chart
+      chart.priceScale('left').applyOptions({
         scaleMargins: {
-          top: 0.85,
+          top: 0.8,
           bottom: 0,
         },
-        borderVisible: false,
-        position: 'left',
       });
       
       // Color volume bars based on price direction for that candle
