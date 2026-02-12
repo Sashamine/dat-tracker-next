@@ -230,6 +230,36 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
           value: d.close,
         }))
       );
+      
+      // Add volume histogram bars at the bottom
+      const volumeSeries = chart.addSeries(HistogramSeries, {
+        priceScaleId: 'volume',
+        priceFormat: {
+          type: 'volume',
+        },
+      });
+      
+      // Configure volume scale to take up bottom 20% of chart
+      chart.priceScale('volume').applyOptions({
+        scaleMargins: {
+          top: 0.85,
+          bottom: 0,
+        },
+        borderVisible: false,
+      });
+      
+      // Color volume bars based on price direction for that candle
+      volumeSeries.setData(
+        processed.map((d, i) => {
+          const prevClose = i > 0 ? processed[i - 1].close : d.open;
+          const isUp = d.close >= prevClose;
+          return {
+            time: d.time,
+            value: d.volume,
+            color: isUp ? 'rgba(34, 197, 94, 0.5)' : 'rgba(239, 68, 68, 0.5)',
+          };
+        })
+      );
     }
 
     chart.timeScale().fitContent();
