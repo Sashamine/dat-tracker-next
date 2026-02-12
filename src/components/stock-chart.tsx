@@ -124,6 +124,10 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
       rightPriceScale: {
         borderColor: "#374151",
       },
+      leftPriceScale: {
+        borderColor: "#374151",
+        visible: true,
+      },
       timeScale: {
         borderColor: "#374151",
         timeVisible: isIntraday,
@@ -239,13 +243,14 @@ export function StockChart({ data, chartMode: controlledMode, onChartModeChange 
         },
       });
       
-      // Configure volume scale to take up bottom 20% of chart
+      // Configure volume scale on left side, bottom 20% of chart
       chart.priceScale('volume').applyOptions({
         scaleMargins: {
           top: 0.85,
           bottom: 0,
         },
         borderVisible: false,
+        position: 'left',
       });
       
       // Color volume bars based on price direction for that candle
