@@ -21,45 +21,29 @@ interface ChartDataPoint {
   rawHPS: number;
   adjustedHPS: number;
   mNav: number;
-  leverage: number;
 }
 
 // Get mNAV for a specific ticker at a specific date from MNAV_HISTORY
-function getMNavAtDate(ticker: string, targetDate: string): { mNav: number; leverage: number } | null {
+function getMNavAtDate(ticker: string, targetDate: string): number | null {
   const target = new Date(targetDate);
   
-  // Find the closest snapshot on or before the target date
-  let closestSnapshot = null;
+  let closestMNav = null;
   let closestDiff = Infinity;
   
   for (const snapshot of MNAV_HISTORY) {
     const snapshotDate = new Date(snapshot.date);
     const diff = target.getTime() - snapshotDate.getTime();
     
-    // Only consider snapshots on or before target date
     if (diff >= 0 && diff < closestDiff) {
-      // Check if this ticker is in the snapshot
       const companyData = snapshot.companies.find(c => c.ticker === ticker);
       if (companyData) {
-        closestSnapshot = { snapshot, companyData };
+        closestMNav = companyData.mnav;
         closestDiff = diff;
       }
     }
   }
   
-  if (!closestSnapshot) return null;
-  
-  const { companyData } = closestSnapshot;
-  
-  // Calculate leverage: (EV - MarketCap) / CryptoNav = Net Debt / CryptoNav
-  // EV = MarketCap + Debt - Cash, so Debt - Cash = EV - MarketCap
-  const netDebt = companyData.enterpriseValue - companyData.marketCap;
-  const leverage = companyData.cryptoNav > 0 ? Math.max(0, netDebt / companyData.cryptoNav) : 0;
-  
-  return {
-    mNav: companyData.mnav,
-    leverage,
-  };
+  return closestMNav;
 }
 
 export function AdjustedHPSChart({
@@ -71,7 +55,7 @@ export function AdjustedHPSChart({
 }: AdjustedHPSChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const [timeRange, setTimeRange] = useState<TimeRange>("1y");
+  const [timeRange, setTimeRange] = useState<TimeRange>("all");
 
   // Get holdings history and match with mNAV history
   const chartData = useMemo(() => {
@@ -82,28 +66,22 @@ export function AdjustedHPSChart({
     
     for (const snapshot of history.history) {
       const rawHPS = snapshot.holdingsPerShare;
+      const mNav = getMNavAtDate(ticker, snapshot.date) ?? currentMNav;
       
-      // Get point-in-time mNAV and leverage from MNAV_HISTORY
-      const metrics = getMNavAtDate(ticker, snapshot.date);
-      
-      // Use historical data if available, fall back to current values
-      const mNav = metrics?.mNav ?? currentMNav;
-      const leverage = metrics?.leverage ?? currentLeverage;
-      
-      // Adjusted HPS = rawHPS / mNav * (1 - leverage)
-      const adjustedHPS = rawHPS / mNav * (1 - leverage);
+      // Adjusted HPS = what you actually own per share, accounting for the premium
+      // If mNAV is 2x, you paid 2x for each unit of crypto exposure
+      const adjustedHPS = rawHPS / mNav;
       
       data.push({
         date: snapshot.date,
         rawHPS,
         adjustedHPS,
         mNav,
-        leverage,
       });
     }
     
     return data;
-  }, [ticker, currentMNav, currentLeverage]);
+  }, [ticker, currentMNav]);
 
   // Filter by time range
   const filteredData = useMemo(() => {
@@ -128,42 +106,34 @@ export function AdjustedHPSChart({
     }
     
     const filtered = chartData.filter(d => new Date(d.date) >= startDate);
-    
-    // Ensure we have at least a few points
-    if (filtered.length < 3 && chartData.length >= 3) {
-      return chartData.slice(-Math.max(3, filtered.length + 2));
-    }
-    
-    return filtered;
+    return filtered.length >= 2 ? filtered : chartData;
   }, [chartData, timeRange]);
 
   // Calculate growth metrics
-  const growthMetrics = useMemo(() => {
+  const metrics = useMemo(() => {
     if (filteredData.length < 2) return null;
     
     const first = filteredData[0];
     const last = filteredData[filteredData.length - 1];
     
-    const rawGrowth = first.rawHPS > 0 ? (last.rawHPS - first.rawHPS) / first.rawHPS : 0;
-    const adjustedGrowth = first.adjustedHPS > 0 ? (last.adjustedHPS - first.adjustedHPS) / first.adjustedHPS : 0;
+    const companyGrowth = first.rawHPS > 0 ? (last.rawHPS - first.rawHPS) / first.rawHPS : 0;
+    const yourGrowth = first.adjustedHPS > 0 ? (last.adjustedHPS - first.adjustedHPS) / first.adjustedHPS : 0;
     
-    // Calculate what raw growth would be after just mNAV adjustment
-    const avgMNav = (first.mNav + last.mNav) / 2;
-    const afterMNavOnly = rawGrowth / avgMNav;
+    // Average mNAV over the period
+    const avgMNav = filteredData.reduce((sum, d) => sum + d.mNav, 0) / filteredData.length;
     
     return {
-      rawGrowth,
-      adjustedGrowth,
-      mNavDrag: rawGrowth - afterMNavOnly,
-      leverageDrag: afterMNavOnly - adjustedGrowth,
-      startMNav: first.mNav,
-      endMNav: last.mNav,
-      startLeverage: first.leverage,
-      endLeverage: last.leverage,
+      companyGrowth,
+      yourGrowth,
+      difference: companyGrowth - yourGrowth,
+      avgMNav,
+      currentMNav: last.mNav,
+      startDate: first.date,
+      endDate: last.date,
     };
   }, [filteredData]);
 
-  // Create chart
+  // Create chart - single line showing "Your Actual Exposure"
   useEffect(() => {
     if (!chartContainerRef.current || filteredData.length < 2) return;
 
@@ -172,7 +142,6 @@ export function AdjustedHPSChart({
       chartRef.current = null;
     }
 
-    const isMobile = window.innerWidth < 768;
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
@@ -183,7 +152,7 @@ export function AdjustedHPSChart({
         horzLines: { color: "rgba(156, 163, 175, 0.1)" },
       },
       width: chartContainerRef.current.clientWidth,
-      height: isMobile ? 250 : 300,
+      height: 200,
       rightPriceScale: {
         borderVisible: false,
       },
@@ -191,42 +160,14 @@ export function AdjustedHPSChart({
         borderVisible: false,
         timeVisible: false,
       },
-      crosshair: {
-        horzLine: { visible: true, labelVisible: true },
-        vertLine: { visible: true, labelVisible: true },
-      },
     });
 
     chartRef.current = chart;
 
-    // Raw HPS line (faded)
-    const rawSeries = chart.addSeries(LineSeries, {
-      color: "rgba(156, 163, 175, 0.5)",
-      lineWidth: 1,
-      lineStyle: 2, // dashed
-      title: `Raw ${asset}/Share`,
-      priceFormat: {
-        type: "custom",
-        formatter: (price: number) => {
-          if (price >= 0.01) return price.toFixed(5);
-          if (price >= 0.0001) return price.toFixed(7);
-          return price.toFixed(9);
-        },
-      },
-    });
-
-    rawSeries.setData(
-      filteredData.map((d) => ({
-        time: d.date as Time,
-        value: d.rawHPS,
-      }))
-    );
-
-    // Adjusted HPS line (prominent)
-    const adjustedSeries = chart.addSeries(LineSeries, {
-      color: "#8b5cf6", // purple
+    // Single line: Your actual crypto exposure per share
+    const series = chart.addSeries(LineSeries, {
+      color: "#8b5cf6",
       lineWidth: 2,
-      title: `Adjusted ${asset}/Share`,
       priceFormat: {
         type: "custom",
         formatter: (price: number) => {
@@ -237,7 +178,7 @@ export function AdjustedHPSChart({
       },
     });
 
-    adjustedSeries.setData(
+    series.setData(
       filteredData.map((d) => ({
         time: d.date as Time,
         value: d.adjustedHPS,
@@ -248,10 +189,8 @@ export function AdjustedHPSChart({
 
     const handleResize = () => {
       if (chartContainerRef.current && chartRef.current) {
-        const isMobileNow = window.innerWidth < 768;
         chartRef.current.applyOptions({
           width: chartContainerRef.current.clientWidth,
-          height: isMobileNow ? 250 : 300,
         });
       }
     };
@@ -265,7 +204,7 @@ export function AdjustedHPSChart({
         chartRef.current = null;
       }
     };
-  }, [filteredData, asset]);
+  }, [filteredData]);
 
   if (!chartData.length) {
     return (
@@ -278,19 +217,19 @@ export function AdjustedHPSChart({
   const formatPct = (n: number) => {
     const pct = n * 100;
     const sign = pct >= 0 ? "+" : "";
-    return `${sign}${pct.toFixed(1)}%`;
+    return `${sign}${pct.toFixed(0)}%`;
   };
 
   return (
     <div className={cn("bg-gray-50 dark:bg-gray-900 rounded-lg p-6", className)}>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Risk-Adjusted {asset}/Share
+            Your Actual {asset} Exposure
           </h3>
-          <p className="text-sm text-gray-500">
-            Adjusted for mNAV ({growthMetrics ? `${growthMetrics.startMNav.toFixed(1)}x → ${growthMetrics.endMNav.toFixed(1)}x` : `${currentMNav.toFixed(1)}x`}) 
-            {" & leverage "}({growthMetrics ? `${(growthMetrics.startLeverage * 100).toFixed(0)}% → ${(growthMetrics.endLeverage * 100).toFixed(0)}%` : `${(currentLeverage * 100).toFixed(0)}%`})
+          <p className="text-sm text-gray-500 mt-1">
+            What you really own per share, adjusted for the price premium
           </p>
         </div>
         <div className="flex gap-1">
@@ -316,62 +255,72 @@ export function AdjustedHPSChart({
         </div>
       </div>
 
-      {/* Growth metrics */}
-      {growthMetrics && (
-        <div className="flex flex-wrap gap-6 mb-4">
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide">Raw Growth</p>
+      {/* Key Metrics - Plain English */}
+      {metrics && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {/* Company Performance */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl">📈</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Company Performance
+              </span>
+            </div>
+            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+              {formatPct(metrics.companyGrowth)}
+            </p>
+            <p className="text-sm text-gray-500 mt-1">
+              {asset} per share growth
+            </p>
+          </div>
+
+          {/* Your Actual Growth */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-2 border-purple-500">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl">💰</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Your Actual Growth
+              </span>
+            </div>
             <p className={cn(
-              "text-xl font-bold font-mono",
-              "text-gray-400"
+              "text-3xl font-bold",
+              metrics.yourGrowth >= 0 ? "text-purple-600" : "text-red-600"
             )}>
-              {formatPct(growthMetrics.rawGrowth)}
+              {formatPct(metrics.yourGrowth)}
+            </p>
+            <p className="text-sm text-gray-500 mt-1">
+              Adjusted for premium paid
             </p>
           </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide">Adjusted Growth</p>
-            <p className={cn(
-              "text-xl font-bold font-mono",
-              growthMetrics.adjustedGrowth >= 0 ? "text-purple-600" : "text-red-600"
-            )}>
-              {formatPct(growthMetrics.adjustedGrowth)}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide">mNAV Drag</p>
-            <p className="text-lg font-semibold font-mono text-amber-600">
-              {formatPct(-Math.abs(growthMetrics.mNavDrag))}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide">Leverage Drag</p>
-            <p className="text-lg font-semibold font-mono text-red-500">
-              {formatPct(-Math.abs(growthMetrics.leverageDrag))}
-            </p>
-          </div>
+        </div>
+      )}
+
+      {/* Explanation */}
+      {metrics && metrics.avgMNav > 1 && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            <strong>Why the difference?</strong> On average, you paid{" "}
+            <span className="font-semibold">{metrics.avgMNav.toFixed(1)}x</span> the value of the underlying {asset}.
+            {metrics.avgMNav > 1.5 && (
+              <> That premium reduces how much {asset} exposure each dollar actually buys you.</>
+            )}
+          </p>
         </div>
       )}
 
       {/* Chart */}
       {filteredData.length >= 2 ? (
-        <div ref={chartContainerRef} className="w-full" />
+        <div>
+          <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
+            Your {asset} exposure per share over time
+          </p>
+          <div ref={chartContainerRef} className="w-full" />
+        </div>
       ) : (
-        <div className="h-[250px] flex items-center justify-center text-gray-500">
+        <div className="h-[200px] flex items-center justify-center text-gray-500">
           Not enough data points
         </div>
       )}
-
-      {/* Legend */}
-      <div className="mt-4 flex gap-4 text-xs text-gray-500">
-        <span className="flex items-center gap-1.5">
-          <span className="w-4 h-0.5 bg-gray-400" style={{ borderStyle: 'dashed' }} />
-          <span>Raw {asset}/Share</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-4 h-0.5 bg-purple-500" />
-          <span>Adjusted {asset}/Share</span>
-        </span>
-      </div>
     </div>
   );
 }
