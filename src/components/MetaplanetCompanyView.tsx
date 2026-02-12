@@ -47,7 +47,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
   // Chart state
   const [timeRange, setTimeRange] = useState<TimeRange>("1mo");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1mo"]);
-  const [chartMode, setChartMode] = useState<"price" | "volume" | "mnav" | "hps">("price");
+  const [chartMode, setChartMode] = useState<"price" | "mnav" | "hps">("price");
   const { data: history, isLoading: historyLoading } = useStockHistory("3350.T", timeRange, interval);
   
   const [mnavTimeRange, setMnavTimeRange] = useState<TimeRange>("1mo");
@@ -498,7 +498,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
       <div className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
         {/* Chart type toggles */}
         <div className="flex justify-center gap-6 mb-4">
-          {(["price", "volume", "mnav", "hps"] as const).map((mode) => (
+          {(["price", "mnav", "hps"] as const).map((mode) => (
             <label key={mode} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -508,7 +508,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
                 className="w-4 h-4 border-gray-600 bg-gray-700 text-indigo-500 focus:ring-indigo-500"
               />
               <span className="text-base font-semibold text-gray-900 dark:text-white">
-                {mode === "price" ? "Price" : mode === "volume" ? "Volume" : mode === "mnav" ? "mNAV" : "HPS"}
+                {mode === "price" ? "Price" : mode === "mnav" ? "mNAV" : "HPS"}
               </span>
             </label>
           ))}
@@ -519,7 +519,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
           <div className="flex gap-1">
             {(["1d", "7d", "1mo", "1y", "all"] as const).map((value) => {
               const label = value === "1d" 
-                ? (chartMode === "volume" ? "1D" : "24H")
+                ? ("24H")
                 : value === "7d" ? "7D"
                 : value === "1mo" ? "1M"
                 : value === "1y" ? "1Y"
@@ -543,13 +543,13 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
         </div>
         
         {/* Chart content */}
-        {(chartMode === "price" || chartMode === "volume") && (
+        {chartMode === "price" && (
           historyLoading ? (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               Loading chart...
             </div>
           ) : history && history.length > 0 ? (
-            <StockChart data={history} chartMode={chartMode === "volume" ? "volume" : "price"} onChartModeChange={(m) => setChartMode(m)} />
+            <StockChart data={history} chartMode={chart"price"} />
           ) : (
             <div className="h-[400px] flex items-center justify-center text-gray-500">
               No chart data available for 3350.T
