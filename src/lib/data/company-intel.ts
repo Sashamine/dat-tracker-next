@@ -128,6 +128,11 @@ const XXI_INTEL: CompanyIntel = {
   ],
   keyBackers: ["Jack Mallers (CEO)", "Tether", "Bitfinex", "SoftBank", "Cantor Fitzgerald"],
   outlook2026: "Building out Bitcoin-native financial services. Competing directly with MSTR for institutional BTC treasury leadership.",
+  strategyDocs: [
+    { title: "SPAC Merger Announcement", date: "2025-04-23", description: "Twenty One Capital formation via Cantor Equity Partners", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=twenty+one&type=&dateb=&owner=include&count=40" },
+    { title: "S-4 Registration Statement", date: "2025-08-15", description: "Full merger details and pro forma financials", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001964789&type=S-4" },
+    { title: "Investor Presentation", date: "2025-12-09", description: "NYSE debut and Bitcoin treasury strategy", url: "https://www.xxi.com/investors" },
+  ],
 };
 
 const CEPO_INTEL: CompanyIntel = {
@@ -169,6 +174,11 @@ const MARA_INTEL: CompanyIntel = {
   ],
   keyBackers: ["Fred Thiel (CEO)"],
   outlook2026: "Continue HODL strategy. Expand to 75 EH/s. Leverage Exaion partnership for low-carbon mining.",
+  strategyDocs: [
+    { title: "Q3 2025 Investor Presentation", date: "2025-11-05", description: "HODL strategy and operational metrics", url: "https://ir.mara.com/news-events/presentations" },
+    { title: "2025 Annual Report", date: "2026-02-28", description: "Full year mining and treasury performance", url: "https://ir.mara.com/financial-information/annual-reports" },
+    { title: "Bitcoin Mining & HODL Strategy", date: "2024-01-01", description: "Core strategy: mine and hold all BTC", url: "https://www.mara.com/bitcoin" },
+  ],
 };
 
 const RIOT_INTEL: CompanyIntel = {
@@ -418,6 +428,12 @@ const BMNR_INTEL: CompanyIntel = {
   ],
   keyBackers: ["Tom Lee (Chairman, Fundstrat)", "ARK (Cathie Wood)", "MOZAYYX", "Founders Fund", "Bill Miller III", "Pantera", "Kraken", "DCG", "Galaxy Digital"],
   outlook2026: "MAVAN validator launch Q1. Target 5% ETH supply. $360-480M annual staking income.",
+  strategyDocs: [
+    { title: "ETH Treasury Strategy Overview", date: "2025-06-30", description: "Initial $250M private placement and strategy launch", url: "https://bitminerstrategy.com/investors" },
+    { title: "MAVAN Validator Network", date: "2025-12-01", description: "Made in America Validator Network: proprietary staking infrastructure", url: "https://bitminerstrategy.com/mavan" },
+    { title: "5% ETH Supply Target", date: "2025-11-24", description: "Roadmap to holding 5% of total ETH supply", url: "https://bitminerstrategy.com/news" },
+    { title: "Q3 2025 Shareholder Letter", date: "2025-11-12", description: "Chairman Tom Lee's strategic vision", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001940804&type=10-Q" },
+  ],
 };
 
 const SBET_INTEL: CompanyIntel = {
@@ -439,6 +455,11 @@ const SBET_INTEL: CompanyIntel = {
   ],
   keyBackers: ["Joseph Chalom (CEO, ex-BlackRock)", "Joseph Lubin (Chairman, Ethereum co-founder)"],
   outlook2026: "Institutional buildout. Target consistent premium to NAV.",
+  strategyDocs: [
+    { title: "ETH Treasury Strategy Launch", date: "2025-06-02", description: "Pivot from gaming to Ethereum treasury company", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=8-K" },
+    { title: "Q3 2025 10-Q", date: "2025-11-12", description: "First full quarter financials post-pivot: +1,100% revenue YoY", url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/" },
+    { title: "Leadership Expansion", date: "2025-10-20", description: "BlackRock, Bridgewater, Bain Capital executives join", url: "https://sharplinkinc.com/news" },
+  ],
 };
 
 const ETHM_INTEL: CompanyIntel = {
