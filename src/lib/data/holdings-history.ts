@@ -1114,64 +1114,80 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
 export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | null {
   const upperTicker = ticker.toUpperCase();
   
-  // SBET interpolation - has weekly 8-K data (~20 points), add midpoints for smoother charts (~40 points)
+  // SBET interpolation - daily granularity for smooth charts and date matching with earnings
   if (upperTicker === "SBET") {
     const rawHistory = HOLDINGS_HISTORY["SBET"]?.history || [];
+    if (rawHistory.length === 0) return null;
     
-    // Add midpoint interpolation between each pair of snapshots
-    // This creates ~3.5 day granularity instead of 7 days
     const interpolatedHistory: HoldingsSnapshot[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Add daily interpolation between each pair of SEC snapshots
     for (let i = 0; i < rawHistory.length; i++) {
       const current = rawHistory[i];
-      interpolatedHistory.push(current);
+      interpolatedHistory.push(current); // Always include the SEC-verified point
       
-      // Add midpoint between current and next (if there is a next)
-      if (i < rawHistory.length - 1) {
-        const next = rawHistory[i + 1];
-        const currentDate = new Date(current.date);
-        const nextDate = new Date(next.date);
-        const midDate = new Date((currentDate.getTime() + nextDate.getTime()) / 2);
-        const midDateStr = midDate.toISOString().split('T')[0];
-        
-        // Midpoint uses current values (holdings stay flat until next 8-K)
+      // Determine end date: next snapshot or today (for last point)
+      const currentDate = new Date(current.date);
+      const endDate = i < rawHistory.length - 1 
+        ? new Date(rawHistory[i + 1].date)
+        : today;
+      
+      // Add daily points between current and end (excluding endpoints)
+      const dayMs = 24 * 60 * 60 * 1000;
+      let d = new Date(currentDate.getTime() + dayMs);
+      while (d < endDate) {
+        const dateStr = d.toISOString().split('T')[0];
         interpolatedHistory.push({
           ...current,
-          date: midDateStr,
+          date: dateStr,
           source: `Interpolated (${current.source})`,
           sourceType: "interpolated" as HoldingsSource,
+          methodology: "Daily carry-forward from last SEC filing",
+          confidence: "medium" as const,
         });
+        d = new Date(d.getTime() + dayMs);
       }
     }
     
     return { ticker: "SBET", asset: "ETH", history: interpolatedHistory };
   }
   
-  // BMNR interpolation - has weekly 8-K data (~24 points), add midpoints for smoother charts (~48 points)
+  // BMNR interpolation - daily granularity for smooth charts and date matching with earnings
   if (upperTicker === "BMNR") {
     const rawHistory = HOLDINGS_HISTORY["BMNR"]?.history || [];
+    if (rawHistory.length === 0) return null;
     
-    // Add midpoint interpolation between each pair of snapshots
-    // This creates ~3.5 day granularity instead of 7 days
     const interpolatedHistory: HoldingsSnapshot[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Add daily interpolation between each pair of SEC snapshots
     for (let i = 0; i < rawHistory.length; i++) {
       const current = rawHistory[i];
-      interpolatedHistory.push(current);
+      interpolatedHistory.push(current); // Always include the SEC-verified point
       
-      // Add midpoint between current and next (if there is a next)
-      if (i < rawHistory.length - 1) {
-        const next = rawHistory[i + 1];
-        const currentDate = new Date(current.date);
-        const nextDate = new Date(next.date);
-        const midDate = new Date((currentDate.getTime() + nextDate.getTime()) / 2);
-        const midDateStr = midDate.toISOString().split('T')[0];
-        
-        // Midpoint uses current values (holdings stay flat until next 8-K)
+      // Determine end date: next snapshot or today (for last point)
+      const currentDate = new Date(current.date);
+      const endDate = i < rawHistory.length - 1 
+        ? new Date(rawHistory[i + 1].date)
+        : today;
+      
+      // Add daily points between current and end (excluding endpoints)
+      const dayMs = 24 * 60 * 60 * 1000;
+      let d = new Date(currentDate.getTime() + dayMs);
+      while (d < endDate) {
+        const dateStr = d.toISOString().split('T')[0];
         interpolatedHistory.push({
           ...current,
-          date: midDateStr,
+          date: dateStr,
           source: `Interpolated (${current.source})`,
           sourceType: "interpolated" as HoldingsSource,
+          methodology: "Daily carry-forward from last SEC filing",
+          confidence: "medium" as const,
         });
+        d = new Date(d.getTime() + dayMs);
       }
     }
     
