@@ -15,6 +15,7 @@ import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
 import { StockPriceCell } from "./price-cell";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
+import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
@@ -382,6 +383,82 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
           />
         </div>
       )}
+
+      {/* Strategy & Overview - Collapsed by default */}
+      {(() => {
+        const intel = getCompanyIntel("XXI");
+        return (
+          <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-6 group">
+            <summary className="p-6 cursor-pointer flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Strategy & Overview
+              </h3>
+              <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div className="px-6 pb-6">
+              {/* Links */}
+              <div className="flex items-center gap-3 mb-6">
+                {company.website && (
+                  <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                    Website
+                  </a>
+                )}
+                {company.twitter && (
+                  <a href={`https://twitter.com/${company.twitter.replace('https://twitter.com/', '').replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Twitter
+                  </a>
+                )}
+              </div>
+
+              {/* Strategy Summary */}
+              {intel?.strategySummary && (
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{intel.strategySummary}</p>
+              )}
+
+              {/* Key People */}
+              {intel?.keyBackers && intel.keyBackers.length > 0 && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">Key People</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {intel.keyBackers.map((backer, idx) => (
+                      <span key={idx} className="px-3 py-1.5 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full font-medium">
+                        {backer}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Recent Developments */}
+              {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">Recent Developments</h4>
+                  <ul className="space-y-2">
+                    {intel.recentDevelopments.slice(0, 6).map((dev, idx) => (
+                      <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300 text-sm">
+                        <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-indigo-500" />
+                        <span>{dev}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Outlook */}
+              {intel?.outlook2026 && (
+                <div>
+                  <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">Outlook & Catalysts</h4>
+                  <div className="text-gray-700 dark:text-gray-300 text-sm whitespace-pre-line">{intel.outlook2026}</div>
+                </div>
+              )}
+            </div>
+          </details>
+        );
+      })()}
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* CHARTS */}
