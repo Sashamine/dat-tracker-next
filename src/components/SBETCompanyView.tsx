@@ -411,7 +411,14 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
             label="Staking Rewards"
             data={SBET_PROVENANCE.stakingRewards}
             format="eth"
-            subLabel="Cumulative earned"
+            subLabel={
+              <span className="flex items-center gap-1">
+                Cumulative earned
+                <span className="px-1.5 py-0.5 text-[10px] bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 rounded">
+                  Stale (Dec 14)
+                </span>
+              </span>
+            }
             ticker="sbet"
           />
         )}
