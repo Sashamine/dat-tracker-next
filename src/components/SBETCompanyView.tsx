@@ -312,72 +312,79 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
       {(() => {
         const intel = getCompanyIntel("SBET");
         return (
-          <div className="mb-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-xl p-6 border border-indigo-100 dark:border-indigo-900/50">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-lg">🎯</span>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Strategy & Overview</h2>
-              <div className="flex-1" />
-              <div className="flex items-center gap-3 text-sm">
-                {company.website && (
-                  <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">Website</a>
-                )}
-                {company.twitter && (
-                  <a href={company.twitter.startsWith("http") ? company.twitter : `https://twitter.com/${company.twitter}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">Twitter</a>
-                )}
-                <a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${SBET_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">SEC Filings</a>
+          <details className="mb-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-xl border border-indigo-100 dark:border-indigo-900/50 group" open>
+            <summary className="p-4 cursor-pointer flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🎯</span>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Strategy & Overview</h2>
               </div>
-            </div>
-            
-            {/* Strategy Summary */}
-            {intel?.strategySummary && (
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{intel.strategySummary}</p>
-            )}
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Key Highlights */}
-              <div>
-                <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Key Highlights</h4>
-                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> 100% staked for yield (native + Lido)</li>
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> Debt-free - no convertibles</li>
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> Weekly transparency via 8-K filings</li>
-                  <li className="flex items-start gap-2"><span className="text-green-500">✓</span> ~$26.7M USDC reserves</li>
-                </ul>
-              </div>
-              
-              {/* Recent Developments */}
-              {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
-                <div>
-                  <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Recent Developments</h4>
-                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                    {intel.recentDevelopments.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2"><span className="text-indigo-500">•</span> {item}</li>
-                    ))}
-                  </ul>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 text-sm">
+                  {company.website && (
+                    <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>Website</a>
+                  )}
+                  {company.twitter && (
+                    <a href={company.twitter.startsWith("http") ? company.twitter : `https://twitter.com/${company.twitter}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>Twitter</a>
+                  )}
+                  <a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${SBET_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline" onClick={(e) => e.stopPropagation()}>SEC Filings</a>
                 </div>
+                <svg className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </summary>
+            <div className="px-6 pb-6 space-y-6">
+              {/* Strategy Summary */}
+              {intel?.strategySummary && (
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
               )}
               
-              {/* Key Backers & Outlook */}
-              <div>
-                {intel?.keyBackers && intel.keyBackers.length > 0 && (
-                  <>
-                    <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Leadership</h4>
-                    <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
-                      {intel.keyBackers.map((backer, i) => (
-                        <li key={i} className="flex items-start gap-2"><span className="text-amber-500">★</span> {backer}</li>
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Key Highlights */}
+                <div>
+                  <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Key Highlights</h4>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-start gap-2"><span className="text-green-500">✓</span> 100% staked for yield (native + Lido)</li>
+                    <li className="flex items-start gap-2"><span className="text-green-500">✓</span> Debt-free - no convertibles</li>
+                    <li className="flex items-start gap-2"><span className="text-green-500">✓</span> Weekly transparency via 8-K filings</li>
+                    <li className="flex items-start gap-2"><span className="text-green-500">✓</span> ~$26.7M USDC reserves</li>
+                  </ul>
+                </div>
+                
+                {/* Recent Developments */}
+                {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Recent Developments</h4>
+                    <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                      {intel.recentDevelopments.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2"><span className="text-indigo-500">•</span> {item}</li>
                       ))}
                     </ul>
-                  </>
+                  </div>
                 )}
-                {intel?.outlook2026 && (
-                  <>
-                    <h4 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">2026 Outlook</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{intel.outlook2026}</p>
-                  </>
-                )}
+                
+                {/* Key Backers & Outlook */}
+                <div>
+                  {intel?.keyBackers && intel.keyBackers.length > 0 && (
+                    <>
+                      <h4 className="font-semibold mb-3 text-gray-900 dark:text-gray-100">Leadership</h4>
+                      <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        {intel.keyBackers.map((backer, i) => (
+                          <li key={i} className="flex items-start gap-2"><span className="text-amber-500">★</span> {backer}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  {intel?.outlook2026 && (
+                    <>
+                      <h4 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">2026 Outlook</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{intel.outlook2026}</p>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          </details>
         );
       })()}
 
