@@ -1114,7 +1114,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
 export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | null {
   const upperTicker = ticker.toUpperCase();
   
-  // SBET interpolation - daily granularity for smooth charts and date matching with earnings
+  // SBET interpolation - daily granularity with LINEAR interpolation for smooth curves
   if (upperTicker === "SBET") {
     const rawHistory = HOLDINGS_HISTORY["SBET"]?.history || [];
     if (rawHistory.length === 0) return null;
@@ -1122,39 +1122,67 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
     const interpolatedHistory: HoldingsSnapshot[] = [];
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const dayMs = 24 * 60 * 60 * 1000;
     
-    // Add daily interpolation between each pair of SEC snapshots
     for (let i = 0; i < rawHistory.length; i++) {
       const current = rawHistory[i];
       interpolatedHistory.push(current); // Always include the SEC-verified point
       
-      // Determine end date: next snapshot or today (for last point)
       const currentDate = new Date(current.date);
-      const endDate = i < rawHistory.length - 1 
-        ? new Date(rawHistory[i + 1].date)
-        : today;
+      const isLast = i === rawHistory.length - 1;
       
-      // Add daily points between current and end (excluding endpoints)
-      const dayMs = 24 * 60 * 60 * 1000;
-      let d = new Date(currentDate.getTime() + dayMs);
-      while (d < endDate) {
-        const dateStr = d.toISOString().split('T')[0];
-        interpolatedHistory.push({
-          ...current,
-          date: dateStr,
-          source: `Interpolated (${current.source})`,
-          sourceType: "interpolated" as HoldingsSource,
-          methodology: "Daily carry-forward from last SEC filing",
-          confidence: "medium" as const,
-        });
-        d = new Date(d.getTime() + dayMs);
+      if (isLast) {
+        // For last point, carry forward to today (flat line - no future data to interpolate toward)
+        let d = new Date(currentDate.getTime() + dayMs);
+        while (d <= today) {
+          interpolatedHistory.push({
+            ...current,
+            date: d.toISOString().split('T')[0],
+            source: `Projected (${current.source})`,
+            sourceType: "interpolated" as HoldingsSource,
+            methodology: "Carry-forward from last SEC filing",
+            confidence: "low" as const,
+          });
+          d = new Date(d.getTime() + dayMs);
+        }
+      } else {
+        // Linear interpolation between current and next SEC filing
+        const next = rawHistory[i + 1];
+        const nextDate = new Date(next.date);
+        const totalDays = (nextDate.getTime() - currentDate.getTime()) / dayMs;
+        
+        let d = new Date(currentDate.getTime() + dayMs);
+        let dayNum = 1;
+        while (d < nextDate) {
+          const progress = dayNum / totalDays; // 0 to 1
+          
+          // Linear interpolation of key metrics
+          const interpHoldings = current.holdings + (next.holdings - current.holdings) * progress;
+          const interpShares = current.sharesOutstandingDiluted + (next.sharesOutstandingDiluted - current.sharesOutstandingDiluted) * progress;
+          const interpHPS = interpHoldings / interpShares;
+          
+          interpolatedHistory.push({
+            ...current,
+            date: d.toISOString().split('T')[0],
+            holdings: Math.round(interpHoldings),
+            sharesOutstandingDiluted: Math.round(interpShares),
+            holdingsPerShare: interpHPS,
+            source: `Interpolated (${current.source} → ${next.source})`,
+            sourceType: "interpolated" as HoldingsSource,
+            methodology: "Linear interpolation between SEC filings",
+            confidence: "medium" as const,
+          });
+          
+          d = new Date(d.getTime() + dayMs);
+          dayNum++;
+        }
       }
     }
     
     return { ticker: "SBET", asset: "ETH", history: interpolatedHistory };
   }
   
-  // BMNR interpolation - daily granularity for smooth charts and date matching with earnings
+  // BMNR interpolation - daily granularity with LINEAR interpolation for smooth curves
   if (upperTicker === "BMNR") {
     const rawHistory = HOLDINGS_HISTORY["BMNR"]?.history || [];
     if (rawHistory.length === 0) return null;
@@ -1162,32 +1190,60 @@ export function getHoldingsHistory(ticker: string): CompanyHoldingsHistory | nul
     const interpolatedHistory: HoldingsSnapshot[] = [];
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const dayMs = 24 * 60 * 60 * 1000;
     
-    // Add daily interpolation between each pair of SEC snapshots
     for (let i = 0; i < rawHistory.length; i++) {
       const current = rawHistory[i];
       interpolatedHistory.push(current); // Always include the SEC-verified point
       
-      // Determine end date: next snapshot or today (for last point)
       const currentDate = new Date(current.date);
-      const endDate = i < rawHistory.length - 1 
-        ? new Date(rawHistory[i + 1].date)
-        : today;
+      const isLast = i === rawHistory.length - 1;
       
-      // Add daily points between current and end (excluding endpoints)
-      const dayMs = 24 * 60 * 60 * 1000;
-      let d = new Date(currentDate.getTime() + dayMs);
-      while (d < endDate) {
-        const dateStr = d.toISOString().split('T')[0];
-        interpolatedHistory.push({
-          ...current,
-          date: dateStr,
-          source: `Interpolated (${current.source})`,
-          sourceType: "interpolated" as HoldingsSource,
-          methodology: "Daily carry-forward from last SEC filing",
-          confidence: "medium" as const,
-        });
-        d = new Date(d.getTime() + dayMs);
+      if (isLast) {
+        // For last point, carry forward to today (flat line - no future data to interpolate toward)
+        let d = new Date(currentDate.getTime() + dayMs);
+        while (d <= today) {
+          interpolatedHistory.push({
+            ...current,
+            date: d.toISOString().split('T')[0],
+            source: `Projected (${current.source})`,
+            sourceType: "interpolated" as HoldingsSource,
+            methodology: "Carry-forward from last SEC filing",
+            confidence: "low" as const,
+          });
+          d = new Date(d.getTime() + dayMs);
+        }
+      } else {
+        // Linear interpolation between current and next SEC filing
+        const next = rawHistory[i + 1];
+        const nextDate = new Date(next.date);
+        const totalDays = (nextDate.getTime() - currentDate.getTime()) / dayMs;
+        
+        let d = new Date(currentDate.getTime() + dayMs);
+        let dayNum = 1;
+        while (d < nextDate) {
+          const progress = dayNum / totalDays; // 0 to 1
+          
+          // Linear interpolation of key metrics
+          const interpHoldings = current.holdings + (next.holdings - current.holdings) * progress;
+          const interpShares = current.sharesOutstandingDiluted + (next.sharesOutstandingDiluted - current.sharesOutstandingDiluted) * progress;
+          const interpHPS = interpHoldings / interpShares;
+          
+          interpolatedHistory.push({
+            ...current,
+            date: d.toISOString().split('T')[0],
+            holdings: Math.round(interpHoldings),
+            sharesOutstandingDiluted: Math.round(interpShares),
+            holdingsPerShare: interpHPS,
+            source: `Interpolated (${current.source} → ${next.source})`,
+            sourceType: "interpolated" as HoldingsSource,
+            methodology: "Linear interpolation between SEC filings",
+            confidence: "medium" as const,
+          });
+          
+          d = new Date(d.getTime() + dayMs);
+          dayNum++;
+        }
       }
     }
     
