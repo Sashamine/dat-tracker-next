@@ -312,7 +312,7 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
       {(() => {
         const intel = getCompanyIntel("SBET");
         return (
-          <details className="mb-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-xl border border-indigo-100 dark:border-indigo-900/50 group" open>
+          <details className="mb-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 rounded-xl border border-indigo-100 dark:border-indigo-900/50 group">
             <summary className="p-4 cursor-pointer flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-lg">🎯</span>
