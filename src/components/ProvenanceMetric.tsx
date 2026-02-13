@@ -330,9 +330,9 @@ export function ProvenanceMetric({
                                 >
                                   {input.source.type === "regulatory" && (input.source as DocumentSource).sourceName 
                                     ? `View on ${(input.source as DocumentSource).sourceName} ↗`
-                                    : input.source.type === "company-website"
-                                    ? "View Source ↗"
-                                    : "View on SEC ↗"}
+                                    : inputUrl && (inputUrl.includes("sec.gov") || inputUrl.includes("/filings/"))
+                                    ? "View on SEC ↗"
+                                    : "View Source ↗"}
                                 </a>
                               ) : (
                                 <Link
