@@ -674,6 +674,8 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-05", holdings: 13_800_000, sharesOutstandingDiluted: 93_112_148, holdingsPerShare: 0.148, source: "Company dashboard (AVAX count not SEC-disclosed)", sourceUrl: "https://analytics-avaxone.theblueprint.xyz/", sourceType: "company-reported" },
   // Jan 28, 2026: Updated from dashboard + buyback 8-K
   { date: "2026-01-28", holdings: 13_871_000, sharesOutstandingDiluted: 92_462_303, holdingsPerShare: 0.150, source: "Dashboard + 8-K buyback (649K shares repurchased)", sourceUrl: "https://analytics-avaxone.theblueprint.xyz/", sourceType: "company-reported" },
+  // Feb 12, 2026: Latest dashboard reading (includes staking rewards accrual)
+  { date: "2026-02-12", holdings: 13_889_000, sharesOutstandingDiluted: 92_672_000, holdingsPerShare: 0.1499, source: "Company dashboard", sourceUrl: "https://analytics-avaxone.theblueprint.xyz/", sourceType: "company-reported" },
 ];
 
 // CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation
