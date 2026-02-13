@@ -2110,37 +2110,51 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
 
   // ========== DeFi Development Corp (DFDV) ==========
-  // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Upcoming
+  // Calendar year company (fiscal = calendar), FY end Dec 31
+  // Formerly Janover Inc. (JNVR), pivoted to SOL treasury April 2025
+  // Verified 2026-02-13 via SEC XBRL (CIK 0001805526) + 8-K business updates
+  //
+  // Q4 2025 - Upcoming (10-K due ~Mar 31, 2026)
   {
     ticker: "DFDV",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-03-15",
+    earningsDate: "2026-03-31",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 2_221_329,
+    sharesAtQuarterEnd: 29_892_800,
+    holdingsPerShare: 0.0743,
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 - 10-Q filed 2025-11-19
+  // XBRL: CryptoAssetNumberOfUnits=1,157 (thousands) → 1,157,000 SOL
+  // XBRL: EntityCommonStockSharesOutstanding=31,401,212
+  // XBRL: NetIncomeLossAvailableToCommonStockholdersDiluted Q3=$57,504,000
+  // XBRL: IncomeLossFromContinuingOperationsBeforeIncomeTaxes Q3=$73,961,000
   {
     ticker: "DFDV",
     fiscalYear: 2025,
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-11-14",
+    earningsDate: "2025-11-19",
     earningsTime: "AMC",
-    epsActual: -0.15,
-    epsEstimate: -0.12,
-    revenueActual: 200_000,
-    revenueEstimate: 400_000,
-    netIncome: -2_800_000,
+    holdingsAtQuarterEnd: 1_157_000,
+    sharesAtQuarterEnd: 31_401_212,
+    holdingsPerShare: 0.0368,
+    netIncome: 56_026_000,  // Q3 only: 9mo total $70.7M - H1 $14.7M = $56M
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/",
     status: "reported",
   },
-  // Q2 2025
+  // Q2 2025 - 10-Q filed 2025-08-14
+  // XBRL: CryptoAssetNumberOfUnits=573 (thousands) → 573,000 SOL
+  // XBRL: EntityCommonStockSharesOutstanding=21,045,049
+  // XBRL: Net income H1=$14,654,000 (IncomeFromContinuing - Tax)
   {
     ticker: "DFDV",
     fiscalYear: 2025,
@@ -2149,12 +2163,31 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
-    epsActual: -0.18,
-    epsEstimate: -0.14,
-    revenueActual: 150_000,
-    revenueEstimate: 350_000,
-    netIncome: -3_200_000,
+    holdingsAtQuarterEnd: 573_000,
+    sharesAtQuarterEnd: 21_045_049,
+    holdingsPerShare: 0.0272,
+    netIncome: 14_654_000,  // H1 2025 net income (XBRL)
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/",
+    status: "reported",
+  },
+  // Q1 2025 - 10-Q filed 2025-05-14
+  // SOL pivot announced April 7, 2025 — Q1 was still mostly Janover legacy ops
+  // XBRL: EntityCommonStockSharesOutstanding=2,066,711 (post-reverse-split)
+  // No significant SOL holdings yet
+  {
+    ticker: "DFDV",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,
+    sharesAtQuarterEnd: 2_066_711,
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/",
     status: "reported",
   },
 
@@ -2322,8 +2355,6 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 2_173_204,  // 10-Q Note 5: "Approximate number of Solana tokens held" as of Dec 31, 2025
     sharesAtQuarterEnd: 62_796_362,  // 10-Q balance sheet: 62,796,362 issued (416,226 treasury)
     holdingsPerShare: 0.0346,  // 2,173,204 / 62,796,362
-    revenue: 8_052_040,  // Total revenue (product $2.9M + staking $5.1M)
-    netIncome: -178_924_930,  // Net loss (includes $164.5M unrealized digital asset losses)
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     status: "reported",

@@ -162,7 +162,7 @@ export const DFDV_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // CASH - ~$9M in cash, stablecoins, and other tokens
   // =========================================================================
-  cashAndEquivalents: pv(
+  cashReserves: pv(
     LATEST_CASH,
     docSource({
       type: "sec-document",

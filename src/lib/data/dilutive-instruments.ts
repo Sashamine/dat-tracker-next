@@ -428,41 +428,118 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // UPXI (Upexi Inc) - SOL treasury company
-  // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
-  // Convertibles OTM at ~$2.12 (Jan 2026 price): $150M@$4.25, $36M@$2.39
+  // Verified 2026-02-13 via SEC 10-Q Q2 FY2026 (CIK 0001775194, filed 2026-02-10)
+  // Price ~$1.17 at Feb 2026 offering. Convertibles deep OTM except Hivemind ($2.39) somewhat close.
   UPXI: [
+    // $150M Convertible Notes @$4.25 (Jul 16, 2025)
+    // Cannot be repaid in cash; converts to ~35.3M shares OR returns ~963K SOL at maturity
+    // Forced conversion at VWAP > $6.37 for 30 days
     {
       type: "convertible",
       strikePrice: 4.25,
-      potentialShares: 35_294_118,
-      faceValue: 150_000_000,
-      source: "8-K Jul 2025",
+      potentialShares: 35_293_206,  // 10-Q Note 10: "approximately 35,293,206 shares"
+      faceValue: 149_996_123,
+      source: "10-Q Q2 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
-      expiration: "2030-07-01",
-      notes: "$150M convertible note - deep OTM",
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2027-07-16",
+      notes: "$150M convertible @$4.25. 2% interest. Cannot repay in cash — converts or returns SOL. Forced conversion VWAP>$6.37 for 30 days.",
     },
+    // $36M Hivemind Convertible @$2.39 (Jan 9, 2026)
+    // In exchange for 265,500 locked SOL. Collateralized by those SOL.
+    // Cannot be repaid in cash; converts to ~15.1M shares OR returns pro rata SOL
     {
       type: "convertible",
       strikePrice: 2.39,
-      potentialShares: 15_062_761,
+      potentialShares: 15_062_761,  // $36M / $2.39
       faceValue: 36_000_000,
-      source: "8-K Jan 2026",
+      source: "8-K Jan 14, 2026 (Hivemind)",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000207/upxi_ex41.htm",
-      expiration: "2028-01-14",  // 24 months from Jan 2026
-      notes: "$36M Hivemind convertible - slightly OTM",
+      expiration: "2028-01-09",  // 24 months from Jan 9, 2026
+      notes: "$36M Hivemind convertible @$2.39. 1% interest. For 265.5K locked SOL. First-priority security interest in SOL.",
     },
+    // $560K Promissory Notes @$3.00 (convertible, maturity Jun 1, 2026)
+    {
+      type: "convertible",
+      strikePrice: 3.00,
+      potentialShares: 186_667,  // $560K / $3.00
+      faceValue: 560_000,
+      source: "10-Q Q2 FY2026 Note 10",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2026-06-01",
+      notes: "$560K promissory @$3.00. 12% interest. Subordinate to convertible notes.",
+    },
+    // Dec 2025 PIPE Warrants — AMENDED in Feb 2026 from $4.00 to $2.83
     {
       type: "warrant",
-      strikePrice: 4.00,
+      strikePrice: 2.83,  // Amended from $4.00 in Feb 2026 offering
       potentialShares: 3_289_474,
-      source: "8-K Dec 2025",
+      source: "10-Q Q2 FY2026 Note 18 (amendment)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008713/0001477932-25-008713-index.htm",
-      expiration: "2029-12-01",  // 48 months from Dec 2025
-      notes: "Dec 2025 PIPE warrants - OTM at ~$2.12",
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2029-12-01",
+      notes: "Dec 2025 PIPE warrants. Originally $4.00, amended to $2.83 in Feb 2026. Redemption trigger reduced from $8.50 to $7.00.",
     },
+    // Feb 2026 Registered Direct Offering Warrants @$1.50
+    {
+      type: "warrant",
+      strikePrice: 1.50,
+      potentialShares: 6_337_000,
+      source: "10-Q Q2 FY2026 Note 18 (subsequent event)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2031-02-01",  // 5 years from issuance
+      notes: "Feb 2026 registered direct warrants @$1.50. Forced conversion at $5.00. 5-year term.",
+    },
+    // Preferred Stock conversion
+    {
+      type: "convertible",
+      strikePrice: 0,  // Convertible at holder option, no additional payment
+      potentialShares: 138_889,  // 150,000 preferred → 138,889 common
+      source: "10-Q Q2 FY2026 Note 12",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2099-12-31",  // No expiration
+      notes: "150K Series A preferred (CEO Allan Marshall). Converts to 138,889 common. 10x voting.",
+    },
+    // Stock Options
+    {
+      type: "option",
+      strikePrice: 3.40,  // Weighted average exercise price
+      potentialShares: 744_478,
+      source: "10-Q Q2 FY2026 Note 13",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2030-12-31",  // Weighted avg remaining life 5.09 years from Dec 2025
+      notes: "Stock options. 619,164 vested, 125,314 unvested. Weighted avg strike $3.40.",
+    },
+    // RSUs (vested but unissued — these WILL become shares, treated as options with $0 strike)
+    {
+      type: "option",
+      strikePrice: 0,
+      potentialShares: 1_673_665,  // Vested but not yet issued as common stock
+      source: "10-Q Q2 FY2026 Note 13",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2026-06-30",  // Will be issued
+      notes: "Vested RSUs not yet issued. 1,673,665 shares. Essentially guaranteed dilution. (Modeled as $0 strike options.)",
+    },
+    // RSUs (unvested)
+    {
+      type: "option",
+      strikePrice: 0,
+      potentialShares: 3_044_085,  // 4,717,750 total - 1,673,665 vested = 3,044,085 unvested
+      source: "10-Q Q2 FY2026 Note 13",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      expiration: "2027-06-30",  // ~0.54 years weighted avg remaining
+      notes: "Unvested RSUs. $11.6M unrecognized comp expense. (Modeled as $0 strike options.)",
+    },
+    // TODO: GSR Asset Manager Warrants (2,192,982 shares at $2.28-$5.70) — DISPUTED IN ARBITRATION
+    // GSR terminated Dec 26, 2025. Status of warrants unclear. Arbitration ongoing.
+    // Not including until resolution. If included: 877,193@$2.28 + 438,596@$3.42 + 438,596@$4.56 + 438,597@$5.70
   ],
 
   // FWDI (Forward Industries) - SOL treasury company
@@ -1487,6 +1564,54 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // TODO: Extract from Q3 2025 10-Q equity footnotes
     // Merger 8-K (0001213900-25-083726) Item 3.02 indicates equity issuances
     // Need to identify: warrants, stock options, RSUs, convertibles
+  ],
+
+  // DeFi Development Corp (DFDV) - SOL treasury company
+  // Verified 2026-02-13 via SEC XBRL (CIK 0001805526) + 10-Q filings
+  DFDV: [
+    // 5.50% Convertible Senior Notes due 2030
+    // $134M face value (XBRL ConvertibleDebtNoncurrent $131.4M net of $8.9M discount)
+    // Conversion price: $9.74 per share (from 10-Q Q2 2025)
+    // Potential shares: $134,000,000 / $9.74 = 13,757,700
+    // XBRL IncrementalCommonSharesAttributableToConversionOfDebtSecurities: 6,804,000 (Q3 quarterly)
+    {
+      type: "convertible",
+      strikePrice: 9.74,
+      potentialShares: 13_757_700,
+      faceValue: 134_000_000,
+      source: "10-Q Q2 2025 + Q3 2025 XBRL",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/",
+      expiration: "2030-07-15",
+      issuedDate: "2025-04-04",
+      notes:
+        "5.50% Convertible Senior Notes due 2030. " +
+        "Conversion price $9.74/share. Issued in multiple tranches: " +
+        "~$42M initial (Apr 2025), ~$112.5M (Jul 2025). " +
+        "XBRL ProceedsFromConvertibleDebt: $148.9M (9mo to Sep 30, 2025).",
+    },
+    // DFDVW Warrant Dividend - distributed to shareholders Oct/Nov 2025
+    // Exact strike price needs verification from warrant agreement
+    // XBRL IncrementalCommonSharesAttributableToCallOptionsAndWarrants: 290,000 (Q3 quarterly)
+    // XBRL ProceedsFromIssuanceOfWarrants: $124.8M (as of Aug 24, 2025 - likely notional)
+    // TODO: Extract exact strike price and share count from warrant FAQ (8-K Oct 8, 2025)
+    {
+      type: "warrant",
+      strikePrice: 25.0, // TODO: Verify - estimated from warrant FAQ
+      potentialShares: 290_000, // Q3 diluted EPS impact
+      source: "8-K Oct 8, 2025 + Q3 2025 XBRL",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/",
+      issuedDate: "2025-10-08",
+      notes:
+        "DFDVW warrant dividend. Trading publicly on Nasdaq. " +
+        "Exact terms need verification from warrant agreement. " +
+        "XBRL shows 290K incremental shares in Q3 diluted EPS.",
+    },
+    // Stock Option / RSU Pool
+    // XBRL: ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant = 3,500,000
+    // These are available for future grant, not yet issued
+    // Not adding as dilutive since not yet granted/outstanding
   ],
 };
 
