@@ -392,23 +392,23 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
     sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 332_431_000,
-    sharesSource: "SEC-verified (provenance): 10-Q baseline + 8-K ATM + 10-Q employee equity + Class B",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446",
+    sharesSource: "Company (strategy.com) + SEC audit (10-Q + ATM 8-Ks). See provenance for dual-source breakdown.",
+    sharesSourceUrl: "https://www.strategy.com/shares",
     sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,
     // CONVERTS: 10-Q Q3 2025 Note 7
     capitalRaisedConverts: 7_274_000_000,
     capitalRaisedConvertsSource: "SEC 10-Q Q3 2025: Cash flow statement - proceeds from convertible notes",
     capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/d893246d10q.htm#:~:text=Convertible%20Senior%20Notes",
-    // DEBT: from provenance
-    totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_173_903_000,
-    debtSource: "SEC-verified (provenance)",
-    debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q",
-    debtAsOf: "2025-09-30",
-    // PREFERRED: from provenance
-    preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 8_382_000_000,
-    preferredSource: "SEC-verified (provenance): Q3 10-Q + 8-K issuances",
-    preferredSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
-    preferredAsOf: "2026-01-26",
+    // DEBT: Company current (strategy.com/debt) + SEC audit (Q3 10-Q)
+    totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_214_000_000,
+    debtSource: "Company (strategy.com/debt $8,214M notional) + SEC (Q3 10-Q $8,174M book). Δ$40M = OID.",
+    debtSourceUrl: "https://www.strategy.com/debt",
+    debtAsOf: "2026-02-12",
+    // PREFERRED: Company current (strategy.com/credit) + SEC audit (Q3 10-Q + 8-Ks)
+    preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 8_383_000_000,
+    preferredSource: "Company (strategy.com/credit $8,383M) + SEC (Q3 10-Q $5,786M + post-Q3 8-Ks)",
+    preferredSourceUrl: "https://www.strategy.com/credit",
+    preferredAsOf: "2026-02-12",
     // Cash obligations from SEC 8-K Dec 1, 2025
     preferredDividendAnnual: 780_000_000,
     debtInterestAnnual: 43_000_000,
@@ -427,7 +427,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2026-01-04",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
-    notes: "All core financials from provenance/mstr.ts (SEC-verified). Click any metric on company page to see source.",
+    notes: "Dual-source provenance: company-disclosed (strategy.com Reg FD) + SEC-verified (10-Q/8-K). See provenance/mstr.ts for full audit trail.",
   },
   {
     id: "3350t",
