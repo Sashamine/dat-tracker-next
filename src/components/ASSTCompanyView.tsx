@@ -21,6 +21,7 @@ import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
+import { StalenessNote } from "./staleness-note";
 import type { Company } from "@/lib/types";
 import {
   useStockHistory,
@@ -198,6 +199,16 @@ export function ASSTCompanyView({ company, className = "" }: ASSTCompanyViewProp
         </span>
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
+
+            <StalenessNote
+        dates={[
+          company.holdingsLastUpdated,
+          company.debtAsOf,
+          company.cashAsOf,
+          company.sharesAsOf,
+        ]}
+        secCik={company.secCik}
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
         {/* mNAV - Clickable with ProvenanceMetric + expand button */}

@@ -1411,6 +1411,16 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       issuedDate: "2024-10-01",  // Approximate issue date
       notes: "Mercury zero-coupon convertible bonds. ¥1000 strike, OTM at ¥540. Excluded from sharesForMnav.",
     },
+    {
+      type: "warrant",
+      strikePrice: 3.53,  // ¥547 exercise price / 155 JPY/USD
+      potentialShares: 15_944_000,  // 159,440 rights × 100 shares each
+      source: "TDnet: 25th Series Stock Acquisition Rights (Feb 13, 2026 completion notice)",
+      sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+      expiration: "2027-02-13",  // 1-year exercise period from Feb 13, 2026
+      issuedDate: "2026-02-13",
+      notes: "25th Series warrants. 159,440 rights × 100 shares = 15.9M potential shares at ¥547 strike (~$3.53).",
+    },
   ],
 };
 

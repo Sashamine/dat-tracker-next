@@ -23,6 +23,7 @@ import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import { StalenessNote } from "./staleness-note";
 import {
   useStockHistory,
   TimeRange,
@@ -223,6 +224,16 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
         </span>
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
+
+            <StalenessNote
+        dates={[
+          company.holdingsLastUpdated,
+          company.debtAsOf,
+          company.cashAsOf,
+          company.sharesAsOf,
+        ]}
+        secCik={company.secCik}
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
         {/* mNAV - Clickable to expand formula */}

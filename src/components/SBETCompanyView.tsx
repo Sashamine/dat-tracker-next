@@ -17,6 +17,7 @@ import { getCompanyIntel } from "@/lib/data/company-intel";
 import { cn } from "@/lib/utils";
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import { StalenessNote } from "./staleness-note";
 import {
   useStockHistory,
   TimeRange,
@@ -165,6 +166,16 @@ export function SBETCompanyView({ company, className = "" }: SBETCompanyViewProp
         </span>
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
+
+      <StalenessNote
+        dates={[
+          company.holdingsLastUpdated,
+          company.debtAsOf,
+          company.cashAsOf,
+          company.sharesAsOf,
+        ]}
+        secCik={company.secCik}
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
         {/* mNAV - Clickable with ProvenanceMetric + expand button */}

@@ -67,26 +67,26 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "35,102",
   }), "Dec 30 purchase brought total to 35,102 BTC"),
 
-  // Shares Outstanding (from Jan 29, 2026 Share Issuance Notice)
-  // Common shares as of Dec 31, 2025: 1,142,274,340
-  sharesOutstanding: pv(1_142_274_340, tdnetSource({
-    title: "Notice Regarding Issuance of New Shares and 25th Series Stock Acquisition Rights",
-    date: "2026-01-29",
-    url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260129/20260129542067.pdf",
-    quote: "Number of Shares Outstanding After the Offering (As of December 31, 2025): Common Shares: 1,142,274,340",
-    searchTerm: "1,142,274,340",
-  }), "Jan 29, 2026 filing - Issued Shares section"),
+  // Shares Outstanding (Jan 29 base + Feb 13 placement)
+  // 1,142,274,340 (Dec 31, 2025) + 24,530,000 (Feb 13 3rd-party allotment) = 1,166,804,340
+  sharesOutstanding: pv(1_166_804_340, tdnetSource({
+    title: "Notice Regarding Completion of Payment for Issuance of New Shares and 25th Series Stock Acquisition Rights",
+    date: "2026-02-13",
+    url: "https://metaplanet.jp/en/shareholders/disclosures",
+    quote: "1,142,274,340 common shares (Jan 29, 2026) + 24,530,000 new shares placed (Feb 13, 2026)",
+    searchTerm: "24,530,000",
+  }), "Feb 13, 2026: 24.53M new shares placed via 3rd-party allotment"),
 
-  // Total Debt (from Jan 30, 2026 Credit Facility Disclosure)
-  // Credit facility: $500M limit, $355M drawn as of Jan 30, 2026
-  // Note: 19th series bonds fully redeemed Dec 29, 2025
-  totalDebt: pv(355_000_000, tdnetSource({
-    title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
-    date: "2026-01-30",
-    url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260130/20260130543874.pdf",
-    quote: "The credit facility has a borrowing limit of $500 million. Including this borrowing, we have currently drawn down $355 million.",
-    searchTerm: "355 million",
-  }), "Credit facility: $500M limit, $355M drawn (Jan 30, 2026)"),
+  // Total Debt (~$280M as of early Feb 2026)
+  // Was $355M drawn from $500M credit facility. Company deleveraging — part of $137M raise allocated to repayment.
+  // Pending confirmation in Feb 16, 2026 FY2025 Annual Report.
+  totalDebt: pv(280_000_000, tdnetSource({
+    title: "Estimated from multiple sources (analytics dashboard, CoinDesk Feb 6, Aktiencheck Feb 11)",
+    date: "2026-02-06",
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "~$280M (~¥43B) drawn from $500M credit facility. Reduced from $355M via partial repayment.",
+    searchTerm: "280",
+  }), "Deleveraging from $355M. Confirm with Feb 16 FY2025 annual report."),
 
   // Cash Reserves (from Q3 2025 Balance Sheet)
   cashReserves: pv(18_000_000, tdnetSource({

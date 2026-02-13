@@ -96,7 +96,7 @@ export const ethCompanies: Company[] = [
     costBasisSource: "SEC 10-Q Q3 2025: Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
     website: "https://sharplink.com",
-    twitter: "https://twitter.com/SharpLinkGaming",
+    twitter: "https://twitter.com/SharpLinkInc",  // Renamed from SharpLinkGaming (Feb 3, 2026)
     secCik: "0001981535",
     // tokenizedAddress removed — was a pump.fun meme token, not an official tokenized stock
     stakingPct: 1.0,  // "100%" (Jul 1 8-K) / "substantially all" (Aug-Dec 8-Ks) / "nearly 100%" (Q2 earnings)
@@ -453,15 +453,15 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     avgDailyVolume: 200_000_000,
     marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
-    sharesForMnav: 1_118_664_340,  // 1.142B common - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
-    sharesSource: "TDnet Q3 FY2025: 1,142,264,340 common shares - 23.6M Mercury convert adjustment",
+    sharesForMnav: 1_143_204_340,  // 1.167B common (1,142,274,340 + 24,530,000 Feb 13 placement) - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
+    sharesSource: "TDnet: 1,142,274,340 (Jan 29, 2026) + 24,530,000 new shares (Feb 13, 2026 3rd-party allotment) - 23.6M Mercury converts",
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
-    sharesAsOf: "2025-09-30",
+    sharesAsOf: "2026-02-13",
     // Debt: Zero-coupon yen-denominated bonds - no interest payments, principal at maturity
-    totalDebt: 355_000_000,  // $355M per Metaplanet analytics dashboard (Feb 2026)
-    debtSource: "Metaplanet Analytics Dashboard",
+    totalDebt: 280_000_000,  // ~$280M (~¥43B) — multiple sources report deleveraging from $355M. Pending confirmation in Feb 16 annual report.
+    debtSource: "Metaplanet Analytics Dashboard + CoinDesk (Feb 6, 2026). Part of $137M raise allocated to credit facility repayment.",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
-    debtAsOf: "2026-02-11",
+    debtAsOf: "2026-02-06",
     cashReserves: 18_000_000,  // Q3 FY2025: ¥2.77B (¥1,488M cash + ¥1,286M deposits) = ~$18M USD
     restrictedCash: 0,  // No restricted cash indicated in Q3 filing
     cashSource: "TDnet Q3 FY2025 Financial Results",
