@@ -243,7 +243,9 @@ export function getSourceUrl(source: XBRLSource | DocumentSource | DerivedSource
   if (source.type === "xbrl") {
     return secEdgarUrl(source.cik, source.accession);
   } else if (source.type === "derived") {
-    return undefined;
+    // Resolve through to first input
+    const firstInput = Object.values(source.inputs)[0];
+    return firstInput ? getSourceUrl(firstInput.source) : undefined;
   } else {
     return source.url;
   }
@@ -254,7 +256,9 @@ export function getSourceDate(source: XBRLSource | DocumentSource | DerivedSourc
   if (source.type === "xbrl") {
     return source.filingDate;
   } else if (source.type === "derived") {
-    return undefined;
+    // Resolve through to first input
+    const firstInput = Object.values(source.inputs)[0];
+    return firstInput ? getSourceDate(firstInput.source) : undefined;
   } else {
     return source.documentDate || source.filingDate;
   }

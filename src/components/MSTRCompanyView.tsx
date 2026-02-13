@@ -7,7 +7,21 @@ import Link from "next/link";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
 import { MSTR_PROVENANCE, MSTR_CIK } from "@/lib/data/provenance/mstr";
-import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
+import { pv, derivedSource, docSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+
+// Resolved provenance URLs/dates (handles derivedSource → first input drill-through)
+const PROV_URLS = {
+  shares: MSTR_PROVENANCE.sharesOutstanding?.source ? getSourceUrl(MSTR_PROVENANCE.sharesOutstanding.source) : undefined,
+  sharesDate: MSTR_PROVENANCE.sharesOutstanding?.source ? getSourceDate(MSTR_PROVENANCE.sharesOutstanding.source) : undefined,
+  debt: MSTR_PROVENANCE.totalDebt?.source ? getSourceUrl(MSTR_PROVENANCE.totalDebt.source) : undefined,
+  debtDate: MSTR_PROVENANCE.totalDebt?.source ? getSourceDate(MSTR_PROVENANCE.totalDebt.source) : undefined,
+  cash: MSTR_PROVENANCE.cashReserves?.source ? getSourceUrl(MSTR_PROVENANCE.cashReserves.source) : undefined,
+  cashDate: MSTR_PROVENANCE.cashReserves?.source ? getSourceDate(MSTR_PROVENANCE.cashReserves.source) : undefined,
+  holdings: MSTR_PROVENANCE.holdings?.source ? getSourceUrl(MSTR_PROVENANCE.holdings.source) : undefined,
+  holdingsDate: MSTR_PROVENANCE.holdings?.source ? getSourceDate(MSTR_PROVENANCE.holdings.source) : undefined,
+  preferred: MSTR_PROVENANCE.preferredEquity?.source ? getSourceUrl(MSTR_PROVENANCE.preferredEquity.source) : undefined,
+  preferredDate: MSTR_PROVENANCE.preferredEquity?.source ? getSourceDate(MSTR_PROVENANCE.preferredEquity.source) : undefined,
+};
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
@@ -343,18 +357,18 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
           basicShares={effectiveShares?.basic}
           itmDilutionShares={effectiveShares ? effectiveShares.diluted - effectiveShares.basic : undefined}
           itmDebtAdjustment={metrics.inTheMoneyDebtValue}
-          sharesSourceUrl={MSTR_PROVENANCE.sharesOutstanding?.source?.url}
+          sharesSourceUrl={PROV_URLS.shares}
           sharesSource={MSTR_PROVENANCE.sharesOutstanding?.source?.type}
-          sharesAsOf={MSTR_PROVENANCE.sharesOutstanding?.source?.asOf}
-          debtSourceUrl={MSTR_PROVENANCE.totalDebt?.source?.url}
+          sharesAsOf={PROV_URLS.sharesDate}
+          debtSourceUrl={PROV_URLS.debt}
           debtSource={MSTR_PROVENANCE.totalDebt?.source?.type}
-          debtAsOf={MSTR_PROVENANCE.totalDebt?.source?.asOf}
-          cashSourceUrl={MSTR_PROVENANCE.cashReserves?.source?.url}
+          debtAsOf={PROV_URLS.debtDate}
+          cashSourceUrl={PROV_URLS.cash}
           cashSource={MSTR_PROVENANCE.cashReserves?.source?.type}
-          cashAsOf={MSTR_PROVENANCE.cashReserves?.source?.asOf}
-          holdingsSourceUrl={MSTR_PROVENANCE.holdings?.source?.url}
+          cashAsOf={PROV_URLS.cashDate}
+          holdingsSourceUrl={PROV_URLS.holdings}
           holdingsSource={MSTR_PROVENANCE.holdings?.source?.type}
-          holdingsAsOf={MSTR_PROVENANCE.holdings?.source?.asOf}
+          holdingsAsOf={PROV_URLS.holdingsDate}
         />
         </div>
       )}
@@ -369,9 +383,9 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
             cashReserves={metrics.cashReserves}
             cryptoNav={metrics.cryptoNav}
             leverage={metrics.leverage}
-            debtSourceUrl={MSTR_PROVENANCE.totalDebt?.source?.url}
-            cashSourceUrl={MSTR_PROVENANCE.cashReserves?.source?.url}
-            holdingsSourceUrl={MSTR_PROVENANCE.holdings?.source?.url}
+            debtSourceUrl={PROV_URLS.debt}
+            cashSourceUrl={PROV_URLS.cash}
+            holdingsSourceUrl={PROV_URLS.holdings}
           />
         </div>
       )}
@@ -388,11 +402,11 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
             equityNav={metrics.equityNav}
             equityNavPerShare={metrics.equityNavPerShare}
             stockPrice={stockPrice}
-            holdingsSourceUrl={MSTR_PROVENANCE.holdings?.source?.url}
-            cashSourceUrl={MSTR_PROVENANCE.cashReserves?.source?.url}
-            debtSourceUrl={MSTR_PROVENANCE.totalDebt?.source?.url}
-            preferredSourceUrl={MSTR_PROVENANCE.preferredEquity?.source?.url}
-            sharesSourceUrl={MSTR_PROVENANCE.sharesOutstanding?.source?.url}
+            holdingsSourceUrl={PROV_URLS.holdings}
+            cashSourceUrl={PROV_URLS.cash}
+            debtSourceUrl={PROV_URLS.debt}
+            preferredSourceUrl={PROV_URLS.preferred}
+            sharesSourceUrl={PROV_URLS.shares}
           />
         </div>
       )}
