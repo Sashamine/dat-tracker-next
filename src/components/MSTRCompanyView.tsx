@@ -148,13 +148,13 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
       },
     }), `Using live BTC price: $${btcPrice.toLocaleString()}`);
 
-    // Create local provenance for preferred that points to on-page section
-    const preferredPv = pv(preferredEquity, docSource({
-      type: "sec-document",
-      url: "#metric-preferred-equity",
-      quote: `$${(preferredEquity / 1e9).toFixed(2)}B preferred`,
-      anchor: "See Preferred Equity below",
-    }), "STRK + STRF + ATM preferred");
+    // Use actual provenance for preferred (with resolved URL)
+    const preferredPv = MSTR_PROVENANCE.preferredEquity || pv(preferredEquity, docSource({
+      type: "company-website",
+      url: "https://www.strategy.com/credit",
+      quote: `$${(preferredEquity / 1e9).toFixed(2)}B preferred (STRF + STRC + STRE + STRK + STRD)`,
+      anchor: "strategy.com/credit (Reg FD)",
+    }), "5 preferred series from strategy.com/credit");
 
     const mNavPv: ProvenanceValue<number> | null = mNav !== null ? pv(mNav, derivedSource({
       derivation: "Enterprise Value ÷ Crypto NAV (adjusted for ITM converts)",
