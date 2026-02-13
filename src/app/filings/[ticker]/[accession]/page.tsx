@@ -71,6 +71,7 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
           dfdv: "1652044", upxi: "1777319", hsdt: "1580063", tron: "1956744",
           cwd: "1627282", stke: "1846839", djt: "1849635", fld: "1899287",
           naka: "1977303", tbh: "1903595", fwdi: "1879932",
+          sbet: "1981535", avx: "1826397",
         };
         const cik = ciks[ticker.toLowerCase()];
         
