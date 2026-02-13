@@ -2,7 +2,7 @@
   "ticker": "BNC",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-13T02:07:04.087Z",
+  "lastUpdated": "2026-02-13T15:59:45.118Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -5484,6 +5484,15 @@
       "low": 4.44,
       "close": 4.55,
       "volume": 323175
+    },
+    {
+      "date": "2026-02-13",
+      "time": "08:59",
+      "open": 4.27,
+      "high": 4.5,
+      "low": 4.27,
+      "close": 4.5,
+      "volume": 101494
     },
     {
       "date": "2026-02-13",
