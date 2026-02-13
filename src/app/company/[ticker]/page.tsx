@@ -26,6 +26,7 @@ import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
 import { DataFlagBadge, FPIBadge } from "@/components/ui/data-flag-badge";
 import { cn } from "@/lib/utils";
+import { StalenessNote } from "@/components/staleness-note";
 import {
   calculateNAV,
   calculateNAVPerShare,
@@ -845,6 +846,17 @@ export default function CompanyPage() {
                 <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}</span>
               </p>
             </div>
+
+            {/* Staleness warning */}
+            <StalenessNote
+              dates={[
+                displayCompany.holdingsLastUpdated,
+                displayCompany.debtAsOf,
+                displayCompany.cashAsOf,
+                displayCompany.sharesAsOf,
+              ]}
+              secCik={displayCompany.secCik}
+            />
 
             {/* Detailed grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

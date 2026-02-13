@@ -13,6 +13,7 @@ import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
 import { ScheduledEvents } from "./scheduled-events";
+import { StalenessNote } from "./staleness-note";
 import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
 import { StockPriceCell } from "./price-cell";
@@ -646,6 +647,17 @@ export function MARACompanyView({ company, className = "" }: MARACompanyViewProp
               </p>
             )}
           </div>
+
+          {/* Staleness warning */}
+          <StalenessNote
+            dates={[
+              company.holdingsLastUpdated,
+              company.debtAsOf,
+              company.cashAsOf,
+              company.sharesAsOf,
+            ]}
+            secCik={company.secCik}
+          />
 
           {/* Balance sheet grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
