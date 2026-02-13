@@ -106,11 +106,11 @@ export function FWDICompanyView({ company, className = "" }: Props) {
 <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wide mb-2">◎ SOL Treasury Company</h4>
 <ul className="text-sm text-purple-600 dark:text-purple-300 space-y-1">
 <li>• <strong>{"World\u0027s largest SOL treasury company"}</strong>{" — pivoted from design/accessories in Sep 2025"}</li>
-<li>• Galaxy Digital, Jump Crypto, Multicoin Capital backed — $1.65B PIPE closed Sep 11, 2025</li>
-<li>• <strong>{FWDI_PROVENANCE.holdings.value.toLocaleString() + " SOL-equivalent"}</strong>{" accumulated (raw SOL + fwdSOL LSTs)"}</li>
-<li>• First equity tokenized on Solana via Superstate — bridging TradFi and DeFi</li>
-<li>• Active DeFi deployment: borrow-lend vaults, token exchanges, liquid staking</li>
-<li>• Design segment declining (~$4M/qtr) but still profitable — legacy business winding down</li>
+<li>• Galaxy Digital, Jump Crypto, Multicoin Capital backed — <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">$1.65B PIPE closed Sep 11, 2025</a></li>
+<li>• <strong>{FWDI_PROVENANCE.holdings.value.toLocaleString() + " SOL-equivalent"}</strong>{" accumulated — "}<a href="https://forwardindustries.com/sol-treasury" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">SOL Treasury</a></li>
+<li>• First equity tokenized on Solana via Superstate — <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">1,489,896 shares tokenized</a></li>
+<li>• Active DeFi deployment: borrow-lend vaults, token exchanges, liquid staking — <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">10-Q</a></li>
+<li>• Design segment ~$4M/qtr revenue, still profitable — legacy business</li>
 </ul>
 </div>
 
@@ -123,7 +123,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
 <div><p className="text-green-600 dark:text-green-300 font-medium">Galaxy Mgmt Fees</p><p className="text-2xl font-bold text-green-700 dark:text-green-300">{"$" + (FWDI_STAKING.assetManagementFeesQ1/1e6).toFixed(2) + "M"}<span className="text-sm font-normal">/qtr</span></p><p className="text-xs text-green-500">Advisory fee to Galaxy Digital</p></div>
 <div><p className="text-green-600 dark:text-green-300 font-medium">Staked Value</p><p className="text-2xl font-bold text-green-700 dark:text-green-300">{"$" + (FWDI_STAKING.stakedAssetsValueDec31/1e6).toFixed(0) + "M"}</p><p className="text-xs text-green-500">At Dec 31, 2025</p></div>
 </div>
-<p className="text-xs text-green-500 mt-3">{"Source: Q1 FY2026 10-Q segment data. Staking COGS $1.4M \u2192 gross profit $16.0M (92% margin)."}</p>
+<p className="text-xs text-green-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-green-700">Q1 FY2026 10-Q</a>{" segment data. Staking COGS $1.4M → gross profit $16.0M (92% margin)."}</p>
 </div>
 
 {/* Buyback Card */}
@@ -135,6 +135,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
 <div><p className="text-blue-600 dark:text-blue-300 font-medium">Avg Price</p><p className="text-2xl font-bold text-blue-700 dark:text-blue-300">{"$" + FWDI_CAPITAL.buybackAvgPrice.toFixed(2)}</p><p className="text-xs text-blue-500">Per share repurchased</p></div>
 <div><p className="text-blue-600 dark:text-blue-300 font-medium">Remaining</p><p className="text-2xl font-bold text-blue-700 dark:text-blue-300">{"$" + ((FWDI_CAPITAL.buybackAuthorized - FWDI_CAPITAL.buybackUsed)/1e6).toFixed(1) + "M"}</p><p className="text-xs text-blue-500">Capacity available</p></div>
 </div>
+<p className="text-xs text-blue-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Q1 FY2026 10-Q</a>{" — buybacks through Jan 2026. Program authorized Nov 2025, expires Sep 2027."}</p>
 </div>
 
 {/* PIPE Details */}
@@ -144,7 +145,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
 <div><p className="text-indigo-600 dark:text-indigo-300 font-medium">Total PIPE Proceeds</p><p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">{"$" + (FWDI_CAPITAL.pipeTotal/1e9).toFixed(2) + "B"}</p><p className="text-xs text-indigo-500">{"Closed " + FWDI_CAPITAL.pipeClosedDate}</p></div>
 <div><p className="text-indigo-600 dark:text-indigo-300 font-medium">Initial SOL Purchases</p><p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">{FWDI_CAPITAL.initialPurchases.sol.toLocaleString() + " SOL"}</p><p className="text-xs text-indigo-500">{"Avg ~$" + FWDI_CAPITAL.initialPurchases.avgPrice + "/SOL on " + FWDI_CAPITAL.initialPurchases.date}</p></div>
 </div>
-<p className="text-xs text-indigo-500 mt-3">{"ATM agent: " + FWDI_CAPITAL.atmAgent + ". " + FWDI_CAPITAL.atmSharesSoldQ1.toLocaleString() + " shares sold via ATM in Q1 FY2026 for $" + (FWDI_CAPITAL.atmProceedsQ1/1e6).toFixed(1) + "M."}</p>
+<p className="text-xs text-indigo-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">8-K Sep 8, 2025</a>{" (PIPE), "}<a href="https://www.sec.gov/Archives/edgar/data/38264/000168316825006963/" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">8-K Sep 15</a>{" (initial purchases). ATM: " + FWDI_CAPITAL.atmAgent + ", " + FWDI_CAPITAL.atmSharesSoldQ1.toLocaleString() + " shares sold Q1 for $" + (FWDI_CAPITAL.atmProceedsQ1/1e6).toFixed(1) + "M."}</p>
 </div>
 
 {/* Holdings Breakdown */}
@@ -159,7 +160,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
 <div className="text-xs text-gray-500 ml-4">{"Cost: $" + (FWDI_BALANCE_SHEET.doubleZeroTokens.cost/1e6).toFixed(1) + "M | Carrying: $" + (FWDI_BALANCE_SHEET.doubleZeroTokens.carryingValue/1e6).toFixed(1) + "M"}</div>
 <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">Other digital assets</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">{"$" + (FWDI_BALANCE_SHEET.otherDigitalAssets/1e6).toFixed(1) + "M"}</span></div>
 <div className="border-t border-gray-300 dark:border-gray-600 pt-2 mt-2 flex justify-between items-center"><span className="text-gray-700 dark:text-gray-200 font-semibold">Total Digital Assets (carrying)</span><span className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">{"$" + (FWDI_BALANCE_SHEET.totalDigitalAssetsCarrying/1e6).toFixed(1) + "M"}</span></div>
-<div className="text-xs text-gray-500">{"Total cost basis: $" + (FWDI_BALANCE_SHEET.totalDigitalAssetsCost/1e6).toFixed(1) + "M"}</div>
+<div className="text-xs text-gray-500">{"Total cost basis: $" + (FWDI_BALANCE_SHEET.totalDigitalAssetsCost/1e6).toFixed(1) + "M — "}<a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-700">10-Q</a></div>
 </div>
 </div>
 
