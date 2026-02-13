@@ -95,10 +95,10 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     LATEST_HOLDINGS,
     docSource({
       type: "company-website",
-      url: "https://www.forwardindustries.com/",
+      url: "https://forwardindustries.com/sol-treasury",
       quote: "6,979,967 SOL as of January 15, 2026",
       anchor: "SOL Holdings",
-      sourceName: "Forward Industries IR",
+      sourceName: "Forward Industries SOL Treasury",
       documentDate: LATEST_HOLDINGS_DATE,
     }),
     `SOL-equivalent (raw SOL + liquid staking tokens). 10-Q Dec 31 shows 4,973,000 raw SOL (cost $972.8M) + $201.6M in "digital assets not measured at fair value" (likely fwdSOL). Website Jan 15 total: 6,979,967.`

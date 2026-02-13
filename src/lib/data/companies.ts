@@ -1354,7 +1354,7 @@ export const solCompanies: Company[] = [
     holdings: 6_979_967,  // Jan 15, 2026 SOL-equivalent (raw SOL + LSTs like fwdSOL)
     holdingsLastUpdated: "2026-01-15",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.forwardindustries.com/",
+    holdingsSourceUrl: "https://forwardindustries.com/sol-treasury",
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
     // Fiscal year end: September 30
     costBasisSource: "SEC XBRL - $1.59B / 6.85M SOL",
