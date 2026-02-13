@@ -212,6 +212,7 @@ const CIK_TICKERS: Record<string, string> = {
   "1627282": "cwd", "1846839": "stke", "1849635": "djt", "1977303": "naka",
   "1903595": "tbh", "1879932": "fwdi", "1830131": "hypd", "1949556": "xxi",
   "1981535": "sbet",
+  "1826397": "avx",
 };
 
 /** Build URL to our internal XBRL viewer */
@@ -238,10 +239,11 @@ export function xbrlApiUrl(cik: string): string {
   return `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10, "0")}.json`;
 }
 
-/** Get URL from any source type (XBRL builds from cik/accession, Document has direct URL, Derived has none) */
+/** Get URL from any source type (XBRL → internal viewer with document tab, Document → direct URL, Derived → follows first input) */
 export function getSourceUrl(source: XBRLSource | DocumentSource | DerivedSource): string | undefined {
   if (source.type === "xbrl") {
-    return secEdgarUrl(source.cik, source.accession);
+    // Use internal filing viewer with document tab + anchor for easy verification
+    return filingViewerUrl(source.cik, source.accession, source.documentAnchor);
   } else if (source.type === "derived") {
     // Resolve through to first input
     const firstInput = Object.values(source.inputs)[0];

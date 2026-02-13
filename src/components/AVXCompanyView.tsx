@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
 import { AVX_PROVENANCE, AVX_CIK, AVX_PIPE, AVX_STAKING, AVX_CAPITAL_PROGRAMS } from "@/lib/data/provenance/avx";
-import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
+import { pv, derivedSource, docSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
@@ -177,18 +177,18 @@ export function AVXCompanyView({ company, className = "" }: AVXCompanyViewProps)
             basicShares={effectiveShares?.basic}
             itmDilutionShares={effectiveShares ? effectiveShares.diluted - effectiveShares.basic : undefined}
             itmDebtAdjustment={metrics.inTheMoneyDebtValue}
-            sharesSourceUrl={AVX_PROVENANCE.sharesOutstanding?.source?.url}
+            sharesSourceUrl={AVX_PROVENANCE.sharesOutstanding?.source ? getSourceUrl(AVX_PROVENANCE.sharesOutstanding.source) : undefined}
             sharesSource={AVX_PROVENANCE.sharesOutstanding?.source?.type}
-            sharesAsOf={AVX_PROVENANCE.sharesOutstanding?.source?.asOf}
-            debtSourceUrl={AVX_PROVENANCE.totalDebt?.source?.url}
+            sharesAsOf={AVX_PROVENANCE.sharesOutstanding?.source ? getSourceDate(AVX_PROVENANCE.sharesOutstanding.source) : undefined}
+            debtSourceUrl={AVX_PROVENANCE.totalDebt?.source ? getSourceUrl(AVX_PROVENANCE.totalDebt.source) : undefined}
             debtSource={AVX_PROVENANCE.totalDebt?.source?.type}
-            debtAsOf={AVX_PROVENANCE.totalDebt?.source?.asOf}
-            cashSourceUrl={AVX_PROVENANCE.cashReserves?.source?.url}
+            debtAsOf={AVX_PROVENANCE.totalDebt?.source ? getSourceDate(AVX_PROVENANCE.totalDebt.source) : undefined}
+            cashSourceUrl={AVX_PROVENANCE.cashReserves?.source ? getSourceUrl(AVX_PROVENANCE.cashReserves.source) : undefined}
             cashSource={AVX_PROVENANCE.cashReserves?.source?.type}
-            cashAsOf={AVX_PROVENANCE.cashReserves?.source?.asOf}
-            holdingsSourceUrl={AVX_PROVENANCE.holdings?.source?.url}
+            cashAsOf={AVX_PROVENANCE.cashReserves?.source ? getSourceDate(AVX_PROVENANCE.cashReserves.source) : undefined}
+            holdingsSourceUrl={AVX_PROVENANCE.holdings?.source ? getSourceUrl(AVX_PROVENANCE.holdings.source) : undefined}
             holdingsSource={AVX_PROVENANCE.holdings?.source?.type}
-            holdingsAsOf={AVX_PROVENANCE.holdings?.source?.asOf}
+            holdingsAsOf={AVX_PROVENANCE.holdings?.source ? getSourceDate(AVX_PROVENANCE.holdings.source) : undefined}
             holdingsSearchTerm={(AVX_PROVENANCE.holdings?.source as any)?.searchTerm}
             debtSearchTerm={(AVX_PROVENANCE.totalDebt?.source as any)?.searchTerm}
             cashSearchTerm={(AVX_PROVENANCE.cashReserves?.source as any)?.searchTerm} />
@@ -200,9 +200,9 @@ export function AVXCompanyView({ company, className = "" }: AVXCompanyViewProps)
           <LeverageCalculationCard rawDebt={metrics.totalDebt} adjustedDebt={metrics.adjustedDebt}
             itmDebtAdjustment={metrics.inTheMoneyDebtValue} cashReserves={metrics.cashReserves}
             cryptoNav={metrics.cryptoNav} leverage={metrics.leverage}
-            debtSourceUrl={AVX_PROVENANCE.totalDebt?.source?.url}
-            cashSourceUrl={AVX_PROVENANCE.cashReserves?.source?.url}
-            holdingsSourceUrl={AVX_PROVENANCE.holdings?.source?.url} />
+            debtSourceUrl={AVX_PROVENANCE.totalDebt?.source ? getSourceUrl(AVX_PROVENANCE.totalDebt.source) : undefined}
+            cashSourceUrl={AVX_PROVENANCE.cashReserves?.source ? getSourceUrl(AVX_PROVENANCE.cashReserves.source) : undefined}
+            holdingsSourceUrl={AVX_PROVENANCE.holdings?.source ? getSourceUrl(AVX_PROVENANCE.holdings.source) : undefined} />
         </div>
       )}
 
@@ -212,11 +212,11 @@ export function AVXCompanyView({ company, className = "" }: AVXCompanyViewProps)
             totalDebt={metrics.adjustedDebt} preferredEquity={metrics.preferredEquity}
             sharesOutstanding={metrics.sharesOutstanding} equityNav={metrics.equityNav}
             equityNavPerShare={metrics.equityNavPerShare} stockPrice={stockPrice}
-            holdingsSourceUrl={AVX_PROVENANCE.holdings?.source?.url}
-            cashSourceUrl={AVX_PROVENANCE.cashReserves?.source?.url}
-            debtSourceUrl={AVX_PROVENANCE.totalDebt?.source?.url}
-            preferredSourceUrl={AVX_PROVENANCE.preferredEquity?.source?.url}
-            sharesSourceUrl={AVX_PROVENANCE.sharesOutstanding?.source?.url} />
+            holdingsSourceUrl={AVX_PROVENANCE.holdings?.source ? getSourceUrl(AVX_PROVENANCE.holdings.source) : undefined}
+            cashSourceUrl={AVX_PROVENANCE.cashReserves?.source ? getSourceUrl(AVX_PROVENANCE.cashReserves.source) : undefined}
+            debtSourceUrl={AVX_PROVENANCE.totalDebt?.source ? getSourceUrl(AVX_PROVENANCE.totalDebt.source) : undefined}
+            preferredSourceUrl={AVX_PROVENANCE.preferredEquity?.source ? getSourceUrl(AVX_PROVENANCE.preferredEquity.source) : undefined}
+            sharesSourceUrl={AVX_PROVENANCE.sharesOutstanding?.source ? getSourceUrl(AVX_PROVENANCE.sharesOutstanding.source) : undefined} />
         </div>
       )}
 
