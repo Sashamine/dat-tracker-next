@@ -189,28 +189,26 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // QUARTERLY BURN - derived from operating cash flow
-  // 9M 2025 OpCF turned slightly positive ($2.6M) due to working capital
-  // But operating loss is -$141M/9M → ~$47M/quarter (includes crypto fair value)
-  // Core G&A burn is much lower — use Q1 2025 OpCF as best proxy
+  // QUARTERLY BURN - derived from 9M 2025 operating cash flow
+  // 9M 2025 OpCF: +$2.6M → ~$880K/quarter (essentially breakeven)
   // =========================================================================
   quarterlyBurn: pv(
-    9_737_800,
+    0, // 9M 2025 OpCF is +$2.6M — operations are cash-flow positive, no burn
     xbrlSource({
       fact: "us-gaap:NetCashProvidedByUsedInOperatingActivities",
-      searchTerm: "-9,737,800",
-      rawValue: -9_737_800,
+      searchTerm: "2,638,800",
+      rawValue: 2_638_800,
       unit: "USD",
       periodType: "duration",
       periodStart: "2025-01-01",
-      periodEnd: "2025-03-31",
+      periodEnd: "2025-09-30",
       cik: DJT_CIK,
-      accession: "0001140361-25-018209",
+      accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
-      filingDate: "2025-05-09",
-      documentAnchor: "Cash used in operating activities",
+      filingDate: "2025-11-07",
+      documentAnchor: "Cash provided by operating activities",
     }),
-    "Q1 2025 operating cash burn ($9.7M). Best proxy for core burn rate — pre-BTC deployment quarter. 9M 2025 OpCF turned positive ($2.6M) due to working capital changes, not core profitability."
+    "9M 2025 operating cash flow: +$2.6M. Operations are cash-flow neutral/positive — no burn."
   ),
 
   // =========================================================================

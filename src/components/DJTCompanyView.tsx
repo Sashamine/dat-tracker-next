@@ -172,7 +172,7 @@ export function DJTCompanyView({ company, className = "" }: Props) {
 <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Additional Metrics</h3>
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-{DJT_PROVENANCE.quarterlyBurn&&<ProvenanceMetric label="Quarterly Burn" data={DJT_PROVENANCE.quarterlyBurn} format="currency" subLabel="Q1 2025 OpCF proxy" tooltip="$9.7M/qtr core operating burn (pre-BTC deployment)" ticker="djt" />}
+{DJT_PROVENANCE.quarterlyBurn&&<ProvenanceMetric label="Quarterly Burn" data={DJT_PROVENANCE.quarterlyBurn} format="currency" subLabel="9M 2025 OpCF: +$2.6M" tooltip="Operations are cash-flow neutral/positive. 9M 2025 OpCF was +$2.6M." ticker="djt" />}
 
 <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
 <p className="text-sm text-green-700 dark:text-green-400 font-semibold">Restricted Cash</p>
