@@ -979,9 +979,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Converts especially deep OTM ($20 strike vs $5 stock)
 
   // AVX (AVAX One Technology) - AVAX treasury company
-  // Verified 2026-01-29 via SEC 8-K (CIK 0001826397)
-  // Basic shares: 93,112,148 (10-Q Nov 14, 2025)
-  // After buybacks: ~92.5M (dashboard shows 92.67M as of Jan 28, 2026)
+  // Verified 2026-02-13 via SEC 8-K (CIK 0001826397)
+  // Basic shares: 92,672,000 (dashboard Feb 12, 2026 — post-PIPE 93.1M minus buybacks)
+  // Pre-funded warrants at $0.0001 are functionally common stock
   AVX: [
     {
       type: "warrant",
@@ -996,7 +996,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
   // Total AVX dilution: 6.1M pre-funded warrants (always ITM)
-  // Fully diluted: ~93M basic + 6.1M = ~99.2M shares
+  // Fully diluted: ~92.7M basic + 6.1M = ~98.8M shares
+  // Also: 2024 Equity Plan has 5.75M authorized (grants TBD in 10-K)
 
   // CYPH (Cypherpunk Technologies) - ZEC treasury company
   // Verified 2026-01-29 via SEC 8-K Oct 9, 2025 (CIK 0001509745)

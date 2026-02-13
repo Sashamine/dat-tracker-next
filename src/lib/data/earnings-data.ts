@@ -2818,13 +2818,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-01", // 10-K expected ~60 days after Dec 31
     earningsTime: "AMC",
-    // Dashboard shows 13.87M AVAX as of Jan 28, 2026 - pending SEC verification in 10-K
-    holdingsAtQuarterEnd: 13_800_000, // Estimated from dashboard (PIPE closed Nov 5)
-    sharesAtQuarterEnd: 92_462_303, // 93.1M - 649K buybacks
-    holdingsPerShare: 0.1493, // 13.8M / 92.46M
+    // Dashboard shows 13.889M AVAX as of Feb 12, 2026 (includes staking rewards)
+    // Shares: 92.672M (post-PIPE 93.1M minus buybacks)
+    holdingsAtQuarterEnd: 13_889_000, // Dashboard Feb 12, 2026 (pending SEC 10-K verification)
+    sharesAtQuarterEnd: 92_672_000, // Dashboard Feb 12 (93.1M - buybacks)
+    holdingsPerShare: 0.1499, // 13.889M / 92.672M
     source: "company-dashboard",
     sourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
-    status: "upcoming", // Awaiting 10-K SEC filing
+    status: "upcoming", // Awaiting 10-K SEC filing (due ~March 2026)
   },
   // Q3 2025 (Jul-Sep) - Pre-PIPE (no AVAX holdings)
   {
@@ -2836,7 +2837,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-14", // 10-Q filed
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0, // Pre-PIPE - company was AgriFORCE with no AVAX
-    sharesAtQuarterEnd: 6_297_654, // Pre-PIPE share count (10-Q XBRL)
+    sharesAtQuarterEnd: 4_128_089, // Pre-PIPE share count (10-Q XBRL, post 1:9 reverse split Jul 2025)
     holdingsPerShare: 0,
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",

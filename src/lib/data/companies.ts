@@ -2249,37 +2249,41 @@ export const avaxCompanies: Company[] = [
     ticker: "AVX",
     asset: "AVAX",
     tier: 1,
-    holdings: 13_871_000,  // ⚠️ Dashboard only - not SEC verified until Q4 10-K
-    holdingsLastUpdated: "2026-01-28",
-    holdingsSource: "company-dashboard",  // Not SEC - PIPE closed after Q3 10-Q period
+    holdings: 13_889_000,  // Dashboard (SEC-referenced in 8-K filings)
+    holdingsLastUpdated: "2026-02-12",
+    holdingsSource: "company-dashboard",  // PIPE closed after Q3 10-Q; dashboard is primary until 10-K
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
-    totalDebt: 1_841_100,  // SEC 10-Q Sep 30, 2025: LongTermDebt (legacy debentures, pre-PIPE)
-    debtSource: "SEC 10-Q Q3 2025: LongTermDebt $1,841,100",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/",
+    totalDebt: 1_689_415,  // SEC 10-Q Sep 30: debentures $1,372,679 + LT $41,736 + loan $275,000
+    debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     debtAsOf: "2025-09-30",
+    cashReserves: 894_701,  // ⚠️ PRE-PIPE. $145M+ cash came in Nov 5. TBD in 10-K.
+    cashAsOf: "2025-09-30",
+    cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     stakingPct: 0.90,  // "more than 90% of AVAX holdings staked"
     stakingApy: 0.08,
     stakingSource: "SEC 8-K Jan 28, 2026",
     stakingAsOf: "2026-01-28",
-    quarterlyBurnUsd: 186_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000164117225010961/",
+    quarterlyBurnUsd: 186_167,  // Exact from XBRL
+    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $186,167",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     burnAsOf: "2025-09-30",
-    capitalRaisedAtm: 40_000_000,
-    capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826397&type=S-3",
-    capitalRaisedPipe: 219_000_000,  // $219M PIPE Nov 2025 ($145M cash + $73.7M AVAX)
+    capitalRaisedAtm: 100_000_000,  // S-3 shelf filed Feb 9, 2026
+    capitalRaisedAtmSource: "SEC S-3 shelf registration (Feb 9, 2026)",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315226005802/",
+    capitalRaisedPipe: 219_042_206,  // $219M PIPE Nov 2025 ($145.4M cash + $73.7M AVAX)
     avgDailyVolume: 15_000_000,
-    marketCap: 193_000_000,
-    sharesForMnav: 93_112_148,  // 10-Q Nov 14, 2025 cover page
-    sharesAsOf: "2025-11-14",
-    sharesSource: "SEC 10-Q Nov 14, 2025",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+    sharesForMnav: 92_672_000,  // Dashboard (post-PIPE 93.1M minus ~440K buybacks)
+    sharesAsOf: "2026-02-12",
+    sharesSource: "Company dashboard (post-PIPE 93,112,148 minus buybacks)",
+    sharesSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     secCik: "1826397",
-    strategy: "Regulated AVAX exposure for US capital markets.",
-    notes: "Nasdaq listed. $40M buyback program (649K repurchased thru Jan 25). Hivemind asset manager. 6.1M pre-funded warrants ITM.",
+    website: "https://www.avax-one.com",
+    strategy: "First publicly traded AVAX treasury. Staking + validator infra + fintech M&A.",
+    notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026.",
   },
 ];
 
