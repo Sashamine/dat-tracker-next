@@ -2,7 +2,7 @@
   "ticker": "BTBT",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-13T17:44:32.260Z",
+  "lastUpdated": "2026-02-13T18:08:42.133Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -5660,6 +5660,15 @@
       "low": 1.7,
       "close": 1.79,
       "volume": 9475497
+    },
+    {
+      "date": "2026-02-13",
+      "time": "11:08",
+      "open": 1.74,
+      "high": 1.8492,
+      "low": 1.7,
+      "close": 1.77,
+      "volume": 10599953
     },
     {
       "date": "2026-02-13",
