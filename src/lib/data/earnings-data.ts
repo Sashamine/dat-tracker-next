@@ -7,7 +7,7 @@
 // exactly what period the data covers.
 //
 // Legacy fiscal year mappings (kept for backwards compatibility):
-// - CLSK (CleanSpark) - Fiscal year ends September 30
+// - (CLSK removed - not a HODL treasury, 83% BTC classified as current/for-sale)
 // - All others use calendar year (fiscal = calendar)
 
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter, YieldPeriod } from "../types";
@@ -61,24 +61,6 @@ function fiscalToCalendar(
   fiscalYear: number,
   fiscalQuarter: 1 | 2 | 3 | 4
 ): { calendarYear: number; calendarQuarter: 1 | 2 | 3 | 4 } {
-  // CLSK: Fiscal year ends September 30
-  // FY Q1 (Oct-Dec) → Calendar Q4 of prior year
-  // FY Q2 (Jan-Mar) → Calendar Q1 of same year  
-  // FY Q3 (Apr-Jun) → Calendar Q2 of same year
-  // FY Q4 (Jul-Sep) → Calendar Q3 of same year
-  if (ticker === "CLSK") {
-    switch (fiscalQuarter) {
-      case 1: // Oct-Dec → Calendar Q4 of prior year
-        return { calendarYear: fiscalYear - 1, calendarQuarter: 4 };
-      case 2: // Jan-Mar → Calendar Q1
-        return { calendarYear: fiscalYear, calendarQuarter: 1 };
-      case 3: // Apr-Jun → Calendar Q2
-        return { calendarYear: fiscalYear, calendarQuarter: 2 };
-      case 4: // Jul-Sep → Calendar Q3
-        return { calendarYear: fiscalYear, calendarQuarter: 3 };
-    }
-  }
-
   // All other companies use calendar year (fiscal = calendar)
   return { calendarYear: fiscalYear, calendarQuarter: fiscalQuarter };
 }
@@ -615,151 +597,6 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2024-02-28",
     earningsTime: "AMC",
     ...getMARAQuarterEndDataForEarnings("2023-12-31")!,
-    status: "reported",
-  },
-
-  // ========== CleanSpark (CLSK) - Fiscal Year ends September ==========
-  // CLSK FY→Calendar mapping:
-  //   FY Q1 (Oct-Dec) → Calendar Q4 of PRIOR year
-  //   FY Q2 (Jan-Mar) → Calendar Q1
-  //   FY Q3 (Apr-Jun) → Calendar Q2
-  //   FY Q4 (Jul-Sep) → Calendar Q3
-  //
-  // Q1 FY2026 (Oct-Dec 2025) → Calendar Q4 2025 - Upcoming
-  // Holdings from SEC DEF 14A Jan 22, 2026 (most recent available)
-  // Shares from same DEF 14A (record date Jan 9, 2026)
-  {
-    ticker: "CLSK",
-    fiscalYear: 2026,
-    fiscalQuarter: 1,
-    calendarYear: 2025,  // FY Q1 maps to Q4 of prior year
-    calendarQuarter: 4,
-    earningsDate: "2026-02-05",
-    earningsTime: "AMC",
-    holdingsAtQuarterEnd: 13099,  // SEC DEF 14A Jan 22, 2026
-    sharesAtQuarterEnd: 255_750_361,  // SEC DEF 14A (record date Jan 9, 2026)
-    holdingsPerShare: 0.0000512,
-    source: "sec-filing",
-    status: "upcoming",
-  },
-  // Q4 FY2025 (Jul-Sep 2025) → Calendar Q3 2025
-  {
-    ticker: "CLSK",
-    fiscalYear: 2025,
-    fiscalQuarter: 4,
-    calendarYear: 2025,
-    calendarQuarter: 3,
-    earningsDate: "2025-12-09",
-    earningsTime: "AMC",
-    epsActual: 0.12,
-    epsEstimate: -0.10,
-    revenueActual: 162_300_000,
-    revenueEstimate: 164_000_000,
-    netIncome: 246_300_000,
-    holdingsAtQuarterEnd: 10556,
-    sharesAtQuarterEnd: 310_000_000,
-    holdingsPerShare: 0.0000341,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q3 FY2025 (Apr-Jun 2025) → Calendar Q2 2025
-  {
-    ticker: "CLSK",
-    fiscalYear: 2025,
-    fiscalQuarter: 3,
-    calendarYear: 2025,
-    calendarQuarter: 2,
-    earningsDate: "2025-08-12",
-    earningsTime: "AMC",
-    epsActual: -0.21,
-    epsEstimate: -0.24,
-    revenueActual: 104_100_000,
-    revenueEstimate: 113_000_000,
-    netIncome: -55_200_000,
-    holdingsAtQuarterEnd: 8049,
-    sharesAtQuarterEnd: 276_000_000,
-    holdingsPerShare: 0.0000292,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q2 FY2025 (Jan-Mar 2025) → Calendar Q1 2025
-  {
-    ticker: "CLSK",
-    fiscalYear: 2025,
-    fiscalQuarter: 2,
-    calendarYear: 2025,
-    calendarQuarter: 1,
-    earningsDate: "2025-05-06",
-    earningsTime: "AMC",
-    epsActual: -0.30,
-    epsEstimate: -0.15,
-    revenueActual: 91_400_000,
-    revenueEstimate: 114_000_000,
-    netIncome: -77_200_000,
-    holdingsAtQuarterEnd: 6100,
-    sharesAtQuarterEnd: 263_000_000,
-    holdingsPerShare: 0.0000232,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q1 FY2025 (Oct-Dec 2024) → Calendar Q4 2024
-  {
-    ticker: "CLSK",
-    fiscalYear: 2025,
-    fiscalQuarter: 1,
-    calendarYear: 2024,  // FY Q1 maps to Q4 of prior year
-    calendarQuarter: 4,
-    earningsDate: "2025-02-11",
-    earningsTime: "AMC",
-    epsActual: 0.22,
-    epsEstimate: -0.06,
-    revenueActual: 162_000_000,
-    revenueEstimate: 136_000_000,
-    netIncome: 51_100_000,
-    holdingsAtQuarterEnd: 6061,
-    sharesAtQuarterEnd: 243_000_000,
-    holdingsPerShare: 0.0000249,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q4 FY2024 (Jul-Sep 2024) → Calendar Q3 2024
-  {
-    ticker: "CLSK",
-    fiscalYear: 2024,
-    fiscalQuarter: 4,
-    calendarYear: 2024,
-    calendarQuarter: 3,
-    earningsDate: "2024-12-10",
-    earningsTime: "AMC",
-    epsActual: -0.13,
-    epsEstimate: -0.16,
-    revenueActual: 104_500_000,
-    revenueEstimate: 116_000_000,
-    netIncome: -26_400_000,
-    holdingsAtQuarterEnd: 8049,
-    sharesAtQuarterEnd: 199_000_000,
-    holdingsPerShare: 0.0000404,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q3 FY2024 (Apr-Jun 2024) → Calendar Q2 2024
-  {
-    ticker: "CLSK",
-    fiscalYear: 2024,
-    fiscalQuarter: 3,
-    calendarYear: 2024,
-    calendarQuarter: 2,
-    earningsDate: "2024-08-05",
-    earningsTime: "AMC",
-    epsActual: -0.04,
-    epsEstimate: -0.18,
-    revenueActual: 104_100_000,
-    revenueEstimate: 87_000_000,
-    netIncome: -7_000_000,
-    holdingsAtQuarterEnd: 6154,
-    sharesAtQuarterEnd: 173_000_000,
-    holdingsPerShare: 0.0000356,
-    source: "sec-filing",
     status: "reported",
   },
 
