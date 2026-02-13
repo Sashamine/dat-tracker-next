@@ -110,61 +110,19 @@ export const AVX_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalDebt: pv(
     TOTAL_DEBT,
-    derivedSource({
-      derivation: "Sum of all debt instruments from 10-Q balance sheet",
-      formula: "$1,372,679 (debentures) + $41,736 (LT debt) + $275,000 (loan) = $1,689,415",
-      inputs: {
-        debentures: pv(
-          1_372_679,
-          xbrlSource({
-            fact: "us-gaap:ConvertibleNotesPayableCurrent",
-            searchTerm: "1,372,679",
-            rawValue: 1_372_679,
-            unit: "USD",
-            periodType: "instant",
-            periodEnd: Q3_2025_PERIOD_END,
-            cik: AVX_CIK,
-            accession: Q3_2025_10Q_ACCESSION,
-            filingType: "10-Q",
-            filingDate: Q3_2025_10Q_FILED,
-            documentAnchor: "Debentures",
-          })
-        ),
-        longTermDebt: pv(
-          41_736,
-          xbrlSource({
-            fact: "us-gaap:LongTermDebt",
-            searchTerm: "41,736",
-            rawValue: 41_736,
-            unit: "USD",
-            periodType: "instant",
-            periodEnd: Q3_2025_PERIOD_END,
-            cik: AVX_CIK,
-            accession: Q3_2025_10Q_ACCESSION,
-            filingType: "10-Q",
-            filingDate: Q3_2025_10Q_FILED,
-            documentAnchor: "Long-term debt",
-          })
-        ),
-        loanPayable: pv(
-          275_000,
-          xbrlSource({
-            fact: "us-gaap:LoansPayable",
-            searchTerm: "275,000",
-            rawValue: 275_000,
-            unit: "USD",
-            periodType: "instant",
-            periodEnd: Q3_2025_PERIOD_END,
-            cik: AVX_CIK,
-            accession: Q3_2025_10Q_ACCESSION,
-            filingType: "10-Q",
-            filingDate: Q3_2025_10Q_FILED,
-            documentAnchor: "Loan payable",
-          })
-        ),
-      },
+    docSource({
+      type: "sec-document",
+      searchTerm: "1,372,679",
+      url: secDocUrl(AVX_CIK, Q3_2025_10Q_ACCESSION, "form10-q.htm"),
+      quote: "Debentures $1,372,679 + Long-term debt $41,736 + Loan payable $275,000 = $1,689,415",
+      anchor: "Balance Sheet",
+      cik: AVX_CIK,
+      accession: Q3_2025_10Q_ACCESSION,
+      filingType: "10-Q",
+      filingDate: Q3_2025_10Q_FILED,
+      documentDate: Q3_2025_PERIOD_END,
     }),
-    "Legacy pre-PIPE debt only. All debentures are current (due within 12 months). Minimal debt for a DAT."
+    "Legacy pre-PIPE debt: debentures ($1.37M, current) + LT debt ($42K) + loan ($275K). Minimal for a DAT."
   ),
 
   // =========================================================================
