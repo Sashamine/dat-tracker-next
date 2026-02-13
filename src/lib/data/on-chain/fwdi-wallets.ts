@@ -4,9 +4,18 @@
  * https://intel.arkm.com/explorer/entity/forward-industries
  * Scraped: 2026-02-13
  *
- * Arkham tracks $375M across these wallets (~4.4M SOL).
- * Note: The remaining ~2.5M SOL-equivalent is in fwdSOL LSTs
- * which may be in additional wallets not yet attributed by Arkham.
+ * Arkham tracks ~4.5M SOL across these wallets.
+ * Verified on-chain via Solana RPC: 4,509,655 SOL total.
+ *
+ * Gap vs website (6.98M SOL-equiv):
+ * ~2.5M SOL-equivalent is in fwdSOL liquid staking tokens,
+ * likely deployed into DeFi protocols (borrow-lend vaults,
+ * token-exchange pools) and not attributed to FWDI on Arkham.
+ * The 10-Q classifies these as "digital assets NOT at fair value"
+ * carried at cost ($201.6M).
+ *
+ * TODO: Find fwdSOL mint address and DeFi vault addresses
+ * to track the remaining ~2.5M SOL-equivalent.
  */
 
 export interface FwdiWallet {
