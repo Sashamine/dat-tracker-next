@@ -471,12 +471,28 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Also: 102.1M shares reserved for ATM (sold at market, not dilutive at a strike)
   // Also: $1B share buyback program (Nov 2025 – Sep 2027), ~$975.6M remaining
   FWDI: [
-    // Galaxy Advisor Warrants — exercise price TBD (need 8-K exhibit 10.2)
-    { type: "warrant", potentialShares: 4_458_796, strikePrice: 0, source: "8-K Sep 11, 2025", sourceUrl: "/filings/fwdi/0001683168-25-006838", notes: "Galaxy Strategic Advisor warrants — exercise price TBD (check exhibit 10.2)" },
-    // Jump Crypto Lead Investor Warrants — exercise price TBD
-    { type: "warrant", potentialShares: 4_458_796, strikePrice: 0, source: "8-K Sep 8, 2025", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Jump Crypto Lead Investor warrants — exercise price TBD (check exhibit 10.3)" },
-    // Multicoin Capital Lead Investor Warrants — exercise price TBD
-    { type: "warrant", potentialShares: 4_458_796, strikePrice: 0, source: "8-K Sep 8, 2025", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Multicoin Capital Lead Investor warrants — exercise price TBD (check exhibit 10.4)" },
+    // All 3 warrant tranches: $0.01 exercise price, BUT performance-based vesting.
+    // Each tranche has 3 sub-tranches that vest at different stock price targets
+    // (relative to $18.50 PIPE price). Perpetual (no expiration). Cashless exercise.
+    // Source: 8-K Sep 8, 2025, EX-10.3 (Galaxy) and EX-10.4 (Jump/Multicoin)
+    // https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm
+    // https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm
+
+    // Galaxy Strategic Advisor Warrants — 5% of PIPE shares
+    // 1/3 vests at $27.75 (150% of $18.50), 1/3 at $37.00 (200%), 1/3 at $46.25 (250%)
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm", notes: "Galaxy Advisor warrants — vests when stock ≥ $27.75 for 20/30 trading days. Perpetual, cashless exercise." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm", notes: "Galaxy Advisor warrants — vests when stock ≥ $37.00 for 20/30 trading days. Perpetual, cashless exercise." },
+    { type: "warrant", potentialShares: 1_486_487, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm", notes: "Galaxy Advisor warrants — vests when stock ≥ $46.25 for 20/30 trading days. Perpetual, cashless exercise." },
+
+    // Jump Crypto Lead Investor Warrants — 5% of PIPE shares (split pro rata with Multicoin)
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Jump Crypto warrants — vests when stock ≥ $27.75 for 20/30 trading days. Perpetual, cashless exercise." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Jump Crypto warrants — vests when stock ≥ $37.00 for 20/30 trading days. Perpetual, cashless exercise." },
+    { type: "warrant", potentialShares: 1_486_487, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Jump Crypto warrants — vests when stock ≥ $46.25 for 20/30 trading days. Perpetual, cashless exercise." },
+
+    // Multicoin Capital Lead Investor Warrants — 5% of PIPE shares (split pro rata with Jump)
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin warrants — vests when stock ≥ $27.75 for 20/30 trading days. Perpetual, cashless exercise." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin warrants — vests when stock ≥ $37.00 for 20/30 trading days. Perpetual, cashless exercise." },
+    { type: "warrant", potentialShares: 1_486_487, strikePrice: 0.01, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin warrants — vests when stock ≥ $46.25 for 20/30 trading days. Perpetual, cashless exercise." },
   ],
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
