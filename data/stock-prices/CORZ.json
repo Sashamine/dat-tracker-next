@@ -2,7 +2,7 @@
   "ticker": "CORZ",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-13T19:44:33.455Z",
+  "lastUpdated": "2026-02-13T19:59:32.150Z",
   "prices": [
     {
       "date": "2024-01-24",
@@ -5594,6 +5594,15 @@
       "low": 17.2339,
       "close": 18.235,
       "volume": 5538131
+    },
+    {
+      "date": "2026-02-13",
+      "time": "12:59",
+      "open": 17.6,
+      "high": 18.51,
+      "low": 17.2339,
+      "close": 18.085,
+      "volume": 5756506
     },
     {
       "date": "2026-02-13",
