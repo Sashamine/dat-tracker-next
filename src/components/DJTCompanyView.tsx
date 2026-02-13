@@ -4,7 +4,7 @@
 import { useMemo, useState } from "react";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
-import { DJT_PROVENANCE, DJT_CIK, DJT_CAPITAL_RAISE, DJT_BALANCE_SHEET, DJT_TODO } from "@/lib/data/provenance/djt";
+import { DJT_PROVENANCE, DJT_CIK, DJT_CAPITAL_RAISE, DJT_BALANCE_SHEET, DJT_INCOME_STATEMENT, DJT_TODO } from "@/lib/data/provenance/djt";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
@@ -178,21 +178,21 @@ export function DJTCompanyView({ company, className = "" }: Props) {
 <p className="text-sm text-green-700 dark:text-green-400 font-semibold">Restricted Cash</p>
 <p className="text-2xl font-bold text-green-600">${(DJT_BALANCE_SHEET.restrictedCash/1e6).toFixed(0)}M</p>
 <p className="text-xs text-green-500">From convertible proceeds</p>
-<a href="/filings/djt/0001140361-25-040977" className="text-xs text-green-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
+<a href={`/filings/djt/0001140361-25-040977?tab=document&q=${encodeURIComponent("335,838.8")}`} className="text-xs text-green-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
 </div>
 
 <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
 <p className="text-sm text-purple-700 dark:text-purple-400 font-semibold">Revenue (Q3 2025)</p>
-<p className="text-2xl font-bold text-purple-600">${(973/1000).toFixed(1)}M</p>
+<p className="text-2xl font-bold text-purple-600">${(DJT_INCOME_STATEMENT.revenue.q3_2025/1e6).toFixed(1)}M</p>
 <p className="text-xs text-purple-500">Truth Social (~$1M/qtr)</p>
-<a href="/filings/djt/0001140361-25-040977" className="text-xs text-purple-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
+<a href={`/filings/djt/0001140361-25-040977?tab=document&q=${encodeURIComponent("972.9")}`} className="text-xs text-purple-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
 </div>
 
 <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800">
 <p className="text-sm text-red-700 dark:text-red-400 font-semibold">Net Loss (Q3 2025)</p>
-<p className="text-2xl font-bold text-red-600">-$54.8M</p>
+<p className="text-2xl font-bold text-red-600">-${(Math.abs(DJT_INCOME_STATEMENT.profitLoss.q3_2025)/1e6).toFixed(1)}M</p>
 <p className="text-xs text-red-500">Includes crypto FV changes</p>
-<a href="/filings/djt/0001140361-25-040977" className="text-xs text-red-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
+<a href={`/filings/djt/0001140361-25-040977?tab=document&q=${encodeURIComponent("54,848.5")}`} className="text-xs text-red-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
 </div>
 
 {es&&es.diluted>es.basic&&<div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
