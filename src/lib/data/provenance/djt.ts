@@ -50,10 +50,9 @@ const DEC_2025_TREASURY_8K_FILED = "2025-12-30";
 // LATEST DATA POINTS (from XBRL + 8-K filings)
 // =========================================================================
 
-// Holdings: 11,542 BTC (includes Dec 2025 purchase of ~300 BTC)
-// Q3 quarter-end was ~11,242 BTC; 11,542 confirmed via 8-K / news Dec 2025
-const LATEST_HOLDINGS = 11_542; // BTC
-const LATEST_HOLDINGS_DATE = "2025-12-30"; // Dec 2025 treasury update 8-K
+// Holdings: 11,542.16 BTC as of Sep 30, 2025 (Q3 2025 10-Q, crypto assets table)
+const LATEST_HOLDINGS = 11_542; // BTC (11,542.16 per 10-Q)
+const LATEST_HOLDINGS_DATE = "2025-09-30"; // Q3 2025 10-Q period end
 
 // Shares from XBRL: EntityCommonStockSharesOutstanding
 const SHARES_OUTSTANDING = 279_997_636;
@@ -108,17 +107,17 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "11,542",
-      url: `/filings/djt/${DEC_2025_TREASURY_8K_ACCESSION}`,
-      quote: "11,542 BTC held as of December 2025",
-      anchor: "Bitcoin Holdings",
+      searchTerm: "11,542.16",
+      url: `/filings/djt/${Q3_2025_10Q_ACCESSION}?tab=document&q=11%2C542`,
+      quote: "Bitcoin 11,542.16 units, Cost Basis $1,368,082.6, Fair Value $1,320,108.6",
+      anchor: "Bitcoin",
       cik: DJT_CIK,
-      accession: DEC_2025_TREASURY_8K_ACCESSION,
-      filingType: "8-K",
-      filingDate: DEC_2025_TREASURY_8K_FILED,
-      documentDate: "2025-12-30",
+      accession: Q3_2025_10Q_ACCESSION,
+      filingType: "10-Q",
+      filingDate: Q3_2025_10Q_FILED,
+      documentDate: Q3_2025_PERIOD_END,
     }),
-    "11,542 BTC includes ~300 purchased in Dec 2025 (post Q3 close). Q3 quarter-end was ~11,242. No standard XBRL crypto tags — uses custom taxonomy. Also holds CRO tokens and $300M BTC options strategy (not counted here)."
+    "11,542.16 BTC per Q3 2025 10-Q crypto assets table. Cost basis $1.368B, fair value $1.320B. Also holds CRO tokens (Cronos) and $300M BTC options strategy (not counted here)."
   ),
 
   // =========================================================================

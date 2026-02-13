@@ -1235,7 +1235,7 @@ export const btcCompanies: Company[] = [
     holdings: DJT_PROVENANCE.holdings?.value || 11_542,
     holdingsLastUpdated: DJT_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/djt/0001140361-25-046825",
+    holdingsSourceUrl: "/filings/djt/0001140361-25-040977?tab=document&q=11%2C542",
     datStartDate: "2025-05-01",
     isMiner: false,
     // BURN: from provenance (Q1 2025 OpCF as proxy for core burn)

@@ -1324,7 +1324,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // XBRL shows CryptoAssetFairValueNoncurrent, not unit count - use holdings-history for BTC
   //
   // Q4 2025 - Upcoming (10-K expected ~March 2026)
-  // Holdings: 11,542 BTC (confirmed Dec 2025 — includes ~300 BTC purchased in Dec)
+  // Holdings TBD — Q3 had 11,542.16 BTC, may have acquired more in Q4
   {
     ticker: "DJT",
     fiscalYear: 2025,
@@ -1333,16 +1333,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-20",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 11_542, // 8-K Dec 30, 2025 treasury update
-    sharesAtQuarterEnd: 279_997_636, // No change since Q3 (no ATM)
-    holdingsPerShare: 0.00004122, // 11,542 / 279,997,636
     source: "sec-filing",
-    sourceUrl: "/filings/djt/0001140361-25-046825",
     status: "upcoming",
   },
   // Q3 2025 - XBRL verified: 279,997,636 shares, ProfitLoss -$54.8M, Revenue $973K
-  // ⚠️ BTC count: ~11,242 at Q3 end (11,542 includes ~300 BTC purchased Dec 2025)
-  // No standard crypto XBRL tags — BTC from balance sheet analysis + 8-K updates
+  // BTC count: 11,542.16 per 10-Q crypto assets table (cost $1.368B, FV $1.320B)
   {
     ticker: "DJT",
     fiscalYear: 2025,
@@ -1353,16 +1348,16 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     revenueActual: 972_900, // XBRL: RevenueFromContractWithCustomerExcludingAssessedTax
     netIncome: -54_848_500, // XBRL: ProfitLoss Q3 2025
-    holdingsAtQuarterEnd: 11_242, // ~11,242 at Sep 30 (11,542 minus ~300 Dec purchase)
+    holdingsAtQuarterEnd: 11_542, // 10-Q: 11,542.16 BTC at Sep 30
     sharesAtQuarterEnd: 279_997_636, // XBRL: EntityCommonStockSharesOutstanding as of Nov 5
-    holdingsPerShare: 0.00004015, // 11,242 / 279,997,636
+    holdingsPerShare: 0.00004122, // 11,542 / 279,997,636
     source: "sec-filing",
     sourceUrl: "/filings/djt/0001140361-25-040977",
     status: "reported",
   },
   // Q2 2025 - $2.5B raise closed, first BTC purchases (~$2B deployed by Jul 21)
   // XBRL: ProfitLoss -$20M, Revenue $833K (derived: 9M $2,677K - Q3 $973K - Q1 $871K)
-  // Holdings: ~11,242 BTC (bulk purchased in Q2-Q3 with $2B deployment by Jul 21)
+  // Holdings: ~11,242 BTC at Q2 end (Q3 10-Q shows 11,542.16 — ~300 more acquired in Q3)
   {
     ticker: "DJT",
     fiscalYear: 2025,
@@ -1373,7 +1368,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     revenueActual: 832_600, // Derived: 9M $2,677K - Q3 $973K - Q1 $872K
     netIncome: -20_001_900, // XBRL: ProfitLoss Q2 2025
-    holdingsAtQuarterEnd: 11_242, // Bulk BTC purchased by Jul 21 (~$2B deployed)
+    holdingsAtQuarterEnd: 11_242, // Estimated — bulk purchased by Jul 21, Q3 shows 11,542
     sharesAtQuarterEnd: 280_000_000, // Post-PIPE (~81M new shares)
     holdingsPerShare: 0.00004015, // 11,242 / 280,000,000
     source: "sec-filing",
