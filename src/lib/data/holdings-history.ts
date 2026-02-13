@@ -554,7 +554,7 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-15", holdings: 6_822_000, sharesOutstandingDiluted: 99_960_397, holdingsPerShare: 0.06825, source: "8-K: Initial SOL purchases at avg $232/SOL", sharesSource: "86.1M common + 13.8M PFWs issued", sourceUrl: "/filings/fwdi/0001683168-25-006963", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 6_854_000, sharesOutstandingDiluted: 99_960_397, holdingsPerShare: 0.06857, source: "10-K XBRL: CryptoAssetNumberOfUnits (cost $1.59B)", sharesSource: "86,145,514 common + 13,814,883 PFWs", sourceUrl: "/filings/fwdi/0001683168-25-009068", sourceType: "sec-filing" },
   { date: "2025-12-31", holdings: 4_973_000, sharesOutstandingDiluted: 97_788_874, holdingsPerShare: 0.05085, totalDebt: 0, cash: 25_388_079, source: "10-Q: raw SOL only (+ ~2M in fwdSOL LST form, $201.6M)", sharesSource: "84,924,272 common + 12,864,602 PFWs", sourceUrl: "/filings/fwdi/0001683168-26-000960", sourceType: "sec-filing" },
-  { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 96_003_639, holdingsPerShare: 0.07271, source: "Company website: SOL-equivalent (raw SOL + LSTs)", sharesSource: "83,139,037 common (Jan 31) + 12,864,602 PFWs", sourceUrl: "https://www.forwardindustries.com/", sourceType: "company-website" },
+  { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 96_003_639, holdingsPerShare: 0.07271, source: "Company website: SOL-equivalent (raw SOL + LSTs)", sharesSource: "83,139,037 common (Jan 31) + 12,864,602 PFWs", sourceUrl: "https://forwardindustries.com/sol-treasury", sourceType: "company-website" },
 ];
 
 // Helius Medical / Solana Company (HSDT) - SOL treasury
