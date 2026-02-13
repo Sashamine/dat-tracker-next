@@ -79,7 +79,7 @@ export const NAKA_PROVENANCE: ProvenanceFinancials = {
       fact: "srt:CryptoAssetNumberOfUnits",
       searchTerm: "5,398",
       rawValue: 5398,
-      unit: "Integer",
+      unit: "shares",
       periodType: "instant",
       periodEnd: Q3_2025_PERIOD_END,
       cik: NAKA_CIK,
