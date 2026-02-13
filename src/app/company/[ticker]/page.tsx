@@ -57,7 +57,6 @@ import { XXICompanyView } from "@/components/XXICompanyView";
 import { MetaplanetCompanyView } from "@/components/MetaplanetCompanyView";
 import { SBETCompanyView } from "@/components/SBETCompanyView";
 import { ASSTCompanyView } from "@/components/ASSTCompanyView";
-import { CLSKCompanyView } from "@/components/CLSKCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
 import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
@@ -462,8 +461,6 @@ export default function CompanyPage() {
           <SBETCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "ASST" ? (
           <ASSTCompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "CLSK" ? (
-          <CLSKCompanyView company={displayCompany} />
         ) : (
           <>
         {/* Key Valuation Metrics */}

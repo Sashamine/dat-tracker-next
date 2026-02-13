@@ -2,7 +2,6 @@ import { Company } from "../types";
 import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
-import { CLSK_PROVENANCE, CLSK_PROVENANCE_DEBUG, getCLSKProvenance } from "./provenance/clsk";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
 
@@ -611,52 +610,46 @@ export const btcCompanies: Company[] = [
     notes: "Largest US public miner. Core financials from provenance/mara.ts. ~$3.25B in 0% convertible notes (2026, 2030, 2032 series). Dilutives (~81M from converts) in dilutive-instruments.ts.",
   },
   {
-    // =========================================================================
-    // CLSK - All core financials from provenance/clsk.ts (SEC-verified)
-    // Last verified: 2026-02-13 via Q1 FY2026 10-Q + IR page
-    // =========================================================================
     id: "clsk",
     name: "CleanSpark",
     ticker: "CLSK",
-    secCik: "0000827876",
-    website: "https://cleanspark.com",
-    twitter: "CleanSpark_Inc",
-    // irUrl: "https://investors.cleanspark.com/overview/",
     asset: "BTC",
     tier: 1,
-    // HOLDINGS: from provenance (company IR page, updated monthly)
-    holdings: CLSK_PROVENANCE.holdings?.value || 13_513,
-    holdingsLastUpdated: CLSK_PROVENANCE_DEBUG.holdingsDate,
-    holdingsSource: "company-reported",
-    holdingsSourceUrl: "https://www.cleanspark.com/bitcoin-operations",
+    holdings: 13_099,
+    holdingsLastUpdated: "2026-01-17",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001785459&type=8-K&dateb=&owner=include&count=40",
     datStartDate: "2024-01-01",
+    website: "https://cleanspark.com",
+    twitter: "https://twitter.com/CleanSpark_Inc",
+    secCik: "0000827876",  // Verified 2026-01-28 (was incorrectly 0001785459)
+    // costBasisAvg removed - needs SEC verification
     isMiner: true,
-    // SHARES: from provenance (10-Q cover page, Jan 29, 2026)
-    sharesForMnav: CLSK_PROVENANCE.sharesOutstanding?.value || 255_752_913,
-    sharesSource: "SEC 10-Q Q1 FY2026 (filed 2026-02-05): EntityCommonStockSharesOutstanding as of 2026-01-29",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312526039538/",
-    sharesAsOf: CLSK_PROVENANCE_DEBUG.sharesDate,
-    // CASH: from provenance (10-Q XBRL)
-    cashReserves: CLSK_PROVENANCE.cashReserves?.value || 458_097_000,
-    restrictedCash: CLSK_PROVENANCE.cashReserves?.value || 458_097_000, // Operating capital (miner) - not excess
-    cashSource: "SEC 10-Q Q1 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312526039538/",
-    cashAsOf: CLSK_PROVENANCE_DEBUG.balanceSheetDate,
-    // DEBT: from provenance (10-Q XBRL)
-    totalDebt: CLSK_PROVENANCE.totalDebt?.value || 1_786_759_000,
-    debtSource: "SEC 10-Q Q1 FY2026 XBRL: LongTermDebt (net). $650M 0% due 2030 + $1.15B 0% due 2032",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312526039538/",
-    debtAsOf: CLSK_PROVENANCE_DEBUG.balanceSheetDate,
-    // BURN: from provenance (G&A only, excludes mining COGS)
-    quarterlyBurnUsd: CLSK_PROVENANCE.quarterlyBurn?.value || 19_400_760,
-    burnSource: "SEC 10-K FY2025 XBRL: GeneralAndAdministrativeExpense $19.4M (Q4 FY2025: Jul-Sep 2025)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
+    // btcMinedAnnual removed - not citable from SEC filings
+    quarterlyBurnUsd: 19_400_760,  // Q3 2025 G&A
+    burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense $19,400,760 (2025-07-01 to 2025-09-30)",
+    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829794&type=10-Q",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 250_000_000,
     hasOptions: true,
-    leader: "Matt Schultz (Chairman & CEO)",
-    strategy: "US BTC miner (50 EH/s) with HODL strategy + AI/HPC infrastructure pivot. 1.8 GW power portfolio. Active share buyback program ($460M / 30.6M shares repurchased Nov 2025).",
-    notes: "$1.8B total converts: $650M due 2030 (capped call at $24.66) + $1.15B due 2032. 42.4M shares in treasury from buyback. BTC split between current ($830M) + noncurrent ($172M, pledged as collateral). FY ends Sep 30.",
+    marketCap: 3_040_000_000,
+    sharesForMnav: 255_750_361,  // SEC DEF 14A Jan 22, 2026 (record date Jan 9, 2026)
+    sharesSource: "SEC 10-K (filed 2025-11-25): EntityCommonStockSharesOutstanding = 255,583,445 as of 2025-11-19",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
+    sharesAsOf: "2025-11-19",
+    cashReserves: 43_000_000,  // $43M cash (Sep 2025)
+    restrictedCash: 43_000_000,  // Operating capital (miner) - not excess
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
+    cashAsOf: "2025-09-30",
+    leader: "Zach Bradford (CEO)",
+    strategy: "Efficient US miner. 50 EH/s. DAM derivatives program.",
+    // Debt: $550M 0% converts due 2030 (Dec 2024) + $1.15B 0% converts due 2032 (Nov 2025) = $1.7B total
+    totalDebt: 1_700_000_000,  // $550M (2030) + $1.15B (2032) convertible notes
+    debtSource: "SEC filings Dec 2024 + Nov 2025",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
+    debtAsOf: "2025-11-13",
+    notes: "$1.7B total converts: $550M due 2030 + $1.15B due 2032. $400M BTC-backed credit (largely undrawn).",
   },
   {
     // =========================================================================
