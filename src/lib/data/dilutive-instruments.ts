@@ -169,33 +169,33 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // CleanSpark (CLSK) - BTC miner with HODL strategy
-  // Verified 2026-01-28 via SEC filings (CIK 0000827876)
-  // $1.7B total converts: $550M (Dec 2024) + $1.15B (Nov 2025)
-  // Note: Strike prices need verification from 8-K exhibits
+  // Verified 2026-02-13 via SEC 8-K filings + PR Newswire
+  // $1.8B total converts: $650M (Dec 2024, upsized from $550M) + $1.15B (Nov 2025)
+  // Conversion prices verified from pricing PRs
   CLSK: [
     {
       type: "convertible",
-      strikePrice: 18.50, // Estimated - Dec 2024 ~30% premium over ~$14 stock
-      potentialShares: 29_730_000, // $550M / $18.50 = ~29.7M shares
-      faceValue: 550_000_000,
-      source: "8-K Dec 2024",
+      strikePrice: 14.80, // Verified: 20% premium over $12.33 close on Dec 12, 2024
+      potentialShares: 43_930_770, // 67.5858 × 650,000 = 43,930,770 shares
+      faceValue: 650_000_000, // $550M + $100M greenshoe exercised
+      source: "8-K Dec 2024 + pricing PR",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876&type=8-K",
-      expiration: "2030-12-15",
-      issuedDate: "2024-12-12",
-      notes: "0% Convertible Senior Notes due 2030 - strike needs verification",
+        "https://www.prnewswire.com/news-releases/cleanspark-inc-announces-pricing-of-550-million-convertible-notes-offering-302331078.html",
+      expiration: "2030-06-15",
+      issuedDate: "2024-12-17",
+      notes: "0% Convertible Senior Notes due 2030. Rate: 67.5858 shares/$1,000. Capped call at $24.66 (100% premium). $145M share buyback from offering investors.",
     },
     {
       type: "convertible",
-      strikePrice: 15.50, // Estimated - Nov 2025 ~30% premium over ~$12 stock
-      potentialShares: 74_190_000, // $1.15B / $15.50 = ~74.2M shares
+      strikePrice: 19.16, // Verified: 27.5% premium over $15.03 close on Nov 10, 2025
+      potentialShares: 60_010_680, // 52.1832 × 1,150,000 = 60,010,680 shares
       faceValue: 1_150_000_000,
-      source: "8-K Nov 2025",
+      source: "8-K Nov 2025 + pricing PR",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000827876&type=8-K",
+        "https://www.prnewswire.com/news-releases/cleanspark-inc-announces-closing-of-upsized-1-15-billion-zero-coupon-convertible-notes-offering-302615019.html",
       expiration: "2032-06-15",
       issuedDate: "2025-11-13",
-      notes: "0% Convertible Senior Notes due 2032 - strike needs verification",
+      notes: "0% Convertible Senior Notes due 2032. Rate: 52.1832 shares/$1,000. $460M share buyback (30.6M shares) from offering investors.",
     },
   ],
 

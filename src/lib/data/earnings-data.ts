@@ -625,9 +625,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   //   FY Q3 (Apr-Jun) → Calendar Q2
   //   FY Q4 (Jul-Sep) → Calendar Q3
   //
-  // Q1 FY2026 (Oct-Dec 2025) → Calendar Q4 2025 - Upcoming
-  // Holdings from SEC DEF 14A Jan 22, 2026 (most recent available)
-  // Shares from same DEF 14A (record date Jan 9, 2026)
+  // Q1 FY2026 (Oct-Dec 2025) → Calendar Q4 2025 - Reported Feb 5, 2026
+  // Holdings: XBRL shows only noncurrent (1,648 BTC). Total ~10,716 BTC from fair values ($1.002B / ~$93.5K)
+  // Shares: 255,749,498 outstanding (298.1M issued - 42.4M treasury)
+  // Revenue: $181.2M, Net Loss: ($378.7M) from BTC fair value losses
   {
     ticker: "CLSK",
     fiscalYear: 2026,
@@ -636,20 +637,27 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-05",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 13099,  // SEC DEF 14A Jan 22, 2026
-    sharesAtQuarterEnd: 255_750_361,  // SEC DEF 14A (record date Jan 9, 2026)
-    holdingsPerShare: 0.0000512,
+    epsActual: -1.35,
+    revenueActual: 181_200_000,
+    netIncome: -378_711_000,
+    holdingsAtQuarterEnd: 10716,  // Estimated: ($830M + $172M) / $93,500 BTC price
+    sharesAtQuarterEnd: 255_749_498,  // 10-Q balance sheet (Dec 31, 2025)
+    holdingsPerShare: 0.0000419,  // 10,716 / 255,749,498
     source: "sec-filing",
-    status: "upcoming",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312526039538/",
+    status: "reported",
   },
   // Q4 FY2025 (Jul-Sep 2025) → Calendar Q3 2025
+  // XBRL: CryptoAssetNumberOfUnits = 2,583 BTC (noncurrent only)
+  // Total BTC from fair values: ($967M + $223M) / ~$63K ≈ ~10,556 BTC estimated
+  // Shares: 10-K cover page 255,583,445 (Nov 19, 2025) — but at quarter end Sep 30 was ~284M pre-buyback
   {
     ticker: "CLSK",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-12-09",
+    earningsDate: "2025-11-25",
     earningsTime: "AMC",
     epsActual: 0.12,
     epsEstimate: -0.10,
@@ -657,9 +665,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueEstimate: 164_000_000,
     netIncome: 246_300_000,
     holdingsAtQuarterEnd: 10556,
-    sharesAtQuarterEnd: 310_000_000,
-    holdingsPerShare: 0.0000341,
+    sharesAtQuarterEnd: 284_327_598,  // Balance sheet (Sep 30, 2025) from 10-Q
+    holdingsPerShare: 0.0000371,  // 10,556 / 284,327,598
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/",
     status: "reported",
   },
   // Q3 FY2025 (Apr-Jun 2025) → Calendar Q2 2025
