@@ -373,6 +373,12 @@ export function ProvenanceMetric({
                     >
                       {data.source.type === "regulatory" && (data.source as DocumentSource).sourceName 
                         ? `View on ${(data.source as DocumentSource).sourceName} ↗`
+                        : data.source.type === "company-website" && (data.source as DocumentSource).sourceName
+                        ? `${(data.source as DocumentSource).sourceName} ↗`
+                        : data.source.type === "company-website"
+                        ? "View Source ↗"
+                        : data.source.type === "press-release"
+                        ? "Press Release ↗"
                         : "SEC Filing ↗"}
                     </a>
                   ) : (
