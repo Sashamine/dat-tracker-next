@@ -392,19 +392,21 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // BTBT (Bit Digital) - ETH treasury company (formerly BTC miner)
-  // Verified 2026-01-29 via SEC 8-K Oct 2, 2025
-  // $165M 4.00% Convertible Senior Notes due 2030 (underwritten by Barclays, Cantor, B. Riley)
+  // Verified 2026-02-13 via Oct 8, 2025 PR: "$150 million convertible notes offering,
+  // which included the underwriters' full exercise of their over-allotment option"
+  // $135M upsized offering + $15M overallotment = $150M total (NOT $165M)
+  // 4.00% Convertible Senior Notes due 2030 (underwritten by Barclays, Cantor, B. Riley)
   BTBT: [
     {
       type: "convertible",
       strikePrice: 4.16,
-      potentialShares: 39_663_462,  // $165M / $4.16 (or 240.3846 shares per $1,000 × 165,000)
-      faceValue: 165_000_000,  // $150M + $15M overallotment
-      source: "8-K Oct 2, 2025",
+      potentialShares: 36_057_692,  // 240.3846 shares per $1,000 × 150,000 = 36,057,690
+      faceValue: 150_000_000,  // $135M upsized + $15M overallotment fully exercised
+      source: "8-K Oct 2, 2025 + PR Oct 8, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1710350/000121390025095533/0001213900-25-095533-index.htm",
+        "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
       expiration: "2030-10-01",
-      notes: "$165M 4% convertible notes - OTM at ~$2.35 stock (Jan 2026). Put date Oct 1, 2028.",
+      notes: "$150M 4% convertible notes. Conversion: 240.3846 shares/$1K = $4.16/share. Investors: Kraken, Jump, Jane Street. Put date ~Oct 1, 2028.",
     },
   ],
 
@@ -1447,6 +1449,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       issuedDate: "2026-02-13",
       notes: "25th Series warrants. 159,440 rights × 100 shares = 15.9M potential shares at ¥547 strike (~$3.53).",
     },
+  ],
+
+  // ABTC (American Bitcoin) - BTC miner/accumulator
+  // Post-merger with Gryphon Sep 3, 2025. 80% owned by Hut 8.
+  // TODO: Access Q3 2025 10-Q to extract dilutive instruments.
+  // The 899M shares figure from the 10-Q appears to be total shares (all classes).
+  // Pre-merger XBRL basic was 82.8M. Gap likely due to shares issued to Hut 8.
+  // Dilutive instruments (warrants, options) beyond those are unknown pending Q3 10-Q access.
+  // Leaving empty for now — dilutives will show as "None tracked" in UI.
+  ABTC: [
+    // TODO: Extract from Q3 2025 10-Q equity footnotes
+    // Merger 8-K (0001213900-25-083726) Item 3.02 indicates equity issuances
+    // Need to identify: warrants, stock options, RSUs, convertibles
   ],
 };
 

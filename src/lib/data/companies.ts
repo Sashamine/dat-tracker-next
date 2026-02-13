@@ -3,6 +3,7 @@ import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
 import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
+import { NAKA_PROVENANCE, NAKA_PROVENANCE_DEBUG, getNakaProvenance } from "./provenance/naka";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
 
@@ -177,8 +178,9 @@ export const ethCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
     datStartDate: "2025-01-01",
-    website: "https://bitdigital.com",
-    twitter: "https://twitter.com/Aboringcompany",
+    website: "https://bit-digital.com",
+    twitter: "https://x.com/BitDigital_BTBT",
+    investorRelationsUrl: "https://bit-digital.com/investors/",
     costBasisAvg: 3_045,
     costBasisSource: "PR Jan 7, 2026 - 'total average ETH acquisition price'",
     costBasisSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
@@ -209,13 +211,13 @@ export const ethCompanies: Company[] = [
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
     cashAsOf: "2025-09-30",
-    totalDebt: 207_000_000,  // $165M converts (Oct 2025) + $42M lease liabilities (SEC 10-Q Q3 2025)
-    debtSource: "SEC 8-K Oct 2, 2025 (converts) + 10-Q Q3 2025 (leases)",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390023033401/",
+    totalDebt: 150_000_000,  // $150M convertible notes ($135M upsized + $15M overallotment). Lease liabilities excluded (operating, offset by ROU assets).
+    debtSource: "PR Oct 8, 2025: '$150 million convertible notes offering, which included the underwriters' full exercise of their over-allotment option'",
+    debtSourceUrl: "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
     debtAsOf: "2025-10-02",
     otherInvestments: 427_300_000,  // WhiteFiber (WYFI) ~27M shares @ ~$15.83 (Jan 7, 2026 PR)
     leader: "Sam Tabar",
-    strategy: "89% staked, fully exited BTC. $165M 4% converts due 2030.",
+    strategy: "89% staked, fully exited BTC. $150M 4% converts due 2030. Majority stake in WhiteFiber (WYFI) AI/HPC.",
     notes: "Staking yield ~3.5% annualized. $427M WhiteFiber (WYFI) stake - AI infrastructure.",
   },
   {
@@ -1181,45 +1183,54 @@ export const btcCompanies: Company[] = [
   },
   // Removed: NDA.V (416 BTC), DMGI.V (403 BTC), LMFA (356 BTC) - below 500 BTC threshold
   {
+    // =========================================================================
+    // NAKA - Core financials from provenance/naka.ts (SEC-verified XBRL)
+    // =========================================================================
     id: "naka",
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
     asset: "BTC",
     tier: 1,
-    holdings: 5_398,
-    holdingsLastUpdated: "2025-11-12",
+    // HOLDINGS: from provenance (XBRL CryptoAssetNumberOfUnits, BTCMember)
+    holdings: NAKA_PROVENANCE.holdings?.value || 5_398,
+    holdingsLastUpdated: NAKA_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     datStartDate: "2025-05-12",
     costBasisAvg: 118_205,
-    costBasisSource: "SEC 8-K Nov 19, 2025",
+    costBasisSource: "SEC 8-K Nov 19, 2025: 5,765 BTC purchased at weighted avg $118,204.88",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     isMiner: false,
-    quarterlyBurnUsd: 8_000_000,
-    burnSource: "SEC 10-Q (filed 2025-05-08): NetCashUsedInOperatingActivities $865,083 (2025-01-01 to 2025-03-31)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225009328/",
-    burnAsOf: "2025-03-31",
+    // BURN: from provenance (Q3 2025 G&A + OpCF estimate)
+    quarterlyBurnUsd: NAKA_PROVENANCE.quarterlyBurn?.value || 8_000_000,
+    burnSource: "SEC 10-Q Q3 2025 XBRL: G&A $4.98M + conservative ramp estimate",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/",
+    burnAsOf: "2025-09-30",
+    // CAPITAL RAISE
+    capitalRaisedPipe: 710_000_000,  // $540M PIPE + $200M Yorkville converts (net ~$710M)
     avgDailyVolume: 50_000_000,
     hasOptions: true,
-    // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 511_555_864,  // SEC 10-Q Nov 2025: 439.85M shares + 71.7M pre-funded warrants = 511.56M fully diluted
-    sharesSource: "SEC 10-Q (filed 2025-11-19): EntityCommonStockSharesOutstanding = 439,850,889 as of 2025-11-14",
+    // SHARES: from provenance (XBRL EntityCommonStockSharesOutstanding + pre-funded warrants)
+    sharesForMnav: NAKA_PROVENANCE.sharesOutstanding?.value || 511_555_864,
+    sharesSource: "SEC 10-Q Q3 2025 XBRL: 439,850,889 common + 71,704,975 pre-funded warrants ($0.001 exercise)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/",
-    sharesAsOf: "2025-11-14",
-    // Debt: $210M Kraken BTC-backed loan only - Yorkville converts redeemed Oct 2025 via Two Prime, then refinanced Dec 2025
-    totalDebt: 210_000_000,  // Kraken loan Dec 2025 (replaced Two Prime which replaced Yorkville)
-    debtSource: "Kraken credit facility Dec 2025",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225009328/",
-    debtAsOf: "2025-12-31",
-    cashReserves: 24_185_083,  // SEC 10-Q Q3 2025 balance sheet
-    // TODO: No debt - review if cash should be restricted (not subtracted from EV)
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q",
+    sharesAsOf: NAKA_PROVENANCE_DEBUG.sharesDate,
+    // DEBT: from provenance (Kraken $210M BTC-backed loan Dec 2025)
+    totalDebt: NAKA_PROVENANCE.totalDebt?.value || 210_000_000,
+    debtSource: "SEC 8-K Dec 9, 2025: Kraken $210M USDT loan, 8% annual, BTC-collateralized, due Dec 4, 2026",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm",
+    debtAsOf: "2025-12-09",
+    // CASH: from provenance (XBRL CashAndCashEquivalentsAtCarryingValue)
+    cashReserves: NAKA_PROVENANCE.cashReserves?.value || 24_185_083,
+    cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/",
     cashAsOf: "2025-09-30",
     secCik: "0001946573",
     leader: "David Bailey (CEO, Bitcoin Magazine)",
-    strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies.",
-    notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). Share buyback authorized Dec 2025 as mNAV < 1.",
+    website: "https://nakamoto.com",
+    twitter: "@nakamotoinc",
+    strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies across finance, media, and advisory.",
+    notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). $5B ATM authorized. Share buyback authorized Dec 2025 as mNAV < 1. Strategic investments: Metaplanet $30M, Treasury BV $15M, FUTURE Holdings $6M.",
   },
   {
     // =========================================================================
@@ -1320,23 +1331,30 @@ export const btcCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
     datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
-    // costBasisAvg removed - needs verification
+    // costBasisAvg: not verified — needs Q3 10-Q access
     isMiner: true,
-    // btcMinedAnnual removed - not citable from SEC filings
     quarterlyBurnUsd: 8_052_000,  // Q3 2025 G&A
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=10-Q",
+    burnSourceUrl: `/filings/abtc/0001193125-25-281390?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
-    // Shares: 899,489,426 diluted per Q3 2025 10-Q
+    // Shares: 899,489,426 total shares per Q3 2025 10-Q (all classes, post-merger)
+    // Pre-merger XBRL basic was 82,802,406 (Q2 2025 cover)
+    // Post-merger includes Class A + Class B (Hut 8's 80% stake)
+    // TODO: Verify exact Class A/B breakdown from Q3 10-Q
     sharesForMnav: 899_489_426,
-    sharesSource: "SEC 10-Q (filed 2025-08-14): EntityCommonStockSharesOutstanding = 82,802,406 as of 2025-08-14",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000121390025076632/",
-    sharesAsOf: "2025-08-14",
+    sharesSource: "SEC 10-Q Q3 2025 (filed 2025-11-14): 899,489,426 total shares (all classes, post-merger)",
+    sharesSourceUrl: `/filings/abtc/0001193125-25-281390`,
+    sharesAsOf: "2025-09-30",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
-    strategy: "Pure-play Bitcoin miner focused on HODL strategy.",
-    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: 432 satoshis/share (Nov 5).",
+    strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
+    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~567 sats/share (Dec 14). Trump family co-founded. Pure-play BTC miner with HODL commitment.",
+    website: "https://abtc.com",
+    twitter: "https://x.com/ABTC",
+    // IR: https://abtc.com/investors
+    // Debt/Cash: Not verified from Q3 10-Q (SEC 403 blocked access)
+    // TODO: Verify debt and cash from Q3 2025 balance sheet
   },
   // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
   // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company

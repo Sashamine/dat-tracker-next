@@ -1064,9 +1064,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // Calendar year company (fiscal = calendar)
   // Merged with Gryphon Digital Mining Sep 3, 2025
   // SEC CIK: 0001755953
-  // Verified 2026-01-28 via SEC XBRL
+  // Verified 2026-02-13 via SEC XBRL + EFTS + PR Newswire
   //
-  // Q4 2025 - Upcoming (use Nov 5 press release data)
+  // Q4 2025 - Upcoming (use Dec 14 press release: 5,098 BTC)
   {
     ticker: "ABTC",
     fiscalYear: 2025,
@@ -1075,11 +1075,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 4_004,  // Nov 5, 2025 PR (latest verified)
-    sharesAtQuarterEnd: 899_489_426,  // Q3 2025 10-Q diluted
-    holdingsPerShare: 0.0000045,
+    holdingsAtQuarterEnd: 5_098,  // Dec 14, 2025 PR (Top 20 milestone)
+    sharesAtQuarterEnd: 899_489_426,  // Q3 2025 10-Q total shares (all classes)
+    holdingsPerShare: 0.00000567,  // 5,098 / 899,489,426 = ~567 sats/share
     source: "press-release",
-    sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html",
+    sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
     status: "upcoming",
   },
   // Q3 2025 (Jul-Sep) - First quarter post-merger
@@ -1091,11 +1091,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q XBRL
-    sharesAtQuarterEnd: 899_489_426,  // Diluted shares
-    holdingsPerShare: 0.0000038,
+    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q
+    sharesAtQuarterEnd: 899_489_426,  // Total shares (all classes, post-merger)
+    holdingsPerShare: 0.0000038,  // ~380 sats/share
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953&type=10-Q",
+    sourceUrl: `/filings/abtc/0001193125-25-281390`,
     status: "reported",
   },
 
@@ -1129,9 +1129,26 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     netIncome: -86_035_808,  // Includes $59.8M non-cash Nakamoto acquisition loss, $22.1M unrealized loss on digital assets
     holdingsAtQuarterEnd: 5_398,  // As of Nov 12, 2025 (per 8-K)
     sharesAtQuarterEnd: 511_555_864,  // 439.85M shares + 71.7M pre-funded warrants
-    holdingsPerShare: 0.0000106,
+    holdingsPerShare: 0.00001055,  // 5,398 / 511,555,864
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+    status: "reported",
+  },
+  // Q2 2025 - 10-Q filed Aug 5, 2025 (first quarter with BTC strategy; merger completed Aug 2025)
+  // Note: NAKA merger announced May 12, BTC purchases began, but merger not formally complete until Aug
+  {
+    ticker: "NAKA",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-05",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // BTC purchases started but merger not yet closed; pre-merger KindlyMD had no BTC
+    sharesAtQuarterEnd: 6_029_648,  // Pre-merger KindlyMD shares (XBRL Dec 2024 count used as proxy)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225022128/",
     status: "reported",
   },
 
@@ -1888,6 +1905,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Bit Digital (BTBT) ==========
   // Calendar year company (fiscal = calendar)
+  // ETH treasury strategy started mid-2025 (pivoted from BTC mining)
+  // Holdings from monthly press releases and quarterly 10-Q filings
   // Q4 2025 - Upcoming (holdings from Jan 7, 2026 press release)
   {
     ticker: "BTBT",
@@ -1897,65 +1916,62 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-12",
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 155_227,
-    sharesAtQuarterEnd: 323_792_059,
-    holdingsPerShare: 0.000479,
+    holdingsAtQuarterEnd: 155_227,  // Dec 31, 2025 PR
+    sharesAtQuarterEnd: 323_792_059,  // Dec 31, 2025 PR
+    holdingsPerShare: 0.000479,  // 155,227 / 323,792,059
     source: "press-release",
+    sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
     status: "upcoming",
   },
-  // Q3 2025
+  // Q3 2025 - Massive ETH accumulation via $150M convert proceeds
   {
     ticker: "BTBT",
     fiscalYear: 2025,
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-11-13",
+    earningsDate: "2025-11-14",
     earningsTime: "BMO",
-    epsActual: 0.03,
-    epsEstimate: -0.01,
-    revenueActual: 28_800_000,
-    revenueEstimate: 25_000_000,
-    netIncome: 4_100_000,
-    holdingsAtQuarterEnd: 140_000,
-    sharesAtQuarterEnd: 324_000_000,
-    holdingsPerShare: 0.000432,
+    epsActual: 0.47,  // Q3 earnings PR: "$0.47 per diluted share"
+    revenueActual: 30_500_000,  // Q3 PR: "$30.5 million" total revenue
+    netIncome: 146_700_000,  // Q3 PR: "$146.7 million" (includes $146M digital asset gains)
+    holdingsAtQuarterEnd: 122_187,  // Sep 30, 2025 monthly PR
+    sharesAtQuarterEnd: 323_674_831,  // XBRL Q3 10-Q cover (Nov 10, 2025)
+    holdingsPerShare: 0.000378,  // 122,187 / 323,674,831
     source: "sec-filing",
+    sourceUrl: "https://bit-digital.com/press-releases/bit-digital-inc-announces-financial-results-for-the-third-quarter-of-fiscal-year-2025/",
     status: "reported",
   },
-  // Q2 2025
+  // Q2 2025 - ETH pivot accelerated (30K ETH by end of quarter)
   {
     ticker: "BTBT",
     fiscalYear: 2025,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-08-13",
+    earningsDate: "2025-08-14",
     earningsTime: "BMO",
-    epsActual: -0.05,
-    epsEstimate: -0.03,
-    revenueActual: 22_500_000,
-    revenueEstimate: 24_000_000,
-    netIncome: -8_500_000,
-    holdingsAtQuarterEnd: 120_000,
-    sharesAtQuarterEnd: 315_000_000,
-    holdingsPerShare: 0.000381,
+    holdingsAtQuarterEnd: 30_663,  // Jun 30, 2025 (from Q3 earnings PR retrospective)
+    sharesAtQuarterEnd: 321_432_722,  // XBRL Q2 10-Q cover (Aug 13, 2025)
+    holdingsPerShare: 0.000095,  // 30,663 / 321,432,722
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025076608/",
     status: "reported",
   },
-  // Q1 2025
+  // Q1 2025 - Pre-pivot, minimal ETH holdings
   {
     ticker: "BTBT",
     fiscalYear: 2025,
     fiscalQuarter: 1,
     calendarYear: 2025,
     calendarQuarter: 1,
-    earningsDate: "2025-05-13",
+    earningsDate: "2025-05-15",
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 85_000,
-    sharesAtQuarterEnd: 207_780_871,
-    holdingsPerShare: 0.000409,
+    holdingsAtQuarterEnd: 10_000,  // Estimated pre-pivot. ETH strategy started Jun 2025.
+    sharesAtQuarterEnd: 207_780_871,  // XBRL Q1 10-Q cover (May 12, 2025)
+    holdingsPerShare: 0.000048,  // 10,000 / 207,780,871
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/",
     status: "reported",
   },
 
