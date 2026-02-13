@@ -500,12 +500,15 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
-  // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
+  // Verified 2026-02-13 via SEC XBRL Q3 2025 (CIK 0001610853)
   // Q3 earnings press release: "75.9 million common shares and pre-funded warrants outstanding"
-  // Basic shares (Nov 17): 41.3M → Pre-funded warrants: ~34.6M
+  // Basic shares (Nov 17): 41,301,400 → Pre-funded warrants: ~34,598,600 @ $0.00001
   // NOTE: Pre-funded warrants ALREADY INCLUDED in sharesForMnav (75.9M)
   // DO NOT add them here - would cause double-counting in mNAV calculation
   // sharesForMnav = 41.3M basic + 34.6M pre-funded = 75.9M FD
+  //
+  // HSDTW (public warrants): Listed on NASDAQ. Strike price and expiration TBD.
+  // TODO: Research HSDTW warrant terms from 10-Q/10-K text and add here.
   HSDT: [],
 
   // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)

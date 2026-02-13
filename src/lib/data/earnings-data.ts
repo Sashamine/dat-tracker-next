@@ -2188,11 +2188,43 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-18",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL: 1,393,804 unrestricted + 345,551 restricted
+    holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL CryptoAssetNumberOfUnits: 1,739,355 SOL
     sharesAtQuarterEnd: 75_900_000,  // Q3 press release: "75.9M common shares and pre-funded warrants"
-    holdingsPerShare: 0.0229,  // 1.74M / 75.9M
+    holdingsPerShare: 0.0229,  // 1,739,355 / 75,900,000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001610853&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
+    status: "reported",
+  },
+  // Q2 2025 - Reported (10-Q Aug 14, 2025) — SOL treasury just beginning
+  {
+    ticker: "HSDT",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // SOL pivot not yet closed; no CryptoAssetNumberOfUnits in Q2 XBRL
+    sharesAtQuarterEnd: 1_077_257,  // XBRL EntityCommonStockSharesOutstanding (pre-PIPE, no PFWs yet)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025011568/",
+    status: "reported",
+  },
+  // Q1 2025 - Reported (10-Q May 1, 2025) — Still medical device company
+  {
+    ticker: "HSDT",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-01",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-pivot, no SOL holdings
+    sharesAtQuarterEnd: 7_920_928,  // XBRL EntityCommonStockSharesOutstanding (pre-PIPE)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025006120/",
     status: "reported",
   },
 
@@ -2262,21 +2294,39 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // SOL treasury began April 2025 with Arthur Hayes advisory
   // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
   //
-  // FY 2026 Q2 (Oct-Dec 2025) = CY Q4 2025 - Upcoming
+  // FY 2026 Q3 (Jan-Mar 2026) = CY Q1 2026 - Upcoming
+  {
+    ticker: "UPXI",
+    fiscalYear: 2026,
+    fiscalQuarter: 3,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15",  // Estimated 10-Q filing (~45 days after quarter end)
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Not yet reported
+    sharesAtQuarterEnd: 69_760_581,  // Latest known (Feb 9, 2026)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=10-Q",
+    status: "upcoming",
+  },
+  // FY 2026 Q2 (Oct-Dec 2025) = CY Q4 2025 - Reported (10-Q Feb 10, 2026)
   {
     ticker: "UPXI",
     fiscalYear: 2026,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-14",  // Estimated 10-Q filing
+    earningsDate: "2026-02-10",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 2_174_583,  // Jan 5, 2026 8-K (most recent before Q-end)
-    sharesAtQuarterEnd: 62_178_230,  // 58.9M + 3.29M PIPE shares
-    holdingsPerShare: 0.0350,
+    holdingsAtQuarterEnd: 2_173_204,  // 10-Q Note 5: "Approximate number of Solana tokens held" as of Dec 31, 2025
+    sharesAtQuarterEnd: 62_796_362,  // 10-Q balance sheet: 62,796,362 issued (416,226 treasury)
+    holdingsPerShare: 0.0346,  // 2,173,204 / 62,796,362
+    revenue: 8_052_040,  // Total revenue (product $2.9M + staking $5.1M)
+    netIncome: -178_924_930,  // Net loss (includes $164.5M unrealized digital asset losses)
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000137/upxi_ex991.htm",
-    status: "upcoming",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    status: "reported",
   },
   // FY 2026 Q1 (Jul-Sep 2025) = CY Q3 2025 - Reported (10-Q Nov 12, 2025)
   {
@@ -2287,27 +2337,43 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-12",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 2_018_419,  // SEC 10-Q Sep 30, 2025
-    sharesAtQuarterEnd: 58_888_756,  // SEC 10-Q basic shares
-    holdingsPerShare: 0.0343,
+    holdingsAtQuarterEnd: 2_018_419,  // SEC 10-Q Sep 30, 2025 (from 10-K FY2025 context)
+    sharesAtQuarterEnd: 58_888_756,  // SEC XBRL: EntityCommonStockSharesOutstanding as of Sep 23, 2025
+    holdingsPerShare: 0.0343,  // 2,018,419 / 58,888,756
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/upxi_10q.htm",
     status: "reported",
   },
-  // FY 2025 Q4 (Apr-Jun 2025) = CY Q2 2025 - First full SOL quarter
+  // FY 2025 Q4 (Apr-Jun 2025) = CY Q2 2025 - First full SOL quarter - Reported (10-K Sep 24, 2025)
   {
     ticker: "UPXI",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-09-26",  // 8-K results announcement
+    earningsDate: "2025-09-24",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 735_692,  // Holdings history
-    sharesAtQuarterEnd: 28_000_000,  // Approximate from holdings history
-    holdingsPerShare: 0.0263,
+    holdingsAtQuarterEnd: 744_026,  // 10-K FY2025 Note 5: "Approximate number of Solana tokens held" as of Jun 30, 2025
+    sharesAtQuarterEnd: 38_270_571,  // 10-K: common shares issued as of Jun 30, 2025 (from equity table)
+    holdingsPerShare: 0.0194,  // 744,026 / 38,270,571
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225006996/upxi_10k.htm",
+    status: "reported",
+  },
+  // FY 2025 Q3 (Jan-Mar 2025) = CY Q1 2025 - SOL strategy began (10-Q May 16, 2025)
+  {
+    ticker: "UPXI",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-16",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // SOL strategy began in April 2025; no holdings at Mar 31
+    sharesAtQuarterEnd: 1_320_924,  // XBRL: 1,320,924 shares as of Feb 14, 2025 (pre-reverse-split adjusted, pre-SOL pivot)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225003866/upxi_10q.htm",
     status: "reported",
   },
 

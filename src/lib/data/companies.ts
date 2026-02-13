@@ -1415,34 +1415,41 @@ export const solCompanies: Company[] = [
     tier: 1,
     website: "https://solanacompany.co",
     twitter: "https://x.com/SolanaCompany1",
-    holdings: 2_300_000,  // Oct 29, 2025 press release - 2.3M SOL
+    holdings: 2_300_000,  // Oct 29, 2025 8-K press release - ~2.3M SOL
     holdingsLastUpdated: "2025-10-29",
-    holdingsSource: "press-release",
+    holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
     datStartDate: "2025-05-01",
-    // costBasisAvg removed - needs verification
     stakingPct: 0.95,  // "commenced native staking with acquired SOL in September of 2025"
     stakingMethod: "Native staking via third-party validators (Anchorage Digital custody)",
     stakingSource: "SEC 10-Q Nov 18, 2025: $342K staking rewards revenue, ~7% native staking yield. Commenced native staking Sep 2025.",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
     stakingAsOf: "2025-09-30",
     stakingVerified: true,
-    stakingLastAudited: "2026-02-05",
+    stakingLastAudited: "2026-02-13",
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 4_646_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025006120/",
+    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense (Jul-Sep 2025)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 75_900_000,  // Q3 2025 10-Q press release: "75.9 million common shares and pre-funded warrants outstanding"
-    sharesSource: "SEC 10-Q (filed 2025-11-18): EntityCommonStockSharesOutstanding = 41,301,400 as of 2025-11-17",
+    sharesForMnav: 75_900_000,  // 41.3M basic + ~34.6M pre-funded warrants @ $0.00001. PFWs are economically equivalent to shares.
+    sharesSource: "Q3 2025 earnings press release: '75.9M common shares and pre-funded warrants outstanding'. XBRL basic = 41,301,400 + ~34.6M PFWs @ $0.00001",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
     sharesAsOf: "2025-11-17",
+    totalDebt: 0,  // No LongTermDebt in XBRL
+    debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt.",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
+    debtAsOf: "2025-09-30",
+    cashReserves: 124_051_000,  // XBRL CashAndCashEquivalentsAtCarryingValue Sep 30
+    cashSource: "XBRL CashAndCashEquivalentsAtCarryingValue Q3 2025. Mostly $500M PIPE proceeds being deployed into SOL.",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
+    cashAsOf: "2025-09-30",
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
-    strategy: "SOL treasury via Anchorage Digital custody",
-    notes: "Partnered with Solana Foundation. sharesForMnav includes pre-funded warrants.",
+    strategy: "SOL treasury via Anchorage Digital custody. Partnered with Solana Foundation.",
+    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav includes ~34.6M pre-funded warrants @ $0.00001 (economically equivalent to shares). $500M PIPE closed Sep 15, 2025.",
   },
   {
     id: "dfdv",
@@ -1453,10 +1460,10 @@ export const solCompanies: Company[] = [
     tier: 1,
     website: "https://defidevcorp.com",
     twitter: "https://x.com/defidevcorp",
-    holdings: 2_221_329,  // Q4 2025 business update
+    holdings: 2_221_329,  // Q4 2025 business update: "holds 2,221,329 SOL and SOL equivalents"
     holdingsLastUpdated: "2026-01-01",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1805526&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/",
     datStartDate: "2025-04-01",
     // costBasisAvg removed - needs verification
     stakingPct: 0.90,  // Stakes SOL + operates validators; $4.85M in validator/staking rewards (9mo)
@@ -1477,10 +1484,10 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
-    sharesForMnav: 29_892_800,  // Company press release Jan 5, 2026 (Q4 business update); SEC 8-K Nov 13, 2025 showed 31.4M pre-buyback
-    sharesSource: "SEC 10-Q (filed 2025-11-19): EntityCommonStockSharesOutstanding = 31,401,212 as of 2025-11-19",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/",
-    sharesAsOf: "2025-11-19",
+    sharesForMnav: 29_892_800,  // Q4 business update Jan 5, 2026: "29,892,800 shares outstanding as of January 1, 2026"
+    sharesSource: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update — shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/",
+    sharesAsOf: "2026-01-01",
     totalDebt: 186_000_000,  // $186M: $134M converts (OTM) + $52M SOL/DeFi loans (defidevcorp.com/dashboard Jan 2026)
     debtSource: "SEC 10-Q Q3 2025: $134M convertible notes + defidevcorp.com dashboard for $52M SOL/DeFi loans",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/",
@@ -1501,46 +1508,45 @@ export const solCompanies: Company[] = [
     secCik: "0001775194",
     asset: "SOL",
     tier: 1,
-    holdings: 2_174_583,  // Jan 5, 2026 - was 2,106,989
+    holdings: 2_174_583,  // Jan 5, 2026 press release (10-Q Dec 31 shows 2,173,204; Hivemind adds 265,500 locked)
     holdingsLastUpdated: "2026-01-05",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
     datStartDate: "2025-04-01",
-    // costBasisAvg removed - needs verification
-    stakingPct: 0.95,  // 8-K confirms SOL is "locked and staked" — transfer required no unstaking
+    stakingPct: 0.95,  // 10-Q Note 5: "approximately 95% of its Solana treasury staked as of December 31, 2025"
     stakingMethod: "Native staking (locked/staked SOL)",
-    stakingSource: "SEC 8-K Jan 14, 2026: 'locked and staked nature of the Digital Assets' — transfer effected without unstaking.",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000207/upxi_8k.htm",
-    stakingAsOf: "2026-01-14",
+    stakingSource: "SEC 10-Q Q2 FY2026 Note 5: '95% of its Solana treasury staked'. 8-K Jan 14: 'locked and staked nature of the Digital Assets'.",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    stakingAsOf: "2025-12-31",
     stakingVerified: true,
-    stakingLastAudited: "2026-02-05",
-    stakingApy: 0.08,
-    quarterlyBurnUsd: 2_500_000,
-    burnSource: "SEC 10-Q (filed 2025-11-12): NetCashUsedInOperatingActivities $9,780,221 (2025-07-01 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
-    burnAsOf: "2025-09-30",
+    stakingLastAudited: "2026-02-13",
+    stakingApy: 0.08,  // 65,720 SOL staking revenue / ~2M avg SOL / 6 months ≈ 8% APY
+    quarterlyBurnUsd: 6_230_944,  // 10-Q: $12.46M OpCF used in 6 months / 2 (includes digital asset strategy costs)
+    burnSource: "SEC 10-Q (filed 2026-02-10): Net cash used in operating activities $(12,461,887) for 6 months ended Dec 31, 2025",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    burnAsOf: "2025-12-31",
     capitalRaisedAtm: 100_000_000,
-    capitalRaisedAtmSource: "SEC S-3 shelf registration",
+    capitalRaisedAtmSource: "SEC S-3 shelf registration (effective Jan 8, 2026)",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=S-3",
-    sharesForMnav: 61_761_756,  // 58.9M (10-Q Sep) + 3.29M (Dec PIPE) - 0.42M (buybacks) = 61.76M
-    sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 59,918,609 as of 2025-11-12",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
-    sharesAsOf: "2025-11-12",
-    totalDebt: 200_000_000,  // $200M: $150M convert @$4.25 + $36M convert @$2.39 + $14M other
-    debtSource: "SEC 10-Q Q3 2025: Convertible notes payable $186M + other debt",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/",
-    debtAsOf: "2025-09-30",
-    cashReserves: 2_200_000,  // $2.2M cash (SEC 10-Q Sep 2025)
-    restrictedCash: 2_200_000,  // Operating capital - not excess
-    cashSource: "SEC 10-Q Sep 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793222007297/",
-    cashAsOf: "2025-09-30",
-    capitalRaisedPipe: 210_000_000,  // $200M (prior) + $10M (Dec 2025 PIPE)
+    sharesForMnav: 69_760_581,  // 10-Q cover page as of Feb 9, 2026 (includes Feb 2026 offering of 6.34M + RSU vesting)
+    sharesSource: "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    sharesAsOf: "2026-02-09",
+    totalDebt: 254_632_756,  // $150M convert @$4.25 + $36M Hivemind @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
+    debtSource: "SEC 10-Q Q2 FY2026: Convertible $150M + Hivemind $36M (subsequent) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    debtAsOf: "2025-12-31",
+    cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet
+    restrictedCash: 1_616_765,  // Operating capital - not excess
+    cashSource: "SEC 10-Q Q2 FY2026 balance sheet",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    cashAsOf: "2025-12-31",
+    capitalRaisedPipe: 217_400_000,  // $47M (Jul 2025) + $151M converts (Jul 2025) + $10M (Dec PIPE) + $7.4M (Feb 2026 offering)
     avgDailyVolume: 120_000_000,
     hasOptions: true,
-    leader: "Arthur Hayes (advisory)",
-    strategy: "SOL treasury + consumer brands. 95% staked. Discounted locked token purchases.",
-    notes: "$50M buyback approved Nov 2025. Dec 2025: $10M PIPE + 3.29M warrants @$4. Jan 2026: $36M Hivemind convertible for locked SOL. Verified 2026-01-29.",
+    leader: "Allan Marshall (CEO), Arthur Hayes (advisory)",
+    strategy: "SOL treasury + consumer brands. 95% staked. Discounted locked token purchases. Three value drivers: capital issuance, staking yield, locked SOL discounts.",
+    notes: "$50M buyback approved Nov 2025 ($800K executed). Feb 2026: 6.34M shares + warrants @$1.50. Dec warrants amended from $4→$2.83. Jan 2026: $36M Hivemind for 265.5K locked SOL. GSR asset mgr terminated (arbitration). Verified 2026-02-13.",
   },
   {
     id: "stke",
