@@ -4,7 +4,7 @@
 import { useMemo, useState } from "react";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
-import { DJT_PROVENANCE, DJT_CIK, DJT_CAPITAL_RAISE, DJT_BALANCE_SHEET, DJT_INCOME_STATEMENT, DJT_TODO } from "@/lib/data/provenance/djt";
+import { DJT_PROVENANCE, DJT_CIK, DJT_CAPITAL_RAISE, DJT_BALANCE_SHEET, DJT_TODO } from "@/lib/data/provenance/djt";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
@@ -174,26 +174,9 @@ export function DJTCompanyView({ company, className = "" }: Props) {
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 {DJT_PROVENANCE.quarterlyBurn&&<ProvenanceMetric label="Quarterly Burn" data={DJT_PROVENANCE.quarterlyBurn} format="currency" subLabel="9M 2025 OpCF: +$2.6M" tooltip="Operations are cash-flow neutral/positive. 9M 2025 OpCF was +$2.6M." ticker="djt" />}
 
-<div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
-<p className="text-sm text-green-700 dark:text-green-400 font-semibold">Restricted Cash</p>
-<p className="text-2xl font-bold text-green-600">${(DJT_BALANCE_SHEET.restrictedCash/1e6).toFixed(0)}M</p>
-<p className="text-xs text-green-500">From convertible proceeds</p>
-<a href={`/filings/djt/0001140361-25-040977?tab=document&q=${encodeURIComponent("335,838.8")}`} className="text-xs text-green-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
-</div>
-
-<div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
-<p className="text-sm text-purple-700 dark:text-purple-400 font-semibold">Revenue (Q3 2025)</p>
-<p className="text-2xl font-bold text-purple-600">${(DJT_INCOME_STATEMENT.revenue.q3_2025/1e6).toFixed(1)}M</p>
-<p className="text-xs text-purple-500">Truth Social (~$1M/qtr)</p>
-<a href={`/filings/djt/0001140361-25-040977?tab=document&q=${encodeURIComponent("972.9")}`} className="text-xs text-purple-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
-</div>
-
-<div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800">
-<p className="text-sm text-red-700 dark:text-red-400 font-semibold">Net Loss (Q3 2025)</p>
-<p className="text-2xl font-bold text-red-600">-${(Math.abs(DJT_INCOME_STATEMENT.profitLoss.q3_2025)/1e6).toFixed(1)}M</p>
-<p className="text-xs text-red-500">Includes crypto FV changes</p>
-<a href={`/filings/djt/0001140361-25-040977?tab=document&q=${encodeURIComponent("54,848.5")}`} className="text-xs text-red-600 hover:underline mt-1 inline-block">Source: 10-Q →</a>
-</div>
+{DJT_PROVENANCE.restrictedCash&&<ProvenanceMetric label="Restricted Cash" data={DJT_PROVENANCE.restrictedCash} format="currency" subLabel="From convertible proceeds" tooltip="$336M restricted from convertible note proceeds. Total cash = $502M." ticker="djt" />}
+{DJT_PROVENANCE.revenueQ3&&<ProvenanceMetric label="Revenue (Q3 2025)" data={DJT_PROVENANCE.revenueQ3} format="currency" subLabel="Truth Social (~$1M/qtr)" tooltip="Truth Social revenue. Minimal relative to treasury strategy." ticker="djt" />}
+{DJT_PROVENANCE.netLossQ3&&<ProvenanceMetric label="Net Loss (Q3 2025)" data={DJT_PROVENANCE.netLossQ3} format="currency" subLabel="Includes crypto FV changes" tooltip="Net loss includes crypto fair value changes. Operating loss was -$57.7M." ticker="djt" />}
 
 {es&&es.diluted>es.basic&&<div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
 <p className="text-sm text-amber-700 dark:text-amber-400">ITM Dilution</p>

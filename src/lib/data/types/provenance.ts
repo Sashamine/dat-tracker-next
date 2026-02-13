@@ -168,6 +168,15 @@ export interface ProvenanceFinancials {
   
   /** Preferred equity */
   preferredEquity?: ProvenanceValue<number>;
+  
+  /** Restricted cash */
+  restrictedCash?: ProvenanceValue<number>;
+  
+  /** Revenue (latest quarter) */
+  revenueQ3?: ProvenanceValue<number>;
+  
+  /** Net loss (latest quarter, stored as positive) */
+  netLossQ3?: ProvenanceValue<number>;
 }
 
 // ============================================================================

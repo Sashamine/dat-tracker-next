@@ -212,6 +212,72 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
+  // RESTRICTED CASH - from XBRL
+  // $336M restricted from convertible proceeds
+  // =========================================================================
+  restrictedCash: pv(
+    RESTRICTED_CASH,
+    xbrlSource({
+      fact: "us-gaap:RestrictedCash",
+      searchTerm: "335,838.8",
+      rawValue: RESTRICTED_CASH,
+      unit: "USD",
+      periodType: "instant",
+      periodEnd: Q3_2025_PERIOD_END,
+      cik: DJT_CIK,
+      accession: Q3_2025_10Q_ACCESSION,
+      filingType: "10-Q",
+      filingDate: Q3_2025_10Q_FILED,
+      documentAnchor: "Restricted cash",
+    }),
+    "Restricted cash from convertible note proceeds. Total cash = $502M ($166M unrestricted + $336M restricted)."
+  ),
+
+  // =========================================================================
+  // REVENUE (Q3 2025)
+  // =========================================================================
+  revenueQ3: pv(
+    REVENUE_Q3_2025,
+    xbrlSource({
+      fact: "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      searchTerm: "972.9",
+      rawValue: REVENUE_Q3_2025,
+      unit: "USD",
+      periodType: "duration",
+      periodStart: "2025-07-01",
+      periodEnd: "2025-09-30",
+      cik: DJT_CIK,
+      accession: Q3_2025_10Q_ACCESSION,
+      filingType: "10-Q",
+      filingDate: Q3_2025_10Q_FILED,
+      documentAnchor: "Net sales",
+    }),
+    "Truth Social revenue (~$1M/quarter). Minimal relative to treasury strategy."
+  ),
+
+  // =========================================================================
+  // NET LOSS (Q3 2025)
+  // =========================================================================
+  netLossQ3: pv(
+    Math.abs(PROFIT_LOSS_Q3_2025),
+    xbrlSource({
+      fact: "us-gaap:ProfitLoss",
+      searchTerm: "54,848.5",
+      rawValue: PROFIT_LOSS_Q3_2025,
+      unit: "USD",
+      periodType: "duration",
+      periodStart: "2025-07-01",
+      periodEnd: "2025-09-30",
+      cik: DJT_CIK,
+      accession: Q3_2025_10Q_ACCESSION,
+      filingType: "10-Q",
+      filingDate: Q3_2025_10Q_FILED,
+      documentAnchor: "Net loss",
+    }),
+    "Includes crypto fair value changes. Operating loss was -$57.7M."
+  ),
+
+  // =========================================================================
   // PREFERRED EQUITY - None
   // =========================================================================
   preferredEquity: pv(
