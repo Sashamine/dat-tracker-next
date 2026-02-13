@@ -371,7 +371,8 @@ export default function CompanyPage() {
                 <span>Earnings</span>
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
               </Link>
-              {displayCompany.website && (
+              {/* Hide website/twitter for companies with custom views (they show in Strategy & Overview) */}
+              {displayCompany.website && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX"].includes(displayCompany.ticker) && (
                 <a
                   href={displayCompany.website}
                   target="_blank"
@@ -382,7 +383,7 @@ export default function CompanyPage() {
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
               )}
-              {displayCompany.twitter && (
+              {displayCompany.twitter && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX"].includes(displayCompany.ticker) && (
                 <a
                   href={displayCompany.twitter}
                   target="_blank"
@@ -447,7 +448,8 @@ export default function CompanyPage() {
           </div>
         )}
 
-        {/* MSTR/BMNR/MARA/XXI/Metaplanet/SBET/ASST: Use fully provenance-tracked views */}
+        {/* Custom provenance views handle their own website/twitter links in Strategy & Overview */}
+        {/* MSTR/BMNR/MARA/XXI/Metaplanet/SBET/ASST/AVX: Use fully provenance-tracked views */}
         {displayCompany.ticker === "MSTR" ? (
           <MSTRCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "BMNR" ? (
