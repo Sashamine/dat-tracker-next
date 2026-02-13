@@ -808,7 +808,7 @@ const FLD_HISTORY: HoldingsSnapshot[] = [
 // ⚠️ No standard crypto XBRL tags — BTC count from 8-K press releases + balance sheet analysis
 const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 199_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 2_343_901_700, source: "8-K Treasury deal announced", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 11_242, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.00004015, totalDebt: 950_769_100, cash: 1_343_901_700, source: "Q2 2025 10-Q (estimated — bulk BTC purchased by Jul 21)", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 0, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 1_343_901_700, source: "Q2 2025 10-Q — raise closed but BTC purchased in July", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 11_542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.00004122, totalDebt: 950_769_100, cash: 166_072_700, source: "Q3 2025 10-Q: 11,542.16 BTC (cost $1.368B, FV $1.320B)", sharesSource: "XBRL: EntityCommonStockSharesOutstanding", sourceUrl: "/filings/djt/0001140361-25-040977", sourceType: "sec-filing" },
 ];
 
