@@ -369,6 +369,9 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
           holdingsSourceUrl={PROV_URLS.holdings}
           holdingsSource={MSTR_PROVENANCE.holdings?.source?.type}
           holdingsAsOf={PROV_URLS.holdingsDate}
+          preferredSourceUrl={PROV_URLS.preferred}
+          preferredSource={MSTR_PROVENANCE.preferredEquity?.source?.type}
+          preferredAsOf={PROV_URLS.preferredDate}
         />
         </div>
       )}
