@@ -565,12 +565,29 @@ export async function GET(request: NextRequest) {
         }
       }, 60000);
 
+      // Auto-close after 15 minutes to avoid dev server timeout (~20min).
+      // Client should auto-reconnect via EventSource.
+      const MAX_STREAM_LIFETIME = 15 * 60 * 1000;
+      const lifetimeTimeout = setTimeout(() => {
+        console.log("[Stream] Closing after 15min lifetime (client will auto-reconnect)");
+        isAborted = true;
+        clearInterval(stockPollInterval);
+        clearInterval(cryptoInterval);
+        clearInterval(fullRefreshInterval);
+        try {
+          controller.close();
+        } catch (e) {
+          // Already closed
+        }
+      }, MAX_STREAM_LIFETIME);
+
       // Handle client disconnect
       request.signal.addEventListener("abort", () => {
         isAborted = true;
         clearInterval(stockPollInterval);
         clearInterval(cryptoInterval);
         clearInterval(fullRefreshInterval);
+        clearTimeout(lifetimeTimeout);
         try {
           controller.close();
         } catch (e) {
