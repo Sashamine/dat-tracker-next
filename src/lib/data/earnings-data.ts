@@ -2182,27 +2182,46 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Forward Industries (FWDI) ==========
   // Fiscal year end: September 30
-  // $1.65B PIPE closed Sep 11, 2025 - SOL treasury began
-  // FY 2025 Q4 (Jul-Sep 2025) = First quarter with SOL holdings
-  // Verified 2026-01-28 via SEC XBRL
+  // $1.65B PIPE closed Sep 11, 2025 — SOL treasury began
+  // Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens)
+  // Shares = common + pre-funded warrants (PFWs @ $0.00001, included in basic)
+  // Verified 2026-02-13 via 10-Q Q1 FY2026 (filed 2026-02-12)
   //
-  // FY 2026 Q1 (Oct-Dec 2025) - Upcoming, Dec shareholder update available
+  // FY 2026 Q2 (Jan-Mar 2026) - Upcoming
+  {
+    ticker: "FWDI",
+    fiscalYear: 2026,
+    fiscalQuarter: 2,
+    calendarYear: 2026,
+    calendarQuarter: 1,
+    earningsDate: "2026-05-15",
+    earningsTime: "AMC",
+    source: "sec-filing",
+    status: "upcoming",
+  },
+  // FY 2026 Q1 (Oct-Dec 2025) - 10-Q filed Feb 12, 2026
+  // 10-Q: 4,973,000 raw SOL + $201.6M in LSTs. Website Jan 15: 6,979,967 SOL-eq.
+  // Shares: 84,924,272 common at Dec 31 + 12,864,602 PFWs = 97,788,874
   {
     ticker: "FWDI",
     fiscalYear: 2026,
     fiscalQuarter: 1,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-14",
+    earningsDate: "2026-02-12",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 6_921_342,  // Dec 1, 2025 shareholder update
-    sharesAtQuarterEnd: 112_505_114,  // 86.1M basic + 26.4M pre-funded warrants
-    holdingsPerShare: 0.0615,
-    source: "press-release",
-    sourceUrl: "https://www.forwardindustries.com/",
-    status: "upcoming",
+    revenueActual: 21_435_250,   // $17.4M staking + $4.1M design
+    netIncome: -585_651_086,     // Massive unrealized SOL FV loss (non-cash)
+    holdingsAtQuarterEnd: 4_973_000,  // Raw SOL per 10-Q (+ ~2M in LST form)
+    sharesAtQuarterEnd: 97_788_874,   // 84,924,272 common + 12,864,602 PFWs at Dec 31
+    holdingsPerShare: 0.05085,        // 4,973,000 / 97,788,874 (raw SOL only)
+    source: "sec-filing",
+    sourceUrl: `/filings/fwdi/0001683168-26-000960`,
+    status: "reported",
   },
-  // FY 2025 Q4 (Jul-Sep 2025) - First SOL quarter
+  // FY 2025 Q4 (Jul-Sep 2025) - First SOL quarter (10-K)
+  // 6,854,000 SOL per XBRL CryptoAssetNumberOfUnits
+  // Shares: 86,145,514 common + ~13.8M PFWs = ~99.9M (using 10-K common + total PFW issued)
   {
     ticker: "FWDI",
     fiscalYear: 2025,
@@ -2211,11 +2230,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-12-11",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 6_854_000,  // SEC XBRL CryptoAssetNumberOfUnits
-    sharesAtQuarterEnd: 112_505_114,  // 86.1M basic + 26.4M pre-funded warrants
-    holdingsPerShare: 0.0609,
+    revenueActual: 18_187_525,   // FY2025 total (mostly design; staking started late Sep)
+    netIncome: -166_974_340,     // FY2025 total
+    holdingsAtQuarterEnd: 6_854_000,  // XBRL CryptoAssetNumberOfUnits
+    sharesAtQuarterEnd: 99_960_397,   // 86,145,514 common + 13,814,883 PFWs issued
+    holdingsPerShare: 0.06857,        // 6,854,000 / 99,960,397
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K",
+    sourceUrl: `/filings/fwdi/0001683168-25-009068`,
     status: "reported",
   },
 

@@ -543,20 +543,18 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== ADDITIONAL SOL COMPANIES ====================
 
-// Forward Industries (FWDI) - World's leading SOL treasury, launched Sept 2025
-// Sep 2025: $1.65B PIPE resulted in significant dilution (~86M FD shares)
-// Debt-free after PIPE raise
 // Forward Industries (FWDI) - World's largest SOL treasury
 // Fiscal year end: September 30. $1.65B PIPE closed Sep 11, 2025.
 // SEC CIK: 0000038264
-// DILUTION: 86.1M basic shares + 26.4M pre-funded warrants @ $0.03 = 112.5M FD shares
-// Verified 2026-01-28 via SEC XBRL
+// Shares = common + pre-funded warrants (PFWs @ $0.00001, included in basic EPS)
+// Holdings = SOL-equivalent where noted (raw SOL + fwdSOL liquid staking tokens)
+// Shares declining via $1B buyback program (Nov 2025 – Sep 2027)
+// Verified 2026-02-13 via 10-Q Q1 FY2026 (filed 2026-02-12)
 const FWDI_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-09-11", holdings: 6_834_506, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0608, source: "8-K Initial PIPE close", sharesSource: "86.1M basic + 26.4M pre-funded warrants", sourceUrl: "/filings/fwdi/0001683168-25-007036", sourceType: "sec-filing" },
-  { date: "2025-09-30", holdings: 6_854_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0609, stockPrice: 326.42, source: "SEC 10-K FY2025 XBRL", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000038264&type=10-K", sourceType: "sec-filing" },
-  { date: "2025-11-15", holdings: 6_900_000, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0613, source: "8-K SOL holdings update", sourceUrl: "/filings/fwdi/0001683168-25-008454", sourceType: "sec-filing" },
-  { date: "2025-12-01", holdings: 6_921_342, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0615, source: "8-K Shareholder update", sourceUrl: "/filings/fwdi/0001683168-25-008941", sourceType: "sec-filing" },
-  { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 112_505_114, holdingsPerShare: 0.0620, source: "Press release", sourceUrl: "https://www.forwardindustries.com/", sourceType: "press-release" },
+  { date: "2025-09-15", holdings: 6_822_000, sharesOutstandingDiluted: 99_960_397, holdingsPerShare: 0.06825, source: "8-K: Initial SOL purchases at avg $232/SOL", sharesSource: "86.1M common + 13.8M PFWs issued", sourceUrl: "/filings/fwdi/0001683168-25-006963", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 6_854_000, sharesOutstandingDiluted: 99_960_397, holdingsPerShare: 0.06857, source: "10-K XBRL: CryptoAssetNumberOfUnits (cost $1.59B)", sharesSource: "86,145,514 common + 13,814,883 PFWs", sourceUrl: "/filings/fwdi/0001683168-25-009068", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 4_973_000, sharesOutstandingDiluted: 97_788_874, holdingsPerShare: 0.05085, totalDebt: 0, cash: 25_388_079, source: "10-Q: raw SOL only (+ ~2M in fwdSOL LST form, $201.6M)", sharesSource: "84,924,272 common + 12,864,602 PFWs", sourceUrl: "/filings/fwdi/0001683168-26-000960", sourceType: "sec-filing" },
+  { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 96_003_639, holdingsPerShare: 0.07271, source: "Company website: SOL-equivalent (raw SOL + LSTs)", sharesSource: "83,139,037 common (Jan 31) + 12,864,602 PFWs", sourceUrl: "https://www.forwardindustries.com/", sourceType: "company-website" },
 ];
 
 // Helius Medical / Solana Company (HSDT) - SOL treasury

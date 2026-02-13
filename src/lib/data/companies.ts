@@ -1351,9 +1351,9 @@ export const solCompanies: Company[] = [
     secCik: "0000038264",
     asset: "SOL",
     tier: 1,
-    holdings: 6_979_967,  // Jan 15, 2026 treasury update
+    holdings: 6_979_967,  // Jan 15, 2026 SOL-equivalent (raw SOL + LSTs like fwdSOL)
     holdingsLastUpdated: "2026-01-15",
-    holdingsSource: "press-release",
+    holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.forwardindustries.com/",
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
     // Fiscal year end: September 30
@@ -1366,26 +1366,27 @@ export const solCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
-    quarterlyBurnUsd: 1_799_000,
-    burnSource: "SEC 10-Q Q2 FY2026 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316824000976/",
-    burnAsOf: "2025-06-30",
+    quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M — treasury ops costs)
+    burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense",
+    burnSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
+    burnAsOf: "2025-12-31",
     capitalRaisedPipe: 1_650_000_000,
-    // Shares: 86,145,514 basic (SEC 10-K) + 26,359,600 pre-funded warrants @ $0.03 = 112,505,114 FD
-    sharesForMnav: 112_505_114,
-    sharesSource: "SEC 10-K (filed 2025-12-11): EntityCommonStockSharesOutstanding = 86,459,465 as of 2025-12-05",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825009068/",
-    sharesAsOf: "2025-12-05",
+    // Shares: 83,139,037 common (Jan 31) + 12,864,602 pre-funded warrants @ $0.00001 = 96,003,639
+    // PFWs included in basic EPS per 10-Q. Shares declining via $1B buyback program.
+    sharesForMnav: 96_003_639,
+    sharesSource: "SEC 10-Q Q1 FY2026: 83,139,037 common + 12,864,602 PFWs",
+    sharesSourceUrl: `/filings/fwdi/0001683168-26-000960`,
+    sharesAsOf: "2026-01-31",
     avgDailyVolume: 400_000_000,
     hasOptions: true,
-    cashReserves: 30_000_000,  // ~$30M operating capital (cash + USDC, Dec 2025)
-    restrictedCash: 30_000_000,  // Operating capital - not excess
-    cashSource: "Press release Dec 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000100329716000907/",
-    cashAsOf: "2025-12-31",
+    cashReserves: 12_000_000,  // ~$12M at Jan 31 per 10-Q MD&A (declining due to buybacks)
+    restrictedCash: 0,
+    cashSource: "SEC 10-Q Q1 FY2026 MD&A: 'approximately $12 million in cash'",
+    cashSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=document&q=approximately%20%2412%20million`,
+    cashAsOf: "2026-01-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
-    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 26.4M pre-funded warrants @ $0.03. First equity on Solana via Superstate.",
+    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens).",
   },
   {
     id: "hsdt",

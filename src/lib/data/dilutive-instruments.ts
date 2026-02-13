@@ -464,11 +464,20 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // FWDI (Forward Industries) - SOL treasury company
-  // Verified 2026-01-28 via SEC XBRL (CIK 0000038264)
-  // NOTE: 26.4M pre-funded warrants @ $0.03 are ALREADY INCLUDED in sharesForMnav (112.5M)
-  // Pre-funded warrants at $0.03 are essentially shares - don't add them again here
-  // sharesForMnav = 86.1M basic + 26.4M pre-funded = 112.5M FD
-  FWDI: [],
+  // Verified 2026-02-13 via 10-Q Q1 FY2026 (CIK 0000038264)
+  // NOTE: 12.9M pre-funded warrants @ $0.00001 ALREADY INCLUDED in sharesForMnav (96M)
+  // sharesForMnav = 83.1M common + 12.9M PFWs = 96.0M
+  // Other warrants below are NOT in sharesForMnav — exercise prices TBD (need 8-K exhibit review)
+  // Also: 102.1M shares reserved for ATM (sold at market, not dilutive at a strike)
+  // Also: $1B share buyback program (Nov 2025 – Sep 2027), ~$975.6M remaining
+  FWDI: [
+    // Galaxy Advisor Warrants — exercise price TBD (need 8-K exhibit 10.2)
+    { type: "warrant", potentialShares: 4_458_796, strikePrice: 0, source: "8-K Sep 11, 2025", sourceUrl: "/filings/fwdi/0001683168-25-006838", notes: "Galaxy Strategic Advisor warrants — exercise price TBD (check exhibit 10.2)" },
+    // Jump Crypto Lead Investor Warrants — exercise price TBD
+    { type: "warrant", potentialShares: 4_458_796, strikePrice: 0, source: "8-K Sep 8, 2025", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Jump Crypto Lead Investor warrants — exercise price TBD (check exhibit 10.3)" },
+    // Multicoin Capital Lead Investor Warrants — exercise price TBD
+    { type: "warrant", potentialShares: 4_458_796, strikePrice: 0, source: "8-K Sep 8, 2025", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Multicoin Capital Lead Investor warrants — exercise price TBD (check exhibit 10.4)" },
+  ],
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
   // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
