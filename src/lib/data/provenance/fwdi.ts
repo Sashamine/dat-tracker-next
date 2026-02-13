@@ -16,7 +16,6 @@
 import {
   type ProvenanceFinancials,
   pv,
-  xbrlSource,
   docSource,
 } from "../types/provenance";
 
@@ -112,18 +111,17 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   sharesOutstanding: pv(
     SHARES_FOR_MNAV,
-    xbrlSource({
-      fact: "dei:EntityCommonStockSharesOutstanding",
+    docSource({
+      type: "sec-document",
       searchTerm: "83,139,037",
-      rawValue: SHARES_COMMON_JAN31,
-      unit: "shares",
-      periodType: "instant",
-      periodEnd: SHARES_DATE,
+      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      quote: "83,139,037 shares of common stock outstanding as of January 31, 2026",
+      anchor: "Common Stock Outstanding",
       cik: FWDI_CIK,
       accession: Q1_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q1_FY2026_10Q_FILED,
-      documentAnchor: "Common Stock Outstanding",
+      documentDate: SHARES_DATE,
     }),
     `83,139,037 common + 12,864,602 pre-funded warrants @ $0.00001 = 96,003,639. PFWs included in basic EPS per 10-Q. Shares decreasing due to $1B buyback program (3.3M repurchased through Jan 2026 at avg $7.32).`
   ),
@@ -174,19 +172,17 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   quarterlyBurn: pv(
     GA_EXPENSE_Q1,
-    xbrlSource({
-      fact: "us-gaap:GeneralAndAdministrativeExpense",
+    docSource({
+      type: "sec-document",
       searchTerm: "3,252",
-      rawValue: GA_EXPENSE_Q1,
-      unit: "USD",
-      periodType: "duration",
-      periodStart: "2025-10-01",
-      periodEnd: Q1_FY2026_PERIOD_END,
+      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      quote: "General and administrative expense $3,252,629",
+      anchor: "General and administrative",
       cik: FWDI_CIK,
       accession: Q1_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q1_FY2026_10Q_FILED,
-      documentAnchor: "General and administrative",
+      documentDate: Q1_FY2026_PERIOD_END,
     }),
     "Q1 FY2026 G&A: $3.25M. Up from ~$2.4M/qtr avg in FY2025 due to treasury-related costs. Galaxy asset management fees: $1.74M/qtr additional. OpCF was -$7.9M in Q1."
   ),
@@ -215,19 +211,17 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   revenueQ3: pv(
     REVENUE_Q1,
-    xbrlSource({
-      fact: "us-gaap:Revenues",
+    docSource({
+      type: "sec-document",
       searchTerm: "21,435",
-      rawValue: REVENUE_Q1,
-      unit: "USD",
-      periodType: "duration",
-      periodStart: "2025-10-01",
-      periodEnd: Q1_FY2026_PERIOD_END,
+      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      quote: "Total revenues $21,435,250",
+      anchor: "Revenues",
       cik: FWDI_CIK,
       accession: Q1_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q1_FY2026_10Q_FILED,
-      documentAnchor: "Revenues",
+      documentDate: Q1_FY2026_PERIOD_END,
     }),
     "Q1 FY2026: $21.4M total ($17.4M staking at 92% margin + $4.1M design segment). Staking revenue is the primary driver."
   ),
@@ -237,19 +231,17 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   netLossQ3: pv(
     Math.abs(NET_LOSS_Q1),
-    xbrlSource({
-      fact: "us-gaap:NetIncomeLoss",
+    docSource({
+      type: "sec-document",
       searchTerm: "585,651",
-      rawValue: NET_LOSS_Q1,
-      unit: "USD",
-      periodType: "duration",
-      periodStart: "2025-10-01",
-      periodEnd: Q1_FY2026_PERIOD_END,
+      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      quote: "Net loss $(585,651,086)",
+      anchor: "Net loss",
       cik: FWDI_CIK,
       accession: Q1_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q1_FY2026_10Q_FILED,
-      documentAnchor: "Net loss",
+      documentDate: Q1_FY2026_PERIOD_END,
     }),
     "Dominated by $560M unrealized SOL mark-to-market loss (non-cash). Operating loss -$583.6M. Staking operations profitable at segment level."
   ),
