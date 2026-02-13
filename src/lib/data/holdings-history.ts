@@ -803,13 +803,14 @@ const FLD_HISTORY: HoldingsSnapshot[] = [
 // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company
 
 // Trump Media (DJT) - Started BTC treasury May 2025
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
-// 279,997,636 shares per SEC 10-Q Q3 2025 (filed Nov 5, 2025)
-// DJT Debt: $1B zero-coupon convertibles (issued May 2025 for BTC treasury)
+// SEC EDGAR source: EntityCommonStockSharesOutstanding = 279,997,636 (Q3 2025 10-Q, Nov 5, 2025)
+// DJT Debt: ~$951M carrying value ($1B par zero-coupon converts due 2030)
+// ⚠️ No standard crypto XBRL tags — BTC count from 8-K press releases + balance sheet analysis
 const DJT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 220_624_508, holdingsPerShare: 0, totalDebt: 1_000_000_000, cash: 0, source: "8-K Treasury deal", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
-  { date: "2025-07-21", holdings: 19000, sharesOutstandingDiluted: 275_000_000, holdingsPerShare: 0.0000691, totalDebt: 1_000_000_000, cash: 50_000_000, source: "8-K BTC holdings", sourceUrl: "/filings/djt/0001140361-25-026510", sourceType: "sec-filing" },
-  { date: "2025-09-30", holdings: 11542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.0000412, stockPrice: 326.42, totalDebt: 1_000_000_000, cash: 50_000_000, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q", sourceType: "sec-filing" },
+  { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 199_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 2_343_901_700, source: "8-K Treasury deal announced", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 11_242, sharesOutstandingDiluted: 280_000_000, holdingsPerShare: 0.00004015, totalDebt: 950_769_100, cash: 1_343_901_700, source: "Q2 2025 10-Q (bulk BTC purchased by Jul 21)", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 11_242, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.00004015, totalDebt: 950_769_100, cash: 166_072_700, source: "Q3 2025 10-Q (XBRL verified)", sharesSource: "XBRL: EntityCommonStockSharesOutstanding", sourceUrl: "/filings/djt/0001140361-25-040977", sourceType: "sec-filing" },
+  { date: "2025-12-30", holdings: 11_542, sharesOutstandingDiluted: 279_997_636, holdingsPerShare: 0.00004122, totalDebt: 950_769_100, cash: 166_072_700, source: "8-K Dec 30 treasury update (~300 BTC purchased)", sourceUrl: "/filings/djt/0001140361-25-046825", sourceType: "sec-filing" },
 ];
 
 // Twenty One Capital (XXI) - Launched by Tether/SoftBank/Mallers, 3rd largest public BTC holder

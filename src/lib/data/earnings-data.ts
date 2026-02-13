@@ -1323,7 +1323,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // BTC treasury started May 2025 ($2.5B private placement)
   // XBRL shows CryptoAssetFairValueNoncurrent, not unit count - use holdings-history for BTC
   //
-  // Q4 2025 - Upcoming
+  // Q4 2025 - Upcoming (10-K expected ~March 2026)
+  // Holdings: 11,542 BTC (confirmed Dec 2025 — includes ~300 BTC purchased in Dec)
   {
     ticker: "DJT",
     fiscalYear: 2025,
@@ -1332,64 +1333,70 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-20",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 11_542, // 8-K Dec 30, 2025 treasury update
+    sharesAtQuarterEnd: 279_997_636, // No change since Q3 (no ATM)
+    holdingsPerShare: 0.00004122, // 11,542 / 279,997,636
     source: "sec-filing",
+    sourceUrl: "/filings/djt/0001140361-25-046825",
     status: "upcoming",
   },
-  // Q3 2025 - XBRL: $1.467B crypto FV, 279.997M shares (SEC 10-Q)
-  // BTC count: 11,542 (from 10-Q filing, per holdings-history)
+  // Q3 2025 - XBRL verified: 279,997,636 shares, ProfitLoss -$54.8M, Revenue $973K
+  // ⚠️ BTC count: ~11,242 at Q3 end (11,542 includes ~300 BTC purchased Dec 2025)
+  // No standard crypto XBRL tags — BTC from balance sheet analysis + 8-K updates
   {
     ticker: "DJT",
     fiscalYear: 2025,
     fiscalQuarter: 3,
     calendarYear: 2025,
     calendarQuarter: 3,
-    earningsDate: "2025-11-08",
+    earningsDate: "2025-11-07",
     earningsTime: "AMC",
-    epsActual: -0.10,
-    epsEstimate: -0.08,
-    revenueActual: 1_000_000,
-    revenueEstimate: 2_500_000,
-    netIncome: -19_200_000,
-    holdingsAtQuarterEnd: 11542,
-    sharesAtQuarterEnd: 279_997_636,
-    holdingsPerShare: 0.0000412,
+    revenueActual: 972_900, // XBRL: RevenueFromContractWithCustomerExcludingAssessedTax
+    netIncome: -54_848_500, // XBRL: ProfitLoss Q3 2025
+    holdingsAtQuarterEnd: 11_242, // ~11,242 at Sep 30 (11,542 minus ~300 Dec purchase)
+    sharesAtQuarterEnd: 279_997_636, // XBRL: EntityCommonStockSharesOutstanding as of Nov 5
+    holdingsPerShare: 0.00004015, // 11,242 / 279,997,636
     source: "sec-filing",
+    sourceUrl: "/filings/djt/0001140361-25-040977",
     status: "reported",
   },
-  // Q2 2025 - Deal closed May 29, first BTC purchases in Q2
-  // No XBRL crypto data for Q2, using 0 as conservative estimate (bulk purchases likely Q3)
+  // Q2 2025 - $2.5B raise closed, first BTC purchases (~$2B deployed by Jul 21)
+  // XBRL: ProfitLoss -$20M, Revenue $833K (derived: 9M $2,677K - Q3 $973K - Q1 $871K)
+  // Holdings: ~11,242 BTC (bulk purchased in Q2-Q3 with $2B deployment by Jul 21)
   {
     ticker: "DJT",
     fiscalYear: 2025,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-08-08",
+    earningsDate: "2025-08-01",
     earningsTime: "AMC",
-    epsActual: -0.09,
-    epsEstimate: -0.07,
-    revenueActual: 900_000,
-    revenueEstimate: 2_000_000,
-    netIncome: -16_400_000,
-    holdingsAtQuarterEnd: 0, // Deal closed late May, bulk purchases in Q3
-    sharesAtQuarterEnd: 191_500_000, // XBRL verified
-    holdingsPerShare: 0,
+    revenueActual: 832_600, // Derived: 9M $2,677K - Q3 $973K - Q1 $872K
+    netIncome: -20_001_900, // XBRL: ProfitLoss Q2 2025
+    holdingsAtQuarterEnd: 11_242, // Bulk BTC purchased by Jul 21 (~$2B deployed)
+    sharesAtQuarterEnd: 280_000_000, // Post-PIPE (~81M new shares)
+    holdingsPerShare: 0.00004015, // 11,242 / 280,000,000
     source: "sec-filing",
+    sourceUrl: "/filings/djt/0001140361-25-028418",
     status: "reported",
   },
   // Q1 2025 - Pre-treasury, no BTC yet
+  // XBRL: ProfitLoss -$31.7M, OpCF -$9.7M
   {
     ticker: "DJT",
     fiscalYear: 2025,
     fiscalQuarter: 1,
     calendarYear: 2025,
     calendarQuarter: 1,
-    earningsDate: "2025-05-08",
+    earningsDate: "2025-05-09",
     earningsTime: "AMC",
+    revenueActual: 871_900, // Derived: 9M $2,677K - H1 implied
+    netIncome: -31_726_600, // XBRL: ProfitLoss Q1 2025
     holdingsAtQuarterEnd: 0,
-    sharesAtQuarterEnd: 220_600_000, // XBRL verified
+    sharesAtQuarterEnd: 199_000_000, // Pre-PIPE
     holdingsPerShare: 0,
     source: "sec-filing",
+    sourceUrl: "/filings/djt/0001140361-25-018209",
     status: "reported",
   },
   // Q4 2024 - Pre-treasury
@@ -1402,9 +1409,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-02-14",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,
-    sharesAtQuarterEnd: 220_700_000, // XBRL verified
+    sharesAtQuarterEnd: 199_000_000, // Pre-PIPE
     holdingsPerShare: 0,
     source: "sec-filing",
+    sourceUrl: "/filings/djt/0001140361-25-004822",
     status: "reported",
   },
 

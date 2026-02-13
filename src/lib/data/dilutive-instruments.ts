@@ -999,6 +999,35 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Fully diluted: ~92.7M basic + 6.1M = ~98.8M shares
   // Also: 2024 Equity Plan has 5.75M authorized (grants TBD in 10-K)
 
+  // DJT (Trump Media & Technology Group) - BTC treasury company
+  // Verified 2026-02-13 via SEC XBRL + 8-K filings (CIK 0001849635)
+  // Basic shares: 279,997,636 (Q3 2025 10-Q, as of Nov 5, 2025)
+  // ⚠️ INCOMPLETE: DJTWW warrant count/strike and convertible conversion price need verification
+  DJT: [
+    {
+      type: "convertible",
+      strikePrice: 0, // TODO: Conversion price not yet verified — check 8-K EX-2.1 from Dec 18, 2025
+      potentialShares: 0, // TODO: Cannot calculate without conversion price
+      source: "8-K May 2025 ($2.5B private placement)",
+      sourceUrl: "/filings/djt/0001140361-25-040977",
+      expiration: "2030-12-31",
+      issuedDate: "2025-05-29",
+      notes:
+        "$1B par zero-coupon convertible senior secured notes due 2030. Carrying value ~$946M (XBRL: ConvertibleNotesPayable). Conversion price/ratio TBD from 8-K exhibit.",
+    },
+    // DJTWW warrants — legacy from DWAC SPAC merger
+    // TODO: Verify count and strike from 10-K/10-Q footnotes
+    // {
+    //   type: "warrant",
+    //   strikePrice: TBD,
+    //   potentialShares: TBD,
+    //   source: "DWAC merger (2024)",
+    //   notes: "Public warrants trading as DJTWW. Count and strike need verification.",
+    // },
+  ],
+  // Total DJT dilution: INCOMPLETE — convertible terms + DJTWW warrants + earnout shares TBD
+  // Known dilutive risks: $1B converts (price unknown), DJTWW warrants, DWAC earnout shares
+
   // CYPH (Cypherpunk Technologies) - ZEC treasury company
   // Verified 2026-01-29 via SEC 8-K Oct 9, 2025 (CIK 0001509745)
   // Basic shares: 137,420,344 (56.6M common + 80.8M pre-funded warrants already in basic)

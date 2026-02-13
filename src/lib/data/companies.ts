@@ -2,6 +2,7 @@ import { Company } from "../types";
 import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
+import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
 
@@ -1221,39 +1222,49 @@ export const btcCompanies: Company[] = [
     notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). Share buyback authorized Dec 2025 as mNAV < 1.",
   },
   {
+    // =========================================================================
+    // DJT - Core financials from provenance/djt.ts (SEC-verified XBRL)
+    // =========================================================================
     id: "djt",
     name: "Trump Media & Technology",
     ticker: "DJT",
     secCik: "0001849635",
     asset: "BTC",
     tier: 1,
-    holdings: 11_542,  // Verified: SEC 10-Q Q3 2025 filing (per holdings-history)
-    holdingsLastUpdated: "2025-09-30",
+    // HOLDINGS: from provenance (8-K treasury updates, Dec 2025)
+    holdings: DJT_PROVENANCE.holdings?.value || 11_542,
+    holdingsLastUpdated: DJT_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001849635&type=10-Q",
+    holdingsSourceUrl: "/filings/djt/0001140361-25-046825",
     datStartDate: "2025-05-01",
-    // costBasisAvg removed - needs verification
     isMiner: false,
-    quarterlyBurnUsd: 10_000_000,
-    burnSource: "SEC 10-Q (filed 2025-05-09): NetCashUsedInOperatingActivities $9,737,800 (2025-01-01 to 2025-03-31)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125018209/",
+    // BURN: from provenance (Q1 2025 OpCF as proxy for core burn)
+    quarterlyBurnUsd: DJT_PROVENANCE.quarterlyBurn?.value || 9_737_800,
+    burnSource: "SEC 10-Q Q1 2025 XBRL: NetCashProvidedByUsedInOperatingActivities -$9,737,800",
+    burnSourceUrl: "/filings/djt/0001140361-25-018209",
     burnAsOf: "2025-03-31",
+    // CAPITAL: $2.5B private placement ($1.5B equity + $1B converts)
     capitalRaisedPipe: 2_500_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
-    // marketCap calculated from sharesForMnav × price (removed static override)
-    sharesForMnav: 279_997_636,  // SEC 10-Q Q3 2025 (Nov 5, 2025)
-    sharesSource: "SEC 10-Q (filed 2025-11-07): EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
-    sharesAsOf: "2025-11-05",
-    // Debt: $1B 0% convertible senior secured notes due 2030, part of $2.5B private placement (May 2025)
-    totalDebt: 1_000_000_000,  // $1B zero-coupon converts
-    debtSource: "SEC 8-K May 2025",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
-    debtAsOf: "2025-05-29",
+    // SHARES: from provenance (XBRL verified)
+    sharesForMnav: DJT_PROVENANCE.sharesOutstanding?.value || 279_997_636,
+    sharesSource: "SEC 10-Q Q3 2025 XBRL: EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
+    sharesSourceUrl: "/filings/djt/0001140361-25-040977",
+    sharesAsOf: DJT_PROVENANCE_DEBUG.sharesDate,
+    // DEBT: from provenance (XBRL LongTermDebt — carrying value of $1B par converts)
+    totalDebt: DJT_PROVENANCE.totalDebt?.value || 950_769_100,
+    debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2030)",
+    debtSourceUrl: "/filings/djt/0001140361-25-040977",
+    debtAsOf: "2025-09-30",
+    // CASH: from provenance (XBRL — unrestricted only)
+    cashReserves: DJT_PROVENANCE.cashReserves?.value || 166_072_700,
+    cashAsOf: "2025-09-30",
+    cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
+    cashSourceUrl: "/filings/djt/0001140361-25-040977",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
-    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts.",
+    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2030. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital.",
   },
   {
     id: "boyaa",
