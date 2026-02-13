@@ -13,12 +13,37 @@
 
 export interface ATMSaleEvent {
   filingDate: string;
+  /** Total shares across ALL programs (common + preferred). Use commonShares() for Class A only. */
   shares: number;
   proceeds: number;
   format: "narrative" | "table";
   sharesByProgram?: Record<string, number>;
   accessionNumber: string;
   secUrl: string;
+}
+
+/**
+ * Extract Class A common shares from an ATM event.
+ * - Narrative format (pre-2025): all shares are common (no preferred ATM existed yet)
+ * - Table format: sum "MSTR ATM" + "Common ATM" keys only
+ * - Preferred programs (STRK, STRF, STRD, STRC) are excluded
+ */
+export function getCommonShares(event: ATMSaleEvent): number {
+  if (!event.sharesByProgram) {
+    // Narrative format — all shares are Class A common (pre-preferred era)
+    return event.shares;
+  }
+  return (event.sharesByProgram["MSTR ATM"] || 0) 
+       + (event.sharesByProgram["Common ATM"] || 0);
+}
+
+/**
+ * Get cumulative Class A common shares issued via ATM after a given date
+ */
+export function getCommonATMSharesAfter(afterDate: string, throughDate?: string): number {
+  return MSTR_ATM_SALES
+    .filter(atm => atm.filingDate > afterDate && (!throughDate || atm.filingDate <= throughDate))
+    .reduce((sum, atm) => sum + getCommonShares(atm), 0);
 }
 
 export const MSTR_ATM_SALES: ATMSaleEvent[] = [

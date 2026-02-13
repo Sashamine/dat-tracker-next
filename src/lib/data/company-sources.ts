@@ -82,22 +82,6 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-18",
   },
 
-  RIOT: {
-    ticker: "RIOT",
-    name: "Riot Platforms",
-    investorRelations: "https://www.riotplatforms.com/investors",
-    secCik: "1167419",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001167419",
-    exchange: "NASDAQ",
-    blockworksUrl: "https://blockworks.com/analytics/RIOT",
-    sharesSource: "diluted",
-    sharesNotes: "Uses WeightedAverageNumberOfDilutedSharesOutstanding from 10-Q.",
-    reportsHoldingsFrequency: "monthly",
-    reportsMnavDaily: false,
-    notes: "Monthly production updates include BTC holdings.",
-    lastVerified: "2026-01-18",
-  },
-
   CLSK: {
     ticker: "CLSK",
     name: "CleanSpark",
@@ -448,14 +432,16 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   ASST: {
     ticker: "ASST",
     name: "Strive, Inc.",
+    investorRelations: "https://investors.strive.com",
     secCik: "1920406",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406",
     exchange: "NASDAQ",
-    sharesSource: "diluted",
+    sharesSource: "basic",
+    sharesNotes: "Post 1-for-20 split (Feb 3, 2026): 40.77M basic (Class A 29.6M + Class B 11.1M). Pre-funded warrants (3.2M @ $0.002) and traditional warrants (26.7M @ $27) tracked in dilutive-instruments.ts.",
     reportsHoldingsFrequency: "on_purchase",
     reportsMnavDaily: false,
-    notes: "First publicly traded asset management BTC treasury. Merged with Semler Scientific Jan 2026.",
-    lastVerified: "2026-01-22",
+    notes: "First publicly traded asset manager with BTC treasury. Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026. 1-for-20 reverse split Feb 3, 2026. SATA 12.25% perpetual preferred is NOT convertible to common.",
+    lastVerified: "2026-02-12",
   },
 
   FGNX: {

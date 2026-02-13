@@ -36,7 +36,6 @@ const DATA_NOTES: Record<string, string> = {
 const LAST_CHECKED: Record<string, string> = {
   MSTR: "2025-01-12",
   MARA: "2025-01-12",
-  RIOT: "2025-01-12",
   CLSK: "2025-01-12",
   "3350.T": "2025-01-12",
   SMLR: "2025-01-12",

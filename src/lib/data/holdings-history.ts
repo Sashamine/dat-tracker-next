@@ -85,36 +85,6 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 52850, sharesOutstandingDiluted: 378_184_353, holdingsPerShare: 0.0001398, stockPrice: 10.0, totalDebt: 3_248_000_000, cash: 826_392_000, source: "Q3 2025 10-Q (35,493 + 17,357 receivable)", sourceUrl: "/filings/mara/0001507605-25-000028", sourceType: "sec-filing" },
 ];
 
-// RIOT Platforms - BTC Miner
-// SEC EDGAR CIK: 0001167419
-//
-// SHARE COUNT CORRECTION (Jan 2026):
-// Previous entries used 371M from SEC 10-Q cover page (basic shares)
-// Correct diluted shares: ~402M (implied from Q3 2025 EPS: $104.5M ÷ $0.26 = 402M)
-// Q3 2025 was a profit quarter, so diluted includes all convertible securities
-//
-// HOLDINGS NOTE: RIOT sold 1,818 BTC in Dec 2025, reducing holdings to 18,005 BTC
-// Source: Riot Dec 2025 Production Update (riotplatforms.com, Jan 7, 2026)
-// All data verified via SEC XBRL (2026-01-28)
-// BTC = CryptoAssetNumberOfUnits (total, includes restricted)
-// Shares = CommonStockSharesOutstanding from XBRL
-// RIOT Debt: $794M converts (issued late 2024/early 2025)
-const RIOT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2022-12-31", holdings: 6974, sharesOutstandingDiluted: 167_800_000, holdingsPerShare: 0.0000416, stockPrice: 3.39, totalDebt: 0, cash: 230_000_000, source: "Q4 2022 10-K (XBRL)", sourceUrl: "/filings/riot/10K-2022-12-31#btc-holdings", sourceType: "sec-filing" },
-  { date: "2023-12-31", holdings: 7362, sharesOutstandingDiluted: 230_800_000, holdingsPerShare: 0.0000319, stockPrice: 15.47, totalDebt: 0, cash: 450_000_000, source: "Q4 2023 10-K (XBRL)", sourceUrl: "/filings/riot/10K-2023-12-31#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-03-31", holdings: 8490, sharesOutstandingDiluted: 268_000_000, holdingsPerShare: 0.0000317, stockPrice: 10.0, totalDebt: 0, cash: 400_000_000, source: "Q1 2024 10-Q (XBRL)", sourceUrl: "/filings/riot/10Q-2024-03-31#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-06-30", holdings: 9334, sharesOutstandingDiluted: 283_700_000, holdingsPerShare: 0.0000329, stockPrice: 9.0, totalDebt: 0, cash: 350_000_000, source: "Q2 2024 10-Q (XBRL)", sourceUrl: "/filings/riot/10Q-2024-06-30#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-09-30", holdings: 10427, sharesOutstandingDiluted: 324_300_000, holdingsPerShare: 0.0000322, stockPrice: 8.0, totalDebt: 0, cash: 300_000_000, source: "Q3 2024 10-Q (XBRL)", sourceUrl: "/filings/riot/10Q-2024-09-30#btc-holdings", sourceType: "sec-filing" },
-  { date: "2024-12-31", holdings: 17722, sharesOutstandingDiluted: 344_900_000, holdingsPerShare: 0.0000514, stockPrice: 10.21, totalDebt: 550_000_000, cash: 350_000_000, source: "Q4 2024 10-K (XBRL)", sourceUrl: "/filings/riot/10K-2024-12-31#btc-holdings", sourceType: "sec-filing" },
-  { date: "2025-03-31", holdings: 19223, sharesOutstandingDiluted: 350_200_000, holdingsPerShare: 0.0000549, stockPrice: 10.5, totalDebt: 794_000_000, cash: 400_000_000, source: "Q1 2025 10-Q (XBRL)", sourceUrl: "/filings/riot/10Q-2025-03-31#btc-holdings", sourceType: "sec-filing" },
-  // Q2 2025: 19,273 BTC total = 15,973 unrestricted + 3,300 restricted
-  { date: "2025-06-30", holdings: 19273, sharesOutstandingDiluted: 363_200_000, holdingsPerShare: 0.0000531, stockPrice: 15.0, totalDebt: 794_000_000, cash: 400_000_000, source: "Q2 2025 10-Q (XBRL)", sourceUrl: "/filings/riot/10Q-2025-06-30#btc-holdings", sourceType: "sec-filing" },
-  // Q3 2025: 19,287 BTC total = 15,987 unrestricted + 3,300 restricted
-  { date: "2025-09-30", holdings: 19287, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000520, stockPrice: 9.0, totalDebt: 794_000_000, cash: 400_000_000, source: "Q3 2025 10-Q (XBRL)", sourceUrl: "/filings/riot/10Q-2025-09-30#btc-holdings", sourceType: "sec-filing" },
-  // Dec 2025: Sold 1,818 BTC → 18,005 BTC remaining (per production update)
-  { date: "2025-12-31", holdings: 18005, sharesOutstandingDiluted: 371_100_000, holdingsPerShare: 0.0000485, stockPrice: 12.67, totalDebt: 794_000_000, cash: 400_000_000, source: "8-K Dec 2025 production", sourceUrl: "/filings/riot/0001104659-26-000248", sourceType: "sec-filing" },
-];
-
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company
 // Data from TSE filings and press releases
 //
@@ -857,17 +827,22 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Strive Asset (ASST) - First publicly traded asset management BTC treasury
-// Merged with Semler Scientific (SMLR) on Jan 16, 2026
-// NOTE: No pre-merger Semler backfill - tracking Strive specifically from merger date
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
-// DUAL-CLASS: 1.05B Class A + 198M Class B = 1.247B total shares
-// Preferred: SATA 12.25% perpetual preferred (2M shares x $100 stated) = $200M
+// Strive, Inc. (ASST) - First publicly traded asset manager with BTC treasury
+// Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026
+// 1-for-20 reverse split Feb 3, 2026 - ALL share counts POST-SPLIT adjusted
+// SEC CIK: 0001920406
+// DUAL-CLASS: Class A 29,628,976 + Class B 11,145,205 = 40,774,181 (post-split)
+// Pre-funded warrants: 3,208,713 @ $0.002 (always ITM, tracked in dilutive-instruments.ts)
+// Traditional warrants: 26,727,805 @ $27 (from PIPE, tracked in dilutive-instruments.ts)
+// Preferred: SATA 12.25% perpetual preferred (2M shares × $100 stated) = $200M - NOT convertible
 const ASST_HISTORY: HoldingsSnapshot[] = [
-  // Jan 16, 2026: Strive + Semler merger closed
+  // Q3 2025: SEC 10-Q (Sep 30, 2025) - shares adjusted for 1-for-20 split
+  { date: "2025-09-30", holdings: 5886, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0001444, totalDebt: 0, preferredEquity: 200_000_000, cash: 109_000_000, source: "SEC 10-Q Q3 2025 (shares adjusted for 1-for-20 split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/0001628280-25-052343-index.htm", sourceType: "sec-filing" },
+  // Jan 16, 2026: Strive + Semler merger closed (shares adjusted for 1-for-20 split Feb 3)
   // Combined holdings: ~10,500 BTC (Strive) + ~2,300 BTC (Semler) = 12,798 BTC
-  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001026, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - SEC DEF 14C: 1.05B Class A + 198M Class B", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
-  // Jan 28, 2026: Additional BTC purchases
-  { date: "2026-01-28", holdings: 13132, sharesOutstandingDiluted: 1_247_436_814, holdingsPerShare: 0.00001053, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "SEC 8-K Jan 28, 2026: 13,131.82 BTC", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/", sourceType: "sec-filing" },
+  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0003138, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - shares adjusted for 1-for-20 split", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
+  // Jan 28, 2026: SEC 8-K - 13,131.82 BTC
+  { date: "2026-01-28", holdings: 13131.82, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0003221, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "SEC 8-K Jan 28, 2026: 13,131.82 BTC", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/0001140361-26-002606-index.htm", sourceType: "sec-filing" },
 ];
 
 // ==================== BNB COMPANIES ====================
@@ -1027,7 +1002,6 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   SWC: { ticker: "SWC", asset: "BTC", history: SWC_HISTORY },
   // MSTR: Uses MSTR_VERIFIED_FINANCIALS via getHoldingsHistory() - DO NOT add here
   MARA: { ticker: "MARA", asset: "BTC", history: MARA_HISTORY },
-  RIOT: { ticker: "RIOT", asset: "BTC", history: RIOT_HISTORY },
   CLSK: { ticker: "CLSK", asset: "BTC", history: CLSK_HISTORY },
   "3350.T": { ticker: "3350.T", asset: "BTC", history: METAPLANET_HISTORY },
   KULR: { ticker: "KULR", asset: "BTC", history: KULR_HISTORY },

@@ -19,7 +19,7 @@
  */
 
 import { MSTR_HOLDINGS_VERIFIED, type VerifiedHolding } from './mstr-holdings-verified';
-import { MSTR_ATM_SALES, type ATMSaleEvent } from './mstr-atm-sales';
+import { MSTR_ATM_SALES, getCommonShares, type ATMSaleEvent } from './mstr-atm-sales';
 import { MSTR_EMPLOYEE_EQUITY, type EmployeeEquityQuarter } from './mstr-employee-equity';
 import { MSTR_SEC_HISTORY, type MSTRSecFiling } from './mstr-sec-history';
 
@@ -102,6 +102,32 @@ export const CLASS_B_SHARES = 19_640_000;
 /** Stock split date (10:1) */
 export const SPLIT_DATE = "2024-08-07";
 
+/**
+ * Company-disclosed shares from strategy.com/shares (Reg FD channel).
+ * Primary source for Basic Shares Outstanding.
+ * 8-Ks reference: "The Company uses its website (www.strategy.com) as a disclosure channel"
+ * 
+ * Format: { date: classA (thousands), classB is always 19,640 }
+ */
+const STRATEGY_COM_SHARES: Record<string, number> = {
+  // From strategy.com/shares "Basic Shares Outstanding" column (Class A in thousands)
+  "2025-09-30": 267_468_000,
+  "2025-12-31": 292_422_000,
+  "2026-02-08": 313_442_000,
+};
+
+/**
+ * Get company-disclosed Class A shares for a given date.
+ * Returns the most recent disclosure on or before the date.
+ */
+function getCompanyDisclosedShares(date: string): { classA: number; asOf: string } | null {
+  const dates = Object.keys(STRATEGY_COM_SHARES).sort().reverse();
+  for (const d of dates) {
+    if (d <= date) return { classA: STRATEGY_COM_SHARES[d], asOf: d };
+  }
+  return null;
+}
+
 /** Number of days after which balance sheet is considered stale */
 export const STALE_THRESHOLD_DAYS = 90;
 
@@ -134,7 +160,7 @@ function getBaselineShares(filing: MSTRSecFiling): number {
 function getCumulativeATMShares(afterDate: string, throughDate: string): number {
   return MSTR_ATM_SALES
     .filter(atm => atm.filingDate > afterDate && atm.filingDate <= throughDate)
-    .reduce((sum, atm) => sum + atm.shares, 0);
+    .reduce((sum, atm) => sum + getCommonShares(atm), 0);
 }
 
 /**
@@ -193,22 +219,34 @@ function buildVerifiedFinancials(): VerifiedFinancialSnapshot[] {
       continue;
     }
     
-    // Calculate share components
+    // Calculate share components (bottom-up from SEC filings)
     const baselineShares = getBaselineShares(baseline);
     const atmCumulative = getCumulativeATMShares(baseline.periodEnd, holding.date);
     const employeeEquityCumulative = getCumulativeEmployeeEquity(baseline.periodEnd, holding.date);
     
-    const classA = baselineShares + atmCumulative + employeeEquityCumulative;
+    const bottomUpClassA = baselineShares + atmCumulative + employeeEquityCumulative;
+    
+    // Use company-disclosed shares (strategy.com) when available as primary source.
+    // Falls back to bottom-up calc for historical dates not covered.
+    const disclosed = getCompanyDisclosedShares(holding.date);
+    const classA = disclosed ? disclosed.classA : bottomUpClassA;
     const total = classA + CLASS_B_SHARES;
     
     // Build source string
     const quarterStr = formatQuarter(baseline.periodEnd);
-    let sourceStr = `${baseline.formType} ${quarterStr}`;
-    if (atmCumulative > 0 || employeeEquityCumulative > 0) {
-      const parts: string[] = [];
-      if (atmCumulative > 0) parts.push(`ATM +${(atmCumulative / 1_000_000).toFixed(2)}M`);
-      if (employeeEquityCumulative > 0) parts.push(`emp +${(employeeEquityCumulative / 1_000).toFixed(0)}K`);
-      sourceStr += ` + ${parts.join(', ')}`;
+    let sourceStr: string;
+    if (disclosed) {
+      const gap = classA - bottomUpClassA;
+      sourceStr = `strategy.com (${disclosed.asOf})`;
+      if (gap > 0) sourceStr += ` [+${(gap / 1_000).toFixed(0)}K vs bottom-up = emp equity/timing]`;
+    } else {
+      sourceStr = `${baseline.formType} ${quarterStr}`;
+      if (atmCumulative > 0 || employeeEquityCumulative > 0) {
+        const parts: string[] = [];
+        if (atmCumulative > 0) parts.push(`ATM +${(atmCumulative / 1_000_000).toFixed(2)}M`);
+        if (employeeEquityCumulative > 0) parts.push(`emp +${(employeeEquityCumulative / 1_000).toFixed(0)}K`);
+        sourceStr += ` + ${parts.join(', ')}`;
+      }
     }
     
     // Determine balance sheet staleness

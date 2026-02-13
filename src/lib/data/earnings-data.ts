@@ -618,201 +618,6 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
-  // ========== Riot Platforms (RIOT) ==========
-  // Calendar year company (fiscal = calendar)
-  // CIK: 0001167419
-  // All data verified via SEC XBRL (2026-01-28)
-  // BTC holdings = TOTAL (unrestricted + restricted)
-  // Shares = CommonStockSharesOutstanding from XBRL
-  //
-  // Q4 2025 - Holdings from 8-K (Dec 2025 production update), earnings upcoming
-  // Source: https://www.riotplatforms.com/riot-announces-december-2025-production-and-operations-updates/
-  // Note: Sold 1,818 BTC in Dec 2025 → 18,005 BTC remaining
-  {
-    ticker: "RIOT",
-    fiscalYear: 2025,
-    fiscalQuarter: 4,
-    calendarYear: 2025,
-    calendarQuarter: 4,
-    earningsDate: "2026-02-20",
-    earningsTime: "AMC",
-    holdingsAtQuarterEnd: 18005,
-    sharesAtQuarterEnd: 371_100_000, // Using Q3 2025 shares until 10-K
-    holdingsPerShare: 0.0000485,
-    source: "press-release",
-    status: "upcoming",
-  },
-  // Q3 2025 - XBRL verified: 19,287 BTC total (15,987 unrestricted + 3,300 restricted), 371.1M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2025,
-    fiscalQuarter: 3,
-    calendarYear: 2025,
-    calendarQuarter: 3,
-    earningsDate: "2025-11-05",
-    earningsTime: "AMC",
-    epsActual: 0.29,
-    epsEstimate: -0.18,
-    revenueActual: 180_200_000,
-    revenueEstimate: 125_000_000,
-    netIncome: 104_500_000,
-    holdingsAtQuarterEnd: 19287,
-    sharesAtQuarterEnd: 371_100_000,
-    holdingsPerShare: 0.0000520,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q2 2025 - XBRL verified: 19,273 BTC total (15,973 unrestricted + 3,300 restricted), 363.2M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2025,
-    fiscalQuarter: 2,
-    calendarYear: 2025,
-    calendarQuarter: 2,
-    earningsDate: "2025-07-30",
-    earningsTime: "AMC",
-    epsActual: -0.63,
-    epsEstimate: -0.25,
-    revenueActual: 70_000_000,
-    revenueEstimate: 84_000_000,
-    netIncome: -247_800_000,
-    holdingsAtQuarterEnd: 19273,
-    sharesAtQuarterEnd: 363_200_000,
-    holdingsPerShare: 0.0000531,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q1 2025 - XBRL verified: 19,223 BTC, 350.2M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2025,
-    fiscalQuarter: 1,
-    calendarYear: 2025,
-    calendarQuarter: 1,
-    earningsDate: "2025-04-30",
-    earningsTime: "AMC",
-    epsActual: -0.72,
-    epsEstimate: -0.20,
-    revenueActual: 68_200_000,
-    revenueEstimate: 91_000_000,
-    netIncome: -296_400_000,
-    holdingsAtQuarterEnd: 19223,
-    sharesAtQuarterEnd: 350_200_000,
-    holdingsPerShare: 0.0000549,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q4 2024 - XBRL verified: 17,722 BTC, 344.9M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2024,
-    fiscalQuarter: 4,
-    calendarYear: 2024,
-    calendarQuarter: 4,
-    earningsDate: "2025-02-26",
-    earningsTime: "AMC",
-    epsActual: 0.50,
-    epsEstimate: -0.18,
-    revenueActual: 115_300_000,
-    revenueEstimate: 113_000_000,
-    netIncome: 166_100_000,
-    holdingsAtQuarterEnd: 17722,
-    sharesAtQuarterEnd: 344_900_000,
-    holdingsPerShare: 0.0000514,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q3 2024 - XBRL verified: 10,427 BTC, 324.3M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2024,
-    fiscalQuarter: 3,
-    calendarYear: 2024,
-    calendarQuarter: 3,
-    earningsDate: "2024-10-30",
-    earningsTime: "AMC",
-    epsActual: -0.54,
-    epsEstimate: -0.18,
-    revenueActual: 84_800_000,
-    revenueEstimate: 95_000_000,
-    netIncome: -154_400_000,
-    holdingsAtQuarterEnd: 10427,
-    sharesAtQuarterEnd: 324_300_000,
-    holdingsPerShare: 0.0000322,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q2 2024 - XBRL verified: 9,334 BTC, 283.7M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2024,
-    fiscalQuarter: 2,
-    calendarYear: 2024,
-    calendarQuarter: 2,
-    earningsDate: "2024-07-31",
-    earningsTime: "AMC",
-    epsActual: 0.32,
-    epsEstimate: -0.19,
-    revenueActual: 70_000_000,
-    revenueEstimate: 77_000_000,
-    netIncome: 127_300_000,
-    holdingsAtQuarterEnd: 9334,
-    sharesAtQuarterEnd: 283_700_000,
-    holdingsPerShare: 0.0000329,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q1 2024 - XBRL verified: 8,490 BTC, 268.0M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2024,
-    fiscalQuarter: 1,
-    calendarYear: 2024,
-    calendarQuarter: 1,
-    earningsDate: "2024-05-01",
-    earningsTime: "AMC",
-    epsActual: 0.25,
-    epsEstimate: 0.02,
-    revenueActual: 79_300_000,
-    revenueEstimate: 72_000_000,
-    netIncome: 211_800_000,
-    holdingsAtQuarterEnd: 8490,
-    sharesAtQuarterEnd: 268_000_000,
-    holdingsPerShare: 0.0000317,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q4 2023 - XBRL verified: 7,362 BTC, 230.8M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2023,
-    fiscalQuarter: 4,
-    calendarYear: 2023,
-    calendarQuarter: 4,
-    earningsDate: "2024-02-28",
-    earningsTime: "AMC",
-    holdingsAtQuarterEnd: 7362,
-    sharesAtQuarterEnd: 230_800_000,
-    holdingsPerShare: 0.0000319,
-    source: "sec-filing",
-    status: "reported",
-  },
-  // Q4 2022 - XBRL verified: 6,974 BTC, 167.8M shares
-  {
-    ticker: "RIOT",
-    fiscalYear: 2022,
-    fiscalQuarter: 4,
-    calendarYear: 2022,
-    calendarQuarter: 4,
-    earningsDate: "2023-03-01",
-    earningsTime: "AMC",
-    holdingsAtQuarterEnd: 6974,
-    sharesAtQuarterEnd: 167_800_000,
-    holdingsPerShare: 0.0000416,
-    source: "sec-filing",
-    status: "reported",
-  },
-
   // ========== CleanSpark (CLSK) - Fiscal Year ends September ==========
   // CLSK FY→Calendar mapping:
   //   FY Q1 (Oct-Dec) → Calendar Q4 of PRIOR year
@@ -1588,12 +1393,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
-  // ========== Strive Asset (ASST) ==========
+  // ========== Strive (ASST) ==========
   // Calendar year company (fiscal = calendar)
-  // Merged with Semler Scientific on Jan 16, 2026
-  // NOTE: Tracking Strive specifically from merger date (no Semler backfill)
+  // Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026
+  // 1-for-20 reverse split Feb 3, 2026
+  // ALL share counts below are POST-SPLIT adjusted for consistent HPS tracking
+  // SEC CIK: 0001920406
   //
-  // Q1 2026 - First post-merger quarter (upcoming)
+  // Q1 2026 - First full post-merger quarter (upcoming)
   {
     ticker: "ASST",
     fiscalYear: 2026,
@@ -1605,7 +1412,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q4 2025 - Partial post-merger (Jan 16-31 only)
+  // Q4 2025 - Partial quarter (includes Semler acquisition Jan 16)
+  // Note: Holdings from Jan 28, 2026 8-K; shares post-split adjusted
   {
     ticker: "ASST",
     fiscalYear: 2025,
@@ -1614,12 +1422,30 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 12798,  // Combined: ~10.5K (Strive) + ~2.3K (Semler)
-    sharesAtQuarterEnd: 1_247_436_814,  // 1.05B Class A + 198M Class B
-    holdingsPerShare: 0.00001026,
+    holdingsAtQuarterEnd: 13_132,  // Jan 28, 2026 8-K: 13,131.82 BTC
+    sharesAtQuarterEnd: 40_774_181,  // Post-split: Class A 29,628,976 + Class B 11,145,205
+    holdingsPerShare: 0.0003221,  // 13132 / 40,774,181
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/0001140361-26-002606-index.htm",
     status: "upcoming",
+  },
+  // Q3 2025 - SEC 10-Q (Sep 30, 2025)
+  // Note: Share count adjusted for 1-for-20 split for consistent HPS tracking
+  // Pre-split: 815,483,610 → Post-split: 40,774,181
+  {
+    ticker: "ASST",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-11-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 5_886,  // SEC 10-Q Q3 2025
+    sharesAtQuarterEnd: 40_774_181,  // Post-split adjusted: 815,483,610 / 20
+    holdingsPerShare: 0.0001444,  // 5886 / 40,774,181
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/0001628280-25-052343-index.htm",
+    status: "reported",
   },
 
   // ========== Twenty One Capital (XXI) ==========

@@ -259,6 +259,7 @@ export function MnavCalculationCard({
             sourceDate={debtAsOf}
             sourceLabel={debtSource}
             searchTerm={debtSearchTerm}
+            showZero={true}
           />
           
           <FormulaRow 

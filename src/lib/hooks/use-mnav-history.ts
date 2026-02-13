@@ -330,7 +330,7 @@ async function fetchCompanyIntradayMnav(
     const freeCash = (company.cashReserves || 0) - (company.restrictedCash || 0);
     
     const enterpriseValue = marketCap + adjustedDebt + (company.preferredEquity || 0) - freeCash;
-    const cryptoNav = company.holdings * cryptoPrice;
+    const cryptoNav = company.holdings * cryptoPrice + (company.restrictedCash || 0);
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
 
     return {
@@ -561,8 +561,11 @@ async function getCompanyDailyMnav(
     // Convert stock price to USD if needed (forexRate = units of foreign currency per USD)
     const stockPriceUsd = stockPrice / forexRate;
     const marketCap = stockPriceUsd * shares;  // Now uses historical shares!
-    const cryptoNav = holdings * cryptoPrice;
-    const enterpriseValue = marketCap + debt - cash;
+    const restrictedCash = companyData.restrictedCash ?? 0;
+    const preferred = companyData.preferredEquity ?? 0;
+    const freeCash = cash - restrictedCash;
+    const cryptoNav = holdings * cryptoPrice + restrictedCash;
+    const enterpriseValue = marketCap + debt + preferred - freeCash;
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
     
     result.push({

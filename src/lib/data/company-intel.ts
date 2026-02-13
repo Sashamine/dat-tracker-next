@@ -181,26 +181,6 @@ const MARA_INTEL: CompanyIntel = {
   ],
 };
 
-const RIOT_INTEL: CompanyIntel = {
-  ticker: "RIOT",
-  lastResearched: "2026-01-13",
-  pressReleases: [
-    { date: "2026-01-06", title: "Announced $200M in BTC sales (Nov-Dec 2025)", summary: "Funding AI data center expansion", url: "https://www.riotplatforms.com/news-media/press-releases" },
-    { date: "2025-12-01", title: "Sold 1,818 BTC for $161.6M", summary: "Largest monthly liquidation", url: "https://www.riotplatforms.com/news-media/press-releases" },
-    { date: "2025-11-01", title: "Sold 383 BTC for $37M", summary: "Strategic shift to selling production", url: "https://www.riotplatforms.com/news-media/press-releases" },
-    { date: "2025-09-26", title: "JPMorgan/Citi upgraded stock on AI pivot", summary: "45% upside forecast through 2026", url: "https://www.riotplatforms.com/news-media/press-releases" },
-  ],
-  strategySummary: "Strategic shift began April 2025: now selling majority of monthly BTC production to fund AI data center expansion. Corsicana facility targeting 112 MW by Q1 2027 for AI/HPC colocation. Deployed hashrate increased from 36.6 EH/s to 38.5 EH/s. Moving to quarterly Bitcoin production updates in 2026. $500M stock offering launched.",
-  recentDevelopments: [
-    "18,005 BTC holdings (down from 19,000+ in early 2025)",
-    "JPMorgan forecast 45% upside through 2026, expecting 600 MW colocation deal",
-    "Citi upgraded to buy with $24 price target",
-    "Hashprice near 5-year lows (~$37/PH/s) eroding margins industry-wide",
-  ],
-  keyBackers: ["Jason Les (CEO)"],
-  outlook2026: "AI/HPC pivot accelerating. Quarterly BTC production updates. Target 600 MW colocation deal.",
-};
-
 const CLSK_INTEL: CompanyIntel = {
   ticker: "CLSK",
   lastResearched: "2026-01-13",
@@ -223,21 +203,30 @@ const CLSK_INTEL: CompanyIntel = {
 
 const ASST_INTEL: CompanyIntel = {
   ticker: "ASST",
-  lastResearched: "2026-01-13",
+  lastResearched: "2026-02-12",
   pressReleases: [
+    { date: "2026-02-03", title: "1-for-20 reverse stock split effective", summary: "Class A: 29.6M, Class B: 11.1M post-split", url: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/" },
+    { date: "2026-01-28", title: "Holdings reached 13,131.82 BTC", summary: "Continued accumulation post-merger", url: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/" },
+    { date: "2026-01-16", title: "Completed acquisition of Semler Scientific", summary: "Combined BTC treasuries", url: "https://investors.strive.com" },
     { date: "2025-09-01", title: "Completed merger with Asset Entities", summary: "Became Strive, Inc.", url: "https://www.strive.com/press" },
     { date: "2025-05-27", title: "Secured $750M PIPE funding", summary: "For Bitcoin purchases", url: "https://www.strive.com/press" },
-    { date: "2025-12-01", title: "Announced acquisition of Semler Scientific", summary: "All-stock deal to combine BTC treasuries", url: "https://www.strive.com/press" },
   ],
-  strategySummary: "Founded in 2022 by Vivek Ramaswamy and Anson Frericks as 'anti-woke' asset manager. First publicly traded asset management firm to adopt Bitcoin treasury strategy. $750M raise (potentially $1.5B with warrants) for Bitcoin acquisition. Strategy intends to acquire Bitcoin at significant discount to market value. Over $2B AUM across 13 ETFs, CITs, and direct indexing platform. SATA 12.25% perpetual preferred issued. No debt - perpetual preferred only.",
+  strategySummary: "First publicly traded asset management firm with Bitcoin treasury strategy. Founded in 2022 by Vivek Ramaswamy and Anson Frericks. Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026. Uses perpetual preferred stock (SATA 12.25%) instead of debt. Over $2B AUM across 13 ETFs, CITs, and direct indexing platform. Plans to monetize Semler's healthcare diagnostics business while maintaining aggressive BTC accumulation.",
   recentDevelopments: [
-    "~10,900 BTC holdings (~$1.26B)",
-    "CEO Matt Cole: firm aims to outperform Bitcoin regardless of price direction",
-    "Vivek Ramaswamy expected to run for Ohio governor in 2026",
-    "Stock surging on elevated retail interest",
+    "13,132 BTC holdings (~$1.3B) as of Jan 28, 2026",
+    "1-for-20 reverse split effective Feb 3, 2026 (40.77M shares post-split)",
+    "SATA 12.25% perpetual preferred ($200M) - NOT convertible to common stock",
+    "No debt - uses perpetual preferred instead of convertibles",
+    "Semler acquisition completed Jan 16, 2026",
+    "Pre-funded warrants (3.2M @ $0.002) + Traditional warrants (26.7M @ $27) outstanding",
   ],
-  keyBackers: ["Vivek Ramaswamy (Co-Founder)", "Matt Cole (CEO)", "Anson Frericks"],
-  outlook2026: "Complete Semler merger. Combined entity to be major BTC treasury force.",
+  keyBackers: ["Vivek Ramaswamy (Co-Founder)", "Matt Cole (CEO)", "Eric Semler (Exec Chair)", "Anson Frericks"],
+  outlook2026: "Post-merger integration. Monetize Semler healthcare ops. Continue aggressive BTC accumulation.",
+  strategyDocs: [
+    { title: "Jan 28, 2026 8-K (Holdings Update)", date: "2026-01-28", description: "13,131.82 BTC holdings confirmed", url: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/0001140361-26-002606-index.htm" },
+    { title: "Feb 3, 2026 8-K (Stock Split)", date: "2026-02-03", description: "1-for-20 reverse split details", url: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/0000950103-26-001560-index.htm" },
+    { title: "Q3 2025 10-Q", date: "2025-11-14", description: "5,886 BTC holdings at Sep 30, 2025", url: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/0001628280-25-052343-index.htm" },
+  ],
 };
 
 const SMLR_INTEL: CompanyIntel = {
@@ -1092,7 +1081,6 @@ export const COMPANY_INTEL: Record<string, CompanyIntel> = {
   XXI: XXI_INTEL,
   CEPO: CEPO_INTEL,
   MARA: MARA_INTEL,
-  RIOT: RIOT_INTEL,
   CLSK: CLSK_INTEL,
   ASST: ASST_INTEL,
   SMLR: SMLR_INTEL,

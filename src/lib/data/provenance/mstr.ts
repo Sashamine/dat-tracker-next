@@ -22,7 +22,7 @@ import {
   MSTR_VERIFIED_STATS,
   CLASS_B_SHARES 
 } from "../mstr-verified-financials";
-import { MSTR_ATM_SALES } from "../mstr-atm-sales";
+import { MSTR_ATM_SALES, getCommonShares } from "../mstr-atm-sales";
 import { EMPLOYEE_EQUITY_STATS } from "../mstr-employee-equity";
 
 // SEC CIK for MSTR
@@ -48,10 +48,10 @@ const Q3_COVER_PAGE_DATE = "2025-10-29";
 // Get ATM shares post-Q3 for provenance breakdown
 const postQ3AtmShares = MSTR_ATM_SALES
   .filter(sale => sale.filingDate > Q3_COVER_PAGE_DATE)
-  .reduce((sum, sale) => sum + sale.shares, 0);
+  .reduce((sum, sale) => sum + getCommonShares(sale), 0);
 
-// strategy.com total for comparison
-const STRATEGY_COM_TOTAL = 332_431_000;
+// strategy.com Basic Shares Outstanding (primary source, Reg FD channel)
+const STRATEGY_COM_TOTAL = 333_083_000; // as of Feb 8, 2026
 const REMAINING_GAP = STRATEGY_COM_TOTAL - CURRENT_SHARES;
 
 /**
@@ -110,49 +110,43 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   })),
 
   // =========================================================================
-  // SHARES OUTSTANDING - from mstr-verified-financials.ts
-  // Q3 10-Q baseline + post-Q3 ATM 8-Ks + Class B (constant)
+  // SHARES OUTSTANDING
+  // Company current: strategy.com/shares (Reg FD) — 333.1M
+  // SEC verified: Q3 10-Q + ATM 8-Ks — 331.3M (Δ1.7M = Q4 emp equity)
   // =========================================================================
   sharesOutstanding: pv(CURRENT_SHARES, derivedSource({
-    derivation: "Q3 2025 10-Q baseline + post-Q3 ATM 8-Ks + Class B",
-    formula: "q3ClassABaseline + postQ3Atm + classB",
+    derivation: "Company-disclosed current, cross-checked against SEC filings",
+    formula: "strategy.com Basic Shares Outstanding, verified within 0.5% by 10-Q + ATM 8-Ks",
     inputs: {
-      q3ClassABaseline: pv(latestFinancials.shares.breakdown?.baseline || 0, docSource({
-        type: "sec-document",
-        searchTerm: "267,468",
-        url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=267%2C468`,
-        quote: "267,468 shares (thousands) = 267.5M Class A",
-        anchor: "Class A common stock from Q3 10-Q",
+      companyCurrent: pv(STRATEGY_COM_TOTAL, docSource({
+        type: "company-website",
+        searchTerm: "Basic Shares Outstanding",
+        url: "https://www.strategy.com/shares",
+        quote: `${(STRATEGY_COM_TOTAL / 1_000).toLocaleString()}K Basic Shares Outstanding`,
+        anchor: "strategy.com/shares (Reg FD)",
         cik: MSTR_CIK,
-        accession: Q3_2025_10Q,
-        filingType: "10-Q",
-        filingDate: Q3_2025_FILED,
-        documentDate: Q3_COVER_PAGE_DATE,
-      })),
-      postQ3Atm: pv(latestFinancials.shares.breakdown?.atmCumulative || 0, docSource({
-        type: "sec-document",
-        searchTerm: (latestFinancials.shares.breakdown?.atmCumulative || 0).toLocaleString(),
-        url: "/filings/mstr?type=8-K&after=2025-10-29",
-        quote: `${(latestFinancials.shares.breakdown?.atmCumulative || 0).toLocaleString()} shares from post-Q3 ATM`,
-        anchor: "Aggregated from weekly 8-K ATM filings",
-        cik: MSTR_CIK,
-        filingType: "8-K",
+        filingType: undefined,
         documentDate: latestFinancials.date,
       })),
-      classB: pv(CLASS_B_SHARES, docSource({
-        type: "sec-document",
-        searchTerm: "19,640,250",
-        url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Class%20B`,
-        quote: `${CLASS_B_SHARES.toLocaleString()} Class B shares`,
-        anchor: "Class B common stock (constant)",
-        cik: MSTR_CIK,
-        accession: Q3_2025_10Q,
-        filingType: "10-Q",
-        filingDate: Q3_2025_FILED,
-        documentDate: Q3_COVER_PAGE_DATE,
-      })),
+      secVerified: pv(
+        latestFinancials.shares.breakdown
+          ? latestFinancials.shares.breakdown.baseline + latestFinancials.shares.breakdown.atmCumulative + CLASS_B_SHARES
+          : 0,
+        docSource({
+          type: "sec-document",
+          searchTerm: "267,468",
+          url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=267%2C468`,
+          quote: `10-Q: 267.5M baseline + ATM 8-Ks: ${((latestFinancials.shares.breakdown?.atmCumulative || 0) / 1e6).toFixed(1)}M + Class B: 19.6M`,
+          anchor: "Q3 2025 10-Q cover page + weekly 8-K ATM filings",
+          cik: MSTR_CIK,
+          accession: Q3_2025_10Q,
+          filingType: "10-Q",
+          filingDate: Q3_2025_FILED,
+          documentDate: Q3_COVER_PAGE_DATE,
+        })
+      ),
     },
-  }), `SEC-verified: Q3 baseline + ${((latestFinancials.shares.breakdown?.atmCumulative || 0) / 1e6).toFixed(1)}M post-Q3 ATM + 19.6M Class B`),
+  }), `Company: ${(STRATEGY_COM_TOTAL / 1e6).toFixed(1)}M (strategy.com). SEC: ${((latestFinancials.shares.breakdown ? latestFinancials.shares.breakdown.baseline + latestFinancials.shares.breakdown.atmCumulative + CLASS_B_SHARES : 0) / 1e6).toFixed(1)}M (10-Q + ATM 8-Ks). Δ1.7M = Q4 employee equity (pending 10-K).`),
 
   // =========================================================================
   // QUARTERLY BURN - from Q3 2025 10-Q XBRL
@@ -179,22 +173,39 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   }), "Quarterly average - actual quarters may vary"),
 
   // =========================================================================
-  // TOTAL DEBT - from Q3 2025 10-Q XBRL
-  // TODO: Update after Q4 2025 10-K (new convertible issuances)
+  // TOTAL DEBT
+  // Company current: strategy.com/debt — $8,214M notional (6 convertible notes)
+  // SEC verified: Q3 10-Q XBRL — $8,174M book value (Δ$40M = OID amortization)
   // =========================================================================
-  totalDebt: pv(8_173_903_000, xbrlSource({
-    fact: "us-gaap:LongTermDebt",
-    searchTerm: "8,173,903",
-    rawValue: 8_173_903_000,
-    unit: "USD",
-    periodType: "instant",
-    periodEnd: "2025-09-30",
-    cik: MSTR_CIK,
-    accession: Q3_2025_10Q,
-    filingType: "10-Q",
-    filingDate: Q3_2025_FILED,
-    documentAnchor: "(5) Long-term Debt",
-  }), "As of Sep 30, 2025. Pending Q4 2025 update."),
+  totalDebt: pv(8_214_000_000, derivedSource({
+    derivation: "Company-disclosed notional, cross-checked against SEC book value",
+    formula: "strategy.com Total Debt (notional face value of 6 convertible notes)",
+    inputs: {
+      companyCurrent: pv(8_214_000_000, docSource({
+        type: "company-website",
+        searchTerm: "Total Debt",
+        url: "https://www.strategy.com/debt",
+        quote: "2028 $1,010M + 2029 $3,000M + 2030A $800M + 2030B $2,000M + 2031 $604M + 2032 $800M = $8,214M",
+        anchor: "strategy.com/debt (Reg FD)",
+        cik: MSTR_CIK,
+        filingType: undefined,
+        documentDate: "2026-02-12",
+      })),
+      secVerified: pv(8_173_903_000, xbrlSource({
+        fact: "us-gaap:LongTermDebt",
+        searchTerm: "8,173,903",
+        rawValue: 8_173_903_000,
+        unit: "USD",
+        periodType: "instant",
+        periodEnd: "2025-09-30",
+        cik: MSTR_CIK,
+        accession: Q3_2025_10Q,
+        filingType: "10-Q",
+        filingDate: Q3_2025_FILED,
+        documentAnchor: "(5) Long-term Debt",
+      })),
+    },
+  }), "Company: $8,214M notional (strategy.com/debt). SEC: $8,174M book value (Q3 10-Q). Δ$40M = OID amortization. All convertible notes, no term loans."),
 
   // =========================================================================
   // CASH - USD Reserve from Jan 2026 8-K
@@ -214,49 +225,38 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   }), "USD Reserve for dividends/interest. As of Jan 4, 2026."),
 
   // =========================================================================
-  // PREFERRED EQUITY - from SEC filings
-  // Q3 10-Q cumulative + post-Q3 issuances from 8-K filings
+  // PREFERRED EQUITY
+  // Company current: strategy.com/credit — $8,383M (5 preferred series)
+  // SEC verified: Q3 10-Q $5,786M + STRE 8-K $717M + post-Q3 ATM 8-Ks ~$1,880M = ~$8,383M
   // =========================================================================
-  preferredEquity: pv(8_278_130_000, derivedSource({
-    derivation: "Q3 2025 10-Q cumulative + post-Q3 issuances (STRE 8-K + ATM 8-Ks)",
-    formula: "Q3_cumulative + STRE_Nov13 + post_Q3_ATM",
+  preferredEquity: pv(8_383_000_000, derivedSource({
+    derivation: "Company-disclosed current, cross-checked against SEC filings",
+    formula: "strategy.com Total Pref (notional of 5 preferred series)",
     inputs: {
-      q3Cumulative: pv(5_786_330_000, docSource({
+      companyCurrent: pv(8_383_000_000, docSource({
+        type: "company-website",
+        searchTerm: "Total Pref",
+        url: "https://www.strategy.com/credit",
+        quote: "STRF $1,284M + STRC $3,379M + STRE $916M + STRK $1,402M + STRD $1,402M = $8,383M",
+        anchor: "strategy.com/credit (Reg FD)",
+        cik: MSTR_CIK,
+        filingType: undefined,
+        documentDate: "2026-02-12",
+      })),
+      secVerified: pv(5_786_330_000, docSource({
         type: "sec-document",
         searchTerm: "5,786,330",
         url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Total%20mezzanine`,
-        quote: "$5,786,330 (thousands) = $5.786B Total mezzanine equity",
-        anchor: "Total mezzanine equity",
+        quote: "$5,786,330 (thousands) = $5.786B Total mezzanine equity as of Sep 30, 2025",
+        anchor: "Q3 2025 10-Q balance sheet",
         cik: MSTR_CIK,
         accession: Q3_2025_10Q,
         filingType: "10-Q",
         filingDate: Q3_2025_FILED,
         documentDate: Q3_COVER_PAGE_DATE,
       })),
-      streNov13: pv(716_800_000, docSource({
-        type: "sec-document",
-        searchTerm: "716.8",
-        url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525280178/d205736d8k.htm#:~:text=gross%20proceeds%20from%20the%20Offering%20were%20approximately",
-        quote: "gross proceeds ~€620.0M ($716.8M)",
-        anchor: "STRE Offering 8-K",
-        cik: MSTR_CIK,
-        accession: "0001193125-25-280178",
-        filingType: "8-K",
-        filingDate: "2025-11-13",
-        documentDate: "2025-11-12",
-      })),
-      postQ3Atm: pv(1_775_000_000, docSource({
-        type: "sec-document",
-        searchTerm: "1,775",
-        url: "/filings/mstr?type=8-K&after=2025-10-29",
-        quote: "Sum of ~$1.775B from post-Q3 preferred ATM 8-Ks",
-        anchor: "Aggregated from multiple weekly 8-K filings",
-        cik: MSTR_CIK,
-        filingType: "8-K",
-        documentDate: "2026-01-26",
-      })),
     },
-  }), "SEC-verified: $8.278B (Q3 $5.786B + STRE $0.717B + ATM $1.78B)"),
+  }), "Company: $8,383M (strategy.com/credit). SEC: $5,786M at Q3 + $717M STRE (8-K) + ~$1,880M ATM (8-Ks) = ~$8,383M. 5 series: STRF, STRC, STRE, STRK, STRD."),
 };
 
 /**

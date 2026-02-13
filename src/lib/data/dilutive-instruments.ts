@@ -270,24 +270,6 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
-  // RIOT Platforms - BTC miner with HODL strategy
-  // Verified 2026-01-28 via SEC 8-K (CIK 0001167419)
-  // Note: RIOT sold 1,818 BTC in Dec 2025 (first major sale) - unusual for HODL miner
-  RIOT: [
-    {
-      type: "convertible",
-      strikePrice: 14.86, // Verified: 67.2767 shares/$1000 = $14.86 conversion price (32.5% premium over $11.22)
-      potentialShares: 39_970_000, // $594M / $14.86 = 39.97M shares
-      faceValue: 594_000_000,
-      source: "8-K Dec 11, 2024 (accession 0001104659-24-127656)",
-      sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1167419/000110465924127656/tm2430044d5_8k.htm",
-      expiration: "2030-01-15",
-      issuedDate: "2024-12-10",
-      notes: "0.75% Convertible Senior Notes due 2030 - used proceeds for $510M BTC purchase",
-    },
-  ],
-
   // NXTT removed - company has history of false financial reports
 
   // MARA Holdings - BTC miner with HODL strategy
@@ -355,6 +337,52 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "1.00% Convertible Senior Secured Notes due 2030, conversion rate 72.0841 shares/$1,000, collateralized by 16,116.32 BTC",
     },
   ],
+
+  // Strive (ASST) - First asset manager BTC treasury
+  // Verified 2026-02-12 via SEC filings (CIK 0001920406)
+  // Post-Semler merger (Jan 16, 2026) + 1-for-20 reverse split (Feb 3, 2026)
+  // Basic shares: 62,370,000 (post-merger, post-split)
+  // Diluted: ~90.12M → Difference: ~27.75M in dilutive instruments
+  // Pre-funded warrants @ $0.002 are essentially shares - always ITM
+  // NOTE: SATA 12.25% perpetual preferred is NOT convertible to common stock
+  ASST: [
+    {
+      type: "warrant",
+      strikePrice: 0.002, // $0.002 - essentially $0, always ITM
+      potentialShares: 3_208_713,
+      source: "8-K Feb 3, 2026 (post-split)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/",
+      issuedDate: "2026-01-21",
+      notes: "Pre-funded warrants @ $0.002 - always ITM, essentially shares. From PIPE financing.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 27.0, // Post-split: $540 pre-split / 20 = $27
+      potentialShares: 21_787_205, // Adjusted post-merger
+      source: "8-K Feb 3, 2026 (post-split)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/",
+      issuedDate: "2026-01-21",
+      notes: "Traditional warrants from PIPE @ $27 post-split. Significantly OTM if stock below $27.",
+    },
+    {
+      type: "convertible",
+      strikePrice: 3.63, // $1,000 / 275.3887 conversion rate = $3.63 per share
+      potentialShares: 2_753_887, // $10M × 275.3887 / 1000 = 2,753,887 shares
+      faceValue: 10_000_000,
+      source: "8-K Jan 28, 2026 (Semler convertible notes)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/",
+      issuedDate: "2026-01-16", // Assumed from Semler merger
+      expiration: "2027-12-15", // Verify from original Semler note terms
+      notes: "$10M remaining Semler convertible notes after $90M exchange. Conversion rate: 275.3887 shares per $1,000.",
+    },
+  ],
+  // Total ASST dilution: 3.2M pre-funded (ITM) + 21.8M traditional warrants + 2.75M converts
+  // sharesForMnav uses basic (62.37M) since dilutives tracked here
+  // At typical prices (~$30): Pre-funded adds 3.2M + converts add 2.75M → FD ~68.3M shares
+  // If stock > $27: Traditional warrants add 21.8M → FD ~90.1M shares
 
   // BTCS Inc - ETH treasury company
   // Verified 2026-01-29 via SEC filings and btcs.com

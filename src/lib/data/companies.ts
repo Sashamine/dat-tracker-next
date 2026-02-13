@@ -610,55 +610,6 @@ export const btcCompanies: Company[] = [
     notes: "Largest US public miner. Core financials from provenance/mara.ts. ~$3.25B in 0% convertible notes (2026, 2030, 2032 series). Dilutives (~81M from converts) in dilutive-instruments.ts.",
   },
   {
-    id: "riot",
-    name: "Riot Platforms",
-    ticker: "RIOT",
-    asset: "BTC",
-    tier: 1,
-    holdings: 18_005,  // Jan 7, 2026 - sold 1,818 BTC in Dec 2025
-    holdingsLastUpdated: "2026-01-07",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.riotplatforms.com/riot-announces-december-2025-production-and-operations-updates/",
-    datStartDate: "2024-01-01",
-    website: "https://riotplatforms.com",
-    twitter: "https://twitter.com/RiotPlatforms",
-    secCik: "0001167419",
-    // costBasisAvg removed - needs SEC verification
-    isMiner: true,
-    // btcMinedAnnual removed - not citable from SEC filings
-    quarterlyBurnUsd: 69_832_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense (excl mining COGS)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000155837025006119/",
-    burnAsOf: "2025-09-30",
-    avgDailyVolume: 350_000_000,
-    hasOptions: true,
-    marketCap: 5_220_000_000,
-    sharesForMnav: 403_000_000,  // 403M diluted shares (Q3 2025)
-    sharesSource: "SEC 10-Q (filed 2025-10-30): EntityCommonStockSharesOutstanding = 371,807,186 as of 2025-10-29",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
-    sharesAsOf: "2025-10-29",
-    // Note: RIOT reports "unrestricted cash" separately from restricted cash in SEC filings
-    cashReserves: 330_700_000,  // $330.7M unrestricted cash (Q3 2025)
-    restrictedCash: 330_700_000,  // Operating capital (miner) - not excess
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
-    cashAsOf: "2025-09-30",
-    leader: "Jason Les (CEO)",
-    strategy: "HODL miner + treasury. Converts fund BTC buys. 1 GW Corsicana.",
-    // Debt: $594M 0.75% convertible notes due 2030 (Dec 2024) + $200M Coinbase BTC-backed credit facility
-    totalDebt: 794_000_000,
-    debtSource: "SEC 10-Q + press releases",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
-    debtAsOf: "2025-12-31",
-    // Cash obligations: $594M × 0.75% = $4.455M/year (converts only; credit facility rate unknown)
-    debtInterestAnnual: 4_455_000,
-    cashObligationsAnnual: 4_455_000,
-    cashObligationsSource: "SEC 10-Q Q3 2025: 0.75% convertible notes",
-    cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1167419/000110465925104466/",
-    cashObligationsAsOf: "2025-09-30",
-    notes: "Adopted DAT playbook Dec 2024. $594M converts used for $510M BTC purchase. 3rd largest corporate holder. Credit facility interest not included.",
-  },
-  {
     id: "clsk",
     name: "CleanSpark",
     ticker: "CLSK",
@@ -701,42 +652,64 @@ export const btcCompanies: Company[] = [
     notes: "$1.7B total converts: $550M due 2030 + $1.15B due 2032. $400M BTC-backed credit (largely undrawn).",
   },
   {
+    // =========================================================================
+    // STRV (Strive, Inc.) - First publicly traded asset manager with BTC treasury
+    // Trades as ASST on NASDAQ. Merged with Asset Entities Sep 2025.
+    // Acquired Semler Scientific Jan 2026. 1-for-20 reverse split Feb 3, 2026.
+    // All data from provenance/strv.ts (SEC-verified)
+    // =========================================================================
     id: "asst",
-    name: "Strive (Strive + Semler)",
+    name: "Strive, Inc.",
     ticker: "ASST",
     asset: "BTC",
     tier: 1,
-    holdings: 13_132,  // SEC 8-K Jan 28, 2026: "now holds 13,131.82 Bitcoin as of January 28, 2026"
+    // HOLDINGS: SEC 8-K Jan 28, 2026
+    holdings: 13_131.82,
     holdingsLastUpdated: "2026-01-28",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/",
+    holdingsSourceUrl: "https://investors.strive.com/news-events/news-releases/news-details/2026/Strive-Announces-Closing-of-Upsized--Oversubscribed-Follow-On-Offering-of-SATA-Stock-and-Concurrent-Exchange-of-Semler-Notes/default.aspx",
     datStartDate: "2024-05-01",
+    website: "https://strive.com",
+    twitter: "stikiinvestor",
+    investorRelationsUrl: "https://investors.strive.com",
     secCik: "0001920406",
-    // costBasisAvg removed - needs SEC verification
     isMiner: false,
-    quarterlyBurnUsd: 15_000_000,  // Combined burn
-    burnSource: "SEC 10-Q (filed 2025-11-14): NetCashUsedInOperatingActivities $13,955,000 (2025-09-12 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/",
+    // BURN: SEC 10-Q Q3 2025
+    quarterlyBurnUsd: 15_000_000,
+    burnSource: "SEC 10-Q Q3 2025",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/asst-20250930.htm",
     burnAsOf: "2025-09-30",
-    avgDailyVolume: 100_000_000,  // Increased post-merger
-    hasOptions: true,
-    marketCap: 1_110_000_000,  // ~$1.11B per Stock Analysis (Jan 2026)
-    sharesForMnav: 1_247_436_814,  // SEC DEF 14C Jan 16, 2026: 1.05B Class A + 198M Class B
-    sharesSource: "SEC 10-Q (filed 2024-08-14): CommonStockSharesOutstanding = 1,677,056 as of 2023-12-31",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000121390024069032/",
-    sharesAsOf: "2023-12-31",
-    cashReserves: 77_780_000,  // Combined cash (Strive + Semler)
-    restrictedCash: 77_780_000,  // Operating capital - not excess
-    cashSource: "SEC 8-K Jan 2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/",
-    cashAsOf: "2026-01-16",
-    preferredEquity: 200_000_000,  // SATA 12.25% perpetual preferred (2M shares × $100 stated)
-    preferredSource: "SEC 8-K Jan 21, 2026: Variable Rate Series A Perpetual Preferred (SATA) - $100 stated/liquidation value per share",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126001875/",
-    preferredAsOf: "2026-01-21",
+    avgDailyVolume: 100_000_000,
+    hasOptions: false,  // No stock options granted per SEC data
+    // SHARES: Anchor 44.7M post-split as of Dec 31, 2025 (SEC 8-K Jan 5, 2026: 894.3M pre-split ÷ 20)
+    // + Semler merger shares (Jan 16) + PIPE/SATA offering shares (Jan 21-28) = ~62.37M estimated
+    // Pre-funded warrants @ $0.002 tracked in dilutive-instruments.ts
+    sharesForMnav: 62_370_000,
+    sharesSource: "Company-derived: 44.7M verified (8-K Jan 5: 894.3M pre-split ÷ 20) + ~17.7M from merger/PIPE",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+    sharesAsOf: "2026-01-28",
+    // CASH: SEC 8-K Jan 5, 2026 — $67.6M as of Dec 31, 2025
+    // Post-Jan: +$119M SATA raise, -$20M Coinbase payoff, -BTC purchases → estimated ~$50-80M current
+    cashReserves: 67_600_000,
+    restrictedCash: 67_600_000,  // Operating capital earmarked for BTC - not excess
+    cashSource: "SEC 8-K Jan 5, 2026 (preliminary, as of Dec 31, 2025)",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+    cashAsOf: "2025-12-31",
+    // DEBT: $100M Semler converts - $90M exchanged for SATA = $10M remaining (SEC 8-K Jan 28)
+    // Coinbase $20M loan also paid off. 100% BTC unencumbered.
+    totalDebt: 10_000_000,
+    debtSource: "Company-derived: $100M Semler converts - $90M exchanged = $10M (SEC 8-K Jan 28, 2026)",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
+    debtAsOf: "2026-01-28",
+    // PREFERRED: SATA 12.25% perpetual preferred (NOT convertible to common)
+    // Dec 31: 2,012,729 SATA (SEC 8-K Jan 5) + Jan: 1.32M underwritten + ~930K exchange = ~4.26M @ $100 stated value
+    preferredEquity: 426_000_000,
+    preferredSource: "Company-derived: 2.01M verified (8-K Jan 5) + 1.32M underwritten + ~930K exchange = ~4.26M @ $100",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+    preferredAsOf: "2026-01-28",
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
-    strategy: "First asset mgmt BTC treasury. No debt - perpetual preferred only. Plans to monetize Semler healthcare ops.",
-    notes: "Acquired Semler Scientific Jan 2026. SATA 12.25% perpetual preferred. 11th largest corporate BTC holder.",
+    strategy: "First publicly traded asset manager with BTC treasury. No debt - uses perpetual preferred (SATA) instead. Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026.",
+    notes: "1-for-20 reverse split Feb 3, 2026. SATA 12.25% perpetual preferred NOT convertible to common. Pre-funded warrants (3.2M @ $0.002) and traditional warrants (26.7M @ $27) tracked in dilutive-instruments.ts.",
   },
   {
     id: "kulr",
