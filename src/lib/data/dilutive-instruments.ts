@@ -1057,6 +1057,28 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Total DJT dilution: INCOMPLETE — convertible terms + DJTWW warrants + earnout shares TBD
   // Known dilutive risks: $1B converts (price unknown), DJTWW warrants, DWAC earnout shares
 
+  // NAKA (Nakamoto Inc.) - BTC treasury company
+  // Verified 2026-02-13 via SEC 10-Q Q3 2025 XBRL (CIK 0001946573)
+  // Basic shares for mNAV: 511,555,864 (439.85M common + 71.7M pre-funded warrants at $0.001)
+  // Pre-funded warrants already included in basic count (near-zero exercise price)
+  NAKA: [
+    {
+      type: "warrant",
+      strikePrice: 11.50, // Standard SPAC-style warrants from KindlyMD era
+      potentialShares: 85_091_274,
+      source: "10-Q Q3 2025 XBRL: ClassOfWarrantOrRightNumberOfSecuritiesCalledByEachWarrantOrRight",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/",
+      expiration: "2026-03-31", // ~0.28 years remaining as of Sep 30, 2025
+      issuedDate: "2023-01-01", // Approximate — from original KindlyMD IPO
+      notes:
+        "Tradeable warrants (NAKAW) on OTC Pink Market. 85.1M warrants at ~$11.50 exercise. Intrinsic value $90.3M per XBRL. ~0.28 years remaining as of Q3 2025.",
+    },
+    // Note: $200M Yorkville convertible debenture (conversion $2.80) was EXTINGUISHED Oct 2025
+    // Replaced by Two Prime loan → Kraken $210M BTC-backed loan (Dec 2025)
+    // No convertible debt outstanding as of Dec 2025
+  ],
+
   // CYPH (Cypherpunk Technologies) - ZEC treasury company
   // Verified 2026-01-29 via SEC 8-K Oct 9, 2025 (CIK 0001509745)
   // Basic shares: 137,420,344 (56.6M common + 80.8M pre-funded warrants already in basic)
