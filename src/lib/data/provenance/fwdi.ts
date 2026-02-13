@@ -136,7 +136,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "12,084",
-      url: `/filings/fwdi/${Q1_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
       quote: "Total liabilities $12,084,535 (all current — taxes, accrued expenses, leases)",
       anchor: "Total liabilities",
       cik: FWDI_CIK,
@@ -157,7 +157,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "approximately $12 million",
-      url: `/filings/fwdi/${Q1_FY2026_10Q_ACCESSION}?tab=document&q=approximately%20%2412%20million`,
+      url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
       quote: "approximately $12 million in cash as of January 31, 2026",
       anchor: "Cash and cash equivalents",
       cik: FWDI_CIK,
@@ -198,7 +198,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `/filings/fwdi/${Q1_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
       quote: "Series A-1 Convertible Preferred: 0 shares outstanding",
       anchor: "Preferred stock",
       cik: FWDI_CIK,
