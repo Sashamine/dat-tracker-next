@@ -14,8 +14,22 @@
  * The 10-Q classifies these as "digital assets NOT at fair value"
  * carried at cost ($201.6M).
  *
- * TODO: Find fwdSOL mint address and DeFi vault addresses
- * to track the remaining ~2.5M SOL-equivalent.
+ * fwdSOL (Sanctum LST):
+ *   Mint: cPQPBN7WubB3zyQDpzTK2ormx1BMdAym9xkrYUJsctm
+ *   Stake Pool: 2iZHumJq19hyCYkD3xFoZ6dbiFbJ5nqbwALMdJBYQsJa
+ *   Total Supply: ~1,735,477 fwdSOL = ~1,762,724 SOL-equiv (1 fwdSOL ≈ 1.0157 SOL)
+ *   APY: ~6.43% (Sanctum)
+ *   Sanctum page: https://app.sanctum.so/explore/fwdSOL
+ *
+ * Top fwdSOL holders (likely FWDI-controlled, not on Arkham):
+ *   3ZnmkVEmCTaD4gaGvU7Bv9J9NJeEPFTQA9gvpqRzoPrb — 1,300,849 fwdSOL
+ *   9DrvZvyWh1HuAoZxvYWMvkf2XCzryCpGgHqrMjyDWpmo — 424,556 fwdSOL
+ *
+ * Combined on-chain total:
+ *   Native SOL (Arkham wallets): ~4,509,655 SOL
+ *   fwdSOL (Sanctum LST):       ~1,762,724 SOL-equiv
+ *   TOTAL:                       ~6,272,379 SOL-equiv
+ *   (vs website Jan 15: 6,979,967 — gap ~707K from other DeFi/unlabeled)
  */
 
 export interface FwdiWallet {
@@ -133,3 +147,38 @@ export const FWDI_STAKE_ACCOUNTS = FWDI_WALLETS.filter(
 export const FWDI_CUSTODY_WALLETS = FWDI_WALLETS.filter(
   (w) => w.type === "custody" || w.type === "hot-wallet" || w.type === "deposit"
 ).map((w) => w.address);
+
+// =========================================================================
+// fwdSOL — Sanctum Liquid Staking Token
+// =========================================================================
+
+/** fwdSOL SPL token mint address */
+export const FWDSOL_MINT = "cPQPBN7WubB3zyQDpzTK2ormx1BMdAym9xkrYUJsctm";
+
+/** fwdSOL Sanctum stake pool address */
+export const FWDSOL_STAKE_POOL = "2iZHumJq19hyCYkD3xFoZ6dbiFbJ5nqbwALMdJBYQsJa";
+
+/** Sanctum API for fwdSOL exchange rate (SOL per fwdSOL in lamports) */
+export const SANCTUM_SOL_VALUE_URL =
+  "https://extra-api.sanctum.so/v1/sol-value/current?lst=cPQPBN7WubB3zyQDpzTK2ormx1BMdAym9xkrYUJsctm";
+
+/** Sanctum API for fwdSOL APY */
+export const SANCTUM_APY_URL =
+  "https://extra-api.sanctum.so/v1/apy/latest?lst=cPQPBN7WubB3zyQDpzTK2ormx1BMdAym9xkrYUJsctm";
+
+/**
+ * Wallets holding fwdSOL — not yet attributed on Arkham.
+ * These are likely FWDI-controlled wallets or DeFi vault positions.
+ */
+export const FWDI_FWDSOL_HOLDERS = [
+  {
+    address: "3ZnmkVEmCTaD4gaGvU7Bv9J9NJeEPFTQA9gvpqRzoPrb",
+    label: "Top fwdSOL holder (likely FWDI)",
+    fwdsolAmount: 1_300_849, // as of 2026-02-13
+  },
+  {
+    address: "9DrvZvyWh1HuAoZxvYWMvkf2XCzryCpGgHqrMjyDWpmo",
+    label: "2nd fwdSOL holder (likely FWDI)",
+    fwdsolAmount: 424_556, // as of 2026-02-13
+  },
+];
