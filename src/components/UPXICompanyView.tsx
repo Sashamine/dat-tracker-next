@@ -176,7 +176,7 @@ export function UPXICompanyView({ company, className = "" }: Props) {
 </div>
 
 {/* STALENESS + EVENTS */}
-<StalenessNote company={company} />
+<StalenessNote dates={[company.holdingsLastUpdated, company.debtAsOf, company.cashAsOf, company.sharesAsOf]} secCik={company.secCik} />
 <ScheduledEvents ticker="UPXI" />
 
 {/* HOLDINGS HISTORY */}

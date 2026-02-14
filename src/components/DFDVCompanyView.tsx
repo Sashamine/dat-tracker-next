@@ -196,7 +196,7 @@ export function DFDVCompanyView({ company, className = "" }: Props) {
 </div>
 
 {/* STALENESS NOTE */}
-<StalenessNote ticker="DFDV" />
+<StalenessNote dates={[company.holdingsLastUpdated, company.debtAsOf, company.cashAsOf, company.sharesAsOf]} secCik={company.secCik} />
 
 {/* CHARTS */}
 <div className="mb-6">
