@@ -141,7 +141,7 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   quarterlyBurn: pv(QUARTERLY_BURN, docSource({
     type: "sec-document",
     searchTerm: "17,401,915",
-    url: `https://www.sec.gov/Archives/edgar/data/${BTBT_CIK}/000121390025044155/`,
+    url: `https://www.sec.gov/Archives/edgar/data/${BTBT_CIK}/000121390025044155/ea0241656-10q_bitdigital.htm`,
     quote: "NetCashUsedInOperatingActivities $17,401,915 (2025-01-01 to 2025-03-31)",
     anchor: "Operating Activities",
     cik: BTBT_CIK,

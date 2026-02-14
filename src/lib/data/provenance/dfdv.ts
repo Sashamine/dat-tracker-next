@@ -144,7 +144,7 @@ export const DFDV_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "131,444",
-      url: `https://www.sec.gov/Archives/edgar/data/${DFDV_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/`,
+      url: `https://www.sec.gov/Archives/edgar/data/${DFDV_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/dfdv-20250930.htm`,
       quote:
         "ConvertibleDebtNoncurrent $131,444,000 + SOL/DeFi loans from company dashboard",
       anchor: "debt",

@@ -130,7 +130,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "144,115,480",
-      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm`,
       quote: "Convertible notes payable $144,115,480; Short-term treasury debt $62,695,723; Cygnet notes $5,380,910; Promissory notes $560,000",
       anchor: "Total Debt",
       cik: UPXI_CIK,
@@ -147,7 +147,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "1,616,765",
-      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm`,
       quote: "Cash $1,616,765",
       anchor: "Cash",
       cik: UPXI_CIK,
@@ -182,7 +182,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm`,
       quote: "Preferred stock, $0.00001 par value, 150,000 shares issued — convertible to 138,889 common, no material liquidation preference",
       anchor: "Preferred stock",
       cik: UPXI_CIK,

@@ -107,9 +107,9 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     SHARES_FOR_MNAV,
     docSource({
       type: "sec-document",
-      searchTerm: "75.9 million common shares and pre-funded warrants",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/`,
-      quote: "75.9 million common shares and pre-funded warrants outstanding",
+      searchTerm: "41,301,400",
+      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
+      quote: "the registrant had 41,301,400 shares of Class A common stock",
       anchor: "Shares Outstanding",
       cik: HSDT_CIK,
       accession: Q3_2025_10Q_ACCESSION,
@@ -117,24 +117,25 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentDate: SHARES_DATE,
     }),
-    `Basic: ${SHARES_BASIC.toLocaleString()} (XBRL) + PFWs: ~${PREFUNDED_WARRANTS.toLocaleString()} @ $0.00001 = ${SHARES_FOR_MNAV.toLocaleString()}`
+    `Basic: ${SHARES_BASIC.toLocaleString()} (10-Q cover page) + PFWs: ~${PREFUNDED_WARRANTS.toLocaleString()} @ $0.00001 (from PIPE 8-K ${PIPE_8K_ACCESSION}) = ${SHARES_FOR_MNAV.toLocaleString()}`
   ),
 
   totalDebt: pv(
     TOTAL_DEBT,
-    docSource({
-      type: "sec-document",
-      searchTerm: "No long-term debt",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/`,
-      quote: "No LongTermDebt XBRL tag reported",
-      anchor: "Balance Sheet",
+    xbrlSource({
+      fact: "us-gaap:LongTermDebt",
+      searchTerm: "Total liabilities",
+      rawValue: 0,
+      unit: "USD",
+      periodType: "instant",
+      periodEnd: Q3_2025_PERIOD_END,
       cik: HSDT_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      documentAnchor: "Balance Sheet",
     }),
-    "No long-term debt reported in XBRL. LongTermDebt concept returns 404."
+    "No LongTermDebt XBRL tag reported. Balance sheet shows no long-term borrowings."
   ),
 
   cashReserves: pv(
@@ -178,7 +179,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     PREFERRED_EQUITY,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/`,
+      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
       quote: "No preferred stock outstanding",
       anchor: "Preferred Stock",
       cik: HSDT_CIK,
