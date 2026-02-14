@@ -96,7 +96,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     SHARES_OUTSTANDING,
     docSource({
       type: "sec-document",
-      searchTerm: "899,489,426 shares",
+      searchTerm: "899,489,426",
       url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm`,
       quote: "899,489,426 shares outstanding",
       anchor: "shares-outstanding",
