@@ -83,6 +83,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
       filingDate: LATEST_HOLDINGS_DATE,
       documentDate: LATEST_HOLDINGS_DATE,
     }),
+    "Source says 'approximately 5,098 Bitcoin' — standard PR hedging language. " +
     "Includes BTC held in custody or pledged for miner purchases under BITMAIN agreement. " +
     "Acquired through combination of mining and strategic purchases. " +
     "XBRL does not include CryptoAssetNumberOfUnits for this CIK."
@@ -132,9 +133,11 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentAnchor: "Long-term Debt",
     }),
-    "No LongTermDebt in Q3 2025 XBRL. DebtDefaultLongtermDebtAmount=$103.8M is Hut 8 pre-merger debt disclosed in footnotes. " +
-    "OperatingLeaseLiability=$185.6M (mining facility leases). " +
-    "Treating financial debt as $0 for mNAV since no bonds/converts/credit facilities."
+    "Financial debt: $0. No bonds, convertibles, credit facilities, or notes payable. " +
+    "Excluded from mNAV: operating lease liabilities ($185.6M — mining facility leases, operational not financial), " +
+    "Bitmain miner purchase liability ($286.2M — BTC-collateralized equipment commitment), " +
+    "intercompany payable to Hut 8 ($103.8M — parent owns 80%, consolidation artifact). " +
+    "Methodology: mNAV debt = financial debt instruments only, consistent with REIT NAV conventions."
   ),
 
   // =========================================================================
