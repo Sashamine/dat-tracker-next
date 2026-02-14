@@ -2,7 +2,7 @@
   "ticker": "ETHM",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-14T02:14:32.423Z",
+  "lastUpdated": "2026-02-14T02:29:32.286Z",
   "prices": [
     {
       "date": "2025-07-29",
@@ -2835,6 +2835,15 @@
     {
       "date": "2026-02-14",
       "time": "19:14",
+      "open": 10.35,
+      "high": 10.355,
+      "low": 10.35,
+      "close": 10.35,
+      "volume": 28425
+    },
+    {
+      "date": "2026-02-14",
+      "time": "19:29",
       "open": 10.35,
       "high": 10.355,
       "low": 10.35,
