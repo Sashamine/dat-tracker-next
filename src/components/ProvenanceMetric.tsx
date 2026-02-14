@@ -121,7 +121,12 @@ function isInternalUrl(url: string | undefined): boolean {
 /** Get source URL - prefers external URL when available, falls back to internal viewer */
 function getViewerUrl(source: XBRLSource | DocumentSource | DerivedSource, ticker: string = "mstr"): string | null {
   if (source.type === "xbrl") {
-    // XBRL always uses internal viewer (we can render it)
+    // Link to document view with search term so user can Ctrl+F to verify
+    // Falls back to XBRL tab if no searchTerm available
+    const searchTerm = source.searchTerm || source.documentAnchor;
+    if (searchTerm) {
+      return `/filings/${ticker}/${source.accession}?tab=document&q=${encodeURIComponent(searchTerm)}`;
+    }
     const period = source.periodEnd ? `&period=${encodeURIComponent(source.periodEnd)}` : "";
     return `/filings/${ticker}/${source.accession}?tab=xbrl&fact=${encodeURIComponent(source.fact)}${period}`;
   } else if (source.type === "sec-document" || source.type === "press-release" || 
