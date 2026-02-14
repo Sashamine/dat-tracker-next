@@ -207,20 +207,28 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-31", holdings: 70_500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.001410, stockPrice: 155.61, source: "8-K Jan 7, 2026 shareholder letter (verified)", sharesSource: "Est diluted. Convertibles at $5.85/$13 out of money, options at $2.64 in money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K", sourceType: "sec-filing" },
 ];
 
-// Bit Digital - ETH miner and holder
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
-// Corrected to 324M FD shares per Q3 2025 10-Q (was overstated)
-// Note: Historical values were incorrectly showing ~30-40K ETH when actual holdings were much higher
-// BTBT accumulated ETH throughout 2024-2025, reaching 155,227 ETH by Dec 2025
-// BTBT Debt: $165M converts (Oct 2025) + $42M lease liabilities = $207M
+// Bit Digital - ETH treasury + AI/HPC (WhiteFiber/WYFI)
+// SEC CIK: 0001710350
+// ETH strategy pivot: started mid-2025, converted all BTC to ETH
+// Debt: $150M 4% Convertible Senior Notes due 2030 (issued Oct 2025)
+// Preferred: 1M shares at $9.05M book value
+// XBRL shares source: EntityCommonStockSharesOutstanding (cover page)
+// NOTE: Q1-Q3 2025 ETH holdings verified against earnings-data.ts (Feb 2026 audit)
+// Pre-2025 holdings need further verification from 10-K/10-Q digital assets notes
 const BTBT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2023-12-31", holdings: 17245, sharesOutstandingDiluted: 165_000_000, holdingsPerShare: 0.000105, stockPrice: 63.16, totalDebt: 42_000_000, cash: 30_000_000, source: "2023 10-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001710350&type=10-K" },
-  { date: "2024-06-30", holdings: 22890, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.000131, stockPrice: 137.75, totalDebt: 42_000_000, cash: 40_000_000, source: "Q2 2024 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10Q-2024-06-30#eth-holdings" },
-  { date: "2024-12-31", holdings: 27350, sharesOutstandingDiluted: 182_435_019, holdingsPerShare: 0.000150, stockPrice: 302.96, totalDebt: 165_000_000, cash: 50_000_000, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10K-2024-12-31#eth-holdings" },
-  { date: "2025-03-31", holdings: 85000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000409, stockPrice: 288.27, totalDebt: 207_000_000, cash: 60_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10Q-2025-03-31#eth-holdings" },
-  { date: "2025-06-30", holdings: 120000, sharesOutstandingDiluted: 315_000_000, holdingsPerShare: 0.000381, stockPrice: 404.23, totalDebt: 207_000_000, cash: 80_000_000, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/btbt/10Q-2025-06-30#eth-holdings" },
-  { date: "2025-09-30", holdings: 140000, sharesOutstandingDiluted: 324_000_000, holdingsPerShare: 0.000432, stockPrice: 326.42, totalDebt: 207_000_000, cash: 100_000_000, source: "Q3 2025 10-Q", sharesSource: "SEC 10-Q diluted", sourceType: "sec-filing", sourceUrl: "/filings/btbt/0001213900-25-110383" },
-  { date: "2025-12-31", holdings: 155_227, sharesOutstandingDiluted: 323_792_059, holdingsPerShare: 0.000479, stockPrice: 155.61, totalDebt: 207_000_000, cash: 100_000_000, source: "Jan 7, 2026 Press Release (Dec 2025 metrics)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release" },
+  // Pre-ETH pivot (mixed BTC/ETH holdings — values need verification from 10-K notes)
+  { date: "2023-12-31", holdings: 17245, sharesOutstandingDiluted: 107_291_827, holdingsPerShare: 0.000161, stockPrice: 63.16, totalDebt: 0, cash: 16_860_934, source: "FY2023 20-F", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001710350&type=20-F", methodology: "ETH holdings from 20-F digital assets note. Shares from XBRL.", confidence: "medium" },
+  { date: "2024-06-30", holdings: 22890, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.000131, stockPrice: 137.75, totalDebt: 0, cash: 40_000_000, source: "Q2 2024 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001710350&type=10-Q", methodology: "ETH holdings need verification from 10-Q notes.", confidence: "medium" },
+  { date: "2024-12-31", holdings: 27350, sharesOutstandingDiluted: 179_125_205, holdingsPerShare: 0.000153, stockPrice: 302.96, totalDebt: 0, cash: 95_201_335, source: "FY2024 10-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000101376225000307/", methodology: "Shares from XBRL. Cash from XBRL. ETH count needs verification.", confidence: "medium" },
+  // 2025 — ETH pivot + massive accumulation
+  // Q1: Pre-pivot, minimal ETH. Shares from XBRL cover page (May 12, 2025)
+  { date: "2025-03-31", holdings: 10_000, sharesOutstandingDiluted: 207_780_871, holdingsPerShare: 0.000048, stockPrice: 288.27, totalDebt: 0, cash: 57_555_011, source: "Q1 2025 10-Q (pre-ETH pivot, estimated)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/", methodology: "Estimated pre-pivot ETH. Shares/cash from XBRL. No converts yet.", confidence: "low" },
+  // Q2: ETH pivot started, ~30K ETH accumulated. Shares from XBRL cover page (Aug 13, 2025)
+  { date: "2025-06-30", holdings: 30_663, sharesOutstandingDiluted: 321_432_722, holdingsPerShare: 0.000095, stockPrice: 404.23, totalDebt: 0, cash: 181_165_847, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025076608/", methodology: "ETH from Q3 earnings PR retrospective. Shares/cash from XBRL. No converts yet.", confidence: "high" },
+  // Q3: Major accumulation. $150M converts issued Oct 2 (post quarter-end). Shares from XBRL cover (Nov 10, 2025)
+  { date: "2025-09-30", holdings: 122_187, sharesOutstandingDiluted: 323_674_831, holdingsPerShare: 0.000378, stockPrice: 326.42, totalDebt: 0, cash: 179_118_182, source: "Q3 2025 monthly PR + 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/", methodology: "ETH from Sep 30 monthly PR. Converts issued Oct 2, so $0 debt at Q3 end. Cash from XBRL.", confidence: "high" },
+  // Q4 quarter-end anchor — must match earnings-data.ts Q4 entry
+  { date: "2025-12-31", holdings: 155_227, sharesOutstandingDiluted: 323_792_059, holdingsPerShare: 0.000479, stockPrice: 155.61, totalDebt: 150_000_000, cash: 179_118_182, preferredEquity: 9_050_000, source: "Dec 2025 monthly PR (Jan 7, 2026)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release", methodology: "ETH/shares from Dec PR. Debt = $150M converts (Oct 2025). Cash carried from Q3 (Q4 not filed). Preferred = $9.05M.", confidence: "high" },
 ];
 
 // ==================== SOL COMPANIES ====================

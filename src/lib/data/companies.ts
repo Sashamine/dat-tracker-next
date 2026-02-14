@@ -215,6 +215,8 @@ export const ethCompanies: Company[] = [
     debtSource: "PR Oct 8, 2025: '$150 million convertible notes offering, which included the underwriters' full exercise of their over-allotment option'",
     debtSourceUrl: "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
     debtAsOf: "2025-10-02",
+    preferredEquity: 9_050_000,  // 1M preferred shares at $9.05M book value (Q3 2025 10-Q balance sheet)
+
     otherInvestments: 427_300_000,  // WhiteFiber (WYFI) ~27M shares @ ~$15.83 (Jan 7, 2026 PR)
     leader: "Sam Tabar",
     strategy: "89% staked, fully exited BTC. $150M 4% converts due 2030. Majority stake in WhiteFiber (WYFI) AI/HPC.",

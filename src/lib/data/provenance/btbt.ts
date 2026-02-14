@@ -152,19 +152,21 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   }), "~$17.4M in Q1 2025 / 2 ≈ $8.5M quarterly (conservative est). Includes mining ops wind-down costs."),
 
   // =========================================================================
-  // PREFERRED EQUITY - None
+  // PREFERRED EQUITY - 1,000,000 preferred shares at $9.05M book value
+  // Verified from Q3 2025 10-Q balance sheet (Feb 2026 adversarial audit)
   // =========================================================================
-  preferredEquity: pv(0, docSource({
+  preferredEquity: pv(9_050_000, docSource({
     type: "sec-document",
+    searchTerm: "9,050,000",
     url: `https://www.sec.gov/Archives/edgar/data/${BTBT_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/ea0263546-10q_bitdigital.htm`,
-    quote: "No preferred stock outstanding",
-    anchor: "Preferred",
+    quote: "Preferred shares, $0.01 par value, 10,000,000 shares authorized, 1,000,000 shares issued and outstanding — $9,050,000",
+    anchor: "Preferred shares",
     cik: BTBT_CIK,
     accession: Q3_2025_10Q_ACCESSION,
     filingType: "10-Q",
     filingDate: Q3_2025_10Q_FILED,
     documentDate: Q3_2025_PERIOD_END,
-  }), "No preferred equity issued."),
+  }), "1M preferred shares at $9.05M book value. Classified in shareholders' equity. Unchanged since Dec 2024."),
 };
 
 // =========================================================================
