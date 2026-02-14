@@ -240,7 +240,13 @@ export function filingViewerUrl(cik: string, accession: string, anchor?: string)
 
 /** Build URL to SEC EDGAR filing (for "View on SEC" backup link) */
 export function secEdgarUrl(cik: string, accession: string): string {
-  return `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/`;
+  const accessionNoDashes = accession.replace(/-/g, "");
+  // Link to the filing index page (lists all documents) rather than the raw directory
+  // (which shows a confusing directory listing instead of the actual filing)
+  const accessionDashed = accessionNoDashes.length === 18
+    ? `${accessionNoDashes.slice(0, 10)}-${accessionNoDashes.slice(10, 12)}-${accessionNoDashes.slice(12)}`
+    : accession; // already dashed
+  return `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNoDashes}/${accessionDashed}-index.htm`;
 }
 
 /** Build URL to SEC XBRL API for company facts */
