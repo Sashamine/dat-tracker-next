@@ -933,12 +933,12 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea0255489-6k_bitfufu.htm",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     sharesAsOf: "2025-06-30",
     totalDebt: 101_301_000,  // SEC XBRL Jun 2025: Long Term Debt
     debtAsOf: "2025-06-30",
     debtSource: "SEC 20-F/6-K XBRL",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea0255489-6k_bitfufu.htm",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (648k+ users).",
     notes: "Singapore (Nasdaq FUFU). BITMAIN partner. 3.7 EH/s self-owned, 26.1 EH/s under management. 478 MW hosting. 274 BTC pledged for loans.",
   },
