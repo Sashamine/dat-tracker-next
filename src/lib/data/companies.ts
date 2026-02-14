@@ -497,7 +497,7 @@ export const btcCompanies: Company[] = [
     holdings: 43_514,  // Combined: Tether (24,500) + Bitfinex (7,000) + PIPE (~11.5K) + In-Kind (~0.4K)
     holdingsLastUpdated: "2025-12-09",  // Merger close date
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/0001213900-25-121293-index.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea026946001ex99-4_twenty.htm#:~:text=31%2C500%20Bitcoin",
     // Breakdown: Contribution 31,500 + PIPE Bitcoin ~11,533 + In-Kind PIPE ~392 = ~43,425
     datStartDate: "2025-12-09",
     costBasisAvg: 91_509,  // S-1 Jan 2026: Initial ~42K BTC at $90,560.40 (closing date FV) + 1,500 post-close at ~$118K
@@ -1469,7 +1469,7 @@ export const solCompanies: Company[] = [
     holdings: 2_221_329,  // Q4 2025 business update: "holds 2,221,329 SOL and SOL equivalents"
     holdingsLastUpdated: "2026-01-01",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
     datStartDate: "2025-04-01",
     // costBasisAvg removed - needs verification
     stakingPct: 0.90,  // Stakes SOL + operates validators; $4.85M in validator/staking rewards (9mo)
@@ -2137,7 +2137,7 @@ export const suiCompanies: Company[] = [
     holdings: 108_098_436,  // Jan 7, 2026 8-K treasury update
     holdingsLastUpdated: "2026-01-07",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
     datStartDate: "2025-08-01",
     secCik: "1425355",
     stakingPct: 0.98,  // "Substantially almost all of these holdings continue to be staked"
