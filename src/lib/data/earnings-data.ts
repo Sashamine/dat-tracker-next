@@ -1091,9 +1091,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q (Sep 30 period end)
-    sharesAtQuarterEnd: 927_604_994,  // 10-Q cover page (Nov 13): Class A 195,380,091 + Class B 732,224,903
-    holdingsPerShare: 0.00000368,  // 3,418 / 927,604,994 = ~368 sats/share
+    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q: "Number of Bitcoin held as of September 30, 2025: 3,418"
+    sharesAtQuarterEnd: 920_684_912,  // 10-Q balance sheet (Sep 30): Class A 188,460,009 + Class B 732,224,903
+    holdingsPerShare: 0.00000371,  // 3,418 / 920,684,912 = ~371 sats/share
     source: "sec-filing",
     sourceUrl: `/filings/abtc/0001193125-25-281390`,
     status: "reported",

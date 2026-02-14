@@ -366,7 +366,7 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   // Post-merger (Sep 3, 2025)
   // Share count: 927,604,994 from Q3 2025 10-Q cover page (Class A: 195,380,091 + Class B: 732,224,903)
   // NOTE: 899,489,426 was WRONG — that was diluted weighted avg for EPS, not actual shares outstanding
-  { date: "2025-09-30", holdings: 3_418, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000368, stockPrice: 326.42, source: "SEC 10-Q Q3 2025: 'Number of Bitcoin held as of September 30, 2025: 3,418'", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 3_418, sharesOutstandingDiluted: 920_684_912, holdingsPerShare: 0.00000371, stockPrice: 326.42, source: "SEC 10-Q Q3 2025: 'Number of Bitcoin held as of September 30, 2025: 3,418'", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm", sourceType: "sec-filing", sharesSource: "10-Q balance sheet Sep 30: Class A 188,460,009 + Class B 732,224,903 = 920,684,912" },
   { date: "2025-10-24", holdings: 3_865, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000417, source: "Press release", sourceType: "press-release", sourceUrl: "https://ir.americanbitcoin.com/press-releases/" },
   { date: "2025-11-05", holdings: 4_004, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000432, source: "8-K BTC holdings", sourceUrl: "/filings/naka/0001193125-25-277545", sourceType: "sec-filing" },
   // Dec 2025 updates - verified 2026-02-14
