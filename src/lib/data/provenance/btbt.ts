@@ -69,7 +69,8 @@ const secDocUrl = (cik: string, accession: string, doc: string) =>
 export const BTBT_PROVENANCE: ProvenanceFinancials = {
   
   // =========================================================================
-  // ETH HOLDINGS - from monthly press releases
+  // ETH HOLDINGS - from Feb 6, 2026 press release (Jan 31 data)
+  // Cross-verified with SEC 8-K investor presentation (Feb 4, 2026): 0001213900-26-011802
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "press-release",
@@ -79,7 +80,8 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
     anchor: "155,239",
     cik: BTBT_CIK,
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Monthly ETH treasury press release. Includes ~15,218 ETH in externally managed fund."),
+    // SEC cross-ref: https://www.sec.gov/Archives/edgar/data/1710350/000121390026011802/ea027549101ex99-1_bitdigital.htm
+  }), "Monthly ETH treasury PR. SEC 8-K cross-ref: 0001213900-26-011802. Includes ~15,236 ETH in externally managed fund."),
 
   // =========================================================================
   // COST BASIS - from monthly press release
@@ -104,35 +106,40 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
     quote: "Bit Digital shares outstanding were 324,202,059 as of January 31, 2026",
     anchor: "324,202,059",
     documentDate: SHARES_DATE,
-  }), "Basic shares. XBRL cross-check: 323,674,831 as of Nov 10, 2025 (Q3 10-Q)."),
+    // SEC cross-ref: XBRL 323,674,831 as of Nov 10, 2025 (Q3 10-Q cover)
+  }), "Basic shares (Jan 31, 2026 PR). XBRL cross-check: 323,674,831 (Nov 10). SEC 8-K: 0001213900-26-011802."),
 
   // =========================================================================
   // CASH RESERVES - from Q3 2025 earnings PR
   // =========================================================================
-  cashReserves: pv(CASH_RESERVES, docSource({
-    type: "press-release",
-    searchTerm: "179.1 million",
-    url: "https://bit-digital.com/press-releases/bit-digital-inc-announces-financial-results-for-the-third-quarter-of-fiscal-year-2025/",
-    quote: "Cash and cash equivalents totaled $179.1 million as of September 30, 2025",
-    anchor: "179.1 million",
+  cashReserves: pv(CASH_RESERVES, xbrlSource({
+    fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+    searchTerm: "179,118,182",
+    rawValue: 179_118_182,
+    unit: "USD",
+    periodType: "instant",
+    periodEnd: Q3_2025_PERIOD_END,
     cik: BTBT_CIK,
-    documentDate: Q3_2025_PERIOD_END,
-  }), "Q3 2025 cash. Up from $95.2M at Dec 31, 2024."),
+    accession: Q3_2025_10Q_ACCESSION,
+    filingType: "10-Q",
+    filingDate: Q3_2025_10Q_FILED,
+    documentAnchor: "Cash and cash equivalents",
+  }), "Q3 2025 10-Q XBRL. Up from $95.2M at Dec 31, 2024. PR cross-ref: '$179.1 million'."),
 
   // =========================================================================
   // TOTAL DEBT - $150M 4% Convertible Senior Notes due 2030
   // =========================================================================
   totalDebt: pv(TOTAL_DEBT, docSource({
-    type: "press-release",
-    searchTerm: "150 million",
-    url: "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
-    quote: "recently completed $150 million convertible notes offering, which included the underwriters' full exercise of their over-allotment option",
-    anchor: "150 million",
+    type: "sec-document",
+    searchTerm: "150,000,000",
+    url: secDocUrl(BTBT_CIK, CONVERTS_8K_ACCESSION, "ea0258193-8k_bitdigital.htm"),
+    quote: "$150,000,000 aggregate principal amount of 4.00% Convertible Senior Notes due 2030",
+    anchor: "150,000,000",
     cik: BTBT_CIK,
     accession: CONVERTS_8K_ACCESSION,
     filingType: "8-K",
     filingDate: CONVERTS_8K_FILED,
-    documentDate: "2025-10-08",
+    documentDate: "2025-10-02",
   }), "$135M base + $15M overallotment = $150M. 4% coupon, due Oct 1, 2030. Conversion: $4.16/share (240.3846 shares/$1K)."),
 
   // =========================================================================
