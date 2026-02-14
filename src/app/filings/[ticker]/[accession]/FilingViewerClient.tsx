@@ -109,13 +109,28 @@ export default function FilingViewerClient({ ticker, accession, searchQuery, anc
     const accessionDashed = accession.includes("-")
       ? accession
       : `${accession.slice(0, 10)}-${accession.slice(10, 12)}-${accession.slice(12)}`;
+    const secBase = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNoDashes}`;
     const secIndexUrl = cik
-      ? `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNoDashes}/${accessionDashed}-index.htm`
+      ? `${secBase}/${accessionDashed}-index.htm`
       : `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${ticker}&type=&dateb=&owner=include&count=40`;
     
-    // Auto-redirect to SEC.gov after a brief moment
+    // Auto-redirect: fetch the index page to find the primary document
     if (typeof window !== "undefined" && cik) {
-      window.location.href = secIndexUrl;
+      (async () => {
+        try {
+          // Fetch the index page to find the actual document link
+          const res = await fetch(`/api/sec/resolve-document?cik=${cik}&accession=${accessionDashed}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.documentUrl) {
+              window.location.href = data.documentUrl;
+              return;
+            }
+          }
+        } catch {}
+        // Fallback: go to index page
+        window.location.href = secIndexUrl;
+      })();
     }
     
     return (
