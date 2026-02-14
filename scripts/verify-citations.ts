@@ -422,6 +422,171 @@ async function verifyXbrl(citation: ExtractedCitation): Promise<VerificationResu
 /**
  * Verify a document citation by fetching the URL and searching for the value
  */
+/**
+ * Build search terms from a citation's value, searchTerm, and quote
+ */
+function buildSearchTerms(value: number | string, source: any): string[] {
+  const terms: string[] = [];
+
+  if (source.searchTerm) {
+    terms.push(source.searchTerm);
+  }
+
+  if (typeof value === "number" && value > 0) {
+    terms.push(String(value));
+    terms.push(value.toLocaleString("en-US"));
+    if (value >= 1_000_000) {
+      terms.push((value / 1_000_000).toFixed(1));
+    }
+  }
+
+  if (source.quote) {
+    const quoteSnippet = source.quote.substring(0, 60).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    terms.push(quoteSnippet);
+  }
+
+  return terms;
+}
+
+/**
+ * Search for terms in HTML body, return match details
+ */
+function searchInBody(body: string, searchTerms: string[]): { anyFound: boolean; matchDetails: string[] } {
+  const textBody = body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+  let anyFound = false;
+  const matchDetails: string[] = [];
+
+  for (const term of searchTerms) {
+    if (!term) continue;
+    const found = textBody.includes(term) || body.includes(term);
+    if (found) {
+      anyFound = true;
+      matchDetails.push(`✓ "${term.substring(0, 50)}"`);
+    } else {
+      matchDetails.push(`✗ "${term.substring(0, 50)}"`);
+    }
+  }
+
+  return { anyFound, matchDetails };
+}
+
+/**
+ * Check if a URL is an SEC filing index page
+ */
+function isSecIndexUrl(url: string): boolean {
+  return /sec\.gov\/Archives\/edgar\/data\/\d+\/\d+\/?$/.test(url);
+}
+
+/**
+ * Extract document links from an SEC filing index page.
+ * Returns URLs to the actual filing documents (10-Q, 8-K, etc.)
+ * Prioritizes: primary document > exhibits > all .htm files
+ */
+function extractDocLinksFromIndex(indexBody: string, baseUrl: string): string[] {
+  const links: string[] = [];
+  const base = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+
+  // SEC index pages list documents in a table. Extract .htm links.
+  const hrefPattern = /href="\.?\/?([^"]+\.htm[l]?)"/gi;
+  let match;
+  const seen = new Set<string>();
+
+  while ((match = hrefPattern.exec(indexBody)) !== null) {
+    const filename = match[1];
+    // Skip XBRL viewer links, R files, and non-document files
+    if (filename.startsWith("R") && /^R\d+\.htm/.test(filename)) continue;
+    if (filename.includes("xbrl") || filename.includes("viewer")) continue;
+    if (filename.includes("Financial_Report")) continue;
+
+    const fullUrl = filename.startsWith("http") ? filename : base + filename;
+    if (!seen.has(fullUrl)) {
+      seen.add(fullUrl);
+      links.push(fullUrl);
+    }
+  }
+
+  // Sort: primary filing documents first (10-q, 10-k, 8-k, ex-*), then others
+  links.sort((a, b) => {
+    const aPrimary = /\d+-\d+\.htm|form\d|10[qk]|8-?k/i.test(a) ? 0 : 1;
+    const bPrimary = /\d+-\d+\.htm|form\d|10[qk]|8-?k/i.test(b) ? 0 : 1;
+    return aPrimary - bPrimary;
+  });
+
+  return links;
+}
+
+/**
+ * Verify a citation using SEC EFTS full-text search.
+ * Searches for the exact searchTerm or value within a company's filings.
+ * This bypasses SEC bot-blocking since EFTS is designed for programmatic access.
+ */
+async function verifyViaEfts(
+  searchTerm: string,
+  cik?: string,
+  filingType?: string
+): Promise<{ found: boolean; filingId?: string; details?: string }> {
+  // URL-encode the search term with quotes for exact match
+  const encodedTerm = encodeURIComponent(`"${searchTerm}"`);
+  let eftsUrl = `https://efts.sec.gov/LATEST/search-index?q=${encodedTerm}&dateRange=custom&startdt=2024-01-01&enddt=2027-01-01`;
+
+  if (filingType) {
+    eftsUrl += `&forms=${filingType}`;
+  }
+
+  const { status, body, error } = await fetchWithRetry(eftsUrl, 1);
+
+  if (error || status !== 200) {
+    return { found: false, details: `EFTS error: ${error || `HTTP ${status}`}` };
+  }
+
+  try {
+    const data = JSON.parse(body);
+    const totalHits = data.hits?.total?.value || 0;
+
+    if (totalHits === 0) {
+      return { found: false };
+    }
+
+    // Check if any hit matches the expected CIK
+    const hits = data.hits?.hits || [];
+    for (const hit of hits) {
+      const hitCiks = hit._source?.ciks || [];
+      const hitId = hit._id || "";
+      const hitForm = hit._source?.form || "";
+
+      // If we have a CIK, verify it matches
+      if (cik) {
+        const normalizedCik = cik.replace(/^0+/, "");
+        const cikMatch = hitCiks.some((c: string) => c.replace(/^0+/, "") === normalizedCik);
+        if (cikMatch) {
+          return {
+            found: true,
+            filingId: hitId,
+            details: `EFTS: "${searchTerm}" found in ${hitForm} (${hitId})`,
+          };
+        }
+      } else {
+        // No CIK filter — accept any hit
+        return {
+          found: true,
+          filingId: hitId,
+          details: `EFTS: "${searchTerm}" found in ${hitForm} (${hitId})`,
+        };
+      }
+    }
+
+    // Hits exist but none match our CIK
+    return { found: false, details: `EFTS: ${totalHits} hits but none for CIK ${cik}` };
+  } catch (parseErr: any) {
+    return { found: false, details: `EFTS parse error: ${parseErr.message}` };
+  }
+}
+
+/**
+ * Verify a document citation by fetching the URL and searching for the value.
+ * If the URL is an SEC index page, follows links to actual filing documents.
+ * Falls back to EFTS full-text search if direct access fails.
+ */
 async function verifyDocument(citation: ExtractedCitation): Promise<VerificationResult> {
   const { field, value, source } = citation;
   const url = source.url;
@@ -451,55 +616,96 @@ async function verifyDocument(citation: ExtractedCitation): Promise<Verification
   result.httpStatus = status;
 
   if (status === 403) {
+    // Don't return early — fall through to EFTS fallback below
     result.status = "warn";
-    result.details = "SEC 403 — access blocked for automated requests. Manual verification needed.";
-    return result;
+    result.details = "SEC 403 — access blocked for automated requests.";
   }
 
-  if (status !== 200) {
+  if (status !== 200 && status !== 403) {
     result.status = "fail";
     result.error = `HTTP ${status}`;
     return result;
   }
 
-  // Content verification: search for the value or searchTerm
-  const searchTerms: string[] = [];
+  const searchTerms = buildSearchTerms(value, source);
+  let anyFound = false;
+  let matchDetails: string[] = [];
 
-  if (source.searchTerm) {
-    searchTerms.push(source.searchTerm);
+  // First try: search the fetched page directly (skip if 403)
+  if (status === 200) {
+    const directSearch = searchInBody(body, searchTerms);
+    anyFound = directSearch.anyFound;
+    matchDetails = directSearch.matchDetails;
   }
 
-  // Generate number format variants
-  if (typeof value === "number" && value > 0) {
-    const raw = String(value);
-    searchTerms.push(raw); // plain number
-    searchTerms.push(value.toLocaleString("en-US")); // with commas
-    // Without trailing zeros for large round numbers
-    if (value >= 1_000_000) {
-      searchTerms.push((value / 1_000_000).toFixed(1)); // e.g., "210.0"
+  // If not found and this is an SEC index page, crawl into the actual documents
+  if (!anyFound && status === 200 && isSecIndexUrl(url)) {
+    const docLinks = extractDocLinksFromIndex(body, url);
+    const maxDocsToCheck = 4; // Check primary docs + a couple exhibits
+
+    for (let i = 0; i < Math.min(docLinks.length, maxDocsToCheck); i++) {
+      const docUrl = docLinks[i];
+
+      // Rate limit for SEC
+      await new Promise((r) => setTimeout(r, 200));
+
+      const docResult = await fetchWithRetry(docUrl, 1);
+
+      if (docResult.status === 403 || docResult.status !== 200 || !docResult.body) continue;
+
+      const docSearch = searchInBody(docResult.body, searchTerms);
+
+      if (docSearch.anyFound) {
+        anyFound = true;
+        const filename = docUrl.split("/").pop() || docUrl;
+        matchDetails = docSearch.matchDetails.map(
+          (m) => m.startsWith("✓") ? `${m} (in ${filename})` : m
+        );
+        result.url = docUrl; // Update to the actual document URL
+        break;
+      }
+    }
+
+    if (!anyFound && docLinks.length > 0) {
+      const checkedCount = Math.min(docLinks.length, maxDocsToCheck);
+      matchDetails.push(`(crawled ${checkedCount}/${docLinks.length} filing docs)`);
     }
   }
 
-  if (source.quote) {
-    // Search for a significant substring of the quote (first 40 chars)
-    const quoteSnippet = source.quote.substring(0, 60).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    searchTerms.push(quoteSnippet);
-  }
+  // EFTS fallback: if not found via direct fetch/crawl, try SEC full-text search
+  if (!anyFound) {
+    const cik = source.cik || url.match(/edgar\/data\/(\d+)\//)?.[1];
+    const filingType = source.filingType;
 
-  // Normalize body for searching (strip HTML tags for cleaner matching)
-  const textBody = body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    // Build candidate search terms for EFTS (short, specific, numeric preferred)
+    const eftsTerms: string[] = [];
 
-  let anyFound = false;
-  const matchDetails: string[] = [];
+    // Prefer numeric searchTerms (most unique in filings)
+    if (source.searchTerm && /[\d]/.test(source.searchTerm)) {
+      // Extract just the numeric portion if it's embedded in text
+      const numMatch = source.searchTerm.match(/[\d,]+(?:\.\d+)?/);
+      if (numMatch && numMatch[0].length >= 4) {
+        eftsTerms.push(numMatch[0]);
+      }
+      // Also try the full searchTerm if short enough
+      if (source.searchTerm.length <= 40) {
+        eftsTerms.push(source.searchTerm);
+      }
+    }
 
-  for (const term of searchTerms) {
-    if (!term) continue;
-    const found = textBody.includes(term) || body.includes(term);
-    if (found) {
-      anyFound = true;
-      matchDetails.push(`✓ "${term.substring(0, 50)}"`);
-    } else {
-      matchDetails.push(`✗ "${term.substring(0, 50)}"`);
+    // Try formatted value
+    if (typeof value === "number" && value > 0) {
+      eftsTerms.push(value.toLocaleString("en-US"));
+    }
+
+    for (const term of eftsTerms) {
+      if (anyFound) break;
+      await new Promise((r) => setTimeout(r, 150)); // Rate limit
+      const eftsResult = await verifyViaEfts(term, cik, filingType);
+      if (eftsResult.found) {
+        anyFound = true;
+        matchDetails = [`✓ ${eftsResult.details}`];
+      }
     }
   }
 
@@ -508,8 +714,9 @@ async function verifyDocument(citation: ExtractedCitation): Promise<Verification
 
   if (!anyFound && searchTerms.length > 0) {
     result.status = "warn";
-    result.details = `URL accessible but value not found on page. Searched: ${matchDetails.join(", ")}`;
+    result.details = `Value not found. Searched: ${matchDetails.join(", ")}`;
   } else if (anyFound) {
+    result.status = "pass";
     result.details = matchDetails.filter((m) => m.startsWith("✓")).join(", ");
   }
 
