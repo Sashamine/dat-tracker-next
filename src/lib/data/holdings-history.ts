@@ -373,6 +373,9 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   // Dec share counts may differ from Nov 13 cover page due to ATM issuances — using 927.6M as baseline
   { date: "2025-12-08", holdings: 4_783, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000515, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
   { date: "2025-12-14", holdings: 5_098, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000549, source: "PR Newswire Dec 14, 2025 (Top 20 milestone)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html", sourceType: "press-release" },
+  // Q4 quarter-end anchor — carried forward from Dec 14 PR (no Dec 31 disclosure)
+  // Must match earnings-data.ts Q4 2025 entry: 5,098 / 927,604,994 = 549 sats
+  { date: "2025-12-31", holdings: 5_098, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000549, source: "Carried forward from Dec 14 PR (no Q4 end disclosure yet)", sourceType: "press-release", methodology: "Interpolated Q4 anchor — will update when 10-K filed", confidence: "medium" },
   // TODO: Jan 2026 - no PR/8-K found, company discloses via X now
 ];
 
