@@ -90,9 +90,9 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "2,300,000 SOL",
+      searchTerm: "2.3 million SOL",
       url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm`,
-      quote: "Approximately 2,300,000 SOL tokens",
+      quote: "hold over 2.3 million SOL",
       anchor: "SOL Holdings",
       cik: HSDT_CIK,
       accession: OCT29_8K_ACCESSION,

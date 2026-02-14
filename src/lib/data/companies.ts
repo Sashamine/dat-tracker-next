@@ -1335,7 +1335,7 @@ export const btcCompanies: Company[] = [
     isMiner: true,
     quarterlyBurnUsd: 8_052_000,  // Q3 2025 G&A
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30)",
-    burnSourceUrl: `/filings/abtc/0001193125-25-281390?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
@@ -1345,7 +1345,7 @@ export const btcCompanies: Company[] = [
     // TODO: Verify exact Class A/B breakdown from Q3 10-Q
     sharesForMnav: 899_489_426,
     sharesSource: "SEC 10-Q Q3 2025 (filed 2025-11-14): 899,489,426 total shares (all classes, post-merger)",
-    sharesSourceUrl: `/filings/abtc/0001193125-25-281390`,
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
     sharesAsOf: "2025-09-30",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
@@ -1353,8 +1353,14 @@ export const btcCompanies: Company[] = [
     website: "https://abtc.com",
     twitter: "https://x.com/ABTC",
     // IR: https://abtc.com/investors
-    // Debt/Cash: Not verified from Q3 10-Q (SEC 403 blocked access)
-    // TODO: Verify debt and cash from Q3 2025 balance sheet
+    cashReserves: 7_976_000,  // XBRL: us-gaap:Cash as of Sep 30, 2025
+    cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
+    cashAsOf: "2025-09-30",
+    totalDebt: 0,  // No LongTermDebt in XBRL. Operating lease liabilities ($185.6M) excluded.
+    debtSource: "SEC 10-Q Q3 2025 XBRL — no LongTermDebt fact reported",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
+    debtAsOf: "2025-09-30",
   },
   // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
   // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company

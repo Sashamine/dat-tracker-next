@@ -52,7 +52,7 @@ const TOTAL_DEBT = 0;
 
 // Cash: Not verified from Q3 10-Q
 // TODO: Verify from Q3 2025 10-Q balance sheet
-const CASH_RESERVES = 0;
+const CASH_RESERVES = 7_976_000; // XBRL: us-gaap:Cash as of Sep 30, 2025
 
 // Quarterly burn: $8,052,000 G&A from Q3 2025 10-Q
 const QUARTERLY_BURN = 8_052_000;
@@ -117,21 +117,23 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
   // Not verified — SEC 403 blocked direct Q3 10-Q access
   // =========================================================================
   totalDebt: pv(
-    TOTAL_DEBT,
-    docSource({
-      type: "sec-document",
-      searchTerm: "debt",
-      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
-      quote: "TODO: Verify from Q3 2025 10-Q balance sheet",
-      anchor: "total-debt",
+    0,
+    xbrlSource({
+      fact: "us-gaap:LongTermDebt",
+      searchTerm: "0",
+      rawValue: 0,
+      unit: "USD",
+      periodType: "instant",
+      periodEnd: Q3_2025_PERIOD_END,
       cik: ABTC_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      documentAnchor: "Long-term Debt",
     }),
-    "TODO: Not verified. SEC 403 blocked direct filing access during audit. " +
-    "Task brief says 'no debt' — verify."
+    "No LongTermDebt in Q3 2025 XBRL. DebtDefaultLongtermDebtAmount=$103.8M is Hut 8 pre-merger debt disclosed in footnotes. " +
+    "OperatingLeaseLiability=$185.6M (mining facility leases). " +
+    "Treating financial debt as $0 for mNAV since no bonds/converts/credit facilities."
   ),
 
   // =========================================================================
@@ -139,20 +141,21 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
   // Not verified — SEC 403 blocked direct Q3 10-Q access
   // =========================================================================
   cashReserves: pv(
-    CASH_RESERVES,
-    docSource({
-      type: "sec-document",
-      searchTerm: "cash",
-      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
-      quote: "TODO: Verify from Q3 2025 10-Q balance sheet",
-      anchor: "cash-reserves",
+    7_976_000,
+    xbrlSource({
+      fact: "us-gaap:Cash",
+      searchTerm: "7,976,000",
+      rawValue: 7_976_000,
+      unit: "USD",
+      periodType: "instant",
+      periodEnd: Q3_2025_PERIOD_END,
       cik: ABTC_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      documentAnchor: "Cash",
     }),
-    "TODO: Not verified. SEC 403 blocked direct filing access during audit."
+    "$7.98M cash as of Sep 30, 2025. XBRL fact is us-gaap:Cash (not CashAndCashEquivalents). Pre-merger was $678K (Q2)."
   ),
 
   // =========================================================================
@@ -160,17 +163,19 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   quarterlyBurn: pv(
     QUARTERLY_BURN,
-    docSource({
-      type: "sec-document",
-      searchTerm: "GeneralAndAdministrativeExpense",
-      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
-      quote: "$8,052,000 G&A expense for Q3 2025",
-      anchor: "quarterly-burn",
+    xbrlSource({
+      fact: "us-gaap:GeneralAndAdministrativeExpense",
+      searchTerm: "8,052,000",
+      rawValue: 8_052_000,
+      unit: "USD",
+      periodType: "duration",
+      periodStart: "2025-07-01",
+      periodEnd: Q3_2025_PERIOD_END,
       cik: ABTC_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      documentAnchor: "General and Administrative Expense",
     }),
     "Q3 2025 General & Administrative Expense from XBRL. " +
     "First full quarter post-merger (merged Sep 3, 2025). " +

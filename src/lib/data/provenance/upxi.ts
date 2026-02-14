@@ -17,6 +17,7 @@
 import {
   type ProvenanceFinancials,
   pv,
+  xbrlSource,
   docSource,
 } from "../types/provenance";
 
@@ -108,17 +109,18 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
 
   sharesOutstanding: pv(
     SHARES_FOR_MNAV,
-    docSource({
-      type: "sec-document",
-      searchTerm: "shares of common stock issued",
-      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
-      quote: "69,760,581 shares of common stock, par value $0.00001 per share, issued",
-      anchor: "Shares Outstanding",
+    xbrlSource({
+      fact: "dei:EntityCommonStockSharesOutstanding",
+      searchTerm: "69,760,581",
+      rawValue: 69_760_581,
+      unit: "shares",
+      periodType: "instant",
+      periodEnd: SHARES_DATE,
       cik: UPXI_CIK,
       accession: Q2_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q2_FY2026_10Q_FILED,
-      documentDate: SHARES_DATE,
+      documentAnchor: "Entity Common Stock Shares Outstanding",
     }),
     "10-Q cover page as of Feb 9, 2026. Includes Dec PIPE (3.29M), Feb offering (6.34M), RSU vesting."
   ),
@@ -127,7 +129,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     TOTAL_DEBT,
     docSource({
       type: "sec-document",
-      searchTerm: "Convertible Notes",
+      searchTerm: "144,115,480",
       url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "Convertible notes payable $144,115,480; Short-term treasury debt $62,695,723; Cygnet notes $5,380,910; Promissory notes $560,000",
       anchor: "Total Debt",
@@ -144,7 +146,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     CASH_RESERVES,
     docSource({
       type: "sec-document",
-      searchTerm: "Cash",
+      searchTerm: "1,616,765",
       url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "Cash $1,616,765",
       anchor: "Cash",
@@ -159,17 +161,19 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
 
   quarterlyBurn: pv(
     QUARTERLY_BURN,
-    docSource({
-      type: "sec-document",
-      searchTerm: "Net cash used in operating activities",
-      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
-      quote: "Net cash used in operating activities $(12,461,887) for six months ended Dec 31, 2025",
-      anchor: "Operating Cash Flow",
+    xbrlSource({
+      fact: "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+      searchTerm: "12,461,887",
+      rawValue: -12_461_887,
+      unit: "USD",
+      periodType: "duration",
+      periodStart: "2025-07-01",
+      periodEnd: Q2_FY2026_PERIOD_END,
       cik: UPXI_CIK,
       accession: Q2_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q2_FY2026_10Q_FILED,
-      documentDate: Q2_FY2026_PERIOD_END,
+      documentAnchor: "Net cash used in operating activities",
     }),
     "6-month OpCF $12.46M / 2 = $6.23M/quarter. Includes digital asset strategy costs."
   ),

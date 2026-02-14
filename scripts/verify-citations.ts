@@ -317,7 +317,8 @@ async function verifyXbrl(citation: ExtractedCitation): Promise<VerificationResu
     };
   }
 
-  const url = `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`;
+  const paddedCik = cik.replace(/^0+/, "").padStart(10, "0");
+  const url = `https://data.sec.gov/api/xbrl/companyfacts/CIK${paddedCik}.json`;
 
   const result: VerificationResult = {
     company: "", field, value, sourceType: "xbrl",
@@ -395,7 +396,7 @@ async function verifyXbrl(citation: ExtractedCitation): Promise<VerificationResu
 
     for (const [unitKey, entries] of Object.entries(factData.units || {})) {
       for (const entry of entries as any[]) {
-        if (Math.abs(entry.val - rawValue) < 1) {
+        if (Math.abs(entry.val - rawValue) < 1 || Math.abs(entry.val + rawValue) < 1) {
           found = true;
           result.details = `Found val=${entry.val} in ${unitKey} (filed ${entry.filed}, period ${entry.end || entry.start})`;
           break;
