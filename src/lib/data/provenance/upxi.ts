@@ -111,7 +111,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "shares of common stock issued",
-      url: `/filings/upxi/${Q2_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "69,760,581 shares of common stock, par value $0.00001 per share, issued",
       anchor: "Shares Outstanding",
       cik: UPXI_CIK,
@@ -128,7 +128,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "Convertible Notes",
-      url: `/filings/upxi/${Q2_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "Convertible notes payable $144,115,480; Short-term treasury debt $62,695,723; Cygnet notes $5,380,910; Promissory notes $560,000",
       anchor: "Total Debt",
       cik: UPXI_CIK,
@@ -145,7 +145,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "Cash",
-      url: `/filings/upxi/${Q2_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "Cash $1,616,765",
       anchor: "Cash",
       cik: UPXI_CIK,
@@ -162,7 +162,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "Net cash used in operating activities",
-      url: `/filings/upxi/${Q2_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "Net cash used in operating activities $(12,461,887) for six months ended Dec 31, 2025",
       anchor: "Operating Cash Flow",
       cik: UPXI_CIK,
@@ -178,7 +178,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `/filings/upxi/${Q2_FY2026_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/`,
       quote: "Preferred stock, $0.00001 par value, 150,000 shares issued — convertible to 138,889 common, no material liquidation preference",
       anchor: "Preferred stock",
       cik: UPXI_CIK,

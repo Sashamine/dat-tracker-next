@@ -97,7 +97,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "899,489,426 shares",
-      url: `/filings/abtc/${Q3_2025_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
       quote: "899,489,426 shares outstanding",
       anchor: "shares-outstanding",
       cik: ABTC_CIK,
@@ -121,7 +121,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "debt",
-      url: `/filings/abtc/${Q3_2025_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
       quote: "TODO: Verify from Q3 2025 10-Q balance sheet",
       anchor: "total-debt",
       cik: ABTC_CIK,
@@ -143,7 +143,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "cash",
-      url: `/filings/abtc/${Q3_2025_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
       quote: "TODO: Verify from Q3 2025 10-Q balance sheet",
       anchor: "cash-reserves",
       cik: ABTC_CIK,
@@ -163,7 +163,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "GeneralAndAdministrativeExpense",
-      url: `/filings/abtc/${Q3_2025_10Q_ACCESSION}?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
+      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/`,
       quote: "$8,052,000 G&A expense for Q3 2025",
       anchor: "quarterly-burn",
       cik: ABTC_CIK,

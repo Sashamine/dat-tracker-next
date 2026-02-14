@@ -108,7 +108,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "11,542.16",
-      url: `/filings/djt/${Q3_2025_10Q_ACCESSION}?tab=document&q=11%2C542`,
+      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/`,
       quote: "Bitcoin 11,542.16 units, Cost Basis $1,368,082.6, Fair Value $1,320,108.6",
       anchor: "Bitcoin",
       cik: DJT_CIK,
@@ -284,7 +284,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `/filings/djt/${Q3_2025_10Q_ACCESSION}`,
+      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/`,
       quote: "No preferred stock outstanding",
       anchor: "Preferred stock",
       cik: DJT_CIK,
