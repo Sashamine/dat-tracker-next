@@ -548,6 +548,14 @@ async function getCompanyDailyMnav(
     // Get historical snapshot for this date (includes holdings, shares, debt, etc.)
     const snapshot = getSnapshotAtDate(ticker, date);
     
+    // Skip dates before first holdings snapshot — using current holdings with old
+    // adjusted stock prices produces wildly wrong mNAV values (e.g., post-merger
+    // adjusted prices applied to pre-merger entity)
+    if (!snapshot) {
+      const holdingsAtDate = getHoldingsAtDate(ticker, date);
+      if (!holdingsAtDate) continue; // No historical data for this date at all
+    }
+    
     // Use historical values where available, fall back to current companyData
     const holdings = snapshot?.holdings 
       ?? getHistoricalHoldings(ticker, date) 

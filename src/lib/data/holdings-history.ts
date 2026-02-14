@@ -345,11 +345,9 @@ const BMNR_HISTORY: HoldingsSnapshot[] = [
 // Verified 2026-01-28 via SEC 8-K filings
 // NAKA Debt: $210M Kraken loan (Dec 2025)
 const NAKA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-08-15", holdings: 1250, sharesOutstandingDiluted: 95_000_000, holdingsPerShare: 0.0000132, totalDebt: 0, cash: 10_000_000, source: "8-K ETH treasury", sourceUrl: "/filings/bmnr/0001493152-24-033579", sourceType: "sec-filing" },
-  { date: "2024-10-31", holdings: 2800, sharesOutstandingDiluted: 110_000_000, holdingsPerShare: 0.0000255, totalDebt: 0, cash: 15_000_000, source: "Q3 2024 filing", sourceType: "sec-filing", sourceUrl: "/filings/naka/0001493152-24-044866" },
-  { date: "2024-12-31", holdings: 4150, sharesOutstandingDiluted: 125_000_000, holdingsPerShare: 0.0000332, stockPrice: 302.96, totalDebt: 0, cash: 20_000_000, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/naka/10KA-2024-12-31#btc-holdings" },
-  { date: "2025-03-31", holdings: 5398, sharesOutstandingDiluted: 140_000_000, holdingsPerShare: 0.0000386, stockPrice: 288.27, totalDebt: 0, cash: 25_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/naka/10Q-2025-03-31#btc-holdings" },
-  { date: "2025-08-14", holdings: 21, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000001, totalDebt: 0, cash: 5_000_000, source: "Pre-merger", sourceType: "company-reported", sourceUrl: "https://www.nakamoto.net/investors/" },
+  // Pre-merger entries removed — Yahoo's historical prices are adjusted for the reverse merger,
+  // so combining pre-merger holdings (21 BTC from KindlyMD) with post-merger adjusted prices
+  // produces wildly wrong mNAV values (900x+). NAKA chart starts from post-merger.
   { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 450_000_000, holdingsPerShare: 0.0000128, totalDebt: 0, cash: 30_000_000, source: "Post-merger 8-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=8-K" },
   // Nov 14, 2025: 439,850,889 shares + 71,704,975 pre-funded warrants = 511,555,864 fully diluted
   { date: "2025-11-14", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 0, cash: 30_000_000, source: "SEC 10-Q Nov 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },

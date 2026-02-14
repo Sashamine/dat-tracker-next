@@ -1,5 +1,5 @@
 // Auto-generated historical mNAV data
-// Generated: 2026-02-14T02:01:49.486Z
+// Generated: 2026-02-14T02:13:16.456Z
 // DO NOT EDIT - regenerate with: npx tsx scripts/generate-mnav-history.ts
 
 export interface HistoricalMNAVCompany {
@@ -3294,9 +3294,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-08-15",
-    "median": 4.2314936923595745,
-    "average": 5.250889211228272,
-    "count": 3,
+    "median": 6.869608180680072,
+    "average": 6.869608180680072,
+    "count": 2,
     "btcPrice": 57552.92,
     "ethPrice": 2570.39,
     "companies": [
@@ -3315,22 +3315,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 170850000,
         "enterpriseValue": 165850000,
         "cryptoNav": 17443715
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 2.013,
-        "marketCap": 154850000,
-        "enterpriseValue": 144850000,
-        "cryptoNav": 71941150
       }
     ]
   },
   {
     "date": "2024-08-16",
-    "median": 3.1479603519475985,
-    "average": 3.1479603519475985,
-    "count": 2,
+    "median": 4.315402254289323,
+    "average": 4.315402254289323,
+    "count": 1,
     "btcPrice": 58893.67,
     "ethPrice": 2593.7,
     "companies": [
@@ -3341,22 +3333,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5001920000,
         "enterpriseValue": 5751920000,
         "cryptoNav": 1332881539
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.981,
-        "marketCap": 155800000,
-        "enterpriseValue": 145800000,
-        "cryptoNav": 73617088
       }
     ]
   },
   {
     "date": "2024-08-19",
-    "median": 4.31975506203064,
-    "average": 5.368683506220493,
-    "count": 3,
+    "median": 7.021147536168263,
+    "average": 7.021147536168263,
+    "count": 2,
     "btcPrice": 59464.41,
     "ethPrice": 2637.47,
     "companies": [
@@ -3375,22 +3359,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 180230000,
         "enterpriseValue": 175230000,
         "cryptoNav": 18023068
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 2.064,
-        "marketCap": 163400000,
-        "enterpriseValue": 153400000,
-        "cryptoNav": 74330513
       }
     ]
   },
   {
     "date": "2024-08-20",
-    "median": 4.347114273343313,
-    "average": 5.3786282534770224,
-    "count": 3,
+    "median": 7.034865452577508,
+    "average": 7.034865452577508,
+    "count": 2,
     "btcPrice": 59027.55,
     "ethPrice": 2573.25,
     "companies": [
@@ -3409,22 +3385,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 211817150,
         "enterpriseValue": 206817150,
         "cryptoNav": 21271758
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 2.066,
-        "marketCap": 162450000,
-        "enterpriseValue": 152450000,
-        "cryptoNav": 73784438
       }
     ]
   },
   {
     "date": "2024-08-21",
-    "median": 4.4640000552157115,
-    "average": 5.298930460421544,
-    "count": 3,
+    "median": 6.939090597352516,
+    "average": 6.939090597352516,
+    "count": 2,
     "btcPrice": 61170.8,
     "ethPrice": 2631.39,
     "companies": [
@@ -3443,22 +3411,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 212527350,
         "enterpriseValue": 207527350,
         "cryptoNav": 22044121
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 2.019,
-        "marketCap": 164350000,
-        "enterpriseValue": 154350000,
-        "cryptoNav": 76463500
       }
     ]
   },
   {
     "date": "2024-08-22",
-    "median": 3.1777174198778635,
-    "average": 3.1777174198778635,
-    "count": 2,
+    "median": 4.348389979819141,
+    "average": 4.348389979819141,
+    "count": 1,
     "btcPrice": 60387.29,
     "ethPrice": 2623.57,
     "companies": [
@@ -3469,22 +3429,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5192880000,
         "enterpriseValue": 5942880000,
         "cryptoNav": 1366685147
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 2.007,
-        "marketCap": 161500000,
-        "enterpriseValue": 151500000,
-        "cryptoNav": 75484113
       }
     ]
   },
   {
     "date": "2024-08-23",
-    "median": 3.1648148841089645,
-    "average": 3.1648148841089645,
-    "count": 2,
+    "median": 4.485909122478803,
+    "average": 4.485909122478803,
+    "count": 1,
     "btcPrice": 64087.8,
     "ethPrice": 2764.81,
     "companies": [
@@ -3495,22 +3447,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5756520000,
         "enterpriseValue": 6506520000,
         "cryptoNav": 1450435090
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.844,
-        "marketCap": 157700000,
-        "enterpriseValue": 147700000,
-        "cryptoNav": 80109750
       }
     ]
   },
   {
     "date": "2024-08-26",
-    "median": 3.194917621453185,
-    "average": 3.194917621453185,
-    "count": 2,
+    "median": 4.546088191382169,
+    "average": 4.546088191382169,
+    "count": 1,
     "btcPrice": 62850.27,
     "ethPrice": 2681.15,
     "companies": [
@@ -3521,22 +3465,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5716480000,
         "enterpriseValue": 6466480000,
         "cryptoNav": 1422427311
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.844,
-        "marketCap": 154850000,
-        "enterpriseValue": 144850000,
-        "cryptoNav": 78562838
       }
     ]
   },
   {
     "date": "2024-08-27",
-    "median": 3.1895062649898107,
-    "average": 3.1895062649898107,
-    "count": 2,
+    "median": 4.621324791079694,
+    "average": 4.621324791079694,
+    "count": 1,
     "btcPrice": 59441.73,
     "ethPrice": 2458.29,
     "companies": [
@@ -3547,22 +3483,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5467000000,
         "enterpriseValue": 6217000000,
         "cryptoNav": 1345285233
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.758,
-        "marketCap": 140600000,
-        "enterpriseValue": 130600000,
-        "cryptoNav": 74302163
       }
     ]
   },
   {
     "date": "2024-08-28",
-    "median": 3.0687707369194275,
-    "average": 3.0687707369194275,
-    "count": 2,
+    "median": 4.509589201361783,
+    "average": 4.509589201361783,
+    "count": 1,
     "btcPrice": 59043.5,
     "ethPrice": 2528.73,
     "companies": [
@@ -3573,22 +3501,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5276040000,
         "enterpriseValue": 6026040000,
         "cryptoNav": 1336272492
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.628,
-        "marketCap": 130150000,
-        "enterpriseValue": 120150000,
-        "cryptoNav": 73804375
       }
     ]
   },
   {
     "date": "2024-08-29",
-    "median": 2.9398479458163416,
-    "average": 2.9398479458163416,
-    "count": 2,
+    "median": 4.452708961397892,
+    "average": 4.452708961397892,
+    "count": 1,
     "btcPrice": 59369.85,
     "ethPrice": 2527.97,
     "companies": [
@@ -3599,22 +3519,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5232920000,
         "enterpriseValue": 5982920000,
         "cryptoNav": 1343658445
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.427,
-        "marketCap": 115900000,
-        "enterpriseValue": 105900000,
-        "cryptoNav": 74212313
       }
     ]
   },
   {
     "date": "2024-08-30",
-    "median": 2.9055941105344796,
-    "average": 2.9055941105344796,
-    "count": 2,
+    "median": 4.404096444691696,
+    "average": 4.404096444691696,
+    "count": 1,
     "btcPrice": 59129.05,
     "ethPrice": 2526.02,
     "companies": [
@@ -3625,22 +3537,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 5143600000,
         "enterpriseValue": 5893600000,
         "cryptoNav": 1338208660
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.407,
-        "marketCap": 114000000,
-        "enterpriseValue": 104000000,
-        "cryptoNav": 73911313
       }
     ]
   },
   {
     "date": "2024-09-03",
-    "median": 4.189375429354407,
-    "average": 4.956592305998249,
-    "count": 3,
+    "median": 6.731013983162917,
+    "average": 6.731013983162917,
+    "count": 2,
     "btcPrice": 57481.84,
     "ethPrice": 2424.4,
     "companies": [
@@ -3659,22 +3563,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 197080500,
         "enterpriseValue": 192080500,
         "cryptoNav": 20714731
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.408,
-        "marketCap": 111150000,
-        "enterpriseValue": 101150000,
-        "cryptoNav": 71852300
       }
     ]
   },
   {
     "date": "2024-09-04",
-    "median": 4.064501180139012,
-    "average": 4.588420138325424,
-    "count": 3,
+    "median": 6.119204540930941,
+    "average": 6.119204540930941,
+    "count": 2,
     "btcPrice": 57975.52,
     "ethPrice": 2450.36,
     "companies": [
@@ -3693,22 +3589,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 175774500,
         "enterpriseValue": 170774500,
         "cryptoNav": 20892638
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.527,
-        "marketCap": 120650000,
-        "enterpriseValue": 110650000,
-        "cryptoNav": 72469400
       }
     ]
   },
   {
     "date": "2024-09-05",
-    "median": 3.9433578616750014,
-    "average": 5.117784396782081,
-    "count": 3,
+    "median": 6.848082072371639,
+    "average": 6.848082072371639,
+    "count": 2,
     "btcPrice": 56167.4,
     "ethPrice": 2367.89,
     "companies": [
@@ -3727,22 +3615,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 202407000,
         "enterpriseValue": 197407000,
         "cryptoNav": 20241046
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.657,
-        "marketCap": 126350000,
-        "enterpriseValue": 116350000,
-        "cryptoNav": 70209250
       }
     ]
   },
   {
     "date": "2024-09-06",
-    "median": 3.9865550228661677,
-    "average": 5.0189345355415576,
-    "count": 3,
+    "median": 6.658777437668281,
+    "average": 6.658777437668281,
+    "count": 2,
     "btcPrice": 53954.33,
     "ethPrice": 2224.52,
     "companies": [
@@ -3761,22 +3641,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 186427500,
         "enterpriseValue": 181427500,
         "cryptoNav": 19443522
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.739,
-        "marketCap": 127300000,
-        "enterpriseValue": 117300000,
-        "cryptoNav": 67442913
       }
     ]
   },
   {
     "date": "2024-09-09",
-    "median": 4.067967533903626,
-    "average": 4.80778948170406,
-    "count": 3,
+    "median": 6.402658893017605,
+    "average": 6.402658893017605,
+    "count": 2,
     "btcPrice": 57056.31,
     "ethPrice": 2360,
     "companies": [
@@ -3795,22 +3667,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 184652000,
         "enterpriseValue": 179652000,
         "cryptoNav": 20561382
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.618,
-        "marketCap": 125400000,
-        "enterpriseValue": 115400000,
-        "cryptoNav": 71320388
       }
     ]
   },
   {
     "date": "2024-09-10",
-    "median": 4.338248084634541,
-    "average": 4.996031293204898,
-    "count": 3,
+    "median": 6.713025043263429,
+    "average": 6.713025043263429,
+    "count": 2,
     "btcPrice": 57642.43,
     "ethPrice": 2388.83,
     "companies": [
@@ -3829,22 +3693,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 213924300,
         "enterpriseValue": 208924300,
         "cryptoNav": 22989530
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.562,
-        "marketCap": 122550000,
-        "enterpriseValue": 112550000,
-        "cryptoNav": 72053038
       }
     ]
   },
   {
     "date": "2024-09-11",
-    "median": 4.324452288749995,
-    "average": 4.990694502692595,
-    "count": 3,
+    "median": 6.70772132558605,
+    "average": 6.70772132558605,
+    "count": 2,
     "btcPrice": 57354.27,
     "ethPrice": 2340.73,
     "companies": [
@@ -3863,22 +3719,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 212952800,
         "enterpriseValue": 207952800,
         "cryptoNav": 22874604
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.557,
-        "marketCap": 121600000,
-        "enterpriseValue": 111600000,
-        "cryptoNav": 71692838
       }
     ]
   },
   {
     "date": "2024-09-12",
-    "median": 4.268305658685468,
-    "average": 4.889789085203161,
-    "count": 3,
+    "median": 6.593033342401819,
+    "average": 6.593033342401819,
+    "count": 2,
     "btcPrice": 58140.61,
     "ethPrice": 2361.91,
     "companies": [
@@ -3897,22 +3745,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 211787000,
         "enterpriseValue": 206787000,
         "cryptoNav": 23188219
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.483,
-        "marketCap": 117800000,
-        "enterpriseValue": 107800000,
-        "cryptoNav": 72675763
       }
     ]
   },
   {
     "date": "2024-09-13",
-    "median": 4.170514136281938,
-    "average": 4.573648926147104,
-    "count": 3,
+    "median": 6.129484549269887,
+    "average": 6.129484549269887,
+    "count": 2,
     "btcPrice": 60548.12,
     "ethPrice": 2441.28,
     "companies": [
@@ -3931,22 +3771,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 200323300,
         "enterpriseValue": 195323300,
         "cryptoNav": 24148407
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.462,
-        "marketCap": 120650000,
-        "enterpriseValue": 110650000,
-        "cryptoNav": 75685150
       }
     ]
   },
   {
     "date": "2024-09-16",
-    "median": 4.279582293523103,
-    "average": 4.660989407797942,
-    "count": 3,
+    "median": 6.237661873906539,
+    "average": 6.237661873906539,
+    "count": 2,
     "btcPrice": 58210.01,
     "ethPrice": 2295.53,
     "companies": [
@@ -3965,22 +3797,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 195271500,
         "enterpriseValue": 190271500,
         "cryptoNav": 23215898
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.508,
-        "marketCap": 119700000,
-        "enterpriseValue": 109700000,
-        "cryptoNav": 72762513
       }
     ]
   },
   {
     "date": "2024-09-17",
-    "median": 4.129773901878296,
-    "average": 4.502029428785708,
-    "count": 3,
+    "median": 6.019310168328097,
+    "average": 6.019310168328097,
+    "count": 2,
     "btcPrice": 60321.59,
     "ethPrice": 2342.21,
     "companies": [
@@ -3999,22 +3823,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 195271500,
         "enterpriseValue": 190271500,
         "cryptoNav": 24058060
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.467,
-        "marketCap": 120650000,
-        "enterpriseValue": 110650000,
-        "cryptoNav": 75401988
       }
     ]
   },
   {
     "date": "2024-09-18",
-    "median": 3.9158084874306343,
-    "average": 4.428116095293047,
-    "count": 3,
+    "median": 5.9257109651971325,
+    "average": 5.9257109651971325,
+    "count": 2,
     "btcPrice": 61775.68,
     "ethPrice": 2375.01,
     "companies": [
@@ -4033,22 +3849,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 200517600,
         "enterpriseValue": 195517600,
         "cryptoNav": 24637994
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.433,
-        "marketCap": 120650000,
-        "enterpriseValue": 110650000,
-        "cryptoNav": 77219600
       }
     ]
   },
   {
     "date": "2024-09-19",
-    "median": 3.865717048449814,
-    "average": 4.525312760960692,
-    "count": 3,
+    "median": 6.085021191195015,
+    "average": 6.085021191195015,
+    "count": 2,
     "btcPrice": 62963.41,
     "ethPrice": 2465.83,
     "companies": [
@@ -4067,22 +3875,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 213535700,
         "enterpriseValue": 208535700,
         "cryptoNav": 25111697
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.406,
-        "marketCap": 120650000,
-        "enterpriseValue": 110650000,
-        "cryptoNav": 78704263
       }
     ]
   },
   {
     "date": "2024-09-20",
-    "median": 3.8699233206820343,
-    "average": 4.563029633002535,
-    "count": 3,
+    "median": 6.186436039748422,
+    "average": 6.186436039748422,
+    "count": 2,
     "btcPrice": 63211.47,
     "ethPrice": 2561.88,
     "companies": [
@@ -4101,22 +3901,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 219364700,
         "enterpriseValue": 214364700,
         "cryptoNav": 25210631
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.316,
-        "marketCap": 114000000,
-        "enterpriseValue": 104000000,
-        "cryptoNav": 79014338
       }
     ]
   },
   {
     "date": "2024-09-23",
-    "median": 3.975821054012003,
-    "average": 4.380539498288318,
-    "count": 3,
+    "median": 5.896059156773787,
+    "average": 5.896059156773787,
+    "count": 2,
     "btcPrice": 63341.97,
     "ethPrice": 2647.17,
     "companies": [
@@ -4135,22 +3927,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 202460600,
         "enterpriseValue": 197460600,
         "cryptoNav": 25262678
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.35,
-        "marketCap": 116850000,
-        "enterpriseValue": 106850000,
-        "cryptoNav": 79177463
       }
     ]
   },
   {
     "date": "2024-09-24",
-    "median": 3.9899934833901014,
-    "average": 4.33295284865619,
-    "count": 3,
+    "median": 5.846314961644165,
+    "average": 5.846314961644165,
+    "count": 2,
     "btcPrice": 64276.65,
     "ethPrice": 2653.41,
     "companies": [
@@ -4169,22 +3953,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 202460600,
         "enterpriseValue": 197460600,
         "cryptoNav": 25635456
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.306,
-        "marketCap": 114950000,
-        "enterpriseValue": 104950000,
-        "cryptoNav": 80345813
       }
     ]
   },
   {
     "date": "2024-09-25",
-    "median": 4.0033201667971,
-    "average": 4.33237943225022,
-    "count": 3,
+    "median": 5.82171246826391,
+    "average": 5.82171246826391,
+    "count": 2,
     "btcPrice": 63144.83,
     "ethPrice": 2579.69,
     "companies": [
@@ -4203,22 +3979,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 197408800,
         "enterpriseValue": 192408800,
         "cryptoNav": 25184053
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.354,
-        "marketCap": 116850000,
-        "enterpriseValue": 106850000,
-        "cryptoNav": 78931038
       }
     ]
   },
   {
     "date": "2024-09-26",
-    "median": 4.166218586812721,
-    "average": 4.215577688891185,
-    "count": 3,
+    "median": 5.72014805901928,
+    "average": 5.72014805901928,
+    "count": 2,
     "btcPrice": 65183.68,
     "ethPrice": 2632.81,
     "companies": [
@@ -4237,22 +4005,14 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 194105700,
         "enterpriseValue": 189105700,
         "cryptoNav": 25997207
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.206,
-        "marketCap": 108300000,
-        "enterpriseValue": 98300000,
-        "cryptoNav": 81479600
       }
     ]
   },
   {
     "date": "2024-09-27",
-    "median": 4.08022853637406,
-    "average": 4.19125993859516,
-    "count": 3,
+    "median": 5.706561020403585,
+    "average": 5.706561020403585,
+    "count": 2,
     "btcPrice": 65790.28,
     "ethPrice": 2695.48,
     "companies": [
@@ -4271,14 +4031,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 197408800,
         "enterpriseValue": 192408800,
         "cryptoNav": 26239137
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.161,
-        "marketCap": 105450000,
-        "enterpriseValue": 95450000,
-        "cryptoNav": 82237850
       }
     ]
   },
@@ -5562,9 +5314,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-10-31",
-    "median": 5.615697502397828,
-    "average": 5.126092267951863,
-    "count": 8,
+    "median": 5.86266475429272,
+    "average": 5.788554487362836,
+    "count": 7,
     "btcPrice": 70207.54,
     "ethPrice": 2515.04,
     "companies": [
@@ -5601,14 +5353,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 184996868
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.489,
-        "marketCap": 111100000,
-        "enterpriseValue": 96100000,
-        "cryptoNav": 196581112
-      },
-      {
         "ticker": "FUFU",
         "asset": "BTC",
         "mnav": 9.928,
@@ -5636,9 +5380,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-01",
-    "median": 4.520199954022774,
-    "average": 4.08590336043463,
-    "count": 8,
+    "median": 5.873524178966759,
+    "average": 4.602268579364703,
+    "count": 7,
     "btcPrice": 69473.41,
     "ethPrice": 2510.39,
     "companies": [
@@ -5675,14 +5419,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 183062435
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.471,
-        "marketCap": 106689000,
-        "enterpriseValue": 91689000,
-        "cryptoNav": 194525548
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 9.356,
@@ -5710,9 +5446,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-04",
-    "median": 4.439146807852186,
-    "average": 4.202894952695554,
-    "count": 8,
+    "median": 5.742063618188998,
+    "average": 4.73762567484887,
+    "count": 7,
     "btcPrice": 67811.95,
     "ethPrice": 2396.87,
     "companies": [
@@ -5749,14 +5485,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 178684488
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.46,
-        "marketCap": 102300000,
-        "enterpriseValue": 87300000,
-        "cryptoNav": 189873460
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 9.585,
@@ -5784,9 +5512,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-05",
-    "median": 4.598251051936205,
-    "average": 4.197931765605913,
-    "count": 8,
+    "median": 6.0027290806763505,
+    "average": 4.735862993190188,
+    "count": 7,
     "btcPrice": 69378.09,
     "ethPrice": 2422.4,
     "companies": [
@@ -5823,14 +5551,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 182811267
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.432,
-        "marketCap": 99000000,
-        "enterpriseValue": 84000000,
-        "cryptoNav": 194258652
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 9.369,
@@ -5858,9 +5578,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-06",
-    "median": 5.4117236461865605,
-    "average": 4.776011639526156,
-    "count": 9,
+    "median": 6.030890863946226,
+    "average": 5.326684447025851,
+    "count": 8,
     "btcPrice": 75643.57,
     "ethPrice": 2724.61,
     "companies": [
@@ -5895,14 +5615,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 193458883,
         "enterpriseValue": 193458883,
         "cryptoNav": 199320807
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.371,
-        "marketCap": 93500000,
-        "enterpriseValue": 78500000,
-        "cryptoNav": 211801996
       },
       {
         "ticker": "FUFU",
@@ -5940,9 +5652,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-07",
-    "median": 5.088778114952222,
-    "average": 4.728726119708096,
-    "count": 9,
+    "median": 5.993294495727722,
+    "average": 5.273677792519125,
+    "count": 8,
     "btcPrice": 75922.41,
     "ethPrice": 2897.52,
     "companies": [
@@ -5977,14 +5689,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 195275398,
         "enterpriseValue": 195275398,
         "cryptoNav": 200055550
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.369,
-        "marketCap": 93467000,
-        "enterpriseValue": 78467000,
-        "cryptoNav": 212582748
       },
       {
         "ticker": "FUFU",
@@ -6022,9 +5726,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-08",
-    "median": 4.974674715631132,
-    "average": 4.514878090652285,
-    "count": 9,
+    "median": 5.198017754589422,
+    "average": 5.032791672581523,
+    "count": 8,
     "btcPrice": 76562.31,
     "ethPrice": 2963.98,
     "companies": [
@@ -6059,14 +5763,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 197091913,
         "enterpriseValue": 197091913,
         "cryptoNav": 201741687
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.372,
-        "marketCap": 94655000,
-        "enterpriseValue": 79655000,
-        "cryptoNav": 214374468
       },
       {
         "ticker": "FUFU",
@@ -6104,9 +5800,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-11",
-    "median": 4.3678180110837355,
-    "average": 4.225493197983609,
-    "count": 9,
+    "median": 4.741017591118133,
+    "average": 4.713261600052634,
+    "count": 8,
     "btcPrice": 88758.31,
     "ethPrice": 3375.79,
     "companies": [
@@ -6141,14 +5837,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 203449717,
         "enterpriseValue": 203449717,
         "cryptoNav": 233878147
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.323,
-        "marketCap": 95359000,
-        "enterpriseValue": 80359000,
-        "cryptoNav": 248523268
       },
       {
         "ticker": "FUFU",
@@ -6186,9 +5874,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-12",
-    "median": 4.540812755571408,
-    "average": 4.329294262426748,
-    "count": 9,
+    "median": 5.007143469526531,
+    "average": 4.827700275315134,
+    "count": 8,
     "btcPrice": 88040.54,
     "ethPrice": 3247.18,
     "companies": [
@@ -6223,14 +5911,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 228880932,
         "enterpriseValue": 228880932,
         "cryptoNav": 231986823
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.342,
-        "marketCap": 99319000,
-        "enterpriseValue": 84319000,
-        "cryptoNav": 246513512
       },
       {
         "ticker": "FUFU",
@@ -6268,9 +5948,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-13",
-    "median": 4.620293910869598,
-    "average": 4.033232305315132,
-    "count": 9,
+    "median": 4.750013890264919,
+    "average": 4.499964653963783,
+    "count": 8,
     "btcPrice": 90498.51,
     "ethPrice": 3191.32,
     "companies": [
@@ -6305,14 +5985,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 261578208,
         "enterpriseValue": 261578208,
         "cryptoNav": 238463574
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.299,
-        "marketCap": 90860000,
-        "enterpriseValue": 75860000,
-        "cryptoNav": 253395828
       },
       {
         "ticker": "FUFU",
@@ -6350,9 +6022,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-14",
-    "median": 4.819975863449292,
-    "average": 4.248443666289001,
-    "count": 9,
+    "median": 5.480851193858458,
+    "average": 4.7353741825400695,
+    "count": 8,
     "btcPrice": 87334.19,
     "ethPrice": 3059.11,
     "companies": [
@@ -6387,14 +6059,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 275202073,
         "enterpriseValue": 275202073,
         "cryptoNav": 230125591
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.353,
-        "marketCap": 101321000,
-        "enterpriseValue": 86321000,
-        "cryptoNav": 244535732
       },
       {
         "ticker": "FUFU",
@@ -6432,9 +6096,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-15",
-    "median": 0.83605441398563,
-    "average": 2.2508006077955316,
-    "count": 3,
+    "median": 3.2071580859837776,
+    "average": 3.2071580859837776,
+    "count": 2,
     "btcPrice": 91058.92,
     "ethPrice": 3091.03,
     "companies": [
@@ -6445,14 +6109,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 477093600,
         "enterpriseValue": 517093600,
         "cryptoNav": 92697981
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.338,
-        "marketCap": 101200000,
-        "enterpriseValue": 86200000,
-        "cryptoNav": 254964976
       },
       {
         "ticker": "HSDT",
@@ -6466,9 +6122,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-18",
-    "median": 0.6683910560973577,
-    "average": 2.216402284854999,
-    "count": 3,
+    "median": 3.1610331514030023,
+    "average": 3.1610331514030023,
+    "count": 2,
     "btcPrice": 90514.83,
     "ethPrice": 3209.54,
     "companies": [
@@ -6479,14 +6135,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 480952800,
         "enterpriseValue": 520952800,
         "cryptoNav": 92144097
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.327,
-        "marketCap": 97911000,
-        "enterpriseValue": 82911000,
-        "cryptoNav": 253441524
       },
       {
         "ticker": "HSDT",
@@ -6500,9 +6148,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-19",
-    "median": 0.6169576819633552,
-    "average": 2.371964332263404,
-    "count": 3,
+    "median": 3.411008121691968,
+    "average": 3.411008121691968,
+    "count": 2,
     "btcPrice": 92418.48,
     "ethPrice": 3112.1,
     "companies": [
@@ -6513,14 +6161,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 615060000,
         "enterpriseValue": 655060000,
         "cryptoNav": 105568706
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.294,
-        "marketCap": 91047000,
-        "enterpriseValue": 76047000,
-        "cryptoNav": 258771744
       },
       {
         "ticker": "HSDT",
@@ -6534,9 +6174,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-20",
-    "median": 0.6007267133460641,
-    "average": 2.305607431151713,
-    "count": 3,
+    "median": 3.297397781051602,
+    "average": 3.297397781051602,
+    "count": 2,
     "btcPrice": 94379.92,
     "ethPrice": 3072.39,
     "companies": [
@@ -6547,14 +6187,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 606216000,
         "enterpriseValue": 646216000,
         "cryptoNav": 107809239
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.322,
-        "marketCap": 100100000,
-        "enterpriseValue": 85100000,
-        "cryptoNav": 264263776
       },
       {
         "ticker": "HSDT",
@@ -6568,9 +6200,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-21",
-    "median": 0.4951844421938298,
-    "average": 2.428405977242688,
-    "count": 3,
+    "median": 3.4762576471171274,
+    "average": 3.4762576471171274,
+    "count": 2,
     "btcPrice": 98436.25,
     "ethPrice": 3359.82,
     "companies": [
@@ -6581,14 +6213,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 686080000,
         "enterpriseValue": 726080000,
         "cryptoNav": 112442744
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.333,
-        "marketCap": 106700000,
-        "enterpriseValue": 91700000,
-        "cryptoNav": 275621500
       },
       {
         "ticker": "HSDT",
@@ -6602,9 +6226,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-22",
-    "median": 0.5537741534154972,
-    "average": 2.5401832859346962,
-    "count": 3,
+    "median": 3.623066084645475,
+    "average": 3.623066084645475,
+    "count": 2,
     "btcPrice": 99010.89,
     "ethPrice": 3331.89,
     "companies": [
@@ -6615,14 +6239,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 716900000,
         "enterpriseValue": 756900000,
         "cryptoNav": 113099150
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.374,
-        "marketCap": 118800000,
-        "enterpriseValue": 103800000,
-        "cryptoNav": 277230492
       },
       {
         "ticker": "HSDT",
@@ -6636,9 +6252,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-25",
-    "median": 0.6269965833867179,
-    "average": 2.71602611078826,
-    "count": 3,
+    "median": 3.7881924349497624,
+    "average": 3.7881924349497624,
+    "count": 2,
     "btcPrice": 93019.38,
     "ethPrice": 3414.86,
     "companies": [
@@ -6649,14 +6265,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 698408000,
         "enterpriseValue": 738408000,
         "cryptoNav": 106255108
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.572,
-        "marketCap": 163900000,
-        "enterpriseValue": 148900000,
-        "cryptoNav": 260454264
       },
       {
         "ticker": "HSDT",
@@ -6670,9 +6278,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-26",
-    "median": 0.7496185106294972,
-    "average": 2.7770459875559985,
-    "count": 3,
+    "median": 3.7907597260192487,
+    "average": 3.7907597260192487,
+    "count": 2,
     "btcPrice": 91903.89,
     "ethPrice": 3323.46,
     "companies": [
@@ -6683,14 +6291,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 680720000,
         "enterpriseValue": 720720000,
         "cryptoNav": 104980895
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.75,
-        "marketCap": 207900000,
-        "enterpriseValue": 192900000,
-        "cryptoNav": 257330892
       },
       {
         "ticker": "HSDT",
@@ -6704,9 +6304,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-27",
-    "median": 0.5933655989432841,
-    "average": 2.2346901331561373,
-    "count": 3,
+    "median": 3.158869346579885,
+    "average": 3.158869346579885,
+    "count": 2,
     "btcPrice": 95957.51,
     "ethPrice": 3657.71,
     "companies": [
@@ -6717,14 +6317,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 587456000,
         "enterpriseValue": 627456000,
         "cryptoNav": 109611304
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.386,
-        "marketCap": 118800000,
-        "enterpriseValue": 103800000,
-        "cryptoNav": 268681028
       },
       {
         "ticker": "HSDT",
@@ -6738,9 +6330,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-11-29",
-    "median": 0.6802914236424875,
-    "average": 2.3379409281481744,
-    "count": 3,
+    "median": 3.2986929544455346,
+    "average": 3.2986929544455346,
+    "count": 2,
     "btcPrice": 97510.92,
     "ethPrice": 3593.72,
     "companies": [
@@ -6751,14 +6343,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 619080000,
         "enterpriseValue": 659080000,
         "cryptoNav": 111385749
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.416,
-        "marketCap": 128700000,
-        "enterpriseValue": 113700000,
-        "cryptoNav": 273030576
       },
       {
         "ticker": "HSDT",
@@ -6772,9 +6356,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-02",
-    "median": 0.9957727671158485,
-    "average": 2.1219896750305107,
-    "count": 4,
+    "median": 1.1073967051946327,
+    "average": 2.692214502873391,
+    "count": 3,
     "btcPrice": 95859.75,
     "ethPrice": 3644.73,
     "companies": [
@@ -6785,14 +6369,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 626316000,
         "enterpriseValue": 666316000,
         "cryptoNav": 109499634
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.411,
-        "marketCap": 125400000,
-        "enterpriseValue": 110400000,
-        "cryptoNav": 268407300
       },
       {
         "ticker": "SRAG.DU",
@@ -6814,9 +6390,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-03",
-    "median": 1.0313380740091183,
-    "average": 2.179379004311033,
-    "count": 4,
+    "median": 1.1877376019819743,
+    "average": 2.708767025051559,
+    "count": 3,
     "btcPrice": 95928.37,
     "ethPrice": 3617.6,
     "companies": [
@@ -6827,14 +6403,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 624440000,
         "enterpriseValue": 664440000,
         "cryptoNav": 109578018
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.591,
-        "marketCap": 173800000,
-        "enterpriseValue": 158800000,
-        "cryptoNav": 268599436
       },
       {
         "ticker": "SRAG.DU",
@@ -6856,9 +6424,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-04",
-    "median": 0.9290248747384362,
-    "average": 2.081137817981399,
-    "count": 4,
+    "median": 1.0706216227993726,
+    "average": 2.5582179982514415,
+    "count": 3,
     "btcPrice": 98751.87,
     "ethPrice": 3845.15,
     "companies": [
@@ -6869,14 +6437,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 616132000,
         "enterpriseValue": 656132000,
         "cryptoNav": 112803274
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.65,
-        "marketCap": 194700000,
-        "enterpriseValue": 179700000,
-        "cryptoNav": 276505236
       },
       {
         "ticker": "SRAG.DU",
@@ -6898,9 +6458,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-05",
-    "median": 0.9782282433254592,
-    "average": 2.4260774490010673,
-    "count": 4,
+    "median": 1.06622877588178,
+    "average": 3.0278400725344454,
+    "count": 3,
     "btcPrice": 97053.82,
     "ethPrice": 3789.23,
     "companies": [
@@ -6911,14 +6471,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 750132000,
         "enterpriseValue": 790132000,
         "cryptoNav": 110863608
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.621,
-        "marketCap": 183700000,
-        "enterpriseValue": 168700000,
-        "cryptoNav": 271750696
       },
       {
         "ticker": "SRAG.DU",
@@ -6940,9 +6492,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-06",
-    "median": 0.9273795751340042,
-    "average": 2.2442862581797547,
-    "count": 4,
+    "median": 1.0063506619445146,
+    "average": 2.8018301149565263,
+    "count": 3,
     "btcPrice": 99897.97,
     "ethPrice": 4005.27,
     "companies": [
@@ -6953,14 +6505,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 707520000,
         "enterpriseValue": 747520000,
         "cryptoNav": 114112452
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.572,
-        "marketCap": 174900000,
-        "enterpriseValue": 159900000,
-        "cryptoNav": 279714316
       },
       {
         "ticker": "SRAG.DU",
@@ -6982,9 +6526,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-09",
-    "median": 0.9798268068816014,
-    "average": 2.3681155656450175,
-    "count": 5,
+    "median": 1.806316738396775,
+    "average": 2.8356706738730835,
+    "count": 4,
     "btcPrice": 97338.34,
     "ethPrice": 3714.19,
     "companies": [
@@ -7003,14 +6547,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 714220000,
         "enterpriseValue": 754220000,
         "cryptoNav": 111188612
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.498,
-        "marketCap": 150700000,
-        "enterpriseValue": 135700000,
-        "cryptoNav": 272547352
       },
       {
         "ticker": "SRAG.DU",
@@ -7032,9 +6568,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-10",
-    "median": 1.0818654970760233,
-    "average": 2.383140793134069,
-    "count": 5,
+    "median": 1.8209320926150423,
+    "average": 2.8383343943922252,
+    "count": 4,
     "btcPrice": 96657.88,
     "ethPrice": 3630.62,
     "companies": [
@@ -7053,14 +6589,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 715560000,
         "enterpriseValue": 755560000,
         "cryptoNav": 110411330
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.562,
-        "marketCap": 167200000,
-        "enterpriseValue": 152200000,
-        "cryptoNav": 270642064
       },
       {
         "ticker": "SRAG.DU",
@@ -7082,9 +6610,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-11",
-    "median": 0.9879792894204555,
-    "average": 2.366344671120023,
-    "count": 5,
+    "median": 1.7356119699699462,
+    "average": 2.8450037169404734,
+    "count": 4,
     "btcPrice": 101203.07,
     "ethPrice": 3834.97,
     "companies": [
@@ -7103,14 +6631,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 777468000,
         "enterpriseValue": 817468000,
         "cryptoNav": 115603255
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.452,
-        "marketCap": 143000000,
-        "enterpriseValue": 128000000,
-        "cryptoNav": 283368596
       },
       {
         "ticker": "SRAG.DU",
@@ -7132,9 +6652,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-12",
-    "median": 0.8606393991454121,
-    "average": 2.5478547876795727,
-    "count": 5,
+    "median": 1.6573549796761535,
+    "average": 3.068617265871088,
+    "count": 4,
     "btcPrice": 100041.98,
     "ethPrice": 3882.65,
     "companies": [
@@ -7153,14 +6673,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 887080000,
         "enterpriseValue": 927080000,
         "cryptoNav": 114276953
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.465,
-        "marketCap": 145200000,
-        "enterpriseValue": 130200000,
-        "cryptoNav": 280117544
       },
       {
         "ticker": "SRAG.DU",
@@ -7182,9 +6694,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-13",
-    "median": 0.8355956772684089,
-    "average": 2.4945763587138408,
-    "count": 5,
+    "median": 1.6342618861964358,
+    "average": 3.005545734629031,
+    "count": 4,
     "btcPrice": 101429.78,
     "ethPrice": 3907.67,
     "companies": [
@@ -7203,14 +6715,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 888420000,
         "enterpriseValue": 928420000,
         "cryptoNav": 115862223
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.451,
-        "marketCap": 143000000,
-        "enterpriseValue": 128000000,
-        "cryptoNav": 284003384
       },
       {
         "ticker": "SRAG.DU",
@@ -7580,9 +7084,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2024-12-31",
-    "median": 3.0806638277912963,
-    "average": 3.9038625120089314,
-    "count": 12,
+    "median": 4.241454648135438,
+    "average": 4.227093818830275,
+    "count": 11,
     "btcPrice": 93391.98,
     "ethPrice": 3331.15,
     "companies": [
@@ -7617,14 +7121,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 398157406,
         "enterpriseValue": 398157406,
         "cryptoNav": 305765343
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.348,
-        "marketCap": 155000000,
-        "enterpriseValue": 135000000,
-        "cryptoNav": 387576717
       },
       {
         "ticker": "FUFU",
@@ -7686,9 +7182,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-02",
-    "median": 3.022024785263368,
-    "average": 3.8297237066655847,
-    "count": 12,
+    "median": 4.158721284914376,
+    "average": 4.142557929173911,
+    "count": 11,
     "btcPrice": 96900.96,
     "ethPrice": 3452.59,
     "companies": [
@@ -7723,14 +7219,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 440882060,
         "enterpriseValue": 440882060,
         "cryptoNav": 317253743
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.389,
-        "marketCap": 176250000,
-        "enterpriseValue": 156250000,
-        "cryptoNav": 402138984
       },
       {
         "ticker": "FUFU",
@@ -7792,9 +7280,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-03",
-    "median": 3.276151044543796,
-    "average": 3.8865209523616486,
-    "count": 12,
+    "median": 4.499954850247066,
+    "average": 4.201614733016812,
+    "count": 11,
     "btcPrice": 98135.8,
     "ethPrice": 3607.83,
     "companies": [
@@ -7829,14 +7317,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 422701356,
         "enterpriseValue": 422701356,
         "cryptoNav": 321296609
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.42,
-        "marketCap": 191250000,
-        "enterpriseValue": 171250000,
-        "cryptoNav": 407263570
       },
       {
         "ticker": "FUFU",
@@ -7898,9 +7378,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-06",
-    "median": 3.265715503913839,
-    "average": 3.8240102644408362,
-    "count": 12,
+    "median": 4.493749077277583,
+    "average": 4.138451171406813,
+    "count": 11,
     "btcPrice": 102282.2,
     "ethPrice": 3688.83,
     "companies": [
@@ -7935,14 +7415,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 475425396,
         "enterpriseValue": 475425396,
         "cryptoNav": 334871923
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.365,
-        "marketCap": 175000000,
-        "enterpriseValue": 155000000,
-        "cryptoNav": 424471130
       },
       {
         "ticker": "FUFU",
@@ -8004,9 +7476,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-07",
-    "median": 3.280552793886631,
-    "average": 4.040611628633541,
-    "count": 12,
+    "median": 4.528787333752964,
+    "average": 4.36613605221219,
+    "count": 11,
     "btcPrice": 96942.47,
     "ethPrice": 3380.43,
     "companies": [
@@ -8041,14 +7513,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 470880220,
         "enterpriseValue": 470880220,
         "cryptoNav": 317389647
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.46,
-        "marketCap": 205000000,
-        "enterpriseValue": 185000000,
-        "cryptoNav": 402311251
       },
       {
         "ticker": "FUFU",
@@ -8110,9 +7574,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-08",
-    "median": 3.2229451928351978,
-    "average": 3.9930291654573256,
-    "count": 12,
+    "median": 4.432291978404127,
+    "average": 4.313684138932443,
+    "count": 11,
     "btcPrice": 95051.06,
     "ethPrice": 3326.54,
     "companies": [
@@ -8147,14 +7611,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 429064602,
         "enterpriseValue": 429064602,
         "cryptoNav": 311197170
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.466,
-        "marketCap": 203750000,
-        "enterpriseValue": 183750000,
-        "cryptoNav": 394461899
       },
       {
         "ticker": "FUFU",
@@ -8216,9 +7672,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-10",
-    "median": 3.2150213516188115,
-    "average": 4.031205617821477,
-    "count": 12,
+    "median": 4.448239476162616,
+    "average": 4.360961129042551,
+    "count": 11,
     "btcPrice": 94710.29,
     "ethPrice": 3266.41,
     "companies": [
@@ -8253,14 +7709,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 447245306,
         "enterpriseValue": 447245306,
         "cryptoNav": 310081489
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.404,
-        "marketCap": 178750000,
-        "enterpriseValue": 158750000,
-        "cryptoNav": 393047704
       },
       {
         "ticker": "FUFU",
@@ -8322,9 +7770,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-13",
-    "median": 3.209405739862115,
-    "average": 4.075734165299414,
-    "count": 12,
+    "median": 4.487573887759033,
+    "average": 4.4091731892088895,
+    "count": 11,
     "btcPrice": 94517.66,
     "ethPrice": 3136.46,
     "companies": [
@@ -8359,14 +7807,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 436336884,
         "enterpriseValue": 436336884,
         "cryptoNav": 309450819
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.408,
-        "marketCap": 180000000,
-        "enterpriseValue": 160000000,
-        "cryptoNav": 392248289
       },
       {
         "ticker": "FUFU",
@@ -8428,9 +7868,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-14",
-    "median": 3.173096078952792,
-    "average": 4.02726626456962,
-    "count": 12,
+    "median": 4.441586828850139,
+    "average": 4.357922009126793,
+    "count": 11,
     "btcPrice": 96526.87,
     "ethPrice": 3224.35,
     "companies": [
@@ -8465,14 +7905,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 448154341,
         "enterpriseValue": 448154341,
         "cryptoNav": 316028972
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.39,
-        "marketCap": 176250000,
-        "enterpriseValue": 156250000,
-        "cryptoNav": 400586511
       },
       {
         "ticker": "FUFU",
@@ -8534,9 +7966,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-15",
-    "median": 4.507477978275618,
-    "average": 4.213260136070971,
-    "count": 11,
+    "median": 5.027071696336355,
+    "average": 4.595628534254674,
+    "count": 10,
     "btcPrice": 100510.84,
     "ethPrice": 3451.52,
     "companies": [
@@ -8571,14 +8003,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 449972411,
         "enterpriseValue": 449972411,
         "cryptoNav": 329072490
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.39,
-        "marketCap": 182500000,
-        "enterpriseValue": 162500000,
-        "cryptoNav": 417119986
       },
       {
         "ticker": "FUFU",
@@ -8632,9 +8056,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-16",
-    "median": 4.5257130536124155,
-    "average": 4.284721804757206,
-    "count": 11,
+    "median": 5.05093003352654,
+    "average": 4.674330569341531,
+    "count": 10,
     "btcPrice": 99979.43,
     "ethPrice": 3307.52,
     "companies": [
@@ -8669,14 +8093,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 468153115,
         "enterpriseValue": 468153115,
         "cryptoNav": 327332654
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.389,
-        "marketCap": 181250000,
-        "enterpriseValue": 161250000,
-        "cryptoNav": 414914635
       },
       {
         "ticker": "FUFU",
@@ -8730,9 +8146,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-17",
-    "median": 4.535717203583709,
-    "average": 4.274464474480273,
-    "count": 11,
+    "median": 4.94528607760544,
+    "average": 4.6640111975421545,
+    "count": 10,
     "btcPrice": 104111.13,
     "ethPrice": 3475.27,
     "companies": [
@@ -8767,14 +8183,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 489060924,
         "enterpriseValue": 489060924,
         "cryptoNav": 340859840
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.379,
-        "marketCap": 183750000,
-        "enterpriseValue": 163750000,
-        "cryptoNav": 432061190
       },
       {
         "ticker": "FUFU",
@@ -8828,9 +8236,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-21",
-    "median": 4.203114283521326,
-    "average": 4.292465352361932,
-    "count": 11,
+    "median": 4.727419307688587,
+    "average": 4.685393301262961,
+    "count": 10,
     "btcPrice": 106155.61,
     "ethPrice": 3327.64,
     "companies": [
@@ -8865,14 +8273,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 477243467,
         "enterpriseValue": 477243467,
         "cryptoNav": 347553467
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.363,
-        "marketCap": 180000000,
-        "enterpriseValue": 160000000,
-        "cryptoNav": 440545782
       },
       {
         "ticker": "FUFU",
@@ -8926,9 +8326,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-22",
-    "median": 4.35360127219435,
-    "average": 4.352891563155918,
-    "count": 11,
+    "median": 4.865644792908444,
+    "average": 4.750119388816987,
+    "count": 10,
     "btcPrice": 103669.08,
     "ethPrice": 3241.51,
     "companies": [
@@ -8963,14 +8363,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 469062150,
         "enterpriseValue": 469062150,
         "cryptoNav": 339412568
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.381,
-        "marketCap": 183750000,
-        "enterpriseValue": 163750000,
-        "cryptoNav": 430226682
       },
       {
         "ticker": "FUFU",
@@ -9024,9 +8416,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-23",
-    "median": 4.4168307335169805,
-    "average": 4.26161708009578,
-    "count": 11,
+    "median": 4.890408957298938,
+    "average": 4.651843058976068,
+    "count": 10,
     "btcPrice": 103933.88,
     "ethPrice": 3338.7,
     "companies": [
@@ -9061,14 +8453,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 462698904,
         "enterpriseValue": 462698904,
         "cryptoNav": 340279523
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.359,
-        "marketCap": 175000000,
-        "enterpriseValue": 155000000,
-        "cryptoNav": 431325602
       },
       {
         "ticker": "FUFU",
@@ -9122,9 +8506,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-24",
-    "median": 4.410781025368593,
-    "average": 4.311970997735157,
-    "count": 11,
+    "median": 4.8638291646942475,
+    "average": 4.70927153249304,
+    "count": 10,
     "btcPrice": 104854.78,
     "ethPrice": 3309.74,
     "companies": [
@@ -9159,14 +8543,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 471789256,
         "enterpriseValue": 471789256,
         "cryptoNav": 343294550
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.339,
-        "marketCap": 167500000,
-        "enterpriseValue": 147500000,
-        "cryptoNav": 435147337
       },
       {
         "ticker": "FUFU",
@@ -9220,9 +8596,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-27",
-    "median": 4.189340961427782,
-    "average": 4.2025455110813335,
-    "count": 11,
+    "median": 4.825753943408319,
+    "average": 4.590338105206767,
+    "count": 10,
     "btcPrice": 102065.72,
     "ethPrice": 3181.65,
     "companies": [
@@ -9257,14 +8633,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 437245919,
         "enterpriseValue": 437245919,
         "cryptoNav": 334163167
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.325,
-        "marketCap": 157500000,
-        "enterpriseValue": 137500000,
-        "cryptoNav": 423572738
       },
       {
         "ticker": "FUFU",
@@ -9318,9 +8686,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-28",
-    "median": 4.148214211994184,
-    "average": 4.273588102694705,
-    "count": 11,
+    "median": 4.82625657175428,
+    "average": 4.665558098179465,
+    "count": 10,
     "btcPrice": 101284.47,
     "ethPrice": 3075.83,
     "companies": [
@@ -9355,14 +8723,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 450881447,
         "enterpriseValue": 450881447,
         "cryptoNav": 331605355
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.354,
-        "marketCap": 168750000,
-        "enterpriseValue": 148750000,
-        "cryptoNav": 420330551
       },
       {
         "ticker": "FUFU",
@@ -9416,9 +8776,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-29",
-    "median": 4.7408399598930915,
-    "average": 4.690512807412605,
-    "count": 12,
+    "median": 5.373858103349075,
+    "average": 5.08604170279756,
+    "count": 11,
     "btcPrice": 103742.97,
     "ethPrice": 3114.1,
     "companies": [
@@ -9461,14 +8821,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 450881447,
         "enterpriseValue": 450881447,
         "cryptoNav": 339654484
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.34,
-        "marketCap": 166250000,
-        "enterpriseValue": 146250000,
-        "cryptoNav": 430533326
       },
       {
         "ticker": "FUFU",
@@ -9522,9 +8874,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-30",
-    "median": 4.262669889301131,
-    "average": 4.297584942064926,
-    "count": 11,
+    "median": 4.792697535564144,
+    "average": 4.694272314335597,
+    "count": 10,
     "btcPrice": 104739.58,
     "ethPrice": 3247.4,
     "companies": [
@@ -9559,14 +8911,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 450881447,
         "enterpriseValue": 450881447,
         "cryptoNav": 342917385
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.331,
-        "marketCap": 163750000,
-        "enterpriseValue": 143750000,
-        "cryptoNav": 434669257
       },
       {
         "ticker": "FUFU",
@@ -9620,9 +8964,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-01-31",
-    "median": 4.21147508760197,
-    "average": 4.313086557398067,
-    "count": 11,
+    "median": 4.827575649163411,
+    "average": 4.710866708733388,
+    "count": 10,
     "btcPrice": 102412.41,
     "ethPrice": 3300.04,
     "companies": [
@@ -9657,14 +9001,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 450881447,
         "enterpriseValue": 450881447,
         "cryptoNav": 335298230
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.335,
-        "marketCap": 162500000,
-        "enterpriseValue": 142500000,
-        "cryptoNav": 425011502
       },
       {
         "ticker": "FUFU",
@@ -9718,9 +9054,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-03",
-    "median": 4.2936738859597865,
-    "average": 4.482454814901453,
-    "count": 11,
+    "median": 4.894461221352724,
+    "average": 4.899823109622917,
+    "count": 10,
     "btcPrice": 101451.28,
     "ethPrice": 2883.08,
     "companies": [
@@ -9755,14 +9091,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 429973637,
         "enterpriseValue": 429973637,
         "cryptoNav": 332151491
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.309,
-        "marketCap": 150000000,
-        "enterpriseValue": 130000000,
-        "cryptoNav": 421022812
       },
       {
         "ticker": "FUFU",
@@ -9816,9 +9144,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-04",
-    "median": 4.527343783860534,
-    "average": 4.78451180612472,
-    "count": 11,
+    "median": 5.1140256118796135,
+    "average": 5.230623352981216,
+    "count": 10,
     "btcPrice": 97794.88,
     "ethPrice": 2732.09,
     "companies": [
@@ -9853,14 +9181,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 432700743,
         "enterpriseValue": 432700743,
         "cryptoNav": 320180437
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.323,
-        "marketCap": 151250000,
-        "enterpriseValue": 131250000,
-        "cryptoNav": 405848752
       },
       {
         "ticker": "FUFU",
@@ -9914,9 +9234,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-05",
-    "median": 4.42483375163407,
-    "average": 4.755646588058474,
-    "count": 11,
+    "median": 5.0970210165459795,
+    "average": 5.198483013596555,
+    "count": 10,
     "btcPrice": 96633.71,
     "ethPrice": 2788.52,
     "companies": [
@@ -9951,14 +9271,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 428155567,
         "enterpriseValue": 428155567,
         "cryptoNav": 316378767
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.327,
-        "marketCap": 151250000,
-        "enterpriseValue": 131250000,
-        "cryptoNav": 401029897
       },
       {
         "ticker": "FUFU",
@@ -10012,9 +9324,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-06",
-    "median": 4.448754742033598,
-    "average": 4.849688064515259,
-    "count": 11,
+    "median": 5.111055849505789,
+    "average": 5.301281259405025,
+    "count": 10,
     "btcPrice": 96564.27,
     "ethPrice": 2686.96,
     "companies": [
@@ -10049,14 +9361,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 438154954,
         "enterpriseValue": 438154954,
         "cryptoNav": 316151420
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.334,
-        "marketCap": 153750000,
-        "enterpriseValue": 133750000,
-        "cryptoNav": 400741721
       },
       {
         "ticker": "FUFU",
@@ -10110,9 +9414,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-07",
-    "median": 3.5105286943443077,
-    "average": 4.382906579976838,
-    "count": 10,
+    "median": 4.731758955751528,
+    "average": 4.832106685128189,
+    "count": 9,
     "btcPrice": 96532.73,
     "ethPrice": 2622.67,
     "companies": [
@@ -10139,14 +9443,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 423610391,
         "enterpriseValue": 423610391,
         "cryptoNav": 316048158
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.34,
-        "marketCap": 156250000,
-        "enterpriseValue": 136250000,
-        "cryptoNav": 400610830
       },
       {
         "ticker": "FUFU",
@@ -10200,9 +9496,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-10",
-    "median": 3.4868817580679545,
-    "average": 4.330055042995764,
-    "count": 10,
+    "median": 4.642774038119459,
+    "average": 4.773741756856664,
+    "count": 9,
     "btcPrice": 97458.59,
     "ethPrice": 2661.94,
     "companies": [
@@ -10229,14 +9525,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 416338110,
         "enterpriseValue": 416338110,
         "cryptoNav": 319079424
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.337,
-        "marketCap": 156250000,
-        "enterpriseValue": 136250000,
-        "cryptoNav": 404453149
       },
       {
         "ticker": "FUFU",
@@ -10290,9 +9578,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-11",
-    "median": 3.389853706195777,
-    "average": 4.3435574460852235,
-    "count": 10,
+    "median": 4.455263561030451,
+    "average": 4.782148825640117,
+    "count": 9,
     "btcPrice": 95781.05,
     "ethPrice": 2602.22,
     "companies": [
@@ -10319,14 +9607,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 419065215,
         "enterpriseValue": 419065215,
         "cryptoNav": 313587158
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.396,
-        "marketCap": 177500000,
-        "enterpriseValue": 157500000,
-        "cryptoNav": 397491358
       },
       {
         "ticker": "FUFU",
@@ -10380,9 +9660,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-12",
-    "median": 3.3112650444712086,
-    "average": 4.283921739597783,
-    "count": 10,
+    "median": 4.430117873402515,
+    "average": 4.6532278978879065,
+    "count": 9,
     "btcPrice": 97874.61,
     "ethPrice": 2738.57,
     "companies": [
@@ -10409,14 +9689,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 388158019,
         "enterpriseValue": 388158019,
         "cryptoNav": 320441473
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.96,
-        "marketCap": 410000000,
-        "enterpriseValue": 390000000,
-        "cryptoNav": 406179632
       },
       {
         "ticker": "FUFU",
@@ -10470,9 +9742,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-13",
-    "median": 3.4375022087729183,
-    "average": 4.362992606322792,
-    "count": 10,
+    "median": 4.531458759338353,
+    "average": 4.766727443113709,
+    "count": 9,
     "btcPrice": 96632.78,
     "ethPrice": 2676.25,
     "companies": [
@@ -10499,14 +9771,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 376340562,
         "enterpriseValue": 376340562,
         "cryptoNav": 316375722
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.729,
-        "marketCap": 312500000,
-        "enterpriseValue": 292500000,
-        "cryptoNav": 401026037
       },
       {
         "ticker": "FUFU",
@@ -10560,9 +9824,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-02-14",
-    "median": 4.440873770958975,
-    "average": 4.808168786427506,
-    "count": 11,
+    "median": 5.079155865558293,
+    "average": 5.2046558491362225,
+    "count": 10,
     "btcPrice": 97508.71,
     "ethPrice": 2726.02,
     "companies": [
@@ -10597,14 +9861,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 369068281,
         "enterpriseValue": 369068281,
         "cryptoNav": 319243517
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.843,
-        "marketCap": 361250000,
-        "enterpriseValue": 341250000,
-        "cryptoNav": 404661147
       },
       {
         "ticker": "FUFU",
@@ -11364,9 +10620,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-03-31",
-    "median": 3.6590289725268095,
-    "average": 3.532785177991484,
-    "count": 7,
+    "median": 3.9605657283101197,
+    "average": 4.046618898280625,
+    "count": 6,
     "btcPrice": 82539.52,
     "ethPrice": 1822.14,
     "companies": [
@@ -11403,14 +10659,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 276589932
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.45,
-        "marketCap": 225400000,
-        "enterpriseValue": 200400000,
-        "cryptoNav": 445548329
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.897,
@@ -11430,9 +10678,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-01",
-    "median": 3.653417567556303,
-    "average": 3.4141257239501956,
-    "count": 7,
+    "median": 3.9307057755517194,
+    "average": 3.911517350836675,
+    "count": 6,
     "btcPrice": 85174.96,
     "ethPrice": 1905.23,
     "companies": [
@@ -11469,14 +10717,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 285421291
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.43,
-        "marketCap": 222600000,
-        "enterpriseValue": 197600000,
-        "cryptoNav": 459774434
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.684,
@@ -11496,9 +10736,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-02",
-    "median": 3.9466769161331308,
-    "average": 3.5880323755167987,
-    "count": 7,
+    "median": 4.189093121251763,
+    "average": 4.113649537378243,
+    "count": 6,
     "btcPrice": 82490.58,
     "ethPrice": 1794.63,
     "companies": [
@@ -11535,14 +10775,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 276425934
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.434,
-        "marketCap": 218400000,
-        "enterpriseValue": 193400000,
-        "cryptoNav": 445284151
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.901,
@@ -11562,9 +10794,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-03",
-    "median": 3.6034812395655447,
-    "average": 3.5016261108161237,
-    "count": 7,
+    "median": 3.9399249671741,
+    "average": 4.013423902006802,
+    "count": 6,
     "btcPrice": 83158.8,
     "ethPrice": 1816.31,
     "companies": [
@@ -11601,14 +10833,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 278665139
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.431,
-        "marketCap": 218400000,
-        "enterpriseValue": 193400000,
-        "cryptoNav": 448891202
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.846,
@@ -11628,9 +10852,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-04",
-    "median": 3.6708950045423268,
-    "average": 3.386949007428524,
-    "count": 7,
+    "median": 3.896482189780772,
+    "average": 3.8843581543107537,
+    "count": 6,
     "btcPrice": 83860.21,
     "ethPrice": 1816.25,
     "companies": [
@@ -11667,14 +10891,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 281015564
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.402,
-        "marketCap": 207200000,
-        "enterpriseValue": 182200000,
-        "cryptoNav": 452677414
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.789,
@@ -11694,9 +10910,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-07",
-    "median": 3.561845947599287,
-    "average": 3.492508062562632,
-    "count": 7,
+    "median": 3.912554051502236,
+    "average": 4.006242957718186,
+    "count": 6,
     "btcPrice": 79143.06,
     "ethPrice": 1552.42,
     "companies": [
@@ -11733,14 +10949,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 265208394
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.41,
-        "marketCap": 200200000,
-        "enterpriseValue": 175200000,
-        "cryptoNav": 427214238
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 7.193,
@@ -11760,9 +10968,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-08",
-    "median": 4.120388875178766,
-    "average": 3.620118940368598,
-    "count": 7,
+    "median": 4.18351791345801,
+    "average": 4.141196569092188,
+    "count": 6,
     "btcPrice": 76255.1,
     "ethPrice": 1472.15,
     "companies": [
@@ -11799,14 +11007,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 255530840
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.494,
-        "marketCap": 228200000,
-        "enterpriseValue": 203200000,
-        "cryptoNav": 411625030
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 7.466,
@@ -11826,9 +11026,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-09",
-    "median": 3.533671971659698,
-    "average": 3.424738253316068,
-    "count": 7,
+    "median": 3.6763402853399465,
+    "average": 3.913279705434587,
+    "count": 6,
     "btcPrice": 82587.03,
     "ethPrice": 1669,
     "companies": [
@@ -11865,14 +11065,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 276749138
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.493,
-        "marketCap": 245000000,
-        "enterpriseValue": 220000000,
-        "cryptoNav": 445804788
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.893,
@@ -11892,9 +11084,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-10",
-    "median": 3.9160857370406403,
-    "average": 3.548599232760398,
-    "count": 7,
+    "median": 3.9640190421721577,
+    "average": 4.056279500745383,
+    "count": 6,
     "btcPrice": 79554.96,
     "ethPrice": 1521.51,
     "companies": [
@@ -11931,14 +11123,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 266588671
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.503,
-        "marketCap": 240800000,
-        "enterpriseValue": 215800000,
-        "cryptoNav": 429437674
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 7.156,
@@ -11958,9 +11142,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-11",
-    "median": 3.847497055184946,
-    "average": 3.449457419522936,
-    "count": 7,
+    "median": 3.9197962504823467,
+    "average": 3.9444619503395875,
+    "count": 6,
     "btcPrice": 83386,
     "ethPrice": 1566.02,
     "companies": [
@@ -11997,14 +11181,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 279426486
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.479,
-        "marketCap": 240800000,
-        "enterpriseValue": 215800000,
-        "cryptoNav": 450117628
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.827,
@@ -12024,9 +11200,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-14",
-    "median": 3.771398300091995,
-    "average": 3.453234950250614,
-    "count": 7,
+    "median": 3.810732962915888,
+    "average": 3.9530596600523533,
+    "count": 6,
     "btcPrice": 84575.75,
     "ethPrice": 1623.79,
     "companies": [
@@ -12063,14 +11239,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 283413338
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.454,
-        "marketCap": 232400000,
-        "enterpriseValue": 207400000,
-        "cryptoNav": 456539899
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.731,
@@ -12090,9 +11258,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-15",
-    "median": 2.8393054523346732,
-    "average": 3.279197039113034,
-    "count": 8,
+    "median": 3.796624935370762,
+    "average": 3.680256200959704,
+    "count": 7,
     "btcPrice": 83638.17,
     "ethPrice": 1588.7,
     "companies": [
@@ -12129,14 +11297,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "cryptoNav": 280271508
       },
       {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.472,
-        "marketCap": 238000000,
-        "enterpriseValue": 213000000,
-        "cryptoNav": 451478842
-      },
-      {
         "ticker": "FLD",
         "asset": "BTC",
         "mnav": 6.807,
@@ -12164,9 +11324,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-16",
-    "median": 3.6246456071340565,
-    "average": 3.9415476418989215,
-    "count": 9,
+    "median": 3.7244281378292614,
+    "average": 4.377086045387179,
+    "count": 8,
     "btcPrice": 84029.4,
     "ethPrice": 1577.24,
     "companies": [
@@ -12201,14 +11361,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 342706261,
         "enterpriseValue": 342706261,
         "cryptoNav": 281582519
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.457,
-        "marketCap": 232400000,
-        "enterpriseValue": 207400000,
-        "cryptoNav": 453590701
       },
       {
         "ticker": "FLD",
@@ -12246,9 +11398,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-17",
-    "median": 3.783312631068477,
-    "average": 3.6527881682176666,
-    "count": 9,
+    "median": 3.811421562152688,
+    "average": 4.049411714881606,
+    "count": 8,
     "btcPrice": 84943.42,
     "ethPrice": 1583.68,
     "companies": [
@@ -12283,14 +11435,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 354523718,
         "enterpriseValue": 354523718,
         "cryptoNav": 284645400
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.48,
-        "marketCap": 245000000,
-        "enterpriseValue": 220000000,
-        "cryptoNav": 458524581
       },
       {
         "ticker": "FLD",
@@ -12328,9 +11472,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-21",
-    "median": 3.6515916281811416,
-    "average": 3.568428069318516,
-    "count": 9,
+    "median": 3.7349235075841234,
+    "average": 3.966641681287411,
+    "count": 8,
     "btcPrice": 87515.57,
     "ethPrice": 1579.7,
     "companies": [
@@ -12365,14 +11509,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 389067055,
         "enterpriseValue": 389067055,
         "cryptoNav": 293264675
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.383,
-        "marketCap": 205800000,
-        "enterpriseValue": 180800000,
-        "cryptoNav": 472409047
       },
       {
         "ticker": "FLD",
@@ -12410,9 +11546,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-22",
-    "median": 3.1467578700120913,
-    "average": 3.4226102537846197,
-    "count": 9,
+    "median": 3.3524224712943487,
+    "average": 3.7994083273587713,
+    "count": 8,
     "btcPrice": 93483.3,
     "ethPrice": 1757.04,
     "companies": [
@@ -12447,14 +11583,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 389067055,
         "enterpriseValue": 389067055,
         "cryptoNav": 313262538
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.408,
-        "marketCap": 231000000,
-        "enterpriseValue": 206000000,
-        "cryptoNav": 504622853
       },
       {
         "ticker": "FLD",
@@ -12492,9 +11620,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-23",
-    "median": 3.572075691628068,
-    "average": 3.608821080998904,
-    "count": 9,
+    "median": 3.581061922396284,
+    "average": 4.004532909215159,
+    "count": 8,
     "btcPrice": 93729.23,
     "ethPrice": 1795.87,
     "companies": [
@@ -12529,14 +11657,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 427246532,
         "enterpriseValue": 427246532,
         "cryptoNav": 314086650
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.443,
-        "marketCap": 249200000,
-        "enterpriseValue": 224200000,
-        "cryptoNav": 505950384
       },
       {
         "ticker": "FLD",
@@ -12574,9 +11694,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-24",
-    "median": 3.7934935206535565,
-    "average": 3.635721778460743,
-    "count": 9,
+    "median": 3.969395122484953,
+    "average": 4.037382588691177,
+    "count": 8,
     "btcPrice": 94022.48,
     "ethPrice": 1770.44,
     "companies": [
@@ -12611,14 +11731,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 402702582,
         "enterpriseValue": 402702582,
         "cryptoNav": 315069330
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.422,
-        "marketCap": 239400000,
-        "enterpriseValue": 214400000,
-        "cryptoNav": 507533347
       },
       {
         "ticker": "FLD",
@@ -12656,9 +11768,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-25",
-    "median": 3.8290069713823467,
-    "average": 3.7194933502422405,
-    "count": 9,
+    "median": 4.253157436613758,
+    "average": 4.128586637345578,
+    "count": 8,
     "btcPrice": 94711.24,
     "ethPrice": 1785.94,
     "companies": [
@@ -12693,14 +11805,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 405429688,
         "enterpriseValue": 405429688,
         "cryptoNav": 317377365
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.447,
-        "marketCap": 253400000,
-        "enterpriseValue": 228400000,
-        "cryptoNav": 511251274
       },
       {
         "ticker": "FLD",
@@ -12738,9 +11842,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-28",
-    "median": 3.8258552303792768,
-    "average": 3.8246395198063445,
-    "count": 9,
+    "median": 3.9767958766100158,
+    "average": 4.247748619597258,
+    "count": 8,
     "btcPrice": 95035.06,
     "ethPrice": 1800.19,
     "companies": [
@@ -12775,14 +11879,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 409065828,
         "enterpriseValue": 409065828,
         "cryptoNav": 318462486
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.44,
-        "marketCap": 250600000,
-        "enterpriseValue": 225600000,
-        "cryptoNav": 512999254
       },
       {
         "ticker": "FLD",
@@ -12820,9 +11916,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-29",
-    "median": 3.7207781393923387,
-    "average": 3.8877456104657853,
-    "count": 9,
+    "median": 3.9219013556950513,
+    "average": 4.317955409791763,
+    "count": 8,
     "btcPrice": 94274.16,
     "ethPrice": 1798.47,
     "companies": [
@@ -12857,14 +11953,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 406338723,
         "enterpriseValue": 406338723,
         "cryptoNav": 315912710
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.446,
-        "marketCap": 252000000,
-        "enterpriseValue": 227000000,
-        "cryptoNav": 508891916
       },
       {
         "ticker": "FLD",
@@ -12902,9 +11990,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-04-30",
-    "median": 3.6077580290085853,
-    "average": 3.8413935447896486,
-    "count": 9,
+    "median": 3.62474328722485,
+    "average": 4.263003581563417,
+    "count": 8,
     "btcPrice": 94186.14,
     "ethPrice": 1793.83,
     "companies": [
@@ -12939,14 +12027,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 412701969,
         "enterpriseValue": 412701969,
         "cryptoNav": 315617755
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.469,
-        "marketCap": 263200000,
-        "enterpriseValue": 238200000,
-        "cryptoNav": 508416784
       },
       {
         "ticker": "FLD",
@@ -12984,9 +12064,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-01",
-    "median": 3.6922864504955357,
-    "average": 3.9055499854909623,
-    "count": 9,
+    "median": 3.7563174468411664,
+    "average": 4.336595253993812,
+    "count": 8,
     "btcPrice": 96519.31,
     "ethPrice": 1838.83,
     "companies": [
@@ -13021,14 +12101,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 412701969,
         "enterpriseValue": 412701969,
         "cryptoNav": 323436208
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.457,
-        "marketCap": 263200000,
-        "enterpriseValue": 238200000,
-        "cryptoNav": 521011235
       },
       {
         "ticker": "FLD",
@@ -13066,9 +12138,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-02",
-    "median": 3.7373110672529735,
-    "average": 4.030769221633357,
-    "count": 9,
+    "median": 4.072749490506405,
+    "average": 4.468006241633836,
+    "count": 8,
     "btcPrice": 96925.07,
     "ethPrice": 1842.84,
     "companies": [
@@ -13103,14 +12175,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 421792321,
         "enterpriseValue": 421792321,
         "cryptoNav": 324795910
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.533,
-        "marketCap": 303800000,
-        "enterpriseValue": 278800000,
-        "cryptoNav": 523201528
       },
       {
         "ticker": "FLD",
@@ -13148,9 +12212,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-05",
-    "median": 3.973261330132368,
-    "average": 3.9572583898719014,
-    "count": 9,
+    "median": 4.062904869583639,
+    "average": 4.365317389938076,
+    "count": 8,
     "btcPrice": 94767.95,
     "ethPrice": 1820.05,
     "companies": [
@@ -13185,14 +12249,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 388158019,
         "enterpriseValue": 388158019,
         "cryptoNav": 317567400
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.693,
-        "marketCap": 379400000,
-        "enterpriseValue": 354400000,
-        "cryptoNav": 511557394
       },
       {
         "ticker": "FLD",
@@ -13230,9 +12286,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-06",
-    "median": 3.8521152698128605,
-    "average": 3.912209942029831,
-    "count": 9,
+    "median": 3.9579932182806488,
+    "average": 4.304769630095031,
+    "count": 8,
     "btcPrice": 96835.87,
     "ethPrice": 1816.98,
     "companies": [
@@ -13267,14 +12323,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 388158019,
         "enterpriseValue": 388158019,
         "cryptoNav": 324497000
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.772,
-        "marketCap": 428400000,
-        "enterpriseValue": 403400000,
-        "cryptoNav": 522720026
       },
       {
         "ticker": "FLD",
@@ -13312,9 +12360,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-07",
-    "median": 3.7845249893865893,
-    "average": 3.7906521519177394,
-    "count": 9,
+    "median": 3.791208595623961,
+    "average": 4.167230087936545,
+    "count": 8,
     "btcPrice": 97052.27,
     "ethPrice": 1811.34,
     "companies": [
@@ -13349,14 +12397,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 411792934,
         "enterpriseValue": 411792934,
         "cryptoNav": 325222157
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.778,
-        "marketCap": 432600000,
-        "enterpriseValue": 407600000,
-        "cryptoNav": 523888153
       },
       {
         "ticker": "FLD",
@@ -13394,9 +12434,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-08",
-    "median": 3.1066924182185356,
-    "average": 3.459233407946314,
-    "count": 9,
+    "median": 3.453787078790131,
+    "average": 3.7785663688375557,
+    "count": 8,
     "btcPrice": 103259,
     "ethPrice": 2207.19,
     "companies": [
@@ -13431,14 +12471,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 454517587,
         "enterpriseValue": 454517587,
         "cryptoNav": 346020909
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.905,
-        "marketCap": 529200000,
-        "enterpriseValue": 504200000,
-        "cryptoNav": 557392082
       },
       {
         "ticker": "FLD",
@@ -13476,9 +12508,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-09",
-    "median": 2.9053314268917028,
-    "average": 3.5930744659978333,
-    "count": 9,
+    "median": 3.4074028899609736,
+    "average": 3.9250560831987285,
+    "count": 8,
     "btcPrice": 102982.3,
     "ethPrice": 2345.32,
     "companies": [
@@ -13513,14 +12545,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 460880833,
         "enterpriseValue": 460880833,
         "cryptoNav": 345093687
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 0.937,
-        "marketCap": 546000000,
-        "enterpriseValue": 521000000,
-        "cryptoNav": 555898455
       },
       {
         "ticker": "FLD",
@@ -13558,9 +12582,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-12",
-    "median": 3.2149546360870342,
-    "average": 3.7721176279039383,
-    "count": 8,
+    "median": 3.0211761357357063,
+    "average": 3.824029698113307,
+    "count": 7,
     "btcPrice": 102802.44,
     "ethPrice": 2495.56,
     "companies": [
@@ -13587,14 +12611,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 460880833,
         "enterpriseValue": 460880833,
         "cryptoNav": 344490976
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 3.409,
-        "marketCap": 1916600000,
-        "enterpriseValue": 1891600000,
-        "cryptoNav": 554927571
       },
       {
         "ticker": "FLD",
@@ -13632,9 +12648,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-13",
-    "median": 2.713096195720098,
-    "average": 3.5891946840832425,
-    "count": 8,
+    "median": 2.7377814588553444,
+    "average": 3.740047503329983,
+    "count": 7,
     "btcPrice": 104136.59,
     "ethPrice": 2680.04,
     "companies": [
@@ -13661,14 +12677,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 442700130,
         "enterpriseValue": 442700130,
         "cryptoNav": 348961713
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 2.533,
-        "marketCap": 1449000000,
-        "enterpriseValue": 1424000000,
-        "cryptoNav": 562129313
       },
       {
         "ticker": "FLD",
@@ -13706,9 +12714,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-14",
-    "median": 2.73323811771121,
-    "average": 3.6013831738995896,
-    "count": 8,
+    "median": 2.7996509195361434,
+    "average": 3.84851855018758,
+    "count": 7,
     "btcPrice": 103543.76,
     "ethPrice": 2610.07,
     "companies": [
@@ -13735,14 +12743,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 451790482,
         "enterpriseValue": 451790482,
         "cryptoNav": 346975140
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 1.871,
-        "marketCap": 1071000000,
-        "enterpriseValue": 1046000000,
-        "cryptoNav": 558929216
       },
       {
         "ticker": "FLD",
@@ -13780,9 +12780,9 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
   },
   {
     "date": "2025-05-15",
-    "median": 3.1496030221572955,
-    "average": 3.787189144863222,
-    "count": 8,
+    "median": 2.8803488073637893,
+    "average": 3.839807988850711,
+    "count": 7,
     "btcPrice": 103787.64,
     "ethPrice": 2549,
     "companies": [
@@ -13809,14 +12809,6 @@ export const MNAV_HISTORY: HistoricalMNAVSnapshot[] = [
         "marketCap": 435427849,
         "enterpriseValue": 435427849,
         "cryptoNav": 347792382
-      },
-      {
-        "ticker": "NAKA",
-        "asset": "BTC",
-        "mnav": 3.419,
-        "marketCap": 1940400000,
-        "enterpriseValue": 1915400000,
-        "cryptoNav": 560245681
       },
       {
         "ticker": "FLD",
