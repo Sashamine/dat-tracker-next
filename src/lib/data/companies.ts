@@ -176,7 +176,7 @@ export const ethCompanies: Company[] = [
     holdings: 155_239,  // Jan 31, 2026 (Feb 6, 2026 press release)
     holdingsLastUpdated: "2026-01-31",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
+    holdingsSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
     datStartDate: "2025-01-01",
     website: "https://bit-digital.com",
     twitter: "https://x.com/BitDigital_BTBT",
@@ -203,9 +203,9 @@ export const ethCompanies: Company[] = [
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
     sharesForMnav: 324_202_059,  // Feb 6, 2026 press release (basic shares, Jan 31 2026)
-    sharesSource: "SEC 10-Q (filed 2025-11-14): EntityCommonStockSharesOutstanding = 323,674,831 as of 2025-11-10",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
-    sharesAsOf: "2025-11-10",
+    sharesSource: "Feb 6, 2026 PR: 'Bit Digital shares outstanding were 324,202,059 as of January 31, 2026'",
+    sharesSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    sharesAsOf: "2026-01-31",
     cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
     restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",

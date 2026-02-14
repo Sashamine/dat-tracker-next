@@ -218,7 +218,13 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
 <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(M.en)}</span>
 </p>
 </div>
-<StalenessNote dates={[company.holdingsLastUpdated,company.debtAsOf,company.cashAsOf,company.sharesAsOf]} secCik={company.secCik} />
+<StalenessNote labeledDates={[
+          { label: "Holdings", date: company.holdingsLastUpdated },
+          { label: "Cash", date: company.cashAsOf },
+          { label: "Debt", date: company.debtAsOf },
+          { label: "Shares", date: company.sharesAsOf },
+          { label: "Burn rate", date: company.burnAsOf },
+        ]} secCik={company.secCik} />
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 <ProvenanceMetric label="Crypto NAV" data={M.navPv} format="currency" subLabel={`${M.h.toLocaleString()} ETH`} tooltip="ETH holdings at current market price" ticker="btbt" />
 {BTBT_PROVENANCE.cashReserves&&<ProvenanceMetric label="Cash" data={BTBT_PROVENANCE.cashReserves} format="currency" subLabel="As of Sep 30, 2025" tooltip="$179.1M cash. Up from $95.2M at Dec 31, 2024. Includes proceeds from equity raises." ticker="btbt" />}

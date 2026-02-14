@@ -92,6 +92,8 @@ Reviews Agent A's output. Attacks the ENTIRE extraction — not just one dimensi
 
 5. **Arithmetic** — Recalculate every derived number (HPS, mNAV) from the raw inputs. Do they match?
 
+6. **Source authority** — For each citation, is it using the most authoritative available source? Preference order: SEC filing (8-K/10-Q/10-K) > regulatory filing > press release > company website. If the same data exists in both a PR and an 8-K, the citation should point to the 8-K. PR URLs can change or disappear; SEC EDGAR is permanent.
+
 **Output:** `extraction-adversary.md` — every error found, with evidence.
 
 **Threshold for adversarial:** This phase is always adversarial because it reconciles multiple source types (XBRL, 8-K, 10-Q, PRs) across multiple time periods. Single agents consistently cut corners on exhaustive source searches, fabricate quotes, and miss entire categories of financial instruments.
@@ -176,6 +178,8 @@ Reviews ALL previous agents' work. Structured attack vectors:
 
 7. **Fix safety** — If fixes were applied between phases, did they introduce new inconsistencies? Check that all four data files still agree after changes. (Known pattern: ABTC fix changed shares to 920.7M but left SPS baseline at 368 instead of 371.)
 
+8. **Staleness UX** — Does the page correctly flag stale individual metrics to users? Check: if holdings were updated recently but cash is 4+ months old, does the UI warn about stale cash? The StalenessNote component may use the most recent date across ALL metrics, masking individually stale values. (Known pattern: BTBT holdings fresh at Jan 31 masked Sep 30 cash staleness.)
+
 **Output:** `final-adversary.md`
 
 **Threshold for adversarial:** This phase is always adversarial because it's cross-file consistency (>2 files) feeding into financial calculations. Pipeline checkers consistently miss hardcoded values, formula divergences, and placeholder data.
@@ -239,3 +243,6 @@ Single agents cut corners on:
 - Source verifier missed $150M convertible notes (XBRL LongTermDebt field doesn't capture converts)
 - Company page and overview page used different mNAV formulas (cash treatment, otherInvestments)
 - Most data from Q3 PR when Jan/Feb 2026 data was available — staleness not caught until human review
+- All citations pointed to press releases when 8-K filings contained the same data — SEC filings are more authoritative and permanent
+- StalenessNote component picks most recent date across ALL metrics, masking individually stale values (Jan 31 holdings hid Sep 30 cash, Mar 31 burn)
+- Company page ITM convert adjustment missing — would diverge from overview when stock exceeds $4.16 conversion price
