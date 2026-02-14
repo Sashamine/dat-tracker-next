@@ -173,8 +173,8 @@ export const ethCompanies: Company[] = [
     secCik: "0001710350",
     asset: "ETH",
     tier: 1,
-    holdings: 155_227,  // Dec 31, 2025 (Jan 7, 2026 press release)
-    holdingsLastUpdated: "2025-12-31",
+    holdings: 155_239,  // Jan 31, 2026 (Feb 6, 2026 press release)
+    holdingsLastUpdated: "2026-01-31",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
     datStartDate: "2025-01-01",
@@ -202,7 +202,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
-    sharesForMnav: 323_792_059,  // Jan 7, 2026 press release (basic shares)
+    sharesForMnav: 324_202_059,  // Feb 6, 2026 press release (basic shares, Jan 31 2026)
     sharesSource: "SEC 10-Q (filed 2025-11-14): EntityCommonStockSharesOutstanding = 323,674,831 as of 2025-11-10",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
     sharesAsOf: "2025-11-10",

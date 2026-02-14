@@ -33,12 +33,12 @@ const CONVERTS_8K_FILED = "2025-10-02";
 // =========================================================================
 // KEY VALUES
 // =========================================================================
-const LATEST_HOLDINGS = 155_227;          // Dec 31, 2025 (Jan 7, 2026 PR)
-const LATEST_HOLDINGS_DATE = "2025-12-31";
-const JAN_2026_HOLDINGS = 155_239;        // Jan 31, 2026 (Feb 6, 2026 PR)
+const LATEST_HOLDINGS = 155_239;          // Jan 31, 2026 (Feb 6, 2026 PR)
+const LATEST_HOLDINGS_DATE = "2026-01-31";
+const DEC_2025_HOLDINGS = 155_227;        // Dec 31, 2025 (Jan 7, 2026 PR) — used for Q4 earnings anchor
 
-const SHARES_OUTSTANDING = 323_792_059;   // Dec 31, 2025 (Jan 7, 2026 PR)
-const SHARES_DATE = "2025-12-31";
+const SHARES_OUTSTANDING = 324_202_059;   // Jan 31, 2026 (Feb 6, 2026 PR)
+const SHARES_DATE = "2026-01-31";
 const XBRL_SHARES = 323_674_831;          // Nov 10, 2025 (Q3 10-Q cover)
 const XBRL_SHARES_DATE = "2025-11-10";
 
@@ -73,10 +73,10 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "press-release",
-    searchTerm: "155,227",
-    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
-    quote: "As of December 31, 2025, the Company held approximately 155,227.3 ETH",
-    anchor: "155,227",
+    searchTerm: "155,239",
+    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    quote: "As of January 31, 2026, the Company held approximately 155,239.4 ETH",
+    anchor: "155,239",
     cik: BTBT_CIK,
     documentDate: LATEST_HOLDINGS_DATE,
   }), "Monthly ETH treasury press release. Includes ~15,218 ETH in externally managed fund."),
@@ -99,10 +99,10 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   sharesOutstanding: pv(SHARES_OUTSTANDING, docSource({
     type: "press-release",
-    searchTerm: "323,792,059",
-    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
-    quote: "Bit Digital shares outstanding were 323,792,059 as of December 31, 2025",
-    anchor: "323,792,059",
+    searchTerm: "324,202,059",
+    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    quote: "Bit Digital shares outstanding were 324,202,059 as of January 31, 2026",
+    anchor: "324,202,059",
     documentDate: SHARES_DATE,
   }), "Basic shares. XBRL cross-check: 323,674,831 as of Nov 10, 2025 (Q3 10-Q)."),
 
