@@ -57,8 +57,13 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
     if (!BTBT_PROVENANCE.holdings||!BTBT_PROVENANCE.totalDebt||!BTBT_PROVENANCE.cashReserves) return null;
     const h=BTBT_PROVENANCE.holdings.value, d=BTBT_PROVENANCE.totalDebt.value, c=BTBT_PROVENANCE.cashReserves.value;
     const pf=BTBT_PROVENANCE.preferredEquity?.value||0, sh=BTBT_PROVENANCE.sharesOutstanding?.value||company.sharesForMnav||0;
-    const nav=h*ethP, nd=Math.max(0,d-c);
-    const ev=mc+d+pf-c, mn=nav>0?ev/nav:null, lv=nav>0?nd/nav:0;
+    // Match overview page logic: restrictedCash = cashReserves (all cash is operational, not excess)
+    const rc=company.restrictedCash||0, fc=c-rc; // freeCash = cash - restrictedCash
+    // otherInvestments (WYFI $427.3M) included in NAV if material (>5% of crypto NAV)
+    const baseCryptoNav=h*ethP, oi=company.otherInvestments||0;
+    const oiMaterial=baseCryptoNav>0&&(oi/baseCryptoNav)>0.05;
+    const nav=baseCryptoNav+rc+(oiMaterial?oi:0), nd=Math.max(0,d-c);
+    const ev=mc+d+pf-fc, mn=nav>0?ev/nav:null, lv=nav>0?nd/nav:0;
     const en=nav+c-d-pf, enps=sh>0?en/sh:0, hps=sh>0?h/sh:0;
     const navPv:ProvenanceValue<number>=pv(nav,derivedSource({derivation:"ETH*Price",formula:"h*p",inputs:{holdings:BTBT_PROVENANCE.holdings}}),`Live ETH: $${ethP.toLocaleString()}`);
     const mnPv=mn!==null?pv(mn,derivedSource({derivation:"EV/CryptoNAV",formula:"ev/nav",inputs:{debt:BTBT_PROVENANCE.totalDebt,cash:BTBT_PROVENANCE.cashReserves,holdings:BTBT_PROVENANCE.holdings}}),`Debt: ${formatLargeNumber(d)}`):null;
