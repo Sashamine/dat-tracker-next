@@ -1076,8 +1076,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 5_098,  // Dec 14, 2025 PR (Top 20 milestone)
-    sharesAtQuarterEnd: 899_489_426,  // Q3 2025 10-Q total shares (all classes)
-    holdingsPerShare: 0.00000567,  // 5,098 / 899,489,426 = ~567 sats/share
+    sharesAtQuarterEnd: 927_604_994,  // 10-Q cover page: Class A 195,380,091 + Class B 732,224,903
+    holdingsPerShare: 0.00000549,  // 5,098 / 927,604,994 = ~549 sats/share
     source: "press-release",
     sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
     status: "upcoming",
@@ -1091,9 +1091,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q
-    sharesAtQuarterEnd: 899_489_426,  // Total shares (all classes, post-merger)
-    holdingsPerShare: 0.0000038,  // ~380 sats/share
+    holdingsAtQuarterEnd: 3_418,  // SEC 10-Q (Sep 30 period end)
+    sharesAtQuarterEnd: 927_604_994,  // 10-Q cover page (Nov 13): Class A 195,380,091 + Class B 732,224,903
+    holdingsPerShare: 0.00000368,  // 3,418 / 927,604,994 = ~368 sats/share
     source: "sec-filing",
     sourceUrl: `/filings/abtc/0001193125-25-281390`,
     status: "reported",
