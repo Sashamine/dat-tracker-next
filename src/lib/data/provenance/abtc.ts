@@ -169,7 +169,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     QUARTERLY_BURN,
     xbrlSource({
       fact: "us-gaap:GeneralAndAdministrativeExpense",
-      searchTerm: "8,052,000",
+      searchTerm: "8,052",
       rawValue: 8_052_000,
       unit: "USD",
       periodType: "duration",
