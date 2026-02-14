@@ -7,13 +7,18 @@ import Link from "next/link";
 
 // Ticker to CIK mapping
 const TICKER_CIKS: Record<string, string> = {
-  mstr: "1050446", mara: "1507605", riot: "1167419", clsk: "1515671",
-  btbt: "1799290", kulr: "1662684", bmnr: "1829311", corz: "1878848",
-  abtc: "2068580", btcs: "1510079", game: "1825079", fgnx: "1437925",
-  dfdv: "1652044", upxi: "1777319", hsdt: "1580063", tron: "1956744",
-  cwd: "1627282", stke: "1846839", djt: "1849635", naka: "1977303",
-  tbh: "1903595", fwdi: "38264", hypd: "1830131", xxi: "1949556",
-  sbet: "1981535", avx: "1826397",
+  // CIKs sourced from companies.ts secCik — used for SEC.gov fallback URLs
+  abtc: "1755953", asst: "1920406", avx: "1826397", bmnr: "1829311",
+  bnc: "1482541", btbt: "1710350", btcs: "1436229", btog: "1735556",
+  cepo: "1865602", cwd: "1627282", cyph: "1509745", ddc: "1808110",
+  dfdv: "1805526", djt: "1849635", ethm: "2080334", fgnx: "1591890",
+  fld: "1889123", fufu: "1921158", fwdi: "38264", game: "1714562",
+  hsdt: "1610853", hypd: "1682639", kulr: "1662684", lits: "1262104",
+  mara: "1507605", mstr: "1050446", na: "1872302", naka: "1946573",
+  purr: "2078856", sbet: "1981535", sqns: "1383395", stke: "1846839",
+  suig: "1425355", taox: "1571934", tbh: "1903595", tron: "1956744",
+  twav: "746210", upxi: "1775194", xxi: "2070457", zone: "1956741",
+  zooz: "1992818",
 };
 
 interface FilingViewerClientProps {
@@ -99,30 +104,44 @@ export default function FilingViewerClient({ ticker, accession, searchQuery, anc
   }
   
   if (error || !content) {
+    // Build direct SEC.gov URL for this filing
+    const accessionNoDashes = accession.replace(/-/g, "");
+    const accessionDashed = accession.includes("-")
+      ? accession
+      : `${accession.slice(0, 10)}-${accession.slice(10, 12)}-${accession.slice(12)}`;
+    const secIndexUrl = cik
+      ? `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNoDashes}/${accessionDashed}-index.htm`
+      : `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${ticker}&type=&dateb=&owner=include&count=40`;
+    
+    // Auto-redirect to SEC.gov after a brief moment
+    if (typeof window !== "undefined" && cik) {
+      window.location.href = secIndexUrl;
+    }
+    
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center max-w-md">
-          <div className="text-red-500 text-6xl mb-4">📄</div>
-          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-            Filing Not Found
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            {error || `Could not load ${ticker} filing ${accession}`}
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400 mb-2">
+            Redirecting to SEC filing...
+          </p>
+          <p className="text-gray-400 dark:text-gray-500 text-sm mb-4">
+            Filing not cached locally. Opening SEC EDGAR instead.
           </p>
           <div className="flex gap-3 justify-center">
             <Link
-              href={`/company/${ticker.toLowerCase()}`}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              Back to {ticker}
-            </Link>
-            <a
-              href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${ticker}&type=&dateb=&owner=include&count=40`}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`/company/${ticker.toUpperCase()}`}
               className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600"
             >
-              Search SEC EDGAR
+              ← Back to {ticker.toUpperCase()}
+            </Link>
+            <a
+              href={secIndexUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              Open SEC Filing ↗
             </a>
           </div>
         </div>
