@@ -77,19 +77,24 @@ Goes to primary sources. Does NOT read any project code.
 
 **Output:** `ground-truth.md` with verbatim quotes and URLs for every number.
 
-### Agent B: Staleness Auditor
-Reviews Agent A's output. Single focus: **is every data point from the most recent available source?**
+### Agent B: Extraction Adversary
+Reviews Agent A's output. Attacks the ENTIRE extraction — not just one dimension.
 
-- For each metric in ground-truth.md:
-  - What is the as-of date?
-  - Navigate to SEC EDGAR and company PR page
-  - Is there a NEWER filing or PR with updated data?
-  - If yes: flag it and extract the newer value
-- Also check: has the company filed anything in the last 30 days that Agent A missed?
+**Attack vectors:**
 
-**Output:** `staleness-audit.md` — list of stale items with newer sources, or "all current" confirmation.
+1. **Completeness** — Did Agent A miss any filings? Check EDGAR for 8-Ks, S-3s, 424Bs that weren't mentioned. Did it miss convertibles (Item 2.03)? Preferred equity? Warrants (Item 3.02)?
 
-**Threshold for adversarial:** This phase is always adversarial because it reconciles multiple source types (XBRL, 8-K, 10-Q, PRs) across multiple time periods.
+2. **Accuracy** — For every quoted number, navigate to the source URL and verify the quote actually exists in the document. Fabricated quotes are a known failure mode.
+
+3. **Staleness** — For every metric, is there a NEWER source? If Agent A used Q3 data, check whether Q4 or a more recent PR exists. Check the company's PR page and recent 8-Ks independently.
+
+4. **Methodology** — Did Agent A use the right share count type? (Basic vs diluted weighted avg — a known error pattern.) Did it correctly identify debt instruments? (XBRL LongTermDebt misses convertibles.)
+
+5. **Arithmetic** — Recalculate every derived number (HPS, mNAV) from the raw inputs. Do they match?
+
+**Output:** `extraction-adversary.md` — every error found, with evidence.
+
+**Threshold for adversarial:** This phase is always adversarial because it reconciles multiple source types (XBRL, 8-K, 10-Q, PRs) across multiple time periods. Single agents consistently cut corners on exhaustive source searches, fabricate quotes, and miss entire categories of financial instruments.
 
 ---
 
@@ -188,7 +193,7 @@ Apply fixes from Phase 4 findings. Then:
 
 | Phase | Agents | Adversarial? | Why |
 |-------|--------|-------------|-----|
-| 1. Data Extraction | 2 (researcher + staleness) | Yes | Multi-source reconciliation |
+| 1. Data Extraction | 2 (researcher + adversary) | Yes | Multi-source reconciliation, fabrication risk |
 | 2. Custom View | 1 | No | Code generation, compiler-verified |
 | 3. Citations | 1 | No | Mechanical pass/fail checks |
 | 4. Cross-Consistency | 2 (pipeline + adversary) | Yes | Cross-file financial calculations |
