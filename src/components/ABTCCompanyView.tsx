@@ -603,8 +603,8 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
             )}
             <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
               <p className="text-sm text-amber-700 dark:text-amber-400">SPS Growth</p>
-              <p className="text-2xl font-bold text-amber-600">+{((metrics.satsPerShare - 368) / 368 * 100).toFixed(0)}%</p>
-              <p className="text-xs text-amber-500">since Q3 2025 (368 → {Math.round(metrics.satsPerShare)} sats)</p>
+              <p className="text-2xl font-bold text-amber-600">+{((metrics.satsPerShare - 371) / 371 * 100).toFixed(0)}%</p>
+              <p className="text-xs text-amber-500">since Q3 2025 (371 → {Math.round(metrics.satsPerShare)} sats)</p>
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
               <p className="text-sm text-purple-700 dark:text-purple-400">Hut 8 Ownership</p>
