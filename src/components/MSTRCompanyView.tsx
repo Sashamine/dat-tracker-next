@@ -255,11 +255,13 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
       </div>
 
       <StalenessNote
-        dates={[
-          company.holdingsLastUpdated,
-          company.debtAsOf,
-          company.cashAsOf,
-          company.sharesAsOf,
+        labeledDates={[
+          { label: "Holdings", date: company.holdingsLastUpdated },
+          { label: "Debt", date: company.debtAsOf },
+          { label: "Cash", date: company.cashAsOf },
+          { label: "Shares", date: company.sharesAsOf },
+          { label: "Preferred", date: company.preferredAsOf },
+          { label: "Burn", date: company.burnAsOf },
         ]}
         secCik={company.secCik}
       />
@@ -665,8 +667,8 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
               <span className="text-gray-400"> BTC</span>
               <span className="text-green-600"> + {formatLargeNumber(metrics.cashReserves)}</span>
               <span className="text-gray-400"> cash</span>
-              <span className="text-red-600"> − {formatLargeNumber(metrics.totalDebt)}</span>
-              <span className="text-gray-400"> debt</span>
+              <span className="text-red-600"> − {formatLargeNumber(metrics.adjustedDebt)}</span>
+              <span className="text-gray-400"> adj. debt{metrics.inTheMoneyDebtValue > 0 ? ` (${formatLargeNumber(metrics.totalDebt)} − ${formatLargeNumber(metrics.inTheMoneyDebtValue)} ITM converts)` : ''}</span>
               <span className="text-red-600"> − {formatLargeNumber(metrics.preferredEquity)}</span>
               <span className="text-gray-400"> preferred</span>
               <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(metrics.equityNav)}</span>
@@ -691,8 +693,8 @@ export function MSTRCompanyView({ company, className = "" }: MSTRCompanyViewProp
                 label="Cash Reserves"
                 data={MSTR_PROVENANCE.cashReserves}
                 format="currency"
-                subLabel="From SEC 10-Q"
-                tooltip="Cash and equivalents"
+                subLabel="USD Reserve (8-K)"
+                tooltip="USD Reserve for dividends/interest"
                 ticker="mstr"
               />
             )}

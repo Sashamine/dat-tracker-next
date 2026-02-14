@@ -920,18 +920,18 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       expiration: "2025-12-15", // MATURED - converted to shares
       notes: "$650M @ 0.75% convertible notes due Dec 2025 (MATURED)",
     },
-    // === Feb 2021 Convertible - $1.05B @ 0% ===
+    // === Feb 2021 Convertible - $1.05B @ 0% (FULLY CONVERTED Q1 2025) ===
     {
       type: "convertible",
       strikePrice: 143.25, // $1,432.46 pre-split / 10
       potentialShares: 7_329_843, // $1.05B / $143.25
       faceValue: 1_050_000_000,
-      source: "8-K Feb 2021",
+      source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312521049984/0001193125-21-049984-index.htm",
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
       issuedDate: "2021-02-17",
-      expiration: "2027-02-15",
-      notes: "$1.05B @ 0% convertible notes due Feb 2027",
+      expiration: "2025-03-31", // Fully redeemed/converted Q1 2025 per Q3 10-Q
+      notes: "$1.05B @ 0% convertible notes due Feb 2027 (FULLY CONVERTED Q1 2025 — shares already in basic count)",
     },
     // === Mar 2024 Convertible #1 - $800M @ 0.625% ===
     {
@@ -1012,11 +1012,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "$2B @ 0% convertible notes due Mar 2030 (2030B Notes)",
     },
   ],
-  // Total MSTR convertible dilution: ~39.5M potential shares
-  // At current ~$320 stock price:
-  // - IN money: $118, $125, $135, $143.25, $183.19 → ~30.4M dilutive shares
+  // Total MSTR convertible dilution: ~32.2M potential shares (active notes only)
+  // At current ~$350 stock price:
+  // - IN money: $118, $125, $135, $183.19 → ~23.1M dilutive shares
   // - OUT of money: $433.43, $672.40 → ~9.1M non-dilutive
   // Note: Dec 2020 $650M notes matured Dec 15, 2025 and converted to ~16.3M shares
+  // Note: Feb 2021 $1.05B notes fully redeemed/converted Q1 2025 (per Q3 10-Q) — shares in basic count
 
   // ==================== BNB COMPANIES ====================
 

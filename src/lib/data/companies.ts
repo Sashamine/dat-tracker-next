@@ -376,7 +376,7 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (mstr-holdings-verified.ts)
-    holdings: MSTR_PROVENANCE.holdings?.value || 713_502,
+    holdings: MSTR_PROVENANCE.holdings?.value || 714_644,
     holdingsLastUpdated: MSTR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
     holdingsSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
@@ -385,7 +385,7 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/Strategy",
     secCik: "0001050446",
     // COST BASIS: from provenance
-    costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_052,
+    costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_056,
     costBasisSource: "SEC 8-K (provenance-tracked)",
     costBasisSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
     isMiner: false,
