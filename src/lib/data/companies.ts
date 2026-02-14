@@ -100,7 +100,7 @@ export const ethCompanies: Company[] = [
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkInc",  // Renamed from SharpLinkGaming (Feb 3, 2026)
     secCik: "0001981535",
-    // tokenizedAddress removed — was a pump.fun meme token, not an official tokenized stock
+    // tokenizedAddress removed - was a pump.fun meme token, not an official tokenized stock
     stakingPct: 1.0,  // "100%" (Jul 1 8-K) / "substantially all" (Aug-Dec 8-Ks) / "nearly 100%" (Q2 earnings)
     stakingMethod: "Native staking + Lido LsETH (liquid staking)",
     stakingSource: "SEC 8-K Dec 17, 2025: 639,241 native ETH + 224,183 LsETH as-if-redeemed. Cumulative rewards: 9,241 ETH (3,350 native + 5,891 LsETH)",
@@ -461,7 +461,7 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     sharesAsOf: "2026-02-13",
     // Debt: Zero-coupon yen-denominated bonds - no interest payments, principal at maturity
-    totalDebt: 280_000_000,  // ~$280M (~¥43B) — multiple sources report deleveraging from $355M. Pending confirmation in Feb 16 annual report.
+    totalDebt: 280_000_000,  // ~$280M (~¥43B) - multiple sources report deleveraging from $355M. Pending confirmation in Feb 16 annual report.
     debtSource: "Metaplanet Analytics Dashboard + CoinDesk (Feb 6, 2026). Part of $137M raise allocated to credit facility repayment.",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
     debtAsOf: "2026-02-06",
@@ -649,7 +649,7 @@ export const btcCompanies: Company[] = [
     sharesSource: "Company-derived: 44.7M verified (8-K Jan 5: 894.3M pre-split ÷ 20) + ~17.7M from merger/PIPE",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
     sharesAsOf: "2026-01-28",
-    // CASH: SEC 8-K Jan 5, 2026 — $67.6M as of Dec 31, 2025
+    // CASH: SEC 8-K Jan 5, 2026 - $67.6M as of Dec 31, 2025
     // Post-Jan: +$119M SATA raise, -$20M Coinbase payoff, -BTC purchases → estimated ~$50-80M current
     cashReserves: 67_600_000,
     restrictedCash: 67_600_000,  // Operating capital earmarked for BTC - not excess
@@ -1096,22 +1096,22 @@ export const btcCompanies: Company[] = [
   // Seetee not listed among major unlisted investments in Q3 2025 report
   // Website only mentions "first purchase 1,170 BTC" with no current figure
   // No Bitcoin disclosure in quarterly reports - possibly sold or too small to report
-  
+
   // SATS.L (Satsuma Technology) removed 2026-02-02: Cannot verify BTC holdings
   // 620 BTC figure only from BitcoinTreasuries.net (secondary source)
   // No RNS filings found mentioning Bitcoin holdings
   // Stock crashed 99% (27.5p -> 0.31p), trading below NAV if holdings are real
-  
+
   // CASH3 (Méliuz) removed 2026-02-02: Cannot verify 605 BTC figure
   // CoinDesk + securities filing show only 45.72 BTC purchased (Mar 2025)
   // 605 BTC from BitcoinTreasuries.net is unverified/likely wrong
   // Re-add when they disclose verified holdings via CVM filing
-  
+
   // 377030.KQ (bitmax) removed 2026-02-02: 551 BTC grossly inflated
   // DART filing Mar 10, 2025 shows only 50 BTC + 268 ETH purchase
   // Even with all reported purchases (50+38+37) = ~125 BTC max
   // Re-add with verified DART totals when available
-  
+
   // ARLP (Alliance Resource Partners) removed 2026-02-02: Not a DAT
   // Coal company (~$3-4B) that mines BTC as side venture using excess power
   // 541 BTC ($42M) is ~1% of company value - not a treasury strategy
@@ -1263,12 +1263,12 @@ export const btcCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025 XBRL: EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
     sharesSourceUrl: "/filings/djt/0001140361-25-040977",
     sharesAsOf: DJT_PROVENANCE_DEBUG.sharesDate,
-    // DEBT: from provenance (XBRL LongTermDebt — carrying value of $1B par converts)
+    // DEBT: from provenance (XBRL LongTermDebt - carrying value of $1B par converts)
     totalDebt: DJT_PROVENANCE.totalDebt?.value || 950_769_100,
     debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2030)",
     debtSourceUrl: "/filings/djt/0001140361-25-040977",
     debtAsOf: "2025-09-30",
-    // CASH: from provenance (XBRL — unrestricted only)
+    // CASH: from provenance (XBRL - unrestricted only)
     cashReserves: DJT_PROVENANCE.cashReserves?.value || 166_072_700,
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
@@ -1331,11 +1331,11 @@ export const btcCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
     datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
-    // costBasisAvg: not verified — needs Q3 10-Q access
+    // costBasisAvg: not verified - needs Q3 10-Q access
     isMiner: true,
     quarterlyBurnUsd: 8_052_000,  // Q3 2025 G&A
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
@@ -1345,7 +1345,7 @@ export const btcCompanies: Company[] = [
     // TODO: Verify exact Class A/B breakdown from Q3 10-Q
     sharesForMnav: 899_489_426,
     sharesSource: "SEC 10-Q Q3 2025 (filed 2025-11-14): 899,489,426 total shares (all classes, post-merger)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     sharesAsOf: "2025-09-30",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
@@ -1355,11 +1355,11 @@ export const btcCompanies: Company[] = [
     // IR: https://abtc.com/investors
     cashReserves: 7_976_000,  // XBRL: us-gaap:Cash as of Sep 30, 2025
     cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // No LongTermDebt in XBRL. Operating lease liabilities ($185.6M) excluded.
-    debtSource: "SEC 10-Q Q3 2025 XBRL — no LongTermDebt fact reported",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/",
+    debtSource: "SEC 10-Q Q3 2025 XBRL - no LongTermDebt fact reported",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     debtAsOf: "2025-09-30",
   },
   // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
@@ -1390,7 +1390,7 @@ export const solCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
-    quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M — treasury ops costs)
+    quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M - treasury ops costs)
     burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
     burnAsOf: "2025-12-31",
@@ -1491,7 +1491,7 @@ export const solCompanies: Company[] = [
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
     sharesForMnav: 29_892_800,  // Q4 business update Jan 5, 2026: "29,892,800 shares outstanding as of January 1, 2026"
-    sharesSource: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update — shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
+    sharesSource: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update - shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/",
     sharesAsOf: "2026-01-01",
     totalDebt: 186_000_000,  // $186M: $134M converts (OTM) + $52M SOL/DeFi loans (defidevcorp.com/dashboard Jan 2026)
