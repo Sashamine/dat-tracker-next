@@ -136,3 +136,94 @@ These are intentionally designed to link to SEC filing search pages rather than 
 1. **For directory listing URLs:** Consider updating to point to specific document URLs for better traceability
 2. **For derived values:** Document the calculation methodology in comments (e.g., XXI's combined holdings)
 3. **For exhibit data:** Always link to the exhibit (ex99-1.htm) rather than the main filing document (8-k.htm) when the data is in the exhibit
+
+---
+
+## Full Audit (2026-02-14)
+
+**Auditor:** Claude (comprehensive audit)
+**Methodology:** Browser automation to verify SEC document content (SEC blocks direct fetch)
+
+### Companies Verified
+
+#### ETH Companies
+
+| Company | URL Field | Cited Value | Status | Notes |
+|---------|-----------|-------------|--------|-------|
+| **BMNR** | holdingsSourceUrl | 4,325,738 ETH | ✅ verified | ex99-1.htm contains exact value |
+| **BMNR** | stakingSourceUrl | 2,897,459 ETH staked (67%) | ✅ verified | ex99-1.htm: "2,897,459 ETH (67.0%)" |
+| **BMNR** | cashSourceUrl | $595 million | ✅ verified | ex99-1.htm: "$595 million in cash" |
+| **SBET** | holdingsSourceUrl | 863,424 ETH | ✅ verified | ex99-1.htm: "863,424 ETH" |
+| **SBET** | holdingsNative | 639,241 ETH | ✅ verified | Footnote 1: "639,241 native ETH" |
+| **SBET** | holdingsLsETH | 224,183 ETH | ✅ verified | Footnote 1: "224,183 ETH as-if redeemed from LsETH" |
+| **FGNX** | holdingsSourceUrl | 37,594 ETH | ✅ verified | ex99-1.htm: "37,594 ETH" |
+| **FGNX** | debtSourceUrl | $1.9 million | ✅ verified | ex99-1.htm: "total debt outstanding was $1.9 million" |
+| **FGNX** | sharesSourceUrl | 33.6M common + 0.8M preferred | ✅ verified | ex99-1.htm: both values present |
+
+#### BTC Companies
+
+| Company | URL Field | Cited Value | Status | Notes |
+|---------|-----------|-------------|--------|-------|
+| **NAKA** | holdingsSourceUrl | 5,398 BTC | ✅ verified | "held 5,398 Bitcoin as of November 12, 2025" |
+| **NAKA** | costBasisSourceUrl | $118,204.88 | ✅ verified | "5,765 Bitcoin at weighted average price of $118,204.88" |
+| **NAKA** | sharesSourceUrl | 439,850,889 + 71,704,975 PFWs | ✅ verified | Both values present in document |
+| **XXI** | holdingsSourceUrl | 31,500 BTC (contribution) | ✅ verified | Pro forma shows 24,500 (Tether) + 7,000 (Bitfinex) |
+| **XXI** | sharesSourceUrl | 346,548,153 Class A + 304,842,759 Class B | ✅ verified | Pro forma equity table |
+| **XXI** | debtSourceUrl | $486.5M converts | ✅ verified | Indenture section confirms amount |
+| **KULR** | holdingsSourceUrl | 1,057 BTC (~$112.5M) | ✅ verified | Balance sheet: "Digital assets $112,539,271" |
+| **KULR** | sharesSourceUrl | 45,674,420 | ✅ verified | Cover page: "45,674,420 shares outstanding" |
+| **KULR** | debtSourceUrl | $3,800,000 | ✅ verified | Balance sheet: "Loan payable $3,800,000" |
+| **KULR** | cashSourceUrl | $20,588,596 | ✅ verified | Balance sheet: "Cash $20,588,596" |
+
+#### SOL Companies
+
+| Company | URL Field | Cited Value | Status | Notes |
+|---------|-----------|-------------|--------|-------|
+| **HSDT** | holdingsSourceUrl | 2,300,000 SOL | ✅ verified | "over 2.3 million SOL" |
+| **HSDT** | stakingApy | 7.03% | ✅ verified | "gross staking yield was 7.03% APY" |
+
+#### BNB Companies
+
+| Company | URL Field | Cited Value | Status | Notes |
+|---------|-----------|-------------|--------|-------|
+| **NA** | holdingsSourceUrl | 130,000 BNB | ✅ verified | "over 130,000 BNB...~US$112 million" |
+
+### URLs Skipped (By Design)
+
+These URLs point to SEC EDGAR search/browse pages - they're navigation links, not document citations:
+
+- All URLs containing `cgi-bin/browse-edgar` (~28 URLs)
+- URLs to non-SEC domains (prnewswire, globenewswire, company websites)
+
+### URLs Previously Fixed
+
+| Company | Field | Issue | Resolution |
+|---------|-------|-------|------------|
+| **SUIG** | holdingsSourceUrl | Pointed to 8-K main doc | Fixed to ex99-1.htm |
+| **DFDV** | holdingsSourceUrl | Pointed to 8-K main doc | Fixed to ex99-1.htm |
+| **XXI** | holdingsSourceUrl | Pointed to index page | Fixed to ex99-4 pro forma |
+
+### Provenance Files Audited
+
+| File | Status | Notes |
+|------|--------|-------|
+| `abtc.ts` | ✅ verified | URLs reference correct SEC documents |
+| `bmnr.ts` | ✅ verified | ex99-1.htm URLs contain cited values |
+| `mstr.ts` | ✅ verified | References dual-source (company + SEC) |
+| `mara.ts` | ✅ verified | 10-Q URLs contain balance sheet data |
+
+### Summary Statistics
+
+- **Total SEC document URLs checked:** 40+
+- **Verified correct:** 35+
+- **Previously fixed:** 3
+- **Browse/search URLs skipped:** ~28
+- **Non-SEC URLs skipped:** ~20+
+
+### Audit Notes
+
+1. **SEC Rate Limiting:** SEC.gov blocks direct fetch requests. Browser automation required.
+2. **Value Formatting:** Values verified in multiple formats (commas, raw, millions)
+3. **Derived Values:** Some values (e.g., XXI's 43,514 BTC) are sums derived from multiple sources - methodology documented in companies.ts comments
+4. **Fragment Anchors:** Many URLs use `#:~:text=` anchors - these work correctly for navigation
+5. **Provenance Pattern:** Companies with provenance files have the most robust URL citations
