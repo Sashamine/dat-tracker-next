@@ -158,17 +158,27 @@ Compares ground truth against ALL code files and UI.
 **Output:** `pipeline-check.md` with MATCH/MISMATCH for every field.
 
 ### Agent D: Final Adversary
-Reviews ALL previous agents' work. Attacks methodology, not just numbers.
+Reviews ALL previous agents' work. Structured attack vectors:
 
-- Did Agent A read the right filing?
-- Did Agent B actually check for newer sources, or just rubber-stamp?
-- Did Agent C verify the UI visually, or just read code?
-- Are there ABTC-pattern errors? (wrong share count type, fabricated quotes, search terms that don't match document text)
-- Do the fixes make sense? Did fixing one thing break another?
+**Attack vectors:**
+
+1. **Spot-check vs exhaustive** — Did Agent C actually check every value in every file, or did it say "ALL MATCH" after checking a few? Independently verify at least 3 values Agent C claimed matched.
+
+2. **Hardcoded values** — Search the company view component for hardcoded numbers (grep for specific values like share counts, sats, holdings). Any number that should be dynamic but is hardcoded is a bug. (Known pattern: ABTC had "380 sats" hardcoded.)
+
+3. **Formula parity** — Independently read `getCompanyMNAV()` in `mnav-calculation.ts` and the company view's mNAV formula. Compare them line by line. Don't trust Agent C's assessment. Check: cash treatment (free cash vs full cash), otherInvestments inclusion, preferredEquity, debt adjustments for ITM converts.
+
+4. **Chart/earnings alignment** — Navigate to the company page. Read the HPS chart data points at quarter-end dates. Read the earnings table values. Do they match? This must be a visual check, not just code comparison.
+
+5. **Placeholder detection** — Check holdings-history entries for suspiciously round numbers or linear progressions that suggest placeholders rather than real data. (Known pattern: BTBT had 85K→120K→140K placeholder ETH values.)
+
+6. **Agent quality** — Did Agent A read the right filings? Did Agent B actually verify quotes exist in documents, or just rubber-stamp? Did Agent C catch cross-file drift or just check surface-level matches?
+
+7. **Fix safety** — If fixes were applied between phases, did they introduce new inconsistencies? Check that all four data files still agree after changes. (Known pattern: ABTC fix changed shares to 920.7M but left SPS baseline at 368 instead of 371.)
 
 **Output:** `final-adversary.md`
 
-**Threshold for adversarial:** This phase is always adversarial because it's cross-file consistency (>2 files) feeding into financial calculations.
+**Threshold for adversarial:** This phase is always adversarial because it's cross-file consistency (>2 files) feeding into financial calculations. Pipeline checkers consistently miss hardcoded values, formula divergences, and placeholder data.
 
 ---
 
