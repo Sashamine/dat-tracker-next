@@ -277,7 +277,7 @@ export const ethCompanies: Company[] = [
     stakingPct: 0,  // Direct holdings not staked - yield is via Dialectic fund
     quarterlyBurnUsd: 6_171_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000164117225010979/form10-q.htm",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 30_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
@@ -1683,7 +1683,7 @@ export const hypeCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     totalDebt: 7_656_005,  // Notes payable (Avenue loan)
     debtSource: "SEC 10-Q Q3 2025",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465921104176/eyen-20210630x10q.htm",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
     debtAsOf: "2025-09-30",
     leader: "Hyunsu Jung (CEO)",
     strategy: "First US public HYPE treasury. Liquid staking via Kinetiq.",
@@ -2036,7 +2036,7 @@ export const zecCompanies: Company[] = [
     holdings: 290_062,  // Dec 30, 2025 8-K: 290,062.67 ZEC
     holdingsLastUpdated: "2025-12-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/0001104659-25-125039-index.html",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
     datStartDate: "2025-10-08",  // Oct 8, 2025 PIPE closing date
     secCik: "1509745",
     costBasisAvg: 334.41,
@@ -2229,7 +2229,7 @@ export const dogeCompanies: Company[] = [
     mergerExpectedClose: "2026-Q1",
     quarterlyBurnUsd: 713_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025065688/ea0248572-10q_brag.htm",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025111616/ea0263575-10q_brag.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 5_000_000,
