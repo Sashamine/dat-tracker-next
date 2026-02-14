@@ -40,11 +40,13 @@ const FY2024_10K_ACCESSION = "0001213900-25-026404"; // Filed 2025-03-31 (pre-me
 const LATEST_HOLDINGS = 5_098; // Dec 14, 2025 press release
 const LATEST_HOLDINGS_DATE = "2025-12-14";
 
-// Shares: 899,489,426 from Q3 2025 10-Q (total shares, all classes)
-// This is the diluted/total count post-merger. XBRL EntityCommonStockSharesOutstanding
-// only shows 82,802,406 (pre-merger Q2 2025). Post-merger Q3 10-Q likely has multi-class.
-const SHARES_OUTSTANDING = 899_489_426;
-const SHARES_DATE = "2025-09-30";
+// Shares: 927,604,994 from Q3 2025 10-Q cover page (as of Nov 13, 2025)
+// Class A: 195,380,091 + Class B: 732,224,903 + Class C: 0 = 927,604,994
+// NOTE: 899,489,426 was WRONG — that's diluted weighted avg shares for EPS, not actual outstanding
+const SHARES_CLASS_A = 195_380_091;
+const SHARES_CLASS_B = 732_224_903;
+const SHARES_OUTSTANDING = SHARES_CLASS_A + SHARES_CLASS_B; // 927,604,994
+const SHARES_DATE = "2025-11-13";
 
 // Debt: Not verified from Q3 10-Q (SEC 403 blocked direct access)
 // TODO: Verify from Q3 2025 10-Q balance sheet
@@ -96,20 +98,19 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     SHARES_OUTSTANDING,
     docSource({
       type: "sec-document",
-      searchTerm: "899,489,426",
+      searchTerm: "195,380,091",
       url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm`,
-      quote: "899,489,426 shares outstanding",
+      quote: "195,380,091 shares of Class A common stock, 732,224,903 shares of Class B common stock",
       anchor: "shares-outstanding",
       cik: ABTC_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      documentDate: SHARES_DATE,
     }),
-    "Post-merger share count from Q3 2025 10-Q. " +
-    "Includes all classes of common stock. " +
-    "Pre-merger XBRL showed 82,802,406 basic as of Q2 2025 (cover page). " +
-    "TODO: Verify exact Class A vs Class B breakdown from 10-Q."
+    "10-Q cover page as of Nov 13, 2025. " +
+    "Class A: 195,380,091 + Class B: 732,224,903 = 927,604,994. " +
+    "Class B held by Hut 8 (~80% ownership). No Class C outstanding."
   ),
 
   // =========================================================================

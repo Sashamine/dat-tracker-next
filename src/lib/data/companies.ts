@@ -1339,14 +1339,13 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
-    // Shares: 899,489,426 total shares per Q3 2025 10-Q (all classes, post-merger)
-    // Pre-merger XBRL basic was 82,802,406 (Q2 2025 cover)
-    // Post-merger includes Class A + Class B (Hut 8's 80% stake)
-    // TODO: Verify exact Class A/B breakdown from Q3 10-Q
-    sharesForMnav: 899_489_426,
-    sharesSource: "SEC 10-Q Q3 2025 (filed 2025-11-14): 899,489,426 total shares (all classes, post-merger)",
+    // Shares: 927,604,994 from Q3 2025 10-Q cover page (as of Nov 13, 2025)
+    // Class A: 195,380,091 + Class B: 732,224,903 (Hut 8's ~80% stake)
+    // NOTE: 899,489,426 was WRONG — that's diluted weighted avg for EPS, not actual outstanding
+    sharesForMnav: 927_604_994,
+    sharesSource: "SEC 10-Q Q3 2025 cover page: Class A 195,380,091 + Class B 732,224,903 = 927,604,994",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
-    sharesAsOf: "2025-09-30",
+    sharesAsOf: "2025-11-13",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
     notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~567 sats/share (Dec 14). Trump family co-founded. Pure-play BTC miner with HODL commitment.",
