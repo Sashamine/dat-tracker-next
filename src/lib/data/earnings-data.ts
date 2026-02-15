@@ -1444,8 +1444,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-02-13",
     earningsTime: null,
     holdingsAtQuarterEnd: 35_102,  // Dec 30, 2025 purchase data
-    sharesAtQuarterEnd: 1_142_274_340,  // Jan 29, 2026 filing (closest to Dec 31). Mercury preferred is separate class.
-    holdingsPerShare: 0.00003073,  // 35102 / 1,142,274,340
+    sharesAtQuarterEnd: 1_142_248_401,  // ~Dec 8: 1,142,274,340 issued - ~25,939 treasury. Mercury preferred is separate class.
+    holdingsPerShare: 0.00003073,  // 35102 / 1,142,248,401
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "upcoming",
@@ -1460,8 +1460,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-13",
     earningsTime: null,
     holdingsAtQuarterEnd: 30_823,  // Sep 30, 2025 (from analytics)
-    sharesAtQuarterEnd: 1_100_000_000,  // ~1.1B shares at Q3
-    holdingsPerShare: 0.0000280,  // 30823 / 1.1B
+    sharesAtQuarterEnd: 1_140_948_401,  // Q3 FY2025 filing Section 4: 1,140,974,340 issued - 25,939 treasury
+    holdingsPerShare: 0.00002702,  // 30823 / 1,140,948,401
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
@@ -1476,8 +1476,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-08-13",
     earningsTime: null,
     holdingsAtQuarterEnd: 13_350,  // Jun 30, 2025 (from analytics)
-    sharesAtQuarterEnd: 800_000_000,  // ~800M shares at Q2
-    holdingsPerShare: 0.0000167,  // 13350 / 800M
+    sharesAtQuarterEnd: 654_688_628,  // Q2 FY2025 filing Section 4: 654,714,340 issued - 25,712 treasury
+    holdingsPerShare: 0.00002039,  // 13350 / 654,688,628
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
@@ -1492,8 +1492,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-05-14",
     earningsTime: null,
     holdingsAtQuarterEnd: 4_046,  // Mar 31, 2025 (from analytics)
-    sharesAtQuarterEnd: 500_000_000,  // ~500M shares at Q1
-    holdingsPerShare: 0.0000081,  // 4046 / 500M
+    sharesAtQuarterEnd: 459_880_960,  // Q1 FY2025 filing Section 4: 459,906,340 issued - 25,380 treasury
+    holdingsPerShare: 0.00000880,  // 4046 / 459,880,960
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
@@ -1508,8 +1508,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-02-14",
     earningsTime: null,
     holdingsAtQuarterEnd: 1_762,  // Dec 23, 2024 purchase (from analytics)
-    sharesAtQuarterEnd: 300_000_000,  // ~300M shares at Q4 2024
-    holdingsPerShare: 0.0000059,  // 1762 / 300M
+    sharesAtQuarterEnd: 361_725_360,  // FY2024 Annual filing Section 4: 362,683,340 issued - 957,980 treasury (×10 post-split)
+    holdingsPerShare: 0.00000487,  // 1762 / 361,725,360
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
@@ -1524,8 +1524,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2024-11-14",
     earningsTime: null,
     holdingsAtQuarterEnd: 399,  // Sep 10, 2024 (from analytics: 398.83)
-    sharesAtQuarterEnd: 200_000_000,  // ~200M shares at Q3 2024
-    holdingsPerShare: 0.0000020,  // 399 / 200M
+    sharesAtQuarterEnd: 193_855_250,  // Q3 FY2024 filing Section 4: 19,392,923 issued - 7,398 treasury (×10 post-split)
+    holdingsPerShare: 0.00000206,  // 399 / 193,855,250
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",
@@ -1540,8 +1540,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2024-08-14",
     earningsTime: null,
     holdingsAtQuarterEnd: 141,  // Jun 10, 2024 (from analytics: 141.07)
-    sharesAtQuarterEnd: 150_000_000,  // ~150M shares at Q2 2024
-    holdingsPerShare: 0.0000009,  // 141 / 150M
+    sharesAtQuarterEnd: 181_689_892,  // Q2 FY2024 filing Section 4: 181,692,187 issued - 22,885 treasury (pre-split, equivalent post-split)
+    holdingsPerShare: 0.00000078,  // 141 / 181,689,892
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "reported",

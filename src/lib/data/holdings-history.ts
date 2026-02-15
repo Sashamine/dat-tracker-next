@@ -118,10 +118,24 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
 // All values SPLIT-ADJUSTED to current share basis (post Mar 28, 2025 10:1 forward split)
 // Historical shares ×10, historical BTC/share ÷10 for continuity
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
+  // SHARE COUNT DATA QUALITY:
+  // Quarter-end entries use ACTUAL shares from TDnet quarterly filing Section 4 (issued - treasury).
+  // Intermediate entries between quarters use ESTIMATED shares (round numbers, interpolated).
+  // TODO: Replace intermediate estimates with actual counts from monthly warrant exercise reports.
+  //
+  // Verified quarter-end anchors (post-split equivalent):
+  //   Jun 30, 2024: 181,689,892  (Q2 FY2024 filing)
+  //   Sep 30, 2024: 193,855,250  (Q3 FY2024 filing)
+  //   Dec 31, 2024: 361,725,360  (FY2024 Annual filing)
+  //   Mar 31, 2025: 459,880,960  (Q1 FY2025 filing)
+  //   Jun 30, 2025: 654,688,628  (Q2 FY2025 filing)
+  //   Sep 30, 2025: 1,140,948,401 (Q3 FY2025 filing)
+  //   ~Dec 8, 2025: 1,142,248,401 (warrant exercise status Feb 2, 2026)
+  //
   // 2024 Q2 (split-adjusted: shares ×10)
   { date: "2024-04-23", holdings: 97.85, sharesOutstandingDiluted: 176_000_000, holdingsPerShare: 0.000000556, source: "Initial BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-05-09", holdings: 117.72, sharesOutstandingDiluted: 179_000_000, holdingsPerShare: 0.000000658, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
-  { date: "2024-06-10", holdings: 141.07, sharesOutstandingDiluted: 185_000_000, holdingsPerShare: 0.000000763, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
+  { date: "2024-06-10", holdings: 141.07, sharesOutstandingDiluted: 181_689_892, holdingsPerShare: 0.000000776, source: "TDnet disclosure", sharesSource: "Q2 FY2024 filing Section 4: 181,692,187 issued - 22,885 treasury (pre-split equivalent)", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   // 2024 Q3 (split-adjusted)
   { date: "2024-07-01", holdings: 161.27, sharesOutstandingDiluted: 195_000_000, holdingsPerShare: 0.000000827, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-07-08", holdings: 203.73, sharesOutstandingDiluted: 205_000_000, holdingsPerShare: 0.000000994, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
@@ -129,7 +143,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-07-22", holdings: 245.99, sharesOutstandingDiluted: 225_000_000, holdingsPerShare: 0.00000109, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-08-13", holdings: 303.09, sharesOutstandingDiluted: 250_000_000, holdingsPerShare: 0.00000121, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-08-20", holdings: 360.37, sharesOutstandingDiluted: 265_000_000, holdingsPerShare: 0.00000136, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
-  { date: "2024-09-10", holdings: 398.83, sharesOutstandingDiluted: 290_000_000, holdingsPerShare: 0.00000138, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
+  { date: "2024-09-10", holdings: 398.83, sharesOutstandingDiluted: 193_855_250, holdingsPerShare: 0.00000206, source: "TDnet disclosure", sharesSource: "Q3 FY2024 filing Section 4: 19,392,923 issued - 7,398 treasury (×10 post-split)", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   // 2024 Q4 (split-adjusted)
   { date: "2024-10-01", holdings: 506.74, sharesOutstandingDiluted: 320_000_000, holdingsPerShare: 0.00000158, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-10-03", holdings: 530.71, sharesOutstandingDiluted: 325_000_000, holdingsPerShare: 0.00000163, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
@@ -139,7 +153,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-16", holdings: 861.39, sharesOutstandingDiluted: 342_000_000, holdingsPerShare: 0.00000252, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
   { date: "2024-10-28", holdings: 1018.00, sharesOutstandingDiluted: 360_000_000, holdingsPerShare: 0.00000283, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
   { date: "2024-11-19", holdings: 1142.29, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.00000286, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
-  { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 460_000_000, holdingsPerShare: 0.00000383, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
+  { date: "2024-12-23", holdings: 1762.00, sharesOutstandingDiluted: 361_725_360, holdingsPerShare: 0.00000487, source: "TDnet disclosure", sharesSource: "FY2024 Annual filing Section 4: 362,683,340 issued - 957,980 treasury (×10 post-split). Dec 23 pre-dates Dec 31 by 8 days.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
   // 2025 Q1 (split-adjusted until Mar 28)
   { date: "2025-02-17", holdings: 2031.43, sharesOutstandingDiluted: 470_000_000, holdingsPerShare: 0.00000432, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   { date: "2025-02-20", holdings: 2100.00, sharesOutstandingDiluted: 472_000_000, holdingsPerShare: 0.00000445, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
@@ -150,7 +164,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-18", holdings: 3200.00, sharesOutstandingDiluted: 493_000_000, holdingsPerShare: 0.00000649, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   { date: "2025-03-24", holdings: 3350.00, sharesOutstandingDiluted: 496_000_000, holdingsPerShare: 0.00000675, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   // Mar 28, 2025: 10:1 forward split (now continuous with above)
-  { date: "2025-03-31", holdings: 4046.00, sharesOutstandingDiluted: 500_000_000, holdingsPerShare: 0.00000809, stockPrice: 288.27, source: "TDnet Q1 end", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
+  { date: "2025-03-31", holdings: 4046.00, sharesOutstandingDiluted: 459_880_960, holdingsPerShare: 0.00000880, stockPrice: 288.27, source: "TDnet Q1 end", sharesSource: "Q1 FY2025 filing Section 4: 459,906,340 issued - 25,380 treasury", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   // 2025 Q2
   { date: "2025-04-02", holdings: 4206.00, sharesOutstandingDiluted: 520_000_000, holdingsPerShare: 0.00000809, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-04-14", holdings: 4525.00, sharesOutstandingDiluted: 540_000_000, holdingsPerShare: 0.00000838, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
@@ -163,7 +177,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-16", holdings: 10000.00, sharesOutstandingDiluted: 740_000_000, holdingsPerShare: 0.00001351, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-06-23", holdings: 11111.00, sharesOutstandingDiluted: 765_000_000, holdingsPerShare: 0.00001452, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-06-26", holdings: 12345.00, sharesOutstandingDiluted: 780_000_000, holdingsPerShare: 0.00001583, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
-  { date: "2025-06-30", holdings: 13350.00, sharesOutstandingDiluted: 800_000_000, holdingsPerShare: 0.00001669, stockPrice: 404.23, source: "TDnet Q2 end", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
+  { date: "2025-06-30", holdings: 13350.00, sharesOutstandingDiluted: 654_688_628, holdingsPerShare: 0.00002039, stockPrice: 404.23, source: "TDnet Q2 end", sharesSource: "Q2 FY2025 filing Section 4: 654,714,340 issued - 25,712 treasury", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   // 2025 Q3
   { date: "2025-07-07", holdings: 15555.00, sharesOutstandingDiluted: 840_000_000, holdingsPerShare: 0.00001852, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   { date: "2025-07-14", holdings: 16352.00, sharesOutstandingDiluted: 870_000_000, holdingsPerShare: 0.00001879, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
@@ -175,7 +189,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-01", holdings: 20000.00, sharesOutstandingDiluted: 1_030_000_000, holdingsPerShare: 0.00001942, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   { date: "2025-09-08", holdings: 20136.00, sharesOutstandingDiluted: 1_050_000_000, holdingsPerShare: 0.00001918, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   { date: "2025-09-22", holdings: 25555.00, sharesOutstandingDiluted: 1_080_000_000, holdingsPerShare: 0.00002366, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
-  { date: "2025-09-30", holdings: 30823.00, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, stockPrice: 326.42, source: "TDnet Q3 end", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
+  { date: "2025-09-30", holdings: 30823.00, sharesOutstandingDiluted: 1_140_948_401, holdingsPerShare: 0.00002702, stockPrice: 326.42, source: "TDnet Q3 end", sharesSource: "Q3 FY2025 filing Section 4: 1,140,974,340 issued - 25,939 treasury", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   // 2025 Q4 / 2026
   // Dec 30: shares = 1,142,274,340 common (Jan 29 filing, closest to Dec 30). Mercury Class B preferred is a SEPARATE class, not subtracted.
   // Debt = $280M (3 facilities: $100M Nov 4 + $130M Nov 21 + $50M Dec 1). The $75M Jan 30 draw hadn't happened yet.
