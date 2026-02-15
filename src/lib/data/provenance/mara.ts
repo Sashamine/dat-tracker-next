@@ -40,7 +40,7 @@ const SHARES_OUTSTANDING = 378_184_353; // Basic shares from 10-Q cover
 const DILUTED_SHARES = 470_126_290; // From WeightedAverageNumberOfDilutedSharesOutstanding
 
 // Financial data
-const TOTAL_DEBT = 3_248_000_000; // ~$3.25B in convertible notes
+const TOTAL_DEBT = 3_642_472_000; // $3.25B convertible notes (book value) + $350M line of credit + other. Per FMP balance sheet Q3 2025.
 const CASH_RESERVES = 826_392_000; // $826M cash
 const RESTRICTED_CASH = 12_000_000; // $12M restricted
 const COST_BASIS_TOTAL = 4_637_673_000; // Total cost of BTC
@@ -76,10 +76,10 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   // Total cost / total holdings = average cost per BTC
   // =========================================================================
   costBasisAvg: pv(
-    87_760,
+    87_762, // $4,637,673,000 / 52,850 = $87,762.33
     derivedSource({
       derivation: "Total BTC cost / Total BTC holdings",
-      formula: "$4,637,673,000 / 52,850 BTC = $87,760/BTC",
+      formula: "$4,637,673,000 / 52,850 BTC = $87,762/BTC",
       inputs: {
         totalCost: pv(
           COST_BASIS_TOTAL,
@@ -186,20 +186,38 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalDebt: pv(
     TOTAL_DEBT,
-    xbrlSource({
-      fact: "us-gaap:LongTermDebt",
-      searchTerm: "3,248,000",
-      rawValue: TOTAL_DEBT,
-      unit: "USD",
-      periodType: "instant",
-      periodEnd: Q3_2025_PERIOD_END,
-      cik: MARA_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
-      documentAnchor: "Long-term debt",
+    derivedSource({
+      derivation: "Long-term convertible notes (book value) + line of credit + current portion",
+      formula: "$3,247,561K (LongTermDebt XBRL) + $350,000K (line of credit, current) + $44,911K (other) = $3,642,472K",
+      inputs: {
+        longTermDebt: pv(3_247_561_000, xbrlSource({
+          fact: "us-gaap:LongTermDebt",
+          searchTerm: "3,247,561",
+          rawValue: 3_247_561_000,
+          unit: "USD",
+          periodType: "instant",
+          periodEnd: Q3_2025_PERIOD_END,
+          cik: MARA_CIK,
+          accession: Q3_2025_10Q_ACCESSION,
+          filingType: "10-Q",
+          filingDate: Q3_2025_10Q_FILED,
+          documentAnchor: "Long-term debt",
+        })),
+        lineOfCredit: pv(350_000_000, docSource({
+          type: "sec-document",
+          searchTerm: "350,000",
+          url: `https://www.sec.gov/Archives/edgar/data/${MARA_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/mara-20250930.htm`,
+          quote: "Line of credit - current portion $350,000",
+          anchor: "Line of credit",
+          cik: MARA_CIK,
+          accession: Q3_2025_10Q_ACCESSION,
+          filingType: "10-Q",
+          filingDate: Q3_2025_10Q_FILED,
+          documentDate: Q3_2025_PERIOD_END,
+        })),
+      },
     }),
-    "~$3.25B in convertible notes: 2026 ($747.5M), 2030 ($850M), 2031, 2032 ($950M) series."
+    "5 convertible note tranches ($3.3B face) + $350M line of credit. Converts: Dec 2026 ($48M), Sep 2031 ($300M), Mar 2030 ($1B), Jun 2031 ($925M), Aug 2032 ($1.025B)."
   ),
 
   // =========================================================================

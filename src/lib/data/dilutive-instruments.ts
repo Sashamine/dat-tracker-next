@@ -254,40 +254,64 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // NXTT removed - company has history of false financial reports
 
   // MARA Holdings - BTC miner with HODL strategy
-  // Verified 2026-01-28 via SEC 8-Ks + XBRL (CIK 0001507605)
+  // Verified 2026-02-14 via 10-Q Q3 2025 Note 14 (CIK 0001507605)
+  // Source: https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm
+  // All 5 convertible tranches from the "key terms" table in Note 14
   MARA: [
     {
       type: "convertible",
-      strikePrice: 76.17,
-      potentialShares: 9_812_000, // $747.5M / $76.17 = 9.812M shares
-      faceValue: 747_500_000,
-      source: "8-K Nov 2021",
+      strikePrice: 76.17, // $1,000 / 13.1277 = $76.17
+      potentialShares: 631_265, // $48,077K × 13.1277 / 1000
+      faceValue: 48_077_000, // Remaining principal as of Q3 2025 (originally $747.5M)
+      source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=8-K",
-      expiration: "2026-11-15",
-      notes: "0% Convertible Senior Notes due 2026",
+        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      expiration: "2026-12-01",
+      notes: "1.0% Convertible Senior Notes due Dec 2026 (13.1277 shares per $1,000). Most redeemed; $48M remaining.",
     },
     {
       type: "convertible",
-      strikePrice: 20.26, // Verified from 8-K Jul 28, 2025
-      potentialShares: 46_890_000, // $950M / $20.2585 = 46.89M shares
-      faceValue: 950_000_000,
-      source: "8-K Jul 2025",
+      strikePrice: 18.89, // $1,000 / 52.9451 = $18.89
+      potentialShares: 15_883_530, // $300,000K × 52.9451 / 1000
+      faceValue: 300_000_000,
+      source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000095014225002027/eh250659491_8k.htm",
-      expiration: "2032-05-01",
-      notes: "0% Convertible Senior Notes due 2032 (49.3619 shares per $1,000)",
+        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      expiration: "2031-09-01",
+      notes: "2.125% Convertible Senior Notes due Sep 2031 (52.9451 shares per $1,000)",
     },
     {
       type: "convertible",
-      strikePrice: 34.58, // Verified from 8-K Dec 4, 2024
-      potentialShares: 24_580_000, // $850M / $34.583 = 24.58M shares
-      faceValue: 850_000_000,
-      source: "8-K Dec 2024",
+      strikePrice: 25.91, // $1,000 / 38.5902 = $25.91
+      potentialShares: 38_590_200, // $1,000,000K × 38.5902 / 1000
+      faceValue: 1_000_000_000,
+      source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000149315224048704/form8-k.htm",
-      expiration: "2030-12-01",
-      notes: "0% Convertible Senior Notes due 2030 (28.9159 shares per $1,000)",
+        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      expiration: "2030-03-01",
+      notes: "0% Convertible Senior Notes due Mar 2030 (38.5902 shares per $1,000)",
+    },
+    {
+      type: "convertible",
+      strikePrice: 34.58, // $1,000 / 28.9159 = $34.58
+      potentialShares: 26_747_208, // $925,000K × 28.9159 / 1000
+      faceValue: 925_000_000,
+      source: "10-Q Q3 2025 Note 14",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      expiration: "2031-06-01",
+      notes: "0% Convertible Senior Notes due Jun 2031 (28.9159 shares per $1,000)",
+    },
+    {
+      type: "convertible",
+      strikePrice: 20.26, // $1,000 / 49.3619 = $20.26
+      potentialShares: 50_596_048, // $1,025,000K × 49.3619 / 1000
+      faceValue: 1_025_000_000,
+      source: "10-Q Q3 2025 Note 14",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      expiration: "2032-08-01",
+      notes: "0% Convertible Senior Notes due Aug 2032 (49.3619 shares per $1,000). Capped call partially offsets dilution.",
     },
     {
       type: "option",
@@ -295,8 +319,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 324_375,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q",
-      notes: "RSUs/restricted stock (NonOptionEquityInstrumentsOutstanding)",
+        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      notes: "Performance-based RSUs (anti-dilutive as of Q3 2025)",
     },
   ],
 
