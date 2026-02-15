@@ -331,7 +331,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Shares: 651,390,912 (Class A: 346,548,153 + Class B: 304,842,759) per 10-Q XBRL
   // Twenty One Capital (XXI) - BTC treasury (Tether/SoftBank/Mallers)
   // Verified 2026-02-14 via 8-K Dec 12, 2025 (Indenture + Employment Agreements)
-  // Source: https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm
+  // Source: https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm
   XXI: [
     {
       type: "convertible",
@@ -340,7 +340,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 486_500_000,
       source: "8-K Dec 12, 2025 (Indenture)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
       issuedDate: "2025-12-09",
       expiration: "2030-12-01",
       notes: "1.00% Convertible Senior Secured Notes due 2030, conversion rate 72.0841 shares/$1,000, collateralized by 16,116.32 BTC",
@@ -351,7 +351,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 12_179_268,
       source: "8-K Dec 12, 2025 (CEO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
       issuedDate: "2025-12-09",
       notes: "CEO (Jack Mallers) stock options. Vest over time per employment agreement.",
     },
@@ -361,7 +361,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_215_732,
       source: "8-K Dec 12, 2025 (CEO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
       issuedDate: "2025-12-09",
       notes: "CEO (Jack Mallers) RSUs. Vest over time per employment agreement.",
     },
@@ -371,9 +371,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 941_620,
       source: "8-K Dec 12, 2025 (CFO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
       issuedDate: "2025-12-09",
-      notes: "CFO (Will Meehan) stock options. Vest over time per employment agreement.",
+      notes: "CFO (Steven Meehan) stock options. Vest over time per employment agreement.",
     },
     {
       type: "option",
@@ -381,9 +381,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 248_619,
       source: "8-K Dec 12, 2025 (CFO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
       issuedDate: "2025-12-09",
-      notes: "CFO (Will Meehan) RSUs. Vest over time per employment agreement.",
+      notes: "CFO (Steven Meehan) RSUs. Vest over time per employment agreement.",
     },
   ],
 
