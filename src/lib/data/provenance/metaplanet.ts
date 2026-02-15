@@ -90,7 +90,7 @@ export const METAPLANET_PROVENANCE = {
     date: "2026-01-30",
     url: PDF_URLS.creditFacilityJan30,
     quote: "$355M total: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4). See also: creditFacilityDec01, creditFacilityNov21, creditFacilityNov04 PDFs.",
-    searchTerm: "Execution of Borrowing",
+    searchTerm: "75 million USD",
   }), "4 credit facilities outstanding. All zero-coupon bonds (series 2-19) fully redeemed."),
 
   // Cash Reserves (estimated from capital flow trace since Q3 2025)
