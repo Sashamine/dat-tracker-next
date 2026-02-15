@@ -136,7 +136,7 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
     const estimatedSharesPv = pv(estimatedShares, derivedSource({
       derivation: "Estimated from ATM activity",
       formula: shareEstimateForMcap.methodology,
-      inputs: { anchor: "#share-estimation" },
+      inputs: { anchor: BMNR_PROVENANCE.sharesOutstanding },
     }), shareEstimateForMcap.methodology);
 
     const mNavPv: ProvenanceValue<number> | null = mNav !== null ? pv(mNav, derivedSource({
@@ -234,11 +234,11 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
       </div>
 
             <StalenessNote
-        dates={[
-          company.holdingsLastUpdated,
-          company.debtAsOf,
-          company.cashAsOf,
-          company.sharesAsOf,
+        labeledDates={[
+          { label: "Holdings", date: company.holdingsLastUpdated },
+          { label: "Debt", date: company.debtAsOf },
+          { label: "Cash", date: company.cashAsOf },
+          { label: "Shares", date: company.sharesAsOf },
         ]}
         secCik={company.secCik}
       />
