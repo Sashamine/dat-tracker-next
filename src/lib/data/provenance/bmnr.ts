@@ -75,8 +75,8 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
         type: "sec-document",
         searchTerm: "14,953,824",
         url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
-        quote: "digital assets at cost of $14,953,824",
-        anchor: "digital assets at cost",
+        quote: "ETH 3,737,140 14,953,824 10,544,339 (digital assets table: Units / Cost Basis / Fair Value, $ in thousands)",
+        anchor: "14,953,824",
         cik: BMNR_CIK,
         accession: Q1_FY2026_10Q,
         filingType: "10-Q",
@@ -86,7 +86,20 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
       postQuarterPurchases: pv(1_887_282_172, derivedSource({
         derivation: "Sum of (weekly ETH delta × 8-K ETH price) from Dec 7 to Feb 8",
         formula: "588,598 additional ETH purchased at avg ~$3,207, total $1,887,282,172",
-        inputs: {},
+        inputs: {
+          // Per-week 8-K chain (accession numbers):
+          // Dec 7:  0001493152-25-026397 (Dec 8 8-K)
+          // Dec 14: 0001493152-25-027660 (Dec 15 8-K)
+          // Dec 21: 0001493152-25-028674 (Dec 22 8-K)
+          // Jan 4:  0001493152-26-000274 (Jan 5 8-K)
+          // Jan 11: 0001493152-26-001237 (Jan 12 8-K)
+          // Jan 19: 0001493152-26-002762 (Jan 20 8-K)
+          // Jan 25: 0001493152-26-003536 (Jan 26 8-K)
+          // Feb 1:  0001493152-26-004658 (Feb 2 8-K)
+          // Feb 8:  0001493152-26-005707 (Feb 9 8-K)
+          // Each 8-K has ETH holdings count. Delta × stated ETH price = weekly cost.
+          // See: bmnr-holdings-history.ts for the full chain.
+        },
       })),
     },
   }), "10-Q baseline ($14.95B for 3,737,140 ETH) + estimated cost of 588,598 ETH from weekly 8-K prices. See clawd/bmnr-audit/cost-basis.md"),
@@ -141,13 +154,17 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
       q1Fy2025Ga: pv(959_000, docSource({
         type: "sec-document",
         searchTerm: "959",
-        url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225015441/form10-q.htm",
-        quote: "G&A ~$959K",
-        anchor: "General and Administrative",
+        url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
+        quote: "General and administrative expenses 223,436 959 (comparative column, in thousands)",
+        anchor: "General and administrative",
         cik: BMNR_CIK,
+        accession: Q1_FY2026_10Q,
         filingType: "10-Q",
-        filingDate: "2025-01-14",
-        documentDate: "2024-11-30",
+        filingDate: Q1_FY2026_FILED,
+        documentDate: Q1_FY2026_PERIOD_END,
+        // NOTE: $959K is the RECLASSIFIED Q1 FY2025 G&A from the Q1 FY2026 comparative column.
+        // The original Q1 FY2025 10-Q (accn 0001683168-25-000223) reported G&A as $82,322 (raw dollars).
+        // The Q1 FY2026 filing reclassified operating expenses, combining items into G&A = $959K.
       })),
     },
   }), "Estimated. Q1 FY2026 G&A of $223M was mostly one-time capital raising costs."),
@@ -187,9 +204,13 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   }), "No preferred equity issued."),
 
   // =========================================================================
-  // OTHER INVESTMENTS - tracked in companies.ts, not in ProvenanceFinancials
-  // $200M Beast Industries + $19M Eightco Holdings (OCTO) = $219M
-  // Excluded from mNAV (not crypto-correlated equity investments)
+  // OTHER INVESTMENTS - $219M total, excluded from mNAV
+  // Source: Feb 9, 2026 8-K (same as holdings): "193 Bitcoin (BTC),
+  // $200 million stake in Beast Industries, $19 million stake in
+  // Eightco Holdings (NASDAQ: ORBS) ('moonshots')"
+  // URL: https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm
+  // Accession: 0001493152-26-005707
+  // These are non-crypto equity investments, excluded from CryptoNAV.
   // =========================================================================
 };
 
@@ -199,19 +220,22 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
 
 /** Staking data with provenance - from weekly 8-K filings */
 export const BMNR_STAKING_PROVENANCE = {
+  // NOTE: The 8-K headline says "2,873,459 staked ETH" but the body says "2,897,459".
+  // We use the body figure (2,897,459) because: 2,897,459/4,325,738 = 66.97% ≈ "about 67%" (matches filing).
+  // The headline figure (2,873,459) gives 66.42% which would round to 66%, not 67%.
+  // Conclusion: headline has a digit transposition (73 vs 97). Source document error, not ours.
   stakedAmount: pv(LATEST_STAKED, docSource({
     type: "sec-document",
     searchTerm: "2,897,459",
-    // Direct link to the actual document containing the data
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
-    quote: "2,897,459 ETH (67.0%) are currently staked",
+    quote: "Bitmine total staked ETH stands at 2,897,459 (body figure; headline has typo 2,873,459)",
     anchor: "staked",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
     filingDate: "2026-02-09",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K press release (ex99-1.htm)."),
+  }), "Weekly 8-K press release (ex99-1.htm). Body figure used over headline (digit transposition in headline)."),
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",

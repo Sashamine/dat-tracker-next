@@ -66,7 +66,7 @@ export const ethCompanies: Company[] = [
     cashSource: "SEC-verified (provenance): 8-K Feb 9, 2026",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=%24595%20million",
     cashAsOf: BMNR_PROVENANCE_DEBUG.holdingsDate,
-    otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO)
+    otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO) — SEC 8-K Feb 9, 2026 (accn 005707)
     // DEBT: from provenance ($0)
     totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
     debtSource: "SEC-verified (provenance): No debt financing",
