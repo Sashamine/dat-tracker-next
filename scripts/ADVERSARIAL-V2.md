@@ -11,17 +11,18 @@ Each agent gets **one principle**, not a checklist. Fewer instructions = deeper 
 
 ## Agent 1: Source Verifier
 
-**Principle:** Every cited number must be findable at its source URL.
+**Principle:** Every cited number must be findable at its source URL, and it must mean what the quote claims.
 
 For every provenance entry:
 1. Open the source URL
 2. Ctrl+F the searchTerm
-3. Screenshot the match (or lack of match)
-4. If 0 matches → FAIL with evidence
+3. If 0 matches → FAIL
+4. If found → **read the surrounding context.** Does the text support what the quote says? (e.g., if searchTerm is "1,488" and quote says "cash ¥2.77B", those are different numbers — SEMANTIC FAIL)
+5. If no searchTerm is set → flag as UNVERIFIABLE (don't skip silently)
 
-That's it. Don't check math. Don't check consistency. Just: does this URL contain this text?
+Don't check math. Don't check consistency. Just: does this URL contain this text, and does it mean what we claim?
 
-**Output:** Table of (field, url, searchTerm, PASS/FAIL, screenshot)
+**Output:** Table of (field, url, searchTerm, PASS/SEMANTIC FAIL/FAIL/UNVERIFIABLE, what the surrounding context says)
 
 ---
 
@@ -31,11 +32,13 @@ That's it. Don't check math. Don't check consistency. Just: does this URL contai
 
 Read the data files. For every calculated value:
 1. Identify the formula
-2. Identify the inputs
+2. Identify the inputs (use values stored in files, not live market data)
 3. Recalculate from scratch
 4. Compare to stored value
 
 Targets: mNAV, HPS, EV, CryptoNAV, cost basis, preferred equity (shares × par)
+
+For mNAV, use the stored/commented market data snapshot (stock price, BTC price, FX rate) — don't fetch live prices. The goal is to verify internal consistency, not current accuracy.
 
 Don't verify sources. Don't check URLs. Just: does the math work?
 
@@ -67,7 +70,7 @@ Don't check URLs work. Don't verify math. Just: is the provenance chain clean?
 
 ## Agent 4: Cross-File Consistency
 
-**Principle:** The same number must appear identically everywhere it's used.
+**Principle:** The same number must appear identically everywhere it's used. When they disagree, name the gap.
 
 Read ALL data files for one company:
 - `companies.ts`
@@ -81,13 +84,14 @@ Read ALL data files for one company:
 For every shared value (holdings, shares, debt, cash, preferred):
 1. Find it in every file where it appears
 2. Compare exact values
-3. Flag any mismatch
+3. If mismatch → **compute the exact gap and name what known quantity equals it.** Does the gap equal Mercury preferred shares? A specific credit facility? A known share placement? If the gap matches a known instrument or event, say so — that's the diagnosis, not "rounding."
+4. If the gap doesn't match any known quantity, flag as UNEXPLAINED
 
 Also check: is anything double-counted? (e.g., same instrument in both preferredEquity AND dilutive faceValue affecting the same EV path)
 
-Don't verify sources. Don't verify math. Just: do all files agree?
+Don't verify sources. Don't verify math. Just: do all files agree, and if not, what explains the difference?
 
-**Output:** Matrix of (field, file1 value, file2 value, file3 value, MATCH/MISMATCH)
+**Output:** Matrix of (field, file1 value, file2 value, gap, gap explanation, MATCH/MISMATCH)
 
 ---
 
@@ -96,6 +100,8 @@ Don't verify sources. Don't verify math. Just: do all files agree?
 **Principle:** The gaps between agents are where errors hide.
 
 You receive four reports. Your job is NOT to summarize them. Your job is to find what they missed by looking at the **intersections**.
+
+**Before writing your verdict:** Read at least 2 data files independently and spot-check 3 values yourself. You are a skeptic, not an aggregator.
 
 Specific things to check:
 
@@ -107,7 +113,7 @@ Specific things to check:
 
 4. **Everything ✓ but wrong** — All four agents passed, but the number is still wrong. This happens when the wrong source was chosen (e.g., Q3 when Q4 exists), or the right source was misread. Pick the 2-3 highest-risk values and independently verify them yourself.
 
-5. **Agent quality** — Did any agent take shortcuts? Signs: all-PASS with no screenshots, vague "verified" without specifics, checking 3 of 10 fields and extrapolating.
+5. **Agent quality** — Did any agent take shortcuts or misdiagnose? Signs: all-PASS with no detail, "rounding" as explanation for gaps that equal known quantities, vague "verified" without specifics, diagnosing temporal gaps as bugs or vice versa.
 
 **Output:** Final verdict with any new findings. If everything truly passes, explain WHY you trust the results (not just "all agents said PASS").
 
