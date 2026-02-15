@@ -1815,8 +1815,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
-  // ========== SharpLink Gaming (SBET) ==========
-  // Calendar year company (fiscal = calendar)
+  // ========== Sharplink, Inc. (SBET) ==========
+  // Fiscal year ends December 31 (changed from Jan 31 during ETH pivot; last Jan-31 10-K was FY2025)
+  // Calendar year company — fiscal quarters align with calendar quarters
   // ETH treasury pivot: June 2025. Pre-pivot data not meaningful for DAT analysis.
   // Note: 1:12 reverse split May 5, 2025. Share counts post-split unless noted.
   // SEC XBRL CIK: 0001981535
@@ -1858,10 +1859,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueActual: 10_843_567,  // SEC XBRL Revenues (quarterly Jul-Sep)
     netIncome: 104_270_205,  // SEC XBRL NetIncomeLoss (quarterly Jul-Sep) - includes crypto gains
     holdingsAtQuarterEnd: 817_747,  // SEC 10-Q: 580,841 native + 236,906 LsETH (as-if redeemed)
-    sharesAtQuarterEnd: 180_000_000,  // Interpolated from Aug 31 (170M) to Oct 19 (184.5M)
-    holdingsPerShare: 0.004543,  // 817747 / 180000000
+    sharesAtQuarterEnd: 192_193_183,  // SEC XBRL CommonStockSharesOutstanding at Sep 30, 2025
+    holdingsPerShare: 0.004255,  // 817747 / 192193183
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     status: "reported",
   },
   // Q2 2025 - ETH pivot initiated June 2025 (filed 2025-08-14)
@@ -1881,7 +1882,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 145_000_000,  // Interpolated from weekly ATM dilution
     holdingsPerShare: 0.001379,  // 200000 / 145000000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024107/form10-q.htm",
     status: "reported",
   },
   // Q1 2025 - Pre-ETH pivot (filed 2025-05-15)
@@ -1900,7 +1901,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 575_255,  // SEC XBRL CommonStockSharesOutstanding at Mar 31
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225010881/form10-q.htm",
     status: "reported",
   },
 

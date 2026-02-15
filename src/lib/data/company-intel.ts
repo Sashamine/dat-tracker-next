@@ -436,7 +436,7 @@ const SBET_INTEL: CompanyIntel = {
     { date: "2025-07-25", title: "Joseph Chalom (BlackRock) joins as Co-CEO", summary: "Key hire", url: "https://sharplinkinc.com/news" },
     { date: "2025-06-02", title: "ETH treasury business launched", summary: "Strategy pivot", url: "https://sharplinkinc.com/news" },
   ],
-  strategySummary: "Pivoted to ETH treasury strategy in May 2025. Raised $2.6 billion in capital since launch. Q3 2025: Revenue up 1,100% YoY to $10.8M; Net income $104.3M. Joe Lubin (Ethereum co-founder) as Chairman. Institutional ownership increased from low single digits to >30%. Stock experienced 2,600% spike then 86% correction; now trades at ~0.9x ETH holdings value.",
+  strategySummary: "Pivoted to ETH treasury strategy in June 2025. Raised $2.6 billion in capital since launch. Q3 2025: Revenue up 1,100% YoY to $10.8M; Net income $104.3M. Joe Lubin (Ethereum co-founder) as Chairman. Institutional ownership increased from low single digits to >30%. Stock experienced 2,600% spike then 86% correction; now trades at ~0.9x ETH holdings value.",
   recentDevelopments: [
     "863,424 ETH holdings (~$2.66B)",
     "#2 ETH treasury globally",
@@ -445,8 +445,8 @@ const SBET_INTEL: CompanyIntel = {
   keyBackers: ["Joseph Chalom (CEO, ex-BlackRock)", "Joseph Lubin (Chairman, Ethereum co-founder)"],
   outlook2026: "Institutional buildout. Target consistent premium to NAV.",
   strategyDocs: [
-    { title: "ETH Treasury Strategy Launch", date: "2025-06-02", description: "Pivot from gaming to Ethereum treasury company", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=8-K" },
-    { title: "Q3 2025 10-Q", date: "2025-11-12", description: "First full quarter financials post-pivot: +1,100% revenue YoY", url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/" },
+    { title: "ETH Treasury Strategy Launch", date: "2025-06-02", description: "Pivot from gaming to Ethereum treasury company", url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/form8-k.htm" },
+    { title: "Q3 2025 10-Q", date: "2025-11-12", description: "First full quarter financials post-pivot: +1,100% revenue YoY", url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm" },
     { title: "Leadership Expansion", date: "2025-10-20", description: "BlackRock, Bridgewater, Bain Capital executives join", url: "https://sharplinkinc.com/news" },
   ],
 };

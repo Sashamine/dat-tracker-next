@@ -93,7 +93,7 @@ export const ethCompanies: Company[] = [
     provenanceFile: "provenance/sbet.ts",
     lastVerified: "2026-02-11",
     nextExpectedFiling: "Q4 2025 10-K (Mar 2026)",
-    datStartDate: "2025-05-01",
+    datStartDate: "2025-06-02",  // ETH treasury strategy launched June 2, 2025
     costBasisAvg: 3_696,  // SEC Q3 2025 10-Q: $3.022B total cost / 817,747 ETH-equivalent units
     costBasisSource: "SEC 10-Q Q3 2025: Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
@@ -106,13 +106,13 @@ export const ethCompanies: Company[] = [
     stakingSource: "SEC 8-K Dec 17, 2025: 639,241 native ETH + 224,183 LsETH as-if-redeemed. Cumulative rewards: 9,241 ETH (3,350 native + 5,891 LsETH)",
     stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
     stakingAsOf: "2025-12-14",
-    quarterlyBurnUsd: 2_850_000,
-    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $514,085 (2025-01-01 to 2025-03-31)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225010881/form10-q.htm",
-    burnAsOf: "2025-03-31",
+    quarterlyBurnUsd: 6_271_000,  // Q3 2025: $8,409,724 YTD - $2,138,473 H1 = $6,271,251
+    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashProvidedByUsedInOperatingActivities = -$8,409,724 (Jan-Sep) minus -$2,138,473 (Jan-Jun) = -$6,271,251 Q3",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    burnAsOf: "2025-09-30",
     capitalRaisedAtm: 2_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014878/forms-3asr.htm",
     avgDailyVolume: 300_000_000,
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
@@ -127,7 +127,7 @@ export const ethCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     totalDebt: 0,  // Debt-free per SEC 10-Q Q3 2025 (was $12.8M in 2023, paid off)
     debtSource: "SEC 10-Q Q3 2025",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/form10-k.htm",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     debtAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",

@@ -95,18 +95,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
-  // SBET (SharpLink Gaming) - ETH treasury company
-  // Verified 2026-01-28 via SEC XBRL (CIK 0001981535)
+  // SBET (Sharplink, Inc.) - ETH treasury company (renamed from SharpLink Gaming Feb 3, 2026)
+  // Verified 2026-02-15 via SEC XBRL + 10-Q Q3 2025 (CIK 0001981535)
   // Note: 1:12 reverse split May 5, 2025 - all figures post-split adjusted
+  // TODO: Reclassify after dilutive research completes — 18.1M "RSUs" are actually warrants
   SBET: [
     {
       type: "warrant",
-      strikePrice: 1.08, // Post-split adjusted (pre-split ~$0.09 * 12)
+      strikePrice: 1.08, // Post-split adjusted (pre-split ~$0.09 * 12) — TODO: verify, may be $6.15-$7.99
       potentialShares: 3_455_019,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
-      notes: "ClassOfWarrantOrRightOutstanding - likely ITM at ~$10 stock",
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "ClassOfWarrantOrRightOutstanding - Strategic Advisor Warrants",
     },
     {
       type: "option",
@@ -114,7 +115,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 9_022,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
       notes: "Stock options - deep OTM at ~$10 stock price",
     },
     {
@@ -123,8 +124,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 18_116_449,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q",
-      notes: "RSUs (NonOptionEquityInstrumentsOutstanding) - large grant with new mgmt",
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "TODO: NonOptionEquityInstrumentsOutstanding — likely total warrants (pre-funded + advisor), not RSUs. Actual RSUs ~1.28M.",
     },
   ],
 
@@ -371,7 +372,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 970_201, // Updated per 8-K Jan 6, 2026 (796,951 time + 173,250 performance)
       source: "8-K Jan 6, 2026 (CFO Option Amendment)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026000436/ea0271770-8k_twenty.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001442/ea0271770-8k_twenty.htm",
       issuedDate: "2026-01-02",
       notes: "CFO (Steven Meehan) stock options. Amended from 941,620 to 970,201. Vest over time.",
     },
@@ -391,7 +392,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 297_029, // S-1/A pro forma: 13,446,498 total - 12,179,268 CEO - 970,201 CFO
       source: "S-1/A Feb 9, 2026 (Pro Forma)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026012655/ea0274618-s1a_twenty.htm",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
       issuedDate: "2025-12-09",
       notes: "Other employee options under Incentive Plan. Derived from S-1/A pro forma total (13,446,498) less CEO and CFO grants.",
     },

@@ -168,7 +168,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
 
   SBET: {
     ticker: "SBET",
-    name: "SharpLink Gaming",
+    name: "Sharplink, Inc.",  // Renamed from SharpLink Gaming (Feb 3, 2026)
     officialDashboard: "https://www.sharplink.com/eth-dashboard",
     investorRelations: "https://investors.sharplink.com/",
     secCik: "1981535",

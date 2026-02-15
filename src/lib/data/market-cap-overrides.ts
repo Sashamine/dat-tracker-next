@@ -18,7 +18,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   "MSTR": 58_000_000_000,     // $58B - Strategy (~364M shares × ~$159, Jan 2026) - uses sharesForMnav for dynamic calc
 
   // === ETH Treasury Companies ===
-  "SBET": 2_363_000_000,      // $2.36B - SharpLink Gaming (fully diluted)
+  "SBET": 2_363_000_000,      // $2.36B - Sharplink, Inc. (fully diluted)
   "BMNR": 14_170_000_000,     // $14.17B - Bitmine (~430M shares × $31.20, Jan 2026)
 
   // === BTC Miners with significant debt ===

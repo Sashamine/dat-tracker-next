@@ -408,11 +408,11 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 
 // ==================== ADDITIONAL ETH COMPANIES ====================
 
-// Sharplink Inc (SBET) - Largest ETH treasury (formerly SharpLink Gaming, renamed Feb 3, 2026)
+// Sharplink, Inc. (SBET) - #2 ETH treasury (formerly SharpLink Gaming, renamed Feb 3, 2026)
 // ETH treasury strategy launched June 2, 2025 — NO ETH holdings before that date
 // Note: 1:12 reverse split on May 6, 2025
 // Using BASIC shares (EntityCommonStockSharesOutstanding)
-// SEC CIK: 1981535 | Fiscal year ends Jan 31
+// SEC CIK: 1981535 | FY ends Dec 31 (changed from Jan 31 during ETH pivot; FY2025 10-K was Jan 31)
 //
 // Weekly 8-K filings provide ETH updates with capital summary tables
 // ETH totals = native ETH + LsETH "as-if redeemed" (liquid staking tokens at conversion rate)

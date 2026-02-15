@@ -162,10 +162,10 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026012655/ea0274618-s1a_twenty.htm",
+      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
       quote: "no shares of Preferred Stock issued and outstanding",
       cik: XXI_CIK,
-      accession: "0001213900-26-012655",
+      accession: "0001213900-26-013482",
       filingType: "S-1/A",
       filingDate: "2026-02-09",
       documentDate: MERGER_CLOSE_DATE,
