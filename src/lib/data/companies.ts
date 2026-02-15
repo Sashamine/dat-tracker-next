@@ -106,8 +106,8 @@ export const ethCompanies: Company[] = [
     stakingSource: "SEC 8-K Dec 17, 2025: 639,241 native ETH + 224,183 LsETH as-if-redeemed. Cumulative rewards: 9,241 ETH (3,350 native + 5,891 LsETH)",
     stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
     stakingAsOf: "2025-12-14",
-    quarterlyBurnUsd: 6_271_000,  // Q3 2025: $8,409,724 YTD - $2,138,473 H1 = $6,271,251
-    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashProvidedByUsedInOperatingActivities = -$8,409,724 (Jan-Sep) minus -$2,138,473 (Jan-Jun) = -$6,271,251 Q3",
+    quarterlyBurnUsd: 2_728_000,  // 9-month avg: $8,183,743 continuing ops / 3 = $2.73M/qtr (Q3 alone was $6.3M but volatile)
+    burnSource: "SEC 10-Q Q3 2025: NetCashUsedInOperatingActivities continuing ops = $8,183,743 (9mo) / 3 quarters",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 2_000_000_000,

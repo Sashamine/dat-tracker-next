@@ -193,10 +193,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "option",
       strikePrice: 0, // RSUs vest at $0
       potentialShares: 1_281_951,
-      source: "10-Q Q3 2025 RSU activity table",
+      source: "10-Q Q3 2025 Note 8 RSU activity table",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
-      notes: "Unvested RSUs. Weighted avg grant price $20.71. 2.84 years remaining. Always ITM for dilution.",
+      notes: "Service-based RSUs (unvested). Weighted avg grant price $20.71. 2.84 years remaining.",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // Performance RSUs vest at $0
+      potentialShares: 115_069,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Performance-based RSUs (unvested). Granted to executive officers, 3-year vesting. Parameters not yet finalized.",
     },
   ],
 
