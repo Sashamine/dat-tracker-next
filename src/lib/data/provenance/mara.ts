@@ -154,7 +154,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentAnchor: "shares of common stock outstanding",
     }),
-    "Basic shares. Dilutives (~81M from converts + ~324K RSUs) tracked in dilutive-instruments.ts."
+    "Basic shares. Dilutives (~132M from converts + ~324K warrants at $25.00, expiring ~Jan 2026) tracked in dilutive-instruments.ts."
   ),
 
   // =========================================================================

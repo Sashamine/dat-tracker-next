@@ -314,13 +314,14 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "0% Convertible Senior Notes due Aug 2032 (49.3619 shares per $1,000). Capped call partially offsets dilution.",
     },
     {
-      type: "option",
-      strikePrice: 0, // RSUs vest at $0
+      type: "warrant",
+      strikePrice: 25.00, // $25.00 exercise price per 10-Q
       potentialShares: 324_375,
       source: "10-Q Q3 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
-      notes: "Performance-based RSUs (anti-dilutive as of Q3 2025)",
+      expiration: "2026-01-31", // ~0.3 years from Sep 30, 2025
+      notes: "Warrants to purchase common stock at $25.00. Expiring ~Jan 2026 — may already be expired.",
     },
   ],
 

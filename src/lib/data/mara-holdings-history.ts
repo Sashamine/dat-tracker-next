@@ -198,7 +198,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 17320,
     sharesOutstandingDiluted: 272_956_165,
     holdingsPerShare: 0.0000635,
-    stockPrice: 20.0,
+    stockPrice: 22.58,
     totalDebt: 751_500_000,
     cash: 200_000_000,
     source: "Q1 2024 10-Q",
@@ -213,7 +213,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 18488,
     sharesOutstandingDiluted: 294_474_622,
     holdingsPerShare: 0.0000628,
-    stockPrice: 18.0,
+    stockPrice: 19.85,
     totalDebt: 751_500_000,
     cash: 250_000_000,
     source: "Q2 2024 10-Q",
@@ -228,7 +228,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 22632,
     sharesOutstandingDiluted: 308_000_000,
     holdingsPerShare: 0.0000735,
-    stockPrice: 15.0,
+    stockPrice: 15.14,
     totalDebt: 1_000_000_000,
     cash: 250_000_000,
     source: "8-K BTC Treasury Purchase (+4,144 BTC at ~$59,500)",
@@ -245,7 +245,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 26747,
     sharesOutstandingDiluted: 321_831_487,
     holdingsPerShare: 0.0000831,
-    stockPrice: 17.0,
+    stockPrice: 16.22,
     totalDebt: 1_000_000_000,
     cash: 300_000_000,
     source: "Q3 2024 10-Q",
@@ -260,7 +260,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 40435,
     sharesOutstandingDiluted: 340_000_000,
     holdingsPerShare: 0.0001189,
-    stockPrice: 25.0,
+    stockPrice: 23.86,
     totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "8-K BTC Yield (47.6% YTD)",
@@ -275,7 +275,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 44394,
     sharesOutstandingDiluted: 342_500_000,
     holdingsPerShare: 0.0001296,
-    stockPrice: 22.0,
+    stockPrice: 21.61,
     totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "8-K BTC Yield (60.9% YTD)",
@@ -306,7 +306,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 47531,
     sharesOutstandingDiluted: 351_927_748,
     holdingsPerShare: 0.0001351,
-    stockPrice: 17.0,
+    stockPrice: 11.50,
     totalDebt: 2_598_549_000, // $2,298,549K LongTermDebt + $300,000K LinesOfCreditCurrent (XBRL)
     cash: 196_215_000, // XBRL CashAndCashEquivalentsAtCarryingValue
     source: "Q1 2025 10-Q (33,263 custody + 14,269 receivable)",
@@ -323,7 +323,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 49951,
     sharesOutstandingDiluted: 370_457_880,
     holdingsPerShare: 0.0001348,
-    stockPrice: 17.0,
+    stockPrice: 15.68,
     totalDebt: 2_600_546_000, // $2,250,546K LongTermDebt + $350,000K LinesOfCreditCurrent (XBRL)
     cash: 109_475_000, // XBRL CashAndCashEquivalentsAtCarryingValue
     source: "Q2 2025 10-Q (34,401 custody + 15,550 receivable)",
@@ -340,7 +340,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     holdings: 52850,
     sharesOutstandingDiluted: 378_184_353, // Note: field name is legacy — this is BASIC shares from cover page
     holdingsPerShare: 0.0001397,
-    stockPrice: 10.0,
+    stockPrice: 18.26,
     totalDebt: 3_597_561_000, // $3,247,561K LongTermDebt (XBRL) + $350,000K LinesOfCreditCurrent (XBRL)
     cash: 826_392_000,
     source: "Q3 2025 10-Q (35,493 custody + 17,357 receivable)",
@@ -386,9 +386,12 @@ export function getMARAQuarterEndDataForEarnings(quarterEnd: string): {
     return undefined;
   }
   
-  // Build full SEC URL from relative path
-  const sourceUrl = snapshot.sourceUrl?.startsWith("/filings/mara/")
-    ? `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001507605&type=10-Q&accession=${snapshot.sourceUrl.split("/").pop()}`
+  // Build full SEC filing index URL from relative path
+  const accession = snapshot.sourceUrl?.startsWith("/filings/mara/")
+    ? snapshot.sourceUrl.split("/").pop() || ""
+    : "";
+  const sourceUrl = accession
+    ? `https://www.sec.gov/Archives/edgar/data/1507605/${accession.replace(/-/g, "")}/${accession}-index.htm`
     : snapshot.sourceUrl || "";
   
   return {
