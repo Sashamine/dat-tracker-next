@@ -448,8 +448,8 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-04-01",
     website: "https://metaplanet.jp",
     twitter: "https://twitter.com/Metaplanet_JP",
-    costBasisAvg: 107_607,
-    costBasisSource: "company-website",
+    costBasisAvg: 102_875,  // From provenance (JPY cost ÷ holdings, converted at current FX). Analytics shows $107,607 at different FX rate.
+    costBasisSource: "Metaplanet provenance (54 acquisitions, JPY-denominated, FX-converted)",
     costBasisSourceUrl: "https://metaplanet.jp/en/analytics",
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,  // Estimated from Q3 FY2025 operating expenses
@@ -457,7 +457,7 @@ export const btcCompanies: Company[] = [
     burnSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 200_000_000,
-    marketCap: 4_010_000_000,  // ~$4.0B (Jan 2026, 1.142B shares × ¥548 ÷ 156 USD/JPY)
+    marketCap: 2_430_000_000,  // ~$2.4B (Feb 2026, 1.167B shares × ¥325 ÷ 152.7 JPY/USD)
     sharesForMnav: 1_143_204_340,  // 1.167B common (1,142,274,340 + 24,530,000 Feb 13 placement) - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
     sharesSource: "TDnet: 1,142,274,340 (Jan 29, 2026) + 24,530,000 new shares (Feb 13, 2026 3rd-party allotment) - 23.6M Mercury converts",
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
@@ -472,6 +472,7 @@ export const btcCompanies: Company[] = [
     cashSource: "TDnet Q3 FY2025 Financial Results",
     cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2025-09-30",
+    preferredEquity: 567_000_000,  // Mercury Class B preferred: ¥86.58B (~$567M at 152.7 JPY/USD). 23.61M shares at ¥1,000 conversion, OTM at ¥325. TDnet Dec 2025.
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
     notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M BTC-backed credit facility.",
