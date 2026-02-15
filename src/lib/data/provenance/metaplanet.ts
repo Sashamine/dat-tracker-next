@@ -73,13 +73,13 @@ export const METAPLANET_PROVENANCE = {
   }), "Dec 30 purchase brought total to 35,102 BTC"),
 
   // Shares Outstanding (Jan 29 base + Feb 13 placement)
-  // 1,142,274,340 (Dec 31, 2025) + 24,530,000 (Feb 13 3rd-party allotment) = 1,166,804,340
-  sharesOutstanding: pv(1_166_804_340, tdnetSource({
+  // 1,142,274,340 (Jan 29, 2026) + 24,529,000 (Feb 13 3rd-party allotment) = 1,166,803,340
+  sharesOutstanding: pv(1_166_803_340, tdnetSource({
     title: "Notice Regarding Completion of Payment for Issuance of New Shares and 25th Series Stock Acquisition Rights",
     date: "2026-02-13",
     url: "https://metaplanet.jp/en/shareholders/disclosures",
-    quote: "1,142,274,340 common shares (Jan 29, 2026) + 24,530,000 new shares placed (Feb 13, 2026)",
-    searchTerm: "24,530,000",
+    quote: "1,142,274,340 common shares (Jan 29, 2026) + 24,529,000 new shares placed (Feb 13, 2026)",
+    searchTerm: "Completion of Payment",
   }), "Feb 13, 2026: 24.53M new shares placed via 3rd-party allotment"),
 
   // Total Debt ($355M as of Feb 14, 2026)
@@ -90,7 +90,7 @@ export const METAPLANET_PROVENANCE = {
     date: "2026-01-30",
     url: PDF_URLS.creditFacilityJan30,
     quote: "$355M total: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4). See also: creditFacilityDec01, creditFacilityNov21, creditFacilityNov04 PDFs.",
-    searchTerm: "Credit Facility",
+    searchTerm: "Execution of Borrowing",
   }), "4 credit facilities outstanding. All zero-coupon bonds (series 2-19) fully redeemed."),
 
   // Cash Reserves (estimated from capital flow trace since Q3 2025)
