@@ -396,7 +396,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
-    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 332_431_000,
+    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 333_083_000,
     sharesSource: "Company (strategy.com) + SEC audit (10-Q + ATM 8-Ks). See provenance for dual-source breakdown.",
     sharesSourceUrl: "https://www.strategy.com/shares",
     sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,

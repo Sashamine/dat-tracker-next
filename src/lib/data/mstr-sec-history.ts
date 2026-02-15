@@ -374,10 +374,10 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     totalLiabilities: 9_254_685_000,
     convertibleDebt: 8_131_130_000,
     longTermDebt: null,
-    preferredEquity: 593_624_000,
+    preferredEquity: 1_304_497_000,
     commonSharesOutstanding: 246_537_000,
     preSplit: false,
-    notes: "First quarter with preferred equity (STRK Series A launched)",
+    notes: "First quarter with preferred equity. Total mezzanine = STRK $593,624K + STRF $710,873K",
   },
   {
     periodEnd: "2025-06-30",
@@ -391,10 +391,10 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     totalLiabilities: 9_283_527_000,
     convertibleDebt: 8_137_427_000,
     longTermDebt: null,
-    preferredEquity: 1_040_394_000,
+    preferredEquity: 2_893_921_000,
     commonSharesOutstanding: 261_318_000,
     preSplit: false,
-    notes: "Preferred equity grows with additional series",
+    notes: "Total mezzanine = STRK $1,040,394K + STRF $874,041K + STRC $979,486K",
   },
   {
     periodEnd: "2025-09-30",
@@ -408,10 +408,10 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     totalLiabilities: 9_346_405_000,
     convertibleDebt: 8_143_824_000,
     longTermDebt: null,
-    preferredEquity: 1_091_342_000,
+    preferredEquity: 5_786_330_000,
     commonSharesOutstanding: 267_468_000,
     preSplit: false,
-    notes: "Most recent SEC filing",
+    notes: "Total mezzanine = STRK $1,091,342K + STRF $1,193,240K + STRC $2,473,800K + STRD $1,027,948K",
   },
 ];
 
