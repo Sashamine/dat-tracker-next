@@ -1607,19 +1607,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // Metaplanet (3350.T) - Japan TSE
-  // Mercury convertible bonds - ¥1000 strike (~$6.41 at 156 JPY/USD)
-  // Currently OTM at ~¥540 (~$3.46) stock price
+  // Mercury Class B preferred - ¥1000 strike (~$6.55 at 152.7 JPY/USD)
+  // Currently deeply OTM at ~¥325 stock price
+  // NOTE: Mercury is tracked as preferredEquity ($155M at par) in companies.ts,
+  // NOT as debt. faceValue is omitted so ITM logic doesn't subtract from totalDebt.
+  // When ITM, this entry adds shares to diluted count only.
   "3350.T": [
     {
       type: "convertible",
-      strikePrice: 6.41,  // ¥1000 conversion price / 156 JPY/USD
-      potentialShares: 23_600_000,  // 23.6M shares if fully converted
-      faceValue: 151_000_000,  // ~¥23.6B face value (~$151M at 156 JPY/USD)
-      source: "TDnet Q3 FY2025 Financial Results",
+      strikePrice: 6.55,  // ¥1000 conversion price / 152.7 JPY/USD
+      potentialShares: 23_610_000,  // 23.61M Mercury Class B preferred shares
+      // faceValue intentionally omitted — Mercury is in preferredEquity, not totalDebt.
+      // If included, ITM logic would incorrectly reduce debt by ~$155M.
+      source: "TDnet: Notice Regarding Issuance of Class B Preferred Shares (Nov 20, 2025)",
       sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
       expiration: "2029-12-31",  // Mercury bonds mature 2029 (verify exact date)
-      issuedDate: "2024-10-01",  // Approximate issue date
-      notes: "Mercury zero-coupon convertible bonds. ¥1000 strike, OTM at ¥540. Excluded from sharesForMnav.",
+      issuedDate: "2025-11-20",
+      notes: "Mercury Class B preferred. ¥1,000 par/strike, deeply OTM at ¥325. Tracked as preferredEquity in EV, not debt. When ITM, adds 23.6M shares to diluted count.",
     },
     {
       type: "warrant",
