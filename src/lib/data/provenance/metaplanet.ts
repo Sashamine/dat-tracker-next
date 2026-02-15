@@ -95,22 +95,22 @@ export const METAPLANET_PROVENANCE = {
         url: PDF_URLS.creditFacilityJan30,
         searchTerm: "75 million USD",
       })),
-      creditFacilityDec01: pv(50_000_000, tdnetSource({
+      creditFacilityDec05: pv(50_000_000, tdnetSource({
         title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
-        date: "2025-12-01",
-        url: PDF_URLS.creditFacilityDec01,
+        date: "2025-12-05", // Disclosures page shows Dec 05, not Dec 01
+        url: PDF_URLS.creditFacilityDec01, // PDF URL key unchanged
         searchTerm: "50 million USD",
       })),
-      creditFacilityNov21: pv(130_000_000, tdnetSource({
+      creditFacilityNov25: pv(130_000_000, tdnetSource({
         title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
-        date: "2025-11-21",
-        url: PDF_URLS.creditFacilityNov21,
+        date: "2025-11-25", // PDF metadata confirms Nov 25, not Nov 21
+        url: PDF_URLS.creditFacilityNov21, // PDF URL key unchanged (references same document)
         searchTerm: "130 million USD",
       })),
-      creditFacilityNov04: pv(100_000_000, tdnetSource({
+      creditFacilityNov05: pv(100_000_000, tdnetSource({
         title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
-        date: "2025-11-04",
-        url: PDF_URLS.creditFacilityNov04,
+        date: "2025-11-05", // Disclosure date Nov 05, not Nov 04
+        url: PDF_URLS.creditFacilityNov04, // PDF URL key unchanged
         searchTerm: "100 million USD",
       })),
     },

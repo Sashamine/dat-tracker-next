@@ -83,7 +83,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
     const holdings = METAPLANET_PROVENANCE.holdings.value;
     const totalDebt = METAPLANET_PROVENANCE.totalDebt.value;
     const cashReserves = METAPLANET_PROVENANCE.cashReserves.value;
-    const preferredEquity = company.preferredEquity || 0; // Mercury Class B preferred: ~$567M
+    const preferredEquity = company.preferredEquity || 0; // Mercury Class B preferred: ~$155M at par (23.61M shares × ¥1,000)
     const sharesOutstanding = METAPLANET_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
     
     // No ITM convertible adjustment for Metaplanet (zero-coupon bonds don't convert)
