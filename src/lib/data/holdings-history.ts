@@ -464,7 +464,7 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-14", holdings: 838_152, sharesOutstandingDiluted: 175_000_000, holdingsPerShare: 0.004789, source: "8-K Sep 16, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/", sourceType: "sec-filing" },
   // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH). Lower than Sep 14 due to LsETH rate
   // Accession: 0001493152-25-021970
-  { date: "2025-09-30", holdings: 817_747, sharesOutstandingDiluted: 180_000_000, holdingsPerShare: 0.004543, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 817_747, sharesOutstandingDiluted: 192_193_183, holdingsPerShare: 0.004255, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm", sourceType: "sec-filing" },
   
   // Oct-Dec 2025 — Stabilizing around 860K
   // Accession: 0001493152-25-018731

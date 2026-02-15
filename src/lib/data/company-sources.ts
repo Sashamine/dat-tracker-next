@@ -177,10 +177,10 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     trackers: ["sbetnav.com", "sbettracker.com", "sbetmnav.com"],
     blockworksUrl: "https://blockworks.com/analytics/SBET",
     sharesSource: "basic",
-    sharesNotes: "Using basic shares (196.69M) - matches reported mNAV. Fully diluted count (warrants, options, RSUs) not publicly available. Company reports 'Assumed Diluted Shares' for ETH Concentration metric but doesn't publish the number.",
+    sharesNotes: "Using basic shares (196.69M) - matches reported mNAV. Fully diluted: ~19.5M additional shares from warrants (11.9M pre-funded, 3.5M strategic advisor, 2.8M placement agent), RSUs (1.4M), and options (9K). Per 10-Q Q3 2025 Notes 7-8.",
     reportsHoldingsFrequency: "weekly",
     reportsMnavDaily: true,
-    notes: "Largest ETH treasury. 1:12 reverse split May 6, 2025. Dashboard updates daily. Joe Lubin affiliated.",
+    notes: "#2 ETH treasury. 1:12 reverse split May 5, 2025. Dashboard updates daily. Joe Lubin affiliated.",
     lastVerified: "2026-01-18",
   },
 

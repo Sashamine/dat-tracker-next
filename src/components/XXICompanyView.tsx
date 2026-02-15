@@ -746,8 +746,36 @@ export function XXICompanyView({ company, className = "" }: XXICompanyViewProps)
                   {(XXI_PROVENANCE_DEBUG.classAShares / 1e6).toFixed(0)}M A / {(XXI_PROVENANCE_DEBUG.classBShares / 1e6).toFixed(0)}M B
                 </p>
                 <p className="text-xs text-purple-500">
-                  Class A (public) / Class B (founders)
+                  Class A (public) / Class B (voting only)
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Dual-class methodology note */}
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-800">
+              <div className="flex items-start gap-2">
+                <span className="text-indigo-500 mt-0.5">ℹ️</span>
+                <div>
+                  <p className="text-sm font-medium text-indigo-700 dark:text-indigo-300 mb-1">
+                    Dual-Class Share Methodology
+                  </p>
+                  <p className="text-xs text-indigo-600 dark:text-indigo-400 leading-relaxed">
+                    XXI&apos;s mNAV uses <strong>Class A shares only</strong> ({(XXI_PROVENANCE_DEBUG.classAShares / 1e6).toFixed(1)}M) for market cap.
+                    Class B shares ({(XXI_PROVENANCE_DEBUG.classBShares / 1e6).toFixed(1)}M) carry voting rights but have{" "}
+                    <strong>zero economic rights</strong> — no dividends, no liquidation proceeds — per the{" "}
+                    <a
+                      href="https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-indigo-800 dark:hover:text-indigo-200"
+                    >
+                      Amended Certificate of Formation
+                    </a>.
+                    {" "}Note: some data providers (e.g. Google Finance) use total shares (651M), resulting in a higher reported market cap.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
