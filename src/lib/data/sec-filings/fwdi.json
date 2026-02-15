@@ -1,9 +1,17 @@
 {
   "ticker": "FWDI",
-  "cik": "38264",
+  "cik": "0000038264",
   "asset": "SOL",
   "companyName": "Forward Industries, Inc.",
   "filings": [
+    {
+      "accessionNumber": "0001683168-26-000960",
+      "formType": "10-Q",
+      "filedDate": "2026-02-12",
+      "periodDate": "2025-12-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      "description": "Q1 FY2026 10-Q"
+    },
     {
       "accessionNumber": "0001683168-25-009073",
       "formType": "8-K",
@@ -18,7 +26,8 @@
       "formType": "10-K",
       "filedDate": "2025-12-11",
       "periodDate": "2025-09-30",
-      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825009068/forward_i10k-093025.htm"
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825009068/forward_i10k-093025.htm",
+      "description": "FY2025 10-K"
     },
     {
       "accessionNumber": "0001683168-25-008941",
@@ -105,6 +114,15 @@
       "description": "FORM 8-K"
     },
     {
+      "accessionNumber": "0001683168-25-006963",
+      "formType": "8-K",
+      "filedDate": "2025-09-17",
+      "periodDate": "2025-09-15",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825006963/forward_i8k.htm",
+      "items": [],
+      "description": "8-K: Initial SOL purchases (6,822,000 SOL)"
+    },
+    {
       "accessionNumber": "0001683168-25-007047",
       "formType": "8-K",
       "filedDate": "2025-09-17",
@@ -128,7 +146,16 @@
       "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825007036/forward_i8k.htm",
       "items": [],
       "description": "FORM 8-K"
+    },
+    {
+      "accessionNumber": "0001683168-25-006734",
+      "formType": "8-K",
+      "filedDate": "2025-09-08",
+      "periodDate": "2025-09-08",
+      "url": "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_8k.htm",
+      "items": [],
+      "description": "8-K: $1.65B PIPE, Galaxy/Jump/Multicoin advisory agreements"
     }
   ],
-  "fetchedAt": "2026-01-29T17:43:29.214Z"
+  "fetchedAt": "2026-02-15T15:30:00.000Z"
 }
