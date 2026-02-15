@@ -188,9 +188,9 @@ export const STRV_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // PREFERRED EQUITY - SATA 12.25% Perpetual Preferred
+  // PREFERRED EQUITY - SATA 12.50% Perpetual Preferred (rate increased from 12.25% effective Feb 16)
   // NOT convertible to common stock
-  // IPO 2M + Jan underwritten 1.32M + Jan exchange ~930K = ~4.25M @ $100 = $425M
+  // Feb 13 8-K: 4,265,518 SATA shares × $100 stated value = $426,551,800
   // =========================================================================
   preferredEquity: pv(
     PREFERRED_EQUITY,

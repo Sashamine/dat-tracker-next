@@ -632,7 +632,7 @@ export const btcCompanies: Company[] = [
     holdings: 13_131.82,
     holdingsLastUpdated: "2026-01-28",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://investors.strive.com/news-events/news-releases/news-details/2026/Strive-Announces-Closing-of-Upsized--Oversubscribed-Follow-On-Offering-of-SATA-Stock-and-Concurrent-Exchange-of-Semler-Notes/default.aspx",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
     datStartDate: "2024-05-01",
     website: "https://strive.com",
     twitter: "stikiinvestor",
