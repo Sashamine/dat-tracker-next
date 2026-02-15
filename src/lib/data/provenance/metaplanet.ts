@@ -83,15 +83,38 @@ export const METAPLANET_PROVENANCE = {
   }), "Feb 13, 2026: 24.53M new shares placed via 3rd-party allotment"),
 
   // Total Debt ($355M as of Feb 14, 2026)
-  // 4 credit facilities: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4)
+  // Sum of 4 credit facility draws. No single document states $355M.
   // All zero-coupon bonds (series 2-19) have been fully redeemed ($0 remaining)
-  totalDebt: pv(355_000_000, tdnetSource({
-    title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
-    date: "2026-01-30",
-    url: PDF_URLS.creditFacilityJan30,
-    quote: "$355M total: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4). See also: creditFacilityDec01, creditFacilityNov21, creditFacilityNov04 PDFs.",
-    searchTerm: "75 million USD",
-  }), "4 credit facilities outstanding. All zero-coupon bonds (series 2-19) fully redeemed."),
+  totalDebt: pv(355_000_000, derivedSource({
+    derivation: "Sum of 4 outstanding credit facility draws",
+    formula: "75_000_000 + 50_000_000 + 130_000_000 + 100_000_000",
+    inputs: {
+      creditFacilityJan30: pv(75_000_000, tdnetSource({
+        title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
+        date: "2026-01-30",
+        url: PDF_URLS.creditFacilityJan30,
+        searchTerm: "75 million USD",
+      })),
+      creditFacilityDec01: pv(50_000_000, tdnetSource({
+        title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
+        date: "2025-12-01",
+        url: PDF_URLS.creditFacilityDec01,
+        searchTerm: "50 million USD",
+      })),
+      creditFacilityNov21: pv(130_000_000, tdnetSource({
+        title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
+        date: "2025-11-21",
+        url: PDF_URLS.creditFacilityNov21,
+        searchTerm: "130 million USD",
+      })),
+      creditFacilityNov04: pv(100_000_000, tdnetSource({
+        title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
+        date: "2025-11-04",
+        url: PDF_URLS.creditFacilityNov04,
+        searchTerm: "100 million USD",
+      })),
+    },
+  }), "4 credit facilities outstanding. No repayments observed. All zero-coupon bonds (series 2-19) fully redeemed. Actual balance sheet total will be in FY2025 annual report."),
 
   // Cash Reserves (estimated from capital flow trace since Q3 2025)
   // Q3: $18M + Inflows ($355M credit, $136M Mercury preferred, $80M Feb placement)
