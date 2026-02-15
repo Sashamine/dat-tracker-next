@@ -458,8 +458,8 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     avgDailyVolume: 200_000_000,
     marketCap: 2_430_000_000,  // ~$2.4B (Feb 2026, 1.167B shares × ¥325 ÷ 152.7 JPY/USD)
-    sharesForMnav: 1_166_804_340,  // 1,142,274,340 (Jan 29, 2026) + 24,530,000 (Feb 13 placement). Mercury preferred is a separate class, NOT in common count.
-    sharesSource: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,530,000 new common shares (Feb 13, 2026 3rd-party allotment)",
+    sharesForMnav: 1_166_803_340,  // 1,142,274,340 (Jan 29, 2026) + 24,529,000 (Feb 13 placement). Mercury preferred is a separate class, NOT in common count.
+    sharesSource: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,529,000 new common shares (Feb 13, 2026 3rd-party allotment)",
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     sharesAsOf: "2026-02-13",
     // Debt: 4 credit facilities totaling $355M (all zero-coupon bonds have been fully redeemed)
