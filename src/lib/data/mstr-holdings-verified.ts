@@ -22,7 +22,17 @@ export const MSTR_HOLDINGS_VERIFIED: VerifiedHolding[] = [
   { date: "2020-09-15", holdings: 38250, filingType: "8K", accession: "245835", source: "8k-2020-09-15-245835.html" },
   { date: "2020-12-04", holdings: 40824, filingType: "8K", accession: "310787", source: "8k-2020-12-04-310787.html" },
   
-  // 2021
+  // 2021 (backfilled from mstr-btc-purchases.ts 8-K data)
+  { date: "2021-01-22", holdings: 70784, filingType: "8K", accession: "014227", source: "8k-2021-01-22-014227.html" },
+  { date: "2021-02-02", holdings: 71079, filingType: "8K", accession: "025369", source: "8k-2021-02-02-025369.html" },
+  { date: "2021-03-01", holdings: 90859, filingType: "8K", accession: "062322", source: "8k-2021-03-01-062322.html" },
+  { date: "2021-03-05", holdings: 91064, filingType: "8K", accession: "070446", source: "8k-2021-03-05-070446.html" },
+  { date: "2021-03-12", holdings: 91326, filingType: "8K", accession: "078715", source: "8k-2021-03-12-078715.html" },
+  { date: "2021-04-05", holdings: 91579, filingType: "8K", accession: "105625", source: "8k-2021-04-05-105625.html" },
+  { date: "2021-05-13", holdings: 91850, filingType: "8K", accession: "159855", source: "8k-2021-05-13-159855.html" },
+  { date: "2021-05-18", holdings: 92079, filingType: "8K", accession: "164617", source: "8k-2021-05-18-164617.html" },
+  { date: "2021-08-24", holdings: 108992, filingType: "8K", accession: "254529", source: "8k-2021-08-24-254529.html" },
+  { date: "2021-09-13", holdings: 114042, filingType: "8K", accession: "270915", source: "8k-2021-09-13-270915.html" },
   { date: "2021-11-29", holdings: 121044, filingType: "8K", accession: "341815", source: "8k-2021-11-29-341815.html" },
   { date: "2021-12-09", holdings: 122478, filingType: "8K", accession: "352140", source: "8k-2021-12-09-352140.html" },
   { date: "2021-12-30", holdings: 124391, filingType: "8K", accession: "369767", source: "8k-2021-12-30-369767.html" },
@@ -38,7 +48,10 @@ export const MSTR_HOLDINGS_VERIFIED: VerifiedHolding[] = [
   { date: "2022-11-01", holdings: 130000, filingType: "10Q", accession: "", source: "10-Q-2022-11-01.html" },
   { date: "2022-12-28", holdings: 132500, filingType: "8K", accession: "313098", source: "8k-2022-12-28-313098.html" },
   
-  // 2023
+  // 2023 (backfilled from mstr-btc-purchases.ts 8-K data)
+  { date: "2023-03-27", holdings: 138955, filingType: "8K", accession: "079839", source: "8k-2023-03-27-079839.html" },
+  { date: "2023-04-05", holdings: 140000, filingType: "8K", accession: "091616", source: "8k-2023-04-05-091616.html" },
+  { date: "2023-06-28", holdings: 152333, filingType: "8K", accession: "176793", source: "8k-2023-06-28-176793.html" },
   { date: "2023-09-25", holdings: 158245, filingType: "8K", accession: "240932", source: "8k-2023-09-25-240932.html" },
   { date: "2023-11-01", holdings: 158400, filingType: "10Q", accession: "", source: "10-Q-2023-11-01.html" },
   { date: "2023-11-30", holdings: 174530, filingType: "8K", accession: "285756", source: "8k-2023-11-30-285756.html" },
