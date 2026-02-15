@@ -117,15 +117,18 @@ export const METAPLANET_PROVENANCE = {
   }), "4 credit facilities outstanding. No repayments observed. All zero-coupon bonds (series 2-19) fully redeemed. Actual balance sheet total will be in FY2025 annual report."),
 
   // Cash Reserves (estimated from capital flow trace since Q3 2025)
-  // Q3: $18M + Inflows ($355M credit, $136M Mercury preferred, $80M Feb placement)
-  // - Outflows ($451M BTC, $10M bond redemption, $34M debt repay, $16M opex/buybacks) ≈ $78M
-  cashReserves: pv(78_000_000, tdnetSource({
+  // Q3 base: ~$18M (¥1,488M cash + other liquid assets)
+  // Inflows: $355M credit facilities + $155M Mercury preferred (¥23.61B at ~152.7 FX) + $80M Feb placement = $590M
+  // Outflows: $451M BTC purchases + $10M bond redemption + $34M debt repay + $16M opex/buybacks = $511M
+  // Net: $18M + $590M - $511M ≈ $97M
+  // NOTE: Previous estimate used $136M for Mercury (implied 173.6 FX — wrong). Corrected to $155M at 152.7 FX.
+  cashReserves: pv(97_000_000, tdnetSource({
     title: "Estimated: Q3 Financial Results + post-Q3 capital flow trace",
     date: "2026-02-14",
     url: PDF_URLS.q3FinancialResults,
-    quote: "Q3 balance sheet: Cash and Cash Equivalents ¥1,488M ($9.7M). Starting point for capital flow trace: ¥1,488M + other liquid assets → ~$18M base + $571M inflows - $510M outflows ≈ $78M",
+    quote: "Q3 balance sheet: Cash and Cash Equivalents ¥1,488M. Capital flow trace: $18M base + $590M inflows - $511M outflows ≈ $97M",
     searchTerm: "1,488",
-  }), "Estimated from capital flow trace. Confirm with FY2025 annual report (expected mid-Feb 2026)."),
+  }), "Estimated from capital flow trace. Mercury preferred corrected to $155M (¥23.61B at 152.7 FX). Confirm with FY2025 annual report."),
 
   // Average Cost Basis (from company disclosure)
   // JPY cost: ¥15,945,691/BTC (¥559.726B / 35,102 BTC)

@@ -467,9 +467,9 @@ export const btcCompanies: Company[] = [
     debtSource: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
     debtAsOf: "2026-02-14",
-    cashReserves: 78_000_000,  // Estimated from capital flow trace: $18M (Q3) + $571M inflows - $510M outflows ≈ $78M. Confirm with FY2025 annual report.
+    cashReserves: 97_000_000,  // Estimated from capital flow trace: $18M (Q3) + $590M inflows - $511M outflows ≈ $97M. Mercury corrected to $155M (was $136M). Confirm with FY2025 annual report.
     restrictedCash: 0,
-    cashSource: "Estimated: Q3 $18M + $355M credit facilities + $136M Mercury preferred + $80M Feb placement - $451M BTC purchases - $60M redemptions/repayments/opex",
+    cashSource: "Estimated: Q3 $18M + $355M credit + $155M Mercury preferred (corrected FX) + $80M Feb placement - $451M BTC - $60M redemptions/repayments/opex",
     cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2026-02-14",
     preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
