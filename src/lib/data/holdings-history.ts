@@ -821,8 +821,8 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
 // 1-for-20 reverse split Feb 3, 2026 - ALL share counts POST-SPLIT adjusted
 // SEC CIK: 0001920406
 // DUAL-CLASS: Class A 53,168,237 + Class B 9,880,282 = 63,048,519 (post-split, Feb 13 8-K)
-// Pre-funded warrants: 3,208,713 @ $0.002 (always ITM, tracked in dilutive-instruments.ts)
-// Traditional warrants: TODO reconcile count (21.8M vs 26.7M)
+// Pre-funded warrants: 53,614 @ $0.002 post-split (1,072,289 pre-split, Jan 5 8-K)
+// Traditional warrants: 26,594,435 @ $27 post-split (531,888,702 pre-split, Jan 5 8-K)
 // Preferred: SATA 12.50% perpetual preferred (4,265,518 shares × $100 stated) = $426.6M - NOT convertible
 const ASST_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: SEC 10-Q (Sep 30, 2025) - shares adjusted for 1-for-20 split
