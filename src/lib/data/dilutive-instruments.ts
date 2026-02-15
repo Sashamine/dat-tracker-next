@@ -96,36 +96,107 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // SBET (Sharplink, Inc.) - ETH treasury company (renamed from SharpLink Gaming Feb 3, 2026)
-  // Verified 2026-02-15 via SEC XBRL + 10-Q Q3 2025 (CIK 0001981535)
+  // Verified 2026-02-15 via SEC 10-Q Q3 2025 Note 8 (CIK 0001981535)
   // Note: 1:12 reverse split May 5, 2025 - all figures post-split adjusted
-  // TODO: Reclassify after dilutive research completes — 18.1M "RSUs" are actually warrants
+  //
+  // XBRL NonOptionEquityInstrumentsOutstanding (18,116,449) = pre-funded + placement + strategic warrants
+  // XBRL ClassOfWarrantOrRightOutstanding (3,455,019) = strategic advisor warrants only
+  // Actual RSUs: 1,281,951 unvested (from RSU activity table in 10-Q)
   SBET: [
+    // Strategic Advisor Warrants (Consensys) - 4 tranches with tiered strikes
     {
       type: "warrant",
-      strikePrice: 1.08, // Post-split adjusted (pre-split ~$0.09 * 12) — TODO: verify, may be $6.15-$7.99
-      potentialShares: 3_455_019,
-      source: "10-Q Q3 2025",
+      strikePrice: 6.15,
+      potentialShares: 1_382_007,
+      source: "10-Q Q3 2025 Note 8",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
-      notes: "ClassOfWarrantOrRightOutstanding - Strategic Advisor Warrants",
+      notes: "Strategic Advisor Warrants tranche (i) - Consensys. Fully vested, nonforfeitable.",
     },
+    {
+      type: "warrant",
+      strikePrice: 6.765,
+      potentialShares: 691_004,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Strategic Advisor Warrants tranche (ii) - Consensys. Fully vested, nonforfeitable.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.38,
+      potentialShares: 691_004,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Strategic Advisor Warrants tranche (iii) - Consensys. Fully vested, nonforfeitable.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.995,
+      potentialShares: 691_004,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Strategic Advisor Warrants tranche (iv) - Consensys. Fully vested, nonforfeitable.",
+    },
+    // Placement Agent Warrants (ThinkEquity) from May 2025 PIPE
+    {
+      type: "warrant",
+      strikePrice: 7.68,
+      potentialShares: 2_764_013,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Placement agent warrants (ThinkEquity) from May 2025 PIPE. Fully vested.",
+    },
+    // Pre-Funded Warrants - exercise price $0.0001 (essentially free)
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 1_496_612,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Pre-funded warrants - Consensys ($4.5M registered offering). Always ITM.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 3_966_340,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Pre-funded warrants - Consensys (PIPE offering). Always ITM.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 6_434_213,
+      source: "10-Q Q3 2025 Note 8",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      notes: "Pre-funded warrants - Joseph Lubin (PIPE offering). Always ITM.",
+    },
+    // Stock Options - deep OTM
     {
       type: "option",
       strikePrice: 91.06,
       potentialShares: 9_022,
-      source: "10-Q Q3 2025",
+      source: "10-Q Q3 2025 Note 8",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
-      notes: "Stock options - deep OTM at ~$10 stock price",
+      notes: "Stock options - deep OTM at ~$10 stock price. Weighted avg exercise price $91.06.",
     },
+    // RSUs - always ITM (vest at $0)
     {
       type: "option",
       strikePrice: 0, // RSUs vest at $0
-      potentialShares: 18_116_449,
-      source: "10-Q Q3 2025",
+      potentialShares: 1_281_951,
+      source: "10-Q Q3 2025 RSU activity table",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
-      notes: "TODO: NonOptionEquityInstrumentsOutstanding — likely total warrants (pre-funded + advisor), not RSUs. Actual RSUs ~1.28M.",
+      notes: "Unvested RSUs. Weighted avg grant price $20.71. 2.84 years remaining. Always ITM for dilution.",
     },
   ],
 
