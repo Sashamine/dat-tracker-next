@@ -1444,8 +1444,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-02-13",
     earningsTime: null,
     holdingsAtQuarterEnd: 35_102,  // Dec 30, 2025 purchase data
-    sharesAtQuarterEnd: 1_140_000_000,  // ~1.14B shares
-    holdingsPerShare: 0.0000308,  // 35102 / 1.14B
+    sharesAtQuarterEnd: 1_142_274_340,  // Jan 29, 2026 filing (closest to Dec 31). Mercury preferred is separate class.
+    holdingsPerShare: 0.00003073,  // 35102 / 1,142,274,340
     source: "press-release",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     status: "upcoming",

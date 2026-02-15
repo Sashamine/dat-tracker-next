@@ -177,7 +177,9 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-22", holdings: 25555.00, sharesOutstandingDiluted: 1_080_000_000, holdingsPerShare: 0.00002366, source: "TDnet disclosure", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   { date: "2025-09-30", holdings: 30823.00, sharesOutstandingDiluted: 1_100_000_000, holdingsPerShare: 0.00002802, stockPrice: 326.42, source: "TDnet Q3 end", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   // 2025 Q4 / 2026
-  { date: "2025-12-30", holdings: 35102.00, sharesOutstandingDiluted: 1_118_664_340, holdingsPerShare: 0.00003138, source: "TDnet disclosure", sharesSource: "Common shares ex-OTM Mercury converts", sourceUrl: "https://metaplanet.jp/bitcoin", sourceType: "regulatory-filing" , totalDebt: 280_000_000, cash: 100_000_000 },
+  // Dec 30: shares = 1,142,274,340 common (Jan 29 filing, closest to Dec 30). Mercury Class B preferred is a SEPARATE class, not subtracted.
+  // Debt = $280M (3 facilities: $100M Nov 4 + $130M Nov 21 + $50M Dec 1). The $75M Jan 30 draw hadn't happened yet.
+  { date: "2025-12-30", holdings: 35102.00, sharesOutstandingDiluted: 1_142_274_340, holdingsPerShare: 0.00003073, source: "TDnet disclosure", sharesSource: "TDnet: 1,142,274,340 common shares (Jan 29, 2026 filing). Mercury Class B preferred (23.61M) is separate class, NOT subtracted.", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures", sourceType: "regulatory-filing", totalDebt: 280_000_000, cash: 78_000_000 },
 ];
 
 // Semler Scientific (SMLR) - Medical device company turned BTC treasury

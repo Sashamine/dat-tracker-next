@@ -100,7 +100,7 @@ export const METAPLANET_PROVENANCE = {
     title: "Estimated: Q3 Financial Results + post-Q3 capital flow trace",
     date: "2026-02-14",
     url: PDF_URLS.q3FinancialResults,
-    quote: "Q3 cash ¥2.77B ($18M) + $571M inflows (credit facilities, Mercury preferred, Feb placement) - $510M outflows (BTC purchases, bond redemptions, opex) ≈ $78M",
+    quote: "Q3 balance sheet: Cash and Cash Equivalents ¥1,488M ($9.7M). Starting point for capital flow trace: ¥1,488M + other liquid assets → ~$18M base + $571M inflows - $510M outflows ≈ $78M",
     searchTerm: "1,488",
   }), "Estimated from capital flow trace. Confirm with FY2025 annual report (expected mid-Feb 2026)."),
 
@@ -114,6 +114,17 @@ export const METAPLANET_PROVENANCE = {
     quote: "Average Purchase Price: 15,945,691 yen per Bitcoin",
     searchTerm: "15,945,691",
   }), "¥15,945,691/BTC ÷ 155 JPY/USD = ~$102,875"),
+
+  // Preferred Equity (Mercury Class B at par value)
+  // 23,610,000 Class B preferred shares × ¥1,000 par = ¥23.61B (~$155M at 152.7 FX)
+  // Consistent with MSTR STRK/STRF treatment: use par/liquidation value, not market
+  preferredEquity: pv(155_000_000, tdnetSource({
+    title: "Notice Regarding Issuance of Class B Preferred Shares through Third-Party Allotment",
+    date: "2025-11-20",
+    url: "https://metaplanet.jp/en/shareholders/disclosures",
+    quote: "23,610,000 Class B preferred shares issued to Mercury (Nov 20, 2025). Par value ¥1,000/share. Total: ¥23.61B (~$155M at 152.7 JPY/USD).",
+    searchTerm: "Class B Preferred Shares",
+  }), "Mercury Class B preferred at par. Separate share class from common. Used in EV calculation, not share dilution."),
 };
 
 // =============================================================================
