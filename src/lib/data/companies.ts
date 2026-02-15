@@ -649,17 +649,17 @@ export const btcCompanies: Company[] = [
     // SHARES: Anchor 44.7M post-split as of Dec 31, 2025 (SEC 8-K Jan 5, 2026: 894.3M pre-split ÷ 20)
     // + Semler merger shares (Jan 16) + PIPE/SATA offering shares (Jan 21-28) = ~62.37M estimated
     // Pre-funded warrants @ $0.002 tracked in dilutive-instruments.ts
-    sharesForMnav: 62_370_000,
-    sharesSource: "Company-derived: 44.7M verified (8-K Jan 5: 894.3M pre-split ÷ 20) + ~17.7M from merger/PIPE",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
-    sharesAsOf: "2026-01-28",
+    sharesForMnav: 63_048_519,  // Feb 13 8-K: Class A 53,168,237 + Class B 9,880,282 (post-split)
+    sharesSource: "SEC 8-K Feb 13, 2026: 53,168,237 Class A + 9,880,282 Class B = 63,048,519 (post 1-for-20 split)",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    sharesAsOf: "2026-02-11",
     // CASH: SEC 8-K Jan 5, 2026 - $67.6M as of Dec 31, 2025
     // Post-Jan: +$119M SATA raise, -$20M Coinbase payoff, -BTC purchases → estimated ~$50-80M current
-    cashReserves: 67_600_000,
-    restrictedCash: 67_600_000,  // Operating capital earmarked for BTC - not excess
-    cashSource: "SEC 8-K Jan 5, 2026 (preliminary, as of Dec 31, 2025)",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
-    cashAsOf: "2025-12-31",
+    cashReserves: 127_200_000,  // Feb 13 8-K: $127.2M as of Feb 11, 2026
+    restrictedCash: 127_200_000,  // Operating capital earmarked for BTC - not excess
+    cashSource: "SEC 8-K Feb 13, 2026: $127.2M as of Feb 11, 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    cashAsOf: "2026-02-11",
     // DEBT: $100M Semler converts - $90M exchanged for SATA = $10M remaining (SEC 8-K Jan 28)
     // Coinbase $20M loan also paid off. 100% BTC unencumbered.
     totalDebt: 10_000_000,
@@ -668,13 +668,13 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2026-01-28",
     // PREFERRED: SATA 12.25% perpetual preferred (NOT convertible to common)
     // Dec 31: 2,012,729 SATA (SEC 8-K Jan 5) + Jan: 1.32M underwritten + ~930K exchange = ~4.26M @ $100 stated value
-    preferredEquity: 426_000_000,
-    preferredSource: "Company-derived: 2.01M verified (8-K Jan 5) + 1.32M underwritten + ~930K exchange = ~4.26M @ $100",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
-    preferredAsOf: "2026-01-28",
+    preferredEquity: 426_600_000,  // Feb 13 8-K: 4,265,518 SATA shares × $100 stated value
+    preferredSource: "SEC 8-K Feb 13, 2026: 4,265,518 SATA shares outstanding × $100 stated value",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    preferredAsOf: "2026-02-11",
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
     strategy: "First publicly traded asset manager with BTC treasury. No debt - uses perpetual preferred (SATA) instead. Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026.",
-    notes: "1-for-20 reverse split Feb 3, 2026. SATA 12.25% perpetual preferred NOT convertible to common. Pre-funded warrants (3.2M @ $0.002) and traditional warrants (26.7M @ $27) tracked in dilutive-instruments.ts.",
+    notes: "1-for-20 reverse split Feb 3, 2026. SATA 12.50% perpetual preferred (4,265,518 shares) NOT convertible to common. Pre-funded warrants (3.2M @ $0.002) and traditional warrants tracked in dilutive-instruments.ts.",
   },
   {
     id: "kulr",

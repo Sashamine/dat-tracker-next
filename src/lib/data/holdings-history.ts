@@ -820,18 +820,20 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
 // Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026
 // 1-for-20 reverse split Feb 3, 2026 - ALL share counts POST-SPLIT adjusted
 // SEC CIK: 0001920406
-// DUAL-CLASS: Class A 29,628,976 + Class B 11,145,205 = 40,774,181 (post-split)
+// DUAL-CLASS: Class A 53,168,237 + Class B 9,880,282 = 63,048,519 (post-split, Feb 13 8-K)
 // Pre-funded warrants: 3,208,713 @ $0.002 (always ITM, tracked in dilutive-instruments.ts)
-// Traditional warrants: 26,727,805 @ $27 (from PIPE, tracked in dilutive-instruments.ts)
-// Preferred: SATA 12.25% perpetual preferred (2M shares × $100 stated) = $200M - NOT convertible
+// Traditional warrants: TODO reconcile count (21.8M vs 26.7M)
+// Preferred: SATA 12.50% perpetual preferred (4,265,518 shares × $100 stated) = $426.6M - NOT convertible
 const ASST_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: SEC 10-Q (Sep 30, 2025) - shares adjusted for 1-for-20 split
-  { date: "2025-09-30", holdings: 5886, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0001444, totalDebt: 0, preferredEquity: 200_000_000, cash: 109_000_000, source: "SEC 10-Q Q3 2025 (shares adjusted for 1-for-20 split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/0001628280-25-052343-index.htm", sourceType: "sec-filing" },
-  // Jan 16, 2026: Strive + Semler merger closed (shares adjusted for 1-for-20 split Feb 3)
+  { date: "2025-09-30", holdings: 5886, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0001444, totalDebt: 0, preferredEquity: 200_000_000, cash: 109_000_000, source: "SEC 10-Q Q3 2025 (shares adjusted for 1-for-20 split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/asst-20250930.htm", sourceType: "sec-filing" },
+  // Jan 16, 2026: Strive + Semler merger closed. Semler adds ~2,300 BTC + $100M converts
   // Combined holdings: ~10,500 BTC (Strive) + ~2,300 BTC (Semler) = 12,798 BTC
-  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0003138, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - shares adjusted for 1-for-20 split", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001920406&type=DEF+14C", sourceType: "sec-filing" },
-  // Jan 28, 2026: SEC 8-K - 13,131.82 BTC
-  { date: "2026-01-28", holdings: 13131.82, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0003221, totalDebt: 0, preferredEquity: 200_000_000, cash: 50_000_000, source: "SEC 8-K Jan 28, 2026: 13,131.82 BTC", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/0001140361-26-002606-index.htm", sourceType: "sec-filing" },
+  // Shares: pre-merger 40.77M + Semler merger shares (TBD exact) — using pre-merger as lower bound
+  { date: "2026-01-16", holdings: 12798, sharesOutstandingDiluted: 40_774_181, holdingsPerShare: 0.0003138, totalDebt: 100_000_000, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - Semler acquired", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326000616/dp240082_8k.htm", sourceType: "sec-filing" },
+  // Jan 28, 2026: SEC 8-K - 13,131.82 BTC. $90M Semler converts exchanged for SATA → $10M debt remaining
+  // SATA preferred grew to ~4.26M shares ($426M) from offerings + exchange
+  { date: "2026-01-28", holdings: 13131.82, sharesOutstandingDiluted: 63_048_519, holdingsPerShare: 0.0002083, totalDebt: 10_000_000, preferredEquity: 426_600_000, cash: 67_600_000, source: "SEC 8-K Jan 28, 2026: 13,131.82 BTC", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm", sourceType: "sec-filing" },
 ];
 
 // ==================== BNB COMPANIES ====================

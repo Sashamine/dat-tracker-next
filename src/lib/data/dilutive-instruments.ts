@@ -492,37 +492,36 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_208_713,
       source: "8-K Feb 3, 2026 (post-split)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/",
+        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/dp240990_8k.htm",
       issuedDate: "2026-01-21",
       notes: "Pre-funded warrants @ $0.002 - always ITM, essentially shares. From PIPE financing.",
     },
     {
       type: "warrant",
       strikePrice: 27.0, // Post-split: $540 pre-split / 20 = $27
-      potentialShares: 21_787_205, // Adjusted post-merger
+      potentialShares: 21_787_205, // TODO: Reconcile — 26.7M elsewhere, verify from Feb 13 8-K
       source: "8-K Feb 3, 2026 (post-split)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/",
+        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/dp240990_8k.htm",
       issuedDate: "2026-01-21",
       notes: "Traditional warrants from PIPE @ $27 post-split. Significantly OTM if stock below $27.",
     },
     {
       type: "convertible",
-      strikePrice: 3.63, // $1,000 / 275.3887 conversion rate = $3.63 per share
-      potentialShares: 2_753_887, // $10M × 275.3887 / 1000 = 2,753,887 shares
+      strikePrice: 72.60, // Post-split: $3.63 pre-split × 20 = $72.60 ($1,000 / 13.7694 post-split conversion rate)
+      potentialShares: 137_694, // Post-split: 2,753,887 pre-split / 20 = 137,694 shares
       faceValue: 10_000_000,
       source: "8-K Jan 28, 2026 (Semler convertible notes)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/",
-      issuedDate: "2026-01-16", // Assumed from Semler merger
-      expiration: "2027-12-15", // Verify from original Semler note terms
-      notes: "$10M remaining Semler convertible notes after $90M exchange. Conversion rate: 275.3887 shares per $1,000.",
+        "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
+      issuedDate: "2026-01-16",
+      expiration: "2027-12-15",
+      notes: "$10M remaining Semler convertible notes after $90M exchange. Pre-split conversion rate: 275.3887/1000. Post-split: 13.7694/1000.",
     },
   ],
-  // Total ASST dilution: 3.2M pre-funded (ITM) + 21.8M traditional warrants + 2.75M converts
-  // sharesForMnav uses basic (62.37M) since dilutives tracked here
-  // At typical prices (~$30): Pre-funded adds 3.2M + converts add 2.75M → FD ~68.3M shares
-  // If stock > $27: Traditional warrants add 21.8M → FD ~90.1M shares
+  // Total ASST dilution: 3.2M pre-funded (ITM) + 21.8M traditional warrants + 137K converts
+  // sharesForMnav uses basic since dilutives tracked here
+  // TODO: Reconcile warrant counts (21.8M here vs 26.7M in companies.ts notes)
 
   // BTCS Inc - ETH treasury company
   // Verified 2026-01-29 via SEC filings and btcs.com

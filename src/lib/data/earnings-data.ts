@@ -1267,8 +1267,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "sec-filing",
     status: "upcoming",
   },
-  // Q4 2025 - Partial quarter (includes Semler acquisition Jan 16)
-  // Note: Holdings from Jan 28, 2026 8-K; shares post-split adjusted
+  // Q4 2025 - Partial quarter (includes Semler acquisition Jan 16, 1-for-20 split Feb 3)
+  // Holdings from Jan 28 8-K (post-merger). Shares from Feb 13 8-K (post-split, post-merger).
   {
     ticker: "ASST",
     fiscalYear: 2025,
@@ -1278,10 +1278,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 13_132,  // Jan 28, 2026 8-K: 13,131.82 BTC
-    sharesAtQuarterEnd: 40_774_181,  // Post-split: Class A 29,628,976 + Class B 11,145,205
-    holdingsPerShare: 0.0003221,  // 13132 / 40,774,181
+    sharesAtQuarterEnd: 63_048_519,  // Feb 13, 2026 8-K: Class A 53,168,237 + Class B 9,880,282 (post-split)
+    holdingsPerShare: 0.2083,  // 13132 / 63,048,519
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/0001140361-26-002606-index.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
     status: "upcoming",
   },
   // Q3 2025 - SEC 10-Q (Sep 30, 2025)

@@ -107,7 +107,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   // SHARES OUTSTANDING
   // 83,139,037 common (Jan 31, 2026 cover page)
   // + 12,864,602 pre-funded warrants @ $0.00001 (essentially shares)
-  // = 95,003,639 for mNAV (PFWs included in basic EPS per 10-Q)
+  // = 96,003,639 for mNAV (PFWs included in basic EPS per 10-Q)
   // =========================================================================
   sharesOutstanding: pv(
     SHARES_FOR_MNAV,
