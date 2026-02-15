@@ -339,7 +339,7 @@ export default function CompanyEarningsPage() {
                   {displayEarnings.map((earning, idx) => {
                     // Calculate growth in holdings per share (QoQ for quarterly, YoY for annual)
                     const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
-                    const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
+                    const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined && prevEarning.holdingsPerShare !== 0
                       ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
                       : null;
 
@@ -394,7 +394,7 @@ export default function CompanyEarningsPage() {
               {displayEarnings.map((earning, idx) => {
                 // Calculate growth in holdings per share (QoQ for quarterly, YoY for annual)
                 const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
-                const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined
+                const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined && prevEarning.holdingsPerShare !== 0
                   ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
                   : null;
 
