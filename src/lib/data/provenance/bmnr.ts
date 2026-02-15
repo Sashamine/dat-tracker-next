@@ -276,27 +276,29 @@ export interface ShareEstimate {
  * Uses Q1 FY2026 10-Q baseline + estimated ATM issuances
  */
 export function estimateBMNRShares(): ShareEstimate {
-  // Baseline from Q1 FY2026 10-Q (filed Jan 13, 2026)
-  const baselineShares = SHARES_OUTSTANDING; // 454,862,451
-  const baselineDate = SHARES_DATE; // "2026-01-12"
-  
-  // ETH acquisitions since baseline
-  // From 8-K filings: Jan 12 holdings: 3,737,140 → Feb 8 holdings: 4,325,738
-  const ethAcquired = LATEST_HOLDINGS - 3_737_140; // 588,598 ETH
-  const avgEthPrice = 2_600; // Rough average ETH price in this period
-  const avgStockPrice = 22; // Rough average BMNR stock price
-  
-  // Estimate shares issued via ATM
-  const estimatedNewShares = Math.round((ethAcquired * avgEthPrice) / avgStockPrice);
-  // = (588,598 × $2,600) / $22 = ~69.5M new shares
-  
+  // Baseline from Q1 FY2026 10-Q cover page (filed Jan 13, 2026)
+  const baselineShares = SHARES_OUTSTANDING; // 454,862,451 as of Jan 12
+
+  // Cash-adjusted ATM estimation from weekly 8-K data (Jan 12 → Feb 8)
+  // Method: ATM_proceeds = ETH_cost + cash_change, shares = ATM_proceeds / stock_price
+  // Anchored to 10-Q, then estimated forward using Alpaca stock prices + 8-K ETH/cash data
+  // Cross-check: pre-anchor estimate at Jan 11 = 452.5M vs actual 454.9M = 0.51% error
+  //
+  // Weekly breakdown (from 8-K extraction + Alpaca prices):
+  //   Jan 19: +35,268 ETH, $113M cost, -$9M cash chg  → $104M ATM @ $28.24 = 3,691,415 shares
+  //   Jan 25: +40,302 ETH, $114M cost, -$297M cash chg → net negative (cash drawdown, 0 shares)
+  //   Feb 1:  +41,787 ETH, $97M cost,  -$96M cash chg  → $1M ATM @ $22.80 = 35,986 shares
+  //   Feb 8:  +40,613 ETH, $86M cost,  +$9M cash chg   → $95M ATM @ $21.45 = 4,443,013 shares
+  // See: clawd/bmnr-audit/share-estimation.md
+  const estimatedNewShares = 8_170_414; // Sum: 3,691,415 + 0 + 35,986 + 4,443,013
+
   return {
     date: LATEST_HOLDINGS_DATE,
     baselineShares,
     estimatedNewShares,
-    totalEstimated: baselineShares + estimatedNewShares,
+    totalEstimated: baselineShares + estimatedNewShares, // ~463,032,865
     confidence: "medium",
-    methodology: `Q1 FY2026 10-Q baseline (${baselineShares.toLocaleString()}) + estimated ATM (${estimatedNewShares.toLocaleString()} from ${ethAcquired.toLocaleString()} ETH × $${avgEthPrice} ÷ $${avgStockPrice})`,
+    methodology: `Q1 FY2026 10-Q baseline (${baselineShares.toLocaleString()}) + cash-adjusted ATM estimate (${estimatedNewShares.toLocaleString()} shares from weekly 8-K ETH deltas, Alpaca stock prices, adjusted for cash drawdowns). Cross-checks at 0.51% vs 10-Q anchor.`,
   };
 }
 
