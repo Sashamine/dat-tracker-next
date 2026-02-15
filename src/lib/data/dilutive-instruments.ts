@@ -1282,31 +1282,33 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // DJT (Trump Media & Technology Group) - BTC treasury company
   // Verified 2026-02-13 via SEC XBRL + 8-K filings (CIK 0001849635)
   // Basic shares: 279,997,636 (Q3 2025 10-Q, as of Nov 5, 2025)
-  // ⚠️ INCOMPLETE: DJTWW warrant count/strike and convertible conversion price need verification
+  // Verified 2026-02-15 via SEC 8-K EX-4.1 indenture + Q3 10-Q footnotes (CIK 0001849635)
   DJT: [
     {
       type: "convertible",
-      strikePrice: 0, // TODO: Conversion price not yet verified — check 8-K EX-2.1 from Dec 18, 2025
-      potentialShares: 0, // TODO: Cannot calculate without conversion price
-      source: "8-K May 2025 ($2.5B private placement)",
-      sourceUrl: "/filings/djt/0001140361-25-040977",
+      strikePrice: 34.72, // $1,000 / 28.8 shares per $1,000 = $34.72 per share
+      potentialShares: 28_800_000, // $1B par × 28.8 / 1000 = 28,800,000 shares
+      source: "8-K May 30, 2025 EX-4.1 Indenture (conversion rate 28.8 shares per $1,000)",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125025009/",
       expiration: "2030-12-31",
       issuedDate: "2025-05-29",
       notes:
-        "$1B par zero-coupon convertible senior secured notes due 2030. Carrying value ~$946M (XBRL: ConvertibleNotesPayable). Conversion price/ratio TBD from 8-K exhibit.",
+        "$1B par zero-coupon convertible senior secured notes due 2030. Conversion rate: 28.8 shares per $1,000 principal ($34.72 strike). Carrying value ~$946M (XBRL: ConvertibleNotesPayable).",
     },
-    // DJTWW warrants — legacy from DWAC SPAC merger
-    // TODO: Verify count and strike from 10-K/10-Q footnotes
-    // {
-    //   type: "warrant",
-    //   strikePrice: TBD,
-    //   potentialShares: TBD,
-    //   source: "DWAC merger (2024)",
-    //   notes: "Public warrants trading as DJTWW. Count and strike need verification.",
-    // },
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 11_019_766,
+      source: "Q3 2025 10-Q footnotes (DJTWW public warrants from DWAC merger)",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
+      expiration: "2029-03-25",
+      issuedDate: "2021-09-08",
+      notes:
+        "Legacy DWAC SPAC public warrants trading as DJTWW. 11,019,766 warrants at $11.50 exercise. Exercisable for Class A common stock.",
+    },
   ],
-  // Total DJT dilution: INCOMPLETE — convertible terms + DJTWW warrants + earnout shares TBD
-  // Known dilutive risks: $1B converts (price unknown), DJTWW warrants, DWAC earnout shares
+  // Total DJT dilution: 28.8M convert shares ($34.72 strike) + 11M DJTWW warrants ($11.50)
+  // Earnout warrants from DWAC merger still unquantified (TODO: verify tranches/triggers)
 
   // NAKA (Nakamoto Inc.) - BTC treasury company
   // Verified 2026-02-13 via SEC 10-Q Q3 2025 XBRL (CIK 0001946573)

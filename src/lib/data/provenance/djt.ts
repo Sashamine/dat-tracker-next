@@ -10,8 +10,8 @@
  * ⚠️ NOTES:
  * - No standard crypto XBRL tags (CryptoAssetNumberOfUnits etc.) — DJT uses custom taxonomy
  * - BTC count must be sourced from filing text / 8-K press releases, not XBRL
- * - Holdings figure 11,542 BTC includes ~300 BTC purchased Dec 2025 (post Q3 close)
- * - Q3 2025 quarter-end BTC count was ~11,242 (implied from balance sheet + news)
+ * - Holdings figure 11,542.16 BTC is the Q3 2025 10-Q value (as of Sep 30, 2025)
+ * - DJT made additional BTC purchases in Dec 2025 (not reflected in this figure)
  * - DJT also holds CRO tokens and $300M in BTC options strategy (not tracked here)
  */
 

@@ -390,7 +390,7 @@ export const btcCompanies: Company[] = [
     costBasisSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
     isMiner: false,
     // QUARTERLY BURN: from provenance
-    quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value || 15_200_000,
+    quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value ?? 15_200_000,
     burnAsOf: "2025-11-03",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
     avgDailyVolume: 3_000_000_000,
@@ -589,7 +589,7 @@ export const btcCompanies: Company[] = [
     costBasisAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     isMiner: true,
     // QUARTERLY BURN: from provenance (G&A only, mining COGS excluded)
-    quarterlyBurnUsd: MARA_PROVENANCE.quarterlyBurn?.value || 85_296_000,
+    quarterlyBurnUsd: MARA_PROVENANCE.quarterlyBurn?.value ?? 85_296_000,
     burnSource: "SEC-verified (provenance): 10-Q Q3 2025 G&A (mining COGS excluded)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     burnAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
@@ -1206,7 +1206,7 @@ export const btcCompanies: Company[] = [
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
     isMiner: false,
     // BURN: from provenance (Q3 2025 G&A + OpCF estimate)
-    quarterlyBurnUsd: NAKA_PROVENANCE.quarterlyBurn?.value || 8_000_000,
+    quarterlyBurnUsd: NAKA_PROVENANCE.quarterlyBurn?.value ?? 8_000_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: G&A $4.98M + conservative ramp estimate",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
     burnAsOf: "2025-09-30",
@@ -1254,7 +1254,7 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-05-01",
     isMiner: false,
     // BURN: from provenance (Q1 2025 OpCF as proxy for core burn)
-    quarterlyBurnUsd: DJT_PROVENANCE.quarterlyBurn?.value || 9_737_800,
+    quarterlyBurnUsd: DJT_PROVENANCE.quarterlyBurn?.value ?? 9_737_800,
     burnSource: "SEC 10-Q Q1 2025 XBRL: NetCashProvidedByUsedInOperatingActivities -$9,737,800",
     burnSourceUrl: "/filings/djt/0001140361-25-018209",
     burnAsOf: "2025-03-31",
