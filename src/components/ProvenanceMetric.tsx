@@ -34,7 +34,7 @@ function formatValue(value: number, format: string): string {
       return `$${(value / 1e9).toFixed(2)}B`;
     } else if (Math.abs(value) >= 1e6) {
       return `$${(value / 1e6).toFixed(1)}M`;
-    } else if (Math.abs(value) >= 1e3) {
+    } else if (Math.abs(value) >= 1e4) {
       return `$${(value / 1e3).toFixed(0)}K`;
     }
     return `$${value.toLocaleString()}`;
