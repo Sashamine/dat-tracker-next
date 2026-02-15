@@ -410,7 +410,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 
 // Sharplink, Inc. (SBET) - #2 ETH treasury (formerly SharpLink Gaming, renamed Feb 3, 2026)
 // ETH treasury strategy launched June 2, 2025 — NO ETH holdings before that date
-// Note: 1:12 reverse split on May 6, 2025
+// Note: 1:12 reverse split on May 5, 2025
 // Using BASIC shares (EntityCommonStockSharesOutstanding)
 // SEC CIK: 1981535 | FY ends Dec 31 (changed from Jan 31 during ETH pivot; FY2025 10-K was Jan 31)
 //
@@ -468,7 +468,7 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   
   // Oct-Dec 2025 — Stabilizing around 860K
   // Accession: 0001493152-25-018731
-  { date: "2025-10-19", holdings: 859_853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004661, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/", sourceType: "sec-filing" },
+  { date: "2025-10-19", holdings: 859_853, sharesOutstandingDiluted: 184_500_000, holdingsPerShare: 0.004660, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/", sourceType: "sec-filing" },
   // Accession: 0001493152-25-022065 (8-K/A corrected)
   { date: "2025-11-09", holdings: 861_251, sharesOutstandingDiluted: 189_000_000, holdingsPerShare: 0.004557, source: "8-K/A Nov 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/", sourceType: "sec-filing" },
   // Accession: 0001493152-25-028063 (LATEST)
