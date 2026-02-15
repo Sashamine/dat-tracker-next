@@ -640,8 +640,8 @@ export const btcCompanies: Company[] = [
     secCik: "0001920406",
     isMiner: false,
     // BURN: SEC 10-Q Q3 2025
-    quarterlyBurnUsd: 15_000_000,
-    burnSource: "SEC 10-Q Q3 2025",
+    quarterlyBurnUsd: 6_500_000,  // Predecessor 9mo OpCF: -$18.2M / ~2.8 quarters = ~$6.5M/qtr (Successor 19-day period distorted by merger costs)
+    burnSource: "SEC 10-Q Q3 2025: Predecessor OpCF -$18,209K (Jan 1 - Sep 11, 254 days). Successor 19 days not representative.",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/asst-20250930.htm",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 100_000_000,
@@ -674,7 +674,7 @@ export const btcCompanies: Company[] = [
     preferredAsOf: "2026-02-11",
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
     strategy: "First publicly traded asset manager with BTC treasury. No debt - uses perpetual preferred (SATA) instead. Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026.",
-    notes: "1-for-20 reverse split Feb 3, 2026. SATA 12.50% perpetual preferred (4,265,518 shares) NOT convertible to common. Pre-funded warrants (3.2M @ $0.002) and traditional warrants tracked in dilutive-instruments.ts.",
+    notes: "1-for-20 reverse split Feb 6, 2026. SATA 12.50% perpetual preferred (4,265,518 shares) NOT convertible to common. Pre-funded warrants (53.6K @ $0.002) and traditional warrants (26.6M @ $27) tracked in dilutive-instruments.ts. ~$10M Semler converts remaining, planned retirement by Apr 2026.",
   },
   {
     id: "kulr",
@@ -1378,6 +1378,8 @@ export const solCompanies: Company[] = [
     secCik: "0000038264",
     asset: "SOL",
     tier: 1,
+    website: "https://www.forwardindustries.com",
+    twitter: "https://x.com/FWDI_io",
     holdings: 6_979_967,  // Jan 15, 2026 SOL-equivalent (raw SOL + LSTs like fwdSOL)
     holdingsLastUpdated: "2026-01-15",
     holdingsSource: "company-website",
@@ -1413,6 +1415,10 @@ export const solCompanies: Company[] = [
     cashAsOf: "2026-01-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
+    totalDebt: 0,  // Debt free — total liabilities $12.1M are all current (taxes, accrued expenses, lease)
+    debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
+    debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
+    debtAsOf: "2025-12-31",
     notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens).",
   },
   {

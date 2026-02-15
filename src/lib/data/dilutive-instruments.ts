@@ -479,32 +479,30 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // Strive (ASST) - First asset manager BTC treasury
-  // Verified 2026-02-12 via SEC filings (CIK 0001920406)
-  // Post-Semler merger (Jan 16, 2026) + 1-for-20 reverse split (Feb 3, 2026)
-  // Basic shares: 62,370,000 (post-merger, post-split)
-  // Diluted: ~90.12M → Difference: ~27.75M in dilutive instruments
+  // Verified 2026-02-15 via SEC 8-K Jan 5, 2026 + Feb 13, 2026 (CIK 0001920406)
+  // Post-Semler merger (Jan 16, 2026) + 1-for-20 reverse split (Feb 6, 2026)
+  // Basic shares: 63,048,519 (Feb 13 8-K: 53,168,237 Class A + 9,880,282 Class B)
   // Pre-funded warrants @ $0.002 are essentially shares - always ITM
-  // NOTE: SATA 12.25% perpetual preferred is NOT convertible to common stock
+  // NOTE: SATA 12.50% perpetual preferred is NOT convertible to common stock
+  // Warrant counts from Jan 5 8-K (Dec 31, 2025 data) adjusted for 1:20 split
   ASST: [
     {
       type: "warrant",
-      strikePrice: 0.002, // $0.002 - essentially $0, always ITM
-      potentialShares: 3_208_713,
-      source: "8-K Feb 3, 2026 (post-split)",
+      strikePrice: 0.002, // $0.04 pre-split / 20 = $0.002 - always ITM
+      potentialShares: 53_614, // Jan 5 8-K: 1,072,289 pre-split / 20 = 53,614
+      source: "8-K Jan 5, 2026 (Dec 31 data, adjusted for 1:20 split)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/dp240990_8k.htm",
-      issuedDate: "2026-01-21",
-      notes: "Pre-funded warrants @ $0.002 - always ITM, essentially shares. From PIPE financing.",
+        "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+      notes: "Pre-funded warrants @ $0.002 - always ITM, essentially shares.",
     },
     {
       type: "warrant",
       strikePrice: 27.0, // Post-split: $540 pre-split / 20 = $27
-      potentialShares: 21_787_205, // TODO: Reconcile — 26.7M elsewhere, verify from Feb 13 8-K
-      source: "8-K Feb 3, 2026 (post-split)",
+      potentialShares: 26_594_435, // Jan 5 8-K: 531,888,702 pre-split / 20 = 26,594,435
+      source: "8-K Jan 5, 2026 (Dec 31 data, adjusted for 1:20 split)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/dp240990_8k.htm",
-      issuedDate: "2026-01-21",
-      notes: "Traditional warrants from PIPE @ $27 post-split. Significantly OTM if stock below $27.",
+        "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+      notes: "Traditional warrants @ $27 post-split. OTM if stock below $27.",
     },
     {
       type: "convertible",
@@ -519,9 +517,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "$10M remaining Semler convertible notes after $90M exchange. Pre-split conversion rate: 275.3887/1000. Post-split: 13.7694/1000.",
     },
   ],
-  // Total ASST dilution: 3.2M pre-funded (ITM) + 21.8M traditional warrants + 137K converts
-  // sharesForMnav uses basic since dilutives tracked here
-  // TODO: Reconcile warrant counts (21.8M here vs 26.7M in companies.ts notes)
+  // Total ASST dilution: 53.6K pre-funded (ITM) + 26.6M traditional warrants + 137K converts
+  // sharesForMnav uses basic (63M) since dilutives tracked here
+  // At $27+: traditional warrants add 26.6M → FD ~89.7M shares
 
   // BTCS Inc - ETH treasury company
   // Verified 2026-01-29 via SEC filings and btcs.com
