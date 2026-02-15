@@ -101,6 +101,14 @@ Reviews Agent A's output. Attacks the ENTIRE extraction — not just one dimensi
 
 6. **Source authority** — For each citation, is it using the most authoritative available source? Preference order: SEC filing (8-K/10-Q/10-K) > regulatory filing > press release > company website. If the same data exists in both a PR and an 8-K, the citation should point to the 8-K. PR URLs can change or disappear; SEC EDGAR is permanent.
 
+7. **Circular derivation** — Was ANY input derived backwards from an output (e.g., cash derived from mNAV, shares derived from market cap)? Every input must trace to a primary source — filing, disclosure, or bottom-up calculation from filings. If a number was "derived from" a company's dashboard metric, flag it.
+
+8. **Preferred equity basis** — If the company has preferred shares, verify the valuation basis. Use par/liquidation value (e.g., ¥1,000/share, $100/share), NOT market conversion value or aggregate market value. Cross-check: does (preferredEquity ÷ shares) equal par? If not, the valuation basis is wrong.
+
+9. **Share class separation** — If preferred/convertible shares exist, verify whether they are a SEPARATE class or included in the common count. Check the filing's capital structure table. If separate, do NOT subtract them from common shares in sharesForMnav. If included (rare), document why.
+
+10. **Don't anchor to company mNAV** — If the company publishes its own mNAV, do NOT use it as a target. Build ours independently. Then explain any gap as a methodology difference (preferred treatment, cash treatment, dilution approach). Document the gap and rationale.
+
 **Output:** `extraction-adversary.md` — every error found, with evidence.
 
 **Threshold for adversarial:** This phase is always adversarial because it reconciles multiple source types (XBRL, 8-K, 10-Q, PRs) across multiple time periods. Single agents consistently cut corners on exhaustive source searches, fabricate quotes, and miss entire categories of financial instruments.
@@ -191,7 +199,11 @@ Reviews ALL previous agents' work. Structured attack vectors:
 
 7. **Fix safety** — If fixes were applied between phases, did they introduce new inconsistencies? Check that all four data files still agree after changes. (Known pattern: ABTC fix changed shares to 920.7M but left SPS baseline at 368 instead of 371.)
 
-8. **Staleness UX** — Does the page correctly flag stale individual metrics to users? Check: if holdings were updated recently but cash is 4+ months old, does the UI warn about stale cash? The StalenessNote component may use the most recent date across ALL metrics, masking individually stale values. (Known pattern: BTBT holdings fresh at Jan 31 masked Sep 30 cash staleness.)
+8. **Source quality preservation** — For every provenance entry, verify: (a) URL points to a specific filing/PDF, not a generic page; (b) searchTerm matches findable text in the source document; (c) quote contains the actual number being cited. If any provenance entry links to a directory listing or generic page when a specific PDF exists, flag it.
+
+9. **Preferred equity sanity check** — If preferredEquity > 0, verify: preferredEquity ÷ preferred share count ≈ par value per share. If the per-share implied value doesn't match a known par/liquidation/issue price, the valuation is likely wrong. Cross-check against dilutive-instruments.ts — are the same shares double-counted (once in preferredEquity and again as potential dilutive shares)?
+
+10. **Staleness UX** — Does the page correctly flag stale individual metrics to users? Check: if holdings were updated recently but cash is 4+ months old, does the UI warn about stale cash? The StalenessNote component may use the most recent date across ALL metrics, masking individually stale values. (Known pattern: BTBT holdings fresh at Jan 31 masked Sep 30 cash staleness.)
 
 **Output:** `final-adversary.md`
 
@@ -268,6 +280,14 @@ Single agents cut corners on:
 - mNAV formula parity gap (~2.4%) between company page inline formula and canonical `calculateMNAV()` — same class of bug as BTBT and MSTR
 - **Phase 4D (final adversary) failed on first attempt** — read all inputs before writing, exhausted context. Succeeded on retry with incremental writes (2.5 min vs 2 hours). Sub-agents must write output incrementally.
 - **Cost basis not updated when holdings updated.** 10-Q cost basis ($14.95B / 3.74M ETH = $4,002) was left as-is even though holdings were updated to 4.33M from 8-Ks. The ~589K additional ETH purchased at lower prices ($2,100-$3,200) pulls avg cost to $3,893. Verification checked each field against its source but didn't check whether derived metrics used stale inputs.
+
+### From Metaplanet (Feb 2026)
+- **Reverse-derived inputs from target outputs.** Cash ($175M) was derived backwards from Metaplanet's EV ($2.61B) to make our mNAV match theirs (1.07x). This is circular reasoning — always build inputs bottom-up from filings, never from the output you're trying to match.
+- **Preferred equity valued at wrong basis.** $567M (¥3,667/share) was in the codebase with no clear origin — doesn't match par (¥1,000) or issue price (¥900). Correct value: $155M at par (23.61M × ¥1,000). For mNAV, use **par/liquidation value** for preferred, consistent with MSTR STRK/STRF ($100 par). Nobody questioned this until the adversarial pass.
+- **Double-exclusion of preferred from shares.** Mercury Class B preferred is a separate share class, NOT included in the common count. Code subtracted 23.6M preferred from common — but they were never in the common count. Always verify whether preferred/convertible shares are a separate class or embedded in common before adjusting sharesForMnav.
+- **Anchored to company's own mNAV.** First instinct was to match Metaplanet's 1.07x by zeroing out preferred equity and inflating cash. Should have built our number independently, then explained the gap. The gap (our ~1.19x vs their 1.07x) is a legitimate methodological difference (we include preferred in EV), not an error.
+- **Source quality degraded during updates.** When updating provenance entries, TDnet PDF links (xj-storage.jp) were replaced with generic page URLs (metaplanet.jp/en/analytics). Search terms were changed to generic strings. Provenance updates must preserve or improve source specificity, never degrade it.
+- **Existing data treated as verified.** The $567M preferred and shares subtraction predated the current session. Multiple verification passes accepted them without independent verification. Every number in the pipeline should be challengeable, regardless of how long it's been there.
 
 ### Derived Metric Consistency Rule (from BMNR cost basis miss)
 > **When ANY input to a derived metric is updated, ALL derived metrics using that input must be recalculated.**
