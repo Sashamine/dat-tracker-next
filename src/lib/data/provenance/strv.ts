@@ -81,27 +81,26 @@ const DEC31_TRADITIONAL_WARRANTS = 531_888_702; // pre-split
 const DEC31_PREFUNDED_WARRANTS = 1_072_289; // pre-split
 
 // Post-Semler merger + post-split share counts (1-for-20 split effective Feb 6, 2026)
-// Anchor: 44.7M (Dec 31 verified) + ~17.7M from Semler merger (Jan 16) + PIPE (Jan 21-28)
-const BASIC_SHARES = 62_370_000; // Estimated post-merger, post-split basic shares
+// Feb 13 8-K: Class A 53,168,237 + Class B 9,880,282 = 63,048,519 as of Feb 11, 2026
+const BASIC_SHARES = 63_048_519; // Verified from SEC 8-K Feb 13, 2026
 
 // Pre-funded warrants @ $0.002 - always ITM, essentially shares
-// Dec 31: 1,072,289 pre-split = 53,614 post-split. Additional from PIPE = ~3.15M
-const PRE_FUNDED_WARRANTS = 3_208_713;
-const SHARES_WITH_PRE_FUNDED = BASIC_SHARES + PRE_FUNDED_WARRANTS; // 65,578,713
+// Dec 31: 1,072,289 pre-split / 20 = 53,614 post-split
+const PRE_FUNDED_WARRANTS = 53_614;
+const SHARES_WITH_PRE_FUNDED = BASIC_SHARES + PRE_FUNDED_WARRANTS; // 63,102,133
 
 // Total debt: $10M remaining Semler convertible notes (after $90M exchange)
 // Source: Jan 28, 2026 company PR
 const TOTAL_DEBT = 10_000_000;
 
-// Cash: $67.6M as of Dec 31, 2025 (SEC 8-K Jan 5, 2026)
-// Post-Jan: +$119M SATA raise, -$20M Coinbase payoff, -BTC purchases → ~$50-80M estimated
-const CASH = 67_600_000;
+// Cash: $127.2M as of Feb 11, 2026 (SEC 8-K Feb 13, 2026)
+const CASH = 127_200_000;
 
-// Preferred equity: SATA 12.25% perpetual preferred
+// Preferred equity: SATA 12.50% perpetual preferred (rate increased from 12.25% effective Feb 16)
 // NOT convertible to common stock
-// Dec 31: 2,012,729 SATA (verified) + Jan: 1.32M underwritten + ~930K exchange = ~4.26M @ $100
-const SATA_TOTAL_SHARES = 4_262_729; // 2,012,729 + 1,320,000 + ~930,000
-const PREFERRED_EQUITY = Math.round(SATA_TOTAL_SHARES * 100); // ~$426M
+// Feb 13 8-K: 4,265,518 SATA shares outstanding as of Feb 11, 2026
+const SATA_TOTAL_SHARES = 4_265_518; // Verified from SEC 8-K Feb 13, 2026
+const PREFERRED_EQUITY = Math.round(SATA_TOTAL_SHARES * 100); // $426,551,800
 
 /**
  * STRV Financial Data with Full Provenance
@@ -129,7 +128,7 @@ export const STRV_PROVENANCE: ProvenanceFinancials = {
 
   // =========================================================================
   // SHARES OUTSTANDING - Post-Semler merger (Jan 16, 2026) + Post-split (Feb 3, 2026)
-  // Basic: 62,370,000 (includes Semler shares, post 1-for-20 split)
+  // Basic: 63,048,519 (Feb 13 8-K: Class A 53,168,237 + Class B 9,880,282, post 1-for-20 split)
   // =========================================================================
   sharesOutstanding: pv(
     BASIC_SHARES,

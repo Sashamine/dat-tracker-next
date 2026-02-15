@@ -1279,7 +1279,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 13_132,  // Jan 28, 2026 8-K: 13,131.82 BTC
     sharesAtQuarterEnd: 63_048_519,  // Feb 13, 2026 8-K: Class A 53,168,237 + Class B 9,880,282 (post-split)
-    holdingsPerShare: 0.2083,  // 13132 / 63,048,519
+    holdingsPerShare: 0.0002083,  // 13132 / 63,048,519
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
     status: "upcoming",

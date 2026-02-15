@@ -668,7 +668,7 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2026-01-28",
     // PREFERRED: SATA 12.25% perpetual preferred (NOT convertible to common)
     // Dec 31: 2,012,729 SATA (SEC 8-K Jan 5) + Jan: 1.32M underwritten + ~930K exchange = ~4.26M @ $100 stated value
-    preferredEquity: 426_600_000,  // Feb 13 8-K: 4,265,518 SATA shares × $100 stated value
+    preferredEquity: 426_551_800,  // Feb 13 8-K: 4,265,518 SATA shares × $100 stated value
     preferredSource: "SEC 8-K Feb 13, 2026: 4,265,518 SATA shares outstanding × $100 stated value",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
     preferredAsOf: "2026-02-11",
