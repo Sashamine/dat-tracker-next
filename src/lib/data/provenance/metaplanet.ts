@@ -77,25 +77,27 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "24,530,000",
   }), "Feb 13, 2026: 24.53M new shares placed via 3rd-party allotment"),
 
-  // Total Debt (~$280M as of early Feb 2026)
-  // Was $355M drawn from $500M credit facility. Company deleveraging — part of $137M raise allocated to repayment.
-  // Pending confirmation in Feb 16, 2026 FY2025 Annual Report.
-  totalDebt: pv(280_000_000, tdnetSource({
-    title: "Estimated from multiple sources (analytics dashboard, CoinDesk Feb 6, Aktiencheck Feb 11)",
-    date: "2026-02-06",
+  // Total Debt ($355M as of Feb 14, 2026)
+  // 4 credit facilities: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4)
+  // All zero-coupon bonds (series 2-19) have been fully redeemed ($0 remaining)
+  totalDebt: pv(355_000_000, tdnetSource({
+    title: "Metaplanet Analytics Dashboard — Debt Outstanding",
+    date: "2026-02-14",
     url: "https://metaplanet.jp/en/analytics",
-    quote: "~$280M (~¥43B) drawn from $500M credit facility. Reduced from $355M via partial repayment.",
-    searchTerm: "280",
-  }), "Deleveraging from $355M. Confirm with Feb 16 FY2025 annual report."),
+    quote: "Debt Outstanding: $355.00M (4 credit facilities: $75M + $50M + $130M + $100M)",
+    searchTerm: "$355.00M",
+  }), "4 credit facilities outstanding. All zero-coupon bonds (series 2-19) fully redeemed."),
 
-  // Cash Reserves (from Q3 2025 Balance Sheet)
-  cashReserves: pv(18_000_000, tdnetSource({
-    title: "Financial Results Summary for the Third Quarter",
-    date: "2025-11-13",
-    url: PDF_URLS.q3FinancialResults,
-    quote: "Cash and Cash Equivalents: 1,488 + Deposits: 1,286 = 2,774 million JPY",
-    searchTerm: "1,488",  // Cash and Cash Equivalents line
-  }), "Q3 balance sheet: ¥2.77B (~$18M USD at 155 JPY/USD)"),
+  // Cash Reserves (derived from analytics dashboard EV formula)
+  // Q3 2025 balance was ¥2.77B ($18M) but multiple capital raises since (warrants, $137M Feb placement, bond proceeds)
+  // Derived: EV $2.61B = MCap $2.43B + Debt $355M - Cash → Cash ≈ $175M
+  cashReserves: pv(175_000_000, tdnetSource({
+    title: "Derived from Metaplanet Analytics Dashboard EV",
+    date: "2026-02-14",
+    url: "https://metaplanet.jp/en/analytics",
+    quote: "EV: $2.61B, Market Cap: $2.43B, Debt: $355M → Cash ≈ $175M (MCap + Debt - EV)",
+    searchTerm: "$2.61B",
+  }), "Derived from analytics EV. Q3 was $18M; massive capital raises since. Confirm with FY2025 annual report."),
 
   // Average Cost Basis (from company disclosure)
   // JPY cost: ¥15,945,691/BTC (¥559.726B / 35,102 BTC)

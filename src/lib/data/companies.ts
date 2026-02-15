@@ -462,20 +462,20 @@ export const btcCompanies: Company[] = [
     sharesSource: "TDnet: 1,142,274,340 (Jan 29, 2026) + 24,530,000 new shares (Feb 13, 2026 3rd-party allotment) - 23.6M Mercury converts",
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     sharesAsOf: "2026-02-13",
-    // Debt: Zero-coupon yen-denominated bonds - no interest payments, principal at maturity
-    totalDebt: 280_000_000,  // ~$280M (~¥43B) - multiple sources report deleveraging from $355M. Pending confirmation in Feb 16 annual report.
-    debtSource: "Metaplanet Analytics Dashboard + CoinDesk (Feb 6, 2026). Part of $137M raise allocated to credit facility repayment.",
+    // Debt: 4 credit facilities totaling $355M (all zero-coupon bonds have been fully redeemed)
+    totalDebt: 355_000_000,  // $355M: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4) credit facilities
+    debtSource: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
-    debtAsOf: "2026-02-06",
-    cashReserves: 18_000_000,  // Q3 FY2025: ¥2.77B (¥1,488M cash + ¥1,286M deposits) = ~$18M USD
-    restrictedCash: 0,  // No restricted cash indicated in Q3 filing
-    cashSource: "TDnet Q3 FY2025 Financial Results",
-    cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
-    cashAsOf: "2025-09-30",
-    preferredEquity: 567_000_000,  // Mercury Class B preferred: ¥86.58B (~$567M at 152.7 JPY/USD). 23.61M shares at ¥1,000 conversion, OTM at ¥325. TDnet Dec 2025.
+    debtAsOf: "2026-02-14",
+    cashReserves: 175_000_000,  // Derived from analytics: EV $2.61B = MCap $2.43B + Debt $355M - Cash → Cash ≈ $175M. Q3 was $18M but massive capital raises since (warrants, bonds, $137M Feb placement).
+    restrictedCash: 0,  // No restricted cash indicated
+    cashSource: "Derived from Metaplanet Analytics (EV = MCap + Debt - Cash). Q3 balance was ¥2.77B ($18M) but multiple capital raises since.",
+    cashSourceUrl: "https://metaplanet.jp/en/analytics",
+    cashAsOf: "2026-02-14",
+    preferredEquity: 0,  // Mercury Class B preferred (23.61M shares, ¥1,000 conversion, OTM at ¥325) excluded from EV per Metaplanet's own mNAV methodology. Tracked in dilutive-instruments.ts instead.
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
-    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M BTC-backed credit facility.",
+    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M in credit facilities outstanding (4 draws from BTC-backed facility). All zero-coupon bonds (series 2-19) fully redeemed.",
     // Key strategy documents (TDnet disclosures):
     // - 2025-2027 BITCOIN PLAN (Jun 6, 2025): 210K BTC target, warrant framework
     // - Phase II: Bitcoin Platform (Oct 1, 2025): BTC income generation for preferred dividends
