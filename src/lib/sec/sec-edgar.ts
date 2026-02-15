@@ -41,7 +41,7 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "ABTC": "0002068580",  // American Bitcoin (miner with HODL strategy)
   // ETH
   "BMNR": "0001829311",  // Bitmine Immersion
-  "SBET": "0001981535",  // SharpLink Gaming
+  "SBET": "0001981535",  // Sharplink, Inc.
   "ETHM": "0002080334",  // The Ether Machine (Dynamix merger)
   "BTBT": "0001710350",  // Bit Digital
   "BTCS": "0001436229",  // BTCS Inc

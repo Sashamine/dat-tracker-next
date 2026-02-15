@@ -240,7 +240,7 @@ const BMNR_PURCHASES: Purchase[] = [
 ];
 
 // =============================================================================
-// SBET (SharpLink Gaming) - ETH purchases from SEC 10-Q filings
+// SBET (Sharplink, Inc.) - ETH purchases from SEC 10-Q filings (renamed from SharpLink Gaming Feb 3, 2026)
 // ETH treasury strategy launched June 2, 2025 (NO holdings before this date)
 // Cost basis from SEC filings: Q2 10-Q and Q3 10-Q digital asset notes
 // =============================================================================
