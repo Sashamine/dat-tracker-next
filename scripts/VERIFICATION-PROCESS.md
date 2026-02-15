@@ -22,17 +22,24 @@ Goes to primary sources. Does NOT read any project code.
 
 **11-Step Process:**
 
-1. **Holdings Data** — Find current crypto holdings
-   - Check SEC EDGAR 8-Ks (Items 7.01, 8.01) for the MOST RECENT disclosure
+1. **Holdings Data** — Build COMPLETE historical picture
+   - Check SEC EDGAR 8-Ks (Items 7.01, 8.01) for ALL disclosures since the last 10-Q/10-K
+   - **Extract the actual holdings number from EVERY 8-K, not just the most recent.** Each filing is a data point for: holdings history, HPS tracking, charts, and share estimation.
    - Check company press releases / IR page
    - Check company Twitter/X for informal disclosures
    - **STALENESS RULE: For every metric, confirm no newer source exists. If you find a Q3 source, explicitly check for Q4 or newer PRs before recording it.**
-   - Record: asset type, exact amount, as-of date, source URL, verbatim quote
+   - Record for EACH data point: asset type, exact amount, as-of date, source URL, verbatim quote
+   - **ATM WITHOUT SHARE DISCLOSURE:** If the company has an active ATM program but does NOT disclose share counts in 8-Ks (e.g., BMNR), the weekly holdings deltas are the ONLY signal for estimating share dilution. You MUST extract every 8-K to build this chain. Use the methodology:
+     ```
+     shares_issued = (ETH_delta × ETH_price) / stock_price
+     ```
+     Anchor to the most recent 10-Q/10-K XBRL share count, then accumulate estimated issuance forward. Cross-check against any 424B5 cumulative totals.
 
 2. **SEC Filing Verification** — Map the filing landscape
    - Confirm CIK
    - List ALL filings from past 6 months (10-Q, 10-K, 8-K, S-3, 424B)
    - For each 8-K: note Item numbers and what they disclose
+   - **For each 8-K with Item 7.01/8.01: extract the actual data, don't just list it.** A filing list without extracted values is incomplete.
    - Record accession numbers, filing dates, period-end dates
 
 3. **XBRL Data Extraction** — Structured data from API
@@ -246,3 +253,11 @@ Single agents cut corners on:
 - All citations pointed to press releases when 8-K filings contained the same data — SEC filings are more authoritative and permanent
 - StalenessNote component picks most recent date across ALL metrics, masking individually stale values (Jan 31 holdings hid Sep 30 cash, Mar 31 burn)
 - Company page ITM convert adjustment missing — would diverge from overview when stock exceeds $4.16 conversion price
+
+### From BMNR (Feb 2026)
+- **Agent listed 15+ weekly 8-Ks but only extracted data from the most recent.** It treated intermediate filings as "older data not needed for current state." This is wrong — every 8-K is a data point for holdings history, HPS charts, and (critically) share estimation when the company doesn't disclose ATM shares.
+- **ATM without share disclosure is a distinct pattern.** MSTR discloses shares weekly in 8-Ks. BMNR does not. The verification process must detect this pattern and require full 8-K extraction to estimate dilution via holdings deltas.
+- Dilutive instruments had misclassified warrants as RSUs (XBRL tag `NonOptionEquityInstruments` represents warrants, not RSUs)
+- CVI Warrants (10.4M @ $87.50) entirely missing from dilutive instruments
+- mNAV formula parity gap (~2.4%) between company page inline formula and canonical `calculateMNAV()` — same class of bug as BTBT and MSTR
+- **Phase 4D (final adversary) failed on first attempt** — read all inputs before writing, exhausted context. Succeeded on retry with incremental writes (2.5 min vs 2 hours). Sub-agents must write output incrementally.
