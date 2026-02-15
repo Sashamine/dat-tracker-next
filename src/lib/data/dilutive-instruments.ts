@@ -1286,19 +1286,20 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 34.72, // $1,000 / 28.8 shares per $1,000 = $34.72 per share
       potentialShares: 28_800_000, // $1B par × 28.8 / 1000 = 28,800,000 shares
+      faceValue: 1_000_000_000, // $1B par value — subtracted from debt when ITM
       source: "8-K May 30, 2025 EX-4.1 Indenture (conversion rate 28.8 shares per $1,000)",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125025009/",
-      expiration: "2030-12-31",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125020967/ef20049966_ex4-1.htm",
+      expiration: "2028-05-29",
       issuedDate: "2025-05-29",
       notes:
-        "$1B par zero-coupon convertible senior secured notes due 2030. Conversion rate: 28.8 shares per $1,000 principal ($34.72 strike). Carrying value ~$946M (XBRL: ConvertibleNotesPayable).",
+        "$1B par zero-coupon convertible senior secured notes due 2028. Conversion rate: 28.8 shares per $1,000 principal ($34.72 strike). Carrying value ~$946M (XBRL: ConvertibleNotesPayable).",
     },
     {
       type: "warrant",
       strikePrice: 11.50,
       potentialShares: 11_019_766,
-      source: "Q3 2025 10-Q footnotes (DJTWW public warrants from DWAC merger)",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
+      source: "Q3 2025 10-Q Note 13 (DJTWW public warrants from DWAC merger)",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
       expiration: "2029-03-25",
       issuedDate: "2021-09-08",
       notes:

@@ -1247,7 +1247,7 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (8-K treasury updates, Dec 2025)
-    holdings: DJT_PROVENANCE.holdings?.value || 11_542,
+    holdings: DJT_PROVENANCE.holdings?.value ?? 11_542,
     holdingsLastUpdated: DJT_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/djt/0001140361-25-040977?tab=document&q=11%2C542",
@@ -1263,23 +1263,23 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // SHARES: from provenance (XBRL verified)
-    sharesForMnav: DJT_PROVENANCE.sharesOutstanding?.value || 279_997_636,
+    sharesForMnav: DJT_PROVENANCE.sharesOutstanding?.value ?? 279_997_636,
     sharesSource: "SEC 10-Q Q3 2025 XBRL: EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
     sharesSourceUrl: "/filings/djt/0001140361-25-040977",
     sharesAsOf: DJT_PROVENANCE_DEBUG.sharesDate,
     // DEBT: from provenance (XBRL LongTermDebt - carrying value of $1B par converts)
-    totalDebt: DJT_PROVENANCE.totalDebt?.value || 950_769_100,
-    debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2030)",
+    totalDebt: DJT_PROVENANCE.totalDebt?.value ?? 950_769_100,
+    debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2028)",
     debtSourceUrl: "/filings/djt/0001140361-25-040977",
     debtAsOf: "2025-09-30",
     // CASH: from provenance (XBRL - unrestricted only)
-    cashReserves: DJT_PROVENANCE.cashReserves?.value || 166_072_700,
+    cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
     cashSourceUrl: "/filings/djt/0001140361-25-040977",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
-    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2030. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital.",
+    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital.",
   },
   {
     id: "boyaa",

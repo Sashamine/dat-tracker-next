@@ -64,7 +64,7 @@ const TOTAL_LIABILITIES = 986_982_400;
 const CURRENT_LIABILITIES = 38_574_800;
 const NONCURRENT_LIABILITIES = TOTAL_LIABILITIES - CURRENT_LIABILITIES; // $948,407,600
 
-// Debt: $1B zero-coupon convertible senior secured notes due 2030
+// Debt: $1B zero-coupon convertible senior secured notes due 2028
 const CONVERTIBLE_NOTES_PAYABLE = 945_645_500; // XBRL carrying value (< $1B par due to issuance costs)
 const LONG_TERM_DEBT = 950_769_100; // XBRL LongTermDebt (includes converts + other)
 const LONG_TERM_DEBT_NONCURRENT = 946_079_700; // XBRL LongTermDebtNoncurrent
@@ -108,7 +108,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "11,542.16",
-      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/`,
+      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm`,
       quote: "Bitcoin 11,542.16 units, Cost Basis $1,368,082.6, Fair Value $1,320,108.6",
       anchor: "Bitcoin",
       cik: DJT_CIK,
@@ -144,7 +144,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
 
   // =========================================================================
   // TOTAL DEBT - from XBRL (us-gaap:LongTermDebt)
-  // $1B zero-coupon convertible senior secured notes due 2030
+  // $1B zero-coupon convertible senior secured notes due 2028
   // Carrying value ~$951M (par minus issuance costs)
   // =========================================================================
   totalDebt: pv(
@@ -162,7 +162,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentAnchor: "Long-term Debt",
     }),
-    "$1B par zero-coupon convertible senior secured notes due 2030. Carrying value ~$951M reflects issuance costs. ConvertibleNotesPayable XBRL = $945.6M. Part of $2.5B private placement (May 2025)."
+    "$1B par zero-coupon convertible senior secured notes due 2028. Carrying value ~$951M reflects issuance costs. ConvertibleNotesPayable XBRL = $945.6M. Part of $2.5B private placement (May 2025)."
   ),
 
   // =========================================================================
@@ -284,7 +284,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/`,
+      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm`,
       quote: "No preferred stock outstanding",
       anchor: "Preferred stock",
       cik: DJT_CIK,
@@ -324,7 +324,7 @@ export const DJT_CAPITAL_RAISE: DJTCapitalRaise = {
   equityComponent: PIPE_EQUITY,
   debtComponent: PIPE_CONVERTS,
   sharesIssued: 80_000_000,  // ~81M shares (199M → 280M)
-  convertMaturity: "2030",
+  convertMaturity: "2028-05-29",
   convertCoupon: 0,  // Zero-coupon
   convertParValue: 1_000_000_000,
   investors: 50,
@@ -412,13 +412,13 @@ export const DJT_SHARE_HISTORY = [
 // =========================================================================
 
 export const DJT_TODO = {
-  convertibleTerms: "Strike price / conversion ratio not verified — check 8-K EX-2.1 from Dec 18, 2025",
-  djtwwWarrants: "DJTWW public warrants exist (legacy SPAC) — count and strike not verified",
+  convertibleTerms: "✅ Verified: $34.72 strike, 28.8 shares/$1,000, 28.8M potential shares, maturity May 29, 2028. Per 8-K EX-4.1 (0001140361-25-020967)",
+  djtwwWarrants: "✅ Verified: 11,019,766 warrants at $11.50 strike, expires 2029-03-25. Per Q3 10-Q Note 13",
   earnoutShares: "Earnout shares from DWAC merger — status/tranches unknown",
   croHoldings: "DJT holds CRO tokens (Crypto.com) — amount not quantified",
   btcOptions: "$300M allocated to BTC options strategy — not tracked in holdings",
   fy2025_10k: "Expected ~March 2026 — will have first post-BTC annual balance sheet",
-  exactQ3BTC: "Exact Q3 quarter-end BTC count needs verification from 10-Q text (XBRL has no crypto tags)",
+  exactQ3BTC: "✅ Verified: 11,542.16 BTC per Q3 10-Q crypto assets table (no XBRL crypto tags, sourced from filing text)",
 };
 
 // =========================================================================
@@ -438,7 +438,7 @@ export const DJT_PROVENANCE_DEBUG = {
   convertibleCarryingValue: CONVERTIBLE_NOTES_PAYABLE,
   pipeTotal: PIPE_TOTAL,
   notes:
-    "Truth Social parent. $2.5B raise ($1.5B equity + $1B zero-coupon converts due 2030). No standard crypto XBRL tags. Also holds CRO + $300M BTC options (not counted). DJTWW warrants + earnout shares need verification.",
+    "Truth Social parent. $2.5B raise ($1.5B equity + $1B zero-coupon converts due 2028). No standard crypto XBRL tags. Also holds CRO + $300M BTC options (not counted). DJTWW warrants + earnout shares need verification.",
 };
 
 // =========================================================================
