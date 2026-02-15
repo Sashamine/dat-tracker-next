@@ -467,10 +467,10 @@ export const btcCompanies: Company[] = [
     debtSource: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
     debtAsOf: "2026-02-14",
-    cashReserves: 175_000_000,  // Derived from analytics: EV $2.61B = MCap $2.43B + Debt $355M - Cash → Cash ≈ $175M. Q3 was $18M but massive capital raises since (warrants, bonds, $137M Feb placement).
-    restrictedCash: 0,  // No restricted cash indicated
-    cashSource: "Derived from Metaplanet Analytics (EV = MCap + Debt - Cash). Q3 balance was ¥2.77B ($18M) but multiple capital raises since.",
-    cashSourceUrl: "https://metaplanet.jp/en/analytics",
+    cashReserves: 78_000_000,  // Estimated from capital flow trace: $18M (Q3) + $571M inflows - $510M outflows ≈ $78M. Confirm with FY2025 annual report.
+    restrictedCash: 0,
+    cashSource: "Estimated: Q3 $18M + $355M credit facilities + $136M Mercury preferred + $80M Feb placement - $451M BTC purchases - $60M redemptions/repayments/opex",
+    cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2026-02-14",
     preferredEquity: 567_000_000,  // Mercury Class B preferred: ¥86.58B (~$567M). 23.61M shares at ¥1,000 conversion, OTM at ¥325. Note: Metaplanet's own dashboard excludes preferred from EV (their mNAV ~1.07x); we include it for consistency with MSTR/STRK treatment.
     leader: "Simon Gerovich (CEO)",

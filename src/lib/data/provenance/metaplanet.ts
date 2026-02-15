@@ -88,16 +88,16 @@ export const METAPLANET_PROVENANCE = {
     searchTerm: "$355.00M",
   }), "4 credit facilities outstanding. All zero-coupon bonds (series 2-19) fully redeemed."),
 
-  // Cash Reserves (derived from analytics dashboard EV formula)
-  // Q3 2025 balance was ¥2.77B ($18M) but multiple capital raises since (warrants, $137M Feb placement, bond proceeds)
-  // Derived: EV $2.61B = MCap $2.43B + Debt $355M - Cash → Cash ≈ $175M
-  cashReserves: pv(175_000_000, tdnetSource({
-    title: "Derived from Metaplanet Analytics Dashboard EV",
+  // Cash Reserves (estimated from capital flow trace since Q3 2025)
+  // Q3: $18M + Inflows ($355M credit, $136M Mercury preferred, $80M Feb placement)
+  // - Outflows ($451M BTC, $10M bond redemption, $34M debt repay, $16M opex/buybacks) ≈ $78M
+  cashReserves: pv(78_000_000, tdnetSource({
+    title: "Capital flow trace from TDnet disclosures (Q3 2025 → Feb 2026)",
     date: "2026-02-14",
-    url: "https://metaplanet.jp/en/analytics",
-    quote: "EV: $2.61B, Market Cap: $2.43B, Debt: $355M → Cash ≈ $175M (MCap + Debt - EV)",
-    searchTerm: "$2.61B",
-  }), "Derived from analytics EV. Q3 was $18M; massive capital raises since. Confirm with FY2025 annual report."),
+    url: "https://metaplanet.jp/en/shareholders/disclosures",
+    quote: "$18M (Q3) + $571M inflows - $510M outflows ≈ $78M estimated cash",
+    searchTerm: "cash",
+  }), "Estimated from capital flow trace. Confirm with FY2025 annual report (expected mid-Feb 2026)."),
 
   // Average Cost Basis (from company disclosure)
   // JPY cost: ¥15,945,691/BTC (¥559.726B / 35,102 BTC)
