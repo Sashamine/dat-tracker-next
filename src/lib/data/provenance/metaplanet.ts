@@ -55,6 +55,11 @@ function tdnetSource(params: {
 const PDF_URLS = {
   btcPurchaseDec30: "https://contents.xj-storage.jp/xcontents/33500/4a51c54b/ec98/4363/bc59/64c440d858e3/140120251229527957.pdf",
   q3FinancialResults: "https://contents.xj-storage.jp/xcontents/33500/07d06a47/5b14/4ca6/a744/8415fa2bcc9e/140120251112597045.pdf",
+  // Credit facility disclosures (TDnet PDFs)
+  creditFacilityJan30: "https://contents.xj-storage.jp/xcontents/33500/02f0c329/c996/4597/ab84/6b2474a8f46a/140120260130543874.pdf",
+  creditFacilityDec01: "https://contents.xj-storage.jp/xcontents/33500/6ac9e946/cd10/4c2a/9c62/eaba439ef7af/140120251205515544.pdf",
+  creditFacilityNov21: "https://contents.xj-storage.jp/xcontents/33500/5d285f0a/9691/42ad/a9fb/ad9cc1bb8b4b/140120251125508365.pdf",
+  creditFacilityNov04: "https://contents.xj-storage.jp/xcontents/33500/c26b6844/626b/4669/b235/4475668e115b/140120251031585499.pdf",
 };
 
 export const METAPLANET_PROVENANCE = {
@@ -81,22 +86,22 @@ export const METAPLANET_PROVENANCE = {
   // 4 credit facilities: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4)
   // All zero-coupon bonds (series 2-19) have been fully redeemed ($0 remaining)
   totalDebt: pv(355_000_000, tdnetSource({
-    title: "Metaplanet Analytics Dashboard — Debt Outstanding",
-    date: "2026-02-14",
-    url: "https://metaplanet.jp/en/analytics",
-    quote: "Debt Outstanding: $355.00M (4 credit facilities: $75M + $50M + $130M + $100M)",
-    searchTerm: "$355.00M",
+    title: "Notice Regarding Execution of Borrowing Based on Credit Facility Agreement",
+    date: "2026-01-30",
+    url: PDF_URLS.creditFacilityJan30,
+    quote: "$355M total: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4). See also: creditFacilityDec01, creditFacilityNov21, creditFacilityNov04 PDFs.",
+    searchTerm: "Credit Facility",
   }), "4 credit facilities outstanding. All zero-coupon bonds (series 2-19) fully redeemed."),
 
   // Cash Reserves (estimated from capital flow trace since Q3 2025)
   // Q3: $18M + Inflows ($355M credit, $136M Mercury preferred, $80M Feb placement)
   // - Outflows ($451M BTC, $10M bond redemption, $34M debt repay, $16M opex/buybacks) ≈ $78M
   cashReserves: pv(78_000_000, tdnetSource({
-    title: "Capital flow trace from TDnet disclosures (Q3 2025 → Feb 2026)",
+    title: "Estimated: Q3 Financial Results + post-Q3 capital flow trace",
     date: "2026-02-14",
-    url: "https://metaplanet.jp/en/shareholders/disclosures",
-    quote: "$18M (Q3) + $571M inflows - $510M outflows ≈ $78M estimated cash",
-    searchTerm: "cash",
+    url: PDF_URLS.q3FinancialResults,
+    quote: "Q3 cash ¥2.77B ($18M) + $571M inflows (credit facilities, Mercury preferred, Feb placement) - $510M outflows (BTC purchases, bond redemptions, opex) ≈ $78M",
+    searchTerm: "1,488",
   }), "Estimated from capital flow trace. Confirm with FY2025 annual report (expected mid-Feb 2026)."),
 
   // Average Cost Basis (from company disclosure)
