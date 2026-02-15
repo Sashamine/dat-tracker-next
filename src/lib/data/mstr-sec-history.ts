@@ -404,14 +404,14 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 73_205_725_000,
     cashAndEquivalents: 54_285_000,
-    totalAssets: 74_597_847_000,
+    totalAssets: 73_619_038_000,
     totalLiabilities: 9_346_405_000,
     convertibleDebt: 8_143_824_000,
     longTermDebt: null,
     preferredEquity: 5_786_330_000,
     commonSharesOutstanding: 267_468_000,
     preSplit: false,
-    notes: "Total mezzanine = STRK $1,091,342K + STRF $1,193,240K + STRC $2,473,800K + STRD $1,027,948K",
+    notes: "Total mezzanine = STRK $1,091,342K + STRF $1,193,240K + STRC $2,473,800K + STRD $1,027,948K. totalAssets verified from XBRL us-gaap:Assets.",
   },
 ];
 
