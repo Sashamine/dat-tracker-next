@@ -472,7 +472,7 @@ export const btcCompanies: Company[] = [
     cashSource: "Derived from Metaplanet Analytics (EV = MCap + Debt - Cash). Q3 balance was ¥2.77B ($18M) but multiple capital raises since.",
     cashSourceUrl: "https://metaplanet.jp/en/analytics",
     cashAsOf: "2026-02-14",
-    preferredEquity: 0,  // Mercury Class B preferred (23.61M shares, ¥1,000 conversion, OTM at ¥325) excluded from EV per Metaplanet's own mNAV methodology. Tracked in dilutive-instruments.ts instead.
+    preferredEquity: 567_000_000,  // Mercury Class B preferred: ¥86.58B (~$567M). 23.61M shares at ¥1,000 conversion, OTM at ¥325. Note: Metaplanet's own dashboard excludes preferred from EV (their mNAV ~1.07x); we include it for consistency with MSTR/STRK treatment.
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
     notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M in credit facilities outstanding (4 draws from BTC-backed facility). All zero-coupon bonds (series 2-19) fully redeemed.",
