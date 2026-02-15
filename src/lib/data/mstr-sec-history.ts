@@ -61,7 +61,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 380_758_000,
     cashAndEquivalents: 52_653_000,
-    totalAssets: 1_104_420_000,
+    totalAssets: 772_905_000,   // XBRL us-gaap:Assets (was 1,104,420 from HTML scrape)
     totalLiabilities: 500_283_000,
     convertibleDebt: null,
     longTermDebt: null,
@@ -78,7 +78,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 1_054_302_000,
     cashAndEquivalents: 59_675_000,
-    totalAssets: 1_812_278_000,
+    totalAssets: 1_465_612_000, // XBRL us-gaap:Assets (was 1,812,278 from HTML scrape)
     totalLiabilities: 1_169_963_000,
     convertibleDebt: null,
     longTermDebt: null,
@@ -97,7 +97,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 1_946_582_000,
     cashAndEquivalents: 82_544_000,
-    totalAssets: 2_771_003_000,
+    totalAssets: 2_443_079_000, // XBRL us-gaap:Assets (was 2,771,003 from HTML scrape)
     totalLiabilities: 1_758_527_000,
     convertibleDebt: 674_443_000,
     longTermDebt: null,
@@ -114,7 +114,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_051_039_000,
     cashAndEquivalents: 56_399_000,
-    totalAssets: 2_892_285_000,
+    totalAssets: 2_624_359_000, // XBRL us-gaap:Assets (was 2,892,285 from HTML scrape)
     totalLiabilities: 1_816_422_000,
     convertibleDebt: 636_392_000,
     longTermDebt: null,
@@ -130,7 +130,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_405_739_000,
     cashAndEquivalents: 56_975_000,
-    totalAssets: 3_265_697_000,
+    totalAssets: 2_986_244_000, // XBRL us-gaap:Assets (was 3,265,697 from HTML scrape)
     totalLiabilities: 2_114_403_000,
     convertibleDebt: 637_136_000,
     longTermDebt: null,
@@ -146,7 +146,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_850_210_000,
     cashAndEquivalents: 63_356_000,
-    totalAssets: 3_739_035_000,
+    totalAssets: 3_557_124_000, // XBRL us-gaap:Assets (was 3,739,035 from HTML scrape)
     totalLiabilities: 2_443_759_000,
     convertibleDebt: 637_882_000,
     longTermDebt: null,
@@ -164,7 +164,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_895_619_000,
     cashAndEquivalents: 92_677_000,
-    totalAssets: 3_814_810_000,
+    totalAssets: 3_638_387_000, // XBRL us-gaap:Assets (was 3,814,810 from HTML scrape)
     totalLiabilities: 2_469_148_000,
     convertibleDebt: 638_630_000,
     longTermDebt: null,
@@ -180,7 +180,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 1_987_781_000,
     cashAndEquivalents: 69_386_000,
-    totalAssets: 2_897_813_000,
+    totalAssets: 2_568_365_000, // XBRL us-gaap:Assets (was 2,897,813 from HTML scrape)
     totalLiabilities: 2_488_068_000,
     convertibleDebt: 639_380_000,
     longTermDebt: null,
@@ -197,7 +197,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 1_993_032_000,
     cashAndEquivalents: 60_390_000,
-    totalAssets: 2_908_433_000,
+    totalAssets: 2_545_286_000, // XBRL us-gaap:Assets (was 2,908,433 from HTML scrape)
     totalLiabilities: 2_500_905_000,
     convertibleDebt: 640_133_000,
     longTermDebt: null,
@@ -213,7 +213,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 1_840_028_000,
     cashAndEquivalents: 43_835_000,
-    totalAssets: 2_753_631_000,
+    totalAssets: 2_410_272_000, // XBRL us-gaap:Assets (was 2,753,631 from HTML scrape)
     totalLiabilities: 2_511_762_000,
     convertibleDebt: 640_888_000,
     longTermDebt: null,
@@ -232,7 +232,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_000_392_000,
     cashAndEquivalents: 94_311_000,
-    totalAssets: 2_958_851_000,
+    totalAssets: 3_026_402_000, // XBRL us-gaap:Assets (was 2,958,851 from HTML scrape)
     totalLiabilities: 2_523_091_000,
     convertibleDebt: 641_645_000,
     longTermDebt: null,
@@ -249,7 +249,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_323_252_000,
     cashAndEquivalents: 65_968_000,
-    totalAssets: 3_270_055_000,
+    totalAssets: 3_363_104_000, // XBRL us-gaap:Assets (was 3,270,055 from HTML scrape)
     totalLiabilities: 2_543_016_000,
     convertibleDebt: 642_405_000,
     longTermDebt: null,
@@ -265,7 +265,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 2_451_374_000,
     cashAndEquivalents: 45_009_000,
-    totalAssets: 3_391_638_000,
+    totalAssets: 3_373_941_000, // XBRL us-gaap:Assets (was 3,391,638 from HTML scrape)
     totalLiabilities: 2_565_098_000,
     convertibleDebt: 643_167_000,
     longTermDebt: null,
@@ -281,7 +281,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 3_626_476_000,
     cashAndEquivalents: 46_817_000,
-    totalAssets: 4_534_127_000,
+    totalAssets: 4_762_528_000, // XBRL us-gaap:Assets (was 4,534,127 from HTML scrape)
     totalLiabilities: 2_591_907_000,
     convertibleDebt: 643_931_000,
     longTermDebt: null,
@@ -300,7 +300,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 5_074_152_000,
     cashAndEquivalents: 81_326_000,
-    totalAssets: 5_986_978_000,
+    totalAssets: 6_351_539_000, // XBRL us-gaap:Assets (was 5,986,978 from HTML scrape)
     totalLiabilities: 3_537_988_000,
     convertibleDebt: 644_698_000,
     longTermDebt: null,
@@ -317,7 +317,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 5_687_890_000,
     cashAndEquivalents: 66_923_000,
-    totalAssets: 6_585_610_000,
+    totalAssets: 7_053_073_000, // XBRL us-gaap:Assets (was 6,585,610 from HTML scrape)
     totalLiabilities: 4_191_571_000,
     convertibleDebt: 3_346_519_000,
     longTermDebt: null,
@@ -334,7 +334,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 6_850_879_000,
     cashAndEquivalents: 46_343_000,
-    totalAssets: 7_745_451_000,
+    totalAssets: 8_343_581_000, // XBRL us-gaap:Assets (was 7,745,451 from HTML scrape)
     totalLiabilities: 4_269_428_000,
     convertibleDebt: 4_202_656_000,
     longTermDebt: null,
@@ -351,7 +351,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-K&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 23_909_373_000,
     cashAndEquivalents: 38_117_000,
-    totalAssets: 25_119_428_000,
+    totalAssets: 25_843_685_000, // XBRL us-gaap:Assets (was 25,119,428 from HTML scrape)
     totalLiabilities: 8_227_285_000,
     convertibleDebt: null, // Not separately reported in 10-K
     longTermDebt: null,
@@ -370,7 +370,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 43_546_079_000,
     cashAndEquivalents: 60_298_000,
-    totalAssets: 44_798_093_000,
+    totalAssets: 43_919_760_000, // XBRL us-gaap:Assets (was 44,798,093 from HTML scrape)
     totalLiabilities: 9_254_685_000,
     convertibleDebt: 8_131_130_000,
     longTermDebt: null,
@@ -387,7 +387,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     secUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=10-Q&dateb=&owner=include&count=40&search_text=",
     digitalAssets: 64_362_798_000,
     cashAndEquivalents: 50_095_000,
-    totalAssets: 65_712_605_000,
+    totalAssets: 64_773_415_000, // XBRL us-gaap:Assets (was 65,712,605 from HTML scrape)
     totalLiabilities: 9_283_527_000,
     convertibleDebt: 8_137_427_000,
     longTermDebt: null,
