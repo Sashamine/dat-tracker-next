@@ -141,7 +141,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
       q1Fy2025Ga: pv(959_000, docSource({
         type: "sec-document",
         searchTerm: "959",
-        url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225015441/",
+        url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225015441/form10-q.htm",
         quote: "G&A ~$959K",
         anchor: "General and Administrative",
         cik: BMNR_CIK,
@@ -215,10 +215,10 @@ export const BMNR_STAKING_PROVENANCE = {
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",
-    searchTerm: "67.0%",
+    searchTerm: "67%",
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
-    quote: "67.0%",
-    anchor: "67.0%",
+    quote: "about 67%",
+    anchor: "67%",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",

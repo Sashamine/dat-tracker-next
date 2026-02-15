@@ -58,9 +58,9 @@ export const MARA_SEC_HISTORY: MaraSecSnapshot[] = [
   { 
     date: "2025-09-30", 
     form: "10-Q",
-    dilutedShares: 450_081_096,  // Note: Our holdings-history has 470M (methodology difference)
+    dilutedShares: 450_081_096,  // XBRL YTD (Jan-Sep 2025). Q3-only is 470,126,290.
     cryptoFairValue: 6_032_190_000,  // $6.03B
-    cryptoCost: 4_645_104_000,       // $4.65B cost basis
+    cryptoCost: 4_645_104_000,       // $4.65B XBRL CryptoAssetCost (includes all crypto). Note 5 BTC-only cost is $4,637,673K ($7.4M less — non-BTC crypto).
     cash: 826_392_000,               // $826.4M
     longTermDebt: 3_247_561_000,     // $3.25B
     // Implied BTC: ~$6.03B / ~$63,500 (Q3 end price) ≈ 95,000 BTC

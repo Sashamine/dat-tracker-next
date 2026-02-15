@@ -81,13 +81,13 @@ export const MARA_BTC_YIELD_FILINGS: Array<{
     date: "2024-12-09",
     holdings: 40435,
     ytdYield: "47.6%",
-    accession: "0001493152-24-048150",
+    accession: "0001493152-24-049365", // Fixed: was 048150
   },
   {
     date: "2024-12-18",
     holdings: 44394,
     ytdYield: "60.9%",
-    accession: "0001493152-24-048535",
+    accession: "0001493152-24-050693", // Fixed: was 048535
   },
 ];
 
@@ -307,8 +307,8 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     sharesOutstandingDiluted: 351_927_748,
     holdingsPerShare: 0.0001351,
     stockPrice: 17.0,
-    totalDebt: 3_248_000_000,
-    cash: 400_000_000,
+    totalDebt: 2_598_549_000, // $2,298,549K LongTermDebt + $300,000K LinesOfCreditCurrent (XBRL)
+    cash: 196_215_000, // XBRL CashAndCashEquivalentsAtCarryingValue
     source: "Q1 2025 10-Q (33,263 custody + 14,269 receivable)",
     sourceUrl: "/filings/mara/0001507605-25-000009",
     sourceType: "sec-filing",
@@ -324,8 +324,8 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     sharesOutstandingDiluted: 370_457_880,
     holdingsPerShare: 0.0001348,
     stockPrice: 17.0,
-    totalDebt: 3_248_000_000,
-    cash: 400_000_000,
+    totalDebt: 2_600_546_000, // $2,250,546K LongTermDebt + $350,000K LinesOfCreditCurrent (XBRL)
+    cash: 109_475_000, // XBRL CashAndCashEquivalentsAtCarryingValue
     source: "Q2 2025 10-Q (34,401 custody + 15,550 receivable)",
     sourceUrl: "/filings/mara/0001507605-25-000018",
     sourceType: "sec-filing",
@@ -338,10 +338,10 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-09-30",
     holdings: 52850,
-    sharesOutstandingDiluted: 378_184_353,
-    holdingsPerShare: 0.0001398,
+    sharesOutstandingDiluted: 378_184_353, // Note: field name is legacy — this is BASIC shares from cover page
+    holdingsPerShare: 0.0001397,
     stockPrice: 10.0,
-    totalDebt: 3_248_000_000,
+    totalDebt: 3_597_561_000, // $3,247,561K LongTermDebt (XBRL) + $350,000K LinesOfCreditCurrent (XBRL)
     cash: 826_392_000,
     source: "Q3 2025 10-Q (35,493 custody + 17,357 receivable)",
     sourceUrl: "/filings/mara/0001507605-25-000028",

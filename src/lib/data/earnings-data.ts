@@ -471,10 +471,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-12",
     earningsTime: "AMC",
-    epsActual: 0.32,
+    epsActual: 0.27, // XBRL EarningsPerShareDiluted Q3-only (2025-07-01 to 2025-09-30)
     epsEstimate: 0.05,
-    revenueActual: 131_600_000,
+    revenueActual: 252_410_000, // XBRL Revenues Q3-only (was 131.6M — copy-paste from Q3 2024)
     revenueEstimate: 145_000_000,
+    netIncome: 123_134_000, // XBRL ProfitLoss Q3-only
     ...getMARAQuarterEndDataForEarnings("2025-09-30")!,
     status: "reported",
   },
@@ -488,11 +489,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-06",
     earningsTime: "AMC",
-    epsActual: -0.42,
+    epsActual: 1.84, // XBRL EarningsPerShareDiluted Q2-only (2025-04-01 to 2025-06-30)
     epsEstimate: -0.15,
-    revenueActual: 145_100_000,
+    revenueActual: 238_485_000, // XBRL Revenues Q2-only (was 145.1M — copy-paste from Q2 2024)
     revenueEstimate: 157_000_000,
-    netIncome: -199_700_000,
+    netIncome: 808_205_000, // XBRL ProfitLoss Q2-only (was -199.7M — copy-paste from Q2 2024)
     ...getMARAQuarterEndDataForEarnings("2025-06-30")!,
     status: "reported",
   },
@@ -506,11 +507,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 1,
     earningsDate: "2025-05-08",
     earningsTime: "AMC",
-    epsActual: -0.47,
+    epsActual: -1.55, // XBRL EarningsPerShareDiluted Q1-only (2025-01-01 to 2025-03-31)
     epsEstimate: -0.25,
-    revenueActual: 213_900_000,
+    revenueActual: 213_884_000, // XBRL Revenues Q1-only
     revenueEstimate: 224_000_000,
-    netIncome: -183_400_000,
+    netIncome: -533_443_000, // XBRL ProfitLoss Q1-only
     ...getMARAQuarterEndDataForEarnings("2025-03-31")!,
     status: "reported",
   },

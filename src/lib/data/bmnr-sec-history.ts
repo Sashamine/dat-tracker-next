@@ -71,7 +71,7 @@ export const BMNR_SEC_HISTORY: BMNRSecFiling[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001683168-24-000250-index.html",
     digitalAssets: 152_990,
     cashAndEquivalents: 470_529,
-    totalAssets: 7_934_925,
+    totalAssets: 8_580_018, // XBRL verified (was 7,934,925 — copy-paste from Q1 FY2025)
     totalLiabilities: 5_914_801,
     totalDebt: 2_019_922,
     preferredEquity: 45,
@@ -87,7 +87,7 @@ export const BMNR_SEC_HISTORY: BMNRSecFiling[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001683168-24-002367-index.html",
     digitalAssets: 11_733,
     cashAndEquivalents: 342_296,
-    totalAssets: 7_712_598,
+    totalAssets: 7_849_837, // XBRL verified (was 7,712,598)
     totalLiabilities: 4_858_045,
     totalDebt: 1_718_779,
     preferredEquity: 45,
@@ -103,7 +103,7 @@ export const BMNR_SEC_HISTORY: BMNRSecFiling[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001683168-24-004815-index.html",
     digitalAssets: 169_632,
     cashAndEquivalents: 281_004,
-    totalAssets: 7_699_513,
+    totalAssets: 8_166_529, // XBRL verified (was 7,699,513)
     totalLiabilities: 4_846_866,
     totalDebt: 1_625_000,
     preferredEquity: 45,
@@ -119,7 +119,7 @@ export const BMNR_SEC_HISTORY: BMNRSecFiling[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001683168-24-008555-index.html",
     digitalAssets: 0,
     cashAndEquivalents: 499_270,
-    totalAssets: 8_344_213,
+    totalAssets: 7_283_529, // XBRL verified (was 8,344,213)
     totalLiabilities: 5_491_660,
     totalDebt: 2_356_472,
     preferredEquity: 45,
@@ -153,7 +153,7 @@ export const BMNR_SEC_HISTORY: BMNRSecFiling[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001683168-25-002541-index.html",
     digitalAssets: 247_923,
     cashAndEquivalents: 482_951,
-    totalAssets: 8_257_347,
+    totalAssets: 7_500_676, // XBRL verified (was 8,257,347)
     totalLiabilities: 5_403_885,
     totalDebt: 2_560_461,
     preferredEquity: 45,
@@ -169,7 +169,7 @@ export const BMNR_SEC_HISTORY: BMNRSecFiling[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1829311/0001683168-25-004889-index.html",
     digitalAssets: 173_916,
     cashAndEquivalents: 1_473_501,
-    totalAssets: 8_173_267,
+    totalAssets: 8_265_816, // XBRL verified (was 8,173,267)
     totalLiabilities: 5_387_860,
     totalDebt: 2_391_407,
     preferredEquity: 45,

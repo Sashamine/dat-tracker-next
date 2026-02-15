@@ -5,6 +5,7 @@
 
 import type { HoldingsSource } from '../types';
 import { MSTR_VERIFIED_FINANCIALS } from './mstr-verified-financials';
+import { BMNR_HISTORY } from './bmnr-holdings-history';
 
 export interface HoldingsSnapshot {
   date: string; // YYYY-MM-DD
@@ -321,44 +322,8 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Bitmine Immersion (BMNR) - World's largest ETH treasury
-// Data from SEC 8-K filings (Item 7.01), 10-Q, 10-K, 424B5
-// SEC EDGAR CIK: 1829311
-// AUDITED 2026-02-09: Holdings verified from 8-Ks, shares from XBRL + 424B5 anchors
-// Share methodology: Anchors from 10-Q/10-K/424B5, interpolated between using ETH acquisition
+// Single source of truth: bmnr-holdings-history.ts (imported above)
 // See: clawd/bmnr-audit/METHODOLOGY.md
-const BMNR_HISTORY: HoldingsSnapshot[] = [
-  // July 2025 - Initial accumulation (share anchor: 424B5 Jul 23 = 112.3M)
-  { date: "2025-07-17", holdings: 300657, sharesOutstandingDiluted: 112_311_382, holdingsPerShare: 0.002677, stockPrice: 41.90, source: "SEC 8-K Initial holdings", sharesSource: "424B5 anchor (Jul 23)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  { date: "2025-07-23", holdings: 566776, sharesOutstandingDiluted: 112_311_382, holdingsPerShare: 0.005046, stockPrice: 39.50, source: "SEC 8-K Jul 24", sharesSource: "424B5 anchor", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011364/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  // August 2025 - Rapid accumulation (share anchor: 424B5 Aug 11 = 218.9M after 106.6M ATM)
-  { date: "2025-08-17", holdings: 1523373, sharesOutstandingDiluted: 218_888_720, holdingsPerShare: 0.006959, stockPrice: 57.81, source: "SEC 8-K Aug 18", sharesSource: "424B5 anchor (Aug 11)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225012109/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  { date: "2025-08-24", holdings: 1713899, sharesOutstandingDiluted: 218_888_720, holdingsPerShare: 0.007829, stockPrice: 53.49, source: "SEC 8-K Aug 25", sharesSource: "424B5 anchor (Aug 11)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225012292/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  // September 2025 (share anchor: 424B5 Sep 22 = 224.1M after 5.2M direct)
-  { date: "2025-09-07", holdings: 2069443, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.009406, stockPrice: 42.04, source: "SEC 8-K Sep 8", sharesSource: "Interpolated Aug-Sep", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225012776/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-09-14", holdings: 2151676, sharesOutstandingDiluted: 222_000_000, holdingsPerShare: 0.009692, stockPrice: 55.09, source: "SEC 8-K Sep 15", sharesSource: "Interpolated Aug-Sep", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225013376/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-09-21", holdings: 2416054, sharesOutstandingDiluted: 224_106_435, holdingsPerShare: 0.010781, stockPrice: 61.29, source: "SEC 8-K Sep 22", sharesSource: "424B5 anchor", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225014387/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  { date: "2025-09-28", holdings: 2650900, sharesOutstandingDiluted: 240_000_000, holdingsPerShare: 0.011045, stockPrice: 50.50, source: "SEC 8-K Sep 29", sharesSource: "Interpolated Sep-Nov", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225015879/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  // October 2025 (interpolated between Sep 22 and Nov 20 anchors)
-  { date: "2025-10-05", holdings: 2830151, sharesOutstandingDiluted: 260_000_000, holdingsPerShare: 0.010885, stockPrice: 56.65, source: "SEC 8-K Oct 6", sharesSource: "Interpolated Sep-Nov", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225017019/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-10-19", holdings: 3236014, sharesOutstandingDiluted: 290_000_000, holdingsPerShare: 0.011159, stockPrice: 49.85, source: "SEC 8-K Oct 20", sharesSource: "Interpolated Sep-Nov", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225018577/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-10-26", holdings: 3313069, sharesOutstandingDiluted: 310_000_000, holdingsPerShare: 0.010687, stockPrice: 50.41, source: "SEC 8-K Oct 27", sharesSource: "Interpolated Sep-Nov", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225019644/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  // November 2025 (share anchor: 10-K Nov 20 = 384.1M)
-  { date: "2025-11-02", holdings: 3395422, sharesOutstandingDiluted: 330_000_000, holdingsPerShare: 0.010289, stockPrice: 46.65, source: "SEC 8-K Nov 3", sharesSource: "Interpolated Sep-Nov", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225020545/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-11-09", holdings: 3505723, sharesOutstandingDiluted: 350_000_000, holdingsPerShare: 0.010016, stockPrice: 40.23, source: "SEC 8-K Nov 10", sharesSource: "Interpolated Sep-Nov", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225021429/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-11-23", holdings: 3629701, sharesOutstandingDiluted: 380_000_000, holdingsPerShare: 0.009552, stockPrice: 26.00, source: "SEC 8-K Nov 24", sharesSource: "Near 10-K anchor", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225024762/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-11-30", holdings: 3726499, sharesOutstandingDiluted: 408_578_823, holdingsPerShare: 0.009121, stockPrice: 33.12, source: "SEC 8-K Dec 1", sharesSource: "10-Q balance sheet (Nov 30)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225025501/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  // December 2025 (interpolated between Nov 20 and Jan 12 anchors)
-  { date: "2025-12-14", holdings: 3967210, sharesOutstandingDiluted: 400_000_000, holdingsPerShare: 0.009918, stockPrice: 34.86, cash: 1_000_000_000, source: "SEC 8-K Dec 15", sharesSource: "Interpolated Nov-Jan", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225027660/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2025-12-21", holdings: 4066062, sharesOutstandingDiluted: 410_000_000, holdingsPerShare: 0.009917, stockPrice: 31.36, cash: 1_000_000_000, source: "SEC 8-K Dec 22", sharesSource: "Interpolated Nov-Jan", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225028674/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  // January 2026 (share anchor: 10-Q Jan 12 = 454.9M)
-  { date: "2026-01-04", holdings: 4143502, sharesOutstandingDiluted: 430_000_000, holdingsPerShare: 0.009636, stockPrice: 31.19, cash: 915_000_000, source: "SEC 8-K Jan 5", sharesSource: "Interpolated Nov-Jan", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226000274/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2026-01-11", holdings: 4167768, sharesOutstandingDiluted: 450_000_000, holdingsPerShare: 0.009262, stockPrice: 30.06, cash: 988_000_000, source: "SEC 8-K Jan 12", sharesSource: "Near 10-Q anchor", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226001237/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2026-01-19", holdings: 4203036, sharesOutstandingDiluted: 454_862_451, holdingsPerShare: 0.009241, stockPrice: 31.16, cash: 979_000_000, source: "SEC 8-K Jan 20", sharesSource: "10-Q XBRL anchor (Jan 12)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002762/ex99-1.htm", sourceType: "sec-filing", confidence: "high" },
-  { date: "2026-01-25", holdings: 4243338, sharesOutstandingDiluted: 460_000_000, holdingsPerShare: 0.009225, stockPrice: 28.80, cash: 682_000_000, source: "SEC 8-K Jan 26", sharesSource: "Estimated from ATM", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  // February 2026 (estimated shares from ATM activity since Jan 12 anchor)
-  { date: "2026-02-01", holdings: 4285125, sharesOutstandingDiluted: 470_000_000, holdingsPerShare: 0.009117, stockPrice: 25.10, cash: 586_000_000, source: "SEC 8-K Feb 2", sharesSource: "Estimated from ATM", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004658/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-  { date: "2026-02-08", holdings: 4325738, sharesOutstandingDiluted: 480_000_000, holdingsPerShare: 0.009012, stockPrice: 20.47, cash: 595_000_000, source: "SEC 8-K Feb 9 (latest)", sharesSource: "Estimated from ATM", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm", sourceType: "sec-filing", confidence: "medium" },
-];
 
 // Nakamoto Inc. (NAKA) - Rebranded from KindlyMD Jan 21, 2026
 // SEC CIK: 0001946573

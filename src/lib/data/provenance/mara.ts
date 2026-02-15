@@ -37,10 +37,10 @@ const LATEST_HOLDINGS_DATE = "2025-09-30";
 
 // Shares outstanding
 const SHARES_OUTSTANDING = 378_184_353; // Basic shares from 10-Q cover
-const DILUTED_SHARES = 470_126_290; // From WeightedAverageNumberOfDilutedSharesOutstanding
+const DILUTED_SHARES = 470_126_290; // XBRL WeightedAverageNumberOfDilutedSharesOutstanding Q3-ONLY (Jul-Sep 2025). YTD (Jan-Sep) is 450,081,096.
 
 // Financial data
-const TOTAL_DEBT = 3_642_472_000; // $3.25B convertible notes (book value) + $350M line of credit + other. Per FMP balance sheet Q3 2025.
+const TOTAL_DEBT = 3_597_561_000; // $3,247,561K LongTermDebt (XBRL) + $350,000K LinesOfCreditCurrent (XBRL). Both from 10-Q Q3 2025.
 const CASH_RESERVES = 826_392_000; // $826M cash
 const RESTRICTED_CASH = 12_000_000; // $12M restricted
 const COST_BASIS_TOTAL = 4_637_673_000; // Total cost of BTC
@@ -76,10 +76,10 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   // Total cost / total holdings = average cost per BTC
   // =========================================================================
   costBasisAvg: pv(
-    87_762, // $4,637,673,000 / 52,850 = $87,762.33
+    87_752, // $4,637,673,000 / 52,850 = $87,751.62
     derivedSource({
       derivation: "Total BTC cost / Total BTC holdings",
-      formula: "$4,637,673,000 / 52,850 BTC = $87,762/BTC",
+      formula: "$4,637,673,000 / 52,850 BTC = $87,752/BTC",
       inputs: {
         totalCost: pv(
           COST_BASIS_TOTAL,
@@ -187,8 +187,8 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   totalDebt: pv(
     TOTAL_DEBT,
     derivedSource({
-      derivation: "Long-term convertible notes (book value) + line of credit + current portion",
-      formula: "$3,247,561K (LongTermDebt XBRL) + $350,000K (line of credit, current) + $44,911K (other) = $3,642,472K",
+      derivation: "Long-term convertible notes (book value) + line of credit (current)",
+      formula: "$3,247,561K (LongTermDebt XBRL) + $350,000K (LinesOfCreditCurrent XBRL) = $3,597,561K",
       inputs: {
         longTermDebt: pv(3_247_561_000, xbrlSource({
           fact: "us-gaap:LongTermDebt",
@@ -217,7 +217,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
         })),
       },
     }),
-    "5 convertible note tranches ($3.3B face) + $350M line of credit. Converts: Dec 2026 ($48M), Sep 2031 ($300M), Mar 2030 ($1B), Jun 2031 ($925M), Aug 2032 ($1.025B)."
+    "5 convertible note tranches ($3.298B face) + $350M line of credit. Converts: Dec 2026 1% ($48M), Sep 2031 2.125% ($300M), Mar 2030 0% ($1B), Jun 2031 0% ($925M), Aug 2032 0% ($1.025B). Per 10-Q Q3 2025 Note 14."
   ),
 
   // =========================================================================
@@ -265,6 +265,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
 
 // =========================================================================
 // CONVERTIBLE NOTES DETAIL
+// Reconciled 2026-02-15 with 10-Q Q3 2025 Note 14 (5 tranches)
 // Full breakdown of all convertible tranches for reference
 // Actual dilutive calculations in dilutive-instruments.ts
 // =========================================================================
@@ -282,40 +283,65 @@ export interface MARAConvertibleNote {
   status: "outstanding" | "converted" | "redeemed" | "matured";
 }
 
+// Updated 2026-02-15 to match 10-Q Q3 2025 Note 14 (5 tranches)
 export const MARA_CONVERTIBLE_NOTES: MARAConvertibleNote[] = [
   {
     id: "2026-notes",
-    name: "2026 Convertible Senior Notes",
+    name: "1.0% Convertible Senior Notes due Dec 2026",
     issuanceDate: "2021-11-18",
-    maturityDate: "2026-11-15",
-    principalAmount: 747_500_000,
-    couponRate: 0,
-    conversionPrice: 76.17,
-    sharesIfConverted: 9_812_000,
+    maturityDate: "2026-12-01",
+    principalAmount: 48_077_000,    // $48M remaining (originally $747.5M, most redeemed)
+    couponRate: 1.0,                // 1.0%
+    conversionPrice: 76.17,         // $1,000 / 13.1277 = $76.17
+    sharesIfConverted: 631_265,     // $48,077K × 13.1277 / 1000
     accession8k: "0001193125-21-334851",
     status: "outstanding",
   },
   {
+    id: "2031-notes-a",
+    name: "2.125% Convertible Senior Notes due Sep 2031",
+    issuanceDate: "2024-08-14",
+    maturityDate: "2031-09-01",
+    principalAmount: 300_000_000,   // $300M
+    couponRate: 2.125,              // 2.125%
+    conversionPrice: 18.89,         // $1,000 / 52.9451 = $18.89
+    sharesIfConverted: 15_883_530,  // $300,000K × 52.9451 / 1000
+    accession8k: "0001493152-24-032433",
+    status: "outstanding",
+  },
+  {
     id: "2030-notes",
-    name: "2030 Convertible Senior Notes",
+    name: "0% Convertible Senior Notes due Mar 2030",
+    issuanceDate: "2024-11-21",
+    maturityDate: "2030-03-01",
+    principalAmount: 1_000_000_000, // $1B
+    couponRate: 0,                  // 0% (zero-coupon)
+    conversionPrice: 25.91,         // $1,000 / 38.5902 = $25.91
+    sharesIfConverted: 38_590_200,  // $1,000,000K × 38.5902 / 1000
+    accession8k: "0001493152-24-047078",
+    status: "outstanding",
+  },
+  {
+    id: "2031-notes-b",
+    name: "0% Convertible Senior Notes due Jun 2031",
     issuanceDate: "2024-12-04",
-    maturityDate: "2030-12-01",
-    principalAmount: 850_000_000,
-    couponRate: 0,
-    conversionPrice: 34.58,
-    sharesIfConverted: 24_580_000,
+    maturityDate: "2031-06-01",
+    principalAmount: 925_000_000,   // $925M
+    couponRate: 0,                  // 0% (zero-coupon)
+    conversionPrice: 34.58,         // $1,000 / 28.9159 = $34.58
+    sharesIfConverted: 26_747_208,  // $925,000K × 28.9159 / 1000
     accession8k: "0001493152-24-048704",
     status: "outstanding",
   },
   {
     id: "2032-notes",
-    name: "2032 Convertible Senior Notes",
+    name: "0% Convertible Senior Notes due Aug 2032",
     issuanceDate: "2025-07-28",
-    maturityDate: "2032-05-01",
-    principalAmount: 950_000_000,
-    couponRate: 0,
-    conversionPrice: 20.26,
-    sharesIfConverted: 46_890_000,
+    maturityDate: "2032-08-01",
+    principalAmount: 1_025_000_000, // $1.025B
+    couponRate: 0,                  // 0% (zero-coupon)
+    conversionPrice: 20.26,         // $1,000 / 49.3619 = $20.26
+    sharesIfConverted: 50_596_048,  // $1,025,000K × 49.3619 / 1000
     accession8k: "0000950142-25-002027",
     status: "outstanding",
   },

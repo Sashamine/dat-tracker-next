@@ -28,7 +28,7 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=4%2C325%2C738%20ETH",
     datStartDate: "2025-07-01",
     // COST BASIS: from provenance (10-Q)
-    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 4_002,
+    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 3_893,
     costBasisSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=cost%20basis",
     costBasisAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
@@ -582,7 +582,7 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/MARAHoldings",
     secCik: "0001507605",
     // COST BASIS: from provenance (10-Q)
-    costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value || 87_762,
+    costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value || 87_752,
     costBasisSource: "SEC-verified (provenance): 10-Q Q3 2025",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     costBasisAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
@@ -609,11 +609,11 @@ export const btcCompanies: Company[] = [
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
     // DEBT: from provenance (~$3.25B in convertible notes)
-    totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_642_472_000,
-    debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL",
+    totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_597_561_000,
+    debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     debtAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
-    notes: "Largest US public miner. Core financials from provenance/mara.ts. ~$3.25B in 0% convertible notes (2026, 2030, 2032 series). Dilutives (~81M from converts) in dilutive-instruments.ts.",
+    notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-Q Note 14 + $350M line of credit. Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts.",
   },
   {
     // =========================================================================
