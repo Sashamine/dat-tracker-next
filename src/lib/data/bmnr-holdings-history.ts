@@ -22,6 +22,7 @@ const SHARE_ANCHORS = {
   '2025-08-11': { shares: 218_888_720, source: '424B5 (after 106.6M ATM)', accession: '0001493152-25-011831' },
   '2025-09-22': { shares: 224_106_435, source: '424B5 (+5.2M direct)', accession: '0001493152-25-014391' },
   '2025-11-20': { shares: 384_067_823, source: '10-K XBRL', accession: '0001493152-25-024679' },
+  '2025-11-30': { shares: 408_578_823, source: '10-Q balance sheet', accession: '0001493152-26-002084' },
   '2026-01-12': { shares: 454_862_451, source: '10-Q XBRL', accession: '0001493152-26-002084' },
 };
 
@@ -224,12 +225,12 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-11-30',
     holdings: 3726499,
-    sharesOutstandingDiluted: 384_067_823, // 10-K anchor
-    holdingsPerShare: 0.009703,
+    sharesOutstandingDiluted: 408_578_823, // 10-Q balance sheet anchor (Nov 30)
+    holdingsPerShare: 0.009121,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225025501/ex99-1.htm',
     sourceType: 'sec-filing',
-    methodology: 'Shares from 10-K XBRL anchor (Nov 20)',
+    methodology: 'Shares from 10-Q balance sheet (Nov 30, 2025). HPS: 3,726,499 / 408,578,823 = 0.009121',
     confidence: 'high',
   },
   

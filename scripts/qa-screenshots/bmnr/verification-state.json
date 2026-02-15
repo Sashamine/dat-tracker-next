@@ -1,0 +1,50 @@
+{
+  "ticker": "BMNR",
+  "startedAt": "2026-02-14T22:06:00Z",
+  "updatedAt": "2026-02-14T22:38:00Z",
+  "status": "in-progress",
+  "phases": {
+    "1a": { "status": "complete", "outputFile": "C:\\Users\\edwin\\clawd\\bmnr-ground-truth.md" },
+    "1b": { "status": "complete", "outputFile": "C:\\Users\\edwin\\dat-tracker-next\\scripts\\qa-screenshots\\bmnr\\extraction-adversary.md" },
+    "4c": { "status": "complete", "outputFile": "C:\\Users\\edwin\\dat-tracker-next\\scripts\\qa-screenshots\\bmnr\\pipeline-check.md" },
+    "4d": {
+      "status": "complete",
+      "completedAt": "2026-02-14T22:38:00Z",
+      "outputFile": "C:\\Users\\edwin\\dat-tracker-next\\scripts\\qa-screenshots\\bmnr\\final-adversary.md",
+      "summary": {
+        "confirmed": 7,
+        "disputed": 1,
+        "newIssues": 2,
+        "fixOrder": [
+          "1. Dilutive instruments (CVI warrants, RSU fix, strategic advisor fix, hasDilutiveInstruments)",
+          "2. Nov 30 share anchor (408,578,823)",
+          "3. mNAV formula parity (BMNRCompanyView vs calculateMNAV)",
+          "4. Staking revenue $188M→$202M",
+          "5. C-3 warrant verification",
+          "6. Consulting fee disclosure note",
+          "7. Holdings history dedup"
+        ]
+      }
+    },
+    "5": {
+      "status": "pending",
+      "agent": "Fix & Verify",
+      "inputFiles": [
+        "C:\\Users\\edwin\\dat-tracker-next\\scripts\\qa-screenshots\\bmnr\\final-adversary.md",
+        "C:\\Users\\edwin\\dat-tracker-next\\scripts\\qa-screenshots\\bmnr\\pipeline-check.md",
+        "C:\\Users\\edwin\\clawd\\bmnr-ground-truth.md"
+      ]
+    }
+  },
+  "contextEstimate": {
+    "systemOverhead": 15000,
+    "conversationTokens": 25000,
+    "totalEstimate": 40000,
+    "sessionLimit": 195000,
+    "rotationThreshold": 120000
+  },
+  "lessons": [
+    "Phase 4D first attempt: read everything then write → 2h timeout, no output",
+    "Phase 4D retry: incremental write → 2.5 min, complete output. Add to CONTEXT-MANAGEMENT.md"
+  ]
+}

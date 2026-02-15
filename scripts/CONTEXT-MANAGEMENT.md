@@ -301,6 +301,15 @@ Do NOT read the file yourself to build the prompt.
 - Return format enforcement: **not consistent** ❌
 - Session rotation: **manual only** ❌
 
+### Incremental Output Rule (learned Feb 14)
+**Sub-agents must write output files incrementally.** Never read all inputs before writing.
+
+Pattern: Read input A → write findings → Read input B → append findings → Write summary.
+
+Anti-pattern: Read A, B, C, D → process → write everything at end. This fails when context fills up during reads, leaving nothing for writes.
+
+**Evidence:** BMNR Phase 4D first attempt read all 4 input files (100K tokens, 2 hours), then tried to write the report — context exhausted, no output file created. Retry with incremental writes: 65K tokens, 2.5 minutes, complete output.
+
 ### Priority implementation order
 1. **State file** — biggest bang. Enables crash recovery immediately.
 2. **Sub-agent return format** — add structured summary to spawn prompts.

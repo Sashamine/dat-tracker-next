@@ -113,12 +113,12 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     filingType: "10-Q",
     filingDate: Q1_FY2026_FILED,
     documentAnchor: "shares outstanding of the registrant",
-  }), "Basic shares. Add ~4.4M dilutive shares (warrants + RSUs) for fully diluted."),
+  }), "Basic shares. Add ~13.5M potentially dilutive shares (CVI warrants 10.4M @ $87.50, strategic advisor warrants 3.0M @ $5.40, RSUs 27K, C-3 warrants 1.3K) for fully diluted."),
 
   // =========================================================================
   // STAKING - tracked separately (not in ProvenanceFinancials type)
-  // From Feb 2, 2026 8-K: 2,897,459 ETH staked (67.6%)
-  // Annualized staking revenue ~$188M
+  // From Feb 9, 2026 8-K: 2,897,459 ETH staked (67.0%)
+  // Annualized staking revenue ~$202M
   // =========================================================================
 
   // =========================================================================
@@ -233,17 +233,17 @@ export const BMNR_STAKING_PROVENANCE = {
     documentDate: LATEST_HOLDINGS_DATE,
   })),
 
-  annualizedRevenue: pv(188_000_000, docSource({
+  annualizedRevenue: pv(202_000_000, docSource({
     type: "sec-document",
-    searchTerm: "188",
-    url: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226004960/ex99-1.htm",
-    quote: "Annualized staking revenues are approximately $188 million",
+    searchTerm: "202",
+    url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
+    quote: "Annualized staking revenues are now $202 million, up +7% in the past week",
     anchor: "staking",
     cik: BMNR_CIK,
-    accession: "0001493152-26-004960",
+    accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-02",
-    documentDate: "2026-02-01",
+    filingDate: "2026-02-09",
+    documentDate: LATEST_HOLDINGS_DATE,
   })),
 };
 

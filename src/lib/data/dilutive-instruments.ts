@@ -51,35 +51,47 @@ export interface InstrumentBreakdown {
  */
 export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // BMNR (Bitmine Immersion) - ETH treasury company
-  // Verified 2026-01-28 via SEC XBRL (CIK 0001829311)
+  // Verified 2026-02-14 via 10-Q Q1 FY2026 (Note 10) + 8-K Sep 22 2025 (CVI)
+  // Total potentially dilutive: 13,507,318 shares
   BMNR: [
     {
       type: "warrant",
       strikePrice: 10.0,
-      potentialShares: 129_375,
-      source: "10-K FY2025",
+      potentialShares: 1_280,
+      source: "10-Q Q1 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-K",
-      notes: "ClassOfWarrantOrRightOutstanding @ $10 exercise price",
+        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+      notes: "C-3 legacy warrants (pre-pivot). Strike unknown, using $10 estimate.",
     },
     {
       type: "warrant",
       strikePrice: 5.4,
-      potentialShares: 1_231_945,
-      source: "8-K Jul 2025 PIPE",
+      potentialShares: 3_043_654,
+      source: "10-Q Q1 FY2026 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1829311/000168316825004494",
+        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
       issuedDate: "2025-07-10",
-      notes: "Placement agent warrants (ThinkEquity) from $250M PIPE",
+      notes: "Strategic Advisor + Placement Agent (ThinkEquity) warrants from $250M PIPE. 3,107,114 issued, 63,460 exercised, 3,043,654 remaining.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 87.5,
+      potentialShares: 10_435_430,
+      source: "10-Q Q1 FY2026 Note 7 + 8-K Sep 22 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+      issuedDate: "2025-09-22",
+      expiration: "2027-03-22",
+      notes: "CVI Warrants (liability-classified). Registered direct offering @ $70/share + warrants @ $87.50. Currently OTM. Fair value $98.6M at Nov 30.",
     },
     {
       type: "option",
       strikePrice: 0, // RSUs vest at $0
-      potentialShares: 3_043_654,
-      source: "10-Q Q1 FY2026",
+      potentialShares: 26_954,
+      source: "10-Q Q1 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001829311&type=10-Q",
-      notes: "RSUs/restricted stock (NonOptionEquityInstrumentsOutstanding)",
+        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+      notes: "RSUs from 2025 Omnibus Incentive Plan (S-8 filed Feb 9, 2026)",
     },
   ],
 

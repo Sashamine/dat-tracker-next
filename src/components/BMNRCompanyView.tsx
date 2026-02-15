@@ -97,11 +97,19 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
     // Net debt = Debt - Cash (BMNR has no debt, so this is negative = net cash)
     const netDebt = Math.max(0, totalDebt - cashReserves);
     
-    // EV = Market Cap + Debt + Preferred - Cash (using estimated market cap)
-    const ev = estimatedMarketCap + totalDebt + preferredEquity - cashReserves;
+    // ═══════════════════════════════════════════════════════════════════
+    // mNAV formula — matches canonical calculateMNAV() in calculations.ts
+    // restrictedCash = cashReserves for BMNR (all cash is operational, not excess)
+    // freeCash = cashReserves - restrictedCash = 0 (no EV deduction)
+    // totalNav = cryptoNav + restrictedCash (cash added to NAV denominator)
+    // ═══════════════════════════════════════════════════════════════════
+    const restrictedCash = cashReserves; // All BMNR cash is operational
+    const freeCash = cashReserves - restrictedCash; // = 0
+    const ev = estimatedMarketCap + totalDebt + preferredEquity - freeCash;
+    const totalNav = cryptoNav + restrictedCash;
     
-    // mNAV = EV / Crypto NAV
-    const mNav = cryptoNav > 0 ? ev / cryptoNav : null;
+    // mNAV = EV / Total NAV (matches canonical formula)
+    const mNav = totalNav > 0 ? ev / totalNav : null;
     
     // Leverage = Net Debt / Crypto NAV
     const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
@@ -341,7 +349,7 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
             mNAV={metrics.mNav}
             sharesForMnav={metrics.estimatedShares}
             stockPrice={stockPrice}
-            hasDilutiveInstruments={false}
+            hasDilutiveInstruments={true}
             sharesSourceUrl={BMNR_PROVENANCE.sharesOutstanding?.source?.url}
             sharesSource={BMNR_PROVENANCE.sharesOutstanding?.source?.type}
             sharesAsOf={BMNR_PROVENANCE.sharesOutstanding?.source?.asOf}
@@ -592,7 +600,7 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
               totalDebt: metrics.totalDebt,
               preferredEquity: metrics.preferredEquity,
               cashReserves: metrics.cashReserves,
-              restrictedCash: 0,
+              restrictedCash: metrics.cashReserves, // All BMNR cash is operational — matches companies.ts
               asset: "ETH",
             }}
           />
