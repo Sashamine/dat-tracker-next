@@ -328,6 +328,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Verified 2026-02-10 via SEC 8-K (Dec 12, 2025) + 10-Q (Dec 19, 2025)
   // BTC sources: Tether/Bitfinex (31,500) + PIPE (10,500) + additional = ~43,514 BTC
   // Shares: 651,390,912 (Class A: 346,548,153 + Class B: 304,842,759) per 10-Q XBRL
+  // Twenty One Capital (XXI) - BTC treasury (Tether/SoftBank/Mallers)
+  // Verified 2026-02-14 via 8-K Dec 12, 2025 (Indenture + Employment Agreements)
+  // Source: https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm
   XXI: [
     {
       type: "convertible",
@@ -340,6 +343,46 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       issuedDate: "2025-12-09",
       expiration: "2030-12-01",
       notes: "1.00% Convertible Senior Secured Notes due 2030, conversion rate 72.0841 shares/$1,000, collateralized by 16,116.32 BTC",
+    },
+    {
+      type: "option",
+      strikePrice: 14.43, // Exercise price from Employment Agreement
+      potentialShares: 12_179_268,
+      source: "8-K Dec 12, 2025 (CEO Employment Agreement)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+      issuedDate: "2025-12-09",
+      notes: "CEO (Jack Mallers) stock options. Vest over time per employment agreement.",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // RSUs vest at $0
+      potentialShares: 3_215_732,
+      source: "8-K Dec 12, 2025 (CEO Employment Agreement)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+      issuedDate: "2025-12-09",
+      notes: "CEO (Jack Mallers) RSUs. Vest over time per employment agreement.",
+    },
+    {
+      type: "option",
+      strikePrice: 14.43,
+      potentialShares: 941_620,
+      source: "8-K Dec 12, 2025 (CFO Employment Agreement)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+      issuedDate: "2025-12-09",
+      notes: "CFO (Will Meehan) stock options. Vest over time per employment agreement.",
+    },
+    {
+      type: "option",
+      strikePrice: 0, // RSUs vest at $0
+      potentialShares: 248_619,
+      source: "8-K Dec 12, 2025 (CFO Employment Agreement)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0228850-8k_twentyone.htm",
+      issuedDate: "2025-12-09",
+      notes: "CFO (Will Meehan) RSUs. Vest over time per employment agreement.",
     },
   ],
 
