@@ -208,21 +208,24 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   }), "Company: $8,214M notional (strategy.com/debt). SEC: $8,174M book value (Q3 10-Q). Δ$40M = OID amortization. All convertible notes, no term loans."),
 
   // =========================================================================
-  // CASH - USD Reserve from Jan 2026 8-K
-  // This is cash earmarked for preferred dividends + debt interest
+  // CASH - USD Reserve ($2.25B)
+  // First disclosed in Jan 4, 2026 8-K. Confirmed in Feb 5, 2026 Q4 earnings.
+  // This is cash earmarked for preferred dividends + debt interest.
+  // Balance sheet shows $2.30B total cash (Dec 31, 2025); $2.25B is the
+  // earmarked USD Reserve portion.
   // =========================================================================
   cashReserves: pv(2_250_000_000, docSource({
     type: "sec-document",
     searchTerm: "2.25",
     url: "/filings/mstr/0001193125-26-001550?tab=document&q=USD%20Reserve",
-    quote: "USD Reserve was $2.25 billion",
+    quote: "USD Reserve was $2.25 billion, which provides approximately 2.5 years of coverage for dividends on its preferred stock and interest on its outstanding indebtedness",
     anchor: "USD Reserve",
     cik: MSTR_CIK,
     accession: "0001193125-26-001550",
     filingType: "8-K",
     filingDate: "2026-01-05",
     documentDate: "2026-01-04",
-  }), "USD Reserve for dividends/interest. As of Jan 4, 2026."),
+  }), "USD Reserve for dividends/interest. First disclosed Jan 4 8-K (accn 001550). Confirmed Feb 5 Q4 earnings 8-K (accn 021726, Exhibit 99.1): same $2.25B figure reiterated as of Feb 1, 2026. Balance sheet (Dec 31): $2,301,470K total cash."),
 
   // =========================================================================
   // PREFERRED EQUITY
