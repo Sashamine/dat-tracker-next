@@ -310,20 +310,16 @@ export function BMNRCompanyView({ company, className = "" }: BMNRCompanyViewProp
           ticker="bmnr"
         />
 
-        {/* Cost Basis - STALE (from Q1 10-Q, excludes recent purchases) */}
+        {/* Cost Basis - 10-Q baseline + estimated post-quarter purchases */}
         {BMNR_PROVENANCE.costBasisAvg && (
           <div className="relative">
-            <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-[10px] font-medium bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded z-10">
-              STALE
-            </span>
             <ProvenanceMetric
               label="Avg Cost Basis"
               data={BMNR_PROVENANCE.costBasisAvg}
               format="currency"
-              subLabel="Per ETH (Nov 2025)"
-              tooltip="From Q1 10-Q only - excludes recent purchases"
+              subLabel="Per ETH (estimated)"
+              tooltip="10-Q baseline + estimated cost of post-quarter ETH purchases from weekly 8-K prices"
               ticker="bmnr"
-              className="border-2 border-amber-300 dark:border-amber-700"
             />
           </div>
         )}
