@@ -99,7 +99,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Verified 2026-02-15 via SEC 10-Q Q3 2025 Note 8 (CIK 0001981535)
   // Note: 1:12 reverse split May 5, 2025 - all figures post-split adjusted
   //
-  // XBRL NonOptionEquityInstrumentsOutstanding (18,116,449) = pre-funded + placement + strategic warrants
+  // XBRL NonOptionEquityInstrumentsOutstanding (18,116,449) = pre-funded + placement + strategic warrants + ~252 legacy/rounding
   // XBRL ClassOfWarrantOrRightOutstanding (3,455,019) = strategic advisor warrants only
   // Actual RSUs: 1,281,951 unvested (from RSU activity table in 10-Q)
   SBET: [

@@ -455,7 +455,7 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   // Accession: 0001641172-25-024734
   { date: "2025-08-17", holdings: 740_760, sharesOutstandingDiluted: 164_000_000, holdingsPerShare: 0.004517, source: "8-K Aug 19, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/", sourceType: "sec-filing" },
   // Accession: 0001641172-25-025469
-  { date: "2025-08-24", holdings: 797_704, sharesOutstandingDiluted: 167_000_000, holdingsPerShare: 0.004776, source: "8-K Aug 26, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/", sourceType: "sec-filing" },
+  { date: "2025-08-24", holdings: 797_704, sharesOutstandingDiluted: 167_000_000, holdingsPerShare: 0.004777, source: "8-K Aug 26, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/", sourceType: "sec-filing" },
   // Accession: 0001493152-25-012518
   { date: "2025-08-31", holdings: 837_230, sharesOutstandingDiluted: 170_000_000, holdingsPerShare: 0.004925, source: "8-K Sep 2, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/", sourceType: "sec-filing" },
   
