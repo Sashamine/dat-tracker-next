@@ -333,8 +333,8 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
             debtSource={METAPLANET_PROVENANCE.totalDebt?.source?.type}
             debtAsOf={METAPLANET_PROVENANCE.totalDebt?.source ? getSourceDate(METAPLANET_PROVENANCE.totalDebt.source) : undefined}
             cashSourceUrl={METAPLANET_PROVENANCE.cashReserves?.source ? getSourceUrl(METAPLANET_PROVENANCE.cashReserves.source) : undefined}
-            cashSource={METAPLANET_PROVENANCE.cashReserves?.source?.type}
-            cashAsOf={METAPLANET_PROVENANCE.cashReserves?.source ? getSourceDate(METAPLANET_PROVENANCE.cashReserves.source) : undefined}
+            cashSource="estimated (Q3 base + capital flows)"
+            cashAsOf="2025-09-30"
             holdingsSourceUrl={METAPLANET_PROVENANCE.holdings?.source ? getSourceUrl(METAPLANET_PROVENANCE.holdings.source) : undefined}
             holdingsSource={METAPLANET_PROVENANCE.holdings?.source?.type}
             holdingsAsOf={METAPLANET_PROVENANCE.holdings?.source ? getSourceDate(METAPLANET_PROVENANCE.holdings.source) : undefined}
@@ -633,7 +633,7 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
               <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(metrics.equityNav)}</span>
             </p>
             <p className="text-xs text-gray-500 mt-1">
-              Zero-coupon bonds — no interest payments to service
+              Cash is estimated from Q3 balance + post-Q3 capital flows. Debt = 4 credit facilities (zero-coupon bonds fully redeemed).
             </p>
           </div>
 
@@ -655,8 +655,8 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
                 label="Cash Reserves"
                 data={METAPLANET_PROVENANCE.cashReserves}
                 format="currency"
-                subLabel="From Q3 Filing"
-                tooltip="Cash and equivalents (converted from JPY)"
+                subLabel="⚠️ Estimated (Q3 base + capital flows)"
+                tooltip="No cash disclosure since Q3 (Sep 30, 2025). Estimated from Q3 balance + credit facility draws + equity placements − BTC purchases − bond redemptions. Will update when FY2025 annual report is filed."
                 ticker="3350.T"
               />
             )}
@@ -667,8 +667,8 @@ export function MetaplanetCompanyView({ company, className = "" }: MetaplanetCom
                 label="Total Debt"
                 data={METAPLANET_PROVENANCE.totalDebt}
                 format="currency"
-                subLabel="Zero-coupon bonds"
-                tooltip="¥44B in zero-coupon yen-denominated bonds (~$280M USD)"
+                subLabel="4 credit facilities"
+                tooltip="Sum of 4 credit facility draws: $100M (Nov 4) + $130M (Nov 21) + $50M (Dec 1) + $75M (Jan 30). No repayments observed. Actual balance will be in FY2025 annual report."
                 ticker="3350.T"
               />
             )}
