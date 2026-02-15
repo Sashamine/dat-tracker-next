@@ -458,8 +458,8 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     avgDailyVolume: 200_000_000,
     marketCap: 2_430_000_000,  // ~$2.4B (Feb 2026, 1.167B shares × ¥325 ÷ 152.7 JPY/USD)
-    sharesForMnav: 1_143_204_340,  // 1.167B common (1,142,274,340 + 24,530,000 Feb 13 placement) - 23.6M Mercury converts (¥1000 strike, OTM at ¥540)
-    sharesSource: "TDnet: 1,142,274,340 (Jan 29, 2026) + 24,530,000 new shares (Feb 13, 2026 3rd-party allotment) - 23.6M Mercury converts",
+    sharesForMnav: 1_166_804_340,  // 1,142,274,340 (Jan 29, 2026) + 24,530,000 (Feb 13 placement). Mercury preferred is a separate class, NOT in common count.
+    sharesSource: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,530,000 new common shares (Feb 13, 2026 3rd-party allotment)",
     sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     sharesAsOf: "2026-02-13",
     // Debt: 4 credit facilities totaling $355M (all zero-coupon bonds have been fully redeemed)
@@ -472,7 +472,7 @@ export const btcCompanies: Company[] = [
     cashSource: "Estimated: Q3 $18M + $355M credit facilities + $136M Mercury preferred + $80M Feb placement - $451M BTC purchases - $60M redemptions/repayments/opex",
     cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
     cashAsOf: "2026-02-14",
-    preferredEquity: 567_000_000,  // Mercury Class B preferred: ¥86.58B (~$567M). 23.61M shares at ¥1,000 conversion, OTM at ¥325. Note: Metaplanet's own dashboard excludes preferred from EV (their mNAV ~1.07x); we include it for consistency with MSTR/STRK treatment.
+    preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
     notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M in credit facilities outstanding (4 draws from BTC-backed facility). All zero-coupon bonds (series 2-19) fully redeemed.",
