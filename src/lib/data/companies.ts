@@ -503,8 +503,8 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea026946001ex99-4_twenty.htm#:~:text=31%2C500%20Bitcoin",
     // Breakdown: Contribution 31,500 + PIPE Bitcoin ~11,533 + In-Kind PIPE ~392 = ~43,425
     datStartDate: "2025-12-09",
-    costBasisAvg: 91_509,  // S-1 Jan 2026: Initial ~42K BTC at $90,560.40 (closing date FV) + 1,500 post-close at ~$118K
-    costBasisSource: "SEC S-1 Jan 5, 2026: Bitcoin valued at $90,560.40 per BTC (Closing date Dec 8, 2025). PIPE BTC: $458.7M (4,812 BTC) + $99.5M (917 BTC) + $147.5M (1,381 BTC)",
+    costBasisAvg: 91_400,  // Blended: $3,977,198,487 / 43,514.113 BTC per S-1/A (31,500 at $90,560 FV + PIPE at various prices)
+    costBasisSource: "SEC S-1/A Feb 9, 2026: Blended cost basis from Tether/Bitfinex contribution ($90,560.40/BTC) + PIPE purchases ($85K-$108K/BTC)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
     isMiner: false,
     stakingPct: 0,  // BTC not staked
@@ -512,14 +512,15 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     // DUAL-CLASS: 346,548,153 Class A + 304,842,759 Class B = 651,390,912 total
-    sharesForMnav: 651_390_912,  // Total shares (both classes)
+    // Class B has ZERO economic rights (no dividends, no liquidation) per charter
+    sharesForMnav: 346_548_153,  // Class A ONLY — Class B has no economic rights
     sharesSource: "SEC 8-K Dec 12, 2025",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/0001213900-25-121293-index.htm",
     sharesAsOf: "2025-12-09",
     // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC (~3:1 ratio)
     totalDebt: 486_500_000,
     debtSource: "SEC 8-K Dec 12, 2025 - 1% secured converts due 2030",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
     debtAsOf: "2025-12-09",
     // Cash obligations: $486.5M × 1% = $4.865M/year
     debtInterestAnnual: 4_865_000,
@@ -529,8 +530,8 @@ export const btcCompanies: Company[] = [
     cashObligationsAsOf: "2025-12-09",
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     restrictedCash: 119_300_000,  // Debt service reserves - not excess
-    cashSource: "SEC 8-K Dec 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025123918/ea0270339-10q_twenty.htm",
+    cashSource: "SEC S-1 Jan 5, 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
     cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services. Tether/SoftBank/Cantor backed.",
@@ -540,7 +541,7 @@ export const btcCompanies: Company[] = [
     id: "cepo",  // BSTR Holdings pre-merger
     name: "BSTR Holdings",
     ticker: "CEPO",
-    secCik: "0001865602",  // Pre-merger SPAC, will become BSTR
+    secCik: "0002027708",  // BSTR/Blockstream SPAC (0001865602 was Cantor → XXI)
     asset: "BTC",
     tier: 1,
     holdings: 30_021,

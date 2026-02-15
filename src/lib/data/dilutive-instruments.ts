@@ -368,12 +368,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     {
       type: "option",
       strikePrice: 14.43,
-      potentialShares: 941_620,
-      source: "8-K Dec 12, 2025 (CFO Employment Agreement)",
+      potentialShares: 970_201, // Updated per 8-K Jan 6, 2026 (796,951 time + 173,250 performance)
+      source: "8-K Jan 6, 2026 (CFO Option Amendment)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
-      issuedDate: "2025-12-09",
-      notes: "CFO (Steven Meehan) stock options. Vest over time per employment agreement.",
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026000436/ea0271770-8k_twenty.htm",
+      issuedDate: "2026-01-02",
+      notes: "CFO (Steven Meehan) stock options. Amended from 941,620 to 970,201. Vest over time.",
     },
     {
       type: "option",
@@ -384,6 +384,16 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
       issuedDate: "2025-12-09",
       notes: "CFO (Steven Meehan) RSUs. Vest over time per employment agreement.",
+    },
+    {
+      type: "option",
+      strikePrice: 14.43, // Assumed same as officer grants
+      potentialShares: 297_029, // S-1/A pro forma: 13,446,498 total - 12,179,268 CEO - 970,201 CFO
+      source: "S-1/A Feb 9, 2026 (Pro Forma)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026012655/ea0274618-s1a_twenty.htm",
+      issuedDate: "2025-12-09",
+      notes: "Other employee options under Incentive Plan. Derived from S-1/A pro forma total (13,446,498) less CEO and CFO grants.",
     },
   ],
 

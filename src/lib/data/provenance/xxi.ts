@@ -35,7 +35,7 @@ const MERGER_CLOSE_DATE = "2025-12-09";
 // =========================================================================
 const Q4_2025_10Q_ACCESSION = "0001213900-25-123918";
 const Q4_2025_10Q_FILED = "2025-12-19";
-const Q4_2025_PERIOD_END = "2025-12-09";
+const Q4_2025_PERIOD_END = "2025-09-30"; // 10-Q is pre-merger SPAC stub period
 
 // Holdings at merger close
 const HOLDINGS = 43_514;
@@ -49,7 +49,7 @@ const TOTAL_SHARES = CLASS_A_SHARES + CLASS_B_SHARES; // 651,390,912
 // Financial data
 const TOTAL_DEBT = 486_500_000; // $486.5M convertible notes
 const CASH_RESERVES = 119_300_000; // $119.3M
-const COST_BASIS_AVG = 91_509; // Blended cost basis from S-1
+const COST_BASIS_AVG = 91_400; // Blended: $3,977,198,487 / 43,514.113 BTC per S-1/A
 
 /**
  * XXI Financial Data with Full Provenance
@@ -162,15 +162,15 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: secDocUrl(XXI_CIK, Q4_2025_10Q_ACCESSION, "xxi-20250930.htm"),
-      quote: "No preferred stock authorized or issued",
+      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026012655/ea0274618-s1a_twenty.htm",
+      quote: "no shares of Preferred Stock issued and outstanding",
       cik: XXI_CIK,
-      accession: Q4_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q4_2025_10Q_FILED,
-      documentDate: Q4_2025_PERIOD_END,
+      accession: "0001213900-26-012655",
+      filingType: "S-1/A",
+      filingDate: "2026-02-09",
+      documentDate: MERGER_CLOSE_DATE,
     }),
-    "No preferred equity issued."
+    "1M preferred shares authorized, none issued. Source: S-1/A Feb 9, 2026."
   ),
 };
 

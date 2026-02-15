@@ -805,8 +805,8 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 //   - PIPE investments: 10,500 BTC (Initial + Option + April In-Kind + Additional)
 //   - Additional purchases: ~1,514 BTC
 //   - Total: 43,514 BTC
-// DUAL-CLASS: Class A (346.5M non-voting) + Class B (304.8M voting) = 651.4M total shares
-// For mNAV, use TOTAL shares (both classes have economic rights)
+// DUAL-CLASS: Class A (346.5M public) + Class B (304.8M founder/sponsor, zero economic rights)
+// For mNAV, use Class A ONLY — Class B has no dividends or liquidation rights per charter
 // Debt: $486.5M convertible notes (issued at merger)
 const XXI_HISTORY: HoldingsSnapshot[] = [
   // Pre-merger announcements removed - no verifiable SEC filings

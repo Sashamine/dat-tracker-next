@@ -1328,11 +1328,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-03-15",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 43_514,  // Post-merger combined holdings
-    sharesAtQuarterEnd: 651_390_912,  // Class A + Class B
-    holdingsPerShare: 0.0000668,
+    sharesAtQuarterEnd: 346_548_153,  // Class A only — Class B has no economic rights
+    holdingsPerShare: 0.0001256,  // 43,514 / 346,548,153
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002070457&type=8-K",
-    status: "reported",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+    status: "upcoming",  // 10-K not yet filed
   },
 
   // ========== DJT / Trump Media ==========
