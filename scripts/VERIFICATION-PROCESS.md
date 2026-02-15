@@ -158,6 +158,12 @@ Compares ground truth against ALL code files and UI.
   - Same otherInvestments inclusion (materiality threshold)
   - Same preferredEquity
 
+**Derived metric vintage check:**
+- For each derived metric (cost basis, HPS, mNAV, unrealized gains, carrying value):
+  - List ALL inputs and their as-of dates
+  - If any input was updated from a newer source (e.g., 8-K) but other inputs still use 10-Q data, flag as STALE
+  - Common miss: cost basis uses 10-Q holdings count while actual holdings come from recent 8-K
+
 **UI verification:**
 - Navigate to company page AND overview page
 - Do the mNAVs match?
@@ -261,3 +267,15 @@ Single agents cut corners on:
 - CVI Warrants (10.4M @ $87.50) entirely missing from dilutive instruments
 - mNAV formula parity gap (~2.4%) between company page inline formula and canonical `calculateMNAV()` — same class of bug as BTBT and MSTR
 - **Phase 4D (final adversary) failed on first attempt** — read all inputs before writing, exhausted context. Succeeded on retry with incremental writes (2.5 min vs 2 hours). Sub-agents must write output incrementally.
+- **Cost basis not updated when holdings updated.** 10-Q cost basis ($14.95B / 3.74M ETH = $4,002) was left as-is even though holdings were updated to 4.33M from 8-Ks. The ~589K additional ETH purchased at lower prices ($2,100-$3,200) pulls avg cost to $3,893. Verification checked each field against its source but didn't check whether derived metrics used stale inputs.
+
+### Derived Metric Consistency Rule (from BMNR cost basis miss)
+> **When ANY input to a derived metric is updated, ALL derived metrics using that input must be recalculated.**
+
+Common cascades:
+- Holdings updated → cost basis, carrying value, unrealized gains must update
+- Shares updated → HPS, mNAV must update  
+- Cash updated → mNAV, runway/burn calculations must update
+- Debt updated → mNAV, EV calculations must update
+
+**Add to Phase 4 checklist:** "For every derived metric, are ALL inputs at the same vintage? If holdings are from Feb 8 but cost basis uses Nov 30 holdings count, flag as stale."

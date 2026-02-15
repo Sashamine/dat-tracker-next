@@ -65,13 +65,13 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   }), "Weekly 8-K press release (ex99-1.htm)."),
 
   // =========================================================================
-  // COST BASIS - from Q1 FY2026 10-Q
+  // COST BASIS - 10-Q baseline + estimated post-quarter purchases from 8-K chain
   // =========================================================================
-  costBasisAvg: pv(4_002, derivedSource({
-    derivation: "Total ETH cost / Total ETH holdings",
-    formula: "$14,953,824,000 / 3,737,140 ETH = $4,002/ETH",
+  costBasisAvg: pv(3_893, derivedSource({
+    derivation: "Total ETH cost / Total ETH holdings (10-Q baseline + 8-K weekly purchases)",
+    formula: "$16,841,106,172 / 4,325,738 ETH = $3,893/ETH",
     inputs: {
-      totalCost: pv(14_953_824_000, docSource({
+      baselineCost: pv(14_953_824_000, docSource({
         type: "sec-document",
         searchTerm: "14,953,824",
         url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
@@ -83,20 +83,13 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
         filingDate: Q1_FY2026_FILED,
         documentDate: Q1_FY2026_PERIOD_END,
       })),
-      totalHoldings: pv(3_737_140, docSource({
-        type: "sec-document",
-        searchTerm: "3,737,140",
-        url: `https://www.sec.gov/Archives/edgar/data/${BMNR_CIK}/000149315226002084/form10-q.htm`,
-        quote: "3,737,140 Ether",
-        anchor: "3,737,140 Ether",
-        cik: BMNR_CIK,
-        accession: Q1_FY2026_10Q,
-        filingType: "10-Q",
-        filingDate: Q1_FY2026_FILED,
-        documentDate: Q1_FY2026_PERIOD_END,
+      postQuarterPurchases: pv(1_887_282_172, derivedSource({
+        derivation: "Sum of (weekly ETH delta × 8-K ETH price) from Dec 7 to Feb 8",
+        formula: "588,598 additional ETH purchased at avg ~$3,207, total $1,887,282,172",
+        inputs: {},
       })),
     },
-  }), "⚠️ STALE: As of Nov 30, 2025 only. Excludes ~590K ETH purchased since then at $2,100-$3,200. Actual current basis likely lower."),
+  }), "10-Q baseline ($14.95B for 3,737,140 ETH) + estimated cost of 588,598 ETH from weekly 8-K prices. See clawd/bmnr-audit/cost-basis.md"),
 
   // =========================================================================
   // SHARES OUTSTANDING - from 10-Q cover page
