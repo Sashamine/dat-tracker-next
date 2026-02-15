@@ -581,7 +581,7 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/MARAHoldings",
     secCik: "0001507605",
     // COST BASIS: from provenance (10-Q)
-    costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value || 87_760,
+    costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value || 87_762,
     costBasisSource: "SEC-verified (provenance): 10-Q Q3 2025",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     costBasisAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
@@ -608,7 +608,7 @@ export const btcCompanies: Company[] = [
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
     // DEBT: from provenance (~$3.25B in convertible notes)
-    totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_248_000_000,
+    totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_642_472_000,
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     debtAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
