@@ -250,7 +250,7 @@ export const ethCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 60_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%221436229%22&forms=S-3",
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K grants). Dilutives in dilutive-instruments.ts

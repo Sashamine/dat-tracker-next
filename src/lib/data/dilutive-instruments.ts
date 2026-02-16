@@ -2324,7 +2324,7 @@ export function detectDilutiveInstruments(
  * Format dilution detection result for display/logging.
  *
  * Example outputs:
- * - "BTCS: Has dilutive instruments (3.2M shares, 6.8% dilution)"
+ * - "BTCS: Has dilutive instruments (6.8M shares, 14.5% dilution)"
  * - "MSTR: Has dilutive instruments (45.2M shares, 12.3% dilution)"
  * - "XYZ: No dilutive instruments detected (basic = diluted)"
  */
