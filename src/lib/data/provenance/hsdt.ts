@@ -223,7 +223,7 @@ export function getHSDTProvenance() {
   return {
     holdings: HSDT_PROVENANCE.holdings?.value,
     holdingsDate: LATEST_HOLDINGS_DATE,
-    sharesBasic: SHARES_BASIC,
+    sharesBasic: SHARES_BASIC_NOV17,
     sharesFD: SHARES_FOR_MNAV,
     sharesDate: SHARES_DATE,
     cashReserves: HSDT_PROVENANCE.cashReserves?.value,
