@@ -769,16 +769,33 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
-  // Verified 2026-02-13 via SEC XBRL Q3 2025 (CIK 0001610853)
-  // Q3 earnings press release: "75.9 million common shares and pre-funded warrants outstanding"
-  // Basic shares (Nov 17): 41,301,400 → Pre-funded warrants: ~34,598,600 @ $0.00001
-  // NOTE: Pre-funded warrants ALREADY INCLUDED in sharesForMnav (75.9M)
-  // DO NOT add them here - would cause double-counting in mNAV calculation
-  // sharesForMnav = 41.3M basic + 34.6M pre-funded = 75.9M FD
+  // Verified 2026-02-15 via SEC 10-Q Q3 2025 Note 6 warrant table (CIK 0001610853)
   //
-  // HSDTW (public warrants): Listed on NASDAQ. Strike price and expiration TBD.
-  // TODO: Research HSDTW warrant terms from 10-Q/10-K text and add here.
-  HSDT: [],
+  // sharesForMnav = 41,301,400 basic + 35,627,639 PFWs @ $0.001 = 76,929,039
+  // PFWs ALREADY INCLUDED in sharesForMnav — NOT listed here (would double-count)
+  //
+  // Total XBRL warrants outstanding: 116,972,530 (ClassOfWarrantOrRightOutstanding Sep 30)
+  // Breakdown:
+  //   35,627,639 PFWs @ $0.001 (in sharesForMnav, NOT here)
+  //   73,941,196 Stapled Warrants @ $10.134 (here — ITM tracking)
+  //    7,394,119 Advisor Warrants @ $0.001 (here — nearly certain exercise)
+  //          617 HSDTW Public Warrants @ $6.756 (here — negligible)
+  //            2 Common Warrants @ $47.55 (ignored — negligible)
+  //        8,957 Other Equity Warrants @ $563-$611K (ignored — deep OTM)
+  HSDT: [
+    // 2025 Stapled Warrants — issued with PIPE Sep 2025
+    // One stapled warrant per PFW/share purchased in PIPE
+    // Strike $10.134 = PIPE purchase price. Exercisable upon stockholder approval (received Oct 30, 2025)
+    // 73,941,196 = 36,261,239 (crypto portion, exp Jul 2028) + 37,679,957 (common portion, exp Jun 2028)
+    { type: "warrant", potentialShares: 73_941_196, strikePrice: 10.134, expirationDate: "2028-07-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "2025 Stapled Warrants (crypto + common portions). Strike = PIPE price $10.134. Exercisable post-stockholder approval Oct 30, 2025. Classified as derivative liability." },
+    // Base Advisor Warrants — issued to advisors in connection with PIPE
+    // Strike $0.001 — economically equivalent to shares, virtually certain exercise
+    // Stockholder approval received Oct 30, 2025. Expire Oct 2030.
+    { type: "warrant", potentialShares: 7_394_119, strikePrice: 0.001, expirationDate: "2030-10-30", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "Base Advisor Warrants @ $0.001. Stockholder approval received Oct 30, 2025. Classified as equity. Virtually certain to be exercised." },
+    // HSDTW — 2022 Public Warrants (NASDAQ-listed)
+    // Post 1:50 reverse split: 617 warrants remaining (negligible)
+    { type: "warrant", potentialShares: 617, strikePrice: 6.756, expirationDate: "2027-08-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "HSDTW public warrants. Post 1:50 reverse split — negligible count. Classified as derivative liability." },
+  ],
 
   // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)
   // Verified 2026-01-29 via SEC 40-F FY2025 (CIK 0001846839)

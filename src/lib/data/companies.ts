@@ -1436,41 +1436,41 @@ export const solCompanies: Company[] = [
     tier: 1,
     website: "https://solanacompany.co",
     twitter: "https://x.com/SolanaCompany1",
-    holdings: 2_300_000,  // Oct 29, 2025 8-K press release - ~2.3M SOL
-    holdingsLastUpdated: "2025-10-29",
+    holdings: 2_340_757,  // 10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18, 2025
+    holdingsLastUpdated: "2025-11-18",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     datStartDate: "2025-05-01",
-    stakingPct: 0.95,  // "commenced native staking with acquired SOL in September of 2025"
+    stakingPct: 0.9996,  // 10-Q: 1,738,682 staked / 1,739,355 total = 99.96%
     stakingMethod: "Native staking via third-party validators (Anchorage Digital custody)",
-    stakingSource: "SEC 10-Q Nov 18, 2025: $342K staking rewards revenue, ~7% native staking yield. Commenced native staking Sep 2025.",
+    stakingSource: "SEC 10-Q Q3 2025 Note 3: 1,738,682/1,739,355 SOL staked (99.96%). $342K staking rewards (partial quarter, commenced Sep 2025). 7.03% APY.",
     stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     stakingAsOf: "2025-09-30",
     stakingVerified: true,
-    stakingLastAudited: "2026-02-13",
+    stakingLastAudited: "2026-02-15",
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
     quarterlyBurnUsd: 4_646_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense (Jul-Sep 2025)",
+    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense (Jul-Sep 2025, single quarter)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 75_900_000,  // 41.3M basic + ~34.6M pre-funded warrants @ $0.00001. PFWs are economically equivalent to shares.
-    sharesSource: "Q3 2025 earnings press release: '75.9M common shares and pre-funded warrants outstanding'. XBRL basic = 41,301,400 + ~34.6M PFWs @ $0.00001",
+    sharesForMnav: 76_929_039,  // 41,301,400 basic (Nov 17 cover) + 35,627,639 PFWs @ $0.001. PFWs economically equivalent to shares.
+    sharesSource: "10-Q: 41,301,400 basic (cover page Nov 17) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30). Press release rounds to '75.9M'.",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     sharesAsOf: "2025-11-17",
-    totalDebt: 0,  // No LongTermDebt in XBRL
-    debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt.",
+    totalDebt: 0,  // No LongTermDebt in XBRL (404)
+    debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     debtAsOf: "2025-09-30",
     cashReserves: 124_051_000,  // XBRL CashAndCashEquivalentsAtCarryingValue Sep 30
-    cashSource: "XBRL CashAndCashEquivalentsAtCarryingValue Q3 2025. Mostly $500M PIPE proceeds being deployed into SOL.",
+    cashSource: "XBRL CashAndCashEquivalentsAtCarryingValue Q3 2025. $111.1M held at custodian for SOL purchases (10-Q Note 3).",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     cashAsOf: "2025-09-30",
     avgDailyVolume: 150_000_000,
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
     strategy: "SOL treasury via Anchorage Digital custody. Partnered with Solana Foundation.",
-    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav includes ~34.6M pre-funded warrants @ $0.00001 (economically equivalent to shares). $500M PIPE closed Sep 15, 2025.",
+    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 41.3M basic + 35.6M PFWs @ $0.001. 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. $500M PIPE closed Sep 15, 2025.",
   },
   {
     id: "dfdv",
