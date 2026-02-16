@@ -787,14 +787,14 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // One stapled warrant per PFW/share purchased in PIPE
     // Strike $10.134 = PIPE purchase price. Exercisable upon stockholder approval (received Oct 30, 2025)
     // 73,941,196 = 36,261,239 (crypto portion, exp Jul 2028) + 37,679,957 (common portion, exp Jun 2028)
-    { type: "warrant", potentialShares: 73_941_196, strikePrice: 10.134, expirationDate: "2028-07-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "2025 Stapled Warrants (crypto + common portions). Strike = PIPE price $10.134. Exercisable post-stockholder approval Oct 30, 2025. Classified as derivative liability." },
+    { type: "warrant", potentialShares: 73_941_196, strikePrice: 10.134, expiration: "2028-07-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "2025 Stapled Warrants (crypto + common portions). Strike = PIPE price $10.134. Exercisable post-stockholder approval Oct 30, 2025. Classified as derivative liability." },
     // Base Advisor Warrants — issued to advisors in connection with PIPE
     // Strike $0.001 — economically equivalent to shares, virtually certain exercise
     // Stockholder approval received Oct 30, 2025. Expire Oct 2030.
-    { type: "warrant", potentialShares: 7_394_119, strikePrice: 0.001, expirationDate: "2030-10-30", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "Base Advisor Warrants @ $0.001. Stockholder approval received Oct 30, 2025. Classified as equity. Virtually certain to be exercised." },
+    { type: "warrant", potentialShares: 7_394_119, strikePrice: 0.001, expiration: "2030-10-30", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "Base Advisor Warrants @ $0.001. Stockholder approval received Oct 30, 2025. Classified as equity. Virtually certain to be exercised." },
     // HSDTW — 2022 Public Warrants (NASDAQ-listed)
     // Post 1:50 reverse split: 617 warrants remaining (negligible)
-    { type: "warrant", potentialShares: 617, strikePrice: 6.756, expirationDate: "2027-08-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "HSDTW public warrants. Post 1:50 reverse split — negligible count. Classified as derivative liability." },
+    { type: "warrant", potentialShares: 617, strikePrice: 6.756, expiration: "2027-08-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "HSDTW public warrants. Post 1:50 reverse split — negligible count. Classified as derivative liability." },
   ],
 
   // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)
