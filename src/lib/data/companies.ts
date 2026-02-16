@@ -1339,7 +1339,7 @@ export const btcCompanies: Company[] = [
     // costBasisAvg: not verified - needs Q3 10-Q access
     isMiner: true,
     quarterlyBurnUsd: 8_052_000,  // Q3 2025 G&A
-    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30)",
+    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30). G&A only — excludes mining COGS. Likely inflated by one-time merger costs; pre-merger run rate was ~$1.6M/qtr.",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
@@ -1353,7 +1353,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-11-13",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
-    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~567 sats/share (Dec 14). Trump family co-founded. Pure-play BTC miner with HODL commitment.",
+    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~550 sats/share (Dec 14). Trump family co-founded. Pure-play BTC miner with HODL commitment.",
     website: "https://abtc.com",
     twitter: "https://x.com/ABTC",
     // IR: https://abtc.com/investors
@@ -1361,8 +1361,8 @@ export const btcCompanies: Company[] = [
     cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     cashAsOf: "2025-09-30",
-    totalDebt: 0,  // No LongTermDebt in XBRL. Operating lease liabilities ($185.6M) excluded.
-    debtSource: "SEC 10-Q Q3 2025 XBRL - no LongTermDebt fact reported",
+    totalDebt: 286_200_000,  // Bitmain miner purchase agreement — BTC pledged at fixed price for mining equipment. 24-month redemption window. Per Q3 2025 10-Q.
+    debtSource: "Bitmain miner purchase agreement — BTC pledged at fixed price for mining equipment. 24-month redemption window. Per Q3 2025 10-Q. Operating leases ($185.6M) and intercompany payable ($103.8M to Hut 8) excluded.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     debtAsOf: "2025-09-30",
   },

@@ -48,9 +48,9 @@ const SHARES_CLASS_B = 732_224_903;
 const SHARES_OUTSTANDING = SHARES_CLASS_A + SHARES_CLASS_B; // 927,604,994
 const SHARES_DATE = "2025-11-13";
 
-// Debt: Not verified from Q3 10-Q (SEC 403 blocked direct access)
-// TODO: Verify from Q3 2025 10-Q balance sheet
-const TOTAL_DEBT = 0;
+// Debt: $286.2M Bitmain miner purchase agreement from Q3 2025 10-Q
+// BTC pledged at fixed price for mining equipment. 24-month redemption window.
+const TOTAL_DEBT = 286_200_000;
 
 // Cash: Not verified from Q3 10-Q
 // TODO: Verify from Q3 2025 10-Q balance sheet
@@ -112,29 +112,27 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // TOTAL DEBT
-  // Not verified — SEC 403 blocked direct Q3 10-Q access
+  // TOTAL DEBT — $286.2M Bitmain miner purchase agreement
+  // BTC pledged at fixed price for mining equipment. 24-month redemption window.
   // =========================================================================
   totalDebt: pv(
-    0,
+    286_200_000,
     docSource({
       type: "sec-document",
-      searchTerm: "Long-term debt",
+      searchTerm: "Bitmain",
       url: `https://www.sec.gov/Archives/edgar/data/${ABTC_CIK}/000119312525281390/abtc-20250930.htm`,
-      quote: "No long-term financial debt on Q3 2025 balance sheet",
-      anchor: "balance-sheet",
+      quote: "Bitmain miner purchase agreement — BTC pledged at fixed price for mining equipment",
+      anchor: "bitmain-agreement",
       cik: ABTC_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
       documentDate: Q3_2025_PERIOD_END,
     }),
-    "Financial debt: $0. No bonds, convertibles, credit facilities, or notes payable. " +
-    "XBRL has no LongTermDebt fact post-2023 (last entry: $5.15M at Dec 31, 2023, pre-merger Gryphon). " +
-    "Excluded from mNAV: operating lease liabilities ($185.6M — mining facility leases, operational not financial), " +
-    "Bitmain miner purchase liability ($286.2M — BTC-collateralized equipment commitment), " +
-    "intercompany payable to Hut 8 ($103.8M — parent owns 80%, consolidation artifact). " +
-    "Methodology: mNAV debt = financial debt instruments only, consistent with REIT NAV conventions."
+    "$286.2M Bitmain miner purchase agreement. BTC pledged at fixed price for mining equipment with 24-month redemption window. " +
+    "2,385 of 3,418 BTC (69.8%) pledged as of Sep 30, 2025. Economically a BTC-collateralized equipment commitment. " +
+    "Operating leases ($185.6M) and intercompany payable ($103.8M to Hut 8) excluded. " +
+    "Only Bitmain BTC-collateralized equipment commitment included as financial obligation."
   ),
 
   // =========================================================================
