@@ -6259,3 +6259,215 @@ Total crypto prices: 16
 }
 [Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
 ✓ Compiled in 231ms
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+✓ Compiled in 306ms
+✓ Compiled in 241ms
+✓ Compiled in 238ms
+✓ Compiled in 236ms
+✓ Compiled in 233ms
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+✓ Compiled in 262ms
+✓ Compiled in 273ms
+✓ Compiled in 228ms
+ GET /api/prices/stream 200 in 4.6min
+ GET /company/3350.T 200 in 348ms (compile: 178ms, render: 170ms)
+ GET /company/SQNS 200 in 115ms (compile: 6ms, render: 108ms)
+[StockHistory] Using FMP for SQNS: 274 points
+ GET /api/stocks/SQNS/history?range=1y&interval=1d 200 in 154ms (compile: 27ms, render: 127ms)
+ GET /api/db/companies 200 in 13ms (compile: 4ms, render: 9ms)
+ GET /api/db/companies/SQNS 200 in 577ms (compile: 28ms, render: 550ms)
+ GET /api/prices/stream 200 in 4.7min
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream] Sent initial data
+[StockHistory] Using FMP for 3350.T: 266 points
+ GET /api/stocks/3350.T/history?range=1y&interval=1d 200 in 99ms (compile: 4ms, render: 94ms)
+ GET /api/db/companies 200 in 12ms (compile: 3ms, render: 8ms)
+ GET /api/db/companies/3350.T 200 in 205ms (compile: 5ms, render: 200ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream] Sent initial data
+ GET /icons/icon-192.png 404 in 92ms (compile: 10ms, render: 82ms)
+ GET /icons/icon-192.png 404 in 212ms (compile: 7ms, render: 205ms)
+✓ Compiled in 223ms

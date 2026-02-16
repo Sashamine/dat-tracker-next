@@ -2170,7 +2170,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsPerShare: 0.0272,
     netIncome: 14_654_000,  // H1 2025 net income (XBRL)
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/dfdv-20250630.htm",
     status: "reported",
   },
   // Q1 2025 - 10-Q filed 2025-05-14
@@ -2189,7 +2189,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 2_066_711,
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/ea0240826-10q_defi.htm",
     status: "reported",
   },
 

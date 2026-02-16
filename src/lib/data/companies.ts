@@ -1503,12 +1503,12 @@ export const solCompanies: Company[] = [
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.114,
     quarterlyBurnUsd: 3_572_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/ea0240826-10q_defi.htm",
+    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $3,572,000",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 200_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001805526&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525282606/",
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
@@ -1516,8 +1516,8 @@ export const solCompanies: Company[] = [
     sharesSource: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update - shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
     sharesAsOf: "2026-01-01",
-    totalDebt: 186_000_000,  // $186M: $134M converts (OTM) + $52M SOL/DeFi loans (defidevcorp.com/dashboard Jan 2026)
-    debtSource: "SEC 10-Q Q3 2025: $134M convertible notes + defidevcorp.com dashboard for $52M SOL/DeFi loans",
+    totalDebt: 186_000_000,  // $186M: $134M converts (SEC-verified) + $52M SOL/DeFi loans (company-disclosure only)
+    debtSource: "SEC 10-Q Q3 2025: $134M convertible notes (XBRL ConvertibleDebtNoncurrent $131.4M carrying). $52M SOL/DeFi loans from defidevcorp.com dashboard ONLY — not SEC-filed. Await FY2025 10-K for SEC verification.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     debtAsOf: "2026-01-01",
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens

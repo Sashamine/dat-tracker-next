@@ -1855,7 +1855,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 134_000_000,
       source: "10-Q Q2 2025 + Q3 2025 XBRL",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/dfdv-20250630.htm",
       expiration: "2030-07-15",
       issuedDate: "2025-04-04",
       notes:
@@ -1871,15 +1871,15 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     {
       type: "warrant",
       strikePrice: 22.5,
-      potentialShares: 290_000, // Q3 diluted EPS impact
-      source: "8-K Oct 8, 2025 + Q3 2025 XBRL",
+      potentialShares: 31_401_212, // 1 warrant per share at Oct 2025 record date (~31.4M shares outstanding)
+      source: "8-K Oct 8, 2025 (warrant dividend to all shareholders of record)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/ea0264118-8k_defi.htm",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/ea0260652-8k_defi.htm",
       issuedDate: "2025-10-08",
       notes:
-        "DFDVW warrant dividend. Trading publicly on Nasdaq. " +
+        "DFDVW warrant dividend — 1 warrant per share distributed to all shareholders. " +
         "Exercise price $22.50/share, expires Jan 21, 2028 (subject to early expiration trigger). " +
-        "See FAQ exhibit (EX-99.2) for warrant terms. XBRL shows 290K incremental shares in Q3 diluted EPS.",
+        "Trading publicly on Nasdaq as DFDVW. ~31.4M warrants outstanding based on shares at record date.",
     },
     // Stock Option / RSU Pool
     // XBRL: ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant = 3,500,000
