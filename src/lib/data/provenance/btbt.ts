@@ -43,8 +43,8 @@ const XBRL_SHARES = 323_674_831;          // Nov 10, 2025 (Q3 10-Q cover)
 const XBRL_SHARES_DATE = "2025-11-10";
 
 const TOTAL_DEBT = 150_000_000;           // $150M convertible notes (4% due 2030)
-const CASH_RESERVES = 179_100_000;        // Q3 2025 earnings PR
-const QUARTERLY_BURN = 8_500_000;         // From companies.ts, derived from Q1 cash flow
+const CASH_RESERVES = 179_118_182;        // Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
+const QUARTERLY_BURN = 17_400_000;        // Q1 2025 10-Q: $17.4M operating cash used (pre-ETH-pivot, conservative)
 
 const STAKED_ETH = 138_263;               // Dec 31, 2025
 const STAKING_PCT = 0.89;                 // 89% staked
@@ -132,7 +132,7 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   totalDebt: pv(TOTAL_DEBT, docSource({
     type: "sec-document",
     searchTerm: "150,000,000",
-    url: secDocUrl(BTBT_CIK, CONVERTS_8K_ACCESSION, "ea0258193-8k_bitdigital.htm"),
+    url: secDocUrl(BTBT_CIK, CONVERTS_8K_ACCESSION, "ea0259669-8k_bitdigital.htm"),
     quote: "$150,000,000 aggregate principal amount of 4.00% Convertible Senior Notes due 2030",
     anchor: "150,000,000",
     cik: BTBT_CIK,
@@ -156,7 +156,7 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
     filingType: "10-Q",
     filingDate: "2025-05-15",
     documentDate: "2025-03-31",
-  }), "~$17.4M in Q1 2025 / 2 ≈ $8.5M quarterly (conservative est). Includes mining ops wind-down costs."),
+  }), "$17.4M Q1 2025 operating cash used per 10-Q. Pre-ETH-pivot figure, includes mining wind-down. Post-pivot burn likely lower but no post-convert quarterly data yet."),
 
   // =========================================================================
   // PREFERRED EQUITY - 1,000,000 preferred shares at $9.05M book value

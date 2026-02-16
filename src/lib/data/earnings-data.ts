@@ -1939,7 +1939,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     netIncome: 146_700_000,  // Q3 PR: "$146.7 million" (includes $146M digital asset gains)
     holdingsAtQuarterEnd: 122_187,  // Sep 30, 2025 monthly PR
     sharesAtQuarterEnd: 323_674_831,  // XBRL Q3 10-Q cover (Nov 10, 2025)
-    holdingsPerShare: 0.000378,  // 122,187 / 323,674,831
+    holdingsPerShare: 0.000377,  // 122,187 / 323,674,831
     source: "sec-filing",
     sourceUrl: "https://bit-digital.com/press-releases/bit-digital-inc-announces-financial-results-for-the-third-quarter-of-fiscal-year-2025/",
     status: "reported",

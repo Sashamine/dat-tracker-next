@@ -192,13 +192,13 @@ export const ethCompanies: Company[] = [
     stakingAsOf: "2025-12-31",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    quarterlyBurnUsd: 8_500_000,
-    burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $17,401,915 (2025-01-01 to 2025-03-31)",
+    quarterlyBurnUsd: 17_400_000,
+    burnSource: "SEC 10-Q Q1 2025: NetCashUsedInOperatingActivities $17,401,915 (pre-ETH-pivot, conservative)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/ea0241656-10q_bitdigital.htm",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 172_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001710350&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025037166/",
     avgDailyVolume: 80_000_000,
     hasOptions: true,
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
@@ -206,8 +206,8 @@ export const ethCompanies: Company[] = [
     sharesSource: "Feb 6, 2026 PR: 'Bit Digital shares outstanding were 324,202,059 as of January 31, 2026'",
     sharesSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
     sharesAsOf: "2026-01-31",
-    cashReserves: 179_100_000,  // $179.1M cash (Q3 2025)
-    restrictedCash: 179_100_000,  // Operating capital (miner) - not excess
+    cashReserves: 179_118_182,  // Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
+    restrictedCash: 179_118_182,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
     cashAsOf: "2025-09-30",
