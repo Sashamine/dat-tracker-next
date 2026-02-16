@@ -312,8 +312,8 @@ function updateHoldingsHistory(
     
     const arrayContent = content.substring(arrayStartIndex, arrayEndIndex);
     
-    // Extract the last entry's sharesOutstandingDiluted
-    const sharesPattern = /sharesOutstandingDiluted:\s*([\d_]+)/g;
+    // Extract the last entry's sharesOutstanding
+    const sharesPattern = /sharesOutstanding:\s*([\d_]+)/g;
     let lastSharesMatch;
     let lastShares = 0;
     while ((lastSharesMatch = sharesPattern.exec(arrayContent)) !== null) {
@@ -335,7 +335,7 @@ function updateHoldingsHistory(
     const holdingsPerShare = (newHoldings / lastShares).toFixed(6);
     
     // Format the new entry
-    const newEntry = `  { date: "${filingDate}", holdings: ${newHoldings.toLocaleString().replace(/,/g, '_')}, sharesOutstandingDiluted: ${lastShares.toLocaleString().replace(/,/g, '_')}, holdingsPerShare: ${holdingsPerShare}, source: "${source}", sourceUrl: "${filingUrl}", sourceType: "sec-filing" },\n`;
+    const newEntry = `  { date: "${filingDate}", holdings: ${newHoldings.toLocaleString().replace(/,/g, '_')}, sharesOutstanding: ${lastShares.toLocaleString().replace(/,/g, '_')}, holdingsPerShare: ${holdingsPerShare}, source: "${source}", sourceUrl: "${filingUrl}", sourceType: "sec-filing" },\n`;
     
     if (dryRun) {
       console.log(`[DRY RUN] Would append to ${ticker} holdings history:`);

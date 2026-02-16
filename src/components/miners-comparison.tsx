@@ -79,7 +79,7 @@ function calculateCompanyStats(company: Company): CompanyStats | null {
     growth90d: hps90dAgo ? ((currentHPS - hps90dAgo) / hps90dAgo) * 100 : null,
     growth1y: hps1yAgo ? ((currentHPS - hps1yAgo) / hps1yAgo) * 100 : null,
     currentHoldings: latest.holdings,
-    currentShares: latest.sharesOutstandingDiluted,
+    currentShares: latest.sharesOutstanding,
     latestDate: latest.date,
   };
 }

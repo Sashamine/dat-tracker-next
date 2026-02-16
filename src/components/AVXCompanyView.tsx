@@ -252,7 +252,7 @@ export function AVXCompanyView({ company, className = "" }: AVXCompanyViewProps)
                 <h4 className="text-sm font-semibold text-red-700 dark:text-red-400 uppercase tracking-wide mb-2">🏔️ AVAX Treasury Company</h4>
                 <ul className="text-sm text-red-600 dark:text-red-300 space-y-1">
                   <li>• <strong>First publicly traded AVAX treasury company</strong> (Nasdaq: AVX)</li>
-                  <li>• &gt;90% of AVAX holdings staked at ~8% APY via proprietary validators</li>
+                  <li>• &gt;90% of AVAX holdings staked at ~8% target APY via proprietary validators (~2.65% realized thru Dec 2025)</li>
                   <li>• Pivoted from AgriFORCE Growing Systems (agriculture) in November 2025</li>
                   <li>• $219M PIPE funded initial AVAX accumulation + Hivemind Capital partnership</li>
                 </ul>
@@ -450,7 +450,8 @@ export function AVXCompanyView({ company, className = "" }: AVXCompanyViewProps)
               <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
                 <p className="text-sm text-green-700 dark:text-green-400 font-semibold">Staking</p>
                 <p className="text-2xl font-bold text-green-600">&gt;90% staked</p>
-                <p className="text-xs text-green-500">~8% APY via validators</p>
+                <p className="text-xs text-green-500">~8% target APY via validators</p>
+                <p className="text-xs text-green-500/70">(~2.65% realized thru Dec 2025)</p>
                 <p className="text-xs text-green-500 mt-1">Expected Q1 2026: ~{AVX_STAKING.expectedQ1_2026Rewards.toLocaleString()} AVAX rewards</p>
                 <a href={AVX_STAKING.source} target="_blank" rel="noopener noreferrer" className="text-xs text-green-600 hover:underline mt-1 inline-block">Source: 8-K →</a>
               </div>

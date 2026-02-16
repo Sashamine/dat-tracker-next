@@ -3637,9 +3637,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 1,
     earningsDate: "2026-05-15", // 20-F due within 4 months of fiscal year end
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 1783, // Jan 29, 2026 - 1,783 BTC (ongoing)
-    sharesAtQuarterEnd: 23_310_000,
-    holdingsPerShare: 0.0000765,
+    holdingsAtQuarterEnd: 1988, // Feb 11, 2026 - 1,988 BTC (ongoing)
+    sharesAtQuarterEnd: 28_723_005,
+    holdingsPerShare: 0.0000692,
     source: "company-dashboard",
     sourceUrl: "https://treasury.ddc.xyz",
     status: "upcoming",
@@ -3653,8 +3653,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-01", // Estimated interim 6-K
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 1183, // Nov 26, 2025 - 1,183 BTC
-    sharesAtQuarterEnd: 23_310_000,
+    holdingsAtQuarterEnd: 1183, // Dec 31, 2025 - 1,183 BTC
+    sharesAtQuarterEnd: 23_309_005,
     holdingsPerShare: 0.0000508,
     source: "company-dashboard",
     sourceUrl: "https://treasury.ddc.xyz",
@@ -3670,7 +3670,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-15", // Estimated
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 1058, // Sep 24, 2025 - 1,058 BTC
-    sharesAtQuarterEnd: 8_310_000,
+    sharesAtQuarterEnd: 8_307_583,
     holdingsPerShare: 0.0001273,
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=6-K",

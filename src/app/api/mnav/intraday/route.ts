@@ -79,7 +79,7 @@ function getHoldingsAtDate(ticker: string, date: string): { holdings: number; sh
   let result = null;
   for (const snapshot of history) {
     if (snapshot.date <= date) {
-      result = { holdings: snapshot.holdings, shares: snapshot.sharesOutstandingDiluted };
+      result = { holdings: snapshot.holdings, shares: snapshot.sharesOutstanding };
     } else {
       break;
     }

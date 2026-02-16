@@ -71,7 +71,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-07-17',
     holdings: 300657,
-    sharesOutstandingDiluted: 112_311_382,
+    sharesOutstanding: 112_311_382,
     holdingsPerShare: 0.002677,
     stockPrice: undefined, // TODO: fetch historical
     source: '8-K Initial holdings disclosure',
@@ -83,7 +83,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-07-23',
     holdings: 566776,
-    sharesOutstandingDiluted: 112_311_382,
+    sharesOutstanding: 112_311_382,
     holdingsPerShare: 0.005046,
     stockPrice: undefined,
     source: '8-K Holdings update',
@@ -96,7 +96,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-08-17',
     holdings: 1523373,
-    sharesOutstandingDiluted: 218_888_720, // Using Aug 11 anchor
+    sharesOutstanding: 218_888_720, // Using Aug 11 anchor
     holdingsPerShare: 0.006959,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225012109/ex99-1.htm',
@@ -107,7 +107,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-08-24',
     holdings: 1713899,
-    sharesOutstandingDiluted: 218_888_720,
+    sharesOutstanding: 218_888_720,
     holdingsPerShare: 0.007829,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225012292/ex99-1.htm',
@@ -119,7 +119,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-09-07',
     holdings: 2069443,
-    sharesOutstandingDiluted: 220_000_000, // Estimated
+    sharesOutstanding: 220_000_000, // Estimated
     holdingsPerShare: 0.009406,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225012776/ex99-1.htm',
@@ -130,7 +130,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-09-14',
     holdings: 2151676,
-    sharesOutstandingDiluted: 222_000_000,
+    sharesOutstanding: 222_000_000,
     holdingsPerShare: 0.009692,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225013376/ex99-1.htm',
@@ -140,7 +140,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-09-21',
     holdings: 2416054,
-    sharesOutstandingDiluted: 224_106_435,
+    sharesOutstanding: 224_106_435,
     holdingsPerShare: 0.010781,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225014387/ex99-1.htm',
@@ -150,7 +150,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-09-28',
     holdings: 2650900,
-    sharesOutstandingDiluted: 240_000_000,
+    sharesOutstanding: 240_000_000,
     holdingsPerShare: 0.011045,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225015879/ex99-1.htm',
@@ -163,7 +163,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-10-05',
     holdings: 2830151,
-    sharesOutstandingDiluted: 260_000_000,
+    sharesOutstanding: 260_000_000,
     holdingsPerShare: 0.010885,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225017019/ex99-1.htm',
@@ -173,7 +173,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-10-19',
     holdings: 3236014,
-    sharesOutstandingDiluted: 290_000_000,
+    sharesOutstanding: 290_000_000,
     holdingsPerShare: 0.011159,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225018577/ex99-1.htm',
@@ -183,7 +183,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-10-26',
     holdings: 3313069,
-    sharesOutstandingDiluted: 310_000_000,
+    sharesOutstanding: 310_000_000,
     holdingsPerShare: 0.010687,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225019644/ex99-1.htm',
@@ -195,7 +195,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-11-02',
     holdings: 3395422,
-    sharesOutstandingDiluted: 330_000_000,
+    sharesOutstanding: 330_000_000,
     holdingsPerShare: 0.010289,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225020545/ex99-1.htm',
@@ -205,7 +205,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-11-09',
     holdings: 3505723,
-    sharesOutstandingDiluted: 350_000_000,
+    sharesOutstanding: 350_000_000,
     holdingsPerShare: 0.010016,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225021429/ex99-1.htm',
@@ -215,7 +215,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-11-23',
     holdings: 3629701,
-    sharesOutstandingDiluted: 380_000_000,
+    sharesOutstanding: 380_000_000,
     holdingsPerShare: 0.009552,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225024762/ex99-1.htm',
@@ -225,7 +225,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-11-30',
     holdings: 3726499,
-    sharesOutstandingDiluted: 408_578_823, // 10-Q balance sheet anchor (Nov 30)
+    sharesOutstanding: 408_578_823, // 10-Q balance sheet anchor (Nov 30)
     holdingsPerShare: 0.009121,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225025501/ex99-1.htm',
@@ -238,7 +238,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-12-14',
     holdings: 3967210,
-    sharesOutstandingDiluted: 400_000_000,
+    sharesOutstanding: 400_000_000,
     holdingsPerShare: 0.009918,
     cash: 1_000_000_000,
     source: '8-K Holdings update',
@@ -249,7 +249,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-12-21',
     holdings: 4066062,
-    sharesOutstandingDiluted: 410_000_000,
+    sharesOutstanding: 410_000_000,
     holdingsPerShare: 0.009917,
     cash: 1_000_000_000,
     source: '8-K Holdings update',
@@ -262,7 +262,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2026-01-04',
     holdings: 4143502,
-    sharesOutstandingDiluted: 430_000_000,
+    sharesOutstanding: 430_000_000,
     holdingsPerShare: 0.009636,
     cash: 915_000_000,
     source: '8-K Holdings update',
@@ -273,7 +273,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2026-01-11',
     holdings: 4167768,
-    sharesOutstandingDiluted: 450_000_000,
+    sharesOutstanding: 450_000_000,
     holdingsPerShare: 0.009262,
     cash: 988_000_000,
     source: '8-K Holdings update',
@@ -285,7 +285,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2026-01-19',
     holdings: 4203036,
-    sharesOutstandingDiluted: 454_862_451, // 10-Q anchor
+    sharesOutstanding: 454_862_451, // 10-Q anchor
     holdingsPerShare: 0.009241,
     cash: 979_000_000,
     source: '8-K Holdings update',
@@ -297,7 +297,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2026-01-25',
     holdings: 4243338,
-    sharesOutstandingDiluted: 460_000_000,
+    sharesOutstanding: 460_000_000,
     holdingsPerShare: 0.009225,
     cash: 682_000_000,
     source: '8-K Holdings update',
@@ -310,7 +310,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2026-02-01',
     holdings: 4285125,
-    sharesOutstandingDiluted: 470_000_000,
+    sharesOutstanding: 470_000_000,
     holdingsPerShare: 0.009117,
     cash: 586_000_000,
     source: '8-K Holdings update',
@@ -321,7 +321,7 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2026-02-08',
     holdings: 4325738,
-    sharesOutstandingDiluted: 480_000_000,
+    sharesOutstanding: 480_000_000,
     holdingsPerShare: 0.009012,
     cash: 595_000_000,
     source: '8-K Holdings update - Latest',
@@ -380,8 +380,8 @@ export function getBMNRQuarterEndData(quarterEnd: string): {
   const source: EarningsSource = (snapshot.source && snapshot.source.includes('8-K')) ? 'sec-filing' : 'sec-filing';
   return {
     holdingsAtQuarterEnd: snapshot.holdings,
-    sharesAtQuarterEnd: snapshot.sharesOutstandingDiluted,
-    holdingsPerShare: snapshot.holdings / snapshot.sharesOutstandingDiluted,
+    sharesAtQuarterEnd: snapshot.sharesOutstanding,
+    holdingsPerShare: snapshot.holdings / snapshot.sharesOutstanding,
     source,
     sourceUrl: snapshot.sourceUrl || '',
   };

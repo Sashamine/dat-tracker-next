@@ -915,28 +915,33 @@ export const btcCompanies: Company[] = [
     twitter: "ddcbtc_",
     asset: "BTC",
     tier: 2,
-    holdings: 1_783,  // treasury.ddc.xyz Jan 29, 2026
-    holdingsLastUpdated: "2026-01-29",
+    holdings: 1_988,  // treasury.ddc.xyz Feb 11, 2026
+    holdingsLastUpdated: "2026-02-11",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://treasury.ddc.xyz",
     datStartDate: "2025-02-21",
     website: "https://ir.ddc.xyz",
     secCik: "0001808110",
-    costBasisAvg: 88_112,
+    costBasisAvg: 85_661,  // treasury.ddc.xyz weighted avg for 1,988 BTC
     costBasisSource: "company-website",
     costBasisSourceUrl: "https://treasury.ddc.xyz",
     isMiner: false,
-    quarterlyBurnUsd: 3_395_000,
-    burnSource: "SEC 6-K filings (estimate - foreign private issuer)",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1808110&type=6-K",
-    burnAsOf: "2025-09-30",
+    quarterlyBurnUsd: 1_600_000,  // H1 2025 opex: $3.19M / 2 quarters (424B3 F-1 financials)
+    burnSource: "SEC 424B3 Jan 26, 2026 (F-1 financials, H1 2025 unaudited)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+    burnAsOf: "2025-06-30",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 23_310_000,  // treasury.ddc.xyz basic shares (matches their 0.43x mNAV calc)
-    sharesSource: "SEC 20-F FY2024",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=20-F",
+    sharesForMnav: 28_723_005,  // 6-K Feb 6, 2026 + treasury.ddc.xyz basic shares
+    sharesSource: "SEC 6-K Feb 6, 2026 + treasury.ddc.xyz",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
+    sharesAsOf: "2026-02-06",
+    totalDebt: 27_000_000,  // Anson Senior Secured Convertible Notes (Initial Closing Jul 2025)
+    debtSource: "SEC 424B3 Jan 26, 2026 / 6-K Jul 1, 2025 — Anson SPA Initial Notes",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+    debtAsOf: "2026-01-26",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
-    notes: "NYSE American listed. DayDayCook brand. Dual-class structure (Class B = 10 votes). ⚠️ HOLDINGS: Company reports 1,783 BTC, SEC 424B3 Jan 26 shows 1,383 BTC. ⚠️ DILUTIVE INSTRUMENTS: $300M convertible note (Anson, OTM), $200M ELOC undrawn, 1.8M Pre-IPO options, 2023 ESOP pool. Fully diluted: 29.75M shares (0.47x mNAV).",
+    notes: "NYSE American listed. DayDayCook brand. Dual-class (Class B = 10 votes, CEO only). Anson SPA: $27M convertible drawn ($275M additional undrawn), $200M ELOC (equity, undrawn). Satoshi Strategic: $32.8M preferred (pending NYSE approval). Fully diluted: ~35.7M shares per dashboard.",
   },
   // HIVE Digital Technologies (HIVE) REMOVED 2026-02-02
   // Reason: Not a DAT accumulator. SEC XBRL shows only $24.4M crypto (Sep 2025) = ~313 BTC
@@ -2347,7 +2352,7 @@ export const avaxCompanies: Company[] = [
     debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     debtAsOf: "2025-09-30",
-    cashReserves: 894_701,  // ⚠️ PRE-PIPE. $145M+ cash came in Nov 5. TBD in 10-K.
+    cashReserves: 894_701,  // ⚠️ Pre-PIPE figure from 10-Q Sep 30, 2025. $145M+ PIPE cash received Nov 5, 2025. Actual balance pending 10-K (~March 2026).
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
@@ -2371,6 +2376,7 @@ export const avaxCompanies: Company[] = [
     sharesSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     secCik: "1826397",
     website: "https://www.avax-one.com",
+    twitter: "avax_one",
     strategy: "First publicly traded AVAX treasury. Staking + validator infra + fintech M&A.",
     notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25, 649.8K shares at avg $1.71). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026.",
   },

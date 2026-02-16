@@ -192,8 +192,8 @@ export function generateDilutionNarrative(
   const previous = history[history.length - 2];
 
   const shareGrowth =
-    ((latest.sharesOutstandingDiluted - previous.sharesOutstandingDiluted) /
-      previous.sharesOutstandingDiluted) *
+    ((latest.sharesOutstanding - previous.sharesOutstanding) /
+      previous.sharesOutstanding) *
     100;
 
   const holdingsGrowth =

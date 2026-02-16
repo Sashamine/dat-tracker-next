@@ -181,7 +181,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2023-12-31",
     holdings: 15126,
-    sharesOutstandingDiluted: 267_639_590,
+    sharesOutstanding: 267_639_590,
     holdingsPerShare: 0.0000565,
     stockPrice: 23.49,
     totalDebt: 751_500_000,
@@ -196,7 +196,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-03-31",
     holdings: 17320,
-    sharesOutstandingDiluted: 272_956_165,
+    sharesOutstanding: 272_956_165,
     holdingsPerShare: 0.0000635,
     stockPrice: 22.58,
     totalDebt: 751_500_000,
@@ -211,7 +211,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-06-30",
     holdings: 18488,
-    sharesOutstandingDiluted: 294_474_622,
+    sharesOutstanding: 294_474_622,
     holdingsPerShare: 0.0000628,
     stockPrice: 19.85,
     totalDebt: 751_500_000,
@@ -226,7 +226,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-08-14",
     holdings: 22632,
-    sharesOutstandingDiluted: 308_000_000,
+    sharesOutstanding: 308_000_000,
     holdingsPerShare: 0.0000735,
     stockPrice: 15.14,
     totalDebt: 1_000_000_000,
@@ -243,7 +243,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-09-30",
     holdings: 26747,
-    sharesOutstandingDiluted: 321_831_487,
+    sharesOutstanding: 321_831_487,
     holdingsPerShare: 0.0000831,
     stockPrice: 16.22,
     totalDebt: 1_000_000_000,
@@ -258,7 +258,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-12-09",
     holdings: 40435,
-    sharesOutstandingDiluted: 340_000_000,
+    sharesOutstanding: 340_000_000,
     holdingsPerShare: 0.0001189,
     stockPrice: 23.86,
     totalDebt: 2_600_000_000,
@@ -273,7 +273,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-12-18",
     holdings: 44394,
-    sharesOutstandingDiluted: 342_500_000,
+    sharesOutstanding: 342_500_000,
     holdingsPerShare: 0.0001296,
     stockPrice: 21.61,
     totalDebt: 2_600_000_000,
@@ -289,7 +289,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2024-12-31",
     holdings: 44893,
-    sharesOutstandingDiluted: 345_816_827,
+    sharesOutstanding: 345_816_827,
     holdingsPerShare: 0.0001298,
     stockPrice: 16.77,
     totalDebt: 2_600_000_000,
@@ -304,7 +304,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-03-31",
     holdings: 47531,
-    sharesOutstandingDiluted: 351_927_748,
+    sharesOutstanding: 351_927_748,
     holdingsPerShare: 0.0001351,
     stockPrice: 11.50,
     totalDebt: 2_598_549_000, // $2,298,549K LongTermDebt + $300,000K LinesOfCreditCurrent (XBRL)
@@ -321,7 +321,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-06-30",
     holdings: 49951,
-    sharesOutstandingDiluted: 370_457_880,
+    sharesOutstanding: 370_457_880,
     holdingsPerShare: 0.0001348,
     stockPrice: 15.68,
     totalDebt: 2_600_546_000, // $2,250,546K LongTermDebt + $350,000K LinesOfCreditCurrent (XBRL)
@@ -338,7 +338,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-09-30",
     holdings: 52850,
-    sharesOutstandingDiluted: 378_184_353, // Note: field name is legacy — this is BASIC shares from cover page
+    sharesOutstanding: 378_184_353, // Note: field name is legacy — this is BASIC shares from cover page
     holdingsPerShare: 0.0001397,
     stockPrice: 18.26,
     totalDebt: 3_597_561_000, // $3,247,561K LongTermDebt (XBRL) + $350,000K LinesOfCreditCurrent (XBRL)
@@ -396,7 +396,7 @@ export function getMARAQuarterEndDataForEarnings(quarterEnd: string): {
   
   return {
     holdingsAtQuarterEnd: snapshot.holdings,
-    sharesAtQuarterEnd: snapshot.sharesOutstandingDiluted,
+    sharesAtQuarterEnd: snapshot.sharesOutstanding,
     holdingsPerShare: snapshot.holdingsPerShare,
     source: snapshot.sourceType === "sec-filing" ? "sec-filing" : "press-release",
     sourceUrl,

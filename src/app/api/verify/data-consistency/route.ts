@@ -79,7 +79,7 @@ export async function GET() {
     // Check 2: Shares consistency between history and company
     if (latestHistory && company.sharesForMnav) {
       checks++;
-      const histShares = latestHistory.sharesOutstandingDiluted;
+      const histShares = latestHistory.sharesOutstanding;
       const compShares = company.sharesForMnav;
       // Allow 10% tolerance (timing differences, different sources)
       if (Math.abs(histShares - compShares) / compShares > 0.10) {

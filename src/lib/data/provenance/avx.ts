@@ -226,6 +226,10 @@ export const AVX_PIPE: AVXPipeTransaction = {
 
 export const AVX_STAKING = {
   percentStaked: 0.90,
+  // NOTE: 0.08 (8%) is the advertised/target APY from company disclosures.
+  // Realized yield through Dec 2025 was ~2.65% APY per math audit
+  // (only ~89K AVAX gained in 99 days vs ~299K expected at 8%).
+  // Discrepancy may be due to ramp-up period, partial staking, or validator timing.
   apy: 0.08,
   rewardsThruDec2025: 600_000, // USD
   expectedQ1_2026Rewards: 180_000, // AVAX tokens

@@ -561,7 +561,7 @@ async function getCompanyDailyMnav(
       ?? getHistoricalHoldings(ticker, date) 
       ?? getHoldingsAtDate(ticker, date) 
       ?? companyData.holdings;
-    const shares = snapshot?.sharesOutstandingDiluted ?? companyData.sharesForMnav;
+    const shares = snapshot?.sharesOutstanding ?? companyData.sharesForMnav;
     const debt = snapshot?.totalDebt ?? companyData.totalDebt ?? 0;
     const cash = snapshot?.cash ?? companyData.cashReserves ?? 0;
     

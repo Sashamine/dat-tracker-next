@@ -519,7 +519,7 @@ async function generateHistoricalMNAV(): Promise<void> {
       const fxRate = FX_TO_USD[companyInfo.currency] || 1.0;
 
       // Use stored market cap or calculate from price × shares, then convert to USD
-      const marketCapLocal = holdings.marketCap || (stockPrice * holdings.sharesOutstandingDiluted);
+      const marketCapLocal = holdings.marketCap || (stockPrice * holdings.sharesOutstanding);
       const marketCap = marketCapLocal * fxRate;
 
       // Use debt/cash from holdings-history for EV-based mNAV
@@ -553,7 +553,7 @@ async function generateHistoricalMNAV(): Promise<void> {
         holdings: holdings.holdings,
         stockPrice,
         cryptoPrice,
-        sharesOutstanding: holdings.sharesOutstandingDiluted,
+        sharesOutstanding: holdings.sharesOutstanding,
         totalDebt,
         cash,
       });

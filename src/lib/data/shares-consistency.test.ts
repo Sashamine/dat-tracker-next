@@ -1,7 +1,7 @@
 /**
  * Shares Consistency Validation
  *
- * Compares sharesForMnav in companies.ts with the latest sharesOutstandingDiluted
+ * Compares sharesForMnav in companies.ts with the latest sharesOutstanding
  * in holdings-history.ts to catch data sync issues.
  *
  * Run with: npx vitest run shares-consistency
@@ -38,7 +38,7 @@ describe('Shares Consistency Check', () => {
       if (!history?.history?.length) continue;
 
       const latestEntry = history.history[history.history.length - 1];
-      const historyShares = latestEntry.sharesOutstandingDiluted;
+      const historyShares = latestEntry.sharesOutstanding;
       const sharesForMnav = company.sharesForMnav!;
 
       if (!historyShares || historyShares === 0) continue;
@@ -76,7 +76,7 @@ describe('Shares Consistency Check', () => {
       if (!history?.history?.length) continue;
 
       const latestEntry = history.history[history.history.length - 1];
-      const historyShares = latestEntry.sharesOutstandingDiluted;
+      const historyShares = latestEntry.sharesOutstanding;
       const sharesForMnav = company.sharesForMnav!;
 
       if (!historyShares || historyShares === 0) continue;

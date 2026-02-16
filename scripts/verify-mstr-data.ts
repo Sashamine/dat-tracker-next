@@ -32,7 +32,7 @@ for (const q of QUARTERS) {
   
   if (earningsSnapshot && chartSnapshot) {
     const holdingsMatch = earningsSnapshot.holdings.value === chartSnapshot.holdings;
-    const sharesMatch = earningsSnapshot.shares.total === chartSnapshot.sharesOutstandingDiluted;
+    const sharesMatch = earningsSnapshot.shares.total === chartSnapshot.sharesOutstanding;
     const hpsEarnings = earningsSnapshot.holdingsPerShare || 0;
     const hpsChart = chartSnapshot.holdingsPerShare || 0;
     const hpsDiff = Math.abs(hpsEarnings - hpsChart);
@@ -40,7 +40,7 @@ for (const q of QUARTERS) {
     console.log(`  Earnings date: ${earningsSnapshot.date}`);
     console.log(`  Chart date:    ${chartSnapshot.date}`);
     console.log(`  Holdings:      ${earningsSnapshot.holdings.value.toLocaleString()} / ${chartSnapshot.holdings.toLocaleString()} ${holdingsMatch ? '✓' : '✗ MISMATCH'}`);
-    console.log(`  Shares:        ${earningsSnapshot.shares.total.toLocaleString()} / ${chartSnapshot.sharesOutstandingDiluted?.toLocaleString() || 'N/A'} ${sharesMatch ? '✓' : '✗ MISMATCH'}`);
+    console.log(`  Shares:        ${earningsSnapshot.shares.total.toLocaleString()} / ${chartSnapshot.sharesOutstanding?.toLocaleString() || 'N/A'} ${sharesMatch ? '✓' : '✗ MISMATCH'}`);
     console.log(`  HPS:           ${hpsEarnings.toFixed(6)} / ${hpsChart.toFixed(6)} ${hpsDiff < 0.000001 ? '✓' : '✗ MISMATCH'}`);
   } else {
     console.log(`  ✗ Missing data: earnings=${!!earningsSnapshot} chart=${!!chartSnapshot}`);

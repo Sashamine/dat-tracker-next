@@ -26,7 +26,7 @@ export async function GET() {
         asset: companyData.asset,
         date: entry.date,
         holdings: entry.holdings,
-        sharesOutstanding: entry.sharesOutstandingDiluted,
+        sharesOutstanding: entry.sharesOutstanding,
         holdingsPerShare: entry.holdingsPerShare,
         source: entry.source || "Unknown",
         sourceUrl: entry.sourceUrl || null,

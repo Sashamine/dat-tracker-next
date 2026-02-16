@@ -1502,10 +1502,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Fully diluted: 137.4M basic + 76M warrants = ~213.4M shares
 
   // DDC (DDC Enterprise) - BTC treasury company
-  // Verified 2026-02-02 via SEC F-1/424B3 (Jan 2026) and 20-F (May 2025)
+  // Updated 2026-02-16 via SEC 6-K Feb 6, 424B3 Jan 26, 20-F FY2024, treasury.ddc.xyz
   // CIK: 0001808110
-  // Basic shares: 24,532,958 (22.78M Class A + 1.75M Class B)
-  // No preferred outstanding (all converted at IPO)
+  // Basic shares: 28,723,005 (Class A, per 6-K Feb 6, 2026)
+  // Class B: 1,750,000 (CEO Norma Chu, 10x voting)
+  // Total economic shares: 30,473,005
+  // Dashboard diluted: 35,724,861
   DDC: [
     {
       type: "option",
@@ -1514,7 +1516,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       source: "SEC 20-F FY2024",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/ea0241193-20f_ddcenter.htm",
-      notes: "2023 ESOP stock options outstanding as of Dec 31, 2024",
+      notes: "2023 ESOP stock options outstanding as of Dec 31, 2024. May be reduced post-Nov 2024 cancellation of underwater grants — verify with 20-F FY2025.",
     },
     {
       type: "warrant",
@@ -1527,9 +1529,45 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       expiration: "2035-06-01", // 10-year term
       notes: "2025 Warrant Program: CEO 1.7M + execs/directors 500K. Vest 3yr, expire 10yr. Strike TBD by Board.",
     },
+    {
+      type: "convertible",
+      strikePrice: 8.97,  // Implied: $27M / 3,010,204 shares (from dashboard CB line)
+      potentialShares: 3_010_204,  // treasury.ddc.xyz Shares tab "CB" = 3,010,204
+      faceValue: 27_000_000,
+      source: "SEC 424B3 Jan 26, 2026 + treasury.ddc.xyz dilution breakdown",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+      expiration: "2027-07-01",
+      issuedDate: "2025-07-01",
+      notes: "Anson Initial Notes. $27M senior secured convertible. Secured by all BTC + cash collateral. $275M additional capacity undrawn. Implied conversion ~$8.97/share from dashboard.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0,  // Exercise price "set forth therein" — undisclosed in prospectus, TBD
+      potentialShares: 1_791_653,  // Dashboard warrants (3,991,652) minus 2025 Warrant Program (2,199,999)
+      source: "SEC 424B3 Jan 26, 2026 (Anson SPA) + treasury.ddc.xyz Shares tab",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+      issuedDate: "2025-07-01",
+      expiration: "2030-07-01",  // 5-year term from issuance
+      notes: "Anson Initial Warrants from $27M convertible deal. Exercisable immediately. Strike undisclosed in prospectus.",
+    },
+    {
+      type: "preferred",
+      strikePrice: 0,  // Conversion at 150% of 5-day VWAP at closing — TBD
+      potentialShares: 16_000_000,
+      faceValue: 32_800_000,
+      source: "SEC 6-K Feb 6, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
+      issuedDate: "2025-12-30",
+      notes: "Satoshi Strategic — 16M senior convertible preferred shares. 4.5% annual dividend. Conversion at 150% of 5-day VWAP preceding close. Subject to NYSE approval. NOT YET CLOSED as of Feb 2026.",
+    },
   ],
-  // Total DDC dilution: 1.66M options + 2.2M warrants = ~3.86M potential shares
-  // At ~$2.60 stock: Options OTM ($3.85 strike), Warrants TBD
+  // Total DDC dilution: 1.66M options + 2.2M warrants (2025 program) + 3.01M convertible + 1.79M Anson warrants + 16M preferred = ~24.66M potential shares
+  // Plus 28.72M basic = ~53.4M fully diluted (if all instruments convert, including pending Satoshi preferred)
+  // Dashboard shows 35.7M diluted (excludes Satoshi preferred which is pending NYSE approval)
+  // At ~$2.60 stock: Options OTM ($3.85), Anson convert OTM ($8.97), Satoshi preferred TBD
   // 2023 ESOP allows up to 1.208M shares + 10% annual increase
   // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually
 

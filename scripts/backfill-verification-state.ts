@@ -107,7 +107,7 @@ async function backfillVerificationState() {
       }
 
       // 2. Insert shares_outstanding baseline
-      if (latest.sharesOutstandingDiluted !== undefined) {
+      if (latest.sharesOutstanding !== undefined) {
         const sharesDate = latest.sharesAsOf || latest.date;
         const sharesSourceUrl = companySources?.secFilingsUrl || sourceUrl;
 
@@ -125,7 +125,7 @@ async function backfillVerificationState() {
           [
             ticker,
             'shares_outstanding',
-            latest.sharesOutstandingDiluted,
+            latest.sharesOutstanding,
             sharesDate,
             'sec-filing',
             sharesSourceUrl,

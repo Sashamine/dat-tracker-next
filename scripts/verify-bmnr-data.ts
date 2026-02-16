@@ -62,7 +62,7 @@ console.log('-'.repeat(40));
 let missingFields: string[] = [];
 for (const snap of rawHistory) {
   if (!snap.holdings) missingFields.push(`${snap.date}: missing holdings`);
-  if (!snap.sharesOutstandingDiluted) missingFields.push(`${snap.date}: missing shares`);
+  if (!snap.sharesOutstanding) missingFields.push(`${snap.date}: missing shares`);
   if (!snap.holdingsPerShare) missingFields.push(`${snap.date}: missing HPS`);
   if (!snap.sourceUrl) missingFields.push(`${snap.date}: missing sourceUrl`);
 }
@@ -102,7 +102,7 @@ const latest = rawHistory[rawHistory.length - 1];
 if (latest) {
   console.log(`  Date:     ${latest.date}`);
   console.log(`  Holdings: ${latest.holdings.toLocaleString()} ETH`);
-  console.log(`  Shares:   ${latest.sharesOutstandingDiluted.toLocaleString()}`);
+  console.log(`  Shares:   ${latest.sharesOutstanding.toLocaleString()}`);
   console.log(`  HPS:      ${latest.holdingsPerShare.toFixed(6)} ETH/share`);
   console.log(`  Cash:     $${(latest.cash || 0).toLocaleString()}`);
   console.log(`  Source:   ${latest.source}`);

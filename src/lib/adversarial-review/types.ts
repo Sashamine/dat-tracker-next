@@ -66,7 +66,7 @@ export interface DiscrepancyResolution {
 // Fields that can be changed
 export type DataField =
   | "holdings"
-  | "sharesOutstandingDiluted"
+  | "sharesOutstanding"
   | "sharesOutstandingBasic"
   | "totalDebt"
   | "cashReserves"
@@ -641,7 +641,7 @@ export function validateMandatoryChecks(output: ProposerOutput): string[] {
 
   // Basic vs Diluted Check (only if shares field)
   const isSharesField = output.proposal.field.includes("shares") ||
-                        output.proposal.field === "sharesOutstandingDiluted" ||
+                        output.proposal.field === "sharesOutstanding" ||
                         output.proposal.field === "sharesOutstandingBasic";
   if (isSharesField) {
     if (checks.basicVsDilutedCheck?.applicable && !checks.basicVsDilutedCheck?.searchPerformed) {

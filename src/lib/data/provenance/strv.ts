@@ -264,7 +264,7 @@ export function getSTRVHoldingsSnapshot(date: string) {
     return {
       date: HOLDINGS_DATE,
       holdings: HOLDINGS,
-      sharesOutstandingDiluted: BASIC_SHARES,
+      sharesOutstanding: BASIC_SHARES,
       holdingsPerShare: HOLDINGS / BASIC_SHARES,
       source: "SEC 8-K Jan 28, 2026",
       sourceUrl: secDocUrl(JAN28_8K_ACCESSION, JAN28_8K_DOC),

@@ -163,7 +163,7 @@ export function calculateMNAVAtDate(
   // Calculate values
   const currencyMultiplier = getCurrencyMultiplier(ticker, forexRates);
   const stockPriceUSD = stockData.close * currencyMultiplier;
-  const sharesOutstanding = holdings.sharesOutstandingDiluted;
+  const sharesOutstanding = holdings.sharesOutstanding;
   const marketCap = stockPriceUSD * sharesOutstanding;
   const cryptoNav = holdings.holdings * cryptoPrice;
 
@@ -212,7 +212,7 @@ export function calculateMNAVHistory(
 
     const currencyMultiplier = getCurrencyMultiplier(ticker, forexRates);
     const stockPriceUSD = stockData.close * currencyMultiplier;
-    const sharesOutstanding = holdings.sharesOutstandingDiluted;
+    const sharesOutstanding = holdings.sharesOutstanding;
     const marketCap = stockPriceUSD * sharesOutstanding;
     const cryptoNav = holdings.holdings * cryptoPrice;
 

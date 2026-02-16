@@ -47,10 +47,10 @@ describe('Holdings History Source Tracking (Phase 7a)', () => {
       }
     });
 
-    it('all entries have sharesOutstandingDiluted field', () => {
+    it('all entries have sharesOutstanding field', () => {
       for (const { ticker, entry, index } of allEntries) {
-        expect(entry.sharesOutstandingDiluted, `${ticker}[${index}] missing sharesOutstandingDiluted`).toBeDefined();
-        expect(typeof entry.sharesOutstandingDiluted, `${ticker}[${index}] sharesOutstandingDiluted must be number`).toBe('number');
+        expect(entry.sharesOutstanding, `${ticker}[${index}] missing sharesOutstanding`).toBeDefined();
+        expect(typeof entry.sharesOutstanding, `${ticker}[${index}] sharesOutstanding must be number`).toBe('number');
       }
     });
 

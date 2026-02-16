@@ -31,7 +31,7 @@ function getLatestSharesWithSource(ticker: string): {
   if (!history || history.history.length === 0) return undefined;
   const latest = history.history[history.history.length - 1];
   return {
-    value: latest.sharesOutstandingDiluted,
+    value: latest.sharesOutstanding,
     asOf: latest.date,
     source: latest.sharesSource || latest.source || 'holdings-history.ts',
     sourceUrl: latest.sourceUrl,
