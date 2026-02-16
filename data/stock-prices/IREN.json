@@ -2,7 +2,7 @@
   "ticker": "IREN",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-16T14:00:02.041Z",
+  "lastUpdated": "2026-02-16T14:15:01.994Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6015,6 +6015,15 @@
     {
       "date": "2026-02-16",
       "time": "09:00",
+      "open": 40.74,
+      "high": 43.47,
+      "low": 39.52,
+      "close": 42.22,
+      "volume": 31579644
+    },
+    {
+      "date": "2026-02-16",
+      "time": "09:15",
       "open": 40.74,
       "high": 43.47,
       "low": 39.52,
