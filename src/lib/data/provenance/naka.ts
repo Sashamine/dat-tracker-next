@@ -209,8 +209,8 @@ export const NAKA_TODO = [
   "Q4 2025 10-K due ~March 2026 — will have updated holdings + year-end financials",
   "Check if additional BTC purchased since Nov 2025 via any new 8-K filings",
   "ATM program usage may have increased since Q3 (only $5.6M of $5B used)",
-  "Verify NAKAW warrant strike price (~$11.50) and expiration from original prospectus",
   "BTC Inc. call option details — put option liability was $21.8M as of Q3",
+  "Nasdaq compliance: must achieve $1+ bid by June 8, 2026",
 ];
 
 // =========================================================================
