@@ -297,12 +297,16 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
 // $189M convertible debt raised Jul 2025 for BTC purchases
 // SQNS Debt: $189M → sold 970 BTC Nov 2025 → $94.5M remaining → full redemption via 1,617 BTC sale by Jun 2026
 // ADS ratio: ~1 ADS = 100 ordinary shares (1,599,589,702 ordinary / ~15.5M ADS)
-// Note: pre-split entries use pre-split ordinary share counts, post-split use ADS
+// Note: Pre-reverse-split entries (Jun-Jul 2025) use ordinary shares.
+// Post-split entries (Sep 2025+) use ADS (~1 ADS = 100 ordinary shares).
+// HPS is consistent within each row but NOT directly comparable across the split boundary.
 const SQNS_HISTORY: HoldingsSnapshot[] = [
+  // Pre-split: ordinary shares (not comparable to post-split ADS entries)
   { date: "2025-06-23", holdings: 0, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0, totalDebt: 0, cash: 10_000_000, source: "DAT strategy announced", sourceType: "press-release", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
   { date: "2025-07-08", holdings: 1_500, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0.00000597, totalDebt: 189_000_000, cash: 20_000_000, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
-  { date: "2025-09-17", holdings: 3_234, sharesOutstandingDiluted: 25_140_892, holdingsPerShare: 0.0001287, totalDebt: 189_000_000, cash: 25_000_000, source: "1:10 reverse split + peak holdings", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
-  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 13_933_963, holdingsPerShare: 0.0001625, totalDebt: 89_000_000, cash: 15_000_000, source: "Company treasury update: sold 970 BTC to repay debt", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "company-website" },
+  // Post-split: ADS (1 ADS ≈ 100 ordinary shares)
+  { date: "2025-09-17", holdings: 3_234, sharesOutstandingDiluted: 25_140_892, holdingsPerShare: 0.0001287, totalDebt: 189_000_000, cash: 25_000_000, source: "1:10 reverse split + peak holdings (shares = post-split ordinary, not ADS)", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
+  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 13_933_963, holdingsPerShare: 0.0001625, totalDebt: 94_500_000, cash: 15_000_000, source: "Company treasury update: sold 970 BTC to repay ~$94.5M of $189M convertible", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "company-website" },  // $189M - ~$94.5M repaid = $94.5M remaining (confirmed by Q4 6-K)
   { date: "2025-12-31", holdings: 2_139, sharesOutstandingDiluted: 15_504_809, holdingsPerShare: 0.0001379, totalDebt: 94_500_000, cash: 13_400_000, source: "6-K Q4 2025: 2,139 BTC ($187.1M), 1,617 pledged. $94.5M convertible. Cash $13.4M.", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm" },
 ];
 
