@@ -78,7 +78,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 {M.mnPv&&<div className={cn("cursor-pointer transition-all rounded-lg",exp==="mnav"&&"ring-2 ring-indigo-500")} onClick={()=>tog("mnav")}><ProvenanceMetric label="mNAV" data={M.mnPv} format="mnav" subLabel={<span className="flex items-center gap-1">EV / Crypto NAV <span className="text-indigo-500">{exp==="mnav"?"▼":"▶"}</span></span>} tooltip="How much you pay per dollar of SOL exposure." ticker="hsdt" /></div>}
 <div className={cn("cursor-pointer transition-all rounded-lg",exp==="leverage"&&"ring-2 ring-amber-500")} onClick={()=>tog("leverage")}><ProvenanceMetric label="Leverage" data={M.lvPv} format="mnav" subLabel={<span className="flex items-center gap-1">Net Debt / Crypto NAV <span className="text-amber-500">{exp==="leverage"?"▼":"▶"}</span></span>} tooltip="Zero debt — no leverage." ticker="hsdt" /></div>
 <div className={cn("cursor-pointer transition-all rounded-lg",exp==="equityNav"&&"ring-2 ring-indigo-500")} onClick={()=>tog("equityNav")}><ProvenanceMetric label="Equity NAV/Share" data={M.enpsPv} format="currency" subLabel={<span className="flex items-center gap-1">What each share is worth <span className="text-indigo-500">{exp==="equityNav"?"▼":"▶"}</span></span>} tooltip="Net assets per share after debt." ticker="hsdt" /></div>
-<ProvenanceMetric label="SOL Holdings" data={HSDT_PROVENANCE.holdings} format="number" subLabel="~2.3M SOL (Oct 29, 2025)" tooltip="Oct 29 8-K press release. XBRL Q3 2025 shows 1,739,355 SOL at Sep 30." ticker="hsdt" />
+<ProvenanceMetric label="SOL Holdings" data={HSDT_PROVENANCE.holdings} format="number" subLabel="2,340,757 SOL (Nov 18, 2025)" tooltip="10-Q Note 10 (Subsequent Events). XBRL Q3 2025 = 1,739,355 SOL at Sep 30, plus 587,737 net purchased post-Q3." ticker="hsdt" />
 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4"><p className="text-sm text-gray-500 dark:text-gray-400">SOL / Share</p><p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{M.hps.toFixed(4)}</p><p className="text-xs text-gray-400">{M.h.toLocaleString()} / {(M.sh/1e6).toFixed(1)}M</p></div>
 </div>
 
@@ -97,7 +97,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div className="flex items-center gap-3 mb-6">
 <a href="https://solanacompany.co" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>Website</a>
 <a href="https://x.com/SolanaCompany1" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>Twitter</a>
-<a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${HSDT_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>SEC Filings</a>
+<a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${HSDT_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>SEC Filings</a>{/* Note: cgi-bin URL is deprecated but still functional for EDGAR company search */}
 </div>
 
 <div className="mb-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
@@ -105,10 +105,10 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <ul className="text-sm text-purple-600 dark:text-purple-300 space-y-1">
 <li>{"• "}<strong>{"Pivoted from medical devices (PoNS\u2122)"}</strong>{" to SOL treasury strategy in May 2025"}</li>
 <li>{"• Pantera Capital & Summer Capital led \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">{"$500M PIPE closed Sep 15, 2025"}</a></li>
-<li>{"• "}<strong>{HSDT_PROVENANCE.holdings.value.toLocaleString() + " SOL"}</strong>{" held as of Oct 29, 2025 \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">{"8-K Oct 29"}</a></li>
+<li>{"• "}<strong>{HSDT_PROVENANCE.holdings.value.toLocaleString() + " SOL"}</strong>{" held as of Nov 18, 2025 \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">{"10-Q Note 10"}</a></li>
 <li>{"• Partnered with "}<strong>{"Solana Foundation"}</strong>{" \u2014 strategic alignment with Solana ecosystem"}</li>
 <li>{"• SOL held in custody at "}<strong>{"Anchorage Digital"}</strong>{" \u2014 institutional-grade qualified custodian"}</li>
-<li>{"• 95% staked via native staking \u2014 7.03% APY, earning ~$342K/qtr staking rewards"}</li>
+<li>{"• ~100% staked via native staking \u2014 7.03% APY, $342K staking revenue in Q3 (partial quarter, commenced Sep 2025)"}</li>
 <li>{"• Name changed from Helius Medical Technologies to Solana Company Sep 2025"}</li>
 </ul>
 </div>
@@ -140,11 +140,11 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-3">{"\uD83D\uDD0D Share Structure (Nov 17, 2025)"}</h4>
 <div className="space-y-2 text-sm">
 <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">Common Stock (basic)</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">41,301,400</span></div>
-<div className="text-xs text-gray-500 ml-4">XBRL EntityCommonStockSharesOutstanding (cover page)</div>
-<div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">{"Pre-funded Warrants @ $0.00001"}</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">~34,598,600</span></div>
-<div className="text-xs text-gray-500 ml-4">Economically equivalent to shares — included in FD count</div>
-<div className="border-t border-gray-300 dark:border-gray-600 pt-2 mt-2 flex justify-between items-center"><span className="text-gray-700 dark:text-gray-200 font-semibold">Total for mNAV</span><span className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">75,900,000</span></div>
-<div className="text-xs text-gray-500">{"Per Q3 2025 earnings press release \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-700">{"10-Q"}</a></div>
+<div className="text-xs text-gray-500 ml-4">XBRL EntityCommonStockSharesOutstanding (cover page Nov 17)</div>
+<div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">{"Pre-funded Warrants @ $0.001"}</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">35,627,639</span></div>
+<div className="text-xs text-gray-500 ml-4">10-Q Note 6 warrant table (Sep 30). Economically equivalent to shares.</div>
+<div className="border-t border-gray-300 dark:border-gray-600 pt-2 mt-2 flex justify-between items-center"><span className="text-gray-700 dark:text-gray-200 font-semibold">Total for mNAV</span><span className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">76,929,039</span></div>
+<div className="text-xs text-gray-500">{"10-Q: basic + PFWs. Press release rounds to \u201c75.9M\u201d \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-700">{"10-Q"}</a></div>
 </div>
 </div>
 
@@ -190,9 +190,9 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <StalenessNote dates={[company.holdingsLastUpdated,company.debtAsOf,company.cashAsOf,company.sharesAsOf]} secCik={company.secCik} />
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 <ProvenanceMetric label="Crypto NAV" data={M.navPv} format="currency" subLabel={`${M.h.toLocaleString()} SOL`} tooltip="SOL holdings at current market price" ticker="hsdt" />
-{HSDT_PROVENANCE.cashReserves&&<ProvenanceMetric label="Cash" data={HSDT_PROVENANCE.cashReserves} format="currency" subLabel="Mostly PIPE proceeds" tooltip="$124M at Sep 30. Includes $500M PIPE proceeds being deployed into SOL purchases." ticker="hsdt" />}
+{HSDT_PROVENANCE.cashReserves&&<ProvenanceMetric label="Cash" data={HSDT_PROVENANCE.cashReserves} format="currency" subLabel="PIPE proceeds deploying into SOL" tooltip="$124M at Sep 30. $111.1M held at custodian for SOL purchases (10-Q Note 3). Significantly lower post-Q3 as SOL purchases continued." ticker="hsdt" />}
 {HSDT_PROVENANCE.totalDebt&&<ProvenanceMetric label="Total Debt" data={HSDT_PROVENANCE.totalDebt} format="currency" subLabel="Debt free" tooltip="No long-term debt. LongTermDebt XBRL tag not reported (404)." ticker="hsdt" />}
-{HSDT_PROVENANCE.sharesOutstanding&&<ProvenanceMetric label="Shares Outstanding" data={HSDT_PROVENANCE.sharesOutstanding} format="shares" subLabel="41.3M basic + ~34.6M PFWs" tooltip="75.9M total = 41,301,400 common shares + ~34,598,600 pre-funded warrants @ $0.00001. PFWs included in basic count per press release." ticker="hsdt" />}
+{HSDT_PROVENANCE.sharesOutstanding&&<ProvenanceMetric label="Shares Outstanding" data={HSDT_PROVENANCE.sharesOutstanding} format="shares" subLabel="41.3M basic + 35.6M PFWs" tooltip="76.9M total = 41,301,400 common (Nov 17 cover) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table). Plus 73.9M stapled warrants @ $10.134 and 7.4M advisor warrants @ $0.001 tracked separately." ticker="hsdt" />}
 </div>
 
 {/* Additional Metrics */}
@@ -227,7 +227,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div className="mb-4 mt-8 flex items-center gap-2"><span className="text-lg">{"\uD83D\uDCF0"}</span><h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Research & Filings</h2><div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" /></div>
 
 <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg text-sm text-gray-500 dark:text-gray-400">
-<strong>Data Provenance:</strong> All values sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source. SOL holdings from Oct 29, 2025 8-K press release (~2.3M SOL). XBRL Q3 2025 shows 1,739,355 SOL at Sep 30 (pre-Oct acquisitions). Shares include 41.3M common + ~34.6M pre-funded warrants @ $0.00001. Cash of $124M at Sep 30 includes PIPE proceeds being deployed. Fiscal year ends December 31.
+<strong>Data Provenance:</strong> All values sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source. SOL holdings from 10-Q Note 10 (2,340,757 SOL as of Nov 18, 2025). XBRL Q3 = 1,739,355 at Sep 30, plus 587,737 net purchased post-Q3. Shares: 41.3M common + 35.6M PFWs @ $0.001 = 76.9M. Dilutives: 73.9M stapled warrants @ $10.134, 7.4M advisor warrants @ $0.001. Cash $124M at Sep 30 (PIPE proceeds deploying). FY ends Dec 31.
 </div>
 </div>);
 }

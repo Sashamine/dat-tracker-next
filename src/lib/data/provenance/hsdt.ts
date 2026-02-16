@@ -43,19 +43,22 @@ const PIPE_8K_ACCESSION = "0001104659-25-089774";  // Sep 15 PIPE 8-K
 
 // SOL Holdings
 // XBRL Q3 2025: CryptoAssetNumberOfUnits = 1,739,355 (Sep 30)
-// 8-K Oct 29: ~2,300,000 SOL (most recent disclosure)
+// 8-K Oct 29: ~2,300,000 SOL (approximate)
+// 10-Q Note 10 (Subsequent Events, Nov 18): 2,340,757 SOL (most precise/current)
 const SOL_XBRL_Q3 = 1_739_355;
 const SOL_OCT29_8K = 2_300_000;
-const LATEST_HOLDINGS = SOL_OCT29_8K;  // Most recent
-const LATEST_HOLDINGS_DATE = "2025-10-29";
+const SOL_10Q_NOTE10 = 2_340_757;
+const LATEST_HOLDINGS = SOL_10Q_NOTE10;  // Most current — 10-Q Subsequent Events
+const LATEST_HOLDINGS_DATE = "2025-11-18";
 
 // Shares
 // XBRL: EntityCommonStockSharesOutstanding = 41,301,400 (basic, cover page Nov 17)
-// Press release: "75.9 million common shares and pre-funded warrants outstanding"
-// Pre-funded warrants at $0.00001 are economically equivalent to shares
+// 10-Q Note 6 warrant table: 35,627,639 PFWs outstanding at Sep 30
+// Press release rounds to "75.9 million" (actual: 76,929,039)
+// Pre-funded warrants at $0.001 are economically equivalent to shares
 const SHARES_BASIC = 41_301_400;
-const PREFUNDED_WARRANTS = 34_598_600;  // 75.9M - 41.3M
-const SHARES_FOR_MNAV = 75_900_000;  // basic + PFWs
+const PREFUNDED_WARRANTS = 35_627_639;  // 10-Q Note 6 warrant table (Sep 30)
+const SHARES_FOR_MNAV = 76_929_039;  // basic + PFWs (41,301,400 + 35,627,639)
 const SHARES_DATE = "2025-11-17";
 
 // Financial data (Q3 2025 10-Q XBRL)
@@ -66,11 +69,11 @@ const PREFERRED_EQUITY = 0;  // No PreferredStockValue
 
 // Staking
 export const HSDT_STAKING = {
-  stakingPct: 0.95,
+  stakingPct: 0.9996,  // 10-Q Note 3: 1,738,682 staked / 1,739,355 total = 99.96%
   stakingApy: 0.0703,
   stakingMethod: "Native staking via Anchorage Digital custody",
   stakingCommenced: "September 2025",
-  stakingRevenueQ3: 342_000,  // Q3 2025 10-Q
+  stakingRevenueQ3: 342_000,  // Q3 2025 10-Q (partial quarter — staking commenced Sep 2025)
 };
 
 // Capital raises
@@ -90,17 +93,17 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "2.3 million SOL",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm`,
-      quote: "hold over 2.3 million SOL",
+      searchTerm: "2,340,757 SOL",
+      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
+      quote: "the Company held directly or had rights to 2,340,757 SOL",
       anchor: "SOL Holdings",
       cik: HSDT_CIK,
-      accession: OCT29_8K_ACCESSION,
-      filingType: "8-K",
-      filingDate: OCT29_8K_FILED,
+      accession: Q3_2025_10Q_ACCESSION,
+      filingType: "10-Q",
+      filingDate: Q3_2025_10Q_FILED,
       documentDate: LATEST_HOLDINGS_DATE,
     }),
-    "Oct 29, 2025 8-K press release. XBRL Q3 shows 1,739,355 SOL at Sep 30 (pre-Oct purchases)."
+    "10-Q Note 10 (Subsequent Events, Nov 18). XBRL Q3 = 1,739,355 at Sep 30. Purchased net 587,737 SOL post-Q3 at $211.97."
   ),
 
   sharesOutstanding: pv(
@@ -117,7 +120,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentDate: SHARES_DATE,
     }),
-    `Basic: ${SHARES_BASIC.toLocaleString()} (10-Q cover page) + PFWs: ~${PREFUNDED_WARRANTS.toLocaleString()} @ $0.00001 (from PIPE 8-K ${PIPE_8K_ACCESSION}) = ${SHARES_FOR_MNAV.toLocaleString()}`
+    `Basic: ${SHARES_BASIC.toLocaleString()} (10-Q cover page Nov 17) + PFWs: ${PREFUNDED_WARRANTS.toLocaleString()} @ $0.001 (Note 6 warrant table Sep 30) = ${SHARES_FOR_MNAV.toLocaleString()}. Press release rounds to "75.9M".`
   ),
 
   totalDebt: pv(
@@ -180,7 +183,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
-      quote: "No preferred stock outstanding",
+      quote: "No preferred stock line item on balance sheet",
       anchor: "Preferred Stock",
       cik: HSDT_CIK,
       accession: Q3_2025_10Q_ACCESSION,
@@ -188,7 +191,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentDate: Q3_2025_PERIOD_END,
     }),
-    "No preferred equity issued."
+    "No preferred equity — absent from balance sheet."
   ),
 };
 
@@ -207,7 +210,7 @@ export const HSDT_PROVENANCE_DEBUG = {
   totalDebt: TOTAL_DEBT,
   cash: CASH,
   quarterlyBurn: QUARTERLY_BURN,
-  notes: "Holdings stale since Oct 29. 10-K FY2025 expected ~Mar 2026. HSDTW public warrants need strike price research.",
+  notes: "Holdings from 10-Q Note 10 (Nov 18). 10-K FY2025 expected ~Mar 2026. Dilutives: 73.9M stapled @ $10.134, 7.4M advisor @ $0.001, 617 HSDTW @ $6.756.",
 };
 
 // =========================================================================

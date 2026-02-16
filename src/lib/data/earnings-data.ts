@@ -2195,8 +2195,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Solana Company (HSDT, fka Helius Medical) ==========
   // Calendar year company (fiscal = calendar), FY end Dec 31
-  // SOL treasury began ~May 2025, partnered with Pantera Capital + Summer Capital
-  // Verified 2026-01-29 via SEC XBRL Q3 2025 (CIK 0001610853)
+  // SOL treasury began ~May 2025, $500M PIPE closed Sep 15, 2025 (Pantera + Summer Capital)
+  // 1:50 reverse split effective Jul 1, 2025
+  // Verified 2026-02-15 via SEC XBRL Q3 2025 (CIK 0001610853)
+  // sharesForMnav = 41,301,400 basic + 35,627,639 PFWs @ $0.001 = 76,929,039
   //
   // Q4 2025 - Upcoming (10-K due ~Mar 2026)
   {
@@ -2207,11 +2209,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-15",  // Estimated 10-K filing
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 2_300_000,  // Oct 29, 2025 8-K (~2.3M SOL, best available)
-    sharesAtQuarterEnd: 75_900_000,  // Q3 press release: "75.9M common shares and pre-funded warrants"
-    holdingsPerShare: 0.0303,  // 2.3M / 75.9M
+    holdingsAtQuarterEnd: 2_340_757,  // 10-Q Note 10: 2,340,757 SOL as of Nov 18 (best available pre-Q4 end)
+    sharesAtQuarterEnd: 76_929_039,  // 41,301,400 basic + 35,627,639 PFWs (10-Q warrant table)
+    holdingsPerShare: 0.03043,  // 2,340,757 / 76,929,039
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     status: "upcoming",
   },
   // Q3 2025 - Reported (10-Q Nov 18, 2025)
@@ -2223,14 +2225,15 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-18",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL CryptoAssetNumberOfUnits: 1,739,355 SOL
-    sharesAtQuarterEnd: 75_900_000,  // Q3 press release: "75.9M common shares and pre-funded warrants"
-    holdingsPerShare: 0.0229,  // 1,739,355 / 75,900,000
+    holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL CryptoAssetNumberOfUnits: 1,739,355 SOL at Sep 30
+    sharesAtQuarterEnd: 75_926_867,  // 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs (Note 6 warrant table)
+    holdingsPerShare: 0.02291,  // 1,739,355 / 75,926,867
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     status: "reported",
   },
-  // Q2 2025 - Reported (10-Q Aug 14, 2025) — SOL treasury just beginning
+  // Q2 2025 - Reported (10-Q Aug 14, 2025) — SOL treasury just beginning, pre-PIPE
+  // 1:50 reverse split effective Jul 1, 2025 — share count reflects post-split
   {
     ticker: "HSDT",
     fiscalYear: 2025,
@@ -2240,13 +2243,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // SOL pivot not yet closed; no CryptoAssetNumberOfUnits in Q2 XBRL
-    sharesAtQuarterEnd: 1_077_257,  // XBRL EntityCommonStockSharesOutstanding (pre-PIPE, no PFWs yet)
+    sharesAtQuarterEnd: 1_077_257,  // XBRL EntityCommonStockSharesOutstanding (post-reverse-split, pre-PIPE, no PFWs yet)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025011568/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025011568/hsdt-20250630x10q.htm",
     status: "reported",
   },
-  // Q1 2025 - Reported (10-Q May 1, 2025) — Still medical device company
+  // Q1 2025 - Reported (10-Q May 1, 2025) — Still medical device company (pre-split)
   {
     ticker: "HSDT",
     fiscalYear: 2025,
@@ -2256,10 +2259,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-05-01",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // Pre-pivot, no SOL holdings
-    sharesAtQuarterEnd: 7_920_928,  // XBRL EntityCommonStockSharesOutstanding (pre-PIPE)
+    sharesAtQuarterEnd: 7_920_928,  // XBRL EntityCommonStockSharesOutstanding (pre-reverse-split)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025006120/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025006120/hsdt-20250331x10q.htm",
     status: "reported",
   },
 
