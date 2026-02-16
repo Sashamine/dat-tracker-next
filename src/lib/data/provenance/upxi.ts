@@ -44,7 +44,7 @@ const FY2025_10K_FILED = "2025-09-24";
 // SOL Holdings
 // 10-Q Dec 31, 2025: 2,173,204 SOL (Note 5)
 // Jan 5, 2026 press release: 2,174,583 SOL
-// Jan 9, 2026 Hivemind: +265,500 locked SOL → total ~2,440,083
+// Jan 9, 2026 Hivemind: +265,500 locked SOL (subsequent event, NOT included in Jan 5 or Dec 31 counts)
 const SOL_DEC31_2025 = 2_173_204;           // 10-Q Note 5
 const SOL_JAN5_2026 = 2_174_583;            // Press release
 const SOL_HIVEMIND = 265_500;               // 8-K Jan 2026
@@ -65,20 +65,20 @@ const SHARES_FOR_MNAV = SHARES_FEB9_2026;
 
 // Debt
 // $150M convertible @$4.25: $149,996,123 (net of $5.88M deferred financing costs = $144,115,480 on BS)
-// $36M Hivemind @$2.39: ~$36,000,000 (subsequent event)
+// Hivemind @$2.39: $35,961,975 (subsequent event, EX-41 exact principal)
 // BitGo credit facility: $62,695,723 (short-term, 11.5%)
 // Cygnet notes: $5,380,910
 // Promissory notes: $560,000 (convertible @$3.00)
 const CONVERTIBLE_150M = 149_996_123;
-const HIVEMIND_36M = 36_000_000;
+const HIVEMIND_36M = 35_961_975;            // EX-41 exact principal (10-Q says "approximately $36 million")
 const BITGO_CREDIT = 62_695_723;
 const CYGNET_NOTES = 5_380_910;
 const PROMISSORY_NOTES = 560_000;
 const TOTAL_DEBT = CONVERTIBLE_150M + HIVEMIND_36M + BITGO_CREDIT + CYGNET_NOTES + PROMISSORY_NOTES;
-// = $254,632,756
+// = $254,594,731
 
 // Cash
-const CASH_RESERVES = 1_616_765;            // 10-Q Dec 31, 2025 balance sheet
+const CASH_RESERVES = 1_616_765;            // 10-Q Dec 31, 2025 balance sheet. Post-offering ~$9.7M per Feb 10 earnings 8-K.
 
 // Quarterly Burn (from operating cash flow)
 // 6 months ended Dec 31, 2025: $(12,461,887) net cash used in operations
@@ -101,7 +101,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
       sourceName: "GlobeNewswire",
       documentDate: LATEST_HOLDINGS_DATE,
     }),
-    "Jan 5, 2026 press release. 10-Q Dec 31 shows 2,173,204 SOL. Hivemind adds 265,500 locked."
+    "Jan 5, 2026 press release. 10-Q Dec 31 shows 2,173,204 SOL. Hivemind 265,500 locked SOL (Jan 9) is NOT included — subsequent event after this date."
   ),
 
   sharesOutstanding: pv(
@@ -136,7 +136,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q2_FY2026_10Q_FILED,
       documentDate: "2026-01-09",
     }),
-    "$150M convert @$4.25 + $36M Hivemind @$2.39 (subsequent) + $62.7M BitGo credit + $5.4M Cygnet + $560K promissory = $254.6M"
+    "$150M convert @$4.25 + $35.96M Hivemind @$2.39 (EX-41: $35,961,975, subsequent) + $62.7M BitGo credit + $5.4M Cygnet + $560K promissory = $254.6M"
   ),
 
   cashReserves: pv(
@@ -153,7 +153,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q2_FY2026_10Q_FILED,
       documentDate: Q2_FY2026_PERIOD_END,
     }),
-    "Operating capital only. Not excess cash."
+    "Operating capital only. Not excess cash. Post-offering cash ~$9.7M per Feb 10 earnings 8-K, but using audited Dec 31 BS figure."
   ),
 
   quarterlyBurn: pv(

@@ -1544,7 +1544,7 @@ export const solCompanies: Company[] = [
     secCik: "0001775194",
     asset: "SOL",
     tier: 1,
-    holdings: 2_174_583,  // Jan 5, 2026 press release (10-Q Dec 31 shows 2,173,204; Hivemind adds 265,500 locked)
+    holdings: 2_174_583,  // Jan 5, 2026 press release (10-Q Dec 31 shows 2,173,204). NOTE: Hivemind 265,500 locked SOL (Jan 9) NOT included — that was a subsequent event after this date.
     holdingsLastUpdated: "2026-01-05",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
@@ -1561,18 +1561,18 @@ export const solCompanies: Company[] = [
     burnSource: "SEC 10-Q (filed 2026-02-10): Net cash used in operating activities $(12,461,887) for 6 months ended Dec 31, 2025",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     burnAsOf: "2025-12-31",
-    capitalRaisedAtm: 100_000_000,
-    capitalRaisedAtmSource: "SEC S-3 shelf registration (effective Jan 8, 2026)",
-    capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22S-3%22&forms=S-3&dateRange=custom&startdt=2025-12-01&enddt=2026-01-31&entityName=upexi",  // S-3 filed Dec 22, 2025
+    capitalRaisedAtm: 1_000_000_000,  // $1B S-3 shelf registration (filed Dec 22, 2025, effective Jan 8, 2026). ~$7.4M used via Feb 2026 424B5.
+    capitalRaisedAtmSource: "SEC S-3 shelf registration $1B (effective Jan 8, 2026)",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225009150/upxi_s3.htm",
     sharesForMnav: 69_760_581,  // 10-Q cover page as of Feb 9, 2026 (includes Feb 2026 offering of 6.34M + RSU vesting)
     sharesSource: "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     sharesAsOf: "2026-02-09",
-    totalDebt: 254_632_756,  // $150M convert @$4.25 + $36M Hivemind @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
-    debtSource: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $36M + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
+    totalDebt: 254_594_731,  // $150M convert @$4.25 + $35.96M Hivemind @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
+    debtSource: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $35.96M (EX-41: $35,961,975) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     debtAsOf: "2026-01-09",
-    cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet
+    cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet. NOTE: Post-offering cash ~$9.7M per Feb 10 earnings 8-K (EX-99.2), but using audited BS figure.
     restrictedCash: 1_616_765,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q2 FY2026 balance sheet",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
