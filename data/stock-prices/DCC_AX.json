@@ -2,7 +2,7 @@
   "ticker": "DCC.AX",
   "exchange": "ASX",
   "currency": "AUD",
-  "lastUpdated": "2026-02-14T02:59:32.214Z",
+  "lastUpdated": "2026-02-16T14:00:02.041Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6098,6 +6098,15 @@
       "low": 0.034,
       "close": 0.034,
       "volume": 1672980
+    },
+    {
+      "date": "2026-02-16",
+      "time": "09:00",
+      "open": 0.034,
+      "high": 0.035,
+      "low": 0.034,
+      "close": 0.034,
+      "volume": 348998
     }
   ]
 }
