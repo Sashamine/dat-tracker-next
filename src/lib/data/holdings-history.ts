@@ -90,8 +90,8 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
 // Data from TSE filings and press releases
 //
 // STOCK SPLIT HISTORY:
-// - July 30, 2024: 1-for-10 reverse split (shares ÷10)
-// - March 28, 2025: 10-for-1 forward split (shares ×10)
+// - July 30, 2024: 1-for-10 reverse split (shares /10)
+// - March 28, 2025: 10-for-1 forward split (shares x10)
 // All historical numbers below are split-adjusted.
 //
 // SHARE STRUCTURE (Jan 2026):
@@ -100,9 +100,9 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
 // - Difference:      ~294M from preferred stock (Class B "MERCURY" etc.)
 //
 // PREFERRED STOCK:
-// - Class B "MERCURY" (Dec 2025): 23.61M shares, ¥1,000 conversion price
-// - Currently underwater (stock ¥510 vs conversion ¥1,000)
-// - Total preferred: ¥86.58B - handled via preferredEquity in companies.ts, NOT share dilution
+// - Class B "MERCURY" (Dec 2025): 23.61M shares, $1,000 conversion price
+// - Currently underwater (stock $510 vs conversion $1,000)
+// - Total preferred: $86.58B - handled via preferredEquity in companies.ts, NOT share dilution
 //
 // For mNAV calculation, we use COMMON SHARES (1.14B) because:
 // - metaplanet.jp shows ~1.26x mNAV using this methodology
@@ -117,7 +117,7 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
 //
 // Full purchase history from metaplanet.jp/en/analytics
 // All values SPLIT-ADJUSTED to current share basis (post Mar 28, 2025 10:1 forward split)
-// Historical shares ×10, historical BTC/share ÷10 for continuity
+// Historical shares x10, historical BTC/share /10 for continuity
 const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   // SHARE COUNT SOURCES:
   // QF = Quarterly filing Section 4 (issued - treasury). Most authoritative.
@@ -125,17 +125,17 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   // WAR = Warrant exercise status reports
   //
   // Apr-Sep 2024: No warrant exercises until Sep 6. Shares flat at 181,692,180.
-  // 11th SAR (gratis allotment): exercised Sep 6 – Oct 22, 2024. +180,991,160 shares.
+  // 11th SAR (gratis allotment): exercised Sep 6 - Oct 22, 2024. +180,991,160 shares.
   // 12th SAR (EVO FUND): all exercised Jan 6, 2025. +29,000,000 shares.
   // 13th-17th SAR (EVO FUND): exercising Feb 2025+.
   // 20th+ SAR: exercising Jun 2025+.
   // Sep 10, 2025: International offering (+385M shares).
   //
-  // 2024 Q2 — No exercises. Shares flat at 181,692,180 (post-split equiv).
+  // 2024 Q2 - No exercises. Shares flat at 181,692,180 (post-split equiv).
   { date: "2024-04-23", holdings: 97.85, sharesOutstanding: 181_692_180, holdingsPerShare: 0.000000539, source: "Initial BTC purchase", sharesSource: "QF: Q2 FY2024. No exercises Apr-Aug 2024.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-05-09", holdings: 117.72, sharesOutstanding: 181_692_180, holdingsPerShare: 0.000000648, source: "TDnet disclosure", sharesSource: "QF: flat, no exercises", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-06-10", holdings: 141.07, sharesOutstanding: 181_692_180, holdingsPerShare: 0.000000776, source: "TDnet disclosure", sharesSource: "QF: Q2 FY2024 Section 4: 181,692,187 issued - ~7 fractional", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
-  // 2024 Q3 — 11th SAR exercise period starts Sep 6. Shares flat until then.
+  // 2024 Q3 - 11th SAR exercise period starts Sep 6. Shares flat until then.
   { date: "2024-07-01", holdings: 161.27, sharesOutstanding: 181_692_180, holdingsPerShare: 0.000000888, source: "TDnet disclosure", sharesSource: "QF: flat, no exercises until Sep 6", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-07-08", holdings: 203.73, sharesOutstanding: 181_692_180, holdingsPerShare: 0.00000112, source: "TDnet disclosure", sharesSource: "QF: flat", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-07-16", holdings: 225.61, sharesOutstanding: 181_692_180, holdingsPerShare: 0.00000124, source: "TDnet disclosure", sharesSource: "QF: flat", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
@@ -143,7 +143,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-08-13", holdings: 303.09, sharesOutstanding: 181_692_180, holdingsPerShare: 0.00000167, source: "TDnet disclosure", sharesSource: "QF: flat. 11th SAR issued Aug 6 but exercise starts Sep 6.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-08-20", holdings: 360.37, sharesOutstanding: 181_692_180, holdingsPerShare: 0.00000198, source: "TDnet disclosure", sharesSource: "QF: flat", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-09-10", holdings: 398.83, sharesOutstanding: 193_929_230, holdingsPerShare: 0.00000206, source: "TDnet disclosure", sharesSource: "QF: Q3 anchor 193,929,230. 11th SAR mid-exercise (started Sep 6). Using Sep 30 anchor as best available.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
-  // 2024 Q4 — 11th SAR 100% exercised by Oct 22 (WAR: Oct 23 filing). Shares jump to 362,683,340.
+  // 2024 Q4 - 11th SAR 100% exercised by Oct 22 (WAR: Oct 23 filing). Shares jump to 362,683,340.
   // Oct 1-16: 11th SAR mid-exercise by 13,774 shareholders. Exact daily counts unknown. Using post-exercise value.
   { date: "2024-10-01", holdings: 506.74, sharesOutstanding: 362_683_340, holdingsPerShare: 0.00000140, source: "TDnet disclosure", sharesSource: "WAR: 11th SAR mid-exercise. Post-exercise value used (100% done by Oct 22).", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 0, cash: 5_000_000 },
   { date: "2024-10-03", holdings: 530.71, sharesOutstanding: 362_683_340, holdingsPerShare: 0.00000146, source: "TDnet disclosure", sharesSource: "WAR: 11th SAR mid-exercise", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
@@ -154,7 +154,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-28", holdings: 1018.00, sharesOutstanding: 362_683_340, holdingsPerShare: 0.00000281, source: "TDnet disclosure", sharesSource: "WAR: 11th SAR 100% exercised Oct 22. ACQ PDF confirms 362,683,340.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
   { date: "2024-11-19", holdings: 1142.29, sharesOutstanding: 362_683_340, holdingsPerShare: 0.00000315, source: "TDnet disclosure", sharesSource: "WAR: flat. 12th SAR issued Dec 16, no exercises Nov. ACQ PDF confirms.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
   { date: "2024-12-23", holdings: 1762.00, sharesOutstanding: 362_683_340, holdingsPerShare: 0.00000486, source: "TDnet disclosure", sharesSource: "QF: FY2024 Annual 362,683,340 issued. 12th SAR: 0 exercised in Dec per Jan 6 filing.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 50_000_000, cash: 10_000_000 },
-  // 2025 Q1 — 12th SAR all exercised Jan 6 (+29M). 13th-17th SAR exercising from Feb 2025.
+  // 2025 Q1 - 12th SAR all exercised Jan 6 (+29M). 13th-17th SAR exercising from Feb 2025.
   { date: "2025-02-17", holdings: 2031.43, sharesOutstanding: 391_683_340, holdingsPerShare: 0.00000519, source: "TDnet disclosure", sharesSource: "WAR: 12th SAR exercised Jan 6 (+29M). 13th-17th issued Feb 17, 0 exercised yet.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   { date: "2025-02-20", holdings: 2100.00, sharesOutstanding: 396_683_340, holdingsPerShare: 0.00000529, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table issued common shares", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   { date: "2025-02-25", holdings: 2235.00, sharesOutstanding: 403_323_340, holdingsPerShare: 0.00000554, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table. WAR: Feb month-end confirmed by Mar 4 filing.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
@@ -164,7 +164,7 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-18", holdings: 3200.00, sharesOutstanding: 442_483_340, holdingsPerShare: 0.00000723, source: "TDnet disclosure", sharesSource: "ACQ: flat from Mar 5", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   { date: "2025-03-24", holdings: 3350.00, sharesOutstanding: 442_483_340, holdingsPerShare: 0.00000757, source: "TDnet disclosure", sharesSource: "ACQ: flat from Mar 5", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
   { date: "2025-03-31", holdings: 4046.00, sharesOutstanding: 459_880_960, holdingsPerShare: 0.00000880, stockPrice: 288.27, source: "TDnet Q1 end", sharesSource: "QF: Q1 FY2025 Section 4: 459,906,340 issued - 25,380 treasury", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 100_000_000, cash: 20_000_000 },
-  // 2025 Q2 — All shares from ACQ BTC Yield table "Issued Common Shares"
+  // 2025 Q2 - All shares from ACQ BTC Yield table "Issued Common Shares"
   { date: "2025-04-02", holdings: 4206.00, sharesOutstanding: 459_906_340, holdingsPerShare: 0.00000915, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-04-14", holdings: 4525.00, sharesOutstanding: 479_260_340, holdingsPerShare: 0.00000944, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-04-21", holdings: 4855.00, sharesOutstanding: 488_506_340, holdingsPerShare: 0.00000994, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
@@ -173,11 +173,11 @@ const METAPLANET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-12", holdings: 6796.00, sharesOutstanding: 553_074_340, holdingsPerShare: 0.00001229, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-05-19", holdings: 7800.00, sharesOutstanding: 593_214_340, holdingsPerShare: 0.00001315, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-06-02", holdings: 8888.00, sharesOutstanding: 600_714_340, holdingsPerShare: 0.00001480, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
-  { date: "2025-06-16", holdings: 10000.00, sharesOutstanding: 600_714_340, holdingsPerShare: 0.00001665, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table. Flat — 20th SAR not yet exercising.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
+  { date: "2025-06-16", holdings: 10000.00, sharesOutstanding: 600_714_340, holdingsPerShare: 0.00001665, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table. Flat - 20th SAR not yet exercising.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-06-23", holdings: 11111.00, sharesOutstanding: 600_714_340, holdingsPerShare: 0.00001850, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table. Flat.", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-06-26", holdings: 12345.00, sharesOutstanding: 654_714_340, holdingsPerShare: 0.00001886, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table. Large 20th SAR exercise (+54M).", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
   { date: "2025-06-30", holdings: 13350.00, sharesOutstanding: 654_688_628, holdingsPerShare: 0.00002039, stockPrice: 404.23, source: "TDnet Q2 end", sharesSource: "QF: Q2 FY2025 Section 4: 654,714,340 issued - 25,712 treasury", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 180_000_000, cash: 50_000_000 },
-  // 2025 Q3 — All shares from ACQ BTC Yield table "Issued Common Shares"
+  // 2025 Q3 - All shares from ACQ BTC Yield table "Issued Common Shares"
   { date: "2025-07-07", holdings: 15555.00, sharesOutstanding: 662_814_340, holdingsPerShare: 0.00002347, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   { date: "2025-07-14", holdings: 16352.00, sharesOutstanding: 671_814_340, holdingsPerShare: 0.00002434, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
   { date: "2025-07-28", holdings: 17132.00, sharesOutstanding: 686_214_340, holdingsPerShare: 0.00002496, source: "TDnet disclosure", sharesSource: "ACQ: BTC Yield table", sourceType: "regulatory-filing", sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures" , totalDebt: 280_000_000, cash: 100_000_000 },
@@ -220,7 +220,7 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 14_700, sharesOutstanding: 22_000_000, holdingsPerShare: 0.000668, stockPrice: 404.23, source: "Q2 2025 (implied from Q3 380% growth)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225023517/form10-q.htm" },
   { date: "2025-09-30", holdings: 70_322, sharesOutstanding: 50_298_201, holdingsPerShare: 0.001398, stockPrice: 326.42, source: "Q3 2025 8-K (verified)", sharesSource: "10-Q diluted shares. Options at $2.64 in the money", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm", sourceType: "sec-filing" },
   { date: "2025-12-31", holdings: 70_500, sharesOutstanding: 50_000_000, holdingsPerShare: 0.001410, stockPrice: 155.61, source: "8-K Jan 7, 2026 shareholder letter (verified)", sharesSource: "Est diluted. Convertibles at $5.85/$13 out of money, options at $2.64 in money", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000734/form8-k.htm", sourceType: "sec-filing" },
-  { date: "2026-02-05", holdings: 60_500, sharesOutstanding: 50_000_000, holdingsPerShare: 0.001210, source: "8-K Feb 6, 2026 — sold 10,000 ETH", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226005565/form8-k.htm", sourceType: "sec-filing", totalDebt: 61_660_526 },
+  { date: "2026-02-05", holdings: 60_500, sharesOutstanding: 50_000_000, holdingsPerShare: 0.001210, source: "8-K Feb 6, 2026 - sold 10,000 ETH", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226005565/form8-k.htm", sourceType: "sec-filing", totalDebt: 61_660_526 },
 ];
 
 // Bit Digital - ETH treasury + AI/HPC (WhiteFiber/WYFI)
@@ -232,18 +232,18 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
 // NOTE: Q1-Q3 2025 ETH holdings verified against earnings-data.ts (Feb 2026 audit)
 // Pre-2025 holdings need further verification from 10-K/10-Q digital assets notes
 const BTBT_HISTORY: HoldingsSnapshot[] = [
-  // Pre-ETH pivot (mixed BTC/ETH holdings — values need verification from 10-K notes)
+  // Pre-ETH pivot (mixed BTC/ETH holdings - values need verification from 10-K notes)
   { date: "2023-12-31", holdings: 17245, sharesOutstanding: 107_291_827, holdingsPerShare: 0.000161, stockPrice: 63.16, totalDebt: 0, cash: 16_860_934, source: "FY2023 20-F", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000101376224000254/", methodology: "ETH holdings from 20-F digital assets note. Shares from XBRL.", confidence: "medium" },
   { date: "2024-06-30", holdings: 22890, sharesOutstanding: 175_000_000, holdingsPerShare: 0.000131, stockPrice: 137.75, totalDebt: 0, cash: 40_000_000, source: "Q2 2024 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390024068974/", methodology: "ETH holdings need verification from 10-Q notes.", confidence: "medium" },
   { date: "2024-12-31", holdings: 27350, sharesOutstanding: 179_125_205, holdingsPerShare: 0.000153, stockPrice: 302.96, totalDebt: 0, cash: 95_201_335, source: "FY2024 10-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000101376225000307/", methodology: "Shares from XBRL. Cash from XBRL. ETH count needs verification.", confidence: "medium" },
-  // 2025 — ETH pivot + massive accumulation
+  // 2025 - ETH pivot + massive accumulation
   // Q1: Pre-pivot, minimal ETH. Shares from XBRL cover page (May 12, 2025)
   { date: "2025-03-31", holdings: 10_000, sharesOutstanding: 207_780_871, holdingsPerShare: 0.000048, stockPrice: 288.27, totalDebt: 0, cash: 57_555_011, source: "Q1 2025 10-Q (pre-ETH pivot, estimated)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/", methodology: "Estimated pre-pivot ETH. Shares/cash from XBRL. No converts yet.", confidence: "low" },
   // Q2: ETH pivot started, ~30K ETH accumulated. Shares from XBRL cover page (Aug 13, 2025)
   { date: "2025-06-30", holdings: 30_663, sharesOutstanding: 321_432_722, holdingsPerShare: 0.000095, stockPrice: 404.23, totalDebt: 0, cash: 181_165_847, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025076608/", methodology: "ETH from Q3 earnings PR retrospective. Shares/cash from XBRL. No converts yet.", confidence: "high" },
   // Q3: Major accumulation. $150M converts issued Oct 2 (post quarter-end). Shares from XBRL cover (Nov 10, 2025)
   { date: "2025-09-30", holdings: 122_187, sharesOutstanding: 323_674_831, holdingsPerShare: 0.000377, stockPrice: 326.42, totalDebt: 0, cash: 179_118_182, source: "Q3 2025 monthly PR + 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/", methodology: "ETH from Sep 30 monthly PR. Converts issued Oct 2, so $0 debt at Q3 end. Cash from XBRL.", confidence: "high" },
-  // Q4 quarter-end anchor — must match earnings-data.ts Q4 entry
+  // Q4 quarter-end anchor - must match earnings-data.ts Q4 entry
   { date: "2025-12-31", holdings: 155_227, sharesOutstanding: 323_792_059, holdingsPerShare: 0.000479, stockPrice: 155.61, totalDebt: 150_000_000, cash: 179_118_182, preferredEquity: 9_050_000, source: "Dec 2025 monthly PR (Jan 7, 2026)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release", methodology: "ETH/shares from Dec PR. Debt = $150M converts (Oct 2025). Cash carried from Q3 (Q4 not filed). Preferred = $9.05M.", confidence: "high" },
 ];
 
@@ -267,7 +267,7 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
 // DFDV Debt: $140.3M converts (two tranches) + $70.3M BitGo financing + $267K short-term = $202M (10-Q Sep 30, 2025)
 const DFDV_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-04-15", holdings: 150000, sharesOutstanding: 15_000_000, holdingsPerShare: 0.01000, totalDebt: 50_000_000, cash: 10_000_000, source: "Initial SOL treasury (estimate; totalDebt is approximate — only April PIPE $42M closed at this point)", sourceType: "press-release", sourceUrl: "https://defidevcorp.com/press-releases" },
+  { date: "2025-04-15", holdings: 150000, sharesOutstanding: 15_000_000, holdingsPerShare: 0.01000, totalDebt: 50_000_000, cash: 10_000_000, source: "Initial SOL treasury (estimate; totalDebt is approximate - only April PIPE $42M closed at this point)", sourceType: "press-release", sourceUrl: "https://defidevcorp.com/press-releases" },
   { date: "2025-06-30", holdings: 573000, sharesOutstanding: 21_045_049, holdingsPerShare: 0.02723, stockPrice: 404.23, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/dfdv-20250630.htm" },
   { date: "2025-09-30", holdings: 1157000, sharesOutstanding: 31_401_212, holdingsPerShare: 0.03685, stockPrice: 326.42, totalDebt: 202_042_000, source: "Q3 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm" },
   { date: "2026-01-01", holdings: 2_221_329, sharesOutstanding: 29_892_800, holdingsPerShare: 0.07431, totalDebt: 202_042_000, cash: 9_000_000, source: "Q4 2025 business update (8-K); totalDebt carried from 10-Q Sep 30 (no newer filing)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm", sourceType: "sec-filing" },
@@ -307,7 +307,7 @@ const SQNS_HISTORY: HoldingsSnapshot[] = [
   // Pre-split: ordinary shares (not comparable to post-split ADS entries)
   { date: "2025-06-23", holdings: 0, sharesOutstanding: 251_408_922, holdingsPerShare: 0, totalDebt: 0, cash: 10_000_000, source: "DAT strategy announced", sourceType: "press-release", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
   { date: "2025-07-08", holdings: 1_500, sharesOutstanding: 251_408_922, holdingsPerShare: 0.00000597, totalDebt: 189_000_000, cash: 20_000_000, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
-  // Post-split: ADS (1 ADS ˜ 100 ordinary shares)
+  // Post-split: ADS (1 ADS = 100 ordinary shares)
   { date: "2025-09-17", holdings: 3_234, sharesOutstanding: 25_140_892, holdingsPerShare: 0.0001287, totalDebt: 189_000_000, cash: 25_000_000, source: "1:10 reverse split + peak holdings (shares = post-split ordinary, not ADS)", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
   { date: "2025-11-04", holdings: 2_264, sharesOutstanding: 13_933_963, holdingsPerShare: 0.0001625, totalDebt: 94_500_000, cash: 15_000_000, source: "Company treasury update: sold 970 BTC to repay ~$94.5M of $189M convertible", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "company-website" },  // $189M - ~$94.5M repaid = $94.5M remaining (confirmed by Q4 6-K)
   { date: "2025-12-31", holdings: 2_139, sharesOutstanding: 15_504_809, holdingsPerShare: 0.0001379, totalDebt: 94_500_000, cash: 13_400_000, source: "6-K Q4 2025: 2,139 BTC ($187.1M), 1,617 pledged. $94.5M convertible. Cash $13.4M.", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm" },
@@ -338,7 +338,7 @@ const BOYAA_HISTORY: HoldingsSnapshot[] = [
 // Verified 2026-01-28 via SEC 8-K filings
 // NAKA Debt: $210M Kraken loan (Dec 2025)
 const NAKA_HISTORY: HoldingsSnapshot[] = [
-  // Pre-merger entries removed — Yahoo's historical prices are adjusted for the reverse merger,
+  // Pre-merger entries removed - Yahoo's historical prices are adjusted for the reverse merger,
   // so combining pre-merger holdings (21 BTC from KindlyMD) with post-merger adjusted prices
   // produces wildly wrong mNAV values (900x+). NAKA chart starts from post-merger.
   // Aug 19: post-merger. Shares from merger completion 8-K: 376.1M common + 133.8M pre-funded = 509.9M
@@ -361,25 +361,25 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 2_100, sharesOutstanding: 74_101_315, holdingsPerShare: 0.0000283, stockPrice: 27.88, source: "Q2 2025 10-Q (pre-merger)", sourceType: "sec-filing", sourceUrl: "/filings/abtc/10Q-2025-06-30#btc-holdings" },
   // Post-merger (Sep 3, 2025)
   // Share count: 927,604,994 from Q3 2025 10-Q cover page (Class A: 195,380,091 + Class B: 732,224,903)
-  // NOTE: 899,489,426 was WRONG — that was diluted weighted avg for EPS, not actual shares outstanding
+  // NOTE: 899,489,426 was WRONG - that was diluted weighted avg for EPS, not actual shares outstanding
   // stockPrice adjusted from $326.42 (Gryphon pre-merger) by ~14.5:1 exchange ratio
   { date: "2025-09-30", holdings: 3_418, sharesOutstanding: 920_684_912, holdingsPerShare: 0.00000371, stockPrice: 22.51, source: "SEC 10-Q Q3 2025: 'Number of Bitcoin held as of September 30, 2025: 3,418'", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm", sourceType: "sec-filing", sharesSource: "10-Q balance sheet Sep 30: Class A 188,460,009 + Class B 732,224,903 = 920,684,912" },
   { date: "2025-10-24", holdings: 3_865, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000417, source: "Press release", sourceType: "press-release", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html" }, // Oct 24 data (3,865 BTC) verifiable from Nov 5 PR table; original Oct 24 PR URL is dead
   { date: "2025-11-05", holdings: 4_004, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000432, source: "PR Newswire Nov 5, 2025", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html", sourceType: "press-release" },
   // Dec 2025 updates - verified 2026-02-14
-  // Dec share counts may differ from Nov 13 cover page due to ATM issuances — using 927.6M as baseline
+  // Dec share counts may differ from Nov 13 cover page due to ATM issuances - using 927.6M as baseline
   { date: "2025-12-08", holdings: 4_783, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000516, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
   { date: "2025-12-14", holdings: 5_098, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000549, source: "PR Newswire Dec 14, 2025 (Top 20 milestone)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html", sourceType: "press-release" },
-  // Q4 quarter-end anchor — carried forward from Dec 14 PR (no Dec 31 disclosure)
+  // Q4 quarter-end anchor - carried forward from Dec 14 PR (no Dec 31 disclosure)
   // Must match earnings-data.ts Q4 2025 entry: 5,098 / 927,604,994 = 549 sats
-  { date: "2025-12-31", holdings: 5_098, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000549, source: "Carried forward from Dec 14 PR (no Q4 end disclosure yet)", sourceType: "press-release", methodology: "Interpolated Q4 anchor — will update when 10-K filed", confidence: "medium" },
+  { date: "2025-12-31", holdings: 5_098, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000549, source: "Carried forward from Dec 14 PR (no Q4 end disclosure yet)", sourceType: "press-release", methodology: "Interpolated Q4 anchor - will update when 10-K filed", confidence: "medium" },
   // TODO: Jan 2026 - no PR/8-K found, company discloses via X now
 ];
 
 // NXTT (Next Technology Holding) removed - history of false financial reports, shareholder lawsuits
 
 // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
-// Data from AMF (Autorité des marchés financiers) regulatory filings
+// Data from AMF (Autorite des marches financiers) regulatory filings
 // API: https://dilaamf.opendatasoft.com/api/v2/ (ISIN: FR0011053636)
 // Note: Massive dilution in Sep 2025 from EUR58.1M private placement (Sep 16, 2025 AMF filing)
 const ALTBG_HISTORY: HoldingsSnapshot[] = [
@@ -422,7 +422,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL ETH COMPANIES ====================
 
 // Sharplink, Inc. (SBET) - #2 ETH treasury (formerly SharpLink Gaming, renamed Feb 3, 2026)
-// ETH treasury strategy launched June 2, 2025 — NO ETH holdings before that date
+// ETH treasury strategy launched June 2, 2025 - NO ETH holdings before that date
 // Note: 1:12 reverse split on May 5, 2025
 // Using BASIC shares (EntityCommonStockSharesOutstanding)
 // SEC CIK: 1981535 | FY ends Dec 31 (changed from Jan 31 during ETH pivot; FY2025 10-K was Jan 31)
@@ -440,7 +440,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 // See provenance file for complete SEC accession numbers and filing details
 // Last verified: 2026-02-11 | Last holdings update: 2025-12-17 (no Jan/Feb 2026 updates)
 const SBET_HISTORY: HoldingsSnapshot[] = [
-  // Jun 2025 — Initial accumulation phase (strategy launched Jun 2)
+  // Jun 2025 - Initial accumulation phase (strategy launched Jun 2)
   // Accession: 0001641172-25-014970
   { date: "2025-06-12", holdings: 176_270, sharesOutstanding: 140_000_000, holdingsPerShare: 0.001259, source: "8-K Jun 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/", sourceType: "sec-filing" },
   // Accession: 0001641172-25-016228
@@ -450,7 +450,7 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   // Q2 2025 quarter-end (interpolated between Jun 27 and Jul 4 filings)
   { date: "2025-06-30", holdings: 200_000, sharesOutstanding: 145_000_000, holdingsPerShare: 0.001379, source: "Interpolated (Q2 end)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=10-Q", sourceType: "interpolated" as HoldingsSource },
   
-  // Jul 2025 — Rapid accumulation (inc. 10K ETH from Ethereum Foundation on Jul 11)
+  // Jul 2025 - Rapid accumulation (inc. 10K ETH from Ethereum Foundation on Jul 11)
   // Accession: 0001641172-25-018094
   { date: "2025-07-04", holdings: 205_634, sharesOutstanding: 146_000_000, holdingsPerShare: 0.001408, source: "8-K Jul 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/", sourceType: "sec-filing" },
   // Accession: 0001641172-25-019635
@@ -460,7 +460,7 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   // Accession: 0001641172-25-021266
   { date: "2025-07-27", holdings: 438_190, sharesOutstanding: 155_000_000, holdingsPerShare: 0.002827, source: "8-K Jul 29, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/", sourceType: "sec-filing" },
   
-  // Aug 2025 — Massive buying spree
+  // Aug 2025 - Massive buying spree
   // Accession: 0001641172-25-022149
   { date: "2025-08-03", holdings: 521_939, sharesOutstanding: 158_000_000, holdingsPerShare: 0.003303, source: "8-K Aug 5, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/", sourceType: "sec-filing" },
   // Accession: 0001641172-25-023115
@@ -472,14 +472,14 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   // Accession: 0001493152-25-012518
   { date: "2025-08-31", holdings: 837_230, sharesOutstanding: 170_000_000, holdingsPerShare: 0.004925, source: "8-K Sep 2, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/", sourceType: "sec-filing" },
   
-  // Sep 2025 — Accumulation slows
+  // Sep 2025 - Accumulation slows
   // Accession: 0001493152-25-013634
   { date: "2025-09-14", holdings: 838_152, sharesOutstanding: 175_000_000, holdingsPerShare: 0.004789, source: "8-K Sep 16, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/", sourceType: "sec-filing" },
   // Q3 2025 10-Q: 817,747 ETH (580,841 native + 236,906 LsETH). Lower than Sep 14 due to LsETH rate
   // Accession: 0001493152-25-021970
   { date: "2025-09-30", holdings: 817_747, sharesOutstanding: 192_193_183, holdingsPerShare: 0.004255, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm", sourceType: "sec-filing" },
   
-  // Oct-Dec 2025 — Stabilizing around 860K
+  // Oct-Dec 2025 - Stabilizing around 860K
   // Accession: 0001493152-25-018731
   { date: "2025-10-19", holdings: 859_853, sharesOutstanding: 184_500_000, holdingsPerShare: 0.004660, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/", sourceType: "sec-filing" },
   // Accession: 0001493152-25-022065 (8-K/A corrected)
@@ -550,14 +550,14 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
 // SEC CIK: 0000038264
 // Shares = common + pre-funded warrants (PFWs @ $0.00001, included in basic EPS)
 // Holdings = SOL-equivalent where noted (raw SOL + fwdSOL liquid staking tokens)
-// Shares declining via $1B buyback program (Nov 2025 – Sep 2027)
+// Shares declining via $1B buyback program (Nov 2025 - Sep 2027)
 // Verified 2026-02-13 via 10-Q Q1 FY2026 (filed 2026-02-12)
 const FWDI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-15", holdings: 6_822_000, sharesOutstanding: 99_960_397, holdingsPerShare: 0.06825, source: "8-K: Initial SOL purchases at avg $232/SOL", sharesSource: "86.1M common + 13.8M PFWs issued", sourceUrl: "/filings/fwdi/0001683168-25-006963", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 6_854_000, sharesOutstanding: 99_960_397, holdingsPerShare: 0.06857, source: "10-K XBRL: CryptoAssetNumberOfUnits (cost $1.59B)", sharesSource: "86,145,514 common + 13,814,883 PFWs", sourceUrl: "/filings/fwdi/0001683168-25-009068", sourceType: "sec-filing" },
   // Dec 31: SOL-equivalent estimate = 4,973,000 raw SOL + ~1,614,000 SOL from LSTs ($201.6M / $124.86 SOL price)
   // Raw SOL per 10-Q XBRL: 4,973,000. Using SOL-equivalent to avoid misleading V-shaped dip vs Jan 15 SOL-equivalent figure.
-  { date: "2025-12-31", holdings: 6_587_000, sharesOutstanding: 97_788_874, holdingsPerShare: 0.06736, totalDebt: 0, cash: 25_388_079, source: "10-Q: SOL-equivalent estimate (4,973,000 raw + ~1,614,000 from $201.6M fwdSOL LSTs at $124.86/SOL)", sharesSource: "84,924,272 common + 12,864,602 PFWs", sourceUrl: "/filings/fwdi/0001683168-26-000960", sourceType: "sec-filing", methodology: "Raw SOL (4,973,000) from 10-Q XBRL + LST SOL-equivalent (~1,614,000) derived from $201.6M 'digital assets not measured at FV' ÷ $124.86 Dec 31 SOL price. See 10-Q balance sheet for breakdown.", confidence: "medium" },
+  { date: "2025-12-31", holdings: 6_587_000, sharesOutstanding: 97_788_874, holdingsPerShare: 0.06736, totalDebt: 0, cash: 25_388_079, source: "10-Q: SOL-equivalent estimate (4,973,000 raw + ~1,614,000 from $201.6M fwdSOL LSTs at $124.86/SOL)", sharesSource: "84,924,272 common + 12,864,602 PFWs", sourceUrl: "/filings/fwdi/0001683168-26-000960", sourceType: "sec-filing", methodology: "Raw SOL (4,973,000) from 10-Q XBRL + LST SOL-equivalent (~1,614,000) derived from $201.6M 'digital assets not measured at FV' / $124.86 Dec 31 SOL price. See 10-Q balance sheet for breakdown.", confidence: "medium" },
   { date: "2026-01-15", holdings: 6_979_967, sharesOutstanding: 96_003_639, holdingsPerShare: 0.07271, source: "Company website: SOL-equivalent (raw SOL + LSTs)", sharesSource: "83,139,037 common (Jan 31) + 12,864,602 PFWs", sourceUrl: "https://forwardindustries.com/sol-treasury", sourceType: "company-website" },
 ];
 
@@ -566,7 +566,7 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
 // $500M PIPE closed Sep 15, 2025 (Pantera + Summer Capital)
 // 1-for-50 reverse stock split effective July 1, 2025
 // sharesOutstanding includes pre-funded warrants at $0.001 (essentially shares)
-// Pre-pivot entries removed — company had no SOL holdings before Sep 2025 PIPE
+// Pre-pivot entries removed - company had no SOL holdings before Sep 2025 PIPE
 const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: XBRL CryptoAssetNumberOfUnits = 1,739,355 SOL at Sep 30
   { date: "2025-09-30", holdings: 1_739_355, sharesOutstanding: 75_926_867, holdingsPerShare: 0.02291, totalDebt: 0, cash: 124_051_000, source: "Q3 2025 10-Q XBRL", sharesSource: "Q3 press release: 75.9M common + PFWs (40,299,228 basic + 35,627,639 PFWs)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
@@ -822,10 +822,10 @@ const FLD_HISTORY: HoldingsSnapshot[] = [
 // Trump Media (DJT) - Started BTC treasury May 2025
 // SEC EDGAR source: EntityCommonStockSharesOutstanding = 279,997,636 (Q3 2025 10-Q, Nov 5, 2025)
 // DJT Debt: ~$951M carrying value ($1B par zero-coupon converts due 2028)
-// ?? No standard crypto XBRL tags — BTC count from 8-K press releases + balance sheet analysis
+// ?? No standard crypto XBRL tags - BTC count from 8-K press releases + balance sheet analysis
 const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-30", holdings: 0, sharesOutstanding: 199_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 2_343_901_700, source: "8-K Treasury deal announced", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 0, sharesOutstanding: 280_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 1_343_901_700, source: "Q2 2025 10-Q — raise closed but BTC purchased in July", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 0, sharesOutstanding: 280_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 1_343_901_700, source: "Q2 2025 10-Q - raise closed but BTC purchased in July", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 11_542, sharesOutstanding: 279_997_636, holdingsPerShare: 0.00004122, totalDebt: 950_769_100, cash: 166_072_700, source: "Q3 2025 10-Q: 11,542.16 BTC (cost $1.368B, FV $1.320B)", sharesSource: "XBRL: EntityCommonStockSharesOutstanding", sourceUrl: "/filings/djt/0001140361-25-040977", sourceType: "sec-filing" },
 ];
 
@@ -836,7 +836,7 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 //   - Additional purchases: ~1,514 BTC
 //   - Total: 43,514 BTC
 // DUAL-CLASS: Class A (346.5M public) + Class B (304.8M founder/sponsor, zero economic rights)
-// For mNAV, use Class A ONLY — Class B has no dividends or liquidation rights per charter
+// For mNAV, use Class A ONLY - Class B has no dividends or liquidation rights per charter
 // Debt: $486.5M convertible notes (issued at merger)
 const XXI_HISTORY: HoldingsSnapshot[] = [
   // Pre-merger announcements removed - no verifiable SEC filings
@@ -853,13 +853,13 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
 // DUAL-CLASS: Class A 53,168,237 + Class B 9,880,282 = 63,048,519 (post-split, Feb 13 8-K)
 // Pre-funded warrants: 53,614 @ $0.002 post-split (1,072,289 pre-split, Jan 5 8-K)
 // Traditional warrants: 26,594,435 @ $27 post-split (531,888,702 pre-split, Jan 5 8-K)
-// Preferred: SATA 12.50% perpetual preferred (4,265,518 shares × $100 stated) = $426.6M - NOT convertible
+// Preferred: SATA 12.50% perpetual preferred (4,265,518 shares x $100 stated) = $426.6M - NOT convertible
 const ASST_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: SEC 10-Q (Sep 30, 2025) - shares adjusted for 1-for-20 split
   { date: "2025-09-30", holdings: 5886, sharesOutstanding: 40_774_181, holdingsPerShare: 0.0001444, totalDebt: 0, preferredEquity: 0, cash: 109_000_000, source: "SEC 10-Q Q3 2025 (shares adjusted for 1-for-20 split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/asst-20250930.htm", sourceType: "sec-filing" },
   // Jan 16, 2026: Strive + Semler merger closed. Semler adds ~2,300 BTC + $100M converts
   // Combined holdings: ~10,500 BTC (Strive) + ~2,300 BTC (Semler) = 12,798 BTC
-  // Shares: pre-merger 40.77M + Semler merger shares (TBD exact) — using pre-merger as lower bound
+  // Shares: pre-merger 40.77M + Semler merger shares (TBD exact) - using pre-merger as lower bound
   { date: "2026-01-16", holdings: 12798, sharesOutstanding: 40_774_181, holdingsPerShare: 0.0003138, totalDebt: 100_000_000, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - Semler acquired", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326000616/dp240082_8k.htm", sourceType: "sec-filing" },
   // Jan 28, 2026: SEC 8-K - 13,131.82 BTC. $90M Semler converts exchanged for SATA ? $10M debt remaining
   // SATA preferred grew to ~4.26M shares ($426M) from offerings + exchange
