@@ -2210,8 +2210,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-03-15",  // Estimated 10-K filing
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 2_340_757,  // 10-Q Note 10: 2,340,757 SOL as of Nov 18 (best available pre-Q4 end)
-    sharesAtQuarterEnd: 76_929_039,  // 41,301,400 basic + 35,627,639 PFWs (10-Q warrant table)
-    holdingsPerShare: 0.03043,  // 2,340,757 / 76,929,039
+    sharesAtQuarterEnd: 75_926_867,  // 40,299,228 basic (Sep 30) + 35,627,639 PFWs (consistent date)
+    holdingsPerShare: 0.03083,  // 2,340,757 / 75,926,867
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     status: "upcoming",

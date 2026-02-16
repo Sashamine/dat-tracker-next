@@ -97,14 +97,14 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div className="flex items-center gap-3 mb-6">
 <a href="https://solanacompany.co" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>Website</a>
 <a href="https://x.com/SolanaCompany1" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>Twitter</a>
-<a href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${HSDT_CIK}&type=&dateb=&owner=include&count=40`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>SEC Filings</a>{/* Note: cgi-bin URL is deprecated but still functional for EDGAR company search */}
+<a href={`https://efts.sec.gov/LATEST/search-index?q=%22HSDT%22&dateRange=custom&startdt=2025-01-01&forms=10-Q,10-K,8-K`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>SEC Filings</a>
 </div>
 
 <div className="mb-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
 <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wide mb-2">{"◎ SOL Treasury Company"}</h4>
 <ul className="text-sm text-purple-600 dark:text-purple-300 space-y-1">
 <li>{"• "}<strong>{"Pivoted from medical devices (PoNS\u2122)"}</strong>{" to SOL treasury strategy in May 2025"}</li>
-<li>{"• Pantera Capital & Summer Capital led \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">{"$500M PIPE closed Sep 15, 2025"}</a></li>
+<li>{"• Pantera Capital & Summer Capital led \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/tm2526070d1_8k.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">{"$500M PIPE closed Sep 15, 2025"}</a></li>
 <li>{"• "}<strong>{HSDT_PROVENANCE.holdings.value.toLocaleString() + " SOL"}</strong>{" held as of Nov 18, 2025 \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">{"10-Q Note 10"}</a></li>
 <li>{"• Partnered with "}<strong>{"Solana Foundation"}</strong>{" \u2014 strategic alignment with Solana ecosystem"}</li>
 <li>{"• SOL held in custody at "}<strong>{"Anchorage Digital"}</strong>{" \u2014 institutional-grade qualified custodian"}</li>
@@ -122,7 +122,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div><p className="text-green-600 dark:text-green-300 font-medium">% Staked</p><p className="text-2xl font-bold text-green-700 dark:text-green-300">{(HSDT_STAKING.stakingPct*100).toFixed(0) + "%"}</p><p className="text-xs text-green-500">Of total SOL holdings</p></div>
 <div><p className="text-green-600 dark:text-green-300 font-medium">Custodian</p><p className="text-2xl font-bold text-green-700 dark:text-green-300">Anchorage</p><p className="text-xs text-green-500">Qualified digital asset custodian</p></div>
 </div>
-<p className="text-xs text-green-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/" target="_blank" rel="noopener noreferrer" className="underline hover:text-green-700">{"Q3 2025 10-Q"}</a>{" \u2014 commenced native staking September 2025."}</p>
+<p className="text-xs text-green-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-green-700">{"Q3 2025 10-Q"}</a>{" \u2014 commenced native staking September 2025."}</p>
 </div>
 
 {/* PIPE Details */}
@@ -132,19 +132,19 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div><p className="text-indigo-600 dark:text-indigo-300 font-medium">Total PIPE Proceeds</p><p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">{"$" + (HSDT_CAPITAL.pipeTotal/1e6).toFixed(0) + "M"}</p><p className="text-xs text-indigo-500">{"Closed " + HSDT_CAPITAL.pipeClosedDate}</p></div>
 <div><p className="text-indigo-600 dark:text-indigo-300 font-medium">Lead Investors</p><p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">Pantera + Summer</p><p className="text-xs text-indigo-500">Pantera Capital & Summer Capital</p></div>
 </div>
-<p className="text-xs text-indigo-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">{"8-K Sep 15, 2025"}</a>{" \u2014 Items 1.01, 3.02, 7.01, 8.01. Cash on hand Sep 30: $124M (PIPE proceeds being deployed)."}</p>
+<p className="text-xs text-indigo-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/tm2526070d1_8k.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">{"8-K Sep 15, 2025"}</a>{" \u2014 Items 1.01, 3.02, 7.01, 8.01. Cash on hand Sep 30: $124M (PIPE proceeds being deployed)."}</p>
 </div>
 
 {/* Share Structure */}
 <div className="mb-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-<h4 className="text-sm font-semibold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-3">{"\uD83D\uDD0D Share Structure (Nov 17, 2025)"}</h4>
+<h4 className="text-sm font-semibold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-3">{"\uD83D\uDD0D Share Structure (Sep 30, 2025)"}</h4>
 <div className="space-y-2 text-sm">
-<div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">Common Stock (basic)</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">41,301,400</span></div>
-<div className="text-xs text-gray-500 ml-4">XBRL EntityCommonStockSharesOutstanding (cover page Nov 17)</div>
+<div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">Common Stock (basic)</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">40,299,228</span></div>
+<div className="text-xs text-gray-500 ml-4">10-Q balance sheet (Sep 30). Nov 17 cover page: 41,301,400 (includes ~1M PFW exercises)</div>
 <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-300">{"Pre-funded Warrants @ $0.001"}</span><span className="font-mono font-bold text-gray-900 dark:text-gray-100">35,627,639</span></div>
 <div className="text-xs text-gray-500 ml-4">10-Q Note 6 warrant table (Sep 30). Economically equivalent to shares.</div>
-<div className="border-t border-gray-300 dark:border-gray-600 pt-2 mt-2 flex justify-between items-center"><span className="text-gray-700 dark:text-gray-200 font-semibold">Total for mNAV</span><span className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">76,929,039</span></div>
-<div className="text-xs text-gray-500">{"10-Q: basic + PFWs. Press release rounds to \u201c75.9M\u201d \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-700">{"10-Q"}</a></div>
+<div className="border-t border-gray-300 dark:border-gray-600 pt-2 mt-2 flex justify-between items-center"><span className="text-gray-700 dark:text-gray-200 font-semibold">Total for mNAV</span><span className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">75,926,867</span></div>
+<div className="text-xs text-gray-500">{"10-Q Sep 30: basic + PFWs (consistent date). Press release rounds to \u201c75.9M\u201d \u2014 "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-700">{"10-Q"}</a></div>
 </div>
 </div>
 
@@ -192,7 +192,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <ProvenanceMetric label="Crypto NAV" data={M.navPv} format="currency" subLabel={`${M.h.toLocaleString()} SOL`} tooltip="SOL holdings at current market price" ticker="hsdt" />
 {HSDT_PROVENANCE.cashReserves&&<ProvenanceMetric label="Cash" data={HSDT_PROVENANCE.cashReserves} format="currency" subLabel="PIPE proceeds deploying into SOL" tooltip="$124M at Sep 30. $111.1M held at custodian for SOL purchases (10-Q Note 3). Significantly lower post-Q3 as SOL purchases continued." ticker="hsdt" />}
 {HSDT_PROVENANCE.totalDebt&&<ProvenanceMetric label="Total Debt" data={HSDT_PROVENANCE.totalDebt} format="currency" subLabel="Debt free" tooltip="No long-term debt. LongTermDebt XBRL tag not reported (404)." ticker="hsdt" />}
-{HSDT_PROVENANCE.sharesOutstanding&&<ProvenanceMetric label="Shares Outstanding" data={HSDT_PROVENANCE.sharesOutstanding} format="shares" subLabel="41.3M basic + 35.6M PFWs" tooltip="76.9M total = 41,301,400 common (Nov 17 cover) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table). Plus 73.9M stapled warrants @ $10.134 and 7.4M advisor warrants @ $0.001 tracked separately." ticker="hsdt" />}
+{HSDT_PROVENANCE.sharesOutstanding&&<ProvenanceMetric label="Shares Outstanding" data={HSDT_PROVENANCE.sharesOutstanding} format="shares" subLabel="40.3M basic + 35.6M PFWs" tooltip="75.9M total = 40,299,228 common (Sep 30) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table). Consistent Sep 30 date avoids PFW exercise double-counting. Plus 73.9M stapled warrants @ $10.134 and 7.4M advisor warrants @ $0.001 tracked separately." ticker="hsdt" />}
 </div>
 
 {/* Additional Metrics */}
