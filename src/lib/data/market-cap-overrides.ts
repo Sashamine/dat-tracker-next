@@ -70,7 +70,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   "3189.T": { price: 245, marketCap: 63_000_000 },         // ANAP Holdings (JPY) - 39.95M shares × ¥245 ÷ 156 = $63M
   "3825.T": { price: 255, marketCap: 244_000_000 },        // Remixpoint (JPY) - 149M shares × ¥255 ÷ 156 = $244M
   "0434.HK": { price: 1.50, marketCap: 315_000_000 },      // Boyaa Interactive (HKD) - 768M shares × ~HK$3.2 ÷ 7.8
-  "ALCPB": { price: 0.77, marketCap: 175_000_000 },         // Capital B / Blockchain Group (EUR, Euronext Paris)
+  "ALCPB": { price: 0.60, marketCap: 143_000_000 },         // Capital B / Blockchain Group (EUR, Euronext Paris) - 227.5M shares × €0.60 × 1.05 ≈ $143M
   "H100.ST": { price: 1.93, marketCap: 62_000_000 },       // H100 Group (SEK price, USD market cap)
   "DCC.AX": { price: 0.038, marketCap: 39_600_000 },       // DigitalX (AUD) - 1.49B shares × A$0.038 ÷ 1.60 = ~$35M (dashboard: $39.6M)
   "NDA.V": { price: 0.065, marketCap: 13_000_000 },        // Neptune Digital (CAD) - ~200M shares × C$0.065

@@ -6841,3 +6841,63 @@ Total crypto prices: 16
  GET /company/3350.T 200 in 65ms (compile: 8ms, render: 57ms)
  GET /icons/icon-192.png 404 in 361ms (compile: 154ms, render: 208ms)
  GET /icons/icon-192.png 404 in 71ms (compile: 6ms, render: 64ms)
+ GET /api/prices/stream 200 in 63s
+ GET /api/prices/stream 200 in 21.4s
+ GET /api/prices/stream 200 in 10.0min
+✓ Compiled in 706ms
+✓ Compiled in 372ms
+✓ Compiled in 288ms
+ GET /company/SQNS 200 in 5.0s (compile: 2.8s, render: 2.1s)
+ GET /company/SQNS 200 in 584ms (compile: 46ms, render: 538ms)
+✓ Compiled in 420ms
+ GET /api/prices/stream 200 in 93s
+ GET /api/db/companies 200 in 468ms (compile: 406ms, render: 61ms)
+ GET /company/SQNS 200 in 5.1s (compile: 421ms, render: 4.7s)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream] Sent initial data
+[StockHistory] Using FMP for SQNS: 274 points
+ GET /api/stocks/SQNS/history?range=1y&interval=1d 200 in 1110ms (compile: 287ms, render: 823ms)
+ GET /api/db/companies/SQNS 200 in 1290ms (compile: 585ms, render: 705ms)
+ GET /icons/icon-192.png 404 in 1371ms (compile: 385ms, render: 985ms)
+✓ Compiled in 205ms
+✓ Compiled in 273ms
+ GET /api/prices/stream 200 in 15.8s
+ GET /company/SQNS 200 in 790ms (compile: 505ms, render: 285ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream] Sent initial data
+ GET /icons/icon-192.png 404 in 174ms (compile: 7ms, render: 167ms)
+✓ Compiled in 265ms
+✓ Compiled in 197ms
+✓ Compiled in 212ms

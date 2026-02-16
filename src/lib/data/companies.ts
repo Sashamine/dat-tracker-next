@@ -749,6 +749,9 @@ export const btcCompanies: Company[] = [
     totalDebt: 160_160_000,  // Sum of all OCA faceValues in dilutive-instruments.ts (USD)
     debtSource: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
     debtAsOf: "2026-02-09",
+    cashReserves: 0,  // TODO: Update from FY 2025 financials when available. Company raised significant capital via ATM + OCA convertibles, but cash position unclear without IFRS statements.
+    cashSource: "Needs FY 2025 IFRS financials",
+    cashAsOf: "2025-06-30",  // Last known: H1 2025 IFRS
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
     dataWarnings: [
@@ -756,6 +759,11 @@ export const btcCompanies: Company[] = [
         type: "unverified-shares",
         message: "Share counts sourced from company press release (Feb 9, 2026 AMF filing). Company IR pages are JS-rendered and not crawlable.",
         severity: "info",
+      },
+      {
+        type: "stale-data",
+        message: "Active EUR 300M ATM program — share count may be stale between AMF filings. Last update: Feb 9, 2026 (227.5M basic shares).",
+        severity: "warning",
       },
     ],
   },
