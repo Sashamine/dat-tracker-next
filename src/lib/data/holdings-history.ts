@@ -333,10 +333,12 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   // Pre-merger entries removed — Yahoo's historical prices are adjusted for the reverse merger,
   // so combining pre-merger holdings (21 BTC from KindlyMD) with post-merger adjusted prices
   // produces wildly wrong mNAV values (900x+). NAKA chart starts from post-merger.
-  { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 450_000_000, holdingsPerShare: 0.0000128, totalDebt: 0, cash: 30_000_000, source: "Post-merger 8-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=8-K" },
-  // Nov 14, 2025: 439,850,889 shares + 71,704,975 pre-funded warrants = 511,555,864 fully diluted
-  { date: "2025-11-14", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 0, cash: 30_000_000, source: "SEC 10-Q Nov 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573&type=10-Q", sourceType: "sec-filing" },
-  // Dec 2025: Kraken loan of $210M
+  // Aug 19: post-merger. Shares ~484.6M estimated (343.2M PIPE + 7.6M pre-merger + 133.8M pre-funded). No debt yet.
+  { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 484_600_000, holdingsPerShare: 0.0000119, totalDebt: 0, cash: 24_000_000, source: "Post-merger 8-K (shares estimated from PIPE 8-K)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000121390025041722/ea0202959-8k_kindlymd.htm" },
+  // Nov 14: 10-Q cover page. 439.85M shares + 71.7M pre-funded = 511.6M. Yorkville repaid, no debt yet.
+  { date: "2025-11-14", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 0, cash: 24_185_083, source: "SEC 10-Q Q3 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm", sourceType: "sec-filing" },
+  // Dec 9: Kraken $210M BTC-backed loan closed
+  { date: "2025-12-09", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 210_000_000, cash: 24_185_083, source: "SEC 8-K Dec 9, 2025: Kraken $210M loan", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm", sourceType: "sec-filing" },
 ];
 
 // American Bitcoin Corp (ABTC) - Pure-play miner with HODL strategy
@@ -793,7 +795,7 @@ const FLD_HISTORY: HoldingsSnapshot[] = [
 
 // Trump Media (DJT) - Started BTC treasury May 2025
 // SEC EDGAR source: EntityCommonStockSharesOutstanding = 279,997,636 (Q3 2025 10-Q, Nov 5, 2025)
-// DJT Debt: ~$951M carrying value ($1B par zero-coupon converts due 2030)
+// DJT Debt: ~$951M carrying value ($1B par zero-coupon converts due 2028)
 // ⚠️ No standard crypto XBRL tags — BTC count from 8-K press releases + balance sheet analysis
 const DJT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-30", holdings: 0, sharesOutstandingDiluted: 199_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 2_343_901_700, source: "8-K Treasury deal announced", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },

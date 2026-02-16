@@ -184,11 +184,11 @@ export const NAKA_PROVENANCE: ProvenanceFinancials = {
 // BALANCE SHEET DETAILS
 // =========================================================================
 export const NAKA_BALANCE_SHEET = {
-  cryptoAssetFairValue: 615_798_837, // XBRL CryptoAssetFairValueNoncurrent
+  cryptoAssetFairValue: 615_798_837, // XBRL CryptoAssetFairValueNoncurrent as of Sep 30
   cashAndEquivalents: CASH_RESERVES,
-  convertibleNotesPayable: 203_000_000, // Yorkville (as of 10-Q date, before Kraken refi)
-  krakenLoan: TOTAL_DEBT, // $210M, replaced converts
-  totalInvestments: 51_000_000, // Metaplanet $30M + Treasury BV $15M + FUTURE $6M
+  convertibleNotesPayable: 0, // Yorkville $200M fully repaid Oct 2025 (was $203M at 10-Q date)
+  krakenLoan: TOTAL_DEBT, // $210M, replaced Two Prime/Yorkville chain (Dec 2025)
+  totalInvestments: 45_000_000, // Metaplanet $30M + Treasury BV $15M (verified in SEC). FUTURE $6M unverified.
 };
 
 // =========================================================================

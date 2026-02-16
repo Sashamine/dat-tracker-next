@@ -318,7 +318,7 @@ const NAKA_INTEL: CompanyIntel = {
     { date: "2025-08-19", title: "Acquired 5,744 BTC for $679M", summary: "First purchase post-merger at $118K avg", url: "https://nakamoto.com/update/kindlymd-acquires-5-744-btc-to-expand-nakamoto-bitcoin-treasury" },
     { date: "2025-08-01", title: "Merger with KindlyMD closed", summary: "Completed business combination", url: "https://nakamoto.com/update/kindlymd-completes-merger-with-nakamoto-to-establish-bitcoin-treasury" },
   ],
-  strategySummary: "Founded by David Bailey (BTC Inc., Bitcoin Magazine founder). Vision: first publicly traded conglomerate of Bitcoin companies. Plans to bring Bitcoin Magazine, Bitcoin Conference, and 210k Capital hedge fund under Nakamoto Holdings. PIPE at $1.12/share; $200M senior secured convertible notes maturing 2028. Goal: acquire 1M BTC ('one Nakamoto').",
+  strategySummary: "Founded by David Bailey (BTC Inc., Bitcoin Magazine founder). Vision: first publicly traded conglomerate of Bitcoin companies. Plans to bring Bitcoin Magazine, Bitcoin Conference, and 210k Capital hedge fund under Nakamoto Inc. PIPE at $1.12/share; $210M Kraken BTC-backed loan (8% annual, due Dec 2026). Goal: acquire 1M BTC ('one Nakamoto').",
   recentDevelopments: [
     "5,398 BTC holdings (~$484M) - sold 367 BTC in Nov 2025",
     "Share buyback authorized Dec 2025 - stock trading below NAV",

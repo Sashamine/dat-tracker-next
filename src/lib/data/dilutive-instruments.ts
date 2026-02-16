@@ -1327,21 +1327,22 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Make-whole: in fundamental change, convert rate can increase from 28.8 to max 38.88 shares/$1,000
 
   // NAKA (Nakamoto Inc.) - BTC treasury company
-  // Verified 2026-02-13 via SEC 10-Q Q3 2025 XBRL (CIK 0001946573)
+  // Verified 2026-02-15 via SEC 10-Q Q3 2025 XBRL (CIK 0001946573)
   // Basic shares for mNAV: 511,555,864 (439.85M common + 71.7M pre-funded warrants at $0.001)
   // Pre-funded warrants already included in basic count (near-zero exercise price)
+  // NOTE: 85.1M warrants at Sep 30 → only 384,936 by Nov 14 (10-Q cover page). Likely expired ~Jan 2026.
   NAKA: [
     {
       type: "warrant",
-      strikePrice: 11.50, // Standard SPAC-style warrants from KindlyMD era
-      potentialShares: 85_091_274,
-      source: "10-Q Q3 2025 XBRL: ClassOfWarrantOrRightNumberOfSecuritiesCalledByEachWarrantOrRight",
+      strikePrice: 11.50, // From original KindlyMD IPO prospectus
+      potentialShares: 384_936, // Nov 14, 2025 10-Q cover page. Down from 85.1M at Sep 30 (massively exercised/expired).
+      source: "10-Q Q3 2025 cover page: 384,936 warrants outstanding as of Nov 14, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/",
-      expiration: "2026-03-31", // ~0.28 years remaining as of Sep 30, 2025
-      issuedDate: "2023-01-01", // Approximate — from original KindlyMD IPO
+        "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+      expiration: "2026-01-10", // ~0.28 years from Sep 30 ≈ Jan 10, 2026. Likely expired.
+      issuedDate: "2023-01-01",
       notes:
-        "Tradeable warrants (NAKAW) on OTC Pink Market. 85.1M warrants at ~$11.50 exercise. Intrinsic value $90.3M per XBRL. ~0.28 years remaining as of Q3 2025.",
+        "Tradeable warrants (NAKAW). Down from 85.1M at Sep 30 to 384.9K at Nov 14 — most exercised during the PIPE/merger period. Likely expired ~Jan 2026. $11.50 strike from original KindlyMD IPO.",
     },
     // Note: $200M Yorkville convertible debenture (conversion $2.80) was EXTINGUISHED Oct 2025
     // Replaced by Two Prime loan → Kraken $210M BTC-backed loan (Dec 2025)
