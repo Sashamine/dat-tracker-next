@@ -10,7 +10,7 @@ import { BMNR_HISTORY } from './bmnr-holdings-history';
 export interface HoldingsSnapshot {
   date: string; // YYYY-MM-DD
   holdings: number; // Total holdings (BTC, ETH, etc.)
-  sharesOutstanding: number; // Diluted shares (WeightedAverageNumberOfDilutedSharesOutstanding)
+  sharesOutstanding: number; // Basic shares outstanding (EntityCommonStockSharesOutstanding)
   sharesOutstandingBasic?: number; // Basic shares (EntityCommonStockSharesOutstanding) - optional
   holdingsPerShare: number; // Calculated: holdings / sharesOutstanding
 

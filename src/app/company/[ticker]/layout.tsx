@@ -90,8 +90,8 @@ function CompanyJsonLd({ ticker }: { ticker: string }) {
             },
             {
               "@type": "PropertyValue",
-              name: "Shares Outstanding (Diluted)",
-              value: latestHoldings.sharesOutstandingDiluted,
+              name: "Shares Outstanding",
+              value: latestHoldings.sharesOutstanding,
             },
             {
               "@type": "PropertyValue",

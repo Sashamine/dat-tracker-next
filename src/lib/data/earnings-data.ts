@@ -2957,6 +2957,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
   // Q4 2025 (Oct-Dec) - First full quarter post-PIPE, 10-K expected Feb/Mar 2026
+  // Dashboard Feb 12 estimates, not SEC quarter-end actuals. Pending 10-K ~March 2026.
   {
     ticker: "AVX",
     fiscalYear: 2025,
@@ -2973,6 +2974,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "company-dashboard",
     sourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     status: "upcoming", // Awaiting 10-K SEC filing (due ~March 2026)
+    isEstimated: true, // Dashboard Feb 12 estimates, not SEC quarter-end actuals. Pending 10-K ~March 2026.
   },
   // Q3 2025 (Jul-Sep) - Pre-PIPE (no AVAX holdings)
   {

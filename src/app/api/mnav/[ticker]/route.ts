@@ -174,7 +174,7 @@ export async function GET(
     holdingsChanges: relevantSnapshots.map((h: HoldingsSnapshot) => ({
       date: h.date,
       holdings: h.holdings,
-      shares: h.sharesOutstandingDiluted,
+      shares: h.sharesOutstanding,
       source: h.source,
     })),
   });

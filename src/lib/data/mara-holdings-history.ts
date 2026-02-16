@@ -338,7 +338,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
   {
     date: "2025-09-30",
     holdings: 52850,
-    sharesOutstanding: 378_184_353, // Note: field name is legacy — this is BASIC shares from cover page
+    sharesOutstanding: 378_184_353, // BASIC shares from cover page
     holdingsPerShare: 0.0001397,
     stockPrice: 18.26,
     totalDebt: 3_597_561_000, // $3,247,561K LongTermDebt (XBRL) + $350,000K LinesOfCreditCurrent (XBRL)

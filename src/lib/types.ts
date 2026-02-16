@@ -347,6 +347,7 @@ export interface EarningsRecord {
   sourceUrl?: string;
   earningsCallUrl?: string;           // Link to earnings call webcast/registration
   status: EarningsStatus;
+  isEstimated?: boolean;              // True if holdings/shares are dashboard estimates, not SEC-verified
 }
 
 export interface EarningsCalendarEntry {
