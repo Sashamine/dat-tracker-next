@@ -844,7 +844,7 @@ export const btcCompanies: Company[] = [
     holdings: 2_689,  // RNS Feb 11, 2026: "Total Bitcoin Holdings are now 2,689 Bitcoin"
     holdingsLastUpdated: "2026-02-11",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.smarterwebcompany.co.uk/_files/ugd/6ffd5f_aa5f1f919c42462a81cf286f54dd191d.pdf",
+    holdingsSourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/",  // RNS PDF was at _files/ugd/6ffd5f_aa5f1f919c42462a81cf286f54dd191d.pdf but returns 404 (Wix site reorganized)
     datStartDate: "2025-04-01",
     website: "https://www.smarterwebcompany.co.uk",
     twitter: "https://x.com/smarterwebuk",
@@ -1563,7 +1563,7 @@ export const solCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     capitalRaisedAtm: 100_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration (effective Jan 8, 2026)",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=S-3",
+    capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22S-3%22&forms=S-3&dateRange=custom&startdt=2025-12-01&enddt=2026-01-31&entityName=upexi",  // S-3 filed Dec 22, 2025
     sharesForMnav: 69_760_581,  // 10-Q cover page as of Feb 9, 2026 (includes Feb 2026 offering of 6.34M + RSU vesting)
     sharesSource: "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",

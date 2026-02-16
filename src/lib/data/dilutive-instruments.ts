@@ -295,6 +295,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // SWC (The Smarter Web Company) - UK BTC treasury company
+  // AQSE-listed (Aquis Stock Exchange), no SEC filings
+  // No known warrants, convertibles, or options as of Feb 2026
+  // Company analytics: https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/
+  SWC: [],
+
   // Sequans Communications (SQNS) - IoT semiconductor with BTC treasury
   // Verified 2026-02-02 via SEC 6-K filings (CIK 0001383395)
   // Jul 2025: $189M convertible debt raised for BTC purchases

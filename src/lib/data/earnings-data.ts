@@ -2373,9 +2373,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-12",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 2_018_419,  // SEC 10-Q Sep 30, 2025 (from 10-K FY2025 context)
+    holdingsAtQuarterEnd: 2_066_827,  // SEC 10-Q Q1 FY2026 Note 5: 2,066,827 SOL as of Sep 30, 2025
     sharesAtQuarterEnd: 58_888_756,  // SEC XBRL: EntityCommonStockSharesOutstanding as of Sep 23, 2025
-    holdingsPerShare: 0.0343,  // 2,018,419 / 58,888,756
+    holdingsPerShare: 0.0351,  // 2,066,827 / 58,888,756
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/upxi_10q.htm",
     status: "reported",
