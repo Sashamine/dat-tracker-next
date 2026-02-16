@@ -1558,6 +1558,7 @@ export const solCompanies: Company[] = [
     stakingLastAudited: "2026-02-13",
     stakingApy: 0.08,  // 65,720 SOL staking revenue / ~2M avg SOL / 6 months ≈ 8% APY
     quarterlyBurnUsd: 6_230_944,  // 10-Q: $12.46M OpCF used in 6 months / 2 (includes digital asset strategy costs)
+    burnEstimated: true,  // Derived from 6-month OpCF, not a direct quarterly figure
     burnSource: "SEC 10-Q (filed 2026-02-10): Net cash used in operating activities $(12,461,887) for 6 months ended Dec 31, 2025",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     burnAsOf: "2025-12-31",
