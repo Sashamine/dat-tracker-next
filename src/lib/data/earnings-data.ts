@@ -3673,7 +3673,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 8_307_583,
     holdingsPerShare: 0.0001273,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=6-K",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/ea0241193-20f_ddcenter.htm",
     status: "reported",
   },
   // Q2 2025 - First quarter with BTC
@@ -3688,8 +3688,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 138, // Jun 12, 2025 - 137.69 BTC (~138)
     sharesAtQuarterEnd: 6_500_000,
     holdingsPerShare: 0.0000212,
-    source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001808110&type=6-K",
+    source: "company-dashboard",
+    sourceUrl: "https://treasury.ddc.xyz",
     status: "reported",
   },
 
