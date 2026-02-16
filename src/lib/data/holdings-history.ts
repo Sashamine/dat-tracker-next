@@ -375,14 +375,15 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
 // API: https://dilaamf.opendatasoft.com/api/v2/ (ISIN: FR0011053636)
 // Note: Massive dilution in Sep 2025 from EUR58.1M private placement (Sep 16, 2025 AMF filing)
 const ALTBG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 1200, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.0000286, stockPrice: 137.75, source: "H1 2024 Euronext filing", sourceType: "regulatory-filing", sourceUrl: "https://www.theblockchaingroup.io/investors" },
-  { date: "2024-12-31", holdings: 1800, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.0000400, stockPrice: 302.96, source: "FY 2024 annual report", sourceType: "sec-filing", sourceUrl: "https://www.theblockchaingroup.io/investors" },
-  { date: "2025-06-30", holdings: 2201, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000459, stockPrice: 404.23, source: "H1 2025 filing", sourceType: "regulatory-filing", sourceUrl: "https://www.theblockchaingroup.io/investors" },
+  { date: "2024-06-30", holdings: 1200, sharesOutstandingDiluted: 42_000_000, holdingsPerShare: 0.0000286, source: "H1 2024 Euronext filing", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
+  { date: "2024-12-31", holdings: 1800, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.0000400, source: "FY 2024 annual report", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
+  { date: "2025-06-30", holdings: 2201, sharesOutstandingDiluted: 48_000_000, holdingsPerShare: 0.0000459, source: "H1 2025 filing", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
   // Sep 2025: EUR58.1M capital increase via private placement caused ~4x share dilution
   { date: "2025-09-22", holdings: 2800, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000140, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076270_20250922.pdf", sourceType: "regulatory-filing" },
   { date: "2025-09-29", holdings: 2812, sharesOutstandingDiluted: 200_000_000, holdingsPerShare: 0.0000141, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076388_20250929.pdf", sourceType: "regulatory-filing" },
   { date: "2025-10-20", holdings: 2818, sharesOutstandingDiluted: 220_000_000, holdingsPerShare: 0.0000128, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/10/FCACT076738_20251020.pdf", sourceType: "regulatory-filing" },
   { date: "2025-11-25", holdings: 2823, sharesOutstandingDiluted: 226_884_068, holdingsPerShare: 0.0000124, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf", sourceType: "regulatory-filing", sharesSource: "mNAV.com Jan 2026" },
+  { date: "2026-02-09", holdings: 2828, sharesOutstandingDiluted: 227_468_631, holdingsPerShare: 0.0000124, source: "AMF filing - 5 BTC acquired for EUR 0.32M", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf", sourceType: "regulatory-filing", sharesSource: "Company press release Feb 9, 2026" },
 ];
 
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
@@ -552,18 +553,17 @@ const FWDI_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-15", holdings: 6_979_967, sharesOutstandingDiluted: 96_003_639, holdingsPerShare: 0.07271, source: "Company website: SOL-equivalent (raw SOL + LSTs)", sharesSource: "83,139,037 common (Jan 31) + 12,864,602 PFWs", sourceUrl: "https://forwardindustries.com/sol-treasury", sourceType: "company-website" },
 ];
 
-// Helius Medical / Solana Company (HSDT) - SOL treasury
-// NOTE: 1-for-50 reverse stock split effective July 1, 2025
-// Pre-split: ~33.8M shares → Post-split: ~676K, then grew via offerings
-// sharesOutstandingDiluted includes pre-funded warrants at $0.0001 (essentially shares)
+// Solana Company (HSDT, fka Helius Medical) - SOL treasury
+// Pivoted from medical devices (PoNS) to SOL treasury ~May 2025
+// $500M PIPE closed Sep 15, 2025 (Pantera + Summer Capital)
+// 1-for-50 reverse stock split effective July 1, 2025
+// sharesOutstandingDiluted includes pre-funded warrants at $0.001 (essentially shares)
+// Pre-pivot entries removed — company had no SOL holdings before Sep 2025 PIPE
 const HSDT_HISTORY: HoldingsSnapshot[] = [
-  // Pre-split entries (adjusted for 1:50 split)
-  { date: "2024-11-01", holdings: 800000, sharesOutstandingDiluted: 700_000, holdingsPerShare: 1.143, source: "SOL treasury announcement (split-adj)", sourceType: "press-release", sourceUrl: "https://www.globenewswire.com/news-release/2024/11/01/2974181/0/en/Heliogen-Adopts-Bitcoin-Treasury-Reserve-Policy.html" },
-  { date: "2024-12-31", holdings: 1500000, sharesOutstandingDiluted: 840_000, holdingsPerShare: 1.786, stockPrice: 302.96, source: "Q4 2024 10-K (split-adj)", sourceType: "sec-filing", sourceUrl: "/filings/hsdt/10K-2024-12-31#sol-holdings" },
-  // Post reverse split (July 1, 2025)
-  { date: "2025-06-30", holdings: 2200000, sharesOutstandingDiluted: 1_000_000, holdingsPerShare: 2.200, stockPrice: 404.23, source: "Q2 2025 10-Q (split-adj)", sourceType: "sec-filing", sourceUrl: "/filings/hsdt/10Q-2025-06-30#sol-holdings" },
-  // Nov 2025: FD shares include pre-funded + penny warrants exercisable at $0.0001
-  { date: "2025-11-04", holdings: 2_300_000, sharesOutstandingDiluted: 75_900_000, holdingsPerShare: 0.0303, source: "Investor update", sharesSource: "Q3 2025 10-Q: 75.9M common + pre-funded warrants", sourceType: "press-release", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/" },
+  // Q3 2025: XBRL CryptoAssetNumberOfUnits = 1,739,355 SOL at Sep 30
+  { date: "2025-09-30", holdings: 1_739_355, sharesOutstandingDiluted: 75_926_867, holdingsPerShare: 0.02291, totalDebt: 0, cash: 124_051_000, source: "Q3 2025 10-Q XBRL", sharesSource: "Q3 press release: 75.9M common + PFWs (40,299,228 basic + 35,627,639 PFWs)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
+  // Oct 29 8-K: ~2.3M SOL. Nov 18 10-Q Note 10: 2,340,757 SOL
+  { date: "2025-11-18", holdings: 2_340_757, sharesOutstandingDiluted: 76_929_039, holdingsPerShare: 0.03043, totalDebt: 0, cash: 124_051_000, source: "10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18", sharesSource: "10-Q: 41,301,400 basic (Nov 17 cover) + 35,627,639 PFWs @ $0.001", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025

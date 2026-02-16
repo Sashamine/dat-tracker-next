@@ -674,8 +674,8 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
 
   // ==================== EURONEXT COMPANIES ====================
 
-  ALTBG: {
-    ticker: "ALTBG",
+  ALCPB: {
+    ticker: "ALCPB",
     name: "Capital B (fka The Blockchain Group)",
     officialDashboard: "https://cptlb.com/analytics/",
     officialDashboardName: "cptlb.com",

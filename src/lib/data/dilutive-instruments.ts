@@ -848,12 +848,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
-  // Capital B (ALTBG) - France BTC treasury (The Blockchain Group)
+  // Capital B (ALCPB, formerly ALTBG) - France BTC treasury (The Blockchain Group)
   // Trades on Euronext Paris in EUR. Strike prices and face values converted to USD at ~1.04 EUR/USD.
   // Source: Euronext press releases
   // Verified 2026-01-25
-  // Fully diluted: ~391.5M shares (per cptlb.com/analytics)
-  ALTBG: [
+  // Fully diluted: ~390M shares (per Feb 9, 2026 press release: 389,888,020)
+  ALCPB: [
     // === OCA Tranche 1 (March 2025) - Largest dilution, lowest strike ===
     {
       type: "convertible",

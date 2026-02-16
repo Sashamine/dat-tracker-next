@@ -724,30 +724,30 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 2,
     website: "https://cptlb.com",
-    holdings: 2_823,  // AMF filing Nov 25, 2025
-    holdingsLastUpdated: "2025-11-25",
+    holdings: 2_828,  // AMF filing Feb 9, 2026 (2,828 BTC total)
+    holdingsLastUpdated: "2026-02-09",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf",
+    holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
     datStartDate: "2024-12-01",
     // costBasisAvg removed - needs verification
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
     burnSource: "AMF filings (estimate - French IFRS reports)",
-    burnSourceUrl: "https://cptlb.com/investor-relations/",
+    burnSourceUrl: "https://cptlb.com",
     burnAsOf: "2025-09-30",
     burnEstimated: true,  // No XBRL; company-reported estimate
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
-    sharesForMnav: 226_884_068,  // Basic shares per mNAV.com Jan 2026. Diluted: ~392M (via convertibles)
-    sharesSource: "Euronext Paris listing - company-reported",
-    sharesSourceUrl: "https://cptlb.com/investor-relations/",
-    sharesAsOf: "2025-12-31",
+    sharesForMnav: 227_468_631,  // Basic shares per Feb 9, 2026 press release. Diluted: ~390M (389,888,020)
+    sharesSource: "Company press release Feb 9, 2026",
+    sharesSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
+    sharesAsOf: "2026-02-09",
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
     dataWarnings: [
       {
         type: "unverified-shares",
-        message: "Share counts sourced from mNAV dashboard (cptlb.com/analytics), not primary AMF/Euronext filings. Company lacks public IR infrastructure.",
+        message: "Share counts sourced from company press release (Feb 9, 2026 AMF filing). Company IR pages are JS-rendered and not crawlable.",
         severity: "info",
       },
     ],

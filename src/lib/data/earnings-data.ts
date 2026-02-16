@@ -2812,32 +2812,32 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
-  // ========== Capital B (ALTBG) - The Blockchain Group ==========
+  // ========== Capital B (ALCPB, formerly ALTBG) - The Blockchain Group ==========
   // French company, Euronext Growth Paris (ISIN: FR0011053636)
   // Fiscal year: Calendar year (Jan-Dec). Reports H1 (Jun 30) and FY (Dec 31).
   // Data from AMF filings + company website (cptlb.com/analytics)
   // BTC treasury strategy launched Nov 5, 2024 ("Europe's first Bitcoin Treasury Company")
-  // Verified 2026-01-29 via Euronext + cptlb.com
+  // Verified 2026-02-16 via AMF filing Feb 9, 2026
   //
   // H2 2025 / FY 2025 (Dec 31) - Upcoming
   {
-    ticker: "ALTBG",
+    ticker: "ALCPB",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 4,
     earningsDate: "2026-04-30", // Estimated annual report (French companies have 4 months post FY-end)
     earningsTime: null,
-    holdingsAtQuarterEnd: 2_823, // Nov 25, 2025 AMF filing (most recent)
-    sharesAtQuarterEnd: 226_884_068, // Basic shares per mNAV.com Jan 2026
-    holdingsPerShare: 0.0000124,
+    holdingsAtQuarterEnd: 2_828, // Feb 9, 2026 AMF filing (most recent as of update)
+    sharesAtQuarterEnd: 227_468_631, // Basic shares per Feb 9, 2026 press release
+    holdingsPerShare: 0.0000124, // 2828/227468631 ≈ 0.00001243
     source: "manual",
-    sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/11/FCACT077244_20251125.pdf",
+    sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
     status: "upcoming",
   },
   // H1 2025 (Jun 30) - Reported
   {
-    ticker: "ALTBG",
+    ticker: "ALCPB",
     fiscalYear: 2025,
     fiscalQuarter: 2,
     calendarYear: 2025,
@@ -2852,7 +2852,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
   // H2 2024 / FY 2024 (Dec 31) - Reported
   {
-    ticker: "ALTBG",
+    ticker: "ALCPB",
     fiscalYear: 2024,
     fiscalQuarter: 4,
     calendarYear: 2024,
@@ -2867,7 +2867,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   },
   // H1 2024 (Jun 30) - Reported
   {
-    ticker: "ALTBG",
+    ticker: "ALCPB",
     fiscalYear: 2024,
     fiscalQuarter: 2,
     calendarYear: 2024,

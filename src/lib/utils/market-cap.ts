@@ -14,7 +14,7 @@
  * - 3350.T (Metaplanet): JPY → USD conversion
  * - 0434.HK (Boyaa): HKD → USD conversion
  * - H100.ST (Hashdex): SEK → USD conversion
- * - ALTBG (Cathedra): CAD → USD conversion
+ * - ALCPB (Capital B / The Blockchain Group): EUR → USD conversion
  */
 
 import { Company } from "@/lib/types";
@@ -37,7 +37,7 @@ const TICKER_CURRENCIES: Record<string, string> = {
   "3189.T": "JPY",
   "0434.HK": "HKD",
   "H100.ST": "SEK",
-  "ALTBG": "EUR",
+  "ALCPB": "EUR",
   "DCC.AX": "AUD",
   "NDA.V": "CAD",
   "DMGI.V": "CAD",
