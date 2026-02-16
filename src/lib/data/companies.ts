@@ -1298,23 +1298,28 @@ export const btcCompanies: Company[] = [
     costBasisSource: "Q3 2025 report - 'average cost of approximately US$68,114 per unit'",
     costBasisSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     isMiner: false,
-    quarterlyBurnUsd: 2_000_000,
-    burnSource: "HKEx Q3 2025 Report (estimate)",
+    quarterlyBurnUsd: 0,  // Boyaa is cash-flow POSITIVE: 9M 2025 OpCF = HK$43.4M (~$5.6M). Gaming revenue covers costs.
+    burnSource: "HKEX Q3 2025: 9M OpCF HK$43.4M positive. Core gaming revenue HK$329M, ~73% gross margin.",
     burnSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     burnAsOf: "2025-09-30",
-    burnEstimated: true,
     avgDailyVolume: 20_000_000,
     // Shares: 768,004,730 (Dec 31, 2025 Monthly Return - excluding 2,972,000 treasury shares)
     // Pre-Sep 2025 placement: 711,003,730 → Post-placement: 770,976,730 (+59,973,000 @ HK$6.95)
     // Buybacks: 2,972,000 shares repurchased (held as treasury, not cancelled)
-    sharesForMnav: 768_004_730,
-    sharesSource: "HKEx Monthly Return Dec 2025 (filed Jan 5, 2026)",
-    sharesSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0105/2026010502436.pdf",
-    sharesAsOf: "2025-12-31",
-    // FY end: Dec 31 (calendar year)
-    // TODO: Extract from annual/interim reports:
-    // - Cash reserves
-    // - Total debt
+    sharesForMnav: 767_804_730,  // Jan 2026 Monthly Return: 770,976,730 total - 3,172,000 treasury = 767,804,730
+    sharesSource: "HKEX Monthly Return Jan 2026 (filed Feb 3, 2026): excl. 3,172,000 treasury shares",
+    sharesSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0203/2026020302066.pdf",
+    sharesAsOf: "2026-01-31",
+    // DEBT: None — no bank borrowings, no convertibles
+    totalDebt: 0,
+    debtSource: "HKEX Q3 2025: 'no short-term or long-term bank borrowings, no outstanding banking facilities'",
+    debtSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+    debtAsOf: "2025-09-30",
+    // CASH: HK$82.7M (~$10.6M) + HK$78.7M term deposits
+    cashReserves: 10_600_000,  // HK$82.7M ÷ 7.8 ≈ $10.6M (bank + cash balances only)
+    cashSource: "HKEX Q3 2025: HK$82.7M cash + HK$78.7M term deposits (non-current)",
+    cashSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+    cashAsOf: "2025-09-30",
     leader: "Dai Zhikang (Chairman & Executive Director)",
     strategy: "Hong Kong's largest BTC treasury. 15.1% BTC Yield (9mo 2025). Active buyback program.",
     notes: "Asia's MicroStrategy. Sep 2025 raised HK$410M via placement for BTC. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled.",

@@ -1369,6 +1369,24 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // No convertible debt outstanding as of Dec 2025
   ],
 
+  // Boyaa Interactive (0434.HK) - Hong Kong BTC treasury
+  // Verified 2026-02-15 via HKEX Q3 2025 Results + Jan 2026 Monthly Return
+  // Basic shares: 767,804,730 (770,976,730 total - 3,172,000 treasury)
+  // No warrants, no convertibles, no share options outstanding (all exercised/expired)
+  // 2024 Share Option Scheme adopted but no options granted yet (capacity: 70,957,630)
+  "0434.HK": [
+    {
+      type: "rsu",
+      strikePrice: 0, // RSUs vest at no cost
+      potentialShares: 4_350_003, // 2024 RSU Scheme outstanding as of Sep 30, 2025
+      source: "HKEX Q3 2025 Results: RSU Scheme details",
+      sourceUrl:
+        "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+      notes:
+        "RSUs from 2024 scheme. 5.85M granted in 9M 2025, 2.84M vested. Always dilutive (no exercise price).",
+    },
+  ],
+
   // CYPH (Cypherpunk Technologies) - ZEC treasury company
   // Verified 2026-01-29 via SEC 8-K Oct 9, 2025 (CIK 0001509745)
   // Basic shares: 137,420,344 (56.6M common + 80.8M pre-funded warrants already in basic)
