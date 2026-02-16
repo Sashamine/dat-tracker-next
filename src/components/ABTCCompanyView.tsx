@@ -18,6 +18,7 @@ import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
+import { getCompanyEarnings } from "@/lib/data/earnings-data";
 import { cn } from "@/lib/utils";
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
@@ -44,7 +45,8 @@ interface ABTCCompanyViewProps {
  * - Co-Founded by Eric Trump & Donald Trump Jr.
  * - HODL strategy with SPS (Satoshis Per Share) metric
  * - Merged with Gryphon Digital Mining Sep 2025
- * - No debt, no convertibles (pending verification)
+ * - Bitmain miner purchase agreement: $286.2M liability (BTC-collateralized)
+ * - Gryphon warrants: 108,587 @ $1.50; Akerna warrants: 22,826 @ $37
  */
 export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProps) {
   const { data: prices } = usePricesStream();
@@ -79,6 +81,16 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
     if (!stockPrice) return null;
     return getEffectiveShares("ABTC", company.sharesForMnav || 0, stockPrice);
   }, [stockPrice, company.sharesForMnav]);
+
+  // Q3 2025 SPS baseline for growth calculation (dynamically from earnings data)
+  const q3SpsBaseline = useMemo(() => {
+    const earnings = getCompanyEarnings("ABTC");
+    const q3 = earnings.find(e => e.calendarYear === 2025 && e.calendarQuarter === 3);
+    if (q3?.holdingsPerShare) {
+      return Math.round(q3.holdingsPerShare * 100_000_000); // Convert to sats
+    }
+    return 371; // Fallback: Q3 2025 10-Q (3,418 BTC / 920,684,912 shares)
+  }, []);
 
   // =========================================================================
   // PROVENANCE-TRACKED METRICS
@@ -141,7 +153,7 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
       inputs: {
         holdings: ABTC_PROVENANCE.holdings,
       },
-    }), `Market Cap: ${formatLargeNumber(marketCap)}. Debt/cash not verified from Q3 10-Q.`) : null;
+    }), `Market Cap: ${formatLargeNumber(marketCap)}. Debt: $286.2M (Bitmain). Cash: $7.98M (Q3 10-Q).`) : null;
 
     const leveragePv: ProvenanceValue<number> = pv(leverage, derivedSource({
       derivation: "Net Debt ÷ Crypto NAV",
@@ -149,7 +161,7 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
       inputs: {
         holdings: ABTC_PROVENANCE.holdings,
       },
-    }), "Debt and cash not yet verified from SEC filings.");
+    }), `Debt: $286.2M (Bitmain miner purchase agreement). Cash: $7.98M. Source: Q3 2025 10-Q.`);
 
     const equityNavPv: ProvenanceValue<number> = pv(equityNav, derivedSource({
       derivation: "Crypto NAV + Cash − Debt",
@@ -157,7 +169,7 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
       inputs: {
         holdings: ABTC_PROVENANCE.holdings,
       },
-    }), "Assumes $0 debt and $0 cash (pending Q3 10-Q verification).");
+    }), `Debt: ${formatLargeNumber(totalDebt)} (Bitmain). Cash: ${formatLargeNumber(cashReserves)}. Source: Q3 2025 10-Q.`);
 
     const equityNavPerSharePv: ProvenanceValue<number> = pv(equityNavPerShare, derivedSource({
       derivation: "Equity NAV ÷ Shares Outstanding",
@@ -593,7 +605,7 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
               <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(metrics.equityNav)}</span>
             </p>
             {metrics.totalDebt === 0 && metrics.cashReserves === 0 && (
-              <p className="text-xs text-amber-500 mt-1">⚠️ Debt and cash not yet verified — shown as $0 pending Q3 10-Q access</p>
+              <p className="text-xs text-amber-500 mt-1">⚠️ Debt and cash not yet verified — shown as $0 pending filing access</p>
             )}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -603,8 +615,8 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
             )}
             <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
               <p className="text-sm text-amber-700 dark:text-amber-400">SPS Growth</p>
-              <p className="text-2xl font-bold text-amber-600">+{((metrics.satsPerShare - 371) / 371 * 100).toFixed(0)}%</p>
-              <p className="text-xs text-amber-500">since Q3 2025 (371 → {Math.round(metrics.satsPerShare)} sats)</p>
+              <p className="text-2xl font-bold text-amber-600">+{((metrics.satsPerShare - q3SpsBaseline) / q3SpsBaseline * 100).toFixed(0)}%</p>
+              <p className="text-xs text-amber-500">since Q3 2025 ({q3SpsBaseline} → {Math.round(metrics.satsPerShare)} sats)</p>
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
               <p className="text-sm text-purple-700 dark:text-purple-400">Hut 8 Ownership</p>
