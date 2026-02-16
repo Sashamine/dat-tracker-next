@@ -266,8 +266,13 @@ export const ethCompanies: Company[] = [
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
     cashAsOf: "2025-09-30",
+    stakingApy: 0.03,  // ~3% estimated from ETH network consensus rate; NodeOps + Builder+ revenues not separable in 10-Q
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
-    notes: "Verified 2026-01-29. Q3→Q4: +0.3% HPS growth. Options ITM at ~$2.87 (Jan 2026 price).",
+    notes: "Verified 2026-02-16. Aave DeFi leverage: $43.8M USDT borrowed (~6% variable) against ~39K ETH collateral. " +
+      "Board max LTV 40%, Aave liquidation at 80%. Q3 LTV was 34.9%. " +
+      "Converts secured by all assets (excl. Aave collateral), 6% interest. " +
+      "15.7M Series V Preferred outstanding — conversion terms need investigation. " +
+      "712,500 pre-2021 warrants expiring ~Mar 2026 (deeply OTM at $11.50).",
   },
   {
     id: "game",

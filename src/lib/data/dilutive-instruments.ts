@@ -531,52 +531,79 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // At $27+: traditional warrants add 26.6M → FD ~89.7M shares
 
   // BTCS Inc - ETH treasury company
-  // Verified 2026-01-29 via SEC filings and btcs.com
+  // Verified 2026-02-16 via SEC 10-Q Q3 2025 + 8-Ks
   // Jan 5 8-K: +690,300 options granted @ $2.64 (2025 performance incentives)
+  // Q3 10-Q Note 6: 1,369,725 warrants exercised cashless → only 1,411,566 convert warrants remain
+  // Plus 712,500 pre-existing warrants @ $11.50 (Mar 2021 PP, expiring ~Mar 2026)
   BTCS: [
     {
       type: "convertible",
       strikePrice: 5.85,
       potentialShares: 1_335_133,
       faceValue: 7_810_526,
-      source: "8-K May 2025",
+      source: "8-K May 2025 + Q3 10-Q Note 7",
       sourceUrl:
-        "https://www.btcs.com/news-media/convertible-note/",
+        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
       expiration: "2027-05-13",
-      notes: "$7.81M face value convertible note (ATW Partners, 5% OID on $7.438M principal). Conversion @ $5.85.",
+      notes: "$7.81M face value convertible note (ATW Partners, 5% OID on $7.438M principal). " +
+        "6% interest, secured by substantially all assets (excl. Aave collateral). " +
+        "4.99% beneficial ownership cap. No conversions to date.",
     },
     {
       type: "convertible",
       strikePrice: 13.0,
       potentialShares: 773_077,
       faceValue: 10_050_000,
-      source: "8-K Jul 2025",
+      source: "8-K Jul 2025 + Q3 10-Q Note 7",
       sourceUrl:
-        "https://www.btcs.com/news-media/eth-holdings-update-july-21-2025/",
+        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
       expiration: "2027-07-21",
-      notes: "$10.05M face value convertible note (ATW Partners, 5% OID). Conversion @ $13.00.",
+      notes: "$10.05M face value convertible note (ATW Partners, 5% OID). " +
+        "6% interest, secured by substantially all assets (excl. Aave collateral). " +
+        "4.99% beneficial ownership cap. No conversions to date.",
     },
+    // ── Convert warrants (post-exercise) ──────────────────────────────────
+    // Original: 1,901,916 (May) + 879,375 (Jul) = 2,781,291
+    // Exercised cashless Q3: 1,369,725 (surrendered 554,401, received 815,324 net shares)
+    // Remaining: 1,411,566 total equity-classified convert warrants
+    // Exact split unknown; using proportional estimate: May ~69%, Jul ~31%
     {
       type: "warrant",
       strikePrice: 2.75,
-      potentialShares: 1_901_916,
-      source: "8-K May 2025 + Q3 10-Q",
+      potentialShares: 974_000,  // ~69% of 1,411,566 remaining (proportional to original May/total)
+      source: "Q3 10-Q Note 6 (post-exercise balance)",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
       issuedDate: "2025-05-13",
       expiration: "2030-05-13",
-      notes: "Warrants issued with May 2025 ATW convertible note. 5-year term. Near/at-the-money at ~$2.87.",
+      notes: "May 2025 ATW convert warrants. Originally 1,901,916; ~928K exercised cashless in Q3. " +
+        "Remaining ~974K (proportional estimate). Near/at-the-money.",
     },
     {
       type: "warrant",
       strikePrice: 8.00,
-      potentialShares: 879_375,
-      source: "8-K Jul 2025 + Q3 10-Q",
+      potentialShares: 437_566,  // ~31% of 1,411,566 remaining
+      source: "Q3 10-Q Note 6 (post-exercise balance)",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
       issuedDate: "2025-07-21",
       expiration: "2030-07-21",
-      notes: "Warrants issued with Jul 2025 ATW convertible note. 5-year term.",
+      notes: "Jul 2025 ATW convert warrants. Originally 879,375; ~442K exercised cashless in Q3. " +
+        "Remaining ~438K (proportional estimate).",
+    },
+    // ── Pre-existing warrants (Mar 2021 private placement) ────────────────
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 712_500,
+      source: "8-K Mar 4, 2021 + Q3 10-Q Note 6",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+      issuedDate: "2021-03-02",
+      expiration: "2026-03-02",
+      notes: "Pre-existing warrants from Mar 2021 private placement. Originally 7,125,000 pre-reverse-split " +
+        "→ 712,500 post 1-for-10 split. Deeply OTM at current prices. Expiring ~Mar 2026. " +
+        "Classified as derivative liability ($855,713 at Q3).",
     },
     {
       type: "option",
