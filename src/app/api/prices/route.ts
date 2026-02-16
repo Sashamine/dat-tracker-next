@@ -23,7 +23,7 @@ const TICKER_CURRENCY: Record<string, string> = {
   "3825.T": "JPY",    // Remixpoint (Tokyo Stock Exchange)
   "H100.ST": "SEK",
   "0434.HK": "HKD",
-  "ALTBG": "EUR",
+  "ALCPB": "EUR",
   "ETHM": "CAD",
   "SWC": "GBP",     // Smarter Web Company (AQUIS UK)
   "TSWCF": "GBP",   // SWC OTC ticker
@@ -35,15 +35,15 @@ const TICKER_CURRENCY: Record<string, string> = {
 // Stocks not on major exchanges (OTC/international) - use FMP
 // Map: FMP ticker -> display ticker (for tickers with different formats)
 const FMP_TICKER_MAP: Record<string, string> = {
-  "ALTBG.PA": "ALTBG",   // Euronext Paris
+  "ALCPB.PA": "ALCPB",   // Euronext Paris
   "HOGPF": "H100.ST",    // H100 Group OTC ticker -> display as H100.ST
   "TSWCF": "SWC",        // Smarter Web Company OTC ticker -> display as SWC (AQUIS primary)
 };
 const FMP_ONLY_STOCKS = [
   "MSTR",      // Strategy - use FMP for price since Alpaca not working on Vercel
   // ETHM removed - pending SPAC merger, use FALLBACK_STOCKS instead
-  "ALTBG.PA",  // The Blockchain Group (Euronext Paris) - FMP ticker
-  "ALTBG",     // The Blockchain Group - display ticker (not valid on Alpaca)
+  "ALCPB.PA",  // The Blockchain Group (Euronext Paris) - FMP ticker
+  "ALCPB",     // The Blockchain Group - display ticker (not valid on Alpaca)
   "LUXFF",     // Luxxfolio (OTC)
   "IHLDF",     // Immutable Holdings (OTC) - Alpaca has poor OTC coverage
   "NA",        // Nano Labs

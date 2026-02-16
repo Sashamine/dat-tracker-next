@@ -1013,7 +1013,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   NAKA: { ticker: "NAKA", asset: "BTC", history: NAKA_HISTORY },
   ABTC: { ticker: "ABTC", asset: "BTC", history: ABTC_HISTORY },
   // NXTT removed - history of false financial reports
-  ALTBG: { ticker: "ALTBG", asset: "BTC", history: ALTBG_HISTORY },
+  ALTBG: { ticker: "ALCPB", asset: "BTC", history: ALTBG_HISTORY },
   ALCPB: { ticker: "ALCPB", asset: "BTC", history: ALTBG_HISTORY },  // Rebranded from ALTBG
   "H100.ST": { ticker: "H100.ST", asset: "BTC", history: H100_HISTORY },
   "DCC.AX": { ticker: "DCC.AX", asset: "BTC", history: DCC_HISTORY },

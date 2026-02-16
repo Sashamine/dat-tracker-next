@@ -271,7 +271,7 @@ const KULR_INTEL: CompanyIntel = {
 };
 
 const ALTBG_INTEL: CompanyIntel = {
-  ticker: "ALTBG",
+  ticker: "ALCPB",
   lastResearched: "2026-01-13",
   pressReleases: [
     { date: "2025-07-21", title: "Confirmed 1,955 BTC holdings", summary: "1,373% BTC Yield YTD", url: "https://www.thebitcoincompany.fr/en/press" },
@@ -1085,7 +1085,7 @@ export const COMPANY_INTEL: Record<string, CompanyIntel> = {
   ASST: ASST_INTEL,
   SMLR: SMLR_INTEL,
   KULR: KULR_INTEL,
-  ALTBG: ALTBG_INTEL,
+  ALCPB: ALTBG_INTEL,
   "H100.ST": H100ST_INTEL,
   NAKA: NAKA_INTEL,
   DJT: DJT_INTEL,

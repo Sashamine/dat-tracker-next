@@ -44,7 +44,7 @@ export const STOCK_TICKERS = [
   // BTC - International
   "3350.T",    // Metaplanet (Japan)
   "0434.HK",   // Boyaa Interactive (Hong Kong)
-  "ALTBG",     // The Blockchain Group (France/Euronext)
+  "ALCPB",     // The Blockchain Group (France/Euronext)
   "H100.ST",   // H100 Group (Sweden)
   "3825.T",    // Remixpoint (Japan) - Added 2026-02-02
   // "3189.T" removed - Alpaca doesn't support Tokyo Stock Exchange, use FALLBACK_STOCKS

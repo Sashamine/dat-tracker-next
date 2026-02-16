@@ -33,7 +33,7 @@ const MNAV_DASHBOARD_TICKERS = new Set([
   'LITS',     // Lite Strategy - litestrategy.com/dashboard
   'KULR',     // KULR Tech - kulrbitcointracker.com
   'UPXI',     // Upexi - upexi.com
-  'ALTBG',    // Capital B - cptlb.com/analytics (NAV per share)
+  'ALCPB',    // Capital B - cptlb.com/analytics (NAV per share)
 ]);
 
 // Price data interface for mNAV calculation

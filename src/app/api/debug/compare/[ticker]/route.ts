@@ -19,7 +19,7 @@ import { getBinancePrices } from '@/lib/binance';
 
 // Companies with official mNAV dashboards
 const MNAV_DASHBOARD_TICKERS = new Set([
-  '3350.T', 'MSTR', 'SBET', 'DFDV', 'LITS', 'KULR', 'UPXI', 'ALTBG',
+  '3350.T', 'MSTR', 'SBET', 'DFDV', 'LITS', 'KULR', 'UPXI', 'ALCPB',
 ]);
 
 // Map tickers to their relevant fetchers
@@ -29,7 +29,7 @@ const TICKER_FETCHERS: Record<string, string[]> = {
   'LITS': ['litestrategy-dashboard', 'sec-xbrl', 'yahoo-finance'],
   'KULR': ['kulr-tracker', 'sec-xbrl', 'yahoo-finance'],
   'UPXI': ['upexi-dashboard', 'sec-xbrl', 'yahoo-finance'],
-  'ALTBG': ['capital-b-dashboard'],
+  'ALCPB': ['capital-b-dashboard'],
   '3350.T': ['metaplanet-dashboard'],
   'DFDV': ['defidevcorp-dashboard', 'sec-xbrl', 'yahoo-finance'],
   'XXI': ['xxi-mempool', 'sec-xbrl', 'yahoo-finance'],

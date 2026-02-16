@@ -59,7 +59,7 @@ export const fetchers: Record<string, Fetcher> = {
   'capital-b-dashboard': capitalBFetcher,
   'sec-xbrl': secXbrlFetcher,
   'yahoo-finance': yahooFinanceFetcher,
-  'amf-france': amfFetcher,  // French regulatory filings (Capital B / ALTBG)
+  'amf-france': amfFetcher,  // French regulatory filings (Capital B / ALCPB)
   'hkex': hkexFetcher,       // Hong Kong Stock Exchange filings (Boyaa, etc.)
 };
 

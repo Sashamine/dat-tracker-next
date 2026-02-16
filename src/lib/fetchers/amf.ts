@@ -4,7 +4,7 @@
  * Fetches regulatory filings from the French financial regulator's API.
  * API endpoint: https://dilaamf.opendatasoft.com/api/v2/
  *
- * Used for companies like Capital B (The Blockchain Group) - ALTBG on TSX Venture.
+ * Used for companies like Capital B (The Blockchain Group) - ALCPB on Euronext Paris.
  *
  * API Documentation:
  * - Swagger: https://dilaamf.opendatasoft.com/api/v2/swagger.yaml
@@ -15,7 +15,7 @@ import { FetchResult, Fetcher } from './types';
 
 // Map tickers to their ISIN codes for AMF lookup
 const TICKER_TO_ISIN: Record<string, string> = {
-  'ALTBG': 'FR0011053636',  // Capital B (The Blockchain Group)
+  'ALCPB': 'FR0011053636',  // Capital B (The Blockchain Group)
 };
 
 // Map ISINs to company names (for display)

@@ -96,7 +96,7 @@ export const STATIC_STOCK_HISTORY: Record<string, StockPriceHistory> = {
   },
 
   // Add other illiquid stocks as needed
-  // Example: H100.ST (Swedish NGM listed), ALTBG (Euronext Paris), etc.
+  // Example: H100.ST (Swedish NGM listed), ALCPB (Euronext Paris), etc.
 };
 
 /**

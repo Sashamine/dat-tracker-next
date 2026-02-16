@@ -121,18 +121,18 @@ describe('UPXI Fetcher', () => {
   });
 });
 
-describe('Capital B (ALTBG) Fetcher', () => {
+describe('Capital B (ALCPB) Fetcher', () => {
   beforeEach(() => {
     mockFetch.mockReset();
   });
 
-  it('returns empty array for non-ALTBG tickers', async () => {
+  it('returns empty array for non-ALCPB tickers', async () => {
     const results = await capitalBFetcher.fetch(['MSTR', 'KULR']);
     expect(results).toEqual([]);
   });
 
-  it('getSupportedTickers returns ALTBG', () => {
-    expect(getCapitalBTickers()).toEqual(['ALTBG']);
+  it('getSupportedTickers returns ALCPB', () => {
+    expect(getCapitalBTickers()).toEqual(['ALCPB']);
   });
 
   it('fetches from mNAV.com API', async () => {
@@ -156,11 +156,11 @@ describe('Capital B (ALTBG) Fetcher', () => {
       }),
     });
 
-    const results = await capitalBFetcher.fetch(['ALTBG']);
+    const results = await capitalBFetcher.fetch(['ALCPB']);
 
     expect(results.length).toBe(2);
     expect(results.find(r => r.field === 'holdings')).toMatchObject({
-      ticker: 'ALTBG',
+      ticker: 'ALCPB',
       field: 'holdings',
       value: 2823,
     });

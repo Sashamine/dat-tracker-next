@@ -1,5 +1,5 @@
 /**
- * Capital B (ALTBG) Fetcher
+ * Capital B (ALCPB) Fetcher
  *
  * Fetches BTC holdings and mNAV data from the mNAV.com API.
  * Capital B's dashboard at cptlb.com/analytics uses an embedded mNAV.com widget.
@@ -111,12 +111,12 @@ export const capitalBFetcher: Fetcher = {
   name: 'cptlb.com (via mNAV.com)',
 
   async fetch(tickers: string[]): Promise<FetchResult[]> {
-    // This fetcher only supports ALTBG
-    if (!tickers.includes('ALTBG')) {
+    // This fetcher only supports ALCPB
+    if (!tickers.includes('ALCPB')) {
       return [];
     }
 
-    console.log('[capital-b] Fetching ALTBG data...');
+    console.log('[capital-b] Fetching ALCPB data...');
     const results: FetchResult[] = [];
     const fetchedAt = new Date();
 
@@ -143,7 +143,7 @@ export const capitalBFetcher: Fetcher = {
     const btcHeld = data.latest?.btcHeld;
     if (btcHeld && btcHeld > 0) {
       results.push({
-        ticker: 'ALTBG',
+        ticker: 'ALCPB',
         field: 'holdings',
         value: btcHeld,
         source: {
@@ -165,7 +165,7 @@ export const capitalBFetcher: Fetcher = {
     const mnav = calculateMnav(data);
     if (mnav !== null && mnav > 0) {
       results.push({
-        ticker: 'ALTBG',
+        ticker: 'ALCPB',
         field: 'mnav',
         value: mnav,
         source: {
@@ -191,7 +191,7 @@ export const capitalBFetcher: Fetcher = {
       console.log(`[capital-b] Found mNAV: ${mnav.toFixed(3)}x`);
     }
 
-    console.log(`[capital-b] Got ${results.length} data points for ALTBG`);
+    console.log(`[capital-b] Got ${results.length} data points for ALCPB`);
     return results;
   }
 };
@@ -200,5 +200,5 @@ export const capitalBFetcher: Fetcher = {
  * Get list of tickers this fetcher supports
  */
 export function getSupportedTickers(): string[] {
-  return ['ALTBG'];
+  return ['ALCPB'];
 }

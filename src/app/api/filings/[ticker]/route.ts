@@ -27,7 +27,7 @@ function getJurisdiction(ticker: string): string {
   const canadianTickers = ["STKE", "LUXFF", "XTAIF", "CYPH"];
   if (canadianTickers.includes(ticker.toUpperCase())) return "Canada";
   // French tickers
-  if (ticker.toUpperCase() === "ALTBG") return "France";
+  if (ticker.toUpperCase() === "ALCPB") return "France";
   // OTC/Pink sheets
   if (ticker.toUpperCase() === "IHLDF") return "US-OTC";
   // Default to US
@@ -334,7 +334,7 @@ const internationalFilingUrls: Record<string, { source: string; sourceUrl: strin
     note: "H100 Group on Nasdaq Nordic",
   },
   // France
-  "ALTBG": {
+  "ALCPB": {
     source: "Euronext Paris",
     sourceUrl: "https://live.euronext.com/en/product/equities/FR001400RU69-ALXP",
     note: "The Blockchain Group on Euronext",

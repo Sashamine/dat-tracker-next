@@ -32,7 +32,7 @@ const KNOWN_COVERAGE_GAPS = [
   'XRPN',   // OTC - may not have SEC filings
   'CYPH',   // Canadian (CSE) - no SEC filings
   'LUXFF',  // Canadian (CSE) - no SEC filings
-  'ALTBG',  // German (Börse Stuttgart) - no SEC filings
+  'ALCPB',  // French (Euronext Paris) - no SEC filings
   '0434.HK', // Hong Kong - no SEC filings (covered by mNAV but ticker mismatch)
   'BNC',    // BNB Network Company - needs SEC CIK lookup
   'STKE',   // Canadian (TSX Venture) - no SEC filings

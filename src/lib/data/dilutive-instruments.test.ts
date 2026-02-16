@@ -244,8 +244,8 @@ describe("Dilutive Instruments", () => {
       }
     });
 
-    it("should have valid instruments for ALTBG", () => {
-      const altbgInstruments = dilutiveInstruments["ALTBG"];
+    it("should have valid instruments for ALCPB", () => {
+      const altbgInstruments = dilutiveInstruments["ALCPB"];
       expect(altbgInstruments).toBeDefined();
       expect(altbgInstruments.length).toBe(10); // 9 OCA tranches + 1 BSA warrant
 
@@ -265,9 +265,9 @@ describe("Dilutive Instruments", () => {
       expect(totalPotential).toBeLessThan(210_000_000);
     });
 
-    it("should calculate ALTBG dilution correctly at low stock price", () => {
+    it("should calculate ALCPB dilution correctly at low stock price", () => {
       // At $0.80 USD (~€0.77 EUR), instruments at $0.57 and $0.74 are in the money
-      const result = getEffectiveShares("ALTBG", 226_884_068, 0.80);
+      const result = getEffectiveShares("ALCPB", 226_884_068, 0.80);
 
       expect(result.basic).toBe(226_884_068);
 
@@ -280,9 +280,9 @@ describe("Dilutive Instruments", () => {
       expect(totalInMoney).toBeGreaterThan(200_000_000);
     });
 
-    it("should include all ALTBG instruments at high stock price", () => {
+    it("should include all ALCPB instruments at high stock price", () => {
       // At $10 USD, all instruments are in the money
-      const result = getEffectiveShares("ALTBG", 226_884_068, 10.0);
+      const result = getEffectiveShares("ALCPB", 226_884_068, 10.0);
 
       const inMoney = result.breakdown.filter((b) => b.inTheMoney);
       expect(inMoney.length).toBe(10); // All 10 instruments

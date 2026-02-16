@@ -19,7 +19,7 @@ const TICKER_CURRENCY: Record<string, string> = {
   "3825.T": "JPY",    // Remixpoint (Tokyo Stock Exchange)
   "H100.ST": "SEK",
   "0434.HK": "HKD",
-  "ALTBG": "EUR",
+  "ALCPB": "EUR",
   "ETHM": "CAD",
 };
 
@@ -290,7 +290,7 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
       "DCC.AX": "AUD",
       "NDA.V": "CAD",
       "DMGI.V": "CAD",
-      "ALTBG": "EUR",
+      "ALCPB": "EUR",
     };
     
     const forexRates = await fetchForexRates();

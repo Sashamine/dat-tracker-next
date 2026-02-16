@@ -134,7 +134,7 @@ function getCurrencyMultiplier(ticker: string, forexRates: Record<string, number
   if (ticker.endsWith(".ST")) return 1 / (forexRates.SEK || 10.5);
   if (ticker.endsWith(".AX")) return 1 / (forexRates.AUD || 1.55);
   if (ticker.endsWith(".V")) return 1 / (forexRates.CAD || 1.35);
-  if (ticker === "ALTBG" || ticker.endsWith(".PA")) return 1 / (forexRates.EUR || 0.92);
+  if (ticker === "ALCPB" || ticker.endsWith(".PA")) return 1 / (forexRates.EUR || 0.92);
   if (ticker.endsWith(".DU") || ticker.endsWith(".DE")) return 1 / (forexRates.EUR || 0.92);
   return 1; // USD
 }

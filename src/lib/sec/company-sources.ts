@@ -409,7 +409,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
     extractionHints: 'Canadian company on TSX Venture. World\'s largest public TAO holder. Validator operations.',
   },
   {
-    ticker: 'ALTBG',
+    ticker: 'ALCPB',
     name: 'The Blockchain Group',
     asset: 'BTC',
     // Euronext Paris - no SEC filings
