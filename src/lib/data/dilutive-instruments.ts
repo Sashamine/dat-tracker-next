@@ -714,9 +714,22 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Verified 2026-02-13 via 10-Q Q1 FY2026 (CIK 0000038264)
   // NOTE: 12.9M pre-funded warrants @ $0.00001 ALREADY INCLUDED in sharesForMnav (96M)
   // sharesForMnav = 83.1M common + 12.9M PFWs = 96.0M
-  // Other warrants below are NOT in sharesForMnav — exercise prices TBD (need 8-K exhibit review)
+  // Performance warrants below are NOT in sharesForMnav — modeled with vesting triggers as strikePrice
   // Also: 102.1M shares reserved for ATM (sold at market, not dilutive at a strike)
   // Also: $1B share buyback program (Nov 2025 – Sep 2027), ~$975.6M remaining
+  //
+  // WARRANT RECONCILIATION vs XBRL:
+  // XBRL ClassOfWarrantOrRightOutstanding (Sep 30, 2025): 26,359,600 total warrants
+  //   - Pre-funded warrants (PFWs): 12,864,602 @ $0.00001 → in sharesForMnav (essentially shares)
+  //   - Performance warrants below: 13,378,377 (9 tranches × ~1,486,486 avg)
+  //   - Legacy/rounding gap: ~116,621 (immaterial, likely legacy warrants from pre-PIPE era)
+  //   - Total tracked: 12,864,602 + 13,378,377 = 26,242,979 (~99.6% of XBRL total) ✓
+  //
+  // IMPORTANT: Performance warrant tranches CANNOT vest until the Resale Registration Statement
+  // is effective, regardless of stock price. Per EX-10.3 Section 2(b): vesting triggers require
+  // "20 out of 30 trading days FOLLOWING the effectiveness of the Resale Registration Statement."
+  // If the resale S-1 isn't effective yet, NO tranches can vest. This is a material prerequisite
+  // that the strike-price-as-vesting-trigger model doesn't capture.
   FWDI: [
     // All 3 warrant tranches: $0.01 exercise price, BUT performance-based vesting.
     // Each tranche has 3 sub-tranches that vest at different stock price targets
@@ -724,6 +737,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // Source: 8-K Sep 8, 2025, EX-10.3 (Galaxy) and EX-10.4 (Jump/Multicoin)
     // https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm
     // https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm
+    //
+    // PREREQUISITE: Resale Registration Statement must be effective before ANY tranche can vest.
+    // Clock for 20/30 trading day trigger doesn't start until registration is effective.
 
     // Galaxy Strategic Advisor Warrants — 5% of PIPE shares
     // 1/3 vests at $27.75 (150% of $18.50), 1/3 at $37.00 (200%), 1/3 at $46.25 (250%)
@@ -1307,7 +1323,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
   // Total DJT dilution: 28.8M convert shares ($34.72 strike) + 11M DJTWW warrants ($11.50)
-  // Earnout warrants from DWAC merger still unquantified (TODO: verify tranches/triggers)
+  // Earnout shares (40M): fully vested Apr 26, 2024 — already in basic share count (279.9M), NOT additional dilution
+  // Make-whole: in fundamental change, convert rate can increase from 28.8 to max 38.88 shares/$1,000
 
   // NAKA (Nakamoto Inc.) - BTC treasury company
   // Verified 2026-02-13 via SEC 10-Q Q3 2025 XBRL (CIK 0001946573)

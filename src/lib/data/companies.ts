@@ -1394,7 +1394,7 @@ export const solCompanies: Company[] = [
     stakingAsOf: "2025-09-30",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    stakingApy: 0.0673,  // 6.73% gross APY per Jan 2026 update
+    stakingApy: 0.085,  // ~8.5% gross APY derived from 10-Q Q1 FY2026 segment data: $17.4M staking revenue × 4 / $820.8M staked assets = 8.47%
     quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M - treasury ops costs)
     burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,

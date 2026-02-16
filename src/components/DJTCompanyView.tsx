@@ -175,8 +175,8 @@ export function DJTCompanyView({ company, className = "" }: Props) {
 {DJT_PROVENANCE.quarterlyBurn&&<ProvenanceMetric label="Quarterly Burn" data={DJT_PROVENANCE.quarterlyBurn} format="currency" subLabel="9M 2025 OpCF: +$2.6M" tooltip="Operations are cash-flow neutral/positive. 9M 2025 OpCF was +$2.6M." ticker="djt" />}
 
 {DJT_PROVENANCE.restrictedCash&&<ProvenanceMetric label="Restricted Cash" data={DJT_PROVENANCE.restrictedCash} format="currency" subLabel="From convertible proceeds" tooltip="$336M restricted from convertible note proceeds. Total cash = $502M." ticker="djt" />}
-{DJT_PROVENANCE.revenueQ3&&<ProvenanceMetric label="Revenue (Q3 2025)" data={DJT_PROVENANCE.revenueQ3} format="currency" subLabel="Truth Social (~$1M/qtr)" tooltip="Truth Social revenue. Minimal relative to treasury strategy." ticker="djt" />}
-{DJT_PROVENANCE.netLossQ3&&<ProvenanceMetric label="Net Loss (Q3 2025)" data={DJT_PROVENANCE.netLossQ3} format="currency" subLabel="Includes crypto FV changes" tooltip="Net loss includes crypto fair value changes. Operating loss was -$57.7M." ticker="djt" />}
+{DJT_PROVENANCE.revenueLatest&&<ProvenanceMetric label="Revenue (Q3 2025)" data={DJT_PROVENANCE.revenueLatest} format="currency" subLabel="Truth Social (~$1M/qtr)" tooltip="Truth Social revenue. Minimal relative to treasury strategy." ticker="djt" />}
+{DJT_PROVENANCE.netLossLatest&&<ProvenanceMetric label="Net Loss (Q3 2025)" data={DJT_PROVENANCE.netLossLatest} format="currency" subLabel="Includes crypto FV changes" tooltip="Net loss includes crypto fair value changes. Operating loss was -$57.7M." ticker="djt" />}
 
 {es&&es.diluted>es.basic&&<div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
 <p className="text-sm text-amber-700 dark:text-amber-400">ITM Dilution</p>

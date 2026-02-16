@@ -236,7 +236,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // REVENUE (Q3 2025)
   // =========================================================================
-  revenueQ3: pv(
+  revenueLatest: pv(
     REVENUE_Q3_2025,
     xbrlSource({
       fact: "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
@@ -258,7 +258,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // NET LOSS (Q3 2025)
   // =========================================================================
-  netLossQ3: pv(
+  netLossLatest: pv(
     Math.abs(PROFIT_LOSS_Q3_2025),
     xbrlSource({
       fact: "us-gaap:ProfitLoss",
@@ -414,7 +414,7 @@ export const DJT_SHARE_HISTORY = [
 export const DJT_TODO = {
   convertibleTerms: "✅ Verified: $34.72 strike, 28.8 shares/$1,000, 28.8M potential shares, maturity May 29, 2028. Per 8-K EX-4.1 (0001140361-25-020967)",
   djtwwWarrants: "✅ Verified: 11,019,766 warrants at $11.50 strike, expires 2029-03-25. Per Q3 10-Q Note 13",
-  earnoutShares: "Earnout shares from DWAC merger — status/tranches unknown",
+  earnoutShares: "✅ Resolved: 40M earnout shares (3 tranches: 15M@$12.50, 15M@$15, 10M@$17.50) fully vested Apr 26, 2024. Already in basic share count.",
   croHoldings: "DJT holds CRO tokens (Crypto.com) — amount not quantified",
   btcOptions: "$300M allocated to BTC options strategy — not tracked in holdings",
   fy2025_10k: "Expected ~March 2026 — will have first post-BTC annual balance sheet",
