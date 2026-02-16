@@ -6901,3 +6901,102 @@ Total crypto prices: 16
 ✓ Compiled in 265ms
 ✓ Compiled in 197ms
 ✓ Compiled in 212ms
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+✓ Compiled in 1679ms
+ GET /company/SQNS 200 in 6.4s (compile: 3.5s, render: 2.9s)
+ GET /company/SQNS 200 in 240ms (compile: 39ms, render: 202ms)
+ GET /company/SQNS 200 in 102ms (compile: 10ms, render: 92ms)
+ GET /api/db/companies 200 in 277ms (compile: 211ms, render: 66ms)
+ GET /api/prices/stream 200 in 2.6min
+Could not fetch holdings history from database: Error: Connection terminated due to connection timeout
+    at async query (src\lib\db.ts:18:18)
+    at async GET (src\app\api\db\companies\[ticker]\route.ts:29:25)
+  16 |   params?: any[]
+  17 | ): Promise<T[]> {
+> 18 |   const result = await pool.query(text, params);
+     |                  ^
+  19 |   return result.rows as T[];
+  20 | }
+  21 | {
+  [cause]: Error: Connection terminated unexpectedly
+      at ignore-listed frames
+}
+ GET /api/db/companies/SQNS 200 in 8.3s (compile: 391ms, render: 7.9s)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream] Sent initial data
+ GET /icons/icon-192.png 404 in 7.0s (compile: 1184ms, render: 5.8s)
+✓ Compiled in 539ms
+ GET /api/prices/stream 200 in 21.0s
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.034 AUD → $0.0240 USD (rate: 1.415562, marketCap: $35.4M)
+[Stream] Sent initial data
+ GET /api/prices/stream 200 in 14.9min
+ GET /api/prices/stream 200 in 28.0s
+✓ Compiled in 302ms
+✓ Compiled in 287ms
+✓ Compiled in 278ms
+✓ Compiled in 271ms

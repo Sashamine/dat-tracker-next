@@ -771,7 +771,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
   // Verified 2026-02-15 via SEC 10-Q Q3 2025 Note 6 warrant table (CIK 0001610853)
   //
-  // sharesForMnav = 41,301,400 basic + 35,627,639 PFWs @ $0.001 = 76,929,039
+  // sharesForMnav = 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 = 75,926,867
   // PFWs ALREADY INCLUDED in sharesForMnav — NOT listed here (would double-count)
   //
   // Total XBRL warrants outstanding: 116,972,530 (ClassOfWarrantOrRightOutstanding Sep 30)
