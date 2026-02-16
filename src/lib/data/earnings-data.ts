@@ -1146,7 +1146,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-08-05",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // BTC purchases started but merger not yet closed; pre-merger KindlyMD had no BTC
-    sharesAtQuarterEnd: 6_029_648,  // Pre-merger KindlyMD shares (XBRL Dec 2024 count used as proxy)
+    sharesAtQuarterEnd: 7_606_339,  // XBRL Q2 2025 cover page (EntityCommonStockSharesOutstanding)
     holdingsPerShare: 0,
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225022128/form10-q.htm",

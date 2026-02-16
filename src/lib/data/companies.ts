@@ -1207,6 +1207,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     // BURN: from provenance (Q3 2025 G&A + OpCF estimate)
     quarterlyBurnUsd: NAKA_PROVENANCE.quarterlyBurn?.value ?? 8_000_000,
+    burnEstimated: true,  // $8M is forward estimate; Q3 G&A was $4.98M, 9mo avg OpCF ~$5.3M/qtr
     burnSource: "SEC 10-Q Q3 2025 XBRL: G&A $4.98M + conservative ramp estimate",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
     burnAsOf: "2025-09-30",

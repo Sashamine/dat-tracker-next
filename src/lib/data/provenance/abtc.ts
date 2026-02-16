@@ -77,16 +77,13 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
       url: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
       quote: "held approximately 5,098 Bitcoin in its strategic reserve as of December 14, 2025",
       anchor: "bitcoin-reserve",
-      cik: ABTC_CIK,
-      accession: Q3_2025_10Q_ACCESSION,  // Reference filing period
-      filingType: "8-K",  // Press release attached to 8-K filing
-      filingDate: LATEST_HOLDINGS_DATE,
+      // No accession — this is a standalone PR Newswire release, not attached to any SEC filing
       documentDate: LATEST_HOLDINGS_DATE,
     }),
     "Source says 'approximately 5,098 Bitcoin' — standard PR hedging language. " +
     "Includes BTC held in custody or pledged for miner purchases under BITMAIN agreement. " +
     "Acquired through combination of mining and strategic purchases. " +
-    "XBRL does not include CryptoAssetNumberOfUnits for this CIK."
+    "XBRL has CryptoAssetNumberOfUnits (3,418 BTC at Sep 30, 2025) but holdings source uses more recent PR data (5,098 at Dec 14, 2025)."
   ),
 
   // =========================================================================
@@ -120,20 +117,20 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   totalDebt: pv(
     0,
-    xbrlSource({
-      fact: "us-gaap:LongTermDebt",
-      searchTerm: "0",
-      rawValue: 0,
-      unit: "USD",
-      periodType: "instant",
-      periodEnd: Q3_2025_PERIOD_END,
+    docSource({
+      type: "sec-document",
+      searchTerm: "Long-term debt",
+      url: `https://www.sec.gov/Archives/edgar/data/${ABTC_CIK}/000119312525281390/abtc-20250930.htm`,
+      quote: "No long-term financial debt on Q3 2025 balance sheet",
+      anchor: "balance-sheet",
       cik: ABTC_CIK,
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentAnchor: "Long-term Debt",
+      documentDate: Q3_2025_PERIOD_END,
     }),
     "Financial debt: $0. No bonds, convertibles, credit facilities, or notes payable. " +
+    "XBRL has no LongTermDebt fact post-2023 (last entry: $5.15M at Dec 31, 2023, pre-merger Gryphon). " +
     "Excluded from mNAV: operating lease liabilities ($185.6M — mining facility leases, operational not financial), " +
     "Bitmain miner purchase liability ($286.2M — BTC-collateralized equipment commitment), " +
     "intercompany payable to Hut 8 ($103.8M — parent owns 80%, consolidation artifact). " +
@@ -195,11 +192,10 @@ export const ABTC_PROVENANCE_DEBUG = {
   periodEnd: Q3_2025_PERIOD_END,
   mergerDate: "2025-09-03",
   formerNames: ["Gryphon Digital Mining", "Akerna Corp", "MTech Acquisition Holdings"],
-  xbrlNote: "No CryptoAssetNumberOfUnits in XBRL. EntityCommonStockSharesOutstanding only through Q2 2025 (pre-merger).",
+  xbrlNote: "XBRL has CryptoAssetNumberOfUnits (3,418 BTC at Sep 30, 2025; 10,171 BTC at Dec 31, 2024). " +
+    "EntityCommonStockSharesOutstanding only through Q2 2025 (pre-merger, 82,802,406). " +
+    "Post-merger share count (927.6M) sourced from 10-Q cover page text, not XBRL.",
   pendingVerification: [
-    "Exact Class A vs Class B share breakdown",
-    "Total debt from Q3 2025 balance sheet",
-    "Cash reserves from Q3 2025 balance sheet",
     "Cost basis of BTC holdings",
     "Dilutive instruments (warrants, options) from equity footnotes",
     "Recent 8-Ks filed Dec 2025 - Feb 2026 for updated holdings",
