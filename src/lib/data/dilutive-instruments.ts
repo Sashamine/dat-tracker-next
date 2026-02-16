@@ -1847,50 +1847,149 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // At ~$1.14 stock: Gryphon warrants OTM but near the money, Akerna deep OTM
 
   // DeFi Development Corp (DFDV) - SOL treasury company
-  // Verified 2026-02-13 via SEC XBRL (CIK 0001805526) + 10-Q filings
+  // Verified 2026-02-16 via SEC XBRL (CIK 0001805526) + 10-Q Q3 2025 + S-1 Dec 18, 2025
+  // Adversarial audit corrections applied: warrant count, convertible tranches, missing instruments
   DFDV: [
-    // 5.50% Convertible Senior Notes due 2030
-    // $134M face value (XBRL ConvertibleDebtNoncurrent $131.4M net of $8.9M discount)
-    // Conversion price: $9.74 per share (from 10-Q Q2 2025)
-    // Potential shares: $134,000,000 / $9.74 = 13,757,700
-    // XBRL IncrementalCommonSharesAttributableToConversionOfDebtSecurities: 6,804,000 (Q3 quarterly)
+    // ── Convertible Notes (TWO TRANCHES) ──────────────────────────────────
+    // Tranche 1: April 2030 Notes — 2.5% rate
+    // Originally $42M face, $24.1M already converted to stock → $17,847K remaining
+    // Conversion price: $9.74/share
+    // Potential shares: $17,847,000 / $9.74 = ~1,832,851
     {
       type: "convertible",
       strikePrice: 9.74,
-      potentialShares: 13_757_700,
-      faceValue: 134_000_000,
-      source: "10-Q Q2 2025 + Q3 2025 XBRL",
+      potentialShares: 1_832_851,
+      faceValue: 17_847_000,
+      source: "10-Q Q3 2025 (Note 9) + S-1 Dec 18, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/dfdv-20250630.htm",
-      expiration: "2030-07-15",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+      expiration: "2030-04-04",
       issuedDate: "2025-04-04",
       notes:
-        "5.50% Convertible Senior Notes due 2030. " +
-        "Conversion price $9.74/share. Issued in multiple tranches: " +
-        "~$42M initial (Apr 2025), ~$112.5M (Jul 2025). " +
-        "XBRL ProceedsFromConvertibleDebt: $148.9M (9mo to Sep 30, 2025).",
+        "2.5% Convertible Senior Notes due April 2030. " +
+        "Originally $42M face value, $24.1M already converted to common stock. " +
+        "Remaining face: $17,847K. Conversion price $9.74/share. " +
+        "Warrants issued alongside (tracked separately as PIPE warrants).",
     },
-    // DFDVW Warrant Dividend - distributed to shareholders Oct/Nov 2025
-    // Exercise price verified from SEC 8-K + Exhibit 99.2 FAQ: $22.50
-    // XBRL IncrementalCommonSharesAttributableToCallOptionsAndWarrants: 290,000 (Q3 quarterly)
-    // XBRL ProceedsFromIssuanceOfWarrants: $124.8M (as of Aug 24, 2025 - likely notional)
+    // Tranche 2: July 2030 Notes — 5.5% rate
+    // Face value: $122.5M ($112.5M + $10M greenshoe)
+    // Conversion rate: 43.2694 shares/$1,000 = $23.11/share conversion price
+    // Potential shares: 122,500 × 43.2694 = ~5,305,502
+    {
+      type: "convertible",
+      strikePrice: 23.11,
+      potentialShares: 5_305_502,
+      faceValue: 122_500_000,
+      source: "10-Q Q3 2025 (Note 9) + S-1 Dec 18, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+      expiration: "2030-07-15",
+      issuedDate: "2025-07-01",
+      notes:
+        "5.5% Convertible Senior Notes due July 2030. " +
+        "$122.5M face ($112.5M + $10M greenshoe). " +
+        "Conversion rate 43.2694 shares/$1,000 = $23.11/share. " +
+        "Make-whole and fundamental change put provisions. " +
+        "Company can redeem after Jul 5, 2026 if stock ≥150% of conversion price for 20/30 trading days.",
+    },
+
+    // ── DFDVW Warrant Dividend ────────────────────────────────────────────
+    // Distributed Oct 27, 2025. 1 warrant per 10 shares (NOT 1:1).
+    // S-1 confirms: "approximately 3.9 million warrants" / "3,898,856 shares potentially issuable"
+    // Exercise price: $22.50, expires Jan 21, 2028
     {
       type: "warrant",
       strikePrice: 22.5,
-      potentialShares: 31_401_212, // 1 warrant per share at Oct 2025 record date (~31.4M shares outstanding)
-      source: "8-K Oct 8, 2025 (warrant dividend to all shareholders of record)",
+      potentialShares: 3_898_856,
+      source: "S-1 Dec 18, 2025 + 8-K Oct 8, 2025 + 10-Q Q3 2025 Note 19",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/ea0260652-8k_defi.htm",
-      issuedDate: "2025-10-08",
+      issuedDate: "2025-10-27",
       notes:
-        "DFDVW warrant dividend — 1 warrant per share distributed to all shareholders. " +
+        "DFDVW warrant dividend — 1 warrant per 10 shares (1:10 ratio), NOT 1:1. " +
+        "S-1 Dec 18, 2025 confirms 'approximately 3.9 million warrants' distributed. " +
         "Exercise price $22.50/share, expires Jan 21, 2028 (subject to early expiration trigger). " +
-        "Trading publicly on Nasdaq as DFDVW. ~31.4M warrants outstanding based on shares at record date.",
+        "Trading publicly on Nasdaq as DFDVW. Noteholders also received warrants on as-converted pass-through basis.",
     },
-    // Stock Option / RSU Pool
-    // XBRL: ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant = 3,500,000
-    // These are available for future grant, not yet issued
-    // Not adding as dilutive since not yet granted/outstanding
+
+    // ── April 2025 PIPE Warrants ──────────────────────────────────────────
+    // Issued alongside April 2025 convertible notes to PIPE investors
+    // Series 1: 2,400,000 @ $17.14
+    {
+      type: "warrant",
+      strikePrice: 17.14,
+      potentialShares: 2_400_000,
+      source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525316435/",
+      expiration: "2030-04-04",
+      issuedDate: "2025-04-04",
+      notes:
+        "April 2025 PIPE warrant Series 1. Issued to convertible note investors. " +
+        "2,400,000 warrants at $17.14 exercise price. ~5-year term.",
+    },
+    // Series 2: 2,000,000 @ $21.43
+    {
+      type: "warrant",
+      strikePrice: 21.43,
+      potentialShares: 2_000_000,
+      source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525316435/",
+      expiration: "2030-04-04",
+      issuedDate: "2025-04-04",
+      notes:
+        "April 2025 PIPE warrant Series 2. Issued to convertible note investors. " +
+        "2,000,000 warrants at $21.43 exercise price. ~5-year term.",
+    },
+
+    // ── Pre-funded Warrants (August 2025) ─────────────────────────────────
+    // ~4,080,895 outstanding at Sep 30, 2025. $0.0001 exercise price = near-certain conversion.
+    // 1.7M already exercised by Sep 30. Check if more exercised since.
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 4_080_895,
+      source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525316435/",
+      issuedDate: "2025-08-24",
+      notes:
+        "Pre-funded warrants from August 2025 PIPE. $0.0001 exercise price — near-certain conversion. " +
+        "1.7M exercised by Sep 30, 2025; ~4.1M still outstanding. No expiration. " +
+        "Check if more have been exercised since Sep 30.",
+    },
+
+    // ── Stock Options ─────────────────────────────────────────────────────
+    // 1,483,992 outstanding at Sep 30, 2025. Weighted avg exercise price $5.24.
+    {
+      type: "option",
+      strikePrice: 5.24,
+      potentialShares: 1_483_992,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+      issuedDate: "2025-04-04",
+      notes:
+        "Stock options outstanding. Weighted average exercise price $5.24. " +
+        "Per 10-Q Q3 2025 equity compensation disclosures.",
+    },
+
+    // ── RSUs ──────────────────────────────────────────────────────────────
+    // 242,375 unvested RSUs (10-Q Q3 2025) + 16,500 granted Jan 29, 2026 (8-K)
+    {
+      type: "rsu",
+      strikePrice: 0,
+      potentialShares: 258_875,
+      source: "10-Q Q3 2025 + 8-K Jan 29, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+      issuedDate: "2025-04-04",
+      notes:
+        "Restricted Stock Units: 242,375 unvested per 10-Q Q3 2025, " +
+        "plus 16,500 granted to new director (Hadley Stern) per 8-K Jan 29, 2026. " +
+        "Total: 258,875. Strike price $0 (vest to shares).",
+    },
   ],
 };
 

@@ -44,6 +44,7 @@ const FOREX_RATES: Record<string, number> = {
   AUD: 1.55,
   EUR: 0.92,
   SEK: 10.5,
+  GBP: 0.79,
 };
 
 function getCurrencyMultiplier(ticker: string): number {
@@ -53,7 +54,10 @@ function getCurrencyMultiplier(ticker: string): number {
   if (ticker.endsWith(".AX")) return 1 / FOREX_RATES.AUD;
   if (ticker.endsWith(".DU") || ticker.endsWith(".DE")) return 1 / FOREX_RATES.EUR;
   if (ticker.endsWith(".ST")) return 1 / FOREX_RATES.SEK;
-  return 1;
+  // UK companies (AQSE) - no suffix convention, match by ticker
+  // Note: SWC fallback price is pre-converted to USD, but stock-prices JSON (when added) will be in GBP
+  if (ticker === "SWC") return 1 / FOREX_RATES.GBP;
+  return 1;  // USD
 }
 
 function loadStockPrices(ticker: string): PriceRecord[] {

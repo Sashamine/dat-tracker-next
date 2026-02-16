@@ -73,10 +73,13 @@ const LATEST_HOLDINGS = 2_221_329; // SOL + SOL equivalents
 const LATEST_SHARES = 29_892_800;
 const LATEST_CASH = 9_000_000;
 
-// Debt from Q3 10-Q + company dashboard
-const CONVERTIBLE_DEBT_FACE = 134_000_000; // ~$134M 5.50% Convertible Senior Notes
-const SOL_DEFI_LOANS = 52_000_000; // SOL/DeFi protocol loans (post-Q3)
-const TOTAL_DEBT = CONVERTIBLE_DEBT_FACE + SOL_DEFI_LOANS; // $186M
+// Debt from Q3 10-Q balance sheet (SEC-filed)
+const CONVERTIBLE_DEBT_FACE = 140_347_000; // Two tranches: $17,847K (Apr 2030, 2.5%) + $122,500K (Jul 2030, 5.5%)
+const BITGO_FINANCING = 70_331_000; // BitGo Master Loan Agreement - digital asset financing (SEC 10-Q)
+const SHORT_TERM_LOAN = 267_000; // D&O insurance premium financing
+// Net balance sheet total: $131,444K converts + $70,331K BitGo + $267K = $202,042K
+// Face value total: $140,347K + $70,331K + $267K = $210,945K
+const TOTAL_DEBT = 202_042_000; // Using net carrying value per 10-Q balance sheet
 
 // Quarterly burn from Q3 XBRL
 const QUARTERLY_BURN = 3_572_000;
@@ -134,19 +137,22 @@ export const DFDV_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // TOTAL DEBT - $186M: $134M converts + $52M SOL/DeFi loans
-  // Q3 10-Q XBRL: ConvertibleDebtNoncurrent = $131,444,000 (net of discount)
-  //               DebtLongtermAndShorttermCombinedAmount = $131,711,000
-  // Post-Q3: Company dashboard shows additional $52M SOL/DeFi protocol loans
+  // TOTAL DEBT - $202M per 10-Q balance sheet (Sep 30, 2025)
+  // Convertible notes: $140.3M face ($17,847K Apr 2030 @ 2.5% + $122,500K Jul 2030 @ 5.5%)
+  //   Net carrying: $131,444K (after $8.9M unamortized discount)
+  // BitGo digital asset financing: $70,331K (Master Loan Agreement, 12.5% rate)
+  //   250% collateral requirement, 200% margin call trigger
+  //   Collateralized by SOL treasury; $104.1M borrowed, $37.6M repaid
+  // Short-term loan: $267K (D&O insurance premium financing)
   // =========================================================================
   totalDebt: pv(
     TOTAL_DEBT,
     docSource({
       type: "sec-document",
-      searchTerm: "131,444",
+      searchTerm: "202,042",
       url: `https://www.sec.gov/Archives/edgar/data/${DFDV_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/dfdv-20250930.htm`,
       quote:
-        "ConvertibleDebtNoncurrent $131,444,000 + SOL/DeFi loans from company dashboard",
+        "Long-term debt, net $131,444K + Digital asset financing $70,331K + Loan payable $267K = $202,042K total",
       anchor: "debt",
       cik: DFDV_CIK,
       accession: Q3_2025_10Q_ACCESSION,
@@ -154,9 +160,11 @@ export const DFDV_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentDate: Q3_2025_PERIOD_END,
     }),
-    "$134M face value 5.50% Convertible Senior Notes due 2030 (net B/S: $131.4M after unamortized discount of $8.9M). " +
-      "$52M SOL/DeFi protocol loans per defidevcorp.com dashboard (post-Q3 addition). " +
-      "Total: $186M."
+    "Convertible notes: $140.3M face in two tranches ($17,847K Apr 2030 @ 2.5% + $122,500K Jul 2030 @ 5.5%), " +
+      "net $131.4M after $8.9M unamortized discount. " +
+      "BitGo Master Loan Agreement (Jul 25, 2025): $70.3M digital asset financing @ 12.5% rate, " +
+      "250% collateral requirement, 200% margin call trigger, repayable at company option. " +
+      "Short-term loan: $267K D&O insurance. Total per 10-Q: $202,042K."
   ),
 
   // =========================================================================

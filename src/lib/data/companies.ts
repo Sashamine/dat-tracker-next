@@ -1504,12 +1504,12 @@ export const solCompanies: Company[] = [
     // costBasisAvg removed - needs verification
     stakingPct: 0.90,  // Stakes SOL + operates validators; $4.85M in validator/staking rewards (9mo)
     stakingMethod: "Validator operations + third-party staking. dfdvSOL liquid staking token.",
-    stakingSource: "SEC 10-Q Nov 19, 2025: Revenue from 'staking our SOL holdings with third party platforms and from operating validator nodes.' $4.85M staking/validator rewards.",
+    stakingSource: "Q4 2025 business update: 8.3% annualized organic yield (staking, validator ops, onchain deployment). 10-Q 9-month data supports 6-8% range. Prior 11.4% was unverifiable.",
     stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     stakingAsOf: "2025-09-30",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    stakingApy: 0.114,
+    stakingApy: 0.083,  // Company Q4 2025 business update: 8.3% organic yield estimate
     quarterlyBurnUsd: 3_572_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $3,572,000",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
@@ -1524,8 +1524,8 @@ export const solCompanies: Company[] = [
     sharesSource: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update - shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
     sharesAsOf: "2026-01-01",
-    totalDebt: 186_000_000,  // $186M: $134M converts (SEC-verified) + $52M SOL/DeFi loans (company-disclosure only)
-    debtSource: "SEC 10-Q Q3 2025: $134M convertible notes (XBRL ConvertibleDebtNoncurrent $131.4M carrying). $52M SOL/DeFi loans from defidevcorp.com dashboard ONLY — not SEC-filed. Await FY2025 10-K for SEC verification.",
+    totalDebt: 202_042_000,  // 10-Q: $131.4M converts (net) + $70.3M BitGo + $267K short-term
+    debtSource: "SEC 10-Q Q3 2025 balance sheet: $131.4M convertible notes (net, $140.3M face in two tranches) + $70.3M BitGo digital asset financing + $267K short-term loan. Total per 10-Q: $202,042,000",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     debtAsOf: "2026-01-01",
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
@@ -1535,7 +1535,7 @@ export const solCompanies: Company[] = [
     cashAsOf: "2026-01-01",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
-    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token.",
+    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token. $152.2M SOL pledged as collateral (>50% of digital assets). BitGo Master Loan: 250% collateral / 200% margin call trigger — liquidation risk if SOL drops 15-20%. Flora Growth $23.1M convertible note investment (93.3K SOL, 8% rate, due Sep 2030) — credit risk, not liquid SOL.",
   },
   {
     id: "upxi",

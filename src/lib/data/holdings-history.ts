@@ -262,12 +262,12 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
-// DFDV Debt: $134M converts + $52M SOL/DeFi loans = $186M (raised progressively 2025)
+// DFDV Debt: $140.3M converts (two tranches) + $70.3M BitGo financing + $267K short-term = $202M (10-Q Sep 30, 2025)
 const DFDV_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-04-15", holdings: 150000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.01000, totalDebt: 50_000_000, cash: 10_000_000, source: "Initial SOL treasury (estimate)", sourceType: "press-release", sourceUrl: "https://defidevcorp.com/press-releases" },
+  { date: "2025-04-15", holdings: 150000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.01000, totalDebt: 50_000_000, cash: 10_000_000, source: "Initial SOL treasury (estimate; totalDebt is approximate — only April PIPE $42M closed at this point)", sourceType: "press-release", sourceUrl: "https://defidevcorp.com/press-releases" },
   { date: "2025-06-30", holdings: 573000, sharesOutstandingDiluted: 21_045_049, holdingsPerShare: 0.02723, stockPrice: 404.23, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/dfdv-20250630.htm" },
-  { date: "2025-09-30", holdings: 1157000, sharesOutstandingDiluted: 31_401_212, holdingsPerShare: 0.03685, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm" },
-  { date: "2026-01-01", holdings: 2_221_329, sharesOutstandingDiluted: 29_892_800, holdingsPerShare: 0.07431, totalDebt: 186_000_000, cash: 9_000_000, source: "Q4 2025 business update (8-K)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 1157000, sharesOutstandingDiluted: 31_401_212, holdingsPerShare: 0.03685, stockPrice: 326.42, totalDebt: 202_042_000, source: "Q3 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm" },
+  { date: "2026-01-01", holdings: 2_221_329, sharesOutstandingDiluted: 29_892_800, holdingsPerShare: 0.07431, totalDebt: 202_042_000, cash: 9_000_000, source: "Q4 2025 business update (8-K); totalDebt carried from 10-Q Sep 30 (no newer filing)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm", sourceType: "sec-filing" },
 ];
 
 // KULR Technology - Bitcoin First Company
