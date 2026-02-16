@@ -5,7 +5,7 @@ import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./pro
 import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
 import { NAKA_PROVENANCE, NAKA_PROVENANCE_DEBUG, getNakaProvenance } from "./provenance/naka";
 
-// Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,427
+// Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,098 (PR Dec 14; 5,427 ref'd Jan 20 but no public source found — await Feb 26 10-K)
 
 // ETH DAT Companies
 export const ethCompanies: Company[] = [

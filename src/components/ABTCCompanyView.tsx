@@ -166,7 +166,7 @@ export function ABTCCompanyView({ company, className = "" }: ABTCCompanyViewProp
         holdings: ABTC_PROVENANCE.holdings,
         shares: ABTC_PROVENANCE.sharesOutstanding!,
       },
-    }), "Uses 899M total shares (all classes, post-merger).");
+    }), "Uses 928M total shares (all classes, post-merger).");
 
     return {
       holdings,
