@@ -349,16 +349,18 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
 // Verified 2026-01-28 via SEC XBRL
 const ABTC_HISTORY: HoldingsSnapshot[] = [
   // Pre-merger data (Gryphon)
-  { date: "2025-06-30", holdings: 2_100, sharesOutstandingDiluted: 74_101_315, holdingsPerShare: 0.0000283, stockPrice: 404.23, source: "Q2 2025 10-Q (pre-merger)", sourceType: "sec-filing", sourceUrl: "/filings/abtc/10Q-2025-06-30#btc-holdings" },
+  // stockPrice adjusted from $404.23 (Gryphon pre-merger) by ~14.5:1 exchange ratio
+  { date: "2025-06-30", holdings: 2_100, sharesOutstandingDiluted: 74_101_315, holdingsPerShare: 0.0000283, stockPrice: 27.88, source: "Q2 2025 10-Q (pre-merger)", sourceType: "sec-filing", sourceUrl: "/filings/abtc/10Q-2025-06-30#btc-holdings" },
   // Post-merger (Sep 3, 2025)
   // Share count: 927,604,994 from Q3 2025 10-Q cover page (Class A: 195,380,091 + Class B: 732,224,903)
   // NOTE: 899,489,426 was WRONG — that was diluted weighted avg for EPS, not actual shares outstanding
-  { date: "2025-09-30", holdings: 3_418, sharesOutstandingDiluted: 920_684_912, holdingsPerShare: 0.00000371, stockPrice: 326.42, source: "SEC 10-Q Q3 2025: 'Number of Bitcoin held as of September 30, 2025: 3,418'", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm", sourceType: "sec-filing", sharesSource: "10-Q balance sheet Sep 30: Class A 188,460,009 + Class B 732,224,903 = 920,684,912" },
+  // stockPrice adjusted from $326.42 (Gryphon pre-merger) by ~14.5:1 exchange ratio
+  { date: "2025-09-30", holdings: 3_418, sharesOutstandingDiluted: 920_684_912, holdingsPerShare: 0.00000371, stockPrice: 22.51, source: "SEC 10-Q Q3 2025: 'Number of Bitcoin held as of September 30, 2025: 3,418'", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm", sourceType: "sec-filing", sharesSource: "10-Q balance sheet Sep 30: Class A 188,460,009 + Class B 732,224,903 = 920,684,912" },
   { date: "2025-10-24", holdings: 3_865, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000417, source: "Press release", sourceType: "press-release", sourceUrl: "https://ir.americanbitcoin.com/press-releases/" },
-  { date: "2025-11-05", holdings: 4_004, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000432, source: "8-K BTC holdings", sourceUrl: "/filings/naka/0001193125-25-277545", sourceType: "sec-filing" },
+  { date: "2025-11-05", holdings: 4_004, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000432, source: "PR Newswire Nov 5, 2025", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-adds-139-bitcoin-increasing-strategic-reserve-to-4-004-bitcoin-302608175.html", sourceType: "press-release" },
   // Dec 2025 updates - verified 2026-02-14
   // Dec share counts may differ from Nov 13 cover page due to ATM issuances — using 927.6M as baseline
-  { date: "2025-12-08", holdings: 4_783, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000515, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
+  { date: "2025-12-08", holdings: 4_783, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000516, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
   { date: "2025-12-14", holdings: 5_098, sharesOutstandingDiluted: 927_604_994, holdingsPerShare: 0.00000549, source: "PR Newswire Dec 14, 2025 (Top 20 milestone)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html", sourceType: "press-release" },
   // Q4 quarter-end anchor — carried forward from Dec 14 PR (no Dec 31 disclosure)
   // Must match earnings-data.ts Q4 2025 entry: 5,098 / 927,604,994 = 549 sats
