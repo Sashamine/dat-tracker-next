@@ -212,10 +212,10 @@ export function FWDICompanyView({ company, className = "" }: Props) {
 <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Additional Metrics</h3>
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-{FWDI_PROVENANCE.quarterlyBurn&&<ProvenanceMetric label="Quarterly Burn" data={FWDI_PROVENANCE.quarterlyBurn} format="currency" subLabel="G&A expense Q1 FY2026" tooltip="$3.25M G&A. Galaxy advisory fee $1.74M/qtr additional. OpCF was -$7.9M in Q1." ticker="fwdi" />}
+{FWDI_PROVENANCE.quarterlyBurn&&<ProvenanceMetric label="Quarterly Burn" data={FWDI_PROVENANCE.quarterlyBurn} format="currency" subLabel="G&A expense Q1 FY2026" tooltip="$3.25M G&A. Galaxy total ~$3.5M/qtr: Services Agreement $1.75M/qtr (fixed, $583K/mo) + Asset Management ~$1.7M/qtr (0.6% of AUM, variable). OpCF was -$7.9M in Q1." ticker="fwdi" />}
 
-{FWDI_PROVENANCE.revenueQ3&&<ProvenanceMetric label="Revenue (Q1 FY2026)" data={FWDI_PROVENANCE.revenueQ3} format="currency" subLabel="$17.4M staking + $4.1M design" tooltip="Q1 FY2026: $21.4M total ($17.4M staking at 92% margin + $4.1M design segment)." ticker="fwdi" />}
-{FWDI_PROVENANCE.netLossQ3&&<ProvenanceMetric label="Net Loss (Q1 FY2026)" data={FWDI_PROVENANCE.netLossQ3} format="currency" subLabel="Unrealized SOL FV loss (non-cash)" tooltip="Dominated by $560M unrealized SOL mark-to-market loss (non-cash). Staking operations profitable at segment level." ticker="fwdi" />}
+{FWDI_PROVENANCE.revenueLatest&&<ProvenanceMetric label="Revenue (Q1 FY2026)" data={FWDI_PROVENANCE.revenueLatest} format="currency" subLabel="$17.4M staking + $4.1M design" tooltip="Q1 FY2026: $21.4M total ($17.4M staking at 92% margin + $4.1M design segment)." ticker="fwdi" />}
+{FWDI_PROVENANCE.netLossLatest&&<ProvenanceMetric label="Net Loss (Q1 FY2026)" data={FWDI_PROVENANCE.netLossLatest} format="currency" subLabel="Realized + unrealized SOL FV loss" tooltip="Dominated by $560M realized + unrealized SOL mark-to-market loss. FWDI sold 1.88M SOL during Q1. Also includes $33M fwdSOL impairment. Staking operations profitable at segment level." ticker="fwdi" />}
 
 {es&&es.diluted>es.basic&&<div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
 <p className="text-sm text-amber-700 dark:text-amber-400">ITM Dilution</p>

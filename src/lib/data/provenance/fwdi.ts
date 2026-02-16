@@ -74,7 +74,7 @@ const GA_EXPENSE_Q1 = 3_252_629;
 const OP_CF_Q1 = -7_929_151;
 const REVENUE_Q1 = 21_435_250;
 const STAKING_REVENUE_Q1 = 17_381_000;
-const NET_LOSS_Q1 = -585_651_086;            // Includes massive unrealized SOL FV loss
+const NET_LOSS_Q1 = -585_651_086;            // Includes realized + unrealized SOL FV loss (sold 1.88M SOL in Q1)
 const OPERATING_LOSS_Q1 = -583_639_575;
 
 // Liabilities
@@ -184,7 +184,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q1_FY2026_10Q_FILED,
       documentDate: Q1_FY2026_PERIOD_END,
     }),
-    "Q1 FY2026 G&A: $3.25M. Up from ~$2.4M/qtr avg in FY2025 due to treasury-related costs. Galaxy asset management fees: $1.74M/qtr additional. OpCF was -$7.9M in Q1."
+    "Q1 FY2026 G&A: $3.25M. Up from ~$2.4M/qtr avg in FY2025 due to treasury-related costs. Galaxy fees: $1.75M/qtr Services Agreement + ~$1.7M/qtr Asset Management (0.6% AUM) = ~$3.5M/qtr total Galaxy cost (reported in other operating expenses, not G&A). OpCF was -$7.9M in Q1."
   ),
 
   // =========================================================================
@@ -209,7 +209,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // REVENUE (Q1 FY2026) — Staking + Design segments
   // =========================================================================
-  revenueQ3: pv(
+  revenueLatest: pv(
     REVENUE_Q1,
     docSource({
       type: "sec-document",
@@ -227,9 +227,9 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // NET LOSS (Q1 FY2026) — Dominated by unrealized SOL FV loss
+  // NET LOSS (Q1 FY2026) — Dominated by realized + unrealized SOL FV loss
   // =========================================================================
-  netLossQ3: pv(
+  netLossLatest: pv(
     Math.abs(NET_LOSS_Q1),
     docSource({
       type: "sec-document",
@@ -243,7 +243,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q1_FY2026_10Q_FILED,
       documentDate: Q1_FY2026_PERIOD_END,
     }),
-    "Dominated by $560M unrealized SOL mark-to-market loss (non-cash). Operating loss -$583.6M. Staking operations profitable at segment level."
+    "Dominated by $560M realized + unrealized SOL mark-to-market loss (XBRL: CryptoAssetRealizedGainLossOperating). FWDI sold 1.88M SOL during Q1 so there is a realized component. Also includes $33M fwdSOL impairment. Operating loss -$583.6M. Staking operations profitable at segment level."
   ),
 };
 
@@ -281,7 +281,7 @@ export const FWDI_STAKING = {
   stakedAssetsValueSep30: 1_430_500_000,           // $1.43B staked
   estimatedApy: 0.085,                             // ~8.5% gross
   stakingRevenueFY2025: 4_360_000,                 // $4.36M (only ~3 weeks in Sep)
-  assetManagementFeesQ1: 1_739_000,                // Galaxy advisory fee
+  assetManagementFeesQ1: 1_739_000,                // Galaxy Asset Management fee (0.6% AUM, variable). Separate from Services Agreement ($1.75M/qtr fixed). Total Galaxy cost ~$3.5M/qtr.
 };
 
 // =========================================================================
