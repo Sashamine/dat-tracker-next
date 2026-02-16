@@ -2368,7 +2368,7 @@ export const avaxCompanies: Company[] = [
     secCik: "1826397",
     website: "https://www.avax-one.com",
     strategy: "First publicly traded AVAX treasury. Staking + validator infra + fintech M&A.",
-    notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026.",
+    notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25, 649.8K shares at avg $1.71). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026.",
   },
 ];
 
