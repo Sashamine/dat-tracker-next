@@ -55,19 +55,27 @@ describe("Dilutive Instruments", () => {
       expect(inMoney).toHaveLength(0);
     });
 
-    it("should handle UPXI convertibles correctly", () => {
-      // UPXI: Convertibles at $4.25 and $2.39
-      // At $3.00: only the $2.39 convertible is in the money
-      const result = getEffectiveShares("UPXI", 59_000_000, 3.0);
+    it("should handle UPXI instruments correctly at $3.00 stock price", () => {
+      // UPXI current basic shares from Feb 9, 2026 10-Q cover
+      // At $3.00: $2.39 convert, $2.83 warrants, $1.50 warrants, and $0 strike instruments are in the money
+      const result = getEffectiveShares("UPXI", 69_760_581, 3.0);
 
-      expect(result.basic).toBe(59_000_000);
+      expect(result.basic).toBe(69_760_581);
 
       const inMoney = result.breakdown.filter((b) => b.inTheMoney);
-      expect(inMoney).toHaveLength(1);
-      expect(inMoney[0].strikePrice).toBe(2.39);
-      expect(inMoney[0].potentialShares).toBe(15_062_761);
+      expect(inMoney).toHaveLength(6);
+      expect(inMoney).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ type: "convertible", strikePrice: 2.39, potentialShares: 15_062_761 }),
+          expect.objectContaining({ type: "warrant", strikePrice: 2.83, potentialShares: 3_289_474 }),
+          expect.objectContaining({ type: "warrant", strikePrice: 1.5, potentialShares: 6_337_000 }),
+          expect.objectContaining({ type: "convertible", strikePrice: 0, potentialShares: 138_889 }),
+          expect.objectContaining({ type: "option", strikePrice: 0, potentialShares: 1_673_665 }),
+          expect.objectContaining({ type: "option", strikePrice: 0, potentialShares: 3_044_085 }),
+        ])
+      );
 
-      expect(result.diluted).toBe(59_000_000 + 15_062_761);
+      expect(result.diluted).toBe(99_306_455);
     });
 
     it("should include all instruments when stock price is very high", () => {
@@ -237,7 +245,8 @@ describe("Dilutive Instruments", () => {
 
       for (const inst of upxiInstruments) {
         expect(inst.type).toMatch(/^(convertible|option|warrant)$/);
-        expect(inst.strikePrice).toBeGreaterThan(0);
+        // UPXI includes valid $0-strike instruments (preferred conversion + RSUs)
+        expect(inst.strikePrice).toBeGreaterThanOrEqual(0);
         expect(inst.potentialShares).toBeGreaterThan(0);
         expect(inst.source).toBeDefined();
         expect(inst.sourceUrl).toContain("sec.gov");

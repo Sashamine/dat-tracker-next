@@ -93,15 +93,12 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
   holdings: pv(
     LATEST_HOLDINGS,
     docSource({
-      type: "sec-document",
+      type: "press-release",
       searchTerm: "Solana tokens held",
       url: `https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html`,
       quote: "2,174,583 SOL as of January 5, 2026",
       anchor: "SOL holdings",
-      cik: UPXI_CIK,
-      accession: Q2_FY2026_10Q_ACCESSION,
-      filingType: "8-K",
-      filingDate: "2026-01-07",
+      sourceName: "GlobeNewswire",
       documentDate: LATEST_HOLDINGS_DATE,
     }),
     "Jan 5, 2026 press release. 10-Q Dec 31 shows 2,173,204 SOL. Hivemind adds 265,500 locked."
@@ -137,7 +134,7 @@ export const UPXI_PROVENANCE: ProvenanceFinancials = {
       accession: Q2_FY2026_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q2_FY2026_10Q_FILED,
-      documentDate: Q2_FY2026_PERIOD_END,
+      documentDate: "2026-01-09",
     }),
     "$150M convert @$4.25 + $36M Hivemind @$2.39 (subsequent) + $62.7M BitGo credit + $5.4M Cygnet + $560K promissory = $254.6M"
   ),

@@ -731,17 +731,24 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-12-01",
     // costBasisAvg removed - needs verification
     isMiner: false,
-    quarterlyBurnUsd: 2_000_000,
-    burnSource: "AMF filings (estimate - French IFRS reports)",
+    quarterlyBurnUsd: 800_000,  // ~€0.75M/quarter from H1 2025 IFRS (was $2M — too high by ~2.7x)
+    burnSource: "H1 2025 IFRS financials (~€0.72M/quarter operating cash burn)",
     burnSourceUrl: "https://cptlb.com",
-    burnAsOf: "2025-09-30",
-    burnEstimated: true,  // No XBRL; company-reported estimate
+    burnAsOf: "2025-06-30",
+    burnEstimated: true,  // No XBRL; estimated from H1 2025 actuals
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
     sharesForMnav: 227_468_631,  // Basic shares per Feb 9, 2026 press release. Diluted: ~390M (389,888,020)
     sharesSource: "Company press release Feb 9, 2026",
     sharesSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
     sharesAsOf: "2026-02-09",
+    // Total convertible bond face value (all OCA tranches). The mNAV calculator dynamically
+    // subtracts ITM convertible faceValues from totalDebt, so we include ALL tranches here.
+    // At stock ~€0.60: OCA Tranche 1 ($50.5M, strike $0.57) is ITM → subtracted from debt.
+    // Remaining OTM: B-02 ($73.2M), B-03 ($13M), A-03/A-04/B-04 ($16.6M), A-05 ($6.8M) = ~$109.6M effective debt.
+    totalDebt: 160_160_000,  // Sum of all OCA faceValues in dilutive-instruments.ts (USD)
+    debtSource: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
+    debtAsOf: "2026-02-09",
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
     dataWarnings: [
@@ -826,10 +833,10 @@ export const btcCompanies: Company[] = [
     currency: "GBP",
     asset: "BTC",
     tier: 1,  // Verified holdings via RNS
-    holdings: 2_674,  // RNS Jan 22, 2026: "Total Bitcoin Holdings: 2,674 Bitcoin"
-    holdingsLastUpdated: "2026-01-22",
+    holdings: 2_689,  // RNS Feb 11, 2026: "Total Bitcoin Holdings are now 2,689 Bitcoin"
+    holdingsLastUpdated: "2026-02-11",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558",
+    holdingsSourceUrl: "https://www.smarterwebcompany.co.uk/_files/ugd/6ffd5f_aa5f1f919c42462a81cf286f54dd191d.pdf",
     datStartDate: "2025-04-01",
     website: "https://www.smarterwebcompany.co.uk",
     twitter: "https://x.com/smarterwebuk",
@@ -840,12 +847,12 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 395_188_479,  // Company website "Fully Diluted Shares" (Feb 2026) - used for mNAV calc
-    sharesSource: "AQSE listing - company-reported",
-    sharesSourceUrl: "https://www.smarterwebcompany.co.uk/investor-information",
-    sharesAsOf: "2026-01-31",
+    sharesForMnav: 396_602_526,  // Company analytics + RNS Feb 9, 2026 admission update
+    sharesSource: "Company analytics page + RNS Feb 9, 2026",
+    sharesSourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/",
+    sharesAsOf: "2026-02-09",
     strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
-    notes: "AQUIS: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested £221.4M at avg £82,800/BTC. Companies House shows ~696M total shares but company reports 395M fully diluted - difference likely deferred shares from shell restructuring (was Uranium Energy Exploration PLC until Apr 2025). Using company-reported figure for mNAV.",
+    notes: "LSE: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested GBP 222.19M at avg GBP 82,630/BTC (RNS Feb 11, 2026). Companies House shows ~696M total shares but latest publicly displayed company-reported fully diluted share count is 396.6M; difference likely includes deferred shares from shell restructuring (was Uranium Energy Exploration PLC until Apr 2025). Using company-reported fully diluted figure for mNAV.",
     dataWarnings: [],
   },
   {
@@ -871,13 +878,13 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 13_933_963,  // SEC 6-K Q3 2025 weighted avg diluted ADS (verified Feb 2, 2026)
-    sharesSource: "SEC 20-F (filed 2025-04-30): EntityCommonStockSharesOutstanding = 251,408,922 as of 2024-12-31",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339525000018/sqns-20241231.htm",
-    sharesAsOf: "2024-12-31",
-    totalDebt: 189_000_000,  // $189M convertible debt (July 2025)
-    debtSource: "SEC Form 6-K",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339525000018/sqns-20241231.htm",
+    sharesForMnav: 13_933_963,  // Q3 2025 weighted avg diluted ADS (carried forward until Q4 filing)
+    sharesSource: "SEC 6-K (Q3 2025 weighted average diluted ADS)",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
+    sharesAsOf: "2025-09-30",
+    totalDebt: 89_000_000,  // Post-Nov 2025 debt after ~970 BTC sale repayment
+    debtSource: "Company treasury page (post-Nov 2025 repayment update)",
+    debtSourceUrl: "https://sequans.com/bitcoin-treasury/",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC.",
     notes: "NYSE listed (French HQ). Dedicated bitcoin-treasury page with live KPIs. BTC pledged as collateral, later amended. Sold 970 BTC to repay portion of debt.",
   },
@@ -1449,15 +1456,15 @@ export const solCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-15",
     stakingApy: 0.0703,  // 7.03% APY as of Oct 2025
-    quarterlyBurnUsd: 4_646_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense (Jul-Sep 2025, single quarter)",
+    quarterlyBurnUsd: 5_504_000,  // SGA $4,646K + R&D $858K = $5,504K total opex Q3 2025
+    burnSource: "SEC 10-Q Q3 2025 XBRL: SGA ($4,646K) + R&D ($858K) = $5,504K total opex (Jul-Sep 2025, single quarter). R&D declining as medical device ops wind down.",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 76_929_039,  // 41,301,400 basic (Nov 17 cover) + 35,627,639 PFWs @ $0.001. PFWs economically equivalent to shares.
-    sharesSource: "10-Q: 41,301,400 basic (cover page Nov 17) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30). Press release rounds to '75.9M'.",
+    sharesForMnav: 75_926_867,  // 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 (Sep 30) = 75,926,867. Consistent date avoids PFW exercise double-counting.
+    sharesSource: "10-Q: 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30) = 75,926,867. Press release rounds to '75.9M'. Nov 17 cover shows 41,301,400 basic (includes ~1M PFW exercises).",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
-    sharesAsOf: "2025-11-17",
+    sharesAsOf: "2025-09-30",
     totalDebt: 0,  // No LongTermDebt in XBRL (404)
     debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
@@ -1470,7 +1477,7 @@ export const solCompanies: Company[] = [
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
     strategy: "SOL treasury via Anchorage Digital custody. Partnered with Solana Foundation.",
-    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 41.3M basic + 35.6M PFWs @ $0.001. 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. $500M PIPE closed Sep 15, 2025.",
+    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 40.3M basic + 35.6M PFWs @ $0.001 = 75.9M (Sep 30 consistent date). 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. Negative equity (-$152M) is accounting artifact from stapled warrant derivative liabilities. $500M PIPE closed Sep 15, 2025.",
   },
   {
     id: "dfdv",
@@ -1512,12 +1519,12 @@ export const solCompanies: Company[] = [
     totalDebt: 186_000_000,  // $186M: $134M converts (OTM) + $52M SOL/DeFi loans (defidevcorp.com/dashboard Jan 2026)
     debtSource: "SEC 10-Q Q3 2025: $134M convertible notes + defidevcorp.com dashboard for $52M SOL/DeFi loans",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
-    debtAsOf: "2025-09-30",
+    debtAsOf: "2026-01-01",
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/ea0240826-10q_defi.htm",
-    cashAsOf: "2025-09-30",
+    cashSource: "SEC 8-K Q4 2025 Business Update: approximately $9M in cash, stablecoins, and other tokens",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
+    cashAsOf: "2026-01-01",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
     notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token.",
@@ -1554,9 +1561,9 @@ export const solCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     sharesAsOf: "2026-02-09",
     totalDebt: 254_632_756,  // $150M convert @$4.25 + $36M Hivemind @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
-    debtSource: "SEC 10-Q Q2 FY2026: Convertible $150M + Hivemind $36M (subsequent) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
+    debtSource: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $36M + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
-    debtAsOf: "2025-12-31",
+    debtAsOf: "2026-01-09",
     cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet
     restrictedCash: 1_616_765,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q2 FY2026 balance sheet",

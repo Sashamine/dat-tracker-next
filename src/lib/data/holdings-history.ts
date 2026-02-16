@@ -265,11 +265,9 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
 // DFDV Debt: $134M converts + $52M SOL/DeFi loans = $186M (raised progressively 2025)
 const DFDV_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-15", holdings: 150000, sharesOutstandingDiluted: 15_000_000, holdingsPerShare: 0.01000, totalDebt: 50_000_000, cash: 10_000_000, source: "Initial SOL treasury", sourceType: "press-release", sourceUrl: "https://defidevcorp.com/press-releases/" },
-  { date: "2025-06-30", holdings: 735692, sharesOutstandingDiluted: 18_000_000, holdingsPerShare: 0.04087, stockPrice: 404.23, totalDebt: 100_000_000, cash: 20_000_000, source: "Q2 2025", sourceType: "sec-filing", sourceUrl: "/filings/dfdv/10Q-2025-06-30#sol-holdings" },
-  { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 25_000_000, holdingsPerShare: 0.08002, totalDebt: 150_000_000, cash: 30_000_000, source: "2M SOL milestone", sourceType: "press-release", sourceUrl: "https://defidevcorp.com/press-releases/" },
-  { date: "2025-09-30", holdings: 2018419, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.07209, stockPrice: 326.42, totalDebt: 186_000_000, cash: 40_000_000, source: "Q3 2025", sourceType: "sec-filing", sourceUrl: "/filings/dfdv/10Q-2025-09-30#sol-holdings" },
-  { date: "2025-12-31", holdings: 2106000, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.07020, stockPrice: 155.61, totalDebt: 186_000_000, cash: 45_000_000, source: "Q4 2025 preliminary", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001805526&type=10-Q" },
-  { date: "2026-01-01", holdings: 2221329, sharesOutstandingDiluted: 30_000_000, holdingsPerShare: 0.07404, totalDebt: 186_000_000, cash: 45_000_000, source: "Year in review", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001805526", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 573000, sharesOutstandingDiluted: 21_045_049, holdingsPerShare: 0.02723, stockPrice: 404.23, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/" },
+  { date: "2025-09-30", holdings: 1157000, sharesOutstandingDiluted: 31_401_212, holdingsPerShare: 0.03685, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm" },
+  { date: "2026-01-01", holdings: 2_221_329, sharesOutstandingDiluted: 29_892_800, holdingsPerShare: 0.07431, totalDebt: 186_000_000, cash: 9_000_000, source: "Q4 2025 business update (8-K)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm", sourceType: "sec-filing" },
 ];
 
 // KULR Technology - Bitcoin First Company
@@ -302,7 +300,7 @@ const SQNS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-23", holdings: 0, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0, totalDebt: 0, cash: 10_000_000, source: "DAT strategy announced", sourceType: "press-release", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
   { date: "2025-07-08", holdings: 1_500, sharesOutstandingDiluted: 251_408_922, holdingsPerShare: 0.00000597, totalDebt: 189_000_000, cash: 20_000_000, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K" },
   { date: "2025-09-17", holdings: 3_234, sharesOutstandingDiluted: 25_140_892, holdingsPerShare: 0.0001287, totalDebt: 189_000_000, cash: 25_000_000, source: "1:10 reverse split + peak holdings", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K" },
-  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 13_933_963, holdingsPerShare: 0.0001625, totalDebt: 89_000_000, cash: 15_000_000, source: "6-K: Sold 970 BTC to repay debt", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "sec-filing" },
+  { date: "2025-11-04", holdings: 2_264, sharesOutstandingDiluted: 13_933_963, holdingsPerShare: 0.0001625, totalDebt: 89_000_000, cash: 15_000_000, source: "Company treasury update: sold 970 BTC to repay debt", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "company-website" },
 ];
 
 // Boyaa Interactive (0434.HK) - Hong Kong's largest BTC treasury
@@ -567,15 +565,16 @@ const HSDT_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025
-// UPXI Debt: $150M convert @$4.25 + $36M convert @$2.39 + $14M other = $200M
+// Latest debt stack: $150M convert @$4.25 + $36M convert @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
 const UPXI_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-15", holdings: 596714, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.02712, totalDebt: 100_000_000, cash: 20_000_000, source: "Initial $100M SOL purchase", sourceType: "press-release", sourceUrl: "https://ir.upexi.com/press-releases" },
-  { date: "2025-06-30", holdings: 735692, sharesOutstandingDiluted: 28_000_000, holdingsPerShare: 0.02627, stockPrice: 404.23, totalDebt: 150_000_000, cash: 30_000_000, source: "Q2 2025", sourceType: "sec-filing", sourceUrl: "/filings/upxi/10K-2025-06-30#sol-holdings" },
+  { date: "2025-06-30", holdings: 744_026, sharesOutstandingDiluted: 38_270_571, holdingsPerShare: 0.01944, stockPrice: 404.23, totalDebt: 150_000_000, cash: 30_000_000, source: "FY2025 10-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225006996/upxi_10k.htm" },
   { date: "2025-07-31", holdings: 1900000, sharesOutstandingDiluted: 40_000_000, holdingsPerShare: 0.04750, totalDebt: 186_000_000, cash: 40_000_000, source: "Press release", sourceType: "press-release", sourceUrl: "https://ir.upexi.com/press-releases" },
   { date: "2025-08-05", holdings: 2000518, sharesOutstandingDiluted: 45_000_000, holdingsPerShare: 0.04446, totalDebt: 200_000_000, cash: 45_000_000, source: "2M SOL milestone", sourceType: "press-release", sourceUrl: "https://ir.upexi.com/press-releases" },
-  { date: "2025-09-30", holdings: 2018419, sharesOutstandingDiluted: 58_888_756, holdingsPerShare: 0.03427, stockPrice: 326.42, totalDebt: 200_000_000, cash: 50_000_000, source: "Q3 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/upxi/10Q-2025-09-30#sol-holdings" },
-  { date: "2026-01-05", holdings: 2_174_583, sharesOutstandingDiluted: 59_000_000, holdingsPerShare: 0.03686, totalDebt: 200_000_000, cash: 50_000_000, source: "8-K Jan 9, 2026", sharesSource: "10-Q Sep 2025 basic shares. Convertibles ($150M@$4.25, $36M@$2.39) out of money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 2_018_419, sharesOutstandingDiluted: 58_888_756, holdingsPerShare: 0.03427, stockPrice: 326.42, totalDebt: 200_000_000, cash: 50_000_000, source: "Q3 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/upxi_10q.htm" },
+  { date: "2026-01-05", holdings: 2_174_583, sharesOutstandingDiluted: 59_000_000, holdingsPerShare: 0.03686, totalDebt: 200_000_000, cash: 50_000_000, source: "Company update Jan 7, 2026", sourceType: "press-release", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html" },
+  { date: "2026-02-09", holdings: 2_173_204, sharesOutstandingDiluted: 69_760_581, holdingsPerShare: 0.03115, totalDebt: 254_632_756, cash: 1_616_765, source: "SEC 10-Q Q2 FY2026 (Dec 31 holdings + Feb 9 cover shares; debt includes Jan 2026 Hivemind note)", sharesSource: "EntityCommonStockSharesOutstanding as of Feb 9, 2026", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm" },
 ];
 
 // ==================== ALTCOIN TREASURIES ====================
@@ -963,12 +962,13 @@ const SRAG_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // SWC (The Smarter Web Company) - UK BTC Treasury
-// Source: AQUIS RNS announcements
+// Source: UK regulatory announcements + company analytics
 const SWC_HISTORY: HoldingsSnapshot[] = [
   // "The 10 Year Plan" launched Apr 2025
   // Note: Company reports "Fully Diluted Shares" separately from Companies House issued capital
   { date: "2025-11-04", holdings: 2664, sharesOutstandingDiluted: 380_000_000, holdingsPerShare: 0.00000701, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5447426", sourceType: "regulatory-filing" },
-  { date: "2026-01-22", holdings: 2674, sharesOutstandingDiluted: 395_188_479, holdingsPerShare: 0.00000677, stockPrice: 12.81, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5562558", sourceType: "regulatory-filing" },
+  { date: "2026-01-22", holdings: 2674, sharesOutstandingDiluted: 395_188_479, holdingsPerShare: 0.00000677, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/_files/ugd/6ffd5f_71b6f08ec4794f4e8d2f23d06d7ad523.pdf", sourceType: "regulatory-filing" },
+  { date: "2026-02-11", holdings: 2_689, sharesOutstandingDiluted: 396_602_526, holdingsPerShare: 0.00000678, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/_files/ugd/6ffd5f_aa5f1f919c42462a81cf286f54dd191d.pdf", sourceType: "regulatory-filing" },
 ];
 
 // DCC.AX (DigitalX Limited) - Australia's first ASX-listed BTC treasury company

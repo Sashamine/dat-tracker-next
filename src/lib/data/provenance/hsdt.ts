@@ -52,19 +52,21 @@ const LATEST_HOLDINGS = SOL_10Q_NOTE10;  // Most current — 10-Q Subsequent Eve
 const LATEST_HOLDINGS_DATE = "2025-11-18";
 
 // Shares
-// XBRL: EntityCommonStockSharesOutstanding = 41,301,400 (basic, cover page Nov 17)
-// 10-Q Note 6 warrant table: 35,627,639 PFWs outstanding at Sep 30
-// Press release rounds to "75.9 million" (actual: 76,929,039)
+// Use Sep 30 consistent date for both basic and PFWs to avoid double-counting PFW exercises
+// Sep 30 basic: 40,299,228 (balance sheet) — Nov 17 cover page shows 41,301,400 (includes ~1M PFW exercises)
+// Sep 30 PFWs: 35,627,639 (Note 6 warrant table)
+// Total: 75,926,867 — press release rounds to "75.9 million"
 // Pre-funded warrants at $0.001 are economically equivalent to shares
-const SHARES_BASIC = 41_301_400;
+const SHARES_BASIC_SEP30 = 40_299_228;  // Balance sheet Sep 30
+const SHARES_BASIC_NOV17 = 41_301_400;  // Cover page Nov 17 (includes PFW exercises)
 const PREFUNDED_WARRANTS = 35_627_639;  // 10-Q Note 6 warrant table (Sep 30)
-const SHARES_FOR_MNAV = 76_929_039;  // basic + PFWs (41,301,400 + 35,627,639)
-const SHARES_DATE = "2025-11-17";
+const SHARES_FOR_MNAV = 75_926_867;  // Sep 30 basic + Sep 30 PFWs (consistent date)
+const SHARES_DATE = "2025-09-30";
 
 // Financial data (Q3 2025 10-Q XBRL)
 const CASH = 124_051_000;  // CashAndCashEquivalentsAtCarryingValue Sep 30
 const TOTAL_DEBT = 0;  // No LongTermDebt in XBRL (404)
-const QUARTERLY_BURN = 4_646_000;  // SGA Q3 2025 (Jul-Sep)
+const QUARTERLY_BURN = 5_504_000;  // SGA $4,646K + R&D $858K = $5,504K total opex Q3 2025 (Jul-Sep)
 const PREFERRED_EQUITY = 0;  // No PreferredStockValue
 
 // Staking
@@ -110,9 +112,9 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     SHARES_FOR_MNAV,
     docSource({
       type: "sec-document",
-      searchTerm: "41,301,400",
+      searchTerm: "40,299,228",
       url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
-      quote: "the registrant had 41,301,400 shares of Class A common stock",
+      quote: "40,299,228 shares issued and outstanding as of September 30, 2025",
       anchor: "Shares Outstanding",
       cik: HSDT_CIK,
       accession: Q3_2025_10Q_ACCESSION,
@@ -120,7 +122,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
       filingDate: Q3_2025_10Q_FILED,
       documentDate: SHARES_DATE,
     }),
-    `Basic: ${SHARES_BASIC.toLocaleString()} (10-Q cover page Nov 17) + PFWs: ${PREFUNDED_WARRANTS.toLocaleString()} @ $0.001 (Note 6 warrant table Sep 30) = ${SHARES_FOR_MNAV.toLocaleString()}. Press release rounds to "75.9M".`
+    `Basic: ${SHARES_BASIC_SEP30.toLocaleString()} (Sep 30 balance sheet) + PFWs: ${PREFUNDED_WARRANTS.toLocaleString()} @ $0.001 (Note 6 warrant table Sep 30) = ${SHARES_FOR_MNAV.toLocaleString()}. Consistent Sep 30 date avoids PFW exercise double-counting. Press release rounds to "75.9M". Nov 17 cover: ${SHARES_BASIC_NOV17.toLocaleString()} (includes ~1M exercised PFWs).`
   ),
 
   totalDebt: pv(
@@ -162,7 +164,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
   quarterlyBurn: pv(
     QUARTERLY_BURN,
     xbrlSource({
-      fact: "us-gaap:SellingGeneralAndAdministrativeExpense",
+      fact: "us-gaap:SellingGeneralAndAdministrativeExpense + ResearchAndDevelopmentExpense",
       searchTerm: "4,646",
       rawValue: QUARTERLY_BURN,
       unit: "USD",
@@ -173,9 +175,9 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
       accession: Q3_2025_10Q_ACCESSION,
       filingType: "10-Q",
       filingDate: Q3_2025_10Q_FILED,
-      documentAnchor: "Selling, general and administrative",
+      documentAnchor: "Total operating expenses",
     }),
-    "Q3 2025 SGA. Elevated vs prior quarters due to SOL treasury ops scaling."
+    "Q3 2025 total opex: SGA $4,646K + R&D $858K = $5,504K. R&D is legacy medical device wind-down, declining."
   ),
 
   preferredEquity: pv(
@@ -204,7 +206,8 @@ export const HSDT_PROVENANCE_DEBUG = {
   balanceSheetDate: Q3_2025_PERIOD_END,
   lastFilingChecked: Q3_2025_10Q_FILED,
   holdings: LATEST_HOLDINGS,
-  sharesBasic: SHARES_BASIC,
+  sharesBasicSep30: SHARES_BASIC_SEP30,
+  sharesBasicNov17: SHARES_BASIC_NOV17,
   sharesFD: SHARES_FOR_MNAV,
   prefundedWarrants: PREFUNDED_WARRANTS,
   totalDebt: TOTAL_DEBT,

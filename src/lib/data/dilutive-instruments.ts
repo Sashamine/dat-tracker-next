@@ -303,13 +303,13 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   SQNS: [
     {
       type: "convertible",
-      strikePrice: 58.40, // Estimated: $189M / ~3.24M potential shares (pre-split 32.4M / 10)
-      potentialShares: 3_240_000, // Estimated post-split shares
-      faceValue: 189_000_000, // $189M convertible debt
-      source: "SEC 6-K Jul 2025",
-      sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
+      strikePrice: 58.40, // Estimated conversion basis carried from Jul 2025 convertible
+      potentialShares: 1_524_000, // Estimated: $89M / $58.40 after Nov 2025 repayment
+      faceValue: 89_000_000, // Remaining convertible debt after Nov 2025 repayment
+      source: "Company treasury page + SEC 6-K Jul 2025 issuance",
+      sourceUrl: "https://sequans.com/bitcoin-treasury/",
       issuedDate: "2025-07-08",
-      notes: "$189M convertible debt for BTC treasury (3-year term, matures ~Jul 2028). BTC pledged as collateral initially, later amended. Strike estimated - needs verification.",
+      notes: "Original issuance was $189M (3-year term, matures ~Jul 2028); company reports repayment of ~970 BTC worth in Nov 2025, leaving ~$89M outstanding. Strike is inferred from reported debt and implied conversion shares.",
     },
   ],
 
@@ -870,6 +870,14 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Source: Euronext press releases
   // Verified 2026-01-25
   // Fully diluted: ~390M shares (per Feb 9, 2026 press release: 389,888,020)
+  //
+  // ⚠️ DILUTIVE OVERCOUNT (~47M shares):
+  // Our instruments total ~210M potential shares → 227.5M basic + 210M = 437.3M fully diluted.
+  // Company reports 389.9M fully diluted → gap of ~47.4M shares.
+  // Most likely: ~47M of OCA Tranche 1 shares have already converted and are in the 227.5M basic count,
+  // but we still list the full 89.4M as potential dilution. Unconverted remainder is likely ~42M.
+  // TODO: Verify from next AMF filing or conversion notices which tranches are partially converted.
+  // Until verified, we keep the full amounts (conservative overcount).
   ALCPB: [
     // === OCA Tranche 1 (March 2025) - Largest dilution, lowest strike ===
     {
@@ -1857,22 +1865,21 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "XBRL ProceedsFromConvertibleDebt: $148.9M (9mo to Sep 30, 2025).",
     },
     // DFDVW Warrant Dividend - distributed to shareholders Oct/Nov 2025
-    // Exact strike price needs verification from warrant agreement
+    // Exercise price verified from SEC 8-K + Exhibit 99.2 FAQ: $22.50
     // XBRL IncrementalCommonSharesAttributableToCallOptionsAndWarrants: 290,000 (Q3 quarterly)
     // XBRL ProceedsFromIssuanceOfWarrants: $124.8M (as of Aug 24, 2025 - likely notional)
-    // TODO: Extract exact strike price and share count from warrant FAQ (8-K Oct 8, 2025)
     {
       type: "warrant",
-      strikePrice: 25.0, // TODO: Verify - estimated from warrant FAQ
+      strikePrice: 22.5,
       potentialShares: 290_000, // Q3 diluted EPS impact
       source: "8-K Oct 8, 2025 + Q3 2025 XBRL",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/ea0264118-8k_defi.htm",
       issuedDate: "2025-10-08",
       notes:
         "DFDVW warrant dividend. Trading publicly on Nasdaq. " +
-        "Exact terms need verification from warrant agreement. " +
-        "XBRL shows 290K incremental shares in Q3 diluted EPS.",
+        "Exercise price $22.50/share, expires Jan 21, 2028 (subject to early expiration trigger). " +
+        "See FAQ exhibit (EX-99.2) for warrant terms. XBRL shows 290K incremental shares in Q3 diluted EPS.",
     },
     // Stock Option / RSU Pool
     // XBRL: ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant = 3,500,000

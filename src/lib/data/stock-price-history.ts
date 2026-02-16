@@ -38,13 +38,13 @@ export interface StockPriceHistory {
  */
 export const STATIC_STOCK_HISTORY: Record<string, StockPriceHistory> = {
   // The Smarter Web Company (AQUIS: SWC)
-  // IPO: April 2025 at 2.5p, currently ~42p (Jan 2026)
+  // IPO: April 2025 at 2.5p
   // Data manually verified from RNS announcements and AQUIS records
   "SWC": {
     ticker: "SWC",
     currency: "GBP",
     exchange: "AQUIS",
-    lastUpdated: "2026-02-02",
+    lastUpdated: "2026-02-11",
     prices: [
       // April 2025 - IPO period
       { time: "2025-04-01", open: 0.025, high: 0.028, low: 0.024, close: 0.025, volume: 1000000 },
@@ -55,7 +55,7 @@ export const STATIC_STOCK_HISTORY: Record<string, StockPriceHistory> = {
       { time: "2025-05-15", open: 0.045, high: 0.065, low: 0.044, close: 0.060, volume: 5000000 },
       { time: "2025-05-31", open: 0.065, high: 0.085, low: 0.062, close: 0.080, volume: 6000000 },
 
-      // June 2025 - Exceeded £1B market cap milestone (June 21)
+      // June 2025 - Exceeded GBP 1B market cap milestone (June 21)
       { time: "2025-06-15", open: 0.090, high: 0.120, low: 0.088, close: 0.115, volume: 8000000 },
       { time: "2025-06-21", open: 0.120, high: 0.155, low: 0.118, close: 0.150, volume: 12000000 },
       { time: "2025-06-30", open: 0.145, high: 0.160, low: 0.138, close: 0.155, volume: 9000000 },
@@ -92,6 +92,7 @@ export const STATIC_STOCK_HISTORY: Record<string, StockPriceHistory> = {
 
       // February 2026
       { time: "2026-02-02", open: 0.420, high: 0.430, low: 0.415, close: 0.420, volume: 3500000 },
+      { time: "2026-02-11", open: 0.345, high: 0.350, low: 0.330, close: 0.340, volume: 3800000 },
     ],
   },
 

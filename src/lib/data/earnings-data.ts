@@ -1037,10 +1037,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-10",
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 2_264,  // Nov 4, 2025 6-K: sold 970 BTC, now 2,264
+    holdingsAtQuarterEnd: 2_264,  // Nov 4, 2025 treasury update: sold 970 BTC, now 2,264
     sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 diluted ADS (using Q3 until Q4 filed)
     holdingsPerShare: 0.0001625,  // 2264 / 13.93M
-    source: "sec-filing",
+    source: "estimated",
     sourceUrl: "https://sequans.com/bitcoin-treasury/",
     status: "upcoming",
   },
@@ -2129,7 +2129,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 29_892_800,
     holdingsPerShare: 0.0743,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
     status: "upcoming",
   },
   // Q3 2025 - 10-Q filed 2025-11-19
@@ -2150,7 +2150,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsPerShare: 0.0368,
     netIncome: 56_026_000,  // Q3 only: 9mo total $70.7M - H1 $14.7M = $56M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     status: "reported",
   },
   // Q2 2025 - 10-Q filed 2025-08-14
@@ -2330,7 +2330,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // Fiscal year ends June 30
   // FY Q1 = Jul-Sep (CY Q3), FY Q2 = Oct-Dec (CY Q4), FY Q3 = Jan-Mar (CY Q1), FY Q4 = Apr-Jun (CY Q2)
   // SOL treasury began April 2025 with Arthur Hayes advisory
-  // Verified 2026-01-29 via SEC EDGAR (CIK 0001775194)
+  // Verified 2026-02-10 via SEC EDGAR (CIK 0001775194)
   //
   // FY 2026 Q3 (Jan-Mar 2026) = CY Q1 2026 - Upcoming
   {

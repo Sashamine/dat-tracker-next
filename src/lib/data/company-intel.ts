@@ -615,9 +615,9 @@ const DFDV_INTEL: CompanyIntel = {
     { date: "2025-06-06", title: "dfdvSOL listed on Drift Protocol", summary: "LST trading enabled", url: "https://ir.dfdv.one/news-events" },
     { date: "2025-05-06", title: "$11.2M SOL purchase, surpassed 400K tokens", summary: "Accelerated accumulation", url: "https://ir.dfdv.one/news-events" },
   ],
-  strategySummary: "First US public SOL treasury (launched April 2025). Key Metric: SOL Per Share (SPS) - currently 0.0793, targeting 1.0 SPS by December 2028. Key Products: dfdvSOL (Liquid staking token built with Sanctum, listed on Drift Protocol), DFDVx (Tokenized equity on Solana via Kraken, tradeable cross-chain via Mayan). Validator Business: Own validator infrastructure + community validators with BONK and WIF.",
+  strategySummary: "First US public SOL treasury (launched April 2025). Key Metric: SOL Per Share (SPS) - currently 0.0743 (as of Jan 1, 2026), targeting 1.0 SPS by December 2028. Key Products: dfdvSOL (Liquid staking token built with Sanctum, listed on Drift Protocol), DFDVx (Tokenized equity on Solana via Kraken, tradeable cross-chain via Mayan). Validator Business: Own validator infrastructure + community validators with BONK and WIF.",
   recentDevelopments: [
-    "2,195,926 SOL holdings (~$300M)",
+    "2,221,329 SOL holdings (~$300M)",
     "Capital Raised: ~$378 million in 9 months",
     "Top-performing crypto stock of 2025 with +853% return",
     "First Digital Asset Treasury to introduce both LST (dfdvSOL) and tokenized equity (DFDVx)",
@@ -631,11 +631,11 @@ const UPXI_INTEL: CompanyIntel = {
   ticker: "UPXI",
   lastResearched: "2026-01-13",
   pressReleases: [
-    { date: "2026-01-07", title: "High-yield treasury strategy for 2026", summary: "Risk-adjusted optimization", url: "https://ir.upxi.com/news" },
-    { date: "2025-12-23", title: "Filed for up to $1B capital raise", summary: "Shelf registration", url: "https://ir.upxi.com/news" },
-    { date: "2025-09-30", title: "SOL Big Brain joins advisory committee", summary: "Solana ecosystem leader", url: "https://ir.upxi.com/news" },
-    { date: "2025-09-11", title: "129% increase in adjusted SOL per share", summary: "Since treasury launch", url: "https://ir.upxi.com/news" },
-    { date: "2025-08-12", title: "Arthur Hayes joins advisory committee", summary: "BitMEX co-founder", url: "https://ir.upxi.com/news" },
+    { date: "2026-01-07", title: "High-yield treasury strategy for 2026", summary: "Risk-adjusted optimization", url: "https://ir.upexi.com/news" },
+    { date: "2025-12-23", title: "Filed for up to $1B capital raise", summary: "Shelf registration", url: "https://ir.upexi.com/news" },
+    { date: "2025-09-30", title: "SOL Big Brain joins advisory committee", summary: "Solana ecosystem leader", url: "https://ir.upexi.com/news" },
+    { date: "2025-09-11", title: "129% increase in adjusted SOL per share", summary: "Since treasury launch", url: "https://ir.upexi.com/news" },
+    { date: "2025-08-12", title: "Arthur Hayes joins advisory committee", summary: "BitMEX co-founder", url: "https://ir.upexi.com/news" },
   ],
   strategySummary: "SOL treasury + consumer brands hybrid model. Staking Yield: ~8% (~$105,000/day in staking revenue). SOL Breakdown: ~53% in locked SOL (purchased at mid-teens discount). Adjusted SOL Per Share: 0.0197 (~$4.37), up 129% since treasury launch. Consumer Brands: Cure Mushrooms (medicinal products), Lucky Tail (pet care). $500M equity line of credit with Alliance Global Partners.",
   recentDevelopments: [

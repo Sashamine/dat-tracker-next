@@ -42,7 +42,7 @@ const LAST_CHECKED: Record<string, string> = {
   BTCS: "2025-01-12",
   BTBT: "2025-01-12",
   STKE: "2025-01-12",
-  DFDV: "2025-01-12",
+  DFDV: "2026-02-13",
   KULR: "2026-01-12",
   "0434.HK": "2026-01-12",
   BMNR: "2026-01-12",

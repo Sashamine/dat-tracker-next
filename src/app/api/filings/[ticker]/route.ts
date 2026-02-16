@@ -61,7 +61,7 @@ const tickerToCIK: Record<string, string> = {
   // SOL
   "FWDI": "0000038264",
   "HSDT": "0001580063",
-  "DFDV": "0001652044",
+  "DFDV": "0001805526",
   "UPXI": "0001777319",
   // HYPE
   "PURR": "0002078856", // Hyperliquid Strategies

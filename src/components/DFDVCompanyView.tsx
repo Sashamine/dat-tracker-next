@@ -100,7 +100,7 @@ export function DFDVCompanyView({ company, className = "" }: Props) {
 <ul className="text-sm text-purple-600 dark:text-purple-300 space-y-1">
 <li>• <strong>First US public company</strong> with a SOL-focused treasury strategy</li>
 <li>• Formerly Janover Inc. (JNVR) — <a href={`https://www.sec.gov/Archives/edgar/data/${DFDV_CIK}/000121390025029172/`} target="_blank" className="underline">pivoted April 2025</a> under new management</li>
-<li>• <strong>2,221,329 SOL</strong> held as of Jan 1, 2026 — <strong>SPS: 0.0743</strong> (+6.2% QoQ, ~24.6% annualized)</li>
+<li>• <strong>2,221,329 SOL</strong> held as of Jan 1, 2026 — <strong>SPS: 0.0743</strong></li>
 <li>• Operates <strong>validator nodes</strong> on Solana — earns staking rewards + MEV tips</li>
 <li>• <strong>dfdvSOL</strong> liquid staking token — enables SOL yield while maintaining liquidity</li>
 <li>• 90% of SOL treasury staked, 15%+ deployed on-chain in DeFi protocols</li>

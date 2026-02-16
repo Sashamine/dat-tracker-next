@@ -27,7 +27,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
   // "BTDR" removed - primarily a miner/ASIC manufacturer, not a DAT company
 
   // === BTC Treasury Companies (FMP returns stale/incorrect data) ===
-  "SWC": 225_000_000,         // $225M - Smarter Web Company (AQUIS UK) - FMP TSWCF data is wrong ($8.60 vs $0.57)
+  "SWC": 171_000_000,         // ~$171M - Smarter Web Company (LSE UK), based on ~GBP 136M market cap from company analytics (Feb 2026)
   "DJT": 3_900_000_000,       // $3.9B - Trump Media (Jan 2026, per Yahoo/Nasdaq)
   "NAKA": 1_500_000_000,      // $1.5B - Nakamoto Inc. (5K+ BTC, $210M Kraken loan)
   "ASST": 850_000_000,        // $850M - Strive (per Yahoo Finance, FMP returns stale $665M)
@@ -80,7 +80,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   "ETHM": { price: 10.00, marketCap: 230_000_000 },        // Ether Machine (pending SPAC merger)
 
   // UK/AQUIS (FMP has bad data for TSWCF)
-  "SWC": { price: 0.57, marketCap: 225_000_000 },  // Smarter Web Company - £0.42 GBP = ~$0.57 USD, 395M shares
+  "SWC": { price: 0.43, marketCap: 171_000_000 },  // Smarter Web Company - GBP 0.34 ~= $0.43 USD, ~396.6M fully diluted shares
 
   // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },

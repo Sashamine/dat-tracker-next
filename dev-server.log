@@ -1,0 +1,1737 @@
+
+> dat-tracker-next@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.6.199:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 1199ms
+ GET / 200 in 2.0s (compile: 1211ms, render: 815ms)
+ GET / 200 in 129ms (compile: 15ms, render: 114ms)
+ GET /api/db/companies 200 in 226ms (compile: 189ms, render: 38ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/3189.T.png 404 in 217ms (compile: 60ms, render: 157ms)
+ GET /logos/0434.HK.png 404 in 227ms (compile: 30ms, render: 197ms)
+ GET /icons/icon-192.png 404 in 1221ms (compile: 395ms, render: 825ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/BTCT.V.png 404 in 291ms (compile: 29ms, render: 262ms)
+ GET /logos/3825.T.png 404 in 291ms (compile: 90ms, render: 201ms)
+ GET /logos/ALCPB.png 404 in 137ms (compile: 27ms, render: 110ms)
+[CryptoHistory] Binance returned 672 candles for ETH (7d)
+ GET /api/crypto/ETH/history?range=7d 200 in 1082ms (compile: 752ms, render: 329ms)
+ GET /logos/3189.T.svg 404 in 314ms (compile: 12ms, render: 302ms)
+ GET /logos/3189.T.png 404 in 270ms (compile: 50ms, render: 220ms)
+ GET /logos/0434.HK.png 404 in 275ms (compile: 20ms, render: 256ms)
+ GET /logos/DCC.AX.png 404 in 172ms (compile: 12ms, render: 160ms)
+[CryptoHistory] Binance returned 672 candles for BTC (7d)
+ GET /api/crypto/BTC/history?range=7d 200 in 228ms (compile: 31ms, render: 197ms)
+ GET /logos/DDC.png 404 in 105ms (compile: 12ms, render: 92ms)
+ GET /api/crypto/MULTI/history?range=7d 400 in 15ms (compile: 9ms, render: 7ms)
+ GET /logos/SQNS.png 404 in 215ms (compile: 21ms, render: 194ms)
+ GET /logos/ALCPB.png 404 in 214ms (compile: 97ms, render: 118ms)
+ GET /logos/SWC.png 404 in 219ms (compile: 70ms, render: 149ms)
+ GET /logos/SWC.svg 404 in 220ms (compile: 44ms, render: 176ms)
+ GET /logos/SQNS.svg 404 in 224ms (compile: 15ms, render: 209ms)
+ GET /logos/ALCPB.svg 404 in 160ms (compile: 68ms, render: 92ms)
+[CryptoHistory] Binance returned 672 candles for SOL (7d)
+ GET /api/crypto/SOL/history?range=7d 200 in 267ms (compile: 6ms, render: 262ms)
+ GET /logos/FLD.png 404 in 185ms (compile: 40ms, render: 145ms)
+ GET /logos/FUFU.png 404 in 130ms (compile: 17ms, render: 113ms)
+ GET /logos/OBTC3.png 404 in 161ms (compile: 15ms, render: 146ms)
+ GET /logos/SRAG.DU.png 404 in 103ms (compile: 15ms, render: 88ms)
+[CryptoHistory] Binance returned 672 candles for HYPE (7d)
+ GET /api/crypto/HYPE/history?range=7d 200 in 245ms (compile: 38ms, render: 207ms)
+ GET /logos/ZOOZ.png 404 in 239ms (compile: 13ms, render: 226ms)
+ GET /logos/BTCT.V.png 404 in 201ms (compile: 46ms, render: 155ms)
+[CryptoHistory] Binance returned 672 candles for BNB (7d)
+ GET /api/crypto/BNB/history?range=7d 200 in 272ms (compile: 5ms, render: 266ms)
+ GET /logos/3825.T.png 404 in 176ms (compile: 77ms, render: 99ms)
+ GET /logos/3189.T.svg 404 in 278ms (compile: 23ms, render: 255ms)
+ GET /logos/DCC.AX.svg 404 in 248ms (compile: 51ms, render: 197ms)
+ GET /logos/DDC.svg 404 in 214ms (compile: 81ms, render: 133ms)
+ GET /logos/FLD.svg 404 in 226ms (compile: 18ms, render: 208ms)
+ GET /logos/FUFU.svg 404 in 228ms (compile: 76ms, render: 152ms)
+ GET /logos/OBTC3.svg 404 in 117ms (compile: 21ms, render: 96ms)
+ GET /api/crypto/TAO/history?range=7d 200 in 438ms (compile: 21ms, render: 417ms)
+ GET /logos/SRAG.DU.svg 404 in 217ms (compile: 19ms, render: 198ms)
+ GET /logos/ZOOZ.svg 404 in 226ms (compile: 73ms, render: 153ms)
+ GET /logos/BTCT.V.svg 404 in 151ms (compile: 20ms, render: 130ms)
+ GET /logos/3825.T.svg 404 in 101ms (compile: 9ms, render: 93ms)
+[CryptoHistory] Binance returned 672 candles for LINK (7d)
+ GET /api/crypto/LINK/history?range=7d 200 in 120ms (compile: 77ms, render: 42ms)
+[CryptoHistory] Binance failed for TRX, trying CoinGecko
+ GET /api/crypto/TRX/history?range=7d 200 in 121ms (compile: 3ms, render: 118ms)
+[CryptoHistory] Binance returned 672 candles for XRP (7d)
+ GET /api/crypto/XRP/history?range=7d 200 in 48ms (compile: 4ms, render: 44ms)
+[CryptoHistory] Binance returned 672 candles for ZEC (7d)
+ GET /api/crypto/ZEC/history?range=7d 200 in 50ms (compile: 4ms, render: 46ms)
+[CryptoHistory] Binance returned 672 candles for LTC (7d)
+ GET /api/crypto/LTC/history?range=7d 200 in 43ms (compile: 3ms, render: 40ms)
+[CryptoHistory] Binance returned 672 candles for SUI (7d)
+ GET /api/crypto/SUI/history?range=7d 200 in 45ms (compile: 4ms, render: 41ms)
+[CryptoHistory] Binance returned 672 candles for DOGE (7d)
+ GET /api/crypto/DOGE/history?range=7d 200 in 44ms (compile: 4ms, render: 41ms)
+[CryptoHistory] Binance returned 672 candles for AVAX (7d)
+ GET /api/crypto/AVAX/history?range=7d 200 in 46ms (compile: 4ms, render: 42ms)
+[CryptoHistory] Binance returned 672 candles for HBAR (7d)
+ GET /api/crypto/HBAR/history?range=7d 200 in 50ms (compile: 6ms, render: 45ms)
+ GET /api/stocks/BMNR/history?range=7d&interval=1h 200 in 798ms (compile: 676ms, render: 122ms)
+ GET /api/stocks/SBET/history?range=7d&interval=1h 200 in 89ms (compile: 33ms, render: 56ms)
+ GET /api/stocks/ETHM/history?range=7d&interval=1h 200 in 50ms (compile: 5ms, render: 45ms)
+ GET /api/stocks/BTBT/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 53ms)
+ GET /api/stocks/BTCS/history?range=7d&interval=1h 200 in 54ms (compile: 4ms, render: 50ms)
+ GET /api/stocks/GAME/history?range=7d&interval=1h 200 in 48ms (compile: 4ms, render: 44ms)
+ GET /api/stocks/FGNX/history?range=7d&interval=1h 200 in 53ms (compile: 4ms, render: 49ms)
+ GET /api/stocks/MSTR/history?range=7d&interval=1h 200 in 64ms (compile: 4ms, render: 60ms)
+ GET /api/stocks/3350.T/history?range=7d&interval=1h 200 in 46ms (compile: 4ms, render: 43ms)
+ GET /api/stocks/XXI/history?range=7d&interval=1h 200 in 54ms (compile: 4ms, render: 50ms)
+ GET /api/stocks/CEPO/history?range=7d&interval=1h 200 in 76ms (compile: 30ms, render: 46ms)
+ GET /api/stocks/MARA/history?range=7d&interval=1h 200 in 56ms (compile: 5ms, render: 52ms)
+ GET /api/stocks/ASST/history?range=7d&interval=1h 200 in 65ms (compile: 6ms, render: 59ms)
+ GET /api/stocks/KULR/history?range=7d&interval=1h 200 in 63ms (compile: 3ms, render: 60ms)
+[StockHistory] No intraday for ALCPB, trying FMP daily fallback
+ GET /api/stocks/ALCPB/history?range=7d&interval=1h 200 in 73ms (compile: 4ms, render: 69ms)
+[StockHistory] No intraday for H100.ST, trying FMP daily fallback
+ GET /api/stocks/H100.ST/history?range=7d&interval=1h 200 in 78ms (compile: 5ms, render: 73ms)
+[StockHistory] No intraday for OBTC3, trying FMP daily fallback
+ GET /api/stocks/OBTC3/history?range=7d&interval=1h 200 in 185ms (compile: 4ms, render: 181ms)
+ GET /logos/0434.HK.png 404 in 230ms (compile: 14ms, render: 215ms)
+ GET /logos/SWC.png 404 in 228ms (compile: 73ms, render: 155ms)
+ GET /logos/ALCPB.png 404 in 229ms (compile: 119ms, render: 110ms)
+[StockHistory] No intraday for SWC, trying FMP daily fallback
+ GET /api/stocks/SWC/history?range=7d&interval=1h 200 in 160ms (compile: 30ms, render: 131ms)
+ GET /logos/SQNS.png 404 in 249ms (compile: 40ms, render: 209ms)
+ GET /logos/DDC.png 404 in 246ms (compile: 98ms, render: 148ms)
+ GET /logos/SWC.svg 404 in 185ms (compile: 92ms, render: 93ms)
+ GET /api/stocks/SQNS/history?range=7d&interval=1h 200 in 198ms (compile: 9ms, render: 189ms)
+ GET /logos/ALCPB.svg 404 in 226ms (compile: 20ms, render: 206ms)
+ GET /logos/SQNS.svg 404 in 222ms (compile: 72ms, render: 150ms)
+ GET /logos/FUFU.png 404 in 184ms (compile: 91ms, render: 93ms)
+ GET /api/stocks/DDC/history?range=7d&interval=1h 200 in 216ms (compile: 58ms, render: 158ms)
+ GET /logos/FLD.png 404 in 232ms (compile: 15ms, render: 218ms)
+ GET /logos/3189.T.png 404 in 234ms (compile: 70ms, render: 164ms)
+ GET /logos/ZOOZ.png 404 in 142ms (compile: 37ms, render: 105ms)
+ GET /logos/BTCT.V.png 404 in 277ms (compile: 22ms, render: 254ms)
+ GET /logos/SRAG.DU.png 404 in 274ms (compile: 70ms, render: 205ms)
+ GET /api/stocks/FUFU/history?range=7d&interval=1h 200 in 152ms (compile: 37ms, render: 115ms)
+ GET /logos/DCC.AX.png 404 in 194ms (compile: 70ms, render: 124ms)
+ GET /logos/3825.T.png 404 in 253ms (compile: 20ms, render: 233ms)
+ GET /logos/OBTC3.png 404 in 258ms (compile: 85ms, render: 173ms)
+ GET /api/stocks/FLD/history?range=7d&interval=1h 200 in 105ms (compile: 11ms, render: 93ms)
+ GET /logos/DDC.svg 404 in 128ms (compile: 28ms, render: 100ms)
+ GET /logos/FUFU.svg 404 in 234ms (compile: 17ms, render: 217ms)
+ GET /logos/FLD.svg 404 in 181ms (compile: 22ms, render: 159ms)
+ GET /api/stocks/3825.T/history?range=7d&interval=1h 200 in 102ms (compile: 58ms, render: 45ms)
+ GET /logos/3189.T.svg 404 in 180ms (compile: 71ms, render: 109ms)
+ GET /logos/ZOOZ.svg 404 in 244ms (compile: 22ms, render: 222ms)
+ GET /logos/BTCT.V.svg 404 in 277ms (compile: 76ms, render: 201ms)
+ GET /logos/SRAG.DU.svg 404 in 219ms (compile: 86ms, render: 133ms)
+ GET /api/stocks/3189.T/history?range=7d&interval=1h 200 in 122ms (compile: 36ms, render: 87ms)
+ GET /logos/DCC.AX.svg 404 in 215ms (compile: 12ms, render: 203ms)
+ GET /logos/3825.T.svg 404 in 167ms (compile: 24ms, render: 143ms)
+ GET /logos/OBTC3.svg 404 in 160ms (compile: 71ms, render: 89ms)
+ GET /api/stocks/ZOOZ/history?range=7d&interval=1h 200 in 61ms (compile: 4ms, render: 57ms)
+ GET /api/stocks/BTCT.V/history?range=7d&interval=1h 200 in 58ms (compile: 4ms, render: 55ms)
+ GET /api/stocks/SRAG.DU/history?range=7d&interval=1h 200 in 55ms (compile: 3ms, render: 51ms)
+ GET /api/stocks/DCC.AX/history?range=7d&interval=1h 200 in 49ms (compile: 6ms, render: 44ms)
+ GET /api/stocks/NAKA/history?range=7d&interval=1h 200 in 53ms (compile: 4ms, render: 49ms)
+ GET /api/stocks/DJT/history?range=7d&interval=1h 200 in 60ms (compile: 4ms, render: 56ms)
+ GET /api/stocks/0434.HK/history?range=7d&interval=1h 200 in 69ms (compile: 26ms, render: 43ms)
+ GET /api/stocks/ABTC/history?range=7d&interval=1h 200 in 60ms (compile: 4ms, render: 56ms)
+ GET /api/stocks/FWDI/history?range=7d&interval=1h 200 in 53ms (compile: 4ms, render: 49ms)
+ GET /api/stocks/HSDT/history?range=7d&interval=1h 200 in 76ms (compile: 4ms, render: 71ms)
+ GET /api/stocks/DFDV/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 54ms)
+ GET /api/stocks/UPXI/history?range=7d&interval=1h 200 in 53ms (compile: 3ms, render: 49ms)
+ GET /api/stocks/STKE/history?range=7d&interval=1h 200 in 54ms (compile: 5ms, render: 49ms)
+ GET /api/stocks/PURR/history?range=7d&interval=1h 200 in 66ms (compile: 4ms, render: 62ms)
+ GET /api/stocks/HYPD/history?range=7d&interval=1h 200 in 70ms (compile: 22ms, render: 48ms)
+ GET /api/stocks/BNC/history?range=7d&interval=1h 200 in 56ms (compile: 5ms, render: 51ms)
+ GET /api/stocks/NA/history?range=7d&interval=1h 200 in 55ms (compile: 3ms, render: 51ms)
+ GET /api/stocks/TAOX/history?range=7d&interval=1h 200 in 61ms (compile: 4ms, render: 56ms)
+ GET /api/stocks/XTAIF/history?range=7d&interval=1h 200 in 52ms (compile: 4ms, render: 48ms)
+ GET /api/stocks/TWAV/history?range=7d&interval=1h 200 in 51ms (compile: 4ms, render: 48ms)
+ GET /api/stocks/CWD/history?range=7d&interval=1h 200 in 55ms (compile: 4ms, render: 51ms)
+ GET /api/stocks/TRON/history?range=7d&interval=1h 200 in 51ms (compile: 4ms, render: 47ms)
+ GET /api/stocks/XRPN/history?range=7d&interval=1h 200 in 49ms (compile: 4ms, render: 46ms)
+ GET /api/stocks/CYPH/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 53ms)
+ GET /api/stocks/LITS/history?range=7d&interval=1h 200 in 77ms (compile: 31ms, render: 46ms)
+[StockHistory] No intraday for LUXFF, trying FMP daily fallback
+[StockHistory] Using FMP daily fallback for LUXFF: 5 points
+ GET /api/stocks/LUXFF/history?range=7d&interval=1h 200 in 140ms (compile: 3ms, render: 137ms)
+ GET /api/stocks/SUIG/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 52ms)
+ GET /api/stocks/ZONE/history?range=7d&interval=1h 200 in 53ms (compile: 4ms, render: 49ms)
+ GET /api/stocks/TBH/history?range=7d&interval=1h 200 in 55ms (compile: 4ms, render: 52ms)
+ GET /api/stocks/BTOG/history?range=7d&interval=1h 200 in 58ms (compile: 5ms, render: 53ms)
+ GET /api/stocks/AVX/history?range=7d&interval=1h 200 in 53ms (compile: 3ms, render: 49ms)
+[StockHistory] No intraday for IHLDF, trying FMP daily fallback
+[StockHistory] Using FMP daily fallback for IHLDF: 4 points
+ GET /api/stocks/IHLDF/history?range=7d&interval=1h 200 in 106ms (compile: 3ms, render: 102ms)
+[Prices] GET called at 2026-02-16T03:28:31.367Z
+[Prices] Cache miss, fetching fresh data...
+Fetching market caps from FMP: 66 tickers
+[Yahoo] XTAIF: $0.40 (+1.28%)
+FMP returned market caps for 61 stocks
+Alpaca error: Alpaca stock snapshots failed: 400
+[Yahoo] DCC.AX: $0.04 (-5.41%)
+Alpaca crypto: 8 coins
+[Forex] exchangerate-api rates: {
+  AUD: 1.415562,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  GBP: 0.733237,
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516
+}
+[Forex] Using exchangerate-api.com rates
+Total crypto prices: 16
+[LST] Failed to fetch hihype from contract: RPC error: execution reverted
+[LST] All providers failed for hihype, using static fallback
+[LST] Failed to fetch khype from contract: RPC error: execution reverted
+[LST] All providers failed for khype, using static fallback
+[LST] Failed to fetch ihype from contract: RPC error: execution reverted
+[LST] All providers failed for ihype, using static fallback
+[Yahoo] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562)
+[Prices DEBUG] 3189.T fallback: {
+  fallbackPrice: 245,
+  currency: 'JPY',
+  forexRateFromFMP: 152.832936,
+  fallbackRate: 156,
+  rateUsed: 152.832936,
+  priceUsd: 1.6030576027146402,
+  fallbackMarketCap: 63000000
+}
+ GET /api/prices 200 in 363ms (compile: 57ms, render: 306ms)
+[MarketCap Debug] 3350.T calculated: {
+  priceInUsd: 327,
+  effectiveShares: 1206357340,
+  calculatedMarketCap: 394478850180,
+  source: 'calculated'
+}
+[MarketCap Debug] TWAV calculated: {
+  priceInUsd: 0.7080000042915344,
+  effectiveShares: 3207210,
+  calculatedMarketCap: 2270704.693763852,
+  source: 'calculated'
+}
+ GET /api/mnav/yesterday 200 in 11.8s (compile: 289ms, render: 11.6s)
+ GET /logos/ALCPB.png 404 in 293ms (compile: 51ms, render: 243ms)
+ GET /logos/0434.HK.png 404 in 297ms (compile: 24ms, render: 273ms)
+ GET /logos/SWC.png 404 in 283ms (compile: 123ms, render: 160ms)
+ GET /logos/SQNS.png 404 in 225ms (compile: 89ms, render: 136ms)
+ GET /logos/DDC.png 404 in 214ms (compile: 15ms, render: 198ms)
+ GET /logos/FUFU.png 404 in 222ms (compile: 64ms, render: 158ms)
+ GET /logos/ALCPB.svg 404 in 196ms (compile: 41ms, render: 154ms)
+ GET /logos/SWC.svg 404 in 246ms (compile: 23ms, render: 223ms)
+ GET /logos/SQNS.svg 404 in 230ms (compile: 23ms, render: 207ms)
+ GET /logos/FLD.png 404 in 232ms (compile: 84ms, render: 148ms)
+ GET /logos/3189.T.png 404 in 162ms (compile: 73ms, render: 89ms)
+ GET /logos/ZOOZ.png 404 in 248ms (compile: 21ms, render: 227ms)
+ GET /logos/BTCT.V.png 404 in 261ms (compile: 40ms, render: 221ms)
+ GET /logos/SRAG.DU.png 404 in 240ms (compile: 74ms, render: 167ms)
+ GET /logos/DCC.AX.png 404 in 105ms (compile: 20ms, render: 85ms)
+ GET /logos/3825.T.png 404 in 226ms (compile: 20ms, render: 206ms)
+ GET /logos/OBTC3.png 404 in 275ms (compile: 69ms, render: 206ms)
+ GET /logos/DDC.svg 404 in 277ms (compile: 125ms, render: 152ms)
+ GET /logos/FUFU.svg 404 in 164ms (compile: 20ms, render: 144ms)
+ GET /logos/FLD.svg 404 in 219ms (compile: 20ms, render: 199ms)
+ GET /logos/3189.T.svg 404 in 271ms (compile: 72ms, render: 199ms)
+ GET /logos/ZOOZ.svg 404 in 272ms (compile: 100ms, render: 172ms)
+ GET /logos/BTCT.V.svg 404 in 180ms (compile: 17ms, render: 164ms)
+ GET /logos/SRAG.DU.svg 404 in 242ms (compile: 20ms, render: 222ms)
+ GET /logos/DCC.AX.svg 404 in 297ms (compile: 93ms, render: 204ms)
+ GET /logos/3825.T.svg 404 in 297ms (compile: 121ms, render: 176ms)
+ GET /logos/OBTC3.svg 404 in 88ms (compile: 15ms, render: 73ms)
+ GET /logos/SWC.png 404 in 254ms (compile: 81ms, render: 172ms)
+ GET /logos/ALCPB.png 404 in 259ms (compile: 52ms, render: 207ms)
+ GET /logos/0434.HK.png 404 in 265ms (compile: 27ms, render: 238ms)
+ GET /logos/SQNS.png 404 in 260ms (compile: 169ms, render: 91ms)
+ GET /logos/FUFU.png 404 in 306ms (compile: 47ms, render: 260ms)
+ GET /logos/DDC.png 404 in 311ms (compile: 22ms, render: 290ms)
+ GET /logos/FLD.png 404 in 308ms (compile: 119ms, render: 190ms)
+ GET /logos/SWC.svg 404 in 304ms (compile: 143ms, render: 161ms)
+ GET /logos/ALCPB.svg 404 in 239ms (compile: 19ms, render: 220ms)
+ GET /logos/SQNS.svg 404 in 242ms (compile: 66ms, render: 176ms)
+ GET /logos/3189.T.png 404 in 240ms (compile: 115ms, render: 125ms)
+ GET /logos/ZOOZ.png 404 in 159ms (compile: 79ms, render: 79ms)
+ GET /logos/BTCT.V.png 404 in 258ms (compile: 16ms, render: 241ms)
+ GET /logos/SRAG.DU.png 404 in 259ms (compile: 56ms, render: 203ms)
+ GET /logos/DCC.AX.png 404 in 231ms (compile: 82ms, render: 150ms)
+ GET /logos/3825.T.png 404 in 184ms (compile: 86ms, render: 98ms)
+ GET /logos/DDC.svg 404 in 263ms (compile: 45ms, render: 218ms)
+ GET /logos/OBTC3.png 404 in 269ms (compile: 19ms, render: 250ms)
+ GET /logos/FUFU.svg 404 in 262ms (compile: 113ms, render: 149ms)
+ GET /logos/FLD.svg 404 in 169ms (compile: 76ms, render: 93ms)
+ GET /logos/3189.T.svg 404 in 284ms (compile: 18ms, render: 266ms)
+ GET /logos/ZOOZ.svg 404 in 292ms (compile: 66ms, render: 226ms)
+ GET /logos/BTCT.V.svg 404 in 292ms (compile: 122ms, render: 170ms)
+ GET /logos/SRAG.DU.svg 404 in 191ms (compile: 23ms, render: 167ms)
+ GET /logos/3825.T.svg 404 in 184ms (compile: 45ms, render: 139ms)
+ GET /logos/DCC.AX.svg 404 in 190ms (compile: 18ms, render: 172ms)
+ GET /logos/OBTC3.svg 404 in 184ms (compile: 110ms, render: 75ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 300ms (compile: 25ms, render: 275ms)
+ GET /logos/ALCPB.png 404 in 300ms (compile: 73ms, render: 226ms)
+ GET /logos/SWC.png 404 in 298ms (compile: 101ms, render: 197ms)
+ GET /logos/SQNS.png 404 in 295ms (compile: 128ms, render: 167ms)
+ GET /logos/FUFU.png 404 in 279ms (compile: 50ms, render: 229ms)
+ GET /logos/DDC.png 404 in 285ms (compile: 23ms, render: 262ms)
+ GET /logos/3189.T.png 404 in 277ms (compile: 140ms, render: 137ms)
+ GET /logos/FLD.png 404 in 288ms (compile: 120ms, render: 169ms)
+ GET /logos/SQNS.svg 404 in 237ms (compile: 21ms, render: 215ms)
+ GET /logos/SWC.svg 404 in 244ms (compile: 71ms, render: 173ms)
+ GET /logos/ZOOZ.png 404 in 247ms (compile: 119ms, render: 127ms)
+ GET /logos/ALCPB.svg 404 in 250ms (compile: 95ms, render: 155ms)
+ GET /logos/BTCT.V.png 404 in 254ms (compile: 17ms, render: 237ms)
+ GET /logos/DCC.AX.png 404 in 204ms (compile: 43ms, render: 161ms)
+ GET /logos/SRAG.DU.png 404 in 207ms (compile: 18ms, render: 189ms)
+ GET /logos/3825.T.png 404 in 261ms (compile: 115ms, render: 146ms)
+ GET /logos/OBTC3.png 404 in 140ms (compile: 13ms, render: 127ms)
+ GET /logos/DDC.svg 404 in 204ms (compile: 20ms, render: 184ms)
+ GET /logos/FUFU.svg 404 in 257ms (compile: 68ms, render: 189ms)
+ GET /logos/FLD.svg 404 in 259ms (compile: 94ms, render: 165ms)
+ GET /logos/3189.T.svg 404 in 107ms (compile: 15ms, render: 91ms)
+ GET /logos/BTCT.V.svg 404 in 278ms (compile: 50ms, render: 228ms)
+ GET /logos/ZOOZ.svg 404 in 288ms (compile: 26ms, render: 262ms)
+ GET /logos/SRAG.DU.svg 404 in 283ms (compile: 121ms, render: 162ms)
+ GET /logos/DCC.AX.svg 404 in 174ms (compile: 19ms, render: 155ms)
+ GET /logos/3825.T.svg 404 in 190ms (compile: 15ms, render: 175ms)
+ GET /logos/OBTC3.svg 404 in 190ms (compile: 70ms, render: 119ms)
+ GET /logos/0434.HK.png 404 in 289ms (compile: 25ms, render: 264ms)
+ GET /logos/ALCPB.png 404 in 288ms (compile: 108ms, render: 180ms)
+ GET /logos/SWC.png 404 in 292ms (compile: 77ms, render: 215ms)
+ GET /logos/SQNS.png 404 in 282ms (compile: 179ms, render: 102ms)
+ GET /logos/FUFU.png 404 in 307ms (compile: 58ms, render: 249ms)
+ GET /logos/DDC.png 404 in 315ms (compile: 26ms, render: 289ms)
+ GET /logos/FLD.png 404 in 312ms (compile: 90ms, render: 222ms)
+ GET /logos/ALCPB.svg 404 in 270ms (compile: 167ms, render: 103ms)
+ GET /logos/SWC.svg 404 in 300ms (compile: 25ms, render: 275ms)
+ GET /logos/3189.T.png 404 in 288ms (compile: 113ms, render: 175ms)
+ GET /logos/SQNS.svg 404 in 298ms (compile: 91ms, render: 207ms)
+ GET /logos/ZOOZ.png 404 in 250ms (compile: 142ms, render: 108ms)
+ GET /logos/BTCT.V.png 404 in 370ms (compile: 19ms, render: 351ms)
+ GET /logos/DCC.AX.png 404 in 328ms (compile: 77ms, render: 251ms)
+ GET /logos/SRAG.DU.png 404 in 370ms (compile: 82ms, render: 288ms)
+ GET /logos/3825.T.png 404 in 267ms (compile: 110ms, render: 157ms)
+ GET /logos/OBTC3.png 404 in 278ms (compile: 19ms, render: 259ms)
+ GET /logos/DDC.svg 404 in 278ms (compile: 75ms, render: 204ms)
+ GET /logos/FUFU.svg 404 in 224ms (compile: 73ms, render: 151ms)
+ GET /logos/FLD.svg 404 in 166ms (compile: 70ms, render: 96ms)
+ GET /logos/3189.T.svg 404 in 289ms (compile: 24ms, render: 265ms)
+ GET /logos/ZOOZ.svg 404 in 286ms (compile: 76ms, render: 210ms)
+ GET /logos/BTCT.V.svg 404 in 223ms (compile: 77ms, render: 146ms)
+ GET /logos/SRAG.DU.svg 404 in 166ms (compile: 76ms, render: 90ms)
+ GET /logos/DCC.AX.svg 404 in 191ms (compile: 15ms, render: 176ms)
+ GET /logos/3825.T.svg 404 in 187ms (compile: 59ms, render: 128ms)
+ GET /logos/OBTC3.svg 404 in 81ms (compile: 14ms, render: 67ms)
+✓ Compiled in 313ms
+ GET /api/db/companies 200 in 15ms (compile: 5ms, render: 10ms)
+ GET /api/prices/stream 200 in 112s
+ GET /logos/SWC.png 404 in 505ms (compile: 240ms, render: 265ms)
+ GET /logos/ALCPB.png 404 in 521ms (compile: 202ms, render: 319ms)
+ GET /logos/0434.HK.png 404 in 541ms (compile: 117ms, render: 424ms)
+ GET /logos/SQNS.png 404 in 487ms (compile: 324ms, render: 164ms)
+ GET /logos/DDC.png 404 in 370ms (compile: 234ms, render: 137ms)
+ GET /logos/FUFU.png 404 in 364ms (compile: 20ms, render: 344ms)
+ GET /logos/FLD.png 404 in 373ms (compile: 79ms, render: 294ms)
+ GET /logos/3189.T.png 404 in 377ms (compile: 147ms, render: 230ms)
+ GET /logos/SQNS.svg 404 in 260ms (compile: 108ms, render: 151ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/ALCPB.svg 404 in 385ms (compile: 31ms, render: 354ms)
+ GET /logos/SWC.svg 404 in 471ms (compile: 162ms, render: 309ms)
+ GET /logos/ZOOZ.png 404 in 460ms (compile: 214ms, render: 246ms)
+ GET /logos/BTCT.V.png 404 in 188ms (compile: 27ms, render: 161ms)
+ GET /logos/SRAG.DU.png 404 in 236ms (compile: 8ms, render: 228ms)
+ GET /logos/DCC.AX.png 404 in 312ms (compile: 17ms, render: 295ms)
+ GET /logos/3825.T.png 404 in 309ms (compile: 71ms, render: 238ms)
+ GET /logos/OBTC3.png 404 in 190ms (compile: 17ms, render: 173ms)
+ GET /logos/DDC.svg 404 in 235ms (compile: 10ms, render: 225ms)
+ GET /logos/FLD.svg 404 in 220ms (compile: 42ms, render: 178ms)
+ GET /logos/FUFU.svg 404 in 225ms (compile: 14ms, render: 210ms)
+ GET /logos/3189.T.svg 404 in 191ms (compile: 22ms, render: 169ms)
+ GET /logos/0434.HK.png 404 in 246ms (compile: 24ms, render: 222ms)
+ GET /logos/ALCPB.png 404 in 228ms (compile: 26ms, render: 202ms)
+ GET /logos/SQNS.png 404 in 235ms (compile: 56ms, render: 179ms)
+ GET /logos/SWC.png 404 in 172ms (compile: 22ms, render: 151ms)
+ GET /logos/DDC.png 404 in 231ms (compile: 24ms, render: 207ms)
+ GET /logos/FUFU.png 404 in 232ms (compile: 27ms, render: 205ms)
+ GET /logos/ALCPB.svg 404 in 231ms (compile: 76ms, render: 155ms)
+ GET /logos/SQNS.svg 404 in 187ms (compile: 22ms, render: 165ms)
+ GET /logos/SWC.svg 404 in 266ms (compile: 22ms, render: 244ms)
+ GET /logos/FLD.png 404 in 251ms (compile: 24ms, render: 227ms)
+ GET /logos/3189.T.png 404 in 253ms (compile: 78ms, render: 174ms)
+ GET /logos/ZOOZ.svg 404 in 168ms (compile: 18ms, render: 150ms)
+ GET /logos/BTCT.V.svg 404 in 227ms (compile: 19ms, render: 208ms)
+ GET /logos/SRAG.DU.svg 404 in 169ms (compile: 21ms, render: 149ms)
+ GET /logos/DCC.AX.svg 404 in 231ms (compile: 76ms, render: 155ms)
+ GET /logos/3825.T.svg 404 in 173ms (compile: 17ms, render: 156ms)
+ GET /logos/OBTC3.svg 404 in 290ms (compile: 73ms, render: 218ms)
+ GET /logos/DDC.svg 404 in 178ms (compile: 22ms, render: 155ms)
+ GET /logos/FUFU.svg 404 in 295ms (compile: 80ms, render: 216ms)
+ GET /logos/FLD.svg 404 in 172ms (compile: 19ms, render: 152ms)
+ GET /logos/3189.T.svg 404 in 172ms (compile: 73ms, render: 99ms)
+ GET /logos/0434.HK.png 404 in 272ms (compile: 21ms, render: 251ms)
+ GET /logos/ALCPB.png 404 in 271ms (compile: 74ms, render: 197ms)
+ GET /logos/SWC.png 404 in 230ms (compile: 97ms, render: 134ms)
+ GET /logos/SQNS.png 404 in 175ms (compile: 90ms, render: 85ms)
+ GET /logos/DDC.png 404 in 371ms (compile: 16ms, render: 354ms)
+ GET /logos/ALCPB.svg 404 in 367ms (compile: 91ms, render: 276ms)
+ GET /logos/FUFU.png 404 in 374ms (compile: 63ms, render: 311ms)
+ GET /logos/SWC.svg 404 in 293ms (compile: 100ms, render: 192ms)
+ GET /logos/SQNS.svg 404 in 243ms (compile: 19ms, render: 225ms)
+ GET /logos/FLD.png 404 in 243ms (compile: 69ms, render: 175ms)
+ GET /logos/3189.T.png 404 in 246ms (compile: 111ms, render: 135ms)
+ GET /logos/ZOOZ.png 404 in 124ms (compile: 39ms, render: 84ms)
+ GET /logos/BTCT.V.png 404 in 250ms (compile: 16ms, render: 234ms)
+ GET /logos/SRAG.DU.png 404 in 261ms (compile: 65ms, render: 196ms)
+ GET /logos/DCC.AX.png 404 in 153ms (compile: 21ms, render: 133ms)
+ GET /logos/3825.T.png 404 in 151ms (compile: 69ms, render: 82ms)
+ GET /logos/OBTC3.png 404 in 198ms (compile: 17ms, render: 181ms)
+ GET /logos/DDC.svg 404 in 278ms (compile: 64ms, render: 215ms)
+ GET /logos/FUFU.svg 404 in 177ms (compile: 19ms, render: 158ms)
+ GET /logos/FLD.svg 404 in 173ms (compile: 70ms, render: 103ms)
+ GET /logos/SRAG.DU.svg 404 in 380ms (compile: 212ms, render: 168ms)
+ GET /logos/BTCT.V.svg 404 in 385ms (compile: 188ms, render: 197ms)
+ GET /logos/ZOOZ.svg 404 in 393ms (compile: 164ms, render: 229ms)
+ GET /logos/3189.T.svg 404 in 414ms (compile: 335ms, render: 79ms)
+ GET /logos/3825.T.svg 404 in 212ms (compile: 43ms, render: 170ms)
+ GET /logos/DCC.AX.svg 404 in 217ms (compile: 17ms, render: 200ms)
+ GET /logos/OBTC3.svg 404 in 214ms (compile: 125ms, render: 90ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 370ms (compile: 18ms, render: 351ms)
+ GET /logos/ALCPB.png 404 in 372ms (compile: 76ms, render: 296ms)
+ GET /logos/SWC.png 404 in 365ms (compile: 121ms, render: 245ms)
+ GET /logos/SQNS.png 404 in 325ms (compile: 154ms, render: 171ms)
+ GET /logos/DDC.png 404 in 238ms (compile: 9ms, render: 228ms)
+ GET /logos/FUFU.png 404 in 198ms (compile: 17ms, render: 181ms)
+ GET /logos/FLD.png 404 in 203ms (compile: 40ms, render: 163ms)
+ GET /logos/3189.T.png 404 in 206ms (compile: 115ms, render: 91ms)
+ GET /logos/ALCPB.svg 404 in 540ms (compile: 16ms, render: 524ms)
+ GET /logos/SWC.svg 404 in 514ms (compile: 20ms, render: 495ms)
+ GET /logos/SQNS.svg 404 in 526ms (compile: 66ms, render: 461ms)
+ GET /logos/ZOOZ.png 404 in 537ms (compile: 196ms, render: 342ms)
+ GET /logos/BTCT.V.png 404 in 300ms (compile: 33ms, render: 268ms)
+ GET /logos/SRAG.DU.png 404 in 248ms (compile: 44ms, render: 205ms)
+ GET /logos/DCC.AX.png 404 in 231ms (compile: 65ms, render: 166ms)
+ GET /logos/3825.T.png 404 in 134ms (compile: 22ms, render: 112ms)
+ GET /logos/DDC.svg 404 in 267ms (compile: 50ms, render: 218ms)
+ GET /logos/OBTC3.png 404 in 273ms (compile: 21ms, render: 252ms)
+ GET /logos/FUFU.svg 404 in 237ms (compile: 92ms, render: 145ms)
+ GET /logos/FLD.svg 404 in 211ms (compile: 17ms, render: 194ms)
+ GET /logos/3189.T.svg 404 in 208ms (compile: 40ms, render: 168ms)
+ GET /logos/ZOOZ.svg 404 in 212ms (compile: 14ms, render: 198ms)
+ GET /logos/BTCT.V.svg 404 in 169ms (compile: 23ms, render: 147ms)
+ GET /logos/SRAG.DU.svg 404 in 219ms (compile: 71ms, render: 148ms)
+ GET /logos/DCC.AX.svg 404 in 233ms (compile: 26ms, render: 207ms)
+ GET /logos/3825.T.svg 404 in 234ms (compile: 79ms, render: 155ms)
+ GET /logos/OBTC3.svg 404 in 79ms (compile: 17ms, render: 63ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 289ms (compile: 21ms, render: 267ms)
+ GET /logos/SQNS.png 404 in 280ms (compile: 123ms, render: 157ms)
+ GET /logos/ALCPB.png 404 in 290ms (compile: 74ms, render: 216ms)
+ GET /logos/SWC.png 404 in 281ms (compile: 153ms, render: 128ms)
+ GET /logos/DDC.png 404 in 308ms (compile: 11ms, render: 297ms)
+ GET /logos/FUFU.png 404 in 290ms (compile: 49ms, render: 241ms)
+ GET /logos/3189.T.png 404 in 264ms (compile: 102ms, render: 163ms)
+ GET /logos/FLD.png 404 in 270ms (compile: 75ms, render: 196ms)
+ GET /logos/ALCPB.svg 404 in 368ms (compile: 30ms, render: 338ms)
+ GET /logos/SWC.svg 404 in 350ms (compile: 162ms, render: 187ms)
+ GET /logos/ZOOZ.png 404 in 305ms (compile: 200ms, render: 106ms)
+ GET /logos/SQNS.svg 404 in 310ms (compile: 174ms, render: 136ms)
+ GET /logos/BTCT.V.png 404 in 271ms (compile: 16ms, render: 255ms)
+ GET /logos/SRAG.DU.png 404 in 272ms (compile: 71ms, render: 202ms)
+ GET /logos/DCC.AX.png 404 in 236ms (compile: 90ms, render: 146ms)
+ GET /logos/3825.T.png 404 in 181ms (compile: 92ms, render: 89ms)
+ GET /logos/OBTC3.png 404 in 270ms (compile: 19ms, render: 252ms)
+ GET /logos/FUFU.svg 404 in 263ms (compile: 99ms, render: 163ms)
+ GET /logos/DDC.svg 404 in 271ms (compile: 74ms, render: 197ms)
+ GET /logos/FLD.svg 404 in 232ms (compile: 146ms, render: 86ms)
+ GET /logos/ZOOZ.svg 404 in 286ms (compile: 48ms, render: 238ms)
+ GET /logos/3189.T.svg 404 in 292ms (compile: 21ms, render: 270ms)
+ GET /logos/BTCT.V.svg 404 in 290ms (compile: 123ms, render: 167ms)
+ GET /logos/SRAG.DU.svg 404 in 153ms (compile: 59ms, render: 94ms)
+ GET /logos/DCC.AX.svg 404 in 205ms (compile: 18ms, render: 187ms)
+ GET /logos/3825.T.svg 404 in 204ms (compile: 69ms, render: 135ms)
+ GET /logos/OBTC3.svg 404 in 198ms (compile: 119ms, render: 79ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/SWC.png 404 in 319ms (compile: 21ms, render: 298ms)
+ GET /logos/SQNS.png 404 in 322ms (compile: 128ms, render: 194ms)
+ GET /logos/ALCPB.png 404 in 325ms (compile: 99ms, render: 226ms)
+ GET /logos/0434.HK.png 404 in 331ms (compile: 71ms, render: 260ms)
+ GET /logos/SWC.svg 404 in 371ms (compile: 128ms, render: 244ms)
+ GET /logos/DDC.png 404 in 380ms (compile: 100ms, render: 280ms)
+ GET /logos/FLD.png 404 in 367ms (compile: 242ms, render: 125ms)
+ GET /logos/FUFU.png 404 in 373ms (compile: 211ms, render: 162ms)
+ GET /logos/ALCPB.svg 404 in 280ms (compile: 50ms, render: 230ms)
+ GET /logos/SQNS.svg 404 in 285ms (compile: 21ms, render: 263ms)
+ GET /logos/ZOOZ.png 404 in 278ms (compile: 159ms, render: 119ms)
+ GET /logos/3189.T.png 404 in 283ms (compile: 132ms, render: 151ms)
+ GET /logos/BTCT.V.png 404 in 293ms (compile: 17ms, render: 276ms)
+ GET /logos/SRAG.DU.png 404 in 293ms (compile: 77ms, render: 216ms)
+ GET /logos/DCC.AX.png 404 in 252ms (compile: 102ms, render: 150ms)
+ GET /logos/3825.T.png 404 in 198ms (compile: 106ms, render: 92ms)
+ GET /logos/OBTC3.png 404 in 227ms (compile: 15ms, render: 212ms)
+ GET /logos/DDC.svg 404 in 275ms (compile: 92ms, render: 184ms)
+ GET /logos/FUFU.svg 404 in 220ms (compile: 86ms, render: 133ms)
+ GET /logos/FLD.svg 404 in 93ms (compile: 18ms, render: 75ms)
+ GET /logos/3189.T.svg 404 in 263ms (compile: 16ms, render: 248ms)
+ GET /logos/ZOOZ.svg 404 in 262ms (compile: 70ms, render: 192ms)
+ GET /logos/BTCT.V.svg 404 in 240ms (compile: 89ms, render: 151ms)
+ GET /logos/SRAG.DU.svg 404 in 128ms (compile: 18ms, render: 110ms)
+ GET /logos/3825.T.svg 404 in 227ms (compile: 48ms, render: 179ms)
+ GET /logos/DCC.AX.svg 404 in 235ms (compile: 21ms, render: 214ms)
+ GET /logos/OBTC3.svg 404 in 227ms (compile: 121ms, render: 106ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 285ms (compile: 22ms, render: 262ms)
+ GET /logos/SWC.png 404 in 282ms (compile: 101ms, render: 181ms)
+ GET /logos/ALCPB.png 404 in 286ms (compile: 74ms, render: 211ms)
+ GET /logos/SQNS.png 404 in 283ms (compile: 124ms, render: 158ms)
+ GET /logos/DDC.png 404 in 333ms (compile: 22ms, render: 310ms)
+ GET /logos/FLD.png 404 in 336ms (compile: 114ms, render: 222ms)
+ GET /logos/FUFU.png 404 in 342ms (compile: 78ms, render: 263ms)
+ GET /logos/3189.T.png 404 in 340ms (compile: 197ms, render: 143ms)
+ GET /logos/SWC.svg 404 in 381ms (compile: 40ms, render: 342ms)
+ GET /logos/ALCPB.svg 404 in 374ms (compile: 204ms, render: 170ms)
+ GET /logos/SQNS.svg 404 in 380ms (compile: 178ms, render: 203ms)
+ GET /logos/ZOOZ.png 404 in 370ms (compile: 275ms, render: 95ms)
+ GET /logos/BTCT.V.png 404 in 305ms (compile: 21ms, render: 284ms)
+ GET /logos/DCC.AX.png 404 in 295ms (compile: 111ms, render: 184ms)
+ GET /logos/SRAG.DU.png 404 in 303ms (compile: 84ms, render: 220ms)
+ GET /logos/3825.T.png 404 in 261ms (compile: 161ms, render: 100ms)
+ GET /logos/OBTC3.png 404 in 305ms (compile: 17ms, render: 288ms)
+ GET /logos/FLD.svg 404 in 258ms (compile: 108ms, render: 150ms)
+ GET /logos/FUFU.svg 404 in 263ms (compile: 79ms, render: 184ms)
+ GET /logos/DDC.svg 404 in 301ms (compile: 83ms, render: 218ms)
+ GET /logos/3189.T.svg 404 in 296ms (compile: 13ms, render: 283ms)
+ GET /logos/BTCT.V.svg 404 in 239ms (compile: 68ms, render: 171ms)
+ GET /logos/ZOOZ.svg 404 in 243ms (compile: 39ms, render: 205ms)
+ GET /logos/SRAG.DU.svg 404 in 276ms (compile: 138ms, render: 138ms)
+ GET /logos/DCC.AX.svg 404 in 132ms (compile: 11ms, render: 121ms)
+ GET /logos/3825.T.svg 404 in 130ms (compile: 13ms, render: 117ms)
+ GET /logos/OBTC3.svg 404 in 131ms (compile: 62ms, render: 69ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/ALCPB.png 404 in 288ms (compile: 57ms, render: 231ms)
+ GET /logos/0434.HK.png 404 in 294ms (compile: 25ms, render: 269ms)
+ GET /logos/SWC.png 404 in 295ms (compile: 130ms, render: 166ms)
+ GET /logos/SQNS.png 404 in 146ms (compile: 38ms, render: 108ms)
+ GET /logos/DDC.png 404 in 325ms (compile: 23ms, render: 303ms)
+ GET /logos/FUFU.png 404 in 362ms (compile: 71ms, render: 290ms)
+ GET /logos/ALCPB.svg 404 in 359ms (compile: 119ms, render: 240ms)
+ GET /logos/SWC.svg 404 in 209ms (compile: 39ms, render: 170ms)
+ GET /logos/FLD.png 404 in 278ms (compile: 52ms, render: 226ms)
+ GET /logos/SQNS.svg 404 in 285ms (compile: 24ms, render: 261ms)
+ GET /logos/3189.T.png 404 in 287ms (compile: 127ms, render: 159ms)
+ GET /logos/ZOOZ.png 404 in 171ms (compile: 25ms, render: 146ms)
+ GET /logos/BTCT.V.png 404 in 230ms (compile: 19ms, render: 211ms)
+ GET /logos/SRAG.DU.png 404 in 280ms (compile: 76ms, render: 204ms)
+ GET /logos/DCC.AX.png 404 in 283ms (compile: 137ms, render: 147ms)
+ GET /logos/3825.T.png 404 in 107ms (compile: 19ms, render: 88ms)
+ GET /logos/DDC.svg 404 in 283ms (compile: 60ms, render: 223ms)
+ GET /logos/OBTC3.png 404 in 292ms (compile: 31ms, render: 261ms)
+ GET /logos/FUFU.svg 404 in 288ms (compile: 126ms, render: 162ms)
+ GET /logos/FLD.svg 404 in 171ms (compile: 22ms, render: 149ms)
+ GET /logos/3189.T.svg 404 in 217ms (compile: 14ms, render: 203ms)
+ GET /logos/ZOOZ.svg 404 in 283ms (compile: 66ms, render: 216ms)
+ GET /logos/BTCT.V.svg 404 in 181ms (compile: 24ms, render: 158ms)
+ GET /logos/SRAG.DU.svg 404 in 294ms (compile: 78ms, render: 216ms)
+ GET /logos/DCC.AX.svg 404 in 173ms (compile: 22ms, render: 150ms)
+ GET /logos/3825.T.svg 404 in 226ms (compile: 69ms, render: 157ms)
+ GET /logos/OBTC3.svg 404 in 86ms (compile: 13ms, render: 73ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 303ms (compile: 24ms, render: 279ms)
+ GET /logos/ALCPB.png 404 in 301ms (compile: 49ms, render: 252ms)
+ GET /logos/SWC.png 404 in 299ms (compile: 77ms, render: 222ms)
+ GET /logos/SQNS.png 404 in 302ms (compile: 167ms, render: 134ms)
+ GET /logos/FUFU.png 404 in 322ms (compile: 116ms, render: 206ms)
+ GET /logos/DDC.png 404 in 328ms (compile: 89ms, render: 238ms)
+ GET /logos/FLD.png 404 in 322ms (compile: 187ms, render: 135ms)
+ GET /logos/3189.T.png 404 in 251ms (compile: 166ms, render: 85ms)
+ GET /logos/ALCPB.svg 404 in 251ms (compile: 15ms, render: 236ms)
+ GET /logos/SWC.svg 404 in 255ms (compile: 64ms, render: 191ms)
+ GET /logos/SQNS.svg 404 in 253ms (compile: 110ms, render: 143ms)
+ GET /logos/ZOOZ.png 404 in 162ms (compile: 73ms, render: 89ms)
+ GET /logos/BTCT.V.png 404 in 202ms (compile: 12ms, render: 190ms)
+ GET /logos/SRAG.DU.png 404 in 249ms (compile: 65ms, render: 184ms)
+ GET /logos/DCC.AX.png 404 in 181ms (compile: 37ms, render: 144ms)
+ GET /logos/3825.T.png 404 in 110ms (compile: 21ms, render: 89ms)
+ GET /logos/DDC.svg 404 in 192ms (compile: 39ms, render: 153ms)
+ GET /logos/OBTC3.png 404 in 198ms (compile: 19ms, render: 179ms)
+ GET /logos/FUFU.svg 404 in 167ms (compile: 63ms, render: 104ms)
+ GET /logos/FLD.svg 404 in 127ms (compile: 14ms, render: 113ms)
+ GET /logos/ZOOZ.svg 404 in 248ms (compile: 56ms, render: 192ms)
+ GET /logos/3189.T.svg 404 in 252ms (compile: 14ms, render: 238ms)
+ GET /logos/BTCT.V.svg 404 in 152ms (compile: 21ms, render: 130ms)
+ GET /logos/SRAG.DU.svg 404 in 146ms (compile: 66ms, render: 80ms)
+ GET /logos/DCC.AX.svg 404 in 190ms (compile: 14ms, render: 176ms)
+ GET /logos/3825.T.svg 404 in 192ms (compile: 59ms, render: 132ms)
+ GET /logos/OBTC3.svg 404 in 125ms (compile: 37ms, render: 88ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 261ms (compile: 20ms, render: 241ms)
+ GET /logos/SWC.png 404 in 254ms (compile: 101ms, render: 152ms)
+ GET /logos/ALCPB.png 404 in 263ms (compile: 76ms, render: 187ms)
+ GET /logos/SQNS.png 404 in 221ms (compile: 131ms, render: 90ms)
+ GET /logos/DDC.png 404 in 261ms (compile: 17ms, render: 244ms)
+ GET /logos/FLD.png 404 in 262ms (compile: 95ms, render: 168ms)
+ GET /logos/FUFU.png 404 in 270ms (compile: 63ms, render: 207ms)
+ GET /logos/SWC.svg 404 in 194ms (compile: 91ms, render: 103ms)
+ GET /logos/ALCPB.svg 404 in 315ms (compile: 37ms, render: 278ms)
+ GET /logos/3189.T.png 404 in 309ms (compile: 151ms, render: 158ms)
+ GET /logos/SQNS.svg 404 in 315ms (compile: 127ms, render: 188ms)
+ GET /logos/ZOOZ.png 404 in 115ms (compile: 23ms, render: 92ms)
+ GET /logos/BTCT.V.png 404 in 271ms (compile: 20ms, render: 251ms)
+ GET /logos/SRAG.DU.png 404 in 268ms (compile: 66ms, render: 202ms)
+ GET /logos/DCC.AX.png 404 in 220ms (compile: 71ms, render: 150ms)
+ GET /logos/3825.T.png 404 in 138ms (compile: 48ms, render: 90ms)
+ GET /logos/OBTC3.png 404 in 263ms (compile: 19ms, render: 244ms)
+ GET /logos/DDC.svg 404 in 261ms (compile: 67ms, render: 194ms)
+ GET /logos/FUFU.svg 404 in 212ms (compile: 78ms, render: 134ms)
+ GET /logos/FLD.svg 404 in 165ms (compile: 68ms, render: 97ms)
+ GET /logos/ZOOZ.svg 404 in 265ms (compile: 56ms, render: 210ms)
+ GET /logos/3189.T.svg 404 in 271ms (compile: 28ms, render: 243ms)
+ GET /logos/BTCT.V.svg 404 in 149ms (compile: 18ms, render: 130ms)
+ GET /logos/SRAG.DU.svg 404 in 114ms (compile: 38ms, render: 75ms)
+ GET /logos/DCC.AX.svg 404 in 196ms (compile: 16ms, render: 180ms)
+ GET /logos/3825.T.svg 404 in 198ms (compile: 58ms, render: 140ms)
+ GET /logos/OBTC3.svg 404 in 118ms (compile: 45ms, render: 72ms)
+ GET / 200 in 364ms (compile: 145ms, render: 219ms)
+ GET / 200 in 77ms (compile: 11ms, render: 67ms)
+ GET /api/db/companies 200 in 147ms (compile: 127ms, render: 20ms)
+[CryptoHistory] Binance returned 672 candles for ETH (7d)
+ GET /api/crypto/ETH/history?range=7d 200 in 159ms (compile: 28ms, render: 131ms)
+ GET /api/prices/stream 200 in 4.0min
+[CryptoHistory] Binance returned 672 candles for BTC (7d)
+ GET /api/crypto/BTC/history?range=7d 200 in 529ms (compile: 5ms, render: 525ms)
+ GET /api/crypto/MULTI/history?range=7d 400 in 31ms (compile: 25ms, render: 6ms)
+ GET /logos/0434.HK.png 404 in 576ms (compile: 125ms, render: 451ms)
+ GET /logos/ALCPB.png 404 in 579ms (compile: 285ms, render: 293ms)
+ GET /logos/SWC.png 404 in 405ms (compile: 184ms, render: 221ms)
+ GET /logos/SQNS.png 404 in 201ms (compile: 21ms, render: 179ms)
+[CryptoHistory] Binance returned 672 candles for SOL (7d)
+ GET /api/crypto/SOL/history?range=7d 200 in 244ms (compile: 8ms, render: 236ms)
+ GET /logos/FUFU.png 404 in 233ms (compile: 43ms, render: 190ms)
+ GET /logos/DDC.png 404 in 239ms (compile: 16ms, render: 223ms)
+ GET /logos/FLD.png 404 in 133ms (compile: 23ms, render: 110ms)
+ GET /logos/3189.T.png 404 in 253ms (compile: 21ms, render: 232ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/ZOOZ.png 404 in 266ms (compile: 68ms, render: 198ms)
+[CryptoHistory] Binance returned 672 candles for HYPE (7d)
+ GET /api/crypto/HYPE/history?range=7d 200 in 299ms (compile: 33ms, render: 266ms)
+ GET /logos/SRAG.DU.png 404 in 216ms (compile: 17ms, render: 199ms)
+ GET /logos/DCC.AX.png 404 in 213ms (compile: 71ms, render: 142ms)
+ GET /logos/BTCT.V.png 404 in 359ms (compile: 51ms, render: 308ms)
+[CryptoHistory] Binance returned 672 candles for BNB (7d)
+ GET /api/crypto/BNB/history?range=7d 200 in 292ms (compile: 32ms, render: 260ms)
+ GET /logos/0434.HK.png 404 in 274ms (compile: 24ms, render: 250ms)
+ GET /logos/3825.T.png 404 in 272ms (compile: 53ms, render: 219ms)
+ GET /logos/OBTC3.png 404 in 270ms (compile: 83ms, render: 186ms)
+ GET /logos/ALCPB.svg 404 in 260ms (compile: 22ms, render: 238ms)
+ GET /logos/SWC.svg 404 in 262ms (compile: 79ms, render: 183ms)
+ GET /logos/SQNS.svg 404 in 264ms (compile: 109ms, render: 154ms)
+ GET /api/crypto/TAO/history?range=7d 200 in 436ms (compile: 9ms, render: 426ms)
+ GET /logos/ALCPB.png 404 in 231ms (compile: 17ms, render: 214ms)
+ GET /logos/SWC.png 404 in 224ms (compile: 73ms, render: 152ms)
+ GET /logos/SQNS.png 404 in 192ms (compile: 96ms, render: 96ms)
+ GET /logos/DDC.png 404 in 220ms (compile: 71ms, render: 149ms)
+[CryptoHistory] Binance returned 672 candles for LINK (7d)
+ GET /api/crypto/LINK/history?range=7d 200 in 274ms (compile: 33ms, render: 241ms)
+ GET /logos/FUFU.png 404 in 176ms (compile: 76ms, render: 99ms)
+[CryptoHistory] Binance failed for TRX, trying CoinGecko
+ GET /icons/icon-192.png 404 in 467ms (compile: 47ms, render: 420ms)
+ GET /logos/DDC.svg 404 in 185ms (compile: 12ms, render: 173ms)
+ GET /logos/FUFU.svg 404 in 114ms (compile: 21ms, render: 93ms)
+ GET /api/crypto/TRX/history?range=7d 200 in 369ms (compile: 41ms, render: 328ms)
+ GET /logos/3189.T.svg 404 in 257ms (compile: 84ms, render: 173ms)
+ GET /logos/FLD.png 404 in 262ms (compile: 51ms, render: 211ms)
+ GET /logos/FLD.svg 404 in 267ms (compile: 22ms, render: 246ms)
+ GET /logos/3189.T.png 404 in 216ms (compile: 19ms, render: 197ms)
+ GET /logos/ZOOZ.svg 404 in 218ms (compile: 72ms, render: 145ms)
+ GET /logos/ZOOZ.png 404 in 219ms (compile: 100ms, render: 119ms)
+[CryptoHistory] Binance returned 672 candles for XRP (7d)
+ GET /api/crypto/XRP/history?range=7d 200 in 283ms (compile: 35ms, render: 248ms)
+ GET /logos/BTCT.V.png 404 in 242ms (compile: 24ms, render: 217ms)
+ GET /logos/SRAG.DU.png 404 in 258ms (compile: 52ms, render: 205ms)
+ GET /logos/DCC.AX.png 404 in 128ms (compile: 22ms, render: 106ms)
+ GET /logos/3825.T.svg 404 in 256ms (compile: 18ms, render: 238ms)
+ GET /logos/OBTC3.svg 404 in 256ms (compile: 84ms, render: 172ms)
+ GET /logos/ALCPB.svg 404 in 213ms (compile: 95ms, render: 118ms)
+[CryptoHistory] Binance returned 672 candles for ZEC (7d)
+ GET /api/crypto/ZEC/history?range=7d 200 in 310ms (compile: 12ms, render: 297ms)
+ GET /logos/SWC.svg 404 in 262ms (compile: 21ms, render: 241ms)
+ GET /logos/SQNS.svg 404 in 260ms (compile: 79ms, render: 181ms)
+ GET /logos/FLD.svg 404 in 258ms (compile: 105ms, render: 153ms)
+ GET /logos/ZOOZ.svg 404 in 223ms (compile: 54ms, render: 168ms)
+ GET /logos/3189.T.svg 404 in 230ms (compile: 22ms, render: 207ms)
+[CryptoHistory] Binance returned 672 candles for LTC (7d)
+ GET /api/crypto/LTC/history?range=7d 200 in 294ms (compile: 36ms, render: 258ms)
+ GET /logos/BTCT.V.svg 404 in 231ms (compile: 131ms, render: 100ms)
+ GET /logos/SRAG.DU.svg 404 in 150ms (compile: 17ms, render: 133ms)
+ GET /logos/DCC.AX.svg 404 in 148ms (compile: 46ms, render: 102ms)
+[CryptoHistory] Binance returned 672 candles for SUI (7d)
+ GET /api/crypto/SUI/history?range=7d 200 in 47ms (compile: 11ms, render: 37ms)
+[CryptoHistory] Binance returned 672 candles for DOGE (7d)
+ GET /api/crypto/DOGE/history?range=7d 200 in 45ms (compile: 4ms, render: 40ms)
+[CryptoHistory] Binance returned 672 candles for AVAX (7d)
+ GET /api/crypto/AVAX/history?range=7d 200 in 46ms (compile: 4ms, render: 42ms)
+[CryptoHistory] Binance returned 672 candles for HBAR (7d)
+ GET /api/crypto/HBAR/history?range=7d 200 in 60ms (compile: 4ms, render: 56ms)
+ GET /api/stocks/BMNR/history?range=7d&interval=1h 200 in 86ms (compile: 28ms, render: 59ms)
+ GET /api/stocks/SBET/history?range=7d&interval=1h 200 in 56ms (compile: 4ms, render: 52ms)
+ GET /api/stocks/ETHM/history?range=7d&interval=1h 200 in 60ms (compile: 3ms, render: 57ms)
+ GET /api/stocks/BTBT/history?range=7d&interval=1h 200 in 60ms (compile: 4ms, render: 56ms)
+ GET /api/stocks/BTCS/history?range=7d&interval=1h 200 in 50ms (compile: 4ms, render: 46ms)
+ GET /api/stocks/GAME/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 54ms)
+ GET /api/stocks/FGNX/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 53ms)
+ GET /api/stocks/MSTR/history?range=7d&interval=1h 200 in 65ms (compile: 4ms, render: 60ms)
+ GET /api/stocks/3350.T/history?range=7d&interval=1h 200 in 53ms (compile: 3ms, render: 50ms)
+ GET /api/stocks/XXI/history?range=7d&interval=1h 200 in 74ms (compile: 23ms, render: 51ms)
+ GET /api/stocks/CEPO/history?range=7d&interval=1h 200 in 53ms (compile: 4ms, render: 49ms)
+ GET /api/stocks/MARA/history?range=7d&interval=1h 200 in 57ms (compile: 4ms, render: 53ms)
+ GET /api/stocks/ASST/history?range=7d&interval=1h 200 in 65ms (compile: 3ms, render: 61ms)
+ GET /api/stocks/KULR/history?range=7d&interval=1h 200 in 60ms (compile: 5ms, render: 55ms)
+[StockHistory] No intraday for ALCPB, trying FMP daily fallback
+ GET /api/stocks/ALCPB/history?range=7d&interval=1h 200 in 170ms (compile: 4ms, render: 167ms)
+[StockHistory] No intraday for H100.ST, trying FMP daily fallback
+✓ Compiled in 247ms
+ GET /api/stocks/H100.ST/history?range=7d&interval=1h 200 in 84ms (compile: 5ms, render: 79ms)
+[StockHistory] No intraday for OBTC3, trying FMP daily fallback
+ GET /api/stocks/OBTC3/history?range=7d&interval=1h 200 in 98ms (compile: 22ms, render: 75ms)
+[StockHistory] No intraday for SWC, trying FMP daily fallback
+ GET /api/stocks/SWC/history?range=7d&interval=1h 200 in 128ms (compile: 4ms, render: 124ms)
+ GET /api/stocks/SQNS/history?range=7d&interval=1h 200 in 49ms (compile: 3ms, render: 46ms)
+ GET /api/stocks/DDC/history?range=7d&interval=1h 200 in 46ms (compile: 3ms, render: 43ms)
+ GET /api/stocks/FUFU/history?range=7d&interval=1h 200 in 48ms (compile: 4ms, render: 44ms)
+ GET /api/stocks/FLD/history?range=7d&interval=1h 200 in 46ms (compile: 3ms, render: 43ms)
+ GET /api/prices/stream 200 in 6.0s
+ GET /api/stocks/3825.T/history?range=7d&interval=1h 200 in 60ms (compile: 3ms, render: 57ms)
+ GET /logos/0434.HK.png 404 in 296ms (compile: 29ms, render: 266ms)
+ GET /logos/ALCPB.png 404 in 300ms (compile: 83ms, render: 217ms)
+ GET /logos/SWC.png 404 in 305ms (compile: 114ms, render: 191ms)
+ GET /logos/SQNS.png 404 in 163ms (compile: 39ms, render: 124ms)
+ GET /api/stocks/3189.T/history?range=7d&interval=1h 200 in 261ms (compile: 40ms, render: 221ms)
+ GET /logos/DDC.png 404 in 224ms (compile: 26ms, render: 198ms)
+ GET /logos/FUFU.png 404 in 223ms (compile: 62ms, render: 160ms)
+ GET /logos/FLD.png 404 in 126ms (compile: 20ms, render: 106ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/3189.T.png 404 in 196ms (compile: 16ms, render: 180ms)
+ GET /api/stocks/ZOOZ/history?range=7d&interval=1h 200 in 92ms (compile: 16ms, render: 76ms)
+ GET /logos/ZOOZ.png 404 in 291ms (compile: 64ms, render: 227ms)
+ GET /logos/BTCT.V.png 404 in 175ms (compile: 26ms, render: 149ms)
+ GET /logos/SRAG.DU.png 404 in 176ms (compile: 14ms, render: 162ms)
+ GET /api/stocks/BTCT.V/history?range=7d&interval=1h 200 in 107ms (compile: 3ms, render: 104ms)
+ GET /logos/DCC.AX.png 404 in 271ms (compile: 8ms, render: 263ms)
+ GET /logos/3825.T.png 404 in 196ms (compile: 21ms, render: 176ms)
+ GET /logos/OBTC3.png 404 in 126ms (compile: 12ms, render: 114ms)
+ GET /api/stocks/SRAG.DU/history?range=7d&interval=1h 200 in 181ms (compile: 26ms, render: 155ms)
+ GET /logos/ALCPB.svg 404 in 148ms (compile: 13ms, render: 135ms)
+ GET /logos/SWC.svg 404 in 153ms (compile: 63ms, render: 89ms)
+ GET /logos/SQNS.svg 404 in 211ms (compile: 24ms, render: 187ms)
+ GET /api/stocks/DCC.AX/history?range=7d&interval=1h 200 in 138ms (compile: 60ms, render: 78ms)
+ GET /logos/0434.HK.png 404 in 152ms (compile: 17ms, render: 135ms)
+ GET /logos/DDC.svg 404 in 208ms (compile: 69ms, render: 139ms)
+ GET /logos/FUFU.svg 404 in 220ms (compile: 14ms, render: 207ms)
+ GET /logos/FLD.svg 404 in 173ms (compile: 16ms, render: 157ms)
+ GET /logos/3189.T.svg 404 in 172ms (compile: 60ms, render: 112ms)
+ GET /api/stocks/NAKA/history?range=7d&interval=1h 200 in 202ms (compile: 83ms, render: 119ms)
+ GET /logos/ZOOZ.png 404 in 154ms (compile: 15ms, render: 140ms)
+ GET /logos/ALCPB.png 404 in 152ms (compile: 20ms, render: 132ms)
+ GET /logos/SWC.png 404 in 148ms (compile: 67ms, render: 81ms)
+ GET /logos/SQNS.png 404 in 195ms (compile: 19ms, render: 176ms)
+ GET /api/stocks/DJT/history?range=7d&interval=1h 200 in 215ms (compile: 55ms, render: 160ms)
+ GET /logos/DDC.png 404 in 193ms (compile: 50ms, render: 143ms)
+ GET /logos/FUFU.png 404 in 163ms (compile: 20ms, render: 142ms)
+ GET /logos/FLD.png 404 in 163ms (compile: 19ms, render: 144ms)
+ GET /logos/3189.T.png 404 in 188ms (compile: 19ms, render: 168ms)
+ GET /api/stocks/0434.HK/history?range=7d&interval=1h 200 in 123ms (compile: 12ms, render: 112ms)
+ GET /logos/BTCT.V.svg 404 in 185ms (compile: 23ms, render: 161ms)
+ GET /logos/SRAG.DU.svg 404 in 174ms (compile: 22ms, render: 152ms)
+ GET /logos/DCC.AX.svg 404 in 223ms (compile: 22ms, render: 201ms)
+ GET /logos/3825.T.svg 404 in 236ms (compile: 25ms, render: 211ms)
+ GET /api/stocks/ABTC/history?range=7d&interval=1h 200 in 163ms (compile: 37ms, render: 126ms)
+ GET /logos/OBTC3.svg 404 in 171ms (compile: 57ms, render: 114ms)
+ GET /logos/ZOOZ.svg 404 in 269ms (compile: 31ms, render: 238ms)
+ GET /logos/ALCPB.svg 404 in 274ms (compile: 93ms, render: 181ms)
+ GET /logos/SWC.svg 404 in 128ms (compile: 22ms, render: 106ms)
+ GET /api/stocks/FWDI/history?range=7d&interval=1h 200 in 195ms (compile: 9ms, render: 186ms)
+ GET /logos/SQNS.svg 404 in 241ms (compile: 18ms, render: 223ms)
+ GET /logos/DDC.svg 404 in 261ms (compile: 79ms, render: 182ms)
+ GET /logos/FUFU.svg 404 in 144ms (compile: 24ms, render: 120ms)
+ GET /logos/FLD.svg 404 in 194ms (compile: 19ms, render: 175ms)
+ GET /logos/3189.T.svg 404 in 191ms (compile: 48ms, render: 143ms)
+ GET /api/stocks/HSDT/history?range=7d&interval=1h 200 in 169ms (compile: 119ms, render: 50ms)
+ GET /api/stocks/DFDV/history?range=7d&interval=1h 200 in 55ms (compile: 4ms, render: 50ms)
+ GET /api/stocks/UPXI/history?range=7d&interval=1h 200 in 55ms (compile: 4ms, render: 51ms)
+ GET /api/stocks/STKE/history?range=7d&interval=1h 200 in 51ms (compile: 5ms, render: 46ms)
+ GET /api/stocks/PURR/history?range=7d&interval=1h 200 in 51ms (compile: 4ms, render: 47ms)
+ GET /api/stocks/HYPD/history?range=7d&interval=1h 200 in 52ms (compile: 5ms, render: 47ms)
+ GET /api/stocks/BNC/history?range=7d&interval=1h 200 in 49ms (compile: 4ms, render: 45ms)
+ GET /api/stocks/NA/history?range=7d&interval=1h 200 in 49ms (compile: 4ms, render: 45ms)
+ GET /api/stocks/TAOX/history?range=7d&interval=1h 200 in 56ms (compile: 4ms, render: 52ms)
+ GET /api/stocks/XTAIF/history?range=7d&interval=1h 200 in 57ms (compile: 5ms, render: 53ms)
+ GET /api/stocks/TWAV/history?range=7d&interval=1h 200 in 56ms (compile: 5ms, render: 51ms)
+ GET /api/stocks/CWD/history?range=7d&interval=1h 200 in 54ms (compile: 4ms, render: 50ms)
+ GET /api/stocks/TRON/history?range=7d&interval=1h 200 in 99ms (compile: 41ms, render: 58ms)
+ GET /api/stocks/XRPN/history?range=7d&interval=1h 200 in 49ms (compile: 4ms, render: 44ms)
+ GET /api/stocks/CYPH/history?range=7d&interval=1h 200 in 49ms (compile: 4ms, render: 45ms)
+ GET /api/stocks/LITS/history?range=7d&interval=1h 200 in 57ms (compile: 5ms, render: 52ms)
+[StockHistory] No intraday for LUXFF, trying FMP daily fallback
+[StockHistory] Using FMP daily fallback for LUXFF: 5 points
+ GET /api/stocks/LUXFF/history?range=7d&interval=1h 200 in 209ms (compile: 4ms, render: 206ms)
+ GET /api/stocks/SUIG/history?range=7d&interval=1h 200 in 53ms (compile: 3ms, render: 50ms)
+ GET /api/stocks/ZONE/history?range=7d&interval=1h 200 in 54ms (compile: 4ms, render: 49ms)
+ GET /api/stocks/TBH/history?range=7d&interval=1h 200 in 50ms (compile: 5ms, render: 45ms)
+ GET /api/stocks/BTOG/history?range=7d&interval=1h 200 in 58ms (compile: 4ms, render: 54ms)
+ GET /api/stocks/AVX/history?range=7d&interval=1h 200 in 91ms (compile: 32ms, render: 59ms)
+[StockHistory] No intraday for IHLDF, trying FMP daily fallback
+[StockHistory] Using FMP daily fallback for IHLDF: 4 points
+ GET /api/stocks/IHLDF/history?range=7d&interval=1h 200 in 107ms (compile: 4ms, render: 103ms)
+[Prices] GET called at 2026-02-16T03:34:24.014Z
+[Prices] Cache miss, fetching fresh data...
+Fetching market caps from FMP: 66 tickers
+[Yahoo] XTAIF: $0.40 (+1.28%)
+Alpaca error: Alpaca stock snapshots failed: 400
+Alpaca crypto: 8 coins
+FMP returned market caps for 61 stocks
+[Yahoo] DCC.AX: $0.04 (-5.41%)
+[Forex] exchangerate-api rates: {
+  AUD: 1.415562,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  GBP: 0.733237,
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516
+}
+[Forex] Using exchangerate-api.com rates
+[LST] Failed to fetch khype from contract: RPC error: execution reverted
+[LST] All providers failed for khype, using static fallback
+[LST] Failed to fetch ihype from contract: RPC error: execution reverted
+[LST] All providers failed for ihype, using static fallback
+[LST] Failed to fetch hihype from contract: RPC error: execution reverted
+[LST] All providers failed for hihype, using static fallback
+Total crypto prices: 16
+[Yahoo] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562)
+[Prices DEBUG] 3189.T fallback: {
+  fallbackPrice: 245,
+  currency: 'JPY',
+  forexRateFromFMP: 152.832936,
+  fallbackRate: 156,
+  rateUsed: 152.832936,
+  priceUsd: 1.6030576027146402,
+  fallbackMarketCap: 63000000
+}
+ GET /api/prices 200 in 286ms (compile: 4ms, render: 282ms)
+[MarketCap Debug] 3350.T calculated: {
+  priceInUsd: 327,
+  effectiveShares: 1206357340,
+  calculatedMarketCap: 394478850180,
+  source: 'calculated'
+}
+[MarketCap Debug] TWAV calculated: {
+  priceInUsd: 0.7080000042915344,
+  effectiveShares: 3207210,
+  calculatedMarketCap: 2270704.693763852,
+  source: 'calculated'
+}
+ GET /api/mnav/yesterday 200 in 12.8s (compile: 213ms, render: 12.6s)
+ GET /logos/0434.HK.png 404 in 298ms (compile: 14ms, render: 284ms)
+ GET /logos/ALCPB.png 404 in 290ms (compile: 86ms, render: 204ms)
+ GET /logos/SWC.png 404 in 261ms (compile: 90ms, render: 171ms)
+ GET /logos/SQNS.png 404 in 212ms (compile: 133ms, render: 79ms)
+ GET /logos/DDC.png 404 in 252ms (compile: 14ms, render: 238ms)
+ GET /logos/FUFU.png 404 in 248ms (compile: 58ms, render: 190ms)
+ GET /logos/3189.T.png 404 in 221ms (compile: 98ms, render: 123ms)
+ GET /logos/FLD.png 404 in 253ms (compile: 105ms, render: 148ms)
+ GET /logos/ZOOZ.png 404 in 308ms (compile: 13ms, render: 296ms)
+ GET /logos/BTCT.V.png 404 in 262ms (compile: 31ms, render: 231ms)
+ GET /logos/DCC.AX.png 404 in 261ms (compile: 148ms, render: 113ms)
+ GET /logos/SRAG.DU.png 404 in 269ms (compile: 54ms, render: 215ms)
+ GET /logos/3825.T.png 404 in 269ms (compile: 19ms, render: 250ms)
+ GET /logos/ALCPB.svg 404 in 209ms (compile: 47ms, render: 162ms)
+ GET /logos/OBTC3.png 404 in 214ms (compile: 21ms, render: 193ms)
+ GET /logos/SWC.svg 404 in 215ms (compile: 120ms, render: 95ms)
+ GET /logos/SQNS.svg 404 in 247ms (compile: 18ms, render: 229ms)
+ GET /logos/DDC.svg 404 in 191ms (compile: 17ms, render: 174ms)
+ GET /logos/FUFU.svg 404 in 194ms (compile: 40ms, render: 154ms)
+ GET /logos/FLD.svg 404 in 96ms (compile: 15ms, render: 80ms)
+ GET /logos/3189.T.svg 404 in 229ms (compile: 13ms, render: 216ms)
+ GET /logos/ZOOZ.svg 404 in 227ms (compile: 21ms, render: 206ms)
+ GET /logos/BTCT.V.svg 404 in 227ms (compile: 76ms, render: 151ms)
+ GET /logos/SRAG.DU.svg 404 in 230ms (compile: 84ms, render: 146ms)
+ GET /logos/DCC.AX.svg 404 in 221ms (compile: 15ms, render: 206ms)
+ GET /logos/3825.T.svg 404 in 147ms (compile: 13ms, render: 134ms)
+ GET /logos/OBTC3.svg 404 in 80ms (compile: 13ms, render: 67ms)
+✓ Compiled in 223ms
+ GET /api/db/companies 200 in 18ms (compile: 5ms, render: 13ms)
+ GET /api/prices/stream 200 in 30.1s
+ GET /logos/0434.HK.png 404 in 321ms (compile: 25ms, render: 296ms)
+ GET /logos/ALCPB.png 404 in 325ms (compile: 75ms, render: 250ms)
+ GET /logos/SQNS.png 404 in 319ms (compile: 150ms, render: 169ms)
+ GET /logos/SWC.png 404 in 322ms (compile: 123ms, render: 199ms)
+ GET /logos/DDC.png 404 in 127ms (compile: 27ms, render: 99ms)
+ GET /logos/FUFU.png 404 in 363ms (compile: 21ms, render: 342ms)
+ GET /logos/FLD.png 404 in 373ms (compile: 67ms, render: 306ms)
+ GET /logos/3189.T.png 404 in 380ms (compile: 96ms, render: 283ms)
+ GET /logos/ZOOZ.png 404 in 222ms (compile: 48ms, render: 174ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/BTCT.V.png 404 in 306ms (compile: 23ms, render: 283ms)
+ GET /logos/SRAG.DU.png 404 in 300ms (compile: 46ms, render: 254ms)
+ GET /logos/DCC.AX.png 404 in 296ms (compile: 113ms, render: 183ms)
+ GET /logos/3825.T.png 404 in 130ms (compile: 31ms, render: 98ms)
+ GET /logos/OBTC3.png 404 in 306ms (compile: 21ms, render: 286ms)
+ GET /logos/ALCPB.svg 404 in 305ms (compile: 49ms, render: 256ms)
+ GET /logos/SWC.svg 404 in 306ms (compile: 134ms, render: 172ms)
+ GET /logos/SQNS.svg 404 in 219ms (compile: 12ms, render: 207ms)
+ GET /logos/DDC.svg 404 in 197ms (compile: 14ms, render: 183ms)
+ GET /logos/FUFU.svg 404 in 204ms (compile: 61ms, render: 143ms)
+ GET /logos/FLD.svg 404 in 174ms (compile: 38ms, render: 136ms)
+ GET /logos/3189.T.svg 404 in 225ms (compile: 17ms, render: 208ms)
+ GET /logos/0434.HK.png 404 in 225ms (compile: 20ms, render: 206ms)
+ GET /logos/ZOOZ.svg 404 in 228ms (compile: 68ms, render: 160ms)
+ GET /logos/BTCT.V.png 404 in 231ms (compile: 85ms, render: 146ms)
+ GET /logos/SRAG.DU.png 404 in 210ms (compile: 25ms, render: 185ms)
+ GET /logos/ALCPB.png 404 in 265ms (compile: 74ms, render: 191ms)
+ GET /logos/SWC.png 404 in 208ms (compile: 66ms, render: 141ms)
+ GET /logos/SQNS.png 404 in 207ms (compile: 66ms, render: 141ms)
+ GET /logos/DDC.png 404 in 190ms (compile: 16ms, render: 174ms)
+ GET /logos/FUFU.png 404 in 236ms (compile: 60ms, render: 175ms)
+ GET /logos/FLD.png 404 in 148ms (compile: 19ms, render: 129ms)
+ GET /logos/3189.T.png 404 in 282ms (compile: 63ms, render: 219ms)
+ GET /logos/ZOOZ.png 404 in 243ms (compile: 20ms, render: 223ms)
+ GET /logos/DCC.AX.svg 404 in 294ms (compile: 72ms, render: 223ms)
+ GET /logos/3825.T.svg 404 in 163ms (compile: 24ms, render: 139ms)
+ GET /logos/OBTC3.svg 404 in 203ms (compile: 68ms, render: 135ms)
+ GET /logos/BTCT.V.svg 404 in 194ms (compile: 20ms, render: 174ms)
+ GET /logos/SRAG.DU.svg 404 in 280ms (compile: 60ms, render: 220ms)
+ GET /logos/ALCPB.svg 404 in 200ms (compile: 20ms, render: 180ms)
+ GET /logos/SWC.svg 404 in 350ms (compile: 76ms, render: 274ms)
+ GET /logos/SQNS.svg 404 in 309ms (compile: 32ms, render: 277ms)
+ GET /logos/DDC.svg 404 in 200ms (compile: 21ms, render: 178ms)
+ GET /logos/FUFU.svg 404 in 196ms (compile: 67ms, render: 129ms)
+ GET /logos/FLD.svg 404 in 140ms (compile: 17ms, render: 123ms)
+ GET /logos/3189.T.svg 404 in 131ms (compile: 13ms, render: 118ms)
+ GET /logos/ZOOZ.svg 404 in 73ms (compile: 13ms, render: 60ms)
+ GET /logos/0434.HK.png 404 in 255ms (compile: 17ms, render: 238ms)
+ GET /logos/ALCPB.png 404 in 260ms (compile: 64ms, render: 195ms)
+ GET /logos/SQNS.png 404 in 173ms (compile: 64ms, render: 108ms)
+ GET /logos/SWC.png 404 in 178ms (compile: 41ms, render: 136ms)
+ GET /logos/DDC.png 404 in 199ms (compile: 17ms, render: 181ms)
+ GET /logos/FUFU.png 404 in 270ms (compile: 66ms, render: 204ms)
+ GET /logos/FLD.png 404 in 165ms (compile: 19ms, render: 146ms)
+ GET /logos/3189.T.png 404 in 222ms (compile: 69ms, render: 153ms)
+ GET /logos/ZOOZ.png 404 in 199ms (compile: 16ms, render: 183ms)
+ GET /logos/BTCT.V.png 404 in 244ms (compile: 68ms, render: 177ms)
+ GET /logos/SRAG.DU.png 404 in 142ms (compile: 17ms, render: 125ms)
+ GET /logos/DCC.AX.png 404 in 189ms (compile: 62ms, render: 128ms)
+ GET /logos/3825.T.png 404 in 198ms (compile: 19ms, render: 179ms)
+ GET /logos/OBTC3.png 404 in 253ms (compile: 63ms, render: 190ms)
+ GET /logos/ALCPB.svg 404 in 153ms (compile: 18ms, render: 134ms)
+ GET /logos/SWC.svg 404 in 276ms (compile: 65ms, render: 211ms)
+ GET /logos/SQNS.svg 404 in 170ms (compile: 18ms, render: 152ms)
+ GET /logos/DDC.svg 404 in 220ms (compile: 85ms, render: 135ms)
+ GET /logos/FUFU.svg 404 in 201ms (compile: 21ms, render: 181ms)
+ GET /logos/FLD.svg 404 in 251ms (compile: 66ms, render: 185ms)
+ GET /logos/3189.T.svg 404 in 148ms (compile: 17ms, render: 130ms)
+ GET /logos/ZOOZ.svg 404 in 203ms (compile: 62ms, render: 141ms)
+ GET /logos/BTCT.V.svg 404 in 227ms (compile: 18ms, render: 208ms)
+ GET /logos/SRAG.DU.svg 404 in 235ms (compile: 27ms, render: 208ms)
+ GET /logos/DCC.AX.svg 404 in 230ms (compile: 76ms, render: 154ms)
+ GET /logos/3825.T.svg 404 in 219ms (compile: 77ms, render: 142ms)
+ GET /logos/OBTC3.svg 404 in 86ms (compile: 18ms, render: 68ms)
+ GET / 200 in 206ms (compile: 111ms, render: 95ms)
+ GET / 200 in 34ms (compile: 5ms, render: 30ms)
+ GET /api/prices/stream 200 in 12.6s
+ GET /logos/ALCPB.png 404 in 575ms (compile: 187ms, render: 389ms)
+ GET /logos/0434.HK.png 404 in 581ms (compile: 125ms, render: 456ms)
+ GET /logos/SWC.png 404 in 602ms (compile: 356ms, render: 246ms)
+ GET /logos/SQNS.png 404 in 278ms (compile: 80ms, render: 198ms)
+ GET /logos/DDC.png 404 in 182ms (compile: 50ms, render: 133ms)
+ GET /logos/FUFU.png 404 in 278ms (compile: 15ms, render: 263ms)
+ GET /logos/FLD.png 404 in 246ms (compile: 23ms, render: 223ms)
+ GET /logos/3189.T.png 404 in 242ms (compile: 79ms, render: 162ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/ZOOZ.png 404 in 394ms (compile: 36ms, render: 358ms)
+ GET /icons/icon-192.png 404 in 666ms (compile: 102ms, render: 564ms)
+ GET /logos/BTCT.V.png 404 in 489ms (compile: 228ms, render: 261ms)
+ GET /logos/SRAG.DU.png 404 in 413ms (compile: 184ms, render: 229ms)
+ GET /logos/DCC.AX.png 404 in 229ms (compile: 8ms, render: 221ms)
+ GET /logos/3825.T.png 404 in 335ms (compile: 8ms, render: 326ms)
+ GET /logos/OBTC3.png 404 in 269ms (compile: 10ms, render: 259ms)
+ GET /logos/ALCPB.svg 404 in 294ms (compile: 36ms, render: 257ms)
+ GET /logos/SWC.svg 404 in 188ms (compile: 10ms, render: 178ms)
+ GET /logos/SQNS.svg 404 in 86ms (compile: 11ms, render: 76ms)
+ GET /logos/DDC.svg 404 in 310ms (compile: 27ms, render: 283ms)
+ GET /logos/FLD.svg 404 in 309ms (compile: 118ms, render: 190ms)
+ GET /logos/FUFU.svg 404 in 314ms (compile: 85ms, render: 229ms)
+ GET /logos/3189.T.svg 404 in 312ms (compile: 150ms, render: 162ms)
+ GET /logos/BTCT.V.png 404 in 277ms (compile: 53ms, render: 224ms)
+ GET /logos/ZOOZ.svg 404 in 284ms (compile: 22ms, render: 263ms)
+ GET /logos/0434.HK.png 404 in 279ms (compile: 129ms, render: 150ms)
+ GET /logos/ALCPB.png 404 in 240ms (compile: 145ms, render: 95ms)
+ GET /logos/SWC.png 404 in 283ms (compile: 20ms, render: 263ms)
+ GET /logos/SQNS.png 404 in 286ms (compile: 74ms, render: 213ms)
+ GET /logos/DDC.png 404 in 290ms (compile: 129ms, render: 161ms)
+ GET /logos/FUFU.png 404 in 123ms (compile: 21ms, render: 103ms)
+ GET /logos/3189.T.png 404 in 317ms (compile: 57ms, render: 259ms)
+ GET /logos/FLD.png 404 in 323ms (compile: 21ms, render: 302ms)
+ GET /logos/ZOOZ.png 404 in 283ms (compile: 124ms, render: 159ms)
+ GET /logos/SRAG.DU.svg 404 in 217ms (compile: 18ms, render: 199ms)
+ GET /logos/DCC.AX.svg 404 in 271ms (compile: 17ms, render: 254ms)
+ GET /logos/3825.T.svg 404 in 330ms (compile: 117ms, render: 213ms)
+ GET /logos/OBTC3.svg 404 in 177ms (compile: 20ms, render: 157ms)
+ GET /logos/BTCT.V.svg 404 in 229ms (compile: 43ms, render: 186ms)
+ GET /logos/ALCPB.svg 404 in 268ms (compile: 47ms, render: 221ms)
+ GET /logos/SWC.svg 404 in 320ms (compile: 101ms, render: 219ms)
+ GET /logos/SQNS.svg 404 in 194ms (compile: 24ms, render: 170ms)
+ GET /logos/DDC.svg 404 in 186ms (compile: 74ms, render: 112ms)
+ GET /logos/FUFU.svg 404 in 229ms (compile: 24ms, render: 205ms)
+ GET /logos/FLD.svg 404 in 274ms (compile: 72ms, render: 202ms)
+ GET /logos/3189.T.svg 404 in 214ms (compile: 73ms, render: 141ms)
+ GET /logos/ZOOZ.svg 404 in 92ms (compile: 18ms, render: 74ms)
+ GET /logos/0434.HK.png 404 in 263ms (compile: 57ms, render: 206ms)
+ GET /logos/ALCPB.png 404 in 270ms (compile: 31ms, render: 239ms)
+ GET /logos/SWC.png 404 in 253ms (compile: 117ms, render: 136ms)
+ GET /logos/SQNS.png 404 in 257ms (compile: 143ms, render: 114ms)
+ GET /logos/DDC.png 404 in 235ms (compile: 18ms, render: 217ms)
+ GET /logos/FUFU.png 404 in 292ms (compile: 66ms, render: 227ms)
+ GET /logos/FLD.png 404 in 295ms (compile: 137ms, render: 158ms)
+ GET /logos/3189.T.png 404 in 109ms (compile: 20ms, render: 89ms)
+ GET /logos/BTCT.V.png 404 in 274ms (compile: 50ms, render: 224ms)
+ GET /logos/ZOOZ.png 404 in 283ms (compile: 22ms, render: 261ms)
+ GET /logos/SRAG.DU.png 404 in 250ms (compile: 91ms, render: 158ms)
+ GET /logos/DCC.AX.png 404 in 119ms (compile: 20ms, render: 99ms)
+ GET /logos/OBTC3.png 404 in 278ms (compile: 53ms, render: 224ms)
+ GET /logos/3825.T.png 404 in 284ms (compile: 21ms, render: 264ms)
+ GET /logos/ALCPB.svg 404 in 267ms (compile: 93ms, render: 174ms)
+ GET /logos/SWC.svg 404 in 192ms (compile: 21ms, render: 171ms)
+ GET /logos/SQNS.svg 404 in 215ms (compile: 17ms, render: 198ms)
+ GET /logos/DDC.svg 404 in 280ms (compile: 73ms, render: 207ms)
+ GET /logos/FUFU.svg 404 in 167ms (compile: 22ms, render: 144ms)
+ GET /logos/FLD.svg 404 in 215ms (compile: 70ms, render: 145ms)
+ GET /logos/3189.T.svg 404 in 167ms (compile: 18ms, render: 148ms)
+ GET /logos/ZOOZ.svg 404 in 282ms (compile: 73ms, render: 209ms)
+ GET /logos/SRAG.DU.svg 404 in 192ms (compile: 52ms, render: 140ms)
+ GET /logos/BTCT.V.svg 404 in 197ms (compile: 22ms, render: 175ms)
+ GET /logos/3825.T.svg 404 in 395ms (compile: 63ms, render: 332ms)
+ GET /logos/DCC.AX.svg 404 in 406ms (compile: 31ms, render: 375ms)
+ GET /logos/OBTC3.svg 404 in 86ms (compile: 15ms, render: 71ms)
+ GET / 200 in 251ms (compile: 128ms, render: 123ms)
+ GET / 200 in 47ms (compile: 6ms, render: 41ms)
+ GET /api/prices/stream 200 in 11.7s
+ GET /logos/0434.HK.png 404 in 792ms (compile: 141ms, render: 651ms)
+ GET /logos/SWC.png 404 in 762ms (compile: 505ms, render: 258ms)
+ GET /logos/ALCPB.png 404 in 792ms (compile: 492ms, render: 301ms)
+ GET /logos/SQNS.png 404 in 609ms (compile: 427ms, render: 182ms)
+ GET /logos/DDC.png 404 in 287ms (compile: 148ms, render: 140ms)
+ GET /logos/FUFU.png 404 in 301ms (compile: 16ms, render: 285ms)
+ GET /logos/FLD.png 404 in 303ms (compile: 68ms, render: 235ms)
+ GET /logos/3189.T.png 404 in 270ms (compile: 100ms, render: 170ms)
+ GET /logos/ZOOZ.png 404 in 212ms (compile: 107ms, render: 105ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /icons/icon-192.png 404 in 299ms (compile: 18ms, render: 281ms)
+ GET /logos/BTCT.V.png 404 in 295ms (compile: 70ms, render: 225ms)
+ GET /logos/SRAG.DU.png 404 in 289ms (compile: 101ms, render: 188ms)
+ GET /logos/DCC.AX.png 404 in 259ms (compile: 163ms, render: 96ms)
+ GET /logos/3825.T.png 404 in 288ms (compile: 19ms, render: 268ms)
+ GET /logos/OBTC3.png 404 in 288ms (compile: 67ms, render: 221ms)
+ GET /logos/ALCPB.svg 404 in 287ms (compile: 95ms, render: 192ms)
+ GET /logos/SWC.svg 404 in 168ms (compile: 63ms, render: 104ms)
+ GET /logos/DDC.svg 404 in 241ms (compile: 39ms, render: 201ms)
+ GET /logos/SQNS.svg 404 in 285ms (compile: 12ms, render: 273ms)
+ GET /logos/FLD.svg 404 in 213ms (compile: 121ms, render: 92ms)
+ GET /logos/FUFU.svg 404 in 241ms (compile: 69ms, render: 172ms)
+ GET /logos/0434.HK.png 404 in 288ms (compile: 86ms, render: 203ms)
+ GET /logos/ZOOZ.svg 404 in 295ms (compile: 55ms, render: 239ms)
+ GET /logos/3189.T.svg 404 in 299ms (compile: 27ms, render: 272ms)
+ GET /logos/ALCPB.png 404 in 296ms (compile: 177ms, render: 120ms)
+ GET /logos/SQNS.png 404 in 259ms (compile: 49ms, render: 210ms)
+ GET /logos/SWC.png 404 in 263ms (compile: 21ms, render: 242ms)
+ GET /logos/DDC.png 404 in 261ms (compile: 121ms, render: 140ms)
+ GET /logos/FUFU.png 404 in 260ms (compile: 144ms, render: 116ms)
+ GET /logos/FLD.png 404 in 270ms (compile: 16ms, render: 255ms)
+ GET /logos/3189.T.png 404 in 276ms (compile: 63ms, render: 213ms)
+ GET /logos/ZOOZ.png 404 in 279ms (compile: 115ms, render: 164ms)
+ GET /logos/BTCT.V.svg 404 in 151ms (compile: 47ms, render: 105ms)
+ GET /logos/SRAG.DU.svg 404 in 304ms (compile: 21ms, render: 283ms)
+ GET /logos/DCC.AX.svg 404 in 310ms (compile: 55ms, render: 255ms)
+ GET /logos/3825.T.svg 404 in 164ms (compile: 24ms, render: 140ms)
+ GET /logos/OBTC3.svg 404 in 166ms (compile: 69ms, render: 97ms)
+ GET /logos/ALCPB.svg 404 in 258ms (compile: 21ms, render: 238ms)
+ GET /logos/SWC.svg 404 in 263ms (compile: 51ms, render: 212ms)
+ GET /logos/SQNS.svg 404 in 154ms (compile: 20ms, render: 133ms)
+ GET /logos/DDC.svg 404 in 206ms (compile: 66ms, render: 140ms)
+ GET /logos/FUFU.svg 404 in 200ms (compile: 15ms, render: 185ms)
+ GET /logos/FLD.svg 404 in 282ms (compile: 66ms, render: 216ms)
+ GET /logos/3189.T.svg 404 in 166ms (compile: 22ms, render: 145ms)
+ GET /logos/ZOOZ.svg 404 in 156ms (compile: 61ms, render: 95ms)
+ GET /logos/ALCPB.png 404 in 235ms (compile: 38ms, render: 198ms)
+ GET /logos/0434.HK.png 404 in 240ms (compile: 15ms, render: 225ms)
+ GET /logos/SWC.png 404 in 177ms (compile: 80ms, render: 97ms)
+ GET /logos/SQNS.png 404 in 181ms (compile: 56ms, render: 125ms)
+ GET /logos/DDC.png 404 in 249ms (compile: 19ms, render: 230ms)
+ GET /logos/FUFU.png 404 in 253ms (compile: 67ms, render: 186ms)
+ GET /logos/FLD.png 404 in 247ms (compile: 111ms, render: 136ms)
+ GET /logos/3189.T.png 404 in 151ms (compile: 68ms, render: 83ms)
+ GET /logos/ZOOZ.png 404 in 273ms (compile: 13ms, render: 261ms)
+ GET /logos/BTCT.V.png 404 in 277ms (compile: 63ms, render: 213ms)
+ GET /logos/SRAG.DU.png 404 in 231ms (compile: 86ms, render: 144ms)
+ GET /logos/DCC.AX.png 404 in 182ms (compile: 88ms, render: 94ms)
+ GET /logos/3825.T.png 404 in 243ms (compile: 16ms, render: 227ms)
+ GET /logos/OBTC3.png 404 in 248ms (compile: 65ms, render: 183ms)
+ GET /logos/ALCPB.svg 404 in 199ms (compile: 66ms, render: 133ms)
+ GET /logos/SQNS.svg 404 in 151ms (compile: 68ms, render: 84ms)
+ GET /logos/DDC.svg 404 in 237ms (compile: 40ms, render: 198ms)
+ GET /logos/SWC.svg 404 in 242ms (compile: 16ms, render: 227ms)
+ GET /logos/FUFU.svg 404 in 169ms (compile: 16ms, render: 154ms)
+ GET /logos/FLD.svg 404 in 193ms (compile: 35ms, render: 158ms)
+ GET /logos/3189.T.svg 404 in 200ms (compile: 14ms, render: 186ms)
+ GET /logos/ZOOZ.svg 404 in 262ms (compile: 65ms, render: 198ms)
+ GET /logos/BTCT.V.svg 404 in 157ms (compile: 21ms, render: 136ms)
+ GET /logos/SRAG.DU.svg 404 in 205ms (compile: 68ms, render: 137ms)
+ GET /logos/DCC.AX.svg 404 in 144ms (compile: 15ms, render: 129ms)
+ GET /logos/3825.T.svg 404 in 188ms (compile: 64ms, render: 124ms)
+ GET /logos/OBTC3.svg 404 in 77ms (compile: 14ms, render: 63ms)
+ GET /logos/ALCPB.png 404 in 257ms (compile: 54ms, render: 203ms)
+ GET /logos/0434.HK.png 404 in 262ms (compile: 22ms, render: 240ms)
+ GET /logos/SWC.png 404 in 260ms (compile: 122ms, render: 137ms)
+ GET /logos/SQNS.png 404 in 258ms (compile: 166ms, render: 92ms)
+ GET /logos/DDC.png 404 in 248ms (compile: 17ms, render: 231ms)
+ GET /logos/FUFU.png 404 in 256ms (compile: 62ms, render: 195ms)
+ GET /logos/FLD.png 404 in 251ms (compile: 110ms, render: 141ms)
+ GET /logos/3189.T.png 404 in 171ms (compile: 82ms, render: 89ms)
+ GET /logos/ZOOZ.png 404 in 248ms (compile: 18ms, render: 230ms)
+ GET /logos/SRAG.DU.png 404 in 241ms (compile: 85ms, render: 156ms)
+ GET /logos/BTCT.V.png 404 in 250ms (compile: 65ms, render: 185ms)
+ GET /logos/DCC.AX.png 404 in 167ms (compile: 85ms, render: 82ms)
+ GET /logos/3825.T.png 404 in 382ms (compile: 23ms, render: 359ms)
+ GET /logos/ALCPB.svg 404 in 321ms (compile: 163ms, render: 159ms)
+ GET /logos/OBTC3.png 404 in 376ms (compile: 106ms, render: 270ms)
+ GET /logos/SWC.svg 404 in 180ms (compile: 98ms, render: 83ms)
+ GET /logos/SQNS.svg 404 in 246ms (compile: 13ms, render: 233ms)
+ GET /logos/FUFU.svg 404 in 208ms (compile: 48ms, render: 160ms)
+ GET /logos/DDC.svg 404 in 212ms (compile: 23ms, render: 188ms)
+ GET /logos/FLD.svg 404 in 147ms (compile: 54ms, render: 93ms)
+ GET /logos/3189.T.svg 404 in 245ms (compile: 12ms, render: 232ms)
+ GET /logos/ZOOZ.svg 404 in 201ms (compile: 21ms, render: 180ms)
+ GET /logos/BTCT.V.svg 404 in 201ms (compile: 68ms, render: 132ms)
+ GET /logos/SRAG.DU.svg 404 in 198ms (compile: 109ms, render: 89ms)
+ GET /logos/DCC.AX.svg 404 in 204ms (compile: 15ms, render: 188ms)
+ GET /logos/3825.T.svg 404 in 166ms (compile: 35ms, render: 130ms)
+ GET /logos/OBTC3.svg 404 in 146ms (compile: 64ms, render: 82ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 334ms (compile: 15ms, render: 319ms)
+ GET /logos/ALCPB.png 404 in 325ms (compile: 77ms, render: 248ms)
+ GET /logos/SQNS.png 404 in 258ms (compile: 125ms, render: 133ms)
+ GET /logos/SWC.png 404 in 262ms (compile: 96ms, render: 166ms)
+ GET /logos/DDC.png 404 in 300ms (compile: 20ms, render: 279ms)
+ GET /logos/FLD.png 404 in 292ms (compile: 119ms, render: 173ms)
+ GET /logos/FUFU.png 404 in 297ms (compile: 90ms, render: 207ms)
+ GET /logos/3189.T.png 404 in 312ms (compile: 147ms, render: 164ms)
+ GET /logos/ZOOZ.png 404 in 475ms (compile: 39ms, render: 436ms)
+ GET /logos/BTCT.V.png 404 in 472ms (compile: 152ms, render: 320ms)
+ GET /logos/SRAG.DU.png 404 in 463ms (compile: 318ms, render: 145ms)
+ GET /logos/DCC.AX.png 404 in 343ms (compile: 248ms, render: 95ms)
+ GET /logos/3825.T.png 404 in 278ms (compile: 21ms, render: 257ms)
+ GET /logos/OBTC3.png 404 in 279ms (compile: 71ms, render: 208ms)
+ GET /logos/ALCPB.svg 404 in 228ms (compile: 74ms, render: 154ms)
+ GET /logos/SWC.svg 404 in 177ms (compile: 74ms, render: 103ms)
+ GET /logos/SQNS.svg 404 in 295ms (compile: 17ms, render: 279ms)
+ GET /logos/DDC.svg 404 in 301ms (compile: 46ms, render: 255ms)
+ GET /logos/FUFU.svg 404 in 181ms (compile: 25ms, render: 156ms)
+ GET /logos/FLD.svg 404 in 182ms (compile: 77ms, render: 105ms)
+ GET /logos/ZOOZ.svg 404 in 312ms (compile: 54ms, render: 257ms)
+ GET /logos/3189.T.svg 404 in 318ms (compile: 23ms, render: 295ms)
+ GET /logos/BTCT.V.svg 404 in 283ms (compile: 119ms, render: 164ms)
+ GET /logos/SRAG.DU.svg 404 in 176ms (compile: 24ms, render: 152ms)
+ GET /logos/DCC.AX.svg 404 in 238ms (compile: 16ms, render: 222ms)
+ GET /logos/3825.T.svg 404 in 242ms (compile: 73ms, render: 169ms)
+ GET /logos/OBTC3.svg 404 in 115ms (compile: 23ms, render: 91ms)
+ GET / 200 in 262ms (compile: 134ms, render: 128ms)
+ GET / 200 in 43ms (compile: 5ms, render: 39ms)
+ GET /api/db/companies 200 in 126ms (compile: 106ms, render: 20ms)
+ GET /api/prices/stream 200 in 90s
+ GET /logos/0434.HK.png 404 in 628ms (compile: 142ms, render: 486ms)
+ GET /logos/ALCPB.png 404 in 626ms (compile: 208ms, render: 419ms)
+ GET /logos/SWC.png 404 in 625ms (compile: 239ms, render: 386ms)
+ GET /logos/SQNS.png 404 in 623ms (compile: 269ms, render: 353ms)
+ GET /logos/DDC.png 404 in 623ms (compile: 495ms, render: 128ms)
+ GET /logos/FUFU.png 404 in 310ms (compile: 21ms, render: 289ms)
+ GET /logos/3189.T.png 404 in 299ms (compile: 105ms, render: 193ms)
+ GET /logos/FLD.png 404 in 306ms (compile: 72ms, render: 234ms)
+ GET /logos/ZOOZ.png 404 in 276ms (compile: 164ms, render: 112ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /logos/BTCT.V.png 404 in 321ms (compile: 38ms, render: 283ms)
+ GET /logos/SRAG.DU.png 404 in 316ms (compile: 94ms, render: 222ms)
+ GET /logos/DCC.AX.png 404 in 235ms (compile: 80ms, render: 155ms)
+ GET /logos/3825.T.png 404 in 166ms (compile: 77ms, render: 89ms)
+ GET /icons/icon-192.png 404 in 290ms (compile: 16ms, render: 274ms)
+ GET /logos/OBTC3.png 404 in 286ms (compile: 70ms, render: 216ms)
+ GET /logos/ALCPB.svg 404 in 162ms (compile: 21ms, render: 140ms)
+ GET /logos/SWC.svg 404 in 161ms (compile: 65ms, render: 95ms)
+ GET /logos/SQNS.svg 404 in 190ms (compile: 42ms, render: 148ms)
+ GET /logos/DDC.svg 404 in 301ms (compile: 74ms, render: 227ms)
+ GET /logos/FUFU.svg 404 in 175ms (compile: 25ms, render: 150ms)
+ GET /logos/FLD.svg 404 in 282ms (compile: 48ms, render: 235ms)
+ GET /logos/3189.T.svg 404 in 285ms (compile: 49ms, render: 236ms)
+ GET /logos/0434.HK.png 404 in 296ms (compile: 26ms, render: 270ms)
+ GET /logos/ZOOZ.svg 404 in 157ms (compile: 22ms, render: 135ms)
+ GET /logos/BTCT.V.png 404 in 163ms (compile: 65ms, render: 99ms)
+ GET /logos/ALCPB.png 404 in 302ms (compile: 47ms, render: 254ms)
+ GET /logos/SRAG.DU.png 404 in 306ms (compile: 20ms, render: 287ms)
+ GET /logos/SWC.png 404 in 193ms (compile: 30ms, render: 163ms)
+ GET /logos/SQNS.png 404 in 311ms (compile: 74ms, render: 237ms)
+ GET /logos/DDC.png 404 in 180ms (compile: 18ms, render: 162ms)
+ GET /logos/FUFU.png 404 in 295ms (compile: 51ms, render: 244ms)
+ GET /logos/3189.T.png 404 in 224ms (compile: 46ms, render: 178ms)
+ GET /logos/FLD.png 404 in 240ms (compile: 28ms, render: 212ms)
+ GET /logos/ZOOZ.png 404 in 166ms (compile: 18ms, render: 149ms)
+ GET /logos/DCC.AX.svg 404 in 283ms (compile: 76ms, render: 207ms)
+ GET /logos/OBTC3.svg 404 in 165ms (compile: 46ms, render: 119ms)
+ GET /logos/3825.T.svg 404 in 170ms (compile: 19ms, render: 151ms)
+ GET /logos/BTCT.V.svg 404 in 262ms (compile: 21ms, render: 241ms)
+ GET /logos/SRAG.DU.svg 404 in 321ms (compile: 49ms, render: 272ms)
+ GET /logos/ALCPB.svg 404 in 175ms (compile: 21ms, render: 154ms)
+ GET /logos/SWC.svg 404 in 294ms (compile: 82ms, render: 212ms)
+ GET /logos/SQNS.svg 404 in 164ms (compile: 21ms, render: 143ms)
+ GET /logos/DDC.svg 404 in 286ms (compile: 70ms, render: 216ms)
+ GET /logos/FUFU.svg 404 in 171ms (compile: 19ms, render: 152ms)
+ GET /logos/FLD.svg 404 in 285ms (compile: 78ms, render: 207ms)
+ GET /logos/3189.T.svg 404 in 146ms (compile: 18ms, render: 128ms)
+ GET /logos/ZOOZ.svg 404 in 149ms (compile: 70ms, render: 80ms)
+ GET /logos/0434.HK.png 404 in 277ms (compile: 27ms, render: 250ms)
+ GET /logos/SWC.png 404 in 273ms (compile: 97ms, render: 176ms)
+ GET /logos/ALCPB.png 404 in 278ms (compile: 73ms, render: 205ms)
+ GET /logos/SQNS.png 404 in 271ms (compile: 160ms, render: 111ms)
+ GET /logos/DDC.png 404 in 252ms (compile: 13ms, render: 238ms)
+ GET /logos/FUFU.png 404 in 254ms (compile: 65ms, render: 189ms)
+ GET /logos/FLD.png 404 in 228ms (compile: 84ms, render: 144ms)
+ GET /logos/3189.T.png 404 in 162ms (compile: 67ms, render: 95ms)
+ GET /logos/ZOOZ.png 404 in 249ms (compile: 16ms, render: 233ms)
+ GET /logos/BTCT.V.png 404 in 254ms (compile: 68ms, render: 186ms)
+ GET /logos/SRAG.DU.png 404 in 202ms (compile: 67ms, render: 134ms)
+ GET /logos/DCC.AX.png 404 in 156ms (compile: 69ms, render: 87ms)
+ GET /logos/OBTC3.png 404 in 542ms (compile: 46ms, render: 496ms)
+ GET /logos/3825.T.png 404 in 548ms (compile: 18ms, render: 530ms)
+ GET /logos/ALCPB.svg 404 in 427ms (compile: 40ms, render: 387ms)
+ GET /logos/SWC.svg 404 in 418ms (compile: 123ms, render: 295ms)
+ GET /logos/SQNS.svg 404 in 256ms (compile: 18ms, render: 238ms)
+ GET /logos/DDC.svg 404 in 261ms (compile: 49ms, render: 213ms)
+ GET /logos/FUFU.svg 404 in 151ms (compile: 23ms, render: 128ms)
+ GET /logos/FLD.svg 404 in 214ms (compile: 68ms, render: 145ms)
+ GET /logos/3189.T.svg 404 in 164ms (compile: 15ms, render: 150ms)
+ GET /logos/ZOOZ.svg 404 in 269ms (compile: 74ms, render: 195ms)
+ GET /logos/SRAG.DU.svg 404 in 147ms (compile: 38ms, render: 109ms)
+ GET /logos/BTCT.V.svg 404 in 151ms (compile: 15ms, render: 136ms)
+ GET /logos/DCC.AX.svg 404 in 140ms (compile: 17ms, render: 123ms)
+ GET /logos/3825.T.svg 404 in 189ms (compile: 43ms, render: 147ms)
+ GET /logos/OBTC3.svg 404 in 72ms (compile: 12ms, render: 60ms)
+ GET /logos/0434.HK.png 404 in 296ms (compile: 22ms, render: 275ms)
+ GET /logos/ALCPB.png 404 in 297ms (compile: 90ms, render: 207ms)
+ GET /logos/SWC.png 404 in 296ms (compile: 142ms, render: 154ms)
+ GET /logos/SQNS.png 404 in 254ms (compile: 127ms, render: 127ms)
+ GET /logos/DDC.png 404 in 288ms (compile: 20ms, render: 268ms)
+ GET /logos/FLD.png 404 in 283ms (compile: 100ms, render: 183ms)
+ GET /logos/FUFU.png 404 in 293ms (compile: 71ms, render: 222ms)
+ GET /logos/3189.T.png 404 in 209ms (compile: 103ms, render: 106ms)
+ GET /logos/ZOOZ.png 404 in 306ms (compile: 17ms, render: 289ms)
+ GET /logos/BTCT.V.png 404 in 311ms (compile: 68ms, render: 243ms)
+ GET /logos/SRAG.DU.png 404 in 262ms (compile: 74ms, render: 187ms)
+ GET /logos/DCC.AX.png 404 in 180ms (compile: 49ms, render: 131ms)
+ GET /logos/3825.T.png 404 in 337ms (compile: 29ms, render: 308ms)
+ GET /logos/OBTC3.png 404 in 299ms (compile: 42ms, render: 257ms)
+ GET /logos/ALCPB.svg 404 in 311ms (compile: 71ms, render: 240ms)
+ GET /logos/SWC.svg 404 in 194ms (compile: 38ms, render: 156ms)
+ GET /logos/SQNS.svg 404 in 367ms (compile: 39ms, render: 328ms)
+ GET /logos/DDC.svg 404 in 361ms (compile: 166ms, render: 195ms)
+ GET /logos/FUFU.svg 404 in 252ms (compile: 97ms, render: 154ms)
+ GET /logos/FLD.svg 404 in 115ms (compile: 20ms, render: 95ms)
+ GET /logos/ZOOZ.svg 404 in 268ms (compile: 47ms, render: 221ms)
+ GET /logos/3189.T.svg 404 in 274ms (compile: 19ms, render: 255ms)
+ GET /logos/BTCT.V.svg 404 in 167ms (compile: 22ms, render: 145ms)
+ GET /logos/SRAG.DU.svg 404 in 225ms (compile: 74ms, render: 152ms)
+ GET /logos/DCC.AX.svg 404 in 230ms (compile: 18ms, render: 213ms)
+ GET /logos/3825.T.svg 404 in 232ms (compile: 74ms, render: 158ms)
+ GET /logos/OBTC3.svg 404 in 94ms (compile: 20ms, render: 74ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+ GET /logos/0434.HK.png 404 in 299ms (compile: 17ms, render: 282ms)
+ GET /logos/ALCPB.png 404 in 296ms (compile: 77ms, render: 219ms)
+ GET /logos/SWC.png 404 in 249ms (compile: 94ms, render: 155ms)
+ GET /logos/SQNS.png 404 in 196ms (compile: 96ms, render: 100ms)
+ GET /logos/DDC.png 404 in 292ms (compile: 25ms, render: 266ms)
+ GET /logos/FLD.png 404 in 292ms (compile: 108ms, render: 184ms)
+ GET /logos/FUFU.png 404 in 297ms (compile: 77ms, render: 220ms)
+ GET /logos/3189.T.png 404 in 125ms (compile: 26ms, render: 99ms)
+ GET /logos/ZOOZ.png 404 in 337ms (compile: 15ms, render: 322ms)
+ GET /logos/SRAG.DU.png 404 in 288ms (compile: 54ms, render: 233ms)
+ GET /logos/BTCT.V.png 404 in 292ms (compile: 21ms, render: 271ms)
+ GET /logos/DCC.AX.png 404 in 254ms (compile: 162ms, render: 92ms)
+ GET /logos/3825.T.png 404 in 333ms (compile: 15ms, render: 318ms)
+ GET /logos/ALCPB.svg 404 in 312ms (compile: 100ms, render: 212ms)
+ GET /logos/OBTC3.png 404 in 317ms (compile: 50ms, render: 268ms)
+ GET /logos/SWC.svg 404 in 304ms (compile: 153ms, render: 151ms)
+ GET /logos/SQNS.svg 404 in 390ms (compile: 37ms, render: 353ms)
+ GET /logos/FUFU.svg 404 in 284ms (compile: 127ms, render: 157ms)
+ GET /logos/DDC.svg 404 in 289ms (compile: 98ms, render: 191ms)
+ GET /logos/FLD.svg 404 in 210ms (compile: 120ms, render: 90ms)
+ GET /logos/3189.T.svg 404 in 266ms (compile: 16ms, render: 250ms)
+ GET /logos/ZOOZ.svg 404 in 242ms (compile: 38ms, render: 205ms)
+ GET /logos/BTCT.V.svg 404 in 225ms (compile: 70ms, render: 155ms)
+ GET /logos/SRAG.DU.svg 404 in 145ms (compile: 41ms, render: 104ms)
+ GET /logos/DCC.AX.svg 404 in 207ms (compile: 20ms, render: 187ms)
+ GET /logos/3825.T.svg 404 in 202ms (compile: 65ms, render: 137ms)
+ GET /logos/OBTC3.svg 404 in 148ms (compile: 68ms, render: 80ms)
+ GET / 200 in 275ms (compile: 133ms, render: 142ms)
+ GET / 200 in 43ms (compile: 5ms, render: 39ms)
+ GET /api/db/companies 200 in 114ms (compile: 96ms, render: 18ms)
+ GET /api/prices/stream 200 in 80s
+ GET /logos/ALCPB.png 404 in 874ms (compile: 196ms, render: 677ms)
+ GET /logos/0434.HK.png 404 in 879ms (compile: 132ms, render: 747ms)
+ GET /logos/SQNS.png 404 in 875ms (compile: 414ms, render: 461ms)
+ GET /logos/SWC.png 404 in 879ms (compile: 369ms, render: 511ms)
+ GET /logos/DDC.png 404 in 474ms (compile: 172ms, render: 302ms)
+ GET /logos/FLD.png 404 in 294ms (compile: 54ms, render: 239ms)
+ GET /logos/FUFU.png 404 in 299ms (compile: 21ms, render: 278ms)
+ GET /logos/3189.T.png 404 in 261ms (compile: 102ms, render: 159ms)
+ GET /logos/ZOOZ.png 404 in 181ms (compile: 80ms, render: 101ms)
+[Stream DEBUG] Forex rates: {
+  JPY: 152.832936,
+  HKD: 7.817006,
+  SEK: 8.931516,
+  CAD: 1.362006,
+  EUR: 0.842816,
+  AUD: 1.415562,
+  GBP: 0.733237
+}
+[Stream DEBUG] 3189.T conversion: {
+  rawPrice: 1.6030576027146402,
+  currency: 'JPY',
+  rate: 152.832936,
+  convertedPrice: 0.010488953786209017,
+  rawMarketCap: 63000000
+}
+[Stream] DCC.AX converted: 0.035 AUD → $0.0247 USD (rate: 1.415562, marketCap: $36.5M)
+[Stream] Sent initial data
+ GET /icons/icon-192.png 404 in 325ms (compile: 25ms, render: 301ms)
+ GET /logos/BTCT.V.png 404 in 325ms (compile: 76ms, render: 249ms)
+ GET /logos/SRAG.DU.png 404 in 310ms (compile: 132ms, render: 178ms)
+ GET /logos/DCC.AX.png 404 in 228ms (compile: 106ms, render: 122ms)
+ GET /logos/3825.T.png 404 in 552ms (compile: 17ms, render: 535ms)
+ GET /logos/ALCPB.svg 404 in 692ms (compile: 176ms, render: 517ms)
+ GET /logos/SWC.svg 404 in 657ms (compile: 299ms, render: 358ms)
+ GET /logos/OBTC3.png 404 in 744ms (compile: 94ms, render: 650ms)
+ GET /logos/0434.HK.png 404 in 225ms (compile: 12ms, render: 214ms)
+ GET /logos/SQNS.svg 404 in 441ms (compile: 44ms, render: 397ms)
+ GET /logos/FUFU.svg 404 in 431ms (compile: 215ms, render: 216ms)
+ GET /logos/DDC.svg 404 in 442ms (compile: 158ms, render: 285ms)
+ GET /logos/FLD.svg 404 in 250ms (compile: 132ms, render: 118ms)
+ GET /logos/3189.T.svg 404 in 393ms (compile: 32ms, render: 361ms)
+ GET /logos/ZOOZ.svg 404 in 432ms (compile: 122ms, render: 310ms)
+ GET /logos/BTCT.V.png 404 in 431ms (compile: 192ms, render: 239ms)
+ GET /logos/SRAG.DU.png 404 in 263ms (compile: 27ms, render: 236ms)
+ GET /logos/ALCPB.png 404 in 273ms (compile: 25ms, render: 248ms)
+ GET /logos/SWC.png 404 in 333ms (compile: 96ms, render: 237ms)
+ GET /logos/SQNS.png 404 in 339ms (compile: 162ms, render: 177ms)
+ GET /logos/DDC.png 404 in 122ms (compile: 21ms, render: 101ms)
+ GET /logos/FLD.png 404 in 315ms (compile: 62ms, render: 253ms)
+ GET /logos/FUFU.png 404 in 324ms (compile: 33ms, render: 292ms)
+ GET /logos/3189.T.png 404 in 320ms (compile: 137ms, render: 183ms)
+ GET /logos/ZOOZ.png 404 in 201ms (compile: 25ms, render: 176ms)
+ GET /logos/DCC.AX.svg 404 in 271ms (compile: 19ms, render: 252ms)
+ GET /logos/3825.T.svg 404 in 345ms (compile: 83ms, render: 262ms)
+ GET /logos/OBTC3.svg 404 in 212ms (compile: 27ms, render: 185ms)
+ GET /logos/BTCT.V.svg 404 in 272ms (compile: 104ms, render: 167ms)
+ GET /logos/SRAG.DU.svg 404 in 253ms (compile: 24ms, render: 229ms)
+ GET /logos/ALCPB.svg 404 in 301ms (compile: 83ms, render: 217ms)
+ GET /logos/SWC.svg 404 in 239ms (compile: 78ms, render: 161ms)
+ GET /logos/SQNS.svg 404 in 182ms (compile: 23ms, render: 159ms)
+ GET /logos/DDC.svg 404 in 245ms (compile: 20ms, render: 225ms)
+ GET /logos/FUFU.svg 404 in 311ms (compile: 82ms, render: 228ms)
+ GET /logos/FLD.svg 404 in 244ms (compile: 81ms, render: 163ms)
+ GET /logos/3189.T.svg 404 in 117ms (compile: 25ms, render: 92ms)
+ GET /logos/ZOOZ.svg 404 in 112ms (compile: 15ms, render: 97ms)
+ GET /logos/ALCPB.png 404 in 307ms (compile: 55ms, render: 251ms)
+ GET /logos/0434.HK.png 404 in 312ms (compile: 24ms, render: 288ms)
+ GET /logos/SWC.png 404 in 309ms (compile: 141ms, render: 167ms)
+ GET /logos/SQNS.png 404 in 309ms (compile: 195ms, render: 114ms)
+ GET /logos/DDC.png 404 in 296ms (compile: 19ms, render: 277ms)
+ GET /logos/FUFU.png 404 in 301ms (compile: 76ms, render: 225ms)
+ GET /logos/FLD.png 404 in 298ms (compile: 134ms, render: 165ms)
+ GET /logos/3189.T.png 404 in 184ms (compile: 80ms, render: 104ms)
+ GET /logos/ZOOZ.png 404 in 345ms (compile: 17ms, render: 328ms)
+ GET /logos/BTCT.V.png 404 in 350ms (compile: 77ms, render: 273ms)
+ GET /logos/SRAG.DU.png 404 in 291ms (compile: 91ms, render: 200ms)
+ GET /logos/DCC.AX.png 404 in 223ms (compile: 107ms, render: 116ms)
+ GET /logos/3825.T.png 404 in 307ms (compile: 19ms, render: 289ms)
+ GET /logos/OBTC3.png 404 in 305ms (compile: 78ms, render: 226ms)
+ GET /logos/ALCPB.svg 404 in 247ms (compile: 79ms, render: 167ms)
+ GET /logos/SWC.svg 404 in 157ms (compile: 55ms, render: 102ms)
+ GET /logos/DDC.svg 404 in 307ms (compile: 53ms, render: 254ms)
+ GET /logos/SQNS.svg 404 in 312ms (compile: 23ms, render: 289ms)
+ GET /logos/FUFU.svg 404 in 188ms (compile: 27ms, render: 160ms)
+ GET /logos/FLD.svg 404 in 265ms (compile: 78ms, render: 187ms)
+ GET /logos/3189.T.svg 404 in 253ms (compile: 39ms, render: 214ms)
+ GET /logos/ZOOZ.svg 404 in 322ms (compile: 96ms, render: 226ms)
+ GET /logos/BTCT.V.svg 404 in 183ms (compile: 26ms, render: 157ms)
+ GET /logos/SRAG.DU.svg 404 in 178ms (compile: 76ms, render: 102ms)
+ GET /logos/DCC.AX.svg 404 in 245ms (compile: 32ms, render: 213ms)
+ GET /logos/3825.T.svg 404 in 227ms (compile: 71ms, render: 156ms)
+ GET /logos/OBTC3.svg 404 in 164ms (compile: 74ms, render: 90ms)
+ GET /logos/ALCPB.png 404 in 254ms (compile: 51ms, render: 203ms)
+ GET /logos/0434.HK.png 404 in 259ms (compile: 22ms, render: 237ms)
+ GET /logos/SWC.png 404 in 257ms (compile: 125ms, render: 132ms)
+ GET /logos/SQNS.png 404 in 255ms (compile: 139ms, render: 115ms)
+ GET /logos/DDC.png 404 in 251ms (compile: 18ms, render: 233ms)
+ GET /logos/FUFU.png 404 in 260ms (compile: 62ms, render: 198ms)
+ GET /logos/FLD.png 404 in 259ms (compile: 108ms, render: 151ms)
+ GET /logos/3189.T.png 404 in 182ms (compile: 90ms, render: 92ms)
+ GET /logos/ZOOZ.png 404 in 248ms (compile: 19ms, render: 228ms)
+ GET /logos/SRAG.DU.png 404 in 239ms (compile: 86ms, render: 153ms)
+ GET /logos/BTCT.V.png 404 in 247ms (compile: 63ms, render: 184ms)
+ GET /logos/DCC.AX.png 404 in 250ms (compile: 154ms, render: 95ms)
+ GET /logos/3825.T.png 404 in 261ms (compile: 14ms, render: 247ms)
+ GET /logos/ALCPB.svg 404 in 243ms (compile: 64ms, render: 179ms)
+ GET /logos/OBTC3.png 404 in 248ms (compile: 37ms, render: 210ms)
+ GET /logos/SWC.svg 404 in 241ms (compile: 115ms, render: 126ms)
+ GET /logos/SQNS.svg 404 in 427ms (compile: 32ms, render: 395ms)
+ GET /logos/DDC.svg 404 in 419ms (compile: 133ms, render: 286ms)
+ GET /logos/FUFU.svg 404 in 321ms (compile: 179ms, render: 142ms)
+ GET /logos/FLD.svg 404 in 163ms (compile: 73ms, render: 90ms)
+ GET /logos/3189.T.svg 404 in 274ms (compile: 17ms, render: 257ms)
+ GET /logos/ZOOZ.svg 404 in 275ms (compile: 63ms, render: 212ms)
+ GET /logos/BTCT.V.svg 404 in 231ms (compile: 76ms, render: 155ms)
+ GET /logos/SRAG.DU.svg 404 in 178ms (compile: 77ms, render: 101ms)
+ GET /logos/3825.T.svg 404 in 212ms (compile: 46ms, render: 166ms)
+ GET /logos/DCC.AX.svg 404 in 218ms (compile: 18ms, render: 201ms)
+ GET /logos/OBTC3.svg 404 in 178ms (compile: 102ms, render: 76ms)

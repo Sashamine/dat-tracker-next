@@ -1353,7 +1353,7 @@ Generated: 2026-02-07
 ## SQNS (4 data points)
 
 - [ ] **2025-11-04**: 2,264 BTC
-  - Source: 6-K: Sold 970 BTC to repay debt
+  - Source: Company treasury update: sold 970 BTC to repay debt
   - Link: https://sequans.com/bitcoin-treasury/
 
 - [ ] **2025-09-17**: 3,234 BTC
@@ -1426,11 +1426,15 @@ Generated: 2026-02-07
 
 ---
 
-## SWC (2 data points)
+## SWC (3 data points)
+
+- [ ] **2026-02-11**: 2,689 BTC
+  - Source: RNS Bitcoin Purchase
+  - Link: https://www.smarterwebcompany.co.uk/_files/ugd/6ffd5f_aa5f1f919c42462a81cf286f54dd191d.pdf
 
 - [ ] **2026-01-22**: 2,674 BTC
   - Source: RNS Bitcoin Purchase + company analytics
-  - Link: https://www.aquis.eu/stock-exchange/announcements/5562558
+  - Link: https://www.smarterwebcompany.co.uk/_files/ugd/6ffd5f_71b6f08ec4794f4e8d2f23d06d7ad523.pdf
 
 - [ ] **2025-11-04**: 2,664 BTC
   - Source: RNS Bitcoin Purchase
@@ -1502,15 +1506,19 @@ Generated: 2026-02-07
 
 ---
 
-## UPXI (6 data points)
+## UPXI (7 data points)
+
+- [ ] **2026-02-09**: 2,173,204 SOL
+  - Source: SEC 10-Q Q2 FY2026 (Dec 31 holdings, Feb 9 cover-page shares anchor)
+  - Link: https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm
 
 - [ ] **2026-01-05**: 2,174,583 SOL
-  - Source: 8-K Jan 9, 2026
-  - Link: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194
+  - Source: Company update Jan 7, 2026
+  - Link: https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html
 
 - [ ] **2025-09-30**: 2,018,419 SOL
   - Source: Q3 2025 10-Q
-  - Link: /filings/upxi/10Q-2025-09-30#sol-holdings
+  - Link: https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/upxi_10q.htm
 
 - [ ] **2025-08-05**: 2,000,518 SOL
   - Source: 2M SOL milestone
@@ -1520,9 +1528,9 @@ Generated: 2026-02-07
   - Source: Press release
   - Link: https://ir.upexi.com/press-releases
 
-- [ ] **2025-06-30**: 735,692 SOL
-  - Source: Q2 2025
-  - Link: /filings/upxi/10K-2025-06-30#sol-holdings
+- [ ] **2025-06-30**: 744,026 SOL
+  - Source: FY2025 10-K
+  - Link: https://www.sec.gov/Archives/edgar/data/1775194/000147793225006996/upxi_10k.htm
 
 - [ ] **2025-04-15**: 596,714 SOL
   - Source: Initial $100M SOL purchase
@@ -1594,3 +1602,10 @@ Generated: 2026-02-07
 
 ---
 
+## DFDW (Instrument Scope Note)
+
+- [x] DFDW/DFDVW is tracked as a dilutive instrument under DFDV, not as a standalone company in `companies.ts` / `earnings-data.ts` / `holdings-history.ts`.
+  - Source: DFDV warrant record in dilutive instruments
+  - Link: https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/ea0264118-8k_defi.htm
+
+---
