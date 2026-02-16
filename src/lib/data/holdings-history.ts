@@ -783,16 +783,27 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 
 // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
 
-// BitFuFu (FUFU) - Singapore miner, Nasdaq listed
-// SEC 6-K filings, ~1,796 BTC treasury (Jan 2026)
-// Debt: $141.3M total ($101.3M long-term payables + $40M long-term loans, SEC XBRL Jun 2025)
+// BitFuFu (FUFU) - Singapore-based miner, Nasdaq listed (Foreign Private Issuer)
+// SEC CIK: 0001921158 | Files 20-F (annual) + semi-annual 6-K (H1) + monthly operational 6-Ks
+// Only H1 (Jun 30) and FY (Dec 31) have audited/reviewed financials - no Q1/Q3 filings
+// BTC count from inline XBRL (CryptoAssetNumberOfUnits) + monthly 6-K press releases
+// Debt: $141.3M total ($101.3M equipment payable + $40M BTC-collateralized loans, XBRL Jun 2025)
+// Company is profitable - Q3 2025 net income $11.6M
 const FUFU_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 500, sharesOutstanding: 150_000_000, holdingsPerShare: 0.0000033, stockPrice: 4.94, totalDebt: 80_000_000, cash: 20_000_000, source: "Q1 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22bitfufu%22&forms=6-K&dateRange=custom&startdt=2024-01-01&enddt=2024-06-30" },
-  { date: "2024-06-30", holdings: 750, sharesOutstanding: 155_000_000, holdingsPerShare: 0.0000048, stockPrice: 4.70, totalDebt: 90_000_000, cash: 25_000_000, source: "Q2 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390024081168/ea021496301ex99-1_bitfufu.htm" },
-  { date: "2024-09-30", holdings: 1000, sharesOutstanding: 158_000_000, holdingsPerShare: 0.0000063, stockPrice: 4.04, totalDebt: 95_000_000, cash: 30_000_000, source: "Q3 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22bitfufu%22&forms=6-K&dateRange=custom&startdt=2024-07-01&enddt=2024-12-31" },
-  { date: "2024-12-31", holdings: 1250, sharesOutstanding: 160_000_000, holdingsPerShare: 0.0000078, stockPrice: 4.95, totalDebt: 100_000_000, cash: 35_000_000, source: "Q4 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22bitfufu%22&forms=6-K&dateRange=custom&startdt=2024-07-01&enddt=2025-03-31" },
-  { date: "2025-06-30", holdings: 1500, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000091, stockPrice: 3.23, totalDebt: 141_301_000, cash: 40_086_000, source: "H1 2025 6-K", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm", sourceType: "sec-filing" },
-  { date: "2025-12-31", holdings: 1780, sharesOutstanding: 165_000_000, holdingsPerShare: 0.0000108, stockPrice: 2.64, totalDebt: 141_301_000, cash: 45_000_000, source: "SEC 6-K Jan 7, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026001965/ea027210501ex99-1_bitfufu.htm", sourceType: "sec-filing" },
+  // H1 2024 (6-K filed 2024-09-24): XBRL CryptoAssetNumberOfUnits = 1,721 BTC (context c81, Jun 30 2024, Bitcoin)
+  // Shares: XBRL CommonStockSharesOutstanding = 162,902,268 | Cash: XBRL $48,348,000 | Debt: XBRL LongTermLoansPayable $102,435,000 (equipment payable only, no loan facilities yet)
+  { date: "2024-06-30", holdings: 1721, sharesOutstanding: 162_902_268, holdingsPerShare: 0.0000106, stockPrice: 4.70, totalDebt: 102_435_000, cash: 48_348_000, source: "H1 2024 6-K (XBRL-verified)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390024081168/ea021496301ex99-1_bitfufu.htm" },
+  // FY 2024 (20-F filed 2025-04-21): "we held 1,721 Bitcoins as of December 31, 2024"
+  // Shares: XBRL 163,106,615 | Cash: XBRL $38,201,000 | Debt: XBRL LongTermDebt $101,301,000 + LongTermLoansPayable $34,950,000 = $136,251,000
+  { date: "2024-12-31", holdings: 1721, sharesOutstanding: 163_106_615, holdingsPerShare: 0.0000106, stockPrice: 4.95, totalDebt: 136_251_000, cash: 38_201_000, source: "20-F FY2024 (XBRL-verified)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025033733/ea0238119-20f_bitfu.htm" },
+  // H1 2025 (6-K filed 2025-09-05): Q2 2025 earnings PR says 1,792 BTC held as of Jun 30, 2025
+  // Shares: XBRL 164,131,946 | Cash: XBRL $40,086,000 | Debt: XBRL LongTermDebt $101,301,000 + LongTermLoansPayable $40,000,000 = $141,301,000
+  { date: "2025-06-30", holdings: 1792, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000109, stockPrice: 3.23, totalDebt: 141_301_000, cash: 40_086_000, source: "H1 2025 6-K + Q2 earnings PR (XBRL-verified)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm" },
+  // Dec 2025 monthly 6-K (filed 2026-01-07): 1,780 BTC held, 274 BTC pledged
+  // No audited financials for this date yet - shares/debt/cash carried from H1 2025
+  { date: "2025-12-31", holdings: 1780, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000108, stockPrice: 2.64, totalDebt: 141_301_000, cash: 40_086_000, source: "SEC 6-K Jan 7, 2026 (monthly production update)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026001965/ea027210501ex99-1_bitfufu.htm", methodology: "BTC from monthly 6-K. Shares/debt/cash carried from H1 2025 (no FY 2025 financials filed yet).", confidence: "medium" },
+  // Jan 2026 monthly 6-K (filed 2026-02-05): 1,796 BTC held, 252 BTC pledged
+  { date: "2026-01-31", holdings: 1796, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000109, source: "SEC 6-K Feb 5, 2026 (monthly production update)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm", methodology: "BTC from monthly 6-K. Shares carried from H1 2025.", confidence: "medium" },
 ];
 
 // Fold Holdings (FLD) - BTC rewards fintech, Nasdaq listed July 2024

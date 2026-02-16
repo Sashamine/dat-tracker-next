@@ -1611,11 +1611,11 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // All instruments deep OTM at ~$2 stock vs $9-$15 strikes
   // 300 BTC collateral on June note, 475 BTC funded March note
 
-  // FUFU (BitFuFu) - BTC miner
-  // Verified 2026-02-02 via SEC 20-F (Apr 2025) and 6-K (Jan 2026)
+  // FUFU (BitFuFu) - BTC miner (Foreign Private Issuer)
+  // Verified 2026-02-16 via SEC 20-F FY2024, 6-K H1 2025 XBRL, and 6-K Jan 2026
   // CIK: 0001921158
   // Basic shares: 164,131,946 (Jun 2025 XBRL)
-  // Debt: $101.3M long-term
+  // Debt: $141.3M ($101.3M equipment payable + $40M BTC-collateralized loans)
   FUFU: [
     {
       type: "warrant",
@@ -1626,9 +1626,28 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "https://www.sec.gov/Archives/edgar/data/1921158/000121390025033733/ea0238119-20f_bitfu.htm",
       notes: "Public warrants @ $11.50 - each warrant = 3/4 share. Deep OTM at ~$2.80 stock.",
     },
+    {
+      type: "rsu",
+      strikePrice: 0,  // Restricted shares vest at $0 — always ITM
+      potentialShares: 297_444,
+      source: "SEC 6-K H1 2025 XBRL: SharebasedCompensationArrangementBySharebasedPaymentAwardOptionsNonvestedNumberOfShares",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
+      notes: "Unvested restricted shares under 2022 Share Incentive Plan. 6,512,781 granted, 6,176,756 vested, 297,444 unvested (Jun 2025). Grant date fair value $5.05/share. Always ITM.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 207_000,  // 115,000 shares + 86,250 warrant shares (0.75 each) + 5,750 rights (1/20 each)
+      source: "SEC 20-F FY2024 (Chardan Unit Purchase Option)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1921158/000121390025033733/ea0238119-20f_bitfu.htm",
+      notes: "Chardan Unit Purchase Option: 115,000 units @ $11.50. Each unit = 1 share + 1 warrant (3/4 share) + 1 right (1/20 share) = ~1.8 shares. Deep OTM. Immaterial (~0.1% dilution).",
+    },
   ],
-  // Total FUFU dilution: 5.4M potential shares from warrants (all OTM at $11.50 vs ~$2.80)
-  // Also Unit Purchase Option for 115,000 units @ $11.50
+  // Total FUFU dilution: 5.4M public warrant shares + 297K RSUs (always ITM) + 207K Chardan UPO (OTM)
+  // At ~$2.80 stock: only 297K RSUs are ITM. All warrants/UPO deep OTM at $11.50.
+  // ATM program (Jun 2025, B. Riley/Cantor) allows ongoing issuance — ~1M shares issued in H1 2025.
 
   // HYPD (Hyperion DeFi) - HYPE treasury company
   // Verified 2026-01-30 via SEC 424B3 (Jan 9, 2026) and 10-Q Q3 2025

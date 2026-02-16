@@ -962,10 +962,10 @@ export const btcCompanies: Company[] = [
     website: "https://bitfufu.com",
     secCik: "0001921158",
     isMiner: true,
-    quarterlyBurnUsd: 2_046_500,  // H1 2025: $4,093,000 / 2
-    burnSource: "SEC 6-K H1 2025 XBRL: GeneralAndAdministrativeExpense $4,093,000 (H1 2025) / 2",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
-    burnAsOf: "2025-06-30",
+    quarterlyBurnUsd: 0,  // FUFU is profitable — Q3 2025 net income $11.6M, EBITDA $22.1M. Mining revenue covers all operating costs.
+    burnSource: "SEC 6-K Q3 2025: Revenue $180.7M, COGS $173.5M, Net Income $11.6M. Company is cash-flow positive from mining operations. G&A alone is ~$2M/qtr but revenue exceeds total costs.",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025108472/ea026476001ex99-1_bitfufu.htm",
+    burnAsOf: "2025-09-30",
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
@@ -975,8 +975,8 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2025-06-30",
     debtSource: "SEC 6-K H1 2025 XBRL: LongTermDebt $101,301K + LongTermLoansPayable $40,000K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
-    cashReserves: 40_086_000,  // SEC XBRL Jun 2025: CashAndCashEquivalentsAtCarryingValue
-    cashSource: "SEC 6-K H1 2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $40,086,000",
+    cashReserves: 40_086_000,  // SEC XBRL Jun 2025: CashAndCashEquivalentsAtCarryingValue. Q3 2025 PR shows $32.6M but no XBRL filing for Sep 30 (FPI: only H1/FY have XBRL).
+    cashSource: "SEC 6-K H1 2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $40,086,000 (Q3 PR shows $32.6M but unaudited, no XBRL)",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     cashAsOf: "2025-06-30",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (641k+ users).",
