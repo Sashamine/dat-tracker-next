@@ -220,9 +220,13 @@ export function getMarketCapForMnavSync(
   const isNonUsd = NON_USD_TICKERS.has(ticker);
   const currency = TICKER_CURRENCIES[ticker] || "USD";
 
-  // For static fallback stocks, use the verified marketCap directly (from company dashboard)
-  // The fallback marketCap is more accurate than shares × price due to forex rate discrepancies
-  if (stockData?.isStatic && stockData.marketCap && stockData.marketCap > 0) {
+  // For static fallback stocks WITHOUT sharesForMnav, use the verified marketCap directly
+  // (from company dashboard). The fallback marketCap is more accurate than shares × price
+  // due to forex rate discrepancies.
+  // If the company HAS sharesForMnav, fall through to the dilution-aware path below
+  // so that dilutive instruments and debt adjustments are properly applied.
+  if (stockData?.isStatic && stockData.marketCap && stockData.marketCap > 0 &&
+      !(company.sharesForMnav && company.sharesForMnav > 0 && stockData?.price && stockData.price > 0)) {
     return {
       marketCap: stockData.marketCap,
       source: "api",
