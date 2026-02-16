@@ -11,7 +11,7 @@
  * Each instrument has full provenance (source, sourceUrl) for verification.
  */
 
-export type InstrumentType = "convertible" | "option" | "warrant";
+export type InstrumentType = "convertible" | "option" | "warrant" | "preferred" | "rsu";
 
 export interface DilutiveInstrument {
   type: InstrumentType;

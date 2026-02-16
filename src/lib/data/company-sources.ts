@@ -33,7 +33,7 @@ export interface CompanyDataSources {
   trackers?: string[];
   blockworksUrl?: string;
   // Data methodology
-  sharesSource: "diluted" | "basic" | "assumed_diluted" | "unknown";
+  sharesSource: "diluted" | "basic" | "basic_plus_prefunded" | "assumed_diluted" | "unknown";
   sharesNotes?: string;
   // What data is available
   reportsHoldingsFrequency?: "daily" | "weekly" | "monthly" | "quarterly" | "on_purchase";

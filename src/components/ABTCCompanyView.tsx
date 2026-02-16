@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
-import { ABTC_PROVENANCE, ABTC_CIK } from "@/lib/data/provenance/abtc";
-import { pv, derivedSource, docSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { ABTC_PROVENANCE } from "@/lib/data/provenance/abtc";
+import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { StockChart } from "./stock-chart";
 import { CompanyMNAVChart } from "./company-mnav-chart";
 import { HoldingsPerShareChart } from "./holdings-per-share-chart";
@@ -13,9 +13,7 @@ import { HoldingsHistoryTable } from "./holdings-history-table";
 import { ScheduledEvents } from "./scheduled-events";
 import { MnavCalculationCard } from "./mnav-calculation-card";
 import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
-import { StockPriceCell } from "./price-cell";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
-import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
 import { getCompanyEarnings } from "@/lib/data/earnings-data";
@@ -27,9 +25,7 @@ import {
   useStockHistory,
   TimeRange,
   ChartInterval,
-  VALID_INTERVALS,
   DEFAULT_INTERVAL,
-  INTERVAL_LABELS,
 } from "@/lib/hooks/use-stock-history";
 
 interface ABTCCompanyViewProps {
