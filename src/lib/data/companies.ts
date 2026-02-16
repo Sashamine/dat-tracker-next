@@ -949,29 +949,33 @@ export const btcCompanies: Company[] = [
     currency: "USD",
     asset: "BTC",
     tier: 2,
-    holdings: 1_780,  // SEC 6-K Jan 7, 2026 (Dec 2025 Update) - includes 274 BTC pledged
-    holdingsLastUpdated: "2025-12-31",
+    holdings: 1_796,  // SEC 6-K Feb 5, 2026 (Jan 2026 Update) - includes 252 BTC pledged
+    holdingsLastUpdated: "2026-01-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://ir.bitfufu.com/press-viewer/?i=160927",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm",
     datStartDate: "2024-01-01",
     website: "https://bitfufu.com",
     secCik: "0001921158",
     isMiner: true,
     quarterlyBurnUsd: 2_046_500,  // H1 2025: $4,093,000 / 2
     burnSource: "SEC 6-K H1 2025 XBRL: GeneralAndAdministrativeExpense $4,093,000 (H1 2025) / 2",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1921158&type=6-K",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     burnAsOf: "2025-06-30",
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     sharesAsOf: "2025-06-30",
-    totalDebt: 101_301_000,  // SEC XBRL Jun 2025: Long Term Debt
+    totalDebt: 141_301_000,  // SEC XBRL Jun 2025: LongTermDebt $101.3M (payables) + LongTermLoansPayable $40M (loans)
     debtAsOf: "2025-06-30",
-    debtSource: "SEC 20-F/6-K XBRL",
+    debtSource: "SEC 6-K H1 2025 XBRL: LongTermDebt $101,301K + LongTermLoansPayable $40,000K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
-    strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (648k+ users).",
-    notes: "Singapore (Nasdaq FUFU). BITMAIN partner. 3.7 EH/s self-owned, 26.1 EH/s under management. 478 MW hosting. 274 BTC pledged for loans.",
+    cashReserves: 40_086_000,  // SEC XBRL Jun 2025: CashAndCashEquivalentsAtCarryingValue
+    cashSource: "SEC 6-K H1 2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $40,086,000",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
+    cashAsOf: "2025-06-30",
+    strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (641k+ users).",
+    notes: "Singapore (Nasdaq FUFU). BITMAIN partner. 3.7 EH/s self-owned, 29.6 EH/s under management. 520 MW hosting. 252 BTC pledged for loans.",
   },
   // EXOD (Exodus Movement) REMOVED - not a DAT accumulator
   // They hold BTC but sell it for operations/acquisitions, no explicit accumulation strategy

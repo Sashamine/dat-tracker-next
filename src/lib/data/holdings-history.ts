@@ -780,15 +780,15 @@ const CLSK_HISTORY: HoldingsSnapshot[] = [
 // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
 
 // BitFuFu (FUFU) - Singapore miner, Nasdaq listed
-// SEC 6-K filings, ~1,780 BTC treasury
-// Debt: $101M long-term debt (SEC XBRL Jun 2025)
+// SEC 6-K filings, ~1,796 BTC treasury (Jan 2026)
+// Debt: $141.3M total ($101.3M long-term payables + $40M long-term loans, SEC XBRL Jun 2025)
 const FUFU_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-03-31", holdings: 500, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000033, stockPrice: 5.0, totalDebt: 80_000_000, cash: 20_000_000, source: "Q1 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001921158&type=6-K" },
-  { date: "2024-06-30", holdings: 750, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.0000048, stockPrice: 4.5, totalDebt: 90_000_000, cash: 25_000_000, source: "Q2 2024 6-K", sourceType: "sec-filing", sourceUrl: "/filings/fufu/0001213900-24-081168" },
-  { date: "2024-09-30", holdings: 1000, sharesOutstandingDiluted: 158_000_000, holdingsPerShare: 0.0000063, stockPrice: 4.0, totalDebt: 95_000_000, cash: 30_000_000, source: "Q3 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001921158&type=6-K" },
-  { date: "2024-12-31", holdings: 1250, sharesOutstandingDiluted: 160_000_000, holdingsPerShare: 0.0000078, stockPrice: 5.5, totalDebt: 100_000_000, cash: 35_000_000, source: "Q4 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001921158&type=6-K" },
-  { date: "2025-06-30", holdings: 1500, sharesOutstandingDiluted: 164_131_946, holdingsPerShare: 0.0000091, stockPrice: 6.0, totalDebt: 101_301_000, cash: 40_000_000, source: "H1 2025 6-K", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/", sourceType: "sec-filing" },
-  { date: "2025-12-31", holdings: 1780, sharesOutstandingDiluted: 165_000_000, holdingsPerShare: 0.0000108, stockPrice: 5.0, totalDebt: 101_301_000, cash: 45_000_000, source: "SEC 6-K Jan 7, 2026", sourceUrl: "https://ir.bitfufu.com/press-viewer/?i=160927", sourceType: "sec-filing" },
+  { date: "2024-03-31", holdings: 500, sharesOutstandingDiluted: 150_000_000, holdingsPerShare: 0.0000033, stockPrice: 4.94, totalDebt: 80_000_000, cash: 20_000_000, source: "Q1 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22bitfufu%22&forms=6-K&dateRange=custom&startdt=2024-01-01&enddt=2024-06-30" },
+  { date: "2024-06-30", holdings: 750, sharesOutstandingDiluted: 155_000_000, holdingsPerShare: 0.0000048, stockPrice: 4.70, totalDebt: 90_000_000, cash: 25_000_000, source: "Q2 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390024081168/ea021496301ex99-1_bitfufu.htm" },
+  { date: "2024-09-30", holdings: 1000, sharesOutstandingDiluted: 158_000_000, holdingsPerShare: 0.0000063, stockPrice: 3.97, totalDebt: 95_000_000, cash: 30_000_000, source: "Q3 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22bitfufu%22&forms=6-K&dateRange=custom&startdt=2024-07-01&enddt=2024-12-31" },
+  { date: "2024-12-31", holdings: 1250, sharesOutstandingDiluted: 160_000_000, holdingsPerShare: 0.0000078, stockPrice: 4.95, totalDebt: 100_000_000, cash: 35_000_000, source: "Q4 2024 6-K", sourceType: "sec-filing", sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22bitfufu%22&forms=6-K&dateRange=custom&startdt=2024-07-01&enddt=2025-03-31" },
+  { date: "2025-06-30", holdings: 1500, sharesOutstandingDiluted: 164_131_946, holdingsPerShare: 0.0000091, stockPrice: 3.23, totalDebt: 141_301_000, cash: 40_086_000, source: "H1 2025 6-K", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 1780, sharesOutstandingDiluted: 165_000_000, holdingsPerShare: 0.0000108, stockPrice: 2.64, totalDebt: 141_301_000, cash: 45_000_000, source: "SEC 6-K Jan 7, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026001965/ea027210501ex99-1_bitfufu.htm", sourceType: "sec-filing" },
 ];
 
 // Fold Holdings (FLD) - BTC rewards fintech, Nasdaq listed July 2024
