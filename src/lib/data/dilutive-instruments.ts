@@ -1921,7 +1921,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_400_000,
       source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525316435/",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm",
       expiration: "2030-04-04",
       issuedDate: "2025-04-04",
       notes:
@@ -1935,7 +1935,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_000_000,
       source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525316435/",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm",
       expiration: "2030-04-04",
       issuedDate: "2025-04-04",
       notes:
@@ -1952,7 +1952,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 4_080_895,
       source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525316435/",
+        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm",
       issuedDate: "2025-08-24",
       notes:
         "Pre-funded warrants from August 2025 PIPE. $0.0001 exercise price — near-certain conversion. " +
