@@ -220,7 +220,7 @@ export const ethCompanies: Company[] = [
     otherInvestments: 527_600_000,  // WhiteFiber (WYFI) ~27M shares @ ~$19.54 (Feb 6, 2026 PR)
     leader: "Sam Tabar",
     strategy: "89% staked, fully exited BTC. $150M 4% converts due 2030. Majority stake in WhiteFiber (WYFI) AI/HPC.",
-    notes: "Staking yield ~3.5% annualized. $427M WhiteFiber (WYFI) stake - AI infrastructure.",
+    notes: "Staking yield ~2.9% annualized. $528M WhiteFiber (WYFI) stake - AI infrastructure.",
   },
   {
     id: "btcs",

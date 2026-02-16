@@ -202,12 +202,12 @@ export const BTBT_STAKING = {
 
   annualizedYield: pv(STAKING_APY, docSource({
     type: "press-release",
-    searchTerm: "3.5%",
-    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
-    quote: "representing an annualized yield of approximately 3.5%",
-    anchor: "3.5%",
+    searchTerm: "2.9%",
+    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    quote: "representing an annualized yield of approximately 2.9%",
+    anchor: "2.9%",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Generated 389.6 ETH in staking rewards during December 2025."),
+  }), "Jan 2026 PR. Down from 3.5% in Dec 2025."),
 
   stakingRevenue: pv(2_900_000, docSource({
     type: "press-release",
