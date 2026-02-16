@@ -1,6 +1,6 @@
 // DDC Enterprise (DDC) Bitcoin Holdings History
 // Source: SEC filings & https://treasury.ddc.xyz
-// Last updated: 2026-02-02
+// Last updated: 2026-02-16
 
 export interface DDCHoldingsEntry {
   date: string; // YYYY-MM-DD
@@ -28,8 +28,8 @@ export const ddcHoldingsHistory: DDCHoldingsEntry[] = [
   {
     date: "2025-05-29",
     btcAcquired: 78,
-    avgCostUsd: 42970,
-    totalCostUsd: 3351660,
+    avgCostUsd: 40073,  // Updated from treasury.ddc.xyz (was 42970)
+    totalCostUsd: 3125694,
     cumulativeBtc: 100,
     basicShares: 5650000,
     dilutedShares: 6820000,
@@ -159,8 +159,8 @@ export const ddcHoldingsHistory: DDCHoldingsEntry[] = [
   {
     date: "2026-01-28",
     btcAcquired: 100,
-    avgCostUsd: 88130,
-    totalCostUsd: 8813000,
+    avgCostUsd: 88842,  // Updated from treasury.ddc.xyz (was 88130)
+    totalCostUsd: 8884200,
     cumulativeBtc: 1683,
     basicShares: 23310000,
     dilutedShares: 29750000,
@@ -169,13 +169,33 @@ export const ddcHoldingsHistory: DDCHoldingsEntry[] = [
   {
     date: "2026-01-29",
     btcAcquired: 100,
-    avgCostUsd: 88170,
-    totalCostUsd: 8817000,
+    avgCostUsd: 88842,  // Updated from treasury.ddc.xyz (was 88170)
+    totalCostUsd: 8884200,
     cumulativeBtc: 1783,
     basicShares: 23310000,
     dilutedShares: 29750000,
     source: "Press release - treasury.ddc.xyz",
     filingUrl: "https://ir.ddc.xyz/news-events/press-releases/detail/76/",
+  },
+  {
+    date: "2026-02-05",
+    btcAcquired: 105,
+    avgCostUsd: 64767,
+    totalCostUsd: 6800535,
+    cumulativeBtc: 1888,
+    basicShares: 23310000,
+    dilutedShares: 29750000,
+    source: "treasury.ddc.xyz",
+  },
+  {
+    date: "2026-02-11",
+    btcAcquired: 100,
+    avgCostUsd: 64767,
+    totalCostUsd: 6476700,
+    cumulativeBtc: 1988,
+    basicShares: 28720000,  // Updated to 28.72M per 6-K Feb 6
+    dilutedShares: 35720000,  // Updated to 35.72M per treasury.ddc.xyz
+    source: "treasury.ddc.xyz",
   },
 ];
 
@@ -187,19 +207,19 @@ export const ddcSummary = {
   cik: "0001808110",
   
   // Current holdings (as of latest entry)
-  currentBtc: 1783,
-  avgCostPerBtc: 88112,
-  totalCostBasis: 157102549, // Sum of all totalCostUsd
+  currentBtc: 1988,
+  avgCostPerBtc: 85661,  // treasury.ddc.xyz weighted avg
+  totalCostBasis: 170379784, // Sum of all totalCostUsd
   
   // Key dates
   treasuryPolicyDate: "2025-02-21",
   firstPurchaseDate: "2025-05-23",
-  latestPurchaseDate: "2026-01-29",
+  latestPurchaseDate: "2026-02-11",
   
   // Share data
-  currentBasicShares: 23310000,
-  currentDilutedShares: 29750000,
-  btcPerShare: 0.059925, // BTC per 1,000 shares
+  currentBasicShares: 28720000,
+  currentDilutedShares: 35720000,
+  btcPerShare: 0.069210, // BTC per 1,000 shares (1988/28720)
   
   // Performance metrics (from Jan 29, 2026 press release)
   btcYieldYtd2026: 0.507, // 50.7%
