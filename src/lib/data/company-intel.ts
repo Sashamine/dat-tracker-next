@@ -361,12 +361,12 @@ const BOYAA_INTEL: CompanyIntel = {
   ],
   strategySummary: "Leading online gaming company (digital card and board games). One of the largest public Bitcoin holders among Hong Kong-listed companies. Views Bitcoin as resilient store of value and hedge against macroeconomic uncertainties. Pioneer in integrating digital assets into corporate treasury in Hong Kong. Converted all ETH holdings to Bitcoin.",
   recentDevelopments: [
-    "4,091 BTC holdings (~$376M) at $183.66M total cost basis",
+    "4,091 BTC holdings at avg cost ~$68,114/BTC (~$278.6M total cost basis)",
     "Converted Ethereum holdings to Bitcoin as part of Bitcoin-centric treasury strategy",
     "One of the first Hong Kong-listed companies to adopt significant Bitcoin treasury position",
     "'MicroStrategy of Asia' positioning",
   ],
-  keyBackers: ["Zhang Wei (Chairman)"],
+  keyBackers: ["Dai Zhikang (Chairman & Executive Director)"],
   outlook2026: "Continued BTC accumulation. Hong Kong crypto hub positioning.",
 };
 

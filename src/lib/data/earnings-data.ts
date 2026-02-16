@@ -2709,7 +2709,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 710_698_730,
     holdingsPerShare: 0.00000472,
     source: "press-release",
-    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0828/",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     status: "reported",
   },
   // Q1 2025 (derived from H1 2025 - Q2 2025)
@@ -2727,6 +2727,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 710_183_730,
     holdingsPerShare: 0.00000472,
     source: "press-release",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     status: "reported",
   },
   // Q3 2025 (Q3 2025 Results - Nov 17, 2025)
