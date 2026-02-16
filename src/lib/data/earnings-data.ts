@@ -2701,7 +2701,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 2,
-    earningsDate: "2025-08-28", // H1 2025 results announcement (estimated)
+    earningsDate: "2025-08-11", // H1 2025 Interim Results filed Aug 11, 2025
     earningsTime: null,
     revenueActual: 110_713_000, // HK$110.7M (Q2 standalone)
     netIncome: 449_581_000, // HK$449.6M profit (includes BTC FV gains)
@@ -2709,17 +2709,17 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 710_698_730,
     holdingsPerShare: 0.00000472,
     source: "press-release",
-    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0811/2025081101246.pdf",
     status: "reported",
   },
-  // Q1 2025 (derived from H1 2025 - Q2 2025)
+  // Q1 2025 (Q1 2025 Results - May 29, 2025)
   {
     ticker: "0434.HK",
     fiscalYear: 2025,
     fiscalQuarter: 1,
     calendarYear: 2025,
     calendarQuarter: 1,
-    earningsDate: "2025-05-15", // Q1 results (estimated)
+    earningsDate: "2025-05-29", // Q1 2025 Results filed May 29, 2025
     earningsTime: null,
     revenueActual: 111_892_000, // HK$111.9M (H1 222.6M - Q2 110.7M)
     netIncome: -223_561_000, // HK$(223.6)M loss (H1 226M - Q2 449.6M; BTC FV loss in Q1)
@@ -2727,7 +2727,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 710_183_730,
     holdingsPerShare: 0.00000472,
     source: "press-release",
-    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0529/2025052901588.pdf",
     status: "reported",
   },
   // Q3 2025 (Q3 2025 Results - Nov 17, 2025)
@@ -2746,44 +2746,46 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     status: "reported",
   },
-  // Q4 2024 (FY 2024 Annual Results)
+  // Q4 2024 (FY 2024 Annual Results - Mar 5, 2025)
   {
     ticker: "0434.HK",
     fiscalYear: 2024,
     fiscalQuarter: 4,
     calendarYear: 2024,
     calendarQuarter: 4,
-    earningsDate: "2025-03-28", // FY 2024 results (estimated)
+    earningsDate: "2025-03-05", // FY 2024 Annual Results filed Mar 5, 2025
     earningsTime: null,
     holdingsAtQuarterEnd: 3_274, // BTC Yield table
     sharesAtQuarterEnd: 710_183_730,
     holdingsPerShare: 0.00000461,
     source: "press-release",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0305/2025030501876.pdf",
     status: "reported",
   },
-  // Q3 2024 (Q3 2024 Results)
+  // Q3 2024 (Q3 2024 Results - Nov 21, 2024)
   {
     ticker: "0434.HK",
     fiscalYear: 2024,
     fiscalQuarter: 3,
     calendarYear: 2024,
     calendarQuarter: 3,
-    earningsDate: "2024-11-17", // Estimated
+    earningsDate: "2024-11-21", // Q3 2024 Results filed Nov 21, 2024
     earningsTime: null,
     holdingsAtQuarterEnd: 2_635, // BTC Yield table
     sharesAtQuarterEnd: 709_576_301,
     holdingsPerShare: 0.00000371,
     source: "press-release",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2024/1121/2024112100209.pdf",
     status: "reported",
   },
-  // Q2 2024 (H1 2024 from H1 2025 filing comparative)
+  // Q2 2024 (H1 2024 Interim Results - Aug 22, 2024)
   {
     ticker: "0434.HK",
     fiscalYear: 2024,
     fiscalQuarter: 2,
     calendarYear: 2024,
     calendarQuarter: 2,
-    earningsDate: "2024-08-28",
+    earningsDate: "2024-08-22", // H1 2024 Interim Results filed Aug 22, 2024
     earningsTime: null,
     revenueActual: 115_205_000, // HK$115.2M (Q2 2024)
     netIncome: -74_670_000, // HK$(74.7)M loss
@@ -2791,6 +2793,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 709_576_301,
     holdingsPerShare: 0.00000293,
     source: "press-release",
+    sourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2024/0822/2024082200681.pdf",
     status: "reported",
   },
   // Q1 2024 (derived)

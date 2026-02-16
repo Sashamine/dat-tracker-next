@@ -185,15 +185,15 @@ export const ethCompanies: Company[] = [
     costBasisSource: "PR Jan 7, 2026 - 'total average ETH acquisition price'",
     costBasisSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
     stakingPct: 0.89,  // 138,263 / 155,227 = 89% staked
-    stakingApy: 0.035,  // 3.5% annualized yield
+    stakingApy: 0.029,  // 2.9% annualized yield (Jan 2026 PR)
     stakingMethod: "Native staking (via Figment, with EigenLayer restaking)",
-    stakingSource: "PR Jan 7, 2026: 138,263/155,227 ETH staked (89%). Confirmed by SEC 10-Q Nov 14, 2025: $3.79M staking revenue (9mo).",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
-    stakingAsOf: "2025-12-31",
+    stakingSource: "PR Feb 6, 2026: ~2.9% annualized yield (Jan 2026). Dec PR: 138,263/155,227 ETH staked (89%).",
+    stakingSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    stakingAsOf: "2026-01-31",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    quarterlyBurnUsd: 17_400_000,
-    burnSource: "SEC 10-Q Q1 2025: NetCashUsedInOperatingActivities $17,401,915 (pre-ETH-pivot, conservative)",
+    quarterlyBurnUsd: 0,  // Q1 2025 OpCF was +$17.4M (inflow, not outflow). Post-pivot burn unclear — await FY2025 10-K.
+    burnSource: "SEC 10-Q Q1 2025 XBRL: OpCF +$17.4M (cash positive). Pre-pivot figure, not representative.",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/ea0241656-10q_bitdigital.htm",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 172_000_000,
@@ -217,7 +217,7 @@ export const ethCompanies: Company[] = [
     debtAsOf: "2025-10-02",
     preferredEquity: 9_050_000,  // 1M preferred shares at $9.05M book value (Q3 2025 10-Q balance sheet)
 
-    otherInvestments: 427_300_000,  // WhiteFiber (WYFI) ~27M shares @ ~$15.83 (Jan 7, 2026 PR)
+    otherInvestments: 527_600_000,  // WhiteFiber (WYFI) ~27M shares @ ~$19.54 (Feb 6, 2026 PR)
     leader: "Sam Tabar",
     strategy: "89% staked, fully exited BTC. $150M 4% converts due 2030. Majority stake in WhiteFiber (WYFI) AI/HPC.",
     notes: "Staking yield ~3.5% annualized. $427M WhiteFiber (WYFI) stake - AI infrastructure.",
@@ -1309,7 +1309,7 @@ export const btcCompanies: Company[] = [
     // Buybacks: 2,972,000 shares repurchased (held as treasury, not cancelled)
     sharesForMnav: 768_004_730,
     sharesSource: "HKEx Monthly Return Dec 2025 (filed Jan 5, 2026)",
-    sharesSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0106/2026010600040.pdf",
+    sharesSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0105/2026010502436.pdf",
     sharesAsOf: "2025-12-31",
     // FY end: Dec 31 (calendar year)
     // TODO: Extract from annual/interim reports:
