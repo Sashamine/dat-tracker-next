@@ -1761,16 +1761,33 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 
   // ABTC (American Bitcoin) - BTC miner/accumulator
   // Post-merger with Gryphon Sep 3, 2025. 80% owned by Hut 8.
-  // TODO: Access Q3 2025 10-Q to extract dilutive instruments.
-  // The 899M shares figure from the 10-Q appears to be total shares (all classes).
-  // Pre-merger XBRL basic was 82.8M. Gap likely due to shares issued to Hut 8.
-  // Dilutive instruments (warrants, options) beyond those are unknown pending Q3 10-Q access.
-  // Leaving empty for now — dilutives will show as "None tracked" in UI.
+  // Verified 2026-02-17 via 10-Q Q3 2025 (CIK 0001755953)
+  // Basic shares: 927,604,994 (195.4M Class A + 732.2M Class B)
+  // Total dilution: ~131K shares = 0.014% — immaterial but tracked per methodology
   ABTC: [
-    // TODO: Extract from Q3 2025 10-Q equity footnotes
-    // Merger 8-K (0001213900-25-083726) Item 3.02 indicates equity issuances
-    // Need to identify: warrants, stock options, RSUs, convertibles
+    {
+      type: "warrant",
+      strikePrice: 1.50,
+      potentialShares: 108_587,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+      expiration: "2035-01-31",
+      notes: "Legacy Gryphon Digital Mining warrants (pre-merger). Liability-classified. Near the money at ~$1.14 stock price.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 37.00,
+      potentialShares: 22_826,
+      source: "10-Q Q3 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+      expiration: "2027-06-30",
+      notes: "Legacy Akerna Corp warrants (prior entity). Equity-classified. Deeply OTM.",
+    },
   ],
+  // Total ABTC dilution: 108,587 Gryphon warrants ($1.50) + 22,826 Akerna warrants ($37.00) = 131,413 shares
+  // At ~$1.14 stock: Gryphon warrants OTM but near the money, Akerna deep OTM
 
   // DeFi Development Corp (DFDV) - SOL treasury company
   // Verified 2026-02-13 via SEC XBRL (CIK 0001805526) + 10-Q filings
