@@ -1531,15 +1531,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
     {
       type: "convertible",
-      strikePrice: 8.97,  // Implied: $27M / 3,010,204 shares (from dashboard CB line)
-      potentialShares: 3_010_204,  // treasury.ddc.xyz Shares tab "CB" = 3,010,204
+      strikePrice: 13.65,  // SEC Exhibit 10.2 (6-K Jul 11, 2025): Conversion Price $13.65/share
+      potentialShares: 1_978_022,  // $27,000,000 / $13.65 = 1,978,022
       faceValue: 27_000_000,
-      source: "SEC 424B3 Jan 26, 2026 + treasury.ddc.xyz dilution breakdown",
+      source: "SEC 6-K Jul 11, 2025 Exhibit 10.2 (Form of Initial Note)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+        "https://www.sec.gov/Archives/edgar/data/1808110/000121390025063293/ea024799501ex10-2_ddcenter.htm",
       expiration: "2027-07-01",
       issuedDate: "2025-07-01",
-      notes: "Anson Initial Notes. $27M senior secured convertible. Secured by all BTC + cash collateral. $275M additional capacity undrawn. Implied conversion ~$8.97/share from dashboard.",
+      notes: "Anson Initial Notes. $27M senior secured, 0% interest (12% on default). " +
+        "Conversion at $13.65/share (SEC Exhibit 10.2). Dashboard shows $8.97 — may reflect anti-dilution adjustments. " +
+        "⚠️ TOXIC ALTERNATE CONVERSION: Holder can convert at 94% of lowest VWAP in 10 trading days. " +
+        "At ~$2.60 stock → ~$2.44 alt conversion → ~11M shares. 4.99% beneficial ownership cap. " +
+        "Secured by all BTC + cash collateral. LTV covenant ≤60%. $275M additional capacity undrawn.",
     },
     {
       type: "warrant",
@@ -1561,12 +1565,16 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
       issuedDate: "2025-12-30",
-      notes: "Satoshi Strategic — 16M senior convertible preferred shares. 4.5% annual dividend. Conversion at 150% of 5-day VWAP preceding close. Subject to NYSE approval. NOT YET CLOSED as of Feb 2026.",
+      notes: "Satoshi Strategic — 16M senior convertible preferred shares at $2.05 stated value. " +
+        "4.5% annual dividend. Converts at 150% of 5-day VWAP preceding close — " +
+        "16M preferred ≠ 16M Class A; actual dilution depends on VWAP (e.g., at $2.60 VWAP → $3.90 conversion → ~8.4M Class A). " +
+        "Subject to NYSE approval. NOT YET CLOSED as of Feb 2026.",
     },
   ],
-  // Total DDC dilution: 1.66M options + 2.2M warrants (2025 program) + 3.01M convertible + 1.79M Anson warrants + 16M preferred = ~24.66M potential shares
-  // Plus 28.72M basic = ~53.4M fully diluted (if all instruments convert, including pending Satoshi preferred)
-  // Dashboard shows 35.7M diluted (excludes Satoshi preferred which is pending NYSE approval)
+  // Total DDC dilution: ~23.6M potential shares (excl. Anson alternate conversion scenario)
+  // ⚠️ Anson toxic alternate conversion at 94% of 10-day low VWAP could add ~11M shares at ~$2.60
+  // ⚠️ $124M subscription (12.4M shares at $10) pending NYSE approval — not yet in share count
+  // ⚠️ Put Option: BTC subscription investors can put shares back at $18.50 if market cap < $500M
   // At ~$2.60 stock: Options OTM ($3.85), Anson convert OTM ($8.97), Satoshi preferred TBD
   // 2023 ESOP allows up to 1.208M shares + 10% annual increase
   // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually

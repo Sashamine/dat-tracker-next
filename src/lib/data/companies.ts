@@ -932,7 +932,7 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-06-30",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 28_723_005,  // 6-K Feb 6, 2026 + treasury.ddc.xyz basic shares
+    sharesForMnav: 30_473_005,  // 28,723,005 Class A (6-K Feb 6) + 1,750,000 Class B (CEO, same economic rights)
     sharesSource: "SEC 6-K Feb 6, 2026 + treasury.ddc.xyz",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
     sharesAsOf: "2026-02-06",
@@ -941,7 +941,11 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
     debtAsOf: "2026-01-26",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
-    notes: "NYSE American listed. DayDayCook brand. Dual-class (Class B = 10 votes, CEO only). Anson SPA: $27M convertible drawn ($275M additional undrawn), $200M ELOC (equity, undrawn). Satoshi Strategic: $32.8M preferred (pending NYSE approval). Fully diluted: ~35.7M shares per dashboard.",
+    notes: "NYSE American listed. DayDayCook brand. Dual-class (Class B = 10 votes, CEO only). " +
+      "Anson SPA: $27M convertible at $13.65 ($275M undrawn). ⚠️ Toxic alternate conversion at 94% of 10-day low VWAP. " +
+      "0% interest (12% on default). $200M ELOC at 98% of 3-day low VWAP. " +
+      "Satoshi Strategic: $32.8M preferred (pending NYSE). $124M subscription (12.4M shares at $10, pending NYSE). " +
+      "Put Option risk: BTC subscription investors can put at $18.50 if mcap < $500M (currently exercisable).",
   },
   // HIVE Digital Technologies (HIVE) REMOVED 2026-02-02
   // Reason: Not a DAT accumulator. SEC XBRL shows only $24.4M crypto (Sep 2025) = ~313 BTC
