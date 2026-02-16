@@ -213,11 +213,14 @@ const SMLR_HISTORY: HoldingsSnapshot[] = [
 // SEC EDGAR source: EntityCommonStockSharesOutstanding
 // NOTE: Historical data before 2025 needs verification - BTCS dramatically scaled ETH holdings in 2025
 // Q3 2025 8-K: "ETH holdings increased to 70,322 ETH, up 380% from Q2 2025"
+// Aave DeFi debt: ~$61.7M borrowed against ETH collateral (per 10-K 2024 + 10-Q filings)
+// Feb 2026: Sold 10,000 ETH (8-K Feb 6, 2026), reducing holdings to ~60,500 ETH
 const BTCS_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-12-31", holdings: 9_000, sharesOutstandingDiluted: 20_087_981, holdingsPerShare: 0.000448, stockPrice: 302.96, source: "2024 10-K (estimated from YTD growth)", sourceType: "sec-filing", sourceUrl: "/filings/btcs/10K-2024-12-31#eth-holdings" },
-  { date: "2025-06-30", holdings: 14_700, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.000668, stockPrice: 404.23, source: "Q2 2025 (implied from Q3 380% growth)", sourceType: "sec-filing", sourceUrl: "/filings/btcs/10Q-2025-06-30#eth-holdings" },
-  { date: "2025-09-30", holdings: 70_322, sharesOutstandingDiluted: 50_298_201, holdingsPerShare: 0.001398, stockPrice: 326.42, source: "Q3 2025 8-K (verified)", sharesSource: "10-Q diluted shares. Options at $2.64 in the money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229", sourceType: "sec-filing" },
-  { date: "2025-12-31", holdings: 70_500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.001410, stockPrice: 155.61, source: "8-K Jan 7, 2026 shareholder letter (verified)", sharesSource: "Est diluted. Convertibles at $5.85/$13 out of money, options at $2.64 in money", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 9_000, sharesOutstandingDiluted: 20_087_981, holdingsPerShare: 0.000448, stockPrice: 302.96, source: "2024 10-K (estimated from YTD growth)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225008498/form10-k.htm" },
+  { date: "2025-06-30", holdings: 14_700, sharesOutstandingDiluted: 22_000_000, holdingsPerShare: 0.000668, stockPrice: 404.23, source: "Q2 2025 (implied from Q3 380% growth)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225023517/form10-q.htm" },
+  { date: "2025-09-30", holdings: 70_322, sharesOutstandingDiluted: 50_298_201, holdingsPerShare: 0.001398, stockPrice: 326.42, source: "Q3 2025 8-K (verified)", sharesSource: "10-Q diluted shares. Options at $2.64 in the money", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm", sourceType: "sec-filing" },
+  { date: "2025-12-31", holdings: 70_500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.001410, stockPrice: 155.61, source: "8-K Jan 7, 2026 shareholder letter (verified)", sharesSource: "Est diluted. Convertibles at $5.85/$13 out of money, options at $2.64 in money", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000734/form8-k.htm", sourceType: "sec-filing" },
+  { date: "2026-02-05", holdings: 60_500, sharesOutstandingDiluted: 50_000_000, holdingsPerShare: 0.001210, source: "8-K Feb 6, 2026 — sold 10,000 ETH", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226005565/form8-k.htm", sourceType: "sec-filing", totalDebt: 61_660_526 },
 ];
 
 // Bit Digital - ETH treasury + AI/HPC (WhiteFiber/WYFI)

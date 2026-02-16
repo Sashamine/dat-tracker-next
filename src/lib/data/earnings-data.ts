@@ -1750,7 +1750,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 50_298_201,  // Q3 diluted + estimated small increase
     holdingsPerShare: 0.001402,  // 70500 / 50298201
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000734/form8-k.htm",
     status: "upcoming",
   },
   // Q3 2025 - Major ETH accumulation quarter (380% growth)
@@ -1771,7 +1771,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 50_298_201,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding
     holdingsPerShare: 0.001398,  // 70322 / 50298201
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
     status: "reported",
   },
   // Q2 2025
@@ -1792,6 +1792,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 27_938_660,  // SEC XBRL Q2 2025 diluted
     holdingsPerShare: 0.000526,  // 14700 / 27938660
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225023517/form10-q.htm",
     status: "reported",
   },
   // Q4 2024

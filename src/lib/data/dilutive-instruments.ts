@@ -537,34 +537,56 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     {
       type: "convertible",
       strikePrice: 5.85,
-      potentialShares: 1_709_402,
-      faceValue: 10_000_000,
+      potentialShares: 1_335_133,
+      faceValue: 7_810_526,
       source: "8-K May 2025",
       sourceUrl:
         "https://www.btcs.com/news-media/convertible-note/",
       expiration: "2027-05-13",
-      notes: "$10M convertible note (ATW Partners facility, 194% premium)",
+      notes: "$7.81M face value convertible note (ATW Partners, 5% OID on $7.438M principal). Conversion @ $5.85.",
     },
     {
       type: "convertible",
       strikePrice: 13.0,
-      potentialShares: 769_231,
-      faceValue: 10_000_000,
+      potentialShares: 773_077,
+      faceValue: 10_050_000,
       source: "8-K Jul 2025",
       sourceUrl:
         "https://www.btcs.com/news-media/eth-holdings-update-july-21-2025/",
       expiration: "2027-07-21",
-      notes: "$10M convertible note (ATW Partners, 198% premium)",
+      notes: "$10.05M face value convertible note (ATW Partners, 5% OID). Conversion @ $13.00.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 2.75,
+      potentialShares: 1_901_916,
+      source: "8-K May 2025 + Q3 10-Q",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+      issuedDate: "2025-05-13",
+      expiration: "2030-05-13",
+      notes: "Warrants issued with May 2025 ATW convertible note. 5-year term. Near/at-the-money at ~$2.87.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 8.00,
+      potentialShares: 879_375,
+      source: "8-K Jul 2025 + Q3 10-Q",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+      issuedDate: "2025-07-21",
+      expiration: "2030-07-21",
+      notes: "Warrants issued with Jul 2025 ATW convertible note. 5-year term.",
     },
     {
       type: "option",
-      strikePrice: 2.64,
-      potentialShares: 3_913_312,  // 3,223,012 (Q3) + 690,300 (Jan 5 8-K grants)
+      strikePrice: 2.72,
+      potentialShares: 2_582_695,  // 1,892,395 (XBRL Q3) + 690,300 (Jan 5 8-K grants)
       source: "10-Q Q3 2025 + 8-K Jan 5 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229&type=8-K",
+        "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000391/form8-k.htm",
       expiration: "2033-01-01",  // 7-year term from Jan 2026
-      notes: "Employee stock options - 3.2M (Q3) + 690K (Jan 2026 performance grants)",
+      notes: "XBRL Q3: 1,892,395 @ $2.75 + Jan 5 8-K: 690,300 @ $2.64. Blended ~$2.72.",
     },
   ],
 
