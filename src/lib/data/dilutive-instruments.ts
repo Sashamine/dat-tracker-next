@@ -1541,20 +1541,22 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       issuedDate: "2025-07-01",
       notes: "Anson Initial Notes. $27M senior secured, 0% interest (12% on default). " +
         "Conversion at $13.65/share (SEC Exhibit 10.2). Dashboard shows $8.97 — may reflect anti-dilution adjustments. " +
-        "⚠️ TOXIC ALTERNATE CONVERSION: Holder can convert at 94% of lowest VWAP in 10 trading days. " +
-        "At ~$2.60 stock → ~$2.44 alt conversion → ~11M shares. 4.99% beneficial ownership cap. " +
-        "Secured by all BTC + cash collateral. LTV covenant ≤60%. $275M additional capacity undrawn.",
+        "⚠️ TOXIC ALTERNATE CONVERSION RENEGOTIATED (Sep 2025 Waiver): Now 88% of lowest VWAP in 20 trading days (was 94% of 10-day). " +
+        "At ~$2.60 stock → ~$2.29 alt conversion → ~11.8M shares. 4.99% beneficial ownership cap. " +
+        "Secured by all BTC + cash collateral. LTV covenant ≤60%. $275M additional capacity undrawn. " +
+        "DDC breached covenants Sep 2025 — Anson granted 56-day forbearance in exchange for worse terms.",
     },
     {
       type: "warrant",
       strikePrice: 0,  // Exercise price "set forth therein" — undisclosed in prospectus, TBD
-      potentialShares: 1_791_653,  // Dashboard warrants (3,991,652) minus 2025 Warrant Program (2,199,999)
+      potentialShares: 3_583_306,  // Doubled from 1,791,653 due to 70% warrant coverage (was 35%) per Sep 2025 Waiver
       source: "SEC 424B3 Jan 26, 2026 (Anson SPA) + treasury.ddc.xyz Shares tab",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
       issuedDate: "2025-07-01",
       expiration: "2030-07-01",  // 5-year term from issuance
-      notes: "Anson Initial Warrants from $27M convertible deal. Exercisable immediately. Strike undisclosed in prospectus.",
+      notes: "Anson Initial Warrants from $27M convertible deal. Exercisable immediately. Strike undisclosed in prospectus. " +
+        "⚠️ Warrant coverage DOUBLED to 70% (was 35%) per Sep 2025 Waiver/Forbearance Agreement due to covenant breaches.",
     },
     {
       type: "preferred",
@@ -1571,10 +1573,15 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "Subject to NYSE approval. NOT YET CLOSED as of Feb 2026.",
     },
   ],
-  // Total DDC dilution: ~23.6M potential shares (excl. Anson alternate conversion scenario)
-  // ⚠️ Anson toxic alternate conversion at 94% of 10-day low VWAP could add ~11M shares at ~$2.60
+  // Total DDC dilution: ~25.4M potential shares (excl. Anson alternate conversion scenario)
+  // ⚠️ Anson toxic alternate conversion RENEGOTIATED Sep 2025: 88% of 20-day low VWAP (was 94% of 10-day) → ~11.8M shares at ~$2.60
+  // ⚠️ Anson warrants doubled to 3,583,306 (70% coverage, was 35%) per Sep 2025 Waiver
   // ⚠️ $124M subscription (12.4M shares at $10) pending NYSE approval — not yet in share count
   // ⚠️ Put Option: BTC subscription investors can put shares back at $18.50 if market cap < $500M
+  //    PUT OPTION DETAILS (SEC 6-K Jul 3, 2025): Strike $18.50, currently exercisable (~$75M mcap).
+  //    Collateral: BTC from 'Charged Wallet'. Could force DDC to sell BTC to honor put obligation.
+  //    Not modeled as dilutive instrument (no share dilution), but material risk to BTC holdings.
+  //    Source: https://www.sec.gov/Archives/edgar/data/1808110/000121390025063293/ea024799501ex10-2_ddcenter.htm
   // At ~$2.60 stock: Options OTM ($3.85), Anson convert OTM ($8.97), Satoshi preferred TBD
   // 2023 ESOP allows up to 1.208M shares + 10% annual increase
   // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually
