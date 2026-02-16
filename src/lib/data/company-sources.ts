@@ -297,7 +297,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     secCik: "1436229",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001436229",
     exchange: "NASDAQ",
-    sharesSource: "diluted",
+    sharesSource: "basic",  // mNAV uses basic shares (47.1M); dilutives tracked in dilutive-instruments.ts
     reportsHoldingsFrequency: "quarterly",
     reportsMnavDaily: false,
     lastVerified: "2026-01-22",

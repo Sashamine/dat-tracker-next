@@ -220,6 +220,8 @@ const BTCS_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 14_700, sharesOutstanding: 22_000_000, holdingsPerShare: 0.000668, source: "Q2 2025 (implied from Q3 380% growth)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225023517/form10-q.htm" },
   { date: "2025-09-30", holdings: 70_322, sharesOutstanding: 50_298_201, holdingsPerShare: 0.001398, source: "Q3 2025 8-K (verified)", sharesSource: "10-Q diluted shares. Options at $2.64 in the money", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm", sourceType: "sec-filing" },
   { date: "2025-12-31", holdings: 70_500, sharesOutstanding: 50_000_000, holdingsPerShare: 0.001410, source: "8-K Jan 7, 2026 shareholder letter (verified)", sharesSource: "Est diluted. Convertibles at $5.85/$13 out of money, options at $2.64 in money", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000734/form8-k.htm", sourceType: "sec-filing" },
+  // 60,500 = 70,500 (Jan 7 shareholder letter, "more than 70,500 ETH as of Dec 31") - 10,000 (Feb 6 8-K sale).
+  // Neither filing states exactly 60,500 — it's derived. The "more than" qualifier means true value could be 60,501-60,599.
   { date: "2026-02-05", holdings: 60_500, sharesOutstanding: 50_000_000, holdingsPerShare: 0.001210, source: "8-K Feb 6, 2026 - sold 10,000 ETH", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226005565/form8-k.htm", sourceType: "sec-filing", totalDebt: 61_660_526 },
 ];
 
