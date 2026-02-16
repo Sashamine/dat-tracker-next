@@ -55,7 +55,7 @@ const LATEST_HOLDINGS_DATE = "2025-11-18";
 // Use Sep 30 consistent date for both basic and PFWs to avoid double-counting PFW exercises
 // Sep 30 basic: 40,299,228 (balance sheet) — Nov 17 cover page shows 41,301,400 (includes ~1M PFW exercises)
 // Sep 30 PFWs: 35,627,639 (Note 6 warrant table)
-// Total: 75,926,867 — press release rounds to "75.9 million"
+// Total: 75,926,867 (40,299,228 + 35,627,639) — press release rounds to "75.9 million"
 // Pre-funded warrants at $0.001 are economically equivalent to shares
 const SHARES_BASIC_SEP30 = 40_299_228;  // Balance sheet Sep 30
 const SHARES_BASIC_NOV17 = 41_301_400;  // Cover page Nov 17 (includes PFW exercises)
@@ -63,8 +63,10 @@ const PREFUNDED_WARRANTS = 35_627_639;  // 10-Q Note 6 warrant table (Sep 30)
 const SHARES_FOR_MNAV = 75_926_867;  // Sep 30 basic + Sep 30 PFWs (consistent date)
 const SHARES_DATE = "2025-09-30";
 
-// Financial data (Q3 2025 10-Q XBRL)
-const CASH = 124_051_000;  // CashAndCashEquivalentsAtCarryingValue Sep 30
+// Financial data (Q3 2025 10-Q XBRL + Oct 29 8-K update)
+// XBRL Sep 30: $124,051,000. But 10-Q Note 10 shows $124.6M spent on SOL post-Q3.
+// Oct 29 8-K: ">$15M of cash and stablecoins" — best available estimate.
+const CASH = 15_000_000;  // Oct 29 8-K estimate. XBRL Sep 30 was $124,051,000.
 const TOTAL_DEBT = 0;  // No LongTermDebt in XBRL (404)
 const QUARTERLY_BURN = 5_504_000;  // SGA $4,646K + R&D $858K = $5,504K total opex Q3 2025 (Jul-Sep)
 const PREFERRED_EQUITY = 0;  // No PreferredStockValue
@@ -145,20 +147,19 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
 
   cashReserves: pv(
     CASH,
-    xbrlSource({
-      fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
-      searchTerm: "124,051",
-      rawValue: CASH,
-      unit: "USD",
-      periodType: "instant",
-      periodEnd: Q3_2025_PERIOD_END,
+    docSource({
+      type: "sec-document",
+      searchTerm: "$15 million",
+      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm`,
+      quote: "more than $15 million of cash and stablecoins",
+      anchor: "Cash",
       cik: HSDT_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
-      documentAnchor: "Cash and cash equivalents",
+      accession: OCT29_8K_ACCESSION,
+      filingType: "8-K",
+      filingDate: OCT29_8K_FILED,
+      documentDate: "2025-10-29",
     }),
-    "Includes $500M PIPE proceeds being deployed into SOL. Jumped from $6M in Q2 to $124M in Q3."
+    "Oct 29 8-K: >$15M cash+stablecoins. XBRL Sep 30 was $124M but ~$109M deployed into SOL purchases post-Q3 (10-Q Note 10: 587K SOL at $211.97). ~$15M is best estimate pending 10-K FY2025."
   ),
 
   quarterlyBurn: pv(

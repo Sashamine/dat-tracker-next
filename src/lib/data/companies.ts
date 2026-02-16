@@ -1469,8 +1469,8 @@ export const solCompanies: Company[] = [
     debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     debtAsOf: "2025-09-30",
-    cashReserves: 124_051_000,  // XBRL CashAndCashEquivalentsAtCarryingValue Sep 30
-    cashSource: "XBRL CashAndCashEquivalentsAtCarryingValue Q3 2025. $111.1M held at custodian for SOL purchases (10-Q Note 3).",
+    cashReserves: 15_000_000,  // Oct 29 8-K: ">$15M of cash and stablecoins". XBRL Sep 30 was $124M but ~$109M deployed into SOL post-Q3.
+    cashSource: "8-K Oct 29: '>$15M of cash and stablecoins'. XBRL Sep 30 was $124M but 10-Q Note 10 shows $124.6M spent on 587K SOL post-Q3. ~$15M is best available estimate pending 10-K.",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     cashAsOf: "2025-09-30",
     avgDailyVolume: 150_000_000,

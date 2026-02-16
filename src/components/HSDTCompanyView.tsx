@@ -132,7 +132,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div><p className="text-indigo-600 dark:text-indigo-300 font-medium">Total PIPE Proceeds</p><p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">{"$" + (HSDT_CAPITAL.pipeTotal/1e6).toFixed(0) + "M"}</p><p className="text-xs text-indigo-500">{"Closed " + HSDT_CAPITAL.pipeClosedDate}</p></div>
 <div><p className="text-indigo-600 dark:text-indigo-300 font-medium">Lead Investors</p><p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">Pantera + Summer</p><p className="text-xs text-indigo-500">Pantera Capital & Summer Capital</p></div>
 </div>
-<p className="text-xs text-indigo-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/tm2526070d1_8k.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">{"8-K Sep 15, 2025"}</a>{" \u2014 Items 1.01, 3.02, 7.01, 8.01. Cash on hand Sep 30: $124M (PIPE proceeds being deployed)."}</p>
+<p className="text-xs text-indigo-500 mt-3">{"Source: "}<a href="https://www.sec.gov/Archives/edgar/data/1610853/000110465925089774/tm2526070d1_8k.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">{"8-K Sep 15, 2025"}</a>{" \u2014 Items 1.01, 3.02, 7.01, 8.01. ~$15M cash remaining as of Oct 29 (most of $124M PIPE deployed into SOL)."}</p>
 </div>
 
 {/* Share Structure */}
@@ -190,7 +190,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <StalenessNote dates={[company.holdingsLastUpdated,company.debtAsOf,company.cashAsOf,company.sharesAsOf]} secCik={company.secCik} />
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 <ProvenanceMetric label="Crypto NAV" data={M.navPv} format="currency" subLabel={`${M.h.toLocaleString()} SOL`} tooltip="SOL holdings at current market price" ticker="hsdt" />
-{HSDT_PROVENANCE.cashReserves&&<ProvenanceMetric label="Cash" data={HSDT_PROVENANCE.cashReserves} format="currency" subLabel="PIPE proceeds deploying into SOL" tooltip="$124M at Sep 30. $111.1M held at custodian for SOL purchases (10-Q Note 3). Significantly lower post-Q3 as SOL purchases continued." ticker="hsdt" />}
+{HSDT_PROVENANCE.cashReserves&&<ProvenanceMetric label="Cash" data={HSDT_PROVENANCE.cashReserves} format="currency" subLabel="~$15M (Oct 29 8-K)" tooltip="Oct 29 8-K: >$15M cash + stablecoins. XBRL Sep 30 was $124M but ~$109M deployed into SOL post-Q3. Pending 10-K FY2025 for precise figure." ticker="hsdt" />}
 {HSDT_PROVENANCE.totalDebt&&<ProvenanceMetric label="Total Debt" data={HSDT_PROVENANCE.totalDebt} format="currency" subLabel="Debt free" tooltip="No long-term debt. LongTermDebt XBRL tag not reported (404)." ticker="hsdt" />}
 {HSDT_PROVENANCE.sharesOutstanding&&<ProvenanceMetric label="Shares Outstanding" data={HSDT_PROVENANCE.sharesOutstanding} format="shares" subLabel="40.3M basic + 35.6M PFWs" tooltip="75.9M total = 40,299,228 common (Sep 30) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table). Consistent Sep 30 date avoids PFW exercise double-counting. Plus 73.9M stapled warrants @ $10.134 and 7.4M advisor warrants @ $0.001 tracked separately." ticker="hsdt" />}
 </div>
@@ -227,7 +227,7 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
 <div className="mb-4 mt-8 flex items-center gap-2"><span className="text-lg">{"\uD83D\uDCF0"}</span><h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Research & Filings</h2><div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" /></div>
 
 <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg text-sm text-gray-500 dark:text-gray-400">
-<strong>Data Provenance:</strong> All values sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source. SOL holdings from 10-Q Note 10 (2,340,757 SOL as of Nov 18, 2025). XBRL Q3 = 1,739,355 at Sep 30, plus 587,737 net purchased post-Q3. Shares: 41.3M common + 35.6M PFWs @ $0.001 = 76.9M. Dilutives: 73.9M stapled warrants @ $10.134, 7.4M advisor warrants @ $0.001. Cash $124M at Sep 30 (PIPE proceeds deploying). FY ends Dec 31.
+<strong>Data Provenance:</strong> All values sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source. SOL holdings from 10-Q Note 10 (2,340,757 SOL as of Nov 18, 2025). Shares: 40.3M common (Sep 30) + 35.6M PFWs @ $0.001 = 75.9M (consistent date). Dilutives: 73.9M stapled warrants @ $10.134, 7.4M advisor warrants @ $0.001. Cash ~$15M (Oct 29 8-K; $124M PIPE mostly deployed into SOL). FY ends Dec 31.
 </div>
 </div>);
 }

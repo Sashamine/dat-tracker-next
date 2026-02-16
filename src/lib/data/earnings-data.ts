@@ -2198,7 +2198,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // SOL treasury began ~May 2025, $500M PIPE closed Sep 15, 2025 (Pantera + Summer Capital)
   // 1:50 reverse split effective Jul 1, 2025
   // Verified 2026-02-15 via SEC XBRL Q3 2025 (CIK 0001610853)
-  // sharesForMnav = 41,301,400 basic + 35,627,639 PFWs @ $0.001 = 76,929,039
+  // sharesForMnav = 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 (Sep 30) = 75,926,867
   //
   // Q4 2025 - Upcoming (10-K due ~Mar 2026)
   {

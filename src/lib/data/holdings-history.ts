@@ -561,7 +561,7 @@ const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: XBRL CryptoAssetNumberOfUnits = 1,739,355 SOL at Sep 30
   { date: "2025-09-30", holdings: 1_739_355, sharesOutstandingDiluted: 75_926_867, holdingsPerShare: 0.02291, totalDebt: 0, cash: 124_051_000, source: "Q3 2025 10-Q XBRL", sharesSource: "Q3 press release: 75.9M common + PFWs (40,299,228 basic + 35,627,639 PFWs)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
   // Oct 29 8-K: ~2.3M SOL. Nov 18 10-Q Note 10: 2,340,757 SOL
-  { date: "2025-11-18", holdings: 2_340_757, sharesOutstandingDiluted: 75_926_867, holdingsPerShare: 0.03083, totalDebt: 0, cash: 124_051_000, source: "10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18", sharesSource: "10-Q: 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 (consistent date)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
+  { date: "2025-11-18", holdings: 2_340_757, sharesOutstandingDiluted: 75_926_867, holdingsPerShare: 0.03083, totalDebt: 0, cash: 15_000_000, source: "10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18", sharesSource: "10-Q: 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 (consistent date)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025
