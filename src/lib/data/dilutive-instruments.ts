@@ -1330,19 +1330,31 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Verified 2026-02-15 via SEC 10-Q Q3 2025 XBRL (CIK 0001946573)
   // Basic shares for mNAV: 511,555,864 (439.85M common + 71.7M pre-funded warrants at $0.001)
   // Pre-funded warrants already included in basic count (near-zero exercise price)
-  // NOTE: 85.1M warrants at Sep 30 → only 384,936 by Nov 14 (10-Q cover page). Likely expired ~Jan 2026.
+  // NOTE: 85.1M warrants at Sep 30 → only 384,936 tradeable + 203,565 non-tradeable by Nov 14 (10-Q cover page)
   NAKA: [
     {
       type: "warrant",
-      strikePrice: 11.50, // From original KindlyMD IPO prospectus
-      potentialShares: 384_936, // Nov 14, 2025 10-Q cover page. Down from 85.1M at Sep 30 (massively exercised/expired).
-      source: "10-Q Q3 2025 cover page: 384,936 warrants outstanding as of Nov 14, 2025",
+      strikePrice: 6.33, // From KindlyMD 424B4 IPO prospectus (May 31, 2024)
+      potentialShares: 384_936, // Nov 14, 2025 10-Q cover page. Down from 85.1M at Sep 30.
+      source: "10-Q Q3 2025 cover page: 384,936 tradeable warrants as of Nov 14, 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
-      expiration: "2026-01-10", // ~0.28 years from Sep 30 ≈ Jan 10, 2026. Likely expired.
-      issuedDate: "2023-01-01",
+      expiration: "2029-05-31", // 5 years from IPO (May 2024 424B4 prospectus)
+      issuedDate: "2024-05-31",
       notes:
-        "Tradeable warrants (NAKAW). Down from 85.1M at Sep 30 to 384.9K at Nov 14 — most exercised during the PIPE/merger period. Likely expired ~Jan 2026. $11.50 strike from original KindlyMD IPO.",
+        "Tradeable warrants (NAKAW). Down from 85.1M at Sep 30 to 384.9K at Nov 14 — most exercised during PIPE/merger. Strike $6.33 per IPO prospectus.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 6.33, // Same terms as tradeable warrants
+      potentialShares: 101_783, // 203,565 non-tradeable warrants → 101,783 shares (2:1 exercise ratio per prospectus)
+      source: "10-Q Q3 2025 cover page: 203,565 non-tradeable warrants as of Nov 14, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+      expiration: "2029-05-31",
+      issuedDate: "2024-05-31",
+      notes:
+        "Non-tradeable warrants from IPO. 203,565 warrants exercisable for 101,783 shares.",
     },
     // Note: $200M Yorkville convertible debenture (conversion $2.80) was EXTINGUISHED Oct 2025
     // Replaced by Two Prime loan → Kraken $210M BTC-backed loan (Dec 2025)

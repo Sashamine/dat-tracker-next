@@ -76,7 +76,7 @@ export const NAKA_PROVENANCE: ProvenanceFinancials = {
   holdings: pv(
     LATEST_HOLDINGS,
     xbrlSource({
-      fact: "srt:CryptoAssetNumberOfUnits",
+      fact: "us-gaap:CryptoAssetNumberOfUnits",
       searchTerm: "5,398",
       rawValue: 5398,
       unit: "shares",

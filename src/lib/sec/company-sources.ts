@@ -277,19 +277,19 @@ export const COMPANY_SOURCES: CompanySource[] = [
   },
   {
     ticker: 'NAKA',
-    name: 'Nakamoto Holdings (KindlyMD)',
+    name: 'Nakamoto Inc.',
     asset: 'BTC',
-    secCik: '0001946573',  // KindlyMD (post-merger entity)
+    secCik: '0001946573',  // Formerly KindlyMD (rebranded Jan 21, 2026)
     secFilingPatterns: {
       eightK: [/ex99|ex-99|press|release/i],
     },
     holdingsPageUrl: 'https://nakamoto.com/',
-    twitterHandles: ['@nakaboringo'],
+    twitterHandles: ['@nakamotoinc'],
     aggregators: {
-      bitcoinTreasuries: 'kindlymd-inc',
+      bitcoinTreasuries: 'kindlymd-inc',  // Legacy slug on bitcointreasuries.net
     },
     trustLevel: 'official',
-    extractionHints: 'Goal is 1M BTC ("one Nakamoto"). Check nakamoto.com for updates.',
+    extractionHints: 'Goal is 1M BTC ("one Nakamoto"). Check nakamoto.com for updates. Nasdaq delisting warning (cure by June 8, 2026).',
   },
   {
     ticker: 'ABTC',

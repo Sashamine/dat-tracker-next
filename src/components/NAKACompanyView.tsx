@@ -228,7 +228,7 @@ export function NAKACompanyView({ company, className = "" }: Props) {
 <div className="mb-4 mt-8 flex items-center gap-2"><span className="text-lg">📰</span><h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Research & Filings</h2><div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" /></div>
 
 <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg text-sm text-gray-500 dark:text-gray-400">
-<strong>Data Provenance:</strong> All values are sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source. BTC holdings from 10-Q Q3 2025 XBRL (CryptoAssetNumberOfUnits = 5,398, BTCMember). Shares from cover page (EntityCommonStockSharesOutstanding = 439,850,889 as of Nov 14, 2025 + 71,704,975 pre-funded warrants at $0.001). Debt from 8-K Dec 9, 2025 (Kraken $210M USDT loan). Cash from Q3 2025 balance sheet. 85.1M tradeable warrants (NAKAW, ~$11.50 strike) tracked in dilutive-instruments.ts.
+<strong>Data Provenance:</strong> All values are sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source. BTC holdings from 10-Q Q3 2025 XBRL (CryptoAssetNumberOfUnits = 5,398, BTCMember). Shares from cover page (EntityCommonStockSharesOutstanding = 439,850,889 as of Nov 14, 2025 + 71,704,975 pre-funded warrants at $0.001). Debt from 8-K Dec 9, 2025 (Kraken $210M USDT loan). Cash from Q3 2025 balance sheet. 384.9K tradeable + 203.6K non-tradeable warrants ($6.33 strike, exp May 2029) tracked in dilutive-instruments.ts.
 </div>
 </div>);
 }
