@@ -302,20 +302,23 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   SWC: [],
 
   // Sequans Communications (SQNS) - IoT semiconductor with BTC treasury
-  // Verified 2026-02-02 via SEC 6-K filings (CIK 0001383395)
+  // Verified 2026-02-15 via 6-K Q4 2025 + Feb 13 debt restructuring 6-K (CIK 0001383395)
   // Jul 2025: $189M convertible debt raised for BTC purchases
-  // Nov 4, 2025: Sold 970 BTC to repay portion of debt
+  // Nov 2025: Sold 970 BTC, repaid ~$94.5M → $94.5M remaining
+  // Feb 13, 2026: Full redemption announced — selling 1,617 pledged BTC by Jun 2026
   // Note: Foreign private issuer (France), 1:10 reverse split Sep 17, 2025
+  // Convertible being redeemed at par (not converted to shares), so potentialShares → 0
   SQNS: [
     {
       type: "convertible",
-      strikePrice: 58.40, // Estimated conversion basis carried from Jul 2025 convertible
-      potentialShares: 1_524_000, // Estimated: $89M / $58.40 after Nov 2025 repayment
-      faceValue: 89_000_000, // Remaining convertible debt after Nov 2025 repayment
-      source: "Company treasury page + SEC 6-K Jul 2025 issuance",
-      sourceUrl: "https://sequans.com/bitcoin-treasury/",
+      strikePrice: 58.40, // Estimated conversion basis — moot since being redeemed not converted
+      potentialShares: 0, // Feb 13 6-K: full cash redemption via BTC sale, NOT conversion to shares
+      faceValue: 94_500_000, // $94.5M remaining per Q4 6-K — being fully redeemed by Jun 2026
+      source: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
       issuedDate: "2025-07-08",
-      notes: "Original issuance was $189M (3-year term, matures ~Jul 2028); company reports repayment of ~970 BTC worth in Nov 2025, leaving ~$89M outstanding. Strike is inferred from reported debt and implied conversion shares.",
+      expiration: "2026-06-01", // Target full redemption date
+      notes: "Original $189M (Jul 2025). $94.5M remaining. Feb 13 6-K: full cash redemption by selling 1,617 pledged BTC by Jun 1, 2026. NOT being converted to shares. After redemption: $0 debt, ~522 BTC unencumbered.",
     },
   ],
 

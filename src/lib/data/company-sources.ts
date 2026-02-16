@@ -226,7 +226,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     officialDashboardName: "upexi.com",
     officialMnavNote: "Shows Fully-Loaded mNAV on homepage",
     secCik: "1775194",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194",
+    secFilingsUrl: "https://efts.sec.gov/LATEST/search-index?q=%221775194%22&forms=10-Q,10-K,8-K",
     exchange: "NASDAQ",
     sharesSource: "basic",
     sharesNotes: "Using EntityCommonStockSharesOutstanding from SEC filings.",

@@ -1028,7 +1028,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // 1:10 reverse split Sep 17, 2025
   // Verified 2026-02-02
   //
-  // Q4 2025 - Current holdings after Nov 4 sale
+  // Q4 2025 - Dec 31, 2025 (6-K filed Feb 10, 2026)
   {
     ticker: "SQNS",
     fiscalYear: 2025,
@@ -1037,12 +1037,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-10",
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 2_264,  // Nov 4, 2025 treasury update: sold 970 BTC, now 2,264
-    sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 diluted ADS (using Q3 until Q4 filed)
-    holdingsPerShare: 0.0001625,  // 2264 / 13.93M
-    source: "estimated",
-    sourceUrl: "https://sequans.com/bitcoin-treasury/",
-    status: "upcoming",
+    holdingsAtQuarterEnd: 2_139,  // 6-K Q4: 2,139 BTC at Dec 31 ($187.1M), 1,617 pledged
+    sharesAtQuarterEnd: 15_504_809,  // 6-K Q4 weighted avg basic ADS
+    holdingsPerShare: 0.0001379,  // 2139 / 15,504,809
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    status: "reported",
   },
   // Q3 2025 - Peak holdings before Nov sale
   {
@@ -1054,10 +1054,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-04",
     earningsTime: "BMO",
     holdingsAtQuarterEnd: 3_234,  // Peak before Nov 4 sale of 970 BTC
-    sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 weighted avg diluted ADS
+    sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 weighted avg basic ADS
     holdingsPerShare: 0.0002321,  // 3234 / 13.93M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339525000116/form6-kq3x2025.htm",
     status: "reported",
   },
 
@@ -2345,7 +2345,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 69_760_581,  // Latest known (Feb 9, 2026)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=10-Q",
+    sourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22UPXI%22&dateRange=custom&startdt=2026-03-01&forms=10-Q",
     status: "upcoming",
   },
   // FY 2026 Q2 (Oct-Dec 2025) = CY Q4 2025 - Reported (10-Q Feb 10, 2026)

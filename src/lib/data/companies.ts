@@ -869,32 +869,32 @@ export const btcCompanies: Company[] = [
     ticker: "SQNS",
     asset: "BTC",
     tier: 2,
-    holdings: 2_264,  // Nov 4, 2025 (was 3,234, sold 970 to repay debt)
-    holdingsLastUpdated: "2025-11-04",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://sequans.com/bitcoin-treasury/",
+    holdings: 2_139,  // Q4 2025 6-K: 2,139 BTC at Dec 31, 2025 (1,617 pledged as collateral)
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
     datStartDate: "2025-06-23",
     website: "https://sequans.com",
     twitter: "https://twitter.com/Sequans",
     investorRelationsUrl: "https://sequans.com/investor-relations/investor-materials/",
     secCik: "0001383395",
-    // costBasisAvg removed - was estimate
     isMiner: false,
-    quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops
-    burnSource: "SEC 6-K filings (estimate - foreign private issuer)",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1383395&type=6-K",
-    burnAsOf: "2025-09-30",
+    quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops — estimate based on Q4 non-IFRS loss ~$18.5M less BTC-related items
+    burnSource: "6-K Q4 2025 earnings (estimate)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
-    sharesForMnav: 13_933_963,  // Q3 2025 weighted avg diluted ADS (carried forward until Q4 filing)
-    sharesSource: "SEC 6-K (Q3 2025 weighted average diluted ADS)",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001383395&type=6-K",
-    sharesAsOf: "2025-09-30",
-    totalDebt: 89_000_000,  // Post-Nov 2025 debt after ~970 BTC sale repayment
-    debtSource: "Company treasury page (post-Nov 2025 repayment update)",
-    debtSourceUrl: "https://sequans.com/bitcoin-treasury/",
-    strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC.",
-    notes: "NYSE listed (French HQ). Dedicated bitcoin-treasury page with live KPIs. BTC pledged as collateral, later amended. Sold 970 BTC to repay portion of debt.",
+    sharesForMnav: 15_504_809,  // Q4 2025 6-K weighted avg basic ADS. Best available until 20-F.
+    sharesSource: "6-K Q4 2025 weighted avg basic ADS (1,599,589,702 ordinary shares / ~100 ADS ratio)",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    sharesAsOf: "2025-12-31",
+    totalDebt: 94_500_000,  // Q4 6-K: $94.5M convertible outstanding. Feb 13 6-K: full redemption via BTC sale by Jun 2026.
+    debtSource: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
+    strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
+    notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized.",
+    dataWarnings: ["Holdings declining: 1,617 BTC being sold to redeem convertible debt by Jun 2026"],
   },
   {
     id: "ddc",
