@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { ProvenanceMetric } from "./ProvenanceMetric";
 import { ABTC_PROVENANCE } from "@/lib/data/provenance/abtc";
@@ -12,7 +11,7 @@ import { HoldingsPerShareChart } from "./holdings-per-share-chart";
 import { HoldingsHistoryTable } from "./holdings-history-table";
 import { ScheduledEvents } from "./scheduled-events";
 import { MnavCalculationCard } from "./mnav-calculation-card";
-import { LeverageCalculationCard, EquityNavPerShareCalculationCard } from "./expandable-metric-card";
+import { EquityNavPerShareCalculationCard } from "./expandable-metric-card";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
