@@ -334,7 +334,7 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   // so combining pre-merger holdings (21 BTC from KindlyMD) with post-merger adjusted prices
   // produces wildly wrong mNAV values (900x+). NAKA chart starts from post-merger.
   // Aug 19: post-merger. Shares ~484.6M estimated (343.2M PIPE + 7.6M pre-merger + 133.8M pre-funded). No debt yet.
-  { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 484_600_000, holdingsPerShare: 0.0000119, totalDebt: 0, cash: 24_000_000, source: "Post-merger 8-K (shares estimated from PIPE 8-K)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000121390025041722/ea0202959-8k_kindlymd.htm" },
+  { date: "2025-08-19", holdings: 5765, sharesOutstandingDiluted: 484_600_000, holdingsPerShare: 0.0000119, totalDebt: 0, cash: 24_000_000, source: "Post-merger 8-K Aug 15, 2025 (shares estimated from PIPE 8-K)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000121390025077579/ea0252980-8k_kindly.htm" },
   // Nov 14: 10-Q cover page. 439.85M shares + 71.7M pre-funded = 511.6M. Yorkville repaid, no debt yet.
   { date: "2025-11-14", holdings: 5398, sharesOutstandingDiluted: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 0, cash: 24_185_083, source: "SEC 10-Q Q3 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm", sourceType: "sec-filing" },
   // Dec 9: Kraken $210M BTC-backed loan closed
