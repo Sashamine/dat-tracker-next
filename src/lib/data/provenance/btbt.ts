@@ -44,14 +44,14 @@ const XBRL_SHARES_DATE = "2025-11-10";
 
 const TOTAL_DEBT = 150_000_000;           // $150M convertible notes (4% due 2030)
 const CASH_RESERVES = 179_118_182;        // Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
-const QUARTERLY_BURN = 17_400_000;        // Q1 2025 10-Q: $17.4M operating cash used (pre-ETH-pivot, conservative)
+const QUARTERLY_BURN = 0;                 // Q1 2025 XBRL: OpCF was +$17.4M (INFLOW). Ops are cash-positive. Await FY2025 10-K for post-pivot data.
 
 const STAKED_ETH = 138_263;               // Dec 31, 2025
 const STAKING_PCT = 0.89;                 // 89% staked
-const STAKING_APY = 0.035;                // 3.5% annualized (Dec 2025)
+const STAKING_APY = 0.029;                // 2.9% annualized (Jan 2026 PR)
 
 const WYFI_SHARES = 27_000_000;           // Approximate WYFI ownership
-const WYFI_VALUE = 427_300_000;           // ~$427.3M as of Dec 31, 2025
+const WYFI_VALUE = 527_600_000;           // ~$527.6M as of Jan 31, 2026 (Feb 6 PR)
 
 const COST_BASIS = 3_045;                 // Average ETH acquisition price
 
@@ -156,7 +156,7 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
     filingType: "10-Q",
     filingDate: "2025-05-15",
     documentDate: "2025-03-31",
-  }), "$17.4M Q1 2025 operating cash used per 10-Q. Pre-ETH-pivot figure, includes mining wind-down. Post-pivot burn likely lower but no post-convert quarterly data yet."),
+  }), "Q1 2025 XBRL shows +$17.4M operating cash INFLOW (positive, not outflow). Ops are cash-positive. Set to $0 — await FY2025 10-K for post-pivot quarterly burn."),
 
   // =========================================================================
   // PREFERRED EQUITY - 1,000,000 preferred shares at $9.05M book value
@@ -250,12 +250,12 @@ export const BTBT_BALANCE_SHEET = {
 
   wyfiStake: pv(WYFI_VALUE, docSource({
     type: "press-release",
-    searchTerm: "427.3 million",
-    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/",
-    quote: "approximately 27.0 million WhiteFiber (WYFI) shares with a market value of approximately $427.3 million",
-    anchor: "427.3 million",
+    searchTerm: "527.6 million",
+    url: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    quote: "approximately 27.0 million WhiteFiber (WYFI) shares with a market value of approximately $527.6 million",
+    anchor: "527.6 million",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), `~27M WYFI shares (~70.7% ownership). WYFI is AI/HPC infrastructure. IPO Aug 2025.`),
+  }), `~27M WYFI shares (~70.7% ownership). WYFI is AI/HPC infrastructure. IPO Aug 2025. Up from $427M Dec 2025.`),
 };
 
 // =========================================================================

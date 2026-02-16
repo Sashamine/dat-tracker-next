@@ -568,13 +568,21 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     {
       type: "convertible",
       strikePrice: 4.16,
-      potentialShares: 36_057_692,  // 240.3846 shares per $1,000 × 150,000 = 36,057,690
+      potentialShares: 36_057_692,  // 240.3846 shares per $1,000 × 150,000 = 36,057,692
       faceValue: 150_000_000,  // $135M upsized + $15M overallotment fully exercised
       source: "8-K Oct 2, 2025 + PR Oct 8, 2025",
       sourceUrl:
         "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
       expiration: "2030-10-01",
-      notes: "$150M 4% convertible notes. Conversion: 240.3846 shares/$1K = $4.16/share. Investors: Kraken, Jump, Jane Street. Put date ~Oct 1, 2028.",
+      notes: "$150M 4% convertible notes. Conversion: 240.3846 shares/$1K = $4.16/share. Investors: Kraken, Jump, Jane Street. Company optional redemption ~Oct 1, 2028.",
+    },
+    {
+      type: "preferred",
+      strikePrice: 10.00,  // $10.00 liquidation preference per share (effective conversion price)
+      potentialShares: 1_000_000,  // 1M preferred shares, 1:1 convertible to common
+      source: "Q3 2025 10-Q: 1,000,000 preferred shares, $10 liquidation pref, 1:1 convertible",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
+      notes: "Series A preferred. $10 liq pref, 1:1 convert, 8% dividend, 50:1 voting. Held by insiders (CFO + Chairman). 4.99% blocker.",
     },
   ],
 
