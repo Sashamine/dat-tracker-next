@@ -250,7 +250,7 @@ export const ethCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 60_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%221436229%22&forms=S-3",
+    capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22BTCS%22&forms=S-3",
     avgDailyVolume: 15_000_000,
     hasOptions: true,
     sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K grants). Dilutives in dilutive-instruments.ts
@@ -271,7 +271,7 @@ export const ethCompanies: Company[] = [
     notes: "Verified 2026-02-16. Aave DeFi leverage: $43.8M USDT borrowed (~6% variable) against ~39K ETH collateral. " +
       "Board max LTV 40%, Aave liquidation at 80%. Q3 LTV was 34.9%. " +
       "Converts secured by all assets (excl. Aave collateral), 6% interest. " +
-      "15.7M Series V Preferred outstanding — conversion terms need investigation. " +
+      "15.7M Series V Preferred outstanding (non-convertible per 10-K FY2024, no dilutive impact). " +
       "712,500 pre-2021 warrants expiring ~Mar 2026 (deeply OTM at $11.50).",
   },
   {
@@ -906,7 +906,13 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
     notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized.",
-    dataWarnings: ["Holdings declining: 1,617 BTC being sold to redeem convertible debt by Jun 2026"],
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Holdings declining: 1,617 BTC being sold to redeem convertible debt by Jun 2026",
+        severity: "warning",
+      },
+    ],
   },
   {
     id: "ddc",
@@ -926,7 +932,7 @@ export const btcCompanies: Company[] = [
     costBasisSource: "company-website",
     costBasisSourceUrl: "https://treasury.ddc.xyz",
     isMiner: false,
-    quarterlyBurnUsd: 1_600_000,  // H1 2025 opex: $3.19M / 2 quarters (424B3 F-1 financials)
+    quarterlyBurnUsd: 2_600_000,  // H1 2025 operating cash burn: $5.2M / 2 quarters (424B3 F-1 financials)
     burnSource: "SEC 424B3 Jan 26, 2026 (F-1 financials, H1 2025 unaudited)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
     burnAsOf: "2025-06-30",
@@ -941,11 +947,30 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
     debtAsOf: "2026-01-26",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
-    notes: "NYSE American listed. DayDayCook brand. Dual-class (Class B = 10 votes, CEO only). " +
-      "Anson SPA: $27M convertible at $13.65 ($275M undrawn). ⚠️ Toxic alternate conversion at 94% of 10-day low VWAP. " +
+    notes: "NYSE American listed. DayDayCook brand. Dual-class (Class B = 10 votes, CEO only, doubled 875K→1.75M in 2025 by board resolution). " +
+      "Anson SPA: $27M convertible at $13.65 ($275M undrawn). ⚠️ Toxic alternate conversion RENEGOTIATED Sep 2025: now 88% of 20-day low VWAP (was 94% of 10-day). Warrant coverage doubled to 70%. " +
       "0% interest (12% on default). $200M ELOC at 98% of 3-day low VWAP. " +
-      "Satoshi Strategic: $32.8M preferred (pending NYSE). $124M subscription (12.4M shares at $10, pending NYSE). " +
-      "Put Option risk: BTC subscription investors can put at $18.50 if mcap < $500M (currently exercisable).",
+      "Satoshi Strategic: $32.8M preferred (pending NYSE). $124M subscription (12.4M shares at $10, pending NYSE — deeply underwater at ~$2.60). " +
+      "Put Option risk: BTC subscription investors can put at $18.50 if mcap < $500M (currently exercisable). " +
+      "⚠️ GOVERNANCE: 3 auditors in 30 days (KPMG→Marcum→Enrome); Marcum fired after requesting investigation of undisclosed related party allegations. " +
+      "Going concern in FY2023+FY2024 audits. Accumulated deficit $248M. Tontec $584K judgment with HK winding-up threat.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Going concern: FY2023+FY2024 auditors flagged substantial doubt about ability to continue as going concern",
+        severity: "warning",
+      },
+      {
+        type: "stale-data",
+        message: "Burn rate uses operating cash flow ($2.6M/qtr); food business gross profit partially offsets",
+        severity: "info",
+      },
+      {
+        type: "stale-data",
+        message: "$124M subscription at $10/share likely dead — stock at ~$2.60 (3.8x premium to market)",
+        severity: "warning",
+      },
+    ],
   },
   // HIVE Digital Technologies (HIVE) REMOVED 2026-02-02
   // Reason: Not a DAT accumulator. SEC XBRL shows only $24.4M crypto (Sep 2025) = ~313 BTC
