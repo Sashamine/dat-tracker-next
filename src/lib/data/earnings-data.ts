@@ -1149,7 +1149,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_029_648,  // Pre-merger KindlyMD shares (XBRL Dec 2024 count used as proxy)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225022128/kindlymd20250630_10q.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225022128/form10-q.htm",
     status: "reported",
   },
 

@@ -274,7 +274,7 @@ const KULR_PURCHASES: Purchase[] = [
 ];
 
 // =============================================================================
-// NAKA (Nakamoto Holdings) - BTC purchases derived from holdings-history.ts
+// NAKA (Nakamoto Inc.) - BTC purchases derived from holdings-history.ts
 // Total: 5,398 BTC pre-merger, then merged with KindlyMD Aug 2025
 // Note: Aug 2025 jump is from merger, not purchase
 // =============================================================================

@@ -405,15 +405,15 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
 
   NAKA: {
     ticker: "NAKA",
-    name: "Nakamoto Holdings",
+    name: "Nakamoto Inc.",
     secCik: "1946573",
     secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001946573",
     exchange: "NASDAQ",
-    sharesSource: "diluted",
+    sharesSource: "basic_plus_prefunded", // 439.85M common + 71.7M pre-funded warrants = 511.6M
     reportsHoldingsFrequency: "on_purchase",
     reportsMnavDaily: false,
-    notes: "Merged with KindlyMD. David Bailey founded.",
-    lastVerified: "2026-01-22",
+    notes: "Merged with KindlyMD Aug 2025, rebranded Jan 2026. David Bailey (Bitcoin Magazine) CEO. Nasdaq delisting warning Dec 2025 (cure by June 8, 2026).",
+    lastVerified: "2026-02-15",
   },
 
   ABTC: {
