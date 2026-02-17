@@ -4,6 +4,7 @@ import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNR
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
 import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
 import { NAKA_PROVENANCE, NAKA_PROVENANCE_DEBUG, getNakaProvenance } from "./provenance/naka";
+import { H100_PROVENANCE, H100_PROVENANCE_DEBUG, getH100Provenance } from "./provenance/h100";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,098 (PR Dec 14; 5,427 ref'd Jan 20 but no public source found — await Feb 26 10-K)
 
@@ -813,6 +814,8 @@ export const btcCompanies: Company[] = [
     burnSourceUrl: "https://mfn.se/a/h100-group",
     burnAsOf: "2025-09-30",
     burnEstimated: true,  // Swedish quarterly report estimate
+    totalDebt: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké. Convertible SEK 219.8M (~$20.7M) outstanding but may be equity-classified under IFRS.
+    cashReserves: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 12, 2026)

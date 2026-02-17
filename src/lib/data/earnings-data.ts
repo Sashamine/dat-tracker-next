@@ -1565,13 +1565,13 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-01-29",  // Quarterly Activities/Appendix 4C Cash Flow Report
+    earningsDate: "2026-01-30",  // Quarterly Activities/Appendix 4C Cash Flow Report (ASX filing date)
     earningsTime: null,
     holdingsAtQuarterEnd: 504,  // Treasury Information - December 2025 (ASX filing Jan 22, 2026)
     sharesAtQuarterEnd: 1_488_510_854,  // Shares on issue per ASX
     holdingsPerShare: 0.00000033859,  // 504 / 1,488,510,854 = 3.3859e-7
     source: "regulatory-filing",
-    sourceUrl: "https://www.asx.com.au/markets/company/DCC",
+    sourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
     status: "reported",
   },
   // FY2026 Q1 (Jul-Sep 2025 = Calendar Q3 2025) - Reported
@@ -1587,7 +1587,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 1_475_070_604,  // Basic shares at quarter end
     holdingsPerShare: 0.00000033883,  // 499.8 / 1,475,070,604 = 3.3883e-7
     source: "regulatory-filing",
-    sourceUrl: "https://www.asx.com.au/markets/company/DCC",
+    sourceUrl: "https://www.asx.com.au/markets/company/DCC",  // Q1 4C specific URL not available on listcorp
     status: "reported",
   },
   // FY2025 Q4 (Apr-Jun 2025 = Calendar Q2 2025) - Pre-BTC baseline
@@ -1603,7 +1603,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 1_203_623_886,  // Shares before BTC strategy
     holdingsPerShare: 0,
     source: "regulatory-filing",
-    sourceUrl: "https://www.asx.com.au/markets/company/DCC",
+    sourceUrl: "https://www.asx.com.au/markets/company/DCC",  // FY2025 annual report
     status: "reported",
   },
 
