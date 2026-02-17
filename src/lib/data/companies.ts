@@ -343,10 +343,13 @@ export const ethCompanies: Company[] = [
     holdingsLastUpdated: "2026-01-21",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
+    costBasisAvg: 3_854,  // $195.7M / 50,778 ETH (Sep 30 Q3 2025) — blended, pre-sales
+    costBasisSource: "SEC 10-Q Q3 2025 (aggregate cost $195.7M for 50,778 ETH)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
     datStartDate: "2025-07-30",
+    website: "https://fgnexus.io",
     secCik: "1591890",
-    // stakingPct removed - FGNX "intends to stake its ETH" per 8-K Jan 2026, but no confirmed active staking yet
-    stakingMethod: "Native staking (planned)",
+    stakingMethod: "Native staking via Anchorage/Bitgo through Galaxy Digital",
     // VERIFIED: 10-Q Q3 2025 - 9mo burn $4.75M = $1.58M/qtr
     quarterlyBurnUsd: 1_580_000,
     burnSource: "SEC 10-Q Q3 2025",
@@ -354,24 +357,31 @@ export const ethCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 10_000_000,
-    // VERIFIED: SEC 8-K Jan 21, 2026 - 33.6M common + 0.8M preferred
-    sharesForMnav: 33_600_000,
-    sharesSource: "SEC 8-K Jan 21, 2026",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
-    sharesAsOf: "2026-01-20",
-    // VERIFIED: SEC 10-Q Q3 2025 balance sheet
-    cashReserves: 7_500_000,
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
-    cashAsOf: "2025-09-30",
+    // VERIFIED: SEC 8-K Jan 21, 2026 (33.6M pre-split) ÷ 5 (1:5 reverse split Feb 13, 2026)
+    sharesForMnav: 6_720_000,
+    sharesSource: "SEC 8-K Jan 21, 2026 (33.6M pre-split incl PFWs) ÷ 5 (1:5 reverse split Feb 13, 2026)",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm",
+    sharesAsOf: "2026-02-13",
+    // VERIFIED: SEC 8-K Dec 19, 2025 (cash + USDC)
+    cashReserves: 25_200_000,
+    cashSource: "SEC 8-K Dec 19, 2025 (cash + USDC)",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225028609/ex99-1.htm",
+    cashAsOf: "2025-12-17",
     // VERIFIED: SEC 8-K Jan 21, 2026 - $1.9M total debt
     totalDebt: 1_900_000,
     debtSource: "SEC 8-K Jan 21, 2026",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
     debtAsOf: "2026-01-20",
+    preferredEquity: 21_040_000,  // ~841,580 Series A preferred × $25 par (894,580 issued - ~53K repurchased)
+    preferredSource: "SEC 10-Q Q3 2025 + 8-K Jan 21, 2026 (buyback ~53K shares)",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
     leader: "Kyle Cerminara (CEO); Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
-    notes: "Formerly Fundamental Global. Peaked at 50K ETH Sep 2025, sold some for buybacks. 0.8M preferred shares also outstanding.",
+    notes: "Nasdaq: FLD/FGNXP. Formerly Fundamental Global. 1:5 reverse split effective Feb 13, 2026. " +
+      "Peaked at ~50.8K ETH Oct 2025, sold ~13K for buybacks through Jan 2026. " +
+      "894,580 Series A preferred ($25 par, 8% cumulative, non-convertible, ticker FGNXP) — buyback program active. " +
+      "ATM ($5B shelf with ThinkEquity) suspended since Oct 2025. $10M crypto loan facility (evergreen, 7.9%, currently repaid). " +
+      "Staking ETH via Anchorage/Bitgo through Galaxy Digital. Deutsche Börse listing as LU51.",
   },
   // ICG (Intchains) removed - ASIC chip company, not beta to ETH
 ];

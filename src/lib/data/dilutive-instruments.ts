@@ -1733,6 +1733,57 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Series C warrants (869K @ $9) expire Aug 14, 2026 — monitor
   // Two Prime revolving facility ($45M max) — additional BTC collateral TBD
 
+  // FGNX (FG Nexus) - ETH treasury company
+  // Verified 2026-02-17 via SEC 10-Q Q3 2025 + 8-K Feb 13, 2026 (CIK 0001591890)
+  // Basic shares: 6,720,000 post-split (33,600,000 pre-split ÷ 5)
+  // All figures POST 1:5 reverse split (effective Feb 13, 2026)
+  FGNX: [
+    {
+      type: "warrant",
+      strikePrice: 27.50,  // $5.50 pre-split × 5
+      potentialShares: 600_000,  // 3,000,000 pre-split ÷ 5
+      source: "SEC 10-Q Q3 2025 Note 11",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+      issuedDate: "2025-07-29",
+      expiration: "2035-07-29",  // ~10 year term
+      notes: "Placement Agent Warrants (ThinkEquity). Post-split: 600K shares @ $27.50.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 25.00,  // $5.00 pre-split × 5
+      potentialShares: 140_000,  // 700,000 pre-split ÷ 5
+      source: "SEC 10-Q Q3 2025 Note 11",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+      notes: "OGroup LLC affiliate warrants. Post-split: 140K shares @ $25.00.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 25.00,  // $5.00 pre-split × 5
+      potentialShares: 140_000,  // 700,000 pre-split ÷ 5
+      source: "SEC 10-Q Q3 2025 Note 11",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+      notes: "FG Merchant Partners affiliate warrants. Post-split: 140K shares @ $25.00.",
+    },
+    {
+      type: "option",
+      strikePrice: 358.30,  // $71.66 pre-split × 5
+      potentialShares: 5_298,  // 26,490 pre-split ÷ 5
+      source: "SEC 10-Q Q3 2025 Note 10",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+      notes: "2021 Equity Incentive Plan options. Deep OTM (~$358 strike vs ~$15-25 stock). Immaterial.",
+    },
+  ],
+  // Total FGNX dilution: 885K warrants + 5K options = ~890K potential shares (all OTM)
+  // All instruments OTM: warrants at $25-$27.50, options at $358 vs ~$15-25 post-split stock
+  // Pre-funded warrants (~165K post-split @ $0.005) already included in basic share count
+  // Legacy warrants (~4.5K @ $359, expiring ~2027) omitted as immaterial
+  // $5B ATM shelf suspended since Oct 2025 — monitor for reinstatement
+  // 894,580 Series A preferred ($25 par, non-convertible) — tracked as preferredEquity, not dilutive
+
   // FUFU (BitFuFu) - BTC miner (Foreign Private Issuer)
   // Verified 2026-02-16 via SEC 20-F FY2024, 6-K H1 2025 XBRL, and 6-K Jan 2026
   // CIK: 0001921158
