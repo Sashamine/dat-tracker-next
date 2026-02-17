@@ -736,7 +736,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
-    website: "https://kulrtechnology.com",
+    website: "https://kulr.ai",
     twitter: "https://x.com/KULRTech",
     notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. Coinbase loan repaid Oct 15, 2025 — carries no debt. 70 BTC collateral likely released post-repayment.",
   },
