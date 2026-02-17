@@ -301,7 +301,7 @@ const H100ST_INTEL: CompanyIntel = {
   ],
   strategySummary: "Swedish health-tech company pivoted to Bitcoin Treasury strategy. Leading Bitcoin Treasury Company in the Nordics. Mission: maximize Bitcoin exposure per share via innovative financial instruments. June 2025 raise: SEK 69.65M shares + SEK 31.35M zero-interest convertible loans.",
   recentDevelopments: [
-    "1,046 BTC holdings (~$108M at cost)",
+    "1,051 BTC holdings (~$120M at cost)",
     "Largest Bitcoin treasury in the Nordics",
     "Stock surged ~400% within first month of Bitcoin strategy adoption",
     "Future Holdings AG co-founded by Adam Back, Richard Byworth, Sebastien Hess (November 2025)",

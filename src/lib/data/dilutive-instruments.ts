@@ -510,10 +510,10 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 25_919_811, // SEK 219,800,000 / SEK 8.48 per share
       faceValue: 20_736_000, // SEK 219,800,000 / 10.6 = ~$20.7M USD
       source: "MFN Jul 9, 2025 (issuance) + Nov 21, 2025 (partial conversion)",
-      sourceUrl: "https://mfn.se/a/h100-group",
+      sourceUrl: "https://www.mfn.se/a/h100-group/h100-group-has-converted-sek-122-5-million-of-its-outstanding-convertible-loans",
       issuedDate: "2025-07-09",
       expiration: "2030-07-09",
-      notes: "Originally SEK 342.3M / 40.37M shares. SEK 122.5M converted Nov 2025 (14,450,468 shares). Remaining: SEK 219.8M / 25.9M shares. Zero coupon. Forced conversion above SEK 11.27 VWAP.",
+      notes: "Tranche 7 zero-coupon convertible debentures. Originally SEK 342.3M / 40.37M shares. SEK 122.5M converted Nov 2025 (14,450,468 shares). Remaining: SEK 219.8M / 25.9M shares. Company can force conversion at SEK 8.48 if 20-day VWAP > SEK 11.27. Tranche 8 right exists (not yet issued): same investors may request additional ~SEK 342.3M convertible at SEK 11.27 conversion price (~30.4M potential shares) — requires board execution + possible EGM approval.",
     },
   ],
 

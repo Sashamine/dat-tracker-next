@@ -3,8 +3,8 @@
  *
  * Swedish BTC treasury company — first Nordic Bitcoin treasury.
  * Listed on NGM Nordic SME (NOT Nasdaq). ISK-eligible for Swedish investors.
- * Adam Back investor via SEK 342.3M convertible (Jul 2025). SEK 122.5M converted Nov 2025.
- * Acquired Future Holdings AG (Switzerland) Feb 10, 2026.
+ * Adam Back investor via SEK 516M raise (SEK 173.3M equity + SEK 342.3M convertible, Jul 2025). SEK 122.5M converted Nov 2025.
+ * Acquired Future Holdings AG (Switzerland) Feb 12, 2026.
  *
  * ⚠️ NO SEC/XBRL — sources are MFN (Swedish regulatory filings) + company treasury dashboard.
  * Confidence levels are generally IR/3P rather than REG for balance sheet items,
@@ -37,7 +37,7 @@ const LATEST_HOLDINGS_DATE = "2026-02-06";
 // Shares: 335,250,237 (pre-acquisition) + 3,146,456 (Future Holdings AG) = 338,396,693
 // Future Holdings AG acquisition completed Feb 10, 2026
 const SHARES_OUTSTANDING = 338_396_693; // Basic shares post-acquisition
-const SHARES_DATE = "2026-02-10";
+const SHARES_DATE = "2026-02-12";  // MFN filing date for Future Holdings AG acquisition completion
 const PRE_ACQUISITION_SHARES = 335_250_237;
 const FUTURE_HOLDINGS_NEW_SHARES = 3_146_456;
 
@@ -212,7 +212,7 @@ export const H100_CAPITAL_PROGRAMS = {
   acquisition: {
     target: "Future Holdings AG",
     country: "Switzerland",
-    completedDate: "2026-02-10",
+    completedDate: "2026-02-12",  // MFN filing date
     sharesIssued: FUTURE_HOLDINGS_NEW_SHARES,
     note: "First expansion outside Nordics. Swiss BTC treasury company.",
     source: MFN_FEED_URL,
@@ -237,7 +237,7 @@ export const H100_PROVENANCE_DEBUG = {
   notes:
     "First Nordic Bitcoin treasury company. NGM Nordic SME listed (NOT Nasdaq). " +
     "Swedish company — no SEC/XBRL, sources are MFN + treasury dashboard. " +
-    "Adam Back investor via SEK 516M convertible. Acquired Future Holdings AG (Switzerland) Feb 10, 2026. " +
+    "Adam Back investor via SEK 516M raise (SEK 173.3M directed equity + SEK 342.3M zero-coupon convertible debentures). Acquired Future Holdings AG (Switzerland) Feb 12, 2026. " +
     "Cash/debt/burn will be updated with Feb 24, 2026 annual report (Bokslutskommuniké). " +
     "Confidence: Holdings=IR, Shares=IR, CostBasis=3P, Burn=EST, Cash/Debt=UNV.",
 };

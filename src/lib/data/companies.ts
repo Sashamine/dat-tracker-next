@@ -802,7 +802,7 @@ export const btcCompanies: Company[] = [
     holdings: 1_051,  // MFN Feb 6, 2026: 4 BTC purchase → 1,051 total
     holdingsLastUpdated: "2026-02-06",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://mfn.se/a/h100-group",  // Swedish MFN regulatory filings
+    holdingsSourceUrl: "https://mfn.se/a/h100-group/h100-group-acquires-4-39-btc-total-holdings-reach-1-051-btc",  // MFN Feb 6, 2026 filing (specific URL)
     datStartDate: "2025-05-22",  // First BTC purchase May 22, 2025
     costBasisAvg: 114_606,  // treasury.h100.group avg cost
     costBasisSource: "company-website",
@@ -818,10 +818,10 @@ export const btcCompanies: Company[] = [
     sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 10, 2026)
     sharesSource: "https://h100.group/investor-relations/shares",
     sharesSourceUrl: "https://www.h100.group/investor-relations/shares",
-    sharesAsOf: "2026-02-10",
+    sharesAsOf: "2026-02-12",  // MFN filing date for Future Holdings AG acquisition completion
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
-    notes: "NGM Nordic SME listed. ISK-eligible. SEK 516M convertible (Jul 2025, Adam Back et al), SEK 122.5M converted Nov 2025. Acquiring Future Holdings AG (Switzerland). IR page incorrectly claims 'no convertibles'.",
+    notes: "NGM Nordic SME listed. ISK-eligible. SEK 516M total raise Jul 2025 (SEK 173.3M directed equity issue + SEK 342.3M zero-coupon convertible debentures, Adam Back et al). SEK 122.5M converted Nov 2025. Acquired Future Holdings AG (Switzerland) Feb 2026. IR page incorrectly claims 'no convertibles'.",
   },
   {
     id: "obtc3",
