@@ -793,6 +793,25 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // BTCT (Bitcoin Treasury Corp) - Canadian BTC treasury (TSX Venture)
+  // Verified 2026-02-17 via btctcorp.com + TSX Venture Bulletin V2025-1838
+  // CIK: N/A (Canadian, SEDAR+ #000053693)
+  // Basic shares: 10,027,880 (btctcorp.com Feb 2026)
+  // Debt: $25M CAD convertible debentures
+  BTCT: [
+    {
+      type: "convertible",
+      strikePrice: 12.00,  // CAD - implied from $25M / 2,083,333 shares
+      potentialShares: 2_083_333,
+      source: "TSX Venture Bulletin V2025-1838 + btctcorp.com",
+      sourceUrl: "https://btctcorp.com",
+      notes: "25,000 convertible debentures × $1,000 CAD face = $25M total. Implied conversion price $12.00 CAD. Terms need verification from SEDAR+ Filing Statement (Jun 17, 2025). Confidence: EST (implied strike, not directly verified).",
+    },
+  ],
+  // Total BTCT dilution: ~2.08M shares from convertible debentures
+  // All converts currently OTM ($12 strike vs ~$4 stock)
+  // SEDAR+ blocked by captcha — cannot verify exact terms programmatically
+
   // BTBT (Bit Digital) - ETH treasury company (formerly BTC miner)
   // Verified 2026-02-13 via Oct 8, 2025 PR: "$150 million convertible notes offering,
   // which included the underwriters' full exercise of their over-allotment option"

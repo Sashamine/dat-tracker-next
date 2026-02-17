@@ -1180,29 +1180,32 @@ export const btcCompanies: Company[] = [
     currency: "CAD",
     asset: "BTC",
     tier: 2,
-    holdings: 771,  // btctcorp.com homepage: 771.37 BTC (Feb 2026)
-    holdingsLastUpdated: "2026-02-02",
+    holdings: 769,  // btctcorp.com homepage: 769.05 BTC (Feb 17, 2026)
+    holdingsLastUpdated: "2026-02-17",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://btctcorp.com",
     datStartDate: "2025-06-30",  // TSX Venture listing date
     // costBasisAvg removed - third-party source only
     isMiner: false,
+    totalDebt: 25_000_000, // CAD - convertible debentures ($25M face, $12 implied conversion)
+    debtSource: "TSX Venture Bulletin V2025-1838",
+    debtSourceUrl: "https://btctcorp.com",
     quarterlyBurnUsd: 500_000,
     burnSource: "SEDAR+ filings (estimate - new company)",
-    burnSourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=e0b8c2a1f3d4e5c6",
+    burnSourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000053693",
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
     website: "https://btctcorp.com",
     sedarProfile: "000053693",  // SEDAR+ profile number
-    // Shares: 10,075,080 basic, 12,158,413 diluted (accounts for convertible debentures)
-    sharesForMnav: 12_158_413,  // Diluted per btctcorp.com - includes convertible debentures
+    // Shares: 10,027,880 basic, 12,111,213 diluted (accounts for convertible debentures)
+    sharesForMnav: 10_027_880,  // BASIC shares per btctcorp.com — dilutives in dilutive-instruments.ts
     sharesSource: "btctcorp.com homepage + SEDAR+ filings",
     sharesSourceUrl: "https://btctcorp.com",
-    sharesAsOf: "2026-02-02",
-    // Note: Diluted shares include convertible debentures - indicates leverage via converts
+    sharesAsOf: "2026-02-17",
+    // Note: Convertible debentures (~2.08M shares) tracked in dilutive-instruments.ts
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
-    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services. BPS: ₿0.0000634 (diluted). Basic shares: 10,075,080. Convertible debentures outstanding increase diluted count to 12.16M. First Canadian Bitcoin-native treasury company.",
+    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services. BPS: ₿0.0000635 (diluted). Basic shares: 10,027,880. Diluted: 12,111,213 (includes convertible debentures). $25M CAD convertible debentures outstanding. First Canadian Bitcoin-native treasury company.",
   },
   // AKER (Aker ASA) removed 2026-02-02: Cannot verify BTC holdings
   // Seetee not listed among major unlisted investments in Q3 2025 report
