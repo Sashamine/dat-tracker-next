@@ -1688,10 +1688,10 @@ export const solCompanies: Company[] = [
     asset: "SOL",
     tier: 2,
     secCik: "1846839",
-    holdings: 523_134,  // 426,619 direct + 96,515 via jitoSOL (Dec 2025 monthly update)
-    holdingsLastUpdated: "2026-01-06",
+    holdings: 530_251,  // 402,004 direct + 46,474 jitoSOL + 81,640 STKESOL (Jan 2026 monthly update)
+    holdingsLastUpdated: "2026-02-03",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update",
+    holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
     datStartDate: "2024-06-01",
     // costBasisAvg removed - needs verification
     // stakingPct: 0.85 removed - needs verification
@@ -1708,16 +1708,16 @@ export const solCompanies: Company[] = [
     sharesSource: "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
     sharesAsOf: "2025-09-30",
-    totalDebt: 37_000_000,  // CAD $51.9M → ~$37M USD: Credit facility ($16.2M) + Convertibles ($14.5M current + $21.3M LT)
-    debtSource: "SEC 40-F FY2025: Credit facility CAD $16.2M + Convertibles CAD $35.7M",
+    totalDebt: 25_400_000,  // CAD $35.75M → ~$25.4M USD: Convertibles only (credit facility fully settled Dec 2025)
+    debtSource: "SEC 40-F FY2025 + Dec 31, 2025 6-K: Convertibles only (CAD $35.7M), credit facility settled",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
-    debtAsOf: "2025-09-30",
+    debtAsOf: "2025-12-31",
     // Cash obligations: Credit facility + converts interest (rates not disclosed in 40-F summary)
     // Need to verify from full 40-F filing - flagging as estimate
-    cashObligationsAnnual: 2_500_000,  // ESTIMATE: ~6-7% blended rate on CAD $52M
-    cashObligationsSource: "ESTIMATE: SEC 40-F FY2025 - rates not explicitly disclosed",
+    cashObligationsAnnual: 2_500_000,  // ESTIMATE: ~7% on CAD $35.7M converts only (credit facility settled Dec 2025)
+    cashObligationsSource: "ESTIMATE: Convertible interest only — credit facility settled Dec 2025",
     cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
-    cashObligationsAsOf: "2025-09-30",
+    cashObligationsAsOf: "2025-12-31",
     cashReserves: 1_300_000,  // CAD $1.79M → ~$1.3M USD
     restrictedCash: 0,  // Operating cash - available
     cashSource: "SEC 40-F FY2025",
@@ -1726,7 +1726,7 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     leader: "Michael Hubbard (Interim CEO)",
     strategy: "Validator-first SOL treasury (DAT++ model). VanEck ETF staking provider. 99.999% uptime.",
-    notes: "3.35M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Shareholder meeting Mar 31, 2026 re: board reconstitution (Tony Guoga + Max Kaplan requisition). Equity investments: NGRAVE NV, Chia Network, Animoca Brands.",
+    notes: "4.04M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Credit facility fully settled Dec 2025. $50M ATM program est. Jan 2, 2026 (Cantor/Roth). STKESOL liquid staking launched Jan 2026 (683K SOL staked). Q1 FY2026 results March 17, 2026. Shareholder meeting Mar 31, 2026 re: board reconstitution. Equity investments: NGRAVE NV, Chia Network, Animoca Brands.",
     website: "https://solstrategies.io/",
     twitter: "https://x.com/SolStrategies",
     investorRelationsUrl: "https://solstrategies.io/investor-relations",

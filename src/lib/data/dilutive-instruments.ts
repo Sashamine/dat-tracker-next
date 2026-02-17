@@ -1067,6 +1067,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Verified 2026-01-29 via SEC 40-F FY2025 (CIK 0001846839)
   // As of Sep 30, 2025: 643,626 options (WAEP $13.71), 1,552,042 warrants (WAEP $22.14), 15,106 RSUs
   // At ~$1.57 stock price: Most options/warrants deep OTM, only low-strike options + RSUs ITM
+  // Credit facility fully settled Dec 2025 (converted + repaid) — no credit facility dilutives remain
+  // TODO: Verify 4.38M LIFE Offering warrants @ CAD $8.90 — mentioned in provenance but NOT found in 6-K deep dive. Check Q1 FY2026 6-K (March 17, 2026).
   STKE: [
     {
       type: "option",
