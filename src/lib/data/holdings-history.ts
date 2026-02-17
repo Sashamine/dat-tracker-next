@@ -656,16 +656,17 @@ const CWD_HISTORY: HoldingsSnapshot[] = [
 
 // SUI Group (SUIG) - SUI treasury (formerly Mill City Ventures)
 // NOTE: Jan 2026 8-K shows actual holdings of 108M SUI, correcting earlier estimates
-// TODO BACKFILL: Pre-Jan 2026 entries use basic shares (~48M). Jan 2026 8-K introduced "fully adjusted shares" (80.9M)
-//   which includes pre-funded warrants. To fix treasury yield discontinuity, need to find historical
-//   "fully adjusted shares" from prior 8-Ks/10-Qs and update sharesOutstanding for each entry.
+// BACKFILLED: Pre-PIPE entries now use XBRL basic shares (~6.4M). Post-PIPE entries use actual share counts.
+// HPS discontinuity is expected: pre-PIPE float was tiny (~6M shares) vs post-PIPE (~80-83M shares).
+// Jan 2026 "fully adjusted shares" (80.9M) includes pre-funded warrants and reflects 7.8M buyback in Q4 2025.
 //   SEC CIK: 1425355 | Search: https://www.sec.gov/edgar/browse/?CIK=0001425355
 const SUIG_HISTORY: HoldingsSnapshot[] = [
-  // Pre-Jan 2026 entries use basic common shares outstanding (pre reverse-split/restructure methodology).
-  // These do NOT include pre-funded warrants (~5.6M shares). HPS is therefore overstated relative to Jan 2026+ methodology.
-  { date: "2024-10-01", holdings: 45000000, sharesOutstanding: 28_000_000, holdingsPerShare: 1.607, source: "SUI treasury announcement", sourceType: "press-release", sourceUrl: "https://www.sec.gov/edgar/browse/?CIK=0001425355" },
-  { date: "2024-12-31", holdings: 78000000, sharesOutstanding: 35_000_000, holdingsPerShare: 2.229, stockPrice: 302.96, source: "Q4 2024 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425002487/mcvt_10k.htm" },
-  { date: "2025-06-30", holdings: 108000000, sharesOutstanding: 42_000_000, holdingsPerShare: 2.571, stockPrice: 404.23, source: "Q2 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/mcvt_10q.htm" },
+  // Pre-PIPE entries use XBRL basic common shares (~6.4M). PIPE closed Jul 31, 2025 → massive share increase.
+  // Pre-funded warrants (~5.6M shares) NOT included in basic count. HPS is therefore high on tiny float.
+  { date: "2024-10-01", holdings: 45_000_000, sharesOutstanding: 6_385_255, holdingsPerShare: 7.047, source: "SUI treasury announcement; shares from Q3 2024 XBRL EntityCommonStockSharesOutstanding", sourceType: "press-release", sourceUrl: "https://www.sec.gov/edgar/browse/?CIK=0001425355" },
+  { date: "2024-12-31", holdings: 78_000_000, sharesOutstanding: 6_385_255, holdingsPerShare: 12.215, stockPrice: 302.96, source: "Q4 2024 10-K; shares from XBRL EntityCommonStockSharesOutstanding", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425002487/mcvt_10k.htm" },
+  // Q2 2025: PIPE closed Jul 31, so Jun 30 shares were still pre-PIPE (~6M basic). Q2 10-Q cover page shows 82M (as of filing date Aug 14, post-PIPE).
+  { date: "2025-06-30", holdings: 108_000_000, sharesOutstanding: 6_062_773, holdingsPerShare: 17.816, stockPrice: 404.23, source: "Q2 2025 10-Q; shares from Q1 2025 XBRL (pre-PIPE, PIPE closed Jul 31)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/mcvt_10q.htm" },
   // Sep 30: 10-Q says "106 million SUI tokens". Shares from XBRL CommonStockSharesOutstanding = 83,068,868.
   // NOTE: Uses basic common shares (pre reverse-split/restructure methodology). See Jan 2026 entry for "fully adjusted" methodology.
   { date: "2025-09-30", holdings: 106_000_000, sharesOutstanding: 83_068_868, holdingsPerShare: 1.276, stockPrice: 326.42, source: "Q3 2025 10-Q (XBRL: CommonStockSharesOutstanding)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm", sourceType: "sec-filing" },

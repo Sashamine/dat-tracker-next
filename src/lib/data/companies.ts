@@ -2260,7 +2260,7 @@ export const suiCompanies: Company[] = [
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
-    marketCap: 160_000_000,
+    marketCap: 98_000_000,  // ~$98M (80.9M shares × ~$1.21, Jun 2025) — dynamic calc via sharesForMnav preferred
     sharesForMnav: 80_900_000,  // SEC 8-K Jan 8, 2026: "fully adjusted shares issued and outstanding as of January 7, 2026"
     sharesAsOf: "2026-01-07",
     sharesSource: "SEC 8-K Jan 8, 2026",

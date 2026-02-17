@@ -260,50 +260,51 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "Brian Quintenz director warrants (tranche 4)",
     },
     // Sui Foundation Investor Warrants — 4 tranches totaling 3,113,468 shares
-    // Source: Jan 9, 2026 8-K (accession 0001654954-26-000203)
+    // Source: Jul 31, 2025 8-K (accession 0001654954-25-008758) — PIPE closing
+    // Vest over 24 months starting 6 months from issuance (25% every 6 months)
     {
       type: "warrant",
       strikePrice: 5.42,
-      potentialShares: 778_367,
-      source: "8-K Jan 9, 2026",
+      potentialShares: 1_245_387,
+      source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
-      expiration: "2031-01-05",
-      issuedDate: "2026-01-05",
-      notes: "Sui Foundation investor warrants (tranche 1) - 778,367 shares",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Sui Foundation investor warrants (tranche 1) - 1,245,387 shares @ $5.42",
     },
     {
       type: "warrant",
       strikePrice: 5.962,
-      potentialShares: 778_367,
-      source: "8-K Jan 9, 2026",
+      potentialShares: 1_245_387,
+      source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
-      expiration: "2031-01-05",
-      issuedDate: "2026-01-05",
-      notes: "Sui Foundation investor warrants (tranche 2) - 778,367 shares",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Sui Foundation investor warrants (tranche 2) - 1,245,387 shares @ $5.962",
     },
     {
       type: "warrant",
       strikePrice: 6.504,
-      potentialShares: 778_367,
-      source: "8-K Jan 9, 2026",
+      potentialShares: 415_129,
+      source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
-      expiration: "2031-01-05",
-      issuedDate: "2026-01-05",
-      notes: "Sui Foundation investor warrants (tranche 3) - 778,367 shares",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Sui Foundation investor warrants (tranche 3) - 415,129 shares @ $6.504",
     },
     {
       type: "warrant",
       strikePrice: 7.046,
-      potentialShares: 778_367,
-      source: "8-K Jan 9, 2026",
+      potentialShares: 207_565,
+      source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
-      expiration: "2031-01-05",
-      issuedDate: "2026-01-05",
-      notes: "Sui Foundation investor warrants (tranche 4) - 778,367 shares",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Sui Foundation investor warrants (tranche 4) - 207,565 shares @ $7.046",
     },
     // Pre-funded warrants: ~5,600,000 shares @ $0.0001 exercise price
     // NOTE: These are ALREADY included in the 80.9M sharesForMnav base count.
