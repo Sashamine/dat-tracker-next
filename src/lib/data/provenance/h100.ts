@@ -3,7 +3,7 @@
  *
  * Swedish BTC treasury company — first Nordic Bitcoin treasury.
  * Listed on NGM Nordic SME (NOT Nasdaq). ISK-eligible for Swedish investors.
- * Adam Back investor via SEK 516M convertible (Jul 2025).
+ * Adam Back investor via SEK 342.3M convertible (Jul 2025). SEK 122.5M converted Nov 2025.
  * Acquired Future Holdings AG (Switzerland) Feb 10, 2026.
  *
  * ⚠️ NO SEC/XBRL — sources are MFN (Swedish regulatory filings) + company treasury dashboard.
@@ -113,7 +113,7 @@ export const H100_PROVENANCE: ProvenanceFinancials = {
 
   // =========================================================================
   // TOTAL DEBT - Unknown until Feb 24 annual report
-  // SEK 393.5M convertible outstanding but exact USD equivalent uncertain
+  // SEK 219.8M convertible remaining (~$20.7M USD at 10.6 SEK/USD)
   // Confidence: UNV
   // =========================================================================
   totalDebt: pv(
@@ -121,12 +121,12 @@ export const H100_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "regulatory",
       url: MFN_FEED_URL,
-      quote: "SEK 516M convertible (Jul 2025), SEK 122.5M converted Nov 2025. ~SEK 393.5M remaining.",
+      quote: "SEK 342.3M convertible (Jul 2025), SEK 122.5M converted Nov 2025. SEK 219.8M remaining.",
       anchor: "Convertible Debt",
       sourceName: "MFN",
-      documentDate: "2025-11-19",
+      documentDate: "2025-11-21",
     }),
-    "UNV — Total debt unknown until Feb 24, 2026 Bokslutskommuniké. Convertible debentures outstanding (~SEK 393.5M) but exact balance uncertain. Set to 0 as placeholder."
+    "UNV — Total debt unknown until Feb 24, 2026 Bokslutskommuniké. Zero-coupon convertible debentures outstanding (SEK 219.8M / ~$20.7M). Set to 0 as placeholder."
   ),
 
   // =========================================================================
@@ -189,18 +189,25 @@ export const H100_STAKING = null; // BTC cannot be staked natively
 // =========================================================================
 export const H100_CAPITAL_PROGRAMS = {
   convertible: {
-    originalAmount: 49_600_000, // SEK 516M ÷ ~10.4 USD/SEK
-    convertedAmount: 11_800_000, // SEK 122.5M converted Nov 2025
-    remainingAmount: 37_800_000, // ~SEK 393.5M remaining
+    originalAmount: 32_300_000, // SEK 342.3M ÷ ~10.6 SEK/USD
+    convertedAmount: 11_557_000, // SEK 122.5M converted Nov 2025 ÷ ~10.6
+    remainingAmount: 20_736_000, // SEK 219.8M remaining ÷ ~10.6
     currency: "SEK",
-    originalAmountSEK: 516_000_000,
+    originalAmountSEK: 342_300_000,
     convertedAmountSEK: 122_500_000,
-    remainingAmountSEK: 393_500_000,
+    remainingAmountSEK: 219_800_000,
+    conversionPriceSEK: 8.48,
+    potentialShares: 25_919_811, // SEK 219,800,000 / SEK 8.48
+    originalPotentialShares: 40_365_566, // SEK 342,300,000 / SEK 8.48
+    sharesConverted: 14_450_468, // Nov 2025 conversion
+    maturity: "2030-07-09",
+    interestRate: 0, // Zero coupon
+    forcedConversionThreshold: 11.27, // SEK — if 20-day VWAP exceeds, company can force conversion
     investors: "Adam Back et al",
     issuedDate: "2025-07-09",
     conversionDate: "2025-11-21",
     source: MFN_FEED_URL,
-    note: "Zero-interest convertible debentures. SEK 122.5M converted to shares Nov 2025. IR page incorrectly claims 'no convertibles issued'.",
+    note: "Zero-coupon convertible debentures. Originally SEK 342.3M / 40.37M shares. SEK 122.5M converted to 14,450,468 shares Nov 2025. Remaining: SEK 219.8M / 25.9M shares. Forced conversion if 20-day VWAP > SEK 11.27. Maturity Jul 9, 2030.",
   },
   acquisition: {
     target: "Future Holdings AG",

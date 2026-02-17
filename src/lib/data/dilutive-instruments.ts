@@ -498,21 +498,22 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // H100 Group (H100.ST) - Swedish BTC treasury company
-  // Verified 2026-01-29 via MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
-  // Jul 9, 2025: SEK 516M raised via convertible debentures (Adam Back et al)
-  // Nov 21, 2025: SEK 122.5M converted to shares
-  // Remaining: ~SEK 393.5M in outstanding convertibles
-  // Note: IR page incorrectly states "no warrants/convertibles" - MFN filings prove otherwise
+  // Verified 2026-06-28 via MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
+  // Jul 9, 2025: SEK 342.3M raised via zero-coupon convertible debentures (Adam Back et al)
+  // Nov 21, 2025: SEK 122.5M converted to 14,450,468 shares
+  // Remaining: SEK 219.8M / 25.9M potential shares at SEK 8.48 conversion price
+  // Forced conversion: company can force if 20-day VWAP > SEK 11.27
   "H100.ST": [
     {
       type: "convertible",
-      strikePrice: 0.77, // Estimated: SEK 8 / 10.4 USD/SEK. Shares issued at SEK 6-8.48 in Jul-Sep 2025.
-      potentialShares: 43_000_000, // 354.43M diluted - 311.50M basic = ~43M from convertibles
-      faceValue: 38_000_000, // ~SEK 393.5M remaining / 10.4 = $37.8M USD
-      source: "MFN Jul 9, 2025 + Nov 21, 2025",
+      strikePrice: 0.80, // SEK 8.48 / 10.6 SEK/USD = ~$0.80
+      potentialShares: 25_919_811, // SEK 219,800,000 / SEK 8.48 per share
+      faceValue: 20_736_000, // SEK 219,800,000 / 10.6 = ~$20.7M USD
+      source: "MFN Jul 9, 2025 (issuance) + Nov 21, 2025 (partial conversion)",
       sourceUrl: "https://mfn.se/a/h100-group",
       issuedDate: "2025-07-09",
-      notes: "SEK 516M convertible (Adam Back investment), SEK 122.5M converted Nov 2025. Strike price estimated - needs verification from offering docs.",
+      expiration: "2030-07-09",
+      notes: "Originally SEK 342.3M / 40.37M shares. SEK 122.5M converted Nov 2025 (14,450,468 shares). Remaining: SEK 219.8M / 25.9M shares. Zero coupon. Forced conversion above SEK 11.27 VWAP.",
     },
   ],
 
