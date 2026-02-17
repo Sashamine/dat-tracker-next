@@ -2,7 +2,7 @@
   "ticker": "0434.HK",
   "exchange": "HKEX",
   "currency": "HKD",
-  "lastUpdated": "2026-02-17T18:32:06.233Z",
+  "lastUpdated": "2026-02-17T18:47:05.668Z",
   "prices": [
     {
       "date": "2024-01-01",
@@ -6103,6 +6103,15 @@
     {
       "date": "2026-02-17",
       "time": "13:32",
+      "open": 2.79,
+      "high": 2.88,
+      "low": 2.79,
+      "close": 2.88,
+      "volume": 395000
+    },
+    {
+      "date": "2026-02-17",
+      "time": "13:47",
       "open": 2.79,
       "high": 2.88,
       "low": 2.79,
