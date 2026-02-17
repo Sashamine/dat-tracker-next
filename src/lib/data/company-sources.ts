@@ -722,7 +722,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     reportsHoldingsFrequency: "on_purchase",
     reportsMnavDaily: false,
     notes: "Swedish BTC treasury. Adam Back investor. ISK-eligible for Swedish investors.",
-    lastVerified: "2026-01-22",
+    lastVerified: "2026-02-17",
   },
 
   // ==================== CANADIAN COMPANIES ====================

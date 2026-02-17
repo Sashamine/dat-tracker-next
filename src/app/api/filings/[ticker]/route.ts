@@ -329,9 +329,9 @@ const internationalFilingUrls: Record<string, { source: string; sourceUrl: strin
   },
   // Sweden
   "H100.ST": {
-    source: "Nasdaq Nordic",
-    sourceUrl: "https://www.nasdaqomxnordic.com/shares/company/h100",
-    note: "H100 Group on Nasdaq Nordic",
+    source: "NGM Nordic SME",
+    sourceUrl: "https://mfn.se/a/h100-group",
+    note: "H100 Group on NGM (Nordic Growth Market), NOT Nasdaq Nordic",
   },
   // France
   "ALCPB": {

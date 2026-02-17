@@ -61,7 +61,7 @@ Last updated: 2026-01-29
 | 3350.T | TSE | Japan | TDnet/EDINET |
 | 0434.HK | HKEX | Hong Kong | HKEX |
 | ALTBG | Euronext | France | AMF |
-| H100.ST | Nasdaq Nordic | Sweden | FI |
+| H100.ST | NGM Nordic SME | Sweden | FI |
 | XTAIF | CSE | Canada | SEDAR+ |
 | LUXFF | CSE | Canada | SEDAR+ |
 | IHLDF | OTC | US (OTC) | Limited SEC |
