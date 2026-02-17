@@ -3288,7 +3288,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 11_837_022,  // Basic shares before PIPE
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0253920-10k_cleancore.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0254073-10k_clean.htm",
     status: "reported",
   },
 

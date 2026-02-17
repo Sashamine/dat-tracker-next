@@ -698,7 +698,7 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
 // Prior history entries had fabricated share counts; rewritten with SEC-verified data
 const ZONE_HISTORY: HoldingsSnapshot[] = [
   // Pre-treasury: ~11.8M shares (Class A + B) per 10-Q
-  { date: "2025-06-30", holdings: 0, sharesOutstanding: 11_837_022, holdingsPerShare: 0, source: "SEC 10-K FY2025 - pre-treasury baseline", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0253920-10k_cleancore.htm", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 0, sharesOutstanding: 11_837_022, holdingsPerShare: 0, source: "SEC 10-K FY2025 - pre-treasury baseline", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0254073-10k_clean.htm", sourceType: "sec-filing" },
   // Sep 5, 2025: Treasury strategy launched, 175M pre-funded warrants issued
   // Sep 2025: Rapid DOGE accumulation + warrant exercises (164M shares from warrants)
   // Shares grew from 11.8M to 186.6M during Q1 FY2026
