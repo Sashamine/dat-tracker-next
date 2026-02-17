@@ -253,10 +253,10 @@ const KULR_INTEL: CompanyIntel = {
   ticker: "KULR",
   lastResearched: "2026-01-13",
   pressReleases: [
-    { date: "2025-11-24", title: "Counter-UAS Directed Energy Battery System prototype completed", summary: "Defense tech milestone", url: "https://ir.kulrtechnology.com/press-releases" },
-    { date: "2025-11-18", title: "Q3 2025 earnings: Bitcoin holdings ~$120M", summary: "Treasury growth", url: "https://ir.kulrtechnology.com/press-releases" },
-    { date: "2025-05-20", title: "Expanded holdings to 800 BTC", summary: "220.2% BTC yield reported", url: "https://ir.kulrtechnology.com/press-releases" },
-    { date: "2025-01-01", title: "Purchased 213.42 BTC", summary: "Initial 2025 accumulation", url: "https://ir.kulrtechnology.com/press-releases" },
+    { date: "2025-11-24", title: "Counter-UAS Directed Energy Battery System prototype completed", summary: "Defense tech milestone", url: "https://kulr.ai/investors/" },
+    { date: "2025-11-18", title: "Q3 2025 earnings: Bitcoin holdings ~$120M", summary: "Treasury growth", url: "https://kulr.ai/investors/" },
+    { date: "2025-05-20", title: "Expanded holdings to 800 BTC", summary: "220.2% BTC yield reported", url: "https://kulr.ai/investors/" },
+    { date: "2025-01-01", title: "Purchased 213.42 BTC", summary: "Initial 2025 accumulation", url: "https://kulr.ai/investors/" },
   ],
   strategySummary: "Board committed to allocating up to 90% of surplus cash to Bitcoin (December 2024). Uses combination of surplus cash, Coinbase credit facility, and ATM equity program. New hosting partnership with Soluna Holdings for 3.3 MW Bitcoin mining in Kentucky. Core business: Thermal management and battery safety (NASA/aerospace origins). Reports 'BTC Yield' metric.",
   recentDevelopments: [
