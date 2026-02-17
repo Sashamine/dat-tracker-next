@@ -214,6 +214,14 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Treasury: 108,098,436 SUI (Jan 7, 2026) | Shares: 80.9M fully adjusted
   // Note: 80.9M already includes pre-funded warrants - sharesForMnav uses this
   // Director warrants below vest over 24mo (starting 6mo from Jan 2026), 5-year exercise
+  // 18 dilutive instruments totaling 16,600,923 shares:
+  //   Director (Quintenz): 4 tranches, 207,565 shares
+  //   Foundation investor: 4 tranches, 3,113,468 shares
+  //   Pre-funded: 5,600,000 shares (already in base count)
+  //   Placement Agent (A.G.P.): 3,113,469 shares
+  //   Karatage Lead Investor: 4 tranches, 3,113,468 shares
+  //   Management: 3 tranches, 1,245,388 shares
+  //   Advisor: 207,565 shares
   SUIG: [
     {
       type: "warrant",
@@ -320,17 +328,111 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       issuedDate: "2025-01-01",
       notes: "Pre-funded warrants (PFW) — already included in 80.9M sharesForMnav base. Listed for transparency only. Do NOT add to diluted count.",
     },
-    // Underwriter warrant from S-1 filing
+    // Placement Agent (A.G.P.) warrants — 3.75% of securities sold in PIPE
     {
       type: "warrant",
-      strikePrice: 5.00,
-      potentialShares: 75_000,
-      source: "S-1 filing",
+      strikePrice: 5.962,
+      potentialShares: 3_113_469,
+      source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
-      expiration: "2030-12-31",
-      issuedDate: "2025-01-01",
-      notes: "Underwriter warrant from S-1 IPO/offering",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Placement Agent (A.G.P.) warrants — 3.75% of securities sold in PIPE",
+    },
+    // Karatage Lead Investor Warrants — 4 tranches totaling 3,113,468 shares
+    // Source: Jul 31, 2025 8-K (accession 0001654954-25-008758) — PIPE closing
+    {
+      type: "warrant",
+      strikePrice: 5.42,
+      potentialShares: 1_245_387,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 1) - 1,245,387 shares @ $5.42",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.962,
+      potentialShares: 1_245_387,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 2) - 1,245,387 shares @ $5.962",
+    },
+    {
+      type: "warrant",
+      strikePrice: 6.504,
+      potentialShares: 415_129,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 3) - 415,129 shares @ $6.504",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.046,
+      potentialShares: 207_565,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 4) - 207,565 shares @ $7.046",
+    },
+    // Management Warrants — 3 tranches totaling 1,245,388 shares
+    // Source: Jul 31, 2025 8-K (accession 0001654954-25-008758) — PIPE closing
+    {
+      type: "warrant",
+      strikePrice: 5.42,
+      potentialShares: 622_694,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Management warrants from PIPE closing (tranche 1) - 622,694 shares @ $5.42",
+    },
+    {
+      type: "warrant",
+      strikePrice: 6.504,
+      potentialShares: 415_129,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Management warrants from PIPE closing (tranche 2) - 415,129 shares @ $6.504",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.046,
+      potentialShares: 207_565,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Management warrants from PIPE closing (tranche 3) - 207,565 shares @ $7.046",
+    },
+    // Advisor Warrants — 207,565 shares
+    // Source: Jul 31, 2025 8-K (accession 0001654954-25-008758) — PIPE closing
+    {
+      type: "warrant",
+      strikePrice: 5.962,
+      potentialShares: 207_565,
+      source: "8-K Jul 31, 2025",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+      expiration: "2030-07-31",
+      issuedDate: "2025-07-31",
+      notes: "Advisor warrants from PIPE closing",
     },
   ],
 

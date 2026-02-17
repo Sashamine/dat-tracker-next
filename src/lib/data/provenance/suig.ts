@@ -55,7 +55,7 @@ const LATEST_HOLDINGS_DATE = "2026-01-07";
 
 // Shares from Jan 8, 2026 8-K: "fully adjusted shares issued and outstanding"
 const SHARES_OUTSTANDING = 80_900_000; // Basic shares
-const SHARES_DATE = "2026-01-08";
+const SHARES_DATE = "2026-01-07";
 
 // Financial data from Q3 2025 10-Q (Sep 30, 2025)
 const TOTAL_DEBT = 0; // No significant debt per 10-Q
