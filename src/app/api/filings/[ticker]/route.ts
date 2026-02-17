@@ -80,7 +80,7 @@ const tickerToCIK: Record<string, string> = {
   // LTC
   "LITS": "0001411460",
   // SUI
-  "SUIG": "0001066923",
+  "SUIG": "0001425355",
   // DOGE
   "ZONE": "0001814329",
   "TBH": "0001903595", // Brag House Holdings

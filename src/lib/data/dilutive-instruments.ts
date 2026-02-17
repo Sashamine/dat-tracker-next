@@ -221,7 +221,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 83_026,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 1) - vest 25% every 6mo starting Jul 2026",
@@ -232,7 +232,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 41_513,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 2)",
@@ -243,7 +243,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 41_513,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 3)",
@@ -254,10 +254,82 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 41_513,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 4)",
+    },
+    // Sui Foundation Investor Warrants — 4 tranches totaling 3,113,468 shares
+    // Source: Jan 9, 2026 8-K (accession 0001654954-26-000203)
+    {
+      type: "warrant",
+      strikePrice: 5.42,
+      potentialShares: 778_367,
+      source: "8-K Jan 9, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Sui Foundation investor warrants (tranche 1) - 778,367 shares",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.962,
+      potentialShares: 778_367,
+      source: "8-K Jan 9, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Sui Foundation investor warrants (tranche 2) - 778,367 shares",
+    },
+    {
+      type: "warrant",
+      strikePrice: 6.504,
+      potentialShares: 778_367,
+      source: "8-K Jan 9, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Sui Foundation investor warrants (tranche 3) - 778,367 shares",
+    },
+    {
+      type: "warrant",
+      strikePrice: 7.046,
+      potentialShares: 778_367,
+      source: "8-K Jan 9, 2026",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/",
+      expiration: "2031-01-05",
+      issuedDate: "2026-01-05",
+      notes: "Sui Foundation investor warrants (tranche 4) - 778,367 shares",
+    },
+    // Pre-funded warrants: ~5,600,000 shares @ $0.0001 exercise price
+    // NOTE: These are ALREADY included in the 80.9M sharesForMnav base count.
+    // Listed here for transparency/documentation only — do NOT double-count in diluted share calcs.
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 5_600_000,
+      source: "S-1 / 8-K Jan 8, 2026",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=S-1",
+      expiration: "9999-12-31",  // No expiration (pre-funded)
+      issuedDate: "2025-01-01",
+      notes: "Pre-funded warrants (PFW) — already included in 80.9M sharesForMnav base. Listed for transparency only. Do NOT add to diluted count.",
+    },
+    // Underwriter warrant from S-1 filing
+    {
+      type: "warrant",
+      strikePrice: 5.00,
+      potentialShares: 75_000,
+      source: "S-1 filing",
+      sourceUrl:
+        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=S-1",
+      expiration: "2030-12-31",
+      issuedDate: "2025-01-01",
+      notes: "Underwriter warrant from S-1 IPO/offering",
     },
   ],
 
@@ -1587,9 +1659,10 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually
 
   // FLD (Fold Holdings) - BTC treasury company
-  // Verified 2026-02-02 via SEC 10-Q Q3 2025 (CIK 0001889123)
+  // Verified 2026-02-17 via SEC 10-Q Q3 2025 (CIK 0001889123)
   // Basic shares: 48,307,642 (Nov 2025)
-  // Convertible debt: $82.4M ($21.6M June convert + $60.8M March convert related party)
+  // Convertible debt: $66.3M ($20M June convert + $46.3M March convert)
+  // Public warrants: 12.4M FLDDW @ $11.50 (SPAC legacy)
   FLD: [
     {
       type: "warrant",
@@ -1614,17 +1687,50 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     {
       type: "convertible",
       strikePrice: 12.50,
-      potentialShares: 3_704_000,  // $46.3M / $12.50
+      potentialShares: 3_702_360,  // $46,279,500 / $12.50
       faceValue: 46_300_000,  // Principal (fair value is $60.8M)
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
       notes: "March 2025 Investor Note (SATS Credit Fund - related party) @ $12.50/share. Funded with 475 BTC. Triggering events at $15-$40 stock. Deep OTM at ~$2 stock.",
     },
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 12_434_658,
+      source: "SEC 10-Q Q3 2025 Note 11 (Warrants)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      notes: "FLDDW public warrants (legacy FTAC Emerald SPAC). Each warrant exercisable for one share @ $11.50. Trades on Nasdaq. Deep OTM at ~$2 stock.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 12.50,
+      potentialShares: 869_565,
+      source: "SEC 10-Q Q3 2025 Note 10 (December 2024 SPA)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      issuedDate: "2024-12-01",
+      notes: "Series A Warrants from December 2024 SPA. 8-year expiry. Deep OTM at ~$2 stock.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 9.00,
+      potentialShares: 869_565,
+      source: "SEC 10-Q Q3 2025 Note 10 (June 2025 Amendment)",
+      sourceUrl:
+        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      issuedDate: "2025-06-16",
+      expiration: "2026-08-14",
+      notes: "Series C Warrants (amended from $11.50 to $9.00 in June 2025). Expires Aug 14, 2026 — near-term! Deep OTM at ~$2 stock.",
+    },
   ],
-  // Total FLD dilution: 925K warrants + 5.9M convert shares = 6.8M potential (all OTM)
+  // Total FLD dilution: 15.1M warrants + 5.9M convert shares = 21.0M potential (all OTM)
+  // FLDDW: 12,434,658 public warrants @ $11.50 (largest single instrument)
   // All instruments deep OTM at ~$2 stock vs $9-$15 strikes
-  // 300 BTC collateral on June note, 475 BTC funded March note
+  // 300 BTC collateral on June note, 500 BTC funded March note (800 total restricted)
+  // Series C warrants (869K @ $9) expire Aug 14, 2026 — monitor
+  // Two Prime revolving facility ($45M max) — additional BTC collateral TBD
 
   // FUFU (BitFuFu) - BTC miner (Foreign Private Issuer)
   // Verified 2026-02-16 via SEC 20-F FY2024, 6-K H1 2025 XBRL, and 6-K Jan 2026

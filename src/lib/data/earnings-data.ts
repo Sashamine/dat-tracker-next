@@ -2450,10 +2450,122 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-13",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 106_000_000,  // SEC 10-Q: "106 million SUI tokens" (valued at $344.5M @ $3.26)
-    sharesAtQuarterEnd: 89_075_630,  // 10-Q: ~1.19 SUI per share → 106M / 1.19 ≈ 89M
-    holdingsPerShare: 1.190,  // Per 10-Q: "approximately 1.19 SUI per-share of common stock and Pre-Funded Warrants"
+    sharesAtQuarterEnd: 83_068_868,  // XBRL: CommonStockSharesOutstanding = 83,068,868 at Sep 30, 2025 (basic common, excl. pre-funded warrants)
+    holdingsPerShare: 1.276,  // 106,000,000 / 83,068,868 = 1.2761 (note: 10-Q says "~1.19 per share" using fully-adjusted shares incl. PFWs)
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=10-Q",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm",
+    status: "reported",
+  },
+  // Q2 2025 - SEC 10-Q filed Aug 14, 2025
+  {
+    ticker: "SUIG",
+    fiscalYear: 2025,
+    fiscalQuarter: 2,
+    calendarYear: 2025,
+    calendarQuarter: 2,
+    earningsDate: "2025-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 108_000_000,  // holdings-history: 108M SUI at 2025-06-30
+    sharesAtQuarterEnd: 82_110_648,  // XBRL EntityCommonStockSharesOutstanding (post-PIPE, massive jump from 6M)
+    holdingsPerShare: 1.315,  // 108,000,000 / 82,110,648
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/mcvt_10q.htm",
+    status: "reported",
+  },
+  // Q1 2025 - SEC 10-Q filed May 13, 2025
+  {
+    ticker: "SUIG",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-05-13",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // No SUI holdings yet — DAT strategy launched late July 2025
+    sharesAtQuarterEnd: 6_062_773,  // XBRL EntityCommonStockSharesOutstanding (pre-PIPE basic shares)
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425005448/mcvt_10q.htm",
+    status: "reported",
+  },
+  // Q4 2024 (FY2024) - SEC 10-K filed Mar 10, 2025
+  {
+    ticker: "SUIG",
+    fiscalYear: 2024,
+    fiscalQuarter: 4,
+    calendarYear: 2024,
+    calendarQuarter: 4,
+    earningsDate: "2025-03-10",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 78_000_000,  // holdings-history: 78M SUI at 2024-12-31 (Q4 2024 filing)
+    sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
+    holdingsPerShare: 12.215,  // 78,000,000 / 6,385,255 — pre-PIPE, very high HPS on tiny float
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425002487/mcvt_10k.htm",
+    status: "reported",
+  },
+  // Q3 2024 - SEC 10-Q filed Nov 12, 2024
+  {
+    ticker: "SUIG",
+    fiscalYear: 2024,
+    fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
+    earningsDate: "2024-11-12",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 45_000_000,  // holdings-history: 45M SUI announced Oct 1, 2024 (near Q3 end)
+    sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
+    holdingsPerShare: 7.047,  // 45,000,000 / 6,385,255 — SUI treasury just announced
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424014099/mcvt_10q.htm",
+    status: "reported",
+  },
+  // Q2 2024 - SEC 10-Q filed Aug 14, 2024 (pre-crypto pivot)
+  {
+    ticker: "SUIG",
+    fiscalYear: 2024,
+    fiscalQuarter: 2,
+    calendarYear: 2024,
+    calendarQuarter: 2,
+    earningsDate: "2024-08-14",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-crypto pivot (SUI treasury announced Oct 2024)
+    sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424010649/mcvt_10q.htm",
+    status: "reported",
+  },
+  // Q1 2024 - SEC 10-Q filed May 15, 2024 (pre-crypto pivot)
+  {
+    ticker: "SUIG",
+    fiscalYear: 2024,
+    fiscalQuarter: 1,
+    calendarYear: 2024,
+    calendarQuarter: 1,
+    earningsDate: "2024-05-15",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-crypto pivot
+    sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424006409/mcvt_10q.htm",
+    status: "reported",
+  },
+  // Q4 2023 (FY2023) - SEC 10-K filed Apr 2, 2024 (pre-crypto pivot, Mill City Ventures era)
+  {
+    ticker: "SUIG",
+    fiscalYear: 2023,
+    fiscalQuarter: 4,
+    calendarYear: 2023,
+    calendarQuarter: 4,
+    earningsDate: "2024-04-02",
+    earningsTime: "AMC",
+    holdingsAtQuarterEnd: 0,  // Pre-crypto pivot
+    sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
+    holdingsPerShare: 0,
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424004122/mcvt_10k.htm",
     status: "reported",
   },
 
