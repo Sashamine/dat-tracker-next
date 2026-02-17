@@ -3815,10 +3815,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "reported",
   },
 
-  // ========== ZOOZ Power (ZOOZ) - Nasdaq + TASE ==========
-  // Israel-based EV charging company
-  // First BTC purchase: Sep 28, 2025
-  // Source: treasury.zoozpower.com
+  // ========== ZOOZ Strategy Ltd. (ZOOZ) - Nasdaq + TASE ==========
+  // Israel-based BTC treasury (fka ZOOZ Power, EV charging)
+  // Foreign private issuer — files 20-F annual, 6-K interim
+  // First BTC purchase: Jul 2025 (after $180M private placement)
+  // FY2025 20-F expected March 2026
   // Q1 2026 - In progress
   {
     ticker: "ZOOZ",
@@ -3826,32 +3827,28 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 1,
     calendarYear: 2026,
     calendarQuarter: 1,
-    earningsDate: "2026-05-15", // Estimated
+    earningsDate: "2026-05-15", // Estimated (FPI, may only file semi-annually)
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 1047, // Feb 2, 2026 - 1,046.96 BTC (ongoing)
-    sharesAtQuarterEnd: 162_000_000,
-    holdingsPerShare: 0.00000646,
-    source: "company-dashboard",
-    sourceUrl: "https://treasury.zoozpower.com",
+    source: "sec-filing",
     status: "upcoming",
   },
-  // Q4 2025
+  // Q4 2025 — 6-K Jan 20, 2026 has preliminary data
   {
     ticker: "ZOOZ",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-03-15", // Estimated
+    earningsDate: "2026-03-15", // 20-F expected March 2026
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 1047, // Nov 5, 2025 - 1,046.96 BTC (no Q4 purchases)
-    sharesAtQuarterEnd: 162_000_000,
-    holdingsPerShare: 0.00000646,
-    source: "company-dashboard",
-    sourceUrl: "https://treasury.zoozpower.com",
+    holdingsAtQuarterEnd: 1_046,  // 6-K: "completed the purchase of a total of 1,046 Bitcoin"
+    sharesAtQuarterEnd: 163_000_000,  // 161.9M + ~1.14M ATM
+    holdingsPerShare: 0.00000642,  // 1046 / 163M
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     status: "reported",
   },
-  // Q3 2025 - First quarter with BTC
+  // Q3 2025 - First full quarter with BTC
   {
     ticker: "ZOOZ",
     fiscalYear: 2025,
@@ -3860,11 +3857,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-15", // Estimated
     earningsTime: "BMO",
-    holdingsAtQuarterEnd: 525, // Sep 30, 2025 - 524.92 BTC
-    sharesAtQuarterEnd: 161_900_000,
-    holdingsPerShare: 0.00000324,
-    source: "company-dashboard",
-    sourceUrl: "https://treasury.zoozpower.com",
+    holdingsAtQuarterEnd: 525,  // 524.92 BTC per dashboard (6-K confirms purchases through Sep)
+    sharesAtQuarterEnd: 161_899_782,  // 424B5 Sep 30, 2025
+    holdingsPerShare: 0.00000324,  // 525 / 161.9M
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
     status: "reported",
   },
 ];

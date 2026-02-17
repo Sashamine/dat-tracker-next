@@ -987,11 +987,14 @@ const ANAP_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-21", holdings: 1_417, sharesOutstanding: 40_609_400, holdingsPerShare: 0.0000349, source: "TDnet Jan 21, 2026: 1,417.0341 BTC. Shares: 40,609,400 (+ ~2.9M Jan exercises pending settlement)", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf" },
 ];
 
-// ZOOZ Power - Israeli BTC treasury
-// Source: treasury.zoozpower.com dashboard
+// ZOOZ Strategy Ltd. (fka ZOOZ Power) - Israeli BTC treasury
+// Source: SEC 6-K filings + 424B5 for shares
+// Foreign private issuer, Nasdaq + TASE dual-listed
 const ZOOZ_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-09-28", holdings: 100, sharesOutstanding: 150_000_000, holdingsPerShare: 0.00000067, source: "Initial BTC treasury", sourceType: "press-release", sourceUrl: "https://treasury.zoozpower.com" },
-  { date: "2026-02-02", holdings: 1_047, sharesOutstanding: 162_000_000, holdingsPerShare: 0.00000646, source: "treasury.zoozpower.com Feb 2026", sourceType: "company-website", sourceUrl: "https://treasury.zoozpower.com" },
+  // Sep 26, 2025: 424B5 shows 153,472,712 shares; Sep 29: 161,899,782 (post-PP closings)
+  { date: "2025-09-30", holdings: 525, sharesOutstanding: 161_899_782, holdingsPerShare: 0.00000324, source: "6-K Sep 30, 2025 (524.92 BTC per dashboard); shares from 424B5", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm" },
+  // Dec 31, 2025: 6-K Jan 20, 2026 confirms 1,046 BTC + ~1.14M ATM shares sold
+  { date: "2025-12-31", holdings: 1_046, sharesOutstanding: 163_000_000, holdingsPerShare: 0.00000642, source: "SEC 6-K Jan 20, 2026: 1,046 BTC, $27.1M cash, no debt", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm" },
 ];
 
 // Bitcoin Treasury Corp (BTCT.V) - Canadian BTC treasury

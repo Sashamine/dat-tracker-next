@@ -1227,6 +1227,67 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // ZOOZ (ZOOZ Strategy Ltd.) - Israeli BTC treasury company
+  // Verified 2026-02-17 via SEC 424B5 Sep 30, 2025 (accession 0001493152-25-016384)
+  // Foreign private issuer (Israel), Nasdaq + TASE dual-listed
+  // Basic shares: ~163M as of Dec 31, 2025 (161.9M + ~1.14M ATM)
+  ZOOZ: [
+    {
+      type: "warrant",
+      strikePrice: 11.50,
+      potentialShares: 6_022_500,
+      source: "SEC 424B5 Sep 30, 2025: ZOOZW public warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2029-09-30",  // Estimated 5yr from SPAC merger
+      notes: "ZOOZW public warrants (trade on Nasdaq). From Keyarch SPAC merger.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 3.06,
+      potentialShares: 5_350_000,
+      source: "SEC 424B5 Sep 30, 2025: Private Placement warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2030-07-29",  // Estimated 5yr from Jul 2025 PP
+      notes: "Private Placement warrants from Jul/Sep 2025 equity raise",
+    },
+    {
+      type: "warrant",
+      strikePrice: 2.65,  // Weighted average
+      potentialShares: 40_360_895,
+      source: "SEC 424B5 Sep 30, 2025: Forest Hill / Sponsor Support Agreement warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2029-09-30",  // Estimated
+      notes: "Forest Hill 18, LP sponsor warrants. Weighted avg exercise price ~$2.65. LARGEST dilutive block.",
+    },
+    {
+      type: "option",
+      strikePrice: 5.31,
+      potentialShares: 920_010,
+      source: "SEC 424B5 Sep 30, 2025: outstanding options",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2030-09-30",  // Estimated
+      notes: "Employee stock options, weighted avg exercise price $5.31",
+    },
+    {
+      type: "rsu",
+      strikePrice: 0,
+      potentialShares: 20_180_448,  // CEO 13,453,632 + Chairman 6,726,816
+      source: "SEC 424B5 Sep 30, 2025: RSUs granted to CEO + Chairman",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2030-09-30",  // Estimated vesting
+      notes: "CEO Jordan Fried: 13.45M RSUs + Chairman Avi Cohen: 6.73M RSUs. Vesting unknown.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0.001,
+      potentialShares: 4_000_000,
+      source: "SEC 424B5 Sep 30, 2025: nominal strike warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2029-09-30",  // Estimated
+      notes: "Shareholder warrants at ~$0.001 strike — effectively free shares. From pre-closing structure.",
+    },
+  ],
+
   // ZONE (CleanCore Solutions) - DOGE treasury company
   // Verified 2026-01-29 via SEC 8-K Sep 5, 2025
   // Pre-funded warrants (175M @ $0.0001) already exercised and included in basic shares

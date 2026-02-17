@@ -603,6 +603,24 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
 
   // ==================== DOGE COMPANIES ====================
 
+  ZOOZ: {
+    ticker: "ZOOZ",
+    name: "ZOOZ Strategy Ltd.",
+    secCik: "1992818",
+    secFilingsUrl: "https://efts.sec.gov/LATEST/search-index?q=%221992818%22&forms=20-F,6-K",
+    exchange: "NASDAQ",
+    officialDashboard: "https://treasury.zoozpower.com",
+    officialDashboardName: "treasury.zoozpower.com",
+    officialMnavNote: "⚠️ Third-party site (disclaimer: 'not a ZOOZ website'). Shows BTC count, cost basis, shares.",
+    investorRelations: "https://zoozpower.com",
+    sharesSource: "basic",
+    sharesNotes: "Post-$180M private placement. 161.9M from 424B5 + ~1.14M ATM = ~163M. Pre-raise 20-F shows only 12.1M.",
+    reportsHoldingsFrequency: "on_purchase",
+    reportsMnavDaily: false,
+    notes: "Israeli FPI. Nasdaq + TASE dual-listed. Files 20-F (annual) + 6-K (interim). Treasury dashboard is 3P, not official.",
+    lastVerified: "2026-02-17",
+  },
+
   ZONE: {
     ticker: "ZONE",
     name: "CleanCore Solutions, Inc.",

@@ -1133,32 +1133,43 @@ export const btcCompanies: Company[] = [
   },
   {
     id: "zooz",
-    name: "ZOOZ Power",
+    name: "ZOOZ Strategy Ltd.",  // Renamed from ZOOZ Power Oct 2025
     ticker: "ZOOZ",
     twitter: "zoozbitcoin",
     asset: "BTC",
     tier: 2,
-    holdings: 1_047,  // treasury.zoozpower.com Feb 2, 2026 (1,046.96 BTC)
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://treasury.zoozpower.com",
-    datStartDate: "2025-09-28",
+    holdings: 1_046,  // 6-K Jan 20, 2026: "completed the purchase of a total of 1,046 Bitcoin" as of Dec 31, 2025
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    datStartDate: "2025-07-29",  // First ATM agreement date
     website: "https://zoozpower.com",
     secCik: "0001992818",
+    costBasisAvg: 116_520,  // 6-K: $121.9M / 1,046 BTC = ~$116,520 avg
+    costBasisSource: "SEC 6-K Jan 20, 2026: avg purchase price $112,745/BTC × 1,046 = $121.9M (rounding)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     isMiner: false,
-    quarterlyBurnUsd: 3_000_000,
-    burnSource: "SEC 20-F FY2024 XBRL: GeneralAndAdministrativeExpense (estimated quarterly)",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1992818&type=20-F",
+    quarterlyBurnUsd: 3_000_000,  // 20-F FY2024 total opex ~$12M/yr = $3M/qtr (G&A + R&D + COGS). Pre-pivot, may change.
+    burnSource: "SEC 20-F FY2024: total operating expenses ~$12M/year (estimated quarterly)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225009478/form20-f.htm",
     burnAsOf: "2024-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 162_000_000,  // treasury.zoozpower.com basic shares
-    sharesSource: "SEC 20-F (filed 2025-03-07): EntityCommonStockSharesOutstanding = 12,105,496 as of 2024-12-31",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225009478/form20-f.htm",
-    sharesAsOf: "2024-12-31",
-    // costBasisAvg removed - needs verification
-    strategy: "EV charging company (flywheel tech) pivoted to BTC treasury Sep 2025. First NIS-denominated Bitcoin exposure on TASE.",
-    notes: "Nasdaq + TASE dual-listed (Israel). ✅ NO LEVERAGE: BTC funded via $180M equity raise (Jul 2025). Underwater on BTC ($116k avg). Dilutive: 269M fully diluted (warrants @ $3.06 strike, 5yr). Renamed to 'ZOOZ Strategy Ltd.' Oct 2025.",
+    totalDebt: 0,  // 6-K Jan 20, 2026: "no outstanding debt" + promissory notes fully repaid
+    debtSource: "SEC 6-K Jan 20, 2026: promissory notes fully repaid, no outstanding debt",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    debtAsOf: "2025-12-31",
+    cashReserves: 27_100_000,  // 6-K Jan 20, 2026: $27.1M as of Dec 31, 2025
+    cashSource: "SEC 6-K Jan 20, 2026: cash and cash equivalents ~$27.1M",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    cashAsOf: "2025-12-31",
+    sharesForMnav: 163_000_000,  // 424B5 Sep 30, 2025: 161,899,782 + ATM ~1.14M shares sold through Dec 31 ≈ 163M
+    sharesSource: "SEC 424B5 Sep 30, 2025: 161,899,782 outstanding + 6-K: ~1.14M ATM shares sold",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+    sharesAsOf: "2025-12-31",
+    leader: "Jordan Fried (CEO)",
+    strategy: "First Nasdaq + TASE dual-listed BTC treasury company. Pivoted from EV charging (flywheel tech) Jul 2025. $1B ATM registered.",
+    notes: "Israeli company (Lod). ✅ NO LEVERAGE: BTC funded via $180M private placement (Jul+Sep 2025). $1B ATM registered Sep 2025, barely used (~$4M). Cost basis $112,745/BTC avg. Renamed from 'ZOOZ Power' to 'ZOOZ Strategy Ltd.' Oct 2025. Exploring Bitcoin ecosystem cash-flow businesses.",
   },
   // USBC removed 2026-02-02: SEC 10-K states "does not currently intend to make future BTC purchases"
   // They hold ~1,003 BTC but it was a one-time equity contribution, not an ongoing treasury strategy
