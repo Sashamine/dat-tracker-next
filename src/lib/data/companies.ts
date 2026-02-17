@@ -2296,7 +2296,7 @@ export const dogeCompanies: Company[] = [
     website: "https://www.cleancoresol.com",
     twitter: "https://twitter.com/CleanCoreSol",
     secCik: "1956741",
-    holdings: 733_060_893,  // Q2 FY2026 10-Q (Dec 31, 2025) — XBRL-verified. No purchases Jan 1-Feb 10, 2026.
+    holdings: 733_060_893,  // Q2 FY2026 10-Q (Dec 31, 2025) — filing-verified (no XBRL crypto tag). No purchases Jan 1-Feb 10, 2026.
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
@@ -2312,8 +2312,8 @@ export const dogeCompanies: Company[] = [
     cashSource: "SEC 10-Q Q2 FY2026 XBRL",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     cashAsOf: "2025-12-31",
-    totalDebt: 800_000,  // Q2 FY2026 XBRL: NotesPayable $800K at 10% interest
-    debtSource: "SEC 10-Q Q2 FY2026 XBRL: NotesPayable",
+    totalDebt: 800_000,  // Q2 FY2026 10-Q: NotesPayable ~$800K at 10% interest (XBRL last tagged $690K at Jun 30; verify from filing text)
+    debtSource: "SEC 10-Q Q2 FY2026: NotesPayable",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     debtAsOf: "2025-12-31",
     sharesForMnav: 210_556_229,  // SEC 10-Q Q2 FY2026 cover page (Feb 10, 2026)
