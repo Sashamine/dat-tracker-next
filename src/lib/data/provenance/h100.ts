@@ -3,7 +3,7 @@
  *
  * Swedish BTC treasury company — first Nordic Bitcoin treasury.
  * Listed on NGM Nordic SME (NOT Nasdaq). ISK-eligible for Swedish investors.
- * Adam Back investor via SEK 516M raise (SEK 173.3M equity + SEK 342.3M convertible, Jul 2025). SEK 122.5M converted Nov 2025.
+ * Adam Back investor via Jul 2025 raise: SEK 342.3M zero-coupon convertible debentures + directed equity issues. SEK 122.5M converted Nov 2025.
  * Acquired Future Holdings AG (Switzerland) Feb 12, 2026.
  *
  * ⚠️ NO SEC/XBRL — sources are MFN (Swedish regulatory filings) + company treasury dashboard.
@@ -23,6 +23,7 @@ import {
 // KEY SOURCES
 // =========================================================================
 const MFN_FEED_URL = "https://mfn.se/a/h100-group";
+const MFN_HOLDINGS_FILING_URL = "https://mfn.se/a/h100-group/h100-group-acquires-4-39-btc-total-holdings-reach-1-051-btc";
 const TREASURY_DASHBOARD_URL = "https://treasury.h100.group";
 const IR_SHARES_URL = "https://www.h100.group/investor-relations/shares";
 
@@ -30,12 +31,12 @@ const IR_SHARES_URL = "https://www.h100.group/investor-relations/shares";
 // LATEST DATA POINTS
 // =========================================================================
 
-// Holdings from MFN filing Feb 6, 2026: 4 BTC purchase → 1,051 total
+// Holdings from MFN filing Feb 6, 2026: 4.39 BTC purchase → 1,051 total
 const LATEST_HOLDINGS = 1_051; // BTC
 const LATEST_HOLDINGS_DATE = "2026-02-06";
 
 // Shares: 335,250,237 (pre-acquisition) + 3,146,456 (Future Holdings AG) = 338,396,693
-// Future Holdings AG acquisition completed Feb 10, 2026
+// Future Holdings AG acquisition completed Feb 12, 2026
 const SHARES_OUTSTANDING = 338_396_693; // Basic shares post-acquisition
 const SHARES_DATE = "2026-02-12";  // MFN filing date for Future Holdings AG acquisition completion
 const PRE_ACQUISITION_SHARES = 335_250_237;
@@ -69,13 +70,13 @@ export const H100_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "regulatory",
       searchTerm: "1,051",
-      url: MFN_FEED_URL,
-      quote: "4 BTC purchase → 1,051 total BTC holdings",
+      url: MFN_HOLDINGS_FILING_URL,
+      quote: "4.39 BTC purchase → 1,051 total BTC holdings",
       anchor: "BTC Holdings",
       sourceName: "MFN (Modular Finance)",
       documentDate: LATEST_HOLDINGS_DATE,
     }),
-    "MFN regulatory filing Feb 6, 2026. 4 BTC purchase bringing total to 1,051. IR confidence — MFN is the Swedish regulatory disclosure platform but lacks XBRL structure."
+    "MFN regulatory filing Feb 6, 2026. 4.39 BTC purchase bringing total to 1,051. IR confidence — MFN is the Swedish regulatory disclosure platform but lacks XBRL structure."
   ),
 
   // =========================================================================
@@ -92,7 +93,7 @@ export const H100_PROVENANCE: ProvenanceFinancials = {
       anchor: "Share capital development",
       documentDate: SHARES_DATE,
     }),
-    "IR page shows 335,250,237 as last entry. Future Holdings AG acquisition (Feb 10, 2026) issued 3,146,456 new shares per MFN filing. IR page not yet updated with acquisition shares."
+    "IR page shows 335,250,237 as last entry. Future Holdings AG acquisition (Feb 12, 2026) issued 3,146,456 new shares per MFN filing. IR page not yet updated with acquisition shares."
   ),
 
   // =========================================================================
@@ -237,8 +238,9 @@ export const H100_PROVENANCE_DEBUG = {
   notes:
     "First Nordic Bitcoin treasury company. NGM Nordic SME listed (NOT Nasdaq). " +
     "Swedish company — no SEC/XBRL, sources are MFN + treasury dashboard. " +
-    "Adam Back investor via SEK 516M raise (SEK 173.3M directed equity + SEK 342.3M zero-coupon convertible debentures). Acquired Future Holdings AG (Switzerland) Feb 12, 2026. " +
+    "Adam Back investor via Jul 2025 raise: SEK 342.3M zero-coupon convertible debentures + directed equity issues. Acquired Future Holdings AG (Switzerland) Feb 12, 2026. " +
     "Cash/debt/burn will be updated with Feb 24, 2026 annual report (Bokslutskommuniké). " +
+    "⚠️ IR page (h100.group/investor-relations/shares) incorrectly claims 'no convertibles' — contradicted by MFN filings showing SEK 219.8M outstanding. " +
     "Confidence: Holdings=IR, Shares=IR, CostBasis=3P, Burn=EST, Cash/Debt=UNV.",
 };
 

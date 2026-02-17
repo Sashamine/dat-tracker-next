@@ -399,12 +399,12 @@ const ALTBG_HISTORY: HoldingsSnapshot[] = [
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
 // Source: MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
 // Verified 2026-01-29 from MFN press releases
-// Share count grew via directed issues + SEK 516M raise (SEK 173.3M equity + SEK 342.3M convertible) (117M → 335M)
+// Share count grew via directed equity issues + SEK 342.3M convertible debentures (117M → 335M)
 const H100_HISTORY: HoldingsSnapshot[] = [
   // May-Jun 2025: Initial purchases
   { date: "2025-05-22", holdings: 4, sharesOutstanding: 117_090_000, holdingsPerShare: 0.0000000342, source: "MFN: first BTC purchase (4.39 BTC)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   { date: "2025-06-16", holdings: 169, sharesOutstanding: 117_090_000, holdingsPerShare: 0.00000144, source: "MFN: 144.8 BTC purchase", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  // July 2025: Rapid accumulation via Adam Back SEK 516M raise (SEK 173.3M equity + SEK 342.3M convertible)
+  // July 2025: Rapid accumulation via Adam Back SEK 342.3M convertible + directed equity issues
   { date: "2025-07-02", holdings: 248, sharesOutstanding: 233_170_000, holdingsPerShare: 0.00000106, source: "MFN: 47.33 BTC purchase", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   { date: "2025-07-16", holdings: 370, sharesOutstanding: 233_170_000, holdingsPerShare: 0.00000159, source: "MFN: 75.53 BTC ? 370 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   { date: "2025-07-21", holdings: 510, sharesOutstanding: 249_230_000, holdingsPerShare: 0.00000205, source: "MFN: 140.25 BTC ? 510 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
@@ -421,8 +421,8 @@ const H100_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-02", holdings: 1047, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN: Shareholder Letter", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Feb 2026: 4 BTC purchase → 1,051 total
   { date: "2026-02-06", holdings: 1051, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000313, source: "MFN filing Feb 6, 2026", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  // Feb 10, 2026: Acquired Future Holdings AG, issued 3,146,456 new shares
-  { date: "2026-02-10", holdings: 1051, sharesOutstanding: 338_396_693, holdingsPerShare: 0.00000311, source: "MFN: Future Holdings AG acquisition (3,146,456 new shares)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  // Feb 12, 2026: Acquired Future Holdings AG, issued 3,146,456 new shares
+  { date: "2026-02-12", holdings: 1051, sharesOutstanding: 338_396_693, holdingsPerShare: 0.00000311, source: "MFN: Future Holdings AG acquisition (3,146,456 new shares)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
 ];
 
 // ==================== ADDITIONAL ETH COMPANIES ====================
