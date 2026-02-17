@@ -1271,12 +1271,12 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
     {
       type: "warrant",
-      strikePrice: 2.65,  // Weighted average
+      strikePrice: 2.17,  // Per filing
       potentialShares: 40_360_895,
       source: "SEC 424B5 Sep 30, 2025: Forest Hill / Sponsor Support Agreement warrants",
       sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
       expiration: "2029-09-30",  // Estimated
-      notes: "Forest Hill 18, LP sponsor warrants. Weighted avg exercise price ~$2.65. LARGEST dilutive block.",
+      notes: "Forest Hill 18, LP sponsor warrants at $2.17 strike. LARGEST dilutive block.",
     },
     {
       type: "option",
@@ -1300,10 +1300,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "warrant",
       strikePrice: 0.001,
       potentialShares: 4_000_000,
-      source: "SEC 424B5 Sep 30, 2025: nominal strike warrants",
+      source: "SEC 424B5 Sep 30, 2025: Keyarch earnout shares at nominal strike",
       sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
       expiration: "2029-09-30",  // Estimated
-      notes: "Shareholder warrants at ~$0.001 strike — effectively free shares. From pre-closing structure.",
+      notes: "Keyarch SPAC earnout shares at ~$0.001 strike — effectively free. From pre-closing structure.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0.001,
+      potentialShares: 29_525_926,
+      source: "SEC 424B5 Sep 30, 2025: Private Placement pre-funded warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      expiration: "2030-07-29",  // Estimated — no expiry typically for pre-funded
+      notes: "Pre-funded warrants from Jul/Sep 2025 Private Placement at NIS 0.00286 (~$0.001). Permanently ITM. Cost ~$29K total to exercise.",
     },
   ],
 
