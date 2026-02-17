@@ -350,9 +350,9 @@ export const ethCompanies: Company[] = [
     website: "https://fgnexus.io",
     secCik: "1591890",
     stakingMethod: "Native staking via Anchorage/Bitgo through Galaxy Digital",
-    // VERIFIED: 10-Q Q3 2025 - 9mo burn $4.75M = $1.58M/qtr
-    quarterlyBurnUsd: 1_580_000,
-    burnSource: "SEC 10-Q Q3 2025",
+    // 10-Q Q3 2025: G&A $7.24M for 9 months = ~$2.4M/qtr
+    quarterlyBurnUsd: 2_400_000,
+    burnSource: "SEC 10-Q Q3 2025 (G&A $7.24M / 3 quarters)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
