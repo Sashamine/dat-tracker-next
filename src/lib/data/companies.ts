@@ -4,7 +4,7 @@ import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNR
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
 import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
 import { NAKA_PROVENANCE, NAKA_PROVENANCE_DEBUG, getNakaProvenance } from "./provenance/naka";
-import { H100_PROVENANCE, H100_PROVENANCE_DEBUG, getH100Provenance } from "./provenance/h100";
+import { H100_PROVENANCE } from "./provenance/h100";
 
 // Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,098 (PR Dec 14; 5,427 ref'd Jan 20 but no public source found — await Feb 26 10-K)
 
@@ -1322,7 +1322,7 @@ export const btcCompanies: Company[] = [
     description: "DigitalX (ASX:DCC) is a pioneering digital asset company founded in 2014, making it one of the first blockchain companies to list on a major stock exchange globally. In July 2025, the company pivoted to a Bitcoin treasury strategy, raising A$20.7M from institutional investors including UTXO Group, ParaFi Capital, and Animoca Brands. The company holds BTC both directly and through its BTXX Bitcoin ETF. DigitalX leverages its deep expertise in digital asset trading to grow Bitcoin holdings per share while generating operational cash flow through market-neutral strategies.",
     founded: 2014,
     headquarters: "Perth, Australia",
-    ceo: "Daniel Retzke",  // Lisa Wade resigned Sep 26, 2025; Daniel Retzke appointed GM
+    ceo: "William Hamilton",  // GM appointed Sep 26, 2025. Lisa Wade (CEO) left Sep 3, 2024; interim CEO Demetrios Christou resigned Sep 26, 2025
   },
   // Removed: NDA.V (416 BTC), DMGI.V (403 BTC), LMFA (356 BTC) - below 500 BTC threshold
   {

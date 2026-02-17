@@ -127,7 +127,7 @@ export const H100_PROVENANCE: ProvenanceFinancials = {
       sourceName: "MFN",
       documentDate: "2025-11-21",
     }),
-    "UNV — Total debt unknown until Feb 24, 2026 Bokslutskommuniké. Zero-coupon convertible debentures outstanding (SEK 219.8M / ~$20.7M). Set to 0 as placeholder."
+    "EST — SEK 219.8M zero-coupon convertible debentures (~$20.7M at 10.6 SEK/USD). IFRS classification (debt vs equity) TBD in Feb 24, 2026 Bokslutskommuniké. May also have other debt — will update post-annual report."
   ),
 
   // =========================================================================
