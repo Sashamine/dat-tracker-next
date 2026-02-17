@@ -419,7 +419,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-19", holdings: 1047, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN Interim Report", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Jan 2026: Holdings confirmed stable
   { date: "2026-01-02", holdings: 1047, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN: Shareholder Letter", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
-  // Feb 2026: 4 BTC purchase → 1,051 total
+  // Feb 2026: 4.39 BTC purchase → 1,051 total
   { date: "2026-02-06", holdings: 1051, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000313, source: "MFN filing Feb 6, 2026", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Feb 12, 2026: Acquired Future Holdings AG, issued 3,146,456 new shares
   { date: "2026-02-12", holdings: 1051, sharesOutstanding: 338_396_693, holdingsPerShare: 0.00000311, source: "MFN: Future Holdings AG acquisition (3,146,456 new shares)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
