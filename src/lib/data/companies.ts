@@ -1300,7 +1300,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
     datStartDate: "2025-07-01",  // New BTC treasury strategy started Jul 2025
     website: "https://www.digitalx.com",
-    twitter: "https://twitter.com/DigitalXLtd",
+    // twitter: removed — @DigitalXLtd does not exist, no active X account found
     // costBasisAvg removed - dashboard source needs verification
     isMiner: false,
     quarterlyBurnUsd: 440_000,  // A$705K operating outflow Q2 FY2026 ≈ US$440K at 0.63 AUD/USD
