@@ -663,12 +663,12 @@ const CWD_HISTORY: HoldingsSnapshot[] = [
 const SUIG_HISTORY: HoldingsSnapshot[] = [
   // Pre-Jan 2026 entries use basic common shares outstanding (pre reverse-split/restructure methodology).
   // These do NOT include pre-funded warrants (~5.6M shares). HPS is therefore overstated relative to Jan 2026+ methodology.
-  { date: "2024-10-01", holdings: 45000000, sharesOutstanding: 28_000_000, holdingsPerShare: 1.607, source: "SUI treasury announcement", sourceType: "press-release", sourceUrl: "https://www.globenewswire.com/news-release/2024/10/01/" },
-  { date: "2024-12-31", holdings: 78000000, sharesOutstanding: 35_000_000, holdingsPerShare: 2.229, stockPrice: 302.96, source: "Q4 2024 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=10-Q" },
-  { date: "2025-06-30", holdings: 108000000, sharesOutstanding: 42_000_000, holdingsPerShare: 2.571, stockPrice: 404.23, source: "Q2 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=10-Q" },
+  { date: "2024-10-01", holdings: 45000000, sharesOutstanding: 28_000_000, holdingsPerShare: 1.607, source: "SUI treasury announcement", sourceType: "press-release", sourceUrl: "https://www.sec.gov/edgar/browse/?CIK=0001425355" },
+  { date: "2024-12-31", holdings: 78000000, sharesOutstanding: 35_000_000, holdingsPerShare: 2.229, stockPrice: 302.96, source: "Q4 2024 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425002487/mcvt_10k.htm" },
+  { date: "2025-06-30", holdings: 108000000, sharesOutstanding: 42_000_000, holdingsPerShare: 2.571, stockPrice: 404.23, source: "Q2 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/mcvt_10q.htm" },
   // Sep 30: 10-Q says "106 million SUI tokens". Shares from XBRL CommonStockSharesOutstanding = 83,068,868.
   // NOTE: Uses basic common shares (pre reverse-split/restructure methodology). See Jan 2026 entry for "fully adjusted" methodology.
-  { date: "2025-09-30", holdings: 106_000_000, sharesOutstanding: 83_068_868, holdingsPerShare: 1.276, stockPrice: 326.42, source: "Q3 2025 10-Q (XBRL: CommonStockSharesOutstanding)", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 106_000_000, sharesOutstanding: 83_068_868, holdingsPerShare: 1.276, stockPrice: 326.42, source: "Q3 2025 10-Q (XBRL: CommonStockSharesOutstanding)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm", sourceType: "sec-filing" },
   // Jan 2026: Methodology shift — "fully adjusted shares" = common stock post-buyback + pre-funded warrants (~5.6M PFW shares).
   // Company reports 108,098,436 SUI and 80.9M fully adjusted shares (includes 7.8M buyback in Q4 2025).
   // This is a discontinuity from pre-Jan 2026 entries which used basic common shares only.

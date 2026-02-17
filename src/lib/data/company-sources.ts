@@ -592,7 +592,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     ticker: "SUIG",
     name: "SUI Group Holdings",
     secCik: "1425355",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355",
+    secFilingsUrl: "https://www.sec.gov/edgar/browse/?CIK=0001425355",
     exchange: "NASDAQ",
     sharesSource: "basic",
     reportsHoldingsFrequency: "quarterly",
