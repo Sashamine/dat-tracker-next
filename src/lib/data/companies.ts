@@ -1267,8 +1267,8 @@ export const btcCompanies: Company[] = [
     // Verification: €4,609,538 share capital ÷ €0.05 nominal = 92,190,760 shares
     // Authorized: 121,000,000 (increased from 64M at Jan 2024 EGM)
     // Unchanged between Dec 2024 and Jun 2025 — no new issuances in H1 2025
-    sharesForMnav: 92_190_761,
-    sharesSource: "H1 2025 Interim Financial Statements, Note 15 (reviewed by Grant Thornton Malta)",
+    sharesForMnav: 91_686_961,  // 92,190,761 issued - 503,800 treasury (buyback program Sep 2024-Feb 2026, EQS filings)
+    sharesSource: "H1 2025 Interim Note 15: 92,190,761 issued. Net of ~503,800 treasury shares (EQS buyback filings through Feb 2026).",
     sharesSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
     sharesAsOf: "2025-06-30",
     // DEBT: €33M total as of H1 2025 → ~$39.1M USD

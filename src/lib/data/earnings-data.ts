@@ -2955,6 +2955,22 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
     status: "upcoming",
   },
+  // Q3 2025 (Sep 30) - Derived from AMF filings
+  {
+    ticker: "ALCPB",
+    fiscalYear: 2025,
+    fiscalQuarter: 3,
+    calendarYear: 2025,
+    calendarQuarter: 3,
+    earningsDate: "2025-09-29", // AMF filing Sep 29 (1 day before quarter-end)
+    earningsTime: null,
+    holdingsAtQuarterEnd: 2_812, // Sep 29 AMF filing: 2,812 BTC. No acquisitions until Oct 20.
+    sharesAtQuarterEnd: 200_000_000, // Post EUR 58.1M private placement dilution
+    holdingsPerShare: 0.0000141, // 2812/200000000
+    source: "manual",
+    sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076388_20250929.pdf",
+    status: "reported",
+  },
   // H1 2025 (Jun 30) - Reported
   {
     ticker: "ALCPB",
@@ -2970,6 +2986,22 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     source: "manual",
     status: "reported",
   },
+  // Q1 2025 (Mar 31) - Derived from AMF acquisition table
+  {
+    ticker: "ALCPB",
+    fiscalYear: 2025,
+    fiscalQuarter: 1,
+    calendarYear: 2025,
+    calendarQuarter: 1,
+    earningsDate: "2025-03-26", // Last acquisition before Q1 end
+    earningsTime: null,
+    holdingsAtQuarterEnd: 620, // Mar 26 acquisition brought total to 620. Next purchase May 22.
+    sharesAtQuarterEnd: 45_000_000, // Pre-dilution, no capital raises between Dec 2024 and Apr 2025 BSA
+    holdingsPerShare: 0.0000138, // 620/45000000
+    source: "manual",
+    sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
+    status: "reported",
+  },
   // H2 2024 / FY 2024 (Dec 31) - Reported
   {
     ticker: "ALCPB",
@@ -2982,6 +3014,21 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 1_800, // Holdings history
     sharesAtQuarterEnd: 45_000_000,
     holdingsPerShare: 0.0000400,
+    source: "manual",
+    status: "reported",
+  },
+  // Q3 2024 (Sep 30) - Pre-BTC strategy
+  {
+    ticker: "ALCPB",
+    fiscalYear: 2024,
+    fiscalQuarter: 3,
+    calendarYear: 2024,
+    calendarQuarter: 3,
+    earningsDate: "2024-09-30",
+    earningsTime: null,
+    holdingsAtQuarterEnd: 0, // BTC treasury strategy launched Nov 5, 2024
+    sharesAtQuarterEnd: 42_000_000,
+    holdingsPerShare: 0,
     source: "manual",
     status: "reported",
   },
