@@ -795,15 +795,16 @@ export const btcCompanies: Company[] = [
     id: "h100st",
     name: "H100 Group",
     ticker: "H100.ST",
+    website: "https://www.h100.group",
     currency: "SEK",
     asset: "BTC",
     tier: 2,
-    holdings: 1_047,  // MFN Sep 17, 2025: "Total Holdings Reach 1,046" (1,046.66 per treasury tracker)
-    holdingsLastUpdated: "2025-09-17",
+    holdings: 1_051,  // MFN Feb 6, 2026: 4 BTC purchase → 1,051 total
+    holdingsLastUpdated: "2026-02-06",
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://mfn.se/a/h100-group",  // Swedish MFN regulatory filings
     datStartDate: "2025-05-22",  // First BTC purchase May 22, 2025
-    costBasisAvg: 114_808,  // treasury.h100.group avg cost
+    costBasisAvg: 114_606,  // treasury.h100.group avg cost
     costBasisSource: "company-website",
     costBasisSourceUrl: "https://treasury.h100.group",
     isMiner: false,
@@ -815,8 +816,8 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 335_250_237,  // IR page share capital table (basic shares)
-    sharesSource: "h100.group/investor-relations/shares",
-    sharesSourceUrl: "https://www.h100group.com",
+    sharesSource: "https://h100.group/investor-relations/shares",
+    sharesSourceUrl: "https://www.h100.group/investor-relations/shares",
     sharesAsOf: "2025-09-30",
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",

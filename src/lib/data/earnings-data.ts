@@ -1616,7 +1616,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-28",  // Expected ~60 days after quarter end
+    earningsDate: "2026-02-24",  // Bokslutskommuniké (annual report)
     earningsTime: null,
     holdingsAtQuarterEnd: 1_047,  // Stable since Sep 17, 2025
     sharesAtQuarterEnd: 335_250_237,  // After SEK 122.5M convertible conversion (Nov 2025)

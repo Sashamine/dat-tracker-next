@@ -294,10 +294,10 @@ const H100ST_INTEL: CompanyIntel = {
   ticker: "H100.ST",
   lastResearched: "2026-01-13",
   pressReleases: [
-    { date: "2026-01-01", title: "Acquisition of Future Holdings AG (Swiss BTC treasury)", summary: "First expansion outside Nordics", url: "https://www.h100group.com/press" },
-    { date: "2025-09-01", title: "Holdings reached ~1,005 BTC", summary: "Continued accumulation", url: "https://www.h100group.com/press" },
-    { date: "2025-06-11", title: "Raised $10.5M from Adam Back, UTXO Management", summary: "Key investor support", url: "https://www.h100group.com/press" },
-    { date: "2025-05-01", title: "First public BTC treasury in Sweden", summary: "Purchased 4.39 BTC to start", url: "https://www.h100group.com/press" },
+    { date: "2026-01-01", title: "Acquisition of Future Holdings AG (Swiss BTC treasury)", summary: "First expansion outside Nordics", url: "https://www.h100.group/press" },
+    { date: "2025-09-01", title: "Holdings reached ~1,005 BTC", summary: "Continued accumulation", url: "https://www.h100.group/press" },
+    { date: "2025-06-11", title: "Raised $10.5M from Adam Back, UTXO Management", summary: "Key investor support", url: "https://www.h100.group/press" },
+    { date: "2025-05-01", title: "First public BTC treasury in Sweden", summary: "Purchased 4.39 BTC to start", url: "https://www.h100.group/press" },
   ],
   strategySummary: "Swedish health-tech company pivoted to Bitcoin Treasury strategy. Leading Bitcoin Treasury Company in the Nordics. Mission: maximize Bitcoin exposure per share via innovative financial instruments. June 2025 raise: SEK 69.65M shares + SEK 31.35M zero-interest convertible loans.",
   recentDevelopments: [
