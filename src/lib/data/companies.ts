@@ -716,7 +716,7 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 6_264_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001326/tmb-20250331x10q.htm",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
@@ -725,10 +725,10 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     sharesSource: "SEC 10-Q Q3 2025",
     sharesAsOf: "2025-11-14",
-    totalDebt: 3_800_000,  // Coinbase credit facility loan - SEC 10-Q Q3 2025
-    debtSource: "SEC 10-Q Q3 2025",
+    totalDebt: 0,  // Coinbase loan repaid in full Oct 15, 2025 (10-Q subsequent events). Dec 22, 2025 8-K: "carries no debt". $20M facility available but undrawn.
+    debtSource: "SEC 10-Q Q3 2025 subsequent events + Dec 22, 2025 8-K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
-    debtAsOf: "2025-09-30",
+    debtAsOf: "2025-10-15",
     cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
     restrictedCash: 20_600_000,  // Earmarked for BTC purchases per 90% policy - not excess cash
     cashSource: "SEC 10-Q Q3 2025",
@@ -736,7 +736,9 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
     strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
-    notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. 70 BTC pledged as collateral for Coinbase loan.",
+    website: "https://kulrtechnology.com",
+    twitter: "https://x.com/KULRTech",
+    notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. Coinbase loan repaid Oct 15, 2025 — carries no debt. 70 BTC collateral likely released post-repayment.",
   },
   {
     id: "altbg",
