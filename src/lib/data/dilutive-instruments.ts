@@ -1858,7 +1858,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       source: "SEC 10-Q Q3 2025 Note 11",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
-      notes: "OGroup LLC affiliate warrants. Post-split: 140K shares @ $25.00.",
+      notes: "OGroup LLC affiliate warrants. Post-split: 140K shares @ $25.00. CEO Cerminara is Managing Member of OGroup.",
     },
     {
       type: "warrant",
@@ -1867,7 +1867,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       source: "SEC 10-Q Q3 2025 Note 11",
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
-      notes: "FG Merchant Partners affiliate warrants. Post-split: 140K shares @ $25.00.",
+      notes: "FG Merchant Partners affiliate warrants. Post-split: 140K shares @ $25.00. CEO-affiliated entity.",
     },
     {
       type: "option",
@@ -1885,6 +1885,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Legacy warrants (~4.5K @ $359, expiring ~2027) omitted as immaterial
   // $5B ATM shelf suspended since Oct 2025 — monitor for reinstatement
   // 894,580 Series A preferred ($25 par, non-convertible) — tracked as preferredEquity, not dilutive
+  // ⚠️ GOVERNANCE: CEO Cerminara controls OGroup + FG Merchant (280K combined warrants @ $25)
+  //    These are related-party warrants at $2.50 better than placement agent's $27.50 strike
+  //    CEO total control: ~992K shares + warrants through Cerminara Capital, FG Financial, OGroup, FG Merchant
 
   // FUFU (BitFuFu) - BTC miner (Foreign Private Issuer)
   // Verified 2026-02-16 via SEC 20-F FY2024, 6-K H1 2025 XBRL, and 6-K Jan 2026
