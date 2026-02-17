@@ -24,6 +24,7 @@ const TICKER_CURRENCY: Record<string, string> = {
   "H100.ST": "SEK",
   "0434.HK": "HKD",
   "ALCPB": "EUR",
+  "SRAG.DU": "EUR",  // Samara Asset Group (Frankfurt/XETRA)
   "ETHM": "CAD",
   "SWC": "GBP",     // Smarter Web Company (AQUIS UK)
   "TSWCF": "GBP",   // SWC OTC ticker
@@ -54,6 +55,7 @@ const FMP_ONLY_STOCKS = [
   "0434.HK",   // Boyaa Interactive (Hong Kong)
   // SWC removed - FMP has wrong ticker. Using FALLBACK_STOCKS instead.
   // SOL treasury companies - Alpaca IEX often has no data (low volume)
+  "SRAG.DU",   // Samara Asset Group (Frankfurt/XETRA) - Alpaca/IEX has no Frankfurt coverage
   "DFDV",      // DeFi Development
   "UPXI",      // Upexi
   "STKE",      // Sol Strategies
