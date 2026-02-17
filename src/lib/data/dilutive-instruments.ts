@@ -1951,10 +1951,10 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   "3189.T": [
     {
       type: "warrant",
-      strikePrice: 1.74,  // ¥271 / 156 JPY/USD
+      strikePrice: 1.77,  // ¥271 / 153.5 JPY/USD
       potentialShares: 30_430_000,  // 304,300 remaining units × 100 shares each
       source: "TDnet: 8th Series Stock Acquisition Rights monthly exercise report (Feb 3, 2026)",
-      sourceUrl: "https://www.release.tdnet.info/inbs/",
+      sourceUrl: "https://www.anap.co.jp/ir/news/",  // TDnet PDFs lack stable URLs; ANAP IR page links to all filings
       expiration: "2026-12-01",  // Estimated — typically 1 year from issuance
       issuedDate: "2025-12-01",
       notes: "8th Series warrants (MSO, Evo Fund). Actively being exercised — 35,700 of 340,000 units exercised through Jan 2026. Exercise price adjustable (~¥271). Massive dilution potential: 30.4M shares on 40.6M base = 75%.",
