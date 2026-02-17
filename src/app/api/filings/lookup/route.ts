@@ -22,6 +22,7 @@ const TICKER_CIKS: Record<string, string> = {
   smlr: "1736946",
   dghi: "1844392",
   cxdo: "1849318",
+  suig: "1425355",
   // Add more as needed
 };
 

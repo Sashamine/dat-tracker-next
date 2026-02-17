@@ -3243,17 +3243,21 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // CIK: 0001956741
   // Source: SEC EDGAR filings
   //
-  // Q2 FY2026 (Oct-Dec 2025) - Upcoming
+  // Q2 FY2026 (Oct-Dec 2025) - Filed Feb 11, 2026
   {
     ticker: "ZONE",
     fiscalYear: 2026,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-14",  // Expected ~45 days after Dec 31
+    earningsDate: "2026-02-11",
     earningsTime: "AMC",
+    holdingsAtQuarterEnd: 733_060_893,  // Dec 31, 2025 — XBRL-verified
+    sharesAtQuarterEnd: 210_556_229,  // Feb 10, 2026 cover page
+    holdingsPerShare: 3.482,  // 733.06M / 210.56M
     source: "sec-filing",
-    status: "upcoming",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    status: "reported",
   },
   // Q1 FY2026 (Jul-Sep 2025) - Reported Nov 13, 2025
   {
@@ -3265,10 +3269,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-13",
     earningsTime: "BMO",
     holdingsAtQuarterEnd: 703_617_752,  // Sep 30, 2025 - $163.8M fair value
-    sharesAtQuarterEnd: 201_309_022,  // Nov 10, 2025 cover page (post warrant exercises)
-    holdingsPerShare: 3.495,  // 703.6M / 201.3M
+    sharesAtQuarterEnd: 186_598_270,  // Sep 30, 2025 quarter-end shares (not Nov 10 cover page)
+    holdingsPerShare: 3.770,  // 703.6M / 186.6M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/0001213900-25-109642-index.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm",
     status: "reported",
   },
   // Q4 FY2025 (Apr-Jun 2025) - Pre-treasury (no DOGE holdings)
@@ -3284,7 +3288,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 11_837_022,  // Basic shares before PIPE
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956741&type=10-K",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0253920-10k_cleancore.htm",
     status: "reported",
   },
 

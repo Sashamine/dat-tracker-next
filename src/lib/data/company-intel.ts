@@ -956,7 +956,7 @@ const SUIG_INTEL: CompanyIntel = {
   pressReleases: [
     { date: "2025-11-01", title: "Total holdings ~102 million tokens (~$403M)", summary: "Treasury update", url: "https://www.suig.io" },
     { date: "2025-09-30", title: "Holdings exceeded 105 million SUI tokens", summary: "Major milestone", url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm" },
-    { date: "2025-08-26", title: "Rebranded to SUI Group Holdings, ticker changed to SUIG", summary: "Formerly Mill City Ventures", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=8-K&dateb=&owner=include&count=40" },
+    { date: "2025-08-26", title: "Rebranded to SUI Group Holdings, ticker changed to SUIG", summary: "Formerly Mill City Ventures", url: "https://www.sec.gov/Archives/edgar/data/1425355/000121390025080829/ea0254593-8k_suigroup.htm" },
     { date: "2025-08-01", title: "Closed $450M PIPE; pivoted to SUI treasury strategy", summary: "Strategic transformation", url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm" },
   ],
   strategySummary: "Only publicly traded company with official Sui Foundation partnership. Staking all SUI earning ~$26,000/day. Galaxy Asset Management serves as Asset Manager. Big Brain Holdings, Pantera Capital, Electric Capital, GSR, ParaFi, Borderless, FalconX as investors.",

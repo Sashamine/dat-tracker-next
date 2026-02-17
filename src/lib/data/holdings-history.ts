@@ -698,14 +698,14 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
 // Prior history entries had fabricated share counts; rewritten with SEC-verified data
 const ZONE_HISTORY: HoldingsSnapshot[] = [
   // Pre-treasury: ~11.8M shares (Class A + B) per 10-Q
-  { date: "2025-06-30", holdings: 0, sharesOutstanding: 11_837_022, holdingsPerShare: 0, stockPrice: 404.23, source: "SEC 10-Q Q1 FY2026 - pre-treasury baseline", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-109642-index.html", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 0, sharesOutstanding: 11_837_022, holdingsPerShare: 0, source: "SEC 10-K FY2025 - pre-treasury baseline", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0253920-10k_cleancore.htm", sourceType: "sec-filing" },
   // Sep 5, 2025: Treasury strategy launched, 175M pre-funded warrants issued
   // Sep 2025: Rapid DOGE accumulation + warrant exercises (164M shares from warrants)
   // Shares grew from 11.8M to 186.6M during Q1 FY2026
-  { date: "2025-09-30", holdings: 703_617_752, sharesOutstanding: 186_598_270, holdingsPerShare: 3.770, stockPrice: 326.42, source: "SEC 10-Q Q1 FY2026 - digital assets $163.8M fair value", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-109642-index.html", sourceType: "sec-filing" },
-  // Nov 10, 2025: Additional share issuance (201.3M per 10-Q cover page)
-  // DOGE holdings from press release (733.1M as of Nov 12) - not SEC-verified
-  { date: "2025-11-10", holdings: 733_100_000, sharesOutstanding: 201_309_022, holdingsPerShare: 3.642, source: "10-Q cover page (shares); press release Nov 13 (DOGE)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/0001213900-25-109642-index.html", sourceType: "sec-filing" },
+  { date: "2025-09-30", holdings: 703_617_752, sharesOutstanding: 186_598_270, holdingsPerShare: 3.770, source: "SEC 10-Q Q1 FY2026 - digital assets $163.8M fair value", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm", sourceType: "sec-filing" },
+  // Q2 FY2026 (Dec 31, 2025): DOGE holdings confirmed via 10-Q XBRL
+  // No purchases Jan 1-Feb 10, 2026 per subsequent events disclosure
+  { date: "2025-12-31", holdings: 733_060_893, sharesOutstanding: 210_556_229, holdingsPerShare: 3.482, source: "SEC 10-Q Q2 FY2026 (filed Feb 11, 2026) — XBRL-verified DOGE count", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm", sourceType: "sec-filing" },
 ];
 
 // Brag House (TBH) - pending merger with House of Doge

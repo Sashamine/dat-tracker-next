@@ -2296,31 +2296,33 @@ export const dogeCompanies: Company[] = [
     website: "https://www.cleancoresol.com",
     twitter: "https://twitter.com/CleanCoreSol",
     secCik: "1956741",
-    holdings: 733_100_000,  // Nov 12, 2025 press release (Q1 FY2026 results)
-    holdingsLastUpdated: "2025-11-12",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/11/13/3187485/0/en/CleanCore-Solutions-Reports-Fiscal-First-Quarter-2026-Financial-Results-and-Provides-Update-on-its-DOGE-Treasury-Strategy.html",
+    holdings: 733_060_893,  // Q2 FY2026 10-Q (Dec 31, 2025) — XBRL-verified. No purchases Jan 1-Feb 10, 2026.
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     datStartDate: "2025-09-05",
-    quarterlyBurnUsd: 500_000,
-    burnSource: "SEC 10-Q (filed 2025-11-13): NetCashUsedInOperatingActivities $3,796,652 (2025-07-01 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm",
-    burnAsOf: "2025-09-30",
+    quarterlyBurnUsd: 3_600_000,  // Q2 FY2026 XBRL: NetCashUsedInOperatingActivities $7.17M for 6 months = ~$3.6M/qtr
+    burnSource: "SEC 10-Q Q2 FY2026 XBRL: NetCashProvidedByUsedInOperatingActivities -$7,167,396 (Jul-Dec 2025)",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    burnAsOf: "2025-12-31",
     capitalRaisedPipe: 175_000_000,
-    avgDailyVolume: 10_000_000,
+    avgDailyVolume: 3_000_000,
     marketCap: 150_000_000,
-    cashReserves: 12_900_000,  // Sep 30, 2025 10-Q
-    restrictedCash: 12_900_000,  // 10-Q: "restricted cash...to be used for the purchase of Dogecoin"
-    cashSource: "SEC 10-Q Q1 FY2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm",
-    cashAsOf: "2025-09-30",
-    totalDebt: 0,  // Minimal liabilities per 10-Q
-    sharesForMnav: 201_309_022,  // SEC 10-Q Q1 FY2026 cover page (Nov 10, 2025)
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm",
-    sharesSource: "SEC 10-Q Q1 FY2026 cover page",
-    sharesAsOf: "2025-11-10",
+    cashReserves: 5_443_655,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue
+    cashSource: "SEC 10-Q Q2 FY2026 XBRL",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    cashAsOf: "2025-12-31",
+    totalDebt: 800_000,  // Q2 FY2026 XBRL: NotesPayable $800K at 10% interest
+    debtSource: "SEC 10-Q Q2 FY2026 XBRL: NotesPayable",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    debtAsOf: "2025-12-31",
+    sharesForMnav: 210_556_229,  // SEC 10-Q Q2 FY2026 cover page (Feb 10, 2026)
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    sharesSource: "SEC 10-Q Q2 FY2026 cover page",
+    sharesAsOf: "2026-02-10",
     leader: "Clayton Adams (CEO)",
     strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
-    notes: "NYSE American. Q1 FY2026: 703.6M DOGE at $163.8M fair value. Partnership with House of Doge, 21Shares, Robinhood.",
+    notes: "NYSE American. Q2 FY2026: 733M DOGE (Dec 31, 2025). No purchases Jan 1-Feb 10, 2026 per subsequent events. Partnership with House of Doge, 21Shares, Robinhood.",
   },
   {
     id: "tbh",
