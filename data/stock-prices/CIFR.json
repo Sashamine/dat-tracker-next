@@ -2,7 +2,7 @@
   "ticker": "CIFR",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-17T18:17:05.593Z",
+  "lastUpdated": "2026-02-17T18:32:06.233Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6092,6 +6092,15 @@
       "low": 14.96,
       "close": 15.23,
       "volume": 19488093
+    },
+    {
+      "date": "2026-02-17",
+      "time": "13:32",
+      "open": 16.11,
+      "high": 16.2,
+      "low": 14.96,
+      "close": 15.4773,
+      "volume": 20476220
     }
   ]
 }
