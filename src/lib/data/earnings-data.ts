@@ -959,6 +959,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 45_674_420,  // Post-split shares (SEC 10-Q cover page, XBRL-verified)
     holdingsPerShare: 0.0000231,  // 1057 / 45,674,420
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     status: "reported",
   },
   // Q2 2025 - Verified 2026-01-29
@@ -980,6 +981,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 41_108_543,  // Post-split shares
     holdingsPerShare: 0.0000224,  // 920 / 41.1M
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925089765/0001104659-25-089765-index.htm",
     status: "reported",
   },
   // Q1 2025 - Added 2026-01-29
@@ -995,7 +997,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 668,  // Mar 25, 2025 press release (668.3 BTC)
     sharesAtQuarterEnd: 284_389_637,  // Pre-split shares
     holdingsPerShare: 0.00000235,  // 668 / 284.4M
-    source: "press-release",
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001326/tmb-20250331x10q.htm",
     status: "reported",
   },
   // Q4 2024 - Verified 2026-01-29
@@ -1018,6 +1021,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 214_227_808,  // Pre-split shares from Dec 26 8-K
     holdingsPerShare: 0.00000101,  // 217 / 214.2M
     source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001326/tmb-20250331x10q.htm",
     status: "reported",
   },
 
