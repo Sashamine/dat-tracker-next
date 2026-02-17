@@ -1281,7 +1281,7 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
     debtAsOf: "2025-06-30",
     strategy: "BTC as primary treasury reserve. Issued Europe's first Bitcoin Bond (€20M, Q4 2024). Uses Samara Alpha Market-Neutral BTC+ Fund for BTC treasury management. Aims to rival MSTR.",
-    notes: "Frankfurt/XETRA listed (Malta HQ, ISIN MT0001770107). Formerly Cryptology Asset Group. GAV €415.8M, NAV €377.5M as of Q3 2025. ⚠️ Only 49% of GAV in Bitcoin & Crypto — mNAV not directly comparable to pure-play DATs. Non-crypto assets (37% funds, 13% cash) excluded from CryptoNAV but contribute to EV, inflating mNAV. Price/NAV of 0.42x (typical holding company discount). Audited by Grant Thornton Malta. No SEC filings — IFRS reporting. Most BTC managed via Samara Alpha BTC+ Fund (market-neutral strategy). Donates to Brink (BTC development).",
+    notes: "Frankfurt/XETRA listed (Malta HQ, ISIN MT0001770107). Formerly Cryptology Asset Group. GAV €415.8M, NAV €377.5M as of Q3 2025. ⚠️ Only 49% of GAV in Bitcoin & Crypto — mNAV not directly comparable to pure-play DATs. Non-crypto assets (37% funds, 13% cash) excluded from CryptoNAV but contribute to EV, inflating mNAV. Trades at typical holding company discount to NAV. Audited by Grant Thornton Malta (FY2024). No SEC filings — IFRS reporting. Most BTC managed via Samara Alpha BTC+ Fund (market-neutral, BTC-denominated).",
   },
   // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
   // 514 BTC from BitcoinTreasuries.net only - no primary source
