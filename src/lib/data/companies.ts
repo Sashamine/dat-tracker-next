@@ -1238,26 +1238,45 @@ export const btcCompanies: Company[] = [
     currency: "EUR",
     asset: "BTC",
     tier: 2,
-    holdings: 525,  // CEO Patrick Lowry X post Nov 30, 2024
-    holdingsLastUpdated: "2024-11-30",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387",
+    // HOLDINGS: Q3 2025 balance sheet shows €199.8M in intangible assets (digital assets/BTC)
+    // At ~€92K/BTC (Sep 30, 2025 price), implies ~2,170 BTC held directly
+    // Previously: 540 BTC at Dec 2024 (FY2024 Note 10: 480 direct + 60 in DeFi)
+    // H1 2025: sold most direct BTC (€40M proceeds), then massively re-accumulated in Q3 2025
+    // Most BTC managed by Samara Alpha via Market-Neutral BTC+ Fund
+    // ⚠️ EST: exact BTC count not disclosed — derived from €199.8M intangibles ÷ ~€92K/BTC
+    holdings: 2_170,
+    holdingsLastUpdated: "2025-09-30",
+    holdingsSource: "regulatory-filing",  // IFRS consolidated balance sheet (unaudited Q3 2025)
+    holdingsSourceUrl: "https://www.samara-ag.com/financial-statements",
     datStartDate: "2024-01-01",
+    website: "https://www.samara-ag.com",
     twitter: "https://x.com/Patrick_Lowry_",
-    // costBasisAvg removed - was estimate
     isMiner: false,
-    quarterlyBurnUsd: 2_000_000,
-    burnSource: "German Bundesanzeiger filings (estimate)",
-    burnSourceUrl: "https://samara.ag/investor-relations/",
+    quarterlyBurnUsd: 2_700_000,  // €2.3M/qtr (€6M admin + €3.2M interest ÷ 4) × 1.185 EUR/USD
+    burnSource: "FY2024 audited P&L: €6M admin + €3.2M finance costs (estimate per quarter)",
+    burnSourceUrl: "https://cdn.prod.website-files.com/660cd1216e255a8a370aa5ac/685d308f24fa70f5ffd193c2_SAG-Consolidated-2024-Signed%20financial%20statements_compressed.pdf",
     burnAsOf: "2024-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 20_000_000,  // Estimated
-    sharesSource: "Samara AG annual report",
-    sharesSourceUrl: "https://samara.ag/investor-relations/",
-    sharesAsOf: "2024-12-31",
-    strategy: "BTC as primary treasury reserve. Issuing €30M bonds specifically to buy more BTC. Aims to match MicroStrategy.",
-    notes: "Frankfurt listed (Malta HQ). CEO aspires to rival MSTR holdings. Donates to Brink (BTC development).",
+    // SHARES: 92,190,761 confirmed in H1 2025 Interim Note 15 (reviewed by Grant Thornton)
+    // Verification: €4,609,538 share capital ÷ €0.05 nominal = 92,190,760 shares
+    // Authorized: 121,000,000 (increased from 64M at Jan 2024 EGM)
+    // Unchanged between Dec 2024 and Jun 2025 — no new issuances in H1 2025
+    sharesForMnav: 92_190_761,
+    sharesSource: "H1 2025 Interim Financial Statements, Note 15 (reviewed by Grant Thornton Malta)",
+    sharesSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
+    sharesAsOf: "2025-06-30",
+    // DEBT: €33M total as of H1 2025 → ~$39.1M USD
+    // €17.7M Nordic bond (ISIN NO0013364398, Euribor+7.5%, matures Nov 2029)
+    // €15.3M interest-bearing loans (third party)
+    // Bond is senior secured, NOT convertible — no dilutive impact
+    // Note: Company bought back €2M of its own bonds (net outstanding €18M face)
+    totalDebt: 39_100_000,  // €33M × 1.185 EUR/USD (H1 2025 balance sheet)
+    debtSource: "H1 2025 Interim: €17.7M Nordic bond (ISIN NO0013364398) + €15.3M interest-bearing loans = €33M",
+    debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
+    debtAsOf: "2025-06-30",
+    strategy: "BTC as primary treasury reserve. Issued Europe's first Bitcoin Bond (€20M, Q4 2024). Uses Samara Alpha Market-Neutral BTC+ Fund for BTC treasury management. Aims to rival MSTR.",
+    notes: "Frankfurt/XETRA listed (Malta HQ, ISIN MT0001770107). Formerly Cryptology Asset Group. GAV €415.8M, NAV €377.5M as of Q3 2025. 49% of GAV in Bitcoin & Crypto. Audited by Grant Thornton Malta. No SEC filings — IFRS reporting. Donates to Brink (BTC development).",
   },
   // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
   // 514 BTC from BitcoinTreasuries.net only - no primary source

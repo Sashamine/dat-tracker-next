@@ -1004,11 +1004,16 @@ const BTCT_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-02-02", holdings: 771, sharesOutstanding: 12_158_413, holdingsPerShare: 0.0000634, source: "btctcorp.com Feb 2026: 771.37 BTC", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
 ];
 
-// Samara Asset Group (SRAG.DU) - German BTC treasury
-// Source: CEO Patrick Lowry X posts + Bundesanzeiger
+// Samara Asset Group (SRAG.DU) - Malta HQ, Frankfurt/XETRA listed BTC treasury
+// Sources: FY2024 Annual Report (Note 10), H1 2025 Interim, Q3 2025 Corporate Presentation
+// CIK: N/A (no SEC filings — IFRS reporting, Malta-incorporated)
+// Shares: 92,190,761 (H1 2025 Note 15, €0.05 nominal, reviewed by Grant Thornton Malta)
 const SRAG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-01-01", holdings: 300, sharesOutstanding: 20_000_000, holdingsPerShare: 0.000015, source: "Initial holdings estimate", sourceType: "press-release", sourceUrl: "https://samara.ag/investor-relations/" },
-  { date: "2024-11-30", holdings: 525, sharesOutstanding: 20_000_000, holdingsPerShare: 0.00002625, source: "CEO Patrick Lowry X post", sourceType: "press-release", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
+  { date: "2024-01-01", holdings: 300, sharesOutstanding: 57_217_500, holdingsPerShare: 0.00000524, source: "Initial holdings estimate (shares from FY2023 EPS calc)", sourceType: "press-release", sourceUrl: "https://samara.ag/investor-relations/" },
+  { date: "2024-10-16", holdings: 421, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000457, source: "Company IR: 421 BTC acquired", sourceType: "press-release", sourceUrl: "https://www.samara-ag.com/market-insights/samara-asset-group-to-issue-up-to-eu30-million-in-a-nordic-bond-to-acquire-lp-stakes-in-funds-and-grow-its-bitcoin-treasury" },
+  { date: "2024-12-02", holdings: 525, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000570, source: "CEO Patrick Lowry X post: 421+104=525 BTC", sourceType: "press-release", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
+  { date: "2024-12-31", holdings: 540, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000586, source: "FY2024 Annual Report Note 10: 480 direct + 60 in DeFi funds", sourceType: "regulatory-filing", sourceUrl: "https://cdn.prod.website-files.com/660cd1216e255a8a370aa5ac/685d308f24fa70f5ffd193c2_SAG-Consolidated-2024-Signed%20financial%20statements_compressed.pdf" },
+  { date: "2025-09-30", holdings: 2_170, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00002353, source: "EST: Q3 2025 balance sheet €199.8M intangibles ÷ ~€92K/BTC", sourceType: "regulatory-filing", sourceUrl: "https://www.samara-ag.com/financial-statements" },
 ];
 
 // SWC (The Smarter Web Company) - UK BTC Treasury
