@@ -1092,12 +1092,20 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2026-01-14",
     burnEstimated: true,
     avgDailyVolume: 2_000_000,
-    sharesForMnav: 39_954_400,  // TDnet Q1 FY2026 earnings (Jan 14, 2026)
-    sharesSource: "TDnet Q1 FY2026 決算短信",
+    sharesForMnav: 40_609_400,  // Updated: 39,954,400 base + 655,000 from 8th Series warrant exercises (Dec 2025). Per Yahoo Finance JP and TDnet Feb 3, 2026 filing.
+    sharesSource: "TDnet 8th Series warrant exercise report (Feb 3, 2026) + Q1 FY2026 決算短信",
     sharesSourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
-    sharesAsOf: "2026-01-14",
+    sharesAsOf: "2026-01-31",
+    totalDebt: 45_500_000,  // ¥7,100M / 156 JPY/USD — Q1 FY2026 有利子負債 (interest-bearing debt)
+    debtSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
+    debtSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
+    debtAsOf: "2025-11-30",
+    cashReserves: 7_400_000,  // ¥1,159M / 156 JPY/USD — Q1 FY2026 現預金
+    cashSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
+    cashSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
+    cashAsOf: "2025-11-30",
     strategy: "Explicit 'hyperbitcoinization' mission. Runs 'Bitcoin Dojo' teaching other companies BTC treasury strategy.",
-    notes: "TSE Standard. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Blockstream partnership (Dec 2025). First BTC purchase Apr 16, 2025. Total cost basis ¥20.95B (~$139M).",
+    notes: "TSE Standard. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Blockstream partnership (Dec 2025, 'Project ORANGE LEGEND'). First BTC purchase Apr 16, 2025. Total cost basis ¥20.95B (~$139M). ⚠️ Going concern doubt flagged in Q1 FY2026 決算短信. 8th Series warrants actively being exercised — 304,300 units remaining (~30.4M potential shares at ~¥271 strike).",
   },
   {
     id: "zooz",

@@ -1940,6 +1940,27 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
+  // ANAP Holdings (3189.T) - Japanese BTC treasury
+  // 8th Series Stock Acquisition Rights (新株予約権) — issued Dec 1, 2025 via third-party allotment
+  // Per TDnet Feb 3, 2026 monthly exercise report:
+  //   - Total issued: 340,000 units (1 unit = 100 shares = 34M potential shares)
+  //   - Exercised through Jan 2026: 35,700 units → 3,570,000 shares (655K already in basic count)
+  //   - Remaining: 304,300 units → 30,430,000 potential shares
+  //   - Exercise price: ~¥271 (adjustable, Jan 2026 range ¥270-273)
+  // Also has 1st Series Convertible Bonds — terms need further investigation from TDnet filings
+  "3189.T": [
+    {
+      type: "warrant",
+      strikePrice: 1.74,  // ¥271 / 156 JPY/USD
+      potentialShares: 30_430_000,  // 304,300 remaining units × 100 shares each
+      source: "TDnet: 8th Series Stock Acquisition Rights monthly exercise report (Feb 3, 2026)",
+      sourceUrl: "https://www.release.tdnet.info/inbs/",
+      expiration: "2026-12-01",  // Estimated — typically 1 year from issuance
+      issuedDate: "2025-12-01",
+      notes: "8th Series warrants (MSO, Evo Fund). Actively being exercised — 35,700 of 340,000 units exercised through Jan 2026. Exercise price adjustable (~¥271). Massive dilution potential: 30.4M shares on 40.6M base = 75%.",
+    },
+  ],
+
   // ABTC (American Bitcoin) - BTC miner/accumulator
   // Post-merger with Gryphon Sep 3, 2025. 80% owned by Hut 8.
   // Verified 2026-02-17 via 10-Q Q3 2025 (CIK 0001755953)

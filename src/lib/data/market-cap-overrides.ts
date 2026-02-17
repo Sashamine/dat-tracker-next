@@ -67,7 +67,7 @@ export const MARKET_CAP_OVERRIDES: Record<string, number> = {
 export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number }> = {
   // International (price in local currency for display, marketCap in USD)
   "3350.T": { price: 548, marketCap: 4_010_000_000 },      // Metaplanet (JPY) - 1.142B shares × 548 JPY ÷ 156
-  "3189.T": { price: 245, marketCap: 63_000_000 },         // ANAP Holdings (JPY) - 39.95M shares × ¥245 ÷ 156 = $63M
+  "3189.T": { price: 245, marketCap: 63_800_000 },         // ANAP Holdings (JPY) - 40.61M shares × ¥245 ÷ 156 = $63.8M
   "3825.T": { price: 255, marketCap: 244_000_000 },        // Remixpoint (JPY) - 149M shares × ¥255 ÷ 156 = $244M
   "0434.HK": { price: 1.50, marketCap: 315_000_000 },      // Boyaa Interactive (HKD) - 768M shares × ~HK$3.2 ÷ 7.8
   "ALCPB": { price: 0.60, marketCap: 143_000_000 },         // Capital B / Blockchain Group (EUR, Euronext Paris) - 227.5M shares × €0.60 × 1.05 ≈ $143M

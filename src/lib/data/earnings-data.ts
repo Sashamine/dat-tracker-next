@@ -3463,8 +3463,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-04-15", // Estimated - Japanese companies typically report ~45 days after quarter end
     earningsTime: "BMO",
     holdingsAtQuarterEnd: 1417, // Jan 21, 2026 - 1,417.0341 BTC (ongoing quarter)
-    sharesAtQuarterEnd: 39_954_400,
-    holdingsPerShare: 0.0000355,
+    sharesAtQuarterEnd: 40_609_400,  // Updated: includes 8th Series warrant exercises through Dec 2025
+    holdingsPerShare: 0.0000349,
     source: "regulatory-filing",
     sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
     status: "upcoming",
@@ -3479,8 +3479,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-01-14", // Actual TDnet filing date
     earningsTime: "BMO",
     holdingsAtQuarterEnd: 1347, // Dec 25, 2025 - 1,346.5856 BTC
-    sharesAtQuarterEnd: 39_954_400,
-    holdingsPerShare: 0.0000337,
+    sharesAtQuarterEnd: 40_609_400,  // Updated: includes 8th Series warrant exercises through Dec 2025
+    holdingsPerShare: 0.0000332,
     source: "regulatory-filing",
     sourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
     status: "reported",

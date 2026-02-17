@@ -972,8 +972,8 @@ const ANAP_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-04-16", holdings: 100, sharesOutstanding: 39_954_400, holdingsPerShare: 0.0000025, source: "First BTC purchase (approximate)", sourceType: "regulatory-filing" },
   { date: "2025-06-18", holdings: 332, sharesOutstanding: 39_954_400, holdingsPerShare: 0.0000083, source: "Q2 2025 - 331.6579 BTC per TDnet filings", sourceType: "regulatory-filing" },
   { date: "2025-09-30", holdings: 962, sharesOutstanding: 39_954_400, holdingsPerShare: 0.0000241, source: "Q3 2025 - 961.6579 BTC per TDnet filings", sourceType: "regulatory-filing" },
-  { date: "2025-12-25", holdings: 1_347, sharesOutstanding: 39_954_400, holdingsPerShare: 0.0000337, source: "Q4 2025 - 1,346.5856 BTC per TDnet", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf" },
-  { date: "2026-01-21", holdings: 1_417, sharesOutstanding: 39_954_400, holdingsPerShare: 0.0000355, source: "TDnet Jan 21, 2026: 1,417.0341 BTC", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf" },
+  { date: "2025-12-25", holdings: 1_347, sharesOutstanding: 40_609_400, holdingsPerShare: 0.0000332, source: "Q4 2025 - 1,346.5856 BTC per TDnet. Shares: 40,609,400 (incl 8th Series exercises through Dec)", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf" },
+  { date: "2026-01-21", holdings: 1_417, sharesOutstanding: 40_609_400, holdingsPerShare: 0.0000349, source: "TDnet Jan 21, 2026: 1,417.0341 BTC. Shares: 40,609,400 (+ ~2.9M Jan exercises pending settlement)", sourceType: "regulatory-filing", sourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf" },
 ];
 
 // ZOOZ Power - Israeli BTC treasury
