@@ -1239,14 +1239,16 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 2,
     // HOLDINGS: Q3 2025 balance sheet shows €199.8M in intangible assets (digital assets/BTC)
-    // At ~€92K/BTC (Sep 30, 2025 price), implies ~2,170 BTC held directly
+    // At €97,441/BTC (CoinGecko Sep 30, 2025), implies ~2,051 BTC
     // Previously: 540 BTC at Dec 2024 (FY2024 Note 10: 480 direct + 60 in DeFi)
     // H1 2025: sold most direct BTC (€40M proceeds), then massively re-accumulated in Q3 2025
     // Most BTC managed by Samara Alpha via Market-Neutral BTC+ Fund
-    // ⚠️ EST: exact BTC count not disclosed — derived from €199.8M intangibles ÷ ~€92K/BTC
-    holdings: 2_170,
+    // ⚠️ EST: exact BTC count not disclosed — derived from €199.8M intangibles ÷ €97,441/BTC
+    // ⚠️ Intangible assets MAY include non-BTC digital assets
+    // ⚠️ "Market-neutral" strategy means BTC may be actively traded, not HODLed
+    holdings: 2_051,
     holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "regulatory-filing",  // IFRS consolidated balance sheet (unaudited Q3 2025)
+    holdingsSource: "regulatory-filing",  // Derived from unaudited Q3 2025 IFRS balance sheet intangibles (€199.8M) ÷ BTC price — EST confidence
     holdingsSourceUrl: "https://www.samara-ag.com/financial-statements",
     datStartDate: "2024-01-01",
     website: "https://www.samara-ag.com",
