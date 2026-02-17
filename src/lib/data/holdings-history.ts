@@ -1036,14 +1036,14 @@ const DCC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-07-17", holdings: 425.1, sharesOutstanding: 1_580_000_000, holdingsPerShare: 0.000000269, source: "+57.46 BTC @ $118,275", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
   { date: "2025-07-22", holdings: 499.8, sharesOutstanding: 1_580_000_000, holdingsPerShare: 0.000000316, source: "+74.73 BTC @ $117,293", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
   // Aug-Sep: Holdings stable at ~500 BTC
-  { date: "2025-08-31", holdings: 500, sharesOutstanding: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - August 2025", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
-  { date: "2025-09-30", holdings: 500, sharesOutstanding: 1_580_000_000, holdingsPerShare: 0.000000316, stockPrice: 326.42, source: "ASX Treasury Information - September 2025", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-08-31", holdings: 500, sharesOutstanding: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - August 2025", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-09-30", holdings: 500, sharesOutstanding: 1_580_000_000, holdingsPerShare: 0.000000316, source: "ASX Treasury Information - September 2025", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
   // Oct 2025: Small addition. Share count corrected from 1.73B estimate to 1.489B per ASX registry (sats/share 33.84 from Dec Treasury Info implies ~1.489B)
   { date: "2025-10-21", holdings: 504, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000339, source: "+2 BTC @ $108,430", sourceUrl: "https://treasury.digitalx.com/", sourceType: "company-dashboard" },
-  { date: "2025-10-31", holdings: 504, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000339, source: "ASX Treasury Information - October 2025", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-10-31", holdings: 504, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000339, source: "ASX Treasury Information - October 2025", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
   // Nov-Dec: Stable holdings, includes ~194.85 BTC via BTXX ETF
-  { date: "2025-11-30", holdings: 503.2, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000338, source: "ASX Treasury Information - November 2025 (308.8 direct + 194.4 ETF)", sourceType: "regulatory-filing", sourceUrl: "https://treasury.digitalx.com/" },
-  { date: "2025-12-31", holdings: 503.7, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000338, stockPrice: 155.61, source: "ASX Treasury Information - December 2025 (308.8 direct + 194.85 ETF)", sourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html", sourceType: "regulatory-filing" },
+  { date: "2025-11-30", holdings: 503.2, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000338, source: "ASX Treasury Information - November 2025 (308.8 direct + 194.4 ETF)", sourceType: "company-dashboard", sourceUrl: "https://treasury.digitalx.com/" },
+  { date: "2025-12-31", holdings: 503.7, sharesOutstanding: 1_488_510_854, holdingsPerShare: 0.000000338, source: "ASX Treasury Information - December 2025 (308.8 direct + 194.85 ETF)", sourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html", sourceType: "regulatory-filing" },
 ];
 
 // Map of all companies with historical data

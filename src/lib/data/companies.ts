@@ -814,7 +814,7 @@ export const btcCompanies: Company[] = [
     burnSourceUrl: "https://mfn.se/a/h100-group",
     burnAsOf: "2025-09-30",
     burnEstimated: true,  // Swedish quarterly report estimate
-    totalDebt: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké. Convertible SEK 219.8M (~$20.7M) outstanding but may be equity-classified under IFRS.
+    totalDebt: H100_PROVENANCE.totalDebt?.value || 20_736_000,  // SEK 219.8M zero-coupon convertible / 10.6 SEK/USD ≈ $20.7M. IFRS classification TBD Feb 24 Bokslutskommuniké.
     cashReserves: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
@@ -1308,6 +1308,10 @@ export const btcCompanies: Company[] = [
     burnSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
     burnAsOf: "2025-12-31",
     burnEstimated: false,
+    cashReserves: 1_782_000,  // A$2,829,509 × 0.63 AUD/USD ≈ US$1.78M
+    cashSource: "ASX Appendix 4C Q2 FY2026: Cash at bank A$2,829,509",
+    cashSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
+    cashAsOf: "2025-12-31",
     avgDailyVolume: 500_000,
     sharesForMnav: 1_488_510_854,  // 1.49B from ASX (ISIN: AU000000DCC9)
     sharesSource: "asx.com.au",

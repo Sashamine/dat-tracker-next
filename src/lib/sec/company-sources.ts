@@ -35,7 +35,7 @@ export interface CompanySource {
   shareClasses?: string[]; // e.g., ['Class A', 'Class B'] - for LLM extraction hints
 
   // International exchanges
-  exchange?: 'CSE' | 'TSX-V' | 'HKEX' | 'TSE' | 'Euronext' | 'Nasdaq Nordic';
+  exchange?: 'CSE' | 'TSX-V' | 'HKEX' | 'TSE' | 'Euronext' | 'Nasdaq Nordic' | 'NGM';
   exchangeCode?: string; // Exchange-specific company identifier
 
   // Company IR page
@@ -432,7 +432,8 @@ export const COMPANY_SOURCES: CompanySource[] = [
     aggregators: {
       bitcoinTreasuries: 'h100-group',
     },
-    trustLevel: 'aggregator',
+    exchange: 'NGM',
+    trustLevel: 'verified',  // MFN regulatory filings are verifiable, not just aggregator-sourced
     extractionHints: 'Sweden\'s first BTC treasury company. Nordic leader.',
   },
 

@@ -46,7 +46,7 @@ const FUTURE_HOLDINGS_NEW_SHARES = 3_146_456;
 const COST_BASIS_AVG = 114_606; // USD per BTC
 
 // Financial data — limited until Feb 24, 2026 annual report (Bokslutskommuniké)
-const TOTAL_DEBT = 0; // Unknown until Feb 24 report; convertible debt outstanding but amount uncertain
+const TOTAL_DEBT = 20_736_000; // SEK 219.8M zero-coupon convertible / 10.6 SEK/USD ≈ $20.7M. IFRS classification TBD in Feb 24 Bokslutskommuniké.
 const CASH_RESERVES = 0; // Unknown until Feb 24 report
 const QUARTERLY_BURN = 1_000_000; // Estimated from MFN Interim Report Nov 19, 2025
 
