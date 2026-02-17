@@ -1205,7 +1205,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-02-17",
     // Note: Convertible debentures (~2.08M shares) tracked in dilutive-instruments.ts
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
-    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services. BPS: ₿0.0000635 (diluted). Basic shares: 10,027,880. Diluted: 12,111,213 (includes convertible debentures). $25M CAD convertible debentures outstanding. First Canadian Bitcoin-native treasury company.",
+    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services (entire C-suite = Evolve execs). Basic shares: 10,027,880. Website 'diluted': 12,111,213 (converts only). ⚠️ TRUE diluted: ~14.5M (adds 2.43M performance warrants @ $0.001 that website excludes). $25M CAD convertible debentures (1% interest, Jun 2030 maturity, $12 conversion). Zero revenue — pure BTC proxy. Shell RTO via 2680083 Alberta Ltd.",
   },
   // AKER (Aker ASA) removed 2026-02-02: Cannot verify BTC holdings
   // Seetee not listed among major unlisted investments in Q3 2025 report

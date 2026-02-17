@@ -805,12 +805,25 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_083_333,
       source: "TSX Venture Bulletin V2025-1838 + btctcorp.com",
       sourceUrl: "https://btctcorp.com",
-      notes: "25,000 convertible debentures × $1,000 CAD face = $25M total. Implied conversion price $12.00 CAD. Terms need verification from SEDAR+ Filing Statement (Jun 17, 2025). Confidence: EST (implied strike, not directly verified).",
+      notes: "25,000 convertible debentures × $1,000 CAD face = $25M total. Conversion price $12.00 CAD. 1% annual interest, 5yr maturity (Jun 2030). Senior unsecured, non-redeemable first 3 years. Confidence: IR (terms from Q3 financials).",
+    },
+    {
+      type: "warrant",
+      strikePrice: 0.001,  // CAD - nominal/essentially free shares
+      potentialShares: 2_431_667,
+      source: "Annual Information Form (OTC Markets) Jun 23, 2025",
+      sourceUrl: "https://btctcorp.com",
+      notes: "Performance warrants @ $0.001 CAD (nominal). 10-year term. Vest when BTC price > benchmark price at formation. " +
+        "⚠️ HIDDEN DILUTION: Company website explicitly excludes these from 'diluted shares' count. " +
+        "Deeply ITM when vested (~$5 stock vs $0.001 strike). Confidence: REG (from Annual Information Form).",
     },
   ],
-  // Total BTCT dilution: ~2.08M shares from convertible debentures
-  // All converts currently OTM ($12 strike vs ~$4 stock)
-  // SEDAR+ blocked by captcha — cannot verify exact terms programmatically
+  // Total BTCT dilution: ~2.08M convertible + ~2.43M performance warrants = ~4.51M potential shares
+  // Performance warrants are essentially free shares (ITM when vested) — website hides them
+  // True fully diluted: 10,027,880 + 4,514,000 = ~14,542,880 (20% above website's "diluted" 12.1M)
+  // Converts OTM ($12 strike vs ~$5 stock), perf warrants ITM ($0.001 strike)
+  // SEDAR+ blocked by captcha — some terms verified via OTC Markets AIF
+  // ⚠️ GOVERNANCE: Entire management team = Evolve ETFs executives (zero independence)
 
   // BTBT (Bit Digital) - ETH treasury company (formerly BTC miner)
   // Verified 2026-02-13 via Oct 8, 2025 PR: "$150 million convertible notes offering,
