@@ -1021,7 +1021,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 214_227_808,  // Pre-split shares from Dec 26 8-K
     holdingsPerShare: 0.00000101,  // 217 / 214.2M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825000383/tmb-20241231x10k.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825000383/0001410578-25-000383-index.htm",
     status: "reported",
   },
 
