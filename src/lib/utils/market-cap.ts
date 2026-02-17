@@ -13,7 +13,7 @@
  * CURRENCY HANDLING:
  * - 3350.T (Metaplanet): JPY → USD conversion
  * - 0434.HK (Boyaa): HKD → USD conversion
- * - H100.ST (Hashdex): SEK → USD conversion
+ * - H100.ST (H100 Group): SEK → USD conversion
  * - ALCPB (Capital B / The Blockchain Group): EUR → USD conversion
  */
 

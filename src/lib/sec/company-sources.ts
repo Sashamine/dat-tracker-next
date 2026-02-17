@@ -426,7 +426,7 @@ export const COMPANY_SOURCES: CompanySource[] = [
     ticker: 'H100.ST',
     name: 'H100 Group',
     asset: 'BTC',
-    // Nasdaq Stockholm - no SEC filings
+    // NGM Nordic SME - no SEC filings
     holdingsPageUrl: 'https://www.h100.group/',
     twitterHandles: ['@H100Group'],
     aggregators: {

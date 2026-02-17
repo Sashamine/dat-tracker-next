@@ -1249,7 +1249,7 @@ export const btcCompanies: Company[] = [
     holdings: 2_051,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "regulatory-filing",  // Derived from unaudited Q3 2025 IFRS balance sheet intangibles (€199.8M) ÷ BTC price — EST confidence
-    holdingsSourceUrl: "https://www.samara-ag.com/financial-statements",
+    holdingsSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",  // Dec 2025 corp pres, appendix p16: Q3 2025 balance sheet
     datStartDate: "2024-01-01",
     website: "https://www.samara-ag.com",
     twitter: "https://x.com/Patrick_Lowry_",
@@ -1300,11 +1300,11 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/DigitalXLtd",
     // costBasisAvg removed - dashboard source needs verification
     isMiner: false,
-    quarterlyBurnUsd: 1_000_000,
-    burnSource: "ASX Treasury Information filings (estimate)",
-    burnSourceUrl: "https://www.asx.com.au/markets/company/DCC",
+    quarterlyBurnUsd: 440_000,  // A$705K operating outflow Q2 FY2026 ≈ US$440K at 0.63 AUD/USD
+    burnSource: "ASX Appendix 4C Q2 FY2026 (net operating cash outflow A$705K)",
+    burnSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
     burnAsOf: "2025-12-31",
-    burnEstimated: true,
+    burnEstimated: false,
     avgDailyVolume: 500_000,
     sharesForMnav: 1_488_510_854,  // 1.49B from ASX (ISIN: AU000000DCC9)
     sharesSource: "asx.com.au",
@@ -1315,7 +1315,7 @@ export const btcCompanies: Company[] = [
     description: "DigitalX (ASX:DCC) is a pioneering digital asset company founded in 2014, making it one of the first blockchain companies to list on a major stock exchange globally. In July 2025, the company pivoted to a Bitcoin treasury strategy, raising A$20.7M from institutional investors including UTXO Group, ParaFi Capital, and Animoca Brands. The company holds BTC both directly and through its BTXX Bitcoin ETF. DigitalX leverages its deep expertise in digital asset trading to grow Bitcoin holdings per share while generating operational cash flow through market-neutral strategies.",
     founded: 2014,
     headquarters: "Perth, Australia",
-    ceo: "Lisa Wade",
+    ceo: "Daniel Retzke",  // Lisa Wade resigned Sep 26, 2025; Daniel Retzke appointed GM
   },
   // Removed: NDA.V (416 BTC), DMGI.V (403 BTC), LMFA (356 BTC) - below 500 BTC threshold
   {
