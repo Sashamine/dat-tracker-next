@@ -607,7 +607,7 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     ticker: "ZONE",
     name: "CleanCore Solutions, Inc.",
     secCik: "1956741",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001956741",
+    secFilingsUrl: "https://efts.sec.gov/LATEST/search-index?q=%221956741%22&forms=10-Q,10-K,8-K",
     exchange: "NYSE",
     sharesSource: "basic",
     reportsHoldingsFrequency: "quarterly",
