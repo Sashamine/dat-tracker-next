@@ -816,7 +816,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 10, 2026)
-    sharesSource: "https://h100.group/investor-relations/shares",
+    sharesSource: "H100 Group IR page + MFN acquisition filing",
     sharesSourceUrl: "https://www.h100.group/investor-relations/shares",
     sharesAsOf: "2026-02-12",  // MFN filing date for Future Holdings AG acquisition completion
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",

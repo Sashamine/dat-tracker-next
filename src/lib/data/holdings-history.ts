@@ -413,7 +413,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-08-06", holdings: 763, sharesOutstanding: 254_070_000, holdingsPerShare: 0.00000300, source: "MFN: 60.6 BTC ? 763.2 total (largest Nordic)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   { date: "2025-08-20", holdings: 911, sharesOutstanding: 287_520_000, holdingsPerShare: 0.00000317, source: "MFN: 102 BTC ? 911 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Sep 2025: Crossed 1,000 BTC milestone
-  { date: "2025-09-03", holdings: 1005, sharesOutstanding: 309_700_000, holdingsPerShare: 0.00000324, source: "MFN: Surpasses 1,000 BTC in 104 days", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2025-09-03", holdings: 1005, sharesOutstanding: 309_700_000, holdingsPerShare: 0.00000325, source: "MFN: Surpasses 1,000 BTC in 104 days", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   { date: "2025-09-17", holdings: 1047, sharesOutstanding: 311_500_000, holdingsPerShare: 0.00000336, source: "MFN: 21 BTC ? 1,046.66 total", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Nov 2025: SEK 122.5M convertibles converted to shares
   { date: "2025-11-19", holdings: 1047, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN Interim Report", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },

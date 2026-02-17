@@ -498,7 +498,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // H100 Group (H100.ST) - Swedish BTC treasury company
-  // Verified 2026-06-28 via MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
+  // Verified 2026-02-17 via MFN Swedish regulatory filings (https://mfn.se/a/h100-group)
   // Jul 9, 2025: SEK 342.3M raised via zero-coupon convertible debentures (Adam Back et al)
   // Nov 21, 2025: SEK 122.5M converted to 14,450,468 shares
   // Remaining: SEK 219.8M / 25.9M potential shares at SEK 8.48 conversion price
