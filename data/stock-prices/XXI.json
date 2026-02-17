@@ -2,7 +2,7 @@
   "ticker": "XXI",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-17T17:02:10.212Z",
+  "lastUpdated": "2026-02-17T17:17:05.801Z",
   "prices": [
     {
       "date": "2025-01-02",
@@ -4040,6 +4040,15 @@
       "low": 6.01,
       "close": 6.495,
       "volume": 508826
+    },
+    {
+      "date": "2026-02-17",
+      "time": "12:17",
+      "open": 6.41,
+      "high": 6.64,
+      "low": 6.01,
+      "close": 6.47,
+      "volume": 548595
     }
   ]
 }
