@@ -2060,11 +2060,17 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 1.77,  // ¥271 / 153.5 JPY/USD
       potentialShares: 30_430_000,  // 304,300 remaining units × 100 shares each
       source: "TDnet: 8th Series Stock Acquisition Rights monthly exercise report (Feb 3, 2026)",
-      sourceUrl: "https://www.anap.co.jp/ir/news/",  // TDnet PDFs lack stable URLs; ANAP IR page links to all filings
+      sourceUrl: "https://tdnet-pdf.kabutan.jp/20260202/140120260202545295.pdf",  // Feb 2026 monthly exercise report via Kabutan CDN
       expiration: "2026-12-01",  // Estimated — typically 1 year from issuance
       issuedDate: "2025-12-01",
       notes: "8th Series warrants (MSO, Evo Fund). Actively being exercised — 35,700 of 340,000 units exercised through Jan 2026. Exercise price adjustable (~¥271). Massive dilution potential: 30.4M shares on 40.6M base = 75%.",
     },
+    // 1st Series Convertible Bond (第1回無担保転換社債型新株予約権付社債)
+    // Issued Oct 29, 2025 alongside 8th Series warrants and 8th Bond
+    // Exact terms (face value, conversion price, expiration) need extraction from Japanese PDF
+    // Filing: https://tdnet-pdf.kabutan.jp/20251029/140120251028580503.pdf
+    // Correction: https://tdnet-pdf.kabutan.jp/20251110/140120251110593337.pdf
+    // TODO: Extract conversion terms and add as proper convertible instrument
   ],
 
   // ABTC (American Bitcoin) - BTC miner/accumulator
