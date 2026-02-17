@@ -314,7 +314,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 5_600_000,
       source: "S-1 / 8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=S-1",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
       expiration: "9999-12-31",  // No expiration (pre-funded)
       issuedDate: "2025-01-01",
       notes: "Pre-funded warrants (PFW) — already included in 80.9M sharesForMnav base. Listed for transparency only. Do NOT add to diluted count.",
@@ -326,7 +326,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 75_000,
       source: "S-1 filing",
       sourceUrl:
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=S-1",
+        "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
       expiration: "2030-12-31",
       issuedDate: "2025-01-01",
       notes: "Underwriter warrant from S-1 IPO/offering",
