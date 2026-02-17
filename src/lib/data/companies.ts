@@ -815,10 +815,10 @@ export const btcCompanies: Company[] = [
     burnEstimated: true,  // Swedish quarterly report estimate
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
-    sharesForMnav: 335_250_237,  // IR page share capital table (basic shares)
+    sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 10, 2026)
     sharesSource: "https://h100.group/investor-relations/shares",
     sharesSourceUrl: "https://www.h100.group/investor-relations/shares",
-    sharesAsOf: "2025-09-30",
+    sharesAsOf: "2026-02-10",
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
     notes: "NGM Nordic SME listed. ISK-eligible. SEK 516M convertible (Jul 2025, Adam Back et al), SEK 122.5M converted Nov 2025. Acquiring Future Holdings AG (Switzerland). IR page incorrectly claims 'no convertibles'.",
