@@ -181,10 +181,18 @@ export function ALCPBCompanyView({ company, className = "" }: Props) {
 <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-0.5">
 {(["price","mnav","hps"] as const).map(m=><button key={m} onClick={()=>setChartMode(m)} className={cn("px-3 py-1 rounded-md text-sm transition-colors",chartMode===m?"bg-white dark:bg-gray-700 shadow text-gray-900 dark:text-gray-100":"text-gray-500 hover:text-gray-900 dark:hover:text-gray-100")}>{m==="price"?"Price":m==="mnav"?"mNAV":"HPS"}</button>)}
 </div>
+{chartMode!=="hps"&&<div className="flex gap-1">
+{(["1d","7d","1mo","1y","all"] as const).map(v=>{
+const label=v==="1d"?"24H":v==="7d"?"7D":v==="1mo"?"1M":v==="1y"?"1Y":"ALL";
+const active=chartMode==="mnav"?mnavTR:timeRange;
+const handler=chartMode==="mnav"?mtrC:trC;
+return <button key={v} onClick={()=>handler(v)} className={cn("px-3 py-1 text-sm rounded-md transition-colors",active===v?"bg-indigo-600 text-white":"bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300")}>{label}</button>;
+})}
+</div>}
 </div>
 {chartMode==="price"&&<StockChart data={history||[]} isLoading={historyLoading} timeRange={timeRange} onTimeRangeChange={trC} interval={interval} onIntervalChange={setInterval} />}
-{chartMode==="mnav"&&<CompanyMNAVChart ticker="ALCPB" timeRange={mnavTR} onTimeRangeChange={mtrC} interval={mnavInt} onIntervalChange={setMnavInt} />}
-{chartMode==="hps"&&<HoldingsPerShareChart ticker="ALCPB" />}
+{chartMode==="mnav"&&<CompanyMNAVChart ticker="ALCPB" asset="BTC" currentMNAV={M.mn} currentStockPrice={sp} currentCryptoPrice={btcP} timeRange={mnavTR} onTimeRangeChange={mtrC} interval={mnavInt} onIntervalChange={setMnavInt} companyData={{ holdings: M.h, sharesForMnav: M.sh, totalDebt: M.d, preferredEquity: M.pf, cashReserves: M.c, restrictedCash: 0, asset: "BTC", currency: "EUR" }} />}
+{chartMode==="hps"&&<HoldingsPerShareChart ticker="ALCPB" asset="BTC" currentHoldingsPerShare={M.hps} />}
 </div>
 
 {/* ADDITIONAL METRICS ROW */}

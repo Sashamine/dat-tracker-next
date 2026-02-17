@@ -20,6 +20,7 @@ const TICKER_CURRENCY: Record<string, string> = {
   "H100.ST": "SEK",
   "0434.HK": "HKD",
   "ALCPB": "EUR",
+  "SRAG.DU": "EUR",  // Samara Asset Group (Frankfurt/XETRA)
   "ETHM": "CAD",
 };
 
@@ -287,6 +288,7 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
       "3825.T": "JPY",
       "0434.HK": "HKD",
       "H100.ST": "SEK",
+      "SRAG.DU": "EUR",
       "DCC.AX": "AUD",
       "NDA.V": "CAD",
       "DMGI.V": "CAD",

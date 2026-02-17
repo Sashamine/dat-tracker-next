@@ -46,6 +46,12 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 // FMP API key
 const FMP_API_KEY = process.env.FMP_API_KEY || "";
 
+// Display ticker -> API ticker mapping for non-US exchanges
+// The app uses display tickers (ALCPB, H100.ST) but Yahoo/FMP need exchange suffixes
+const API_TICKER_MAP: Record<string, string> = {
+  "ALCPB": "ALCPB.PA",   // Euronext Paris
+};
+
 // Tickers with known Yahoo data issues (incorrect split adjustments)
 // These will try FMP first, and filter out corrupt old data
 // Date is set to AFTER the most recent split to only show clean post-split data
@@ -59,7 +65,8 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ ticker: string }> }
 ) {
-  const { ticker } = await params;
+  const { ticker: displayTicker } = await params;
+  const ticker = API_TICKER_MAP[displayTicker.toUpperCase()] || displayTicker;
   const { searchParams } = new URL(request.url);
   const range = searchParams.get("range") || "1y";
   const requestedInterval = searchParams.get("interval");
