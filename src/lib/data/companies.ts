@@ -1027,10 +1027,13 @@ export const btcCompanies: Company[] = [
     website: "https://foldapp.com",
     secCik: "0001889123",
     isMiner: false,
-    quarterlyBurnUsd: 3_000_000,
-    burnSource: "SEC 20-F FY2024 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000095017025072818/ck0001889123-20250331.htm",
-    burnAsOf: "2025-03-31",
+    costBasisAvg: 72_571,
+    costBasisSource: "SEC 10-Q Q3 2025: aggregate cost $114.3M for 1,575 BTC",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    quarterlyBurnUsd: 5_000_000,
+    burnSource: "SEC 10-Q Q3 2025: Operating loss $5.94M (Q3), $21.8M (9-mo). Cash burn ~$5M/qtr after non-cash adjustments",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    burnAsOf: "2025-09-30",
     avgDailyVolume: 5_000_000,
     sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
     sharesSource: "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
@@ -1041,7 +1044,15 @@ export const btcCompanies: Company[] = [
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
-    notes: "Nasdaq: FLD. Fold Card debit with BTC rewards. Went public July 2024. Russell 2000 (Dec 2025). Also 800 BTC restricted as collateral.",
+    cashReserves: 6_663_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    cashAsOf: "2025-09-30",
+    notes: "Nasdaq: FLD (warrants: FLDDW). Fold Card debit with BTC rewards. Went public Feb 2025 (SPAC merger with FTAC Emerald). " +
+      "Russell 2000 (Dec 2025). Two Prime BTC-collateralized revolving facility ($45M max, 8.5% interest, matures Oct 2026). " +
+      "$250M equity purchase facility (ATM-like, $3.5M used as of Sep 30). " +
+      "800 BTC restricted as collateral (300 BTC for $20M note + 500 BTC for $46.3M note). " +
+      "SATS Credit Fund (related party) holds $46.3M convertible + 750K closing shares.",
   },
   {
     id: "3825t",
@@ -2237,13 +2248,16 @@ export const suiCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.022,
+    // Excludes crypto impairment/unrealized losses. Total GAAP operating expenses were $64.7M in Q3 2025
+    // (XBRL OperatingExpenses = $64,676,420) but dominated by non-cash items (crypto mark-to-market).
+    // This figure reflects actual G&A/cash burn only.
     quarterlyBurnUsd: 1_000_000,
     burnSource: "SEC 10-Q (filed 2025-05-13): NetCashUsedInOperatingActivities $3,646,585 (2025-01-01 to 2025-03-31)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425005448/mcvt_10q.htm",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 500_000_000,
-    capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001425355&type=S-3",
+    capitalRaisedAtmSource: "SEC S-1 registration statement",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 160_000_000,
@@ -2255,8 +2269,8 @@ export const suiCompanies: Company[] = [
     strategy: "Only public company with Sui Foundation relationship",
     notes: "Formerly Mill City Ventures. ~2.9% of SUI supply. Q4 2025: repurchased 7.8M shares.",
     website: "https://www.suig.io",
-    twitter: "https://x.com/suig_io",
-    investorRelationsUrl: "https://www.suig.io/investors",
+    twitter: "officialSUIG",
+    investorRelationsUrl: "https://www.suig.io/investor-relations",
     // otherInvestments: ~$20.7M legacy portfolio (short-term loans, commercial loans, common stock) - not included in mNAV
   },
 ];

@@ -659,7 +659,7 @@ const CWD_HISTORY: HoldingsSnapshot[] = [
 // TODO BACKFILL: Pre-Jan 2026 entries use basic shares (~48M). Jan 2026 8-K introduced "fully adjusted shares" (80.9M)
 //   which includes pre-funded warrants. To fix treasury yield discontinuity, need to find historical
 //   "fully adjusted shares" from prior 8-Ks/10-Qs and update sharesOutstanding for each entry.
-//   SEC CIK: 1425355 | Search: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1425355&type=8-K
+//   SEC CIK: 1425355 | Search: https://www.sec.gov/edgar/browse/?CIK=0001425355
 const SUIG_HISTORY: HoldingsSnapshot[] = [
   // Pre-Jan 2026 entries use basic common shares outstanding (pre reverse-split/restructure methodology).
   // These do NOT include pre-funded warrants (~5.6M shares). HPS is therefore overstated relative to Jan 2026+ methodology.
