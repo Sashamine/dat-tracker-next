@@ -2,7 +2,7 @@
   "ticker": "WULF",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-16T23:15:01.880Z",
+  "lastUpdated": "2026-02-17T16:27:25.976Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6038,6 +6038,15 @@
       "low": 15.2,
       "close": 16.26,
       "volume": 43021841
+    },
+    {
+      "date": "2026-02-17",
+      "time": "11:27",
+      "open": 15.782,
+      "high": 16.13,
+      "low": 15.07,
+      "close": 15.74,
+      "volume": 12619797
     }
   ]
 }
