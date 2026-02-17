@@ -1145,8 +1145,8 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-07-29",  // First ATM agreement date
     website: "https://zoozpower.com",
     secCik: "0001992818",
-    costBasisAvg: 116_520,  // 6-K: $121.9M / 1,046 BTC = ~$116,520 avg
-    costBasisSource: "SEC 6-K Jan 20, 2026: avg purchase price $112,745/BTC × 1,046 = $121.9M (rounding)",
+    costBasisAvg: 116_520,  // 6-K: total consideration $121.9M / 1,046 BTC = $116,520 (includes fees). 6-K also states "$112,745 avg purchase price" — ~$4M gap likely commissions.
+    costBasisSource: "SEC 6-K Jan 20, 2026: $121.9M total consideration for 1,046 BTC. Stated avg price $112,745 (ex-fees).",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,  // 20-F FY2024 total opex ~$12M/yr = $3M/qtr (G&A + R&D + COGS). Pre-pivot, may change.
