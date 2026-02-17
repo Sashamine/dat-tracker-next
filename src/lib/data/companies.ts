@@ -704,7 +704,7 @@ export const btcCompanies: Company[] = [
     ticker: "KULR",
     asset: "BTC",
     tier: 1,
-    holdings: 1_057,  // Q3 2025 10-Q: Total BTC = $120.5M fair value (~987 held + 70 collateral)
+    holdings: 1_057,  // Q3 2025 10-Q: 1,056.7 BTC held (excludes 70 BTC pledged as collateral). Total incl. collateral = 1,127.
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
