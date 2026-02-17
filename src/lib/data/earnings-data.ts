@@ -3116,17 +3116,21 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // First US-listed LTC treasury - launched Jul 2025
   // CIK: 0001262104
   //
-  // Q2 FY2026 (Oct-Dec 2025) - Upcoming
+  // Q2 FY2026 (Oct-Dec 2025) - Filed Feb 17, 2026
   {
     ticker: "LITS",
     fiscalYear: 2026,
     fiscalQuarter: 2,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-14",
-    earningsTime: null,
-    source: "estimated",
-    status: "upcoming",
+    earningsDate: "2026-02-17",
+    earningsTime: "BMO",
+    holdingsAtQuarterEnd: 929_548,  // 833,748 on-BS + 95,800 covered call collateral
+    sharesAtQuarterEnd: 36_361_999,  // 10-Q cover page (Feb 9, 2026)
+    holdingsPerShare: 0.02556,  // 929,548 / 36,361,999
+    source: "sec-filing",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    status: "reported",
   },
   // Q1 FY2026 (Jul-Sep 2025)
   {
@@ -3137,11 +3141,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-14",
     earningsTime: null,
-    holdingsAtQuarterEnd: 929_548,
-    sharesAtQuarterEnd: 36_769_677,
-    holdingsPerShare: 0.0253,  // 929,548 / 36,769,677
+    holdingsAtQuarterEnd: 929_548,  // 929,548 total LTC
+    sharesAtQuarterEnd: 35_655_155,  // 10-Q cover page (Nov 8, 2025)
+    holdingsPerShare: 0.02607,  // 929,548 / 35,655,155
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
     status: "reported",
   },
 

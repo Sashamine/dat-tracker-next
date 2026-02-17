@@ -2190,30 +2190,38 @@ export const ltcCompanies: Company[] = [
     asset: "LTC",
     tier: 1,
     secCik: "1262104",
-    holdings: 929_548,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.litestrategy.com/dashboard/",
+    holdings: 929_548,  // Q2 FY2026 10-Q (Dec 31, 2025): 833,748 on-balance-sheet + 95,800 pledged as covered call collateral = 929,548 total
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
     datStartDate: "2025-07-01",
-    quarterlyBurnUsd: 3_098_000,  // Trailing avg: FY2025 $20.8M/yr + Q1 FY2026 $4.5M
-    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
-    burnAsOf: "2025-09-30",
+    costBasisAvg: 107_580,  // $100M total acquisition / 929,548 LTC ≈ $107.58. XBRL: CryptoAssetCost $89.15M for 833,748 on-BS units.
+    costBasisSource: "SEC 10-Q Q2 FY2026 XBRL: PaymentForAcquisitionCryptoAsset $100M / 929,548 total LTC",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    quarterlyBurnUsd: 3_305_000,  // Q2 FY2026 XBRL: GeneralAndAdministrativeExpense $3,305,000
+    burnSource: "SEC 10-Q Q2 FY2026 XBRL: GeneralAndAdministrativeExpense",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    burnAsOf: "2025-12-31",
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 36_769_677,  // DEF 14A Record Date Dec 15, 2025
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
-    sharesSource: "SEC DEF 14A Dec 30, 2025",
-    sharesAsOf: "2025-12-15",
-    // Cash ($10.1M) is opex runway per 10-Q - neutral for mNAV (not for LTC, not excess)
-    // Removed from mNAV calculation entirely - will be burned on operations
-    // No interest-bearing debt per SEC 10-Q Q1 FY2026 (only $1.07M operating liabilities)
+    totalDebt: 0,  // Q2 FY2026: No interest-bearing debt. MLA with Galaxy undrawn. Only $1.3M operating liabilities.
+    debtSource: "SEC 10-Q Q2 FY2026",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    debtAsOf: "2025-12-31",
+    cashReserves: 8_758_000,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue $8,758,000
+    cashSource: "SEC 10-Q Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    cashAsOf: "2025-12-31",
+    sharesForMnav: 36_361_999,  // Q2 FY2026 10-Q cover page (Feb 9, 2026). Down from 36.8M due to $25M buyback program.
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    sharesSource: "SEC 10-Q Q2 FY2026 cover page (Feb 9, 2026)",
+    sharesAsOf: "2026-02-09",
     leader: "Justin File (CEO)",
-    strategy: "First US-listed LTC treasury. GSR as treasury manager.",
-    notes: "Formerly MEI Pharma. Charlie Lee on board. Dashboard: litestrategy.com/dashboard",
+    strategy: "First US-listed LTC treasury. GSR as treasury manager. Covered call options program generating ~$600K/qtr in premiums.",
+    notes: "Formerly MEI Pharma. Charlie Lee on board. $25M share buyback program ($203K used, $24.8M remaining). 95,800 LTC pledged as covered call collateral. XBRL: 833,748 on-BS + 95,800 collateral = 929,548 total.",
     website: "https://www.litestrategy.com",
-    twitter: "https://x.com/litestrategyco",
-    investorRelationsUrl: "https://investors.litestrategy.com",
+    twitter: "https://x.com/LiteStrategy",
+    investorRelationsUrl: "https://www.litestrategy.com",
   },
   {
     id: "luxff",

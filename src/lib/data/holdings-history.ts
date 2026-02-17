@@ -620,14 +620,14 @@ const XTAIF_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // Lite Strategy (LITS) - LTC treasury
-// SEC EDGAR source: EntityCommonStockSharesOutstanding
+// Fiscal year ends June 30. Formerly MEI Pharma.
+// SEC EDGAR CIK: 1262104
+// Holdings = 833,748 on-balance-sheet + 95,800 pledged as covered call collateral = 929,548 total
 const LITS_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-08-01", holdings: 450000, sharesOutstanding: 32_000_000, holdingsPerShare: 0.01406, source: "Initial LTC treasury 8-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001262104&type=8-K" },
-  { date: "2024-12-31", holdings: 720000, sharesOutstanding: 33_500_000, holdingsPerShare: 0.02149, stockPrice: 302.96, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/lits/10Q-2024-12-31#ltc-holdings" },
-  // Q1 FY2026 (ended Sep 30, 2025): 929,548 LTC per 10-Q and dashboard
-  { date: "2025-09-30", holdings: 929548, sharesOutstanding: 35_655_155, holdingsPerShare: 0.02607, stockPrice: 326.42, source: "Q1 FY2026 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001262104&type=10-Q", sourceType: "sec-filing" },
-  // DEF 14A Record Date Dec 15, 2025: 36,769,677 shares (+1.1M since Sep 30)
-  { date: "2025-12-15", holdings: 929548, sharesOutstanding: 36_769_677, holdingsPerShare: 0.02528, source: "SEC DEF 14A Dec 30, 2025 - Record Date shares", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001262104&type=DEF%2014A", sourceType: "sec-filing" },
+  // Q1 FY2026 (ended Sep 30, 2025): 929,548 LTC total
+  { date: "2025-09-30", holdings: 929_548, sharesOutstanding: 35_655_155, holdingsPerShare: 0.02607, source: "SEC 10-Q Q1 FY2026 (filed Nov 14, 2025)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm" },
+  // Q2 FY2026 (ended Dec 31, 2025): 929,548 LTC total (no new purchases). Shares down to 36,361,999 (buyback).
+  { date: "2025-12-31", holdings: 929_548, sharesOutstanding: 36_361_999, holdingsPerShare: 0.02556, source: "SEC 10-Q Q2 FY2026 (filed Feb 17, 2026)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm" },
 ];
 
 // Cypherpunk Technologies (CYPH) - ZEC treasury, Winklevoss-backed
