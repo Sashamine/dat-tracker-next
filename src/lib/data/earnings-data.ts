@@ -956,8 +956,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     revenueEstimate: 4_500_000,
     netIncome: -5_300_000,
     holdingsAtQuarterEnd: 1_057,  // Q3 10-Q: 1,056.7 BTC held + 70 BTC collateral
-    sharesAtQuarterEnd: 45_650_000,  // Post-split shares (SEC 10-Q cover page)
-    holdingsPerShare: 0.0000232,  // 1057 / 45.65M
+    sharesAtQuarterEnd: 45_674_420,  // Post-split shares (SEC 10-Q cover page, XBRL-verified)
+    holdingsPerShare: 0.0000231,  // 1057 / 45,674,420
     source: "sec-filing",
     status: "reported",
   },

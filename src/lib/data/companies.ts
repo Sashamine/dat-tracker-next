@@ -714,8 +714,8 @@ export const btcCompanies: Company[] = [
     costBasisSource: "SEC 10-Q Q3 2025: digital assets cost basis $106,785,454 (1,057 BTC)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     isMiner: false,
-    quarterlyBurnUsd: 6_264_000,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense",
+    quarterlyBurnUsd: 10_300_000,  // Q3 2025 operating cash burn: SG&A $6.26M + R&D $2.32M + COGS $6.26M - revenue $6.88M ≈ $7.96M opex; cash flow statement shows ~$10.3M/qtr
+    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities (~$10.3M/qtr from cash flow)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
