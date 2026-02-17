@@ -294,12 +294,12 @@ const H100ST_INTEL: CompanyIntel = {
   ticker: "H100.ST",
   lastResearched: "2026-01-13",
   pressReleases: [
-    { date: "2026-01-01", title: "Acquisition of Future Holdings AG (Swiss BTC treasury)", summary: "First expansion outside Nordics", url: "https://www.h100.group/press" },
-    { date: "2025-09-01", title: "Holdings reached ~1,005 BTC", summary: "Continued accumulation", url: "https://www.h100.group/press" },
-    { date: "2025-06-11", title: "Raised $10.5M from Adam Back, UTXO Management", summary: "Key investor support", url: "https://www.h100.group/press" },
-    { date: "2025-05-01", title: "First public BTC treasury in Sweden", summary: "Purchased 4.39 BTC to start", url: "https://www.h100.group/press" },
+    { date: "2026-01-01", title: "Acquisition of Future Holdings AG (Swiss BTC treasury)", summary: "First expansion outside Nordics", url: "https://www.h100.group/news" },
+    { date: "2025-09-01", title: "Holdings reached ~1,005 BTC", summary: "Continued accumulation", url: "https://www.h100.group/news" },
+    { date: "2025-06-11", title: "Raised $10.5M from Adam Back, UTXO Management", summary: "Key investor support", url: "https://www.h100.group/news" },
+    { date: "2025-05-01", title: "First public BTC treasury in Sweden", summary: "Purchased 4.39 BTC to start", url: "https://www.h100.group/news" },
   ],
-  strategySummary: "Swedish health-tech company pivoted to Bitcoin Treasury strategy. Leading Bitcoin Treasury Company in the Nordics. Mission: maximize Bitcoin exposure per share via innovative financial instruments. June 2025 raise: SEK 69.65M shares + SEK 31.35M zero-interest convertible loans.",
+  strategySummary: "Swedish health-tech company pivoted to Bitcoin Treasury strategy. Leading Bitcoin Treasury Company in the Nordics. Mission: maximize Bitcoin exposure per share via innovative financial instruments. SEK 516M total raise Jul 2025 (SEK 173.3M directed equity + SEK 342.3M zero-coupon convertible debentures, Adam Back et al). SEK 122.5M converted Nov 2025.",
   recentDevelopments: [
     "1,051 BTC holdings (~$120M at cost)",
     "Largest Bitcoin treasury in the Nordics",
@@ -307,7 +307,7 @@ const H100ST_INTEL: CompanyIntel = {
     "Future Holdings AG co-founded by Adam Back, Richard Byworth, Sebastien Hess (November 2025)",
   ],
   keyBackers: ["Adam Back (investor)", "UTXO Management", "Richard Byworth"],
-  outlook2026: "Complete Future Holdings AG acquisition. Nordic expansion.",
+  outlook2026: "Future Holdings AG acquisition completed Feb 2026. Nordic + Swiss expansion. Feb 24 annual report (Bokslutskommuniké) will reveal full financials.",
 };
 
 const NAKA_INTEL: CompanyIntel = {
