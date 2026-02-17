@@ -20,7 +20,7 @@ const TICKER_CIKS: Record<string, string> = {
   btcs: "1510079",
   bmnr: "1829311",
   game: "1825079",
-  fgnx: "1437925",
+  fgnx: "1591890",
   lits: "1411460",
   dfdv: "1652044",
   upxi: "1777319",

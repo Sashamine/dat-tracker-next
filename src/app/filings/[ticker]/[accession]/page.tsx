@@ -67,7 +67,7 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
         const ciks: Record<string, string> = {
           mstr: "1050446", mara: "1507605", riot: "1167419", clsk: "1515671",
           btbt: "1799290", kulr: "1662684", bmnr: "1829311", corz: "1878848",
-          abtc: "2068580", btcs: "1510079", game: "1825079", fgnx: "1437925",
+          abtc: "2068580", btcs: "1510079", game: "1825079", fgnx: "1591890",
           dfdv: "1652044", upxi: "1777319", hsdt: "1580063", tron: "1956744",
           cwd: "1627282", stke: "1846839", djt: "1849635", fld: "1899287",
           naka: "1977303", tbh: "1903595", fwdi: "38264",

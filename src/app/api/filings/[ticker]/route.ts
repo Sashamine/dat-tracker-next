@@ -57,7 +57,7 @@ const tickerToCIK: Record<string, string> = {
   "BTBT": "0001799290",
   "BTCS": "0001510079",
   "GAME": "0001825079",
-  "FGNX": "0001437925",
+  "FGNX": "0001591890",
   // SOL
   "FWDI": "0000038264",
   "HSDT": "0001580063",
