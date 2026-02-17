@@ -981,7 +981,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 41_108_543,  // Post-split shares
     holdingsPerShare: 0.0000224,  // 920 / 41.1M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925089765/0001104659-25-089765-index.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001816/tmb-20250630x10q.htm",
     status: "reported",
   },
   // Q1 2025 - Added 2026-01-29
@@ -1021,7 +1021,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 214_227_808,  // Pre-split shares from Dec 26 8-K
     holdingsPerShare: 0.00000101,  // 217 / 214.2M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001326/tmb-20250331x10q.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825000383/tmb-20241231x10k.htm",
     status: "reported",
   },
 
