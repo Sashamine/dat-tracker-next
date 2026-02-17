@@ -1088,13 +1088,13 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - calculation needs verification
     quarterlyBurnUsd: 1_000_000,
     burnSource: "TDnet Q1 FY2026 決算短信 (estimate)",
-    burnSourceUrl: "https://www.release.tdnet.info/inbs/",
+    burnSourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
     burnAsOf: "2026-01-14",
     burnEstimated: true,
     avgDailyVolume: 2_000_000,
     sharesForMnav: 39_954_400,  // TDnet Q1 FY2026 earnings (Jan 14, 2026)
     sharesSource: "TDnet Q1 FY2026 決算短信",
-    sharesSourceUrl: "https://www.release.tdnet.info/inbs/",
+    sharesSourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
     sharesAsOf: "2026-01-14",
     strategy: "Explicit 'hyperbitcoinization' mission. Runs 'Bitcoin Dojo' teaching other companies BTC treasury strategy.",
     notes: "TSE Standard. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Blockstream partnership (Dec 2025). First BTC purchase Apr 16, 2025. Total cost basis ¥20.95B (~$139M).",
