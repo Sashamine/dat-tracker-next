@@ -2,7 +2,7 @@
   "ticker": "HIVE",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-18T16:08:17.532Z",
+  "lastUpdated": "2026-02-18T16:23:17.301Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6236,6 +6236,15 @@
       "low": 2.065,
       "close": 2.1246,
       "volume": 2634210
+    },
+    {
+      "date": "2026-02-18",
+      "time": "09:23",
+      "open": 2.12,
+      "high": 2.15,
+      "low": 2.065,
+      "close": 2.1274,
+      "volume": 2716859
     }
   ]
 }
