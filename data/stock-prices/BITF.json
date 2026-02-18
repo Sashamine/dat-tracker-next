@@ -2,7 +2,7 @@
   "ticker": "BITF",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-17T22:32:05.446Z",
+  "lastUpdated": "2026-02-18T16:08:17.532Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6227,6 +6227,15 @@
       "low": 2.0106,
       "close": 2.1,
       "volume": 26644969
+    },
+    {
+      "date": "2026-02-18",
+      "time": "09:08",
+      "open": 2.08,
+      "high": 2.165,
+      "low": 2.035,
+      "close": 2.1291,
+      "volume": 6519806
     }
   ]
 }
