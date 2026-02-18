@@ -2,7 +2,7 @@
   "ticker": "BTOG",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-18T17:23:34.077Z",
+  "lastUpdated": "2026-02-18T17:42:53.313Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6263,6 +6263,15 @@
       "low": 2.6,
       "close": 2.695,
       "volume": 12824
+    },
+    {
+      "date": "2026-02-18",
+      "time": "10:42",
+      "open": 2.7,
+      "high": 2.81,
+      "low": 2.6,
+      "close": 2.77,
+      "volume": 14717
     }
   ]
 }
