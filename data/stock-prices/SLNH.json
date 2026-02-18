@@ -2,7 +2,7 @@
   "ticker": "SLNH",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-18T20:23:17.162Z",
+  "lastUpdated": "2026-02-18T20:38:17.373Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6344,6 +6344,15 @@
       "low": 0.8202,
       "close": 0.83,
       "volume": 1619126
+    },
+    {
+      "date": "2026-02-18",
+      "time": "13:38",
+      "open": 0.84,
+      "high": 0.88,
+      "low": 0.8202,
+      "close": 0.8495,
+      "volume": 1931490
     }
   ]
 }

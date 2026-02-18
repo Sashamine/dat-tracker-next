@@ -2,7 +2,7 @@
   "ticker": "MSTR",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-18T20:23:17.162Z",
+  "lastUpdated": "2026-02-18T20:38:17.373Z",
   "prices": [
     {
       "date": "2020-08-03",
@@ -13234,6 +13234,15 @@
       "low": 123.625,
       "close": 123.91,
       "volume": 13005684
+    },
+    {
+      "date": "2026-02-18",
+      "time": "13:38",
+      "open": 127.625,
+      "high": 132.25,
+      "low": 123.625,
+      "close": 125.27,
+      "volume": 13829594
     }
   ]
 }
