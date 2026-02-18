@@ -749,12 +749,14 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 2,
     website: "https://cptlb.com",
-    holdings: 2_828,  // AMF filing Feb 9, 2026 (2,828 BTC total)
-    holdingsLastUpdated: "2026-02-09",
+    holdings: 2_834,  // AMF filing Feb 16, 2026 (2,834 BTC total)
+    holdingsLastUpdated: "2026-02-16",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
-    datStartDate: "2024-12-01",
-    // costBasisAvg removed - needs verification
+    holdingsSourceUrl: "https://info.amf-france.org/api/v1/publication/FCACT078298_20260216.pdf",
+    datStartDate: "2024-11-05",  // First BTC purchase announced Nov 5, 2024
+    costBasisAvg: 93_083,  // €93,083 avg per AMF Feb 16, 2026 filing
+    costBasisSource: "regulatory-filing",
+    costBasisSourceUrl: "https://info.amf-france.org/api/v1/publication/FCACT078298_20260216.pdf",
     isMiner: false,
     quarterlyBurnUsd: 800_000,  // ~€0.75M/quarter from H1 2025 IFRS (was $2M — too high by ~2.7x)
     burnSource: "H1 2025 IFRS financials (~€0.72M/quarter operating cash burn)",
@@ -763,31 +765,27 @@ export const btcCompanies: Company[] = [
     burnEstimated: true,  // No XBRL; estimated from H1 2025 actuals
     avgDailyVolume: 10_000_000,
     marketCap: 200_000_000,
-    sharesForMnav: 227_468_631,  // Basic shares per Feb 9, 2026 press release. Diluted: ~390M (389,888,020)
-    sharesSource: "Company press release Feb 9, 2026",
-    sharesSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
-    sharesAsOf: "2026-02-09",
+    sharesForMnav: 228_069_631,  // Basic shares per AMF Feb 16, 2026. Diluted: 392,278,260
+    sharesSource: "AMF filing Feb 16, 2026",
+    sharesSourceUrl: "https://info.amf-france.org/api/v1/publication/FCACT078298_20260216.pdf",
+    sharesAsOf: "2026-02-16",
     // Total convertible bond face value (all OCA tranches). The mNAV calculator dynamically
     // subtracts ITM convertible faceValues from totalDebt, so we include ALL tranches here.
     // At stock ~€0.60: OCA Tranche 1 ($50.5M, strike $0.57) is ITM → subtracted from debt.
     // Remaining OTM: B-02 ($73.2M), B-03 ($13M), A-03/A-04/B-04 ($16.6M), A-05 ($6.8M) = ~$109.6M effective debt.
     totalDebt: 160_160_000,  // Sum of all OCA faceValues in dilutive-instruments.ts (USD)
     debtSource: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
-    debtAsOf: "2026-02-09",
-    cashReserves: 0,  // TODO: Update from FY 2025 financials when available. Company raised significant capital via ATM + OCA convertibles, but cash position unclear without IFRS statements.
-    cashSource: "Needs FY 2025 IFRS financials",
-    cashAsOf: "2025-06-30",  // Last known: H1 2025 IFRS
+    debtAsOf: "2026-02-16",
+    cashReserves: 1_531_000,  // €1.531M available cash per H1 2025 IFRS
+    cashSource: "H1 2025 IFRS financials",
+    cashSourceUrl: "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
+    cashAsOf: "2025-06-30",
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
     notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
     dataWarnings: [
       {
-        type: "unverified-shares",
-        message: "Share counts sourced from company press release (Feb 9, 2026 AMF filing). Company IR pages are JS-rendered and not crawlable.",
-        severity: "info",
-      },
-      {
         type: "stale-data",
-        message: "Active EUR 300M ATM program — share count may be stale between AMF filings. Last update: Feb 9, 2026 (227.5M basic shares).",
+        message: "Active EUR 300M ATM program — share count may be stale between AMF filings. Last update: Feb 16, 2026 (228.1M basic shares).",
         severity: "warning",
       },
     ],
