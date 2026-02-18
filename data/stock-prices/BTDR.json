@@ -2,7 +2,7 @@
   "ticker": "BTDR",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-18T16:23:17.301Z",
+  "lastUpdated": "2026-02-18T16:38:17.250Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6236,6 +6236,15 @@
       "low": 9.45,
       "close": 9.565,
       "volume": 1075061
+    },
+    {
+      "date": "2026-02-18",
+      "time": "09:38",
+      "open": 9.5,
+      "high": 9.735,
+      "low": 9.45,
+      "close": 9.57,
+      "volume": 1157655
     }
   ]
 }
