@@ -2,7 +2,7 @@
   "ticker": "BTCT.V",
   "exchange": "TSXV",
   "currency": "CAD",
-  "lastUpdated": "2026-02-18T17:53:17.651Z",
+  "lastUpdated": "2026-02-18T18:34:30.039Z",
   "prices": [
     {
       "date": "2025-06-30",
@@ -3280,6 +3280,15 @@
       "low": 4.07,
       "close": 4.1,
       "volume": 835
+    },
+    {
+      "date": "2026-02-18",
+      "time": "11:34",
+      "open": 4.07,
+      "high": 4.15,
+      "low": 4.05,
+      "close": 4.15,
+      "volume": 15581
     }
   ]
 }
