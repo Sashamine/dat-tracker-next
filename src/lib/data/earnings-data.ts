@@ -2948,9 +2948,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-04-30", // Estimated annual report (French companies have 4 months post FY-end)
     earningsTime: null,
-    holdingsAtQuarterEnd: 2_828, // Feb 9, 2026 AMF filing (most recent as of update)
-    sharesAtQuarterEnd: 227_468_631, // Basic shares per Feb 9, 2026 press release
-    holdingsPerShare: 0.0000124, // 2828/227468631 ≈ 0.00001243
+    holdingsAtQuarterEnd: 2_823, // Dec 31, 2025: no acquisitions between Nov 25 and Feb 9 per AMF acquisition table
+    sharesAtQuarterEnd: 226_884_068, // Basic shares at Dec 31 (pre-Feb ATM issuances)
+    holdingsPerShare: 0.0000124, // 2823/226884068 ≈ 0.00001244
     source: "manual",
     sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf",
     status: "upcoming",
@@ -2980,9 +2980,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-09-30", // H1 2025 report release
     earningsTime: null,
-    holdingsAtQuarterEnd: 2_201, // Holdings history
+    holdingsAtQuarterEnd: 1_788, // Jun 30 acquisition per AMF table (not 2,201 which is Aug 11)
     sharesAtQuarterEnd: 48_000_000, // Pre-Sep 2025 dilution
-    holdingsPerShare: 0.0000459,
+    holdingsPerShare: 0.0000373, // 1788/48000000
     source: "manual",
     status: "reported",
   },
@@ -3011,9 +3011,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2025-04-30", // Annual report
     earningsTime: null,
-    holdingsAtQuarterEnd: 1_800, // Holdings history
+    holdingsAtQuarterEnd: 40, // Only 15 BTC (Nov 5) + 25 BTC (Dec 4) = 40 total per AMF acquisition table
     sharesAtQuarterEnd: 45_000_000,
-    holdingsPerShare: 0.0000400,
+    holdingsPerShare: 0.00000089, // 40/45000000
     source: "manual",
     status: "reported",
   },
@@ -3041,9 +3041,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2024-09-30", // H1 2024 report
     earningsTime: null,
-    holdingsAtQuarterEnd: 1_200, // Holdings history
+    holdingsAtQuarterEnd: 0, // BTC strategy launched Nov 5, 2024 — no holdings existed Jun 30, 2024
     sharesAtQuarterEnd: 42_000_000,
-    holdingsPerShare: 0.0000286,
+    holdingsPerShare: 0, // 0/42000000 = 0
     source: "manual",
     status: "reported",
   },

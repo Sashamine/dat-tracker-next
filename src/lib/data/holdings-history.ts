@@ -403,6 +403,7 @@ const ALTBG_HISTORY: HoldingsSnapshot[] = [
   // Q4 2025 quarter-end: no acquisitions between Nov 25 and Feb 9 per AMF acquisition table. Shares: last known Nov 25 count (ATM issuances Jan 27-30 hadn't occurred yet).
   { date: "2025-12-31", holdings: 2823, sharesOutstanding: 226_884_068, holdingsPerShare: 0.0000124, source: "Derived from AMF filings — no acquisitions between Nov 25, 2025 and Feb 9, 2026", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf", sourceType: "regulatory-filing" },
   { date: "2026-02-09", holdings: 2828, sharesOutstanding: 227_468_631, holdingsPerShare: 0.0000124, source: "AMF filing - 5 BTC acquired for EUR 0.32M", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf", sourceType: "regulatory-filing", sharesSource: "Company press release Feb 9, 2026" },
+  { date: "2026-02-16", holdings: 2834, sharesOutstanding: 228_069_631, holdingsPerShare: 0.0000124, source: "AMF filing - 6 BTC acquired, total 2,834 BTC", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf", sourceType: "regulatory-filing" },
 ];
 
 // H100 Group (H100.ST) - Swedish BTC treasury (first Nordic Bitcoin treasury company)
