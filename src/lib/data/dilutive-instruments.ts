@@ -11,7 +11,7 @@
  * Each instrument has full provenance (source, sourceUrl) for verification.
  */
 
-export type InstrumentType = "convertible" | "option" | "warrant" | "preferred" | "rsu";
+export type InstrumentType = "convertible" | "option" | "warrant" | "preferred" | "rsu" | "free_shares";
 
 export interface DilutiveInstrument {
   type: InstrumentType;
@@ -1258,6 +1258,15 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
       expiration: "2030-08-01",
       notes: "OCA A-05 Tranche 1: TOBAM (€6.5M). Conversion at €3.6557/share.",
+    },
+    // === Free Shares (Employee/Officer Grants) ===
+    {
+      type: "free_shares",
+      strikePrice: 0,
+      potentialShares: 2_333_750,
+      source: "AMF filing Feb 16, 2026",
+      sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
+      notes: "Free shares granted to employees/officers, not yet vested. Included in company's fully diluted count (392,278,260).",
     },
   ],
 
