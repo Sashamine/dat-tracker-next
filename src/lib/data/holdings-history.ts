@@ -385,11 +385,14 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
 // API: https://dilaamf.opendatasoft.com/api/v2/ (ISIN: FR0011053636)
 // Note: Massive dilution in Sep 2025 from EUR58.1M private placement (Sep 16, 2025 AMF filing)
 const ALTBG_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-06-30", holdings: 1200, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0000286, source: "H1 2024 Euronext filing", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
-  { date: "2024-12-31", holdings: 1800, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0000400, source: "FY 2024 annual report", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
+  // NOTE: BTC Treasury Strategy launched Nov 5, 2024. No BTC holdings before that date.
+  { date: "2024-06-30", holdings: 0, sharesOutstanding: 42_000_000, holdingsPerShare: 0, source: "Pre-strategy launch — no BTC holdings", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
+  // Q4 2024: Only 40 BTC acquired (15 on Nov 5 + 25 on Dec 4) per AMF acquisition table
+  { date: "2024-12-31", holdings: 40, sharesOutstanding: 45_000_000, holdingsPerShare: 0.00000089, source: "Derived from AMF acquisition table — 15 BTC Nov 5 + 25 BTC Dec 4 = 40 total", sourceType: "regulatory-filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf" },
   // Q1 2025 quarter-end: last acquisition Mar 26 brought total to 620. Next acquisition May 22. Shares ~45M pre-dilution.
   { date: "2025-03-31", holdings: 620, sharesOutstanding: 45_000_000, holdingsPerShare: 0.0000138, source: "Derived from AMF acquisition table — 620 BTC after Mar 26 purchase, no acquisitions until May 22", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf", sourceType: "regulatory-filing" },
-  { date: "2025-06-30", holdings: 2201, sharesOutstanding: 48_000_000, holdingsPerShare: 0.0000459, source: "H1 2025 filing", sourceType: "regulatory-filing", sourceUrl: "https://cptlb.com" },
+  // Q2 2025: Last acquisition before Jun 30 was Jun 30 itself (60 BTC → 1,788 total per AMF table)
+  { date: "2025-06-30", holdings: 1788, sharesOutstanding: 48_000_000, holdingsPerShare: 0.0000373, source: "AMF acquisition table — Jun 30 acquisition brought total to 1,788", sourceType: "regulatory-filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf" },
   // Sep 2025: EUR58.1M capital increase via private placement caused ~4x share dilution
   { date: "2025-09-22", holdings: 2800, sharesOutstanding: 200_000_000, holdingsPerShare: 0.0000140, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076270_20250922.pdf", sourceType: "regulatory-filing" },
   { date: "2025-09-29", holdings: 2812, sharesOutstanding: 200_000_000, holdingsPerShare: 0.0000141, source: "AMF filing", sourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2025/09/FCACT076388_20250929.pdf", sourceType: "regulatory-filing" },

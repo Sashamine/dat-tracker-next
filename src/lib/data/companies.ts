@@ -752,11 +752,11 @@ export const btcCompanies: Company[] = [
     holdings: 2_834,  // AMF filing Feb 16, 2026 (2,834 BTC total)
     holdingsLastUpdated: "2026-02-16",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://info.amf-france.org/api/v1/publication/FCACT078298_20260216.pdf",
+    holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
     datStartDate: "2024-11-05",  // First BTC purchase announced Nov 5, 2024
     costBasisAvg: 93_083,  // €93,083 avg per AMF Feb 16, 2026 filing
     costBasisSource: "regulatory-filing",
-    costBasisSourceUrl: "https://info.amf-france.org/api/v1/publication/FCACT078298_20260216.pdf",
+    costBasisSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
     isMiner: false,
     quarterlyBurnUsd: 800_000,  // ~€0.75M/quarter from H1 2025 IFRS (was $2M — too high by ~2.7x)
     burnSource: "H1 2025 IFRS financials (~€0.72M/quarter operating cash burn)",
@@ -767,7 +767,7 @@ export const btcCompanies: Company[] = [
     marketCap: 200_000_000,
     sharesForMnav: 228_069_631,  // Basic shares per AMF Feb 16, 2026. Diluted: 392,278,260
     sharesSource: "AMF filing Feb 16, 2026",
-    sharesSourceUrl: "https://info.amf-france.org/api/v1/publication/FCACT078298_20260216.pdf",
+    sharesSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
     sharesAsOf: "2026-02-16",
     // Total convertible bond face value (all OCA tranches). The mNAV calculator dynamically
     // subtracts ITM convertible faceValues from totalDebt, so we include ALL tranches here.
