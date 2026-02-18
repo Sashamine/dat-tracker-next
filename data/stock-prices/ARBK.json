@@ -2,7 +2,7 @@
   "ticker": "ARBK",
   "exchange": "US",
   "currency": "USD",
-  "lastUpdated": "2026-02-18T19:53:17.272Z",
+  "lastUpdated": "2026-02-18T20:08:17.179Z",
   "prices": [
     {
       "date": "2024-01-02",
@@ -6326,6 +6326,15 @@
       "low": 2.8252,
       "close": 2.8805,
       "volume": 11205
+    },
+    {
+      "date": "2026-02-18",
+      "time": "13:08",
+      "open": 2.89,
+      "high": 2.89,
+      "low": 2.875,
+      "close": 2.89,
+      "volume": 11219
     }
   ]
 }
