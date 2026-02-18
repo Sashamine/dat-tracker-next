@@ -781,7 +781,7 @@ export const btcCompanies: Company[] = [
     cashSourceUrl: "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
     cashAsOf: "2025-06-30",
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
-    notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API.",
+    notes: "Euronext Paris listed. Europe's Strategy equivalent. Data via AMF API. Capital B publishes their own mNAV using diluted shares (392M) without adding debt separately — converts are treated as future shares, not debt. Our calculation uses basic shares (228M) + OCA debt in EV. Both methods are valid; theirs shows ~1.47x, ours ~1.86x.",
     dataWarnings: [
       {
         type: "stale-data",
