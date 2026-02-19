@@ -1439,21 +1439,21 @@ export const EARNINGS_DATA: EarningsRecord[] = [
   // BTC adoption started Apr 23, 2024
   // Source: metaplanet.jp/en/analytics, metaplanet.jp/en/shareholders/disclosures
   //
-  // Q4 FY2025 (Oct-Dec 2025) - Upcoming (~Feb 13, 2026)
+  // Q4 FY2025 (Oct-Dec 2025) - Reported Feb 16, 2026
   {
     ticker: "3350.T",
     fiscalYear: 2025,
     fiscalQuarter: 4,
     calendarYear: 2025,
     calendarQuarter: 4,
-    earningsDate: "2026-02-13",
+    earningsDate: "2026-02-16",  // FY2025 results released Feb 16, 2026 (confirmed by U.Today, Cryptopolitan, The Block)
     earningsTime: null,
-    holdingsAtQuarterEnd: 35_102,  // Dec 30, 2025 purchase data
-    sharesAtQuarterEnd: 1_142_248_401,  // ~Dec 8: 1,142,274,340 issued - ~25,939 treasury. Mercury preferred is separate class.
+    holdingsAtQuarterEnd: 35_102,  // Dec 30, 2025 purchase data (35,102 BTC confirmed in FY2025 report)
+    sharesAtQuarterEnd: 1_142_248_401,  // ~Dec 31: 1,142,274,340 issued - ~25,939 treasury. Mercury preferred is separate class.
     holdingsPerShare: 0.00003073,  // 35102 / 1,142,248,401
-    source: "press-release",
+    source: "regulatory-filing",
     sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
-    status: "upcoming",
+    status: "reported",
   },
   // Q3 FY2025 (Jul-Sep 2025) - Reported Nov 13, 2025
   {
