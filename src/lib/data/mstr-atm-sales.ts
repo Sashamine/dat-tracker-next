@@ -512,7 +512,16 @@ export const MSTR_ATM_SALES: ATMSaleEvent[] = [
     accessionNumber: "0001193125-26-000264",
     secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526000264/mstr-20251117.htm",
   },
+  {
+    filingDate: "2026-02-17",
+    shares: 1445354,  // 660,000 MSTR + 785,354 STRC
+    proceeds: 169000000,
+    format: "table",
+    sharesByProgram: {"MSTR ATM": 660000, "STRC ATM": 785354},
+    accessionNumber: "0001193125-26-053105",
+    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
+  },
 ];
 
-export const ATM_TOTAL_SHARES = 141922366;  // Includes early ATM
-export const ATM_TOTAL_PROCEEDS = 36661400000;  // $36.66B, 89% coverage
+export const ATM_TOTAL_SHARES = 142582366;  // 141922366 + 660000 common
+export const ATM_TOTAL_PROCEEDS = 36830400000;  // $36.66B + $169M
