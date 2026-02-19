@@ -89,8 +89,8 @@ export const ethCompanies: Company[] = [
     ticker: "SBET",
     asset: "ETH",
     tier: 1,
-    holdings: 863_424,  // 639,241 native + 224,183 LsETH (Dec 14, 2025)
-    holdingsLastUpdated: "2025-12-14",
+    holdings: 867_798,  // 587,232 native + 225,429 LsETH + 55,137 WeETH + 13,615 staking rewards (as of Feb 15, 2026; 8-K filed Feb 19, 2026)
+    holdingsLastUpdated: "2026-02-15",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
     // Provenance tracking (see provenance/sbet.ts for full audit trail)
@@ -124,7 +124,7 @@ export const ethCompanies: Company[] = [
     avgDailyVolume: 300_000_000,
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
-    sharesForMnav: 196_690_000,  // 196.69M basic shares (matches SBET dashboard methodology)
+    sharesForMnav: 196_693_191,  // 196,693,191 basic shares (SEC XBRL)
     sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     sharesAsOf: "2025-11-12",
