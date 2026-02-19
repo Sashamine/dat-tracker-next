@@ -659,9 +659,9 @@ export const btcCompanies: Company[] = [
     ticker: "ASST",
     asset: "BTC",
     tier: 1,
-    // HOLDINGS: SEC 8-K Jan 28, 2026
+    // HOLDINGS: SEC 8-K Feb 13, 2026 (as of Feb 11)
     holdings: 13_131.82,
-    holdingsLastUpdated: "2026-01-28",
+    holdingsLastUpdated: "2026-02-11",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
     datStartDate: "2024-05-01",
