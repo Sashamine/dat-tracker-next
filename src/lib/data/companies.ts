@@ -399,10 +399,10 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (mstr-holdings-verified.ts)
-    holdings: MSTR_PROVENANCE.holdings?.value || 714_644,
+    holdings: MSTR_PROVENANCE.holdings?.value || 717_131,
     holdingsLastUpdated: MSTR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
     datStartDate: "2024-01-01",
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
@@ -410,7 +410,7 @@ export const btcCompanies: Company[] = [
     // COST BASIS: from provenance
     costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_056,
     costBasisSource: "SEC 8-K (provenance-tracked)",
-    costBasisSourceUrl: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K`,
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
     isMiner: false,
     // QUARTERLY BURN: from provenance
     quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value ?? 15_200_000,
@@ -419,7 +419,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
-    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 333_083_000,
+    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 333_544_357,
     sharesSource: "Company (strategy.com) + SEC audit (10-Q + ATM 8-Ks). See provenance for dual-source breakdown.",
     sharesSourceUrl: "https://www.strategy.com/shares",
     sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,
@@ -451,8 +451,8 @@ export const btcCompanies: Company[] = [
     // CASH: from provenance
     cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_250_000_000,
     cashSource: "SEC-verified (provenance): 8-K USD Reserve",
-    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001050446&type=8-K",
-    cashAsOf: "2026-01-04",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000012/mstr-20251030x8kxex991.htm",
+    cashAsOf: "2025-12-31",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
     notes: "Dual-source provenance: company-disclosed (strategy.com Reg FD) + SEC-verified (10-Q/8-K). See provenance/mstr.ts for full audit trail.",

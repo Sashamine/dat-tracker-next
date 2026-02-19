@@ -504,6 +504,15 @@ export const MSTR_ATM_SALES: ATMSaleEvent[] = [
     secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526041944/d947535d8k.htm",
   },
   {
+    filingDate: "2026-02-17",
+    shares: 660000,
+    proceeds: 90500000,
+    format: "table",
+    sharesByProgram: {"MSTR ATM": 660000},
+    accessionNumber: "0001193125-26-053105",
+    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
+  },
+  {
     filingDate: "2026-01-02",
     shares: 1000,
     proceeds: 1000,
