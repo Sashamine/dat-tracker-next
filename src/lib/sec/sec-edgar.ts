@@ -18,6 +18,12 @@ import {
 } from './content-extractor';
 import { fetchFilingWithCache } from './filing-cache';
 import { fetchWithRateLimit, waitForRateLimit, recordSuccess } from './rate-limiter';
+import {
+  buildSecArchivesDocUrl,
+  buildSecArchivesIndexUrl,
+  cikNoLeadingZeros,
+  accessionNoDashes,
+} from './sec-shared';
 
 // Map tickers to SEC CIK numbers (legacy - use company-sources.ts instead)
 // CIKs verified against SEC EDGAR on 2026-01-21
@@ -223,10 +229,9 @@ export async function checkSECFilings(
         );
         if (!isRelevant) continue;
 
-        const accessionNumber = recent.accessionNumber[i].replace(/-/g, '');
-        const cikNum = cik.replace(/^0+/, '');
+        const accessionNumber = recent.accessionNumber[i];
         const primaryDoc = recent.primaryDocument[i];
-        const documentUrl = `https://www.sec.gov/Archives/edgar/data/${cikNum}/${accessionNumber}/${primaryDoc}`;
+        const documentUrl = buildSecArchivesDocUrl(cik, accessionNumber, primaryDoc);
 
         // Check if the filing description mentions crypto
         const description = recent.primaryDocDescription?.[i] || '';
@@ -374,9 +379,7 @@ interface FilingIndex {
  */
 async function fetchFilingIndex(cik: string, accessionNumber: string): Promise<FilingIndex | null> {
   try {
-    const accNum = accessionNumber.replace(/-/g, '');
-    const cikNum = cik.replace(/^0+/, '');
-    const url = `https://www.sec.gov/Archives/edgar/data/${cikNum}/${accNum}/index.json`;
+    const url = buildSecArchivesIndexUrl(cik, accessionNumber);
 
     const response = await fetch(url, {
       headers: { 'User-Agent': 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)' },
@@ -422,8 +425,8 @@ export async function searchFilingDocuments(
   const formType = options?.formType || '8-K';
   const filedDate = options?.filedDate || new Date().toISOString().split('T')[0];
   const companySource = getCompanySource(ticker);
-  const cikNum = cik.replace(/^0+/, '');
-  const accNum = accessionNumber.replace(/-/g, '');
+  const cikNum = cikNoLeadingZeros(cik);
+  const accNum = accessionNoDashes(accessionNumber);
 
   // Get filing index
   const indexData = await fetchFilingIndex(cik, accessionNumber);
