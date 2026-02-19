@@ -698,8 +698,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       sourceUrl:
         "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
       issuedDate: "2026-01-16",
-      expiration: "2027-12-15",
-      notes: "$10M remaining Semler convertible notes after $90M exchange. Pre-split conversion rate: 275.3887/1000. Post-split: 13.7694/1000.",
+      expiration: "2030-08-01",
+      notes: "$10M remaining Semler 4.25% convertible senior notes after $90M exchange for SATA preferred. Due 2030 per Jan 16 Supplemental Indenture. Pre-split conversion rate: 275.3887/1000. Post-split: 13.7694/1000.",
     },
   ],
   // Total ASST dilution: 53.6K pre-funded (ITM) + 26.6M traditional warrants + 137K converts
