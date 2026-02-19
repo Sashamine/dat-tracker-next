@@ -1673,10 +1673,10 @@ export const solCompanies: Company[] = [
     secCik: "0001775194",
     asset: "SOL",
     tier: 1,
-    holdings: 2_174_583,  // Jan 5, 2026 press release (10-Q Dec 31 shows 2,173,204). NOTE: Hivemind 265,500 locked SOL (Jan 9) NOT included — that was a subsequent event after this date.
-    holdingsLastUpdated: "2026-01-05",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
+    holdings: 2_173_204,  // SEC 10-Q Q2 FY2026 (Dec 31, 2025 balance sheet). Supersedes Jan 5 PR figure of 2,174,583.
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     datStartDate: "2025-04-01",
     stakingPct: 0.95,  // 10-Q Note 5: "approximately 95% of its Solana treasury staked as of December 31, 2025"
     stakingMethod: "Native staking (locked/staked SOL)",
