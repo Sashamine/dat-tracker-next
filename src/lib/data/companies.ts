@@ -1537,7 +1537,7 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://forwardindustries.com/sol-treasury",
     datStartDate: "2025-09-11",  // $1.65B PIPE closed Sep 11, 2025
     // Fiscal year end: September 30
-    costBasisSource: "SEC XBRL - $1.59B / 6.85M SOL",
+    costBasisSource: "SEC 10-Q Q1 FY2026 Note 4: $972.8M cost / 4,973K SOL = $195.60/SOL (Dec 31). Prior: $1.59B / 6.85M SOL (Sep 30). Difference due to SOL→fwdSOL conversion.",
     stakingPct: 0.99,  // "staking the majority of the SOL in our treasury" per 10-K; 6.73% APY confirms active staking
     stakingMethod: "Native staking via white-label validators + third-party validators",
     stakingSource: "SEC 10-K Dec 11, 2025: 'staking the majority of the SOL in our treasury to earn a staking yield.' Delegates to own and third-party validators.",
@@ -1546,8 +1546,8 @@ export const solCompanies: Company[] = [
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
     stakingApy: 0.085,  // ~8.5% gross APY derived from 10-Q Q1 FY2026 segment data: $17.4M staking revenue × 4 / $820.8M staked assets = 8.47%
-    quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M - treasury ops costs)
-    burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense",
+    quarterlyBurnUsd: 6_697_272,  // Q1 FY2026 total G&A: $3,252,629 (direct) + $3,444,643 (related party: Galaxy service $1.75M + asset mgmt $1.70M)
+    burnSource: "SEC 10-Q Q1 FY2026 MD&A: consolidated G&A $6,697,000 (direct + related party Galaxy fees)",
     burnSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
     burnAsOf: "2025-12-31",
     capitalRaisedPipe: 1_650_000_000,
