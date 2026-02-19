@@ -794,8 +794,8 @@ export const SBET_METADATA = {
   },
   
   // Last verification
-  lastVerified: "2026-02-11",
-  lastHoldingsUpdate: "2025-12-17",
+  lastVerified: "2026-02-19",
+  lastHoldingsUpdate: "2026-02-19",
   nextExpectedUpdate: "Q4 2025 10-K (expected Mar 2026)",
 };
 
