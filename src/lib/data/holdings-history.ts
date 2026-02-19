@@ -898,7 +898,7 @@ const ASST_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-16", holdings: 12798, sharesOutstanding: 40_774_181, holdingsPerShare: 0.0003138, totalDebt: 100_000_000, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - Semler acquired", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326000616/dp240082_8k.htm", sourceType: "sec-filing" },
   // Jan 28, 2026: SEC 8-K - 13,131.82 BTC. $90M Semler converts exchanged for SATA ? $10M debt remaining
   // SATA preferred grew to ~4.26M shares ($426M) from offerings + exchange
-  { date: "2026-01-28", holdings: 13131.82, sharesOutstanding: 63_048_519, holdingsPerShare: 0.0002083, totalDebt: 10_000_000, preferredEquity: 426_551_800, cash: 127_200_000, source: "SEC 8-K Jan 28, 2026: 13,131.82 BTC", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm", sourceType: "sec-filing" },
+  { date: "2026-02-11", holdings: 13131.82, sharesOutstanding: 63_048_519, holdingsPerShare: 0.0002083, totalDebt: 10_000_000, preferredEquity: 426_551_800, cash: 127_200_000, source: "SEC 8-K Feb 13, 2026 (as of Feb 11): 13,131.8 BTC, $127.2M cash, 63M shares", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm", sourceType: "sec-filing" },
 ];
 
 // ==================== BNB COMPANIES ====================
