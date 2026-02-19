@@ -12,7 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "audit:staking": "npx tsx scripts/audit-staking.ts",
     "snapshot": "tsx scripts/snapshot-numbers.ts",
-    "diff-snapshot": "tsx scripts/diff-numbers.ts"
+    "diff-snapshot": "tsx scripts/diff-numbers.ts",
+    "verify-citations": "tsx scripts/verify-citations.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
