@@ -74,7 +74,14 @@ export const ethCompanies: Company[] = [
     debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Asset-light treasury model with minimal recurring costs (~$50K/yr ETH management fees per 10-Q). Q1 FY2026 G&A of $223M was mostly one-time capital raising costs (legal, advisory, banking fees for $8B+ ATM program).",
-    notes: "Largest ETH treasury. 3.58% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $19M Eightco (OCTO) equity investments not in mNAV.",
+    secondaryCryptoHoldings: [
+      {
+        asset: "BTC",
+        amount: 193,
+        note: "SEC 8-K Feb 17, 2026 (accn 006953): '193 Bitcoin (BTC)'",
+      },
+    ],
+    notes: "Largest ETH treasury. 3.62% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $17M Eightco (ORBS) equity investments not in mNAV.",
   },
   {
     id: "sbet",
