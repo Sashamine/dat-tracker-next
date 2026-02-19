@@ -166,6 +166,7 @@ export interface Company {
   holdingsAccession?: string;     // SEC accession number for holdings source
   holdingsNative?: number;        // Native asset holdings (for multi-form treasuries like ETH+LsETH)
   holdingsLsETH?: number;         // Lido staked ETH as-if-redeemed (SBET specific)
+  holdingsWeETH?: number;         // Wrapped eETH (WeETH) as-if-redeemed (SBET specific)
   holdingsStaked?: number;        // Staked portion of holdings (generic)
   stakingRewardsCumulative?: number; // Total staking rewards earned since DAT start
   provenanceFile?: string;        // Path to detailed provenance file (e.g., "provenance/sbet.ts")

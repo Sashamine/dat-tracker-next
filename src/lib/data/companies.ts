@@ -89,17 +89,18 @@ export const ethCompanies: Company[] = [
     ticker: "SBET",
     asset: "ETH",
     tier: 1,
-    holdings: 867_798,  // 587,232 native + 225,429 LsETH + 55,137 WeETH + 13,615 staking rewards (as of Feb 15, 2026; 8-K filed Feb 19, 2026)
+    holdings: 867_798,  // 587,232 native + 225,429 LsETH + 55,137 WeETH (as of Feb 15, 2026; 8-K filed Feb 19, 2026). Staking rewards (13,615 cumulative since Jun 2025) included in balances.
     holdingsLastUpdated: "2026-02-15",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/ex99-1.htm",
     // Provenance tracking (see provenance/sbet.ts for full audit trail)
-    holdingsAccession: "0001493152-25-028063",
-    holdingsNative: 639_241,      // Native ETH held directly
-    holdingsLsETH: 224_183,       // Lido staked ETH (as-if-redeemed)
-    stakingRewardsCumulative: 9_241,  // 3,350 native + 5,891 LsETH rewards
+    holdingsAccession: "0001493152-26-007427",
+    holdingsNative: 587_232,      // Native ETH held directly
+    holdingsLsETH: 225_429,       // Lido staked ETH (as-if-redeemed)
+    holdingsWeETH: 55_137,        // Wrapped eETH (WeETH) - new category as of Feb 15 2026
+    stakingRewardsCumulative: 13_615,  // 4,560 native + 8,906 LsETH + 149 WeETH rewards
     provenanceFile: "provenance/sbet.ts",
-    lastVerified: "2026-02-11",
+    lastVerified: "2026-02-19",
     nextExpectedFiling: "Q4 2025 10-K (Mar 2026)",
     datStartDate: "2025-06-02",  // ETH treasury strategy launched June 2, 2025
     costBasisAvg: 3_696,  // SEC Q3 2025 10-Q: $3.022B total cost / 817,747 ETH-equivalent units
@@ -111,9 +112,9 @@ export const ethCompanies: Company[] = [
     // tokenizedAddress removed - was a pump.fun meme token, not an official tokenized stock
     stakingPct: 1.0,  // "100%" (Jul 1 8-K) / "substantially all" (Aug-Dec 8-Ks) / "nearly 100%" (Q2 earnings)
     stakingMethod: "Native staking + Lido LsETH (liquid staking)",
-    stakingSource: "SEC 8-K Dec 17, 2025: 639,241 native ETH + 224,183 LsETH as-if-redeemed. Cumulative rewards: 9,241 ETH (3,350 native + 5,891 LsETH)",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
-    stakingAsOf: "2025-12-14",
+    stakingSource: "SEC 8-K Feb 19, 2026: 587,232 native ETH + 225,429 LsETH + 55,137 WeETH. Cumulative rewards: 13,615 ETH (4,560 native + 8,906 LsETH + 149 WeETH)",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/ex99-1.htm",
+    stakingAsOf: "2026-02-15",
     quarterlyBurnUsd: 2_728_000,  // 9-month avg: $8,183,743 continuing ops / 3 = $2.73M/qtr (Q3 alone was $6.3M but volatile)
     burnSource: "SEC 10-Q Q3 2025: NetCashUsedInOperatingActivities continuing ops = $8,183,743 (9mo) / 3 quarters",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
