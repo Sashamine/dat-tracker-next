@@ -67,6 +67,11 @@ type SourceHelpers = {
   searchTerm?: (p: any) => string | undefined;
 };
 
+type ScheduledEventsProps = {
+  ticker: string;
+  stockPrice?: number;
+};
+
 export type CompanyViewBaseConfig = {
   ticker: string;
   asset: "BTC" | "ETH";
@@ -89,6 +94,12 @@ export type CompanyViewBaseConfig = {
   // Optional extra sections
   renderStrategyAndOverview?: (ctx: { company: Company; prices: any }) => any;
   renderBalanceSheetExtras?: (ctx: { company: Company; metrics: CompanyViewBaseMetrics; prices: any }) => any;
+
+  // Optional: customize ScheduledEvents props (some tickers pass stockPrice)
+  scheduledEventsProps?: (ctx: { ticker: string; stockPrice: number }) => ScheduledEventsProps;
+
+  // Optional: render extra accordion sections after Scheduled Events
+  renderAfterDataSections?: (ctx: { company: Company; prices: any; metrics: CompanyViewBaseMetrics; stockPrice: number }) => any;
 
   // Optional: override staleness dates
   stalenessDates?: (ctx: { company: Company }) => (string | undefined)[];
@@ -463,9 +474,16 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
           </svg>
         </summary>
         <div className="px-4 pb-4">
-          <ScheduledEvents ticker={config.ticker} />
+          {(() => {
+            const props = config.scheduledEventsProps
+              ? config.scheduledEventsProps({ ticker: config.ticker, stockPrice })
+              : ({ ticker: config.ticker } as ScheduledEventsProps);
+            return <ScheduledEvents {...(props as any)} />;
+          })()}
         </div>
       </details>
+
+      {config.renderAfterDataSections ? config.renderAfterDataSections({ company, prices, metrics, stockPrice }) : null}
 
       {/* Footer */}
       <div className="mt-6 text-xs text-gray-500">
