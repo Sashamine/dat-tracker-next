@@ -9,8 +9,9 @@
  * a simple math sanity check: potentialShares ≈ faceValue / strikePrice.
  *
  * Usage:
- *   npx tsx scripts/verify-citations.ts
- *   npx tsx scripts/verify-citations.ts --verbose
+ *   npx tsx scripts/verify-citations.ts                    # all companies
+ *   npx tsx scripts/verify-citations.ts --ticker ASST       # single company
+ *   npx tsx scripts/verify-citations.ts --ticker ASST --verbose
  *
  * Notes / future work:
  *   --fix could suggest updated searchTerms (e.g. stripping $/commas/precision) when failures occur.
@@ -274,17 +275,34 @@ function pickDateWindow(c: Citation): { startdt: string; enddt: string } {
 }
 
 async function main() {
-  const args = new Set(process.argv.slice(2));
-  const verbose = args.has("--verbose");
+  const args = process.argv.slice(2);
+  const argSet = new Set(args);
+  const verbose = argSet.has("--verbose");
+
+  // --ticker ASST (or --ticker=ASST) filters to a single company
+  let tickerFilter: string | null = null;
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--ticker" && args[i + 1]) {
+      tickerFilter = args[i + 1].toUpperCase();
+    } else if (args[i].startsWith("--ticker=")) {
+      tickerFilter = args[i].split("=")[1].toUpperCase();
+    }
+  }
 
   const repoRoot = "/Users/dwinny/dat-tracker-next";
   const provenanceDir = path.join(repoRoot, "src/lib/data/provenance");
   const dilutiveFile = path.join(repoRoot, "src/lib/data/dilutive-instruments.ts");
 
   const provenanceFiles = findAllTsFiles(provenanceDir);
-  const citations = provenanceFiles.flatMap((f) => extractCitationObjectsFromProvenanceFile(f));
+  let citations = provenanceFiles.flatMap((f) => extractCitationObjectsFromProvenanceFile(f));
 
   const { sources: dilutiveSources, convertibles } = extractDilutiveSources(dilutiveFile);
+
+  // Apply ticker filter if provided
+  if (tickerFilter) {
+    citations = citations.filter((c) => c.ticker.toUpperCase() === tickerFilter);
+    console.log(`Filtering to ticker: ${tickerFilter} (${citations.length} citations)\n`);
+  }
 
   const byTicker = new Map<string, Citation[]>();
   for (const c of citations) {
@@ -385,7 +403,11 @@ async function main() {
   let mathPassed = 0;
   let mathFailed = 0;
 
-  for (const row of convertibles) {
+  const filteredConvertibles = tickerFilter
+    ? convertibles.filter((r) => r.ticker.toUpperCase() === tickerFilter)
+    : convertibles;
+
+  for (const row of filteredConvertibles) {
     const { ticker, strikePrice, faceValue, potentialShares, source } = row;
 
     if (!faceValue || !Number.isFinite(faceValue) || faceValue <= 0 || strikePrice <= 0) {
@@ -421,7 +443,10 @@ async function main() {
   }
 
   lines.push("\n=== Dilutive Instrument Sources (presence only) ===");
-  lines.push(`Found ${dilutiveSources.length} instrument sourceUrl entries in dilutive-instruments.ts`);
+  const filteredDilutiveSources = tickerFilter
+    ? dilutiveSources.filter((s) => s.ticker?.toUpperCase() === tickerFilter)
+    : dilutiveSources;
+  lines.push(`Found ${filteredDilutiveSources.length} instrument sourceUrl entries in dilutive-instruments.ts${tickerFilter ? ` (filtered to ${tickerFilter})` : ""}`);
 
   lines.push("\n=== Summary ===");
   const totalChecked = passed + failed;
