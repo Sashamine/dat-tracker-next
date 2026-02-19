@@ -1,37 +1,22 @@
 import { NextResponse } from "next/server";
 import { getBinancePrices } from "@/lib/binance";
 import { getStockSnapshots, STOCK_TICKERS, isMarketOpen, isExtendedHours } from "@/lib/alpaca";
-import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
+import { FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
 import { FALLBACK_RATES } from "@/lib/utils/currency";
+import {
+  FMP_API_KEY,
+  FOREX_PAIRS,
+  TICKER_CURRENCY,
+  fetchExchangeRateApi,
+  convertPriceToUsd,
+  applyMarketCapOverride,
+  calculateImpliedSharesFromFallback,
+} from "@/lib/prices/shared";
 import { getLSTExchangeRates, getSupportedLSTIds } from "@/lib/lst";
-
-// FMP for market caps, OTC stocks, and forex
-const FMP_API_KEY = process.env.FMP_API_KEY || "";
-
-// Forex pairs we need (FMP format)
-// Note: FMP uses GBPUSD format for some pairs
-const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR", "GBPUSD", "USDAUD"];
 
 // Cache for forex rates (5 minute TTL - forex doesn't move that fast)
 let forexCache: { data: Record<string, number>; timestamp: number } | null = null;
 const FOREX_CACHE_TTL = 5 * 60 * 1000;
-
-// Ticker -> currency mapping for non-USD stocks (used for price conversion)
-const TICKER_CURRENCY: Record<string, string> = {
-  "3350.T": "JPY",
-  "3189.T": "JPY",    // ANAP Holdings (Tokyo Stock Exchange)
-  "3825.T": "JPY",    // Remixpoint (Tokyo Stock Exchange)
-  "H100.ST": "SEK",
-  "0434.HK": "HKD",
-  "ALCPB": "EUR",
-  "SRAG.DU": "EUR",  // Samara Asset Group (Frankfurt/XETRA)
-  "ETHM": "CAD",
-  "SWC": "GBP",     // Smarter Web Company (AQUIS UK)
-  "TSWCF": "GBP",   // SWC OTC ticker
-  "DCC.AX": "AUD",  // DigitalX (ASX Australia)
-  "NDA.V": "CAD",   // Neptune Digital Assets (TSX Venture)
-  "DMGI.V": "CAD",  // DMG Blockchain (TSX Venture)
-};
 
 // Stocks not on major exchanges (OTC/international) - use FMP
 // Map: FMP ticker -> display ticker (for tickers with different formats)
@@ -90,31 +75,6 @@ const RESPONSE_HEADERS = {
   "Pragma": "no-cache",
   "Expires": "0",
 };
-
-// Fetch forex rates from exchangerate-api.com (free, no API key needed)
-async function fetchExchangeRateApi(): Promise<Record<string, number> | null> {
-  try {
-    const response = await fetch("https://open.er-api.com/v6/latest/USD", { cache: "no-store" });
-    if (!response.ok) return null;
-    
-    const data = await response.json();
-    if (data?.result !== "success" || !data?.rates) return null;
-    
-    // Map to our format (1 USD = X currency)
-    const rates: Record<string, number> = {};
-    const currencies = ["AUD", "CAD", "EUR", "GBP", "JPY", "HKD", "SEK"];
-    for (const cur of currencies) {
-      if (data.rates[cur]) {
-        rates[cur] = data.rates[cur];
-      }
-    }
-    console.log("[Forex] exchangerate-api rates:", rates);
-    return rates;
-  } catch (error) {
-    console.error("[Forex] exchangerate-api error:", error);
-    return null;
-  }
-}
 
 // Fetch forex rates (primary: exchangerate-api, fallback: FMP, final: static)
 async function fetchForexRates(): Promise<Record<string, number>> {
@@ -346,14 +306,14 @@ export async function GET() {
         // Convert price to USD if it's a foreign currency stock (Alpaca returns native currency)
         const currency = TICKER_CURRENCY[ticker];
         const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-        const priceUsd = rate && rate > 0 ? currentPrice / rate : currentPrice;
-        const regularPriceUsd = rate && rate > 0 ? (snapshot.prevDailyBar?.c || currentPrice) / rate : (snapshot.prevDailyBar?.c || currentPrice);
+        const priceUsd = convertPriceToUsd(currentPrice, currency, forexRates);
+        const regularPriceUsd = convertPriceToUsd((snapshot.prevDailyBar?.c || currentPrice), currency, forexRates);
 
         stockPrices[ticker] = {
           price: priceUsd,
           change24h,
           volume: dailyBar.v || 0,
-          marketCap: MARKET_CAP_OVERRIDES[ticker] || marketCaps[ticker] || 0,
+          marketCap: applyMarketCapOverride(ticker, marketCaps[ticker] || 0),
           isAfterHours: extendedHours && !marketOpen,
           regularPrice: regularPriceUsd,
         };
@@ -366,13 +326,13 @@ export async function GET() {
       // Convert price to USD if it's a foreign currency stock
       const currency = TICKER_CURRENCY[displayTicker];
       const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-      const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
+      const priceUsd = convertPriceToUsd(data.price, currency, forexRates);
       
       stockPrices[displayTicker] = {
         ...data,
         price: priceUsd,
         // Apply market cap override if available (fixes currency conversion issues)
-        marketCap: MARKET_CAP_OVERRIDES[displayTicker] || data.marketCap,
+        marketCap: applyMarketCapOverride(displayTicker, data.marketCap),
       };
     }
 
@@ -381,20 +341,20 @@ export async function GET() {
       // Convert price to USD if it's a foreign currency stock (e.g., DCC.AX in AUD)
       const currency = YAHOO_CURRENCIES[ticker];
       const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-      const priceUsd = rate && rate > 0 ? data.price / rate : data.price;
+      const priceUsd = convertPriceToUsd(data.price, currency, forexRates);
       
       // Calculate market cap: use shares from company data × USD price
       // Note: FALLBACK_STOCKS.marketCap is in USD, .price is in local currency
       // shares = marketCap_USD / (price_local / rate) = marketCap_USD * rate / price_local
       const fallback = FALLBACK_STOCKS[ticker];
-      const impliedShares = fallback && rate ? (fallback.marketCap * rate) / fallback.price : 0;
+      const impliedShares = calculateImpliedSharesFromFallback(ticker, forexRates);
       const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : 0;
       
       stockPrices[ticker] = {
         ...data,
         price: priceUsd,
         // Use override or calculate from fallback based on new price
-        marketCap: MARKET_CAP_OVERRIDES[ticker] || calculatedMarketCap,
+        marketCap: applyMarketCapOverride(ticker, calculatedMarketCap),
       };
       
       if (currency) {
@@ -414,7 +374,7 @@ export async function GET() {
         // Convert fallback price to USD if it's a foreign currency stock
         const currency = TICKER_CURRENCY[ticker];
         const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-        const priceUsd = rate && rate > 0 ? fallback.price / rate : fallback.price;
+        const priceUsd = convertPriceToUsd(fallback.price, currency, forexRates);
 
         // Debug logging for 3189.T
         if (ticker === "3189.T") {
