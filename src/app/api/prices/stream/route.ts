@@ -1,28 +1,12 @@
 import { NextRequest } from "next/server";
+import { FMP_API_KEY, FOREX_PAIRS, TICKER_CURRENCY, fetchExchangeRateApi, convertPriceToUsd, applyMarketCapOverride } from "@/lib/prices/shared";
+
 import { STOCK_TICKERS } from "@/lib/alpaca";
-import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
+import { FALLBACK_STOCKS } from "@/lib/data/market-cap-overrides";
 import { FALLBACK_RATES } from "@/lib/utils/currency";
 
 // Use Edge Runtime for streaming support
 export const runtime = "edge";
-
-// FMP API Key
-const FMP_API_KEY = process.env.FMP_API_KEY || "";
-
-// Forex pairs we need (FMP format)
-const FOREX_PAIRS = ["USDJPY", "USDHKD", "USDSEK", "USDCAD", "USDEUR"];
-
-// Ticker -> currency mapping for non-USD stocks (used for price conversion)
-const TICKER_CURRENCY: Record<string, string> = {
-  "3350.T": "JPY",
-  "3189.T": "JPY",    // ANAP Holdings (Tokyo Stock Exchange)
-  "3825.T": "JPY",    // Remixpoint (Tokyo Stock Exchange)
-  "H100.ST": "SEK",
-  "0434.HK": "HKD",
-  "ALCPB": "EUR",
-  "SRAG.DU": "EUR",  // Samara Asset Group (Frankfurt/XETRA)
-  "ETHM": "CAD",
-};
 
 // Stocks to fetch from Yahoo Finance (FMP has wrong data or no coverage)
 // Map: display ticker -> Yahoo ticker
@@ -185,29 +169,6 @@ async function fetchCryptoPrices(): Promise<Record<string, { price: number; chan
   }
 }
 
-// Fetch forex rates from exchangerate-api.com (free, no API key needed)
-async function fetchExchangeRateApi(): Promise<Record<string, number> | null> {
-  try {
-    const response = await fetch("https://open.er-api.com/v6/latest/USD", { cache: "no-store" });
-    if (!response.ok) return null;
-    
-    const data = await response.json();
-    if (data?.result !== "success" || !data?.rates) return null;
-    
-    const rates: Record<string, number> = {};
-    const currencies = ["AUD", "CAD", "EUR", "GBP", "JPY", "HKD", "SEK"];
-    for (const cur of currencies) {
-      if (data.rates[cur]) {
-        rates[cur] = data.rates[cur];
-      }
-    }
-    return rates;
-  } catch (error) {
-    console.error("[Forex] exchangerate-api error:", error);
-    return null;
-  }
-}
-
 // Fetch forex rates (primary: exchangerate-api, fallback: FMP, final: static)
 async function fetchForexRates(): Promise<Record<string, number>> {
   if (forexCache && Date.now() - forexCache.timestamp < FOREX_CACHE_TTL) {
@@ -273,7 +234,7 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
             prevClose: stock.previousClose || stock.price || 0,
             change24h: stock.changePercentage || 0,
             volume: stock.volume || 0,
-            marketCap: MARKET_CAP_OVERRIDES[stock.symbol] || stock.marketCap || 0,
+            marketCap: applyMarketCapOverride(stock.symbol, stock.marketCap || 0),
           };
         }
       }
@@ -281,28 +242,12 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
 
     // Add fallbacks for international/illiquid stocks
     // Note: FALLBACK_STOCKS prices are in local currency, need to convert to USD
-    // Currency mapping for fallback stocks that need conversion
-    const FALLBACK_CURRENCIES: Record<string, string> = {
-      "3350.T": "JPY",
-      "3189.T": "JPY",
-      "3825.T": "JPY",
-      "0434.HK": "HKD",
-      "H100.ST": "SEK",
-      "SRAG.DU": "EUR",
-      "DCC.AX": "AUD",
-      "NDA.V": "CAD",
-      "DMGI.V": "CAD",
-      "ALCPB": "EUR",
-    };
-    
     const forexRates = await fetchForexRates();
     for (const [ticker, fallback] of Object.entries(FALLBACK_STOCKS)) {
       if (!result[ticker]) {
-        // Convert price to USD if currency is specified
-        const currency = FALLBACK_CURRENCIES[ticker];
-        const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-        const priceUsd = rate && rate > 0 ? fallback.price / rate : fallback.price;
-        
+        const currency = TICKER_CURRENCY[ticker];
+        const priceUsd = convertPriceToUsd(fallback.price, currency, forexRates);
+
         result[ticker] = {
           price: priceUsd,
           prevClose: priceUsd,
@@ -353,7 +298,7 @@ async function fetchYahooStocks(): Promise<Record<string, any>> {
         prevClose,
         change24h,
         volume: indicators?.volume?.[indicators.volume.length - 1] || 0,
-        marketCap: MARKET_CAP_OVERRIDES[displayTicker] || 0,
+        marketCap: applyMarketCapOverride(displayTicker, 0),
         source: "yahoo",
       };
     } catch (error) {
@@ -395,8 +340,8 @@ async function fetchAllPrices() {
         }
         stockPrices[ticker] = {
           ...data,
-          price: data.price / rate,
-          prevClose: data.prevClose ? data.prevClose / rate : data.price / rate,
+          price: convertPriceToUsd(data.price, currency, forexRates),
+          prevClose: data.prevClose ? convertPriceToUsd(data.prevClose, currency, forexRates) : convertPriceToUsd(data.price, currency, forexRates),
         };
       }
     }
@@ -418,7 +363,7 @@ async function fetchAllPrices() {
     // Note: FALLBACK_STOCKS.marketCap is USD, .price is local currency
     const fallback = FALLBACK_STOCKS[ticker];
     const impliedShares = fallback && rate ? (fallback.marketCap * rate) / fallback.price : 0;
-    const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : (MARKET_CAP_OVERRIDES[ticker] || 0);
+    const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : 0;
     
     if (currency) {
       console.log(`[Stream] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate}, marketCap: $${(calculatedMarketCap/1e6).toFixed(1)}M)`);
@@ -428,7 +373,7 @@ async function fetchAllPrices() {
       ...data,
       price: priceUsd,
       prevClose: rate && rate > 0 ? data.prevClose / rate : data.prevClose,
-      marketCap: calculatedMarketCap,
+      marketCap: applyMarketCapOverride(ticker, calculatedMarketCap),
     };
   }
 
