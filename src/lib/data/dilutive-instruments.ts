@@ -1031,7 +1031,14 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // Multicoin Capital Lead Investor Warrants — 5% of PIPE shares (split pro rata with Jump)
     { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
     { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_484_498, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless. Adjusted −1,989 to match 10-Q Note 6 total of 13,376,388." },
+
+    // Stock Options — 2021 Equity Incentive Plan (amended Sep 2025 per S-8)
+    // 307,000 options outstanding per 10-Q Q1 FY2026 Note 7 anti-dilutive table
+    // 7,000 exercised in Q1 FY2026 for $26,110 proceeds ($3.73/share implied)
+    // Strike price not disclosed in 10-Q — using implied exercise price from Q1 exercises
+    // TODO: Get exact strike breakdown from 10-K FY2025 equity compensation footnote
+    { type: "option", potentialShares: 307_000, strikePrice: 3.73, source: "10-Q Q1 FY2026 Note 7: 307K options anti-dilutive", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm", notes: "2021 Equity Incentive Plan. Strike est. from Q1 exercises ($26,110/7,000=$3.73). Exact breakdown TBD from 10-K." },
   ],
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
