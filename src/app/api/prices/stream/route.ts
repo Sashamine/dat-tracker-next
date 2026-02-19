@@ -363,7 +363,7 @@ async function fetchAllPrices() {
     // Note: FALLBACK_STOCKS.marketCap is USD, .price is local currency
     const fallback = FALLBACK_STOCKS[ticker];
     const impliedShares = fallback && rate ? (fallback.marketCap * rate) / fallback.price : 0;
-    const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : (MARKET_CAP_OVERRIDES[ticker] || 0);
+    const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : 0;
     
     if (currency) {
       console.log(`[Stream] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate}, marketCap: $${(calculatedMarketCap/1e6).toFixed(1)}M)`);
