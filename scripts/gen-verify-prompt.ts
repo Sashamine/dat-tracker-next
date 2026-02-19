@@ -1,8 +1,8 @@
 #!/usr/bin/env npx tsx
 /**
- * Generate a full verification prompt for any DAT company.
+ * Generate a self-contained verification prompt for any DAT company.
  * Usage: npx tsx scripts/gen-verify-prompt.ts KULR
- * Output: ready-to-paste prompt that runs the FULL verification pipeline.
+ * Output: ready-to-paste prompt for ChatGPT — full process embedded, no local file refs.
  */
 
 import { btcCompanies, ethCompanies, solCompanies, otherCompanies } from "../src/lib/data/companies";
@@ -23,7 +23,6 @@ if (!input) {
   process.exit(1);
 }
 
-// Try exact ticker match first, then fuzzy name match
 const inputUpper = input.toUpperCase();
 let company = allCompanies.find(c => c.ticker.toUpperCase() === inputUpper);
 if (!company) {
@@ -42,19 +41,16 @@ if (!company) {
   }
 }
 const ticker = company.ticker;
-
 const instruments = dilutiveInstruments[ticker] ?? [];
 
-// Format helpers
 const fmtNum = (n: number | undefined | null) => n != null ? n.toLocaleString("en-US") : "N/A";
 const fmtUsd = (n: number | undefined | null) => n != null ? `$${n.toLocaleString("en-US")}` : "N/A";
 
-// Determine filing type
 const isUS = company.filingType !== "FPI";
 const hasSEC = !!company.secCik;
 const cikPadded = company.secCik ? company.secCik.replace(/^0+/, "").padStart(10, "0") : null;
 
-// Build dilutives section
+// Build dilutives
 let dilutivesSection = "";
 if (instruments.length > 0) {
   dilutivesSection = "\n### dilutive-instruments.ts\n";
@@ -70,7 +66,6 @@ if (instruments.length > 0) {
   dilutivesSection = "\n### dilutive-instruments.ts\nNo dilutive instruments on file.\n";
 }
 
-// Build secondary holdings section
 let secondarySection = "";
 if (company.secondaryCryptoHoldings?.length) {
   secondarySection = "\n### Secondary Crypto Holdings\n";
@@ -79,38 +74,16 @@ if (company.secondaryCryptoHoldings?.length) {
   }
 }
 
-// The prompt
-const prompt = `You are running the DATCAP verification pipeline for **${company.name} (${ticker})**.
+const prompt = `# DATCAP Verification: ${company.name} (${ticker})
 
-## Process
+## Company
+${hasSEC ? `- CIK: ${cikPadded}` : "- Non-US company (no SEC CIK)"}
+- Asset: ${company.asset}
+- Filing type: ${isUS ? "US (10-Q/10-K)" : "FPI"}
+${hasSEC ? `- XBRL: https://data.sec.gov/api/xbrl/companyfacts/CIK${cikPadded}.json
+- Filings: https://data.sec.gov/submissions/CIK${cikPadded}.json
+- User-Agent for SEC requests: DATCAP Research contact@datcap.com` : ""}
 
-Read and follow the verification specs in \`/Users/dwinny/clawd/specs/\`:
-- **\`verification-principles.md\`** — core philosophy, trust hierarchy, anti-patterns
-- **\`phases/phase-1-reconstruct.md\`** — Phase 1: reconstruction from primary sources (R1-R4 agents)
-- **\`phases/phase-1-adv-*.md\`** — Phase 1-ADV: adversarial review (A1-A4 agents)
-- **\`phases/phase-2-diff.md\`** — Phase 2: diff reconstruction vs codebase
-- **\`phases/phase-3-patch.md\`** — Phase 3: generate patches
-- **\`phases/phase-3-verify.md\`** — Phase 3-V: verify patches
-- **\`phases/phase-4-crossfile.md\`** — Phase 4: cross-file consistency
-- **\`phases/phase-5-merge.md\`** — Phase 5: merge (branch, commit, PR)
-- **\`phases/phase-6-ui-citations.md\`** — Phase 6: UI + citation verification
-- **\`phases/phase-7-mnav-sanity.md\`** — Phase 7: mNAV sanity check
-
-**Read \`verification-principles.md\` first.** Then execute each phase in order.
-
-## Company Details
-
-- **Company:** ${company.name}
-- **Ticker:** ${ticker}
-${hasSEC ? `- **CIK:** ${cikPadded}` : "- **No SEC CIK** (non-US company)"}
-- **Asset:** ${company.asset}
-- **Filing type:** ${isUS ? "US (10-Q/10-K)" : "FPI (20-F/6-K)"}
-${hasSEC ? `
-### SEC Access
-- XBRL: \`https://data.sec.gov/api/xbrl/companyfacts/CIK${cikPadded}.json\`
-- Filings: \`https://data.sec.gov/submissions/CIK${cikPadded}.json\`
-- User-Agent: \`DATCAP Research contact@datcap.com\`
-` : ""}
 ## Current Codebase Values
 
 ### companies.ts
@@ -124,26 +97,78 @@ ${hasSEC ? `
 ${company.stakingPct ? `- stakingPct: ${(company.stakingPct * 100).toFixed(1)}%` : ""}
 ${dilutivesSection}${secondarySection}
 
-## Codebase Location
+---
 
-All data files are in: \`/Users/dwinny/dat-tracker-next/src/lib/data/\`
-- \`companies.ts\` — main company data
-- \`dilutive-instruments.ts\` — warrants, converts, options
-- \`holdings-history.ts\` — historical holdings + share counts
-- \`earnings-data.ts\` — quarterly HPS data
-- \`provenance/${ticker.toLowerCase()}.ts\` — source citations (if exists)
+## Verification Process
 
-## Output Directory
+**Core principle: Reconstruct from primary sources first, THEN compare. Verification without reconstruction is just checking that lies agree with each other.**
 
-Write all phase outputs to: \`/Users/dwinny/clawd/verification-runs/${ticker.toLowerCase()}/${new Date().toISOString().slice(0, 10)}/\`
+### Trust Tags
+Every value gets a confidence tag:
+- **REG** = regulatory filing (SEC EDGAR, TDnet, AMF, ASX)
+- **IR** = official company investor relations
+- **3P** = third-party tracker only
+- **EST** = estimated/derived
+- **UNV** = single source, unverifiable
 
-## Key Rules
-- **Reconstruct first, then compare.** Don't trust existing values.
-- **Every number needs a source URL and confidence tag** (REG/IR/3P/EST/UNV).
-- **No proceeding until each phase is clean.** Loop adversarial/verification until pass.
-- **Cross-file consistency is mandatory.** companies.ts ↔ holdings-history ↔ earnings-data ↔ dilutives must all agree.
-- Run \`npm run build\` after patches to verify no TypeScript errors.
-- Run \`npx tsx scripts/verify-citations.ts\` to verify all searchTerms hit EDGAR.
+### Phase 1: Reconstruct
+Go to primary sources (${hasSEC ? "SEC EDGAR XBRL API + filing full-text" : "regulatory filings, company IR"}) and independently extract:
+
+1. **Holdings** — total ${company.asset} held, as-of date, breakdown (custody/staked/collateral), cost basis
+2. **Shares** — basic shares outstanding${hasSEC ? " from 10-Q cover page (dei:EntityCommonStockSharesOutstanding)" : ""}, as-of date, recent issuances
+3. **Financials** — cash, total debt (breakdown by instrument), preferred equity, quarterly burn
+4. **Dilutives** — ALL warrants, options, convertibles with: strike price, potential shares, face value, expiration, source
+
+For each value: record the exact source URL, quote from the document, and confidence tag.
+
+Also check for:
+- Any filings after the codebase dates with new ${company.asset} purchases/sales
+- ATM programs or new shelf registrations
+- New warrant/option/convertible issuances
+- Share count changes from offerings or buybacks
+
+### Phase 2: Diff
+Compare each reconstructed value against codebase. Categorize:
+- **MATCH** — values equal
+- **STALE** — codebase has older but previously-correct data
+- **WRONG** — codebase has incorrect data
+- **MISSING** — codebase lacks data you found
+
+### Phase 3: Adversarial Self-Review
+Before reporting, challenge your own reconstruction:
+- Are any source URLs actually directory listings instead of documents?
+- Do any holdings pre-date the company's crypto strategy launch?
+- Are share counts from weighted-average (wrong for mNAV) vs actual outstanding?
+- Is cost basis total ÷ holdings = average, or is there a math error?
+- For convertibles: does faceValue ÷ strikePrice ≈ potentialShares?
+- Any numbers that are suspiciously round (likely estimates)?
+
+### Phase 4: Cross-File Consistency
+Flag if any of these would break:
+- holdings-history.ts latest entry must match companies.ts holdings
+- earnings-data.ts quarter-end values must match holdings-history.ts
+- dilutive-instruments.ts ticker key must match companies.ts ticker
+
+## Output Format
+
+### Reconstruction Table
+For each category:
+
+| Field | Reconstructed | Source URL | Codebase | Match | Tag |
+|-------|--------------|-----------|----------|-------|-----|
+
+### Diff Summary
+List ONLY fields that need updating:
+| Field | Current | Should Be | Source | Category |
+|-------|---------|-----------|--------|----------|
+
+### Adversarial Flags
+List anything suspicious about your own findings.
+
+### Verdict
+- **ALL CLEAR ✅** — no updates needed
+- **UPDATES NEEDED** — list specific changes with sources
+- **NEEDS DEEPER INVESTIGATION** — for anything you couldn't resolve
 `;
 
 process.stdout.write(prompt);
