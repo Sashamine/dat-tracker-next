@@ -51,7 +51,7 @@ const postQ3AtmShares = MSTR_ATM_SALES
   .reduce((sum, sale) => sum + getCommonShares(sale), 0);
 
 // strategy.com Basic Shares Outstanding (primary source, Reg FD channel)
-const STRATEGY_COM_TOTAL = 333_083_000; // as of Feb 8, 2026
+const STRATEGY_COM_TOTAL = 333_743_000; // as of Feb 16, 2026 (333,083K + 660K MSTR ATM per Feb 17 8-K)
 const REMAINING_GAP = STRATEGY_COM_TOTAL - CURRENT_SHARES;
 
 /**
@@ -80,11 +80,11 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // COST BASIS - from latest 8-K
   // =========================================================================
-  costBasisAvg: pv(76_056, docSource({
+  costBasisAvg: pv(76_027, docSource({
     type: "sec-document",
-    searchTerm: "76,056",
+    searchTerm: "76,027",
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=average%20purchase`,
-    quote: "$76,056",
+    quote: "$76,027",
     anchor: "Average Purchase Price",
     cik: MSTR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
@@ -96,11 +96,11 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // TOTAL COST BASIS - from latest 8-K
   // =========================================================================
-  totalCostBasis: pv(54_350_000_000, docSource({
+  totalCostBasis: pv(54_520_000_000, docSource({
     type: "sec-document",
-    searchTerm: "54.35",
+    searchTerm: "54.52",
     url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20purchase`,
-    quote: "$54.35B",
+    quote: "$54.52B",
     anchor: "Aggregate Purchase Price",
     cik: MSTR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
