@@ -2322,9 +2322,33 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 15_944_000,  // 159,440 rights × 100 shares each
       source: "TDnet: 25th Series Stock Acquisition Rights (Feb 13, 2026 completion notice)",
       sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
-      expiration: "2027-02-13",  // 1-year exercise period from Feb 13, 2026
+      expiration: "2027-02-15",  // 1-year exercise period: Feb 16, 2026 through Feb 15, 2027
       issuedDate: "2026-02-13",
       notes: "25th Series warrants. 159,440 rights × 100 shares = 15.9M potential shares at ¥547 strike (~$3.53).",
+    },
+    // 23rd & 24th Series SARs - Moving-strike warrants (EVO FUND)
+    // Issued Dec 8, 2025 (replacing cancelled 20th-22nd Series)
+    // Exercise price adjusts daily to prior day's closing price, floored at lower limit.
+    // Using floor price as strikePrice (minimum at which they become exercisable).
+    // When stock > floor, EVO FUND exercises at ~market price (minimal discount).
+    // Source: TDnet Nov 20, 2025 + Dec 8 completion notice
+    {
+      type: "warrant",
+      strikePrice: 4.15,  // ¥637 lower limit / 153.5 JPY/USD (floor price)
+      potentialShares: 105_000_000,  // 1,050,000 rights × 100 shares each
+      source: "TDnet: 23rd Series SAR issuance (Nov 20, 2025 board resolution, Dec 8 effective)",
+      sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+      issuedDate: "2025-12-08",
+      notes: "23rd Series moving-strike SAR (EVO FUND). Exercise price = prior day's close, floored at ¥637 (~$4.15). Currently OTM at ¥325. Exercise from Jan 6, 2026. Suspension clause allows Metaplanet to pause exercises.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 5.06,  // ¥777 lower limit / 153.5 JPY/USD (floor price)
+      potentialShares: 105_000_000,  // 1,050,000 rights × 100 shares each
+      source: "TDnet: 24th Series SAR issuance (Nov 20, 2025 board resolution, Dec 8 effective)",
+      sourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+      issuedDate: "2025-12-08",
+      notes: "24th Series moving-strike SAR (EVO FUND). Exercise price = prior day's close, floored at ¥777 (~$5.06). Currently OTM at ¥325. Exercise from Jan 6, 2026. Suspension clause allows Metaplanet to pause exercises.",
     },
   ],
 
