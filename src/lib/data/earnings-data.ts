@@ -1388,10 +1388,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-01",
     earningsTime: "AMC",
-    revenueActual: 832_600, // Derived: 9M $2,677K - Q3 $973K - Q1 $872K
+    revenueActual: 883_300, // XBRL: RevenueFromContractWithCustomerExcludingAssessedTax Q2 2025
     netIncome: -20_001_900, // XBRL: ProfitLoss Q2 2025
     holdingsAtQuarterEnd: 0, // No BTC at Q2 end — purchases started July 2025
-    sharesAtQuarterEnd: 280_000_000, // Post-PIPE (~81M new shares)
+    sharesAtQuarterEnd: 277_067_396, // XBRL: EntityCommonStockSharesOutstanding (Q2 10-Q cover page)
     holdingsPerShare: 0, // No BTC yet
     source: "sec-filing",
     sourceUrl: "/filings/djt/0001140361-25-028418",
@@ -1407,10 +1407,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 1,
     earningsDate: "2025-05-09",
     earningsTime: "AMC",
-    revenueActual: 871_900, // Derived: 9M $2,677K - H1 implied
+    revenueActual: 821_200, // XBRL: RevenueFromContractWithCustomerExcludingAssessedTax Q1 2025
     netIncome: -31_726_600, // XBRL: ProfitLoss Q1 2025
     holdingsAtQuarterEnd: 0,
-    sharesAtQuarterEnd: 199_000_000, // Pre-PIPE
+    sharesAtQuarterEnd: 220_623_372, // XBRL: EntityCommonStockSharesOutstanding (earnout shares vested Apr 2024, already in basic count)
     holdingsPerShare: 0,
     source: "sec-filing",
     sourceUrl: "/filings/djt/0001140361-25-018209",
@@ -1426,7 +1426,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-02-14",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,
-    sharesAtQuarterEnd: 199_000_000, // Pre-PIPE
+    sharesAtQuarterEnd: 220_657_016, // XBRL: EntityCommonStockSharesOutstanding (earnout shares vested Apr 2024)
     holdingsPerShare: 0,
     source: "sec-filing",
     sourceUrl: "/filings/djt/0001140361-25-004822",

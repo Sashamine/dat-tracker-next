@@ -458,7 +458,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
 //   - Feb 3, 2026: Renamed from SharpLink Gaming to Sharplink Inc
 // SBET holdings history - sourced from provenance/sbet.ts
 // See provenance file for complete SEC accession numbers and filing details
-// Last verified: 2026-02-11 | Last holdings update: 2025-12-17 (no Jan/Feb 2026 updates)
+// Last verified: 2026-02-19 | Last holdings update: 2026-02-19 (8-K as of Feb 15, 2026)
 const SBET_HISTORY: HoldingsSnapshot[] = [
   // Jun 2025 - Initial accumulation phase (strategy launched Jun 2)
   // Accession: 0001641172-25-014970
@@ -504,8 +504,11 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-10-19", holdings: 859_853, sharesOutstanding: 184_500_000, holdingsPerShare: 0.004660, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/", sourceType: "sec-filing" },
   // Accession: 0001493152-25-022065 (8-K/A corrected)
   { date: "2025-11-09", holdings: 861_251, sharesOutstanding: 189_000_000, holdingsPerShare: 0.004557, source: "8-K/A Nov 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/", sourceType: "sec-filing" },
-  // Accession: 0001493152-25-028063 (LATEST)
+  // Accession: 0001493152-25-028063
   { date: "2025-12-14", holdings: 863_424, sharesOutstanding: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/", sourceType: "sec-filing" },
+
+  // Accession: 0001493152-26-007427 (LATEST)
+  { date: "2026-02-15", holdings: 867_798, sharesOutstanding: 196_693_191, holdingsPerShare: 0.004411, source: "8-K filed 2026-02-19", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/", sourceType: "sec-filing" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury
@@ -853,8 +856,10 @@ const FLD_HISTORY: HoldingsSnapshot[] = [
 // DJT Debt: ~$951M carrying value ($1B par zero-coupon converts due 2028)
 // ?? No standard crypto XBRL tags - BTC count from 8-K press releases + balance sheet analysis
 const DJT_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-05-30", holdings: 0, sharesOutstanding: 199_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 2_343_901_700, source: "8-K Treasury deal announced", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
-  { date: "2025-06-30", holdings: 0, sharesOutstanding: 280_000_000, holdingsPerShare: 0, totalDebt: 950_769_100, cash: 1_343_901_700, source: "Q2 2025 10-Q - raise closed but BTC purchased in July", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
+  { date: "2024-12-31", holdings: 0, sharesOutstanding: 220_657_016, holdingsPerShare: 0, totalDebt: 0, cash: 170_236_100, source: "FY2024 10-K: Pre-BTC treasury, earnout shares vested Apr 2024", sourceUrl: "/filings/djt/0001140361-25-004822", sourceType: "sec-filing" },
+  { date: "2025-03-31", holdings: 0, sharesOutstanding: 220_623_372, holdingsPerShare: 0, totalDebt: 0, cash: 146_127_400, source: "Q1 2025 10-Q: Pre-BTC treasury, shares from XBRL CommonStockSharesOutstanding", sourceUrl: "/filings/djt/0001140361-25-018209", sourceType: "sec-filing" },
+  { date: "2025-05-30", holdings: 0, sharesOutstanding: 220_624_508, holdingsPerShare: 0, totalDebt: 0, cash: 146_127_400, source: "8-K Treasury deal announced. Shares from Q1 10-Q cover page (May 8). Converts + equity raise issued late May.", sourceUrl: "/filings/djt/0001140361-25-021584", sourceType: "sec-filing" },
+  { date: "2025-06-30", holdings: 0, sharesOutstanding: 277_067_396, holdingsPerShare: 0, totalDebt: 944_294_700, cash: 1_343_901_700, source: "Q2 2025 10-Q. Shares: Q2 cover page 277M (Jul 31). Debt: XBRL LongTermDebt $944M. BTC purchased in July.", sourceUrl: "/filings/djt/0001140361-25-028418", sourceType: "sec-filing" },
   { date: "2025-09-30", holdings: 11_542, sharesOutstanding: 279_997_636, holdingsPerShare: 0.00004122, totalDebt: 950_769_100, cash: 166_072_700, source: "Q3 2025 10-Q: 11,542.16 BTC (cost $1.368B, FV $1.320B)", sharesSource: "XBRL: EntityCommonStockSharesOutstanding", sourceUrl: "/filings/djt/0001140361-25-040977", sourceType: "sec-filing" },
 ];
 
