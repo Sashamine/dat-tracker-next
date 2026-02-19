@@ -1,8 +1,8 @@
 #!/usr/bin/env npx tsx
 /**
- * Generate a verification prompt for any DAT company.
+ * Generate a full verification prompt for any DAT company.
  * Usage: npx tsx scripts/gen-verify-prompt.ts KULR
- * Output: ready-to-paste prompt for ChatGPT / Claude / etc.
+ * Output: ready-to-paste prompt that runs the FULL verification pipeline.
  */
 
 import { btcCompanies, ethCompanies, solCompanies, otherCompanies } from "../src/lib/data/companies";
@@ -50,22 +50,21 @@ const fmtNum = (n: number | undefined | null) => n != null ? n.toLocaleString("e
 const fmtUsd = (n: number | undefined | null) => n != null ? `$${n.toLocaleString("en-US")}` : "N/A";
 
 // Determine filing type
-const filingType = company.filingType === "FPI" ? "FPI (20-F/6-K)" : "US (10-Q/10-K)";
 const isUS = company.filingType !== "FPI";
+const hasSEC = !!company.secCik;
+const cikPadded = company.secCik ? company.secCik.replace(/^0+/, "").padStart(10, "0") : null;
 
 // Build dilutives section
 let dilutivesSection = "";
 if (instruments.length > 0) {
   dilutivesSection = "\n### dilutive-instruments.ts\n";
   for (const inst of instruments) {
-    const type = inst.type;
     const strike = inst.strikePrice != null ? `$${inst.strikePrice}` : "N/A";
     const shares = fmtNum(inst.potentialShares);
     const face = inst.faceValue ? fmtUsd(inst.faceValue) : "";
     const exp = inst.expiration ?? "";
-    const notes = inst.notes ? ` — ${inst.notes}` : "";
     const source = inst.source ? ` (source: ${inst.source})` : "";
-    dilutivesSection += `- ${type}: ${shares} shares @ strike ${strike}${face ? `, face ${face}` : ""}${exp ? `, exp ${exp}` : ""}${source}${notes}\n`;
+    dilutivesSection += `- ${inst.type}: ${shares} shares @ strike ${strike}${face ? `, face ${face}` : ""}${exp ? `, exp ${exp}` : ""}${source}\n`;
   }
 } else {
   dilutivesSection = "\n### dilutive-instruments.ts\nNo dilutive instruments on file.\n";
@@ -80,40 +79,39 @@ if (company.secondaryCryptoHoldings?.length) {
   }
 }
 
-// Build the prompt
-const prompt = `You are a financial data verification agent. Your job: independently reconstruct ${company.name} (${company.ticker})'s financial data from ${company.secCik ? "SEC filings" : "regulatory filings"}, then compare against the codebase values below. Flag any discrepancies.
+// The prompt
+const prompt = `You are running the DATCAP verification pipeline for **${company.name} (${ticker})**.
 
-## Company: ${company.ticker} — ${company.name}
-${company.secCik ? `- CIK: ${company.secCik}` : "- No SEC CIK (non-US company)"}
-- Asset: ${company.asset}
-- Filing type: ${filingType}
-${company.secCik ? `- SEC filings: https://data.sec.gov/submissions/CIK${company.secCik.replace(/^0+/, "").padStart(10, "0")}.json` : ""}
+## Process
 
-## Instructions
+Read and follow the verification specs in \`/Users/dwinny/clawd/specs/\`:
+- **\`verification-principles.md\`** — core philosophy, trust hierarchy, anti-patterns
+- **\`phases/phase-1-reconstruct.md\`** — Phase 1: reconstruction from primary sources (R1-R4 agents)
+- **\`phases/phase-1-adv-*.md\`** — Phase 1-ADV: adversarial review (A1-A4 agents)
+- **\`phases/phase-2-diff.md\`** — Phase 2: diff reconstruction vs codebase
+- **\`phases/phase-3-patch.md\`** — Phase 3: generate patches
+- **\`phases/phase-3-verify.md\`** — Phase 3-V: verify patches
+- **\`phases/phase-4-crossfile.md\`** — Phase 4: cross-file consistency
+- **\`phases/phase-5-merge.md\`** — Phase 5: merge (branch, commit, PR)
+- **\`phases/phase-6-ui-citations.md\`** — Phase 6: UI + citation verification
+- **\`phases/phase-7-mnav-sanity.md\`** — Phase 7: mNAV sanity check
 
-${company.secCik ? `Go to SEC EDGAR and find the latest ${isUS ? "10-Q" : "20-F/6-K"} and recent 8-Ks.` : "Find the latest regulatory filings."} For EACH data point below, independently extract the value from the filing and cite the specific source. **Reconstruct FIRST, then compare.**
+**Read \`verification-principles.md\` first.** Then execute each phase in order.
 
-${company.secCik ? `### XBRL API (no bot blocking):
-\`\`\`
-https://data.sec.gov/api/xbrl/companyfacts/CIK${company.secCik.replace(/^0+/, "").padStart(10, "0")}.json
-\`\`\`
+## Company Details
 
-### Filing index:
-\`\`\`
-https://data.sec.gov/submissions/CIK${company.secCik.replace(/^0+/, "").padStart(10, "0")}.json
-\`\`\`
+- **Company:** ${company.name}
+- **Ticker:** ${ticker}
+${hasSEC ? `- **CIK:** ${cikPadded}` : "- **No SEC CIK** (non-US company)"}
+- **Asset:** ${company.asset}
+- **Filing type:** ${isUS ? "US (10-Q/10-K)" : "FPI (20-F/6-K)"}
+${hasSEC ? `
+### SEC Access
+- XBRL: \`https://data.sec.gov/api/xbrl/companyfacts/CIK${cikPadded}.json\`
+- Filings: \`https://data.sec.gov/submissions/CIK${cikPadded}.json\`
+- User-Agent: \`DATCAP Research contact@datcap.com\`
 ` : ""}
-### What to Reconstruct
-
-**1. Holdings:** Total ${company.asset} held, as-of date, breakdown (custody/staked/collateral), cost basis
-**2. Shares:** Basic shares from ${isUS ? "10-Q cover page (dei:EntityCommonStockSharesOutstanding)" : "latest filing"}, as-of date, any ATM/offering activity
-**3. Financials:** Cash, total debt, preferred equity, quarterly burn (operating expenses)
-**4. Dilutives:** All warrants, options, and convertible notes with strike prices and quantities
-
-### Trust Tags
-- **REG** = regulatory filing, **IR** = company IR, **3P** = third party, **EST** = estimated, **UNV** = unverifiable
-
-## Current Codebase Values to Compare Against
+## Current Codebase Values
 
 ### companies.ts
 - holdings: ${fmtNum(company.holdings)} ${company.asset}${company.holdingsLastUpdated ? ` (as of ${company.holdingsLastUpdated})` : ""}
@@ -125,22 +123,27 @@ https://data.sec.gov/submissions/CIK${company.secCik.replace(/^0+/, "").padStart
 - quarterlyBurnUsd: ${fmtUsd(company.quarterlyBurnUsd ?? 0)}${company.burnAsOf ? ` (as of ${company.burnAsOf})` : ""}
 ${company.stakingPct ? `- stakingPct: ${(company.stakingPct * 100).toFixed(1)}%` : ""}
 ${dilutivesSection}${secondarySection}
-### Also check for:
-- Any 8-Ks filed after the dates above with new ${company.asset} purchases or sales
-- ATM program details or new shelf registrations
-- Any new warrant, option, or convertible issuances
-- Share count changes from offerings or buybacks
 
-## Output Format
+## Codebase Location
 
-For each category produce a table:
+All data files are in: \`/Users/dwinny/dat-tracker-next/src/lib/data/\`
+- \`companies.ts\` — main company data
+- \`dilutive-instruments.ts\` — warrants, converts, options
+- \`holdings-history.ts\` — historical holdings + share counts
+- \`earnings-data.ts\` — quarterly HPS data
+- \`provenance/${ticker.toLowerCase()}.ts\` — source citations (if exists)
 
-| Field | Reconstructed Value | Source (URL) | Codebase Value | Match | Tag |
-|-------|-------------------|-------------|----------------|-------|-----|
+## Output Directory
 
-At the end, produce a **DIFF SUMMARY** listing only the fields that need updating, with old → new values.
+Write all phase outputs to: \`/Users/dwinny/clawd/verification-runs/${ticker.toLowerCase()}/${new Date().toISOString().slice(0, 10)}/\`
 
-If everything matches, say "ALL CLEAR ✅ — no updates needed."
+## Key Rules
+- **Reconstruct first, then compare.** Don't trust existing values.
+- **Every number needs a source URL and confidence tag** (REG/IR/3P/EST/UNV).
+- **No proceeding until each phase is clean.** Loop adversarial/verification until pass.
+- **Cross-file consistency is mandatory.** companies.ts ↔ holdings-history ↔ earnings-data ↔ dilutives must all agree.
+- Run \`npm run build\` after patches to verify no TypeScript errors.
+- Run \`npx tsx scripts/verify-citations.ts\` to verify all searchTerms hit EDGAR.
 `;
 
 process.stdout.write(prompt);
