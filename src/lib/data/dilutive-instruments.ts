@@ -1500,41 +1500,41 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // === Mar 2024 Convertible #1 - $800M @ 0.625% ===
     {
       type: "convertible",
-      strikePrice: 118.0, // $1,180 pre-split / 10
-      potentialShares: 6_779_661, // $800M / $118
+      strikePrice: 149.77, // Initial conversion price per 10-Q Q3 2025 Note 5
+      potentialShares: 5_341_600, // 6.677 shares per $1,000 × 800,000 units
       faceValue: 800_000_000,
-      source: "8-K Mar 2024",
+      source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524061544/0001193125-24-061544-index.htm",
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
       issuedDate: "2024-03-08",
       expiration: "2030-03-15",
-      notes: "$800M @ 0.625% convertible notes due Mar 2030 (2030A)",
+      notes: "$800M @ 0.625% convertible notes due Mar 2030 (2030A). Conversion rate: 6.677 per $1,000.",
     },
     // === Mar 2024 Convertible #2 - $603.75M @ 0.875% ===
     {
       type: "convertible",
-      strikePrice: 125.0, // $1,250 pre-split / 10
-      potentialShares: 4_830_000, // $603.75M / $125
+      strikePrice: 232.72, // Initial conversion price per 10-Q Q3 2025 Note 5
+      potentialShares: 2_594_314, // 4.297 shares per $1,000 × 603,750 units
       faceValue: 603_750_000,
-      source: "8-K Mar 2024",
+      source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064331/0001193125-24-064331-index.htm",
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
       issuedDate: "2024-03-11",
       expiration: "2031-03-15",
-      notes: "$603.75M @ 0.875% convertible notes due Mar 2031",
+      notes: "$603.75M @ 0.875% convertible notes due Mar 2031. Conversion rate: 4.297 per $1,000.",
     },
     // === Jun 2024 Convertible - $800M @ 2.25% ===
     {
       type: "convertible",
-      strikePrice: 135.0, // $1,350 pre-split / 10
-      potentialShares: 5_925_926, // $800M / $135
+      strikePrice: 204.33, // Initial conversion price per 10-Q Q3 2025 Note 5
+      potentialShares: 3_915_200, // 4.894 shares per $1,000 × 800,000 units
       faceValue: 800_000_000,
-      source: "8-K Jun 2024",
+      source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524160936/0001193125-24-160936-index.htm",
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
       issuedDate: "2024-06-13",
       expiration: "2032-06-15",
-      notes: "$800M @ 2.25% convertible notes due Jun 2032",
+      notes: "$800M @ 2.25% convertible notes due Jun 2032. Conversion rate: 4.894 per $1,000.",
     },
     // === Sep 2024 Convertible - $1.01B @ 0.625% (first post-split) ===
     {
@@ -1576,9 +1576,11 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes: "$2B @ 0% convertible notes due Mar 2030 (2030B Notes)",
     },
   ],
-  // Total MSTR convertible dilution: ~32.2M potential shares (active notes only)
+  // Total MSTR convertible dilution: ~26.4M potential shares (active notes only)
+  // Conversion prices per 10-Q Q3 2025 Note 5 (initial conversion prices):
+  // - $149.77 (2030A), $183.19 (2028), $204.33 (2032), $232.72 (2031), $433.43 (2030B), $672.40 (2029)
   // At current ~$350 stock price:
-  // - IN money: $118, $125, $135, $183.19 → ~23.1M dilutive shares
+  // - IN money: $149.77, $183.19, $204.33, $232.72 → ~17.4M dilutive shares
   // - OUT of money: $433.43, $672.40 → ~9.1M non-dilutive
   // Note: Dec 2020 $650M notes matured Dec 15, 2025 and converted to ~16.3M shares
   // Note: Feb 2021 $1.05B notes fully redeemed/converted Q1 2025 (per Q3 10-Q) — shares in basic count
