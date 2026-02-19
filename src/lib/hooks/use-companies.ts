@@ -32,7 +32,9 @@ export function useCompanies(asset?: string, tier?: number) {
       if (!res.ok) throw new Error('Failed to fetch companies');
       return res.json();
     },
-    staleTime: 30000, // Cache for 30 seconds
+    staleTime: 30000, // Cache for 30 seconds during active use
+    refetchOnMount: 'always', // Always fetch fresh on page load
+    refetchOnWindowFocus: true, // Refresh when user returns to tab
   });
 }
 
@@ -47,6 +49,8 @@ export function useCompany(ticker: string) {
     },
     enabled: !!ticker,
     staleTime: 30000,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: true,
   });
 }
 
