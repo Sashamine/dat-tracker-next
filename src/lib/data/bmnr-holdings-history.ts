@@ -324,10 +324,22 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
     sharesOutstanding: 480_000_000,
     holdingsPerShare: 0.009012,
     cash: 595_000_000,
-    source: '8-K Holdings update - Latest',
+    source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm',
     sourceType: 'sec-filing',
     methodology: 'Shares estimated from ATM activity since Jan 12 anchor',
+    confidence: 'medium',
+  },
+  {
+    date: '2026-02-16',
+    holdings: 4371497,
+    sharesOutstanding: 471_341_725,
+    holdingsPerShare: 0.009275,
+    cash: 670_000_000,
+    source: '8-K Holdings update - Latest',
+    sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm',
+    sourceType: 'sec-filing',
+    methodology: 'Shares estimated from ATM activity since Jan 12 anchor (includes Feb 16 week)',
     confidence: 'medium',
   },
 ];
@@ -340,6 +352,7 @@ export const BMNR_STAKED_ETH: { date: string; stakedEth: number; percentStaked: 
   { date: '2026-01-25', stakedEth: 2_009_267, percentStaked: 47.4 },
   { date: '2026-02-01', stakedEth: 2_897_459, percentStaked: 67.6 },
   { date: '2026-02-08', stakedEth: 2_897_459, percentStaked: 67.0 },
+  { date: '2026-02-16', stakedEth: 3_040_483, percentStaked: 69.6 },
 ];
 
 // EarningsSource type for compatibility with earnings-data.ts

@@ -23,7 +23,7 @@ export const ethCompanies: Company[] = [
     asset: "ETH",
     tier: 1,
     // HOLDINGS: from provenance (8-K filings)
-    holdings: BMNR_PROVENANCE.holdings?.value || 4_325_738,
+    holdings: BMNR_PROVENANCE.holdings?.value || 4_371_497,
     holdingsLastUpdated: BMNR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=4%2C371%2C497%20ETH",
@@ -33,14 +33,14 @@ export const ethCompanies: Company[] = [
     costBasisSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=cost%20basis",
     costBasisAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
-    stakingPct: 0.670,  // 2,897,459 staked / 4,325,738 total per Feb 9 8-K
-    stakingApy: 0.0281,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil
+    stakingPct: 0.696,  // 3,040,483 staked / 4,371,497 total per Feb 17 8-K
+    stakingApy: 0.0284,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil; 7-day yield 2.89%
     stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",
-    stakingSource: "SEC 8-K Feb 9, 2026 (ex99-1): 2,897,459 ETH staked of 4,325,738 total.",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=2%2C897%2C459",
-    stakingAsOf: "2026-02-08",
+    stakingSource: "SEC 8-K Feb 17, 2026 (ex99-2): 3,040,483 ETH staked of 4,371,497 total.",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=3%2C040%2C483",
+    stakingAsOf: "2026-02-16",
     stakingVerified: true,
-    stakingLastAudited: "2026-02-05",
+    stakingLastAudited: "2026-02-16",
     quarterlyBurnUsd: 1_000_000,  // ~$4M/yr based on Q1 FY2025 baseline G&A ($959K/qtr)
     burnSource: "SEC 10-Q: Q1 G&A $223M was mostly one-time capital raising fees; recurring mgmt ~$50K/yr",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=General%20and%20administrative",
