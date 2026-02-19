@@ -1398,11 +1398,11 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "/filings/djt/0001140361-25-040977?tab=document&q=11%2C542",
     datStartDate: "2025-05-01",
     isMiner: false,
-    // BURN: from provenance (Q1 2025 OpCF as proxy for core burn)
-    quarterlyBurnUsd: DJT_PROVENANCE.quarterlyBurn?.value ?? 9_737_800,
-    burnSource: "SEC 10-Q Q1 2025 XBRL: NetCashProvidedByUsedInOperatingActivities -$9,737,800",
-    burnSourceUrl: "/filings/djt/0001140361-25-018209",
-    burnAsOf: "2025-03-31",
+    // BURN: from provenance (9M 2025 OpCF: +$2.6M — cash-flow positive, no burn)
+    quarterlyBurnUsd: DJT_PROVENANCE.quarterlyBurn?.value ?? 0,
+    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashProvidedByUsedInOperatingActivities +$2,638,800 (9M 2025) — operations cash-flow positive",
+    burnSourceUrl: "/filings/djt/0001140361-25-040977",
+    burnAsOf: "2025-09-30",
     // CAPITAL: $2.5B private placement ($1.5B equity + $1B converts)
     capitalRaisedPipe: 2_500_000_000,
     avgDailyVolume: 200_000_000,

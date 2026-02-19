@@ -1703,8 +1703,17 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       notes:
         "Legacy DWAC SPAC public warrants trading as DJTWW. 11,019,766 warrants at $11.50 exercise. Exercisable for Class A common stock.",
     },
+    {
+      type: "rsu",
+      strikePrice: 0, // RSUs have no exercise price — always dilutive
+      potentialShares: 2_672_526,
+      source: "Q3 2025 10-Q dilutive securities table (anti-dilutive exclusions)",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
+      notes:
+        "2,672,526 RSUs outstanding as of Q3 2025. No strike price — always ITM and dilutive. Part of 42.5M total anti-dilutive shares excluded from diluted EPS.",
+    },
   ],
-  // Total DJT dilution: 28.8M convert shares ($34.72 strike) + 11M DJTWW warrants ($11.50)
+  // Total DJT dilution: 28.8M convert shares ($34.72 strike) + 11M DJTWW warrants ($11.50) + 2.67M RSUs ($0 strike)
   // Earnout shares (40M): fully vested Apr 26, 2024 — already in basic share count (279.9M), NOT additional dilution
   // Make-whole: in fundamental change, convert rate can increase from 28.8 to max 38.88 shares/$1,000
 
