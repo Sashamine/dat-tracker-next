@@ -133,7 +133,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     TOTAL_DEBT,
     docSource({
       type: "sec-document",
-      searchTerm: "12,084",
+      searchTerm: "12,084,535",
       url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
       quote: "Total liabilities $12,084,535 (all current — taxes, accrued expenses, leases)",
       anchor: "Total liabilities",
@@ -174,7 +174,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     GA_EXPENSE_Q1,
     docSource({
       type: "sec-document",
-      searchTerm: "3,252",
+      searchTerm: "3,252,629",
       url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
       quote: "General and administrative expense $3,252,629",
       anchor: "General and administrative",
@@ -213,7 +213,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     REVENUE_Q1,
     docSource({
       type: "sec-document",
-      searchTerm: "21,435",
+      searchTerm: "21,435,250",
       url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
       quote: "Total revenues $21,435,250",
       anchor: "Revenues",
@@ -233,7 +233,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     Math.abs(NET_LOSS_Q1),
     docSource({
       type: "sec-document",
-      searchTerm: "585,651",
+      searchTerm: "585,651,086",
       url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
       quote: "Net loss $(585,651,086)",
       anchor: "Net loss",
