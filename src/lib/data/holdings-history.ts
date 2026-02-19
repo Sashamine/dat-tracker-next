@@ -247,6 +247,8 @@ const BTBT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 122_187, sharesOutstanding: 323_674_831, holdingsPerShare: 0.000377, stockPrice: 326.42, totalDebt: 0, cash: 179_118_182, source: "Q3 2025 monthly PR + 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/", methodology: "ETH from Sep 30 monthly PR. Converts issued Oct 2, so $0 debt at Q3 end. Cash from XBRL.", confidence: "high" },
   // Q4 quarter-end anchor - must match earnings-data.ts Q4 entry
   { date: "2025-12-31", holdings: 155_227, sharesOutstanding: 323_792_059, holdingsPerShare: 0.000479, stockPrice: 155.61, totalDebt: 150_000_000, cash: 179_118_182, preferredEquity: 9_050_000, source: "Dec 2025 monthly PR (Jan 7, 2026)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-december-2025/", sourceType: "press-release", methodology: "ETH/shares from Dec PR. Debt = $150M converts (Oct 2025). Cash carried from Q3 (Q4 not filed). Preferred = $9.05M.", confidence: "high" },
+  // Jan 2026: 155,239.4 ETH (incl ~15,236.4 in externally managed fund). Shares from PR. Debt/cash carried.
+  { date: "2026-01-31", holdings: 155_239, sharesOutstanding: 324_202_059, holdingsPerShare: 0.000479, stockPrice: 155.61, totalDebt: 150_000_000, cash: 179_118_182, preferredEquity: 9_050_000, source: "Jan 2026 monthly PR (Feb 6, 2026)", sourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/", sourceType: "press-release", methodology: "155,239.4 ETH (incl ~15,236 in externally managed fund). Shares 324,202,059 from PR. Debt/cash carried from Q3.", confidence: "high" },
 ];
 
 // ==================== SOL COMPANIES ====================
@@ -264,6 +266,8 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
   // Post 1:8 reverse split (Aug 5, 2025 for NASDAQ listing)
   { date: "2025-09-30", holdings: 435_159, sharesOutstanding: 22_999_841, holdingsPerShare: 0.01892, stockPrice: 326.42, source: "SEC 40-F FY2025 annual report", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839&type=40-F", sourceType: "sec-filing" },
   { date: "2026-01-06", holdings: 523_134, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02067, source: "Dec 2025 monthly update + Jan 7 credit facility conversion (2.3M shares)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update", sourceType: "company-website" },
+  // Jan 2026: 530,251 SOL total (402,004 direct + 46,474 jitoSOL + 81,640 STKESOL). Shares carried from prior entry.
+  { date: "2026-02-03", holdings: 530_251, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02096, source: "Jan 2026 monthly business update (Feb 5, 2026)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update", sourceType: "company-website" },
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
@@ -556,7 +560,9 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 50_770, sharesOutstanding: 39_834_188, holdingsPerShare: 1.274, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q cover page", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550", sourceType: "sec-filing" },
   { date: "2025-11-12", holdings: 50_770, sharesOutstanding: 39_574_350, holdingsPerShare: 1.283, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page (Nov 12)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001591890&type=10-Q" },
   // Sold ETH for buybacks - repurchased 9.9M shares
-  { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 33_600_000, holdingsPerShare: 1.119, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks)", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
+  { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 33_600_000, holdingsPerShare: 1.119, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks) - PRE-SPLIT", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
+  // Post 1:5 reverse split (effective Feb 13, 2026): 33,600,000 / 5 = 6,720,000 shares
+  { date: "2026-02-13", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 5.595, source: "1:5 reverse split effective Feb 13, 2026", sharesSource: "SEC 8-K Feb 13, 2026 (33.6M pre-split / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm", sourceType: "sec-filing", methodology: "Holdings carried from Jan 21 PR. Shares adjusted for 1:5 reverse split." },
 ];
 
 // ==================== ADDITIONAL SOL COMPANIES ====================
@@ -860,12 +866,13 @@ const DJT_HISTORY: HoldingsSnapshot[] = [
 //   - Total: 43,514 BTC
 // DUAL-CLASS: Class A (346.5M public) + Class B (304.8M founder/sponsor, zero economic rights)
 // For mNAV, use Class A ONLY - Class B has no dividends or liquidation rights per charter
+// sharesOutstanding below = Class A ONLY (consistent with companies.ts sharesForMnav methodology)
 // Debt: $486.5M convertible notes (issued at merger)
 const XXI_HISTORY: HoldingsSnapshot[] = [
   // Pre-merger announcements removed - no verifiable SEC filings
   // Post-merger (NYSE listing Dec 9, 2025):
-  { date: "2025-12-09", holdings: 43514, sharesOutstanding: 651_390_912, holdingsPerShare: 0.0000668, totalDebt: 486_500_000, cash: 119_300_000, source: "8-K NYSE listing - merger closed", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm", sourceType: "sec-filing" },
-  { date: "2026-01-05", holdings: 43514, sharesOutstanding: 651_390_912, holdingsPerShare: 0.0000668, totalDebt: 486_500_000, cash: 119_300_000, source: "S-1 prospectus", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm", sourceType: "sec-filing" },
+  { date: "2025-12-09", holdings: 43514, sharesOutstanding: 346_548_153, holdingsPerShare: 0.0001256, totalDebt: 486_500_000, cash: 119_300_000, source: "8-K NYSE listing - merger closed", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025119445/ea0268794-8k_twenty.htm", sourceType: "sec-filing", methodology: "Class A shares only (346.5M). Class B (304.8M) excluded - zero economic rights per charter." },
+  { date: "2026-01-05", holdings: 43514, sharesOutstanding: 346_548_153, holdingsPerShare: 0.0001256, totalDebt: 486_500_000, cash: 119_300_000, source: "S-1 prospectus", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm", sourceType: "sec-filing", methodology: "Class A shares only (346.5M). Class B (304.8M) excluded - zero economic rights per charter." },
 ];
 
 // Strive Asset (ASST) - First publicly traded asset management BTC treasury
@@ -1011,7 +1018,9 @@ const ZOOZ_HISTORY: HoldingsSnapshot[] = [
 // Source: btctcorp.com + SEDAR+
 const BTCT_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-06-30", holdings: 100, sharesOutstanding: 10_000_000, holdingsPerShare: 0.00001, source: "TSX Venture listing", sourceType: "regulatory-filing", sourceUrl: "https://btctcorp.com" },
-  { date: "2026-02-02", holdings: 771, sharesOutstanding: 12_158_413, holdingsPerShare: 0.0000634, source: "btctcorp.com Feb 2026: 771.37 BTC", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
+  { date: "2026-02-02", holdings: 771, sharesOutstanding: 10_027_880, holdingsPerShare: 0.0000769, source: "btctcorp.com Feb 2026: 771.37 BTC", sharesSource: "btctcorp.com basic shares (diluted 12,111,213 tracked in dilutive-instruments.ts; prior entry incorrectly used diluted)", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
+  // Feb 17: Website updated - holdings decreased to 769.05 BTC, shares unchanged
+  { date: "2026-02-17", holdings: 769, sharesOutstanding: 10_027_880, holdingsPerShare: 0.0000767, source: "btctcorp.com Feb 17, 2026: 769.05 BTC", sharesSource: "btctcorp.com basic shares", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
 ];
 
 // Samara Asset Group (SRAG.DU) - Malta HQ, Frankfurt/XETRA listed BTC treasury

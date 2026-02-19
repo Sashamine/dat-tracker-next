@@ -23,11 +23,13 @@ import { getCompanySource } from './company-sources';
 import { fetchWithRateLimit } from './rate-limiter';
 import { detectDilutiveInstruments, DilutionDetectionResult } from '../data/dilutive-instruments';
 
+import { SEC_DATA_BASE_URL, SEC_USER_AGENT, padCik10 } from './sec-shared';
+
 // SEC EDGAR API base URL
-const SEC_API_BASE = 'https://data.sec.gov';
+const SEC_API_BASE = SEC_DATA_BASE_URL;
 
 // User agent required by SEC
-const USER_AGENT = 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)';
+const USER_AGENT = SEC_USER_AGENT;
 
 // Default XBRL concepts for crypto holdings
 // Used when company doesn't have custom concepts configured
@@ -169,7 +171,7 @@ interface FactValue {
 async function fetchCompanyFacts(cik: string): Promise<SECCompanyFacts | null> {
   try {
     // Pad CIK to 10 digits
-    const paddedCik = cik.replace(/^0+/, '').padStart(10, '0');
+    const paddedCik = padCik10(cik);
     const url = `${SEC_API_BASE}/api/xbrl/companyfacts/CIK${paddedCik}.json`;
 
     const response = await fetchWithRateLimit(url, {

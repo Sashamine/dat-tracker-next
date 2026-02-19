@@ -528,14 +528,14 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     holdings: 43_514,  // Combined: Tether (24,500) + Bitfinex (7,000) + PIPE (~11.5K) + In-Kind (~0.4K)
-    holdingsLastUpdated: "2025-12-09",  // Merger close date
+    holdingsLastUpdated: "2025-12-08",  // Merger close date (8-K: "consummated on December 8, 2025")
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea026946001ex99-4_twenty.htm#:~:text=31%2C500%20Bitcoin",
     // Breakdown: Contribution 31,500 + PIPE Bitcoin ~11,533 + In-Kind PIPE ~392 = ~43,425
     datStartDate: "2025-12-09",
-    costBasisAvg: 91_400,  // Blended: $3,977,198,487 / 43,514.113 BTC per S-1/A (31,500 at $90,560 FV + PIPE at various prices)
-    costBasisSource: "SEC S-1/A Feb 9, 2026: Blended cost basis from Tether/Bitfinex contribution ($90,560.40/BTC) + PIPE purchases ($85K-$108K/BTC)",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
+    costBasisAvg: 84_864,  // S-1/A Feb 9, 2026: Contribution + Additional PIPE BTC valued at $84,863.57/BTC at Closing
+    costBasisSource: "SEC S-1/A Feb 9, 2026: Tether/Bitfinex contribution + Additional PIPE BTC at $84,863.57/BTC (Closing fair value)",
+    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
     isMiner: false,
     stakingPct: 0,  // BTC not staked
     // No burn data yet - awaiting first 10-Q (merged Dec 2025)
@@ -1673,10 +1673,10 @@ export const solCompanies: Company[] = [
     secCik: "0001775194",
     asset: "SOL",
     tier: 1,
-    holdings: 2_174_583,  // Jan 5, 2026 press release (10-Q Dec 31 shows 2,173,204). NOTE: Hivemind 265,500 locked SOL (Jan 9) NOT included — that was a subsequent event after this date.
-    holdingsLastUpdated: "2026-01-05",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2026/01/07/3214451/0/en/Upexi-Moves-to-High-Return-Treasury-Strategy.html",
+    holdings: 2_173_204,  // SEC 10-Q Q2 FY2026 (Dec 31, 2025 balance sheet). Supersedes Jan 5 PR figure of 2,174,583.
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     datStartDate: "2025-04-01",
     stakingPct: 0.95,  // 10-Q Note 5: "approximately 95% of its Solana treasury staked as of December 31, 2025"
     stakingMethod: "Native staking (locked/staked SOL)",

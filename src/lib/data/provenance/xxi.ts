@@ -28,7 +28,7 @@ const secDocUrl = (cik: string, accession: string, doc: string) =>
 // =========================================================================
 const MERGER_8K_ACCESSION = "0001213900-25-121293";
 const MERGER_8K_FILED = "2025-12-12";
-const MERGER_CLOSE_DATE = "2025-12-09";
+const MERGER_CLOSE_DATE = "2025-12-08"; // 8-K: "the Mergers were consummated on December 8, 2025"
 
 // =========================================================================
 // 10-Q DATA (filed Dec 19, 2025, stub period as of Dec 9, 2025)
@@ -49,7 +49,7 @@ const TOTAL_SHARES = CLASS_A_SHARES + CLASS_B_SHARES; // 651,390,912
 // Financial data
 const TOTAL_DEBT = 486_500_000; // $486.5M convertible notes
 const CASH_RESERVES = 119_300_000; // $119.3M
-const COST_BASIS_AVG = 91_400; // Blended: $3,977,198,487 / 43,514.113 BTC per S-1/A
+const COST_BASIS_AVG = 84_864; // S-1/A Feb 9, 2026: $84,863.57/BTC (Closing fair value for Contribution + Additional PIPE BTC)
 
 /**
  * XXI Financial Data with Full Provenance
@@ -76,21 +76,21 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // COST BASIS - from S-1 Jan 2026
-  // Blended: ~42K BTC at $90,560 (merger FV) + post-close at higher prices
+  // COST BASIS - from S-1/A Feb 9, 2026
+  // Contribution + Additional PIPE BTC valued at $84,863.57/BTC at Closing
   // =========================================================================
   costBasisAvg: pv(
     COST_BASIS_AVG,
     docSource({
       type: "sec-document",
-      searchTerm: "90,560.40",
-      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
-      quote: "Bitcoin valued at $90,560.40 per BTC (Closing date Dec 8, 2025)",
+      searchTerm: "84,863.57",
+      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
+      quote: "at a value of $84,863.57 per Bitcoin",
       anchor: "Fair Value",
       cik: XXI_CIK,
-      accession: "0001213900-26-001285",
-      filingType: "S-1",
-      filingDate: "2026-01-05",
+      accession: "0001213900-26-013482",
+      filingType: "S-1/A",
+      filingDate: "2026-02-09",
       documentDate: MERGER_CLOSE_DATE,
     })
   ),
