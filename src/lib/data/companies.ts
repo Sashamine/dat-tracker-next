@@ -26,7 +26,7 @@ export const ethCompanies: Company[] = [
     holdings: BMNR_PROVENANCE.holdings?.value || 4_325_738,
     holdingsLastUpdated: BMNR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=4%2C325%2C738%20ETH",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=4%2C371%2C497%20ETH",
     datStartDate: "2025-07-01",
     // COST BASIS: from provenance (10-Q)
     costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 3_893,
@@ -64,8 +64,8 @@ export const ethCompanies: Company[] = [
     // CASH: from provenance (8-K)
     cashReserves: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,
     restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,  // Operating capital - not excess
-    cashSource: "SEC-verified (provenance): 8-K Feb 9, 2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm#:~:text=%24595%20million",
+    cashSource: "SEC-verified (provenance): 8-K Feb 17, 2026",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=%24670%20million",
     cashAsOf: BMNR_PROVENANCE_DEBUG.holdingsDate,
     otherInvestments: 219_000_000,  // $200M Beast Industries + $19M Eightco Holdings (OCTO) — SEC 8-K Feb 9, 2026 (accn 005707)
     // DEBT: from provenance ($0)

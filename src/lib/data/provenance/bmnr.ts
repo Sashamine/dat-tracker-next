@@ -21,13 +21,13 @@ export const BMNR_CIK = "1829311";
 
 // Latest data points (updated manually from 8-K filings)
 // Updated 2026-02-09 from 8-K filed today (as of Feb 8)
-const LATEST_HOLDINGS = 4_325_738;
-const LATEST_HOLDINGS_DATE = "2026-02-08";
-const LATEST_HOLDINGS_ACCESSION = "0001493152-26-005707";
-const LATEST_HOLDINGS_DOC = "ex99-1.htm"; // Press release with holdings data
+const LATEST_HOLDINGS = 4_371_497;
+const LATEST_HOLDINGS_DATE = "2026-02-16";
+const LATEST_HOLDINGS_ACCESSION = "0001493152-26-006953";
+const LATEST_HOLDINGS_DOC = "ex99-2.htm"; // Press release with holdings data
 
-const LATEST_STAKED = 2_897_459;
-const STAKING_PCT = 0.670; // 67.0% (2,897,459 / 4,325,738)
+const LATEST_STAKED = 3_040_483;
+const STAKING_PCT = 0.696; // 69.6% (3,040,483 / 4,371,497)
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
@@ -52,7 +52,7 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   holdings: pv(LATEST_HOLDINGS, docSource({
     type: "sec-document",
-    searchTerm: "4,325,738",
+    searchTerm: "4,371,497",
     // Direct link to the actual document containing the data
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
     quote: `${LATEST_HOLDINGS.toLocaleString()} ETH`,
@@ -60,16 +60,16 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-09",
+    filingDate: "2026-02-17",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K press release (ex99-1.htm)."),
+  }), "Weekly 8-K press release (ex99-2.htm)."),
 
   // =========================================================================
   // COST BASIS - 10-Q baseline + estimated post-quarter purchases from 8-K chain
   // =========================================================================
-  costBasisAvg: pv(3_893, derivedSource({
+  costBasisAvg: pv(3_874, derivedSource({
     derivation: "Total ETH cost / Total ETH holdings (10-Q baseline + 8-K weekly purchases)",
-    formula: "$16,841,106,172 / 4,325,738 ETH = $3,893/ETH",
+    formula: "$16,932,512,514 / 4,371,497 ETH = $3,874/ETH",
     inputs: {
       baselineCost: pv(14_953_824_000, docSource({
         type: "sec-document",
@@ -83,9 +83,9 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
         filingDate: Q1_FY2026_FILED,
         documentDate: Q1_FY2026_PERIOD_END,
       })),
-      postQuarterPurchases: pv(1_887_282_172, derivedSource({
-        derivation: "Sum of (weekly ETH delta × 8-K ETH price) from Dec 7 to Feb 8",
-        formula: "588,598 additional ETH purchased at avg ~$3,207, total $1,887,282,172",
+      postQuarterPurchases: pv(1_978_688_514, derivedSource({
+        derivation: "Sum of (weekly ETH delta × 8-K ETH price) from Dec 7 to Feb 16",
+        formula: "634,357 additional ETH purchased at avg ~$3,120, total $1,978,688,514",
         inputs: {
           // Per-week 8-K chain (accession numbers):
           // Dec 7:  0001493152-25-026397 (Dec 8 8-K)
@@ -97,12 +97,13 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
           // Jan 25: 0001493152-26-003536 (Jan 26 8-K)
           // Feb 1:  0001493152-26-004658 (Feb 2 8-K)
           // Feb 8:  0001493152-26-005707 (Feb 9 8-K)
+          // Feb 16: 0001493152-26-006953 (Feb 17 8-K) — 45,759 ETH @ $1,998
           // Each 8-K has ETH holdings count. Delta × stated ETH price = weekly cost.
           // See: bmnr-holdings-history.ts for the full chain.
         },
       })),
     },
-  }), "10-Q baseline ($14.95B for 3,737,140 ETH) + estimated cost of 588,598 ETH from weekly 8-K prices. See clawd/bmnr-audit/cost-basis.md"),
+  }), "10-Q baseline ($14.95B for 3,737,140 ETH) + estimated cost of 634,357 ETH from weekly 8-K prices. See clawd/bmnr-audit/cost-basis.md"),
 
   // =========================================================================
   // SHARES OUTSTANDING - from 10-Q cover page
@@ -130,19 +131,19 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // CASH RESERVES - from Feb 9, 2026 8-K
   // =========================================================================
-  cashReserves: pv(595_000_000, docSource({
+  cashReserves: pv(670_000_000, docSource({
     type: "sec-document",
-    searchTerm: "595",
+    searchTerm: "670 million",
     // Direct link to the actual document containing the data
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
-    quote: "$595 million in cash",
-    anchor: "595",
+    quote: "total cash of $670 million",
+    anchor: "670",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
-    filingDate: "2026-02-09",
+    filingDate: "2026-02-17",
     documentDate: LATEST_HOLDINGS_DATE,
-  }), "Weekly 8-K press release (ex99-1.htm)."),
+  }), "Weekly 8-K press release (ex99-2.htm)."),
 
   // =========================================================================
   // QUARTERLY BURN - estimated from Q1 FY2025 baseline
@@ -204,9 +205,9 @@ export const BMNR_PROVENANCE: ProvenanceFinancials = {
   }), "No preferred equity issued."),
 
   // =========================================================================
-  // OTHER INVESTMENTS - $219M total, excluded from mNAV
+  // OTHER INVESTMENTS - $217M total, excluded from mNAV
   // Source: Feb 9, 2026 8-K (same as holdings): "193 Bitcoin (BTC),
-  // $200 million stake in Beast Industries, $19 million stake in
+  // $200 million stake in Beast Industries, $17 million stake in
   // Eightco Holdings (NASDAQ: ORBS) ('moonshots')"
   // URL: https://www.sec.gov/Archives/edgar/data/1829311/000149315226005707/ex99-1.htm
   // Accession: 0001493152-26-005707
@@ -226,9 +227,9 @@ export const BMNR_STAKING_PROVENANCE = {
   // Conclusion: headline has a digit transposition (73 vs 97). Source document error, not ours.
   stakedAmount: pv(LATEST_STAKED, docSource({
     type: "sec-document",
-    searchTerm: "2,897,459",
+    searchTerm: "3,040,483",
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
-    quote: "Bitmine total staked ETH stands at 2,897,459 (body figure; headline has typo 2,873,459)",
+    quote: "Bitmine total staked ETH stands at 3,040,483",
     anchor: "staked",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
@@ -239,10 +240,10 @@ export const BMNR_STAKING_PROVENANCE = {
 
   stakingPct: pv(STAKING_PCT, docSource({
     type: "sec-document",
-    searchTerm: "67%",
+    searchTerm: "69%",
     url: secDocUrl(BMNR_CIK, LATEST_HOLDINGS_ACCESSION, LATEST_HOLDINGS_DOC),
-    quote: "about 67%",
-    anchor: "67%",
+    quote: "about 69%",
+    anchor: "69%",
     cik: BMNR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
     filingType: "8-K",
@@ -296,7 +297,7 @@ export function estimateBMNRShares(): ShareEstimate {
   // Baseline from Q1 FY2026 10-Q cover page (filed Jan 13, 2026)
   const baselineShares = SHARES_OUTSTANDING; // 454,862,451 as of Jan 12
 
-  // Cash-adjusted ATM estimation from weekly 8-K data (Jan 12 → Feb 8)
+  // Cash-adjusted ATM estimation from weekly 8-K data (Jan 12 → Feb 16)
   // Method: ATM_proceeds = ETH_cost + cash_change, shares = ATM_proceeds / stock_price
   // Anchored to 10-Q, then estimated forward using Alpaca stock prices + 8-K ETH/cash data
   // Cross-check: pre-anchor estimate at Jan 11 = 452.5M vs actual 454.9M = 0.51% error
@@ -306,14 +307,15 @@ export function estimateBMNRShares(): ShareEstimate {
   //   Jan 25: +40,302 ETH, $114M cost, -$297M cash chg → net negative (cash drawdown, 0 shares)
   //   Feb 1:  +41,787 ETH, $97M cost,  -$96M cash chg  → $1M ATM @ $22.80 = 35,986 shares
   //   Feb 8:  +40,613 ETH, $86M cost,  +$9M cash chg   → $95M ATM @ $21.45 = 4,443,013 shares
+  //   Feb 16: +45,759 ETH, $91M cost,  +$75M cash chg  → $166M ATM @ $20.03 = 8,308,860 shares
   // See: clawd/bmnr-audit/share-estimation.md
-  const estimatedNewShares = 8_170_414; // Sum: 3,691,415 + 0 + 35,986 + 4,443,013
+  const estimatedNewShares = 16_479_274; // Sum: 3,691,415 + 0 + 35,986 + 4,443,013 + 8,308,860
 
   return {
     date: LATEST_HOLDINGS_DATE,
     baselineShares,
     estimatedNewShares,
-    totalEstimated: baselineShares + estimatedNewShares, // ~463,032,865
+    totalEstimated: baselineShares + estimatedNewShares, // ~471,341,725
     confidence: "medium",
     methodology: `Q1 FY2026 10-Q baseline (${baselineShares.toLocaleString()}) + cash-adjusted ATM estimate (${estimatedNewShares.toLocaleString()} shares from weekly 8-K ETH deltas, Alpaca stock prices, adjusted for cash drawdowns). Cross-checks at 0.51% vs 10-Q anchor.`,
   };
@@ -327,7 +329,7 @@ export const BMNR_PROVENANCE_DEBUG = {
   holdingsDate: LATEST_HOLDINGS_DATE,
   sharesDate: SHARES_DATE,
   balanceSheetDate: Q1_FY2026_PERIOD_END,
-  lastFilingChecked: "2026-02-02",
+  lastFilingChecked: "2026-02-17",
   notes: "BMNR is simpler than MSTR: no debt, no preferred, single share class.",
 };
 
