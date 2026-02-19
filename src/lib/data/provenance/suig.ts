@@ -101,7 +101,7 @@ export const SUIG_PROVENANCE: ProvenanceFinancials = {
     SHARES_OUTSTANDING,
     docSource({
       type: "sec-document",
-      searchTerm: "80,900,000",
+      searchTerm: "80.9 million shares",
       url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
       quote: "fully adjusted shares issued and outstanding as of January 7, 2026",
       anchor: "Shares Outstanding",

@@ -151,7 +151,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     LONG_TERM_DEBT,
     xbrlSource({
       fact: "us-gaap:LongTermDebt",
-      searchTerm: "950,769",
+      searchTerm: "950,769.1",
       rawValue: LONG_TERM_DEBT,
       unit: "USD",
       periodType: "instant",

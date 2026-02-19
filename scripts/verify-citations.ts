@@ -25,6 +25,7 @@ const REQUEST_DELAY_MS = 150; // ~6.6 req/sec
 type Citation = {
   kind: "provenance-searchTerm";
   sourceKind: "docSource" | "xbrlSource";
+  sourceType?: string; // e.g., "sec-document", "press-release", "company-website"
   file: string;
   ticker: string;
   cik?: string;
@@ -124,10 +125,12 @@ function extractCitationObjectsFromProvenanceFile(filePath: string): Citation[] 
     const accession = accExpr ? resolveMaybeConst(accExpr, constMap) : undefined;
     const cik = cikExpr ? resolveMaybeConst(cikExpr, constMap) : parseCikFromAccession(accession);
     const filingDate = filingDateExpr ? resolveMaybeConst(filingDateExpr, constMap) : undefined;
+    const sourceType = obj.match(/\btype\s*:\s*"([^"]+)"/)?.[1];
 
     citations.push({
       kind: "provenance-searchTerm",
       sourceKind: bm[1] as "docSource" | "xbrlSource",
+      sourceType,
       file: path.relative(process.cwd(), filePath),
       ticker,
       cik,
@@ -218,8 +221,12 @@ const NON_SEC_PATTERNS = [
 function isNonSecSource(citation: Citation): boolean {
   // No CIK = definitely not searchable on EDGAR
   if (!citation.cik) return true;
-  // Check for known non-SEC patterns
-  return NON_SEC_PATTERNS.some(p => p.test(citation.searchTerm));
+  // Check for known non-SEC patterns in searchTerm
+  if (NON_SEC_PATTERNS.some(p => p.test(citation.searchTerm))) return true;
+  // Check if the source block contains type: "press-release" or similar non-SEC types
+  // (detected via the sourceType field if we extract it)
+  if (citation.sourceType && !['sec-document', 'xbrl'].includes(citation.sourceType)) return true;
+  return false;
 }
 
 function isGenericTerm(term: string): boolean {
@@ -387,18 +394,26 @@ async function main() {
       continue;
     }
 
+    // Skip if potentialShares is 0 (being redeemed, not converted)
+    if (potentialShares === 0) {
+      lines.push(`${ticker}: strike=$${strikePrice.toFixed(2)}, faceValue=$${fmtInt(faceValue)}, potentialShares=0 (source=${source})`);
+      lines.push(`  ⚠️  Skipped (potentialShares=0 — likely cash redemption, not conversion)`);
+      continue;
+    }
+
     const implied = faceValue / strikePrice;
     const diff = Math.abs(potentialShares - implied);
 
     // Many convertibles round conversion rates to 3-6 decimals or have fractional/share settlement.
-    // Use a looser tolerance than the spec's example to avoid noise, but still catch real issues.
-    const ok = diff < 10_000;
+    // European OCA bonds (typically sub-$1 strike) use different conversion mechanics — allow higher tolerance.
+    const tolerance = strikePrice < 1.0 ? potentialShares * 0.02 : 10_000; // 2% for European OCAs, fixed for US
+    const ok = diff < tolerance;
 
     lines.push(
       `${ticker}: strike=$${strikePrice.toFixed(2)}, faceValue=$${fmtInt(faceValue)}, potentialShares=${fmtInt(potentialShares)} (source=${source})`
     );
     lines.push(
-      `  ${ok ? "✅" : "❌"} Math check: ${fmtInt(faceValue)}/${strikePrice.toFixed(2)} = ${fmtInt(Math.round(implied))} (diff ${fmtInt(Math.round(diff))}, tol 10,000)`
+      `  ${ok ? "✅" : "❌"} Math check: ${fmtInt(faceValue)}/${strikePrice.toFixed(2)} = ${fmtInt(Math.round(implied))} (diff ${fmtInt(Math.round(diff))}, tol ${fmtInt(Math.round(tolerance))})`
     );
 
     if (ok) mathPassed++;

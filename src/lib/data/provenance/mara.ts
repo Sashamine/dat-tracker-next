@@ -205,7 +205,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
         })),
         lineOfCredit: pv(350_000_000, docSource({
           type: "sec-document",
-          searchTerm: "350,000",
+          searchTerm: "Line of credit, current portion 350,000",
           url: `https://www.sec.gov/Archives/edgar/data/${MARA_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/mara-20250930.htm`,
           quote: "Line of credit - current portion $350,000",
           anchor: "Line of credit",

@@ -183,7 +183,7 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
     inputs: {
       companyCurrent: pv(8_214_000_000, docSource({
         type: "company-website",
-        searchTerm: "8,214",
+        searchTerm: "8,214,000",
         url: "https://www.strategy.com/debt",
         quote: "2028 $1,010M + 2029 $3,000M + 2030A $800M + 2030B $2,000M + 2031 $604M + 2032 $800M = $8,214M",
         anchor: "strategy.com/debt (Reg FD)",

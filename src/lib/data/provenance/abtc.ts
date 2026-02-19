@@ -143,7 +143,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     7_976_000,
     xbrlSource({
       fact: "us-gaap:Cash",
-      searchTerm: "7,976,000",
+      searchTerm: "Cash $ 7,976",
       rawValue: 7_976_000,
       unit: "USD",
       periodType: "instant",
