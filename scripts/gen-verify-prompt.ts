@@ -16,19 +16,32 @@ const allCompanies: Company[] = [
   ...(otherCompanies ?? []),
 ];
 
-const ticker = process.argv[2]?.toUpperCase();
-if (!ticker) {
-  console.error("Usage: npx tsx scripts/gen-verify-prompt.ts <TICKER>");
-  console.error("Available:", allCompanies.map(c => c.ticker).sort().join(", "));
+const input = process.argv[2];
+if (!input) {
+  console.error("Usage: npx tsx scripts/gen-verify-prompt.ts <TICKER or NAME>");
+  console.error("Available:", allCompanies.map(c => `${c.ticker} (${c.name})`).sort().join(", "));
   process.exit(1);
 }
 
-const company = allCompanies.find(c => c.ticker.toUpperCase() === ticker);
+// Try exact ticker match first, then fuzzy name match
+const inputUpper = input.toUpperCase();
+let company = allCompanies.find(c => c.ticker.toUpperCase() === inputUpper);
 if (!company) {
-  console.error(`Company not found: ${ticker}`);
-  console.error("Available:", allCompanies.map(c => c.ticker).sort().join(", "));
-  process.exit(1);
+  const inputLower = input.toLowerCase();
+  const nameMatches = allCompanies.filter(c => c.name.toLowerCase().includes(inputLower));
+  if (nameMatches.length === 1) {
+    company = nameMatches[0];
+  } else if (nameMatches.length > 1) {
+    console.error(`Multiple matches for "${input}":`);
+    nameMatches.forEach(c => console.error(`  ${c.ticker} — ${c.name}`));
+    process.exit(1);
+  } else {
+    console.error(`Company not found: ${input}`);
+    console.error("Available:", allCompanies.map(c => `${c.ticker} (${c.name})`).sort().join(", "));
+    process.exit(1);
+  }
 }
+const ticker = company.ticker;
 
 const instruments = dilutiveInstruments[ticker] ?? [];
 
