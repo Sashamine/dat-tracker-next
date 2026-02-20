@@ -413,6 +413,23 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     preSplit: false,
     notes: "Total mezzanine = STRK $1,091,342K + STRF $1,193,240K + STRC $2,473,800K + STRD $1,027,948K. totalAssets verified from XBRL us-gaap:Assets.",
   },
+  {
+    periodEnd: "2025-12-31",
+    formType: "10-K",
+    filedDate: "2026-02-19",
+    accessionNumber: "0001050446-26-000020",
+    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    digitalAssets: 66_625_344_000, // XBRL: us-gaap:CryptoAssetFairValue (digital assets at fair value)
+    cashAndEquivalents: 2_301_470_000, // XBRL: us-gaap:CashAndCashEquivalentsAtCarryingValue
+    totalAssets: 69_555_898_000, // XBRL: us-gaap:Assets
+    totalLiabilities: 9_478_987_000, // XBRL: us-gaap:Liabilities
+    convertibleDebt: 8_190_155_000, // XBRL: us-gaap:ConvertibleLongTermNotesPayable
+    longTermDebt: null,
+    preferredEquity: 6_919_514_000, // XBRL: us-gaap:TemporaryEquityCarryingAmountAttributableToParent (total mezzanine)
+    commonSharesOutstanding: 314_112_458, // Cover page DEI (Class A); Class B tracked separately via CLASS_B_SHARES
+    preSplit: false,
+    notes: "FY2025 10-K. Total mezzanine = STRK + STRF + STRD + STRC + Stream. Cover page DEI: 314,112,458 Class A + 19,640,250 Class B = 333,752,708 total. Cash increased dramatically from preferred/ATM proceeds.",
+  },
 ];
 
 /**

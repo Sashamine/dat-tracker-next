@@ -103,7 +103,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Strategy (MSTR) ==========
   // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Reported Feb 4, 2026 (10-K filed)
+  // Q4 2025 - Reported Feb 4, 2026 (10-K filed Feb 19, 2026)
   {
     ticker: "MSTR",
     fiscalYear: 2025,
@@ -114,7 +114,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     ...getMSTRQuarterData(2025, 4),
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/0001193125-26-021726-index.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
     status: "reported",
   },
   // Q3 2025
@@ -2303,9 +2303,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     revenueActual: 21_435_250,   // $17.4M staking + $4.1M design
     netIncome: -585_651_086,     // Massive unrealized SOL FV loss (non-cash)
-    holdingsAtQuarterEnd: 6_587_000,  // SOL-equivalent: 4,973,000 raw + ~1,614,000 from $201.6M fwdSOL LSTs at $124.86/SOL
+    holdingsAtQuarterEnd: 4_973_000,  // Raw SOL per 10-Q (+ ~2M in LST form)
     sharesAtQuarterEnd: 97_788_874,   // 84,924,272 common + 12,864,602 PFWs at Dec 31
-    holdingsPerShare: 0.06736,        // 6,587,000 / 97,788,874 (SOL-equivalent, matches holdings-history)
+    holdingsPerShare: 0.05085,        // 4,973,000 / 97,788,874 (raw SOL only)
     source: "sec-filing",
     sourceUrl: `/filings/fwdi/0001683168-26-000960`,
     status: "reported",
