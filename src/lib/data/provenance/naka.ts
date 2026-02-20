@@ -40,6 +40,14 @@ const KRAKEN_LOAN_8K_FILED = "2025-12-09";
 const REBRAND_8K_ACCESSION = "0001493152-26-003008";
 const REBRAND_8K_FILED = "2026-01-21";
 
+// BTC Inc. + UTXO Management acquisition 8-K (Feb 17, 2026)
+// NAKA exercised call option — 363,589,816 new shares on close (expected Q1 2026)
+// Deal SIGNED but NOT YET CLOSED — sharesForMnav unchanged until close
+const BTC_INC_MERGER_8K_ACCESSION = "0001493152-26-006959";
+const BTC_INC_MERGER_8K_FILED = "2026-02-17";
+const BTC_INC_MERGER_SHARES = 363_589_816; // Shares to be issued on merger close
+// Post-close total: 439,850,889 common + 363,589,816 merger + 71,704,975 PFW = 875,145,680
+
 const PIPE_8K_ACCESSION = "0001213900-25-041722";
 const PIPE_8K_FILED = "2025-05-12";
 
@@ -209,7 +217,7 @@ export const NAKA_TODO = [
   "Q4 2025 10-K due ~March 2026 — will have updated holdings + year-end financials",
   "Check if additional BTC purchased since Nov 2025 via any new 8-K filings",
   "ATM program usage may have increased since Q3 (only $5.6M of $5B used)",
-  "BTC Inc. call option details — put option liability was $21.8M as of Q3",
+  "PENDING MERGER: BTC Inc. + UTXO Management acquisition — 363,589,816 shares on close (expected Q1 2026). Update sharesForMnav to ~875,145,680 on close. Source: 8-K 2026-02-17, accession 0001493152-26-006959",
   "Nasdaq compliance: must achieve $1+ bid by June 8, 2026",
 ];
 
@@ -220,7 +228,7 @@ export const NAKA_PROVENANCE_DEBUG = {
   holdingsDate: LATEST_HOLDINGS_DATE,
   sharesDate: SHARES_DATE,
   balanceSheetDate: Q3_2025_PERIOD_END,
-  lastFilingChecked: REBRAND_8K_FILED,
+  lastFilingChecked: BTC_INC_MERGER_8K_FILED,
   holdings: LATEST_HOLDINGS,
   sharesBasic: SHARES_OUTSTANDING,
   sharesPrefunded: PREFUNDED_WARRANTS,
@@ -228,7 +236,10 @@ export const NAKA_PROVENANCE_DEBUG = {
   totalDebt: TOTAL_DEBT,
   cashReserves: CASH_RESERVES,
   quarterlyBurn: QUARTERLY_BURN,
-  notes: "Kraken loan $210M (Dec 2025) replaced Two Prime/Yorkville chain. Pre-funded warrants at $0.001 treated as basic shares.",
+  pendingMergerShares: BTC_INC_MERGER_SHARES,
+  pendingMergerClose: "2026-Q1",
+  pendingMergerSource: `8-K ${BTC_INC_MERGER_8K_FILED}, accession ${BTC_INC_MERGER_8K_ACCESSION}`,
+  notes: "Kraken loan $210M (Dec 2025) replaced Two Prime/Yorkville chain. Pre-funded warrants at $0.001 treated as basic shares. PENDING: BTC Inc. + UTXO merger (363,589,816 shares on close, expected Q1 2026).",
 };
 
 // =========================================================================

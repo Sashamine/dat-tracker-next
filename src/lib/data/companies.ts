@@ -82,15 +82,16 @@ export const ethCompanies: Company[] = [
     ticker: "SBET",
     asset: "ETH",
     tier: 1,
-    holdings: 863_424,  // 639,241 native + 224,183 LsETH (Dec 14, 2025)
-    holdingsLastUpdated: "2025-12-14",
+    holdings: 867_798,  // 587,232 native + 225,429 LsETH + 55,137 WeETH (Feb 15, 2026)
+    holdingsLastUpdated: "2026-02-15",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/form8-k.htm",
     // Provenance tracking (see provenance/sbet.ts for full audit trail)
-    holdingsAccession: "0001493152-25-028063",
-    holdingsNative: 639_241,      // Native ETH held directly
-    holdingsLsETH: 224_183,       // Lido staked ETH (as-if-redeemed)
-    stakingRewardsCumulative: 9_241,  // 3,350 native + 5,891 LsETH rewards
+    holdingsAccession: "0001493152-26-007427",
+    holdingsNative: 587_232,      // Native ETH held directly
+    holdingsLsETH: 225_429,       // Lido staked ETH (as-if-redeemed)
+    holdingsWeETH: 55_137,        // Ether.fi wrapped ETH (WeETH)
+    stakingRewardsCumulative: 13_615,  // Cumulative staking rewards as of Feb 15, 2026
     provenanceFile: "provenance/sbet.ts",
     lastVerified: "2026-02-11",
     nextExpectedFiling: "Q4 2025 10-K (Mar 2026)",
@@ -103,10 +104,10 @@ export const ethCompanies: Company[] = [
     secCik: "0001981535",
     // tokenizedAddress removed - was a pump.fun meme token, not an official tokenized stock
     stakingPct: 1.0,  // "100%" (Jul 1 8-K) / "substantially all" (Aug-Dec 8-Ks) / "nearly 100%" (Q2 earnings)
-    stakingMethod: "Native staking + Lido LsETH (liquid staking)",
-    stakingSource: "SEC 8-K Dec 17, 2025: 639,241 native ETH + 224,183 LsETH as-if-redeemed. Cumulative rewards: 9,241 ETH (3,350 native + 5,891 LsETH)",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
-    stakingAsOf: "2025-12-14",
+    stakingMethod: "Native staking + Lido LsETH (liquid staking) + Ether.fi WeETH",
+    stakingSource: "SEC 8-K Feb 19, 2026: 587,232 native ETH + 225,429 LsETH + 55,137 WeETH. Cumulative rewards: 13,615 ETH (as of Feb 15, 2026)",
+    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/form8-k.htm",
+    stakingAsOf: "2026-02-15",
     quarterlyBurnUsd: 2_728_000,  // 9-month avg: $8,183,743 continuing ops / 3 = $2.73M/qtr (Q3 alone was $6.3M but volatile)
     burnSource: "SEC 10-Q Q3 2025: NetCashUsedInOperatingActivities continuing ops = $8,183,743 (9mo) / 3 quarters",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
@@ -1327,6 +1328,9 @@ export const btcCompanies: Company[] = [
     // =========================================================================
     // NAKA - Core financials from provenance/naka.ts (SEC-verified XBRL)
     // =========================================================================
+    // PENDING: 363,589,816 shares to be issued on BTC Inc. + UTXO merger close (expected Q1 2026)
+    // Post-close sharesForMnav will be ~875,145,680 (439,850,889 + 363,589,816 + 71,704,975 PFW)
+    // Source: 8-K filed 2026-02-17, accession 0001493152-26-006959
     id: "naka",
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",

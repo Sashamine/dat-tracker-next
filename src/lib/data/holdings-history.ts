@@ -500,8 +500,10 @@ const SBET_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-10-19", holdings: 859_853, sharesOutstanding: 184_500_000, holdingsPerShare: 0.004660, source: "8-K Oct 21, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/", sourceType: "sec-filing" },
   // Accession: 0001493152-25-022065 (8-K/A corrected)
   { date: "2025-11-09", holdings: 861_251, sharesOutstanding: 189_000_000, holdingsPerShare: 0.004557, source: "8-K/A Nov 13, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/", sourceType: "sec-filing" },
-  // Accession: 0001493152-25-028063 (LATEST)
+  // Accession: 0001493152-25-028063
   { date: "2025-12-14", holdings: 863_424, sharesOutstanding: 196_693_191, holdingsPerShare: 0.004390, source: "8-K Dec 17, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/", sourceType: "sec-filing" },
+  // Accession: 0001493152-26-007427 (LATEST) — 587,232 native + 225,429 LsETH + 55,137 WeETH
+  { date: "2026-02-15", holdings: 867_798, sharesOutstanding: 196_693_191, holdingsPerShare: 0.004412, source: "8-K Feb 19, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/form8-k.htm", sourceType: "sec-filing" },
 ];
 
 // Ether Capital (ETHM) - Canadian ETH treasury

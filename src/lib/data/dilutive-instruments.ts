@@ -1739,6 +1739,11 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // Note: $200M Yorkville convertible debenture (conversion $2.80) was EXTINGUISHED Oct 2025
     // Replaced by Two Prime loan → Kraken $210M BTC-backed loan (Dec 2025)
     // No convertible debt outstanding as of Dec 2025
+    // ⚠️ PENDING MERGER: 363,589,816 new shares to be issued on BTC Inc. + UTXO Management acquisition close (expected Q1 2026)
+    //    Post-close sharesForMnav will be ~875,145,680 (439,850,889 common + 363,589,816 merger + 71,704,975 PFW)
+    //    Shares NOT yet issued — NOT included in sharesForMnav until deal closes
+    //    Source: 8-K filed 2026-02-17, accession 0001493152-26-006959
+    //    URL: https://www.sec.gov/Archives/edgar/data/1946573/000149315226006959/form8-k.htm
   ],
 
   // Boyaa Interactive (0434.HK) - Hong Kong BTC treasury

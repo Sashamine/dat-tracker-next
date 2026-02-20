@@ -7,9 +7,9 @@
  * 
  * Every value traces back to an SEC filing.
  * 
- * LAST VERIFIED: 2026-02-11
- * LAST HOLDINGS UPDATE: 2025-12-17 (as of Dec 14, 2025)
- * NO HOLDINGS 8-Ks FILED IN JAN/FEB 2026
+ * LAST VERIFIED: 2026-02-20
+ * LAST HOLDINGS UPDATE: 2026-02-19 (as of Feb 15, 2026)
+ * LATEST: 8-K filed Feb 19, 2026 — 867,798 ETH (587,232 native + 225,429 LsETH + 55,137 WeETH)
  */
 
 import { pv, docSource, SECFilingType } from "../types/provenance";
@@ -40,6 +40,17 @@ const SEC_FILINGS: Record<string, SECFiling> = {
   // 2026 FILINGS
   // =========================================================================
   
+  // Feb 19, 2026 - LATEST HOLDINGS UPDATE (as of Feb 15, 2026)
+  holdings_feb_2026: {
+    accession: "0001493152-26-007427",
+    formType: "8-K",
+    filedDate: "2026-02-19",
+    periodDate: "2026-02-15",
+    items: "7.01, 8.01, 9.01",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/form8-k.htm",
+    hasHoldingsUpdate: true,
+  },
+
   // Name change - NO holdings update
   name_change_feb_2026: {
     accession: "0001493152-26-004839",
@@ -468,41 +479,49 @@ function secDoc(filing: SECFiling, quote: string, exhibit?: string, searchTerm?:
 export const SBET_PROVENANCE = {
   
   // ---------------------------------------------------------------------------
-  // ETH HOLDINGS (from Dec 17, 2025 8-K, Ex 99.1)
-  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/ex99-1.htm
+  // ETH HOLDINGS (from Feb 19, 2026 8-K, as of Feb 15, 2026)
+  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/form8-k.htm
   // ---------------------------------------------------------------------------
   
-  // Total ETH holdings (native + LsETH as-if-redeemed)
-  holdings: pv(863_424, secDoc(
-    SEC_FILINGS.holdings_dec_2025,
-    "Accumulated 863,424 ETH¹... ¹As of December 14, 2025, total ETH holdings were comprised of 639,241 native ETH and 224,183 ETH as-if redeemed from LsETH",
-    "ex99-1.htm",
-    "863,424"  // Ctrl+F search term
-  ), "Dec 14, 2025: 639,241 native + 224,183 LsETH"),
+  // Total ETH holdings (native + LsETH + WeETH as-if-redeemed)
+  holdings: pv(867_798, secDoc(
+    SEC_FILINGS.holdings_feb_2026,
+    "Accumulated 867,798 ETH... comprised of 587,232 native ETH, 225,429 LsETH, and 55,137 WeETH",
+    "form8-k.htm",
+    "867,798"  // Ctrl+F search term
+  ), "Feb 15, 2026: 587,232 native + 225,429 LsETH + 55,137 WeETH"),
 
   // Breakdown: Native ETH
-  holdingsNative: pv(639_241, secDoc(
-    SEC_FILINGS.holdings_dec_2025,
-    "639,241 native ETH",
-    "ex99-1.htm",
-    "639,241"
+  holdingsNative: pv(587_232, secDoc(
+    SEC_FILINGS.holdings_feb_2026,
+    "587,232 native ETH",
+    "form8-k.htm",
+    "587,232"
   ), "Native ETH held directly"),
 
   // Breakdown: LsETH (Lido staked ETH) as-if-redeemed
-  holdingsLsETH: pv(224_183, secDoc(
-    SEC_FILINGS.holdings_dec_2025,
-    "224,183 ETH as-if redeemed from LsETH",
-    "ex99-1.htm",
-    "224,183"
+  holdingsLsETH: pv(225_429, secDoc(
+    SEC_FILINGS.holdings_feb_2026,
+    "225,429 ETH as-if redeemed from LsETH",
+    "form8-k.htm",
+    "225,429"
   ), "Lido staked ETH, valued at redemption rate"),
 
+  // Breakdown: WeETH (Ether.fi wrapped ETH)
+  holdingsWeETH: pv(55_137, secDoc(
+    SEC_FILINGS.holdings_feb_2026,
+    "55,137 WeETH (Ether.fi wrapped ETH)",
+    "form8-k.htm",
+    "55,137"
+  ), "Ether.fi wrapped ETH (WeETH)"),
+
   // Staking rewards earned
-  stakingRewards: pv(9_241, secDoc(
-    SEC_FILINGS.holdings_dec_2025,
-    "earned 9,241 ETH² in staking rewards... ²As of December 14, 2025, total ETH rewards were comprised of 3,350 from native ETH and 5,891 from LsETH",
-    "ex99-1.htm",
-    "9,241"
-  ), "3,350 native rewards + 5,891 LsETH rewards"),
+  stakingRewards: pv(13_615, secDoc(
+    SEC_FILINGS.holdings_feb_2026,
+    "earned 13,615 ETH in staking rewards as of February 15, 2026",
+    "form8-k.htm",
+    "13,615"
+  ), "Cumulative staking rewards as of Feb 15, 2026"),
 
   // ---------------------------------------------------------------------------
   // SHARES OUTSTANDING (from Q3 2025 10-Q XBRL)
@@ -576,9 +595,10 @@ export const SBET_PROVENANCE = {
 export interface SBETHoldingsSnapshot {
   date: string;           // Period date (YYYY-MM-DD)
   filedDate: string;      // When 8-K was filed
-  holdings: number;       // Total ETH (native + LsETH as-if-redeemed)
+  holdings: number;       // Total ETH (native + LsETH + WeETH as-if-redeemed)
   holdingsNative?: number;    // Native ETH (when disclosed separately)
   holdingsLsETH?: number;     // LsETH as-if-redeemed (when disclosed)
+  holdingsWeETH?: number;     // Ether.fi WeETH (when disclosed)
   stakingRewards?: number;    // Cumulative staking rewards (when disclosed)
   accession: string;      // SEC accession number
   url: string;            // Direct link to filing
@@ -586,6 +606,18 @@ export interface SBETHoldingsSnapshot {
 
 // All holdings snapshots from 8-K filings (Items 7.01, 8.01)
 export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
+  // Feb 2026 (LATEST)
+  {
+    date: "2026-02-15",
+    filedDate: "2026-02-19",
+    holdings: 867_798,
+    holdingsNative: 587_232,
+    holdingsLsETH: 225_429,
+    holdingsWeETH: 55_137,
+    stakingRewards: 13_615,
+    accession: "0001493152-26-007427",
+    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/form8-k.htm",
+  },
   // Dec 2025
   {
     date: "2025-12-14",
@@ -765,8 +797,8 @@ export const SBET_METADATA = {
   },
   
   // Last verification
-  lastVerified: "2026-02-11",
-  lastHoldingsUpdate: "2025-12-17",
+  lastVerified: "2026-02-20",
+  lastHoldingsUpdate: "2026-02-19",
   nextExpectedUpdate: "Q4 2025 10-K (expected Mar 2026)",
 };
 
