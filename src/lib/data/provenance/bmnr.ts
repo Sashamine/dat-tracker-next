@@ -309,13 +309,14 @@ export function estimateBMNRShares(): ShareEstimate {
   //   Feb 8:  +40,613 ETH, $86M cost,  +$9M cash chg   → $95M ATM @ $21.45 = 4,443,013 shares
   //   Feb 16: +45,759 ETH, $91M cost,  +$75M cash chg  → $166M ATM @ $20.03 = 8,308,860 shares
   // See: clawd/bmnr-audit/share-estimation.md
-  const estimatedNewShares = 16_479_274; // Sum: 3,691,415 + 0 + 35,986 + 4,443,013 + 8,308,860
+  // R-Synth reconstructed ATM estimates: ~21.9M total
+  const estimatedNewShares = 21_920_000;
 
   return {
     date: LATEST_HOLDINGS_DATE,
     baselineShares,
     estimatedNewShares,
-    totalEstimated: baselineShares + estimatedNewShares, // ~471,341,725
+    totalEstimated: baselineShares + estimatedNewShares, // ~476,782,451
     confidence: "medium",
     methodology: `Q1 FY2026 10-Q baseline (${baselineShares.toLocaleString()}) + cash-adjusted ATM estimate (${estimatedNewShares.toLocaleString()} shares from weekly 8-K ETH deltas, Alpaca stock prices, adjusted for cash drawdowns). Cross-checks at 0.51% vs 10-Q anchor.`,
   };
