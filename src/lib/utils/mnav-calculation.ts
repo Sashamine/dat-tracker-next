@@ -43,6 +43,12 @@ export function getCompanyMNAV(
   // Get market cap with dilution adjustments
   const { marketCap, inTheMoneyDebtValue, inTheMoneyWarrantProceeds } = getMarketCapForMnavSync(company, stockData, prices.forex);
 
+  // If we have no market cap data at all, mNAV is meaningless — return null
+  // (This happens when stock price feeds are unavailable, e.g. no FMP API key,
+  // or the stock isn't in FALLBACK_STOCKS. Without market cap, EV is just
+  // debt + preferred - cash, which produces a misleadingly low mNAV.)
+  if (!marketCap || marketCap <= 0) return null;
+
   // Adjust debt by subtracting in-the-money convertible face values
   const adjustedDebt = Math.max(0, (company.totalDebt || 0) - inTheMoneyDebtValue);
 

@@ -68,7 +68,7 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
       const freeCash = cashReserves - restrictedCash; // = 0
       const ev = marketCap + totalDebt + preferredEquity - freeCash;
       const totalNav = cryptoNav + restrictedCash;
-      const mNav = totalNav > 0 ? ev / totalNav : null;
+      const mNav = totalNav > 0 && marketCap > 0 ? ev / totalNav : null;
 
       const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
       const equityNav = cryptoNav + cashReserves - totalDebt - preferredEquity;

@@ -77,7 +77,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
 
       const netDebt = Math.max(0, rawDebt - cashReserves);
       const ev = marketCap + adjustedDebt + preferredEquity - freeCash;
-      const mNav = cryptoNav > 0 ? ev / cryptoNav : null;
+      const mNav = cryptoNav > 0 && marketCap > 0 ? ev / cryptoNav : null;
       const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
       const equityNav = cryptoNav + cashReserves - adjustedDebt - preferredEquity;

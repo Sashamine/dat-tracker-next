@@ -59,7 +59,9 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
       const cryptoNav = holdings * btcPrice;
       const netDebt = Math.max(0, adjustedDebt - cashReserves);
       const ev = marketCap + adjustedDebt + preferredEquity - cashReserves;
-      const mNav = cryptoNav > 0 ? ev / cryptoNav : null;
+      // mNAV requires a valid market cap — without it, EV is just debt+pref-cash
+      // which produces a misleadingly low number
+      const mNav = cryptoNav > 0 && marketCap > 0 ? ev / cryptoNav : null;
       const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
       const equityNav = cryptoNav + cashReserves - adjustedDebt - preferredEquity;
       const equityNavPerShare = sharesOutstanding > 0 ? equityNav / sharesOutstanding : 0;
