@@ -97,7 +97,7 @@ export interface VerifiedFinancialSnapshot {
 // =============================================================================
 
 /** Class B shares are constant (Saylor's super-voting shares) */
-export const CLASS_B_SHARES = 19_640_000;
+export const CLASS_B_SHARES = 19_640_250;
 
 /** Stock split date (10:1) */
 export const SPLIT_DATE = "2024-08-07";
@@ -114,6 +114,7 @@ const STRATEGY_COM_SHARES: Record<string, number> = {
   "2025-09-30": 267_468_000,
   "2025-12-31": 292_422_000,
   "2026-02-08": 313_442_000,
+  "2026-02-19": 314_112_000, // 10-K cover page DEI (314,112,458 → rounded to thousands for consistency)
 };
 
 /**

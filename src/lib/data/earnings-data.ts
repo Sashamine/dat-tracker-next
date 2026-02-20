@@ -103,7 +103,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
 
   // ========== Strategy (MSTR) ==========
   // Calendar year company (fiscal = calendar)
-  // Q4 2025 - Reported Feb 4, 2026 (10-K filed)
+  // Q4 2025 - Reported Feb 4, 2026 (10-K filed Feb 19, 2026)
   {
     ticker: "MSTR",
     fiscalYear: 2025,
@@ -114,7 +114,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     ...getMSTRQuarterData(2025, 4),
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/0001193125-26-021726-index.htm",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
     status: "reported",
   },
   // Q3 2025

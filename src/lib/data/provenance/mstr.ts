@@ -51,7 +51,7 @@ const postQ3AtmShares = MSTR_ATM_SALES
   .reduce((sum, sale) => sum + getCommonShares(sale), 0);
 
 // strategy.com Basic Shares Outstanding (primary source, Reg FD channel)
-const STRATEGY_COM_TOTAL = 333_083_000; // as of Feb 8, 2026
+const STRATEGY_COM_TOTAL = 333_752_708; // 10-K cover page DEI (as of FY2025 filing)
 const REMAINING_GAP = STRATEGY_COM_TOTAL - CURRENT_SHARES;
 
 /**
@@ -80,11 +80,11 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // COST BASIS - from latest 8-K
   // =========================================================================
-  costBasisAvg: pv(76_056, docSource({
+  costBasisAvg: pv(76_027, docSource({
     type: "sec-document",
-    searchTerm: "76,056",
-    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=average%20purchase`,
-    quote: "$76,056",
+    searchTerm: "76,027",
+    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=Average%20Purchase%20Price`,
+    quote: "$76,027",
     anchor: "Average Purchase Price",
     cik: MSTR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
@@ -96,11 +96,11 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // TOTAL COST BASIS - from latest 8-K
   // =========================================================================
-  totalCostBasis: pv(54_350_000_000, docSource({
+  totalCostBasis: pv(54_520_000_000, docSource({
     type: "sec-document",
-    searchTerm: "54.35",
-    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=aggregate%20purchase`,
-    quote: "$54.35B",
+    searchTerm: "54.52",
+    url: `/filings/mstr/${LATEST_HOLDINGS_ACCESSION}?tab=document&q=Aggregate%20Purchase%20Price`,
+    quote: "$54.52B",
     anchor: "Aggregate Purchase Price",
     cik: MSTR_CIK,
     accession: LATEST_HOLDINGS_ACCESSION,
@@ -151,22 +151,22 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
   // QUARTERLY BURN - from Q3 2025 10-Q XBRL
   // =========================================================================
-  quarterlyBurn: pv(15_200_000, derivedSource({
-    derivation: "YTD operating cash outflow ÷ 3 quarters",
-    formula: "Math.abs(ytdOperatingCashFlow) / 3",
+  quarterlyBurn: pv(16_810_000, derivedSource({
+    derivation: "FY operating cash outflow ÷ 4 quarters",
+    formula: "Math.abs(fyOperatingCashFlow) / 4",
     inputs: {
-      ytdOperatingCashFlow: pv(-45_612_000, xbrlSource({
+      fyOperatingCashFlow: pv(-67_241_000, xbrlSource({
         fact: "us-gaap:NetCashProvidedByUsedInOperatingActivities",
-        searchTerm: "45,612",
-        rawValue: -45_612_000,
+        searchTerm: "67,241",
+        rawValue: -67_241_000,
         unit: "USD",
         periodType: "duration",
         periodStart: "2025-01-01",
-        periodEnd: "2025-09-30",
+        periodEnd: "2025-12-31",
         cik: MSTR_CIK,
-        accession: Q3_2025_10Q,
-        filingType: "10-Q",
-        filingDate: Q3_2025_FILED,
+        accession: "0001050446-26-000020",
+        filingType: "10-K",
+        filingDate: "2026-02-19",
         documentAnchor: "Net cash used in operating activities",
       })),
     },
@@ -177,35 +177,35 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // Company current: strategy.com/debt — $8,214M notional (6 convertible notes)
   // SEC verified: Q3 10-Q XBRL — $8,174M book value (Δ$40M = OID amortization)
   // =========================================================================
-  totalDebt: pv(8_214_000_000, derivedSource({
-    derivation: "Company-disclosed notional, cross-checked against SEC book value",
-    formula: "strategy.com Total Debt (notional face value of 6 convertible notes)",
+  totalDebt: pv(8_190_155_000, derivedSource({
+    derivation: "SEC carrying value (primary), cross-referenced to company notional",
+    formula: "10-K balance sheet long-term debt / convertible notes payable (carrying value)",
     inputs: {
+      secVerified: pv(8_190_155_000, xbrlSource({
+        fact: "us-gaap:ConvertibleLongTermNotesPayable",
+        searchTerm: "8,190,155",
+        rawValue: 8_190_155_000,
+        unit: "USD",
+        periodType: "instant",
+        periodEnd: "2025-12-31",
+        cik: MSTR_CIK,
+        accession: "0001050446-26-000020",
+        filingType: "10-K",
+        filingDate: "2026-02-19",
+        documentAnchor: "Long-term debt",
+      })),
       companyCurrent: pv(8_214_000_000, docSource({
         type: "company-website",
-        searchTerm: "8,214,000",
+        searchTerm: "8,214",
         url: "https://www.strategy.com/debt",
-        quote: "2028 $1,010M + 2029 $3,000M + 2030A $800M + 2030B $2,000M + 2031 $604M + 2032 $800M = $8,214M",
+        quote: "Notional (face) value of 6 convertible notes totals $8,214M",
         anchor: "strategy.com/debt (Reg FD)",
         cik: MSTR_CIK,
         filingType: undefined,
         documentDate: "2026-02-12",
       })),
-      secVerified: pv(8_173_903_000, xbrlSource({
-        fact: "us-gaap:LongTermDebt",
-        searchTerm: "8,173,903",
-        rawValue: 8_173_903_000,
-        unit: "USD",
-        periodType: "instant",
-        periodEnd: "2025-09-30",
-        cik: MSTR_CIK,
-        accession: Q3_2025_10Q,
-        filingType: "10-Q",
-        filingDate: Q3_2025_FILED,
-        documentAnchor: "(5) Long-term Debt",
-      })),
     },
-  }), "Company: $8,214M notional (strategy.com/debt). SEC: $8,174M book value (Q3 10-Q). Δ$40M = OID amortization. All convertible notes, no term loans."),
+  }), "SEC: $8,190.155B carrying value (FY2025 10-K). Company: $8,214B notional (strategy.com/debt). Δ = OID/discount."),
 
   // =========================================================================
   // CASH - USD Reserve ($2.25B)
@@ -214,52 +214,72 @@ export const MSTR_PROVENANCE: ProvenanceFinancials = {
   // Balance sheet shows $2.30B total cash (Dec 31, 2025); $2.25B is the
   // earmarked USD Reserve portion.
   // =========================================================================
-  cashReserves: pv(2_250_000_000, docSource({
-    type: "sec-document",
-    searchTerm: "2.25",
-    url: "/filings/mstr/0001193125-26-001550?tab=document&q=USD%20Reserve",
-    quote: "USD Reserve was $2.25 billion, which provides approximately 2.5 years of coverage for dividends on its preferred stock and interest on its outstanding indebtedness",
-    anchor: "USD Reserve",
-    cik: MSTR_CIK,
-    accession: "0001193125-26-001550",
-    filingType: "8-K",
-    filingDate: "2026-01-05",
-    documentDate: "2026-01-04",
-  }), "USD Reserve for dividends/interest. First disclosed Jan 4 8-K (accn 001550). Confirmed Feb 5 Q4 earnings 8-K (accn 021726, Exhibit 99.1): same $2.25B figure reiterated as of Feb 1, 2026. Balance sheet (Dec 31): $2,301,470K total cash."),
+  cashReserves: pv(2_301_470_000, derivedSource({
+    derivation: "SEC balance sheet cash (primary), cross-referenced to USD Reserve disclosure",
+    formula: "CashAndCashEquivalentsAtCarryingValue",
+    inputs: {
+      secVerified: pv(2_301_470_000, xbrlSource({
+        fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        searchTerm: "2,301,470",
+        rawValue: 2_301_470_000,
+        unit: "USD",
+        periodType: "instant",
+        periodEnd: "2025-12-31",
+        cik: MSTR_CIK,
+        accession: "0001050446-26-000020",
+        filingType: "10-K",
+        filingDate: "2026-02-19",
+        documentAnchor: "Cash and cash equivalents",
+      })),
+      usdReserve: pv(2_250_000_000, docSource({
+        type: "sec-document",
+        searchTerm: "USD Reserve was $2.25 billion",
+        url: "/filings/mstr/0001193125-26-001550?tab=document&q=USD%20Reserve",
+        quote: "USD Reserve was $2.25 billion",
+        anchor: "USD Reserve",
+        cik: MSTR_CIK,
+        accession: "0001193125-26-001550",
+        filingType: "8-K",
+        filingDate: "2026-01-05",
+        documentDate: "2026-01-04",
+      })),
+    },
+  }), "SEC: $2,301.470B cash & equivalents (FY2025 10-K). Cross-ref: USD Reserve $2.25B disclosed in Jan 4, 2026 8-K (earmarked for dividends/interest)."),
 
   // =========================================================================
   // PREFERRED EQUITY
   // Company current: strategy.com/credit — $8,383M (5 preferred series)
   // SEC verified: Q3 10-Q $5,786M + STRE 8-K $717M + post-Q3 ATM 8-Ks ~$1,880M = ~$8,383M
   // =========================================================================
-  preferredEquity: pv(8_383_000_000, derivedSource({
-    derivation: "Company-disclosed current, cross-checked against SEC filings",
-    formula: "strategy.com Total Pref (notional of 5 preferred series)",
+  preferredEquity: pv(6_919_514_000, derivedSource({
+    derivation: "SEC carrying value (primary), cross-referenced to company notional",
+    formula: "TemporaryEquityCarryingAmountAttributableToParent",
     inputs: {
+      secVerified: pv(6_919_514_000, xbrlSource({
+        fact: "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
+        searchTerm: "6,919,514",
+        rawValue: 6_919_514_000,
+        unit: "USD",
+        periodType: "instant",
+        periodEnd: "2025-12-31",
+        cik: MSTR_CIK,
+        accession: "0001050446-26-000020",
+        filingType: "10-K",
+        filingDate: "2026-02-19",
+        documentAnchor: "Temporary equity",
+      })),
       companyCurrent: pv(8_383_000_000, docSource({
         type: "company-website",
         searchTerm: "Total Pref",
         url: "https://www.strategy.com/credit",
-        quote: "STRF $1,284M + STRC $3,379M + STRE $916M + STRK $1,402M + STRD $1,402M = $8,383M",
+        quote: "strategy.com reports $8,383M Total Pref (notional)",
         anchor: "strategy.com/credit (Reg FD)",
         cik: MSTR_CIK,
         filingType: undefined,
         documentDate: "2026-02-12",
       })),
-      secVerified: pv(5_786_330_000, docSource({
-        type: "sec-document",
-        searchTerm: "5,786,330",
-        url: `/filings/mstr/${Q3_2025_10Q}?tab=document&q=Total%20mezzanine`,
-        quote: "$5,786,330 (thousands) = $5.786B Total mezzanine equity as of Sep 30, 2025",
-        anchor: "Q3 2025 10-Q balance sheet",
-        cik: MSTR_CIK,
-        accession: Q3_2025_10Q,
-        filingType: "10-Q",
-        filingDate: Q3_2025_FILED,
-        documentDate: Q3_COVER_PAGE_DATE,
-      })),
     },
-  }), "Company: $8,383M (strategy.com/credit). SEC: $5,786M at Q3 + $717M STRE (8-K) + ~$1,880M ATM (8-Ks) = ~$8,383M. 5 series: STRF, STRC, STRE, STRK, STRD."),
+  }), "SEC: $6,919.514B temporary/mezzanine equity carrying value (FY2025 10-K). Company: $8,383B notional (strategy.com/credit)."),
 };
 
 /**

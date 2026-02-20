@@ -416,35 +416,35 @@ export const btcCompanies: Company[] = [
     twitter: "https://twitter.com/Strategy",
     secCik: "0001050446",
     // COST BASIS: from provenance
-    costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_056,
+    costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_027,
     costBasisSource: "SEC 8-K (provenance-tracked)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
     isMiner: false,
-    // QUARTERLY BURN: from provenance
-    quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value ?? 15_200_000,
-    burnAsOf: "2025-11-03",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
+    // QUARTERLY BURN: from provenance (FY2025 10-K: -$67.241M OpCF / 4 quarters)
+    quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value ?? 16_810_000,
+    burnAsOf: "2025-12-31",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
-    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 333_544_357,
-    sharesSource: "Company (strategy.com) + SEC audit (10-Q + ATM 8-Ks). See provenance for dual-source breakdown.",
-    sharesSourceUrl: "https://www.strategy.com/shares",
+    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 333_752_708,
+    sharesSource: "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
     sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,
     // CONVERTS: 10-Q Q3 2025 Note 7
     capitalRaisedConverts: 7_274_000_000,
     capitalRaisedConvertsSource: "SEC 10-Q Q3 2025: Cash flow statement - proceeds from convertible notes",
     capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/d893246d10q.htm#:~:text=Convertible%20Senior%20Notes",
-    // DEBT: Company current (strategy.com/debt) + SEC audit (Q3 10-Q)
-    totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_214_000_000,
-    debtSource: "Company (strategy.com/debt $8,214M notional) + SEC (Q3 10-Q $8,174M book). Δ$40M = OID.",
-    debtSourceUrl: "https://www.strategy.com/debt",
-    debtAsOf: "2026-02-12",
-    // PREFERRED: Company current (strategy.com/credit) + SEC audit (Q3 10-Q + 8-Ks)
-    preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 8_383_000_000,
-    preferredSource: "Company (strategy.com/credit $8,383M) + SEC (Q3 10-Q $5,786M + post-Q3 8-Ks)",
-    preferredSourceUrl: "https://www.strategy.com/credit",
-    preferredAsOf: "2026-02-12",
+    // DEBT: 10-K FY2025 carrying value (XBRL us-gaap:ConvertibleLongTermNotesPayable)
+    totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_190_155_000,
+    debtSource: "SEC 10-K FY2025: $8,190M carrying value (notional $8,214M, Δ = OID)",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    debtAsOf: "2025-12-31",
+    // PREFERRED: 10-K FY2025 mezzanine equity carrying value (5 series: STRK/STRF/STRD/STRC/Stream)
+    preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 6_919_514_000,
+    preferredSource: "SEC 10-K FY2025: $6,920M carrying value (notional $8,383M per strategy.com/credit)",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    preferredAsOf: "2025-12-31",
     // Cash obligations from SEC 8-K Dec 1, 2025
     preferredDividendAnnual: 780_000_000,
     debtInterestAnnual: 43_000_000,
@@ -456,10 +456,10 @@ export const btcCompanies: Company[] = [
     capitalRaisedAtm: 21_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration (21/21 plan equity component)",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524254726/d866aboringprospectus.htm#:~:text=%2421%2C000%2C000%2C000",
-    // CASH: from provenance
-    cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_250_000_000,
-    cashSource: "SEC-verified (provenance): 8-K USD Reserve",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000012/mstr-20251030x8kxex991.htm",
+    // CASH: 10-K FY2025 balance sheet (XBRL us-gaap:CashAndCashEquivalentsAtCarryingValue)
+    cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_301_470_000,
+    cashSource: "SEC 10-K FY2025: $2,301M cash & equivalents (USD Reserve $2,250M per 8-K)",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
     cashAsOf: "2025-12-31",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
