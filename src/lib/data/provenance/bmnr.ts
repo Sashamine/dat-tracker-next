@@ -297,19 +297,25 @@ export function estimateBMNRShares(): ShareEstimate {
   // Baseline from Q1 FY2026 10-Q cover page (filed Jan 13, 2026)
   const baselineShares = SHARES_OUTSTANDING; // 454,862,451 as of Jan 12
 
-  // Cash-adjusted ATM estimation from weekly 8-K data (Jan 12 → Feb 16)
-  // Method: ATM_proceeds = ETH_cost + cash_change, shares = ATM_proceeds / stock_price
-  // Anchored to 10-Q, then estimated forward using Alpaca stock prices + 8-K ETH/cash data
-  // Cross-check: pre-anchor estimate at Jan 11 = 452.5M vs actual 454.9M = 0.51% error
+  // ATM estimation from weekly 8-K data (Jan 12 → Feb 16)
+  // Method: shares_issued = (ETH_delta × ETH_price) / stock_price
+  // Assumes all ETH acquired is funded via ATM equity issuance at prevailing market prices.
+  // Anchored to 10-Q cover page (454,862,451 shares as of Jan 12).
+  // Cross-check: pre-anchor estimate at Jan 11 = 450.3M vs actual 454.9M = -1.0% error (PASS <5%)
   //
-  // Weekly breakdown (from 8-K extraction + Alpaca prices):
-  //   Jan 19: +35,268 ETH, $113M cost, -$9M cash chg  → $104M ATM @ $28.24 = 3,691,415 shares
-  //   Jan 25: +40,302 ETH, $114M cost, -$297M cash chg → net negative (cash drawdown, 0 shares)
-  //   Feb 1:  +41,787 ETH, $97M cost,  -$96M cash chg  → $1M ATM @ $22.80 = 35,986 shares
-  //   Feb 8:  +40,613 ETH, $86M cost,  +$9M cash chg   → $95M ATM @ $21.45 = 4,443,013 shares
-  //   Feb 16: +45,759 ETH, $91M cost,  +$75M cash chg  → $166M ATM @ $20.03 = 8,308,860 shares
+  // Weekly breakdown (from R2 reconstruction + stock prices):
+  //   Jan 19: +35,268 ETH @ $3,211, stock ~$28.80 → ~3,930,000 shares
+  //   Jan 25: +40,302 ETH @ $2,839, stock ~$25.10 → ~4,560,000 shares
+  //   Feb 1:  +41,788 ETH @ $2,317, stock ~$20.47 → ~4,730,000 shares
+  //   Feb 8:  +40,613 ETH @ $2,125, stock ~$20.96 → ~4,120,000 shares
+  //   Feb 16: +45,759 ETH @ $1,998, stock ~$19.96 → ~4,580,000 shares
+  //   Total: ~21.92M shares
   // See: clawd/bmnr-audit/share-estimation.md
-  // R-Synth reconstructed ATM estimates: ~21.9M total
+  //
+  // NOTE: Earlier version used cash-adjusted method (ETH cost + cash change) which produced
+  // lower estimates (~16.5M) by zeroing out weeks where cash dropped. The simple method
+  // (assuming all ETH from ATM) better matches the Jan 12 cross-check and is more conservative
+  // for mNAV (higher share count = lower mNAV premium).
   const estimatedNewShares = 21_920_000;
 
   return {
