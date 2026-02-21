@@ -128,74 +128,149 @@ const codebaseValues = {
 
 const SEC_UA = 'curl -A "DATCAP Research contact@datcap.com"';
 
-const verdictBlock = `\n\nVERDICT: PASS | FAIL | WARN\nCHANGES: ...\nBLOCKED: ...\nDETAILS: ...\n`;
+// Verdict block is no longer a standalone constant — each prompt embeds
+// the IDENTITY line directly via identityGuard() and the prompt text.
+// Workers include IDENTITY in their output; synths include IDENTITY + CHAIN.
 
-function w(label: string, task: string): PromptSpec {
-  return { role: "worker", model: "openai/gpt-5.2", label, task };
-}
-function s(label: string, task: string): PromptSpec {
-  return { role: "synth", model: "openai/gpt-5.2", label, task };
+/**
+ * Identity guard preamble — prepended to every worker/synth prompt.
+ * The agent must self-report its model identity before doing any work.
+ * If it can't confirm it matches the expected provider, it aborts.
+ */
+function identityGuard(expectedProvider: string, role: "worker" | "synth" = "worker"): string {
+  const verdictFormat = role === "synth"
+    ? `Your verdict file MUST end with exactly these lines (no other format accepted):
+CHAIN: <worker_label>=<provider/model>, <worker_label>=<provider/model>, ...
+IDENTITY: <your_provider>/<your_model>
+VERDICT: PASS | FAIL | WARN
+CHANGES: <comma-separated fields>
+BLOCKED: <issues requiring resolution>
+DETAILS: <1-2 sentence summary>
+
+The CHAIN line must list each upstream worker file you read and the IDENTITY line from that file.
+If any upstream worker is missing an IDENTITY line, report that as a FAIL.`
+    : `Your output file MUST end with exactly these lines (no other format accepted):
+IDENTITY: <your_provider>/<your_model>
+VERDICT: PASS | FAIL | WARN
+CHANGES: <comma-separated fields>
+BLOCKED: <issues requiring resolution>
+DETAILS: <1-2 sentence summary>`;
+
+  return `## IDENTITY CHECK (MANDATORY — DO THIS FIRST)
+Before doing ANY work, you must confirm your model identity.
+Expected provider: ${expectedProvider}
+
+Step 1: State what model/provider you are (e.g., "I am Claude Sonnet 4.6 on Anthropic").
+Step 2: If you are NOT running on the expected provider above, reply with ONLY:
+  ABORT: Identity mismatch. Expected ${expectedProvider}, got [your actual provider].
+  Do NOT proceed with any work.
+Step 3: If you confirm you match, state "IDENTITY CONFIRMED: [your model name]" and proceed.
+
+## VERDICT FORMAT (MANDATORY)
+${verdictFormat}
+
+---
+
+`;
 }
 
+/**
+ * Model assignments per phase (from SKILL.md §2a):
+ * - Phase 0, 1, 4, 5, 6 (Build): Sonnet 4.6 (Anthropic)
+ * - Phase 1-ADV, 3-V, 7 (Audit): Grok 4 (xAI)
+ * - Phase 2-3 (Diff/Patch): GPT-5.2 (OpenAI)
+ *
+ * Synthesizers use the same provider as their phase workers.
+ */
+const MODELS = {
+  sonnet: "anthropic/claude-sonnet-4-6",
+  grok: "xai/grok-4-fast-reasoning",
+  gpt: "openai/gpt-5.2",
+} as const;
+
+function w(label: string, task: string, provider?: string, model: string = MODELS.sonnet): PromptSpec {
+  const preamble = provider ? identityGuard(provider, "worker") : "";
+  return { role: "worker", model, label, task: preamble + task };
+}
+function s(label: string, task: string, provider?: string, model: string = MODELS.sonnet): PromptSpec {
+  const preamble = provider ? identityGuard(provider, "synth") : "";
+  return { role: "synth", model, label, task: preamble + task };
+}
 const prompts: Record<string, PromptSpec> = {
+  // --- Phase 1: Reconstruct (Sonnet / Anthropic) ---
   r1: w(
     `${tickerLower}-r1-holdings`,
-    `You are R1 (Holdings) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct crypto holdings, cost basis, and custody/staking breakdown from primary sources (SEC XBRL + filings + recent 8-Ks).\n\nRules:\n- Use SEC endpoints if applicable:\n  - XBRL facts: https://data.sec.gov/api/xbrl/companyfacts/CIK${cikPadded ?? ""}.json\n  - Submissions: https://data.sec.gov/submissions/CIK${cikPadded ?? ""}.json\n- All SEC access must use: ${SEC_UA}\n- Provide direct filing document URLs (not accession directory).\n- Every number: include as-of date + sourceUrl + a short quote/snippet.\n\nWrite output to: ${runDir}/r1-holdings.md\nEnd with the required verdict block.`
+    `You are R1 (Holdings) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct crypto holdings, cost basis, and custody/staking breakdown from primary sources (SEC XBRL + filings + recent 8-Ks).\n\nRules:\n- Use SEC endpoints if applicable:\n  - XBRL facts: https://data.sec.gov/api/xbrl/companyfacts/CIK${cikPadded ?? ""}.json\n  - Submissions: https://data.sec.gov/submissions/CIK${cikPadded ?? ""}.json\n- All SEC access must use: ${SEC_UA}\n- Provide direct filing document URLs (not accession directory).\n- Every number: include as-of date + sourceUrl + a short quote/snippet.\n\nWrite output to: ${runDir}/r1-holdings.md\nEnd with the required verdict block.`,
+    "Anthropic (Sonnet)", MODELS.sonnet
   ),
 
   r2: w(
     `${tickerLower}-r2-shares`,
-    `You are R2 (Shares) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct basic shares outstanding (cover page), any class structure, and recent share count changes (ATM, PIPE, buybacks).\n\nRules:\n- Prefer cover page shares outstanding / DEI tag when available.\n- Include recent 8-K / 424B5 / S-3 updates affecting shares.\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r2-shares.md\nEnd with the required verdict block.`
+    `You are R2 (Shares) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct basic shares outstanding (cover page), any class structure, and recent share count changes (ATM, PIPE, buybacks).\n\nRules:\n- Prefer cover page shares outstanding / DEI tag when available.\n- Include recent 8-K / 424B5 / S-3 updates affecting shares.\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r2-shares.md\nEnd with the required verdict block.`,
+    "Anthropic (Sonnet)", MODELS.sonnet
   ),
 
   r3: w(
     `${tickerLower}-r3-financials`,
-    `You are R3 (Financials) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct cash, total debt (with breakdown), preferred equity, and quarterly burn from latest filings.\n\nRules:\n- Prefer latest 10-Q/10-K balance sheet (or most recent 8-K with updated balances).\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r3-financials.md\nEnd with the required verdict block.`
+    `You are R3 (Financials) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct cash, total debt (with breakdown), preferred equity, and quarterly burn from latest filings.\n\nRules:\n- Prefer latest 10-Q/10-K balance sheet (or most recent 8-K with updated balances).\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r3-financials.md\nEnd with the required verdict block.`,
+    "Anthropic (Sonnet)", MODELS.sonnet
   ),
 
   r4: w(
     `${tickerLower}-r4-dilutives`,
-    `You are R4 (Dilutives) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Enumerate all dilutive instruments (warrants/convertibles/options/RSUs) with strike, potential shares, expiration, and face value where relevant.\n\nRules:\n- Check 8-K Item 3.02 and exhibits for PIPE warrants/convertibles.\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r4-dilutives.md\nEnd with the required verdict block.`
+    `You are R4 (Dilutives) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Enumerate all dilutive instruments (warrants/convertibles/options/RSUs) with strike, potential shares, expiration, and face value where relevant.\n\nRules:\n- Check 8-K Item 3.02 and exhibits for PIPE warrants/convertibles.\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r4-dilutives.md\nEnd with the required verdict block.`,
+    "Anthropic (Sonnet)", MODELS.sonnet
   ),
 
   rSynth: s(
     `${tickerLower}-r-synth`,
-    `You are R-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead these worker outputs:\n- ${runDir}/r1-holdings.md\n- ${runDir}/r2-shares.md\n- ${runDir}/r3-financials.md\n- ${runDir}/r4-dilutives.md\n\nAlso read CODEBASE_VALUES below and use it ONLY for comparison/diff (not as a source of truth).\n\nCODEBASE_VALUES (JSON):\n${JSON.stringify(codebaseValues, null, 2)}\n\nTask:\n- Reconcile R1–R4 into a single reconstruction with citations.\n- Identify discrepancies vs codebase values and list fields to change.\n\nWrite full report: ${runDir}/r-synth.md\nWrite verdict-only (exact 4 lines): ${runDir}/r-synth-verdict.txt\n\nVerdict-only lines must be exactly:\nVERDICT: PASS | FAIL | WARN\nCHANGES: <comma-separated fields>\nBLOCKED: <issues requiring resolution>\nDETAILS: <1-2 sentence summary>`
+    `You are R-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead these worker outputs:\n- ${runDir}/r1-holdings.md\n- ${runDir}/r2-shares.md\n- ${runDir}/r3-financials.md\n- ${runDir}/r4-dilutives.md\n\nFor EACH worker file, find the IDENTITY line near the end. You MUST extract and echo these in your CHAIN line. If any worker file is missing or has no IDENTITY line, that is a FAIL.\n\nAlso read CODEBASE_VALUES below and use it ONLY for comparison/diff (not as a source of truth).\n\nCODEBASE_VALUES (JSON):\n${JSON.stringify(codebaseValues, null, 2)}\n\nTask:\n- Reconcile R1–R4 into a single reconstruction with citations.\n- Identify discrepancies vs codebase values and list fields to change.\n\nWrite full report: ${runDir}/r-synth.md\nWrite verdict-only: ${runDir}/r-synth-verdict.txt`,
+    "Anthropic (Sonnet)", MODELS.sonnet
   ),
 
+  // --- Phase 1-ADV: Adversarial (Grok / xAI) ---
   a1: w(
     `${tickerLower}-a1-numerical`,
-    `You are A1 (Numerical) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Verify all math and derived values in r-synth.md.\n- Recompute every calculation; FAIL if any cannot be verified.\n\nRules:\n- Do NOT use codebase values.\n\nWrite output to: ${runDir}/a1-numerical.md\nEnd with required verdict block.`
+    `You are A1 (Numerical) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Verify all math and derived values in r-synth.md.\n- Recompute every calculation; FAIL if any cannot be verified.\n\nRules:\n- Do NOT use codebase values.\n\nWrite output to: ${runDir}/a1-numerical.md\nEnd with required verdict block.`,
+    "xAI (Grok)", MODELS.grok
   ),
 
   a2: w(
     `${tickerLower}-a2-provenance`,
-    `You are A2 (Provenance) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Verify every sourceUrl in r-synth.md loads and supports the claim (searchTerm/quote present).\n\nRules:\n- URLs must be specific filing documents, not directories.\n- All SEC access must use: ${SEC_UA}\n- If any URL fails or claim not supported: FAIL.\n\nWrite output to: ${runDir}/a2-provenance.md\nEnd with required verdict block.`
+    `You are A2 (Provenance) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Verify every sourceUrl in r-synth.md loads and supports the claim (searchTerm/quote present).\n\nRules:\n- URLs must be specific filing documents, not directories.\n- All SEC access must use: ${SEC_UA}\n- If any URL fails or claim not supported: FAIL.\n\nWrite output to: ${runDir}/a2-provenance.md\nEnd with required verdict block.`,
+    "xAI (Grok)", MODELS.grok
   ),
 
   a3: w(
     `${tickerLower}-a3-temporal`,
-    `You are A3 (Temporal) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Check timeline consistency: dates, quarter-ends, as-of logic, no future data.\n\nRules:\n- Do NOT use codebase values.\n\nWrite output to: ${runDir}/a3-temporal.md\nEnd with required verdict block.`
+    `You are A3 (Temporal) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Check timeline consistency: dates, quarter-ends, as-of logic, no future data.\n\nRules:\n- Do NOT use codebase values.\n\nWrite output to: ${runDir}/a3-temporal.md\nEnd with required verdict block.`,
+    "xAI (Grok)", MODELS.grok
   ),
 
   a4: w(
     `${tickerLower}-a4-completeness`,
-    `You are A4 (Completeness) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Identify missing instruments, missing classes, missing filings/events, coverage gaps.\n\nRules:\n- Do NOT use codebase values.\n\nWrite output to: ${runDir}/a4-completeness.md\nEnd with required verdict block.`
+    `You are A4 (Completeness) for ${ticker}.\n\nRun dir: ${runDir}\nR-Synth path: ${runDir}/r-synth.md\n\nTask:\n- Identify missing instruments, missing classes, missing filings/events, coverage gaps.\n\nRules:\n- Do NOT use codebase values.\n\nWrite output to: ${runDir}/a4-completeness.md\nEnd with required verdict block.`,
+    "xAI (Grok)", MODELS.grok
   ),
 
   aSynth: s(
     `${tickerLower}-a-synth`,
-    `You are A-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead:\n- ${runDir}/a1-numerical.md\n- ${runDir}/a2-provenance.md\n- ${runDir}/a3-temporal.md\n- ${runDir}/a4-completeness.md\n- ${runDir}/r-synth.md\n\nTask:\n- Decide if adversarial findings are real.\n- FAIL if any material error exists.\n\nWrite full report: ${runDir}/a-synth.md\nWrite verdict-only: ${runDir}/a-synth-verdict.txt (exact 4 lines).\n\nVerdict-only lines must be exactly:\nVERDICT: PASS | FAIL | WARN\nCHANGES: <comma-separated fields>\nBLOCKED: <issues requiring resolution>\nDETAILS: <1-2 sentence summary>`
+    `You are A-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead:\n- ${runDir}/a1-numerical.md\n- ${runDir}/a2-provenance.md\n- ${runDir}/a3-temporal.md\n- ${runDir}/a4-completeness.md\n- ${runDir}/r-synth.md\n\nFor EACH worker file (a1-a4), find the IDENTITY line near the end. You MUST extract and echo these in your CHAIN line. If any worker file is missing or has no IDENTITY line, that is a FAIL.\n\nTask:\n- Decide if adversarial findings are real.\n- FAIL if any material error exists.\n\nWrite full report: ${runDir}/a-synth.md\nWrite verdict-only: ${runDir}/a-synth-verdict.txt`,
+    "xAI (Grok)", MODELS.grok
   ),
 
+  // --- Phase 3-V: Verify (Grok / xAI) ---
   vSynth: s(
     `${tickerLower}-v-synth`,
-    `You are V-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nInputs (read whatever exists):\n- ${runDir}/patch.diff (or patches.md)\n- ${runDir}/build.log\n- ${runDir}/citations-check.json (if present)\n\nTask:\n- FAIL if build fails or citation checks fail.\n- PASS only if patch applies cleanly and verification artifacts are valid.\n\nWrite full report: ${runDir}/v-synth.md\nWrite verdict-only: ${runDir}/v-synth-verdict.txt (exact 4 lines).`
+    `You are V-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nInputs (read whatever exists):\n- ${runDir}/patch.diff (or patches.md)\n- ${runDir}/build.log\n- ${runDir}/citations-check.json (if present)\n\nTask:\n- FAIL if build fails or citation checks fail.\n- PASS only if patch applies cleanly and verification artifacts are valid.\n\nWrite full report: ${runDir}/v-synth.md\nWrite verdict-only: ${runDir}/v-synth-verdict.txt (exact 4 lines).`,
+    "xAI (Grok)", MODELS.grok
   ),
 
+  // --- Phase 4: Cross-file (Sonnet / Anthropic) ---
   cSynth: s(
     `${tickerLower}-c-synth`,
-    `You are C-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead these code files for ${ticker} cross-file consistency:\n- src/lib/data/companies.ts\n- src/lib/data/dilutive-instruments.ts\n- src/lib/data/holdings-history.ts\n- src/lib/data/earnings-data.ts\n\nTask:\n- Verify all values agree across files (latest + quarter-ends).\n- FAIL on any mismatch.\n\nWrite full report: ${runDir}/c-synth.md\nWrite verdict-only: ${runDir}/c-synth-verdict.txt (exact 4 lines).`
+    `You are C-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead these code files for ${ticker} cross-file consistency:\n- src/lib/data/companies.ts\n- src/lib/data/dilutive-instruments.ts\n- src/lib/data/holdings-history.ts\n- src/lib/data/earnings-data.ts\n\nTask:\n- Verify all values agree across files (latest + quarter-ends).\n- FAIL on any mismatch.\n\nWrite full report: ${runDir}/c-synth.md\nWrite verdict-only: ${runDir}/c-synth-verdict.txt (exact 4 lines).`,
+    "Anthropic (Sonnet)", MODELS.sonnet
   ),
 };
 

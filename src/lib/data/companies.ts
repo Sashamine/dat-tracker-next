@@ -29,7 +29,7 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=4%2C371%2C497%20ETH",
     datStartDate: "2025-07-01",
     // COST BASIS: from provenance (10-Q)
-    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 3_893,
+    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 3_874,
     costBasisSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=cost%20basis",
     costBasisAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
@@ -60,10 +60,10 @@ export const ethCompanies: Company[] = [
     sharesForMnav: estimateBMNRShares().totalEstimated,
     sharesSource: "Estimated: 10-Q baseline + ATM (ETH × price ÷ stock price)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=454%2C862%2C451",
-    sharesAsOf: new Date().toISOString().split("T")[0], // Today (estimated)
+    sharesAsOf: "2026-02-16", // Latest 8-K (Feb 16, 2026 — estimated ATM through that date)
     // CASH: from provenance (8-K)
-    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,
-    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 595_000_000,  // Operating capital - not excess
+    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,
+    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,  // Operating capital - not excess
     cashSource: "SEC-verified (provenance): 8-K Feb 17, 2026",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=%24670%20million",
     cashAsOf: BMNR_PROVENANCE_DEBUG.holdingsDate,
