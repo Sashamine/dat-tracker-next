@@ -238,8 +238,8 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
   {
     date: '2025-12-14',
     holdings: 3967210,
-    sharesOutstanding: 400_000_000,
-    holdingsPerShare: 0.009918,
+    sharesOutstanding: 410_000_000, // Estimated — 8-K (Dec 15) doesn't disclose share count. Using ~410M (above Nov 30 anchor of 408,578,823 + ~1.4M ATM est.)
+    holdingsPerShare: 0.009676,
     cash: 1_000_000_000,
     source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315225027660/ex99-1.htm',

@@ -60,7 +60,7 @@ export const ethCompanies: Company[] = [
     sharesForMnav: estimateBMNRShares().totalEstimated,
     sharesSource: "Estimated: 10-Q baseline + ATM (ETH × price ÷ stock price)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=454%2C862%2C451",
-    sharesAsOf: new Date().toISOString().split("T")[0], // Today (estimated)
+    sharesAsOf: "2026-02-16", // Latest 8-K (Feb 16, 2026 — estimated ATM through that date)
     // CASH: from provenance (8-K)
     cashReserves: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,
     restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,  // Operating capital - not excess

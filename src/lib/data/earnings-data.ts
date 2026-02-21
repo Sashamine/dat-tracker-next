@@ -1726,7 +1726,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 25_000_000,
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000168316825004889",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000168316825004889/bitmine_i10q-053125.htm",
     status: "reported",
   },
 
