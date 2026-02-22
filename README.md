@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Verification (START HERE)
+
+Canonical verification standard + model role split:
+- **`VERIFICATION_RUNBOOK.md`**
+
+Model assignments + guardrails:
+- `specs/model-assignments.md`
+
 ## Getting Started
 
 First, run the development server:
