@@ -14,7 +14,8 @@
     "snapshot": "tsx scripts/snapshot-numbers.ts",
     "diff-snapshot": "tsx scripts/diff-numbers.ts",
     "verify-citations": "tsx scripts/verify-citations.ts",
-    "xbrl:extract": "node scripts/xbrl/extract-companyfacts.ts"
+    "xbrl:extract": "node scripts/xbrl/extract-companyfacts.ts",
+    "sec:download": "node scripts/xbrl/sec-download-filing.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
