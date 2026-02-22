@@ -183,16 +183,18 @@ ${verdictFormat}
  * Synthesizers use the same provider as their phase workers.
  */
 const MODELS = {
-  sonnet: "anthropic/claude-sonnet-4-6",
+  // 3-tier OpenAI plan (see specs/model-assignments.md)
+  gpt_judge: "openai/gpt-5.2",
+  gpt_mid: "openai/gpt-5.1",      // if unavailable in your account, change to gpt-5.2
+  gpt_cheap: "openai/gpt-5-mini", // bulk extraction
   grok: "xai/grok-4-fast-reasoning",
-  gpt: "openai/gpt-5.2",
 } as const;
 
-function w(label: string, task: string, provider?: string, model: string = MODELS.sonnet): PromptSpec {
+function w(label: string, task: string, provider?: string, model: string = MODELS.gpt_mid): PromptSpec {
   const preamble = provider ? identityGuard(provider, "worker") : "";
   return { role: "worker", model, label, task: preamble + task };
 }
-function s(label: string, task: string, provider?: string, model: string = MODELS.sonnet): PromptSpec {
+function s(label: string, task: string, provider?: string, model: string = MODELS.gpt_mid): PromptSpec {
   const preamble = provider ? identityGuard(provider, "synth") : "";
   return { role: "synth", model, label, task: preamble + task };
 }
@@ -201,31 +203,31 @@ const prompts: Record<string, PromptSpec> = {
   r1: w(
     `${tickerLower}-r1-holdings`,
     `You are R1 (Holdings) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct crypto holdings, cost basis, and custody/staking breakdown from primary sources (SEC XBRL + filings + recent 8-Ks).\n\nRules:\n- Use SEC endpoints if applicable:\n  - XBRL facts: https://data.sec.gov/api/xbrl/companyfacts/CIK${cikPadded ?? ""}.json\n  - Submissions: https://data.sec.gov/submissions/CIK${cikPadded ?? ""}.json\n- All SEC access must use: ${SEC_UA}\n- Provide direct filing document URLs (not accession directory).\n- Every number: include as-of date + sourceUrl + a short quote/snippet.\n\nWrite output to: ${runDir}/r1-holdings.md\nEnd with the required verdict block.`,
-    "Anthropic (Sonnet)", MODELS.sonnet
+    "OpenAI (GPT)", MODELS.gpt_cheap
   ),
 
   r2: w(
     `${tickerLower}-r2-shares`,
     `You are R2 (Shares) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct basic shares outstanding (cover page), any class structure, and recent share count changes (ATM, PIPE, buybacks).\n\nRules:\n- Prefer cover page shares outstanding / DEI tag when available.\n- Include recent 8-K / 424B5 / S-3 updates affecting shares.\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r2-shares.md\nEnd with the required verdict block.`,
-    "Anthropic (Sonnet)", MODELS.sonnet
+    "OpenAI (GPT)", MODELS.gpt_cheap
   ),
 
   r3: w(
     `${tickerLower}-r3-financials`,
     `You are R3 (Financials) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Reconstruct cash, total debt (with breakdown), preferred equity, and quarterly burn from latest filings.\n\nRules:\n- Prefer latest 10-Q/10-K balance sheet (or most recent 8-K with updated balances).\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r3-financials.md\nEnd with the required verdict block.`,
-    "Anthropic (Sonnet)", MODELS.sonnet
+    "OpenAI (GPT)", MODELS.gpt_cheap
   ),
 
   r4: w(
     `${tickerLower}-r4-dilutives`,
     `You are R4 (Dilutives) for {{TICKER}}.\n\nTicker: ${ticker}\nCIK: ${cikPadded ?? "N/A"}\nRun dir: ${runDir}\n\nObjective: Enumerate all dilutive instruments (warrants/convertibles/options/RSUs) with strike, potential shares, expiration, and face value where relevant.\n\nRules:\n- Check 8-K Item 3.02 and exhibits for PIPE warrants/convertibles.\n- All SEC access must use: ${SEC_UA}\n\nWrite output to: ${runDir}/r4-dilutives.md\nEnd with the required verdict block.`,
-    "Anthropic (Sonnet)", MODELS.sonnet
+    "OpenAI (GPT)", MODELS.gpt_mid
   ),
 
   rSynth: s(
     `${tickerLower}-r-synth`,
     `You are R-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead these worker outputs:\n- ${runDir}/r1-holdings.md\n- ${runDir}/r2-shares.md\n- ${runDir}/r3-financials.md\n- ${runDir}/r4-dilutives.md\n\nFor EACH worker file, find the IDENTITY line near the end. You MUST extract and echo these in your CHAIN line. If any worker file is missing or has no IDENTITY line, that is a FAIL.\n\nAlso read CODEBASE_VALUES below and use it ONLY for comparison/diff (not as a source of truth).\n\nCODEBASE_VALUES (JSON):\n${JSON.stringify(codebaseValues, null, 2)}\n\nTask:\n- Reconcile R1–R4 into a single reconstruction with citations.\n- Identify discrepancies vs codebase values and list fields to change.\n\nWrite full report: ${runDir}/r-synth.md\nWrite verdict-only: ${runDir}/r-synth-verdict.txt`,
-    "Anthropic (Sonnet)", MODELS.sonnet
+    "OpenAI (GPT)", MODELS.gpt_mid
   ),
 
   // --- Phase 1-ADV: Adversarial (Grok / xAI) ---
@@ -270,7 +272,7 @@ const prompts: Record<string, PromptSpec> = {
   cSynth: s(
     `${tickerLower}-c-synth`,
     `You are C-Synth for ${ticker}.\n\nRun dir: ${runDir}\n\nRead these code files for ${ticker} cross-file consistency:\n- src/lib/data/companies.ts\n- src/lib/data/dilutive-instruments.ts\n- src/lib/data/holdings-history.ts\n- src/lib/data/earnings-data.ts\n\nTask:\n- Verify all values agree across files (latest + quarter-ends).\n- FAIL on any mismatch.\n\nWrite full report: ${runDir}/c-synth.md\nWrite verdict-only: ${runDir}/c-synth-verdict.txt (exact 4 lines).`,
-    "Anthropic (Sonnet)", MODELS.sonnet
+    "OpenAI (GPT)", MODELS.gpt_mid
   ),
 };
 
