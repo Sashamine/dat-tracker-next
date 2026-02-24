@@ -1,0 +1,61 @@
+name: sec-companyfacts-fill
+
+on:
+  schedule:
+    # Twice daily
+    - cron: "0 6,18 * * *"
+  workflow_dispatch:
+
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Run companyfacts fill-missing batches (cash→debt→preferred)
+        run: bash scripts/sec/apply-cash-batch.sh
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          BRANCH="bot/sec-companyfacts-fill-$(date -u +%Y%m%d-%H%M%S)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "chore(sec): companyfacts fill-missing" || exit 0
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --base master \
+            --head "$BRANCH" \
+            --title "chore(sec): companyfacts fill-missing" \
+            --body "Automated run of companyfacts fill-missing pipeline (cash→debt→preferred).\n\nPolicies:\n- fill-missing-only (no overwrites)\n- freshness guard (stale → DLQ)\n- manual exceptions respected\n" \
+            --label "auto-data" || true
