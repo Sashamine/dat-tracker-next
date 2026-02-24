@@ -47,6 +47,15 @@ function mdTable(rows: Array<[string, number]>, headers: [string, string]) {
   return lines.join('\n');
 }
 
+function mdTable3(rows: Array<[string, string, number]>, headers: [string, string, string]) {
+  const lines = [
+    `| ${headers[0]} | ${headers[1]} | ${headers[2]} |`,
+    `|---|---|---:|`,
+    ...rows.map(([a, b, c]) => `| ${a} | ${b} | ${c} |`),
+  ];
+  return lines.join('\n');
+}
+
 function main() {
   const { file, out, includeNoise } = parseArgs(process.argv.slice(2));
 
@@ -66,6 +75,8 @@ function main() {
   const byTicker = new Map<string, number>();
   const byKindMode = new Map<string, number>();
 
+  const staleDetails: Array<{ kind: string; mode: string; ticker: string; ageDays: number; at?: string; note?: string }> = [];
+
   for (const it of items) {
     const kind = it.kind ?? 'unknown';
     const mode = it.mode ?? 'unknown';
@@ -75,6 +86,13 @@ function main() {
     inc(byMode, mode);
     inc(byTicker, ticker);
     inc(byKindMode, `${kind} · ${mode}`);
+
+    if (kind.endsWith('_extract_stale')) {
+      const ageDays = Math.round(Number(it.ageDays ?? NaN));
+      if (Number.isFinite(ageDays)) {
+        staleDetails.push({ kind, mode, ticker, ageDays, at: it.at, note: it.note });
+      }
+    }
   }
 
   const topKinds = sortEntriesDesc(byKind).slice(0, 25);
@@ -84,6 +102,13 @@ function main() {
     .slice(0, 25);
 
   const now = new Date().toISOString();
+
+  const staleTop = staleDetails
+    .filter((x) => x.ticker !== 'unknown')
+    .sort((a, b) => b.ageDays - a.ageDays || a.ticker.localeCompare(b.ticker))
+    .slice(0, 25)
+    .map((x) => [x.kind, x.ticker, x.ageDays] as [string, string, number]);
+
   const md = [
     `# DLQ Extract Report`,
     ``,
@@ -96,6 +121,9 @@ function main() {
     ``,
     `## By kind + mode`,
     mdTable(topKindModes, ['kind · mode', 'count']),
+    ``,
+    `## Stale details (top by ageDays)`,
+    staleTop.length ? mdTable3(staleTop, ['kind', 'ticker', 'ageDays']) : '_none_',
     ``,
     `## Top tickers`,
     topTickers.length ? mdTable(topTickers, ['ticker', 'count']) : '_none_',
