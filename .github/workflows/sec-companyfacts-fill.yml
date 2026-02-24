@@ -37,6 +37,15 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Diff summary
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          echo "Changed files:" 
+          git diff --name-only
+          echo ""
+          echo "Stats:"
+          git diff --stat
+
       - name: Check for existing auto-data PR
         if: steps.diff.outputs.changed == 'true'
         id: existing
