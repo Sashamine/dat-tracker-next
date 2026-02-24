@@ -108,7 +108,6 @@ jobs:
           gh pr comment "${{ steps.pr.outputs.number }}" --body "<details><summary>DLQ Extract Report</summary>\n\n\n${REPORT}\n\n</details>" || true
 
       - name: Upload DLQ extract artifact
-        if: steps.pr.outputs.number != ''
         uses: actions/upload-artifact@v4
         with:
           name: dlq-extract
