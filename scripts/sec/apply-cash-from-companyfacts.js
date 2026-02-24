@@ -175,22 +175,7 @@ async function main() {
   const eligible = !hasCashReserves;
 
   if (!eligible) {
-    const dlqPath = path.join(process.cwd(), 'infra', 'dlq-extract.json');
-    let dlq = { schemaVersion: '0.1', items: [] };
-    try {
-      dlq = JSON.parse(await fs.readFile(dlqPath, 'utf8'));
-    } catch {}
-    dlq.items.push({
-      kind: 'cash_extract_conflict',
-      ticker,
-      at: new Date().toISOString(),
-      secCik,
-      extracted,
-      note: 'company already has cash fields; fill-missing-only policy prevented overwrite',
-    });
-    await fs.mkdir(path.dirname(dlqPath), { recursive: true });
-    await fs.writeFile(dlqPath, JSON.stringify(dlq, null, 2) + '\n', 'utf8');
-    console.log('dlq: cash already present (not backfilling)');
+    console.log('noop: cash already present (not backfilling)');
     return;
   }
 

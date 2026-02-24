@@ -16,13 +16,15 @@ type DlqExtractFile = {
 };
 
 function parseArgs(argv: string[]) {
-  const args = { file: 'infra/dlq-extract.json', out: '' };
+  const args = { file: 'infra/dlq-extract.json', out: '', includeNoise: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--file' && argv[i + 1]) {
       args.file = argv[++i];
     } else if (a === '--out' && argv[i + 1]) {
       args.out = argv[++i];
+    } else if (a === '--include-noise') {
+      args.includeNoise = true;
     }
   }
   return args;
@@ -46,12 +48,18 @@ function mdTable(rows: Array<[string, number]>, headers: [string, string]) {
 }
 
 function main() {
-  const { file, out } = parseArgs(process.argv.slice(2));
+  const { file, out, includeNoise } = parseArgs(process.argv.slice(2));
 
   const abs = path.resolve(file);
   const raw = fs.readFileSync(abs, 'utf8');
   const j = JSON.parse(raw) as DlqExtractFile;
-  const items = j.items ?? [];
+  const rawItems = j.items ?? [];
+  const noiseKinds = new Set([
+    'cash_extract_conflict',
+    'debt_extract_conflict',
+    'preferred_extract_conflict',
+  ]);
+  const items = includeNoise ? rawItems : rawItems.filter((it) => !noiseKinds.has(it.kind));
 
   const byKind = new Map<string, number>();
   const byMode = new Map<string, number>();
@@ -81,7 +89,7 @@ function main() {
     ``,
     `Generated: ${now}`,
     `Source: \`${file}\``,
-    `Total items: **${items.length}**`,
+    `Total items: **${items.length}**${includeNoise ? '' : ` (excluding noise kinds: ${[...noiseKinds].join(', ')})`}`, 
     ``,
     `## By kind`,
     mdTable(topKinds, ['kind', 'count']),

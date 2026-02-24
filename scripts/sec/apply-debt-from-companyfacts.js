@@ -129,15 +129,7 @@ async function main() {
   // Only apply when the core numeric field is missing (avoid touching curated entries just to backfill URL/date)
   const eligible = !hasDebt;
   if (!eligible) {
-    await dlqPush({
-      kind: 'debt_extract_conflict',
-      ticker,
-      at: new Date().toISOString(),
-      secCik,
-      extracted,
-      note: 'company already has debt fields; fill-missing-only policy prevented overwrite',
-    });
-    console.log('dlq: debt already present (not backfilling)');
+    console.log('noop: debt already present (not backfilling)');
     return;
   }
 
