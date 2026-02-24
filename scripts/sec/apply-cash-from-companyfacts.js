@@ -114,7 +114,7 @@ function findCompanyObjectBlock(src, ticker) {
   return null;
 }
 
-const MAX_AGE_DAYS = 365; // 1 year
+const MAX_AGE_DAYS = 548; // ~18 months
 
 async function main() {
   const ticker = (process.argv[2] || '').trim();
