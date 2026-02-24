@@ -85,5 +85,5 @@ jobs:
             --base master \
             --head "$BRANCH" \
             --title "chore(sec): companyfacts fill-missing" \
-            --body "Automated run of companyfacts fill-missing pipeline (cash→debt→preferred).\n\nPolicies:\n- fill-missing-only (no overwrites)\n- freshness guard (stale → DLQ)\n- manual exceptions respected\n" \
+            --body "Automated run of companyfacts fill-missing pipeline (cash→debt→preferred).\n\nPolicies:\n- fill-missing-only (no overwrites)\n- freshness guard (stale → DLQ)\n- manual exceptions respected\n\nReviewer: @dwinny\n" \
             --label "auto-data" || true
