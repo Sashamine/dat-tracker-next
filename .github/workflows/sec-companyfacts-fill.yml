@@ -67,6 +67,7 @@ jobs:
 
       - name: Create PR
         if: steps.diff.outputs.changed == 'true' && steps.existing.outputs.found != 'true'
+        id: pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -91,6 +92,25 @@ jobs:
           if [[ -n "${pr_url:-}" ]]; then
             pr_number=$(echo "$pr_url" | sed -n 's#.*/pull/\([0-9][0-9]*\)$#\1#p')
             if [[ -n "${pr_number:-}" ]]; then
+              echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+              echo "url=$pr_url" >> "$GITHUB_OUTPUT"
               gh pr edit "$pr_number" --add-reviewer dwinny || true
             fi
           fi
+
+      - name: DLQ report comment
+        if: steps.pr.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPORT=$(npm run -s sec:dlq:report || true)
+          gh pr comment "${{ steps.pr.outputs.number }}" --body "<details><summary>DLQ Extract Report</summary>\n\n\n${REPORT}\n\n</details>" || true
+
+      - name: Upload DLQ extract artifact
+        if: steps.pr.outputs.number != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: dlq-extract
+          path: infra/dlq-extract.json
+          if-no-files-found: ignore
