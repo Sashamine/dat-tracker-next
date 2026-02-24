@@ -81,9 +81,16 @@ jobs:
           git commit -m "chore(sec): companyfacts fill-missing" || exit 0
           git push origin "$BRANCH"
 
-          gh pr create \
+          pr_url=$(gh pr create \
             --base master \
             --head "$BRANCH" \
             --title "chore(sec): companyfacts fill-missing" \
             --body "Automated run of companyfacts fill-missing pipeline (cash→debt→preferred).\n\nPolicies:\n- fill-missing-only (no overwrites)\n- freshness guard (stale → DLQ)\n- manual exceptions respected\n\nReviewer: @dwinny\n" \
-            --label "auto-data" || true
+            --label "auto-data" || true)
+
+          if [[ -n "${pr_url:-}" ]]; then
+            pr_number=$(echo "$pr_url" | sed -n 's#.*/pull/\([0-9][0-9]*\)$#\1#p')
+            if [[ -n "${pr_number:-}" ]]; then
+              gh pr edit "$pr_number" --add-reviewer dwinny || true
+            fi
+          fi
