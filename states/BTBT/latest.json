@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "BTBT",
+  "secCik": "0001710350",
+  "asOf": "2026-01-31",
+  "generatedAt": "2026-02-24T20:16:37.424Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "ETH",
+    "amount": 155239,
+    "source": {
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 324202059,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-31",
+    "source": {
+      "sharesSource": "Feb 6, 2026 PR: 'Bit Digital shares outstanding were 324,202,059 as of January 31, 2026'",
+      "sharesSourceUrl": "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 179118182,
+    "restrictedCash": 179118182,
+    "totalDebt": 150000000,
+    "preferredEquity": 9050000,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
+      "debtSourceUrl": "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

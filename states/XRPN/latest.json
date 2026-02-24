@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "XRPN",
+  "secCik": null,
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.430Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "XRP",
+    "amount": 473276430,
+    "source": {
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": null,
+    "sharesOutstandingFD": null,
+    "asOf": null,
+    "source": {
+      "sharesSource": null,
+      "sharesSourceUrl": null
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

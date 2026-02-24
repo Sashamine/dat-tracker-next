@@ -60,6 +60,11 @@ export interface Company {
   id: string;
   name: string;
   ticker: string;
+
+  // Listing metadata (agent-native routing)
+  country?: string;        // ISO 3166-1 alpha-2 when known (e.g., "US", "CA", "JP").
+  exchangeMic?: string;    // ISO 10383 MIC when known (e.g., "XNAS", "XNYS", "XTSE").
+
   currency?: StockCurrency;  // Stock trading currency (default: USD). Used for price display conversion.
   asset: Asset;
   tier: Tier;

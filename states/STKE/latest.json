@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "STKE",
+  "secCik": "1846839",
+  "asOf": "2026-02-03",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "SOL",
+    "amount": 530251,
+    "source": {
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 25300567,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "sharesSource": "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 1300000,
+    "restrictedCash": 0,
+    "totalDebt": 25400000,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

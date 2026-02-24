@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "XTAIF",
+  "secCik": null,
+  "asOf": "2025-11-25",
+  "generatedAt": "2026-02-24T20:16:37.430Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "TAO",
+    "amount": 59962,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 38031285,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "sharesSource": "SEDAR+ MD&A Sep 30, 2025 (page 11: shares, page 5: warrants)",
+      "sharesSourceUrl": "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 4132218,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

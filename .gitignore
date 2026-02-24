@@ -50,3 +50,10 @@ public/sec-content/
 # verification run artifacts (generated; keep templates tracked)
 /verification-runs/**
 !/verification-runs/_template/**
+
+# SEC fetch cache
+/.cache/
+
+# infra status (optional local scratch)
+.last-infra-ping
+infra/status-history/

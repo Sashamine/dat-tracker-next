@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "ETHM",
+  "secCik": "0002080334",
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.424Z",
+  "listing": {
+    "country": "CA",
+    "exchangeMic": "XTSE",
+    "currency": "CAD"
+  },
+  "holdings": {
+    "asset": "ETH",
+    "amount": 590000,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/2080334/000121390026019335/ea0278027-425_ether.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 60000000,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "sharesSource": "OTC Markets company page",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/2080334/000121390026019335/ea0278027-425_ether.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

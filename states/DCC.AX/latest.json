@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "DCC.AX",
+  "secCik": null,
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "AU",
+    "exchangeMic": "XASX",
+    "currency": "AUD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 504,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 1488510854,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-30",
+    "source": {
+      "sharesSource": "asx.com.au",
+      "sharesSourceUrl": "https://www.asx.com.au/markets/company/DCC"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 1782000,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

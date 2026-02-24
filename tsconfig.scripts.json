@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist-scripts",
+    "rootDir": "./scripts",
+    "module": "node16",
+    "target": "ES2022",
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmitOnError": false,
+    "noEmit": false
+  },
+  "include": [
+    "scripts/state/verify-company-states.ts",
+    "scripts/state/verifier-policy.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

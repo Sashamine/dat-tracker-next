@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "OBTC3",
+  "secCik": null,
+  "asOf": "2026-02-02",
+  "generatedAt": "2026-02-24T20:16:37.426Z",
+  "listing": {
+    "country": "BR",
+    "exchangeMic": "B3SA",
+    "currency": "BRL"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 0,
+    "source": {
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://ri.oranjebtc.com",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 318000000,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "sharesSource": "B3 Exchange listing",
+      "sharesSourceUrl": "https://ri.oranjebtc.com"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": "https://www.oranjebtc.com",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "3189.T",
+  "secCik": null,
+  "asOf": "2026-01-21",
+  "generatedAt": "2026-02-24T20:16:37.427Z",
+  "listing": {
+    "country": "JP",
+    "exchangeMic": "XTKS",
+    "currency": "JPY"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 1417,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 40609400,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-31",
+    "source": {
+      "sharesSource": "TDnet 8th Series warrant exercise report (Feb 3, 2026) + Q1 FY2026 決算短信",
+      "sharesSourceUrl": "https://www.release.tdnet.info/inbs/140120260114533179.pdf"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 7500000,
+    "restrictedCash": null,
+    "totalDebt": 46300000,
+    "preferredEquity": null,
+    "asOf": "2025-11-30",
+    "source": {
+      "cashSourceUrl": "https://kabutan.jp/stock/finance?code=3189",
+      "debtSourceUrl": "https://kabutan.jp/stock/finance?code=3189",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

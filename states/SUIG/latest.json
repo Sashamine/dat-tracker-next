@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "SUIG",
+  "secCik": "1425355",
+  "asOf": "2026-01-07",
+  "generatedAt": "2026-02-24T20:16:37.431Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "SUI",
+    "amount": 108098436,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 80900000,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-07",
+    "source": {
+      "sharesSource": "SEC 8-K Jan 8, 2026",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

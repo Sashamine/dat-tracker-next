@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "SBET",
+  "secCik": "0001981535",
+  "asOf": "2026-02-15",
+  "generatedAt": "2026-02-24T20:16:37.424Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "ETH",
+    "amount": 867798,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/ex99-1.htm",
+      "holdingsAccession": "0001493152-26-007427"
+    }
+  },
+  "shares": {
+    "sharesForMnav": 196693191,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-11-12",
+    "source": {
+      "sharesSource": "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 11100000,
+    "restrictedCash": 11100000,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

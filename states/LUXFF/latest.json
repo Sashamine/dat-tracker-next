@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "LUXFF",
+  "secCik": null,
+  "asOf": "2025-08-31",
+  "generatedAt": "2026-02-24T20:16:37.430Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "LTC",
+    "amount": 20226,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 31554164,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-09",
+    "source": {
+      "sharesSource": "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
+      "sharesSourceUrl": "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,54 @@
+name: state-verify
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'states/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'tsconfig*.json'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'states/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'tsconfig*.json'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build compiled verifier
+        run: npm run -s state:verify:build
+
+      - name: Regenerate states
+        run: npm run -s state:gen:all
+
+      - name: Verify states
+        run: node dist-scripts/state/verify-company-states.js --runId ci
+
+      - name: Ensure no hard failures
+        run: |
+          node -e "const j=require('./infra/latest-verified.json'); if ((j.failCount||0) !== 0) { console.error('failCount', j.failCount); process.exit(1);} console.log('ok failCount=0')"
+
+      # Prefer latest-verified policy for hard requirements; don't fail the workflow on
+      # 'verification-gaps.json' mismatches since it's derived/reporting and can be stale.
+      - name: Warn on verification gaps (non-blocking)
+        run: |
+          node -e "const j=require('./infra/verification-gaps.json'); const keys=Object.keys(j.gaps||{}); if(keys.length){ console.warn('gaps', keys);} else { console.log('ok gaps=0'); }"

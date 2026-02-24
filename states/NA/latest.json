@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "NA",
+  "secCik": "1872302",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BNB",
+    "amount": 130000,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea027141101ex99-1_nano.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 23627224,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-10-07",
+    "source": {
+      "sharesSource": "SEC 424B3 Oct 2025 (Class A: 20.77M + Class B: 2.86M)",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025097024/ea0204760-11.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 50800000,
+    "restrictedCash": null,
+    "totalDebt": 26200000,
+    "preferredEquity": null,
+    "asOf": "2025-06-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea0271411-6k_nano.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025031065/ea0235323-20f_nanolabs.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

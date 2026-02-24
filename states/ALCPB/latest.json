@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "ALCPB",
+  "secCik": null,
+  "asOf": "2026-02-16",
+  "generatedAt": "2026-02-24T20:16:37.426Z",
+  "listing": {
+    "country": "DE",
+    "exchangeMic": "XETR",
+    "currency": "EUR"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 2834,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 228069631,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-16",
+    "source": {
+      "sharesSource": "AMF filing Feb 16, 2026",
+      "sharesSourceUrl": "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 1531000,
+    "restrictedCash": null,
+    "totalDebt": 160160000,
+    "preferredEquity": null,
+    "asOf": "2025-06-30",
+    "source": {
+      "cashSourceUrl": "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
+      "debtSourceUrl": "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

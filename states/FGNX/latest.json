@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "FGNX",
+  "secCik": "1591890",
+  "asOf": "2026-01-21",
+  "generatedAt": "2026-02-24T20:16:37.425Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "ETH",
+    "amount": 37594,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 6720000,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-13",
+    "source": {
+      "sharesSource": "SEC 8-K Jan 21, 2026 (33.6M pre-split incl PFWs) ÷ 5 (1:5 reverse split Feb 13, 2026)",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 25200000,
+    "restrictedCash": null,
+    "totalDebt": 1900000,
+    "preferredEquity": 21040000,
+    "asOf": "2025-12-17",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1591890/000149315225028609/ex99-1.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

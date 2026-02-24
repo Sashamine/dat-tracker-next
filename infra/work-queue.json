@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "0.1",
+  "queue": [
+    {
+      "id": "verifier_cash_asof",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If cashReserves is present, require balanceSheet.asOf (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing cash asOf (queue)",
+      "doneAt": "2026-02-24T05:15:47.265Z"
+    },
+    {
+      "id": "verifier_preferred_asof",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If preferredEquity is present, require balanceSheet.asOf (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing preferred asOf (queue)",
+      "doneAt": "2026-02-24T05:16:32.437Z"
+    },
+    {
+      "id": "verifier_balance_sheet_numbers",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "Ensure balanceSheet cash/debt/preferred fields are numbers when present (hard).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier hardens balance sheet numeric types",
+      "doneAt": "2026-02-24T05:29:39.893Z"
+    },
+    {
+      "id": "verifier_cash_source_metadata",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If cashReserves is present, require balanceSheet.source.cashSourceUrl (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing cash source url",
+      "doneAt": "2026-02-24T05:28:13.201Z"
+    },
+    {
+      "id": "verifier_cost_basis_evidence",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If costBasisAvg present, require costBasisSourceUrl (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing cost basis evidence",
+      "doneAt": "2026-02-24T05:32:10.479Z"
+    },
+    {
+      "id": "verifier_currency_present",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "Require listing.currency present (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing listing currency",
+      "doneAt": "2026-02-24T05:32:10.954Z"
+    },
+    {
+      "id": "verifier_debt_asof",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If totalDebt is present, require balanceSheet.asOf (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing debt asOf (queue)",
+      "doneAt": "2026-02-24T05:29:40.313Z"
+    },
+    {
+      "id": "verifier_debt_source_metadata",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If totalDebt is present, require balanceSheet.source.debtSourceUrl (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing debt source url",
+      "doneAt": "2026-02-24T05:28:13.624Z"
+    },
+    {
+      "id": "verifier_holdings_amount_number",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "Ensure holdings.amount is finite number (hard).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier hardens holdings amount type",
+      "doneAt": "2026-02-24T05:32:11.427Z"
+    },
+    {
+      "id": "verifier_holdings_last_updated",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If holdings.amount present, require asOf date (holdings.asOf) or holdingsLastUpdated (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing holdings asOf",
+      "doneAt": "2026-02-24T05:32:11.897Z"
+    },
+    {
+      "id": "verifier_holdings_sec_evidence",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If holdingsSource == sec-filing, require holdingsSourceUrl or holdingsAccession (hard).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier requires evidence for SEC holdings (queue)",
+      "doneAt": "2026-02-24T10:43:09.978Z"
+    },
+    {
+      "id": "verifier_holdings_source_present",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "Require holdings.source.holdingsSource present (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing holdings source",
+      "doneAt": "2026-02-24T05:29:40.787Z"
+    },
+    {
+      "id": "verifier_listing_metadata",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "Require listing.country and listing.exchangeMic not UNKNOWN (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags unknown listing metadata",
+      "doneAt": "2026-02-24T05:32:12.369Z"
+    },
+    {
+      "id": "verifier_negative_numbers",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "Flag negative values for holdings/shares/cash/debt/preferred (hard).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags invalid negative values",
+      "doneAt": "2026-02-24T05:28:15.565Z"
+    },
+    {
+      "id": "verifier_preferred_source_metadata",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If preferredEquity is present, require balanceSheet.source.preferredSourceUrl (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing preferred source url",
+      "doneAt": "2026-02-24T05:28:19.348Z"
+    },
+    {
+      "id": "verifier_shares_asof",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If sharesForMnav present, require shares.asOf (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing shares asOf",
+      "doneAt": "2026-02-24T05:29:47.528Z"
+    },
+    {
+      "id": "verifier_shares_sec_evidence",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If shares look SEC-sourced, require sharesSourceUrl (hard).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier requires evidence for SEC shares (queue)",
+      "doneAt": "2026-02-24T10:43:10.401Z"
+    },
+    {
+      "id": "verifier_shares_source_metadata",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If sharesForMnav is present, require shares.source.sharesSource or sharesSourceUrl (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing shares source metadata (queue)",
+      "doneAt": "2026-02-24T05:29:55.090Z"
+    },
+    {
+      "id": "verifier_source_urls_valid",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If a sourceUrl is present, require it starts with http(s) (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier validates source url format",
+      "doneAt": "2026-02-24T05:28:22.801Z"
+    },
+    {
+      "id": "verifier_staking_evidence",
+      "type": "verifier-rule",
+      "status": "done",
+      "description": "If stakingPct is present, require stakingSourceUrl (warn-level).",
+      "allowedPaths": [
+        "scripts/state/"
+      ],
+      "commitMessage": "feat(state): verifier flags missing staking evidence (queue)",
+      "doneAt": "2026-02-24T10:43:10.823Z"
+    }
+  ]
+}

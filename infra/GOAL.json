@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "0.1",
+  "goal": "verifier",
+  "workMode": "builder",
+  "allowedPaths": [
+    "scripts/state/",
+    "schemas/",
+    "src/app/api/state/"
+  ],
+  "allowedCommitPrefixes": [
+    "feat:",
+    "fix:",
+    "chore:",
+    "docs:",
+    "refactor:",
+    "perf:",
+    "test:",
+    "style:",
+    "data:",
+    "build:",
+    "release:"
+  ],
+  "disallowCommitPrefixes": [
+    "checkpoint:"
+  ],
+  "auditor": {
+    "enabled": true,
+    "commandPrefix": "COMMAND:",
+    "allowedPaths": [
+      "infra/",
+      "infra/*",
+      ".github/workflows/",
+      "scripts/",
+      "infra/GOAL.json",
+      "infra/monitor-state.json"
+    ],
+    "disallowCommitPrefixes": [
+      "checkpoint:"
+    ],
+    "cronSchedule": "0 9,17 * * *",
+    "alert": {
+      "staleMinutes": 30,
+      "repeat": 3
+    }
+  },
+  "ignoreOnlyPaths": [
+    "infra/STATUS.json",
+    "infra/auto-commit-state.json",
+    "infra/dlq.json",
+    "infra/monitor-auditor.json",
+    "infra/monitor-state.json",
+    "infra/work-queue.json",
+    "scripts/infra/reconcile.js"
+  ],
+  "autoCommit": {
+    "enabled": true,
+    "rateLimitMinutes": 60,
+    "commitMessage": "wip(auto): stale recovery"
+  },
+  "bookkeepingPaths": [
+    "infra/work-queue.json",
+    "infra/dlq.json",
+    "infra/monitor-auditor.json"
+  ]
+}

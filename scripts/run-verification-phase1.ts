@@ -43,6 +43,31 @@ if (!fs.existsSync(promptsAbs)) die(`prompts.json not found: ${promptsAbs}`);
 const promptsJson = JSON.parse(fs.readFileSync(promptsAbs, "utf8")) as PromptsJson;
 
 const runDirAbs = path.resolve(process.cwd(), promptsJson.runDir);
+
+// Optional hybrid prefetch (SEC JSON + primary iXBRL doc)
+// Enable by setting HYBRID_PREFETCH=1 and providing CIK + accession in env.
+if (process.env.HYBRID_PREFETCH === "1") {
+  const cik = process.env.SEC_CIK;
+  const accession = process.env.SEC_ACCESSION;
+  if (!cik || !accession) die("HYBRID_PREFETCH=1 requires SEC_CIK and SEC_ACCESSION env vars");
+  const secOutDir = path.join(runDirAbs, "sec");
+  const cmd = [
+    "npm",
+    "run",
+    "-s",
+    "sec:prefetch-run",
+    "--",
+    "--cik",
+    cik,
+    "--accession",
+    accession,
+    "--outDir",
+    secOutDir,
+  ];
+  const res = spawnSync(cmd[0], cmd.slice(1), { stdio: "inherit", env: process.env });
+  if (res.status !== 0) die("Hybrid prefetch failed");
+}
+
 if (!fs.existsSync(runDirAbs)) die(`runDir not found (relative to cwd): ${promptsJson.runDir}`);
 
 const statePath = path.join(runDirAbs, "STATE.md");
@@ -63,11 +88,14 @@ function spawnAgent(key: string) {
   // command that *spawns* the subagent via tool use.
   const spawnInstruction = `SPAWN_SUBAGENT\nlabel=${spec.label}\nmodel=${spec.model}\ncleanup=keep\n\nTASK:\n${spec.task}`;
 
+  // IMPORTANT: The orchestrator must be a GPT agent (OpenAI) to satisfy the
+  // pipeline's provider-split requirements in specs/model-assignments.md.
+  // flash-orchestrator currently defaults to Gemini in many setups.
   const cmd = [
     "clawdbot",
     "agent",
     "--agent",
-    "flash-orchestrator",
+    "gpt-worker",
     "--message",
     spawnInstruction,
   ];

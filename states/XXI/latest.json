@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "XXI",
+  "secCik": "0002070457",
+  "asOf": "2025-12-08",
+  "generatedAt": "2026-02-24T20:16:37.425Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 43514,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea026946001ex99-4_twenty.htm#:~:text=31%2C500%20Bitcoin",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 346548153,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-09",
+    "source": {
+      "sharesSource": "SEC 8-K Dec 12, 2025",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/0001213900-25-121293-index.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 119300000,
+    "restrictedCash": 119300000,
+    "totalDebt": 486500000,
+    "preferredEquity": null,
+    "asOf": "2025-12-09",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

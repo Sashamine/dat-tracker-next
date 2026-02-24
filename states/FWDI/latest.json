@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "FWDI",
+  "secCik": "0000038264",
+  "asOf": "2026-01-15",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "SOL",
+    "amount": 6979967,
+    "source": {
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://forwardindustries.com/sol-treasury",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 96003639,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-31",
+    "source": {
+      "sharesSource": "SEC 10-Q Q1 FY2026: 83,139,037 common + 12,864,602 PFWs",
+      "sharesSourceUrl": "/filings/fwdi/0001683168-26-000960"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 12000000,
+    "restrictedCash": 0,
+    "totalDebt": 0,
+    "preferredEquity": 4925000,
+    "asOf": "2026-01-31",
+    "source": {
+      "cashSourceUrl": "/filings/fwdi/0001683168-26-000960?tab=document&q=approximately%20%2412%20million",
+      "debtSourceUrl": "/filings/fwdi/0001683168-26-000960",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/38264/000168316825003548/"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}
