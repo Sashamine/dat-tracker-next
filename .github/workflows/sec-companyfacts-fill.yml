@@ -32,8 +32,8 @@ jobs:
       - name: Run companyfacts fill-missing batches (cash→debt→preferred)
         run: bash scripts/sec/apply-cash-batch.sh
 
-      - name: Prune DLQ extract (keep recent + compact)
-        run: npm run -s sec:dlq:prune
+      - name: Prune DLQ extract (dry-run)
+        run: npm run -s sec:dlq:prune -- --dry-run
 
       - name: Detect changes
         id: diff
