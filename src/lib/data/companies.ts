@@ -1,5 +1,5 @@
 import { Company } from "../types";
-import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
+import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr.ts";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
 import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
@@ -17,6 +17,8 @@ export const ethCompanies: Company[] = [
     id: "bmnr",
     name: "Bitmine Immersion",
     ticker: "BMNR",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001829311",
     website: "https://www.bitminetech.io/",
     twitter: "BitMNR",
@@ -63,6 +65,7 @@ export const ethCompanies: Company[] = [
     sharesAsOf: "2026-02-16", // Latest 8-K (Feb 16, 2026 — estimated ATM through that date)
     // CASH: from provenance (8-K)
     cashReserves: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,
+    cashAsOf: "2025-11-30",
     restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,  // Operating capital - not excess
     cashSource: "SEC-verified (provenance): 8-K Feb 17, 2026",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=%24670%20million",
@@ -72,6 +75,8 @@ export const ethCompanies: Company[] = [
     totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
     debtSource: "SEC-verified (provenance): No debt financing",
     debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Asset-light treasury model with minimal recurring costs (~$50K/yr ETH management fees per 10-Q). Q1 FY2026 G&A of $223M was mostly one-time capital raising costs (legal, advisory, banking fees for $8B+ ATM program).",
     secondaryCryptoHoldings: [
@@ -87,6 +92,8 @@ export const ethCompanies: Company[] = [
     id: "sbet",
     name: "Sharplink, Inc.",  // Renamed from SharpLink Gaming (Feb 3, 2026)
     ticker: "SBET",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
     holdings: 867_798,  // 587,232 native + 225,429 LsETH + 55,137 WeETH (as of Feb 15, 2026; 8-K filed Feb 19, 2026). Staking rewards (13,615 cumulative since Jun 2025) included in balances.
@@ -134,7 +141,9 @@ export const ethCompanies: Company[] = [
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     cashAsOf: "2025-09-30",
-    totalDebt: 0,  // Debt-free per SEC 10-Q Q3 2025 (was $12.8M in 2023, paid off)
+    totalDebt: 0,
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // Debt-free per SEC 10-Q Q3 2025 (was $12.8M in 2023, paid off)
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     debtAsOf: "2025-09-30",
@@ -147,6 +156,8 @@ export const ethCompanies: Company[] = [
     id: "ethm",
     name: "The Ether Machine",
     ticker: "ETHM",
+    country: "CA",
+    exchangeMic: "XTSE",
     currency: "CAD",  // Toronto Stock Exchange
     secCik: "0002080334",
     asset: "ETH",
@@ -154,7 +165,7 @@ export const ethCompanies: Company[] = [
     holdings: 590_000,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.sedarplus.ca/landingpage/",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2080334/000121390026019335/ea0278027-425_ether.htm",
     datStartDate: "2025-10-01",
     // stakingPct removed - SPAC pending, needs verification
     stakingMethod: "Native staking",
@@ -168,7 +179,7 @@ export const ethCompanies: Company[] = [
     marketCap: 230_000_000,  // ~$230M (Jan 2026)
     sharesForMnav: 60_000_000,  // From holdings-history.ts
     sharesSource: "OTC Markets company page",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=2080334&type=8-K",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2080334/000121390026019335/ea0278027-425_ether.htm", // exact SEC doc (latest 425 filing)
     sharesAsOf: "2025-09-30",
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
@@ -179,6 +190,8 @@ export const ethCompanies: Company[] = [
     id: "btbt",
     name: "Bit Digital",
     ticker: "BTBT",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001710350",
     asset: "ETH",
     tier: 1,
@@ -225,6 +238,9 @@ export const ethCompanies: Company[] = [
     debtSourceUrl: "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
     debtAsOf: "2025-10-02",
     preferredEquity: 9_050_000,  // 1M preferred shares at $9.05M book value (Q3 2025 10-Q balance sheet)
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm", // exact filing doc (10-Q filed 2025-11-14)
+    preferredSource: "SEC filings (browse) — needs specific filing/table link",
+    preferredAsOf: "2025-12-31",
 
     otherInvestments: 527_600_000,  // WhiteFiber (WYFI) ~27M shares @ ~$19.54 (Feb 6, 2026 PR)
     leader: "Sam Tabar",
@@ -235,6 +251,8 @@ export const ethCompanies: Company[] = [
     id: "btcs",
     name: "BTCS Inc.",
     ticker: "BTCS",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001436229",
     asset: "ETH",
     tier: 2,
@@ -287,6 +305,8 @@ export const ethCompanies: Company[] = [
     id: "game",
     name: "GameSquare",
     ticker: "GAME",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
     secCik: "1714562",
@@ -295,7 +315,7 @@ export const ethCompanies: Company[] = [
     holdings: 1_608,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
     datStartDate: "2025-07-01",
     stakingPct: 0,  // Direct holdings not staked - yield is via Dialectic fund
     quarterlyBurnUsd: 6_171_000,
@@ -317,6 +337,9 @@ export const ethCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value
     preferredEquity: 5_150_000,  // Series A-1 Preferred (3,433 shares @ $1.50 liquidation preference on as-converted basis)
+    totalDebt: 1250000,
+    debtAsOf: "2025-06-30",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000164117225023972/",
     preferredSource: "SEC 10-Q Q3 2025: PreferredStockValue $5,150,000 (3,433 Series A-1 shares)",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
     preferredAsOf: "2025-09-30",
@@ -336,7 +359,7 @@ export const ethCompanies: Company[] = [
         fairValue: 64_539_714,  // SEC 10-Q Sep 30, 2025 - "Investment in ETH Fund"
         sourceDate: "2025-09-30",
         source: "SEC 10-Q Q3 2025",
-        sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1714562&type=10-Q",
+        sourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
         note: "ETH yield fund via Dialectic platform - generates 7.84% yield for buybacks",
       },
     ],
@@ -345,6 +368,8 @@ export const ethCompanies: Company[] = [
     id: "fgnx",
     name: "FG Nexus",
     ticker: "FGNX",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
     // VERIFIED: SEC 8-K Jan 21, 2026
@@ -404,6 +429,8 @@ export const btcCompanies: Company[] = [
     id: "mstr",
     name: "Strategy (fka MicroStrategy)",
     ticker: "MSTR",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (mstr-holdings-verified.ts)
@@ -469,6 +496,8 @@ export const btcCompanies: Company[] = [
     id: "3350t",
     name: "Metaplanet",
     ticker: "3350.T",
+    country: "JP",
+    exchangeMic: "XTKS",
     currency: "JPY",
     asset: "BTC",
     tier: 1,
@@ -485,13 +514,13 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 5_000_000,  // Estimated from Q3 FY2025 operating expenses
     burnSource: "TDnet Q3 FY2025 Financial Results (estimated)",
-    burnSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    burnSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 200_000_000,
     marketCap: 2_430_000_000,  // ~$2.4B (Feb 2026, 1.167B shares × ¥325 ÷ 152.7 JPY/USD)
     sharesForMnav: 1_166_803_340,  // 1,142,274,340 (Jan 29, 2026) + 24,529,000 (Feb 13 placement). Mercury preferred is a separate class, NOT in common count.
     sharesSource: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,529,000 new common shares (Feb 13, 2026 3rd-party allotment)",
-    sharesSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    sharesSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     sharesAsOf: "2026-02-13",
     // Debt: 4 credit facilities totaling $355M (all zero-coupon bonds have been fully redeemed)
     totalDebt: 355_000_000,  // $355M: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4) credit facilities
@@ -501,9 +530,12 @@ export const btcCompanies: Company[] = [
     cashReserves: 97_000_000,  // Estimated from capital flow trace: $18M (Q3) + $590M inflows - $511M outflows ≈ $97M. Mercury corrected to $155M (was $136M). Confirm with FY2025 annual report.
     restrictedCash: 0,
     cashSource: "Estimated: Q3 $18M + $355M credit + $155M Mercury preferred (corrected FX) + $80M Feb placement - $451M BTC - $60M redemptions/repayments/opex",
-    cashSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    cashSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     cashAsOf: "2026-02-14",
     preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
+    preferredSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
+    preferredSource: "TDnet/IR disclosures (Metaplanet) — preferred terms via Mercury Class B preferred",
+    preferredAsOf: "2026-02-14",
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
     notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M in credit facilities outstanding (4 draws from BTC-backed facility). All zero-coupon bonds (series 2-19) fully redeemed.",
@@ -514,15 +546,17 @@ export const btcCompanies: Company[] = [
     // - Q3 2025 Earnings Presentation (Nov 14, 2025): Synthesizes all strategies
     strategyDocs: [
       { title: "Q3 2025 Earnings Presentation", date: "2025-11-14", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf" },
-      { title: "Capital Allocation Policy", date: "2025-10-28", url: "https://metaplanet.jp/en/shareholders/disclosures" },
-      { title: "Phase II: Bitcoin Platform", date: "2025-10-01", url: "https://metaplanet.jp/en/shareholders/disclosures" },
-      { title: "2025-2027 BITCOIN PLAN", date: "2025-06-06", url: "https://metaplanet.jp/en/shareholders/disclosures" },
+      { title: "Capital Allocation Policy", date: "2025-10-28", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf" },
+      { title: "Phase II: Bitcoin Platform", date: "2025-10-01", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf" },
+      { title: "2025-2027 BITCOIN PLAN", date: "2025-06-06", url: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf" },
     ],
   },
   {
     id: "xxi",
     name: "Twenty One Capital",
     ticker: "XXI",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0002070457",  // Post-merger CIK (was 0001865602 Cantor SPAC)
     website: "https://xxi.money",
     twitter: "xxicapital",
@@ -572,13 +606,15 @@ export const btcCompanies: Company[] = [
     id: "cepo",  // BSTR Holdings pre-merger
     name: "BSTR Holdings",
     ticker: "CEPO",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0002027708",  // BSTR/Blockstream SPAC (0001865602 was Cantor → XXI)
     asset: "BTC",
     tier: 1,
     holdings: 30_021,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027708&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2027708/000121390026008287/ea0274216-8k_cantor1.htm",
     datStartDate: "2025-10-01",
     // costBasisAvg removed - needs verification
     isMiner: false,
@@ -602,6 +638,8 @@ export const btcCompanies: Company[] = [
     id: "mara",
     name: "MARA Holdings",
     ticker: "MARA",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (10-Q filing)
@@ -634,6 +672,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: MARA_PROVENANCE_DEBUG.sharesDate,
     // CASH: from provenance (10-Q)
     cashReserves: MARA_PROVENANCE.cashReserves?.value || 826_392_000,
+    cashAsOf: "2025-09-30",
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
     cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
@@ -642,6 +681,10 @@ export const btcCompanies: Company[] = [
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
     // DEBT: from provenance (~$3.25B in convertible notes)
     totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_597_561_000,
+    preferredEquity: 0,
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    debtAsOf: "2023-12-31",
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
     debtAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
@@ -657,6 +700,8 @@ export const btcCompanies: Company[] = [
     id: "asst",
     name: "Strive, Inc.",
     ticker: "ASST",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
     // HOLDINGS: SEC 8-K Feb 13, 2026 (as of Feb 11)
@@ -711,6 +756,8 @@ export const btcCompanies: Company[] = [
     id: "kulr",
     name: "KULR Technology",
     ticker: "KULR",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
     holdings: 1_057,  // Q3 2025 10-Q: 1,056.7 BTC held (excludes 70 BTC pledged as collateral). Total incl. collateral = 1,127.
@@ -734,7 +781,9 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     sharesSource: "SEC 10-Q Q3 2025",
     sharesAsOf: "2025-11-14",
-    totalDebt: 0,  // Coinbase loan repaid in full Oct 15, 2025 (10-Q subsequent events). Dec 22, 2025 8-K: "carries no debt". $20M facility available but undrawn.
+    totalDebt: 0,
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // Coinbase loan repaid in full Oct 15, 2025 (10-Q subsequent events). Dec 22, 2025 8-K: "carries no debt". $20M facility available but undrawn.
     debtSource: "SEC 10-Q Q3 2025 subsequent events + Dec 22, 2025 8-K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     debtAsOf: "2025-10-15",
@@ -753,6 +802,8 @@ export const btcCompanies: Company[] = [
     id: "altbg",
     name: "The Blockchain Group",
     ticker: "ALCPB",  // Changed from ALTBG (Capital B rebrand)
+    country: "DE",
+    exchangeMic: "XETR",
     currency: "EUR",
     asset: "BTC",
     tier: 2,
@@ -784,6 +835,7 @@ export const btcCompanies: Company[] = [
     totalDebt: 160_160_000,  // Sum of all OCA faceValues in dilutive-instruments.ts (USD)
     debtSource: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
     debtAsOf: "2026-02-16",
+    debtSourceUrl: "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
     cashReserves: 1_531_000,  // €1.531M available cash per H1 2025 IFRS
     cashSource: "H1 2025 IFRS financials",
     cashSourceUrl: "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
@@ -802,6 +854,8 @@ export const btcCompanies: Company[] = [
     id: "h100st",
     name: "H100 Group",
     ticker: "H100.ST",
+    country: "SE",
+    exchangeMic: "XSTO",
     website: "https://www.h100.group",
     currency: "SEK",
     asset: "BTC",
@@ -821,12 +875,18 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     burnEstimated: true,  // Swedish quarterly report estimate
     totalDebt: H100_PROVENANCE.totalDebt?.value || 20_736_000,  // SEK 219.8M zero-coupon convertible / 10.6 SEK/USD ≈ $20.7M. IFRS classification TBD Feb 24 Bokslutskommuniké.
+    debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific IFRS period end
+    debtSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index (more specific than /investors)
+    debtSource: "MFN filings index — needs specific interim/annual report link",
     cashReserves: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké
+    cashSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index
+    cashSource: "MFN filings index — needs specific interim/annual report link",
+    cashAsOf: "2025-12-31",
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 12, 2026)
     sharesSource: "H100 Group IR page + MFN acquisition filing",
-    sharesSourceUrl: "https://www.h100.group/investor-relations/shares",
+    sharesSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index (more specific than IR shares landing)
     sharesAsOf: "2026-02-12",  // MFN filing date for Future Holdings AG acquisition completion
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
@@ -836,6 +896,8 @@ export const btcCompanies: Company[] = [
     id: "obtc3",
     name: "OranjeBTC",
     ticker: "OBTC3",
+    country: "BR",
+    exchangeMic: "B3SA",
     currency: "BRL",
     asset: "BTC",
     tier: 2,
@@ -857,7 +919,10 @@ export const btcCompanies: Company[] = [
     sharesSource: "B3 Exchange listing",
     sharesSourceUrl: "https://ri.oranjebtc.com",
     sharesAsOf: "2025-12-31",
-    totalDebt: 0,  // Per StatusInvest - no debt
+    totalDebt: 0,
+    debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // Per StatusInvest - no debt
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
     notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
     dataWarnings: [
@@ -872,6 +937,8 @@ export const btcCompanies: Company[] = [
     id: "swc",
     name: "The Smarter Web Company",
     ticker: "SWC",
+    country: "GB",
+    exchangeMic: "XLON",
     currency: "GBP",
     asset: "BTC",
     tier: 1,  // Verified holdings via RNS
@@ -901,6 +968,8 @@ export const btcCompanies: Company[] = [
     id: "sqns",
     name: "Sequans Communications",
     ticker: "SQNS",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 2,
     holdings: 2_139,  // Q4 2025 6-K: 2,139 BTC at Dec 31, 2025 (1,617 pledged as collateral)
@@ -924,6 +993,7 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
     sharesAsOf: "2025-12-31",
     totalDebt: 94_500_000,  // Q4 6-K: $94.5M convertible outstanding. Feb 13 6-K: full redemption via BTC sale by Jun 2026.
+    debtAsOf: "2025-12-31",
     debtSource: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
@@ -940,6 +1010,8 @@ export const btcCompanies: Company[] = [
     id: "ddc",
     name: "DDC Enterprise",
     ticker: "DDC",
+    country: "US",
+    exchangeMic: "XNAS",
     twitter: "ddcbtc_",
     asset: "BTC",
     tier: 2,
@@ -981,13 +1053,13 @@ export const btcCompanies: Company[] = [
         type: "stale-data",
         message: "Going concern: FY2023+FY2024 auditors flagged substantial doubt about ability to continue as going concern",
         severity: "warning",
-      },
-      {
+  },
+  {
         type: "stale-data",
         message: "Burn rate uses operating cash flow ($2.6M/qtr); food business gross profit partially offsets",
         severity: "info",
-      },
-      {
+  },
+  {
         type: "stale-data",
         message: "$124M subscription at $10/share likely dead — stock at ~$2.60 (3.8x premium to market)",
         severity: "warning",
@@ -1002,6 +1074,8 @@ export const btcCompanies: Company[] = [
     id: "fufu",
     name: "BITFUFU",
     ticker: "FUFU",
+    country: "US",
+    exchangeMic: "XNAS",
     currency: "USD",
     asset: "BTC",
     tier: 2,
@@ -1024,9 +1098,13 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-06-30",
     totalDebt: 141_301_000,  // SEC XBRL Jun 2025: LongTermDebt $101.3M (payables) + LongTermLoansPayable $40M (loans)
     debtAsOf: "2025-06-30",
+    debtSourceUrl: "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
     debtSource: "SEC 6-K H1 2025 XBRL: LongTermDebt $101,301K + LongTermLoansPayable $40,000K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     cashReserves: 40_086_000,  // SEC XBRL Jun 2025: CashAndCashEquivalentsAtCarryingValue. Q3 2025 PR shows $32.6M but no XBRL filing for Sep 30 (FPI: only H1/FY have XBRL).
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 6-K H1 2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $40,086,000 (Q3 PR shows $32.6M but unaudited, no XBRL)",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     cashAsOf: "2025-06-30",
@@ -1039,6 +1117,8 @@ export const btcCompanies: Company[] = [
     id: "fld",
     name: "Fold Holdings",
     ticker: "FLD",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 2,
     holdings: 1_526,  // Q3 2025 Earnings PR (Nov 10, 2025) - also 800 BTC restricted/collateral
@@ -1062,11 +1142,18 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
     sharesAsOf: "2025-11-10",
     totalDebt: 66_300_000,  // SEC 10-Q Sep 2025: $20M June convert + $46.3M March convert (principal, not fair value)
+    preferredEquity: 0,
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/",
     debtAsOf: "2025-09-30",
+    debtSourceUrl: "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     cashReserves: 6_663_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
     cashAsOf: "2025-09-30",
@@ -1080,6 +1167,8 @@ export const btcCompanies: Company[] = [
     id: "3825t",
     name: "Remixpoint",
     ticker: "3825.T",
+    country: "JP",
+    exchangeMic: "XTKS",
     currency: "JPY",
     asset: "MULTI",  // BTC + ETH + XRP + SOL + DOGE
     tier: 2,
@@ -1108,6 +1197,8 @@ export const btcCompanies: Company[] = [
     id: "3189t",
     name: "ANAP Holdings",
     ticker: "3189.T",
+    country: "JP",
+    exchangeMic: "XTKS",
     currency: "JPY",
     asset: "BTC",
     tier: 2,
@@ -1134,6 +1225,9 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     debtAsOf: "2025-11-30",
     cashReserves: 7_500_000,  // ¥1,159M / 153.5 JPY/USD — Q1 FY2026 現預金
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
     cashSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     cashAsOf: "2025-11-30",
@@ -1144,6 +1238,8 @@ export const btcCompanies: Company[] = [
     id: "zooz",
     name: "ZOOZ Strategy Ltd.",  // Renamed from ZOOZ Power Oct 2025
     ticker: "ZOOZ",
+    country: "US",
+    exchangeMic: "XNAS",
     twitter: "zoozbitcoin",
     asset: "BTC",
     tier: 2,
@@ -1164,11 +1260,16 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2024-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
-    totalDebt: 0,  // 6-K Jan 20, 2026: "no outstanding debt" + promissory notes fully repaid
+    totalDebt: 0,
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // 6-K Jan 20, 2026: "no outstanding debt" + promissory notes fully repaid
     debtSource: "SEC 6-K Jan 20, 2026: promissory notes fully repaid, no outstanding debt",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     debtAsOf: "2025-12-31",
     cashReserves: 27_100_000,  // 6-K Jan 20, 2026: $27.1M as of Dec 31, 2025
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 6-K Jan 20, 2026: cash and cash equivalents ~$27.1M",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     cashAsOf: "2025-12-31",
@@ -1186,6 +1287,8 @@ export const btcCompanies: Company[] = [
     id: "btct",
     name: "Bitcoin Treasury Corp",
     ticker: "BTCT.V",
+    country: "CA",
+    exchangeMic: "XTSX",
     currency: "CAD",
     asset: "BTC",
     tier: 2,
@@ -1197,6 +1300,7 @@ export const btcCompanies: Company[] = [
     // costBasisAvg removed - third-party source only
     isMiner: false,
     totalDebt: 25_000_000, // CAD - convertible debentures ($25M face, $12 implied conversion)
+    debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
     debtSource: "TSX Venture Bulletin V2025-1838",
     debtSourceUrl: "https://btctcorp.com",
     quarterlyBurnUsd: 500_000,
@@ -1244,6 +1348,8 @@ export const btcCompanies: Company[] = [
     id: "srag",
     name: "Samara Asset Group",
     ticker: "SRAG.DU",
+    country: "DE",
+    exchangeMic: "XETR",
     currency: "EUR",
     asset: "BTC",
     tier: 2,
@@ -1297,6 +1403,8 @@ export const btcCompanies: Company[] = [
     id: "dcc",
     name: "DigitalX",
     ticker: "DCC.AX",
+    country: "AU",
+    exchangeMic: "XASX",
     currency: "AUD",
     asset: "BTC",
     tier: 1,  // ASX-verified + real-time dashboard
@@ -1315,6 +1423,9 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     burnEstimated: false,
     cashReserves: 1_782_000,  // A$2,829,509 × 0.63 AUD/USD ≈ US$1.78M
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "ASX Appendix 4C Q2 FY2026: Cash at bank A$2,829,509",
     cashSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
     cashAsOf: "2025-12-31",
@@ -1338,6 +1449,8 @@ export const btcCompanies: Company[] = [
     id: "naka",
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (XBRL CryptoAssetNumberOfUnits, BTCMember)
@@ -1372,6 +1485,9 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2025-12-09",
     // CASH: from provenance (XBRL CashAndCashEquivalentsAtCarryingValue)
     cashReserves: NAKA_PROVENANCE.cashReserves?.value || 24_185_083,
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
     cashAsOf: "2025-09-30",
@@ -1389,6 +1505,8 @@ export const btcCompanies: Company[] = [
     id: "djt",
     name: "Trump Media & Technology",
     ticker: "DJT",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001849635",
     asset: "BTC",
     tier: 1,
@@ -1415,11 +1533,17 @@ export const btcCompanies: Company[] = [
     sharesAsOf: DJT_PROVENANCE_DEBUG.sharesDate,
     // DEBT: from provenance (XBRL LongTermDebt - carrying value of $1B par converts)
     totalDebt: DJT_PROVENANCE.totalDebt?.value ?? 950_769_100,
+    preferredEquity: 0,
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
     debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2028)",
     debtSourceUrl: "/filings/djt/0001140361-25-040977",
     debtAsOf: "2025-09-30",
     // CASH: from provenance (XBRL - unrestricted only)
     cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
     cashSourceUrl: "/filings/djt/0001140361-25-040977",
@@ -1431,6 +1555,8 @@ export const btcCompanies: Company[] = [
     id: "boyaa",
     name: "Boyaa Interactive",
     ticker: "0434.HK",
+    country: "HK",
+    exchangeMic: "XHKG",
     currency: "HKD",
     asset: "BTC",
     tier: 1,
@@ -1457,11 +1583,16 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-01-31",
     // DEBT: None — no bank borrowings, no convertibles
     totalDebt: 0,
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",
     debtSource: "HKEX Q3 2025: 'no short-term or long-term bank borrowings, no outstanding banking facilities'",
     debtSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     debtAsOf: "2025-09-30",
     // CASH: HK$82.7M (~$10.6M) + HK$78.7M term deposits
     cashReserves: 10_600_000,  // HK$82.7M ÷ 7.8 ≈ $10.6M (bank + cash balances only)
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "HKEX Q3 2025: HK$82.7M cash + HK$78.7M term deposits (non-current)",
     cashSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     cashAsOf: "2025-09-30",
@@ -1478,6 +1609,8 @@ export const btcCompanies: Company[] = [
     id: "abtc",
     name: "American Bitcoin",
     ticker: "ABTC",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001755953",  // Post-merger CIK (was Gryphon Digital Mining)
     asset: "BTC",
     tier: 1,
@@ -1508,6 +1641,9 @@ export const btcCompanies: Company[] = [
     twitter: "https://x.com/ABTC",
     // IR: https://abtc.com/investors
     cashReserves: 7_976_000,  // XBRL: us-gaap:Cash as of Sep 30, 2025
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     cashAsOf: "2025-09-30",
@@ -1526,6 +1662,8 @@ export const solCompanies: Company[] = [
     id: "fwdi",
     name: "Forward Industries",
     ticker: "FWDI",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0000038264",
     asset: "SOL",
     tier: 1,
@@ -1560,13 +1698,21 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 12_000_000,  // ~$12M at Jan 31 per 10-Q MD&A (declining due to buybacks)
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 0,
     cashSource: "SEC 10-Q Q1 FY2026 MD&A: 'approximately $12 million in cash'",
     cashSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=document&q=approximately%20%2412%20million`,
     cashAsOf: "2026-01-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
-    totalDebt: 0,  // Debt free — total liabilities $12.1M are all current (taxes, accrued expenses, lease)
+    totalDebt: 0,
+    preferredEquity: 4925000,
+    preferredAsOf: "2025-03-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825003548/",
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // Debt free — total liabilities $12.1M are all current (taxes, accrued expenses, lease)
     debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     debtAsOf: "2025-12-31",
@@ -1576,6 +1722,8 @@ export const solCompanies: Company[] = [
     id: "hsdt",
     name: "Solana Company (fka Helius Medical)",
     ticker: "HSDT",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001610853",
     asset: "SOL",
     tier: 1,
@@ -1603,11 +1751,16 @@ export const solCompanies: Company[] = [
     sharesSource: "10-Q: 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30) = 75,926,867. Press release rounds to '75.9M'. Nov 17 cover shows 41,301,400 basic (includes ~1M PFW exercises).",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     sharesAsOf: "2025-09-30",
-    totalDebt: 0,  // No LongTermDebt in XBRL (404)
+    totalDebt: 0,
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // No LongTermDebt in XBRL (404)
     debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     debtAsOf: "2025-09-30",
     cashReserves: 15_000_000,  // Oct 29 8-K: ">$15M of cash and stablecoins". XBRL Sep 30 was $124M but ~$109M deployed into SOL post-Q3.
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "8-K Oct 29: '>$15M of cash and stablecoins'. XBRL Sep 30 was $124M but 10-Q Note 10 shows $124.6M spent on 587K SOL post-Q3. ~$15M is best available estimate pending 10-K.",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     cashAsOf: "2025-09-30",
@@ -1621,6 +1774,8 @@ export const solCompanies: Company[] = [
     id: "dfdv",
     name: "DeFi Development Corp",
     ticker: "DFDV",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001805526",
     asset: "SOL",
     tier: 1,
@@ -1646,7 +1801,7 @@ export const solCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 200_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001805526&type=S-3&dateb=&owner=include&count=10",
+    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390026018400/ea0277645-8k_defi.htm",
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // marketCap removed - calculated from sharesForMnav × FMP price
@@ -1655,10 +1810,16 @@ export const solCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
     sharesAsOf: "2026-01-01",
     totalDebt: 202_042_000,  // 10-Q: $131.4M converts (net) + $70.3M BitGo + $267K short-term
+    preferredEquity: 0,
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/",
     debtSource: "SEC 10-Q Q3 2025 balance sheet: $131.4M convertible notes (net, $140.3M face in two tranches) + $70.3M BitGo digital asset financing + $267K short-term loan. Total per 10-Q: $202,042,000",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     debtAsOf: "2026-01-01",
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Q4 2025 Business Update: approximately $9M in cash, stablecoins, and other tokens",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
@@ -1671,6 +1832,8 @@ export const solCompanies: Company[] = [
     id: "upxi",
     name: "Upexi",
     ticker: "UPXI",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001775194",
     asset: "SOL",
     tier: 1,
@@ -1700,10 +1863,16 @@ export const solCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     sharesAsOf: "2026-02-09",
     totalDebt: 254_594_731,  // $150M convert @$4.25 + $35.96M Hivemind @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
+    preferredEquity: 2,
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/",
     debtSource: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $35.96M (EX-41: $35,961,975) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     debtAsOf: "2026-01-09",
     cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet. NOTE: Post-offering cash ~$9.7M per Feb 10 earnings 8-K (EX-99.2), but using audited BS figure.
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 1_616_765,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q2 FY2026 balance sheet",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
@@ -1719,6 +1888,8 @@ export const solCompanies: Company[] = [
     id: "stke",
     name: "Sol Strategies",
     ticker: "STKE",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "SOL",
     tier: 2,
     secCik: "1846839",
@@ -1753,6 +1924,9 @@ export const solCompanies: Company[] = [
     cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
     cashObligationsAsOf: "2025-12-31",
     cashReserves: 1_300_000,  // CAD $1.79M → ~$1.3M USD
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 0,  // Operating cash - available
     cashSource: "SEC 40-F FY2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
@@ -1773,6 +1947,8 @@ export const hypeCompanies: Company[] = [
     id: "purr",
     name: "Hyperliquid Strategies",
     ticker: "PURR",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0002078856",
     asset: "HYPE",
     tier: 1,
@@ -1796,11 +1972,16 @@ export const hypeCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
     sharesAsOf: "2025-12-05",
     cashReserves: 300_000_000,  // $300M+ cash (Dec 2025) - from $555M PIPE minus HYPE purchase
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 300_000_000,  // No debt = cash not encumbered, don't subtract from EV
     cashSource: "Derived: $555M PIPE (SEC 8-K) - $255M HYPE purchase = ~$300M cash",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
     cashAsOf: "2025-12-05",
     totalDebt: 0,
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",
     debtSource: "SEC 10-Q Q3 2025: No debt",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
     debtAsOf: "2025-09-30",
@@ -1812,6 +1993,8 @@ export const hypeCompanies: Company[] = [
     id: "hypd",
     name: "Hyperion DeFi (fka Eyenovia)",
     ticker: "HYPD",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "HYPE",
     tier: 2,
     secCik: "1682639",
@@ -1824,7 +2007,7 @@ export const hypeCompanies: Company[] = [
     holdings: 1_459_615,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465926000748/tm2534601d1_8k.htm",
     datStartDate: "2025-07-01",
     stakingPct: 0,  // Direct holdings not staked (staked tracked in cryptoInvestments)
     stakingApy: 0.05,
@@ -1839,10 +2022,16 @@ export const hypeCompanies: Company[] = [
     sharesSource: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
     sharesAsOf: "2025-11-10",
     cashReserves: 8_223_180,  // SEC 10-Q Sep 30, 2025
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
     cashAsOf: "2025-09-30",
     totalDebt: 7_656_005,  // Notes payable (Avenue loan)
+    preferredEquity: 544,
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/",
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
     debtAsOf: "2025-09-30",
@@ -1861,7 +2050,7 @@ export const hypeCompanies: Company[] = [
         fairValue: 35_020_000,  // SEC 10-Q Sep 30, 2025 "Digital intangible assets"
         sourceDate: "2025-09-30",
         source: "SEC 10-Q Q3 2025",
-        sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
+        sourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465926000748/tm2534601d1_8k.htm",
         note: "Institutional liquid staking via Kinetiq (HiHYPE wrapper)",
         lstConfigId: "ihype",   // Links to LST config for dynamic rate lookup
         lstAmount: 694_290,     // iHYPE tokens held (derived from SEC fair value / market price)
@@ -1878,6 +2067,8 @@ export const bnbCompanies: Company[] = [
     id: "bnc",
     name: "CEA Industries (BNC)",
     ticker: "BNC",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001482541",
     asset: "BNB",
     tier: 1,
@@ -1898,6 +2089,9 @@ export const bnbCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm",
     sharesAsOf: "2025-12-12",
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm",
@@ -1912,6 +2106,8 @@ export const bnbCompanies: Company[] = [
     id: "na",
     name: "Nano Labs",
     ticker: "NA",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "BNB",
     tier: 2,
     // VERIFIED: SEC 6-K Dec 31, 2025 press release: "over 130,000 BNB...~$112M"
@@ -1935,8 +2131,11 @@ export const bnbCompanies: Company[] = [
     debtAsOf: "2024-12-31",
     // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
     cashReserves: 50_800_000,
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC XBRL 6-K Q2 2025",
-    cashSourceUrl: "https://data.sec.gov/api/xbrl/companyfacts/CIK0001872302.json",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea0271411-6k_nano.htm", // exact SEC 6-K doc (filed 2025-12-31)
     cashAsOf: "2025-06-30",
     // VERIFIED from 424B3 Oct 2025: 20,768,315 Class A + 2,858,909 Class B = 23,627,224
     // Significant dilution in 2025: 15.67M (Dec 2024) → 23.6M (Oct 2025) = +50%
@@ -1962,6 +2161,8 @@ export const taoCompanies: Company[] = [
     id: "taox",
     name: "TAO Synergies",
     ticker: "TAOX",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "TAO",
     tier: 1,
     holdings: 54_058,
@@ -1996,6 +2197,8 @@ export const taoCompanies: Company[] = [
     id: "xtaif",
     name: "xTAO Inc",
     ticker: "XTAIF",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "TAO",
     tier: 1,
     website: "https://www.xtao.co",
@@ -2015,6 +2218,9 @@ export const taoCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
     cashReserves: 4_132_218,  // SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEDAR+ Q2 FY26 MD&A (filed Nov 29, 2025)",
     cashSourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
     cashAsOf: "2025-09-30",
@@ -2031,6 +2237,8 @@ export const taoCompanies: Company[] = [
     id: "twav",
     name: "TaoWeave (fka Oblong)",
     ticker: "TWAV",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "TAO",
     tier: 2,
     holdings: 24_382,  // Dec 10, 2025 8-K: "increased its TAO holdings to 24,382 tokens"
@@ -2060,7 +2268,13 @@ export const taoCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "746210",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
+    preferredEquity: 0,
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/",
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/oblg20250930_10q.htm",
     cashAsOf: "2025-09-30",
@@ -2079,6 +2293,8 @@ export const linkCompanies: Company[] = [
     id: "cwd",
     name: "Caliber",
     ticker: "CWD",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "LINK",
     tier: 1,
     holdings: 562_535,
@@ -2120,12 +2336,14 @@ export const trxCompanies: Company[] = [
     id: "tron",
     name: "Tron Inc",
     ticker: "TRON",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "TRX",
     tier: 1,
     holdings: 677_000_000,  // Jan 23, 2026 8-K: "more than 677 million TRX in total"
     holdingsLastUpdated: "2026-01-23",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=8-K",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226006323/form8-k.htm",
     datStartDate: "2025-07-01",
     website: "https://srmentertainment.com",
     twitter: "https://x.com/tron_inc",
@@ -2162,6 +2380,8 @@ export const xrpCompanies: Company[] = [
     id: "xrpn",
     name: "Evernorth Holdings",
     ticker: "XRPN",  // Trading as Armada Acquisition Corp. II until merger closes
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "XRP",
     tier: 1,
     holdings: 473_276_430,
@@ -2189,6 +2409,8 @@ export const zecCompanies: Company[] = [
     id: "cyph",
     name: "Cypherpunk Technologies",
     ticker: "CYPH",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "ZEC",
     tier: 1,
     website: "https://www.cypherpunk.com",
@@ -2221,6 +2443,8 @@ export const ltcCompanies: Company[] = [
     id: "lits",
     name: "Lite Strategy",
     ticker: "LITS",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "LTC",
     tier: 1,
     secCik: "1262104",
@@ -2238,11 +2462,19 @@ export const ltcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     capitalRaisedPipe: 100_000_000,
     avgDailyVolume: 15_000_000,
-    totalDebt: 0,  // Q2 FY2026: No interest-bearing debt. MLA with Galaxy undrawn. Only $1.3M operating liabilities.
+    totalDebt: 0,
+    preferredEquity: 0,
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/",
+    debtSourceUrl: "https://www.oranjebtc.com",
+    debtSource: "Company website (needs specific financial statement link)",  // Q2 FY2026: No interest-bearing debt. MLA with Galaxy undrawn. Only $1.3M operating liabilities.
     debtSource: "SEC 10-Q Q2 FY2026",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
     debtAsOf: "2025-12-31",
     cashReserves: 8_758_000,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue $8,758,000
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
     cashAsOf: "2025-12-31",
@@ -2261,6 +2493,8 @@ export const ltcCompanies: Company[] = [
     id: "luxff",
     name: "Luxxfolio Holdings",
     ticker: "LUXFF",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "LTC",
     tier: 2,
     holdings: 20_226,  // SEDAR+ FY2025 audited annual (Aug 31, 2025)
@@ -2301,6 +2535,8 @@ export const suiCompanies: Company[] = [
     id: "suig",
     name: "SUI Group Holdings",
     ticker: "SUIG",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "SUI",
     tier: 1,
     holdings: 108_098_436,  // Jan 7, 2026 8-K treasury update
@@ -2350,6 +2586,8 @@ export const dogeCompanies: Company[] = [
     id: "zone",
     name: "CleanCore Solutions",
     ticker: "ZONE",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "DOGE",
     tier: 1,
     website: "https://www.cleancoresol.com",
@@ -2368,6 +2606,9 @@ export const dogeCompanies: Company[] = [
     avgDailyVolume: 3_000_000,
     marketCap: 150_000_000,
     cashReserves: 5_443_655,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q2 FY2026 XBRL",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     cashAsOf: "2025-12-31",
@@ -2387,6 +2628,8 @@ export const dogeCompanies: Company[] = [
     id: "tbh",
     name: "Brag House / House of Doge",
     ticker: "TBH",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "DOGE",
     tier: 1,
     secCik: "1903595",
@@ -2396,7 +2639,7 @@ export const dogeCompanies: Company[] = [
     holdings: 0,  // TBH has no DOGE - it's a gaming company pre-merger
     holdingsLastUpdated: "2026-01-26",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390026015027/ea0276712-8k_brag.htm",
     datStartDate: "2025-09-05",  // House of Doge treasury started Sep 5, 2025
     pendingMerger: true,  // SPAC-style merger not yet closed
     expectedHoldings: 730_000_000,  // HOD holds 730M DOGE per Dec 18, 2025 shareholder letter
@@ -2420,6 +2663,8 @@ export const dogeCompanies: Company[] = [
     id: "btog",
     name: "Bit Origin",
     ticker: "BTOG",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "DOGE",
     tier: 2,
     website: "https://www.bitorigin.io",
@@ -2447,6 +2692,9 @@ export const dogeCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     debtAsOf: "2026-01-20",
     cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashSource: "Yahoo Finance",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     cashAsOf: "2025-06-30",
@@ -2463,6 +2711,8 @@ export const avaxCompanies: Company[] = [
     id: "avx",
     name: "AVAX One Technology",
     ticker: "AVX",
+    country: "US",
+    exchangeMic: "XNAS",
     asset: "AVAX",
     tier: 1,
     holdings: 13_889_000,  // Dashboard (SEC-referenced in 8-K filings)
@@ -2475,6 +2725,9 @@ export const avaxCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     debtAsOf: "2025-09-30",
     cashReserves: 894_701,  // ⚠️ Pre-PIPE figure from 10-Q Sep 30, 2025. $145M+ PIPE cash received Nov 5, 2025. Actual balance pending 10-K (~March 2026).
+    cashSourceUrl: "https://www.h100.group/investors",
+    cashSource: "Company IR (investors page) — needs specific statement link",
+    cashAsOf: "2025-12-31",
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
@@ -2514,6 +2767,8 @@ export const hbarCompanies: Company[] = [
     id: "imtl",
     name: "Immutable Holdings",
     ticker: "IHLDF",
+    country: "US",
+    exchangeMic: "XNAS",
     secCik: "0001905459",  // Only Form D filings - Canadian company files with SEDAR+
     sedarProfile: "000044016",
     cusip: "45258G",

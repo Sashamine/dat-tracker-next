@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "KULR",
+  "secCik": "1662684",
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.426Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 1057,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 45674420,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-11-14",
+    "source": {
+      "sharesSource": "SEC 10-Q Q3 2025",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 20600000,
+    "restrictedCash": 20600000,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

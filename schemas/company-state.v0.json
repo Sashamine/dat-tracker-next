@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://datcap.local/schemas/company-state.v0.json",
+  "title": "CompanyState v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "ticker",
+    "asOf",
+    "generatedAt",
+    "listing",
+    "holdings"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "0.1" },
+    "stateId": { "type": "string", "description": "Deterministic id (future: content hash)" },
+    "ticker": { "type": "string" },
+    "asOf": { "type": "string", "format": "date" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+
+    "listing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["country", "exchangeMic", "currency"],
+      "properties": {
+        "country": { "type": "string" },
+        "exchangeMic": { "type": "string" },
+        "currency": { "type": "string" }
+      }
+    },
+
+    "holdings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset", "amount"],
+      "properties": {
+        "asset": { "type": "string" },
+        "amount": { "type": "number" },
+        "source": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "v0 placeholder: provenance/evidence object"
+        }
+      }
+    },
+
+    "shares": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sharesForMnav": { "type": "number" },
+        "sharesOutstandingFD": { "type": "number" },
+        "asOf": { "type": "string", "format": "date" },
+        "source": { "type": "object", "additionalProperties": true }
+      }
+    },
+
+    "balanceSheet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cashReserves": { "type": "number" },
+        "restrictedCash": { "type": "number" },
+        "totalDebt": { "type": "number" },
+        "preferredEquity": { "type": "number" },
+        "asOf": { "type": "string", "format": "date" },
+        "source": { "type": "object", "additionalProperties": true }
+      }
+    },
+
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "enum": ["pending", "verified", "disputed"] },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

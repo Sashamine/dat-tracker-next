@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "BTCT.V",
+  "secCik": null,
+  "asOf": "2026-02-17",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "CA",
+    "exchangeMic": "XTSX",
+    "currency": "CAD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 769,
+    "source": {
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://btctcorp.com",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 10027880,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-17",
+    "source": {
+      "sharesSource": "btctcorp.com homepage + SEDAR+ filings",
+      "sharesSourceUrl": "https://btctcorp.com"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": 25000000,
+    "preferredEquity": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": "https://btctcorp.com",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

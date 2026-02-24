@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "SWC",
+  "secCik": null,
+  "asOf": "2026-02-11",
+  "generatedAt": "2026-02-24T20:16:37.427Z",
+  "listing": {
+    "country": "GB",
+    "exchangeMic": "XLON",
+    "currency": "GBP"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 2689,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 396602526,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-09",
+    "source": {
+      "sharesSource": "Company analytics page + RNS Feb 9, 2026",
+      "sharesSourceUrl": "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

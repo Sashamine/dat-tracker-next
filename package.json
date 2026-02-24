@@ -15,7 +15,31 @@
     "diff-snapshot": "tsx scripts/diff-numbers.ts",
     "verify-citations": "tsx scripts/verify-citations.ts",
     "xbrl:extract": "node scripts/xbrl/extract-companyfacts.ts",
-    "sec:download": "node scripts/xbrl/sec-download-filing.ts"
+    "sec:download": "node scripts/xbrl/sec-download-filing.ts",
+    "sec:fetch-filings": "node --loader ts-node/esm scripts/sec/fetch-filings.ts",
+    "sec:fetch-companyfacts": "node --loader ts-node/esm scripts/sec/fetch-companyfacts.ts",
+    "sec:cache-smoke": "node --loader ts-node/esm scripts/sec/cache-smoke.ts",
+    "sec:prefetch-run": "node --loader ts-node/esm scripts/sec/hybrid-prefetch.ts",
+    "sec:cache-clear": "node --loader ts-node/esm scripts/sec/cache-clear.ts",
+    "sec:list-accession-docs": "node --loader ts-node/esm scripts/sec/list-accession-docs.ts",
+    "db:company-distribution": "node --loader ts-node/esm scripts/db/company-distribution.ts",
+    "db:company-geo": "node --loader ts-node/esm scripts/db/company-geo-dist.ts",
+    "db:backfill-geo": "node --loader ts-node/esm scripts/db/backfill-geo.ts",
+    "universe:analyze": "node --loader ts-node/esm scripts/analyze-universe.ts",
+    "infra:status": "npx tsx scripts/infra/status.ts",
+    "infra:monitor": "node scripts/infra/monitor.js",
+    "state:gen": "npx tsx scripts/state/generate-company-state.ts",
+    "state:gen:all": "npx tsx scripts/state/generate-all-company-states.ts",
+    "state:verify": "npx tsx scripts/state/verify-company-states.ts",
+    "checkpoint": "npx tsx scripts/infra/checkpoint.ts",
+    "infra:monitor:alert": "npx tsx scripts/infra/monitor-alert.ts",
+    "infra:meaningful": "npx tsx scripts/infra/meaningful-commit.ts",
+    "infra:auditor": "node scripts/infra/auditor.ts",
+    "infra:next": "node scripts/infra/next-action.ts",
+    "infra:auto-commit": "node scripts/infra/auto-product-commit.js",
+    "state:verify:compiled": "node dist-scripts/state/verify-company-states.js",
+    "state:verify:build": "npx -y tsc -p tsconfig.scripts.json",
+    "state:verify:compiled:auto": "bash scripts/state/verify-company-states.compiled.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
@@ -50,10 +74,12 @@
     "pdf-parse": "^2.4.5",
     "playwright": "^1.58.1",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5",
     "vitest": "^4.0.17",
     "ws": "^8.19.0"
-  }
+  },
+  "type": "module"
 }

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "BNC",
+  "secCik": "0001482541",
+  "asOf": "2026-01-28",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BNB",
+    "amount": 515544,
+    "source": {
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://www.ceaindustries.com/dashboard.html",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 44062938,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-12",
+    "source": {
+      "sharesSource": "SEC 10-Q (filed 2025-12-15): EntityCommonStockSharesOutstanding = 44,062,938 as of 2025-12-12",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 77500000,
+    "restrictedCash": 77500000,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": "2025-10-31",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm",
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

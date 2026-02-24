@@ -6,7 +6,7 @@
  *   npx tsx scripts/gen-orchestrated-prompts.ts <TICKER|NAME>
  *
  * Output:
- *   ../clawd/verification-runs/<ticker>/<YYYY-MM-DD>/prompts.json
+ *   verification-runs/<ticker>/<YYYY-MM-DD>/prompts.json
  *
  * Notes:
  * - This is intended to be called from the dat-tracker-next repo so it can import its data.
@@ -285,11 +285,10 @@ const out: PromptsJson = {
   prompts,
 };
 
-// Resolve clawd repo output path relative to dat-tracker-next.
-// Expected layout: .../dat-tracker-next (this script) and .../clawd (sibling).
+// Write inside the dat-tracker-next repo so the verification pipeline is
+// deterministic and does not depend on sibling workspaces.
 const datTrackerNextRoot = process.cwd();
-const clawdRoot = path.resolve(datTrackerNextRoot, "..", "clawd");
-const outDirAbs = path.join(clawdRoot, runDir);
+const outDirAbs = path.join(datTrackerNextRoot, runDir);
 const outPathAbs = path.join(outDirAbs, "prompts.json");
 
 fs.mkdirSync(outDirAbs, { recursive: true });

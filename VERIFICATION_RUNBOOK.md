@@ -227,6 +227,31 @@ Notes:
 
 ---
 
+## Hybrid SEC extraction (recommended)
+
+**Why:** cheaper + faster than LLM-parsing whole iXBRL HTML, and more robust vs SEC rate limiting.
+
+### Layer 1 — JSON-first (numeric facts)
+Use `data.sec.gov` endpoints (cache to disk):
+- Submissions: `https://data.sec.gov/submissions/CIK##########.json`
+- Companyfacts: `https://data.sec.gov/api/xbrl/companyfacts/CIK##########.json`
+
+### Layer 2 — Filings/exhibits only when needed (instrument terms)
+For legal/narrative terms (indentures, warrant mechanics, conversion features), download only the specific docs/exhibits you need from `www.sec.gov/Archives` using the polite downloader + cache.
+
+### Required environment
+SEC requires a descriptive User-Agent including contact info:
+- `SEC_USER_AGENT="Name (email@domain.com)"`
+
+### Commands
+Fetch companyfacts:
+- `npm run sec:fetch-companyfacts -- --cik 0001849635 --outFile verification-runs/djt/2026-02-22/sec/companyfacts.json`
+
+Fetch specific filing docs under an accession directory:
+- `npm run sec:fetch-filings -- --cik 0001849635 --accession 000114036125040977 --outDir verification-runs/djt/2026-02-22/sec/filings --docs "<filename1>,<filename2>"`
+
+(You supply the exact filenames from the accession directory. The script caches responses so repeated runs are near-instant.)
+
 ## Common failure modes (non-exhaustive)
 - Trusting existing values without reconstruction.
 - Generic source URLs (sec.gov home, directory listings, etc.).

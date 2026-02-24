@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "0434.HK",
+  "secCik": null,
+  "asOf": "2025-11-17",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "HK",
+    "exchangeMic": "XHKG",
+    "currency": "HKD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 4091,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 767804730,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-31",
+    "source": {
+      "sharesSource": "HKEX Monthly Return Jan 2026 (filed Feb 3, 2026): excl. 3,172,000 treasury shares",
+      "sharesSourceUrl": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0203/2026020302066.pdf"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 10600000,
+    "restrictedCash": null,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+      "debtSourceUrl": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

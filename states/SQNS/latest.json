@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "SQNS",
+  "secCik": "0001383395",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-02-24T20:16:37.427Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 2139,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 15504809,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "sharesSource": "6-K Q4 2025 weighted avg basic ADS (1,599,589,702 ordinary shares / ~100 ADS ratio)",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": 94500000,
+    "preferredEquity": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

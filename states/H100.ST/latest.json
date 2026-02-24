@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "H100.ST",
+  "secCik": null,
+  "asOf": "2026-02-06",
+  "generatedAt": "2026-02-24T20:16:37.426Z",
+  "listing": {
+    "country": "SE",
+    "exchangeMic": "XSTO",
+    "currency": "SEK"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 1051,
+    "source": {
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://mfn.se/a/h100-group/h100-group-acquires-4-39-btc-total-holdings-reach-1-051-btc",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 338396693,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-12",
+    "source": {
+      "sharesSource": "H100 Group IR page + MFN acquisition filing",
+      "sharesSourceUrl": "https://mfn.se/a/h100-group"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 0,
+    "restrictedCash": null,
+    "totalDebt": 20736000,
+    "preferredEquity": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": "https://mfn.se/a/h100-group",
+      "debtSourceUrl": "https://mfn.se/a/h100-group",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

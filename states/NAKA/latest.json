@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "NAKA",
+  "secCik": "0001946573",
+  "asOf": "2025-11-12",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 5398,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 511555864,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-11-14",
+    "source": {
+      "sharesSource": "SEC 10-Q Q3 2025 XBRL: 439,850,889 common + 71,704,975 pre-funded warrants ($0.001 exercise)",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 24185083,
+    "restrictedCash": null,
+    "totalDebt": 210000000,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

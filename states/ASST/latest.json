@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "ASST",
+  "secCik": "0001920406",
+  "asOf": "2026-02-11",
+  "generatedAt": "2026-02-24T20:16:37.426Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 13131.82,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 63048519,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-11",
+    "source": {
+      "sharesSource": "SEC 8-K Feb 13, 2026: 53,168,237 Class A + 9,880,282 Class B = 63,048,519 (post 1-for-20 split)",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 127200000,
+    "restrictedCash": 127200000,
+    "totalDebt": 10000000,
+    "preferredEquity": 426551800,
+    "asOf": "2026-02-11",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

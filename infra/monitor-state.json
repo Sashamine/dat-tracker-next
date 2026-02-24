@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "0.1",
+  "lastAlertSignature": "ALERT running-but-stale>=30m",
+  "consecutiveAlerts": 0,
+  "updatedAt": "2026-02-24T01:00:00.000Z",
+  "auditorState": {
+    "lastRun": "2026-02-24T01:00:00.000Z",
+    "lastResult": "ok",
+    "blocked": false,
+    "lastCommand": null
+  }
+}

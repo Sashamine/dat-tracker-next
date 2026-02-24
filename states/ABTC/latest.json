@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "ABTC",
+  "secCik": "0001755953",
+  "asOf": "2025-12-14",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 5098,
+    "source": {
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 927604994,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-11-13",
+    "source": {
+      "sharesSource": "SEC 10-Q Q3 2025 cover page: Class A 195,380,091 + Class B 732,224,903 = 927,604,994",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 7976000,
+    "restrictedCash": null,
+    "totalDebt": 286200000,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "0.1",
+  "items": [
+    {
+      "id": "verifier_cash_source_metadata",
+      "at": "2026-02-24T05:10:42.124Z",
+      "error": "unknown_task:verifier_cash_source_metadata"
+    },
+    {
+      "id": "verifier_debt_source_metadata",
+      "at": "2026-02-24T05:15:33.339Z",
+      "error": "unknown_task:verifier_debt_source_metadata"
+    },
+    {
+      "id": "verifier_balance_sheet_numbers",
+      "at": "2026-02-24T05:16:34.051Z",
+      "error": "unknown_task:verifier_balance_sheet_numbers"
+    },
+    {
+      "id": "verifier_cost_basis_evidence",
+      "at": "2026-02-24T05:16:34.052Z",
+      "error": "unknown_task:verifier_cost_basis_evidence"
+    },
+    {
+      "id": "verifier_currency_present",
+      "at": "2026-02-24T05:16:34.053Z",
+      "error": "unknown_task:verifier_currency_present"
+    },
+    {
+      "id": "verifier_debt_asof",
+      "at": "2026-02-24T05:16:34.053Z",
+      "error": "unknown_task:verifier_debt_asof"
+    },
+    {
+      "id": "verifier_holdings_amount_number",
+      "at": "2026-02-24T05:16:34.053Z",
+      "error": "unknown_task:verifier_holdings_amount_number"
+    },
+    {
+      "id": "verifier_holdings_last_updated",
+      "at": "2026-02-24T05:16:34.054Z",
+      "error": "unknown_task:verifier_holdings_last_updated"
+    },
+    {
+      "id": "verifier_holdings_sec_evidence",
+      "at": "2026-02-24T05:16:34.054Z",
+      "error": "unknown_task:verifier_holdings_sec_evidence"
+    },
+    {
+      "id": "verifier_holdings_source_present",
+      "at": "2026-02-24T05:16:34.054Z",
+      "error": "unknown_task:verifier_holdings_source_present"
+    },
+    {
+      "id": "verifier_listing_metadata",
+      "at": "2026-02-24T05:16:34.055Z",
+      "error": "unknown_task:verifier_listing_metadata"
+    },
+    {
+      "id": "verifier_negative_numbers",
+      "at": "2026-02-24T05:16:34.055Z",
+      "error": "unknown_task:verifier_negative_numbers"
+    },
+    {
+      "id": "verifier_preferred_source_metadata",
+      "at": "2026-02-24T05:16:34.055Z",
+      "error": "unknown_task:verifier_preferred_source_metadata"
+    },
+    {
+      "id": "verifier_shares_asof",
+      "at": "2026-02-24T05:16:34.055Z",
+      "error": "unknown_task:verifier_shares_asof"
+    },
+    {
+      "id": "verifier_shares_sec_evidence",
+      "at": "2026-02-24T05:16:34.056Z",
+      "error": "unknown_task:verifier_shares_sec_evidence"
+    },
+    {
+      "id": "verifier_shares_source_metadata",
+      "at": "2026-02-24T05:16:34.056Z",
+      "error": "unknown_task:verifier_shares_source_metadata"
+    },
+    {
+      "id": "verifier_source_urls_valid",
+      "at": "2026-02-24T05:16:34.056Z",
+      "error": "unknown_task:verifier_source_urls_valid"
+    },
+    {
+      "id": "verifier_staking_evidence",
+      "at": "2026-02-24T05:16:34.056Z",
+      "error": "unknown_task:verifier_staking_evidence"
+    }
+  ]
+}

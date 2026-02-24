@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "GAME",
+  "secCik": "1714562",
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.425Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "ETH",
+    "amount": 1608,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 94845193,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-01-06",
+    "source": {
+      "sharesSource": "SEC 10-Q Sep 30 (98.4M) - 3.54M buybacks through Jan 6, 2026",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 6012219,
+    "restrictedCash": null,
+    "totalDebt": 1250000,
+    "preferredEquity": 5150000,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000164117225023972/",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

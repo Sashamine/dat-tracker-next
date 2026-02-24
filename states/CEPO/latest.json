@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "CEPO",
+  "secCik": "0002027708",
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.426Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 30021,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/2027708/000121390026008287/ea0274216-8k_cantor1.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": null,
+    "sharesOutstandingFD": null,
+    "asOf": null,
+    "source": {
+      "sharesSource": null,
+      "sharesSourceUrl": null
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

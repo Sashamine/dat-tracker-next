@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "MSTR",
+  "secCik": "0001050446",
+  "asOf": "2026-02-16",
+  "generatedAt": "2026-02-24T20:16:37.425Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 717131,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 333082250,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-16",
+    "source": {
+      "sharesSource": "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 2301470000,
+    "restrictedCash": null,
+    "totalDebt": 8190155000,
+    "preferredEquity": 6919514000,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

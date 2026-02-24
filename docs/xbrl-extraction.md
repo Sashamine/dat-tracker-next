@@ -90,6 +90,15 @@ These are common, but not universal. Always confirm in `companyfacts`.
 
 ---
 
+## Hybrid add-on: cached filings/exhibits fetch (when XBRL isn’t enough)
+
+Use the `scripts/sec/` polite downloader + cache to fetch only the specific filing docs/exhibits you need when:
+- instrument terms are narrative (indenture/warrant mechanics)
+- you need footnote tables not represented cleanly in companyfacts
+
+Required env var (SEC compliance):
+- `SEC_USER_AGENT="Name (email@domain.com)"`
+
 ## Output contract (what scripts must produce)
 
 For a given ticker, write:

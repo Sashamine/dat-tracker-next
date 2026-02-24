@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "UPXI",
+  "secCik": "0001775194",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "SOL",
+    "amount": 2173204,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 69760581,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-09",
+    "source": {
+      "sharesSource": "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 1616765,
+    "restrictedCash": 1616765,
+    "totalDebt": 254594731,
+    "preferredEquity": 2,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

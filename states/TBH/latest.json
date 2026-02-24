@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "TBH",
+  "secCik": "1903595",
+  "asOf": "2026-01-26",
+  "generatedAt": "2026-02-24T20:16:37.431Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "DOGE",
+    "amount": 0,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1903595/000121390026015027/ea0276712-8k_brag.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 10800000,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-11-12",
+    "source": {
+      "sharesSource": "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1903595/000121390025111616/ea0263575-10q_brag.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

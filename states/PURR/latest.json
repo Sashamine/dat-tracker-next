@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "PURR",
+  "secCik": "0002078856",
+  "asOf": "2025-12-04",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "HYPE",
+    "amount": 12000000,
+    "source": {
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://cryptorank.io/news/feed/hyperliquid-strategies-hype-stake",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 127025563,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-05",
+    "source": {
+      "sharesSource": "SEC 10-Q (filed 2025-12-08): EntityCommonStockSharesOutstanding = 127,025,563 as of 2025-12-05",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 300000000,
+    "restrictedCash": 300000000,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-12-05",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

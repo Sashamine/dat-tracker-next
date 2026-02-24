@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "DJT",
+  "secCik": "0001849635",
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.428Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 11542,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "/filings/djt/0001140361-25-040977?tab=document&q=11%2C542",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 279997636,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-11-05",
+    "source": {
+      "sharesSource": "SEC 10-Q Q3 2025 XBRL: EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
+      "sharesSourceUrl": "/filings/djt/0001140361-25-040977"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 166072700,
+    "restrictedCash": null,
+    "totalDebt": 950769100,
+    "preferredEquity": 0,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "/filings/djt/0001140361-25-040977",
+      "debtSourceUrl": "/filings/djt/0001140361-25-040977",
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/"
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

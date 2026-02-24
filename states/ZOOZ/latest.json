@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "ZOOZ",
+  "secCik": "0001992818",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-02-24T20:16:37.427Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 1046,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 163000000,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "sharesSource": "SEC 424B5 Sep 30, 2025: 161,899,782 outstanding + 6-K: ~1.14M ATM shares sold",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 27100000,
+    "restrictedCash": null,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-12-31",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

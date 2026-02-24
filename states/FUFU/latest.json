@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "FUFU",
+  "secCik": "0001921158",
+  "asOf": "2026-01-31",
+  "generatedAt": "2026-02-24T20:16:37.427Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "BTC",
+    "amount": 1796,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 164131946,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-06-30",
+    "source": {
+      "sharesSource": "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 40086000,
+    "restrictedCash": null,
+    "totalDebt": 141301000,
+    "preferredEquity": null,
+    "asOf": "2025-06-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

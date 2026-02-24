@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "HSDT",
+  "secCik": "0001610853",
+  "asOf": "2025-11-18",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "SOL",
+    "amount": 2340757,
+    "source": {
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 75926867,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "sharesSource": "10-Q: 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30) = 75,926,867. Press release rounds to '75.9M'. Nov 17 cover shows 41,301,400 basic (includes ~1M PFW exercises).",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 15000000,
+    "restrictedCash": null,
+    "totalDebt": 0,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

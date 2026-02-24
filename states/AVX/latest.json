@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "AVX",
+  "secCik": "1826397",
+  "asOf": "2026-02-12",
+  "generatedAt": "2026-02-24T20:16:37.431Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "AVAX",
+    "amount": 13889000,
+    "source": {
+      "holdingsSource": "company-dashboard",
+      "holdingsSourceUrl": "https://analytics-avaxone.theblueprint.xyz/",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 92672000,
+    "sharesOutstandingFD": null,
+    "asOf": "2026-02-12",
+    "source": {
+      "sharesSource": "Company dashboard (post-PIPE 93,112,148 minus buybacks)",
+      "sharesSourceUrl": "https://analytics-avaxone.theblueprint.xyz/"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": 894701,
+    "restrictedCash": null,
+    "totalDebt": 1689415,
+    "preferredEquity": null,
+    "asOf": "2025-09-30",
+    "source": {
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}

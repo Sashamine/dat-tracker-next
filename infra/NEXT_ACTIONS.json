@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "0.1",
+  "actions": [
+    {
+      "id": "api_cache_headers",
+      "label": "Add short cache headers to /api/state/latest and /api/state/tickers",
+      "allowedPaths": ["src/app/api/state/"],
+      "commitPrefix": "feat(api):",
+      "notes": "Set Cache-Control: public, max-age=30, s-maxage=30 (or similar)."
+    },
+    {
+      "id": "api_health",
+      "label": "Add /api/state/health endpoint (returns ok + counts)",
+      "allowedPaths": ["src/app/api/state/"],
+      "commitPrefix": "feat(api):",
+      "notes": "Return { ok: true, tickers: <count>, updatedAt: <iso> }."
+    },
+    {
+      "id": "verifier_require_sources",
+      "label": "Verifier: require holdings.sourceUrl or accession when holdingsSource == sec-filing",
+      "allowedPaths": ["scripts/state/"],
+      "commitPrefix": "feat(state):",
+      "notes": "If holdingsSource is sec-filing, require holdingsSourceUrl or holdingsAccession present."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "0.1",
+  "ticker": "TAOX",
+  "secCik": "1571934",
+  "asOf": "2025-09-30",
+  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "listing": {
+    "country": "US",
+    "exchangeMic": "XNAS",
+    "currency": "USD"
+  },
+  "holdings": {
+    "asset": "TAO",
+    "amount": 54058,
+    "source": {
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://ir.taosynergies.com/",
+      "holdingsAccession": null
+    }
+  },
+  "shares": {
+    "sharesForMnav": 7000000,
+    "sharesOutstandingFD": null,
+    "asOf": "2025-10-31",
+    "source": {
+      "sharesSource": "SEC DEF 14A Nov 17, 2025 (6,848,912 shares as of Oct 31)",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm"
+    }
+  },
+  "balanceSheet": {
+    "cashReserves": null,
+    "restrictedCash": null,
+    "totalDebt": null,
+    "preferredEquity": null,
+    "asOf": null,
+    "source": {
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
+      "preferredSourceUrl": null
+    }
+  },
+  "verification": {
+    "status": "pending"
+  }
+}
