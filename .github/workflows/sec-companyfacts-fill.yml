@@ -98,6 +98,10 @@ jobs:
             fi
           fi
 
+      - name: DLQ report (log)
+        run: |
+          npm run -s sec:dlq:report || true
+
       - name: DLQ report comment
         if: steps.pr.outputs.number != ''
         env:
