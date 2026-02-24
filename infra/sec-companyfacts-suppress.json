@@ -1,6 +1,14 @@
 {
   "schemaVersion": "0.1",
   "cash": [],
-  "debt": [],
-  "preferred": []
+  "debt": [
+    "BNC",
+    "TWAV"
+  ],
+  "preferred": [
+    "AVX",
+    "BNC",
+    "BTCS",
+    "KULR"
+  ]
 }
