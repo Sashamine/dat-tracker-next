@@ -2,8 +2,8 @@ name: sec-companyfacts-fill
 
 on:
   schedule:
-    # Twice daily
-    - cron: "0 6,18 * * *"
+    # Daily @ 05:30 America/Denver (GitHub cron is UTC)
+    - cron: "30 12 * * *"
   workflow_dispatch:
 
 jobs:
@@ -38,7 +38,22 @@ jobs:
           fi
 
       - name: Create PR
+        if: steps.diff.outputs.changed == 'true' && steps.existing.outputs.found != 'true'
+      - name: Check for existing auto-data PR
         if: steps.diff.outputs.changed == 'true'
+        id: existing
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Avoid PR spam: if there's already an open PR labeled auto-data, bail.
+          count=$(gh pr list --state open --label auto-data --json number --jq length)
+          if [ "$count" != "0" ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+          fi
+
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
