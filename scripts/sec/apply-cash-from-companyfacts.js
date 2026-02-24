@@ -173,9 +173,19 @@ async function main() {
   if (!hasCashUrl && extracted.cashSourceUrl) {
     newBlock = newBlock.replace(/cashAsOf:[^\n]*\n/, (m0) => m0 + `    cashSourceUrl: \"${extracted.cashSourceUrl}\",\n`);
   }
-  // Generic staleness flag for UI warning
-  if (isStale && !/staleData:\s*true/.test(newBlock)) {
-    newBlock = newBlock.replace(/cashSourceUrl:[^\n]*\n/, (m0) => m0 + `    staleData: true,\n`);
+  // Stale warning (insert-only): add dataWarnings if none exists
+  if (isStale && !/\bdataWarnings\s*:/.test(newBlock)) {
+    const msg = `Balance sheet data may be stale (cash as-of ${extracted.cashAsOf}).`;
+    newBlock = newBlock.replace(/cashSourceUrl:[^\n]*\n/, (m0) =>
+      m0 +
+      `    dataWarnings: [\n` +
+      `      {\n` +
+      `        type: \"stale-data\",\n` +
+      `        message: \"${msg}\",\n` +
+      `        severity: \"warning\",\n` +
+      `      },\n` +
+      `    ],\n`,
+    );
   }
 
   const outSrc = companiesSrc.slice(0, span.start) + newBlock + companiesSrc.slice(span.end);

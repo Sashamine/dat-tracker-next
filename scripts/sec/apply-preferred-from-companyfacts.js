@@ -131,9 +131,19 @@ async function main() {
       m0 + `    preferredSourceUrl: \"${extracted.preferredSourceUrl}\",\n`
     );
   }
-  // Generic staleness flag for UI warning
-  if (isStale && !/staleData:\s*true/.test(newBlock)) {
-    newBlock = newBlock.replace(/preferredSourceUrl:[^\n]*\n/, (m0) => m0 + `    staleData: true,\n`);
+  // Stale warning (insert-only): add dataWarnings if none exists
+  if (isStale && !/\bdataWarnings\s*:/.test(newBlock)) {
+    const msg = `Balance sheet data may be stale (preferred as-of ${extracted.preferredAsOf}).`;
+    newBlock = newBlock.replace(/preferredSourceUrl:[^\n]*\n/, (m0) =>
+      m0 +
+      `    dataWarnings: [\n` +
+      `      {\n` +
+      `        type: \"stale-data\",\n` +
+      `        message: \"${msg}\",\n` +
+      `        severity: \"warning\",\n` +
+      `      },\n` +
+      `    ],\n`,
+    );
   }
 
   const out = src.slice(0, span.start) + newBlock + src.slice(span.end);

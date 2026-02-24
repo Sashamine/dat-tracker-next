@@ -132,9 +132,19 @@ async function main() {
   if (!hasUrl && extracted.debtSourceUrl) {
     newBlock = newBlock.replace(/debtAsOf:[^\n]*\n/, (m0) => m0 + `    debtSourceUrl: \"${extracted.debtSourceUrl}\",\n`);
   }
-  // Generic staleness flag for UI warning
-  if (isStale && !/staleData:\s*true/.test(newBlock)) {
-    newBlock = newBlock.replace(/debtSourceUrl:[^\n]*\n/, (m0) => m0 + `    staleData: true,\n`);
+  // Stale warning (insert-only): add dataWarnings if none exists
+  if (isStale && !/\bdataWarnings\s*:/.test(newBlock)) {
+    const msg = `Balance sheet data may be stale (debt as-of ${extracted.debtAsOf}).`;
+    newBlock = newBlock.replace(/debtSourceUrl:[^\n]*\n/, (m0) =>
+      m0 +
+      `    dataWarnings: [\n` +
+      `      {\n` +
+      `        type: \"stale-data\",\n` +
+      `        message: \"${msg}\",\n` +
+      `        severity: \"warning\",\n` +
+      `      },\n` +
+      `    ],\n`,
+    );
   }
 
   const out = src.slice(0, span.start) + newBlock + src.slice(span.end);

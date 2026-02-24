@@ -197,11 +197,6 @@ export interface Company {
   preferredAsOf?: string;
   preferredSource?: string;
   preferredSourceUrl?: string;
-
-  // Generic staleness flag for balance-sheet fields (cash/debt/preferred)
-  // True when the most recent applied value is older than the UI threshold (e.g., 60 days)
-  staleData?: boolean;
-
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
   walletAddresses?: string[];   // Known wallet addresses for on-chain verification
