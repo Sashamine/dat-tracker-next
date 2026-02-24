@@ -145,7 +145,9 @@ async function main() {
         `node ${path.join(process.cwd(), 'scripts/sec/no-extract-track.cjs')} cash ${ticker}`,
         { stdio: 'inherit' },
       );
-    } catch {}
+    } catch (e) {
+      console.log(`warn: no-extract-track failed for cash ${ticker}`);
+    }
     return;
   }
 

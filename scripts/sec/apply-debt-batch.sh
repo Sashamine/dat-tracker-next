@@ -54,7 +54,7 @@ echo "summary: ok=$count_ok dlq=$count_dlq noop=$count_noop"
 if [[ $dataChanged -eq 1 ]]; then
   (cd "$ROOT_DIR" && npm run -s state:gen:all)
   (cd "$ROOT_DIR" && npm run -s state:verify:compiled:auto -- --runId debt-extract-batch)
-  (cd "$ROOT_DIR" && git add src/lib/data/companies.ts states infra/latest-verified.json infra/verification-gaps.json infra/STATUS.json infra/dlq-extract.json 2>/dev/null || true)
+  (cd "$ROOT_DIR" && git add src/lib/data/companies.ts states infra/latest-verified.json infra/verification-gaps.json infra/STATUS.json infra/dlq-extract.json infra/sec-companyfacts-failures.json infra/sec-companyfacts-suppress.json 2>/dev/null || true)
   if [[ -z "${CI:-}" ]]; then
     (cd "$ROOT_DIR" && git commit -m "chore(sec): apply debt companyfacts batch" || true)
   fi
