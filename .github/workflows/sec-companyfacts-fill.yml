@@ -37,8 +37,6 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Create PR
-        if: steps.diff.outputs.changed == 'true' && steps.existing.outputs.found != 'true'
       - name: Check for existing auto-data PR
         if: steps.diff.outputs.changed == 'true'
         id: existing
@@ -54,6 +52,8 @@ jobs:
             echo "found=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Create PR
+        if: steps.diff.outputs.changed == 'true' && steps.existing.outputs.found != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
