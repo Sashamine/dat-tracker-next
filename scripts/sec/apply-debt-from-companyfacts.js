@@ -75,7 +75,7 @@ async function dlqPush(item) {
   await fs.writeFile(dlqPath, JSON.stringify(dlq, null, 2) + '\n', 'utf8');
 }
 
-const MAX_AGE_DAYS = 548; // ~18 months
+const MAX_AGE_DAYS = 1095; // 3 years
 
 async function main() {
   const ticker = (process.argv[2] || '').trim();

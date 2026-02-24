@@ -6,7 +6,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const MAX_AGE_DAYS = 548; // ~18 months
+const MAX_AGE_DAYS = 1095; // 3 years
 
 async function execExtract(secCik) {
   const { spawnSync } = await import('node:child_process');
