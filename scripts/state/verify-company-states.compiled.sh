@@ -6,10 +6,20 @@ SRC="$ROOT/scripts/state/verify-company-states.ts"
 OUT="$ROOT/dist-scripts/state/verify-company-states.js"
 STAMP="$ROOT/dist-scripts/.verify-company-states.src-mtime"
 
-src_mtime=$(stat -f "%m" "$SRC")
+# Cross-platform mtime (macOS uses stat -f, Linux uses stat -c)
+mtime() {
+  local file="$1"
+  if stat -f "%m" "$file" >/dev/null 2>&1; then
+    stat -f "%m" "$file"
+  else
+    stat -c "%Y" "$file"
+  fi
+}
+
+src_mtime=$(mtime "$SRC")
 out_mtime=0
 if [[ -f "$OUT" ]]; then
-  out_mtime=$(stat -f "%m" "$OUT")
+  out_mtime=$(mtime "$OUT")
 fi
 
 # Rebuild if src is newer than output OR stamp missing
