@@ -143,29 +143,13 @@ async function main() {
     return;
   }
 
-  // Freshness guard: avoid filling with stale cash facts
-  if (extracted.cashAsOf) {
-    const ageDays = (Date.now() - Date.parse(extracted.cashAsOf)) / 86400000;
-    if (Number.isFinite(ageDays) && ageDays > MAX_AGE_DAYS) {
-      const dlqPath = path.join(process.cwd(), 'infra', 'dlq-extract.json');
-      let dlq = { schemaVersion: '0.1', items: [] };
-      try { dlq = JSON.parse(await fs.readFile(dlqPath, 'utf8')); } catch {}
-      dlq.items.push({
-        kind: 'cash_extract_stale',
-        ticker,
-        at: new Date().toISOString(),
-        secCik,
-        extracted,
-        ageDays,
-        maxAgeDays: MAX_AGE_DAYS,
-        note: 'extracted cash is older than freshness threshold; not applying',
-      });
-      await fs.mkdir(path.dirname(dlqPath), { recursive: true });
-      await fs.writeFile(dlqPath, JSON.stringify(dlq, null, 2) + '\n', 'utf8');
-      console.log('dlq: extracted cash is stale');
-      return;
-    }
-  }
+  // Staleness flag (does not block fill-missing)
+  const STALE_DAYS = 60;
+  const isStale = Boolean(
+    extracted.cashAsOf &&
+      Number.isFinite((Date.now() - Date.parse(extracted.cashAsOf)) / 86400000) &&
+      (Date.now() - Date.parse(extracted.cashAsOf)) / 86400000 > STALE_DAYS,
+  );
 
   const hasCashReserves = /cashReserves:\s*[^,\n]+/.test(block);
   const hasCashAsOf = /cashAsOf:\s*"?\d{4}-\d{2}-\d{2}"?/.test(block);
@@ -188,6 +172,10 @@ async function main() {
   }
   if (!hasCashUrl && extracted.cashSourceUrl) {
     newBlock = newBlock.replace(/cashAsOf:[^\n]*\n/, (m0) => m0 + `    cashSourceUrl: \"${extracted.cashSourceUrl}\",\n`);
+  }
+  // Generic staleness flag for UI warning
+  if (isStale && !/staleData:\s*true/.test(newBlock)) {
+    newBlock = newBlock.replace(/cashSourceUrl:[^\n]*\n/, (m0) => m0 + `    staleData: true,\n`);
   }
 
   const outSrc = companiesSrc.slice(0, span.start) + newBlock + companiesSrc.slice(span.end);

@@ -107,23 +107,13 @@ async function main() {
     return;
   }
 
-  if (extracted.preferredAsOf) {
-    const ageDays = (Date.now() - Date.parse(extracted.preferredAsOf)) / 86400000;
-    if (Number.isFinite(ageDays) && ageDays > MAX_AGE_DAYS) {
-      await dlqPush({
-        kind: 'preferred_extract_stale',
-        ticker,
-        at: new Date().toISOString(),
-        secCik,
-        extracted,
-        ageDays,
-        maxAgeDays: MAX_AGE_DAYS,
-        note: 'extracted preferred is older than freshness threshold; not applying',
-      });
-      console.log('dlq: extracted preferred is stale');
-      return;
-    }
-  }
+  // Staleness flag (does not block fill-missing)
+  const STALE_DAYS = 60;
+  const isStale = Boolean(
+    extracted.preferredAsOf &&
+      Number.isFinite((Date.now() - Date.parse(extracted.preferredAsOf)) / 86400000) &&
+      (Date.now() - Date.parse(extracted.preferredAsOf)) / 86400000 > STALE_DAYS,
+  );
 
   let newBlock = block;
   // Insert after totalDebt (or restrictedCash as fallback)
@@ -140,6 +130,10 @@ async function main() {
     newBlock = newBlock.replace(/preferredAsOf:[^\n]*\n/, (m0) =>
       m0 + `    preferredSourceUrl: \"${extracted.preferredSourceUrl}\",\n`
     );
+  }
+  // Generic staleness flag for UI warning
+  if (isStale && !/staleData:\s*true/.test(newBlock)) {
+    newBlock = newBlock.replace(/preferredSourceUrl:[^\n]*\n/, (m0) => m0 + `    staleData: true,\n`);
   }
 
   const out = src.slice(0, span.start) + newBlock + src.slice(span.end);

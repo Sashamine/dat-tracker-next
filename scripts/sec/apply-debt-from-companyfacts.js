@@ -103,24 +103,13 @@ async function main() {
     return;
   }
 
-  // Freshness guard: avoid filling with stale debt facts
-  if (extracted.debtAsOf) {
-    const ageDays = (Date.now() - Date.parse(extracted.debtAsOf)) / 86400000;
-    if (Number.isFinite(ageDays) && ageDays > MAX_AGE_DAYS) {
-      await dlqPush({
-        kind: 'debt_extract_stale',
-        ticker,
-        at: new Date().toISOString(),
-        secCik,
-        extracted,
-        ageDays,
-        maxAgeDays: MAX_AGE_DAYS,
-        note: 'extracted debt is older than freshness threshold; not applying',
-      });
-      console.log('dlq: extracted debt is stale');
-      return;
-    }
-  }
+  // Staleness flag (does not block fill-missing)
+  const STALE_DAYS = 60;
+  const isStale = Boolean(
+    extracted.debtAsOf &&
+      Number.isFinite((Date.now() - Date.parse(extracted.debtAsOf)) / 86400000) &&
+      (Date.now() - Date.parse(extracted.debtAsOf)) / 86400000 > STALE_DAYS,
+  );
 
   const hasDebt = /totalDebt:\s*[^,\n]+/.test(block);
   const hasAsOf = /debtAsOf:\s*"?\d{4}-\d{2}-\d{2}"?/.test(block);
@@ -142,6 +131,10 @@ async function main() {
   }
   if (!hasUrl && extracted.debtSourceUrl) {
     newBlock = newBlock.replace(/debtAsOf:[^\n]*\n/, (m0) => m0 + `    debtSourceUrl: \"${extracted.debtSourceUrl}\",\n`);
+  }
+  // Generic staleness flag for UI warning
+  if (isStale && !/staleData:\s*true/.test(newBlock)) {
+    newBlock = newBlock.replace(/debtSourceUrl:[^\n]*\n/, (m0) => m0 + `    staleData: true,\n`);
   }
 
   const out = src.slice(0, span.start) + newBlock + src.slice(span.end);
