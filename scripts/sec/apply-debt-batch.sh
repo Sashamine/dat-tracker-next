@@ -55,12 +55,16 @@ if [[ $dataChanged -eq 1 ]]; then
   (cd "$ROOT_DIR" && npm run -s state:gen:all)
   (cd "$ROOT_DIR" && npm run -s state:verify:compiled:auto -- --runId debt-extract-batch)
   (cd "$ROOT_DIR" && git add src/lib/data/companies.ts states infra/latest-verified.json infra/verification-gaps.json infra/STATUS.json infra/dlq-extract.json 2>/dev/null || true)
-  (cd "$ROOT_DIR" && git commit -m "chore(sec): apply debt companyfacts batch" || true)
+  if [[ -z "${CI:-}" ]]; then
+    (cd "$ROOT_DIR" && git commit -m "chore(sec): apply debt companyfacts batch" || true)
+  fi
 elif [[ $dlqChanged -eq 1 ]]; then
   (cd "$ROOT_DIR" && mkdir -p "$DLQ_THROTTLE_DIR")
   if [[ ! -f "$DLQ_THROTTLE_FILE" ]]; then
     (cd "$ROOT_DIR" && git add infra/dlq-extract.json 2>/dev/null || true)
-    (cd "$ROOT_DIR" && git commit -m "chore(sec): update debt DLQ" || true)
+    if [[ -z "${CI:-}" ]]; then
+      (cd "$ROOT_DIR" && git commit -m "chore(sec): update debt DLQ" || true)
+    fi
     touch "$DLQ_THROTTLE_FILE"
   else
     echo "noop: DLQ commit throttled for today"
