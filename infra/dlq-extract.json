@@ -2,491 +2,477 @@
   "schemaVersion": "0.1",
   "items": [
     {
-      "kind": "cash_extract_conflict",
-      "ticker": "BTBT",
-      "at": "2026-02-24T19:10:33.866Z",
-      "secCik": "0001710350",
+      "kind": "preferred_extract_stale",
+      "ticker": "AVX",
+      "at": "2026-02-24T20:16:36.631Z",
+      "secCik": "1826397",
       "extracted": {
-        "cashReserves": 179118182,
-        "cashAsOf": "2025-09-30",
-        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
-        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "cik": "0001826397",
+        "preferredEquity": 6717873,
+        "preferredAsOf": "2021-06-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
+        "tag": "us-gaap:PreferredStockValue",
         "picked": {
-          "end": "2025-09-30",
-          "val": 179118182,
-          "accn": "0001213900-25-110383",
-          "fy": 2025,
-          "fp": "Q3",
+          "end": "2021-06-30",
+          "val": 6717873,
+          "accn": "0001493152-21-018340",
+          "fy": 2021,
+          "fp": "Q2",
           "form": "10-Q",
-          "filed": "2025-11-14",
-          "frame": "CY2025Q3I"
+          "filed": "2021-08-03",
+          "frame": "CY2021Q2I"
         }
       },
-      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
+      "ageDays": 1700.8448684143518,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
     },
     {
-      "kind": "cash_extract_conflict",
-      "ticker": "MSTR",
-      "at": "2026-02-24T19:10:34.586Z",
-      "secCik": "0001050446",
+      "kind": "preferred_extract_stale",
+      "ticker": "ZONE",
+      "at": "2026-02-24T20:16:35.778Z",
+      "secCik": "1956741",
       "extracted": {
-        "cashReserves": 2301470000,
-        "cashAsOf": "2025-12-31",
-        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
-        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "cik": "0001956741",
+        "preferredEquity": 100,
+        "preferredAsOf": "2024-03-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
+        "tag": "us-gaap:PreferredStockValue",
         "picked": {
-          "end": "2025-12-31",
-          "val": 2301470000,
-          "accn": "0001050446-26-000020",
-          "fy": 2025,
+          "end": "2024-03-31",
+          "val": 100,
+          "accn": "0001213900-24-051214",
+          "fy": 2024,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2024-06-10",
+          "frame": "CY2024Q1I"
+        }
+      },
+      "ageDays": 695.8448585416667,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "CWD",
+      "at": "2026-02-24T20:16:34.266Z",
+      "secCik": "1627282",
+      "extracted": {
+        "cik": "0001627282",
+        "preferredEquity": 0,
+        "preferredAsOf": "2023-09-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2023-09-30",
+          "val": 0,
+          "accn": "0001627282-23-000059",
+          "fy": 2023,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2023-11-13",
+          "frame": "CY2023Q3I"
+        }
+      },
+      "ageDays": 878.8448410416667,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "BNC",
+      "at": "2026-02-24T20:16:33.419Z",
+      "secCik": "0001482541",
+      "extracted": {
+        "cik": "0001482541",
+        "preferredEquity": 420,
+        "preferredAsOf": "2021-06-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2021-06-30",
+          "val": 420,
+          "accn": "0001493152-21-019110",
+          "fy": 2021,
+          "fp": "Q2",
+          "form": "10-Q",
+          "filed": "2021-08-10",
+          "frame": "CY2021Q2I"
+        }
+      },
+      "ageDays": 1700.844831238426,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "HSDT",
+      "at": "2026-02-24T20:16:32.616Z",
+      "secCik": "0001610853",
+      "extracted": {
+        "cik": "0001610853",
+        "preferredEquity": 0,
+        "preferredAsOf": "2022-12-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2022-12-31",
+          "val": 0,
+          "accn": "0001558370-23-003338",
+          "fy": 2022,
           "fp": "FY",
           "form": "10-K",
-          "filed": "2026-02-19",
-          "frame": "CY2025Q4I"
+          "filed": "2023-03-09",
+          "frame": "CY2022Q4I"
         }
       },
-      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_conflict",
-      "ticker": "SQNS",
-      "at": "2026-02-24T19:30:01.591Z",
-      "secCik": "0001383395",
-      "extracted": {
-        "cik": "0001383395",
-        "totalDebt": 10755000,
-        "debtAsOf": "2021-06-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
-            "end": "2021-06-30",
-            "val": 10755000,
-            "form": "6-K",
-            "accn": "0001383395-21-000039"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_conflict",
-      "ticker": "SQNS",
-      "at": "2026-02-24T19:30:01.926Z",
-      "secCik": "0001383395",
-      "extracted": {
-        "cik": "0001383395",
-        "totalDebt": 10755000,
-        "debtAsOf": "2021-06-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
-            "end": "2021-06-30",
-            "val": 10755000,
-            "form": "6-K",
-            "accn": "0001383395-21-000039"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_conflict",
-      "ticker": "BTBT",
-      "at": "2026-02-24T19:30:02.284Z",
-      "secCik": "0001710350",
-      "extracted": {
-        "cik": "0001710350",
-        "totalDebt": 196345,
-        "debtAsOf": "2025-09-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "us-gaap:OtherLongTermDebtNoncurrent",
-            "end": "2025-09-30",
-            "val": 196345,
-            "form": "10-Q",
-            "accn": "0001213900-25-110383"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_conflict",
-      "ticker": "MSTR",
-      "at": "2026-02-24T19:30:02.729Z",
-      "secCik": "0001050446",
-      "extracted": {
-        "cik": "0001050446",
-        "totalDebt": 8190155000,
-        "debtAsOf": "2025-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
-        "mode": "sum",
-        "parts": [
-          {
-            "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2025-12-31",
-            "val": 8158842000,
-            "form": "10-K",
-            "accn": "0001050446-26-000020"
-          },
-          {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2025-12-31",
-            "val": 31313000,
-            "form": "10-K",
-            "accn": "0001050446-26-000020"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_stale",
-      "ticker": "SQNS",
-      "at": "2026-02-24T19:39:40.978Z",
-      "secCik": "0001383395",
-      "extracted": {
-        "cik": "0001383395",
-        "totalDebt": 10755000,
-        "debtAsOf": "2021-06-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
-            "end": "2021-06-30",
-            "val": 10755000,
-            "form": "6-K",
-            "accn": "0001383395-21-000039"
-          }
-        ]
-      },
-      "ageDays": 1700.8192242824075,
+      "ageDays": 1151.8448219444444,
       "maxAgeDays": 548,
-      "note": "extracted debt is older than freshness threshold; not applying"
+      "note": "extracted preferred is older than freshness threshold; not applying"
     },
     {
-      "kind": "debt_extract_conflict",
-      "ticker": "BTBT",
-      "at": "2026-02-24T19:39:41.340Z",
-      "secCik": "0001710350",
+      "kind": "preferred_extract_stale",
+      "ticker": "KULR",
+      "at": "2026-02-24T20:16:30.448Z",
+      "secCik": "1662684",
       "extracted": {
-        "cik": "0001710350",
-        "totalDebt": 196345,
-        "debtAsOf": "2025-09-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "us-gaap:OtherLongTermDebtNoncurrent",
-            "end": "2025-09-30",
-            "val": 196345,
-            "form": "10-Q",
-            "accn": "0001213900-25-110383"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_conflict",
-      "ticker": "MSTR",
-      "at": "2026-02-24T19:39:41.759Z",
-      "secCik": "0001050446",
-      "extracted": {
-        "cik": "0001050446",
-        "totalDebt": 8190155000,
-        "debtAsOf": "2025-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
-        "mode": "sum",
-        "parts": [
-          {
-            "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2025-12-31",
-            "val": 8158842000,
-            "form": "10-K",
-            "accn": "0001050446-26-000020"
-          },
-          {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2025-12-31",
-            "val": 31313000,
-            "form": "10-K",
-            "accn": "0001050446-26-000020"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_stale",
-      "ticker": "MARA",
-      "at": "2026-02-24T19:39:42.186Z",
-      "secCik": "0001507605",
-      "extracted": {
-        "cik": "0001507605",
-        "totalDebt": 325654000,
-        "debtAsOf": "2023-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000162828024007680/",
-        "mode": "sum",
-        "parts": [
-          {
-            "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2023-12-31",
-            "val": 325654000,
-            "form": "10-K",
-            "accn": "0001628280-24-007680"
-          },
-          {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2023-12-31",
-            "val": 0,
-            "form": "10-K",
-            "accn": "0001628280-24-007680"
-          }
-        ]
-      },
-      "ageDays": 786.8192382638889,
-      "maxAgeDays": 548,
-      "note": "extracted debt is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "cash_extract_conflict",
-      "ticker": "BTBT",
-      "at": "2026-02-24T19:41:31.688Z",
-      "secCik": "0001710350",
-      "extracted": {
-        "cashReserves": 179118182,
-        "cashAsOf": "2025-09-30",
-        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
-        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "cik": "0001662684",
+        "preferredEquity": 0,
+        "preferredAsOf": "2018-09-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
+        "tag": "us-gaap:PreferredStockValue",
         "picked": {
-          "end": "2025-09-30",
-          "val": 179118182,
-          "accn": "0001213900-25-110383",
-          "fy": 2025,
+          "end": "2018-09-30",
+          "val": 0,
+          "accn": "0001144204-18-059382",
+          "fy": 2018,
           "fp": "Q3",
           "form": "10-Q",
-          "filed": "2025-11-14",
-          "frame": "CY2025Q3I"
+          "filed": "2018-11-13",
+          "frame": "CY2018Q3I"
         }
       },
-      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
+      "ageDays": 2704.8447968518517,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
     },
     {
-      "kind": "cash_extract_conflict",
-      "ticker": "MSTR",
-      "at": "2026-02-24T19:41:32.083Z",
-      "secCik": "0001050446",
+      "kind": "preferred_extract_stale",
+      "ticker": "BTCS",
+      "at": "2026-02-24T20:16:29.255Z",
+      "secCik": "0001436229",
       "extracted": {
-        "cashReserves": 2301470000,
-        "cashAsOf": "2025-12-31",
-        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
-        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "cik": "0001436229",
+        "preferredEquity": 1128,
+        "preferredAsOf": "2017-03-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
+        "tag": "us-gaap:PreferredStockValue",
         "picked": {
-          "end": "2025-12-31",
-          "val": 2301470000,
-          "accn": "0001050446-26-000020",
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2026-02-19",
-          "frame": "CY2025Q4I"
-        }
-      },
-      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "cash_extract_conflict",
-      "ticker": "MARA",
-      "at": "2026-02-24T19:41:32.388Z",
-      "secCik": "0001507605",
-      "extracted": {
-        "cashReserves": 826392000,
-        "cashAsOf": "2025-09-30",
-        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
-        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
-        "picked": {
-          "end": "2025-09-30",
-          "val": 826392000,
-          "accn": "0001507605-25-000028",
-          "fy": 2025,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2025-11-04",
-          "frame": "CY2025Q3I"
-        }
-      },
-      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "cash_extract_conflict",
-      "ticker": "BMNR",
-      "at": "2026-02-24T19:41:32.664Z",
-      "secCik": "0001829311",
-      "extracted": {
-        "cashReserves": 887678000,
-        "cashAsOf": "2025-11-30",
-        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
-        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
-        "picked": {
-          "end": "2025-11-30",
-          "val": 887678000,
-          "accn": "0001493152-26-002084",
-          "fy": 2026,
+          "end": "2017-03-31",
+          "val": 1128,
+          "accn": "0001493152-17-008836",
+          "fy": 2017,
           "fp": "Q1",
           "form": "10-Q",
-          "filed": "2026-01-13",
-          "frame": "CY2025Q4I"
+          "filed": "2017-08-10",
+          "frame": "CY2017Q1I"
         }
       },
-      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_stale",
-      "ticker": "SQNS",
-      "at": "2026-02-24T19:41:33.754Z",
-      "secCik": "0001383395",
-      "extracted": {
-        "cik": "0001383395",
-        "totalDebt": 10755000,
-        "debtAsOf": "2021-06-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
-            "end": "2021-06-30",
-            "val": 10755000,
-            "form": "6-K",
-            "accn": "0001383395-21-000039"
-          }
-        ]
-      },
-      "ageDays": 1700.8205295601852,
+      "ageDays": 3252.8447830439814,
       "maxAgeDays": 548,
-      "note": "extracted debt is older than freshness threshold; not applying"
+      "note": "extracted preferred is older than freshness threshold; not applying"
     },
     {
-      "kind": "debt_extract_conflict",
-      "ticker": "BTBT",
-      "at": "2026-02-24T19:41:34.109Z",
-      "secCik": "0001710350",
+      "kind": "preferred_extract_stale",
+      "ticker": "SBET",
+      "at": "2026-02-24T20:16:28.588Z",
+      "secCik": "0001981535",
       "extracted": {
-        "cik": "0001710350",
-        "totalDebt": 196345,
-        "debtAsOf": "2025-09-30",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "us-gaap:OtherLongTermDebtNoncurrent",
-            "end": "2025-09-30",
-            "val": 196345,
-            "form": "10-Q",
-            "accn": "0001213900-25-110383"
-          }
-        ]
+        "cik": "0001981535",
+        "preferredEquity": 3936,
+        "preferredAsOf": "2023-12-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2023-12-31",
+          "val": 3936,
+          "accn": "0001493152-24-012028",
+          "fy": 2023,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2024-03-29",
+          "frame": "CY2023Q4I"
+        }
       },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_conflict",
-      "ticker": "MSTR",
-      "at": "2026-02-24T19:41:34.725Z",
-      "secCik": "0001050446",
-      "extracted": {
-        "cik": "0001050446",
-        "totalDebt": 8190155000,
-        "debtAsOf": "2025-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
-        "mode": "sum",
-        "parts": [
-          {
-            "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2025-12-31",
-            "val": 8158842000,
-            "form": "10-K",
-            "accn": "0001050446-26-000020"
-          },
-          {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2025-12-31",
-            "val": 31313000,
-            "form": "10-K",
-            "accn": "0001050446-26-000020"
-          }
-        ]
-      },
-      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
-    },
-    {
-      "kind": "debt_extract_stale",
-      "ticker": "MARA",
-      "at": "2026-02-24T19:41:35.132Z",
-      "secCik": "0001507605",
-      "extracted": {
-        "cik": "0001507605",
-        "totalDebt": 325654000,
-        "debtAsOf": "2023-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000162828024007680/",
-        "mode": "sum",
-        "parts": [
-          {
-            "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2023-12-31",
-            "val": 325654000,
-            "form": "10-K",
-            "accn": "0001628280-24-007680"
-          },
-          {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2023-12-31",
-            "val": 0,
-            "form": "10-K",
-            "accn": "0001628280-24-007680"
-          }
-        ]
-      },
-      "ageDays": 786.8205455092592,
+      "ageDays": 786.844775324074,
       "maxAgeDays": 548,
-      "note": "extracted debt is older than freshness threshold; not applying"
+      "note": "extracted preferred is older than freshness threshold; not applying"
     },
     {
-      "kind": "debt_extract_stale",
+      "kind": "preferred_extract_stale",
+      "ticker": "BMNR",
+      "at": "2026-02-24T20:16:28.194Z",
+      "secCik": "0001829311",
+      "extracted": {
+        "cik": "0001829311",
+        "preferredEquity": 45,
+        "preferredAsOf": "2024-05-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2024-05-31",
+          "val": 45,
+          "accn": "0001683168-24-004815",
+          "fy": 2024,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2024-07-15",
+          "frame": "CY2024Q2I"
+        }
+      },
+      "ageDays": 634.8447707638888,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "AVX",
+      "at": "2026-02-24T20:16:17.472Z",
+      "secCik": "1826397",
+      "extracted": {
+        "cik": "0001826397",
+        "preferredEquity": 6717873,
+        "preferredAsOf": "2021-06-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2021-06-30",
+          "val": 6717873,
+          "accn": "0001493152-21-018340",
+          "fy": 2021,
+          "fp": "Q2",
+          "form": "10-Q",
+          "filed": "2021-08-03",
+          "frame": "CY2021Q2I"
+        }
+      },
+      "ageDays": 1700.8446466666667,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "ZONE",
+      "at": "2026-02-24T20:16:16.282Z",
+      "secCik": "1956741",
+      "extracted": {
+        "cik": "0001956741",
+        "preferredEquity": 100,
+        "preferredAsOf": "2024-03-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2024-03-31",
+          "val": 100,
+          "accn": "0001213900-24-051214",
+          "fy": 2024,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2024-06-10",
+          "frame": "CY2024Q1I"
+        }
+      },
+      "ageDays": 695.8446328935186,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "CWD",
+      "at": "2026-02-24T20:16:13.976Z",
+      "secCik": "1627282",
+      "extracted": {
+        "cik": "0001627282",
+        "preferredEquity": 0,
+        "preferredAsOf": "2023-09-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2023-09-30",
+          "val": 0,
+          "accn": "0001627282-23-000059",
+          "fy": 2023,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2023-11-13",
+          "frame": "CY2023Q3I"
+        }
+      },
+      "ageDays": 878.8446062037037,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
       "ticker": "BNC",
-      "at": "2026-02-24T19:42:38.842Z",
+      "at": "2026-02-24T20:16:12.656Z",
       "secCik": "0001482541",
       "extracted": {
         "cik": "0001482541",
-        "totalDebt": 1551,
-        "debtAsOf": "2015-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315216008843/",
-        "mode": "single",
-        "parts": [
-          {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2015-12-31",
-            "val": 1551,
-            "form": "10-K",
-            "accn": "0001493152-16-008843"
-          }
-        ]
+        "preferredEquity": 420,
+        "preferredAsOf": "2021-06-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2021-06-30",
+          "val": 420,
+          "accn": "0001493152-21-019110",
+          "fy": 2021,
+          "fp": "Q2",
+          "form": "10-Q",
+          "filed": "2021-08-10",
+          "frame": "CY2021Q2I"
+        }
       },
-      "ageDays": 3708.8212828935184,
+      "ageDays": 1700.844590925926,
       "maxAgeDays": 548,
-      "note": "extracted debt is older than freshness threshold; not applying"
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "HSDT",
+      "at": "2026-02-24T20:16:11.100Z",
+      "secCik": "0001610853",
+      "extracted": {
+        "cik": "0001610853",
+        "preferredEquity": 0,
+        "preferredAsOf": "2022-12-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2022-12-31",
+          "val": 0,
+          "accn": "0001558370-23-003338",
+          "fy": 2022,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2023-03-09",
+          "frame": "CY2022Q4I"
+        }
+      },
+      "ageDays": 1151.8445729166667,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "KULR",
+      "at": "2026-02-24T20:16:07.916Z",
+      "secCik": "1662684",
+      "extracted": {
+        "cik": "0001662684",
+        "preferredEquity": 0,
+        "preferredAsOf": "2018-09-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2018-09-30",
+          "val": 0,
+          "accn": "0001144204-18-059382",
+          "fy": 2018,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2018-11-13",
+          "frame": "CY2018Q3I"
+        }
+      },
+      "ageDays": 2704.8445360648147,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "BTCS",
+      "at": "2026-02-24T20:16:06.173Z",
+      "secCik": "0001436229",
+      "extracted": {
+        "cik": "0001436229",
+        "preferredEquity": 1128,
+        "preferredAsOf": "2017-03-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2017-03-31",
+          "val": 1128,
+          "accn": "0001493152-17-008836",
+          "fy": 2017,
+          "fp": "Q1",
+          "form": "10-Q",
+          "filed": "2017-08-10",
+          "frame": "CY2017Q1I"
+        }
+      },
+      "ageDays": 3252.8445158912036,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "SBET",
+      "at": "2026-02-24T20:16:04.803Z",
+      "secCik": "0001981535",
+      "extracted": {
+        "cik": "0001981535",
+        "preferredEquity": 3936,
+        "preferredAsOf": "2023-12-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2023-12-31",
+          "val": 3936,
+          "accn": "0001493152-24-012028",
+          "fy": 2023,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2024-03-29",
+          "frame": "CY2023Q4I"
+        }
+      },
+      "ageDays": 786.8445000347223,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "BMNR",
+      "at": "2026-02-24T20:16:04.428Z",
+      "secCik": "0001829311",
+      "extracted": {
+        "cik": "0001829311",
+        "preferredEquity": 45,
+        "preferredAsOf": "2024-05-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2024-05-31",
+          "val": 45,
+          "accn": "0001683168-24-004815",
+          "fy": 2024,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2024-07-15",
+          "frame": "CY2024Q2I"
+        }
+      },
+      "ageDays": 634.8444956944444,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
     },
     {
       "kind": "debt_extract_stale",
       "ticker": "TWAV",
-      "at": "2026-02-24T19:42:39.828Z",
+      "at": "2026-02-24T20:16:00.404Z",
       "secCik": "746210",
       "extracted": {
         "cik": "0000746210",
@@ -511,26 +497,14 @@
           }
         ]
       },
-      "ageDays": 1516.8212943055555,
+      "ageDays": 1516.8444491087962,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
-      "kind": "sec_companyfacts_404",
-      "at": "2026-02-24T19:59:12Z",
-      "ticker": "ETHM",
-      "mode": "cash"
-    },
-    {
-      "kind": "sec_companyfacts_404",
-      "at": "2026-02-24T19:59:18Z",
-      "ticker": "IHLDF",
-      "mode": "cash"
-    },
-    {
       "kind": "debt_extract_stale",
       "ticker": "BNC",
-      "at": "2026-02-24T19:59:20.980Z",
+      "at": "2026-02-24T20:15:59.037Z",
       "secCik": "0001482541",
       "extracted": {
         "cik": "0001482541",
@@ -548,14 +522,248 @@
           }
         ]
       },
-      "ageDays": 3708.832881712963,
+      "ageDays": 3708.844433298611,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
+      "kind": "preferred_extract_stale",
+      "ticker": "AVX",
+      "at": "2026-02-24T20:14:42.881Z",
+      "secCik": "1826397",
+      "extracted": {
+        "cik": "0001826397",
+        "preferredEquity": 6717873,
+        "preferredAsOf": "2021-06-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2021-06-30",
+          "val": 6717873,
+          "accn": "0001493152-21-018340",
+          "fy": 2021,
+          "fp": "Q2",
+          "form": "10-Q",
+          "filed": "2021-08-03",
+          "frame": "CY2021Q2I"
+        }
+      },
+      "ageDays": 1700.843551863426,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "ZONE",
+      "at": "2026-02-24T20:14:42.091Z",
+      "secCik": "1956741",
+      "extracted": {
+        "cik": "0001956741",
+        "preferredEquity": 100,
+        "preferredAsOf": "2024-03-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2024-03-31",
+          "val": 100,
+          "accn": "0001213900-24-051214",
+          "fy": 2024,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2024-06-10",
+          "frame": "CY2024Q1I"
+        }
+      },
+      "ageDays": 695.8435427199074,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "CWD",
+      "at": "2026-02-24T20:14:40.296Z",
+      "secCik": "1627282",
+      "extracted": {
+        "cik": "0001627282",
+        "preferredEquity": 0,
+        "preferredAsOf": "2023-09-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2023-09-30",
+          "val": 0,
+          "accn": "0001627282-23-000059",
+          "fy": 2023,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2023-11-13",
+          "frame": "CY2023Q3I"
+        }
+      },
+      "ageDays": 878.8435219444444,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "BNC",
+      "at": "2026-02-24T20:14:39.413Z",
+      "secCik": "0001482541",
+      "extracted": {
+        "cik": "0001482541",
+        "preferredEquity": 420,
+        "preferredAsOf": "2021-06-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2021-06-30",
+          "val": 420,
+          "accn": "0001493152-21-019110",
+          "fy": 2021,
+          "fp": "Q2",
+          "form": "10-Q",
+          "filed": "2021-08-10",
+          "frame": "CY2021Q2I"
+        }
+      },
+      "ageDays": 1700.843511724537,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "HSDT",
+      "at": "2026-02-24T20:14:38.558Z",
+      "secCik": "0001610853",
+      "extracted": {
+        "cik": "0001610853",
+        "preferredEquity": 0,
+        "preferredAsOf": "2022-12-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2022-12-31",
+          "val": 0,
+          "accn": "0001558370-23-003338",
+          "fy": 2022,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2023-03-09",
+          "frame": "CY2022Q4I"
+        }
+      },
+      "ageDays": 1151.8435018287037,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "KULR",
+      "at": "2026-02-24T20:14:36.300Z",
+      "secCik": "1662684",
+      "extracted": {
+        "cik": "0001662684",
+        "preferredEquity": 0,
+        "preferredAsOf": "2018-09-30",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2018-09-30",
+          "val": 0,
+          "accn": "0001144204-18-059382",
+          "fy": 2018,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2018-11-13",
+          "frame": "CY2018Q3I"
+        }
+      },
+      "ageDays": 2704.8434756944444,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "BTCS",
+      "at": "2026-02-24T20:14:35.086Z",
+      "secCik": "0001436229",
+      "extracted": {
+        "cik": "0001436229",
+        "preferredEquity": 1128,
+        "preferredAsOf": "2017-03-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2017-03-31",
+          "val": 1128,
+          "accn": "0001493152-17-008836",
+          "fy": 2017,
+          "fp": "Q1",
+          "form": "10-Q",
+          "filed": "2017-08-10",
+          "frame": "CY2017Q1I"
+        }
+      },
+      "ageDays": 3252.8434616435184,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "SBET",
+      "at": "2026-02-24T20:14:34.409Z",
+      "secCik": "0001981535",
+      "extracted": {
+        "cik": "0001981535",
+        "preferredEquity": 3936,
+        "preferredAsOf": "2023-12-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2023-12-31",
+          "val": 3936,
+          "accn": "0001493152-24-012028",
+          "fy": 2023,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2024-03-29",
+          "frame": "CY2023Q4I"
+        }
+      },
+      "ageDays": 786.8434538078703,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "preferred_extract_stale",
+      "ticker": "BMNR",
+      "at": "2026-02-24T20:14:34.074Z",
+      "secCik": "0001829311",
+      "extracted": {
+        "cik": "0001829311",
+        "preferredEquity": 45,
+        "preferredAsOf": "2024-05-31",
+        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
+        "tag": "us-gaap:PreferredStockValue",
+        "picked": {
+          "end": "2024-05-31",
+          "val": 45,
+          "accn": "0001683168-24-004815",
+          "fy": 2024,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2024-07-15",
+          "frame": "CY2024Q2I"
+        }
+      },
+      "ageDays": 634.8434499305556,
+      "maxAgeDays": 548,
+      "note": "extracted preferred is older than freshness threshold; not applying"
+    },
+    {
       "kind": "debt_extract_stale",
       "ticker": "TWAV",
-      "at": "2026-02-24T19:59:21.940Z",
+      "at": "2026-02-24T20:03:42.025Z",
       "secCik": "746210",
       "extracted": {
         "cik": "0000746210",
@@ -580,14 +788,14 @@
           }
         ]
       },
-      "ageDays": 1516.8328928240742,
+      "ageDays": 1516.8359030671297,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
       "kind": "debt_extract_stale",
       "ticker": "BNC",
-      "at": "2026-02-24T20:01:56.280Z",
+      "at": "2026-02-24T20:03:41.224Z",
       "secCik": "0001482541",
       "extracted": {
         "cik": "0001482541",
@@ -605,7 +813,7 @@
           }
         ]
       },
-      "ageDays": 3708.834679166667,
+      "ageDays": 3708.835893796296,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
@@ -644,7 +852,7 @@
     {
       "kind": "debt_extract_stale",
       "ticker": "BNC",
-      "at": "2026-02-24T20:03:41.224Z",
+      "at": "2026-02-24T20:01:56.280Z",
       "secCik": "0001482541",
       "extracted": {
         "cik": "0001482541",
@@ -662,1164 +870,478 @@
           }
         ]
       },
-      "ageDays": 3708.835893796296,
+      "ageDays": 3708.834679166667,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
+      "kind": "sec_companyfacts_404",
+      "at": "2026-02-24T19:59:18Z",
+      "ticker": "IHLDF",
+      "mode": "cash"
+    },
+    {
+      "kind": "sec_companyfacts_404",
+      "at": "2026-02-24T19:59:12Z",
+      "ticker": "ETHM",
+      "mode": "cash"
+    },
+    {
       "kind": "debt_extract_stale",
-      "ticker": "TWAV",
-      "at": "2026-02-24T20:03:42.025Z",
-      "secCik": "746210",
+      "ticker": "MARA",
+      "at": "2026-02-24T19:41:35.132Z",
+      "secCik": "0001507605",
       "extracted": {
-        "cik": "0000746210",
-        "totalDebt": 0,
-        "debtAsOf": "2021-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/746210/000074621022000023/",
+        "cik": "0001507605",
+        "totalDebt": 325654000,
+        "debtAsOf": "2023-12-31",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000162828024007680/",
         "mode": "sum",
         "parts": [
           {
             "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2021-12-31",
-            "val": 0,
+            "end": "2023-12-31",
+            "val": 325654000,
             "form": "10-K",
-            "accn": "0000746210-22-000023"
+            "accn": "0001628280-24-007680"
           },
           {
             "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2021-12-31",
+            "end": "2023-12-31",
             "val": 0,
             "form": "10-K",
-            "accn": "0000746210-22-000023"
+            "accn": "0001628280-24-007680"
           }
         ]
       },
-      "ageDays": 1516.8359030671297,
+      "ageDays": 786.8205455092592,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
-      "kind": "preferred_extract_stale",
-      "ticker": "BMNR",
-      "at": "2026-02-24T20:13:23.381Z",
-      "secCik": "0001829311",
+      "kind": "debt_extract_conflict",
+      "ticker": "MSTR",
+      "at": "2026-02-24T19:41:34.725Z",
+      "secCik": "0001050446",
       "extracted": {
-        "cik": "0001829311",
-        "preferredEquity": 45,
-        "preferredAsOf": "2024-05-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-05-31",
-          "val": 45,
-          "accn": "0001683168-24-004815",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-07-15",
-          "frame": "CY2024Q2I"
-        }
+        "cik": "0001050446",
+        "totalDebt": 8190155000,
+        "debtAsOf": "2025-12-31",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
+        "mode": "sum",
+        "parts": [
+          {
+            "tag": "us-gaap:LongTermDebtNoncurrent",
+            "end": "2025-12-31",
+            "val": 8158842000,
+            "form": "10-K",
+            "accn": "0001050446-26-000020"
+          },
+          {
+            "tag": "us-gaap:LongTermDebtCurrent",
+            "end": "2025-12-31",
+            "val": 31313000,
+            "form": "10-K",
+            "accn": "0001050446-26-000020"
+          }
+        ]
       },
-      "ageDays": 634.842631724537,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
     },
     {
-      "kind": "preferred_extract_stale",
-      "ticker": "SBET",
-      "at": "2026-02-24T20:13:24.171Z",
-      "secCik": "0001981535",
+      "kind": "debt_extract_conflict",
+      "ticker": "BTBT",
+      "at": "2026-02-24T19:41:34.109Z",
+      "secCik": "0001710350",
       "extracted": {
-        "cik": "0001981535",
-        "preferredEquity": 3936,
-        "preferredAsOf": "2023-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-12-31",
-          "val": 3936,
-          "accn": "0001493152-24-012028",
-          "fy": 2023,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2024-03-29",
-          "frame": "CY2023Q4I"
-        }
-      },
-      "ageDays": 786.8426408680556,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BTCS",
-      "at": "2026-02-24T20:13:25.507Z",
-      "secCik": "0001436229",
-      "extracted": {
-        "cik": "0001436229",
-        "preferredEquity": 1128,
-        "preferredAsOf": "2017-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2017-03-31",
-          "val": 1128,
-          "accn": "0001493152-17-008836",
-          "fy": 2017,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2017-08-10",
-          "frame": "CY2017Q1I"
-        }
-      },
-      "ageDays": 3252.8426563310186,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "KULR",
-      "at": "2026-02-24T20:13:27.880Z",
-      "secCik": "1662684",
-      "extracted": {
-        "cik": "0001662684",
-        "preferredEquity": 0,
-        "preferredAsOf": "2018-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2018-09-30",
-          "val": 0,
-          "accn": "0001144204-18-059382",
-          "fy": 2018,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2018-11-13",
-          "frame": "CY2018Q3I"
-        }
-      },
-      "ageDays": 2704.842683796296,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "HSDT",
-      "at": "2026-02-24T20:13:34.010Z",
-      "secCik": "0001610853",
-      "extracted": {
-        "cik": "0001610853",
-        "preferredEquity": 0,
-        "preferredAsOf": "2022-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2022-12-31",
-          "val": 0,
-          "accn": "0001558370-23-003338",
-          "fy": 2022,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2023-03-09",
-          "frame": "CY2022Q4I"
-        }
-      },
-      "ageDays": 1151.8427547453703,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BMNR",
-      "at": "2026-02-24T20:13:38.146Z",
-      "secCik": "0001829311",
-      "extracted": {
-        "cik": "0001829311",
-        "preferredEquity": 45,
-        "preferredAsOf": "2024-05-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-05-31",
-          "val": 45,
-          "accn": "0001683168-24-004815",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-07-15",
-          "frame": "CY2024Q2I"
-        }
-      },
-      "ageDays": 634.8428026157408,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "SBET",
-      "at": "2026-02-24T20:13:38.483Z",
-      "secCik": "0001981535",
-      "extracted": {
-        "cik": "0001981535",
-        "preferredEquity": 3936,
-        "preferredAsOf": "2023-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-12-31",
-          "val": 3936,
-          "accn": "0001493152-24-012028",
-          "fy": 2023,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2024-03-29",
-          "frame": "CY2023Q4I"
-        }
-      },
-      "ageDays": 786.8428065162037,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BTCS",
-      "at": "2026-02-24T20:13:39.124Z",
-      "secCik": "0001436229",
-      "extracted": {
-        "cik": "0001436229",
-        "preferredEquity": 1128,
-        "preferredAsOf": "2017-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2017-03-31",
-          "val": 1128,
-          "accn": "0001493152-17-008836",
-          "fy": 2017,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2017-08-10",
-          "frame": "CY2017Q1I"
-        }
-      },
-      "ageDays": 3252.8428139351854,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "KULR",
-      "at": "2026-02-24T20:13:40.206Z",
-      "secCik": "1662684",
-      "extracted": {
-        "cik": "0001662684",
-        "preferredEquity": 0,
-        "preferredAsOf": "2018-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2018-09-30",
-          "val": 0,
-          "accn": "0001144204-18-059382",
-          "fy": 2018,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2018-11-13",
-          "frame": "CY2018Q3I"
-        }
-      },
-      "ageDays": 2704.8428264583335,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "HSDT",
-      "at": "2026-02-24T20:13:42.772Z",
-      "secCik": "0001610853",
-      "extracted": {
-        "cik": "0001610853",
-        "preferredEquity": 0,
-        "preferredAsOf": "2022-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2022-12-31",
-          "val": 0,
-          "accn": "0001558370-23-003338",
-          "fy": 2022,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2023-03-09",
-          "frame": "CY2022Q4I"
-        }
-      },
-      "ageDays": 1151.8428561574074,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BNC",
-      "at": "2026-02-24T20:13:44.128Z",
-      "secCik": "0001482541",
-      "extracted": {
-        "cik": "0001482541",
-        "preferredEquity": 420,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 420,
-          "accn": "0001493152-21-019110",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-10",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.842871851852,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "CWD",
-      "at": "2026-02-24T20:13:46.142Z",
-      "secCik": "1627282",
-      "extracted": {
-        "cik": "0001627282",
-        "preferredEquity": 0,
-        "preferredAsOf": "2023-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-09-30",
-          "val": 0,
-          "accn": "0001627282-23-000059",
-          "fy": 2023,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2023-11-13",
-          "frame": "CY2023Q3I"
-        }
-      },
-      "ageDays": 878.842895162037,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "ZONE",
-      "at": "2026-02-24T20:13:48.304Z",
-      "secCik": "1956741",
-      "extracted": {
-        "cik": "0001956741",
-        "preferredEquity": 100,
-        "preferredAsOf": "2024-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-03-31",
-          "val": 100,
-          "accn": "0001213900-24-051214",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-06-10",
-          "frame": "CY2024Q1I"
-        }
-      },
-      "ageDays": 695.8429201851852,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "AVX",
-      "at": "2026-02-24T20:13:49.158Z",
-      "secCik": "1826397",
-      "extracted": {
-        "cik": "0001826397",
-        "preferredEquity": 6717873,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 6717873,
-          "accn": "0001493152-21-018340",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-03",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.8429300694445,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BMNR",
-      "at": "2026-02-24T20:14:34.074Z",
-      "secCik": "0001829311",
-      "extracted": {
-        "cik": "0001829311",
-        "preferredEquity": 45,
-        "preferredAsOf": "2024-05-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-05-31",
-          "val": 45,
-          "accn": "0001683168-24-004815",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-07-15",
-          "frame": "CY2024Q2I"
-        }
-      },
-      "ageDays": 634.8434499305556,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "SBET",
-      "at": "2026-02-24T20:14:34.409Z",
-      "secCik": "0001981535",
-      "extracted": {
-        "cik": "0001981535",
-        "preferredEquity": 3936,
-        "preferredAsOf": "2023-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-12-31",
-          "val": 3936,
-          "accn": "0001493152-24-012028",
-          "fy": 2023,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2024-03-29",
-          "frame": "CY2023Q4I"
-        }
-      },
-      "ageDays": 786.8434538078703,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BTCS",
-      "at": "2026-02-24T20:14:35.086Z",
-      "secCik": "0001436229",
-      "extracted": {
-        "cik": "0001436229",
-        "preferredEquity": 1128,
-        "preferredAsOf": "2017-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2017-03-31",
-          "val": 1128,
-          "accn": "0001493152-17-008836",
-          "fy": 2017,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2017-08-10",
-          "frame": "CY2017Q1I"
-        }
-      },
-      "ageDays": 3252.8434616435184,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "KULR",
-      "at": "2026-02-24T20:14:36.300Z",
-      "secCik": "1662684",
-      "extracted": {
-        "cik": "0001662684",
-        "preferredEquity": 0,
-        "preferredAsOf": "2018-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2018-09-30",
-          "val": 0,
-          "accn": "0001144204-18-059382",
-          "fy": 2018,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2018-11-13",
-          "frame": "CY2018Q3I"
-        }
-      },
-      "ageDays": 2704.8434756944444,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "HSDT",
-      "at": "2026-02-24T20:14:38.558Z",
-      "secCik": "0001610853",
-      "extracted": {
-        "cik": "0001610853",
-        "preferredEquity": 0,
-        "preferredAsOf": "2022-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2022-12-31",
-          "val": 0,
-          "accn": "0001558370-23-003338",
-          "fy": 2022,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2023-03-09",
-          "frame": "CY2022Q4I"
-        }
-      },
-      "ageDays": 1151.8435018287037,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BNC",
-      "at": "2026-02-24T20:14:39.413Z",
-      "secCik": "0001482541",
-      "extracted": {
-        "cik": "0001482541",
-        "preferredEquity": 420,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 420,
-          "accn": "0001493152-21-019110",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-10",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.843511724537,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "CWD",
-      "at": "2026-02-24T20:14:40.296Z",
-      "secCik": "1627282",
-      "extracted": {
-        "cik": "0001627282",
-        "preferredEquity": 0,
-        "preferredAsOf": "2023-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-09-30",
-          "val": 0,
-          "accn": "0001627282-23-000059",
-          "fy": 2023,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2023-11-13",
-          "frame": "CY2023Q3I"
-        }
-      },
-      "ageDays": 878.8435219444444,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "ZONE",
-      "at": "2026-02-24T20:14:42.091Z",
-      "secCik": "1956741",
-      "extracted": {
-        "cik": "0001956741",
-        "preferredEquity": 100,
-        "preferredAsOf": "2024-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-03-31",
-          "val": 100,
-          "accn": "0001213900-24-051214",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-06-10",
-          "frame": "CY2024Q1I"
-        }
-      },
-      "ageDays": 695.8435427199074,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "AVX",
-      "at": "2026-02-24T20:14:42.881Z",
-      "secCik": "1826397",
-      "extracted": {
-        "cik": "0001826397",
-        "preferredEquity": 6717873,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 6717873,
-          "accn": "0001493152-21-018340",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-03",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.843551863426,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "debt_extract_stale",
-      "ticker": "BNC",
-      "at": "2026-02-24T20:15:59.037Z",
-      "secCik": "0001482541",
-      "extracted": {
-        "cik": "0001482541",
-        "totalDebt": 1551,
-        "debtAsOf": "2015-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315216008843/",
+        "cik": "0001710350",
+        "totalDebt": 196345,
+        "debtAsOf": "2025-09-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
         "mode": "single",
         "parts": [
           {
-            "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2015-12-31",
-            "val": 1551,
-            "form": "10-K",
-            "accn": "0001493152-16-008843"
+            "tag": "us-gaap:OtherLongTermDebtNoncurrent",
+            "end": "2025-09-30",
+            "val": 196345,
+            "form": "10-Q",
+            "accn": "0001213900-25-110383"
           }
         ]
       },
-      "ageDays": 3708.844433298611,
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "debt_extract_stale",
+      "ticker": "SQNS",
+      "at": "2026-02-24T19:41:33.754Z",
+      "secCik": "0001383395",
+      "extracted": {
+        "cik": "0001383395",
+        "totalDebt": 10755000,
+        "debtAsOf": "2021-06-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
+        "mode": "single",
+        "parts": [
+          {
+            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+            "end": "2021-06-30",
+            "val": 10755000,
+            "form": "6-K",
+            "accn": "0001383395-21-000039"
+          }
+        ]
+      },
+      "ageDays": 1700.8205295601852,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
-      "kind": "debt_extract_stale",
-      "ticker": "TWAV",
-      "at": "2026-02-24T20:16:00.404Z",
-      "secCik": "746210",
+      "kind": "cash_extract_conflict",
+      "ticker": "BMNR",
+      "at": "2026-02-24T19:41:32.664Z",
+      "secCik": "0001829311",
       "extracted": {
-        "cik": "0000746210",
-        "totalDebt": 0,
-        "debtAsOf": "2021-12-31",
-        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/746210/000074621022000023/",
+        "cashReserves": 887678000,
+        "cashAsOf": "2025-11-30",
+        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/",
+        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "picked": {
+          "end": "2025-11-30",
+          "val": 887678000,
+          "accn": "0001493152-26-002084",
+          "fy": 2026,
+          "fp": "Q1",
+          "form": "10-Q",
+          "filed": "2026-01-13",
+          "frame": "CY2025Q4I"
+        }
+      },
+      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "cash_extract_conflict",
+      "ticker": "MARA",
+      "at": "2026-02-24T19:41:32.388Z",
+      "secCik": "0001507605",
+      "extracted": {
+        "cashReserves": 826392000,
+        "cashAsOf": "2025-09-30",
+        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "picked": {
+          "end": "2025-09-30",
+          "val": 826392000,
+          "accn": "0001507605-25-000028",
+          "fy": 2025,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2025-11-04",
+          "frame": "CY2025Q3I"
+        }
+      },
+      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "cash_extract_conflict",
+      "ticker": "MSTR",
+      "at": "2026-02-24T19:41:32.083Z",
+      "secCik": "0001050446",
+      "extracted": {
+        "cashReserves": 2301470000,
+        "cashAsOf": "2025-12-31",
+        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
+        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "picked": {
+          "end": "2025-12-31",
+          "val": 2301470000,
+          "accn": "0001050446-26-000020",
+          "fy": 2025,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2026-02-19",
+          "frame": "CY2025Q4I"
+        }
+      },
+      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "cash_extract_conflict",
+      "ticker": "BTBT",
+      "at": "2026-02-24T19:41:31.688Z",
+      "secCik": "0001710350",
+      "extracted": {
+        "cashReserves": 179118182,
+        "cashAsOf": "2025-09-30",
+        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
+        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "picked": {
+          "end": "2025-09-30",
+          "val": 179118182,
+          "accn": "0001213900-25-110383",
+          "fy": 2025,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2025-11-14",
+          "frame": "CY2025Q3I"
+        }
+      },
+      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "debt_extract_stale",
+      "ticker": "MARA",
+      "at": "2026-02-24T19:39:42.186Z",
+      "secCik": "0001507605",
+      "extracted": {
+        "cik": "0001507605",
+        "totalDebt": 325654000,
+        "debtAsOf": "2023-12-31",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000162828024007680/",
         "mode": "sum",
         "parts": [
           {
             "tag": "us-gaap:LongTermDebtNoncurrent",
-            "end": "2021-12-31",
-            "val": 0,
+            "end": "2023-12-31",
+            "val": 325654000,
             "form": "10-K",
-            "accn": "0000746210-22-000023"
+            "accn": "0001628280-24-007680"
           },
           {
             "tag": "us-gaap:LongTermDebtCurrent",
-            "end": "2021-12-31",
+            "end": "2023-12-31",
             "val": 0,
             "form": "10-K",
-            "accn": "0000746210-22-000023"
+            "accn": "0001628280-24-007680"
           }
         ]
       },
-      "ageDays": 1516.8444491087962,
+      "ageDays": 786.8192382638889,
       "maxAgeDays": 548,
       "note": "extracted debt is older than freshness threshold; not applying"
     },
     {
-      "kind": "preferred_extract_stale",
-      "ticker": "BMNR",
-      "at": "2026-02-24T20:16:04.428Z",
-      "secCik": "0001829311",
+      "kind": "debt_extract_conflict",
+      "ticker": "MSTR",
+      "at": "2026-02-24T19:39:41.759Z",
+      "secCik": "0001050446",
       "extracted": {
-        "cik": "0001829311",
-        "preferredEquity": 45,
-        "preferredAsOf": "2024-05-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-05-31",
-          "val": 45,
-          "accn": "0001683168-24-004815",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-07-15",
-          "frame": "CY2024Q2I"
-        }
+        "cik": "0001050446",
+        "totalDebt": 8190155000,
+        "debtAsOf": "2025-12-31",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
+        "mode": "sum",
+        "parts": [
+          {
+            "tag": "us-gaap:LongTermDebtNoncurrent",
+            "end": "2025-12-31",
+            "val": 8158842000,
+            "form": "10-K",
+            "accn": "0001050446-26-000020"
+          },
+          {
+            "tag": "us-gaap:LongTermDebtCurrent",
+            "end": "2025-12-31",
+            "val": 31313000,
+            "form": "10-K",
+            "accn": "0001050446-26-000020"
+          }
+        ]
       },
-      "ageDays": 634.8444956944444,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
     },
     {
-      "kind": "preferred_extract_stale",
-      "ticker": "SBET",
-      "at": "2026-02-24T20:16:04.803Z",
-      "secCik": "0001981535",
+      "kind": "debt_extract_conflict",
+      "ticker": "BTBT",
+      "at": "2026-02-24T19:39:41.340Z",
+      "secCik": "0001710350",
       "extracted": {
-        "cik": "0001981535",
-        "preferredEquity": 3936,
-        "preferredAsOf": "2023-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
-        "tag": "us-gaap:PreferredStockValue",
+        "cik": "0001710350",
+        "totalDebt": 196345,
+        "debtAsOf": "2025-09-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
+        "mode": "single",
+        "parts": [
+          {
+            "tag": "us-gaap:OtherLongTermDebtNoncurrent",
+            "end": "2025-09-30",
+            "val": 196345,
+            "form": "10-Q",
+            "accn": "0001213900-25-110383"
+          }
+        ]
+      },
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "debt_extract_stale",
+      "ticker": "SQNS",
+      "at": "2026-02-24T19:39:40.978Z",
+      "secCik": "0001383395",
+      "extracted": {
+        "cik": "0001383395",
+        "totalDebt": 10755000,
+        "debtAsOf": "2021-06-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
+        "mode": "single",
+        "parts": [
+          {
+            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+            "end": "2021-06-30",
+            "val": 10755000,
+            "form": "6-K",
+            "accn": "0001383395-21-000039"
+          }
+        ]
+      },
+      "ageDays": 1700.8192242824075,
+      "maxAgeDays": 548,
+      "note": "extracted debt is older than freshness threshold; not applying"
+    },
+    {
+      "kind": "debt_extract_conflict",
+      "ticker": "MSTR",
+      "at": "2026-02-24T19:30:02.729Z",
+      "secCik": "0001050446",
+      "extracted": {
+        "cik": "0001050446",
+        "totalDebt": 8190155000,
+        "debtAsOf": "2025-12-31",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
+        "mode": "sum",
+        "parts": [
+          {
+            "tag": "us-gaap:LongTermDebtNoncurrent",
+            "end": "2025-12-31",
+            "val": 8158842000,
+            "form": "10-K",
+            "accn": "0001050446-26-000020"
+          },
+          {
+            "tag": "us-gaap:LongTermDebtCurrent",
+            "end": "2025-12-31",
+            "val": 31313000,
+            "form": "10-K",
+            "accn": "0001050446-26-000020"
+          }
+        ]
+      },
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "debt_extract_conflict",
+      "ticker": "BTBT",
+      "at": "2026-02-24T19:30:02.284Z",
+      "secCik": "0001710350",
+      "extracted": {
+        "cik": "0001710350",
+        "totalDebt": 196345,
+        "debtAsOf": "2025-09-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
+        "mode": "single",
+        "parts": [
+          {
+            "tag": "us-gaap:OtherLongTermDebtNoncurrent",
+            "end": "2025-09-30",
+            "val": 196345,
+            "form": "10-Q",
+            "accn": "0001213900-25-110383"
+          }
+        ]
+      },
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "debt_extract_conflict",
+      "ticker": "SQNS",
+      "at": "2026-02-24T19:30:01.926Z",
+      "secCik": "0001383395",
+      "extracted": {
+        "cik": "0001383395",
+        "totalDebt": 10755000,
+        "debtAsOf": "2021-06-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
+        "mode": "single",
+        "parts": [
+          {
+            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+            "end": "2021-06-30",
+            "val": 10755000,
+            "form": "6-K",
+            "accn": "0001383395-21-000039"
+          }
+        ]
+      },
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "debt_extract_conflict",
+      "ticker": "SQNS",
+      "at": "2026-02-24T19:30:01.591Z",
+      "secCik": "0001383395",
+      "extracted": {
+        "cik": "0001383395",
+        "totalDebt": 10755000,
+        "debtAsOf": "2021-06-30",
+        "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339521000039/",
+        "mode": "single",
+        "parts": [
+          {
+            "tag": "ifrs-full:CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+            "end": "2021-06-30",
+            "val": 10755000,
+            "form": "6-K",
+            "accn": "0001383395-21-000039"
+          }
+        ]
+      },
+      "note": "company already has debt fields; fill-missing-only policy prevented overwrite"
+    },
+    {
+      "kind": "cash_extract_conflict",
+      "ticker": "MSTR",
+      "at": "2026-02-24T19:10:34.586Z",
+      "secCik": "0001050446",
+      "extracted": {
+        "cashReserves": 2301470000,
+        "cashAsOf": "2025-12-31",
+        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/",
+        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
         "picked": {
-          "end": "2023-12-31",
-          "val": 3936,
-          "accn": "0001493152-24-012028",
-          "fy": 2023,
+          "end": "2025-12-31",
+          "val": 2301470000,
+          "accn": "0001050446-26-000020",
+          "fy": 2025,
           "fp": "FY",
           "form": "10-K",
-          "filed": "2024-03-29",
-          "frame": "CY2023Q4I"
+          "filed": "2026-02-19",
+          "frame": "CY2025Q4I"
         }
       },
-      "ageDays": 786.8445000347223,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
+      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
     },
     {
-      "kind": "preferred_extract_stale",
-      "ticker": "BTCS",
-      "at": "2026-02-24T20:16:06.173Z",
-      "secCik": "0001436229",
+      "kind": "cash_extract_conflict",
+      "ticker": "BTBT",
+      "at": "2026-02-24T19:10:33.866Z",
+      "secCik": "0001710350",
       "extracted": {
-        "cik": "0001436229",
-        "preferredEquity": 1128,
-        "preferredAsOf": "2017-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
-        "tag": "us-gaap:PreferredStockValue",
+        "cashReserves": 179118182,
+        "cashAsOf": "2025-09-30",
+        "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/",
+        "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
         "picked": {
-          "end": "2017-03-31",
-          "val": 1128,
-          "accn": "0001493152-17-008836",
-          "fy": 2017,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2017-08-10",
-          "frame": "CY2017Q1I"
-        }
-      },
-      "ageDays": 3252.8445158912036,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "KULR",
-      "at": "2026-02-24T20:16:07.916Z",
-      "secCik": "1662684",
-      "extracted": {
-        "cik": "0001662684",
-        "preferredEquity": 0,
-        "preferredAsOf": "2018-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2018-09-30",
-          "val": 0,
-          "accn": "0001144204-18-059382",
-          "fy": 2018,
+          "end": "2025-09-30",
+          "val": 179118182,
+          "accn": "0001213900-25-110383",
+          "fy": 2025,
           "fp": "Q3",
           "form": "10-Q",
-          "filed": "2018-11-13",
-          "frame": "CY2018Q3I"
+          "filed": "2025-11-14",
+          "frame": "CY2025Q3I"
         }
       },
-      "ageDays": 2704.8445360648147,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "HSDT",
-      "at": "2026-02-24T20:16:11.100Z",
-      "secCik": "0001610853",
-      "extracted": {
-        "cik": "0001610853",
-        "preferredEquity": 0,
-        "preferredAsOf": "2022-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2022-12-31",
-          "val": 0,
-          "accn": "0001558370-23-003338",
-          "fy": 2022,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2023-03-09",
-          "frame": "CY2022Q4I"
-        }
-      },
-      "ageDays": 1151.8445729166667,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BNC",
-      "at": "2026-02-24T20:16:12.656Z",
-      "secCik": "0001482541",
-      "extracted": {
-        "cik": "0001482541",
-        "preferredEquity": 420,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 420,
-          "accn": "0001493152-21-019110",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-10",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.844590925926,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "CWD",
-      "at": "2026-02-24T20:16:13.976Z",
-      "secCik": "1627282",
-      "extracted": {
-        "cik": "0001627282",
-        "preferredEquity": 0,
-        "preferredAsOf": "2023-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-09-30",
-          "val": 0,
-          "accn": "0001627282-23-000059",
-          "fy": 2023,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2023-11-13",
-          "frame": "CY2023Q3I"
-        }
-      },
-      "ageDays": 878.8446062037037,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "ZONE",
-      "at": "2026-02-24T20:16:16.282Z",
-      "secCik": "1956741",
-      "extracted": {
-        "cik": "0001956741",
-        "preferredEquity": 100,
-        "preferredAsOf": "2024-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-03-31",
-          "val": 100,
-          "accn": "0001213900-24-051214",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-06-10",
-          "frame": "CY2024Q1I"
-        }
-      },
-      "ageDays": 695.8446328935186,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "AVX",
-      "at": "2026-02-24T20:16:17.472Z",
-      "secCik": "1826397",
-      "extracted": {
-        "cik": "0001826397",
-        "preferredEquity": 6717873,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 6717873,
-          "accn": "0001493152-21-018340",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-03",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.8446466666667,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BMNR",
-      "at": "2026-02-24T20:16:28.194Z",
-      "secCik": "0001829311",
-      "extracted": {
-        "cik": "0001829311",
-        "preferredEquity": 45,
-        "preferredAsOf": "2024-05-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-05-31",
-          "val": 45,
-          "accn": "0001683168-24-004815",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-07-15",
-          "frame": "CY2024Q2I"
-        }
-      },
-      "ageDays": 634.8447707638888,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "SBET",
-      "at": "2026-02-24T20:16:28.588Z",
-      "secCik": "0001981535",
-      "extracted": {
-        "cik": "0001981535",
-        "preferredEquity": 3936,
-        "preferredAsOf": "2023-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-12-31",
-          "val": 3936,
-          "accn": "0001493152-24-012028",
-          "fy": 2023,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2024-03-29",
-          "frame": "CY2023Q4I"
-        }
-      },
-      "ageDays": 786.844775324074,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BTCS",
-      "at": "2026-02-24T20:16:29.255Z",
-      "secCik": "0001436229",
-      "extracted": {
-        "cik": "0001436229",
-        "preferredEquity": 1128,
-        "preferredAsOf": "2017-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1436229/000149315217008836/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2017-03-31",
-          "val": 1128,
-          "accn": "0001493152-17-008836",
-          "fy": 2017,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2017-08-10",
-          "frame": "CY2017Q1I"
-        }
-      },
-      "ageDays": 3252.8447830439814,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "KULR",
-      "at": "2026-02-24T20:16:30.448Z",
-      "secCik": "1662684",
-      "extracted": {
-        "cik": "0001662684",
-        "preferredEquity": 0,
-        "preferredAsOf": "2018-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000114420418059382/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2018-09-30",
-          "val": 0,
-          "accn": "0001144204-18-059382",
-          "fy": 2018,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2018-11-13",
-          "frame": "CY2018Q3I"
-        }
-      },
-      "ageDays": 2704.8447968518517,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "HSDT",
-      "at": "2026-02-24T20:16:32.616Z",
-      "secCik": "0001610853",
-      "extracted": {
-        "cik": "0001610853",
-        "preferredEquity": 0,
-        "preferredAsOf": "2022-12-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000155837023003338/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2022-12-31",
-          "val": 0,
-          "accn": "0001558370-23-003338",
-          "fy": 2022,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2023-03-09",
-          "frame": "CY2022Q4I"
-        }
-      },
-      "ageDays": 1151.8448219444444,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "BNC",
-      "at": "2026-02-24T20:16:33.419Z",
-      "secCik": "0001482541",
-      "extracted": {
-        "cik": "0001482541",
-        "preferredEquity": 420,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315221019110/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 420,
-          "accn": "0001493152-21-019110",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-10",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.844831238426,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "CWD",
-      "at": "2026-02-24T20:16:34.266Z",
-      "secCik": "1627282",
-      "extracted": {
-        "cik": "0001627282",
-        "preferredEquity": 0,
-        "preferredAsOf": "2023-09-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2023-09-30",
-          "val": 0,
-          "accn": "0001627282-23-000059",
-          "fy": 2023,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2023-11-13",
-          "frame": "CY2023Q3I"
-        }
-      },
-      "ageDays": 878.8448410416667,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "ZONE",
-      "at": "2026-02-24T20:16:35.778Z",
-      "secCik": "1956741",
-      "extracted": {
-        "cik": "0001956741",
-        "preferredEquity": 100,
-        "preferredAsOf": "2024-03-31",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2024-03-31",
-          "val": 100,
-          "accn": "0001213900-24-051214",
-          "fy": 2024,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2024-06-10",
-          "frame": "CY2024Q1I"
-        }
-      },
-      "ageDays": 695.8448585416667,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
-    },
-    {
-      "kind": "preferred_extract_stale",
-      "ticker": "AVX",
-      "at": "2026-02-24T20:16:36.631Z",
-      "secCik": "1826397",
-      "extracted": {
-        "cik": "0001826397",
-        "preferredEquity": 6717873,
-        "preferredAsOf": "2021-06-30",
-        "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315221018340/",
-        "tag": "us-gaap:PreferredStockValue",
-        "picked": {
-          "end": "2021-06-30",
-          "val": 6717873,
-          "accn": "0001493152-21-018340",
-          "fy": 2021,
-          "fp": "Q2",
-          "form": "10-Q",
-          "filed": "2021-08-03",
-          "frame": "CY2021Q2I"
-        }
-      },
-      "ageDays": 1700.8448684143518,
-      "maxAgeDays": 548,
-      "note": "extracted preferred is older than freshness threshold; not applying"
+      "note": "company already has cash fields; fill-missing-only policy prevented overwrite"
     }
   ]
 }

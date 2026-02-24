@@ -41,7 +41,8 @@
     "state:verify:build": "npx -y tsc -p tsconfig.scripts.json",
     "state:verify:compiled:auto": "bash scripts/state/verify-company-states.compiled.sh",
     "sec:dlq:report": "node --import tsx scripts/sec/dlq-report.ts",
-    "sec:dlq:suggest-suppress": "node --import tsx scripts/sec/dlq-suggest-suppress.ts"
+    "sec:dlq:suggest-suppress": "node --import tsx scripts/sec/dlq-suggest-suppress.ts",
+    "sec:dlq:prune": "node --import tsx scripts/sec/dlq-prune.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
