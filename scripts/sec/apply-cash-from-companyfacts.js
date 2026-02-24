@@ -165,7 +165,15 @@ async function main() {
 
   let newBlock = block;
   if (!hasCashReserves) {
-    newBlock = newBlock.replace(/restrictedCash:[^\n]*\n/, (m0) => m0 + `    cashReserves: ${Math.round(extracted.cashReserves)},\n`);
+    if (/restrictedCash:[^\n]*\n/.test(newBlock)) {
+      newBlock = newBlock.replace(/restrictedCash:[^\n]*\n/, (m0) => m0 + `    cashReserves: ${Math.round(extracted.cashReserves)},\n`);
+    } else {
+      // Fallback: insert after totalDebt if present, else after burnAsOf, else after secCik.
+      const anchor = /totalDebt:[^\n]*\n|burnAsOf:[^\n]*\n|secCik:[^\n]*\n/;
+      if (anchor.test(newBlock)) {
+        newBlock = newBlock.replace(anchor, (m0) => m0 + `    cashReserves: ${Math.round(extracted.cashReserves)},\n`);
+      }
+    }
   }
   if (!hasCashAsOf) {
     newBlock = newBlock.replace(/cashReserves:[^\n]*\n/, (m0) => m0 + `    cashAsOf: \"${extracted.cashAsOf}\",\n`);
@@ -186,6 +194,11 @@ async function main() {
       `      },\n` +
       `    ],\n`,
     );
+  }
+
+  if (newBlock === block) {
+    console.log('noop: cash insert failed (no anchor found)');
+    return;
   }
 
   const outSrc = companiesSrc.slice(0, span.start) + newBlock + companiesSrc.slice(span.end);
