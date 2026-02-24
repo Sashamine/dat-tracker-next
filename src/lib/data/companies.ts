@@ -1,5 +1,5 @@
 import { Company } from "../types";
-import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr.ts";
+import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
 import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./provenance/djt";
@@ -69,7 +69,6 @@ export const ethCompanies: Company[] = [
     restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,  // Operating capital - not excess
     cashSource: "SEC-verified (provenance): 8-K Feb 17, 2026",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=%24670%20million",
-    cashAsOf: BMNR_PROVENANCE_DEBUG.holdingsDate,
     otherInvestments: 217_000_000,  // $200M Beast Industries + $17M Eightco Holdings (ORBS) — SEC 8-K Feb 17, 2026 (accn 006953)
     // DEBT: from provenance ($0)
     totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
@@ -142,8 +141,6 @@ export const ethCompanies: Company[] = [
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     cashAsOf: "2025-09-30",
     totalDebt: 0,
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // Debt-free per SEC 10-Q Q3 2025 (was $12.8M in 2023, paid off)
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     debtAsOf: "2025-09-30",
@@ -676,7 +673,6 @@ export const btcCompanies: Company[] = [
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
     cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
-    cashAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
     // DEBT: from provenance (~$3.25B in convertible notes)
@@ -687,7 +683,6 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2023-12-31",
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
-    debtAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-Q Note 14 + $350M line of credit. Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts.",
   },
   {
@@ -782,8 +777,6 @@ export const btcCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025",
     sharesAsOf: "2025-11-14",
     totalDebt: 0,
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // Coinbase loan repaid in full Oct 15, 2025 (10-Q subsequent events). Dec 22, 2025 8-K: "carries no debt". $20M facility available but undrawn.
     debtSource: "SEC 10-Q Q3 2025 subsequent events + Dec 22, 2025 8-K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
     debtAsOf: "2025-10-15",
@@ -835,7 +828,6 @@ export const btcCompanies: Company[] = [
     totalDebt: 160_160_000,  // Sum of all OCA faceValues in dilutive-instruments.ts (USD)
     debtSource: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
     debtAsOf: "2026-02-16",
-    debtSourceUrl: "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
     cashReserves: 1_531_000,  // €1.531M available cash per H1 2025 IFRS
     cashSource: "H1 2025 IFRS financials",
     cashSourceUrl: "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
@@ -921,8 +913,6 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-12-31",
     totalDebt: 0,
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // Per StatusInvest - no debt
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
     notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
     dataWarnings: [
@@ -1098,13 +1088,8 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-06-30",
     totalDebt: 141_301_000,  // SEC XBRL Jun 2025: LongTermDebt $101.3M (payables) + LongTermLoansPayable $40M (loans)
     debtAsOf: "2025-06-30",
-    debtSourceUrl: "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
-    debtSource: "SEC 6-K H1 2025 XBRL: LongTermDebt $101,301K + LongTermLoansPayable $40,000K",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     cashReserves: 40_086_000,  // SEC XBRL Jun 2025: CashAndCashEquivalentsAtCarryingValue. Q3 2025 PR shows $32.6M but no XBRL filing for Sep 30 (FPI: only H1/FY have XBRL).
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 6-K H1 2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $40,086,000 (Q3 PR shows $32.6M but unaudited, no XBRL)",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
     cashAsOf: "2025-06-30",
@@ -1146,14 +1131,10 @@ export const btcCompanies: Company[] = [
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/",
     debtAsOf: "2025-09-30",
-    debtSourceUrl: "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     cashReserves: 6_663_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
     cashAsOf: "2025-09-30",
@@ -1225,9 +1206,6 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     debtAsOf: "2025-11-30",
     cashReserves: 7_500_000,  // ¥1,159M / 153.5 JPY/USD — Q1 FY2026 現預金
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
     cashSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     cashAsOf: "2025-11-30",
@@ -1261,15 +1239,10 @@ export const btcCompanies: Company[] = [
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
     totalDebt: 0,
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // 6-K Jan 20, 2026: "no outstanding debt" + promissory notes fully repaid
     debtSource: "SEC 6-K Jan 20, 2026: promissory notes fully repaid, no outstanding debt",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     debtAsOf: "2025-12-31",
     cashReserves: 27_100_000,  // 6-K Jan 20, 2026: $27.1M as of Dec 31, 2025
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 6-K Jan 20, 2026: cash and cash equivalents ~$27.1M",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
     cashAsOf: "2025-12-31",
@@ -1423,9 +1396,6 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     burnEstimated: false,
     cashReserves: 1_782_000,  // A$2,829,509 × 0.63 AUD/USD ≈ US$1.78M
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "ASX Appendix 4C Q2 FY2026: Cash at bank A$2,829,509",
     cashSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
     cashAsOf: "2025-12-31",
@@ -1485,9 +1455,6 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2025-12-09",
     // CASH: from provenance (XBRL CashAndCashEquivalentsAtCarryingValue)
     cashReserves: NAKA_PROVENANCE.cashReserves?.value || 24_185_083,
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
     cashAsOf: "2025-09-30",
@@ -1541,9 +1508,6 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2025-09-30",
     // CASH: from provenance (XBRL - unrestricted only)
     cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
     cashSourceUrl: "/filings/djt/0001140361-25-040977",
@@ -1583,16 +1547,11 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-01-31",
     // DEBT: None — no bank borrowings, no convertibles
     totalDebt: 0,
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",
     debtSource: "HKEX Q3 2025: 'no short-term or long-term bank borrowings, no outstanding banking facilities'",
     debtSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     debtAsOf: "2025-09-30",
     // CASH: HK$82.7M (~$10.6M) + HK$78.7M term deposits
     cashReserves: 10_600_000,  // HK$82.7M ÷ 7.8 ≈ $10.6M (bank + cash balances only)
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "HKEX Q3 2025: HK$82.7M cash + HK$78.7M term deposits (non-current)",
     cashSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     cashAsOf: "2025-09-30",
@@ -1641,9 +1600,6 @@ export const btcCompanies: Company[] = [
     twitter: "https://x.com/ABTC",
     // IR: https://abtc.com/investors
     cashReserves: 7_976_000,  // XBRL: us-gaap:Cash as of Sep 30, 2025
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
     cashAsOf: "2025-09-30",
@@ -1698,9 +1654,6 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 400_000_000,
     hasOptions: true,
     cashReserves: 12_000_000,  // ~$12M at Jan 31 per 10-Q MD&A (declining due to buybacks)
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 0,
     cashSource: "SEC 10-Q Q1 FY2026 MD&A: 'approximately $12 million in cash'",
     cashSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=document&q=approximately%20%2412%20million`,
@@ -1711,8 +1664,6 @@ export const solCompanies: Company[] = [
     preferredEquity: 4925000,
     preferredAsOf: "2025-03-31",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825003548/",
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // Debt free — total liabilities $12.1M are all current (taxes, accrued expenses, lease)
     debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     debtAsOf: "2025-12-31",
@@ -1752,15 +1703,10 @@ export const solCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     sharesAsOf: "2025-09-30",
     totalDebt: 0,
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // No LongTermDebt in XBRL (404)
     debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     debtAsOf: "2025-09-30",
     cashReserves: 15_000_000,  // Oct 29 8-K: ">$15M of cash and stablecoins". XBRL Sep 30 was $124M but ~$109M deployed into SOL post-Q3.
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "8-K Oct 29: '>$15M of cash and stablecoins'. XBRL Sep 30 was $124M but 10-Q Note 10 shows $124.6M spent on 587K SOL post-Q3. ~$15M is best available estimate pending 10-K.",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     cashAsOf: "2025-09-30",
@@ -1817,9 +1763,6 @@ export const solCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
     debtAsOf: "2026-01-01",
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Q4 2025 Business Update: approximately $9M in cash, stablecoins, and other tokens",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
@@ -1870,9 +1813,6 @@ export const solCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
     debtAsOf: "2026-01-09",
     cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet. NOTE: Post-offering cash ~$9.7M per Feb 10 earnings 8-K (EX-99.2), but using audited BS figure.
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 1_616_765,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q2 FY2026 balance sheet",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
@@ -1924,9 +1864,6 @@ export const solCompanies: Company[] = [
     cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
     cashObligationsAsOf: "2025-12-31",
     cashReserves: 1_300_000,  // CAD $1.79M → ~$1.3M USD
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 0,  // Operating cash - available
     cashSource: "SEC 40-F FY2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
@@ -1972,16 +1909,11 @@ export const hypeCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
     sharesAsOf: "2025-12-05",
     cashReserves: 300_000_000,  // $300M+ cash (Dec 2025) - from $555M PIPE minus HYPE purchase
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 300_000_000,  // No debt = cash not encumbered, don't subtract from EV
     cashSource: "Derived: $555M PIPE (SEC 8-K) - $255M HYPE purchase = ~$300M cash",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
     cashAsOf: "2025-12-05",
     totalDebt: 0,
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",
     debtSource: "SEC 10-Q Q3 2025: No debt",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
     debtAsOf: "2025-09-30",
@@ -2022,9 +1954,6 @@ export const hypeCompanies: Company[] = [
     sharesSource: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
     sharesAsOf: "2025-11-10",
     cashReserves: 8_223_180,  // SEC 10-Q Sep 30, 2025
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
     cashAsOf: "2025-09-30",
@@ -2089,9 +2018,6 @@ export const bnbCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm",
     sharesAsOf: "2025-12-12",
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm",
@@ -2131,9 +2057,6 @@ export const bnbCompanies: Company[] = [
     debtAsOf: "2024-12-31",
     // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
     cashReserves: 50_800_000,
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC XBRL 6-K Q2 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea0271411-6k_nano.htm", // exact SEC 6-K doc (filed 2025-12-31)
     cashAsOf: "2025-06-30",
@@ -2218,9 +2141,6 @@ export const taoCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
     cashReserves: 4_132_218,  // SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEDAR+ Q2 FY26 MD&A (filed Nov 29, 2025)",
     cashSourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
     cashAsOf: "2025-09-30",
@@ -2268,9 +2188,6 @@ export const taoCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "746210",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
@@ -2466,15 +2383,10 @@ export const ltcCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/",
-    debtSourceUrl: "https://www.oranjebtc.com",
-    debtSource: "Company website (needs specific financial statement link)",  // Q2 FY2026: No interest-bearing debt. MLA with Galaxy undrawn. Only $1.3M operating liabilities.
     debtSource: "SEC 10-Q Q2 FY2026",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
     debtAsOf: "2025-12-31",
     cashReserves: 8_758_000,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue $8,758,000
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
     cashAsOf: "2025-12-31",
@@ -2606,9 +2518,6 @@ export const dogeCompanies: Company[] = [
     avgDailyVolume: 3_000_000,
     marketCap: 150_000_000,
     cashReserves: 5_443_655,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "SEC 10-Q Q2 FY2026 XBRL",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     cashAsOf: "2025-12-31",
@@ -2692,9 +2601,6 @@ export const dogeCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     debtAsOf: "2026-01-20",
     cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashSource: "Yahoo Finance",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     cashAsOf: "2025-06-30",
@@ -2725,9 +2631,6 @@ export const avaxCompanies: Company[] = [
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     debtAsOf: "2025-09-30",
     cashReserves: 894_701,  // ⚠️ Pre-PIPE figure from 10-Q Sep 30, 2025. $145M+ PIPE cash received Nov 5, 2025. Actual balance pending 10-K (~March 2026).
-    cashSourceUrl: "https://www.h100.group/investors",
-    cashSource: "Company IR (investors page) — needs specific statement link",
-    cashAsOf: "2025-12-31",
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
