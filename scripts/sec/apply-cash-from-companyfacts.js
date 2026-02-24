@@ -140,6 +140,12 @@ async function main() {
   const extracted = await extractCash(secCik);
   if (!extracted) {
     console.log('noop: no extractable cash');
+    try {
+      require('child_process').execSync(
+        `node ${path.join(process.cwd(), 'scripts/sec/no-extract-track.cjs')} cash ${ticker}`,
+        { stdio: 'inherit' },
+      );
+    } catch {}
     return;
   }
 
