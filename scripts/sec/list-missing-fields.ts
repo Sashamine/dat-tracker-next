@@ -31,11 +31,20 @@ try {
 } catch {}
 const deny = new Set((exceptions[mode] || []).map((t) => String(t).toUpperCase()));
 
+let suppress: any = { cash: [], debt: [], preferred: [] };
+try {
+  const sPath = path.join(process.cwd(), 'infra/sec-companyfacts-suppress.json');
+  suppress = JSON.parse(fs.readFileSync(sPath, 'utf8'));
+} catch {}
+const suppressed = new Set(((suppress?.[mode] || []) as any[]).map((t) => String(t).toUpperCase()));
+
 const out: string[] = [];
 for (const c of allCompanies as any[]) {
   const ticker = c?.ticker;
   if (!ticker) continue;
-  if (deny.has(String(ticker).toUpperCase())) continue;
+  const T = String(ticker).toUpperCase();
+  if (deny.has(T)) continue;
+  if (suppressed.has(T)) continue;
   if (!c?.secCik) continue;
 
   const missingAny = required.some((k) => c[k] == null);
