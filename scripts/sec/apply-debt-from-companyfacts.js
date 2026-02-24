@@ -124,7 +124,16 @@ async function main() {
 
   let newBlock = block;
   if (!hasDebt) {
-    newBlock = newBlock.replace(/preferredEquity:[^\n]*\n/, (m0) => m0 + `    totalDebt: ${Math.round(extracted.totalDebt)},\n`);
+    // Primary anchor: insert after preferredEquity
+    if (/preferredEquity:[^\n]*\n/.test(newBlock)) {
+      newBlock = newBlock.replace(/preferredEquity:[^\n]*\n/, (m0) => m0 + `    totalDebt: ${Math.round(extracted.totalDebt)},\n`);
+    } else {
+      // Fallback: insert after restrictedCash if present, else after cashReserves, else after burnAsOf, else after secCik.
+      const anchor = /restrictedCash:[^\n]*\n|cashReserves:[^\n]*\n|burnAsOf:[^\n]*\n|secCik:[^\n]*\n/;
+      if (anchor.test(newBlock)) {
+        newBlock = newBlock.replace(anchor, (m0) => m0 + `    totalDebt: ${Math.round(extracted.totalDebt)},\n`);
+      }
+    }
   }
   if (!hasAsOf) {
     newBlock = newBlock.replace(/totalDebt:[^\n]*\n/, (m0) => m0 + `    debtAsOf: \"${extracted.debtAsOf}\",\n`);
@@ -145,6 +154,11 @@ async function main() {
       `      },\n` +
       `    ],\n`,
     );
+  }
+
+  if (newBlock === block) {
+    console.log('noop: debt insert failed (no anchor found)');
+    return;
   }
 
   const out = src.slice(0, span.start) + newBlock + src.slice(span.end);

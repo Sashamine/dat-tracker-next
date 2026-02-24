@@ -116,11 +116,16 @@ async function main() {
   );
 
   let newBlock = block;
-  // Insert after totalDebt (or restrictedCash as fallback)
+  // Insert preferredEquity after totalDebt, else restrictedCash, else cashReserves, else burnAsOf, else secCik
   if (/totalDebt:[^\n]*\n/.test(newBlock)) {
     newBlock = newBlock.replace(/totalDebt:[^\n]*\n/, (m0) => m0 + `    preferredEquity: ${Math.round(extracted.preferredEquity)},\n`);
-  } else {
+  } else if (/restrictedCash:[^\n]*\n/.test(newBlock)) {
     newBlock = newBlock.replace(/restrictedCash:[^\n]*\n/, (m0) => m0 + `    preferredEquity: ${Math.round(extracted.preferredEquity)},\n`);
+  } else {
+    const anchor = /cashReserves:[^\n]*\n|burnAsOf:[^\n]*\n|secCik:[^\n]*\n/;
+    if (anchor.test(newBlock)) {
+      newBlock = newBlock.replace(anchor, (m0) => m0 + `    preferredEquity: ${Math.round(extracted.preferredEquity)},\n`);
+    }
   }
 
   newBlock = newBlock.replace(/preferredEquity:[^\n]*\n/, (m0) =>
@@ -144,6 +149,11 @@ async function main() {
       `      },\n` +
       `    ],\n`,
     );
+  }
+
+  if (newBlock === block) {
+    console.log('noop: preferred insert failed (no anchor found)');
+    return;
   }
 
   const out = src.slice(0, span.start) + newBlock + src.slice(span.end);
