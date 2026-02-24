@@ -103,8 +103,16 @@ function main() {
 
   const now = new Date().toISOString();
 
-  const staleTop = staleDetails
-    .filter((x) => x.ticker !== 'unknown')
+  // De-dupe stale: take max ageDays per (kind,ticker)
+  const staleMax = new Map<string, { kind: string; ticker: string; ageDays: number }>();
+  for (const x of staleDetails) {
+    if (x.ticker === 'unknown') continue;
+    const key = `${x.kind}::${x.ticker}`;
+    const prev = staleMax.get(key);
+    if (!prev || x.ageDays > prev.ageDays) staleMax.set(key, { kind: x.kind, ticker: x.ticker, ageDays: x.ageDays });
+  }
+
+  const staleTop = [...staleMax.values()]
     .sort((a, b) => b.ageDays - a.ageDays || a.ticker.localeCompare(b.ticker))
     .slice(0, 25)
     .map((x) => [x.kind, x.ticker, x.ageDays] as [string, string, number]);
