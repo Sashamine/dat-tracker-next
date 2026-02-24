@@ -51,6 +51,9 @@ public/sec-content/
 /verification-runs/**
 !/verification-runs/_template/**
 
+# dist script stamps (generated)
+/dist-scripts/.verify-company-states.src-mtime
+
 # SEC fetch cache
 /.cache/
 
