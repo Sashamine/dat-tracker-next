@@ -396,6 +396,11 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
                   </Tooltip>
                 </TooltipProvider>
               )}
+              {company.dataWarnings?.some(w => w.type === 'stale-data') && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  Stale
+                </Badge>
+              )}
               <Badge variant="outline" className={cn("text-xs", assetColors[company.asset] || assetColors.ETH)}>
                 {company.asset}
               </Badge>
