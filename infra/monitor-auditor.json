@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.1",
-  "lastAlertSignature": "ALERT running-but-stale>=30m",
-  "consecutiveAlerts": 1,
-  "updatedAt": "2026-02-25T01:35:05.104Z"
+  "lastAlertSignature": "ALERT dirty-tree>=15m,dirty-tree>=30m",
+  "consecutiveAlerts": 10,
+  "updatedAt": "2026-02-25T04:05:04.511Z"
 }
