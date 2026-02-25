@@ -75,6 +75,9 @@ function main() {
   const byTicker = new Map<string, number>();
   const byKindMode = new Map<string, number>();
 
+  const byGuardrailReason = new Map<string, number>();
+  const byGuardrailModeReason = new Map<string, number>();
+
   const staleDetails: Array<{ kind: string; mode: string; ticker: string; ageDays: number; at?: string; note?: string }> = [];
 
   for (const it of items) {
@@ -87,6 +90,12 @@ function main() {
     inc(byTicker, ticker);
     inc(byKindMode, `${kind} · ${mode}`);
 
+    if (kind === 'guardrail') {
+      const reason = String((it as any).reason ?? 'unknown');
+      inc(byGuardrailReason, reason);
+      inc(byGuardrailModeReason, `${mode} · ${reason}`);
+    }
+
     if (kind.endsWith('_extract_stale')) {
       const ageDays = Math.round(Number(it.ageDays ?? NaN));
       if (Number.isFinite(ageDays)) {
@@ -97,6 +106,8 @@ function main() {
 
   const topKinds = sortEntriesDesc(byKind).slice(0, 25);
   const topKindModes = sortEntriesDesc(byKindMode).slice(0, 25);
+  const topGuardrailReasons = sortEntriesDesc(byGuardrailReason).slice(0, 25);
+  const topGuardrailModeReasons = sortEntriesDesc(byGuardrailModeReason).slice(0, 25);
   const topTickers = sortEntriesDesc(byTicker)
     .filter(([t]) => t !== 'unknown')
     .slice(0, 25);
@@ -129,6 +140,12 @@ function main() {
     ``,
     `## By kind + mode`,
     mdTable(topKindModes, ['kind · mode', 'count']),
+    ``,
+    `## Guardrail skips`,
+    topGuardrailReasons.length ? mdTable(topGuardrailReasons, ['reason', 'count']) : '_none_',
+    ``,
+    `## Guardrail skips (mode + reason)`,
+    topGuardrailModeReasons.length ? mdTable(topGuardrailModeReasons, ['mode · reason', 'count']) : '_none_',
     ``,
     `## Stale details (top by ageDays)`,
     staleTop.length ? mdTable3(staleTop, ['kind', 'ticker', 'ageDays']) : '_none_',
