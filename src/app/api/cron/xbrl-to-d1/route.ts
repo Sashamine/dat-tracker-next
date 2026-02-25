@@ -209,6 +209,14 @@ export async function GET(request: NextRequest) {
     datapointsIgnored: dryRun ? 0 : datapointsIgnored,
     failures,
     summary,
+    ...(isManual
+      ? {
+          debug: {
+            tickersParam,
+            tickersFilterSize: tickersFilter?.size || 0,
+          },
+        }
+      : {}),
   });
 }
 
