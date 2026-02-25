@@ -141,10 +141,12 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if ! git diff --cached --name-only | grep -q '^infra/sec-companyfacts-suppress\.json$'; then
-            echo "no suppress.json change; skipping"
+          # Comment only if suppress.json actually changed in this PR branch vs base
+          if ! git diff --name-only origin/master...HEAD -- infra/sec-companyfacts-suppress.json | grep -q 'infra/sec-companyfacts-suppress.json'; then
+            echo "no suppress.json change vs origin/master; skipping"
             exit 0
           fi
+
           BODY=$(python3 scripts/sec/suppress-diff-comment.py)
           gh pr comment "${{ steps.pr.outputs.number }}" --body "$BODY" || true
 
