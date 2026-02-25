@@ -88,22 +88,30 @@ export function AssetFundamentalsAggregateCard({ tickers }: { tickers: string[] 
       </div>
 
       <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Cash</p>
-          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.cash.total)}</p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Debt</p>
-          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.debt.total)}</p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Basic Shares</p>
-          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.shares.total)}</p>
-        </div>
-        <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">BTC Holdings (USD FV)</p>
-          <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.btc.total)}</p>
-        </div>
+        {agg.cash.covered > 0 && (
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Cash</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.cash.total)}</p>
+          </div>
+        )}
+        {agg.debt.covered > 0 && (
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Debt</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.debt.total)}</p>
+          </div>
+        )}
+        {agg.shares.covered > 0 && (
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Basic Shares</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.shares.total)}</p>
+          </div>
+        )}
+        {agg.btc.covered > 0 && (
+          <div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">BTC Holdings (USD FV)</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.btc.total)}</p>
+          </div>
+        )}
       </div>
     </div>
   );

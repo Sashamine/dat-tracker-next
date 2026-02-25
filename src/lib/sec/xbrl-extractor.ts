@@ -217,8 +217,12 @@ function findMostRecentValue(
     const factData = namespaceFacts[concept];
     if (!factData?.units) continue;
 
-    // Check USD units first, then pure (for share counts)
-    const units = factData.units['USD'] || factData.units['shares'] || factData.units['pure'];
+    // Check common units
+    // - USD: monetary values
+    // - shares: share counts
+    // - pure: ratios / generic
+    // - BTC: crypto quantity (some filers)
+    const units = factData.units['USD'] || factData.units['BTC'] || factData.units['shares'] || factData.units['pure'];
     if (!units || units.length === 0) continue;
 
     // Sort by period end date descending (primary), then filed date (secondary)
@@ -332,6 +336,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   const btcData = extractBitcoinHoldings(facts.facts, ticker);
   if (btcData) {
     result.bitcoinHoldings = btcData.value;
+    // NOTE: findMostRecentValue prefers USD when present, but will fall back to BTC units if a filer uses that.
     result.bitcoinHoldingsUnit = 'USD';
     result.bitcoinHoldingsDate = btcData.date;
     result.bitcoinHoldingsSource = btcData.accn;
