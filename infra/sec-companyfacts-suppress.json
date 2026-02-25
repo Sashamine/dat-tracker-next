@@ -1,14 +1,38 @@
 {
   "schemaVersion": "0.1",
-  "cash": [],
+  "cash": [
+    "TRON"
+  ],
   "debt": [
     "BNC",
+    "CEPO",
+    "CWD",
+    "CYPH",
+    "ETHM",
+    "IHLDF",
+    "SUIG",
+    "TAOX",
+    "TRON",
     "TWAV"
   ],
   "preferred": [
+    "ABTC",
     "AVX",
     "BNC",
     "BTCS",
-    "KULR"
+    "BTOG",
+    "CEPO",
+    "CYPH",
+    "DDC",
+    "ETHM",
+    "FUFU",
+    "IHLDF",
+    "KULR",
+    "NAKA",
+    "STKE",
+    "SUIG",
+    "TAOX",
+    "XXI",
+    "ZOOZ"
   ]
 }

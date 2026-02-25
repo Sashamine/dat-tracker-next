@@ -3,7 +3,7 @@
   "ticker": "BMNR",
   "secCik": "0001829311",
   "asOf": "2026-02-16",
-  "generatedAt": "2026-02-24T20:16:37.423Z",
+  "generatedAt": "2026-02-25T01:13:03.046Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -31,12 +31,12 @@
     "cashReserves": 670000000,
     "restrictedCash": 670000000,
     "totalDebt": 0,
-    "preferredEquity": null,
-    "asOf": "2026-02-16",
+    "preferredEquity": 45,
+    "asOf": "2025-11-30",
     "source": {
       "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=%24670%20million",
       "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
-      "preferredSourceUrl": null
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/"
     }
   },
   "verification": {
