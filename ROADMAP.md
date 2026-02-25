@@ -1,8 +1,56 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-02-02
-> **Current Phase**: 8d - Populate Dilutive Instruments
-> **Status**: Phase 7a-7c complete. Phase 8a-8c complete. SEC monitoring optimized. Phase 9 (burn rate/mNAV) scaffolded.
+> **Last Updated**: 2026-02-24
+> **Current Phase**: 10a - Cloudflare Provenance Pipeline (R2 + D1 + Workers)
+> **Status**: Cloudflare R2 bucket(s) exist and are populated. D1 database `dat-tracker` created with core provenance tables (artifacts/runs/datapoints). Next work is R2 inventory → artifacts backfill → 30-min ingestion → agent-optimized read APIs.
+
+---
+
+## Phase 10 — Near Real-Time, Correct, Full Provenance (Cloudflare)
+
+**Goal**: Make data updates reliably within **30 minutes**, remain **reproducible/correct**, and expose **full provenance** that is easy for agents to consume.
+
+### 10a — Provenance primitives (DONE)
+- ✅ Cloudflare **R2** adopted for immutable raw artifacts (filings, XBRL, companyfacts snapshots, dashboard captures).
+- ✅ Cloudflare **D1** database created: `dat-tracker`
+- ✅ Core tables created:
+  - `artifacts` — immutable raw inputs indexed by hash + R2 key
+  - `runs` — every transform/ingestion execution (code SHA + timing)
+  - `datapoints` — metric values with lineage (artifact_id + run_id + method + confidence)
+
+### 10b — R2 inventory + artifacts backfill
+**Why**: provenance only works if every existing object in R2 is indexed.
+
+Deliverables:
+- Define an R2 key convention map (prefixes by ticker/filing-type/batch).
+- Backfill `artifacts` rows for existing R2 objects:
+  - classify `source_type` (sec_filing/sec_xbrl/companyfacts/dashboard/manual)
+  - record `content_hash` (or ETag if we can rely on it), `fetched_at` if available, and `r2_key`
+
+### 10c — 30-minute ingestion + transform
+Deliverables:
+- Cloudflare **Worker + Cron Trigger** every 30 minutes:
+  - pull new SEC items / dashboard updates
+  - write raw artifacts to R2
+  - insert `artifacts`
+  - run deterministic transforms → insert `datapoints`
+- Idempotency guarantees:
+  - dedupe by content hash
+  - safe re-runs without duplicate datapoints
+
+### 10d — Verification + confidence scoring
+Deliverables:
+- Automated checks (source reachability, sanity ranges, cross-source compare)
+- Confidence scoring to route:
+  - high confidence → publish as latest
+  - low confidence → DLQ/manual review (CLAUDE.md process)
+
+### 10e — Agent-optimized read APIs
+Deliverables:
+- Minimal endpoints that always return **value + receipts**:
+  - `GET /company/:ticker/metrics` (latest datapoints + provenance bundle)
+  - `GET /company/:ticker/metric/:metric`
+- Each response includes: `as_of`, `reported_at`, `source_url`, `artifact_id`, `run_id`, `method`, `confidence`
 
 ---
 
