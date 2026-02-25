@@ -3,7 +3,7 @@
   "ticker": "TAOX",
   "secCik": "1571934",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-02-24T20:16:37.429Z",
+  "generatedAt": "2026-02-25T00:59:50.415Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -28,13 +28,13 @@
     }
   },
   "balanceSheet": {
-    "cashReserves": null,
+    "cashReserves": 14369718,
     "restrictedCash": null,
     "totalDebt": null,
     "preferredEquity": null,
-    "asOf": null,
+    "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": null,
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001820/",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

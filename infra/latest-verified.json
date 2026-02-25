@@ -23,8 +23,8 @@
     ],
     "warnExact": []
   },
-  "generatedAt": "2026-02-24T23:00:51.494Z",
-  "runId": "cron-latest-verified",
+  "generatedAt": "2026-02-25T00:59:50.600Z",
+  "runId": "preferred-extract-batch",
   "total": 56,
   "okCount": 56,
   "failCount": 0,
