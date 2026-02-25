@@ -117,7 +117,13 @@ jobs:
           git restore --staged infra/dlq-extract.json 2>/dev/null || true
           git restore --staged infra/dlq-throttle 2>/dev/null || true
 
-          git commit -m "chore(sec): companyfacts fill-missing" || exit 0
+          if ! git commit -m "chore(sec): companyfacts fill-missing"; then
+            echo "no staged dataset changes; skipping PR creation"
+            echo "number=" >> "$GITHUB_OUTPUT"
+            echo "url=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           git push origin "$BRANCH"
 
           pr_url=$(gh pr create \
