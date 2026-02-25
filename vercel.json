@@ -22,8 +22,12 @@
       "schedule": "0 6 * * 0"
     },
     {
-      "path": "/api/cron/xbrl-to-d1",
+      "path": "/api/cron/xbrl-to-d1?limit=50&offset=0",
       "schedule": "15 7 * * *"
+    },
+    {
+      "path": "/api/cron/xbrl-to-d1?limit=50&offset=50",
+      "schedule": "25 7 * * *"
     }
   ]
 }
