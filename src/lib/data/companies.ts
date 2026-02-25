@@ -606,6 +606,16 @@ export const btcCompanies: Company[] = [
     country: "US",
     exchangeMic: "XNAS",
     secCik: "0002027708",  // BSTR/Blockstream SPAC (0001865602 was Cantor → XXI)
+    cashReserves: 275381,
+    cashAsOf: "2025-03-31",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2027708/000121390025044272/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (cash as-of 2025-03-31).",
+        severity: "warning",
+      },
+    ],
     asset: "BTC",
     tier: 1,
     holdings: 30_021,
@@ -1012,6 +1022,9 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-02-21",
     website: "https://ir.ddc.xyz",
     secCik: "0001808110",
+    cashReserves: 8351096,
+    cashAsOf: "2024-12-31",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/",
     costBasisAvg: 85_661,  // treasury.ddc.xyz weighted avg for 1,988 BTC
     costBasisSource: "company-website",
     costBasisSourceUrl: "https://treasury.ddc.xyz",
@@ -2106,6 +2119,16 @@ export const taoCompanies: Company[] = [
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001327/snpx-20250331x10q.htm",
     burnAsOf: "2025-09-30",
+    cashReserves: 14369718,
+    cashAsOf: "2025-06-30",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001820/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (cash as-of 2025-06-30).",
+        severity: "warning",
+      },
+    ],
     capitalRaisedPipe: 11_000_000,
     sharesForMnav: 7_000_000,  // ~6.85M per SEC DEF 14A Oct 2025; Series E convertible ($8 strike) out of money
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
@@ -2232,6 +2255,16 @@ export const linkCompanies: Company[] = [
     burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $1,738,000 (2025-01-01 to 2025-03-31)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000059/cwd-20250331.htm",
     burnAsOf: "2025-03-31",
+    cashReserves: 10927000,
+    cashAsOf: "2025-09-30",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000157/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (cash as-of 2025-09-30).",
+        severity: "warning",
+      },
+    ],
     avgDailyVolume: 5_000_000,
     sharesForMnav: 6_905_000,  // 6.53M Class A + 0.37M Class B = 6.9M per SEC DEF 14A Jan 7, 2026
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm",
@@ -2339,6 +2372,16 @@ export const zecCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
     datStartDate: "2025-10-08",  // Oct 8, 2025 PIPE closing date
     secCik: "1509745",
+    cashReserves: 9686000,
+    cashAsOf: "2025-09-30",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925109827/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (cash as-of 2025-09-30).",
+        severity: "warning",
+      },
+    ],
     costBasisAvg: 334.41,
     costBasisSource: "SEC 8-K Dec 30, 2025 - cumulative average price per ZEC",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
@@ -2457,6 +2500,16 @@ export const suiCompanies: Company[] = [
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
     datStartDate: "2025-08-01",
     secCik: "1425355",
+    cashReserves: 1497009,
+    cashAsOf: "2025-06-30",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (cash as-of 2025-06-30).",
+        severity: "warning",
+      },
+    ],
     stakingPct: 0.98,  // "Substantially almost all of these holdings continue to be staked"
     stakingMethod: "Native staking, liquid staking, and restaking via third-party validators",
     stakingSource: "SEC 10-Q Nov 13, 2025: 'Substantially almost all...staked, generating annualized yield of ~2.2%'. $1.01M SUI staking revenue.",

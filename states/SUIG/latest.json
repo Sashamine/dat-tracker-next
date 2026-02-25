@@ -3,7 +3,7 @@
   "ticker": "SUIG",
   "secCik": "1425355",
   "asOf": "2026-01-07",
-  "generatedAt": "2026-02-24T20:16:37.431Z",
+  "generatedAt": "2026-02-25T01:02:08.967Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -28,13 +28,13 @@
     }
   },
   "balanceSheet": {
-    "cashReserves": null,
+    "cashReserves": 1497009,
     "restrictedCash": null,
     "totalDebt": null,
     "preferredEquity": null,
-    "asOf": null,
+    "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": null,
+      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }
