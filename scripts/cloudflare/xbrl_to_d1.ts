@@ -98,7 +98,7 @@ VALUES (${q(runId)}, ${q(startedAt)}, NULL, 'manual', NULL, ${q(`xbrl_to_d1 tick
     .join(',\n');
 
   const dpSql = rows.length
-    ? `INSERT INTO datapoints (datapoint_id, entity_id, metric, value, unit, scale, as_of, reported_at, artifact_id, run_id, method, confidence, flags_json, created_at) VALUES\n${dpValues};`
+    ? `INSERT OR IGNORE INTO datapoints (datapoint_id, entity_id, metric, value, unit, scale, as_of, reported_at, artifact_id, run_id, method, confidence, flags_json, created_at) VALUES\n${dpValues};`
     : '';
 
   if (dryRun) {
