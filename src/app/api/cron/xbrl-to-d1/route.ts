@@ -38,6 +38,9 @@ export async function GET(request: NextRequest) {
     ? new Set(tickersParam.split(',').map(t => t.trim().toUpperCase()).filter(Boolean))
     : null;
 
+  const limit = Math.max(1, Math.min(500, parseInt(searchParams.get('limit') || '50', 10) || 50));
+  const offset = Math.max(0, parseInt(searchParams.get('offset') || '0', 10) || 0);
+
   if (!isManual && !verifyCronSecret(request)) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
@@ -50,16 +53,18 @@ export async function GET(request: NextRequest) {
     `SELECT DISTINCT ticker FROM artifacts WHERE ticker IS NOT NULL ORDER BY ticker;`
   );
 
-  const tickers = tickersRes.results
+  const allTickers = tickersRes.results
     .map(r => (r.ticker || '').toUpperCase())
     .filter(Boolean)
     .filter(t => (tickersFilter ? tickersFilter.has(t) : true));
+
+  const tickers = allTickers.slice(offset, offset + limit);
 
   if (!dryRun) {
     await d1.query(
       `INSERT OR REPLACE INTO runs (run_id, started_at, ended_at, trigger, code_sha, notes)
        VALUES (?, ?, NULL, ?, NULL, ?);`,
-      [runId, startedAt, isManual ? 'manual' : 'scheduled', `xbrl-to-d1 tickers=${tickers.length}`]
+      [runId, startedAt, isManual ? 'manual' : 'scheduled', `xbrl-to-d1 tickers=${tickers.length}/${allTickers.length} offset=${offset} limit=${limit}`]
     );
   }
 
@@ -171,7 +176,7 @@ export async function GET(request: NextRequest) {
     const extra = failures > failedTickers.length ? ` (+${failures - failedTickers.length} more)` : '';
 
     const msg = [
-      `XBRL→D1 cron: ${failures}/${tickers.length} tickers failed.`,
+      `XBRL→D1 cron: ${failures}/${tickers.length} tickers failed (offset=${offset} limit=${limit}).`,
       `runId: ${runId}`,
       `datapoints: +${datapointsInserted} new, ${datapointsIgnored} unchanged`,
       failedTickers.length ? `failed: ${failedTickers.join(', ')}${extra}` : undefined,
@@ -183,7 +188,7 @@ export async function GET(request: NextRequest) {
   // On manual runs, optionally post a success summary (kept quiet for scheduled runs)
   if (!dryRun && updatesChannelId && isManual && failures === 0) {
     const msg = [
-      `XBRL→D1 manual run OK: ${tickers.length} tickers`,
+      `XBRL→D1 manual run OK: ${tickers.length}/${allTickers.length} tickers (offset=${offset} limit=${limit})`,
       `runId: ${runId}`,
       `datapoints: +${datapointsInserted} new, ${datapointsIgnored} unchanged`,
     ].join('\n');
@@ -195,6 +200,9 @@ export async function GET(request: NextRequest) {
     runId,
     dryRun,
     tickers: tickers.length,
+    tickersTotal: allTickers.length,
+    offset,
+    limit,
     datapointsAttempted,
     datapointsInserted: dryRun ? 0 : datapointsInserted,
     datapointsIgnored: dryRun ? 0 : datapointsIgnored,
