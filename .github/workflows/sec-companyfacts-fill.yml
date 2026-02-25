@@ -141,73 +141,29 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-
-          # Only comment if suppress.json actually changed
           if ! git diff --cached --name-only | grep -q '^infra/sec-companyfacts-suppress\.json$'; then
-            echo "no suppress.json change; skipping suppress diff comment"
+            echo "no suppress.json change; skipping"
             exit 0
           fi
-
-          # Compare HEAD (PR branch) to base (master) to extract newly added tickers
-          DIFF=$(git diff origin/master...HEAD -- infra/sec-companyfacts-suppress.json || true)
-
-          added_cash=$(echo "$DIFF" | grep '^+\s*\"' | sed -n 's/^+\s*\"\([A-Z0-9\.\-]*\)\".*/\1/p' | tr '\n' ' ')
-
-          # Better: parse per-section by tracking which array we are in
-          python3 - <<'PY'
-import re, subprocess
-
-diff = subprocess.check_output(['bash','-lc','git diff origin/master...HEAD -- infra/sec-companyfacts-suppress.json || true'], text=True)
-section=None
-added={'cash':[], 'debt':[], 'preferred':[]}
-for line in diff.splitlines():
-    if line.startswith('+++') or line.startswith('---') or line.startswith('@@'):
-        continue
-    m=re.match(r'^[ +\-]*"(cash|debt|preferred)"\s*:\s*\[', line)
-    if m:
-        section=m.group(1)
-        continue
-    if section and line.startswith('+'):
-        m=re.match(r'^\+\s*"([A-Z0-9\.\-]+)"', line)
-        if m:
-            added[section].append(m.group(1))
-
-lines=[]
-for k in ['cash','debt','preferred']:
-    if added[k]:
-        lines.append(f"- **{k}**: " + ', '.join(sorted(set(added[k]))))
-
-body = "**SEC companyfacts suppressions added in this PR:**\n" + ("\n".join(lines) if lines else "(none)")
-print(body)
-PY
           BODY=$(python3 - <<'PY'
 import re, subprocess
-
 diff = subprocess.check_output(['bash','-lc','git diff origin/master...HEAD -- infra/sec-companyfacts-suppress.json || true'], text=True)
 section=None
 added={'cash':[], 'debt':[], 'preferred':[]}
 for line in diff.splitlines():
-    if line.startswith('+++') or line.startswith('---') or line.startswith('@@'):
-        continue
-    m=re.match(r'^[ +\-]*"(cash|debt|preferred)"\s*:\s*\[', line)
-    if m:
-        section=m.group(1)
-        continue
-    if section and line.startswith('+'):
-        m=re.match(r'^\+\s*"([A-Z0-9\.\-]+)"', line)
-        if m:
-            added[section].append(m.group(1))
-
+  if line.startswith(("+++","---","@@")): continue
+  m=re.match(r"^[ +\-]*\"(cash|debt|preferred)\"\s*:\s*\[", line)
+  if m: section=m.group(1); continue
+  if section and line.startswith("+"):
+    m=re.match(r"^\+\s*\"([A-Z0-9\.\-]+)\"", line)
+    if m: added[section].append(m.group(1))
 lines=[]
-for k in ['cash','debt','preferred']:
-    if added[k]:
-        lines.append(f"- **{k}**: " + ', '.join(sorted(set(added[k]))))
-
-body = "**SEC companyfacts suppressions added in this PR:**\n" + ("\n".join(lines) if lines else "(none)")
-print(body)
+for k in ["cash","debt","preferred"]:
+  vals=sorted(set(added[k]))
+  if vals: lines.append(f"- **{k}**: " + ", ".join(vals))
+print("**SEC companyfacts suppressions added in this PR:**\n" + ("\n".join(lines) if lines else "(none)"))
 PY
 )
-
           gh pr comment "${{ steps.pr.outputs.number }}" --body "$BODY" || true
 
       - name: DLQ report comment
