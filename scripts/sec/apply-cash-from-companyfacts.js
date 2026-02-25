@@ -27,6 +27,16 @@ function pickLatestUsdFact(arr) {
   return rows[0] || null;
 }
 
+function isFinitePositiveNumber(n) {
+  return typeof n === 'number' && Number.isFinite(n) && n > 0;
+}
+
+function daysOld(isoDate) {
+  const t = Date.parse(isoDate);
+  if (!Number.isFinite(t)) return null;
+  return (Date.now() - t) / 86400000;
+}
+
 function pickTagNode(facts) {
   for (const c of CANDIDATES) {
     const node = facts?.facts?.[c.ns]?.[c.tag];
@@ -168,6 +178,22 @@ async function main() {
 
   if (!eligible) {
     console.log('noop: cash already present (not backfilling)');
+    return;
+  }
+
+  // Guardrails
+  if (!isFinitePositiveNumber(extracted.cashReserves)) {
+    console.log(`noop: guardrail (invalid cashReserves=${extracted.cashReserves})`);
+    return;
+  }
+  // Sanity cap: avoid poisoning data with unit mistakes (cash in USD)
+  if (extracted.cashReserves > 1_000_000_000_000) {
+    console.log(`noop: guardrail (cashReserves too large=${extracted.cashReserves})`);
+    return;
+  }
+  const ageDays = extracted.cashAsOf ? daysOld(extracted.cashAsOf) : null;
+  if (ageDays != null && ageDays > MAX_AGE_DAYS) {
+    console.log(`noop: guardrail (cash too old ageDays=${Math.round(ageDays)})`);
     return;
   }
 

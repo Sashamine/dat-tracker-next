@@ -8,6 +8,16 @@ import path from 'node:path';
 
 const MAX_AGE_DAYS = 1095; // 3 years
 
+function isFiniteNonNegativeNumber(n) {
+  return typeof n === 'number' && Number.isFinite(n) && n >= 0;
+}
+
+function daysOld(isoDate) {
+  const t = Date.parse(isoDate);
+  if (!Number.isFinite(t)) return null;
+  return (Date.now() - t) / 86400000;
+}
+
 async function execExtract(secCik) {
   const { spawnSync } = await import('node:child_process');
   const res = spawnSync('node', ['scripts/sec/extract-preferred-companyfacts.js', String(secCik)], { encoding: 'utf8' });
@@ -122,6 +132,22 @@ async function main() {
       Number.isFinite((Date.now() - Date.parse(extracted.preferredAsOf)) / 86400000) &&
       (Date.now() - Date.parse(extracted.preferredAsOf)) / 86400000 > STALE_DAYS,
   );
+
+  // Guardrails
+  if (!isFiniteNonNegativeNumber(extracted.preferredEquity)) {
+    console.log(`noop: guardrail (invalid preferredEquity=${extracted.preferredEquity})`);
+    return;
+  }
+  // Sanity cap: avoid poisoning data with unit mistakes (preferred in USD)
+  if (extracted.preferredEquity > 2_000_000_000_000) {
+    console.log(`noop: guardrail (preferredEquity too large=${extracted.preferredEquity})`);
+    return;
+  }
+  const ageDays = extracted.preferredAsOf ? daysOld(extracted.preferredAsOf) : null;
+  if (ageDays != null && ageDays > MAX_AGE_DAYS) {
+    console.log(`noop: guardrail (preferred too old ageDays=${Math.round(ageDays)})`);
+    return;
+  }
 
   let newBlock = block;
   // Insert preferredEquity after totalDebt, else restrictedCash, else cashReserves, else burnAsOf, else secCik

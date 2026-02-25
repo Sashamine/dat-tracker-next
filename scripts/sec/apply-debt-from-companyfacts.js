@@ -77,6 +77,16 @@ async function dlqPush(item) {
 
 const MAX_AGE_DAYS = 1095; // 3 years
 
+function isFiniteNonNegativeNumber(n) {
+  return typeof n === 'number' && Number.isFinite(n) && n >= 0;
+}
+
+function daysOld(isoDate) {
+  const t = Date.parse(isoDate);
+  if (!Number.isFinite(t)) return null;
+  return (Date.now() - t) / 86400000;
+}
+
 async function main() {
   const ticker = (process.argv[2] || '').trim();
   if (!ticker) {
@@ -127,6 +137,22 @@ async function main() {
   const eligible = !hasDebt;
   if (!eligible) {
     console.log('noop: debt already present (not backfilling)');
+    return;
+  }
+
+  // Guardrails
+  if (!isFiniteNonNegativeNumber(extracted.totalDebt)) {
+    console.log(`noop: guardrail (invalid totalDebt=${extracted.totalDebt})`);
+    return;
+  }
+  // Sanity cap: avoid poisoning data with unit mistakes (debt in USD)
+  if (extracted.totalDebt > 2_000_000_000_000) {
+    console.log(`noop: guardrail (totalDebt too large=${extracted.totalDebt})`);
+    return;
+  }
+  const ageDays = extracted.debtAsOf ? daysOld(extracted.debtAsOf) : null;
+  if (ageDays != null && ageDays > MAX_AGE_DAYS) {
+    console.log(`noop: guardrail (debt too old ageDays=${Math.round(ageDays)})`);
     return;
   }
 
