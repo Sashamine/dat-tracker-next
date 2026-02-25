@@ -115,14 +115,7 @@ export function parseFilingUrl(url: string): { year: string; monthDay: string; d
  */
 export const BOYAA_KNOWN_FILINGS: HKEXFiling[] = [
   // 2025
-  {
-    stockCode: '434',
-    documentType: 'interim-results',
-    title: 'Interim Results Announcement for H1 2025',
-    date: '2025-08-28',
-    url: buildFilingUrl('2025', '0828', '2025082800291'),
-    docId: '2025082800291',
-  },
+  // NOTE: removed bad/404 filing docId 2025082800291 (was assumed H1 2025 interim results)
   {
     stockCode: '434',
     documentType: 'quarterly-update',
@@ -132,14 +125,7 @@ export const BOYAA_KNOWN_FILINGS: HKEXFiling[] = [
     docId: '2025111700291',
   },
   // 2024
-  {
-    stockCode: '434',
-    documentType: 'annual-results',
-    title: 'Annual Results Announcement for FY 2024',
-    date: '2025-03-28',
-    url: buildFilingUrl('2025', '0328', '2025032800291'),
-    docId: '2025032800291',
-  },
+  // NOTE: removed bad/404 filing docId 2025032800291 (was assumed FY 2024 annual results)
   {
     stockCode: '434',
     documentType: 'interim-results',

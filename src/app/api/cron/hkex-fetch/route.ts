@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
 
   const tickersParam = (searchParams.get('tickers') || '').trim();
   const hkexSearchUrl = (searchParams.get('hkexSearchUrl') || '').trim();
+  const hkexSearchUrls = (searchParams.get('hkexSearchUrls') || '').trim();
   if (!tickersParam) {
     return NextResponse.json({ success: false, error: 'Missing tickers (comma-separated)' }, { status: 400 });
   }
@@ -67,7 +68,8 @@ export async function GET(request: NextRequest) {
         discoveredCount: 0,
       };
       try {
-        const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit, searchUrlOverride: hkexSearchUrl || undefined });
+        const override = hkexSearchUrl || hkexSearchUrls.split(',').map(s => s.trim()).filter(Boolean)[0] || undefined;
+        const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit, searchUrlOverride: override });
         filings = discovered;
         discovery.success = true;
         discovery.discoveredCount = discovered.length;
