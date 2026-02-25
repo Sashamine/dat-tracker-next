@@ -61,10 +61,13 @@ jobs:
       - name: Detect changes
         id: diff
         run: |
+          set -euo pipefail
           if git diff --quiet; then
-            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "changed=false"
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "changed=true"
           fi
 
       - name: Diff summary
