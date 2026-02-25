@@ -97,7 +97,8 @@ export async function GET(request: NextRequest) {
 
     if (!artifactId || artifactId === 'unknown') {
       const a = await d1.query<{ artifact_id: string }>(
-        `SELECT artifact_id FROM artifacts WHERE ticker = ? ORDER BY created_at DESC LIMIT 1;`,
+        // Some D1 schemas may not include a created_at column on artifacts; avoid ordering on it.
+        `SELECT artifact_id FROM artifacts WHERE ticker = ? LIMIT 1;`,
         [ticker]
       );
       if (a.results[0]?.artifact_id) artifactId = a.results[0].artifact_id;
