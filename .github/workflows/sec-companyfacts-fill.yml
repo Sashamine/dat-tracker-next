@@ -145,25 +145,19 @@ jobs:
             echo "no suppress.json change; skipping"
             exit 0
           fi
-          BODY=$(python3 - <<'PY'
-import re, subprocess
-diff = subprocess.check_output(['bash','-lc','git diff origin/master...HEAD -- infra/sec-companyfacts-suppress.json || true'], text=True)
-section=None
-added={'cash':[], 'debt':[], 'preferred':[]}
+          BODY=$(python3 -c "import re,subprocess; diff=subprocess.check_output(['bash','-lc','git diff origin/master...HEAD -- infra/sec-companyfacts-suppress.json || true'], text=True); section=None; added={'cash':[],'debt':[],'preferred':[]};
 for line in diff.splitlines():
-  if line.startswith(("+++","---","@@")): continue
-  m=re.match(r"^[ +\-]*\"(cash|debt|preferred)\"\s*:\s*\[", line)
+  if line.startswith(('+++','---','@@')): continue
+  m=re.match(r'^[ +\-]*\"(cash|debt|preferred)\"\s*:\s*\[', line);
   if m: section=m.group(1); continue
-  if section and line.startswith("+"):
-    m=re.match(r"^\+\s*\"([A-Z0-9\.\-]+)\"", line)
-    if m: added[section].append(m.group(1))
+  if section and line.startswith('+'):
+    m=re.match(r'^\+\s*\"([A-Z0-9\.\-]+)\"', line);
+    if m: added[section].append(m.group(1));
 lines=[]
-for k in ["cash","debt","preferred"]:
-  vals=sorted(set(added[k]))
-  if vals: lines.append(f"- **{k}**: " + ", ".join(vals))
-print("**SEC companyfacts suppressions added in this PR:**\n" + ("\n".join(lines) if lines else "(none)"))
-PY
-)
+for k in ('cash','debt','preferred'):
+  vals=sorted(set(added[k]));
+  if vals: lines.append(f'- **{k}**: ' + ', '.join(vals));
+print('**SEC companyfacts suppressions added in this PR:**\n' + ('\n'.join(lines) if lines else '(none)'))")
           gh pr comment "${{ steps.pr.outputs.number }}" --body "$BODY" || true
 
       - name: DLQ report comment
