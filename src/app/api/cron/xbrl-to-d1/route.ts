@@ -66,6 +66,7 @@ export async function GET(request: NextRequest) {
   const summary: any[] = [];
   let datapointsAttempted = 0;
   let datapointsInserted = 0;
+  let datapointsIgnored = 0;
   let failures = 0;
 
   for (const ticker of tickers) {
@@ -108,6 +109,20 @@ export async function GET(request: NextRequest) {
 
     if (!dryRun) {
       for (const r of rows) {
+        // Detect whether this would be a duplicate under our unique index
+        const exists = await d1.query<{ n: number }>(
+          `SELECT COUNT(*) AS n
+           FROM datapoints
+           WHERE entity_id = ?
+             AND metric = ?
+             AND COALESCE(as_of,'') = COALESCE(?, '')
+             AND COALESCE(reported_at,'') = COALESCE(?, '')
+             AND COALESCE(artifact_id,'') = COALESCE(?, '')
+             AND value = ?
+             AND unit = ?;`,
+          [ticker, r.metric, r.as_of, r.reported_at, artifactId, r.value, r.unit]
+        );
+
         await d1.query(
           `INSERT OR IGNORE INTO datapoints (
              datapoint_id, entity_id, metric, value, unit, scale,
@@ -116,7 +131,9 @@ export async function GET(request: NextRequest) {
            ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, 'sec_companyfacts_xbrl', 1.0, NULL, ?);`,
           [crypto.randomUUID(), ticker, r.metric, r.value, r.unit, r.as_of, r.reported_at, artifactId, runId, nowIso()]
         );
-        datapointsInserted += 1;
+
+        if ((exists.results[0]?.n || 0) > 0) datapointsIgnored += 1;
+        else datapointsInserted += 1;
       }
     }
 
@@ -127,21 +144,31 @@ export async function GET(request: NextRequest) {
     await d1.query(`UPDATE runs SET ended_at = ? WHERE run_id = ?;`, [nowIso(), runId]);
   }
 
+  const updatesChannelId = process.env.DISCORD_UPDATES_CHANNEL_ID;
+
   // Notify #updates channel on any failures
-  if (!dryRun && failures > 0) {
-    const updatesChannelId = process.env.DISCORD_UPDATES_CHANNEL_ID;
-    if (updatesChannelId) {
-      const failedTickers = summary.filter(s => !s.success).map(s => s.ticker).slice(0, 25);
-      const extra = failures > failedTickers.length ? ` (+${failures - failedTickers.length} more)` : '';
+  if (!dryRun && updatesChannelId && failures > 0) {
+    const failedTickers = summary.filter(s => !s.success).map(s => s.ticker).slice(0, 25);
+    const extra = failures > failedTickers.length ? ` (+${failures - failedTickers.length} more)` : '';
 
-      const msg = [
-        `XBRL→D1 cron: ${failures}/${tickers.length} tickers failed.`,
-        `runId: ${runId}`,
-        failedTickers.length ? `failed: ${failedTickers.join(', ')}${extra}` : undefined,
-      ].filter(Boolean).join('\n');
+    const msg = [
+      `XBRL→D1 cron: ${failures}/${tickers.length} tickers failed.`,
+      `runId: ${runId}`,
+      `datapoints: +${datapointsInserted} new, ${datapointsIgnored} unchanged`,
+      failedTickers.length ? `failed: ${failedTickers.join(', ')}${extra}` : undefined,
+    ].filter(Boolean).join('\n');
 
-      await sendDiscordChannelMessage(updatesChannelId, msg);
-    }
+    await sendDiscordChannelMessage(updatesChannelId, msg);
+  }
+
+  // On manual runs, optionally post a success summary (kept quiet for scheduled runs)
+  if (!dryRun && updatesChannelId && isManual && failures === 0) {
+    const msg = [
+      `XBRL→D1 manual run OK: ${tickers.length} tickers`,
+      `runId: ${runId}`,
+      `datapoints: +${datapointsInserted} new, ${datapointsIgnored} unchanged`,
+    ].join('\n');
+    await sendDiscordChannelMessage(updatesChannelId, msg);
   }
 
   return NextResponse.json({
@@ -151,6 +178,7 @@ export async function GET(request: NextRequest) {
     tickers: tickers.length,
     datapointsAttempted,
     datapointsInserted: dryRun ? 0 : datapointsInserted,
+    datapointsIgnored: dryRun ? 0 : datapointsIgnored,
     failures,
     summary,
   });
