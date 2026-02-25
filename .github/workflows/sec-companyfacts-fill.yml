@@ -108,9 +108,14 @@ jobs:
           git add src/lib/data/companies.ts infra/sec-companyfacts-suppress.json
 
           # Only include failures tracking if a suppression changed (optional provenance).
-          if git diff --name-only | grep -q '^infra/sec-companyfacts-suppress\.json$'; then
+          # (Use --cached because we haven't committed yet.)
+          if git diff --cached --name-only | grep -q '^infra/sec-companyfacts-suppress\.json$'; then
             git add infra/sec-companyfacts-failures.json 2>/dev/null || true
           fi
+
+          # Ensure we never accidentally include DLQ artifacts in the PR commit.
+          git restore --staged infra/dlq-extract.json 2>/dev/null || true
+          git restore --staged infra/dlq-throttle 2>/dev/null || true
 
           git commit -m "chore(sec): companyfacts fill-missing" || exit 0
           git push origin "$BRANCH"
