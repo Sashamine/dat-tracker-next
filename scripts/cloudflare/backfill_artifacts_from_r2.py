@@ -120,9 +120,10 @@ def main() -> None:
     print(sh(cmd))
 
     # count inserted rows for prefix
+    sql_count = f"SELECT COUNT(*) AS n FROM artifacts WHERE r2_key LIKE '{args.prefix}%';"
     count_cmd = (
         f"wrangler d1 execute {shlex.quote(args.d1)} --remote "
-        f"--command {shlex.quote(f\"SELECT COUNT(*) AS n FROM artifacts WHERE r2_key LIKE '{args.prefix}%';\")}"
+        f"--command {shlex.quote(sql_count)}"
     )
     print(sh(count_cmd))
 
