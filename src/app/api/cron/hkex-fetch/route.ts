@@ -3,6 +3,7 @@ import crypto from 'node:crypto';
 import { D1Client } from '@/lib/d1';
 import { COMPANY_SOURCES } from '@/lib/data/company-sources';
 import { fetchFilingPdf, getKnownFilings } from '@/lib/fetchers/hkex';
+import { discoverHkexFilings } from '@/lib/fetchers/hkex-search';
 import { r2PutObject } from '@/lib/r2/client';
 
 function verifyCronSecret(request: NextRequest): boolean {
@@ -56,10 +57,18 @@ export async function GET(request: NextRequest) {
 
       // Normalize: 00434 -> 434
       const stockCode = stockCodeRaw.replace(/^0+/, '') || stockCodeRaw;
-      const known = getKnownFilings(stockCode).slice(0, limit);
+
+      // Discover filings via HKEX search first; fallback to hardcoded list.
+      let filings = [] as ReturnType<typeof getKnownFilings>;
+      try {
+        const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit });
+        filings = discovered;
+      } catch {
+        filings = getKnownFilings(stockCode).slice(0, limit);
+      }
 
       const perTicker: any[] = [];
-      for (const f of known) {
+      for (const f of filings) {
         const bytesBuf = await fetchFilingPdf(f.url);
         if (!bytesBuf) {
           perTicker.push({ url: f.url, docId: f.docId, ok: false, error: 'Failed to fetch PDF' });
@@ -98,7 +107,7 @@ export async function GET(request: NextRequest) {
         perTicker.push({ url: f.url, docId: f.docId, ok: true, r2Key, contentHash, size: bytes.byteLength, date: f.date, title: f.title });
       }
 
-      summary.push({ ticker, stockCode, filingsAttempted: known.length, results: perTicker });
+      summary.push({ ticker, stockCode, filingsAttempted: filings.length, results: perTicker });
     } catch (err: any) {
       failures += 1;
       summary.push({ ticker: tickerRaw, success: false, error: err?.message || String(err) });
