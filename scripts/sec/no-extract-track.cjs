@@ -40,7 +40,7 @@ failures.items[key] = next;
 let suppress = { schemaVersion: '0.1', cash: [], debt: [], preferred: [] };
 try { suppress = JSON.parse(fs.readFileSync(suppressPath, 'utf8')); } catch {}
 
-const threshold = 5;
+const threshold = 3;
 const list = new Set((suppress[mode] || []).map((t) => String(t).toUpperCase()));
 let didSuppress = false;
 if (next.count >= threshold && !list.has(ticker)) {
