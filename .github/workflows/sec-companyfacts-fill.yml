@@ -60,7 +60,8 @@ jobs:
         id: diff
         run: |
           set -euo pipefail
-          if git diff --quiet; then
+          # Consider BOTH unstaged and staged changes
+          if git diff --quiet && git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "changed=false"
           else
@@ -75,11 +76,17 @@ jobs:
       - name: Diff summary
         if: steps.diff.outputs.changed == 'true'
         run: |
-          echo "Changed files:" 
-          git diff --name-only
+          echo "Changed files (unstaged):"
+          git diff --name-only || true
           echo ""
-          echo "Stats:"
-          git diff --stat
+          echo "Changed files (staged):"
+          git diff --cached --name-only || true
+          echo ""
+          echo "Stats (unstaged):"
+          git diff --stat || true
+          echo ""
+          echo "Stats (staged):"
+          git diff --cached --stat || true
 
       - name: Check for existing auto-data PR
         if: steps.diff.outputs.changed == 'true'
