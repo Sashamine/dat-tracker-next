@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 import { allCompanies } from '@/lib/data/companies';
+import { COMPANY_SOURCES } from '@/lib/data/company-sources';
 
 const METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd'] as const;
 
@@ -47,6 +48,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    const companySources = COMPANY_SOURCES[c.ticker.toUpperCase()] || (COMPANY_SOURCES as any)[c.ticker];
+
     results.push({
       ticker: c.ticker,
       name: c.name,
@@ -54,9 +57,21 @@ export async function GET(request: NextRequest) {
       country: (c as any).country || null,
       exchangeMic: (c as any).exchangeMic || null,
       sources: {
+        // from companies.ts
         secCik: (c as any).secCik || null,
         holdingsSource: (c as any).holdingsSource || null,
         holdingsSourceUrl: (c as any).holdingsSourceUrl || null,
+        // from company-sources.ts (verification/citations mapping)
+        edinetCode: companySources?.edinetCode || null,
+        edinetFilingsUrl: companySources?.edinetFilingsUrl || null,
+        hkexStockCode: companySources?.hkexStockCode || null,
+        hkexFilingsUrl: companySources?.hkexFilingsUrl || null,
+        sedarIsin: companySources?.sedarIsin || null,
+        sedarFilingsUrl: companySources?.sedarFilingsUrl || null,
+        euronextIsin: companySources?.euronextIsin || null,
+        euronextFilingsUrl: companySources?.euronextFilingsUrl || null,
+        ngmIsin: companySources?.ngmIsin || null,
+        ngmFilingsUrl: companySources?.ngmFilingsUrl || null,
       },
       d1: {
         has: available,
