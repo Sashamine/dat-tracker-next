@@ -16,13 +16,12 @@ function verifyCronSecret(request: NextRequest): boolean {
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const ticker = (searchParams.get('ticker') || '').trim().toUpperCase();
-  const isManual = searchParams.get('manual') === 'true';
-
   if (!ticker) {
     return NextResponse.json({ success: false, error: 'Missing ticker' }, { status: 400 });
   }
 
-  if (!isManual && !verifyCronSecret(request)) {
+  // Always require auth (debug endpoint)
+  if (!verifyCronSecret(request)) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
 
