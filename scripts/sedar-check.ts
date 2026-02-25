@@ -237,7 +237,8 @@ async function main() {
     : CANADIAN_COMPANIES;
 
   if (companies.length === 0) {
-    console.error(`No company found for ticker: ${tickerArg}`);
+    const { sedarMissingCompanyPrompt } = await import('../src/lib/sedar/missing-company-prompt.ts');
+    console.error(sedarMissingCompanyPrompt({ ticker: String(tickerArg || '') }));
     process.exit(1);
   }
 

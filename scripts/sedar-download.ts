@@ -56,7 +56,8 @@ async function main() {
 
   const company = CANADIAN_COMPANIES.find(c => c.ticker.toUpperCase() === ticker.toUpperCase());
   if (!company) {
-    console.error(`Ticker not found in CANADIAN_COMPANIES: ${ticker}`);
+    const { sedarMissingCompanyPrompt } = await import('../src/lib/sedar/missing-company-prompt.ts');
+    console.error(sedarMissingCompanyPrompt({ ticker }));
     process.exit(1);
   }
 
