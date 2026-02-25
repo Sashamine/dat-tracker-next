@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'node:crypto';
 import { COMPANY_SOURCES } from '@/lib/data/company-sources';
 import { edinetDownloadDocument, edinetListDocuments } from '@/lib/jp/edinet';
-import { D1Client } from '@/lib/d1';
-import { r2PutObject } from '@/lib/r2/client';
+import { ingestArtifactToR2AndD1 } from '@/lib/artifacts/ingest';
 
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
@@ -59,7 +58,7 @@ export async function GET(request: NextRequest) {
   const dryRun = searchParams.get('dryRun') === 'true';
   const maxDocsPerTicker = Math.max(1, Math.min(5, parseInt(searchParams.get('maxDocs') || '1', 10) || 1));
 
-  const d1 = D1Client.fromEnv();
+  // D1/R2 write handled by ingestArtifactToR2AndD1
 
   try {
     const list = await edinetListDocuments({ date, type: 2 });
@@ -92,35 +91,19 @@ export async function GET(request: NextRequest) {
 
         let existedBefore = false;
         if (!dryRun) {
-          const pre = await d1.query<{ artifact_id: string }>(
-            `SELECT artifact_id FROM artifacts WHERE content_hash = ? AND r2_key = ? LIMIT 1;`,
-            [contentHash, r2Key]
-          );
-          existedBefore = pre.results.length > 0;
-
-          await r2PutObject({ key: r2Key, body: bytes, contentType: 'application/zip' });
-
-          const artifactId = crypto.randomUUID();
-          await d1.query(
-            `INSERT OR IGNORE INTO artifacts (
-               artifact_id, source_type, source_url, content_hash, fetched_at,
-               r2_bucket, r2_key, cik, ticker, accession
-             ) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?);`,
-            [
-              artifactId,
-              'edinet_xbrl_zip',
-              `https://api.edinet-fsa.go.jp/api/v2/documents/${doc.docID}?type=1`,
-              contentHash,
-              nowIso(),
-              process.env.R2_BUCKET || 'dat-tracker-filings',
-              r2Key,
-              r.ticker.toUpperCase(),
-              doc.docID,
-            ]
-          );
-
-          if (existedBefore) artifactsIgnored += 1;
-          else artifactsInserted += 1;
+          const ing = await ingestArtifactToR2AndD1({
+            sourceType: 'edinet_xbrl_zip',
+            ticker: r.ticker,
+            accession: doc.docID,
+            sourceUrl: `https://api.edinet-fsa.go.jp/api/v2/documents/${doc.docID}?type=1`,
+            r2Key,
+            bytes,
+            contentType: 'application/zip',
+            fetchedAt: nowIso(),
+          });
+          existedBefore = !ing.inserted;
+          if (ing.inserted) artifactsInserted += 1;
+          else artifactsIgnored += 1;
         }
 
         downloads.push({

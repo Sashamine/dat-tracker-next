@@ -4,7 +4,7 @@ import { D1Client } from '@/lib/d1';
 import { COMPANY_SOURCES } from '@/lib/data/company-sources';
 import { fetchFilingPdf, getKnownFilings } from '@/lib/fetchers/hkex';
 import { discoverHkexFilings } from '@/lib/fetchers/hkex-search';
-import { r2PutObject } from '@/lib/r2/client';
+import { ingestArtifactToR2AndD1 } from '@/lib/artifacts/ingest';
 
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
@@ -104,27 +104,18 @@ export async function GET(request: NextRequest) {
         const r2Key = `hkex/${stockCode}/${f.docId}.pdf`;
 
         if (!dryRun) {
-          await r2PutObject({ key: r2Key, body: bytes, contentType: 'application/pdf' });
-
-          const artifactId = crypto.randomUUID();
-
-          // Pre-check existence so we can count inserted vs ignored.
-          const pre = await d1.query<{ artifact_id: string }>(
-            `SELECT artifact_id FROM artifacts WHERE content_hash = ? AND r2_key = ? LIMIT 1;`,
-            [contentHash, r2Key]
-          );
-          const existedBefore = pre.results.length > 0;
-
-          await d1.query(
-            `INSERT OR IGNORE INTO artifacts (
-               artifact_id, source_type, source_url, content_hash, fetched_at,
-               r2_bucket, r2_key, cik, ticker, accession
-             ) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?);`,
-            [artifactId, 'hkex_pdf', f.url, contentHash, nowIso(), process.env.R2_BUCKET || 'dat-tracker-filings', r2Key, ticker, f.docId]
-          );
-
-          if (existedBefore) artifactsIgnored += 1;
-          else artifactsInserted += 1;
+          const ing = await ingestArtifactToR2AndD1({
+            sourceType: 'hkex_pdf',
+            ticker,
+            accession: f.docId,
+            sourceUrl: f.url,
+            r2Key,
+            bytes,
+            contentType: 'application/pdf',
+            fetchedAt: nowIso(),
+          });
+          if (ing.inserted) artifactsInserted += 1;
+          else artifactsIgnored += 1;
         }
 
         perTicker.push({ url: f.url, docId: f.docId, ok: true, r2Key, contentHash, size: bytes.byteLength, date: f.date, title: f.title });
