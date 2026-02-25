@@ -10,6 +10,9 @@ function verifyCronSecret(request: NextRequest): boolean {
 }
 
 export async function GET(request: NextRequest) {
+  if (process.env.DEBUG_ENDPOINTS_ENABLED !== 'true') {
+    return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
+  }
   const { searchParams } = new URL(request.url);
   const table = (searchParams.get('table') || '').trim();
   if (!table) {

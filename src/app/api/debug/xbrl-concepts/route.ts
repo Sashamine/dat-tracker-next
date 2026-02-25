@@ -14,6 +14,9 @@ function verifyCronSecret(request: NextRequest): boolean {
  * This helps us map the correct concept names for bitcoin_holdings_usd.
  */
 export async function GET(request: NextRequest) {
+  if (process.env.DEBUG_ENDPOINTS_ENABLED !== 'true') {
+    return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
+  }
   const { searchParams } = new URL(request.url);
   const ticker = (searchParams.get('ticker') || '').trim().toUpperCase();
   if (!ticker) {
