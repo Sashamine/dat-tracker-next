@@ -26,6 +26,14 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Restore companyfacts failures cache
+        uses: actions/cache@v4
+        with:
+          path: infra/sec-companyfacts-failures.json
+          key: sec-companyfacts-failures-${{ github.ref_name }}
+          restore-keys: |
+            sec-companyfacts-failures-
+
       - name: Install
         run: npm ci
 
@@ -135,3 +143,9 @@ jobs:
           name: sec-companyfacts-failures
           path: infra/sec-companyfacts-failures.json
           if-no-files-found: ignore
+
+      - name: Update companyfacts failures cache
+        uses: actions/cache/save@v4
+        with:
+          path: infra/sec-companyfacts-failures.json
+          key: sec-companyfacts-failures-${{ github.ref_name }}
