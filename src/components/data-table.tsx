@@ -397,9 +397,39 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
                 </TooltipProvider>
               )}
               {company.dataWarnings?.some(w => w.type === 'stale-data') && (
-                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
-                  Stale
-                </Badge>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge
+                        variant="outline"
+                        className="text-[10px] px-1 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30 cursor-help"
+                      >
+                        Stale
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs">
+                      {company.dataWarnings
+                        ?.filter(w => w.type === 'stale-data')
+                        .map((w, i) => (
+                          <p key={i} className="text-sm">
+                            {w.filingUrl ? (
+                              <a
+                                href={w.filingUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {w.message}
+                              </a>
+                            ) : (
+                              w.message
+                            )}
+                          </p>
+                        ))}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               )}
               <Badge variant="outline" className={cn("text-xs", assetColors[company.asset] || assetColors.ETH)}>
                 {company.asset}
