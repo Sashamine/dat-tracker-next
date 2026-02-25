@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       filingType: out.filingType,
       error: out.error,
     },
-    note: 'TODO: extend extractor to return raw concept keys; currently only shows extracted fields.',
+    rawConcepts: out.rawConcepts,
   });
 }
 

@@ -133,7 +133,9 @@ export interface XBRLExtractionResult {
   error?: string;
 
   // Raw data for debugging
-  rawConcepts?: Record<string, any>;
+  rawConcepts?: {
+    cryptoCandidates?: Array<{ namespace: string; concept: string; units: string[] }>;
+  };
 }
 
 interface SECCompanyFacts {
@@ -331,6 +333,31 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
     cik,
     success: true,
   };
+
+  // Debug: capture any concepts that look like crypto holdings so we can map them.
+  // Keep this lightweight: store names + available unit keys only.
+  try {
+    const candidates: Array<{ namespace: string; concept: string; units: string[] }> = [];
+    const namespaces = Object.keys(facts.facts || {});
+
+    for (const ns of namespaces) {
+      const nsFacts = facts.facts[ns];
+      if (!nsFacts) continue;
+
+      for (const concept of Object.keys(nsFacts)) {
+        const hay = `${ns}:${concept}`.toLowerCase();
+        if (!/(crypto|digitalasset|digitalassets|bitcoin|cryptocurrency)/.test(hay)) continue;
+
+        const factData = (nsFacts as any)[concept];
+        const units = factData?.units ? Object.keys(factData.units) : [];
+        candidates.push({ namespace: ns, concept, units });
+      }
+    }
+
+    result.rawConcepts = { cryptoCandidates: candidates.slice(0, 200) };
+  } catch {
+    // ignore
+  }
 
   // Extract Bitcoin holdings
   const btcData = extractBitcoinHoldings(facts.facts, ticker);
