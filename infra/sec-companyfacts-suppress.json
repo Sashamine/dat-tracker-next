@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "0.1",
   "cash": [
-    "TRON"
+    "TRON",
+    "ZZZZ"
   ],
   "debt": [
     "BNC",
@@ -34,5 +34,6 @@
     "TAOX",
     "XXI",
     "ZOOZ"
-  ]
+  ],
+  "schemaVersion": "0.1"
 }
