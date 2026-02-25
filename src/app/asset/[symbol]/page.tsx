@@ -27,6 +27,7 @@ import { getMarketCap } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { MobileHeader } from "@/components/mobile-header";
 import { MinersComparison } from "@/components/miners-comparison";
+import { AssetFundamentalsAggregateCard } from "@/components/AssetFundamentalsAggregateCard";
 
 // Asset metadata
 const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: boolean }> = {
@@ -244,6 +245,11 @@ export default function AssetPage() {
               {formatMNAV(avgMNAV)}
             </p>
           </div>
+        </div>
+
+        {/* Fundamentals (last filed) - from D1 */}
+        <div className="mb-8">
+          <AssetFundamentalsAggregateCard tickers={companies.map(c => c.ticker)} />
         </div>
 
         {/* Miners Section - BTC only */}
