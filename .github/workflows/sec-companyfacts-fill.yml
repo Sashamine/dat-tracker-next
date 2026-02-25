@@ -41,6 +41,21 @@ jobs:
       - name: Run companyfacts fill-missing batches (cash→debt→preferred)
         run: bash scripts/sec/apply-cash-batch.sh
 
+      - name: CI debug (post-fill)
+        run: |
+          set -euo pipefail
+          echo "pwd: $(pwd)"
+          echo "infra files:"
+          ls -la infra | sed -n '1,200p'
+          echo "git status:"
+          git status --porcelain || true
+          echo "git diff --name-only:"
+          git diff --name-only || true
+          echo "diff suppress:"
+          git diff -- infra/sec-companyfacts-suppress.json || true
+          echo "suppress file head:"
+          sed -n '1,120p' infra/sec-companyfacts-suppress.json || true
+
       - name: Prune DLQ extract (dry-run)
         run: npm run -s sec:dlq:prune -- --dry-run
       - name: Detect changes
