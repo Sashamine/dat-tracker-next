@@ -44,7 +44,9 @@ export class D1Client {
   }
 
   async query<T = any>(sql: string, params?: any[]): Promise<D1QueryResult<T>> {
-    const body = [{ sql, params: params || [] }];
+    // Cloudflare D1 "query" endpoint expects an object payload, not a raw array.
+    // Ref: errors like "Expected object, received array".
+    const body = { sql, params: params || [] };
 
     const res = await fetch(this.url(), {
       method: 'POST',
