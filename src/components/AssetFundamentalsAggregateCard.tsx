@@ -82,7 +82,11 @@ export function AssetFundamentalsAggregateCard({ tickers }: { tickers: string[] 
         <div>
           <p className="text-sm text-gray-500 dark:text-gray-400">Fundamentals (last filed)</p>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Coverage: cash {agg.cash.covered}/{agg.n} · debt {agg.debt.covered}/{agg.n} · shares {agg.shares.covered}/{agg.n} · BTC FV {agg.btc.covered}/{agg.n}
+            Coverage:
+            {agg.cash.covered > 0 ? ` cash ${agg.cash.covered}/${agg.n}` : ''}
+            {agg.debt.covered > 0 ? `${agg.cash.covered > 0 ? ' ·' : ''} debt ${agg.debt.covered}/${agg.n}` : ''}
+            {agg.shares.covered > 0 ? `${agg.cash.covered > 0 || agg.debt.covered > 0 ? ' ·' : ''} shares ${agg.shares.covered}/${agg.n}` : ''}
+            {agg.btc.covered > 0 ? `${agg.cash.covered > 0 || agg.debt.covered > 0 || agg.shares.covered > 0 ? ' ·' : ''} BTC FV ${agg.btc.covered}/${agg.n}` : ''}
           </p>
         </div>
       </div>
