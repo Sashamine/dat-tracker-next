@@ -189,7 +189,7 @@ async function main() {
     const buf = await streamToBuffer(obj.Body);
 
     const pdfParse = (pdfParseImport as any)?.default || (pdfParseImport as any);
-    const parsed = await pdfParse(buf);
+    const parsed = await (pdfParseImport.PDFParse ? pdfParseImport.PDFParse(buf) : pdfParseImport(buf));
     const text = (parsed.text || '').replace(/\u0000/g, ' ').trim();
     if (!text) {
       console.log('  skip: empty pdf text');
