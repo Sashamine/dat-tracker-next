@@ -101,7 +101,7 @@ async function main() {
   if (!extracted) {
     console.log('noop: no extractable debt');
     try {
-      require('child_process').execSync(
+      (await import('node:child_process')).execSync(
         `node ${path.join(process.cwd(), 'scripts/sec/no-extract-track.cjs')} debt ${ticker}`,
         { stdio: 'inherit' },
       );
