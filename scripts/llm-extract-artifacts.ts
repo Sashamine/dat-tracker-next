@@ -13,7 +13,9 @@
 import crypto from 'node:crypto';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import OpenAI from 'openai';
-import pdfParseImport from 'pdf-parse';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const pdfParseImport = require('pdf-parse');
 
 import { D1Client } from '../src/lib/d1';
 
