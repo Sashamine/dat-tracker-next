@@ -13,7 +13,7 @@
 import crypto from 'node:crypto';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import OpenAI from 'openai';
-import * as pdfParse from 'pdf-parse';
+import pdfParseImport from 'pdf-parse';
 
 import { D1Client } from '../src/lib/d1';
 
@@ -186,7 +186,8 @@ async function main() {
     const obj = await r2.send(new GetObjectCommand({ Bucket: a.r2_bucket, Key: a.r2_key }));
     const buf = await streamToBuffer(obj.Body);
 
-    const parsed = await (pdfParse as any).default(buf);
+    const pdfParse = (pdfParseImport as any)?.default || (pdfParseImport as any);
+    const parsed = await pdfParse(buf);
     const text = (parsed.text || '').replace(/\u0000/g, ' ').trim();
     if (!text) {
       console.log('  skip: empty pdf text');
