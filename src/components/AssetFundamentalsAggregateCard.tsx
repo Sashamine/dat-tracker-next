@@ -86,7 +86,7 @@ export function AssetFundamentalsAggregateCard({ tickers }: { tickers: string[] 
             {agg.cash.covered > 0 ? ` cash ${agg.cash.covered}/${agg.n}` : ''}
             {agg.debt.covered > 0 ? `${agg.cash.covered > 0 ? ' ·' : ''} debt ${agg.debt.covered}/${agg.n}` : ''}
             {agg.shares.covered > 0 ? `${agg.cash.covered > 0 || agg.debt.covered > 0 ? ' ·' : ''} shares ${agg.shares.covered}/${agg.n}` : ''}
-            {agg.btc.covered > 0 ? `${agg.cash.covered > 0 || agg.debt.covered > 0 || agg.shares.covered > 0 ? ' ·' : ''} BTC FV ${agg.btc.covered}/${agg.n}` : ''}
+            {agg.btc.covered > 0 ? `${agg.cash.covered > 0 || agg.debt.covered > 0 || agg.shares.covered > 0 ? ' ·' : ''} crypto ${agg.btc.covered}/${agg.n}` : ''}
           </p>
         </div>
       </div>
@@ -112,7 +112,7 @@ export function AssetFundamentalsAggregateCard({ tickers }: { tickers: string[] 
         )}
         {agg.btc.covered > 0 && (
           <div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">BTC Holdings (USD FV)</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Crypto Holdings (USD FV)</p>
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(agg.btc.total)}</p>
           </div>
         )}
