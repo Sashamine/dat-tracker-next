@@ -191,7 +191,7 @@ async function main() {
     const pdfParse = (pdfParseImport as any)?.default || (pdfParseImport as any);
     // pdf-parse v2+ exports a PDFParse class. Use it to load + getText.
     const parser = new pdfParseImport.PDFParse({ verbosity: 0 });
-    await parser.load(buf);
+    await parser.load({ data: new Uint8Array(buf) });
     const parsedText = await parser.getText();
     const text = String(parsedText || '').replace(/\u0000/g, ' ').trim();
     if (!text) {
