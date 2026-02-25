@@ -5,7 +5,7 @@
  * Downloads regulatory filings from SEDAR+ for Canadian companies.
  * Uses Playwright to handle session authentication.
  * 
- * Usage: node scripts/sedar-download.js <ticker> [--limit N] [--force]
+ * Usage: node scripts/sedar-download.js <ticker> [--limit N] [--force] [--headless]
  */
 
 const { chromium } = require('playwright');
@@ -14,13 +14,15 @@ const path = require('path');
 
 // Known company profiles
 const PROFILES = {
+  btctv: { number: '000044786', name: 'Bitcoin Well Inc.' },
   ihldf: { number: '000044016', name: 'Immutable Holdings Inc.' },
   xtaif: { number: '000055546', name: 'Hashgraph Holdings Inc.' }
 };
 
 async function downloadSedarProfile(ticker, options = {}) {
   const tickerLower = ticker.toLowerCase();
-  const profile = PROFILES[tickerLower];
+  const normalized = tickerLower.replace(/\./g, '').replace(/[^a-z0-9]/g, '');
+  const profile = PROFILES[tickerLower] || PROFILES[normalized];
   
   if (!profile) {
     console.error(`Unknown ticker: ${ticker}`);
@@ -41,8 +43,8 @@ async function downloadSedarProfile(ticker, options = {}) {
   console.log(`   Limit: ${options.limit || 'all'} documents\n`);
 
   const browser = await chromium.launch({
-    headless: false,
-    slowMo: 100
+    headless: options.headless !== false,
+    slowMo: options.slowMo || 0,
   });
 
   const context = await browser.newContext({
@@ -223,11 +225,12 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
 SEDAR+ Document Downloader
 
 Usage:
-  node scripts/sedar-download.js <ticker> [--limit N] [--force]
+  node scripts/sedar-download.js <ticker> [--limit N] [--force] [--headless]
 
 Options:
-  --limit N   Only download first N documents
-  --force     Re-download even if file exists
+  --limit N    Only download first N documents
+  --force      Re-download even if file exists
+  --headless   Run Chromium headless (recommended for CI)
 
 Available tickers:
 ${Object.entries(PROFILES).map(([k, v]) => `  ${k.toUpperCase()} - ${v.name} (${v.number})`).join('\n')}
@@ -239,8 +242,9 @@ const ticker = args[0];
 const limitIdx = args.indexOf('--limit');
 const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : null;
 const force = args.includes('--force');
+const headless = args.includes('--headless');
 
-downloadSedarProfile(ticker, { limit, force }).catch(err => {
+downloadSedarProfile(ticker, { limit, force, headless }).catch(err => {
   console.error('Error:', err.message);
   process.exit(1);
 });

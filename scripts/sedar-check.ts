@@ -17,6 +17,7 @@
 import { chromium, type Page } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
 // ============================================
 // CONFIGURATION
@@ -31,33 +32,11 @@ interface CanadianCompany {
   asset: string;
 }
 
-// Import from the main config or define here for standalone use
-const CANADIAN_COMPANIES: CanadianCompany[] = [
-  {
-    ticker: "IHLDF",
-    localTicker: "HOLD",
-    name: "Immutable Holdings Inc.",
-    sedarProfileNumber: "000044016",
-    exchange: "CBOE Canada",
-    asset: "HBAR",
-  },
-  {
-    ticker: "XTAIF",
-    localTicker: "XTAO.U",
-    name: "xTAO Inc.",
-    sedarProfileNumber: "000048521",
-    exchange: "TSX-V",
-    asset: "TAO",
-  },
-  {
-    ticker: "LUXFF",
-    localTicker: "LUXX",
-    name: "Luxxfolio Holdings Inc.",
-    sedarProfileNumber: "000044736",
-    exchange: "CSE",
-    asset: "LTC",
-  },
-];
+// Import canonical list from app code
+import { CANADIAN_COMPANIES } from '../src/lib/sedar/canadian-companies.ts';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // State file to track last seen filings
 const STATE_FILE = path.join(__dirname, '../data/sedar-state.json');

@@ -18,6 +18,15 @@ export interface CanadianCompany {
 
 export const CANADIAN_COMPANIES: CanadianCompany[] = [
   {
+    ticker: "BTCT.V",
+    localTicker: "BTCT",
+    name: "Bitcoin Well Inc.",
+    sedarProfileNumber: "000044786",
+    exchange: "TSX-V",
+    asset: "BTC",
+    fiscalYearEnd: "December",
+  },
+  {
     ticker: "IHLDF",
     localTicker: "HOLD",
     name: "Immutable Holdings Inc.",
