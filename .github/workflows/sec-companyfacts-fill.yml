@@ -4,7 +4,7 @@ on:
   schedule:
     # Daily @ 05:30 America/Denver (GitHub cron is UTC)
     - cron: "30 12 * * *"
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 concurrency:
   group: sec-companyfacts-fill
