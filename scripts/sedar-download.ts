@@ -133,14 +133,26 @@ async function main() {
     for (const [i, doc] of picked.entries()) {
       console.log(`[${i + 1}/${picked.length}] ${doc.title || 'Untitled'}`);
 
-      const resp = await page.request.get(doc.href);
-      const buf = await resp.body();
-      const bytes = new Uint8Array(buf);
+      // Use Playwright's download pipeline to get the real filename/ext.
+      const downloadPromise = page.waitForEvent('download', { timeout: 60000 });
+      await page.goto(doc.href, { waitUntil: 'commit', timeout: 60000 }).catch(() => {});
+      const download = await downloadPromise;
 
-      // Derive a stable-ish docId from URL + content hash
+      const suggested = download.suggestedFilename() || 'sedar.bin';
+      const ext = path.extname(suggested).toLowerCase() || '.bin';
+
+      // Save to temp, then ingest.
+      const tmpName = `${company.ticker.toUpperCase()}-${Date.now()}-${Math.random().toString(16).slice(2)}${ext}`;
+      const tmpPath = path.join(outDir, tmpName);
+      await download.saveAs(tmpPath);
+
+      const bytes = new Uint8Array(fs.readFileSync(tmpPath));
       const contentHash = crypto.createHash('sha256').update(bytes).digest('hex');
-      const docId = `${company.sedarProfileNumber}-${contentHash.slice(0, 12)}`;
-      const r2Key = `sedar/${company.ticker.toUpperCase()}/${docId}.bin`;
+
+      // Stable-ish doc id: profile + filename stem + hash prefix
+      const stem = path.basename(suggested, ext).replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80);
+      const docId = `${company.sedarProfileNumber}-${stem}-${contentHash.slice(0, 12)}`;
+      const r2Key = `sedar/${company.ticker.toUpperCase()}/${docId}${ext}`;
 
       await ingestArtifactToR2AndD1({
         sourceType: 'sedar_filing',
@@ -149,10 +161,15 @@ async function main() {
         sourceUrl: doc.href,
         r2Key,
         bytes,
-        contentType: resp.headers()['content-type'] || 'application/octet-stream',
+        contentType: ext === '.pdf' ? 'application/pdf' : undefined,
       });
 
+      try { fs.unlinkSync(tmpPath); } catch {}
       console.log(`  ✅ ingested: ${r2Key}`);
+
+      // Return to entry page between downloads to keep session stable
+      await page.goto(entry, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.waitForTimeout(1500);
     }
 
     console.log('Done.');
