@@ -143,16 +143,44 @@ async function main() {
   // Guardrails
   if (!isFiniteNonNegativeNumber(extracted.totalDebt)) {
     console.log(`noop: guardrail (invalid totalDebt=${extracted.totalDebt})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'debt',
+      ticker,
+      secCik,
+      reason: 'guardrail_invalid_debt',
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
   // Sanity cap: avoid poisoning data with unit mistakes (debt in USD)
   if (extracted.totalDebt > 2_000_000_000_000) {
     console.log(`noop: guardrail (totalDebt too large=${extracted.totalDebt})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'debt',
+      ticker,
+      secCik,
+      reason: 'guardrail_debt_too_large',
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
   const ageDays = extracted.debtAsOf ? daysOld(extracted.debtAsOf) : null;
   if (ageDays != null && ageDays > MAX_AGE_DAYS) {
     console.log(`noop: guardrail (debt too old ageDays=${Math.round(ageDays)})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'debt',
+      ticker,
+      secCik,
+      reason: 'guardrail_debt_too_old',
+      ageDays: Math.round(ageDays),
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
 

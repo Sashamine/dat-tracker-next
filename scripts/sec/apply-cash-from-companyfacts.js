@@ -126,6 +126,17 @@ function findCompanyObjectBlock(src, ticker) {
 
 const MAX_AGE_DAYS = 548; // ~18 months
 
+async function dlqPush(item) {
+  const dlqPath = path.join(process.cwd(), 'infra', 'dlq-extract.json');
+  let dlq = { schemaVersion: '0.1', items: [] };
+  try {
+    dlq = JSON.parse(await fs.readFile(dlqPath, 'utf8'));
+  } catch {}
+  dlq.items.push(item);
+  await fs.mkdir(path.dirname(dlqPath), { recursive: true });
+  await fs.writeFile(dlqPath, JSON.stringify(dlq, null, 2) + '\n', 'utf8');
+}
+
 async function main() {
   const ticker = (process.argv[2] || '').trim();
   if (!ticker) {
@@ -184,16 +195,44 @@ async function main() {
   // Guardrails
   if (!isFinitePositiveNumber(extracted.cashReserves)) {
     console.log(`noop: guardrail (invalid cashReserves=${extracted.cashReserves})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'cash',
+      ticker,
+      secCik,
+      reason: 'guardrail_invalid_cash',
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
   // Sanity cap: avoid poisoning data with unit mistakes (cash in USD)
   if (extracted.cashReserves > 1_000_000_000_000) {
     console.log(`noop: guardrail (cashReserves too large=${extracted.cashReserves})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'cash',
+      ticker,
+      secCik,
+      reason: 'guardrail_cash_too_large',
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
   const ageDays = extracted.cashAsOf ? daysOld(extracted.cashAsOf) : null;
   if (ageDays != null && ageDays > MAX_AGE_DAYS) {
     console.log(`noop: guardrail (cash too old ageDays=${Math.round(ageDays)})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'cash',
+      ticker,
+      secCik,
+      reason: 'guardrail_cash_too_old',
+      ageDays: Math.round(ageDays),
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
 

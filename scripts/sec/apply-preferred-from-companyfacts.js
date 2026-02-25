@@ -136,16 +136,44 @@ async function main() {
   // Guardrails
   if (!isFiniteNonNegativeNumber(extracted.preferredEquity)) {
     console.log(`noop: guardrail (invalid preferredEquity=${extracted.preferredEquity})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'preferred',
+      ticker,
+      secCik,
+      reason: 'guardrail_invalid_preferred',
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
   // Sanity cap: avoid poisoning data with unit mistakes (preferred in USD)
   if (extracted.preferredEquity > 2_000_000_000_000) {
     console.log(`noop: guardrail (preferredEquity too large=${extracted.preferredEquity})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'preferred',
+      ticker,
+      secCik,
+      reason: 'guardrail_preferred_too_large',
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
   const ageDays = extracted.preferredAsOf ? daysOld(extracted.preferredAsOf) : null;
   if (ageDays != null && ageDays > MAX_AGE_DAYS) {
     console.log(`noop: guardrail (preferred too old ageDays=${Math.round(ageDays)})`);
+    await dlqPush({
+      type: 'guardrail',
+      mode: 'preferred',
+      ticker,
+      secCik,
+      reason: 'guardrail_preferred_too_old',
+      ageDays: Math.round(ageDays),
+      extracted,
+      createdAt: new Date().toISOString(),
+    });
     return;
   }
 
