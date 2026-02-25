@@ -72,6 +72,16 @@ export const ethCompanies: Company[] = [
     otherInvestments: 217_000_000,  // $200M Beast Industries + $17M Eightco Holdings (ORBS) — SEC 8-K Feb 17, 2026 (accn 006953)
     // DEBT: from provenance ($0)
     totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
+    preferredEquity: 45,
+    preferredAsOf: "2024-05-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2024-05-31).",
+        severity: "warning",
+      },
+    ],
     debtSource: "SEC-verified (provenance): No debt financing",
     debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
@@ -141,6 +151,16 @@ export const ethCompanies: Company[] = [
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     cashAsOf: "2025-09-30",
     totalDebt: 0,
+    preferredEquity: 3936,
+    preferredAsOf: "2023-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2023-12-31).",
+        severity: "warning",
+      },
+    ],
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
     debtAsOf: "2025-09-30",
@@ -2255,6 +2275,9 @@ export const linkCompanies: Company[] = [
     burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $1,738,000 (2025-01-01 to 2025-03-31)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000059/cwd-20250331.htm",
     burnAsOf: "2025-03-31",
+    preferredEquity: 0,
+    preferredAsOf: "2023-09-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728223000059/",
     cashReserves: 10927000,
     cashAsOf: "2025-09-30",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000157/",
@@ -2299,6 +2322,16 @@ export const trxCompanies: Company[] = [
     twitter: "https://x.com/tron_inc",
     investorRelationsUrl: "https://srmentertainment.com/investor-relations",
     secCik: "1956744",
+    preferredEquity: 10,
+    preferredAsOf: "2025-06-30",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000164117225022765/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2025-06-30).",
+        severity: "warning",
+      },
+    ],
     // costBasisAvg removed - needs verification
     stakingPct: 1.00,  // 677,596,800 / 677,596,945 TRX staked via JustLend ≈ 100%
     stakingMethod: "Liquid staking via JustLend DAO (sTRX tokens)",
@@ -2575,6 +2608,16 @@ export const dogeCompanies: Company[] = [
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     cashAsOf: "2025-12-31",
     totalDebt: 800_000,  // Q2 FY2026 10-Q: NotesPayable ~$800K at 10% interest (XBRL last tagged $690K at Jun 30; verify from filing text)
+    preferredEquity: 100,
+    preferredAsOf: "2024-03-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390024051214/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2024-03-31).",
+        severity: "warning",
+      },
+    ],
     debtSource: "SEC 10-Q Q2 FY2026: NotesPayable",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
     debtAsOf: "2025-12-31",

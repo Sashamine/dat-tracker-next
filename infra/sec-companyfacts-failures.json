@@ -7,6 +7,160 @@
       "count": 1,
       "firstSeen": "2026-02-25T01:02:07.539Z",
       "lastSeen": "2026-02-25T01:02:07.539Z"
+    },
+    "debt::ETHM": {
+      "mode": "debt",
+      "ticker": "ETHM",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:09.777Z",
+      "lastSeen": "2026-02-25T01:02:09.777Z"
+    },
+    "debt::CEPO": {
+      "mode": "debt",
+      "ticker": "CEPO",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:10.137Z",
+      "lastSeen": "2026-02-25T01:02:10.137Z"
+    },
+    "debt::TAOX": {
+      "mode": "debt",
+      "ticker": "TAOX",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:10.525Z",
+      "lastSeen": "2026-02-25T01:02:10.525Z"
+    },
+    "debt::CWD": {
+      "mode": "debt",
+      "ticker": "CWD",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:10.936Z",
+      "lastSeen": "2026-02-25T01:02:10.936Z"
+    },
+    "debt::TRON": {
+      "mode": "debt",
+      "ticker": "TRON",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:11.306Z",
+      "lastSeen": "2026-02-25T01:02:11.306Z"
+    },
+    "debt::CYPH": {
+      "mode": "debt",
+      "ticker": "CYPH",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:11.795Z",
+      "lastSeen": "2026-02-25T01:02:11.795Z"
+    },
+    "debt::SUIG": {
+      "mode": "debt",
+      "ticker": "SUIG",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:12.209Z",
+      "lastSeen": "2026-02-25T01:02:12.209Z"
+    },
+    "debt::IHLDF": {
+      "mode": "debt",
+      "ticker": "IHLDF",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:12.602Z",
+      "lastSeen": "2026-02-25T01:02:12.602Z"
+    },
+    "preferred::ETHM": {
+      "mode": "preferred",
+      "ticker": "ETHM",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:13.849Z",
+      "lastSeen": "2026-02-25T01:02:13.849Z"
+    },
+    "preferred::XXI": {
+      "mode": "preferred",
+      "ticker": "XXI",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:14.275Z",
+      "lastSeen": "2026-02-25T01:02:14.275Z"
+    },
+    "preferred::CEPO": {
+      "mode": "preferred",
+      "ticker": "CEPO",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:14.659Z",
+      "lastSeen": "2026-02-25T01:02:14.659Z"
+    },
+    "preferred::DDC": {
+      "mode": "preferred",
+      "ticker": "DDC",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:15.039Z",
+      "lastSeen": "2026-02-25T01:02:15.039Z"
+    },
+    "preferred::FUFU": {
+      "mode": "preferred",
+      "ticker": "FUFU",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:15.550Z",
+      "lastSeen": "2026-02-25T01:02:15.550Z"
+    },
+    "preferred::ZOOZ": {
+      "mode": "preferred",
+      "ticker": "ZOOZ",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:15.924Z",
+      "lastSeen": "2026-02-25T01:02:15.924Z"
+    },
+    "preferred::NAKA": {
+      "mode": "preferred",
+      "ticker": "NAKA",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:16.287Z",
+      "lastSeen": "2026-02-25T01:02:16.287Z"
+    },
+    "preferred::ABTC": {
+      "mode": "preferred",
+      "ticker": "ABTC",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:16.762Z",
+      "lastSeen": "2026-02-25T01:02:16.762Z"
+    },
+    "preferred::STKE": {
+      "mode": "preferred",
+      "ticker": "STKE",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:17.664Z",
+      "lastSeen": "2026-02-25T01:02:17.664Z"
+    },
+    "preferred::TAOX": {
+      "mode": "preferred",
+      "ticker": "TAOX",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:18.147Z",
+      "lastSeen": "2026-02-25T01:02:18.147Z"
+    },
+    "preferred::CYPH": {
+      "mode": "preferred",
+      "ticker": "CYPH",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:19.311Z",
+      "lastSeen": "2026-02-25T01:02:19.311Z"
+    },
+    "preferred::SUIG": {
+      "mode": "preferred",
+      "ticker": "SUIG",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:19.716Z",
+      "lastSeen": "2026-02-25T01:02:19.716Z"
+    },
+    "preferred::BTOG": {
+      "mode": "preferred",
+      "ticker": "BTOG",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:20.486Z",
+      "lastSeen": "2026-02-25T01:02:20.486Z"
+    },
+    "preferred::IHLDF": {
+      "mode": "preferred",
+      "ticker": "IHLDF",
+      "count": 1,
+      "firstSeen": "2026-02-25T01:02:20.815Z",
+      "lastSeen": "2026-02-25T01:02:20.815Z"
     }
   }
 }

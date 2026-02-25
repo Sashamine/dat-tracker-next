@@ -23,8 +23,8 @@
     ],
     "warnExact": []
   },
-  "generatedAt": "2026-02-25T01:02:09.155Z",
-  "runId": "cash-extract-batch",
+  "generatedAt": "2026-02-25T01:02:21.473Z",
+  "runId": "preferred-extract-batch",
   "total": 56,
   "okCount": 56,
   "failCount": 0,

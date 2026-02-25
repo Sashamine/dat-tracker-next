@@ -3,7 +3,7 @@
   "ticker": "SBET",
   "secCik": "0001981535",
   "asOf": "2026-02-15",
-  "generatedAt": "2026-02-25T01:02:08.960Z",
+  "generatedAt": "2026-02-25T01:02:21.282Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -31,12 +31,12 @@
     "cashReserves": 11100000,
     "restrictedCash": 11100000,
     "totalDebt": 0,
-    "preferredEquity": null,
+    "preferredEquity": 3936,
     "asOf": "2025-09-30",
     "source": {
       "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
       "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
-      "preferredSourceUrl": null
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/"
     }
   },
   "verification": {
