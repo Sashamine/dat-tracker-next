@@ -3,10 +3,12 @@ import { HKEXFiling, parseFilingUrl } from './hkex';
 export async function discoverHkexFilings(params: {
   stockCode: string; // e.g. 00434
   limit?: number;
+  searchUrlOverride?: string;
 }): Promise<HKEXFiling[]> {
   const code = params.stockCode.replace(/\.HK$/i, '');
 
   const candidates = [
+    ...(params.searchUrlOverride ? [params.searchUrlOverride] : []),
     `https://www.hkexnews.hk/listedco/listconews/sehk/search/search_active_main.xhtml?stockcode=${encodeURIComponent(code)}`,
     `https://www.hkexnews.hk/listedco/listconews/sehk/search/search_active_main.aspx?stockcode=${encodeURIComponent(code)}`,
     `https://www.hkexnews.hk/listedco/listconews/advancedsearch/search_active_main.aspx?stockcode=${encodeURIComponent(code)}`,

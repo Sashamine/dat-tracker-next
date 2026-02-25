@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
   }
 
   const tickersParam = (searchParams.get('tickers') || '').trim();
+  const hkexSearchUrl = (searchParams.get('hkexSearchUrl') || '').trim();
   if (!tickersParam) {
     return NextResponse.json({ success: false, error: 'Missing tickers (comma-separated)' }, { status: 400 });
   }
@@ -66,7 +67,7 @@ export async function GET(request: NextRequest) {
         discoveredCount: 0,
       };
       try {
-        const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit });
+        const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit, searchUrlOverride: hkexSearchUrl || undefined });
         filings = discovered;
         discovery.success = true;
         discovery.discoveredCount = discovered.length;
@@ -83,6 +84,19 @@ export async function GET(request: NextRequest) {
           continue;
         }
 
+        // Sanity check: HKEX 404 pages come back as tiny HTML; avoid uploading those.
+        if ((bytesBuf as ArrayBuffer).byteLength < 50_000) {
+          try {
+            const head = new TextDecoder('utf-8').decode(new Uint8Array(bytesBuf).slice(0, 200));
+            if (head.includes('<html') || head.includes('<!DOCTYPE html')) {
+              perTicker.push({ url: f.url, docId: f.docId, ok: false, error: 'Got HTML (likely 404), not PDF' });
+              continue;
+            }
+          } catch {
+            // ignore
+          }
+        }
+
         const bytes = new Uint8Array(bytesBuf);
         const contentHash = crypto.createHash('sha256').update(bytes).digest('hex');
         const r2Key = `hkex/${stockCode}/${f.docId}.pdf`;
@@ -91,7 +105,15 @@ export async function GET(request: NextRequest) {
           await r2PutObject({ key: r2Key, body: bytes, contentType: 'application/pdf' });
 
           const artifactId = crypto.randomUUID();
-          const inserted = await d1.query(
+
+          // Pre-check existence so we can count inserted vs ignored.
+          const pre = await d1.query<{ artifact_id: string }>(
+            `SELECT artifact_id FROM artifacts WHERE content_hash = ? AND r2_key = ? LIMIT 1;`,
+            [contentHash, r2Key]
+          );
+          const existedBefore = pre.results.length > 0;
+
+          await d1.query(
             `INSERT OR IGNORE INTO artifacts (
                artifact_id, source_type, source_url, content_hash, fetched_at,
                r2_bucket, r2_key, cik, ticker, accession
@@ -99,17 +121,8 @@ export async function GET(request: NextRequest) {
             [artifactId, 'hkex_pdf', f.url, contentHash, nowIso(), process.env.R2_BUCKET || 'dat-tracker-filings', r2Key, ticker, f.docId]
           );
 
-          // D1 doesn't give rowsAffected; do a lightweight existence check by content hash + key
-          const existing = await d1.query<{ artifact_id: string }>(
-            `SELECT artifact_id FROM artifacts WHERE content_hash = ? AND r2_key = ? LIMIT 1;`,
-            [contentHash, r2Key]
-          );
-
-          // If our artifact_id isn't present, it was ignored. If present, assume inserted.
-          // (Best-effort; INSERT OR IGNORE + subsequent SELECT is enough for our counts.)
-          const present = existing.results.length > 0;
-          if (present) artifactsInserted += 1;
-          else artifactsIgnored += 1;
+          if (existedBefore) artifactsIgnored += 1;
+          else artifactsInserted += 1;
         }
 
         perTicker.push({ url: f.url, docId: f.docId, ok: true, r2Key, contentHash, size: bytes.byteLength, date: f.date, title: f.title });
