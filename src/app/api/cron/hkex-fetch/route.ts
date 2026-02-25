@@ -60,10 +60,18 @@ export async function GET(request: NextRequest) {
 
       // Discover filings via HKEX search first; fallback to hardcoded list.
       let filings = [] as ReturnType<typeof getKnownFilings>;
+      const discovery: { attempted: boolean; success: boolean; discoveredCount: number; error?: string } = {
+        attempted: true,
+        success: false,
+        discoveredCount: 0,
+      };
       try {
         const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit });
         filings = discovered;
-      } catch {
+        discovery.success = true;
+        discovery.discoveredCount = discovered.length;
+      } catch (e: any) {
+        discovery.error = e?.message || String(e);
         filings = getKnownFilings(stockCode).slice(0, limit);
       }
 
@@ -107,7 +115,7 @@ export async function GET(request: NextRequest) {
         perTicker.push({ url: f.url, docId: f.docId, ok: true, r2Key, contentHash, size: bytes.byteLength, date: f.date, title: f.title });
       }
 
-      summary.push({ ticker, stockCode, filingsAttempted: filings.length, results: perTicker });
+      summary.push({ ticker, stockCode, discovery, filingsAttempted: filings.length, results: perTicker });
     } catch (err: any) {
       failures += 1;
       summary.push({ ticker: tickerRaw, success: false, error: err?.message || String(err) });
