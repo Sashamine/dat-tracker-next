@@ -5,19 +5,32 @@ export async function discoverHkexFilings(params: {
   limit?: number;
 }): Promise<HKEXFiling[]> {
   const code = params.stockCode.replace(/\.HK$/i, '');
-  const url = `https://www.hkexnews.hk/listedco/listconews/sehk/search/search_active_main.xhtml?stockcode=${encodeURIComponent(code)}`;
 
-  const res = await fetch(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.9',
-    },
-  });
+  const candidates = [
+    `https://www.hkexnews.hk/listedco/listconews/sehk/search/search_active_main.xhtml?stockcode=${encodeURIComponent(code)}`,
+    `https://www.hkexnews.hk/listedco/listconews/sehk/search/search_active_main.aspx?stockcode=${encodeURIComponent(code)}`,
+    `https://www.hkexnews.hk/listedco/listconews/advancedsearch/search_active_main.aspx?stockcode=${encodeURIComponent(code)}`,
+    `https://www1.hkexnews.hk/listedco/listconews/sehk/search/search_active_main.aspx?stockcode=${encodeURIComponent(code)}`,
+  ];
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`HKEX search fetch failed: ${res.status} ${res.statusText} ${text.slice(0, 200)}`);
+  let res: Response | null = null;
+
+  for (const url of candidates) {
+    const r = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+      },
+    });
+    if (r.ok) {
+      res = r;
+      break;
+    }
+  }
+
+  if (!res) {
+    throw new Error('HKEX search fetch failed: all candidate URLs returned non-200');
   }
 
   const html = await res.text();
@@ -31,7 +44,6 @@ export async function discoverHkexFilings(params: {
     const p = parseFilingUrl(pdfUrl);
     if (!p) continue;
 
-    // Date not easily extracted without deeper parsing of HTML table; store null-ish string.
     out.push({
       stockCode: code.replace(/^0+/, '') || code,
       documentType: 'other',
@@ -42,7 +54,6 @@ export async function discoverHkexFilings(params: {
     });
   }
 
-  // Sort newest first by docId (generally increasing with date)
   out.sort((a, b) => (b.docId || '').localeCompare(a.docId || ''));
 
   return out.slice(0, params.limit ?? 10);
