@@ -146,6 +146,20 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
     lastVerified: "2026-01-22",
   },
 
+  "3189.T": {
+    ticker: "3189.T",
+    name: "ANAP Holdings",
+    edinetCode: "E30020",
+    edinetFilingsUrl: "https://irbank.net/E30020",
+    exchange: "TSE",
+    sharesSource: "basic",
+    sharesNotes: "TSE/EDINET filings via irbank mapping.",
+    reportsHoldingsFrequency: "quarterly",
+    reportsMnavDaily: false,
+    notes: "Japan (TSE). EDINET code discovered via irbank (E30020).",
+    lastVerified: "2026-02-25",
+  },
+
   KULR: {
     ticker: "KULR",
     name: "KULR Technology",
