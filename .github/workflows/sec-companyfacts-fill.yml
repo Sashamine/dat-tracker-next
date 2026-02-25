@@ -41,21 +41,6 @@ jobs:
       - name: Run companyfacts fill-missing batches (cash→debt→preferred)
         run: bash scripts/sec/apply-cash-batch.sh
 
-      - name: CI debug (post-fill)
-        run: |
-          set -euo pipefail
-          echo "pwd: $(pwd)"
-          echo "infra files:"
-          ls -la infra | sed -n '1,200p'
-          echo "git status:"
-          git status --porcelain || true
-          echo "git diff --name-only:"
-          git diff --name-only || true
-          echo "diff suppress:"
-          git diff -- infra/sec-companyfacts-suppress.json || true
-          echo "suppress file head:"
-          sed -n '1,120p' infra/sec-companyfacts-suppress.json || true
-
       - name: Detect changes (immediately post-fill)
         id: diff
         run: |
@@ -117,13 +102,14 @@ jobs:
 
           git checkout -b "$BRANCH"
 
-          # Only include failures tracking in the PR if it resulted in a suppression change.
-          # This avoids daily PR noise from counters.
+          # Keep PRs reviewable: only commit the actual dataset changes.
+          # - companies.ts (filled missing fields)
+          # - suppress list (hopeless tickers after repeated no-extract)
+          git add src/lib/data/companies.ts infra/sec-companyfacts-suppress.json
+
+          # Only include failures tracking if a suppression changed (optional provenance).
           if git diff --name-only | grep -q '^infra/sec-companyfacts-suppress\.json$'; then
-            git add -A
-          else
-            git add -A
-            git reset -- infra/sec-companyfacts-failures.json 2>/dev/null || true
+            git add infra/sec-companyfacts-failures.json 2>/dev/null || true
           fi
 
           git commit -m "chore(sec): companyfacts fill-missing" || exit 0
