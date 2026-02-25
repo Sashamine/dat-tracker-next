@@ -34,12 +34,18 @@ const USER_AGENT = SEC_USER_AGENT;
 // Default XBRL concepts for crypto holdings
 // Used when company doesn't have custom concepts configured
 const DEFAULT_BITCOIN_CONCEPTS = [
-  // Standard US-GAAP concepts
+  // Standard / modern US-GAAP crypto concepts
+  // (Observed in SEC companyfacts for MSTR)
+  'us-gaap:CryptoAssetFairValue',
+  'us-gaap:CryptoAssetNumberOfUnits',
+
+  // Older / alternate concepts seen across filers
   'us-gaap:CryptoAssetHeld',
   'us-gaap:DigitalAssets',
   'us-gaap:CryptocurrencyHeldAtFairValue',
   'us-gaap:BitcoinHeld',
   'us-gaap:DigitalAssetsFairValue',
+
   // Generic fallbacks (check any namespace)
   'CryptoAsset',
   'DigitalAsset',
