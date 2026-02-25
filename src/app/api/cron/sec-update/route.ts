@@ -30,6 +30,13 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const isManual = searchParams.get('manual') === 'true';
 
+  // Feature flag: allow disabling this cron without removing the Vercel schedule.
+  // Default is disabled unless explicitly enabled.
+  const enabled = process.env.SEC_UPDATE_ENABLED === 'true';
+  if (!enabled) {
+    return NextResponse.json({ success: true, skipped: true, reason: 'SEC_UPDATE_ENABLED is not true' });
+  }
+
   // Verify authorization for cron runs
   if (!isManual && !verifyCronSecret(request)) {
     return NextResponse.json(
