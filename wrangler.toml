@@ -1,0 +1,12 @@
+name = "dat-tracker-backfill"
+main = "scripts/cloudflare/backfill-worker.ts"
+compatibility_date = "2026-02-24"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dat-tracker"
+database_id = "9abd92f8-3acb-4c31-ae60-909403f77923"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "dat-tracker-filings"
