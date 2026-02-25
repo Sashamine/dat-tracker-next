@@ -49,14 +49,15 @@ export async function GET(request: NextRequest) {
   const startedAt = nowIso();
   const runId = crypto.randomUUID();
 
-  const tickersRes = await d1.query<{ ticker: string }>(
-    `SELECT DISTINCT ticker FROM artifacts WHERE ticker IS NOT NULL ORDER BY ticker;`
-  );
-
-  const allTickers = tickersRes.results
-    .map(r => (r.ticker || '').toUpperCase())
-    .filter(Boolean)
-    .filter(t => (tickersFilter ? tickersFilter.has(t) : true));
+  const allTickers = tickersFilter
+    ? Array.from(tickersFilter)
+    : (
+        await d1.query<{ ticker: string }>(
+          `SELECT DISTINCT ticker FROM artifacts WHERE ticker IS NOT NULL ORDER BY ticker;`
+        )
+      ).results
+        .map(r => (r.ticker || '').toUpperCase())
+        .filter(Boolean);
 
   const tickers = allTickers.slice(offset, offset + limit);
 
