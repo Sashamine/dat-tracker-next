@@ -20,18 +20,6 @@
     {
       "path": "/api/cron/deep-scan",
       "schedule": "0 6 * * 0"
-    },
-    {
-      "path": "/api/cron/xbrl-to-d1?limit=8&offset=0",
-      "schedule": "15 5 * * *"
-    },
-    {
-      "path": "/api/cron/xbrl-to-d1?limit=8&offset=8",
-      "schedule": "30 5 * * *"
-    },
-    {
-      "path": "/api/cron/xbrl-to-d1?limit=8&offset=16",
-      "schedule": "45 5 * * *"
     }
   ]
 }
