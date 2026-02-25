@@ -370,6 +370,33 @@ export default function CompanyPage() {
               )}
             </div>
             <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{displayCompany.name}</p>
+
+            {/* Stale balance sheet banner */}
+            {displayCompany.dataWarnings?.some(w => w.type === 'stale-data') && (
+              <div className="mt-3 rounded-lg border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/20 px-4 py-3">
+                <div className="flex items-start gap-2">
+                  <span className="text-amber-600 dark:text-amber-400">⚠️</span>
+                  <div className="text-sm text-amber-900 dark:text-amber-200">
+                    <p className="font-medium">Balance sheet data may be stale</p>
+                    <ul className="mt-1 list-disc pl-5 space-y-1">
+                      {displayCompany.dataWarnings
+                        .filter(w => w.type === 'stale-data')
+                        .map((w, i) => (
+                          <li key={i}>
+                            {w.filingUrl ? (
+                              <a href={w.filingUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                                {w.message}
+                              </a>
+                            ) : (
+                              w.message
+                            )}
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
             {displayCompany.leader && (
               <p className="mt-1 text-sm text-gray-500">Led by {displayCompany.leader}</p>
             )}
