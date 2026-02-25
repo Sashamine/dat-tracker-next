@@ -70,12 +70,13 @@ export async function GET(request: NextRequest) {
   let failures = 0;
 
   for (const ticker of tickers) {
-    const x = await extractXBRLData(ticker);
-    if (!x.success) {
-      failures += 1;
-      summary.push({ ticker, success: false, error: x.error });
-      continue;
-    }
+    try {
+      const x = await extractXBRLData(ticker);
+      if (!x.success) {
+        failures += 1;
+        summary.push({ ticker, success: false, error: x.error });
+        continue;
+      }
 
     // Best-effort artifact match
     const accn = (x.accessionNumber || '').trim();
@@ -107,21 +108,34 @@ export async function GET(request: NextRequest) {
 
     datapointsAttempted += rows.length;
 
-    if (!dryRun) {
+    if (!dryRun && rows.length) {
+      // Prefetch existing rows for this ticker/metrics to avoid per-datapoint existence queries
+      const metricList = rows.map(r => r.metric);
+      const inList = metricList.map(() => '?').join(',');
+      const existing = await d1.query<{
+        metric: string;
+        value: number;
+        unit: string;
+        as_of: string | null;
+        reported_at: string | null;
+        artifact_id: string;
+      }>(
+        `SELECT metric, value, unit, as_of, reported_at, artifact_id
+         FROM datapoints
+         WHERE entity_id = ?
+           AND metric IN (${inList});`,
+        [ticker, ...metricList]
+      );
+
+      const key = (m: string, v: number, u: string, asOf: any, rep: any, art: string) =>
+        `${m}::${v}::${u}::${asOf || ''}::${rep || ''}::${art || ''}`;
+
+      const existingSet = new Set(
+        existing.results.map(r => key(r.metric, r.value, r.unit, r.as_of, r.reported_at, r.artifact_id))
+      );
+
       for (const r of rows) {
-        // Detect whether this would be a duplicate under our unique index
-        const exists = await d1.query<{ n: number }>(
-          `SELECT COUNT(*) AS n
-           FROM datapoints
-           WHERE entity_id = ?
-             AND metric = ?
-             AND COALESCE(as_of,'') = COALESCE(?, '')
-             AND COALESCE(reported_at,'') = COALESCE(?, '')
-             AND COALESCE(artifact_id,'') = COALESCE(?, '')
-             AND value = ?
-             AND unit = ?;`,
-          [ticker, r.metric, r.as_of, r.reported_at, artifactId, r.value, r.unit]
-        );
+        const k = key(r.metric, r.value, r.unit, r.as_of, r.reported_at, artifactId);
 
         await d1.query(
           `INSERT OR IGNORE INTO datapoints (
@@ -132,12 +146,17 @@ export async function GET(request: NextRequest) {
           [crypto.randomUUID(), ticker, r.metric, r.value, r.unit, r.as_of, r.reported_at, artifactId, runId, nowIso()]
         );
 
-        if ((exists.results[0]?.n || 0) > 0) datapointsIgnored += 1;
+        if (existingSet.has(k)) datapointsIgnored += 1;
         else datapointsInserted += 1;
       }
     }
 
     summary.push({ ticker, success: true, datapoints: rows.length, artifactId });
+    } catch (err) {
+      failures += 1;
+      summary.push({ ticker, success: false, error: err instanceof Error ? err.message : String(err) });
+      continue;
+    }
   }
 
   if (!dryRun) {
