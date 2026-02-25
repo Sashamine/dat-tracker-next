@@ -27,6 +27,11 @@ function q(v: any): string {
   return `'${s}'`;
 }
 
+function shellQuote(s: string): string {
+  // Safe single-quote wrapper for bash -lc
+  return `'${s.replace(/'/g, `'"'"'`)}'`;
+}
+
 function makeRunId(): string {
   return crypto.randomUUID();
 }
@@ -80,7 +85,7 @@ VALUES (${q(runId)}, ${q(startedAt)}, NULL, 'manual', NULL, ${q(`xbrl_to_d1 tick
 
   let artifactId: string | null = null;
   try {
-    const out = sh(`wrangler d1 execute dat-tracker --remote --command ${q(findArtifactSql)}`);
+    const out = sh(`wrangler d1 execute dat-tracker --remote --command ${shellQuote(findArtifactSql)}`);
     const m = out.match(/"artifact_id"\s*:\s*"([^"]+)"/);
     if (m) artifactId = m[1];
   } catch {
@@ -101,8 +106,8 @@ VALUES (${q(runId)}, ${q(startedAt)}, NULL, 'manual', NULL, ${q(`xbrl_to_d1 tick
     return;
   }
 
-  sh(`wrangler d1 execute dat-tracker --remote --command ${q(runSql)}`);
-  if (dpSql) sh(`wrangler d1 execute dat-tracker --remote --command ${q(dpSql)}`);
+  sh(`wrangler d1 execute dat-tracker --remote --command ${shellQuote(runSql)}`);
+  if (dpSql) sh(`wrangler d1 execute dat-tracker --remote --command ${shellQuote(dpSql)}`);
 
   console.log(`[xbrl_to_d1] wrote run=${runId} datapoints=${rows.length} ticker=${ticker} artifact_id=${artifactId}`);
 }
