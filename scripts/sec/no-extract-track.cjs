@@ -27,6 +27,10 @@ try { failures = JSON.parse(fs.readFileSync(failuresPath, 'utf8')); } catch {}
 
 const key = `${mode}::${ticker}`;
 const prev = failures.items?.[key] || { mode, ticker, count: 0, firstSeen: now, lastSeen: now };
+
+process.stdout.write(`track-debug: failuresPath=${failuresPath}\n`);
+process.stdout.write(`track-debug: key=${key} prevCount=${prev.count || 0}\n`);
+
 const next = {
   mode,
   ticker,
@@ -51,6 +55,7 @@ if (next.count >= threshold && !list.has(ticker)) {
 
 fs.mkdirSync(path.dirname(failuresPath), { recursive: true });
 fs.writeFileSync(failuresPath, JSON.stringify(failures, null, 2) + '\n');
+process.stdout.write(`track-debug: wrote failures count=${next.count} suppress=${didSuppress}\n`);
 
 if (didSuppress) {
   fs.mkdirSync(path.dirname(suppressPath), { recursive: true });

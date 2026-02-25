@@ -35,6 +35,11 @@ jobs:
       - name: Prune DLQ extract (dry-run)
         run: npm run -s sec:dlq:prune -- --dry-run
 
+      - name: Debug failures file
+        run: |
+          echo "failures file (head):"
+          sed -n '1,80p' infra/sec-companyfacts-failures.json || true
+
       - name: Detect changes
         id: diff
         run: |
