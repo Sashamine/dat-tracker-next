@@ -228,10 +228,17 @@ export async function fetchFilingPdf(url: string): Promise<ArrayBuffer | null> {
   try {
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; DATTracker/1.0)',
+        // HKEX can be picky; mimic a real browser a bit more.
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept': 'application/pdf,application/octet-stream;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://www1.hkexnews.hk/',
       },
     });
-    if (!response.ok) return null;
+    if (!response.ok) {
+      console.error(`HKEX fetch failed: ${response.status} ${response.statusText} url=${url}`);
+      return null;
+    }
     return await response.arrayBuffer();
   } catch (error) {
     console.error(`Failed to fetch HKEX filing: ${url}`, error);
