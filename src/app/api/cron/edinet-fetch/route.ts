@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'node:crypto';
+import { COMPANY_SOURCES } from '@/lib/data/company-sources';
+import { edinetDownloadDocument, edinetListDocuments } from '@/lib/jp/edinet';
+import { D1Client } from '@/lib/d1';
+import { r2PutObject } from '@/lib/r2/client';
 
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
@@ -7,11 +12,10 @@ function verifyCronSecret(request: NextRequest): boolean {
   if (!authHeader) return false;
   return authHeader === `Bearer ${cronSecret}`;
 }
-import { COMPANY_SOURCES } from '@/lib/data/company-sources';
-import { edinetDownloadDocument, edinetListDocuments } from '@/lib/jp/edinet';
 
-// NOTE: This endpoint is intentionally "artifacts-only" scaffolding.
-// It will be extended to store to R2 + D1 artifacts after EDINET access is confirmed.
+function nowIso() {
+  return new Date().toISOString();
+}
 
 export async function GET(request: NextRequest) {
   if (!verifyCronSecret(request)) {
@@ -50,6 +54,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ success: false, error: `Missing edinetCode for tickers: ${missing.join(', ')}` }, { status: 400 });
   }
 
+  const runId = crypto.randomUUID();
+  const startedAt = nowIso();
+  const dryRun = searchParams.get('dryRun') === 'true';
+  const maxDocsPerTicker = Math.max(1, Math.min(5, parseInt(searchParams.get('maxDocs') || '1', 10) || 1));
+
+  const d1 = D1Client.fromEnv();
+
   try {
     const list = await edinetListDocuments({ date, type: 2 });
     const results = list.results || [];
@@ -63,43 +74,86 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Download just the first doc per code as a connectivity test (no storage yet).
+    let artifactsInserted = 0;
+    let artifactsIgnored = 0;
     const downloads: any[] = [];
+
     for (const r of resolved) {
-      const items = byCode.get(String(r.edinetCode)) || [];
-      const first = items[0];
-      if (!first) {
-        downloads.push({ ticker: r.ticker, edinetCode: r.edinetCode, found: 0, downloaded: false });
+      const items = (byCode.get(String(r.edinetCode)) || []).slice(0, maxDocsPerTicker);
+      if (!items.length) {
+        downloads.push({ ticker: r.ticker, edinetCode: r.edinetCode, found: 0, downloaded: 0 });
         continue;
       }
-      const bytes = await edinetDownloadDocument({ docID: first.docID, type: 1 });
-      downloads.push({
-        ticker: r.ticker,
-        edinetCode: r.edinetCode,
-        found: items.length,
-        downloaded: true,
-        docID: first.docID,
-        size: bytes.byteLength,
-        filerName: first.filerName,
-        docDescription: first.docDescription || null,
-        submitDateTime: first.submitDateTime || null,
-      });
+
+      for (const doc of items) {
+        const bytes = await edinetDownloadDocument({ docID: doc.docID, type: 1 });
+        const contentHash = crypto.createHash('sha256').update(bytes).digest('hex');
+        const r2Key = `edinet/${r.edinetCode}/${doc.docID}.zip`;
+
+        let existedBefore = false;
+        if (!dryRun) {
+          const pre = await d1.query<{ artifact_id: string }>(
+            `SELECT artifact_id FROM artifacts WHERE content_hash = ? AND r2_key = ? LIMIT 1;`,
+            [contentHash, r2Key]
+          );
+          existedBefore = pre.results.length > 0;
+
+          await r2PutObject({ key: r2Key, body: bytes, contentType: 'application/zip' });
+
+          const artifactId = crypto.randomUUID();
+          await d1.query(
+            `INSERT OR IGNORE INTO artifacts (
+               artifact_id, source_type, source_url, content_hash, fetched_at,
+               r2_bucket, r2_key, cik, ticker, accession
+             ) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?);`,
+            [
+              artifactId,
+              'edinet_xbrl_zip',
+              `https://api.edinet-fsa.go.jp/api/v2/documents/${doc.docID}?type=1`,
+              contentHash,
+              nowIso(),
+              process.env.R2_BUCKET || 'dat-tracker-filings',
+              r2Key,
+              r.ticker.toUpperCase(),
+              doc.docID,
+            ]
+          );
+
+          if (existedBefore) artifactsIgnored += 1;
+          else artifactsInserted += 1;
+        }
+
+        downloads.push({
+          ticker: r.ticker,
+          edinetCode: r.edinetCode,
+          docID: doc.docID,
+          size: bytes.byteLength,
+          contentHash,
+          r2Key,
+          filerName: doc.filerName,
+          docDescription: doc.docDescription || null,
+          submitDateTime: doc.submitDateTime || null,
+          existedBefore,
+        });
+      }
     }
 
     return NextResponse.json({
       success: true,
+      runId,
+      startedAt,
       date,
       tickers,
       resolved,
       foundCounts: Object.fromEntries([...byCode.entries()].map(([k, v]) => [k, v.length])),
+      dryRun,
+      maxDocsPerTicker,
+      artifactsInserted,
+      artifactsIgnored,
       downloads,
-      note: 'Scaffolding: confirms EDINET connectivity. Next step is storing zip to R2 + recording artifact rows in D1.',
     });
   } catch (err: any) {
-    return NextResponse.json(
-      { success: false, error: err?.message || String(err) },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, runId, startedAt, error: err?.message || String(err) }, { status: 500 });
   }
 }
 
