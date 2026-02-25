@@ -37,6 +37,8 @@ const DEFAULT_BITCOIN_CONCEPTS = [
   // Standard / modern US-GAAP crypto concepts
   // (Observed in SEC companyfacts for MSTR)
   'us-gaap:CryptoAssetFairValue',
+  'us-gaap:CryptoAssetFairValueNoncurrent',
+  'us-gaap:CryptoAssetFairValueCurrent',
   'us-gaap:CryptoAssetNumberOfUnits',
 
   // Older / alternate concepts seen across filers
