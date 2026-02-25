@@ -125,3 +125,10 @@ jobs:
           name: dlq-extract
           path: infra/dlq-extract.json
           if-no-files-found: ignore
+
+      - name: Upload companyfacts failures artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sec-companyfacts-failures
+          path: infra/sec-companyfacts-failures.json
+          if-no-files-found: ignore
