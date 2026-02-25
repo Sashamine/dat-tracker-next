@@ -106,7 +106,7 @@ async function main() {
         { stdio: 'inherit' },
       );
     } catch (e) {
-      console.log(`warn: no-extract-track failed for debt ${ticker}`);
+      console.log(`warn: no-extract-track failed for debt ${ticker}: ${e?.message || e}`);
     }
     return;
   }
