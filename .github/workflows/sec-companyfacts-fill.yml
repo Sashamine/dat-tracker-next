@@ -30,8 +30,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: infra/sec-companyfacts-failures.json
-          key: sec-companyfacts-failures-${{ github.ref_name }}
+          key: sec-companyfacts-failures-${{ github.ref_name }}-${{ github.run_id }}
           restore-keys: |
+            sec-companyfacts-failures-${{ github.ref_name }}-
             sec-companyfacts-failures-
 
       - name: Install
@@ -146,6 +147,7 @@ jobs:
 
       - name: Update companyfacts failures cache
         uses: actions/cache/save@v4
+        if: always()
         with:
           path: infra/sec-companyfacts-failures.json
-          key: sec-companyfacts-failures-${{ github.ref_name }}
+          key: sec-companyfacts-failures-${{ github.ref_name }}-${{ github.run_id }}
