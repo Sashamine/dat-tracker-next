@@ -100,6 +100,11 @@ function hkexSharesQuoteLooksValid(quote: string): boolean {
     'weighted-average',
     'number of units in issue',
   ];
+
+  // HKEX tables often annotate the "shares in issue" line as "(unaudited)".
+  // If value sanity check passes, allow this phrasing.
+  if (q.includes('unaudited')) return true;
+
   return needles.some(n => q.includes(n));
 }
 
