@@ -69,6 +69,21 @@ function quoteExists(text: string, quote: string): boolean {
   return t.includes(q);
 }
 
+function quoteIndicatesEffected(quote: string): boolean {
+  const q = quote.toLowerCase();
+  // Must indicate the action actually took effect, not just approved/authorized.
+  return (
+    q.includes('became effective') ||
+    q.includes('becomes effective') ||
+    q.includes('will become effective') ||
+    q.includes('effective on') ||
+    q.includes('effective as of') ||
+    q.includes('was effected') ||
+    q.includes('effected a reverse stock split') ||
+    q.includes('effected a stock split')
+  );
+}
+
 function isYyyyMmDd(s: string | null): boolean {
   return !!s && /^\d{4}-\d{2}-\d{2}$/.test(s);
 }
@@ -375,6 +390,11 @@ async function main() {
       // Validate quote exists
       if (!quoteExists(text, ca.quote)) {
         console.log(`  reject: quote not found for action ratio=${ca.ratio}`);
+        continue;
+      }
+      // Validate that the quote indicates the action was actually effected
+      if (!quoteIndicatesEffected(ca.quote)) {
+        console.log(`  reject: quote does not indicate action took effect ratio=${ca.ratio}`);
         continue;
       }
       // Validate ratio sanity
