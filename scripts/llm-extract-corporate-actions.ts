@@ -75,14 +75,26 @@ function isYyyyMmDd(s: string | null): boolean {
 function splitKeywordHits(text: string): { hit: string; index: number }[] {
   const t = text.toLowerCase();
   const needles = [
-    'stock split',
+    // Strong / explicit
     'reverse stock split',
     'reverse split',
+    'forward stock split',
+    'stock split',
+    'effected a',
+    'completed a',
+    'implemented a',
+    'approved a',
+    'declared a',
+    'split of our common stock',
+    'was subdivided into',
+    'was consolidated into',
+    'shares were combined into',
+    'each share was subdivided into',
+    // General
     'share consolidation',
     'share subdivision',
     'subdivision',
     'consolidation of',
-    'shares were combined',
     'split-adjusted',
     'split adjusted',
   ];
@@ -94,8 +106,31 @@ function splitKeywordHits(text: string): { hit: string; index: number }[] {
   return hits.sort((a, b) => a.index - b.index);
 }
 
+function isBoilerplateSplitAdjustment(text: string): boolean {
+  const t = text.toLowerCase();
+  return t.includes('subject to adjustment for stock splits');
+}
+
 function looksSplitRelated(text: string): boolean {
-  return splitKeywordHits(text).length > 0;
+  if (isBoilerplateSplitAdjustment(text)) return false;
+
+  // Require a strong signal, not just generic mentions.
+  const hits = splitKeywordHits(text);
+  const strongNeedles = [
+    'reverse stock split',
+    'reverse split',
+    'forward stock split',
+    'was subdivided into',
+    'was consolidated into',
+    'shares were combined into',
+    'each share was subdivided into',
+    'completed a',
+    'effected a',
+    'implemented a',
+    'approved a',
+    'declared a',
+  ];
+  return hits.some(h => strongNeedles.includes(h.hit));
 }
 
 async function extractWithOpenAI(params: {
