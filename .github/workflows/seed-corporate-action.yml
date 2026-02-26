@@ -1,0 +1,59 @@
+name: Seed Corporate Action (D1)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: 'Ticker (entity_id)'
+        required: true
+        type: string
+      action_type:
+        description: 'split | reverse_split | consolidation | subdivision'
+        required: true
+        type: string
+      ratio:
+        description: 'new_shares / old_shares (e.g. 10 for 10-for-1 split, 0.1 for 1-for-10 reverse split)'
+        required: true
+        type: string
+      effective_date:
+        description: 'YYYY-MM-DD'
+        required: true
+        type: string
+      source_url:
+        description: 'Optional source URL'
+        required: false
+        type: string
+        default: ''
+      dry_run:
+        description: 'Dry run (no D1 writes)'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Insert corporate action
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx scripts/seed-corporate-action.ts \
+            --ticker=${{ inputs.ticker }} \
+            --action_type=${{ inputs.action_type }} \
+            --ratio=${{ inputs.ratio }} \
+            --effective_date=${{ inputs.effective_date }} \
+            --source_url='${{ inputs.source_url }}'
