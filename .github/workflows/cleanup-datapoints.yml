@@ -1,0 +1,47 @@
+name: Cleanup D1 Datapoints by Artifact
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_id:
+        description: 'Artifact ID to clean'
+        required: true
+        type: string
+      keep_metrics:
+        description: 'Comma-separated metrics to keep (everything else for this artifact is deleted)'
+        required: true
+        type: string
+        default: 'bitcoin_holdings_btc,basic_shares'
+      dry_run:
+        description: 'Dry run'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run cleanup
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx scripts/cleanup-datapoints-by-artifact.ts \
+            --artifact=${{ inputs.artifact_id }} \
+            --keep=${{ inputs.keep_metrics }}
