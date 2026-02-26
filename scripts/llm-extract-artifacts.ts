@@ -89,6 +89,19 @@ function quoteExists(text: string, quote: string): boolean {
   return t.includes(q);
 }
 
+function hkexSharesQuoteLooksValid(quote: string): boolean {
+  const q = quote.toLowerCase();
+  const needles = [
+    'shares in issue',
+    'issued share',
+    'issued shares',
+    'ordinary shares',
+    'weighted average',
+    'weighted-average',
+  ];
+  return needles.some(n => q.includes(n));
+}
+
 async function extractWithOpenAI(params: { ticker: string; sourceType: string; text: string; sourceUrl?: string | null; }): Promise<ExtractedPoint[]> {
   const client = new OpenAI({ apiKey: env('OPENAI_API_KEY') });
 
@@ -258,6 +271,11 @@ async function main() {
       const ok = quoteExists(text, p.quote);
       if (!ok) {
         console.log(`  reject ${p.metric}: quote not found`);
+        continue;
+      }
+
+      if (a.source_type === 'hkex_pdf' && p.metric === 'basic_shares' && !hkexSharesQuoteLooksValid(p.quote)) {
+        console.log('  reject basic_shares: quote lacks shares-in-issue keywords (hkex)');
         continue;
       }
 
