@@ -204,7 +204,7 @@ async function main() {
   const d1 = D1Client.fromEnv();
   const r2 = makeR2Client();
 
-  const limit = Math.max(1, Math.min(50, parseInt(process.env.LIMIT || '10', 10) || 10));
+  const limit = Math.max(1, Math.min(500, parseInt(process.env.LIMIT || '10', 10) || 10));
   const force = process.env.FORCE === 'true';
   const dryRun = process.env.DRY_RUN === 'true';
 
