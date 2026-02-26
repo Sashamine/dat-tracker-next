@@ -72,7 +72,7 @@ function isYyyyMmDd(s: string | null): boolean {
   return !!s && /^\d{4}-\d{2}-\d{2}$/.test(s);
 }
 
-function looksSplitRelated(text: string): boolean {
+function splitKeywordHits(text: string): { hit: string; index: number }[] {
   const t = text.toLowerCase();
   const needles = [
     'stock split',
@@ -86,7 +86,16 @@ function looksSplitRelated(text: string): boolean {
     'split-adjusted',
     'split adjusted',
   ];
-  return needles.some(n => t.includes(n));
+  const hits: { hit: string; index: number }[] = [];
+  for (const n of needles) {
+    const idx = t.indexOf(n);
+    if (idx >= 0) hits.push({ hit: n, index: idx });
+  }
+  return hits.sort((a, b) => a.index - b.index);
+}
+
+function looksSplitRelated(text: string): boolean {
+  return splitKeywordHits(text).length > 0;
 }
 
 async function extractWithOpenAI(params: {
@@ -261,7 +270,19 @@ async function main() {
     }
 
     candidates += 1;
+    const hits = splitKeywordHits(text).slice(0, 3);
+    if (hits.length) {
+      const start = Math.max(0, hits[0].index - 120);
+      const end = Math.min(text.length, hits[0].index + 240);
+      const snippet = text.slice(start, end).replace(/\s+/g, ' ').trim();
+      console.log(`  candidate keywords=${hits.map(h => h.hit).join(', ')} snippet="${snippet}"`);
+    }
+
     const extracted = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
+    if (!extracted.length) {
+      console.log('  note: LLM returned 0 actions');
+      continue;
+    }
 
     for (const ca of extracted) {
       // Validate quote exists
