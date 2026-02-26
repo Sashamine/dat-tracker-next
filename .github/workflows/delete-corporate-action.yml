@@ -1,0 +1,38 @@
+name: Delete Corporate Action (D1)
+
+on:
+  workflow_dispatch:
+    inputs:
+      action_id:
+        description: 'action_id (UUID)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Delete corporate action
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx scripts/delete-corporate-action.ts \
+            --action_id=${{ inputs.action_id }}
