@@ -75,24 +75,19 @@ function isYyyyMmDd(s: string | null): boolean {
 function splitKeywordHits(text: string): { hit: string; index: number }[] {
   const t = text.toLowerCase();
   const needles = [
-    // Strong / explicit
+    // Explicit split language
     'reverse stock split',
     'reverse split',
     'forward stock split',
     'stock split',
-    'effected a',
-    'completed a',
-    'implemented a',
-    'approved a',
-    'declared a',
     'split of our common stock',
     'was subdivided into',
     'was consolidated into',
     'shares were combined into',
     'each share was subdivided into',
-    // General
     'share consolidation',
     'share subdivision',
+    // Weak indicators (still useful for snippet logging, but not enough alone)
     'subdivision',
     'consolidation of',
     'split-adjusted',
@@ -120,15 +115,14 @@ function looksSplitRelated(text: string): boolean {
     'reverse stock split',
     'reverse split',
     'forward stock split',
+    'stock split',
+    'split of our common stock',
+    'share consolidation',
+    'share subdivision',
     'was subdivided into',
     'was consolidated into',
     'shares were combined into',
     'each share was subdivided into',
-    'completed a',
-    'effected a',
-    'implemented a',
-    'approved a',
-    'declared a',
   ];
   return hits.some(h => strongNeedles.includes(h.hit));
 }
