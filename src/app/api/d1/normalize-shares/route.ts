@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
-import { normalizeShares, normalizePrice } from '@/lib/corporate-actions';
+import { normalizeShares, normalizePrice } from '@/lib/corporate-actions.ts';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
