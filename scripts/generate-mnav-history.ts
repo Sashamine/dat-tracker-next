@@ -15,6 +15,10 @@ import { HOLDINGS_HISTORY, HoldingsSnapshot } from "../src/lib/data/holdings-his
 // Import current company data for debt fallback
 import { allCompanies } from "../src/lib/data/companies";
 
+// Corporate actions (splits/reverse splits) normalization
+import { normalizePrice, normalizeShares } from "../src/lib/corporate-actions";
+import { getCorporateActions } from "../src/lib/d1";
+
 // Build debt and currency lookup from companies.ts
 const companyDataLookup: Record<string, { totalDebt: number; preferredEquity: number; cash: number; currency: string }> = {};
 for (const company of allCompanies) {
@@ -467,6 +471,20 @@ function median(arr: number[]): number {
   return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
+const corporateActionsCache: Record<string, any[]> = {};
+
+async function getActionsForTicker(ticker: string) {
+  if (corporateActionsCache[ticker]) return corporateActionsCache[ticker];
+  try {
+    const actions = await getCorporateActions({ entityId: ticker });
+    corporateActionsCache[ticker] = actions;
+    return actions;
+  } catch {
+    corporateActionsCache[ticker] = [];
+    return [];
+  }
+}
+
 // Main function
 async function generateHistoricalMNAV(): Promise<void> {
   console.log("Generating Historical mNAV Data...\n");
@@ -518,8 +536,14 @@ async function generateHistoricalMNAV(): Promise<void> {
       const companyInfo = companyDataLookup[ticker] || { totalDebt: 0, preferredEquity: 0, cash: 0, currency: "USD" };
       const fxRate = FX_TO_USD[companyInfo.currency] || 1.0;
 
+      // Normalize shares/price to current basis (split-proof).
+      const actions = await getActionsForTicker(ticker);
+      const sharesOutstanding = normalizeShares({ value: holdings.sharesOutstanding, asOf: targetDate, actions, basis: 'current' });
+      const stockPriceNormalized = normalizePrice({ value: stockPrice, asOf: targetDate, actions, basis: 'current' });
+
       // Use stored market cap or calculate from price × shares, then convert to USD
-      const marketCapLocal = holdings.marketCap || (stockPrice * holdings.sharesOutstanding);
+      // Note: market cap is invariant under the normalization when using normalized pairs.
+      const marketCapLocal = holdings.marketCap || (stockPriceNormalized * sharesOutstanding);
       const marketCap = marketCapLocal * fxRate;
 
       // Use debt/cash from holdings-history for EV-based mNAV
@@ -551,9 +575,9 @@ async function generateHistoricalMNAV(): Promise<void> {
         enterpriseValue,
         cryptoNav,
         holdings: holdings.holdings,
-        stockPrice,
+        stockPrice: stockPriceNormalized,
         cryptoPrice,
-        sharesOutstanding: holdings.sharesOutstanding,
+        sharesOutstanding,
         totalDebt,
         cash,
       });
