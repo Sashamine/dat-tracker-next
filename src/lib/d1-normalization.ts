@@ -1,5 +1,19 @@
-import { getCorporateActions, type LatestDatapointRow } from '@/lib/d1';
+import { D1Client, type LatestDatapointRow } from '@/lib/d1';
 import { normalizeShares, normalizePrice } from '@/lib/corporate-actions';
+
+type CorporateActionRow = { effective_date: string; ratio: number };
+
+async function getCorporateActionsForTicker(ticker: string): Promise<CorporateActionRow[]> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<CorporateActionRow>(
+    `SELECT effective_date, ratio
+     FROM corporate_actions
+     WHERE entity_id = ?
+     ORDER BY effective_date ASC, created_at ASC;`,
+    [ticker.toUpperCase()]
+  );
+  return out.results;
+}
 
 /**
  * Normalize latest_datapoints rows into a consistent split-proof basis.
@@ -12,7 +26,7 @@ export async function normalizeLatestRowsForTicker(
   rows: LatestDatapointRow[],
   basis: 'current' | 'historical' = 'current'
 ): Promise<LatestDatapointRow[]> {
-  const actions = await getCorporateActions(ticker);
+  const actions = await getCorporateActionsForTicker(ticker);
 
   return rows.map(r => {
     if (r.metric !== 'basic_shares') return r;
@@ -33,6 +47,6 @@ export async function normalizePriceForTicker(
   asOf: string,
   basis: 'current' | 'historical' = 'current'
 ): Promise<number> {
-  const actions = await getCorporateActions(ticker);
+  const actions = await getCorporateActionsForTicker(ticker);
   return normalizePrice(price, actions, asOf, basis);
 }
