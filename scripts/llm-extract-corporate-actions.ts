@@ -103,13 +103,34 @@ function splitKeywordHits(text: string): { hit: string; index: number }[] {
 
 function isBoilerplateSplitAdjustment(text: string): boolean {
   const t = text.toLowerCase();
-  return t.includes('subject to adjustment for stock splits');
+  const boiler = [
+    'subject to adjustment for stock splits',
+    'adjusted for stock splits',
+    'retroactively adjusted for stock splits',
+    'adjustment for stock splits',
+    'stock splits, stock dividends, recapitalizations',
+  ];
+  return boiler.some(b => t.includes(b));
+}
+
+function hasSplitRatioPattern(text: string): boolean {
+  // Look for ratio/structure patterns commonly used in split disclosures.
+  const t = text.toLowerCase();
+  const patterns: RegExp[] = [
+    /\b\d+\s*[- ]?for\s*[- ]?\d+\b/i, // 10-for-1
+    /\b\d+\s*:\s*\d+\b/i, // 1:10
+    /\b1\s*[- ]?for\s*[- ]?\d+\b/i, // 1-for-25
+    /\bone\s*\(\s*1\s*\)\s*[- ]?for\s*[- ]?\w+/i,
+    /\bevery\s+\w+\s*\(\s*\d+\s*\)\s+shares?.{0,60}one\s*\(\s*1\s*\)\s+share/i,
+    /\bon the basis of\b.{0,80}\bpost-?reverse\b/i,
+  ];
+  return patterns.some(re => re.test(t));
 }
 
 function looksSplitRelated(text: string): boolean {
   if (isBoilerplateSplitAdjustment(text)) return false;
 
-  // Require a strong signal, not just generic mentions.
+  // Require explicit split language AND a ratio pattern.
   const hits = splitKeywordHits(text);
   const strongNeedles = [
     'reverse stock split',
@@ -124,7 +145,11 @@ function looksSplitRelated(text: string): boolean {
     'shares were combined into',
     'each share was subdivided into',
   ];
-  return hits.some(h => strongNeedles.includes(h.hit));
+
+  const strongHit = hits.some(h => strongNeedles.includes(h.hit));
+  if (!strongHit) return false;
+  if (!hasSplitRatioPattern(text)) return false;
+  return true;
 }
 
 async function extractWithOpenAI(params: {
@@ -313,7 +338,15 @@ async function main() {
 
     const extracted = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
     if (!extracted.length) {
-      console.log(`  note: LLM returned 0 actions artifact_id=${a.artifact_id} ticker=${ticker} key=${a.r2_key}`);
+      // Re-log snippet context to diagnose why the model returned no actions
+      if (hits.length) {
+        const start = Math.max(0, hits[0].index - 120);
+        const end = Math.min(text.length, hits[0].index + 240);
+        const snippet = text.slice(start, end).replace(/\s+/g, ' ').trim();
+        console.log(`  note: LLM returned 0 actions artifact_id=${a.artifact_id} ticker=${ticker} key=${a.r2_key} snippet="${snippet}"`);
+      } else {
+        console.log(`  note: LLM returned 0 actions artifact_id=${a.artifact_id} ticker=${ticker} key=${a.r2_key}`);
+      }
       continue;
     }
 
