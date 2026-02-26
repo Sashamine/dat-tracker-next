@@ -212,6 +212,17 @@ async function main() {
 
     const points = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
 
+    // Defensive: ensure artifact exists before writing datapoints (FK constraint)
+    const artifactOk = await d1.query<{ ok: number }>(
+      `SELECT 1 as ok FROM artifacts WHERE artifact_id = ? LIMIT 1;`,
+      [a.artifact_id]
+    );
+    if (!artifactOk.results.length) {
+      console.log(`  skip: artifact_id not found in D1 (FK would fail): ${a.artifact_id}`);
+      skipped += 1;
+      continue;
+    }
+
     for (const p of points) {
       const ok = quoteExists(text, p.quote);
       if (!ok) {
@@ -219,27 +230,32 @@ async function main() {
         continue;
       }
 
-      await d1.query(
-        `INSERT OR IGNORE INTO datapoints (
-           datapoint_id, entity_id, metric, value, unit, scale,
-           as_of, reported_at, artifact_id, run_id,
-           method, confidence, flags_json, created_at
-         ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, 'llm_pdf_extract', 1.0, NULL, ?);`,
-        [
-          crypto.randomUUID(),
-          ticker,
-          p.metric,
-          p.value,
-          p.unit,
-          p.as_of || null,
-          a.fetched_at,
-          a.artifact_id,
-          runId,
-          new Date().toISOString(),
-        ]
-      );
-      inserted += 1;
-      console.log(`  inserted ${p.metric}=${p.value} ${p.unit}`);
+      try {
+        await d1.query(
+          `INSERT OR IGNORE INTO datapoints (
+             datapoint_id, entity_id, metric, value, unit, scale,
+             as_of, reported_at, artifact_id, run_id,
+             method, confidence, flags_json, created_at
+           ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, 'llm_pdf_extract', 1.0, NULL, ?);`,
+          [
+            crypto.randomUUID(),
+            ticker,
+            p.metric,
+            p.value,
+            p.unit,
+            p.as_of || null,
+            a.fetched_at,
+            a.artifact_id,
+            runId,
+            new Date().toISOString(),
+          ]
+        );
+        inserted += 1;
+        console.log(`  inserted ${p.metric}=${p.value} ${p.unit}`);
+      } catch (e: any) {
+        console.log(`  datapoint insert failed (${p.metric}) artifact_id=${a.artifact_id}: ${e?.message || String(e)}`);
+        continue;
+      }
     }
   }
 
