@@ -18,6 +18,7 @@ const require = createRequire(import.meta.url);
 const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
 
 import { D1Client } from '../src/lib/d1';
+import { hkexBasicSharesAccept } from '../src/lib/llm-extract-artifacts-gates';
 
 const METRICS = [
   'bitcoin_holdings_btc',
@@ -89,24 +90,6 @@ function quoteExists(text: string, quote: string): boolean {
   return t.includes(q);
 }
 
-function hkexSharesQuoteLooksValid(quote: string): boolean {
-  const q = quote.toLowerCase();
-  const needles = [
-    'shares in issue',
-    'issued share',
-    'issued shares',
-    'ordinary shares',
-    'weighted average',
-    'weighted-average',
-    'number of units in issue',
-  ];
-
-  // HKEX tables often annotate the "shares in issue" line as "(unaudited)".
-  // If value sanity check passes, allow this phrasing.
-  if (q.includes('unaudited')) return true;
-
-  return needles.some(n => q.includes(n));
-}
 
 async function extractWithOpenAI(params: { ticker: string; sourceType: string; text: string; sourceUrl?: string | null; }): Promise<ExtractedPoint[]> {
   const client = new OpenAI({ apiKey: env('OPENAI_API_KEY') });
@@ -280,15 +263,17 @@ async function main() {
         continue;
       }
 
-      if (a.source_type === 'hkex_pdf' && p.metric === 'basic_shares' && p.value < 100_000_000) {
-        console.log(`  reject basic_shares: value too small for hkex (${p.value})`);
-        continue;
-      }
-
-      if (a.source_type === 'hkex_pdf' && p.metric === 'basic_shares' && !hkexSharesQuoteLooksValid(p.quote)) {
-        const q = (p.quote || '').replace(/\s+/g, ' ').trim();
-        console.log(`  reject basic_shares: quote lacks shares-in-issue keywords (hkex). quote="${q.slice(0, 180)}"`);
-        continue;
+      if (a.source_type === 'hkex_pdf' && p.metric === 'basic_shares') {
+        const gate = hkexBasicSharesAccept({ value: p.value, quote: p.quote });
+        if (!gate.ok) {
+          const q = (p.quote || '').replace(/\s+/g, ' ').trim();
+          if (gate.reason?.includes('quote lacks')) {
+            console.log(`  reject basic_shares: ${gate.reason} (hkex). quote="${q.slice(0, 180)}"`);
+          } else {
+            console.log(`  reject basic_shares: ${gate.reason}`);
+          }
+          continue;
+        }
       }
 
       if (dryRun) {
