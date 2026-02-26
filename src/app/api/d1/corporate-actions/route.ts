@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCorporateActions } from '@/lib/d1';
+import { D1Client } from '@/lib/d1';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -22,8 +22,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const actions = await getCorporateActions(ticker);
-    return NextResponse.json({ success: true, ticker, actions });
+    const d1 = D1Client.fromEnv();
+    const out = await d1.query(
+      `SELECT
+         action_id, entity_id, action_type, ratio, effective_date,
+         source_artifact_id, source_url, quote, confidence, created_at
+       FROM corporate_actions
+       WHERE entity_id = ?
+       ORDER BY effective_date ASC, created_at ASC;`,
+      [ticker]
+    );
+    return NextResponse.json({ success: true, ticker, actions: out.results });
   } catch (err) {
     return NextResponse.json(
       { success: false, error: err instanceof Error ? err.message : String(err) },

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCorporateActions } from '@/lib/d1';
+import { D1Client } from '@/lib/d1';
 import { normalizeShares, normalizePrice } from '@/lib/corporate-actions';
 
 export async function GET(request: NextRequest) {
@@ -37,7 +37,16 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const actions = await getCorporateActions(ticker);
+    const d1 = D1Client.fromEnv();
+    const out = await d1.query(
+      `SELECT action_id, entity_id, action_type, ratio, effective_date, source_artifact_id, source_url, quote, confidence, created_at
+       FROM corporate_actions
+       WHERE entity_id = ?
+       ORDER BY effective_date ASC, created_at ASC;`,
+      [ticker]
+    );
+    const actions = out.results as Array<{ effective_date: string; ratio: number }>;
+
     const normalized = kind === 'shares'
       ? normalizeShares(value, actions, asOf, basis)
       : normalizePrice(value, actions, asOf, basis);
