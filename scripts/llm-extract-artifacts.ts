@@ -275,7 +275,8 @@ async function main() {
       }
 
       if (a.source_type === 'hkex_pdf' && p.metric === 'basic_shares' && !hkexSharesQuoteLooksValid(p.quote)) {
-        console.log('  reject basic_shares: quote lacks shares-in-issue keywords (hkex)');
+        const q = (p.quote || '').replace(/\s+/g, ' ').trim();
+        console.log(`  reject basic_shares: quote lacks shares-in-issue keywords (hkex). quote="${q.slice(0, 180)}"`);
         continue;
       }
 
