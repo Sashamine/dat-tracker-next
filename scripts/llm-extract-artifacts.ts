@@ -15,7 +15,7 @@ import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import OpenAI from 'openai';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.cjs');
+const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
 
 import { D1Client } from '../src/lib/d1';
 
