@@ -8,10 +8,15 @@ on:
         required: true
         type: string
       keep_metrics:
-        description: 'Comma-separated metrics to keep (everything else for this artifact is deleted)'
-        required: true
+        description: 'Comma-separated metrics to keep (everything else for this artifact is deleted). Ignored if delete_metrics is set.'
+        required: false
         type: string
         default: 'bitcoin_holdings_btc,basic_shares'
+      delete_metrics:
+        description: 'Comma-separated metrics to delete (surgical). If set, keep_metrics is ignored.'
+        required: false
+        type: string
+        default: ''
       dry_run:
         description: 'Dry run'
         required: false
@@ -44,4 +49,5 @@ jobs:
         run: |
           npx tsx scripts/cleanup-datapoints-by-artifact.ts \
             --artifact=${{ inputs.artifact_id }} \
-            --keep=${{ inputs.keep_metrics }}
+            --keep=${{ inputs.keep_metrics }} \
+            --delete_metrics=${{ inputs.delete_metrics }}
