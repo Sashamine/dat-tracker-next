@@ -304,12 +304,16 @@ async function main() {
       const start = Math.max(0, hits[0].index - 120);
       const end = Math.min(text.length, hits[0].index + 240);
       const snippet = text.slice(start, end).replace(/\s+/g, ' ').trim();
-      console.log(`  candidate keywords=${hits.map(h => h.hit).join(', ')} snippet="${snippet}"`);
+      console.log(
+        `  candidate artifact_id=${a.artifact_id} ticker=${ticker} key=${a.r2_key} keywords=${hits
+          .map(h => h.hit)
+          .join(', ')} snippet="${snippet}"`
+      );
     }
 
     const extracted = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
     if (!extracted.length) {
-      console.log('  note: LLM returned 0 actions');
+      console.log(`  note: LLM returned 0 actions artifact_id=${a.artifact_id} ticker=${ticker} key=${a.r2_key}`);
       continue;
     }
 
