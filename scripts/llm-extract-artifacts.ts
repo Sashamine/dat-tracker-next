@@ -162,6 +162,8 @@ async function main() {
   const r2 = makeR2Client();
 
   const limit = Math.max(1, Math.min(50, parseInt(process.env.LIMIT || '10', 10) || 10));
+  const force = process.env.FORCE === 'true';
+  const dryRun = process.env.DRY_RUN === 'true';
 
   const artifacts = await d1.query<ArtifactRow>(
     `SELECT artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key, ticker, accession
@@ -178,11 +180,13 @@ async function main() {
   const startedAt = new Date().toISOString();
 
   // Ensure runs row exists (datapoints.run_id has FK to runs.run_id)
-  await d1.query(
-    `INSERT OR IGNORE INTO runs (run_id, started_at, ended_at, trigger, code_sha, notes)
-     VALUES (?, ?, NULL, ?, ?, ?);`,
-    [runId, startedAt, 'llm_extract_artifacts', process.env.GITHUB_SHA || null, null]
-  );
+  if (!dryRun) {
+    await d1.query(
+      `INSERT OR IGNORE INTO runs (run_id, started_at, ended_at, trigger, code_sha, notes)
+       VALUES (?, ?, NULL, ?, ?, ?);`,
+      [runId, startedAt, 'llm_extract_artifacts', process.env.GITHUB_SHA || null, null]
+    );
+  }
 
   let inserted = 0;
   let skipped = 0;
@@ -196,7 +200,7 @@ async function main() {
       `SELECT COUNT(1) as cnt FROM datapoints WHERE artifact_id = ?;`,
       [a.artifact_id]
     );
-    if ((existing.results[0]?.cnt || 0) > 0) {
+    if (!force && (existing.results[0]?.cnt || 0) > 0) {
       console.log('  skip: datapoints already exist for artifact');
       skipped += 1;
       continue;
@@ -238,20 +242,27 @@ async function main() {
     const points = Array.from(pointsByMetric.values());
 
     // Defensive: ensure artifact exists before writing datapoints (FK constraint)
-    const artifactOk = await d1.query<{ ok: number }>(
-      `SELECT 1 as ok FROM artifacts WHERE artifact_id = ? LIMIT 1;`,
-      [a.artifact_id]
-    );
-    if (!artifactOk.results.length) {
-      console.log(`  skip: artifact_id not found in D1 (FK would fail): ${a.artifact_id}`);
-      skipped += 1;
-      continue;
+    if (!dryRun) {
+      const artifactOk = await d1.query<{ ok: number }>(
+        `SELECT 1 as ok FROM artifacts WHERE artifact_id = ? LIMIT 1;`,
+        [a.artifact_id]
+      );
+      if (!artifactOk.results.length) {
+        console.log(`  skip: artifact_id not found in D1 (FK would fail): ${a.artifact_id}`);
+        skipped += 1;
+        continue;
+      }
     }
 
     for (const p of points) {
       const ok = quoteExists(text, p.quote);
       if (!ok) {
         console.log(`  reject ${p.metric}: quote not found`);
+        continue;
+      }
+
+      if (dryRun) {
+        console.log(`  [dry-run] would insert ${p.metric}=${p.value} ${p.unit} as_of=${p.as_of || ''}`);
         continue;
       }
 
