@@ -72,6 +72,23 @@ function isYyyyMmDd(s: string | null): boolean {
   return !!s && /^\d{4}-\d{2}-\d{2}$/.test(s);
 }
 
+function looksSplitRelated(text: string): boolean {
+  const t = text.toLowerCase();
+  const needles = [
+    'stock split',
+    'reverse stock split',
+    'reverse split',
+    'share consolidation',
+    'share subdivision',
+    'subdivision',
+    'consolidation of',
+    'shares were combined',
+    'split-adjusted',
+    'split adjusted',
+  ];
+  return needles.some(n => t.includes(n));
+}
+
 async function extractWithOpenAI(params: {
   ticker: string;
   sourceType: string;
@@ -183,6 +200,7 @@ async function main() {
 
   let inserted = 0;
   let skipped = 0;
+  let candidates = 0;
 
   for (const a of artifacts.results) {
     const ticker = (a.ticker || '').toUpperCase();
@@ -236,6 +254,13 @@ async function main() {
       continue;
     }
 
+    if (!looksSplitRelated(text)) {
+      console.log('  skip: no split-related keywords');
+      skipped += 1;
+      continue;
+    }
+
+    candidates += 1;
     const extracted = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
 
     for (const ca of extracted) {
@@ -288,7 +313,7 @@ async function main() {
     }
   }
 
-  console.log(`\nDone. inserted=${inserted} skipped=${skipped}`);
+  console.log(`\nDone. candidates=${candidates} inserted=${inserted} skipped=${skipped}`);
 }
 
 main().catch(err => {
