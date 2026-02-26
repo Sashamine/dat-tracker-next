@@ -188,7 +188,7 @@ async function main() {
     const obj = await r2.send(new GetObjectCommand({ Bucket: a.r2_bucket, Key: a.r2_key }));
     const buf = await streamToBuffer(obj.Body);
 
-    const pdfParse = (pdfParseImport as any)?.default || (pdfParseImport as any);
+    // pdf-parse legacy variable removed; using pdfjs-dist below
     // Extract text via pdfjs-dist directly (more reliable than pdf-parse wrappers in ESM/CI).
     const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buf) });
     const doc = await loadingTask.promise;
