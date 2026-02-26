@@ -103,6 +103,7 @@ export async function GET(request: NextRequest) {
         const contentHash = crypto.createHash('sha256').update(bytes).digest('hex');
         const r2Key = `hkex/${stockCode}/${f.docId}.pdf`;
 
+        let artifactId: string | null = null;
         if (!dryRun) {
           const ing = await ingestArtifactToR2AndD1({
             sourceType: 'hkex_pdf',
@@ -114,11 +115,19 @@ export async function GET(request: NextRequest) {
             contentType: 'application/pdf',
             fetchedAt: nowIso(),
           });
+          artifactId = ing.artifactId;
           if (ing.inserted) artifactsInserted += 1;
           else artifactsIgnored += 1;
+        } else {
+          // best-effort lookup by r2_key
+          const existing = await d1.query<{ artifact_id: string }>(
+            `SELECT artifact_id FROM artifacts WHERE r2_key = ? LIMIT 1;`,
+            [r2Key]
+          );
+          artifactId = existing.results[0]?.artifact_id || null;
         }
 
-        perTicker.push({ url: f.url, docId: f.docId, ok: true, r2Key, contentHash, size: bytes.byteLength, date: f.date, title: f.title });
+        perTicker.push({ url: f.url, docId: f.docId, artifactId, ok: true, r2Key, contentHash, size: bytes.byteLength, date: f.date, title: f.title });
       }
 
       summary.push({ ticker, stockCode, discovery, filingsAttempted: filings.length, results: perTicker });
