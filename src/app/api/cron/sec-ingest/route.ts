@@ -7,9 +7,16 @@ export const maxDuration = 300;
 
 function requireAuth(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization') || '';
-  const expected = process.env.DAT_MONITOR_AUTH;
-  if (!expected) return false;
-  return authHeader === `Bearer ${expected}`;
+
+  // Prefer CRON_SECRET (already used across cron/debug endpoints)
+  const cronSecret = process.env.CRON_SECRET;
+  if (cronSecret && authHeader === `Bearer ${cronSecret}`) return true;
+
+  // Optional secondary auth for manual/admin usage
+  const monitorAuth = process.env.DAT_MONITOR_AUTH;
+  if (monitorAuth && authHeader === `Bearer ${monitorAuth}`) return true;
+
+  return false;
 }
 
 type SECSubmissions = {
