@@ -2,8 +2,8 @@
 /**
  * LLM Extraction: Corporate Actions (splits / reverse splits)
  *
- * - Fetch artifacts from D1 (hkex_pdf, sedar_filing)
- * - Extract PDF text
+ * - Fetch artifacts from D1 (hkex_pdf, sedar_filing, sec_filing)
+ * - Extract PDF text (for PDFs) or decode text/HTML
  * - Use OpenAI to extract corporate action events
  * - Validate quote exists + simple numeric sanity checks
  * - Insert into D1 corporate_actions
@@ -159,8 +159,7 @@ async function main() {
   const counts = await d1.query<{ source_type: string; cnt: number }>(
     `SELECT source_type, COUNT(1) as cnt
      FROM artifacts
-     WHERE source_type IN ('hkex_pdf', 'sedar_filing')
-       AND r2_key LIKE '%.pdf'
+     WHERE source_type IN ('hkex_pdf', 'sedar_filing', 'sec_filing')
        AND ticker IS NOT NULL
      GROUP BY source_type
      ORDER BY cnt DESC;`
@@ -170,10 +169,13 @@ async function main() {
   const artifacts = await d1.query<ArtifactRow>(
     `SELECT artifact_id, source_type, source_url, fetched_at, r2_bucket, r2_key, ticker
      FROM artifacts
-     WHERE source_type IN ('hkex_pdf', 'sedar_filing')
-       AND r2_key LIKE '%.pdf'
+     WHERE source_type IN ('hkex_pdf', 'sedar_filing', 'sec_filing')
        AND ticker IS NOT NULL
        AND (? = '' OR UPPER(ticker) = ?)
+       AND (
+         (source_type IN ('hkex_pdf','sedar_filing') AND r2_key LIKE '%.pdf')
+         OR (source_type = 'sec_filing' AND (r2_key LIKE '%.html' OR r2_key LIKE '%.htm' OR r2_key LIKE '%.txt'))
+       )
      ORDER BY fetched_at DESC
      LIMIT ?;`,
     [tickerFilter, tickerFilter, limit]
@@ -200,24 +202,31 @@ async function main() {
     const obj = await r2.send(new GetObjectCommand({ Bucket: a.r2_bucket, Key: a.r2_key }));
     const buf = await streamToBuffer(obj.Body);
 
-    const loadingTask = pdfjsLib.getDocument({
-      data: new Uint8Array(buf),
-      // Reduce pdf.js warnings / improve text extraction quality
-      // Note: these are best-effort; if assets aren't present, pdf.js will still run.
-      cMapUrl: new URL('pdfjs-dist/cmaps/', import.meta.url).toString(),
-      cMapPacked: true,
-      standardFontDataUrl: new URL('pdfjs-dist/standard_fonts/', import.meta.url).toString(),
-    });
-    const doc = await loadingTask.promise;
-
     let text = '';
-    for (let pageNum = 1; pageNum <= doc.numPages; pageNum++) {
-      const page = await doc.getPage(pageNum);
-      const content = await page.getTextContent();
-      const pageText = (content.items || [])
-        .map((it: any) => (it?.str ? String(it.str) : ''))
-        .join(' ');
-      text += `\n\n[page ${pageNum}]\n` + pageText;
+
+    if (a.r2_key.toLowerCase().endsWith('.pdf')) {
+      const loadingTask = pdfjsLib.getDocument({
+        data: new Uint8Array(buf),
+        // Reduce pdf.js warnings / improve text extraction quality
+        // Note: these are best-effort; if assets aren't present, pdf.js will still run.
+        cMapUrl: new URL('pdfjs-dist/cmaps/', import.meta.url).toString(),
+        cMapPacked: true,
+        standardFontDataUrl: new URL('pdfjs-dist/standard_fonts/', import.meta.url).toString(),
+      });
+      const doc = await loadingTask.promise;
+
+      for (let pageNum = 1; pageNum <= doc.numPages; pageNum++) {
+        const page = await doc.getPage(pageNum);
+        const content = await page.getTextContent();
+        const pageText = (content.items || [])
+          .map((it: any) => (it?.str ? String(it.str) : ''))
+          .join(' ');
+        text += `\n\n[page ${pageNum}]\n` + pageText;
+      }
+    } else {
+      // SEC filings are typically stored as HTML or plain text.
+      // Decode as UTF-8 (lossy) and let the LLM handle markup.
+      text = new TextDecoder('utf-8', { fatal: false }).decode(buf);
     }
 
     text = text.replace(/\u0000/g, ' ').trim();
