@@ -27,6 +27,13 @@ const METRICS = [
   'basic_shares',
 ] as const;
 
+const METRICS_BY_SOURCE: Record<string, Metric[]> = {
+  // HKEX filings: keep scope tight for v1
+  hkex_pdf: ['bitcoin_holdings_btc', 'basic_shares'],
+  // SEDAR filings: allow a broader pack (can tighten later)
+  sedar_filing: ['bitcoin_holdings_btc', 'bitcoin_holdings_usd', 'cash_usd', 'debt_usd', 'basic_shares'],
+};
+
 type Metric = (typeof METRICS)[number];
 
 type ArtifactRow = {
@@ -93,7 +100,7 @@ For each datapoint, include an exact supporting QUOTE copied verbatim from the t
     ticker: params.ticker,
     sourceType: params.sourceType,
     sourceUrl: params.sourceUrl || null,
-    metricsAllowed: METRICS,
+    metricsAllowed: (METRICS_BY_SOURCE[params.sourceType] || METRICS),
     instructions: [
       'Extract ONLY if explicitly stated in the text.',
       'Return values as numbers (no commas).',
@@ -146,7 +153,8 @@ For each datapoint, include an exact supporting QUOTE copied verbatim from the t
 
   const content = resp.choices[0]?.message?.content || '{"points":[]}';
   const json = JSON.parse(content);
-  return json.points as ExtractedPoint[];
+  const allowed = new Set<Metric>(METRICS_BY_SOURCE[params.sourceType] || METRICS);
+  return (json.points as ExtractedPoint[]).filter(p => allowed.has(p.metric));
 }
 
 async function main() {
@@ -219,7 +227,15 @@ async function main() {
       continue;
     }
 
-    const points = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
+    const rawPoints = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
+
+    // Deduplicate: keep at most one point per metric per artifact.
+    // Prefer points with a valid quote match; otherwise keep first occurrence.
+    const pointsByMetric = new Map<string, ExtractedPoint>();
+    for (const p of rawPoints) {
+      if (!pointsByMetric.has(p.metric)) pointsByMetric.set(p.metric, p);
+    }
+    const points = Array.from(pointsByMetric.values());
 
     // Defensive: ensure artifact exists before writing datapoints (FK constraint)
     const artifactOk = await d1.query<{ ok: number }>(
