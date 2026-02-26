@@ -1,0 +1,56 @@
+name: LLM Extract Corporate Actions (OpenAI)
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Max artifacts to scan'
+        required: false
+        type: number
+        default: 20
+      ticker:
+        description: 'Optional single ticker filter (e.g. MSTR)'
+        required: false
+        type: string
+        default: ''
+      dry_run:
+        description: 'Dry run (no D1 writes)'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Run extractor
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          LIMIT: ${{ inputs.limit }}
+          TICKER: ${{ inputs.ticker }}
+
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ vars.R2_ENDPOINT }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_REGION: ${{ vars.R2_REGION }}
+
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx scripts/llm-extract-corporate-actions.ts
