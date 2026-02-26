@@ -382,8 +382,12 @@ async function main() {
         console.log(`  reject: invalid ratio ${ca.ratio}`);
         continue;
       }
-      // Validate effective_date if present
-      if (ca.effective_date && !isYyyyMmDd(ca.effective_date)) {
+      // Require effective_date for inserts (avoid dedupe key drift from fallback-to-fetched_at)
+      if (!ca.effective_date) {
+        console.log(`  reject: missing effective_date for action ratio=${ca.ratio}`);
+        continue;
+      }
+      if (!isYyyyMmDd(ca.effective_date)) {
         console.log(`  reject: invalid effective_date ${ca.effective_date}`);
         continue;
       }
@@ -407,8 +411,7 @@ async function main() {
           ticker,
           ca.action_type,
           ca.ratio,
-          // If no effective date, anchor to fetched_at date (better than null; required column)
-          (ca.effective_date || a.fetched_at.slice(0, 10)),
+          ca.effective_date,
           a.artifact_id,
           a.source_url,
           ca.quote,
