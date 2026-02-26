@@ -153,15 +153,30 @@ async function main() {
   const force = process.env.FORCE === 'true';
   const dryRun = process.env.DRY_RUN === 'true';
 
+  const tickerFilter = (process.env.TICKER || '').trim().toUpperCase();
+
+  // Debug counts
+  const counts = await d1.query<{ source_type: string; cnt: number }>(
+    `SELECT source_type, COUNT(1) as cnt
+     FROM artifacts
+     WHERE source_type IN ('hkex_pdf', 'sedar_filing')
+       AND r2_key LIKE '%.pdf'
+       AND ticker IS NOT NULL
+     GROUP BY source_type
+     ORDER BY cnt DESC;`
+  );
+  console.log('Artifact counts:', counts.results);
+
   const artifacts = await d1.query<ArtifactRow>(
     `SELECT artifact_id, source_type, source_url, fetched_at, r2_bucket, r2_key, ticker
      FROM artifacts
      WHERE source_type IN ('hkex_pdf', 'sedar_filing')
        AND r2_key LIKE '%.pdf'
        AND ticker IS NOT NULL
+       AND (? = '' OR UPPER(ticker) = ?)
      ORDER BY fetched_at DESC
      LIMIT ?;`,
-    [limit]
+    [tickerFilter, tickerFilter, limit]
   );
 
   let inserted = 0;
@@ -185,7 +200,14 @@ async function main() {
     const obj = await r2.send(new GetObjectCommand({ Bucket: a.r2_bucket, Key: a.r2_key }));
     const buf = await streamToBuffer(obj.Body);
 
-    const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buf) });
+    const loadingTask = pdfjsLib.getDocument({
+      data: new Uint8Array(buf),
+      // Reduce pdf.js warnings / improve text extraction quality
+      // Note: these are best-effort; if assets aren't present, pdf.js will still run.
+      cMapUrl: new URL('pdfjs-dist/cmaps/', import.meta.url).toString(),
+      cMapPacked: true,
+      standardFontDataUrl: new URL('pdfjs-dist/standard_fonts/', import.meta.url).toString(),
+    });
     const doc = await loadingTask.promise;
 
     let text = '';
