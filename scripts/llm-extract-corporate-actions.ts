@@ -17,6 +17,7 @@ const require = createRequire(import.meta.url);
 const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
 
 import { D1Client } from '../src/lib/d1';
+import { cleanHtmlText } from '../src/lib/sec/content-extractor';
 
 type ArtifactRow = {
   artifact_id: string;
@@ -150,6 +151,13 @@ function looksSplitRelated(text: string): boolean {
   if (!strongHit) return false;
   if (!hasSplitRatioPattern(text)) return false;
   return true;
+}
+
+function centeredChunk(text: string, centerIndex: number, radius = 8000): string {
+  if (centerIndex < 0) return text.slice(0, Math.min(text.length, radius * 2));
+  const start = Math.max(0, centerIndex - radius);
+  const end = Math.min(text.length, centerIndex + radius);
+  return text.slice(start, end);
 }
 
 async function extractWithOpenAI(params: {
@@ -312,9 +320,14 @@ async function main() {
 
     text = text.replace(/\u0000/g, ' ').trim();
     if (!text) {
-      console.log('  skip: empty pdf text');
+      console.log('  skip: empty extracted text');
       skipped += 1;
       continue;
+    }
+
+    // For SEC HTML artifacts, normalize to plain-ish text before detection/LLM.
+    if (a.r2_key.toLowerCase().endsWith('.html') || a.r2_key.toLowerCase().endsWith('.htm')) {
+      text = cleanHtmlText(text);
     }
 
     if (!looksSplitRelated(text)) {
@@ -336,7 +349,15 @@ async function main() {
       );
     }
 
-    const extracted = await extractWithOpenAI({ ticker, sourceType: a.source_type, text, sourceUrl: a.source_url });
+    // Use a centered chunk around the first keyword hit to reduce noise and ensure the ratio sentence is included.
+    const llmText = hits.length ? centeredChunk(text, hits[0].index, 12000) : text;
+
+    const extracted = await extractWithOpenAI({
+      ticker,
+      sourceType: a.source_type,
+      text: llmText,
+      sourceUrl: a.source_url,
+    });
     if (!extracted.length) {
       // Re-log snippet context to diagnose why the model returned no actions
       if (hits.length) {
