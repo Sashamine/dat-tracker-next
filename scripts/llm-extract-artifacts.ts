@@ -15,7 +15,7 @@ import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import OpenAI from 'openai';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const pdfParseImport = require('pdf-parse');
+const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.cjs');
 
 import { D1Client } from '../src/lib/d1';
 
@@ -189,11 +189,21 @@ async function main() {
     const buf = await streamToBuffer(obj.Body);
 
     const pdfParse = (pdfParseImport as any)?.default || (pdfParseImport as any);
-    // pdf-parse v2+ exports a PDFParse class. Use it to load + getText.
-    const parser = new pdfParseImport.PDFParse({ verbosity: 0 });
-    await parser.load({ data: new Uint8Array(buf) });
-    const parsedText = await parser.getText();
-    const text = String(parsedText || '').replace(/\u0000/g, ' ').trim();
+    // Extract text via pdfjs-dist directly (more reliable than pdf-parse wrappers in ESM/CI).
+    const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buf) });
+    const doc = await loadingTask.promise;
+
+    let text = '';
+    for (let pageNum = 1; pageNum <= doc.numPages; pageNum++) {
+      const page = await doc.getPage(pageNum);
+      const content = await page.getTextContent();
+      const pageText = (content.items || [])
+        .map((it: any) => (it?.str ? String(it.str) : ''))
+        .join(' ');
+      text += `\n\n[page ${pageNum}]\n` + pageText;
+    }
+
+    text = text.replace(/\u0000/g, ' ').trim();
     if (!text) {
       console.log('  skip: empty pdf text');
       skipped += 1;
