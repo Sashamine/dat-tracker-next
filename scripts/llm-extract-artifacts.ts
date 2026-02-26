@@ -98,6 +98,7 @@ function hkexSharesQuoteLooksValid(quote: string): boolean {
     'ordinary shares',
     'weighted average',
     'weighted-average',
+    'number of units in issue',
   ];
   return needles.some(n => q.includes(n));
 }
@@ -271,6 +272,11 @@ async function main() {
       const ok = quoteExists(text, p.quote);
       if (!ok) {
         console.log(`  reject ${p.metric}: quote not found`);
+        continue;
+      }
+
+      if (a.source_type === 'hkex_pdf' && p.metric === 'basic_shares' && p.value < 100_000_000) {
+        console.log(`  reject basic_shares: value too small for hkex (${p.value})`);
         continue;
       }
 
