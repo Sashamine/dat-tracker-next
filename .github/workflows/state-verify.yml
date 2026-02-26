@@ -34,6 +34,9 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Run unit test (HKEX shares gate)
+        run: npm run -s test:run src/lib/__tests__/llm-extract-artifacts-gates.test.ts
+
       - name: Build compiled verifier
         run: npm run -s state:verify:build
 
