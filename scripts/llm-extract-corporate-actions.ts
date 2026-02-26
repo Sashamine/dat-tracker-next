@@ -71,17 +71,24 @@ function quoteExists(text: string, quote: string): boolean {
 
 function quoteIndicatesEffected(quote: string): boolean {
   const q = quote.toLowerCase();
-  // Must indicate the action actually took effect, not just approved/authorized.
-  return (
+  // Require strong, past-tense evidence that the action took effect.
+  // (Future-tense announcements like "will become effective" tend to create duplicates.)
+  const pastTense =
     q.includes('became effective') ||
-    q.includes('becomes effective') ||
-    q.includes('will become effective') ||
-    q.includes('effective on') ||
-    q.includes('effective as of') ||
-    q.includes('was effected') ||
-    q.includes('effected a reverse stock split') ||
-    q.includes('effected a stock split')
-  );
+    q.includes('was effective') ||
+    q.includes('has been effected') ||
+    q.includes('was effected');
+
+  if (!pastTense) return false;
+
+  // Also require a concrete ratio pattern in the quote.
+  // Avoids capturing approvals/ranges without an effected ratio.
+  const hasRatio =
+    /\b\d+\s*[- ]?for\s*[- ]?\d+\b/i.test(quote) ||
+    /\b1\s*[- ]?for\s*[- ]?\d+\b/i.test(quote) ||
+    /\bevery\s+\w+\s*\(\s*\d+\s*\)\s+shares?.{0,60}one\s*\(\s*1\s*\)\s+share/i.test(quote);
+
+  return hasRatio;
 }
 
 function isYyyyMmDd(s: string | null): boolean {
@@ -440,7 +447,9 @@ async function main() {
         ]
       );
       inserted += 1;
-      console.log(`  inserted ${ca.action_type} ratio=${ca.ratio}`);
+      console.log(
+        `  inserted ${ca.action_type} ratio=${ca.ratio} effective_date=${ca.effective_date} artifact_id=${a.artifact_id} key=${a.r2_key}`
+      );
     }
   }
 
