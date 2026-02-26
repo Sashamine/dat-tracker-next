@@ -167,6 +167,15 @@ async function main() {
   );
 
   const runId = crypto.randomUUID();
+  const startedAt = new Date().toISOString();
+
+  // Ensure runs row exists (datapoints.run_id has FK to runs.run_id)
+  await d1.query(
+    `INSERT OR IGNORE INTO runs (run_id, started_at, ended_at, trigger, code_sha, notes)
+     VALUES (?, ?, NULL, ?, ?, ?);`,
+    [runId, startedAt, 'llm_extract_artifacts', process.env.GITHUB_SHA || null, null]
+  );
+
   let inserted = 0;
   let skipped = 0;
 
