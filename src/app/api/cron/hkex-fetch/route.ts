@@ -70,6 +70,9 @@ export async function GET(request: NextRequest) {
       try {
         const override = hkexSearchUrl || hkexSearchUrls.split(',').map(s => s.trim()).filter(Boolean)[0] || undefined;
         const discovered = await discoverHkexFilings({ stockCode: stockCodeRaw, limit, searchUrlOverride: override });
+        if (discovered.length === 0) {
+          throw new Error('HKEX discovery returned 0 filings');
+        }
         filings = discovered;
         discovery.success = true;
         discovery.discoveredCount = discovered.length;
