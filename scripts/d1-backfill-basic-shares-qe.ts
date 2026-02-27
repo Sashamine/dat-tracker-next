@@ -116,19 +116,23 @@ async function main() {
     for (const asOf of qEnds) {
       if (inserted + skipped >= limit) break;
 
+      // D1 artifacts schema (current):
+      // artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key, cik, ticker, accession
+      // It does NOT include period_end/form_type/filed_at.
+      // For Phase B we approximate quarter-end artifacts using datapoints.as_of at the quarter-end.
       const art = await d1.query<any>(
-        `SELECT artifact_id, filed_at
-         FROM artifacts
+        `SELECT artifact_id
+         FROM datapoints
          WHERE entity_id = ?
-           AND period_end = ?
-           AND (form_type IN ('10-Q','10-K','20-F','40-F') OR form_type LIKE '%-F')
-         ORDER BY datetime(filed_at) ASC
+           AND metric = 'basic_shares'
+           AND as_of = ?
+         ORDER BY datetime(created_at) DESC
          LIMIT 1;`,
         [ticker, asOf]
       );
 
       const artifactId = art.results?.[0]?.artifact_id as string | undefined;
-      const filedAt = (art.results?.[0]?.filed_at as string | undefined) || null;
+      const filedAt = null;
       if (!artifactId) {
         missing++;
         continue;
@@ -141,11 +145,11 @@ async function main() {
         `SELECT value, unit, scale, reported_at
          FROM datapoints
          WHERE entity_id = ?
-           AND artifact_id = ?
            AND metric = 'basic_shares'
+           AND as_of = ?
          ORDER BY datetime(created_at) DESC
          LIMIT 1;`,
-        [ticker, artifactId]
+        [ticker, asOf]
       );
 
       const value = Number(dp.results?.[0]?.value);
