@@ -4,6 +4,7 @@ import { Suspense, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
+import { useLatestBasicShares } from "@/lib/hooks/use-latest-basic-shares";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -291,8 +292,15 @@ export default function CompanyPage() {
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
 
-  // Use sharesForMnav from company data (same as mNAV calc), fall back to marketCap/price
-  const sharesOutstanding = displayCompany.sharesForMnav || (marketCap && stockPrice ? marketCap / stockPrice : 0);
+  // Preferred shares source for per-share metrics:
+  // 1) D1 latest basic_shares (already normalized to current split basis using corporate_actions)
+  // 2) company.sharesForMnav (curated)
+  // 3) marketCap/price fallback
+  const { data: latestShares } = useLatestBasicShares(displayCompany.ticker);
+  const sharesOutstanding =
+    (latestShares?.shares && latestShares.shares > 0 ? latestShares.shares : 0) ||
+    displayCompany.sharesForMnav ||
+    (marketCap && stockPrice ? marketCap / stockPrice : 0);
   const totalDebt = displayCompany.totalDebt || 0;
   const preferredEquity = displayCompany.preferredEquity || 0;
   const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity);
