@@ -275,6 +275,54 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Optionally ingest key exhibits (ex-99.1 press releases, etc.) for better recall.
+    if (includeExhibits && formUpper.startsWith('8-K') && exhibitsLimit > 0) {
+      const index = await fetchFilingIndex(cik, accession);
+      const docs = (index?.directory?.item || []).filter(d => isInterestingExhibit(d.name));
+
+      // Prefer larger exhibits first (usually press releases); stable tie-break by name.
+      docs.sort((a, b) => (b.size || 0) - (a.size || 0) || a.name.localeCompare(b.name));
+
+      const picked = docs.slice(0, exhibitsLimit);
+
+      for (const d of picked) {
+        try {
+          const exhibitUrl = buildSecArchivesDocUrl(cik, accession, d.name);
+          const exhibitRes = await fetch(exhibitUrl, {
+            headers: {
+              'User-Agent': SEC_USER_AGENT,
+              Accept: 'text/html,application/xhtml+xml,text/plain,application/pdf',
+            },
+            cache: 'no-store',
+          });
+          if (!exhibitRes.ok) continue;
+
+          const buf = new Uint8Array(await exhibitRes.arrayBuffer());
+          const b = exhibitBucket(d.name);
+          const ext = d.name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'html';
+          const safeName = d.name.replace(/[^a-zA-Z0-9_.-]/g, '_');
+          const exhibitKey = `${ticker.toLowerCase()}/${bucket}/${bucket}-${filingDate}-${accession}.${b}.${safeName}.${ext}`;
+
+          const res2 = await ingestArtifactToR2AndD1({
+            sourceType: 'sec_exhibit',
+            ticker,
+            accession,
+            sourceUrl: exhibitUrl,
+            r2Key: exhibitKey,
+            bytes: buf,
+            contentType: d.name.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'text/html; charset=utf-8',
+            fetchedAt: new Date(`${filingDate}T00:00:00Z`).toISOString(),
+          });
+
+          keys.push(res2.r2Key);
+          if (res2.inserted) inserted += 1;
+          else skipped += 1;
+        } catch {
+          // best-effort
+        }
+      }
+    }
+
     if (attempted >= limit) break;
   }
 
