@@ -89,6 +89,11 @@ async function main() {
     const r2Bucket = 'dat-tracker-filings';
     const r2Key = p.accession ? `sec/companyfacts/${p.ticker}/${p.accession}.json` : `sec/companyfacts/${p.ticker}/unknown.json`;
 
+    const contentHash = crypto
+      .createHash('md5')
+      .update(`sec_companyfacts_xbrl|${p.ticker}|${p.accession || 'unknown'}|${r2Key}`)
+      .digest('hex');
+
     await d1.query(
       `INSERT OR IGNORE INTO artifacts (
          artifact_id, source_type, source_url, content_hash, fetched_at,
@@ -98,7 +103,7 @@ async function main() {
         artifactId,
         'sec_companyfacts_xbrl',
         p.sourceUrl,
-        null,
+        contentHash,
         nowIso,
         r2Bucket,
         r2Key,
