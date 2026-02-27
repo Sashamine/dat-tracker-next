@@ -389,7 +389,21 @@ async function main() {
         }
 
       // Use a centered chunk around the first keyword hit to reduce noise and ensure the ratio sentence is included.
-      const llmText = hits.length ? centeredChunk(text, hits[0].index, 12000) : text;
+      // Some filings (notably 14C/14A) mention an already-effective split later as
+      // "began trading on a split-adjusted basis ..."; that evidence can be far from the
+      // first keyword hit. In that case, include a secondary chunk centered on split-adjusted.
+      let llmText = hits.length ? centeredChunk(text, hits[0].index, 12000) : text;
+
+      const tLower = text.toLowerCase();
+      const splitAdjustedIdx = tLower.indexOf('split-adjusted');
+      const splitAdjustedIdx2 = splitAdjustedIdx >= 0 ? splitAdjustedIdx : tLower.indexOf('split adjusted');
+      if (splitAdjustedIdx2 >= 0) {
+        const secondary = centeredChunk(text, splitAdjustedIdx2, 12000);
+        // Append the secondary chunk if the primary chunk doesn't already include split-adjusted context.
+        if (!llmText.toLowerCase().includes('split-adjusted') && !llmText.toLowerCase().includes('split adjusted')) {
+          llmText = `${llmText}\n\n---\n\n[secondary chunk: split-adjusted context]\n${secondary}`;
+        }
+      }
 
       const extracted = await extractWithOpenAI({
               ticker,
