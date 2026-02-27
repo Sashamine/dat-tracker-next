@@ -2,25 +2,7 @@ name: lint (src/app)
 
 on:
   pull_request:
-    paths:
-      - '.github/workflows/**'
-      - 'src/app/**'
-      - 'src/components/**'
-      - 'src/lib/**'
-      - 'scripts/**'
-      - 'eslint.config.*'
-      - 'package.json'
-      - 'tsconfig*.json'
   push:
-    paths:
-      - '.github/workflows/**'
-      - 'src/app/**'
-      - 'src/components/**'
-      - 'src/lib/**'
-      - 'scripts/**'
-      - 'eslint.config.*'
-      - 'package.json'
-      - 'tsconfig*.json'
 
 jobs:
   lint-app:
