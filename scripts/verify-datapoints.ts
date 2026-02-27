@@ -81,18 +81,18 @@ function checkSanityRange(metric: string, value: number | null): VerificationChe
 async function main() {
   const d1 = D1Client.fromEnv();
 
-  const ticker = process.env.TICKER;
+  const entityId = process.env.ENTITY_ID || process.env.TICKER;
   const metric = process.env.METRIC;
   const limit = Number(process.env.LIMIT || '50');
   const dryRun = String(process.env.DRY_RUN || 'true').toLowerCase() !== 'false' ? true : false;
   const verifier = process.env.VERIFIER || 'auto';
   const codeSha = process.env.CODE_SHA || null;
 
-  if (!ticker) throw new Error('Missing env TICKER');
+  if (!entityId) throw new Error('Missing env ENTITY_ID (or legacy TICKER)');
 
-  // NOTE: schema-native key is entity_id (not ticker).
+  // NOTE: schema-native key is entity_id.
   const where: string[] = ['entity_id = ?'];
-  const params: any[] = [ticker];
+  const params: any[] = [entityId];
   if (metric) {
     where.push('metric = ?');
     params.push(metric);
@@ -118,7 +118,7 @@ async function main() {
   params.push(limit);
 
   const rows = await d1.query<DatapointRow>(q, params);
-  console.log(`verify-datapoints: entity_id=${ticker} metric=${metric || '*'} limit=${limit} dryRun=${dryRun} rows=${rows.results.length}`);
+  console.log(`verify-datapoints: entity_id=${entityId} metric=${metric || '*'} limit=${limit} dryRun=${dryRun} rows=${rows.results.length}`);
 
   let wrote = 0;
 
