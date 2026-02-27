@@ -15,6 +15,7 @@ type DatapointRow = {
   value: number | null;
   as_of: string | null;
   reported_at: string | null;
+  artifact_id: string;
   source_url: string | null;
 };
 
@@ -97,12 +98,21 @@ async function main() {
     params.push(metric);
   }
 
-  // Latest datapoints for ticker/metric.
+  // Latest datapoints for entity_id/metric, plus source_url from artifacts.
   const q = `
-    SELECT datapoint_id, entity_id, metric, value, as_of, reported_at, source_url
-    FROM datapoints
-    WHERE ${where.join(' AND ')}
-    ORDER BY COALESCE(as_of, reported_at) DESC
+    SELECT
+      d.datapoint_id,
+      d.entity_id,
+      d.metric,
+      d.value,
+      d.as_of,
+      d.reported_at,
+      d.artifact_id,
+      a.source_url
+    FROM datapoints d
+    LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
+    WHERE ${where.map(w => w.replace(/^/, 'd.')).join(' AND ')}
+    ORDER BY COALESCE(d.as_of, d.reported_at) DESC
     LIMIT ?;
   `;
   params.push(limit);

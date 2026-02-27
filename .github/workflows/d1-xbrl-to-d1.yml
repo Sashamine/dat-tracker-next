@@ -1,0 +1,47 @@
+name: D1 XBRL → D1 Datapoints (companyfacts)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tickers:
+        description: "Comma-separated tickers (e.g. MSTR,MARA)"
+        required: true
+      dry_run:
+        description: "Dry run (no D1 writes)"
+        required: true
+        default: "true"
+      force:
+        description: "Force insert even if as_of is missing"
+        required: true
+        default: "false"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Run XBRL → D1
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+          DRY_RUN: ${{ inputs.dry_run }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          echo "tickers=${{ inputs.tickers }} dry_run=${{ inputs.dry_run }} force=${{ inputs.force }}"
+          npx tsx scripts/d1-xbrl-to-d1.ts \
+            --tickers=${{ inputs.tickers }} \
+            --dry-run=${{ inputs.dry_run }} \
+            --force=${{ inputs.force }}

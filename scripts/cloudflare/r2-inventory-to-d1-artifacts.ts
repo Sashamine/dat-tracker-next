@@ -42,12 +42,26 @@ function sha256(input: string): string {
 
 function classifySourceTypeFromKey(key: string): string | null {
   const k = key.toLowerCase();
+
+  // Explicit pipeline prefixes (preferred)
   if (k.startsWith('sec/')) return 'sec';
   if (k.startsWith('sedar/')) return 'sedar';
-  if (k.includes('/xbrl/')) return 'sec_xbrl';
-  if (k.includes('companyfacts')) return 'sec_companyfacts';
   if (k.startsWith('dashboard/')) return 'dashboard';
   if (k.startsWith('manual/')) return 'manual';
+
+  // Heuristics based on path segments
+  if (k.includes('/xbrl/')) return 'sec_xbrl';
+  if (k.includes('companyfacts')) return 'sec_companyfacts';
+
+  // Many existing keys are ticker-first (e.g. "mstr/10q/...", "abtc/10k/...")
+  // For these, treat as SEC filings unless we have a better classifier.
+  const firstSeg = k.split('/')[0];
+  if (/^[a-z0-9]{1,10}$/.test(firstSeg)) {
+    if (k.includes('/10k/') || k.includes('/10q/') || k.includes('/8k/') || k.includes('/6k/') || k.includes('/20f/') || k.includes('/424b')) {
+      return 'sec_filing';
+    }
+  }
+
   return null;
 }
 
@@ -97,10 +111,14 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
   if (!res.ok) throw new Error(`R2 list failed: ${res.status} ${res.statusText}: ${await res.text()}`);
 
   const json = await res.json();
-  // Cloudflare shape: { success, errors, messages, result: { objects: [...], cursor } }
+  // Cloudflare result shape is inconsistent across APIs/versions:
+  // - sometimes: { result: { objects: [...], cursor } }
+  // - sometimes: { result: [...] } (array of objects)
   if (!json.success) throw new Error(`R2 list failed: ${JSON.stringify(json.errors || json)}`);
-  const objects = (json.result?.objects || []) as R2ObjectLite[];
-  const nextCursor = json.result?.cursor as string | undefined;
+
+  const result = json.result;
+  const objects = (Array.isArray(result) ? result : result?.objects || []) as R2ObjectLite[];
+  const nextCursor = (Array.isArray(result) ? undefined : (result?.cursor as string | undefined));
 
   if (!objects.length) {
     // eslint-disable-next-line no-console
@@ -112,8 +130,8 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
           prefix,
           cursor,
           limit,
-          resultKeys: json.result ? Object.keys(json.result) : null,
-          sampleResult: json.result || null,
+          resultKeys: result ? Object.keys(result) : null,
+          sampleResult: result || null,
         },
         null,
         2
