@@ -8,6 +8,8 @@
  */
 
 import { createHash } from 'node:crypto';
+import { signAwsV4 } from './aws-sigv4';
+import { parseListObjectsV2Xml } from './parse-list-objects-v2';
 
 type D1QueryResult<T = any> = { results: T[]; success: boolean };
 
@@ -108,76 +110,47 @@ async function d1Query<T>(sql: string, params: any[] = []): Promise<D1QueryResul
 }
 
 async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1000): Promise<{ objects: R2ObjectLite[]; cursor?: string }> {
+  // Prefer S3 ListObjectsV2 because it has deterministic pagination.
+  // https://developers.cloudflare.com/r2/api/s3/api/#list-objects-v2
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
-  const apiToken = process.env.CLOUDFLARE_API_TOKEN;
+  const accessKeyId = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
+
   if (!accountId) throw new Error('Missing CLOUDFLARE_ACCOUNT_ID');
-  if (!apiToken) throw new Error('Missing CLOUDFLARE_API_TOKEN');
+  if (!accessKeyId) throw new Error('Missing CLOUDFLARE_R2_ACCESS_KEY_ID');
+  if (!secretAccessKey) throw new Error('Missing CLOUDFLARE_R2_SECRET_ACCESS_KEY');
 
-  // Cloudflare R2 S3-compat is an option, but here we use the R2 REST API.
-  // Endpoint: GET /accounts/:accountId/r2/buckets/:bucketName/objects
-  const url = new URL(`https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucket}/objects`);
+  const endpoint = `https://${accountId}.r2.cloudflarestorage.com`;
+  const url = new URL(`${endpoint}/${bucket}`);
+  url.searchParams.set('list-type', '2');
+  url.searchParams.set('max-keys', String(Math.min(Math.max(limit, 1), 1000)));
   if (prefix) url.searchParams.set('prefix', prefix);
-  if (cursor) url.searchParams.set('cursor', cursor);
-  url.searchParams.set('limit', String(limit));
+  if (cursor) url.searchParams.set('continuation-token', cursor);
 
-  const res = await fetch(url.toString(), {
+  // Minimal AWS SigV4 signing (no external deps)
+  const { headers, method } = await signAwsV4({
+    url,
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${apiToken}`,
-    },
+    region: 'auto',
+    service: 's3',
+    accessKeyId,
+    secretAccessKey,
   });
-  if (!res.ok) throw new Error(`R2 list failed: ${res.status} ${res.statusText}: ${await res.text()}`);
 
-  const json = await res.json();
-  // Cloudflare result shape is inconsistent across APIs/versions:
-  // - sometimes: { result: { objects: [...], cursor } }
-  // - sometimes: { result: [...] } (array of objects)
-  // Pagination cursor may be on json.result.cursor OR json.result_info.cursor.
-  if (!json.success) throw new Error(`R2 list failed: ${JSON.stringify(json.errors || json)}`);
+  const res = await fetch(url.toString(), { method, headers });
+  if (!res.ok) throw new Error(`R2 S3 list failed: ${res.status} ${res.statusText}: ${await res.text()}`);
 
-  const result = json.result;
-  const objects = (Array.isArray(result) ? result : result?.objects || []) as R2ObjectLite[];
-  const nextCursor = (
-    (Array.isArray(result) ? (json.result_info?.cursor as string | undefined) : (result?.cursor as string | undefined))
-  );
+  const xml = await res.text();
+  const parsed = parseListObjectsV2Xml(xml);
 
-  if (process.env.DEBUG_R2_LIST === 'true') {
-    // eslint-disable-next-line no-console
-    console.log(
-      JSON.stringify(
-        {
-          msg: 'r2List: debug response shape',
-          topLevelKeys: Object.keys(json || {}),
-          resultType: Array.isArray(result) ? 'array' : typeof result,
-          resultInfoKeys: json.result_info ? Object.keys(json.result_info) : null,
-          nextCursor,
-          objectsCount: objects.length,
-        },
-        null,
-        2
-      )
-    );
-  }
+  const objects: R2ObjectLite[] = parsed.contents.map((c) => ({
+    key: c.Key,
+    size: c.Size,
+    etag: c.ETag?.replace(/\"/g, ''),
+    uploaded: c.LastModified,
+  }));
 
-  if (!objects.length) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      JSON.stringify(
-        {
-          msg: 'r2List: empty page',
-          bucket,
-          prefix,
-          cursor,
-          limit,
-          resultKeys: result ? Object.keys(result) : null,
-          sampleResult: result || null,
-        },
-        null,
-        2
-      )
-    );
-  }
-
+  const nextCursor = parsed.IsTruncated ? parsed.NextContinuationToken : undefined;
   return { objects, cursor: nextCursor };
 }
 
