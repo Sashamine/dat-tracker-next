@@ -7,18 +7,24 @@
 
 ## AGENTS WORKBOARD (live)
 
+**Legend:** Agent 1 = this assistant
+
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
 ### Now (in progress)
 - **Phase B: Backfill quarter-end `basic_shares` into D1**
-  - **Owner:** (other agent)
+  - **Owner:** Agent 2
   - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
   - **Status:** D1 schema mismatch fixed (use `datapoints.as_of` instead of `artifacts.filed_at/period_end`). Needs merge + workflow dry-run + real run.
   - **DoD:** Dry-run summary looks sane; then write mode for 1 ticker/date-range; then expand.
 
-### Next (queued)
 - **10b: R2 inventory → artifacts backfill**
-  - Map R2 key conventions; ensure every object has an `artifacts` row (hash, source_type, fetched_at, r2_key).
+  - **Owner:** Agent 1
+  - **PR:** #47 https://github.com/Sashamine/dat-tracker-next/pull/47
+  - **Status:** Workflow + script ready; merge PR then run dry-run inventory; then write mode.
+  - **DoD:** artifacts rows exist for existing R2 objects (at least for key prefixes we use).
+
+### Next (queued)
 - **10d: Verification + confidence scoring**
   - Automated checks + DLQ/manual review routing (per CLAUDE.md).
 - **UI: Split miner vs treasury sector stats** (from older notes)
