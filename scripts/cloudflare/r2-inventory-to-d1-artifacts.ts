@@ -44,7 +44,9 @@ function classifySourceTypeFromKey(key: string): string | null {
   const k = key.toLowerCase();
 
   // Explicit pipeline prefixes (preferred)
-  if (k.startsWith('sec/')) return 'sec';
+  if (k.startsWith('sec/xbrl/')) return 'sec_xbrl';
+  if (k.startsWith('sec/companyfacts/')) return 'sec_companyfacts';
+  if (k.startsWith('sec/')) return 'sec_filing';
   if (k.startsWith('sedar/')) return 'sedar';
   if (k.startsWith('dashboard/')) return 'dashboard';
   if (k.startsWith('manual/')) return 'manual';
@@ -57,9 +59,23 @@ function classifySourceTypeFromKey(key: string): string | null {
   // For these, treat as SEC filings unless we have a better classifier.
   const firstSeg = k.split('/')[0];
   if (/^[a-z0-9]{1,10}$/.test(firstSeg)) {
-    if (k.includes('/10k/') || k.includes('/10q/') || k.includes('/8k/') || k.includes('/6k/') || k.includes('/20f/') || k.includes('/424b')) {
+    if (
+      k.includes('/10k/') ||
+      k.includes('/10q/') ||
+      k.includes('/8k/') ||
+      k.includes('/6k/') ||
+      k.includes('/20f/') ||
+      k.includes('/424b') ||
+      k.includes('/s-3') ||
+      k.includes('/s3') ||
+      k.includes('/f-3') ||
+      k.includes('/f3')
+    ) {
       return 'sec_filing';
     }
+
+    if (k.includes('/xbrl/')) return 'sec_xbrl';
+    if (k.includes('companyfacts')) return 'sec_companyfacts';
   }
 
   return null;
@@ -184,7 +200,7 @@ async function main() {
   };
 
   // For chaining chunked runs
-  let lastCursor: string | undefined = cursor;
+  let lastCursor: string | undefined;
 
   let cursor: string | undefined = startCursor;
 
