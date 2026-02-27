@@ -3,7 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS corporate_actions (
   action_id TEXT PRIMARY KEY,
-  entity_id TEXT NOT NULL,
+  entity_id TEXT NOT NULL, -- ticker symbol (string) for now
   action_type TEXT NOT NULL, -- e.g. split, reverse_split, consolidation, subdivision
   ratio REAL NOT NULL,       -- multiplier applied to shares at effective_date going forward in time
   effective_date TEXT NOT NULL, -- YYYY-MM-DD

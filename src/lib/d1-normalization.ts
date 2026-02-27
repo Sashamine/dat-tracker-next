@@ -3,6 +3,7 @@ import { normalizeShares, normalizePrice } from '@/lib/corporate-actions';
 
 type CorporateActionRow = { effective_date: string; ratio: number };
 
+// Note: in D1, corporate_actions.entity_id is the ticker symbol (string) for now.
 async function getCorporateActionsForTicker(ticker: string): Promise<CorporateActionRow[]> {
   const d1 = D1Client.fromEnv();
   const out = await d1.query<CorporateActionRow>(

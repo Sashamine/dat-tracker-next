@@ -23,6 +23,8 @@ export async function GET(request: NextRequest) {
 
   try {
     const d1 = D1Client.fromEnv();
+
+    // Note: in D1, corporate_actions.entity_id is the ticker symbol (string) for now.
     const out = await d1.query(
       `SELECT
          action_id, entity_id, action_type, ratio, effective_date,
