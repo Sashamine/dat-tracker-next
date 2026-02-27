@@ -142,6 +142,7 @@ async function main() {
            AND as_of IS NOT NULL
            AND as_of <= ?
            AND (? = 0 OR as_of >= date(?, '-' || ? || ' days'))
+           AND (method IS NULL OR method != 'backfill_qe')
          ORDER BY as_of DESC, datetime(created_at) DESC
          LIMIT 1;`,
         [ticker, asOf, lookbackDays, asOf, lookbackDays]
