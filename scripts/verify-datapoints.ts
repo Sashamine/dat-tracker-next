@@ -10,7 +10,7 @@ type VerificationCheck = {
 
 type DatapointRow = {
   datapoint_id: string;
-  ticker: string;
+  entity_id: string;
   metric: string;
   value: number | null;
   as_of: string | null;
@@ -89,7 +89,8 @@ async function main() {
 
   if (!ticker) throw new Error('Missing env TICKER');
 
-  const where: string[] = ['ticker = ?'];
+  // NOTE: schema-native key is entity_id (not ticker).
+  const where: string[] = ['entity_id = ?'];
   const params: any[] = [ticker];
   if (metric) {
     where.push('metric = ?');
@@ -98,7 +99,7 @@ async function main() {
 
   // Latest datapoints for ticker/metric.
   const q = `
-    SELECT datapoint_id, ticker, metric, value, as_of, reported_at, source_url
+    SELECT datapoint_id, entity_id, metric, value, as_of, reported_at, source_url
     FROM datapoints
     WHERE ${where.join(' AND ')}
     ORDER BY COALESCE(as_of, reported_at) DESC
@@ -107,7 +108,7 @@ async function main() {
   params.push(limit);
 
   const rows = await d1.query<DatapointRow>(q, params);
-  console.log(`verify-datapoints: ticker=${ticker} metric=${metric || '*'} limit=${limit} dryRun=${dryRun} rows=${rows.results.length}`);
+  console.log(`verify-datapoints: entity_id=${ticker} metric=${metric || '*'} limit=${limit} dryRun=${dryRun} rows=${rows.results.length}`);
 
   let wrote = 0;
 
@@ -120,7 +121,7 @@ async function main() {
 
     const out = {
       datapoint_id: dp.datapoint_id,
-      ticker: dp.ticker,
+      entity_id: dp.entity_id,
       metric: dp.metric,
       as_of: dp.as_of,
       reported_at: dp.reported_at,
