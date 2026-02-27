@@ -59,10 +59,10 @@ export default function CorporateActionsAdminPage() {
     };
   }, []);
 
-  const reviewSet = useMemo(() => {
-    const s = new Set<string>();
-    for (const r of stats?.multiDateSameRatio || []) s.add(r.entity_id);
-    return s;
+  const reviewByTicker = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const r of stats?.multiDateSameRatio || []) m[r.entity_id] = (m[r.entity_id] || 0) + 1;
+    return m;
   }, [stats]);
 
   const filteredTickers = useMemo(() => {
@@ -92,8 +92,19 @@ export default function CorporateActionsAdminPage() {
   return (
     <div style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Corporate Actions (Admin)</h1>
-      <div style={{ color: '#666', marginBottom: 16 }}>
-        Read-only view of extracted splits / reverse splits from D1.
+      <div style={{ color: '#666', marginBottom: 10 }}>
+        Read-only view of extracted splits / reverse splits stored in D1.
+      </div>
+      <div style={{ background: '#f7f7f7', border: '1px solid #e6e6e6', padding: 12, borderRadius: 8, marginBottom: 16, fontSize: 13, lineHeight: 1.4 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6 }}>What this page is for</div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><b>Coverage:</b> which tickers have any extracted corporate actions.</li>
+          <li><b>Evidence:</b> click a ticker to see the stored ratio/date + the supporting quote/source link.</li>
+          <li><b>Sanity checks:</b> if extraction starts churning, you’ll see action counts spike here.</li>
+        </ul>
+        <div style={{ marginTop: 8, color: '#666' }}>
+          Note: the “review” label means the ticker has the same split ratio on multiple dates (often legit, sometimes worth double-checking).
+        </div>
       </div>
 
       {statsError && (
@@ -155,9 +166,11 @@ export default function CorporateActionsAdminPage() {
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontWeight: 700 }}>{t.cnt}</div>
-                    {reviewSet.has(t.entity_id) && (
-                      <div style={{ fontSize: 11, color: '#8a6d3b' }}>review</div>
-                    )}
+                    {reviewByTicker[t.entity_id] ? (
+                      <div style={{ fontSize: 11, color: '#8a6d3b' }}>
+                        review ({reviewByTicker[t.entity_id]})
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </button>
