@@ -72,9 +72,10 @@ export async function GET(request: NextRequest) {
     const documentUrl = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNoDashes}/${primaryDoc}`;
 
     return NextResponse.json({ documentUrl, filename: primaryDoc, indexUrl });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string };
     return NextResponse.json(
-      { error: err.message, indexUrl },
+      { error: e?.message || String(err), indexUrl },
       { status: 500 }
     );
   }
