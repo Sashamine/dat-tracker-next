@@ -59,6 +59,9 @@ function classifySourceTypeFromKey(key: string): string | null {
   // These are SEC filing text artifacts.
   if (/^batch\d+\//.test(k)) return 'sec_filing';
 
+  // Hong Kong filings (PDFs) - treat as non-US filing artifacts
+  if (k.startsWith('hkex/')) return 'nonus_filing';
+
   // Ad-hoc uploads (treat as manual until we add stronger conventions)
   if (k.startsWith('new-uploads/')) return 'manual';
 
@@ -69,14 +72,18 @@ function classifySourceTypeFromKey(key: string): string | null {
   // Many existing keys are ticker-first (e.g. "mstr/10q/...", "abtc/10k/...")
   // For these, treat as SEC filings unless we have a better classifier.
   const firstSeg = k.split('/')[0];
-  if (/^[a-z0-9]{1,10}$/.test(firstSeg)) {
+  if (/^[a-z0-9]{1,10}$/.test(firstSeg) && firstSeg !== 'hkex') {
     if (
       k.includes('/10k/') ||
+      k.includes('/10ka/') ||
       k.includes('/10q/') ||
+      k.includes('/10qa/') ||
       k.includes('/8k/') ||
       k.includes('/6k/') ||
       k.includes('/20f/') ||
       k.includes('/424b') ||
+      k.includes('/proxy14a/') ||
+      k.includes('/proxy14c/') ||
       k.includes('/s-3') ||
       k.includes('/s3') ||
       k.includes('/f-3') ||
