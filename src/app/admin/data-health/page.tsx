@@ -63,8 +63,14 @@ export default async function AdminDataHealthPage() {
   return (
     <div style={{ padding: 24, maxWidth: 1100, margin: '0 auto' }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6 }}>Data Health (Admin)</h1>
-      <div style={{ color: '#666', marginBottom: 16 }}>
+      <div style={{ color: '#666', marginBottom: 10 }}>
         Read-only dashboard over <code>/api/state/*</code> to quickly see verification status, gaps, and unverified tickers.
+      </div>
+
+      <div style={{ display: 'flex', gap: 10, marginBottom: 16, fontSize: 13 }}>
+        <Link href="/admin/corporate-actions">Corporate Actions</Link>
+        <span style={{ color: '#bbb' }}>•</span>
+        <Link href="/admin/sedar-filings">SEDAR Filings</Link>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
