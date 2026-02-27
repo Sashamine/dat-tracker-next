@@ -19,7 +19,7 @@ on:
       - 'tsconfig*.json'
 
 jobs:
-  lint:
+  lint-app:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
