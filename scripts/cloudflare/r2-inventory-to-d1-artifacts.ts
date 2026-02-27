@@ -114,11 +114,32 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
   // Cloudflare result shape is inconsistent across APIs/versions:
   // - sometimes: { result: { objects: [...], cursor } }
   // - sometimes: { result: [...] } (array of objects)
+  // Pagination cursor may be on json.result.cursor OR json.result_info.cursor.
   if (!json.success) throw new Error(`R2 list failed: ${JSON.stringify(json.errors || json)}`);
 
   const result = json.result;
   const objects = (Array.isArray(result) ? result : result?.objects || []) as R2ObjectLite[];
-  const nextCursor = (Array.isArray(result) ? undefined : (result?.cursor as string | undefined));
+  const nextCursor = (
+    (Array.isArray(result) ? (json.result_info?.cursor as string | undefined) : (result?.cursor as string | undefined))
+  );
+
+  if (process.env.DEBUG_R2_LIST === 'true') {
+    // eslint-disable-next-line no-console
+    console.log(
+      JSON.stringify(
+        {
+          msg: 'r2List: debug response shape',
+          topLevelKeys: Object.keys(json || {}),
+          resultType: Array.isArray(result) ? 'array' : typeof result,
+          resultInfoKeys: json.result_info ? Object.keys(json.result_info) : null,
+          nextCursor,
+          objectsCount: objects.length,
+        },
+        null,
+        2
+      )
+    );
+  }
 
   if (!objects.length) {
     // eslint-disable-next-line no-console
