@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    const results: Record<string, any> = {};
+    const results: Record<string, unknown> = {};
     for (const [ticker, rows] of entries) results[ticker] = rows;
 
     return NextResponse.json({ success: true, tickers: tickers.length, results });
