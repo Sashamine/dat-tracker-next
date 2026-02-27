@@ -35,6 +35,16 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "MARA": "0001507605",  // MARA Holdings
   "RIOT": "0001167419",  // Riot Platforms
   "CLSK": "0000827876",  // CleanSpark
+  "BITF": "0001812477",  // Bitfarms Ltd.
+  "CIFR": "0001819989",  // Cipher Mining
+  "COIN": "0001679788",  // Coinbase Global, Inc.
+  "CORZ": "0001839341",  // Core Scientific
+  "GLXY": "0001859392",  // Galaxy Digital Inc.
+  "HIVE": "0001720424",  // HIVE Digital Technologies
+  "HOOD": "0001783879",  // Robinhood Markets
+  "HUT": "0001964789",   // Hut 8 Corp
+  "IREN": "0001878848",  // Iris Energy
+  "WULF": "0001083301",  // TeraWulf
   // "HUT": "0001964789", // Removed - pivoted to AI/HPC, not a DAT company
   // CORZ/BTDR removed - miners without verified HODL/treasury strategy
   "KULR": "0001662684",  // KULR Technology
