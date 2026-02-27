@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   const d1 = D1Client.fromEnv();
 
   const where: string[] = ['d.entity_id = ?'];
-  const params: any[] = [entityId];
+  const params: (string | number)[] = [entityId];
 
   if (metric) {
     where.push('d.metric = ?');
@@ -54,7 +54,30 @@ export async function GET(req: Request) {
   `;
   params.push(limit);
 
-  const rows = await d1.query<any>(q, params);
+  type LatestVerificationRow = {
+    verification_id: string;
+    datapoint_id: string;
+    verdict: 'pass' | 'warn' | 'fail';
+    checks_json: string;
+    checked_at: string;
+    verifier: string | null;
+    code_sha: string | null;
+
+    entity_id: string;
+    metric: string;
+    value: number;
+    unit: string;
+    as_of: string | null;
+    reported_at: string | null;
+    artifact_id: string;
+    run_id: string;
+    method: string | null;
+    confidence: number | null;
+
+    source_url: string | null;
+  };
+
+  const rows = await d1.query<LatestVerificationRow>(q, params);
 
   return NextResponse.json({ ok: true, rows: rows.results });
 }
