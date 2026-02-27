@@ -84,8 +84,6 @@ function isPastOrToday(yyyyMmDd: string): boolean {
 
 function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
     const q = quote.toLowerCase();
-    // Always require a concrete ratio pattern in the quote.
-  if (!quoteHasRatio(quote)) return false;
     // Prefer strong, past-tense evidence.
   const pastTense =
         q.includes('became effective') ||
@@ -97,7 +95,8 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
         q.includes('effected a stock split') ||
         /\beffected\b.{0,60}\breverse stock split\b/i.test(quote) ||
         /\beffected\b.{0,60}\bstock split\b/i.test(quote);
-    if (pastTense) return true;
+    // Past-tense effectiveness statements should generally include the split ratio in the quoted evidence.
+    if (pastTense) return quoteHasRatio(quote);
 
     // Treat "began trading on a split-adjusted basis" as effectiveness evidence.
     // This phrase is common in proxy/information statements and indicates the action has already occurred.
