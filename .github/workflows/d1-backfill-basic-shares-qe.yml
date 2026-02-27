@@ -1,0 +1,55 @@
+name: D1 Backfill Basic Shares (Quarter-End)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tickers:
+        description: "Comma-separated tickers (e.g. MSTR,HSDT)"
+        required: true
+        default: "MSTR"
+      from:
+        description: "Start date YYYY-MM-DD"
+        required: true
+        default: "2023-01-01"
+      to:
+        description: "End date YYYY-MM-DD"
+        required: true
+        default: "2026-12-31"
+      dry_run:
+        description: "Dry run (true/false)"
+        required: true
+        default: "true"
+      limit:
+        description: "Max quarter-end datapoints to attempt"
+        required: true
+        default: "200"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run backfill script
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          echo "tickers=${{ inputs.tickers }} from=${{ inputs.from }} to=${{ inputs.to }} dry_run=${{ inputs.dry_run }} limit=${{ inputs.limit }}"
+          npx tsx scripts/d1-backfill-basic-shares-qe.ts \
+            --tickers=${{ inputs.tickers }} \
+            --from=${{ inputs.from }} \
+            --to=${{ inputs.to }} \
+            --dry-run=${{ inputs.dry_run }} \
+            --limit=${{ inputs.limit }}
