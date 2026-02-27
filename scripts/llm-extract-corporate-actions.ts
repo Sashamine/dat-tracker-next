@@ -69,26 +69,42 @@ function quoteExists(text: string, quote: string): boolean {
   return t.includes(q);
 }
 
-function quoteIndicatesEffected(quote: string): boolean {
+function quoteHasRatio(quote: string): boolean {
+  return (
+    /\b\d+\s*[- ]?for\s*[- ]?\d+\b/i.test(quote) ||
+    /\b1\s*[- ]?for\s*[- ]?\d+\b/i.test(quote) ||
+    /\bevery\s+\w+\s*\(\s*\d+\s*\)\s+shares?.{0,60}one\s*\(\s*1\s*\)\s+share/i.test(quote)
+  );
+}
+
+function isPastOrToday(yyyyMmDd: string): boolean {
+  const d = new Date(`${yyyyMmDd}T00:00:00Z`).getTime();
+  const now = Date.now();
+  return Number.isFinite(d) && d <= now;
+}
+
+function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
   const q = quote.toLowerCase();
-  // Require strong, past-tense evidence that the action took effect.
-  // (Future-tense announcements like "will become effective" tend to create duplicates.)
+
+  // Always require a concrete ratio pattern in the quote.
+  if (!quoteHasRatio(quote)) return false;
+
+  // Prefer strong, past-tense evidence.
   const pastTense =
     q.includes('became effective') ||
     q.includes('was effective') ||
     q.includes('has been effected') ||
-    q.includes('was effected');
+    q.includes('was effected') ||
+    q.includes('was implemented');
 
-  if (!pastTense) return false;
+  if (pastTense) return true;
 
-  // Also require a concrete ratio pattern in the quote.
-  // Avoids capturing approvals/ranges without an effected ratio.
-  const hasRatio =
-    /\b\d+\s*[- ]?for\s*[- ]?\d+\b/i.test(quote) ||
-    /\b1\s*[- ]?for\s*[- ]?\d+\b/i.test(quote) ||
-    /\bevery\s+\w+\s*\(\s*\d+\s*\)\s+shares?.{0,60}one\s*\(\s*1\s*\)\s+share/i.test(quote);
+  // Allow future-tense announcements ONLY if the effective_date has already passed.
+  // This lets us capture "will become effective on 2025-09-15" once we are past that date.
+  const futureTense = q.includes('will become effective') || q.includes('becomes effective');
+  if (futureTense && isPastOrToday(effectiveDate)) return true;
 
-  return hasRatio;
+  return false;
 }
 
 function isYyyyMmDd(s: string | null): boolean {
@@ -400,7 +416,7 @@ async function main() {
         continue;
       }
       // Validate that the quote indicates the action was actually effected
-      if (!quoteIndicatesEffected(ca.quote)) {
+      if (!quoteIndicatesEffected(ca.quote, ca.effective_date)) {
         console.log(`  reject: quote does not indicate action took effect ratio=${ca.ratio}`);
         continue;
       }
