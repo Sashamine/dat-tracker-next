@@ -8,7 +8,10 @@ type Stats = {
   total: number;
   byTicker: Array<{ entity_id: string; cnt: number; last_created_at: string }>;
   byType: Array<{ action_type: string; cnt: number }>;
-  multiDateSameRatio: Array<{ entity_id: string; action_type: string; ratio: number; dates: number }>;
+  // New anomaly signal: same (ticker, type, ratio) with two effective_dates within +/- 1 day
+  nearDuplicatePairs?: Array<{ entity_id: string; action_type: string; ratio: number; date_a: string; date_b: string; days_apart: number }>;
+  // Back-compat (older server responses)
+  multiDateSameRatio?: Array<{ entity_id: string; action_type: string; ratio: number; dates: number }>;
 };
 
 type Action = {
@@ -61,6 +64,9 @@ export default function CorporateActionsAdminPage() {
 
   const reviewByTicker = useMemo(() => {
     const m: Record<string, number> = {};
+    // Prefer nearDuplicatePairs (true churn signal)
+    for (const r of stats?.nearDuplicatePairs || []) m[r.entity_id] = (m[r.entity_id] || 0) + 1;
+    // Fallback for older stats shape
     for (const r of stats?.multiDateSameRatio || []) m[r.entity_id] = (m[r.entity_id] || 0) + 1;
     return m;
   }, [stats]);
@@ -103,7 +109,7 @@ export default function CorporateActionsAdminPage() {
           <li><b>Sanity checks:</b> if extraction starts churning, you’ll see action counts spike here.</li>
         </ul>
         <div style={{ marginTop: 8, color: '#666' }}>
-          Note: the “review” label means the ticker has the same split ratio on multiple dates (often legit, sometimes worth double-checking).
+          Note: the “review” label means we detected a likely near-duplicate (same ratio/type within ±1 day). This is usually churn, not a real second action.
         </div>
       </div>
 
