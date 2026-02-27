@@ -27,6 +27,20 @@ Update this section whenever you start/stop work so other agents can instantly s
   - **Status:** Workflow + script ready; merge PR then run dry-run inventory; then write mode.
   - **DoD:** artifacts rows exist for existing R2 objects (at least for key prefixes we use).
 
+- **10d: Verification plumbing (Agent 4)**
+  - **Owner:** Agent 4
+  - **Status:** Implemented and validated end-to-end in D1 (write mode works).
+  - **Merged PRs:**
+    - #58 d1-migrate workflow + d1-apply-migration script
+    - #59 fix verifier to use schema-native `datapoints.entity_id`
+    - #62 join `artifacts.source_url` (datapoints has no source_url)
+    - #72 verifier workflow accepts `entity_id` (ticker alias) + new API `GET /api/d1/verifications/latest`
+  - **Ops executed:**
+    - Applied migration `010-datapoint-verifications.sql` to D1
+    - Smoke test: `verify-datapoints (10d)` wrote 5 rows for MSTR
+  - **Open gap discovered (10b/10c provenance):**
+    - 323 `artifacts` rows with `source_type='sec_filing'` have `source_url` NULL and `accession` NULL, so receipts can’t be reconstructed for those.
+
 - **CI/Lint ratchet (required checks scope expansion)**
   - **Owner:** Agent 3
   - **Status:** Ongoing: gradually expand `lint-app` scope (admin → key API routes) while keeping changes surgical.
