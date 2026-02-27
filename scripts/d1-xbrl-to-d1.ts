@@ -60,6 +60,57 @@ async function main() {
   const hasRuns = await tableExists(d1, 'runs');
   const hasArtifacts = await tableExists(d1, 'artifacts');
 
+  const ensureArtifacts = async (p: {
+    ticker: string;
+    accession: string | null;
+    sourceUrl: string | null;
+  }): Promise<string> => {
+    if (!hasArtifacts) return 'unknown';
+
+    // 1) Try find an existing artifact by ticker+accession embedded in r2_key or explicit accession column.
+    if (p.accession) {
+      const found = await d1.query<{ artifact_id: string }>(
+        `SELECT artifact_id
+         FROM artifacts
+         WHERE ticker = ?
+           AND (
+             accession = ? OR r2_key LIKE '%' || ? || '%'
+           )
+         LIMIT 1;`,
+        [p.ticker, p.accession, p.accession]
+      );
+      const id = found.results?.[0]?.artifact_id;
+      if (id) return id;
+    }
+
+    // 2) Create a lightweight stub artifact row so datapoints can satisfy FK constraints.
+    //    This is provenance-minimal (still ties datapoints to an artifact_id + run_id).
+    const artifactId = crypto.randomUUID();
+    const r2Bucket = 'dat-tracker-filings';
+    const r2Key = p.accession ? `sec/companyfacts/${p.ticker}/${p.accession}.json` : `sec/companyfacts/${p.ticker}/unknown.json`;
+
+    await d1.query(
+      `INSERT OR IGNORE INTO artifacts (
+         artifact_id, source_type, source_url, content_hash, fetched_at,
+         r2_bucket, r2_key, cik, ticker, accession
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      [
+        artifactId,
+        'sec_companyfacts_xbrl',
+        p.sourceUrl,
+        null,
+        nowIso,
+        r2Bucket,
+        r2Key,
+        null,
+        p.ticker,
+        p.accession,
+      ]
+    );
+
+    return artifactId;
+  };
+
   if (!dryRun && hasRuns) {
     await d1.query(
       `INSERT OR IGNORE INTO runs (run_id, started_at, ended_at, trigger, code_sha, notes)
@@ -146,21 +197,11 @@ async function main() {
 
     extracted++;
 
-    // Best-effort artifact linkage.
-    // If artifacts table exists, try to find one with ticker + accession in r2_key.
-    // Otherwise, set artifact_id to null (D1 FK might allow null; if not, this will fail and we’ll revisit).
-    let artifactId: string | null = null;
-    if (hasArtifacts && x.accessionNumber) {
-      const a = await d1.query<{ artifact_id: string }>(
-        `SELECT artifact_id
-         FROM artifacts
-         WHERE ticker = ?
-           AND r2_key LIKE '%' || ? || '%'
-         LIMIT 1;`,
-        [ticker, x.accessionNumber]
-      );
-      artifactId = a.results?.[0]?.artifact_id || null;
-    }
+    const artifactId = await ensureArtifacts({
+      ticker,
+      accession: x.accessionNumber || null,
+      sourceUrl: x.secUrl || null,
+    });
 
     for (const r of rows) {
       if (!r.as_of) {
