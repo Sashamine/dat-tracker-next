@@ -49,14 +49,29 @@ export async function GET(request: NextRequest) {
       params
     );
 
-    // Near-duplicate diagnostic: same (entity_id, action_type, ratio) with multiple dates
-    const nearDupes = await d1.query<{ entity_id: string; action_type: string; ratio: number; dates: number }>(
-      `SELECT entity_id, action_type, ratio, COUNT(DISTINCT effective_date) as dates
-       FROM corporate_actions
-       ${where}
-       GROUP BY entity_id, action_type, ratio
-       HAVING dates > 1
-       ORDER BY dates DESC
+    // Anomaly diagnostic: same (entity_id, action_type, ratio) with two effective dates within +/- 1 day.
+    // This catches churn like June 30 vs July 1 while ignoring legitimately repeated ratios years apart.
+    const nearDupes = await d1.query<{ entity_id: string; action_type: string; ratio: number; date_a: string; date_b: string; days_apart: number }>(
+      `WITH pairs AS (
+         SELECT
+           a.entity_id,
+           a.action_type,
+           a.ratio,
+           a.effective_date AS date_a,
+           b.effective_date AS date_b,
+           ABS(julianday(a.effective_date) - julianday(b.effective_date)) AS days_apart
+         FROM corporate_actions a
+         JOIN corporate_actions b
+           ON b.entity_id = a.entity_id
+          AND b.action_type = a.action_type
+          AND b.ratio = a.ratio
+          AND b.effective_date > a.effective_date
+         ${ticker ? 'WHERE a.entity_id = ?' : ''}
+       )
+       SELECT entity_id, action_type, ratio, date_a, date_b, days_apart
+       FROM pairs
+       WHERE days_apart <= 1
+       ORDER BY days_apart ASC, entity_id ASC
        LIMIT 200;`,
       params
     );
@@ -67,7 +82,7 @@ export async function GET(request: NextRequest) {
       total: totals.results[0]?.cnt || 0,
       byTicker: byTicker.results,
       byType: byType.results,
-      multiDateSameRatio: nearDupes.results,
+      nearDuplicatePairs: nearDupes.results,
     });
   } catch (err) {
     return NextResponse.json(
