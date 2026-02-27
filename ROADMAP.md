@@ -1,8 +1,39 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-02-24
-> **Current Phase**: 10a - Cloudflare Provenance Pipeline (R2 + D1 + Workers)
-> **Status**: Cloudflare R2 bucket(s) exist and are populated. D1 database `dat-tracker` created with core provenance tables (artifacts/runs/datapoints). Next work is R2 inventory → artifacts backfill → 30-min ingestion → agent-optimized read APIs.
+> **Last Updated**: 2026-02-27
+> **Current Phase**: 10e-lite → 10b/10c/10d (Provenance + agent-read APIs + ingestion)
+
+---
+
+## AGENTS WORKBOARD (live)
+
+**Legend:** Agent 1 = this assistant
+
+Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
+
+### Now (in progress)
+- **Phase B: Backfill quarter-end `basic_shares` into D1**
+  - **Owner:** Agent 2
+  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
+  - **Status:** D1 schema mismatch fixed (use `datapoints.as_of` instead of `artifacts.filed_at/period_end`). Needs merge + workflow dry-run + real run.
+  - **DoD:** Dry-run summary looks sane; then write mode for 1 ticker/date-range; then expand.
+
+- **10b: R2 inventory → artifacts backfill**
+  - **Owner:** Agent 1
+  - **PR:** #47 https://github.com/Sashamine/dat-tracker-next/pull/47
+  - **Status:** Workflow + script ready; merge PR then run dry-run inventory; then write mode.
+  - **DoD:** artifacts rows exist for existing R2 objects (at least for key prefixes we use).
+
+### Next (queued)
+- **10d: Verification + confidence scoring**
+  - Automated checks + DLQ/manual review routing (per CLAUDE.md).
+- **UI: Split miner vs treasury sector stats** (from older notes)
+
+### Done (recent)
+- **Phase A: Split-proof treasury yield**
+  - Merged PR #38 (normalize shares via `corporate_actions` at read-time)
+- **10e-lite: Agent-optimized read APIs (value + receipts)**
+  - Merged PR #44 (`/api/company/[ticker]/metrics` + `/api/company/[ticker]/metric/[metric]`)
 
 ---
 
