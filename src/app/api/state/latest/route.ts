@@ -24,13 +24,14 @@ export async function GET(req: Request) {
       const v = JSON.parse(vRaw) as { okTickers?: string[] };
       const ok = new Set((v.okTickers || []).map((t) => String(t).toUpperCase()));
       if (!ok.has(tickerRaw.toUpperCase())) {
-        const meta = { generatedAt: (v as any).generatedAt ?? null, okCount: (v as any).okCount ?? null, total: (v as any).total ?? null, runId: (v as any).runId ?? null };
+        const vm = v as { generatedAt?: string; okCount?: number; total?: number; runId?: string };
+        const meta = { generatedAt: vm.generatedAt ?? null, okCount: vm.okCount ?? null, total: vm.total ?? null, runId: vm.runId ?? null };
         return NextResponse.json(
           { error: 'not_verified', message: `Ticker ${tickerRaw} is not in latest-verified set. Use ?raw=1 to bypass.`, latestVerified: meta },
           { status: 404 }
         );
       }
-    } catch (e: any) {
+    } catch {
       // If the manifest is missing/unreadable, fall back to raw behavior.
     }
   }
@@ -43,8 +44,9 @@ export async function GET(req: Request) {
     let raw: string;
     try {
       raw = await fs.readFile(pExact, 'utf8');
-    } catch (e: any) {
-      if (String(e?.code || '') !== 'ENOENT') throw e;
+    } catch (e: unknown) {
+      const err = e as { code?: string };
+      if (String(err?.code || '') !== 'ENOENT') throw e;
       raw = await fs.readFile(pUpper, 'utf8');
     }
 
@@ -52,8 +54,9 @@ export async function GET(req: Request) {
     const res = NextResponse.json(json, { status: 200 });
     res.headers.set('Cache-Control', 'public, max-age=30, s-maxage=30');
     return res;
-  } catch (e: any) {
-    const code = String(e?.code || 'unknown');
+  } catch (e: unknown) {
+    const err = e as { code?: string; message?: string };
+    const code = String(err?.code || 'unknown');
     if (code === 'ENOENT') {
       return NextResponse.json(
         {
@@ -64,7 +67,7 @@ export async function GET(req: Request) {
       );
     }
     return NextResponse.json(
-      { error: 'read_failed', message: String(e?.message || e) },
+      { error: 'read_failed', message: String(err?.message || e) },
       { status: 500 }
     );
   }

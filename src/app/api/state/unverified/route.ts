@@ -29,11 +29,23 @@ export async function GET(req: Request) {
 
     const reportPath = path.join(latest.p, 'report.json');
     const reportRaw = await fs.readFile(reportPath, 'utf8');
-    const report = JSON.parse(reportRaw) as any;
+    const report = JSON.parse(reportRaw) as {
+      runId?: string;
+      generatedAt?: string;
+      total?: number;
+      okCount?: number;
+      failCount?: number;
+      results?: Array<{
+        ok?: boolean;
+        ticker?: string;
+        hardIssues?: unknown[];
+        warnIssues?: unknown[];
+      }>;
+    };
 
     const unverified = (report.results || [])
-      .filter((r: any) => !r.ok)
-      .map((r: any) => ({ ticker: r.ticker, hardIssues: r.hardIssues || [], warnIssues: r.warnIssues || [] }))
+      .filter((r) => !r.ok)
+      .map((r) => ({ ticker: r.ticker, hardIssues: r.hardIssues || [], warnIssues: r.warnIssues || [] }))
       .slice(0, limit);
 
     const res = NextResponse.json(
@@ -50,7 +62,8 @@ export async function GET(req: Request) {
     );
     res.headers.set('Cache-Control', 'public, max-age=30, s-maxage=30');
     return res;
-  } catch (e: any) {
-    return NextResponse.json({ error: 'read_failed', message: String(e?.message || e) }, { status: 500 });
+  } catch (e: unknown) {
+    const err = e as { message?: string };
+    return NextResponse.json({ error: 'read_failed', message: String(err?.message || e) }, { status: 500 });
   }
 }
