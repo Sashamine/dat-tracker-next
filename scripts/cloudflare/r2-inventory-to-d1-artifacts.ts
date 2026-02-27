@@ -199,10 +199,10 @@ async function main() {
     errors: 0,
   };
 
+  let cursor: string | undefined = startCursor;
+
   // For chaining chunked runs
   let lastCursor: string | undefined;
-
-  let cursor: string | undefined = startCursor;
 
   while (true) {
     const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit);
