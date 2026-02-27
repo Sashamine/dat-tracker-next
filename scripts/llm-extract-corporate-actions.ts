@@ -434,7 +434,13 @@ async function main() {
           }
               // Validate that the quote indicates the action was actually effected
           if (!quoteIndicatesEffected(ca.quote, ca.effective_date)) {
-                    console.log(`  reject: quote does not indicate action took effect ratio=${ca.ratio}`);
+                    const qShort = String(ca.quote || '')
+                      .replace(/\s+/g, ' ')
+                      .trim()
+                      .slice(0, 420);
+                    console.log(
+                      `  reject: quote does not indicate action took effect ratio=${ca.ratio} effective_date=${ca.effective_date} action_type=${ca.action_type} confidence=${ca.confidence} quote="${qShort}"`
+                    );
                     bump(rejectCounts, 'not_effected');
                     continue;
           }
