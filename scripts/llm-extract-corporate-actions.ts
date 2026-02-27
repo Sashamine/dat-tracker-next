@@ -98,6 +98,19 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
         /\beffected\b.{0,60}\breverse stock split\b/i.test(quote) ||
         /\beffected\b.{0,60}\bstock split\b/i.test(quote);
     if (pastTense) return true;
+
+    // Treat "began trading on a split-adjusted basis" as effectiveness evidence.
+    // This phrase is common in proxy/information statements and indicates the action has already occurred.
+    const splitAdjusted =
+        q.includes('began trading on a split-adjusted basis') ||
+        q.includes('began trading on a split adjusted basis') ||
+        q.includes('began trading on a split-adjusted') ||
+        q.includes('began trading on a split adjusted') ||
+        q.includes('trading on a split-adjusted basis') ||
+        q.includes('trading on a split adjusted basis') ||
+        q.includes('on a split-adjusted basis') ||
+        q.includes('on a split adjusted basis');
+    if (splitAdjusted && isPastOrToday(effectiveDate)) return true;
     // Allow future-tense announcements ONLY if the effective_date has already passed.
   // This lets us capture "will become effective on 2025-09-15" once we are past that date.
   const futureTense =
@@ -376,7 +389,21 @@ async function main() {
         }
 
       // Use a centered chunk around the first keyword hit to reduce noise and ensure the ratio sentence is included.
-      const llmText = hits.length ? centeredChunk(text, hits[0].index, 12000) : text;
+      // Some filings (notably 14C/14A) mention an already-effective split later as
+      // "began trading on a split-adjusted basis ..."; that evidence can be far from the
+      // first keyword hit. In that case, include a secondary chunk centered on split-adjusted.
+      let llmText = hits.length ? centeredChunk(text, hits[0].index, 12000) : text;
+
+      const tLower = text.toLowerCase();
+      const splitAdjustedIdx = tLower.indexOf('split-adjusted');
+      const splitAdjustedIdx2 = splitAdjustedIdx >= 0 ? splitAdjustedIdx : tLower.indexOf('split adjusted');
+      if (splitAdjustedIdx2 >= 0) {
+        const secondary = centeredChunk(text, splitAdjustedIdx2, 12000);
+        // Append the secondary chunk if the primary chunk doesn't already include split-adjusted context.
+        if (!llmText.toLowerCase().includes('split-adjusted') && !llmText.toLowerCase().includes('split adjusted')) {
+          llmText = `${llmText}\n\n---\n\n[secondary chunk: split-adjusted context]\n${secondary}`;
+        }
+      }
 
       const extracted = await extractWithOpenAI({
               ticker,
