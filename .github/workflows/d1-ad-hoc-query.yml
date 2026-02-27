@@ -1,0 +1,37 @@
+name: D1 Ad Hoc Query
+
+on:
+  workflow_dispatch:
+    inputs:
+      sql:
+        description: "SQL to run (use ? placeholders for params)"
+        required: true
+      params:
+        description: "Comma-separated params (optional)"
+        required: false
+        default: ""
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run query
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx scripts/d1-ad-hoc-query.ts \
+            --sql="${{ inputs.sql }}" \
+            --params="${{ inputs.params }}"
