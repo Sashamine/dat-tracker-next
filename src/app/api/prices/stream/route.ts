@@ -216,7 +216,7 @@ async function fetchForexRates(): Promise<Record<string, number>> {
 
 // Fetch stock quotes from FMP REST API (for initial data)
 // Note: Extended hours data requires legacy FMP subscription, so we only get regular market prices
-async function fetchFMPStockQuotes(): Promise<Record<string, unknown>> {
+async function fetchFMPStockQuotes(): Promise<Record<string, { price?: number; marketCap?: number; prevClose?: number; [k: string]: unknown }>> {
   if (!FMP_API_KEY) return {};
 
   try {
@@ -225,7 +225,7 @@ async function fetchFMPStockQuotes(): Promise<Record<string, unknown>> {
     const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
-    const result: Record<string, unknown> = {};
+    const result: Record<string, { price?: number; marketCap?: number; prevClose?: number; [k: string]: unknown }> = {};
     if (Array.isArray(data)) {
       for (const stock of data) {
         if (stock?.symbol) {
@@ -314,12 +314,13 @@ async function fetchAllPrices() {
   const marketOpen = isMarketOpen();
   const extendedHours = isExtendedHours();
 
-  const [cryptoPrices, stockPrices, yahooStocks, forexRates] = await Promise.all([
+  const [cryptoPrices, stockPrices, yahooStocksRaw, forexRates] = await Promise.all([
     fetchCryptoPrices(),
     fetchFMPStockQuotes(),
     fetchYahooStocks(),
     fetchForexRates(),
   ]);
+  const yahooStocks = yahooStocksRaw as Record<string, { price: number; marketCap?: number; [k: string]: unknown }>;
 
   // Convert foreign stock prices to USD
   console.log("[Stream DEBUG] Forex rates:", forexRates);
@@ -334,14 +335,16 @@ async function fetchAllPrices() {
             rawPrice: data.price,
             currency,
             rate,
-            convertedPrice: data.price / rate,
+            convertedPrice: (data.price ?? 0) / rate,
             rawMarketCap: data.marketCap,
           });
         }
         stockPrices[ticker] = {
           ...data,
-          price: convertPriceToUsd(data.price, currency, forexRates),
-          prevClose: data.prevClose ? convertPriceToUsd(data.prevClose, currency, forexRates) : convertPriceToUsd(data.price, currency, forexRates),
+          price: convertPriceToUsd(data.price ?? 0, currency, forexRates),
+          prevClose: data.prevClose
+            ? convertPriceToUsd(data.prevClose, currency, forexRates)
+            : convertPriceToUsd(data.price ?? 0, currency, forexRates),
         };
       }
     }
@@ -372,7 +375,7 @@ async function fetchAllPrices() {
     stockPrices[ticker] = {
       ...data,
       price: priceUsd,
-      prevClose: rate && rate > 0 ? data.prevClose / rate : data.prevClose,
+      prevClose: rate && rate > 0 ? (Number(data.prevClose ?? 0) / rate) : Number(data.prevClose ?? 0),
       marketCap: applyMarketCapOverride(ticker, calculatedMarketCap),
     };
   }

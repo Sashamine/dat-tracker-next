@@ -293,7 +293,7 @@ export async function GET() {
     }
 
     // Format stock prices
-    const stockPrices: Record<string, unknown> = {};
+    const stockPrices: Record<string, { price?: number; [k: string]: unknown }> = {};
 
     for (const ticker of alpacaStockTickers) {
       const snapshot = (stockSnapshots as Record<string, unknown>)[ticker] as {
@@ -333,10 +333,12 @@ export async function GET() {
       const priceUsd = convertPriceToUsd(dataObj.price || 0, currency, forexRates);
       
       stockPrices[displayTicker] = {
-        ...data,
+        ...(dataObj ?? {}),
         price: priceUsd,
         // Apply market cap override if available (fixes currency conversion issues)
-        marketCap: applyMarketCapOverride(displayTicker, data.marketCap),
+        marketCap: applyMarketCapOverride(displayTicker, dataObj.marketCap ?? 0),
+        change24h: dataObj.change24h,
+        volume: dataObj.volume,
       };
     }
 
@@ -354,14 +356,14 @@ export async function GET() {
       const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : 0;
       
       stockPrices[ticker] = {
-        ...data,
+        ...(dataObj ?? {}),
         price: priceUsd,
         // Use override or calculate from fallback based on new price
         marketCap: applyMarketCapOverride(ticker, calculatedMarketCap),
       };
       
       if (currency) {
-        console.log(`[Yahoo] ${ticker} converted: ${data.price} ${currency} → $${priceUsd.toFixed(4)} USD (rate: ${rate})`);
+        console.log(`[Yahoo] ${ticker} converted: ${dataObj.price} ${currency} → $${priceUsd.toFixed(4)} USD`);
       }
     }
 
