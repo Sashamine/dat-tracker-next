@@ -315,6 +315,11 @@ async function main() {
   let skipped = 0;
   let candidates = 0;
 
+  const insertedEvents: Array<{ ticker: string; action_type: string; ratio: number; effective_date: string; artifact_id: string; r2_key: string }> = [];
+  const rejectCounts: Record<string, number> = {};
+  const candidateCounts: Record<string, number> = {};
+  const bump = (m: Record<string, number>, k: string) => (m[k] = (m[k] || 0) + 1);
+
   for (const a of artifacts.results) {
     const ticker = (a.ticker || '').toUpperCase();
     console.log(`\n[${a.source_type}] ${ticker} ${a.r2_key}`);
@@ -379,6 +384,7 @@ async function main() {
     }
 
     candidates += 1;
+    bump(candidateCounts, ticker);
     const hits = splitKeywordHits(text).slice(0, 3);
     if (hits.length) {
       const start = Math.max(0, hits[0].index - 120);
@@ -417,29 +423,35 @@ async function main() {
       // Validate quote exists
       if (!quoteExists(text, ca.quote)) {
         console.log(`  reject: quote not found for action ratio=${ca.ratio}`);
+        bump(rejectCounts, 'quote_not_found');
         continue;
       }
       // Validate that the quote indicates the action was actually effected
       if (!quoteIndicatesEffected(ca.quote, ca.effective_date)) {
         console.log(`  reject: quote does not indicate action took effect ratio=${ca.ratio}`);
+        bump(rejectCounts, 'not_effected');
         continue;
       }
       // Validate ratio sanity
       if (!Number.isFinite(ca.ratio) || ca.ratio <= 0 || ca.ratio > 1000) {
         console.log(`  reject: invalid ratio ${ca.ratio}`);
+        bump(rejectCounts, 'invalid_ratio');
         continue;
       }
       // Require effective_date for inserts (avoid dedupe key drift from fallback-to-fetched_at)
       if (!ca.effective_date) {
         console.log(`  reject: missing effective_date for action ratio=${ca.ratio}`);
+        bump(rejectCounts, 'missing_effective_date');
         continue;
       }
       if (!isYyyyMmDd(ca.effective_date)) {
         console.log(`  reject: invalid effective_date ${ca.effective_date}`);
+        bump(rejectCounts, 'invalid_effective_date');
         continue;
       }
       if (!Number.isFinite(ca.confidence) || ca.confidence < 0 || ca.confidence > 1) {
         console.log(`  reject: invalid confidence ${ca.confidence}`);
+        bump(rejectCounts, 'invalid_confidence');
         continue;
       }
 
@@ -456,6 +468,7 @@ async function main() {
       );
       if ((near.results[0]?.cnt || 0) > 0) {
         console.log(`  skip: near-duplicate existing action within 1 day ratio=${ca.ratio} effective_date=${ca.effective_date}`);
+        bump(rejectCounts, 'near_duplicate');
         skipped += 1;
         continue;
       }
@@ -484,6 +497,14 @@ async function main() {
         ]
       );
       inserted += 1;
+      insertedEvents.push({
+        ticker,
+        action_type: ca.action_type,
+        ratio: ca.ratio,
+        effective_date: ca.effective_date,
+        artifact_id: a.artifact_id,
+        r2_key: a.r2_key,
+      });
       console.log(
         `  inserted ${ca.action_type} ratio=${ca.ratio} effective_date=${ca.effective_date} artifact_id=${a.artifact_id} key=${a.r2_key}`
       );
@@ -491,6 +512,34 @@ async function main() {
   }
 
   console.log(`\nDone. candidates=${candidates} inserted=${inserted} skipped=${skipped}`);
+
+  // Run-only audit report (compact)
+  console.log('\n=== Corporate Actions Audit (run-only) ===');
+  if (insertedEvents.length) {
+    console.log('Inserted actions:');
+    for (const ev of insertedEvents) {
+      console.log(
+        `- ${ev.ticker} ${ev.action_type} ratio=${ev.ratio} effective_date=${ev.effective_date} artifact_id=${ev.artifact_id} key=${ev.r2_key}`
+      );
+    }
+  } else {
+    console.log('Inserted actions: (none)');
+  }
+
+  const rejectKeys = Object.keys(rejectCounts).sort((a, b) => (rejectCounts[b] || 0) - (rejectCounts[a] || 0));
+  if (rejectKeys.length) {
+    console.log('Reject/skip reasons:');
+    for (const k of rejectKeys) console.log(`- ${k}: ${rejectCounts[k]}`);
+  } else {
+    console.log('Reject/skip reasons: (none)');
+  }
+
+  const candKeys = Object.keys(candidateCounts).sort((a, b) => (candidateCounts[b] || 0) - (candidateCounts[a] || 0));
+  if (candKeys.length) {
+    console.log('Candidates by ticker:');
+    for (const k of candKeys.slice(0, 20)) console.log(`- ${k}: ${candidateCounts[k]}`);
+    if (candKeys.length > 20) console.log(`... +${candKeys.length - 20} more`);
+  }
 }
 
 main().catch(err => {
