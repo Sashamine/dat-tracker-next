@@ -56,6 +56,11 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "XXI": "0001865602",   // Twenty One Capital (Cantor Equity Partners)
   "CEPO": "0001865602",  // Same as XXI
   "ASST": "0001920406",  // Strive (acquired Semler Jan 2026)
+
+  // Manual CIK mappings (missing from SEC ticker list / symbol quirks)
+  "SMLR": "0001434588",  // Semler Scientific
+  "SDIG": "0001856028",  // Stronghold Digital Mining
+
   // NXTT removed - miner without verified HODL/treasury strategy
   "ABTC": "0002068580",  // American Bitcoin (miner with HODL strategy)
   // ETH
