@@ -17,6 +17,7 @@ import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
 import { getBMNRQuarterEndData } from "./bmnr-holdings-history";
 import { getMARAQuarterEndDataForEarnings } from "./mara-holdings-history";
+import { normalizeShares } from "@/lib/corporate-actions";
 
 /**
  * Derives calendar year/quarter directly from an XBRL period end date.
@@ -3998,6 +3999,23 @@ export function getEarningsCalendar(options?: {
   return entries;
 }
 
+type CorporateActionLite = { effective_date: string; ratio: number };
+export type CorporateActionsByTicker = Record<string, CorporateActionLite[]>;
+
+function holdingsPerShareCurrentBasis(params: {
+  holdings: number;
+  sharesOutstanding: number;
+  asOf: string;
+  actions: CorporateActionLite[];
+}): number | null {
+  if (!params.sharesOutstanding || params.sharesOutstanding <= 0) return null;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(params.asOf)) return null;
+
+  const normShares = normalizeShares(params.sharesOutstanding, params.actions || [], params.asOf, 'current');
+  if (!Number.isFinite(normShares) || normShares <= 0) return null;
+  return params.holdings / normShares;
+}
+
 // Target days for each period, with max allowed span (2x target)
 const PERIOD_CONFIG: Record<string, { target: number; max: number }> = {
   "1W": { target: 7, max: 14 },
@@ -4011,8 +4029,9 @@ const PERIOD_CONFIG: Record<string, { target: number; max: number }> = {
 export function getTreasuryYieldLeaderboard(options?: {
   period?: "1W" | "1M" | "3M" | "1Y";
   asset?: Asset;
+  actionsByTicker?: CorporateActionsByTicker;
 }): TreasuryYieldMetrics[] {
-  const { period = "1Y", asset } = options || {};
+  const { period = "1Y", asset, actionsByTicker } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
   const config = PERIOD_CONFIG[period];
 
@@ -4069,8 +4088,27 @@ export function getTreasuryYieldLeaderboard(options?: {
     // Data span must be reasonable for this period (not more than 2x target)
     if (daysCovered <= 0 || daysCovered > config.max) continue;
 
+    const actions = actionsByTicker?.[ticker] || [];
+
+    const startValue = holdingsPerShareCurrentBasis({
+      holdings: startSnapshot.holdings,
+      sharesOutstanding: startSnapshot.sharesOutstanding,
+      asOf: startSnapshot.date,
+      actions,
+    });
+
+    const endValue = holdingsPerShareCurrentBasis({
+      holdings: latest.holdings,
+      sharesOutstanding: latest.sharesOutstanding,
+      asOf: latest.date,
+      actions,
+    });
+
+    if (!startValue || startValue <= 0) continue;
+    if (!endValue || endValue <= 0) continue;
+
     // Calculate actual growth over the data span
-    const growthPct = ((latest.holdingsPerShare / startSnapshot.holdingsPerShare) - 1) * 100;
+    const growthPct = ((endValue / startValue) - 1) * 100;
 
     // Annualized growth for comparison
     const dailyRate = growthPct / 100 / daysCovered;
@@ -4081,8 +4119,8 @@ export function getTreasuryYieldLeaderboard(options?: {
       companyName: company.name,
       asset: company.asset,
       period,
-      holdingsPerShareStart: startSnapshot.holdingsPerShare,
-      holdingsPerShareEnd: latest.holdingsPerShare,
+      holdingsPerShareStart: startValue,
+      holdingsPerShareEnd: endValue,
       growthPct,
       annualizedGrowthPct,
       startDate: startSnapshot.date,
@@ -4176,8 +4214,9 @@ function interpolateHoldingsPerShare(
 export function getQuarterlyYieldLeaderboard(options?: {
   quarter?: CalendarQuarter;
   asset?: Asset;
+  actionsByTicker?: CorporateActionsByTicker;
 }): TreasuryYieldMetrics[] {
-  const { quarter = getAvailableQuarters()[0], asset } = options || {};
+  const { quarter = getAvailableQuarters()[0], asset, actionsByTicker } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
@@ -4195,8 +4234,21 @@ export function getQuarterlyYieldLeaderboard(options?: {
     const latest = history[history.length - 1];
     const previous = history[history.length - 2];
 
-    const startValue = previous.holdingsPerShare;
-    const endValue = latest.holdingsPerShare;
+    const actions = actionsByTicker?.[ticker] || [];
+
+    const startValue = holdingsPerShareCurrentBasis({
+      holdings: previous.holdings,
+      sharesOutstanding: previous.sharesOutstanding,
+      asOf: previous.date,
+      actions,
+    });
+
+    const endValue = holdingsPerShareCurrentBasis({
+      holdings: latest.holdings,
+      sharesOutstanding: latest.sharesOutstanding,
+      asOf: latest.date,
+      actions,
+    });
 
     // Skip if invalid data
     if (!startValue || startValue <= 0) continue;
@@ -4252,8 +4304,9 @@ export function getQuarterlyYieldLeaderboard(options?: {
 export function getHoldingsGrowthByPeriod(options?: {
   days?: number;
   asset?: Asset;
+  actionsByTicker?: CorporateActionsByTicker;
 }): TreasuryYieldMetrics[] {
-  const { days, asset } = options || {};
+  const { days, asset, actionsByTicker } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
   const now = new Date();
   const cutoffDate = days ? new Date(now.getTime() - days * 24 * 60 * 60 * 1000) : null;
@@ -4292,8 +4345,21 @@ export function getHoldingsGrowthByPeriod(options?: {
 
     if (!startSnapshot) continue;
 
-    const startValue = startSnapshot.holdingsPerShare;
-    const endValue = latest.holdingsPerShare;
+    const actions = actionsByTicker?.[ticker] || [];
+
+    const startValue = holdingsPerShareCurrentBasis({
+      holdings: startSnapshot.holdings,
+      sharesOutstanding: startSnapshot.sharesOutstanding,
+      asOf: startSnapshot.date,
+      actions,
+    });
+
+    const endValue = holdingsPerShareCurrentBasis({
+      holdings: latest.holdings,
+      sharesOutstanding: latest.sharesOutstanding,
+      asOf: latest.date,
+      actions,
+    });
 
     // Skip if invalid data
     if (!startValue || startValue <= 0) continue;
