@@ -169,6 +169,7 @@ async function main() {
   const dryRun = (process.env.DRY_RUN || 'true').toLowerCase() === 'true';
   const pageLimit = parseInt(process.env.R2_LIST_LIMIT || '1000', 10);
   const maxObjects = parseInt(process.env.MAX_OBJECTS || '0', 10); // 0 = unlimited
+  const startCursor = (process.env.R2_CURSOR || '').trim() || undefined;
 
   if (!bucket) throw new Error('Missing R2_BUCKET');
 
@@ -182,10 +183,14 @@ async function main() {
     errors: 0,
   };
 
-  let cursor: string | undefined = undefined;
+  // For chaining chunked runs
+  let lastCursor: string | undefined = cursor;
+
+  let cursor: string | undefined = startCursor;
 
   while (true) {
     const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit);
+    lastCursor = next;
 
     for (const obj of objects) {
       if (maxObjects && summary.scanned >= maxObjects) break;
@@ -227,7 +232,7 @@ async function main() {
   }
 
   // eslint-disable-next-line no-console
-  console.log(JSON.stringify({ success: true, dryRun, summary }, null, 2));
+  console.log(JSON.stringify({ success: true, dryRun, startCursor, nextCursor: lastCursor || null, summary }, null, 2));
 }
 
 main().catch((err) => {
