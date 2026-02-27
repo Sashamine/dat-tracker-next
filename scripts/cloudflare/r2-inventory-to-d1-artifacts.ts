@@ -34,6 +34,8 @@ type InventorySummary = {
   skipped: number;
   unknownSourceType: number;
   errors: number;
+  unknownKeysSample?: string[];
+  unknownFirstSegCounts?: Record<string, number>;
 };
 
 function sha256(input: string): string {
@@ -44,7 +46,9 @@ function classifySourceTypeFromKey(key: string): string | null {
   const k = key.toLowerCase();
 
   // Explicit pipeline prefixes (preferred)
-  if (k.startsWith('sec/')) return 'sec';
+  if (k.startsWith('sec/xbrl/')) return 'sec_xbrl';
+  if (k.startsWith('sec/companyfacts/')) return 'sec_companyfacts';
+  if (k.startsWith('sec/')) return 'sec_filing';
   if (k.startsWith('sedar/')) return 'sedar';
   if (k.startsWith('dashboard/')) return 'dashboard';
   if (k.startsWith('manual/')) return 'manual';
@@ -57,9 +61,23 @@ function classifySourceTypeFromKey(key: string): string | null {
   // For these, treat as SEC filings unless we have a better classifier.
   const firstSeg = k.split('/')[0];
   if (/^[a-z0-9]{1,10}$/.test(firstSeg)) {
-    if (k.includes('/10k/') || k.includes('/10q/') || k.includes('/8k/') || k.includes('/6k/') || k.includes('/20f/') || k.includes('/424b')) {
+    if (
+      k.includes('/10k/') ||
+      k.includes('/10q/') ||
+      k.includes('/8k/') ||
+      k.includes('/6k/') ||
+      k.includes('/20f/') ||
+      k.includes('/424b') ||
+      k.includes('/s-3') ||
+      k.includes('/s3') ||
+      k.includes('/f-3') ||
+      k.includes('/f3')
+    ) {
       return 'sec_filing';
     }
+
+    if (k.includes('/xbrl/')) return 'sec_xbrl';
+    if (k.includes('companyfacts')) return 'sec_companyfacts';
   }
 
   return null;
@@ -169,6 +187,7 @@ async function main() {
   const dryRun = (process.env.DRY_RUN || 'true').toLowerCase() === 'true';
   const pageLimit = parseInt(process.env.R2_LIST_LIMIT || '1000', 10);
   const maxObjects = parseInt(process.env.MAX_OBJECTS || '0', 10); // 0 = unlimited
+  const startCursor = (process.env.R2_CURSOR || '').trim() || undefined;
 
   if (!bucket) throw new Error('Missing R2_BUCKET');
 
@@ -180,19 +199,33 @@ async function main() {
     skipped: 0,
     unknownSourceType: 0,
     errors: 0,
+    unknownKeysSample: [],
+    unknownFirstSegCounts: {},
   };
 
-  let cursor: string | undefined = undefined;
+  let cursor: string | undefined = startCursor;
+
+  // For chaining chunked runs
+  let lastCursor: string | undefined;
 
   while (true) {
     const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit);
+    lastCursor = next;
 
     for (const obj of objects) {
       if (maxObjects && summary.scanned >= maxObjects) break;
       summary.scanned++;
 
       const sourceType = classifySourceTypeFromKey(obj.key);
-      if (!sourceType) summary.unknownSourceType++;
+      if (!sourceType) {
+        summary.unknownSourceType++;
+
+        // Keep a small sample for debugging classifier gaps
+        if ((summary.unknownKeysSample?.length || 0) < 25) summary.unknownKeysSample?.push(obj.key);
+
+        const firstSeg = obj.key.split('/')[0] || '(empty)';
+        summary.unknownFirstSegCounts![firstSeg] = (summary.unknownFirstSegCounts![firstSeg] || 0) + 1;
+      }
 
       // Deterministic artifact_id: bucket+key
       const artifactId = sha256(`${bucket}:${obj.key}`);
@@ -227,7 +260,7 @@ async function main() {
   }
 
   // eslint-disable-next-line no-console
-  console.log(JSON.stringify({ success: true, dryRun, summary }, null, 2));
+  console.log(JSON.stringify({ success: true, dryRun, startCursor, nextCursor: lastCursor || null, summary }, null, 2));
 }
 
 main().catch((err) => {

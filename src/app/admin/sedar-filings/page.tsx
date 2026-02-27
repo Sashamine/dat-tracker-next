@@ -212,6 +212,16 @@ export default function SedarFilingsPage() {
           <p className="text-gray-600 dark:text-gray-400">
             Track and process Canadian regulatory filings for IHLDF, XTAIF, and LUXFF.
           </p>
+
+          <div className="mt-3 flex items-center gap-2 text-sm">
+            <Link href="/admin/data-health" className="text-indigo-600 dark:text-indigo-400 hover:underline">
+              Data Health
+            </Link>
+            <span className="text-gray-300 dark:text-gray-700">•</span>
+            <Link href="/admin/corporate-actions" className="text-indigo-600 dark:text-indigo-400 hover:underline">
+              Corporate Actions
+            </Link>
+          </div>
         </div>
 
         {/* Summary Cards */}
