@@ -1,6 +1,7 @@
 // GET /api/earnings/yield-leaderboard - Treasury yield rankings (quarterly-based)
 import { NextResponse } from "next/server";
-import { getQuarterlyYieldLeaderboard, getAvailableQuarters } from "@/lib/data/earnings-data";
+import { getQuarterlyYieldLeaderboard, getAvailableQuarters, type CorporateActionsByTicker } from "@/lib/data/earnings-data";
+import { D1Client } from "@/lib/d1";
 import { Asset, CalendarQuarter } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -23,9 +24,28 @@ export async function GET(request: Request) {
       ? quarterParam
       : availableQuarters[0];
 
+    // Preload corporate_actions once and pass into pure computation.
+    // (Avoids async/DB access inside earnings-data.ts which is used by client components too.)
+    let actionsByTicker: CorporateActionsByTicker | undefined = undefined;
+    if (process.env.CLOUDFLARE_ACCOUNT_ID && process.env.CLOUDFLARE_D1_DATABASE_ID && process.env.CLOUDFLARE_API_TOKEN) {
+      const d1 = D1Client.fromEnv();
+      const out = await d1.query<{ entity_id: string; effective_date: string; ratio: number }>(
+        `SELECT entity_id, effective_date, ratio
+         FROM corporate_actions
+         ORDER BY entity_id ASC, effective_date ASC, created_at ASC;`
+      );
+      actionsByTicker = {};
+      for (const r of out.results) {
+        const k = (r.entity_id || '').toUpperCase();
+        if (!k) continue;
+        (actionsByTicker[k] ||= []).push({ effective_date: r.effective_date, ratio: r.ratio });
+      }
+    }
+
     const leaderboard = getQuarterlyYieldLeaderboard({
       quarter,
       asset: asset || undefined,
+      actionsByTicker,
     });
 
     return NextResponse.json({
