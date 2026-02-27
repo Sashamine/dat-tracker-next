@@ -34,6 +34,8 @@ type InventorySummary = {
   skipped: number;
   unknownSourceType: number;
   errors: number;
+  unknownKeysSample?: string[];
+  unknownFirstSegCounts?: Record<string, number>;
 };
 
 function sha256(input: string): string {
@@ -197,6 +199,8 @@ async function main() {
     skipped: 0,
     unknownSourceType: 0,
     errors: 0,
+    unknownKeysSample: [],
+    unknownFirstSegCounts: {},
   };
 
   let cursor: string | undefined = startCursor;
@@ -213,7 +217,15 @@ async function main() {
       summary.scanned++;
 
       const sourceType = classifySourceTypeFromKey(obj.key);
-      if (!sourceType) summary.unknownSourceType++;
+      if (!sourceType) {
+        summary.unknownSourceType++;
+
+        // Keep a small sample for debugging classifier gaps
+        if ((summary.unknownKeysSample?.length || 0) < 25) summary.unknownKeysSample?.push(obj.key);
+
+        const firstSeg = obj.key.split('/')[0] || '(empty)';
+        summary.unknownFirstSegCounts![firstSeg] = (summary.unknownFirstSegCounts![firstSeg] || 0) + 1;
+      }
 
       // Deterministic artifact_id: bucket+key
       const artifactId = sha256(`${bucket}:${obj.key}`);
