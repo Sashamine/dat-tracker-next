@@ -83,15 +83,23 @@ export function getSplitAdjustmentFactor(ticker: string, priceDate: string): num
  */
 export function adjustPricesForSplits(
   ticker: string,
-  prices: Array<{ time: string; open: number; high: number; low: number; close: number; volume: number }>
+  prices: Array<{ time: string; open: number; high: number; low: number; close: number; volume: number }>,
+  splitsOverride?: StockSplit[]
 ): Array<{ time: string; open: number; high: number; low: number; close: number; volume: number }> {
-  const splits = STOCK_SPLITS[ticker.toUpperCase()];
+  const splits = splitsOverride || STOCK_SPLITS[ticker.toUpperCase()];
   if (!splits || splits.length === 0) return prices;
-  
+
   return prices.map(price => {
-    const factor = getSplitAdjustmentFactor(ticker, price.time);
+    // For price adjustment, apply factor for splits AFTER the price date.
+    let factor = 1;
+    const priceDateObj = new Date(price.time);
+    for (const split of splits) {
+      const splitDateObj = new Date(split.date);
+      if (priceDateObj < splitDateObj) factor *= split.ratio;
+    }
+
     if (factor === 1) return price;
-    
+
     return {
       ...price,
       open: price.open * factor,

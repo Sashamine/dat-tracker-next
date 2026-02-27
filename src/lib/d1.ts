@@ -73,6 +73,8 @@ export class D1Client {
   }
 }
 
+import { normalizeLatestRowsForTicker } from '@/lib/d1-normalization';
+
 export type LatestDatapointRow = {
   datapoint_id: string;
   entity_id: string;
@@ -112,5 +114,8 @@ export async function getLatestMetrics(
 
   const params = [ticker.toUpperCase(), ...metrics];
   const out = await d1.query<LatestDatapointRow>(sql, params);
-  return out.results;
+
+  // Hybrid: normalize shares/prices using D1 corporate_actions when present.
+  // (Fallback behavior: if no corporate_actions exist, normalization multiplier is 1.)
+  return await normalizeLatestRowsForTicker(ticker, out.results, 'current');
 }
