@@ -36,5 +36,5 @@ jobs:
 
       # Keep CI lint signal focused on Next.js app surfaces.
       # (Legacy scripts are intentionally excluded; add a separate lint:scripts later.)
-      - name: Lint new admin page only
-        run: npx eslint src/app/admin/corporate-actions/page.tsx
+      - name: Lint admin routes
+        run: npx eslint src/app/admin
