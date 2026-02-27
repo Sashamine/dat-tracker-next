@@ -45,6 +45,9 @@ export const TICKER_TO_CIK: Record<string, string> = {
   "HUT": "0001964789",   // Hut 8 Corp
   "IREN": "0001878848",  // Iris Energy
   "WULF": "0001083301",  // TeraWulf
+
+  // Non-DAT / alias tickers (to keep SEC mapping working even when symbols change)
+  "SQ": "0001512673",    // Block, Inc. (formerly Square)
   // "HUT": "0001964789", // Removed - pivoted to AI/HPC, not a DAT company
   // CORZ/BTDR removed - miners without verified HODL/treasury strategy
   "KULR": "0001662684",  // KULR Technology
