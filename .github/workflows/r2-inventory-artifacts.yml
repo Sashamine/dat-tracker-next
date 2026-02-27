@@ -23,6 +23,10 @@ on:
         description: Page size for R2 list (max 1000)
         required: true
         default: "1000"
+      cursor:
+        description: Optional R2 list cursor/continuation token (from previous run output)
+        required: false
+        default: ""
 
 jobs:
   inventory:
@@ -51,5 +55,6 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run }}
           MAX_OBJECTS: ${{ inputs.max_objects }}
           R2_LIST_LIMIT: ${{ inputs.r2_list_limit }}
+          R2_CURSOR: ${{ inputs.cursor }}
 
         run: npx tsx scripts/cloudflare/r2-inventory-to-d1-artifacts.ts
