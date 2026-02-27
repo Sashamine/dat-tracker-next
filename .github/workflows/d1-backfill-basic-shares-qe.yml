@@ -23,6 +23,10 @@ on:
         description: "Max quarter-end datapoints to attempt"
         required: true
         default: "200"
+      lookback_days:
+        description: "Lookback window (days) when anchoring quarter ends (0 disables; default 180)"
+        required: true
+        default: "180"
 
 jobs:
   run:
@@ -46,10 +50,11 @@ jobs:
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
-          echo "tickers=${{ inputs.tickers }} from=${{ inputs.from }} to=${{ inputs.to }} dry_run=${{ inputs.dry_run }} limit=${{ inputs.limit }}"
+          echo "tickers=${{ inputs.tickers }} from=${{ inputs.from }} to=${{ inputs.to }} dry_run=${{ inputs.dry_run }} limit=${{ inputs.limit }} lookback_days=${{ inputs.lookback_days }}"
           npx tsx scripts/d1-backfill-basic-shares-qe.ts \
             --tickers=${{ inputs.tickers }} \
             --from=${{ inputs.from }} \
             --to=${{ inputs.to }} \
             --dry-run=${{ inputs.dry_run }} \
-            --limit=${{ inputs.limit }}
+            --limit=${{ inputs.limit }} \
+            --lookback-days=${{ inputs.lookback_days }}

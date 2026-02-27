@@ -106,6 +106,7 @@ async function main() {
   const qEnds = quarterEndsBetween(from, to);
 
   let inserted = 0;
+  let wouldInsert = 0;
   let skipped = 0;
   let missing = 0;
 
@@ -181,7 +182,7 @@ async function main() {
       }
 
       if (dryRun) {
-        skipped++;
+        wouldInsert++;
         continue;
       }
 
@@ -266,6 +267,7 @@ async function main() {
         to,
         quarters: qEnds.length,
         inserted,
+        wouldInsert,
         skipped,
         missing,
         hasLatest,
