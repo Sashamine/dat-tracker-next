@@ -3,6 +3,7 @@ name: lint (src/app)
 on:
   pull_request:
     paths:
+      - '.github/workflows/**'
       - 'src/app/**'
       - 'src/components/**'
       - 'src/lib/**'
@@ -11,6 +12,7 @@ on:
       - 'tsconfig*.json'
   push:
     paths:
+      - '.github/workflows/**'
       - 'src/app/**'
       - 'src/components/**'
       - 'src/lib/**'
