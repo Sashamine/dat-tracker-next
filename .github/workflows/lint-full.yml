@@ -39,5 +39,27 @@ jobs:
       # Informational only: repo has legacy lint debt.
       # We want visibility without blocking merges.
       - name: Lint (non-blocking)
-        run: npm run -s lint
-        continue-on-error: true
+        id: lint
+        run: |
+          set +e
+          npm run -s lint 2>&1 | tee lint.log
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          exit 0
+
+      - name: Lint summary (top offenders)
+        if: always()
+        run: |
+          echo "Exit code: ${{ steps.lint.outputs.exit_code }}"
+          echo ""
+          echo "Top files with errors (first 20):"
+          # Print lines like: /path/file.tsx
+          # followed by its error block; this heuristic lists file headers.
+          grep -E '^/.*\.(ts|tsx|js|mjs|cjs)$' -n lint.log | head -n 20 || true
+
+      - name: Upload lint log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-full-log
+          path: lint.log
+          if-no-files-found: ignore
