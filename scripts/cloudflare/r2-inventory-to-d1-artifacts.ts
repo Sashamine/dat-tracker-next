@@ -55,6 +55,13 @@ function classifySourceTypeFromKey(key: string): string | null {
   if (k.startsWith('dashboard/')) return 'dashboard';
   if (k.startsWith('manual/')) return 'manual';
 
+  // Legacy batch ingests: batchN/<ticker>/<accession>.txt
+  // These are SEC filing text artifacts.
+  if (/^batch\d+\//.test(k)) return 'sec_filing';
+
+  // Ad-hoc uploads (treat as manual until we add stronger conventions)
+  if (k.startsWith('new-uploads/')) return 'manual';
+
   // Heuristics based on path segments
   if (k.includes('/xbrl/')) return 'sec_xbrl';
   if (k.includes('companyfacts')) return 'sec_companyfacts';
