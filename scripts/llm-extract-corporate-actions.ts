@@ -84,8 +84,6 @@ function isPastOrToday(yyyyMmDd: string): boolean {
 
 function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
     const q = quote.toLowerCase();
-    // Always require a concrete ratio pattern in the quote.
-  if (!quoteHasRatio(quote)) return false;
     // Prefer strong, past-tense evidence.
   const pastTense =
         q.includes('became effective') ||
@@ -97,10 +95,12 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
         q.includes('effected a stock split') ||
         /\beffected\b.{0,60}\breverse stock split\b/i.test(quote) ||
         /\beffected\b.{0,60}\bstock split\b/i.test(quote);
-    if (pastTense) return true;
+    // Past-tense effectiveness statements should generally include the split ratio in the quoted evidence.
+    if (pastTense) return quoteHasRatio(quote);
 
     // Treat "began trading on a split-adjusted basis" as effectiveness evidence.
     // This phrase is common in proxy/information statements and indicates the action has already occurred.
+    // Note: filings sometimes render this as "split -adjusted" (spacing around hyphen) or different dash types.
     const splitAdjusted =
         q.includes('began trading on a split-adjusted basis') ||
         q.includes('began trading on a split adjusted basis') ||
@@ -109,7 +109,8 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
         q.includes('trading on a split-adjusted basis') ||
         q.includes('trading on a split adjusted basis') ||
         q.includes('on a split-adjusted basis') ||
-        q.includes('on a split adjusted basis');
+        q.includes('on a split adjusted basis') ||
+        /split\s*[-‑–—]?\s*adjusted\s+basis/i.test(quote);
     if (splitAdjusted && isPastOrToday(effectiveDate)) return true;
     // Allow future-tense announcements ONLY if the effective_date has already passed.
   // This lets us capture "will become effective on 2025-09-15" once we are past that date.

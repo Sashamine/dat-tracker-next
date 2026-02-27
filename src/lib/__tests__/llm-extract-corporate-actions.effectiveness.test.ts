@@ -20,7 +20,6 @@ function isPastOrToday(yyyyMmDd: string): boolean {
 
 function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
   const q = quote.toLowerCase();
-  if (!quoteHasRatio(quote)) return false;
 
   const pastTense =
     q.includes('became effective') ||
@@ -32,7 +31,7 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
     q.includes('effected a stock split') ||
     /\beffected\b.{0,60}\breverse stock split\b/i.test(quote) ||
     /\beffected\b.{0,60}\bstock split\b/i.test(quote);
-  if (pastTense) return true;
+  if (pastTense) return quoteHasRatio(quote);
 
   const splitAdjusted =
     q.includes('began trading on a split-adjusted basis') ||
@@ -42,7 +41,8 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
     q.includes('trading on a split-adjusted basis') ||
     q.includes('trading on a split adjusted basis') ||
     q.includes('on a split-adjusted basis') ||
-    q.includes('on a split adjusted basis');
+    q.includes('on a split adjusted basis') ||
+    /split\s*[-‑–—]?\s*adjusted\s+basis/i.test(quote);
   if (splitAdjusted && isPastOrToday(effectiveDate)) return true;
 
   const futureTense = q.includes('will become effective') || q.includes('becomes effective');
@@ -55,6 +55,12 @@ describe('llm-extract-corporate-actions effectiveness heuristic', () => {
   it('accepts "began trading on a split-adjusted basis" as effected evidence (NXTT-style)', () => {
     const quote =
       'On August 28, 2025, the Board approved a specific reverse stock split at a ratio of 1-for-200. The Company\'s shares of Common Stock began trading on a split-adjusted basis on The Nasdaq Capital Market on September 16, 2025.';
+    expect(quoteIndicatesEffected(quote, '2025-09-16')).toBe(true);
+  });
+
+  it('accepts split -adjusted (hyphen with spacing) as effected evidence even if ratio is not in the quote', () => {
+    const quote =
+      'The Company\'s shares of Common Stock began trading on a split -adjusted basis on The Nasdaq Capital Market on September 16, 2025, under the Company\'s existing trading symbol "NXTT".';
     expect(quoteIndicatesEffected(quote, '2025-09-16')).toBe(true);
   });
 
