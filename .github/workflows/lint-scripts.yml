@@ -34,5 +34,5 @@ jobs:
 
       # Informational only: scripts currently carry a lot of lint debt.
       - name: Lint scripts (non-blocking)
-        run: npx eslint scripts
+        run: npx eslint --no-ignore scripts
         continue-on-error: true
