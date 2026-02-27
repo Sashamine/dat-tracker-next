@@ -51,7 +51,7 @@ export default function CorporateActionsAdminPage() {
         setStatsError(null);
         const res = await fetch(`/api/d1/corporate-actions-stats?t=${Date.now()}`);
         const json = (await res.json()) as Stats;
-        if (!res.ok || !json.success) throw new Error((json as any)?.error || `HTTP ${res.status}`);
+        if (!res.ok || !json.success) throw new Error((json as { error?: string })?.error || `HTTP ${res.status}`);
         if (!cancelled) setStats(json);
       } catch (e) {
         if (!cancelled) setStatsError(e instanceof Error ? e.message : String(e));
@@ -86,7 +86,7 @@ export default function CorporateActionsAdminPage() {
     try {
       const res = await fetch(`/api/d1/corporate-actions?ticker=${encodeURIComponent(ticker)}&t=${Date.now()}`);
       const json = (await res.json()) as ActionsResponse;
-      if (!res.ok || !json.success) throw new Error((json as any)?.error || `HTTP ${res.status}`);
+      if (!res.ok || !json.success) throw new Error((json as { error?: string })?.error || `HTTP ${res.status}`);
       setActions(json.actions || []);
     } catch (e) {
       setActionsError(e instanceof Error ? e.message : String(e));

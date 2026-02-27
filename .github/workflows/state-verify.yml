@@ -3,6 +3,7 @@ name: state-verify
 on:
   push:
     paths:
+      - '.github/workflows/**'
       - 'src/**'
       - 'scripts/**'
       - 'states/**'
@@ -11,6 +12,7 @@ on:
       - 'tsconfig*.json'
   pull_request:
     paths:
+      - '.github/workflows/**'
       - 'src/**'
       - 'scripts/**'
       - 'states/**'
