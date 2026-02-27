@@ -95,7 +95,11 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
     q.includes('was effective') ||
     q.includes('has been effected') ||
     q.includes('was effected') ||
-    q.includes('was implemented');
+    q.includes('was implemented') ||
+    q.includes('effected a reverse stock split') ||
+    q.includes('effected a stock split') ||
+    /\beffected\b.{0,60}\breverse stock split\b/i.test(quote) ||
+    /\beffected\b.{0,60}\bstock split\b/i.test(quote);
 
   if (pastTense) return true;
 
