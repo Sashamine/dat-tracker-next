@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStaticHistoryForRange } from "@/lib/data/stock-price-history";
 import { adjustPricesForSplits, STOCK_SPLITS } from "@/lib/data/stock-splits";
+import { D1Client } from "@/lib/d1";
 
 interface HistoricalPrice {
   time: string;
@@ -97,7 +98,19 @@ export async function GET(
   }
 
   // Check if this ticker needs split adjustment
-  const needsSplitAdjustment = ticker.toUpperCase() in STOCK_SPLITS;
+  // Prefer D1 corporate_actions when available; fallback to curated STOCK_SPLITS.
+  const d1 = (!intraday && process.env.CLOUDFLARE_ACCOUNT_ID && process.env.CLOUDFLARE_D1_DATABASE_ID && process.env.CLOUDFLARE_API_TOKEN)
+    ? D1Client.fromEnv()
+    : null;
+
+  const d1HasActions = d1
+    ? (await d1.query<{ cnt: number }>(
+        `SELECT COUNT(1) as cnt FROM corporate_actions WHERE entity_id = ?;`,
+        [ticker.toUpperCase()]
+      )).results[0]?.cnt > 0
+    : false;
+
+  const needsSplitAdjustment = d1HasActions || (ticker.toUpperCase() in STOCK_SPLITS);
   const minDateStr = YAHOO_PROBLEM_TICKERS[ticker.toUpperCase()];
   const hasYahooProblems = !!minDateStr;
 
@@ -142,7 +155,26 @@ export async function GET(
       }
       // Apply split adjustments if needed (Yahoo sometimes doesn't adjust properly)
       if (needsSplitAdjustment) {
-        yahooData = adjustPricesForSplits(ticker, yahooData);
+        if (d1HasActions && d1) {
+          const actions = (await d1.query<{ effective_date: string; ratio: number }>(
+            `SELECT effective_date, ratio
+             FROM corporate_actions
+             WHERE entity_id = ?
+             ORDER BY effective_date ASC, created_at ASC;`,
+            [ticker.toUpperCase()]
+          )).results;
+
+          // Convert action ratios to price adjustment ratios:
+          // price_post = price_pre / shares_ratio => multiply by (1/ratio) for pre-split prices.
+          const splitsForPrice = actions.map(a => ({
+            date: a.effective_date,
+            ratio: 1 / a.ratio,
+            description: 'from D1 corporate_actions',
+          }));
+          yahooData = adjustPricesForSplits(ticker, yahooData, splitsForPrice as any);
+        } else {
+          yahooData = adjustPricesForSplits(ticker, yahooData);
+        }
       }
       cache.set(cacheKey, { data: yahooData, timestamp: Date.now() });
       return NextResponse.json(yahooData);
