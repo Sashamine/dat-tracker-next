@@ -97,10 +97,14 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
   if (!res.ok) throw new Error(`R2 list failed: ${res.status} ${res.statusText}: ${await res.text()}`);
 
   const json = await res.json();
-  // Cloudflare shape: { success, errors, messages, result: { objects: [...], cursor } }
+  // Cloudflare result shape is inconsistent across APIs/versions:
+  // - sometimes: { result: { objects: [...], cursor } }
+  // - sometimes: { result: [...] } (array of objects)
   if (!json.success) throw new Error(`R2 list failed: ${JSON.stringify(json.errors || json)}`);
-  const objects = (json.result?.objects || []) as R2ObjectLite[];
-  const nextCursor = json.result?.cursor as string | undefined;
+
+  const result = json.result;
+  const objects = (Array.isArray(result) ? result : result?.objects || []) as R2ObjectLite[];
+  const nextCursor = (Array.isArray(result) ? undefined : (result?.cursor as string | undefined));
 
   if (!objects.length) {
     // eslint-disable-next-line no-console
@@ -112,8 +116,8 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
           prefix,
           cursor,
           limit,
-          resultKeys: json.result ? Object.keys(json.result) : null,
-          sampleResult: json.result || null,
+          resultKeys: result ? Object.keys(result) : null,
+          sampleResult: result || null,
         },
         null,
         2
