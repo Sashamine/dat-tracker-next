@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
   const companies = allCompanies
     .filter(c => (c.asset || '').toUpperCase() === asset)
-    .filter(c => isLikelyNonUS(c.ticker, (c as any).country || null));
+    .filter(c => isLikelyNonUS(c.ticker, (c as { country?: string | null }).country || null));
 
   // If D1 isn't configured, return just the company list.
   let d1: D1Client | null = null;
@@ -29,10 +29,10 @@ export async function GET(request: NextRequest) {
     d1 = null;
   }
 
-  const results = [] as any[];
+  const results: Array<Record<string, unknown>> = [];
 
   for (const c of companies) {
-    let available: Partial<Record<Metric, boolean>> = {};
+    const available: Partial<Record<Metric, boolean>> = {};
 
     if (d1) {
       try {
@@ -48,19 +48,20 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const companySources = COMPANY_SOURCES[c.ticker.toUpperCase()] || (COMPANY_SOURCES as any)[c.ticker];
+    const companySources =
+      COMPANY_SOURCES[c.ticker.toUpperCase()] || (COMPANY_SOURCES as Record<string, unknown>)[c.ticker];
 
     results.push({
       ticker: c.ticker,
       name: c.name,
       asset: c.asset,
-      country: (c as any).country || null,
-      exchangeMic: (c as any).exchangeMic || null,
+      country: (c as { country?: string | null }).country || null,
+      exchangeMic: (c as { exchangeMic?: string | null }).exchangeMic || null,
       sources: {
         // from companies.ts
-        secCik: (c as any).secCik || null,
-        holdingsSource: (c as any).holdingsSource || null,
-        holdingsSourceUrl: (c as any).holdingsSourceUrl || null,
+        secCik: (c as { secCik?: string | null }).secCik || null,
+        holdingsSource: (c as { holdingsSource?: string | null }).holdingsSource || null,
+        holdingsSourceUrl: (c as { holdingsSourceUrl?: string | null }).holdingsSourceUrl || null,
         // from company-sources.ts (verification/citations mapping)
         edinetCode: companySources?.edinetCode || null,
         edinetFilingsUrl: companySources?.edinetFilingsUrl || null,

@@ -33,9 +33,10 @@ export async function GET(req: Request) {
     const res = NextResponse.json({ tickers, count: tickers.length, mode: preferVerified ? 'verified' : 'raw' }, { status: 200 });
     res.headers.set('Cache-Control', 'public, max-age=30, s-maxage=30');
     return res;
-  } catch (e: any) {
+  } catch (e: unknown) {
+    const err = e as { message?: string };
     return NextResponse.json(
-      { error: 'read_failed', message: String(e?.message || e) },
+      { error: 'read_failed', message: String(err?.message || e) },
       { status: 500 }
     );
   }
