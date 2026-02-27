@@ -86,6 +86,7 @@ async function main() {
   const to = parseDate(argVal('to') || new Date().toISOString().slice(0, 10), '--to');
   const limit = Number(argVal('limit') || '100000');
   const dryRun = (argVal('dry-run') || process.env.DRY_RUN || '').toString() === 'true';
+  const lookbackDays = Math.max(0, Math.min(730, Number(argVal('lookback-days') || '180')));
 
   if (!tickersRaw) throw new Error('Missing --tickers= (comma-separated)');
   const tickers = tickersRaw
@@ -120,47 +121,34 @@ async function main() {
       // artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key, cik, ticker, accession
       // It does NOT include period_end/form_type/filed_at.
       // For Phase B we approximate quarter-end artifacts using datapoints.as_of at the quarter-end.
-      const art = await d1.query<any>(
-        `SELECT artifact_id
-         FROM datapoints
-         WHERE entity_id = ?
-           AND metric = 'basic_shares'
-           AND as_of = ?
-         ORDER BY datetime(created_at) DESC
-         LIMIT 1;`,
-        [ticker, asOf]
-      );
-
-      const artifactId = art.results?.[0]?.artifact_id as string | undefined;
-      const filedAt = null;
-      if (!artifactId) {
-        missing++;
-        continue;
-      }
-
-      // Pull extracted basic_shares datapoint for that artifact.
-      // We expect raw extracted datapoints are stored per artifact in `datapoints` (or `artifact_datapoints`).
-      // Here we assume `datapoints` contains all extracted datapoints and includes artifact_id.
+      // Find the most recent basic_shares datapoint on-or-before the quarter end.
+      // If lookbackDays is set, only consider datapoints within that window.
       const dp = await d1.query<any>(
-        `SELECT value, unit, scale, reported_at
+        `SELECT datapoint_id, as_of, reported_at, value, unit, scale, artifact_id, created_at
          FROM datapoints
          WHERE entity_id = ?
            AND metric = 'basic_shares'
-           AND as_of = ?
-         ORDER BY datetime(created_at) DESC
+           AND as_of IS NOT NULL
+           AND as_of <= ?
+           AND (? = 0 OR as_of >= date(?, '-' || ? || ' days'))
+         ORDER BY as_of DESC, datetime(created_at) DESC
          LIMIT 1;`,
-        [ticker, asOf]
+        [ticker, asOf, lookbackDays, asOf, lookbackDays]
       );
 
-      const value = Number(dp.results?.[0]?.value);
-      if (!Number.isFinite(value) || value <= 0) {
+      const src = dp.results?.[0];
+      const value = Number(src?.value);
+      const artifactId = (src?.artifact_id as string | undefined) || undefined;
+      if (!artifactId || !Number.isFinite(value) || value <= 0) {
         missing++;
         continue;
       }
 
-      const unit = (dp.results?.[0]?.unit as string) || 'shares';
-      const scale = Number(dp.results?.[0]?.scale ?? 0);
-      const reportedAt = (dp.results?.[0]?.reported_at as string) || filedAt;
+      const unit = (src?.unit as string) || 'shares';
+      const scale = Number(src?.scale ?? 0);
+      const reportedAt = (src?.reported_at as string) || (src?.as_of as string) || null;
+      const srcAsOf = (src?.as_of as string) || null;
+      const srcDatapointId = (src?.datapoint_id as string) || null;
 
       const row: DpRow = {
         datapoint_id: dpId(ticker, 'basic_shares', asOf, unit, scale),
@@ -178,6 +166,9 @@ async function main() {
         flags_json: JSON.stringify({
           backfill: true,
           quarter_end: asOf,
+          source_as_of: srcAsOf,
+          source_datapoint_id: srcDatapointId,
+          lookback_days: lookbackDays,
           basis: 'historical',
           note: 'Normalize to current basis via corporate_actions when consuming.',
         }),
