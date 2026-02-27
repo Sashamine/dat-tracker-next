@@ -7,7 +7,10 @@
 
 ## AGENTS WORKBOARD (live)
 
-**Legend:** Agent 1 = this assistant
+**Legend:**
+- **Agent 1** = primary orchestrator (product + core data architecture)
+- **Agent 2** = D1 backfills / migration workflows
+- **Agent 3** = CI/lint ratchet + repo hygiene (this assistant in the #agent-3 thread)
 
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
@@ -23,6 +26,11 @@ Update this section whenever you start/stop work so other agents can instantly s
   - **PR:** #47 https://github.com/Sashamine/dat-tracker-next/pull/47
   - **Status:** Workflow + script ready; merge PR then run dry-run inventory; then write mode.
   - **DoD:** artifacts rows exist for existing R2 objects (at least for key prefixes we use).
+
+- **CI/Lint ratchet (required checks scope expansion)**
+  - **Owner:** Agent 3
+  - **Status:** Ongoing: gradually expand `lint-app` scope (admin → key API routes) while keeping changes surgical.
+  - **Recent:** merged multiple CI hygiene PRs; current open PR: #64 (expand lint-app to api/prices)
 
 ### Next (queued)
 - **10d: Verification + confidence scoring**

@@ -216,7 +216,7 @@ async function fetchForexRates(): Promise<Record<string, number>> {
 
 // Fetch stock quotes from FMP REST API (for initial data)
 // Note: Extended hours data requires legacy FMP subscription, so we only get regular market prices
-async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
+async function fetchFMPStockQuotes(): Promise<Record<string, unknown>> {
   if (!FMP_API_KEY) return {};
 
   try {
@@ -225,7 +225,7 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
     const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
-    const result: Record<string, any> = {};
+    const result: Record<string, unknown> = {};
     if (Array.isArray(data)) {
       for (const stock of data) {
         if (stock?.symbol) {
@@ -267,8 +267,8 @@ async function fetchFMPStockQuotes(): Promise<Record<string, any>> {
 }
 
 // Fetch stocks from Yahoo Finance (for tickers FMP doesn't cover well)
-async function fetchYahooStocks(): Promise<Record<string, any>> {
-  const result: Record<string, any> = {};
+async function fetchYahooStocks(): Promise<Record<string, unknown>> {
+  const result: Record<string, unknown> = {};
 
   for (const [displayTicker, yahooTicker] of Object.entries(YAHOO_TICKERS)) {
     try {
@@ -415,16 +415,16 @@ export async function GET(request: NextRequest) {
   let isAborted = false;
 
   // Price state for tracking changes
-  let lastStockPrices: Record<string, number> = {};
+  const lastStockPrices: Record<string, number> = {};
 
   const stream = new ReadableStream({
     async start(controller) {
-      const sendEvent = (data: any) => {
+      const sendEvent = (data: unknown) => {
         if (isAborted) return;
         try {
           const message = `data: ${JSON.stringify(data)}\n\n`;
           controller.enqueue(encoder.encode(message));
-        } catch (e) {
+        } catch {
           // Stream closed
         }
       };
@@ -434,7 +434,7 @@ export async function GET(request: NextRequest) {
         const initialData = await fetchAllPrices();
         // Store initial prices for change detection
         for (const [symbol, data] of Object.entries(initialData.stocks)) {
-          lastStockPrices[symbol] = (data as any).price || 0;
+          lastStockPrices[symbol] = (data as { price?: number }).price || 0;
         }
         sendEvent(initialData);
         console.log("[Stream] Sent initial data");
@@ -455,7 +455,7 @@ export async function GET(request: NextRequest) {
 
           // Send individual trade events for changed prices
           for (const [symbol, data] of Object.entries(newStockPrices)) {
-            let newPrice = (data as any).price || 0;
+            let newPrice = (data as { price?: number }).price || 0;
             
             // Convert foreign currency prices to USD
             const currency = TICKER_CURRENCY[symbol];
@@ -475,14 +475,14 @@ export async function GET(request: NextRequest) {
                 type: "trade",
                 symbol,
                 price: newPrice,
-                change24h: (data as any).change24h || 0,
+                change24h: (data as { change24h?: number }).change24h || 0,
                 timestamp,
                 assetType: "stock",
               });
             }
           }
-        } catch (e) {
-          console.error("Stock poll error:", e);
+        } catch {
+          console.error("Stock poll error");
         }
       }, 5000);
 
@@ -496,8 +496,8 @@ export async function GET(request: NextRequest) {
             timestamp: new Date().toISOString(),
             partialUpdate: true,
           });
-        } catch (e) {
-          console.error("Crypto refresh error:", e);
+        } catch {
+          console.error("Crypto refresh error");
         }
       }, 30000);
 
@@ -507,8 +507,8 @@ export async function GET(request: NextRequest) {
         try {
           const data = await fetchAllPrices();
           sendEvent({ ...data, fullRefresh: true });
-        } catch (e) {
-          console.error("Full refresh error:", e);
+        } catch {
+          console.error("Full refresh error");
         }
       }, 60000);
 
@@ -523,7 +523,7 @@ export async function GET(request: NextRequest) {
         clearInterval(fullRefreshInterval);
         try {
           controller.close();
-        } catch (e) {
+        } catch {
           // Already closed
         }
       }, MAX_STREAM_LIFETIME);
@@ -537,7 +537,7 @@ export async function GET(request: NextRequest) {
         clearTimeout(lifetimeTimeout);
         try {
           controller.close();
-        } catch (e) {
+        } catch {
           // Already closed
         }
       });

@@ -62,7 +62,7 @@ const YAHOO_CURRENCIES: Record<string, string> = {
 };
 
 // Cache for prices (2 second TTL)
-let priceCache: { data: any; timestamp: number } | null = null;
+let priceCache: { data: unknown; timestamp: number } | null = null;
 const CACHE_TTL = 2000;
 
 // Cache for market caps (5 minute TTL)
@@ -167,11 +167,11 @@ async function fetchMarketCaps(): Promise<Record<string, number>> {
 }
 
 // Fetch Yahoo Finance stocks (for TSX Venture and other stocks FMP doesn't cover)
-async function fetchYahooStocks(tickerMap: Record<string, string>): Promise<Record<string, any>> {
+async function fetchYahooStocks(tickerMap: Record<string, string>): Promise<Record<string, unknown>> {
   const entries = Object.entries(tickerMap);
   if (entries.length === 0) return {};
 
-  const result: Record<string, any> = {};
+  const result: Record<string, unknown> = {};
 
   for (const [displayTicker, yahooTicker] of entries) {
     try {
@@ -216,7 +216,7 @@ async function fetchYahooStocks(tickerMap: Record<string, string>): Promise<Reco
 }
 
 // Fetch FMP stocks (for OTC/international)
-async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
+async function fetchFMPStocks(tickers: string[]): Promise<Record<string, unknown>> {
   if (tickers.length === 0 || !FMP_API_KEY) return {};
 
   try {
@@ -225,7 +225,7 @@ async function fetchFMPStocks(tickers: string[]): Promise<Record<string, any>> {
     const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
 
-    const result: Record<string, any> = {};
+    const result: Record<string, unknown> = {};
     if (Array.isArray(data)) {
       for (const stock of data) {
         if (stock?.symbol) {
@@ -293,10 +293,15 @@ export async function GET() {
     }
 
     // Format stock prices
-    const stockPrices: Record<string, any> = {};
+    const stockPrices: Record<string, unknown> = {};
 
     for (const ticker of alpacaStockTickers) {
-      const snapshot = (stockSnapshots as any)[ticker];
+      const snapshot = (stockSnapshots as Record<string, unknown>)[ticker] as {
+        latestTrade?: { p?: number };
+        latestQuote?: { ap?: number };
+        prevDailyBar?: { c?: number };
+        dailyBar?: { v?: number };
+      } | undefined;
       if (snapshot) {
         const currentPrice = snapshot.latestTrade?.p || snapshot.latestQuote?.ap || 0;
         const prevClose = snapshot.prevDailyBar?.c || currentPrice;
@@ -305,7 +310,6 @@ export async function GET() {
 
         // Convert price to USD if it's a foreign currency stock (Alpaca returns native currency)
         const currency = TICKER_CURRENCY[ticker];
-        const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
         const priceUsd = convertPriceToUsd(currentPrice, currency, forexRates);
         const regularPriceUsd = convertPriceToUsd((snapshot.prevDailyBar?.c || currentPrice), currency, forexRates);
 
@@ -325,8 +329,8 @@ export async function GET() {
       const displayTicker = FMP_TICKER_MAP[ticker] || ticker;
       // Convert price to USD if it's a foreign currency stock
       const currency = TICKER_CURRENCY[displayTicker];
-      const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-      const priceUsd = convertPriceToUsd(data.price, currency, forexRates);
+      const dataObj = data as { price?: number; marketCap?: number; change24h?: number; volume?: number };
+      const priceUsd = convertPriceToUsd(dataObj.price || 0, currency, forexRates);
       
       stockPrices[displayTicker] = {
         ...data,
@@ -340,13 +344,12 @@ export async function GET() {
     for (const [ticker, data] of Object.entries(yahooStocks)) {
       // Convert price to USD if it's a foreign currency stock (e.g., DCC.AX in AUD)
       const currency = YAHOO_CURRENCIES[ticker];
-      const rate = currency ? (forexRates[currency] || FALLBACK_RATES[currency]) : null;
-      const priceUsd = convertPriceToUsd(data.price, currency, forexRates);
+      const dataObj = data as { price?: number; marketCap?: number };
+      const priceUsd = convertPriceToUsd(dataObj.price || 0, currency, forexRates);
       
       // Calculate market cap: use shares from company data × USD price
       // Note: FALLBACK_STOCKS.marketCap is in USD, .price is in local currency
       // shares = marketCap_USD / (price_local / rate) = marketCap_USD * rate / price_local
-      const fallback = FALLBACK_STOCKS[ticker];
       const impliedShares = calculateImpliedSharesFromFallback(ticker, forexRates);
       const calculatedMarketCap = impliedShares > 0 ? impliedShares * priceUsd : 0;
       
