@@ -295,12 +295,12 @@ export default function SedarFilingsPage() {
             How to Process a Filing
           </h2>
           <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 text-sm text-gray-600 dark:text-gray-400 space-y-3">
-            <p><strong>1.</strong> Click "Open SEDAR+" to go to the company&apos;s filing search</p>
+            <p><strong>1.</strong> Click &quot;Open SEDAR+&quot; to go to the company&apos;s filing search</p>
             <p><strong>2.</strong> Find the relevant filing (Interim/Annual Financial Statements)</p>
             <p><strong>3.</strong> Download the PDF and save it to the path shown on the card</p>
             <p><strong>4.</strong> Open the PDF and extract:</p>
             <ul className="list-disc list-inside ml-4 space-y-1">
-              <li>Holdings amount (look for "Digital Assets" or crypto name in balance sheet)</li>
+              <li>Holdings amount (look for &quot;Digital Assets&quot; or crypto name in balance sheet)</li>
               <li>Shares outstanding (look in Notes to Financial Statements)</li>
             </ul>
             <p><strong>5.</strong> Update <code className="bg-gray-200 dark:bg-gray-800 px-1 rounded">src/lib/data/holdings-history.ts</code></p>
