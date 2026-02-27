@@ -8,8 +8,13 @@
     "moduleResolution": "node16",
     "esModuleInterop": true,
     "skipLibCheck": true,
+
+    // tsconfig.json sets noEmit=true for Next, but the verifier build needs emit.
+    // Also, tsconfig.json enables allowImportingTsExtensions which requires noEmit/emitDeclarationOnly.
+    // Override here to satisfy TS5096 and allow compilation.
     "noEmitOnError": false,
-    "noEmit": false
+    "noEmit": false,
+    "allowImportingTsExtensions": false
   },
   "include": [
     "scripts/state/verify-company-states.ts",
