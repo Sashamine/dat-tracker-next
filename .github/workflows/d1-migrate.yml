@@ -1,0 +1,40 @@
+name: d1-migrate
+
+on:
+  workflow_dispatch:
+    inputs:
+      migration:
+        description: 'Migration filename under scripts/migrations (e.g. 010-datapoint-verifications.sql)'
+        required: true
+        type: string
+      dry_run:
+        description: 'If true, print SQL but do not execute'
+        required: false
+        default: 'true'
+        type: string
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Apply migration
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+          DRY_RUN: ${{ inputs.dry_run }}
+
+        run: npx tsx scripts/d1-apply-migration.ts scripts/migrations/${{ inputs.migration }}
