@@ -9,11 +9,29 @@ async function main() {
     "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;"
   );
 
-  console.log(JSON.stringify({ tables: tables.results.map(r => r.name) }, null, 2));
+  const tableNames = tables.results.map(r => r.name);
+  console.log(JSON.stringify({ tables: tableNames }, null, 2));
 
-  for (const t of tables.results.map(r => r.name)) {
-    const info = await d1.query<any>(`PRAGMA table_info(${t});`);
-    console.log(JSON.stringify({ table: t, columns: info.results }, null, 2));
+  // Cloudflare D1 API tokens may not be authorized to run PRAGMA (SQLITE_AUTH).
+  // So instead, we sample one row from each table to infer column names.
+  for (const t of tableNames) {
+    try {
+      const sample = await d1.query<any>(`SELECT * FROM ${t} LIMIT 1;`);
+      const row = sample.results?.[0] || null;
+      const columns = row ? Object.keys(row) : [];
+      console.log(JSON.stringify({ table: t, columns, sampleRow: row }, null, 2));
+    } catch (e) {
+      console.log(
+        JSON.stringify(
+          {
+            table: t,
+            error: e instanceof Error ? e.message : String(e),
+          },
+          null,
+          2
+        )
+      );
+    }
   }
 }
 
