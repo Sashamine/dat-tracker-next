@@ -262,6 +262,10 @@ export async function GET(request: NextRequest) {
           if (!exhibitRes.ok) continue;
 
           const buf = new Uint8Array(await exhibitRes.arrayBuffer());
+          const b = exhibitBucket(d.name);
+          const ext = d.name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'html';
+          const safeName = d.name.replace(/[^a-zA-Z0-9_.-]/g, '_');
+          const exhibitKey = `${ticker.toLowerCase()}/${bucket}/${bucket}-${filingDate}-${accession}.${b}.${safeName}.${ext}`;
 
           const res2 = await ingestArtifactToR2AndD1({
             sourceType: 'sec_exhibit',

@@ -473,6 +473,23 @@ async function main() {
         continue;
       }
 
+      // Near-duplicate suppression: if we already have an action for the same ticker/type/ratio
+      // within +/- 1 day, skip inserting a new row (prevents June30 vs July1 churn).
+      const near = await d1.query<{ cnt: number }>(
+        `SELECT COUNT(1) as cnt
+         FROM corporate_actions
+         WHERE entity_id = ?
+           AND action_type = ?
+           AND ratio = ?
+           AND ABS(julianday(effective_date) - julianday(?)) <= 1;`,
+        [ticker, ca.action_type, ca.ratio, ca.effective_date]
+      );
+      if ((near.results[0]?.cnt || 0) > 0) {
+        console.log(`  skip: near-duplicate existing action within 1 day ratio=${ca.ratio} effective_date=${ca.effective_date}`);
+        skipped += 1;
+        continue;
+      }
+
       if (dryRun) {
         console.log(`  [dry-run] would insert ${ca.action_type} ratio=${ca.ratio} effective_date=${ca.effective_date || ''}`);
         continue;
