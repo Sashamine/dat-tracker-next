@@ -1,0 +1,38 @@
+name: lint-scripts (informational)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'eslint.config.*'
+      - 'tsconfig*.json'
+  push:
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'eslint.config.*'
+      - 'tsconfig*.json'
+
+jobs:
+  lint-scripts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Informational only: scripts currently carry a lot of lint debt.
+      - name: Lint scripts (non-blocking)
+        run: npx eslint --no-ignore scripts
+        continue-on-error: true

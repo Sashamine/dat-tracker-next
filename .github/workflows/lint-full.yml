@@ -1,0 +1,43 @@
+name: lint-full (informational)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'scripts/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'eslint.config.*'
+      - 'tsconfig*.json'
+  push:
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'scripts/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'eslint.config.*'
+      - 'tsconfig*.json'
+
+jobs:
+  lint-full:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Informational only: repo has legacy lint debt.
+      # We want visibility without blocking merges.
+      - name: Lint (non-blocking)
+        run: npm run -s lint
+        continue-on-error: true
