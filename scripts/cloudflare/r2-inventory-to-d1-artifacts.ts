@@ -101,6 +101,26 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
   if (!json.success) throw new Error(`R2 list failed: ${JSON.stringify(json.errors || json)}`);
   const objects = (json.result?.objects || []) as R2ObjectLite[];
   const nextCursor = json.result?.cursor as string | undefined;
+
+  if (!objects.length) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      JSON.stringify(
+        {
+          msg: 'r2List: empty page',
+          bucket,
+          prefix,
+          cursor,
+          limit,
+          resultKeys: json.result ? Object.keys(json.result) : null,
+          sampleResult: json.result || null,
+        },
+        null,
+        2
+      )
+    );
+  }
+
   return { objects, cursor: nextCursor };
 }
 
