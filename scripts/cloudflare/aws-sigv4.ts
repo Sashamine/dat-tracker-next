@@ -42,10 +42,10 @@ export async function signAwsV4(params: {
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
     .join('&');
 
-  const canonicalHeaders = `host:${host}\n` + `x-amz-date:${amzDate}\n`;
-  const signedHeaders = 'host;x-amz-date';
-
   const payloadHash = sha256Hex('');
+
+  const canonicalHeaders = `host:${host}\n` + `x-amz-content-sha256:${payloadHash}\n` + `x-amz-date:${amzDate}\n`;
+  const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
   const canonicalRequest = [
     method,
     canonicalUri,
@@ -76,6 +76,7 @@ export async function signAwsV4(params: {
     headers: {
       Host: host,
       'x-amz-date': amzDate,
+      'x-amz-content-sha256': payloadHash,
       Authorization: authorization,
     },
   };
