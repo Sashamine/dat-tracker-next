@@ -42,12 +42,26 @@ function sha256(input: string): string {
 
 function classifySourceTypeFromKey(key: string): string | null {
   const k = key.toLowerCase();
+
+  // Explicit pipeline prefixes (preferred)
   if (k.startsWith('sec/')) return 'sec';
   if (k.startsWith('sedar/')) return 'sedar';
-  if (k.includes('/xbrl/')) return 'sec_xbrl';
-  if (k.includes('companyfacts')) return 'sec_companyfacts';
   if (k.startsWith('dashboard/')) return 'dashboard';
   if (k.startsWith('manual/')) return 'manual';
+
+  // Heuristics based on path segments
+  if (k.includes('/xbrl/')) return 'sec_xbrl';
+  if (k.includes('companyfacts')) return 'sec_companyfacts';
+
+  // Many existing keys are ticker-first (e.g. "mstr/10q/...", "abtc/10k/...")
+  // For these, treat as SEC filings unless we have a better classifier.
+  const firstSeg = k.split('/')[0];
+  if (/^[a-z0-9]{1,10}$/.test(firstSeg)) {
+    if (k.includes('/10k/') || k.includes('/10q/') || k.includes('/8k/') || k.includes('/6k/') || k.includes('/20f/') || k.includes('/424b')) {
+      return 'sec_filing';
+    }
+  }
+
   return null;
 }
 
