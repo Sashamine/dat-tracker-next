@@ -100,6 +100,7 @@ export async function GET(request: NextRequest) {
   const limit = Math.max(1, Math.min(100, parseInt(sp.get('limit') || '25', 10) || 25));
   const includeExhibits = sp.get('includeExhibits') === '1' || sp.get('includeExhibits') === 'true';
   const exhibitsLimit = Math.max(0, Math.min(20, parseInt(sp.get('exhibitsLimit') || '6', 10) || 6));
+  const dryRun = sp.get('dryRun') === '1' || sp.get('dryRun') === 'true';
 
   if (!ticker) {
     return NextResponse.json({ success: false, error: 'Missing ticker' }, { status: 400 });
@@ -146,6 +147,7 @@ export async function GET(request: NextRequest) {
   }
 
   const keys: string[] = [];
+  const planned: Array<{ sourceType: string; url: string; r2Key: string; contentType: string }> = [];
   let attempted = 0;
   let inserted = 0;
   let skipped = 0;
@@ -189,26 +191,89 @@ export async function GET(request: NextRequest) {
       continue;
     }
 
-    const html = await docRes.text();
-    const bytes = new TextEncoder().encode(html);
-
     const bucket = formBucket(form);
     const r2Key = `${ticker.toLowerCase()}/${bucket}/${bucket}-${filingDate}-${accession}.html`;
 
-    const res = await ingestArtifactToR2AndD1({
-      sourceType: 'sec_filing',
-      ticker,
-      accession,
-      sourceUrl: docUrl,
-      r2Key,
-      bytes,
-      contentType: 'text/html; charset=utf-8',
-      fetchedAt: new Date(`${filingDate}T00:00:00Z`).toISOString(),
-    });
+    if (dryRun) {
+      planned.push({ sourceType: 'sec_filing', url: docUrl, r2Key, contentType: 'text/html; charset=utf-8' });
+      keys.push(r2Key);
+      inserted += 1;
+    } else {
+      const html = await docRes.text();
+      const bytes = new TextEncoder().encode(html);
 
-    keys.push(res.r2Key);
-    if (res.inserted) inserted += 1;
-    else skipped += 1;
+      const res = await ingestArtifactToR2AndD1({
+        sourceType: 'sec_filing',
+        ticker,
+        accession,
+        sourceUrl: docUrl,
+        r2Key,
+        bytes,
+        contentType: 'text/html; charset=utf-8',
+        fetchedAt: new Date(`${filingDate}T00:00:00Z`).toISOString(),
+      });
+
+      keys.push(res.r2Key);
+      if (res.inserted) inserted += 1;
+      else skipped += 1;
+    }
+
+    // Optionally ingest key exhibits (ex-99.1 press releases, etc.) for better recall.
+    if (includeExhibits && formUpper.startsWith('8-K') && exhibitsLimit > 0) {
+      const index = await fetchFilingIndex(cik, accession);
+      const docs = (index?.directory?.item || []).filter(d => isInterestingExhibit(d.name));
+
+      // Prefer larger exhibits first (usually press releases); stable tie-break by name.
+      docs.sort((a, b) => (b.size || 0) - (a.size || 0) || a.name.localeCompare(b.name));
+
+      const picked = docs.slice(0, exhibitsLimit);
+
+      for (const d of picked) {
+        try {
+          const exhibitUrl = buildSecArchivesDocUrl(cik, accession, d.name);
+          const b = exhibitBucket(d.name);
+          const ext = d.name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'html';
+          const safeName = d.name.replace(/[^a-zA-Z0-9_.-]/g, '_');
+          const exhibitKey = `${ticker.toLowerCase()}/${bucket}/${bucket}-${filingDate}-${accession}.${b}.${safeName}.${ext}`;
+          const contentType = d.name.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'text/html; charset=utf-8';
+
+          if (dryRun) {
+            planned.push({ sourceType: 'sec_exhibit', url: exhibitUrl, r2Key: exhibitKey, contentType });
+            keys.push(exhibitKey);
+            inserted += 1;
+            continue;
+          }
+
+          const exhibitRes = await fetch(exhibitUrl, {
+            headers: {
+              'User-Agent': SEC_USER_AGENT,
+              Accept: 'text/html,application/xhtml+xml,text/plain,application/pdf',
+            },
+            cache: 'no-store',
+          });
+          if (!exhibitRes.ok) continue;
+
+          const buf = new Uint8Array(await exhibitRes.arrayBuffer());
+
+          const res2 = await ingestArtifactToR2AndD1({
+            sourceType: 'sec_exhibit',
+            ticker,
+            accession,
+            sourceUrl: exhibitUrl,
+            r2Key: exhibitKey,
+            bytes: buf,
+            contentType,
+            fetchedAt: new Date(`${filingDate}T00:00:00Z`).toISOString(),
+          });
+
+          keys.push(res2.r2Key);
+          if (res2.inserted) inserted += 1;
+          else skipped += 1;
+        } catch {
+          // best-effort
+        }
+      }
+    }
 
     // Optionally ingest key exhibits (ex-99.1 press releases, etc.) for better recall.
     if (includeExhibits && formUpper.startsWith('8-K') && exhibitsLimit > 0) {
@@ -267,9 +332,11 @@ export async function GET(request: NextRequest) {
     cik,
     since: sinceStr,
     limit,
+    dryRun,
     attempted,
     inserted,
     skipped,
     keys,
+    planned,
   });
 }
