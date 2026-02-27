@@ -42,7 +42,8 @@ function quoteIndicatesEffected(quote: string, effectiveDate: string): boolean {
     q.includes('trading on a split-adjusted basis') ||
     q.includes('trading on a split adjusted basis') ||
     q.includes('on a split-adjusted basis') ||
-    q.includes('on a split adjusted basis');
+    q.includes('on a split adjusted basis') ||
+    /split\s*[-‑–—]?\s*adjusted\s+basis/i.test(quote);
   if (splitAdjusted && isPastOrToday(effectiveDate)) return true;
 
   const futureTense = q.includes('will become effective') || q.includes('becomes effective');
@@ -55,6 +56,12 @@ describe('llm-extract-corporate-actions effectiveness heuristic', () => {
   it('accepts "began trading on a split-adjusted basis" as effected evidence (NXTT-style)', () => {
     const quote =
       'On August 28, 2025, the Board approved a specific reverse stock split at a ratio of 1-for-200. The Company\'s shares of Common Stock began trading on a split-adjusted basis on The Nasdaq Capital Market on September 16, 2025.';
+    expect(quoteIndicatesEffected(quote, '2025-09-16')).toBe(true);
+  });
+
+  it('accepts split -adjusted (hyphen with spacing) as effected evidence', () => {
+    const quote =
+      'On August 28, 2025, the Board approved a specific reverse stock split at a ratio of 1-for-200. The Company\'s shares of Common Stock began trading on a split -adjusted basis on The Nasdaq Capital Market on September 16, 2025.';
     expect(quoteIndicatesEffected(quote, '2025-09-16')).toBe(true);
   });
 
