@@ -86,6 +86,8 @@ function formBucket(form: string): string {
   if (f.startsWith('6-k')) return '6k';
   if (f.startsWith('20-f')) return '20f';
   if (f.startsWith('40-f')) return '40f';
+  if (f.startsWith('def 14a') || f.startsWith('pre 14a') || f.startsWith('defa14a')) return 'proxy14a';
+  if (f.startsWith('def 14c') || f.startsWith('pre 14c')) return 'proxy14c';
   return 'other';
 }
 
@@ -171,7 +173,13 @@ export async function GET(request: NextRequest) {
       formUpper.startsWith('10-K') ||
       formUpper.startsWith('6-K') ||
       formUpper.startsWith('20-F') ||
-      formUpper.startsWith('40-F');
+      formUpper.startsWith('40-F') ||
+      // Proxies / information statements often contain reverse split approvals & details
+      formUpper.startsWith('DEF 14A') ||
+      formUpper.startsWith('PRE 14A') ||
+      formUpper.startsWith('DEFA14A') ||
+      formUpper.startsWith('DEF 14C') ||
+      formUpper.startsWith('PRE 14C');
     if (!allowedForm) continue;
 
     attempted += 1;
