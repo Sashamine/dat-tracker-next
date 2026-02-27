@@ -3,9 +3,13 @@ name: verify-datapoints (10d)
 on:
   workflow_dispatch:
     inputs:
-      ticker:
-        description: 'Ticker to verify'
+      entity_id:
+        description: 'Entity id to verify (usually ticker, e.g. MSTR)'
         required: true
+        type: string
+      ticker:
+        description: 'Deprecated alias for entity_id'
+        required: false
         type: string
       metric:
         description: 'Optional metric filter (e.g. basic_shares, btc_holdings)'
@@ -46,6 +50,8 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
           # Inputs
+          ENTITY_ID: ${{ inputs.entity_id }}
+          # Back-compat: if someone still passes ticker
           TICKER: ${{ inputs.ticker }}
           METRIC: ${{ inputs.metric }}
           LIMIT: ${{ inputs.limit }}

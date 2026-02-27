@@ -118,7 +118,7 @@ async function verifyCompany(ticker: string, days: number, useLLM = false): Prom
   let lastError = "";
   let lastContent = "";
   let extractionMethod = "pattern";
-  let searchedFilingTypes = ["8-K"];
+  const searchedFilingTypes = ["8-K"];
 
   for (const filing of eightKFilings.slice(0, 5)) { // Try up to 5 recent 8-Ks
     const content = await fetchFilingContent(filing.finalLink);
