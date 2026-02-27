@@ -99,6 +99,16 @@ async function main() {
   const runId = `backfill_basic_shares_qe_${nowIso}`;
 
   const hasLatest = await tableExists(d1, 'latest_datapoints');
+  const hasRuns = await tableExists(d1, 'runs');
+
+  // Ensure parent run exists if datapoints.run_id is a FK.
+  if (!dryRun && hasRuns) {
+    await d1.query(
+      `INSERT OR IGNORE INTO runs (run_id, started_at, trigger, code_sha, notes)
+       VALUES (?, ?, ?, ?, ?);`,
+      [runId, nowIso, 'manual', null, `phase-b backfill basic_shares qe tickers=${tickers.join(',')}`]
+    );
+  }
 
   // NOTE: We assume there is a `datapoints` table with columns matching LatestDatapointRow.
   // If not present, run the schema migration in docs/phase-b-d1-basic-shares.md.
