@@ -133,7 +133,36 @@ async function main() {
   for (const ticker of tickers) {
     processed++;
 
-    const x = await extractXBRLData(ticker);
+    // IMPORTANT: never let one bad ticker abort the whole batch.
+    // Many tickers will be missing CIK mappings or have missing/partial companyfacts coverage.
+    // We treat those as per-ticker failures and continue.
+    let x:
+      | {
+          success: true;
+          accessionNumber?: string | null;
+          secUrl?: string | null;
+          filingDate?: string | null;
+          cashAndEquivalents?: number | null;
+          cashDate?: string | null;
+          totalDebt?: number | null;
+          debtDate?: string | null;
+          sharesOutstanding?: number | null;
+          sharesOutstandingDate?: string | null;
+          bitcoinHoldings?: number | null;
+          bitcoinHoldingsDate?: string | null;
+        }
+      | { success: false; error: string };
+
+    try {
+      x = await extractXBRLData(ticker);
+    } catch (e) {
+      failed++;
+      console.log(
+        JSON.stringify({ ticker, ok: false, error: e instanceof Error ? e.message : String(e) }, null, 2)
+      );
+      continue;
+    }
+
     if (!x.success) {
       failed++;
       console.log(JSON.stringify({ ticker, ok: false, error: x.error }, null, 2));
@@ -202,11 +231,24 @@ async function main() {
 
     extracted++;
 
-    const artifactId = await ensureArtifacts({
-      ticker,
-      accession: x.accessionNumber || null,
-      sourceUrl: x.secUrl || null,
-    });
+    let artifactId: string;
+    try {
+      artifactId = await ensureArtifacts({
+        ticker,
+        accession: x.accessionNumber || null,
+        sourceUrl: x.secUrl || null,
+      });
+    } catch (e) {
+      failed++;
+      console.log(
+        JSON.stringify(
+          { ticker, ok: false, error: `ensureArtifacts failed: ${e instanceof Error ? e.message : String(e)}` },
+          null,
+          2
+        )
+      );
+      continue;
+    }
 
     for (const r of rows) {
       if (!r.as_of) {
@@ -231,29 +273,48 @@ async function main() {
         continue;
       }
 
-      await d1.query(
-        `INSERT OR IGNORE INTO datapoints (
-           datapoint_id, entity_id, metric, value, unit, scale,
-           as_of, reported_at, artifact_id, run_id,
-           method, confidence, flags_json, created_at
-         ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?);`,
-        [
-          crypto.randomUUID(),
-          ticker,
-          r.metric,
-          r.value,
-          r.unit,
-          r.as_of,
-          r.reported_at,
-          artifactId,
-          runId,
-          r.method,
-          r.confidence,
-          r.flags_json,
-          new Date().toISOString(),
-        ]
-      );
-      inserted++;
+      try {
+        // NOTE: datapoints has FKs to artifacts(artifact_id) and runs(run_id) only.
+        // entity_id is a free-form string (ticker).
+        await d1.query(
+          `INSERT OR IGNORE INTO datapoints (
+             datapoint_id, entity_id, metric, value, unit, scale,
+             as_of, reported_at, artifact_id, run_id,
+             method, confidence, flags_json, created_at
+           ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?);`,
+          [
+            crypto.randomUUID(),
+            ticker,
+            r.metric,
+            r.value,
+            r.unit,
+            r.as_of,
+            r.reported_at,
+            artifactId,
+            runId,
+            r.method,
+            r.confidence,
+            r.flags_json,
+            new Date().toISOString(),
+          ]
+        );
+        inserted++;
+      } catch (e) {
+        failed++;
+        console.log(
+          JSON.stringify(
+            {
+              ticker,
+              ok: false,
+              metric: r.metric,
+              as_of: r.as_of,
+              error: `datapoints insert failed: ${e instanceof Error ? e.message : String(e)}`,
+            },
+            null,
+            2
+          )
+        );
+      }
     }
   }
 
