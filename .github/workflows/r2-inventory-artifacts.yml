@@ -51,6 +51,14 @@ on:
         options:
           - "false"
           - "true"
+      allow_empty_prefix:
+        description: Allow running with an empty prefix (full-bucket scan). Keep false unless you intend that.
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 jobs:
   inventory:
@@ -92,7 +100,7 @@ jobs:
           MAX_ERRORS: "25"
           REQUIRE_PREFIX: "true"
           # Set to true explicitly when you intend a full bucket scan
-          ALLOW_EMPTY_PREFIX: "false"
+          ALLOW_EMPTY_PREFIX: ${{ inputs.allow_empty_prefix }}
           # Optional throttling to avoid D1 rate limits
           D1_THROTTLE_MS: "0"
 
