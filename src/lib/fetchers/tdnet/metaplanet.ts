@@ -483,7 +483,21 @@ export async function ingestFromUrls(entries: TdnetFilingEntry[]): Promise<Extra
 }
 
 export async function ingestByDateRange(opts: { startDate: Date; endDate: Date }): Promise<ExtractionResult> {
-  const filings = await findMetaplanetFilings(opts.startDate, opts.endDate);
+  // TDnet daily list HTML pages appear to only be available for a limited recent window.
+  // Older dates return 404 and can burn the GitHub Actions 20-minute timeout via retries.
+  const LOOKBACK_DAYS = 45;
+  const today = new Date();
+  const minDate = new Date(today);
+  minDate.setDate(minDate.getDate() - LOOKBACK_DAYS);
+
+  const startDate = new Date(Math.max(opts.startDate.getTime(), minDate.getTime()));
+  const endDate = new Date(Math.min(opts.endDate.getTime(), today.getTime()));
+
+  if (startDate > endDate) {
+    return { dataPoints: [], skipped: [{ pdfUrl: '', reason: `TDnet date-range clamped to last ${LOOKBACK_DAYS} days; requested range too old` }] };
+  }
+
+  const filings = await findMetaplanetFilings(startDate, endDate);
   return ingestFromUrls(filings);
 }
 
