@@ -79,6 +79,15 @@ function parseFriendlyFilenameNoSuffix(key: string): { date: string } | null {
   return { date: m[1] };
 }
 
+function parseAccessionFromKey(key: string): { accession: string } | null {
+  // Handles R2 keys like:
+  //   batch4/riot/0001104659-25-104461.txt
+  // where the filename itself is a dashed accession number.
+  const m = key.match(/\b(\d{10}-\d{2}-\d{6})\b/i);
+  if (!m) return null;
+  return { accession: m[1] };
+}
+
 async function fetchJson(url: string): Promise<any> {
   const resp = await fetch(url, {
     headers: {
@@ -242,13 +251,46 @@ async function main() {
   const missingSample: Array<{ ticker: string | null; cik: string; r2_key: string; reason: string }> = [];
 
   for (const [cik10, items] of byCik) {
-    // Filter to just those that look like friendly filenames first, to avoid unnecessary SEC fetch.
+    // Candidate types:
+    //  1) Friendly keys with suffix  (e.g. mstr/8k/8k-YYYY-MM-DD-215604.html)
+    //  2) Friendly keys without suffix (e.g. mara/8k/8k-YYYY-MM-DD.html)
+    //  3) Keys that already contain a dashed accession (e.g. batch4/riot/0001104659-25-104461.txt)
     const withSuffix = items.filter((it) => Boolean(parseFriendlyFilenameWithSuffix(it.r2_key)));
     const noSuffix = items.filter((it) => Boolean(parseFriendlyFilenameNoSuffix(it.r2_key)));
+    const accessionInKey = items.filter((it) => Boolean(parseAccessionFromKey(it.r2_key)));
 
     scanned += items.length;
     candidateSuffix += withSuffix.length;
     candidateNoSuffix += noSuffix.length;
+
+    // 3) Accession-in-key can be handled without SEC submissions JSON.
+    for (const it of accessionInKey) {
+      const parsed = parseAccessionFromKey(it.r2_key);
+      if (!parsed) continue;
+
+      const accession = parsed.accession;
+      const accessionNoDashes = accession.replace(/-/g, '');
+      const cikDigits = cikForEdgarPath(cik10);
+
+      // Use the filing index as source_url (works even if we don't know primaryDocument yet)
+      const sourceUrl = `https://www.sec.gov/Archives/edgar/data/${cikDigits}/${accessionNoDashes}/${accession}-index.html`;
+
+      matched++;
+
+      if (write) {
+        await d1.query(
+          `
+          UPDATE artifacts
+          SET accession = ?, source_url = ?
+          WHERE artifact_id = ?
+            AND source_type = 'sec_filing'
+            AND (source_url IS NULL OR source_url = '');
+          `.trim(),
+          [accession, sourceUrl, it.artifact_id]
+        );
+        updated++;
+      }
+    }
 
     const candidates = [...withSuffix, ...noSuffix];
     if (candidates.length === 0) continue;
