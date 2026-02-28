@@ -21,11 +21,10 @@ Update this section whenever you start/stop work so other agents can instantly s
   - **Status:** D1 schema mismatch fixed (use `datapoints.as_of` instead of `artifacts.filed_at/period_end`). Needs merge + workflow dry-run + real run.
   - **DoD:** Dry-run summary looks sane; then write mode for 1 ticker/date-range; then expand.
 
-- **10b: R2 inventory → artifacts backfill**
+- **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
-  - **PR:** #47 https://github.com/Sashamine/dat-tracker-next/pull/47
-  - **Status:** Workflow + script ready; merge PR then run dry-run inventory; then write mode.
-  - **DoD:** artifacts rows exist for existing R2 objects (at least for key prefixes we use).
+  - **Status:** Next up (after 10b completion): convert inventory/backfill learnings into scheduled ingestion + invariant checks.
+  - **DoD:** Cron-triggered ingestion run + alerting/regression checks; no `unknown`/dupes regressions.
 
 - **10d: Verification plumbing (Agent 4)**
   - **Owner:** Agent 4
@@ -52,6 +51,13 @@ Update this section whenever you start/stop work so other agents can instantly s
 - **UI: Split miner vs treasury sector stats** (from older notes)
 
 ### Done (recent)
+- **10b: R2 inventory → artifacts backfill (DONE 2026-02-28)**
+  - Prefix discovery: https://github.com/Sashamine/dat-tracker-next/actions/runs/22530779754
+  - Full bucket dry-run (cap 2000): https://github.com/Sashamine/dat-tracker-next/actions/runs/22530831208
+  - Full bucket live run: https://github.com/Sashamine/dat-tracker-next/actions/runs/22530938511
+  - Post-run D1 summary (unknown=0, duplicates=[]): https://github.com/Sashamine/dat-tracker-next/actions/runs/22531146011
+  - Ops ledger: ops/STATUS.md
+
 - **Phase A: Split-proof treasury yield**
   - Merged PR #38 (normalize shares via `corporate_actions` at read-time)
 - **10e-lite: Agent-optimized read APIs (value + receipts)**
