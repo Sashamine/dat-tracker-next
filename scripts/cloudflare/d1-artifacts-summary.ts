@@ -52,11 +52,23 @@ async function main() {
   const unknown = await d1Query<{ cnt: number }>(
     `SELECT COUNT(*) as cnt FROM artifacts WHERE source_type='unknown' OR source_type IS NULL;`
   );
-  const sampleUnknown = await d1Query<{ artifact_id: string; r2_key: string; source_type: string | null }>(
-    `SELECT artifact_id, r2_key, source_type
+  const sampleUnknown = await d1Query<{ artifact_id: string; r2_bucket: string; r2_key: string; source_type: string | null }>(
+    `SELECT artifact_id, r2_bucket, r2_key, source_type
      FROM artifacts
      WHERE source_type='unknown' OR source_type IS NULL
      LIMIT 25;`
+  );
+
+  const dupes = await d1Query<{ r2_bucket: string; r2_key: string; cnt: number; types: string }>(
+    `SELECT r2_bucket,
+            r2_key,
+            COUNT(*) as cnt,
+            GROUP_CONCAT(DISTINCT COALESCE(source_type, '(null)')) as types
+     FROM artifacts
+     GROUP BY r2_bucket, r2_key
+     HAVING cnt > 1
+     ORDER BY cnt DESC
+     LIMIT 50;`
   );
 
   console.log(
@@ -67,6 +79,7 @@ async function main() {
         unknown: unknown.results?.[0]?.cnt ?? null,
         byType: byType.results || [],
         sampleUnknown: sampleUnknown.results || [],
+        duplicates: dupes.results || [],
       },
       null,
       2
