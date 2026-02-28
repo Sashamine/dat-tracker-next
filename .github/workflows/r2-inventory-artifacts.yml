@@ -27,6 +27,18 @@ on:
         description: Optional R2 list cursor/continuation token (from previous run output)
         required: false
         default: ""
+      start_after:
+        description: S3 ListObjectsV2 start-after (fallback pagination). Used only when cursor is empty.
+        required: false
+        default: ""
+      debug_pagination:
+        description: Enable verbose pagination logs
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 jobs:
   inventory:
@@ -58,5 +70,7 @@ jobs:
           MAX_OBJECTS: ${{ inputs.max_objects }}
           R2_LIST_LIMIT: ${{ inputs.r2_list_limit }}
           R2_CURSOR: ${{ inputs.cursor }}
+          R2_START_AFTER: ${{ inputs.start_after }}
+          DEBUG_R2_PAGINATION: ${{ inputs.debug_pagination }}
 
         run: npx tsx scripts/cloudflare/r2-inventory-to-d1-artifacts.ts
