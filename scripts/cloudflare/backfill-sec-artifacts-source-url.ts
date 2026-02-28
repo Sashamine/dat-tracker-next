@@ -150,8 +150,22 @@ function findAccessionByDateOnly(
     }
   }
 
+  if (matches.length === 0) return null;
   if (matches.length === 1) return matches[0];
-  return null; // ambiguous or none
+
+  // Deterministic disambiguation for same-day multiple filings:
+  // Prefer HTML primary docs, then choose the shortest primary doc filename.
+  // (This avoids "no-op" backfills for tickers like MARA/RIOT where the R2 key has no accession suffix.)
+  const scored = matches
+    .map((m) => {
+      const doc = (m.primaryDoc || '').toLowerCase();
+      const isHtml = doc.endsWith('.htm') || doc.endsWith('.html');
+      const score = (isHtml ? 1000 : 0) - doc.length;
+      return { ...m, score };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  return { accession: scored[0].accession, primaryDoc: scored[0].primaryDoc };
 }
 
 async function main() {
