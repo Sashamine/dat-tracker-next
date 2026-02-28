@@ -1,0 +1,57 @@
+name: Backfill SEC artifact source_url
+
+on:
+  workflow_dispatch:
+    inputs:
+      write:
+        description: "Write changes to D1 (default: false / dry-run)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      ticker:
+        description: "Optional ticker to limit (e.g. MSTR)"
+        required: false
+        default: ""
+      limit:
+        description: "Optional limit of rows to scan (0 = unlimited)"
+        required: false
+        default: "0"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Backfill source_url (dry-run or write)
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.ticker }}" ]; then
+            ARGS="$ARGS --ticker=${{ inputs.ticker }}"
+          fi
+          if [ "${{ inputs.limit }}" != "0" ]; then
+            ARGS="$ARGS --limit=${{ inputs.limit }}"
+          fi
+
+          if [ "${{ inputs.write }}" = "true" ]; then
+            echo "WRITE MODE"
+            npx tsx scripts/cloudflare/backfill-sec-artifacts-source-url.ts --write $ARGS
+          else
+            echo "DRY RUN"
+            npx tsx scripts/cloudflare/backfill-sec-artifacts-source-url.ts $ARGS
+          fi
