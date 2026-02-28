@@ -320,8 +320,8 @@ async function main() {
           const upd = await d1Query<{ changes?: number }>(
             `UPDATE artifacts
              SET source_type = ?, content_hash = ?, fetched_at = ?
-             WHERE artifact_id = ? AND (source_type = 'unknown' OR source_type IS NULL);`,
-            [desiredType, contentHash, fetchedAt, artifactId]
+             WHERE r2_bucket = ? AND r2_key = ? AND (source_type = 'unknown' OR source_type IS NULL);`,
+            [desiredType, contentHash, fetchedAt, bucket, obj.key]
           );
           const updChanges = (upd.results?.[0] as any)?.changes;
           if (typeof updChanges === 'number') summary.inserted += updChanges;
