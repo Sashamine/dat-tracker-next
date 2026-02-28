@@ -52,14 +52,14 @@ async function main() {
   );
 
   // Count total rows that would be deleted (duplicates beyond the winner)
-  // D1/SQLite supports window functions.
+  // Note: artifacts table has no `id` column; use rowid.
   const deleteCount = await d1Query<{ cnt: number }>(
     `SELECT COUNT(*) as cnt
      FROM (
-       SELECT id,
+       SELECT rowid as rid,
               ROW_NUMBER() OVER (
                 PARTITION BY r2_bucket, r2_key
-                ORDER BY COALESCE(fetched_at,'') DESC, id DESC
+                ORDER BY COALESCE(fetched_at,'') DESC, rowid DESC
               ) as rn
        FROM artifacts
      )
@@ -92,16 +92,16 @@ async function main() {
     return;
   }
 
-  // Perform deletion (keep newest fetched_at, then max id)
+  // Perform deletion (keep newest fetched_at, then highest rowid)
   await d1Query(
     `DELETE FROM artifacts
-     WHERE id IN (
-       SELECT id
+     WHERE rowid IN (
+       SELECT rid
        FROM (
-         SELECT id,
+         SELECT rowid as rid,
                 ROW_NUMBER() OVER (
                   PARTITION BY r2_bucket, r2_key
-                  ORDER BY COALESCE(fetched_at,'') DESC, id DESC
+                  ORDER BY COALESCE(fetched_at,'') DESC, rowid DESC
                 ) as rn
          FROM artifacts
        )
