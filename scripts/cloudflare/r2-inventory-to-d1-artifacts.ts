@@ -96,6 +96,11 @@ function classifySourceTypeFromKey(key: string): string | null {
     if (k.includes('companyfacts')) return 'sec_companyfacts';
   }
 
+  // Root singletons (no directory structure)
+  if (!k.includes('/')) {
+    if (k.endsWith('.html') || k.endsWith('.pdf') || k.endsWith('.txt') || k.endsWith('.json')) return 'manual';
+  }
+
   return null;
 }
 
