@@ -128,8 +128,9 @@ async function r2List(
   prefix: string,
   cursor?: string,
   limit = 1000,
-  startAfter?: string
-): Promise<{ objects: R2ObjectLite[]; cursor?: string }> {
+  startAfter?: string,
+  delimiter?: string
+): Promise<{ objects: R2ObjectLite[]; cursor?: string; commonPrefixes?: string[]; keyCount?: number; maxKeys?: number }> {
   // Prefer S3 ListObjectsV2 because it has deterministic pagination.
   // https://developers.cloudflare.com/r2/api/s3/api/#list-objects-v2
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
@@ -147,6 +148,7 @@ async function r2List(
   if (prefix) url.searchParams.set('prefix', prefix);
   if (cursor) url.searchParams.set('continuation-token', cursor);
   if (!cursor && startAfter) url.searchParams.set('start-after', startAfter);
+  if (delimiter) url.searchParams.set('delimiter', delimiter);
 
   // Minimal AWS SigV4 signing (no external deps)
   const { headers, method } = await signAwsV4({
@@ -172,7 +174,13 @@ async function r2List(
   }));
 
   const nextCursor = parsed.IsTruncated ? parsed.NextContinuationToken : undefined;
-  return { objects, cursor: nextCursor };
+  return {
+    objects,
+    cursor: nextCursor,
+    commonPrefixes: parsed.commonPrefixes,
+    keyCount: parsed.KeyCount,
+    maxKeys: parsed.MaxKeys,
+  };
 }
 
 async function main() {
@@ -183,6 +191,8 @@ async function main() {
   const maxObjects = parseInt(process.env.MAX_OBJECTS || '0', 10); // 0 = unlimited
   const startCursor = (process.env.R2_CURSOR || '').trim() || undefined;
   const startAfter = (process.env.R2_START_AFTER || '').trim() || undefined;
+  const delimiter = (process.env.R2_DELIMITER || '').trim() || undefined;
+  const listPrefixesOnly = (process.env.R2_LIST_PREFIXES_ONLY || 'false').toLowerCase() === 'true';
 
   if (!bucket) throw new Error('Missing R2_BUCKET');
 
@@ -205,8 +215,35 @@ async function main() {
   let lastCursor: string | undefined;
 
   while (true) {
-    const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit, startAfterKey);
+    const { objects, cursor: next, commonPrefixes } = await r2List(
+      bucket,
+      prefix,
+      cursor,
+      pageLimit,
+      startAfterKey,
+      delimiter
+    );
     lastCursor = next;
+
+    if (listPrefixesOnly) {
+      // eslint-disable-next-line no-console
+      console.log(
+        JSON.stringify(
+          {
+            success: true,
+            dryRun,
+            bucket,
+            prefix,
+            delimiter: delimiter || null,
+            commonPrefixes: commonPrefixes || [],
+            nextCursor: next || null,
+          },
+          null,
+          2
+        )
+      );
+      return;
+    }
 
     if (process.env.DEBUG_R2_PAGINATION === 'true') {
       const firstKey = objects[0]?.key || null;
