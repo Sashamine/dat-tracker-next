@@ -39,6 +39,18 @@ on:
         options:
           - "false"
           - "true"
+      delimiter:
+        description: S3 delimiter for listing common prefixes (e.g. "/")
+        required: false
+        default: ""
+      list_prefixes_only:
+        description: If true, output common prefixes (requires delimiter) and exit
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 jobs:
   inventory:
@@ -72,5 +84,7 @@ jobs:
           R2_CURSOR: ${{ inputs.cursor }}
           R2_START_AFTER: ${{ inputs.start_after }}
           DEBUG_R2_PAGINATION: ${{ inputs.debug_pagination }}
+          R2_DELIMITER: ${{ inputs.delimiter }}
+          R2_LIST_PREFIXES_ONLY: ${{ inputs.list_prefixes_only }}
 
         run: npx tsx scripts/cloudflare/r2-inventory-to-d1-artifacts.ts
