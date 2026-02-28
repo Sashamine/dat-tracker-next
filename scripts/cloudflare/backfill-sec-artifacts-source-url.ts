@@ -61,12 +61,21 @@ function formFromKey(key: string): string | null {
   return null;
 }
 
-function parseFriendlyFilename(key: string): { date: string; suffix: string } | null {
+function parseFriendlyFilenameWithSuffix(key: string): { date: string; suffix: string } | null {
   // Match .../<form>/<something>-YYYY-MM-DD-<suffix>.<ext>
   // We only trust numeric suffix of length 3-8 (covers common patterns)
   const m = key.match(/-(\d{4}-\d{2}-\d{2})-(\d{3,8})\.[a-z0-9]+$/i);
   if (!m) return null;
   return { date: m[1], suffix: m[2] };
+}
+
+function parseFriendlyFilenameNoSuffix(key: string): { date: string } | null {
+  // Match .../<form>/<something>-YYYY-MM-DD.<ext>
+  const m = key.match(/-(\d{4}-\d{2}-\d{2})\.[a-z0-9]+$/i);
+  if (!m) return null;
+  // Exclude ones that also have suffix (handled by the other parser)
+  if (parseFriendlyFilenameWithSuffix(key)) return null;
+  return { date: m[1] };
 }
 
 async function fetchJson(url: string): Promise<any> {
@@ -98,7 +107,7 @@ async function loadAllSubmissions(cik10: string): Promise<SubmissionsRecent[]> {
   return sets;
 }
 
-function findAccession(
+function findAccessionBySuffix(
   submissionsSets: SubmissionsRecent[],
   form: string,
   filingDate: string,
@@ -120,6 +129,29 @@ function findAccession(
     }
   }
   return null;
+}
+
+function findAccessionByDateOnly(
+  submissionsSets: SubmissionsRecent[],
+  form: string,
+  filingDate: string
+): { accession: string; primaryDoc: string } | null {
+  const matches: Array<{ accession: string; primaryDoc: string }> = [];
+
+  for (const set of submissionsSets) {
+    const n = set.accessionNumber?.length || 0;
+    for (let i = 0; i < n; i++) {
+      if (set.form?.[i] !== form) continue;
+      if (set.filingDate?.[i] !== filingDate) continue;
+      const acc = set.accessionNumber?.[i];
+      const primary = set.primaryDocument?.[i];
+      if (!acc || !primary) continue;
+      matches.push({ accession: acc, primaryDoc: primary });
+    }
+  }
+
+  if (matches.length === 1) return matches[0];
+  return null; // ambiguous or none
 }
 
 async function main() {
@@ -159,41 +191,45 @@ async function main() {
   }
 
   let scanned = 0;
-  let candidates = 0;
+  let candidateSuffix = 0;
+  let candidateNoSuffix = 0;
   let matched = 0;
   let updated = 0;
   let skippedNoPattern = 0;
   let skippedNoForm = 0;
   let skippedNoMatch = 0;
+  let skippedAmbiguous = 0;
 
   const missingSample: Array<{ ticker: string | null; cik: string; r2_key: string; reason: string }> = [];
 
   for (const [cik10, items] of byCik) {
     // Filter to just those that look like friendly filenames first, to avoid unnecessary SEC fetch.
-    const friendly = items.filter((it) => {
-      const f = parseFriendlyFilename(it.r2_key);
-      return Boolean(f);
-    });
+    const withSuffix = items.filter((it) => Boolean(parseFriendlyFilenameWithSuffix(it.r2_key)));
+    const noSuffix = items.filter((it) => Boolean(parseFriendlyFilenameNoSuffix(it.r2_key)));
 
     scanned += items.length;
-    candidates += friendly.length;
+    candidateSuffix += withSuffix.length;
+    candidateNoSuffix += noSuffix.length;
 
-    if (friendly.length === 0) continue;
+    const candidates = [...withSuffix, ...noSuffix];
+    if (candidates.length === 0) continue;
 
     let submissionsSets: SubmissionsRecent[];
     try {
       submissionsSets = await loadAllSubmissions(cik10);
     } catch (e) {
-      for (const it of friendly) {
+      for (const it of candidates) {
         if (missingSample.length < 50)
           missingSample.push({ ticker: it.ticker, cik: cik10, r2_key: it.r2_key, reason: 'sec_fetch_failed' });
       }
       continue;
     }
 
-    for (const it of friendly) {
-      const f = parseFriendlyFilename(it.r2_key);
-      if (!f) {
+    for (const it of candidates) {
+      const fSuffix = parseFriendlyFilenameWithSuffix(it.r2_key);
+      const fNoSuffix = parseFriendlyFilenameNoSuffix(it.r2_key);
+
+      if (!fSuffix && !fNoSuffix) {
         skippedNoPattern++;
         continue;
       }
@@ -206,11 +242,22 @@ async function main() {
         continue;
       }
 
-      const found = findAccession(submissionsSets, form, f.date, f.suffix);
+      let found: { accession: string; primaryDoc: string } | null = null;
+      if (fSuffix) found = findAccessionBySuffix(submissionsSets, form, fSuffix.date, fSuffix.suffix);
+      else if (fNoSuffix) found = findAccessionByDateOnly(submissionsSets, form, fNoSuffix.date);
+
       if (!found) {
-        skippedNoMatch++;
+        // if no suffix, this may be ambiguous (multiple filings same day)
+        if (fNoSuffix) skippedAmbiguous++;
+        else skippedNoMatch++;
+
         if (missingSample.length < 50)
-          missingSample.push({ ticker: it.ticker, cik: cik10, r2_key: it.r2_key, reason: 'no_match_in_submissions' });
+          missingSample.push({
+            ticker: it.ticker,
+            cik: cik10,
+            r2_key: it.r2_key,
+            reason: fNoSuffix ? 'no_unique_match_in_submissions' : 'no_match_in_submissions',
+          });
         continue;
       }
 
@@ -246,12 +293,14 @@ async function main() {
         onlyTicker,
         limit: limit || null,
         scannedRows: scanned,
-        candidateFriendlyRows: candidates,
+        candidateSuffixRows: candidateSuffix,
+        candidateNoSuffixRows: candidateNoSuffix,
         matched,
         updated: write ? updated : 0,
         skippedNoPattern,
         skippedNoForm,
         skippedNoMatch,
+        skippedAmbiguous,
         missingSample,
       },
       null,
