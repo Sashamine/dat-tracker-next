@@ -1,5 +1,6 @@
 #!/usr/bin/env npx tsx
 
+import crypto from 'node:crypto';
 import { D1Client } from '../src/lib/d1';
 
 type VerificationCheck = {
@@ -29,17 +30,45 @@ function verdictFromChecks(checks: VerificationCheck[]): 'pass' | 'warn' | 'fail
   return 'pass';
 }
 
+function isSecUrl(url: string): boolean {
+  try {
+    const u = new URL(url);
+    return u.hostname === 'www.sec.gov' || u.hostname === 'sec.gov';
+  } catch {
+    return false;
+  }
+}
+
+function secHeaders(): Record<string, string> {
+  // SEC strongly prefers an identifying User-Agent.
+  // If not provided, endpoints can return 403.
+  const ua = process.env.SEC_USER_AGENT || 'dat-tracker-next verifier (contact: ops@datcap.app)';
+  return {
+    'User-Agent': ua,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  };
+}
+
 async function checkSourceUrlReachable(url: string | null): Promise<VerificationCheck> {
   if (!url) {
     return { name: 'source_url_reachable', status: 'warn', details: 'No source_url on datapoint' };
   }
 
+  const headers = isSecUrl(url) ? secHeaders() : undefined;
+
   try {
-    const res = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+    const res = await fetch(url, { method: 'HEAD', redirect: 'follow', headers });
     // Some hosts block HEAD; retry with GET (no body consumption needed here).
     if (res.status === 405 || res.status === 403) {
-      const res2 = await fetch(url, { method: 'GET', redirect: 'follow' });
+      const res2 = await fetch(url, { method: 'GET', redirect: 'follow', headers });
       const s2 = res2.status;
+
+      // SEC can still return 403 even with a UA. In that case, treat it as "reachable but gated"
+      // to avoid noisy warnings for otherwise valid SEC source URLs.
+      if (s2 === 403 && isSecUrl(url)) {
+        return { name: 'source_url_reachable', status: 'pass', details: `GET ${s2} (SEC gated)` };
+      }
+
       if (s2 >= 200 && s2 < 400) return { name: 'source_url_reachable', status: 'pass', details: `GET ${s2}` };
       if (s2 === 404) return { name: 'source_url_reachable', status: 'fail', details: `GET ${s2}` };
       return { name: 'source_url_reachable', status: 'warn', details: `GET ${s2}` };
@@ -48,6 +77,11 @@ async function checkSourceUrlReachable(url: string | null): Promise<Verification
     const s = res.status;
     if (s >= 200 && s < 400) return { name: 'source_url_reachable', status: 'pass', details: `HEAD ${s}` };
     if (s === 404) return { name: 'source_url_reachable', status: 'fail', details: `HEAD ${s}` };
+
+    if (s === 403 && isSecUrl(url)) {
+      return { name: 'source_url_reachable', status: 'pass', details: `HEAD ${s} (SEC gated)` };
+    }
+
     return { name: 'source_url_reachable', status: 'warn', details: `HEAD ${s}` };
   } catch (e) {
     return {
@@ -71,8 +105,10 @@ function checkSanityRange(metric: string, value: number | null): VerificationChe
     return { name: 'sanity_range', status: 'warn', details: 'Unusually high shares value' };
   }
 
-  if ((metric.toLowerCase().includes('holdings') || metric.toLowerCase().includes('btc')) && value > 10_000_000) {
-    return { name: 'sanity_range', status: 'warn', details: 'Unusually high holdings value' };
+  // NOTE: *_holdings_usd are USD values and can be in the billions for large names (MSTR, etc).
+  // The old threshold (10,000,000) was appropriate for unit-denominated holdings, not USD.
+  if (metric.toLowerCase().endsWith('_holdings_usd') && value > 1_000_000_000_000) {
+    return { name: 'sanity_range', status: 'warn', details: 'Unusually high holdings USD value' };
   }
 
   return { name: 'sanity_range', status: 'pass' };
