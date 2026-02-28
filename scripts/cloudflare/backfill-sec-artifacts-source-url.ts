@@ -23,6 +23,7 @@ type ArtifactRow = {
 type SubmissionsRecent = {
   accessionNumber: string[];
   filingDate: string[];
+  reportDate?: string[];
   form: string[];
   primaryDocument: string[];
 };
@@ -154,6 +155,30 @@ function findAccessionByDateOnly(
   return null; // ambiguous or none
 }
 
+function findAccessionByReportDate(
+  submissionsSets: SubmissionsRecent[],
+  form: string,
+  reportDate: string
+): { accession: string; primaryDoc: string } | null {
+  const matches: Array<{ accession: string; primaryDoc: string }> = [];
+
+  for (const set of submissionsSets) {
+    const n = set.accessionNumber?.length || 0;
+    const rd = set.reportDate || [];
+    for (let i = 0; i < n; i++) {
+      if (set.form?.[i] !== form) continue;
+      if (rd[i] !== reportDate) continue;
+      const acc = set.accessionNumber?.[i];
+      const primary = set.primaryDocument?.[i];
+      if (!acc || !primary) continue;
+      matches.push({ accession: acc, primaryDoc: primary });
+    }
+  }
+
+  if (matches.length === 1) return matches[0];
+  return null;
+}
+
 async function main() {
   const write = process.argv.includes('--write');
   const limitArg = process.argv.find((a) => a.startsWith('--limit='));
@@ -243,8 +268,16 @@ async function main() {
       }
 
       let found: { accession: string; primaryDoc: string } | null = null;
-      if (fSuffix) found = findAccessionBySuffix(submissionsSets, form, fSuffix.date, fSuffix.suffix);
-      else if (fNoSuffix) found = findAccessionByDateOnly(submissionsSets, form, fNoSuffix.date);
+      if (fSuffix) {
+        found = findAccessionBySuffix(submissionsSets, form, fSuffix.date, fSuffix.suffix);
+      } else if (fNoSuffix) {
+        // For 10-Q/10-K friendly keys, the date is almost always the period end.
+        // Use reportDate if possible; fall back to filingDate unique match.
+        const k = it.r2_key.toLowerCase();
+        const isPeriodEndKey = k.includes('/10q/') || k.includes('/10k/');
+        if (isPeriodEndKey) found = findAccessionByReportDate(submissionsSets, form, fNoSuffix.date);
+        if (!found) found = findAccessionByDateOnly(submissionsSets, form, fNoSuffix.date);
+      }
 
       if (!found) {
         // if no suffix, this may be ambiguous (multiple filings same day)
