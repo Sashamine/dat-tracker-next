@@ -76,11 +76,8 @@ async function upsertArtifact(dp: ShareDataPoint): Promise<string> {
       r2_key,
       cik,
       ticker,
-      accession,
-      entity_id,
-      period_end,
-      filed_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      accession
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
     [
       artifactId,
       'tdnet_pdf',
@@ -91,10 +88,7 @@ async function upsertArtifact(dp: ShareDataPoint): Promise<string> {
       '',
       null,
       '3350.T',
-      null,
-      '3350.T',
-      dp.asOf,
-      publishedAt || null,
+      null
     ]
   );
 
