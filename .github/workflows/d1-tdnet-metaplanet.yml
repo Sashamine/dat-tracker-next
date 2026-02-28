@@ -1,0 +1,72 @@
+name: D1 TDnet → Metaplanet Basic Shares
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "Comma-separated TDnet PDF URLs"
+        required: false
+        default: ""
+      url_file:
+        description: "Path in repo to a JSON file containing a URL array or TdnetFilingEntry[]"
+        required: false
+        default: ""
+      start:
+        description: "Start date YYYY-MM-DD for discovery mode (TDnet daily listings; ~30 days)"
+        required: false
+        default: ""
+      end:
+        description: "End date YYYY-MM-DD for discovery mode (default: today)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Dry run (true/false)"
+        required: true
+        default: "true"
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build script args
+        id: args
+        shell: bash
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.urls }}" ]; then
+            ARGS="--urls=${{ inputs.urls }}"
+          elif [ -n "${{ inputs.url_file }}" ]; then
+            ARGS="--url-file=${{ inputs.url_file }}"
+          elif [ -n "${{ inputs.start }}" ]; then
+            ARGS="--start=${{ inputs.start }}"
+            if [ -n "${{ inputs.end }}" ]; then
+              ARGS="$ARGS --end=${{ inputs.end }}"
+            fi
+          else
+            echo "::error::One of urls, url_file, or start must be provided."
+            exit 1
+          fi
+          ARGS="$ARGS --dry-run=${{ inputs.dry_run }}"
+          echo "SCRIPT_ARGS=$ARGS" >> "$GITHUB_OUTPUT"
+          echo "script args: $ARGS"
+
+      - name: Run TDnet → D1 ingestion
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          echo "Running: npx tsx scripts/d1-tdnet-metaplanet.ts ${{ steps.args.outputs.SCRIPT_ARGS }}"
+          npx tsx scripts/d1-tdnet-metaplanet.ts ${{ steps.args.outputs.SCRIPT_ARGS }}
