@@ -35,33 +35,27 @@ async function d1Query<T>(sql: string, params: any[] = []): Promise<D1QueryResul
 }
 
 async function main() {
-  const tablesRes = await d1Query<{ name: string }>(
-    `SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name;`
+  const tablesRes = await d1Query<{ name: string; sql: string | null }>(
+    `SELECT name, sql
+     FROM sqlite_master
+     WHERE type='table' AND name NOT LIKE 'sqlite_%'
+     ORDER BY name;`
   );
+
   const tables = (tablesRes.results || []).map((r) => r.name);
+  const ddlByTable: Record<string, string | null> = {};
+  for (const r of tablesRes.results || []) ddlByTable[r.name] = r.sql ?? null;
 
-  const fkByTable: Record<string, any[]> = {};
-  for (const t of tables) {
-    // PRAGMA results come back as objects with columns: id, seq, table, from, to, on_update, on_delete, match
-    const fkRes = await d1Query<any>(`PRAGMA foreign_key_list(${JSON.stringify(t)});`);
-    fkByTable[t] = fkRes.results || [];
-  }
-
-  // Derive inbound references to artifacts
-  const inboundToArtifacts: Array<{ table: string; from: string; to: string; on_delete: string; on_update: string }>
-    = [];
-
-  for (const [table, fks] of Object.entries(fkByTable)) {
-    for (const fk of fks) {
-      if (fk.table === 'artifacts') {
-        inboundToArtifacts.push({
-          table,
-          from: fk.from,
-          to: fk.to,
-          on_delete: fk.on_delete,
-          on_update: fk.on_update,
-        });
-      }
+  // Heuristic: parse inbound FK references to artifacts from DDL (since PRAGMA is blocked)
+  const inboundToArtifacts: Array<{ table: string; ddlSnippet: string }> = [];
+  for (const [table, ddl] of Object.entries(ddlByTable)) {
+    if (!ddl) continue;
+    if (/references\s+artifacts\b/i.test(ddl)) {
+      // Keep a small snippet around the match for readability
+      const idx = ddl.toLowerCase().indexOf('references artifacts');
+      const start = Math.max(0, idx - 80);
+      const end = Math.min(ddl.length, idx + 160);
+      inboundToArtifacts.push({ table, ddlSnippet: ddl.slice(start, end) });
     }
   }
 
@@ -71,7 +65,7 @@ async function main() {
         success: true,
         tables,
         inboundToArtifacts,
-        foreignKeys: fkByTable,
+        tableDDLs: ddlByTable,
       },
       null,
       2
