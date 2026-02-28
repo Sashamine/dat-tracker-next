@@ -69,6 +69,15 @@ function classifySourceTypeFromKey(key: string): string | null {
   if (k.includes('/xbrl/')) return 'sec_xbrl';
   if (k.includes('companyfacts')) return 'sec_companyfacts';
 
+  // SEC form folders even when ticker heuristics fail
+  if (k.includes('/10ka/')) return 'sec_filing';
+  if (k.includes('/10k/')) return 'sec_filing';
+  if (k.includes('/10qa/')) return 'sec_filing';
+  if (k.includes('/10q/')) return 'sec_filing';
+  if (k.includes('/8k/')) return 'sec_filing';
+  if (k.includes('/proxy14a/')) return 'sec_filing';
+  if (k.includes('/proxy14c/')) return 'sec_filing';
+
   // Many existing keys are ticker-first (e.g. "mstr/10q/...", "abtc/10k/...")
   // For these, treat as SEC filings unless we have a better classifier.
   const firstSeg = k.split('/')[0];
