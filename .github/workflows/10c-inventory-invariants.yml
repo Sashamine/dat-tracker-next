@@ -1,0 +1,99 @@
+name: 10c (v1) Inventory + Invariants
+
+on:
+  workflow_dispatch:
+    inputs:
+      prefixes:
+        description: "Comma-separated prefixes to scan (e.g. new-uploads/,mstr/,mara/,riot/)"
+        required: false
+        default: "new-uploads/,mstr/,mara/,riot/"
+      max_objects_per_prefix:
+        description: "Max objects per prefix (0 = unlimited)"
+        required: false
+        default: "2000"
+      d1_throttle_ms:
+        description: "Optional delay between D1 ops (ms)"
+        required: false
+        default: "0"
+
+  schedule:
+    - cron: "*/30 * * * *"
+
+jobs:
+  inventory_and_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run inventory for each prefix (write mode)
+        id: inventory
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+
+          PREFIXES: ${{ inputs.prefixes || 'new-uploads/,mstr/,mara/,riot/' }}
+          MAX_OBJECTS_PER_PREFIX: ${{ inputs.max_objects_per_prefix || '2000' }}
+          D1_THROTTLE_MS: ${{ inputs.d1_throttle_ms || '0' }}
+
+        run: |
+          set -euo pipefail
+          echo "prefixes=$PREFIXES"
+
+          IFS=',' read -ra PFX <<< "$PREFIXES"
+          for prefix in "${PFX[@]}"; do
+            prefix="${prefix// /}"
+            if [ -z "$prefix" ]; then
+              continue
+            fi
+            echo "\n=== inventory prefix: $prefix ==="
+            R2_PREFIX="$prefix" \
+            DRY_RUN="false" \
+            MAX_OBJECTS="$MAX_OBJECTS_PER_PREFIX" \
+            R2_LIST_LIMIT="1000" \
+            REQUIRE_PREFIX="true" \
+            ALLOW_EMPTY_PREFIX="false" \
+            MAX_ERRORS="25" \
+            PROGRESS_EVERY="500" \
+            D1_THROTTLE_MS="$D1_THROTTLE_MS" \
+            npx tsx scripts/cloudflare/r2-inventory-to-d1-artifacts.ts | tee "/tmp/inventory-$prefix.log"
+          done
+
+      - name: D1 artifacts summary (must be clean)
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx tsx scripts/cloudflare/d1-artifacts-summary.ts | tee /tmp/d1-artifacts-summary.json
+
+          node - <<'NODE'
+          const fs = require('fs');
+          const txt = fs.readFileSync('/tmp/d1-artifacts-summary.json','utf8');
+          const jsonLine = txt.trim().split(/\n/).find(l => l.trim().startsWith('{'));
+          const data = JSON.parse(jsonLine);
+          if (!data.success) {
+            console.error('summary did not succeed');
+            process.exit(1);
+          }
+          const unknown = data.unknown || 0;
+          const dupes = Array.isArray(data.duplicates) ? data.duplicates.length : 0;
+          if (unknown > 0 || dupes > 0) {
+            console.error('INVARIANT FAILED', { unknown, dupes });
+            process.exit(2);
+          }
+          console.log('INVARIANTS OK', { total: data.total, unknown, dupes });
+          NODE
