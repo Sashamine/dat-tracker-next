@@ -123,7 +123,13 @@ async function d1Query<T>(sql: string, params: any[] = []): Promise<D1QueryResul
   return json.result?.[0] || { results: [], success: true };
 }
 
-async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1000): Promise<{ objects: R2ObjectLite[]; cursor?: string }> {
+async function r2List(
+  bucket: string,
+  prefix: string,
+  cursor?: string,
+  limit = 1000,
+  startAfter?: string
+): Promise<{ objects: R2ObjectLite[]; cursor?: string }> {
   // Prefer S3 ListObjectsV2 because it has deterministic pagination.
   // https://developers.cloudflare.com/r2/api/s3/api/#list-objects-v2
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
@@ -140,6 +146,7 @@ async function r2List(bucket: string, prefix: string, cursor?: string, limit = 1
   url.searchParams.set('max-keys', String(Math.min(Math.max(limit, 1), 1000)));
   if (prefix) url.searchParams.set('prefix', prefix);
   if (cursor) url.searchParams.set('continuation-token', cursor);
+  if (!cursor && startAfter) url.searchParams.set('start-after', startAfter);
 
   // Minimal AWS SigV4 signing (no external deps)
   const { headers, method } = await signAwsV4({
@@ -175,6 +182,7 @@ async function main() {
   const pageLimit = parseInt(process.env.R2_LIST_LIMIT || '1000', 10);
   const maxObjects = parseInt(process.env.MAX_OBJECTS || '0', 10); // 0 = unlimited
   const startCursor = (process.env.R2_CURSOR || '').trim() || undefined;
+  const startAfter = (process.env.R2_START_AFTER || '').trim() || undefined;
 
   if (!bucket) throw new Error('Missing R2_BUCKET');
 
@@ -191,15 +199,18 @@ async function main() {
   };
 
   let cursor: string | undefined = startCursor;
+  let startAfterKey: string | undefined = startAfter;
 
   // For chaining chunked runs
   let lastCursor: string | undefined;
 
   while (true) {
-    const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit);
+    const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit, startAfterKey);
     lastCursor = next;
 
     if (process.env.DEBUG_R2_PAGINATION === 'true') {
+      const firstKey = objects[0]?.key || null;
+      const lastKey = objects[objects.length - 1]?.key || null;
       // eslint-disable-next-line no-console
       console.log(
         JSON.stringify(
@@ -208,6 +219,9 @@ async function main() {
             prefix,
             inCursor: cursor || null,
             outCursor: next || null,
+            inStartAfter: cursor ? null : startAfterKey || null,
+            firstKey,
+            lastKey,
             pageCount: objects.length,
             scannedSoFar: summary.scanned,
             maxObjects: maxObjects || null,
@@ -267,12 +281,55 @@ async function main() {
     }
 
     if (maxObjects && summary.scanned >= maxObjects) break;
-    if (!next) break;
-    cursor = next;
+
+    if (next) {
+      cursor = next;
+      startAfterKey = undefined;
+      continue;
+    }
+
+    // Fallback when R2 does not return NextContinuationToken / IsTruncated.
+    // If we got a full page, assume there may be more and advance using start-after.
+    if (objects.length >= pageLimit) {
+      startAfterKey = objects[objects.length - 1]?.key;
+      if (process.env.DEBUG_R2_PAGINATION === 'true') {
+        // eslint-disable-next-line no-console
+        console.log(
+          JSON.stringify(
+            {
+              msg: 'r2 pagination fallback start-after',
+              nextStartAfter: startAfterKey || null,
+              reason: 'no next cursor but page was full',
+            },
+            null,
+            2
+          )
+        );
+      }
+      if (!startAfterKey) break;
+      cursor = undefined;
+      continue;
+    }
+
+    break;
   }
 
   // eslint-disable-next-line no-console
-  console.log(JSON.stringify({ success: true, dryRun, startCursor, nextCursor: lastCursor || null, summary }, null, 2));
+  console.log(
+    JSON.stringify(
+      {
+        success: true,
+        dryRun,
+        startCursor,
+        startAfter,
+        nextCursor: lastCursor || null,
+        nextStartAfter: !lastCursor && startAfterKey ? startAfterKey : null,
+        summary,
+      },
+      null,
+      2
+    )
+  );
 }
 
 main().catch((err) => {
