@@ -316,10 +316,9 @@ export function parsePdfText(text: string, titleHint = ''): PdfExtraction {
   if (sectionHeaderIdx !== -1) {
     const window = text.slice(sectionHeaderIdx, sectionHeaderIdx + 4000);
     const SHARE_NUM_RE =
-      /(?:期末発行済株式数[（(][^）)]*[）)][\s\S]{0,120}?|発行済株式[総数]*[\s\S]{0,80}?)(\d[\d,]{3,})\s*株/g;
+      /(?:\b20\d{2}年[\s\S]{0,20}?(?:12月期|3月期|6月期|9月期)[\s\S]{0,80}?)?(\d[\d,]{3,})\s*株/g;
 
     let m: RegExpExecArray | null;
-    let maxInWindow = 0;
     while ((m = SHARE_NUM_RE.exec(window)) !== null) {
       const raw = m[1].replace(/,/g, '');
       let n = parseInt(raw, 10);
@@ -327,9 +326,6 @@ export function parsePdfText(text: string, titleHint = ''): PdfExtraction {
       const contextStart = Math.max(0, m.index - 30);
       const ctx = window.slice(contextStart, m.index + m[0].length + 10);
 
-      // pdf text sometimes drops a leading digit for large share counts.
-      // Only apply this fix when we're in the context of the 2025 year row.
-      if (ctx.includes('2025年') && n >= 1_000_000_000 && n < 10_000_000_000) n += 10_000_000_000;
       if (!isFinite(n) || n < MIN_SHARES || n > MAX_SHARES) continue;
 
       const isWithTreasury = ctx.includes('自己株式を含む');
@@ -341,18 +337,6 @@ export function parsePdfText(text: string, titleHint = ''): PdfExtraction {
         context: ctx.replace(/\s+/g, ' ').trim(),
         confidence: isWithTreasury ? 'high' : 'medium',
       });
-
-      if (n > maxInWindow) maxInWindow = n;
-    }
-
-    // If we detected a likely missing-leading-digit case, add a synthetic candidate for prior year too.
-    // Example: 2025=1,142,274,340 (→ +10B fix) and 2024=362,683,340 should become 10,362,683,340.
-    if (maxInWindow >= 10_000_000_000) {
-      for (const c of candidates) {
-        if (c.value < 1_000_000_000) {
-          c.value += 10_000_000_000;
-        }
-      }
     }
   }
 
