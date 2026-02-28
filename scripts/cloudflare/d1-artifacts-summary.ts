@@ -71,6 +71,19 @@ async function main() {
      LIMIT 50;`
   );
 
+  const unknownWithSibling = await d1Query<{ r2_bucket: string; r2_key: string; cnt: number; types: string }>(
+    `SELECT r2_bucket,
+            r2_key,
+            COUNT(*) as cnt,
+            GROUP_CONCAT(DISTINCT COALESCE(source_type, '(null)')) as types
+     FROM artifacts
+     GROUP BY r2_bucket, r2_key
+     HAVING SUM(CASE WHEN source_type='unknown' OR source_type IS NULL THEN 1 ELSE 0 END) > 0
+        AND SUM(CASE WHEN source_type!='unknown' AND source_type IS NOT NULL THEN 1 ELSE 0 END) > 0
+     ORDER BY cnt DESC
+     LIMIT 50;`
+  );
+
   console.log(
     JSON.stringify(
       {
@@ -80,6 +93,7 @@ async function main() {
         byType: byType.results || [],
         sampleUnknown: sampleUnknown.results || [],
         duplicates: dupes.results || [],
+        unknownWithSibling: unknownWithSibling.results || [],
       },
       null,
       2
