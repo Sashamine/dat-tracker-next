@@ -1,0 +1,54 @@
+name: Backfill legacy SEC 8-K source_url (from R2)
+
+on:
+  workflow_dispatch:
+    inputs:
+      write:
+        description: 'Write updates to D1 (true/false)'
+        required: true
+        default: 'false'
+      ticker:
+        description: 'Optional ticker filter (e.g., BMNR). Blank = all.'
+        required: false
+        default: ''
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: npm ci
+        run: npm ci
+
+      - name: Backfill legacy SEC 8-Ks from R2 (extract accession)
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_REGION: ${{ secrets.R2_REGION }}
+        run: |
+          set -euo pipefail
+
+          WRITE='${{ github.event.inputs.write }}'
+          TICKER='${{ github.event.inputs.ticker }}'
+
+          ARGS=()
+          if [[ "$WRITE" == "true" ]]; then
+            ARGS+=("--write")
+          fi
+          if [[ -n "$TICKER" ]]; then
+            ARGS+=("--ticker=${TICKER}")
+          fi
+
+          echo "Running: npx tsx scripts/cloudflare/backfill-sec-legacy-8k-noaccession.ts ${ARGS[*]}"
+          npx tsx scripts/cloudflare/backfill-sec-legacy-8k-noaccession.ts "${ARGS[@]}"
