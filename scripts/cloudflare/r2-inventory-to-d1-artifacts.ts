@@ -199,6 +199,25 @@ async function main() {
     const { objects, cursor: next } = await r2List(bucket, prefix, cursor, pageLimit);
     lastCursor = next;
 
+    if (process.env.DEBUG_R2_PAGINATION === 'true') {
+      // eslint-disable-next-line no-console
+      console.log(
+        JSON.stringify(
+          {
+            msg: 'r2 pagination page',
+            prefix,
+            inCursor: cursor || null,
+            outCursor: next || null,
+            pageCount: objects.length,
+            scannedSoFar: summary.scanned,
+            maxObjects: maxObjects || null,
+          },
+          null,
+          2
+        )
+      );
+    }
+
     for (const obj of objects) {
       if (maxObjects && summary.scanned >= maxObjects) break;
       summary.scanned++;
@@ -222,18 +241,24 @@ async function main() {
       const fetchedAt = obj.uploaded || null;
 
       if (dryRun) {
+        // In dry-run we count how many would be processed.
         summary.skipped++;
         continue;
       }
 
       try {
-        await d1Query(
+        const before = summary.inserted;
+        const res = await d1Query<{ changes?: number }>(
           `INSERT OR IGNORE INTO artifacts (
             artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key
           ) VALUES (?, ?, ?, ?, ?, ?, ?);`,
           [artifactId, sourceType || 'unknown', null, contentHash, fetchedAt, bucket, obj.key]
         );
-        summary.inserted++;
+
+        // D1 may report changes; prefer it if present so inserted != scanned.
+        const changes = (res.results?.[0] as any)?.changes;
+        if (typeof changes === 'number') summary.inserted += changes;
+        else summary.inserted = before + 1;
       } catch (e) {
         summary.errors++;
         // eslint-disable-next-line no-console
