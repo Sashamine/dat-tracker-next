@@ -87,4 +87,13 @@ jobs:
           R2_DELIMITER: ${{ inputs.delimiter }}
           R2_LIST_PREFIXES_ONLY: ${{ inputs.list_prefixes_only }}
 
+          # Guardrails / observability
+          PROGRESS_EVERY: "500"
+          MAX_ERRORS: "25"
+          REQUIRE_PREFIX: "true"
+          # Set to true explicitly when you intend a full bucket scan
+          ALLOW_EMPTY_PREFIX: "false"
+          # Optional throttling to avoid D1 rate limits
+          D1_THROTTLE_MS: "0"
+
         run: npx tsx scripts/cloudflare/r2-inventory-to-d1-artifacts.ts
