@@ -59,8 +59,8 @@ function classifySourceTypeFromKey(key: string): string | null {
   // These are SEC filing text artifacts.
   if (/^batch\d+\//.test(k)) return 'sec_filing';
 
-  // Hong Kong filings (PDFs) - treat as non-US filing artifacts
-  if (k.startsWith('hkex/')) return 'nonus_filing';
+  // Hong Kong filings (PDFs)
+  if (k.startsWith('hkex/')) return 'hkex_pdf';
 
   // Ad-hoc uploads (treat as manual until we add stronger conventions)
   if (k.startsWith('new-uploads/')) return 'manual';
@@ -304,17 +304,32 @@ async function main() {
 
       try {
         const before = summary.inserted;
+        const desiredType = sourceType || 'unknown';
+
         const res = await d1Query<{ changes?: number }>(
           `INSERT OR IGNORE INTO artifacts (
             artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key
           ) VALUES (?, ?, ?, ?, ?, ?, ?);`,
-          [artifactId, sourceType || 'unknown', null, contentHash, fetchedAt, bucket, obj.key]
+          [artifactId, desiredType, null, contentHash, fetchedAt, bucket, obj.key]
         );
 
-        // D1 may report changes; prefer it if present so inserted != scanned.
         const changes = (res.results?.[0] as any)?.changes;
-        if (typeof changes === 'number') summary.inserted += changes;
-        else summary.inserted = before + 1;
+
+        // If insert was ignored, upgrade unknown rows when we can classify them.
+        if (typeof changes === 'number' && changes === 0 && desiredType !== 'unknown') {
+          const upd = await d1Query<{ changes?: number }>(
+            `UPDATE artifacts
+             SET source_type = ?, content_hash = ?, fetched_at = ?
+             WHERE artifact_id = ? AND (source_type = 'unknown' OR source_type IS NULL);`,
+            [desiredType, contentHash, fetchedAt, artifactId]
+          );
+          const updChanges = (upd.results?.[0] as any)?.changes;
+          if (typeof updChanges === 'number') summary.inserted += updChanges;
+        } else if (typeof changes === 'number') {
+          summary.inserted += changes;
+        } else {
+          summary.inserted = before + 1;
+        }
       } catch (e) {
         summary.errors++;
         // eslint-disable-next-line no-console
