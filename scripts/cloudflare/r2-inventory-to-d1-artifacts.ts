@@ -32,16 +32,55 @@ type InventorySummary = {
   bucket: string;
   prefix: string;
   scanned: number;
-  inserted: number;
+  inserted: number; // legacy: total D1 row changes (inserts + upgrades)
+  insertedNew: number;
+  upgradedExisting: number;
+  noops: number;
   skipped: number;
   unknownSourceType: number;
   errors: number;
   unknownKeysSample?: string[];
   unknownFirstSegCounts?: Record<string, number>;
+  sourceTypeCounts?: Record<string, number>;
 };
 
 function sha256(input: string): string {
   return createHash('sha256').update(input).digest('hex');
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function withRetry<T>(
+  label: string,
+  fn: () => Promise<T>,
+  opts: { retries: number; backoffMs: number[] }
+): Promise<T> {
+  let attempt = 0;
+  // Fixed backoff schedule to keep behavior deterministic
+  while (true) {
+    try {
+      return await fn();
+    } catch (e) {
+      attempt++;
+      const msg = e instanceof Error ? e.message : String(e);
+      const maybeRetryable =
+        msg.includes('429') ||
+        msg.includes('500') ||
+        msg.includes('502') ||
+        msg.includes('503') ||
+        msg.includes('504') ||
+        msg.includes('fetch failed') ||
+        msg.includes('ECONNRESET') ||
+        msg.includes('ETIMEDOUT');
+
+      if (!maybeRetryable || attempt > opts.retries) throw e;
+      const delay = opts.backoffMs[Math.min(attempt - 1, opts.backoffMs.length - 1)] ?? 250;
+      console.log(JSON.stringify({ msg: 'retry', label, attempt, delayMs: delay, err: msg }));
+      await sleep(delay);
+    }
+  }
 }
 
 function classifySourceTypeFromKey(key: string): string | null {
@@ -122,19 +161,23 @@ async function d1Query<T>(sql: string, params: any[] = []): Promise<D1QueryResul
   if (!apiToken) throw new Error('Missing CLOUDFLARE_API_TOKEN');
 
   const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/d1/database/${databaseId}/query`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ sql, params }),
-  });
+  const doQuery = async () => {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ sql, params }),
+    });
 
-  if (!res.ok) throw new Error(`D1 query failed: ${res.status} ${res.statusText}: ${await res.text()}`);
-  const json = (await res.json()) as D1Response<T>;
-  if (!json.success) throw new Error(`D1 query failed: ${JSON.stringify(json.errors || json)}`);
-  return json.result?.[0] || { results: [], success: true };
+    if (!res.ok) throw new Error(`D1 query failed: ${res.status} ${res.statusText}: ${await res.text()}`);
+    const json = (await res.json()) as D1Response<T>;
+    if (!json.success) throw new Error(`D1 query failed: ${JSON.stringify(json.errors || json)}`);
+    return json.result?.[0] || { results: [], success: true };
+  };
+
+  return withRetry('d1Query', doQuery, { retries: 3, backoffMs: [250, 1000, 2500] });
 }
 
 async function r2List(
@@ -174,10 +217,13 @@ async function r2List(
     secretAccessKey,
   });
 
-  const res = await fetch(url.toString(), { method, headers });
-  if (!res.ok) throw new Error(`R2 S3 list failed: ${res.status} ${res.statusText}: ${await res.text()}`);
+  const doList = async () => {
+    const res = await fetch(url.toString(), { method, headers });
+    if (!res.ok) throw new Error(`R2 S3 list failed: ${res.status} ${res.statusText}: ${await res.text()}`);
+    return await res.text();
+  };
 
-  const xml = await res.text();
+  const xml = await withRetry('r2List', doList, { retries: 3, backoffMs: [250, 1000, 2500] });
   const parsed = parseListObjectsV2Xml(xml);
 
   const objects: R2ObjectLite[] = parsed.contents.map((c) => ({
@@ -203,23 +249,35 @@ async function main() {
   const dryRun = (process.env.DRY_RUN || 'true').toLowerCase() === 'true';
   const pageLimit = parseInt(process.env.R2_LIST_LIMIT || '1000', 10);
   const maxObjects = parseInt(process.env.MAX_OBJECTS || '0', 10); // 0 = unlimited
+  const progressEvery = parseInt(process.env.PROGRESS_EVERY || '500', 10);
+  const maxErrors = parseInt(process.env.MAX_ERRORS || '25', 10);
+  const requirePrefix = (process.env.REQUIRE_PREFIX || 'false').toLowerCase() === 'true';
+  const allowEmptyPrefix = (process.env.ALLOW_EMPTY_PREFIX || 'false').toLowerCase() === 'true';
+  const d1ThrottleMs = parseInt(process.env.D1_THROTTLE_MS || '0', 10);
   const startCursor = (process.env.R2_CURSOR || '').trim() || undefined;
   const startAfter = (process.env.R2_START_AFTER || '').trim() || undefined;
   const delimiter = (process.env.R2_DELIMITER || '').trim() || undefined;
   const listPrefixesOnly = (process.env.R2_LIST_PREFIXES_ONLY || 'false').toLowerCase() === 'true';
 
   if (!bucket) throw new Error('Missing R2_BUCKET');
+  if (requirePrefix && !prefix && !allowEmptyPrefix) {
+    throw new Error('Refusing to run with empty prefix (set ALLOW_EMPTY_PREFIX=true to override)');
+  }
 
   const summary: InventorySummary = {
     bucket,
     prefix,
     scanned: 0,
     inserted: 0,
+    insertedNew: 0,
+    upgradedExisting: 0,
+    noops: 0,
     skipped: 0,
     unknownSourceType: 0,
     errors: 0,
     unknownKeysSample: [],
     unknownFirstSegCounts: {},
+    sourceTypeCounts: {},
   };
 
   let cursor: string | undefined = startCursor;
@@ -240,7 +298,6 @@ async function main() {
     lastCursor = next;
 
     if (listPrefixesOnly) {
-      // eslint-disable-next-line no-console
       console.log(
         JSON.stringify(
           {
@@ -259,28 +316,43 @@ async function main() {
       return;
     }
 
-    if (process.env.DEBUG_R2_PAGINATION === 'true') {
+    {
       const firstKey = objects[0]?.key || null;
       const lastKey = objects[objects.length - 1]?.key || null;
-      // eslint-disable-next-line no-console
+      // Always-on lightweight pagination log (debug adds extra detail)
       console.log(
-        JSON.stringify(
-          {
-            msg: 'r2 pagination page',
-            prefix,
-            inCursor: cursor || null,
-            outCursor: next || null,
-            inStartAfter: cursor ? null : startAfterKey || null,
-            firstKey,
-            lastKey,
-            pageCount: objects.length,
-            scannedSoFar: summary.scanned,
-            maxObjects: maxObjects || null,
-          },
-          null,
-          2
-        )
+        JSON.stringify({
+          msg: 'r2_page',
+          prefix,
+          inCursor: cursor || null,
+          outCursor: next || null,
+          inStartAfter: cursor ? null : startAfterKey || null,
+          pageCount: objects.length,
+          firstKey,
+          lastKey,
+        })
       );
+
+      if (process.env.DEBUG_R2_PAGINATION === 'true') {
+      console.log(
+          JSON.stringify(
+            {
+              msg: 'r2 pagination page (debug)',
+              prefix,
+              inCursor: cursor || null,
+              outCursor: next || null,
+              inStartAfter: cursor ? null : startAfterKey || null,
+              firstKey,
+              lastKey,
+              pageCount: objects.length,
+              scannedSoFar: summary.scanned,
+              maxObjects: maxObjects || null,
+            },
+            null,
+            2
+          )
+        );
+      }
     }
 
     for (const obj of objects) {
@@ -288,6 +360,9 @@ async function main() {
       summary.scanned++;
 
       const sourceType = classifySourceTypeFromKey(obj.key);
+      const desiredType = sourceType || 'unknown';
+      summary.sourceTypeCounts![desiredType] = (summary.sourceTypeCounts![desiredType] || 0) + 1;
+
       if (!sourceType) {
         summary.unknownSourceType++;
 
@@ -312,9 +387,6 @@ async function main() {
       }
 
       try {
-        const before = summary.inserted;
-        const desiredType = sourceType || 'unknown';
-
         const res = await d1Query<{ changes?: number }>(
           `INSERT OR IGNORE INTO artifacts (
             artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key
@@ -327,24 +399,65 @@ async function main() {
         // If insert was ignored, optionally upgrade only-when-better.
         // We treat (r2_bucket, r2_key) as the identity (enforced by UNIQUE index).
         // Policy: do NOT churn existing rows. Only upgrade when we can improve classification.
-        if (typeof changes === 'number' && changes === 0 && desiredType !== 'unknown') {
-          const upd = await d1Query<{ changes?: number }>(
-            `UPDATE artifacts
-             SET source_type = ?
-             WHERE r2_bucket = ? AND r2_key = ? AND (source_type = 'unknown' OR source_type IS NULL);`,
-            [desiredType, bucket, obj.key]
-          );
-          const updChanges = (upd.results?.[0] as any)?.changes;
-          if (typeof updChanges === 'number') summary.inserted += updChanges;
+        if (typeof changes === 'number' && changes === 0) {
+          if (desiredType !== 'unknown') {
+            const upd = await d1Query<{ changes?: number }>(
+              `UPDATE artifacts
+               SET source_type = ?
+               WHERE r2_bucket = ? AND r2_key = ? AND (source_type = 'unknown' OR source_type IS NULL);`,
+              [desiredType, bucket, obj.key]
+            );
+            const updChanges = (upd.results?.[0] as any)?.changes;
+            if (typeof updChanges === 'number' && updChanges > 0) {
+              summary.upgradedExisting += updChanges;
+              summary.inserted += updChanges;
+            } else {
+              summary.noops++;
+            }
+          } else {
+            summary.noops++;
+          }
         } else if (typeof changes === 'number') {
+          summary.insertedNew += changes;
           summary.inserted += changes;
         } else {
-          summary.inserted = before + 1;
+          // Unknown response shape, count as a change to avoid under-reporting
+          summary.insertedNew += 1;
+          summary.inserted += 1;
+        }
+
+        if (d1ThrottleMs > 0) await sleep(d1ThrottleMs);
+
+        if (progressEvery > 0 && summary.scanned % progressEvery === 0) {
+      console.log(
+            JSON.stringify({
+              msg: 'progress',
+              scanned: summary.scanned,
+              insertedNew: summary.insertedNew,
+              upgradedExisting: summary.upgradedExisting,
+              noops: summary.noops,
+              errors: summary.errors,
+              cursor: cursor || null,
+              startAfter: startAfterKey || null,
+              lastKey: obj.key,
+            })
+          );
+        }
+
+        if (maxErrors > 0 && summary.errors >= maxErrors) {
+          throw new Error(`Aborting: errors (${summary.errors}) exceeded MAX_ERRORS (${maxErrors})`);
         }
       } catch (e) {
         summary.errors++;
-        // eslint-disable-next-line no-console
-        console.error('Insert failed', { key: obj.key, err: e instanceof Error ? e.message : String(e) });
+      console.error('D1 write failed', {
+          key: obj.key,
+          artifactId,
+          desiredType,
+          contentHash,
+          fetchedAt,
+          err: e instanceof Error ? e.message : String(e),
+        });
+        if (maxErrors > 0 && summary.errors >= maxErrors) throw e;
       }
     }
 
@@ -361,8 +474,7 @@ async function main() {
     if (objects.length >= pageLimit) {
       startAfterKey = objects[objects.length - 1]?.key;
       if (process.env.DEBUG_R2_PAGINATION === 'true') {
-        // eslint-disable-next-line no-console
-        console.log(
+      console.log(
           JSON.stringify(
             {
               msg: 'r2 pagination fallback start-after',
@@ -382,16 +494,22 @@ async function main() {
     break;
   }
 
-  // eslint-disable-next-line no-console
-  console.log(
+  const resume = {
+    bucket,
+    prefix,
+    cursor: lastCursor || null,
+    start_after: !lastCursor && startAfterKey ? startAfterKey : null,
+  };
+      console.log(
     JSON.stringify(
       {
         success: true,
         dryRun,
         startCursor,
         startAfter,
-        nextCursor: lastCursor || null,
-        nextStartAfter: !lastCursor && startAfterKey ? startAfterKey : null,
+        nextCursor: resume.cursor,
+        nextStartAfter: resume.start_after,
+        resume,
         summary,
       },
       null,
@@ -401,7 +519,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  // eslint-disable-next-line no-console
-  console.error(JSON.stringify({ success: false, error: err instanceof Error ? err.message : String(err) }, null, 2));
+      console.error(JSON.stringify({ success: false, error: err instanceof Error ? err.message : String(err) }, null, 2));
   process.exit(1);
 });
