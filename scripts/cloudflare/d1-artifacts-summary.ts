@@ -52,8 +52,11 @@ async function main() {
   const unknown = await d1Query<{ cnt: number }>(
     `SELECT COUNT(*) as cnt FROM artifacts WHERE source_type='unknown' OR source_type IS NULL;`
   );
-  const sampleUnknown = await d1Query<{ r2_key: string }>(
-    `SELECT r2_key FROM artifacts WHERE source_type='unknown' OR source_type IS NULL LIMIT 25;`
+  const sampleUnknown = await d1Query<{ artifact_id: string; r2_key: string; source_type: string | null }>(
+    `SELECT artifact_id, r2_key, source_type
+     FROM artifacts
+     WHERE source_type='unknown' OR source_type IS NULL
+     LIMIT 25;`
   );
 
   console.log(
@@ -63,7 +66,7 @@ async function main() {
         total: total.results?.[0]?.cnt ?? null,
         unknown: unknown.results?.[0]?.cnt ?? null,
         byType: byType.results || [],
-        sampleUnknownKeys: (sampleUnknown.results || []).map((r) => r.r2_key),
+        sampleUnknown: sampleUnknown.results || [],
       },
       null,
       2
