@@ -15,9 +15,9 @@
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
 ### Now (in progress)
-- **Phase 10b/10d: Fix missing provenance for legacy artifacts**
+- **10d: Verification + confidence scoring**
   - **Owner:** Agent 4 (Gemini 3.1)
-  - **Status:** We built `r2-legacy-content-parser.ts` to extract CIK/accession from raw HTML (including iXBRL tags). Next step is wiring it up to update the 323 rows in D1 that have `source_url` NULL.
+  - **Status:** Reviewing existing verification logic (Phase 7/10d) to automate checks and build DLQ routing.
 
 - **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
