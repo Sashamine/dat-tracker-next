@@ -254,6 +254,7 @@ async function main() {
   const requirePrefix = (process.env.REQUIRE_PREFIX || 'false').toLowerCase() === 'true';
   const allowEmptyPrefix = (process.env.ALLOW_EMPTY_PREFIX || 'false').toLowerCase() === 'true';
   const d1ThrottleMs = parseInt(process.env.D1_THROTTLE_MS || '0', 10);
+  const verifyWrites = (process.env.VERIFY_WRITES || 'false').toLowerCase() === 'true';
   const startCursor = (process.env.R2_CURSOR || '').trim() || undefined;
   const startAfter = (process.env.R2_START_AFTER || '').trim() || undefined;
   const delimiter = (process.env.R2_DELIMITER || '').trim() || undefined;
@@ -387,6 +388,18 @@ async function main() {
       }
 
       try {
+        // Optional: verify writes by querying D1 before/after. Useful for small batches & debugging.
+        // This adds extra D1 queries and should stay off by default.
+        // Use env VERIFY_WRITES=true.
+        const doVerify = verifyWrites;
+
+        const before = doVerify
+          ? await d1Query<{ cnt: number }>(
+              `SELECT COUNT(*) AS cnt FROM artifacts WHERE r2_bucket = ? AND r2_key = ?;`,
+              [bucket, obj.key]
+            )
+          : null;
+
         const res = await d1Query<{ changes?: number }>(
           `INSERT OR IGNORE INTO artifacts (
             artifact_id, source_type, source_url, content_hash, fetched_at, r2_bucket, r2_key
@@ -418,12 +431,36 @@ async function main() {
             summary.noops++;
           }
         } else if (typeof changes === 'number') {
-          summary.insertedNew += changes;
-          summary.inserted += changes;
+          // Note: D1's "changes" can be unreliable for INSERT OR IGNORE.
+          // Prefer verified counts when enabled.
+          if (!doVerify) {
+            summary.insertedNew += changes;
+            summary.inserted += changes;
+          }
         } else {
-          // Unknown response shape, count as a change to avoid under-reporting
-          summary.insertedNew += 1;
-          summary.inserted += 1;
+          // Unknown response shape; don't guess unless verifyWrites is off.
+          if (!doVerify) {
+            summary.insertedNew += 1;
+            summary.inserted += 1;
+          }
+        }
+
+        if (doVerify) {
+          const after = await d1Query<{ cnt: number }>(
+            `SELECT COUNT(*) AS cnt FROM artifacts WHERE r2_bucket = ? AND r2_key = ?;`,
+            [bucket, obj.key]
+          );
+          const beforeCnt = Number((before?.results?.[0] as any)?.cnt || 0);
+          const afterCnt = Number((after?.results?.[0] as any)?.cnt || 0);
+
+          // Only count as "insertedNew" if the row did not exist before and does exist now.
+          if (beforeCnt === 0 && afterCnt === 1) {
+            summary.insertedNew += 1;
+            summary.inserted += 1;
+          } else {
+            // Either already existed, or insert failed silently (shouldn't happen without errors)
+            summary.noops += 1;
+          }
         }
 
         if (d1ThrottleMs > 0) await sleep(d1ThrottleMs);
