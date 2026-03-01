@@ -16,7 +16,7 @@ Update this section whenever you start/stop work so other agents can instantly s
 
 ### Now (in progress)
 - **Phase 10b/10d: Fix missing provenance for legacy artifacts**
-  - **Owner:** Agent 4 (Kim Chi Beast)
+  - **Owner:** Agent 4 (Gemini 3.1)
   - **Status:** We built `r2-legacy-content-parser.ts` to extract CIK/accession from raw HTML (including iXBRL tags). Next step is wiring it up to update the 323 rows in D1 that have `source_url` NULL.
 
 - **10c: 30-minute ingestion + transform**
