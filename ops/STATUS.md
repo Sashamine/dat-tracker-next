@@ -6,6 +6,33 @@
 ## Invariants (must hold)
 - `artifacts.unknown = 0`
 - `artifacts.duplicates = []` for unique key `(r2_bucket, r2_key)`
+- `state-verify.failCount = 0` (verification gaps may exist but are non-blocking)
+
+---
+
+## 2026-02-28 — Phase 10c: inventory + invariants verification
+
+### D1 artifacts summary (post-10c)
+Run: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534834348
+
+Artifacts summary:
+- total: 1011
+- unknown: 0
+- duplicates: []
+- byType:
+  - sec_filing: 869
+  - sec_filing_unmapped: 67
+  - manual: 37
+  - sec_companyfacts_xbrl: 35
+  - hkex_pdf: 2
+  - tdnet_pdf: 1
+
+### state-verify
+Run: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534835119
+
+Result summary:
+- failCount=0
+- gaps: ['missing_debt_evidence'] (non-blocking)
 
 ---
 
