@@ -83,3 +83,32 @@ Artifacts summary:
   - sec_companyfacts_xbrl: 35
   - hkex_pdf: 2
   - tdnet_pdf: 1
+
+---
+
+## 2026-02-28 — Phase 10B: R2 Legacy Content Parsing (Extraction)
+
+### Latest Run: bmnr/ Prefix (Write Mode)
+- **Workflow:** `r2-inventory-artifacts.yml`
+- **GitHub Actions Run URL:** https://github.com/Sashamine/dat-tracker-next/actions/runs/22530918952
+- **R2 Bucket:** `dat-tracker-filings`
+- **R2 Prefix:** `bmnr/`
+- **Dry Run:** `false`
+- **Max Objects:** `2000`
+- **Debug Pagination:** `true`
+
+#### Summary Metrics:
+- `scanned`: 40
+- `inserted`: 40
+- `insertedNew`: 40
+- `upgradedExisting`: 0
+- `noops`: 0
+- `skipped`: 0
+- `unknownSourceType`: 0
+- `errors`: 0
+- `sourceTypeCounts.sec_filing`: 40
+
+#### Resume Information:
+- `nextCursor`: null
+- `nextStartAfter`: null
+- **Status:** Completed for `bmnr/` prefix. No further pagination required for this prefix.
