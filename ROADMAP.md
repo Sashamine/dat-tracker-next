@@ -15,40 +15,21 @@
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
 ### Now (in progress)
-- **Phase B: Backfill quarter-end `basic_shares` into D1**
-  - **Owner:** Agent 2
-  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
-  - **Status:** D1 schema mismatch fixed (use `datapoints.as_of` instead of `artifacts.filed_at/period_end`). Needs merge + workflow dry-run + real run.
-  - **DoD:** Dry-run summary looks sane; then write mode for 1 ticker/date-range; then expand.
-
-- **10c: 30-minute ingestion + transform**
-  - **Owner:** Agent 1
-  - **Status:** Next up (after 10b completion): convert inventory/backfill learnings into scheduled ingestion + invariant checks.
-  - **DoD:** Cron-triggered ingestion run + alerting/regression checks; no `unknown`/dupes regressions.
-
-- **10d: Verification plumbing (Agent 4)**
-  - **Owner:** Agent 4
-  - **Status:** Implemented and validated end-to-end in D1 (write mode works).
-  - **Merged PRs:**
-    - #58 d1-migrate workflow + d1-apply-migration script
-    - #59 fix verifier to use schema-native `datapoints.entity_id`
-    - #62 join `artifacts.source_url` (datapoints has no source_url)
-    - #72 verifier workflow accepts `entity_id` (ticker alias) + new API `GET /api/d1/verifications/latest`
-  - **Ops executed:**
-    - Applied migration `010-datapoint-verifications.sql` to D1
-    - Smoke test: `verify-datapoints (10d)` wrote 5 rows for MSTR
-  - **Open gap discovered (10b/10c provenance):**
-    - 323 `artifacts` rows with `source_type='sec_filing'` have `source_url` NULL and `accession` NULL, so receipts can’t be reconstructed for those.
-
-- **CI/Lint ratchet (required checks scope expansion)**
-  - **Owner:** Agent 3
-  - **Status:** Ongoing: gradually expand `lint-app` scope (admin → key API routes) while keeping changes surgical.
-  - **Recent:** merged multiple CI hygiene PRs; current open PR: #64 (expand lint-app to api/prices)
+- **Phase 10b/10d: Fix missing provenance for legacy artifacts**
+  - **Owner:** Agent 1 (Orchestrator)
+  - **Status:** We built `r2-legacy-content-parser.ts` to extract CIK/accession from raw HTML (including iXBRL tags). Next step is wiring it up to update the 323 rows in D1 that have `source_url` NULL.
 
 ### Next (queued)
-- **10d: Verification + confidence scoring**
-  - Automated checks + DLQ/manual review routing (per CLAUDE.md).
-- **UI: Split miner vs treasury sector stats** (from older notes)
+- **Phase B: Backfill quarter-end `basic_shares` into D1**
+  - **Owner:** Unassigned (formerly Agent 2)
+  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
+  - **Status:** Needs merge + workflow dry-run + real run.
+- **10c: 30-minute ingestion + transform**
+  - **Owner:** Unassigned
+  - **Status:** Convert inventory/backfill learnings into scheduled ingestion + invariant checks.
+- **CI/Lint ratchet (required checks scope expansion)**
+  - **Owner:** Unassigned (formerly Agent 3)
+  - **Status:** Expand `lint-app` scope. PR #64 open.
 
 ### Done (recent)
 - **10b: R2 inventory → artifacts backfill (DONE 2026-02-28)**
