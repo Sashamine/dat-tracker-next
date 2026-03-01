@@ -23,8 +23,11 @@ Update this section whenever you start/stop work so other agents can instantly s
 
 - **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
-  - **Status:** Next up (after 10b completion): convert inventory/backfill learnings into scheduled ingestion + invariant checks.
-  - **DoD:** Cron-triggered ingestion run + alerting/regression checks; no `unknown`/dupes regressions.
+  - **Status:** Implementing 10c v1: scheduled inventory + invariants for prefixes `new-uploads/`, `mstr/`, `mara/`, `riot/`.
+    - Merged: #132 (adds scheduled workflow)
+    - Merged: #133 (fix workflow env: set R2_BUCKET + sanitize tee filenames)
+    - In progress: #136 (fix workflow JSON parsing for d1-artifacts-summary pretty output)
+  - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
 - **10d: Verification plumbing (Agent 4)**
   - **Owner:** Agent 4
