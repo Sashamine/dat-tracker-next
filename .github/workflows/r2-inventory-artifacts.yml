@@ -60,6 +60,15 @@ on:
           - "false"
           - "true"
 
+      verify_writes:
+        description: If true, verify each write by checking row existence before/after (slower; use for debugging counters).
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
 jobs:
   inventory:
     runs-on: ubuntu-latest
@@ -103,5 +112,8 @@ jobs:
           ALLOW_EMPTY_PREFIX: ${{ inputs.allow_empty_prefix }}
           # Optional throttling to avoid D1 rate limits
           D1_THROTTLE_MS: "0"
+
+          # Debugging
+          VERIFY_WRITES: ${{ inputs.verify_writes }}
 
         run: npx tsx scripts/cloudflare/r2-inventory-to-d1-artifacts.ts
