@@ -16,16 +16,11 @@ Update this section whenever you start/stop work so other agents can instantly s
 
 ### Now (in progress)
 - **Phase 10b/10d: Fix missing provenance for legacy artifacts**
-  - **Owner:** Agent 1 (Orchestrator)
+  - **Owner:** Agent 4 (Kim Chi Beast)
   - **Status:** We built `r2-legacy-content-parser.ts` to extract CIK/accession from raw HTML (including iXBRL tags). Next step is wiring it up to update the 323 rows in D1 that have `source_url` NULL.
 
-### Next (queued)
-- **Phase B: Backfill quarter-end `basic_shares` into D1**
-  - **Owner:** Unassigned (formerly Agent 2)
-  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
-  - **Status:** Needs merge + workflow dry-run + real run.
 - **10c: 30-minute ingestion + transform**
-  - **Owner:** Unassigned
+  - **Owner:** Agent 1
   - **Status:** Convert inventory/backfill learnings into scheduled ingestion + invariant checks.
 - **CI/Lint ratchet (required checks scope expansion)**
   - **Owner:** Unassigned (formerly Agent 3)
