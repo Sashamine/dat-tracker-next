@@ -1,6 +1,6 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-02-27
+> **Last Updated**: 2026-02-28
 > **Current Phase**: 10e-lite → 10b/10c/10d (Provenance + agent-read APIs + ingestion)
 
 ---
@@ -23,10 +23,13 @@ Update this section whenever you start/stop work so other agents can instantly s
 
 - **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
-  - **Status:** Implementing 10c v1: scheduled inventory + invariants for prefixes `new-uploads/`, `mstr/`, `mara/`, `riot/`.
+  - **Status:** 10c v1 runs green (scheduled inventory + invariants).
     - Merged: #132 (adds scheduled workflow)
     - Merged: #133 (fix workflow env: set R2_BUCKET + sanitize tee filenames)
-    - In progress: #136 (fix workflow JSON parsing for d1-artifacts-summary pretty output)
+    - Merged: #136 (fix workflow JSON parsing for d1-artifacts-summary pretty output)
+    - Verified:
+      - D1 Artifacts Summary: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534834348
+      - state-verify: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534835119 (failCount=0; gaps: missing_debt_evidence)
   - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
 - **10d: Verification plumbing (Agent 4)**
