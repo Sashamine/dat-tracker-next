@@ -88,14 +88,15 @@ jobs:
           node - <<'NODE'
           const fs = require('fs');
           const txt = fs.readFileSync('/tmp/d1-artifacts-summary.json','utf8');
-          // Find the last JSON object line (some scripts/loggers may emit earlier '{' lines)
-          const lines = txt.trim().split(/\n/).map(l => l.trim()).filter(Boolean);
-          const jsonLine = [...lines].reverse().find(l => l.startsWith('{') && l.endsWith('}'));
-          if (!jsonLine) {
-            console.error('Could not find JSON line in summary output');
+          // d1-artifacts-summary prints pretty JSON (multi-line). Extract the first {...last} block.
+          const start = txt.indexOf('{');
+          const end = txt.lastIndexOf('}');
+          if (start === -1 || end === -1 || end <= start) {
+            console.error('Could not find JSON object in summary output');
             process.exit(1);
           }
-          const data = JSON.parse(jsonLine);
+          const jsonText = txt.slice(start, end + 1);
+          const data = JSON.parse(jsonText);
           if (!data.success) {
             console.error('summary did not succeed');
             process.exit(1);
