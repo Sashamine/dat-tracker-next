@@ -8,6 +8,8 @@ import { useCompanies } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
+import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
+import { applyD1Overlay } from "@/lib/d1-overlay";
 import { cn } from "@/lib/utils";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { getQuarterlyYieldLeaderboard, getAvailableQuarters, getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
@@ -221,24 +223,29 @@ export default function MNAVPage() {
     return enrichAllCompanies(baseCompanies);
   }, [companiesData]);
 
+  // D1-first overlay: fetch latest balance sheet metrics from D1
+  const allTickers = useMemo(() => allCompanies.map(c => c.ticker), [allCompanies]);
+  const { data: d1Data } = useD1Fundamentals(allTickers);
+  const d1AllCompanies = useMemo(() => applyD1Overlay(allCompanies, d1Data), [allCompanies, d1Data]);
+
   // Filter companies by selected asset
   const companies = useMemo(() => {
-    if (selectedAsset === "ALL") return allCompanies;
+    if (selectedAsset === "ALL") return d1AllCompanies;
     if (selectedAsset === "OTHER") {
       const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
-      return allCompanies.filter(c => !mainAssets.includes(c.asset));
+      return d1AllCompanies.filter(c => !mainAssets.includes(c.asset));
     }
-    return allCompanies.filter(c => c.asset === selectedAsset);
-  }, [allCompanies, selectedAsset]);
+    return d1AllCompanies.filter(c => c.asset === selectedAsset);
+  }, [d1AllCompanies, selectedAsset]);
 
   // Get available assets for filter tabs
   const availableAssets = useMemo(() => {
     const assetCounts: Record<string, number> = {};
-    allCompanies.forEach(c => {
+    d1AllCompanies.forEach(c => {
       assetCounts[c.asset] = (assetCounts[c.asset] || 0) + 1;
     });
     return assetCounts;
-  }, [allCompanies]);
+  }, [d1AllCompanies]);
 
   // Separate treasuries from miners
   const treasuries = useMemo(() => companies.filter(c => !c.isMiner), [companies]);
@@ -352,7 +359,7 @@ export default function MNAVPage() {
                 : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
             )}
           >
-            All ({allCompanies.length})
+            All ({d1AllCompanies.length})
           </button>
           {(["BTC", "ETH", "SOL", "HYPE", "TAO"] as const).map(asset => (
             availableAssets[asset] > 0 && (
@@ -512,7 +519,7 @@ export default function MNAVPage() {
             </button>
             {showTreasuryHPS && (
               <div className="p-4 bg-white dark:bg-gray-950">
-                <HPSComparison companies={allCompanies} prices={prices} type="treasuries" />
+                <HPSComparison companies={d1AllCompanies} prices={prices} type="treasuries" />
               </div>
             )}
           </div>
@@ -538,7 +545,7 @@ export default function MNAVPage() {
               </button>
               {showMinerHPS && (
                 <div className="p-4 bg-white dark:bg-gray-950">
-                  <HPSComparison companies={allCompanies} prices={prices} type="miners" />
+                  <HPSComparison companies={d1AllCompanies} prices={prices} type="miners" />
                 </div>
               )}
             </div>
