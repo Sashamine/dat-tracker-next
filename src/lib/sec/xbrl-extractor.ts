@@ -109,6 +109,29 @@ const CASH_CONCEPTS = [
   'us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents',
 ];
 
+// Restricted cash is frequently disclosed separately; when present we store it as its own metric.
+// (We still keep CASH_CONCEPTS as the main cash metric source.)
+const RESTRICTED_CASH_CONCEPTS = [
+  'us-gaap:RestrictedCashAndCashEquivalentsAtCarryingValue',
+  'us-gaap:RestrictedCashAndCashEquivalentsCurrent',
+  'us-gaap:RestrictedCashAndCashEquivalentsNoncurrent',
+];
+
+// Preferred/mezzanine equity concepts (varies by filer; MSTR uses TemporaryEquity...).
+const PREFERRED_EQUITY_CONCEPTS = [
+  'us-gaap:TemporaryEquityCarryingAmountAttributableToParent',
+  'us-gaap:RedeemablePreferredStockCarryingAmount',
+  'us-gaap:PreferredStockValue',
+];
+
+// A conservative definition for "other investments" (short-term investments / marketable securities).
+const OTHER_INVESTMENTS_CONCEPTS = [
+  'us-gaap:ShortTermInvestments',
+  'us-gaap:MarketableSecuritiesCurrent',
+  'us-gaap:AvailableForSaleSecuritiesCurrent',
+  'us-gaap:CashCashEquivalentsAndShortTermInvestments',
+];
+
 export interface XBRLExtractionResult {
   ticker: string;
   cik: string;
@@ -130,6 +153,12 @@ export interface XBRLExtractionResult {
   debtDate?: string;
   cashAndEquivalents?: number;
   cashDate?: string;
+  restrictedCash?: number;
+  restrictedCashDate?: string;
+  preferredEquity?: number;
+  preferredEquityDate?: string;
+  otherInvestments?: number;
+  otherInvestmentsDate?: string;
 
   // Metadata
   filingType?: string;             // 10-K, 10-Q
@@ -399,6 +428,27 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   if (cashData) {
     result.cashAndEquivalents = cashData.value;
     result.cashDate = cashData.date;
+  }
+
+  // Extract restricted cash (when available)
+  const restrictedCashData = findMostRecentValue(facts.facts, RESTRICTED_CASH_CONCEPTS);
+  if (restrictedCashData) {
+    result.restrictedCash = restrictedCashData.value;
+    result.restrictedCashDate = restrictedCashData.date;
+  }
+
+  // Extract preferred equity / mezzanine equity (when available)
+  const preferredEquityData = findMostRecentValue(facts.facts, PREFERRED_EQUITY_CONCEPTS);
+  if (preferredEquityData) {
+    result.preferredEquity = preferredEquityData.value;
+    result.preferredEquityDate = preferredEquityData.date;
+  }
+
+  // Extract other investments (short-term investments / marketable securities)
+  const otherInvestmentsData = findMostRecentValue(facts.facts, OTHER_INVESTMENTS_CONCEPTS);
+  if (otherInvestmentsData) {
+    result.otherInvestments = otherInvestmentsData.value;
+    result.otherInvestmentsDate = otherInvestmentsData.date;
   }
 
   // Build SEC URL
