@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getLatestMetrics } from '@/lib/d1';
+import { getHoldingsBasis, type HoldingsBasis } from '@/lib/d1-overlay';
 
 // Returns latest filed fundamentals from Cloudflare D1.
 // Designed for client-side consumption on aggregate pages.
@@ -32,9 +33,15 @@ export async function POST(request: NextRequest) {
     );
 
     const results: Record<string, unknown> = {};
-    for (const [ticker, rows] of entries) results[ticker] = rows;
+    const holdings_basis: Record<string, HoldingsBasis> = {};
+    for (const [ticker, rows] of entries) {
+      results[ticker] = rows;
+      const byMetric: Record<string, number> = {};
+      for (const r of rows) byMetric[r.metric] = r.value;
+      holdings_basis[ticker] = getHoldingsBasis(byMetric.holdings_native, byMetric.bitcoin_holdings_usd);
+    }
 
-    return NextResponse.json({ success: true, tickers: tickers.length, results });
+    return NextResponse.json({ success: true, tickers: tickers.length, holdings_basis, results });
   } catch (err) {
     // Hide D1 failures from the UI by returning a non-throwing payload.
     return NextResponse.json({ success: false, error: err instanceof Error ? err.message : String(err) });
