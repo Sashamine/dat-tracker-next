@@ -18,16 +18,22 @@ Update this section whenever you start/stop work so other agents can instantly s
 - **10c/10d ingestion hardening: `proposal_key` upsert rollout**
   - **Owner:** Agent 6
   - **PRs:** #142 https://github.com/Sashamine/dat-tracker-next/pull/142 (merged), #146 https://github.com/Sashamine/dat-tracker-next/pull/146 (seed legacy `proposal_key`)
-  - **Status:** Prod proof successful on branch run. First pass on MSTR seeded proposal keys (`seededProposalKey=4`), second identical pass updated by proposal key (`updated=4`) with no dedupe unique errors.
+  - **Status:** DONE in prod. Broad run proof on 2026-03-02 (`SMLR,HOOD,CIFR,COIN,HUT,IREN,WULF,MSTR`, `dry_run=false`, `force=true`) returned `updated=30`, `failed=0`; no dedupe/proposal-key uniqueness errors; SMLR FK blocker resolved.
   - **DoD:** Run writer twice with same `proposal_key` and confirm first pass seeds/inserts/updates, second pass is noop/update without violating `ux_datapoints_dedupe`.
   - **How to verify (prod):**
     - Workflow: **D1 XBRL → D1 Datapoints (companyfacts)**, inputs `tickers=MSTR`, `dry_run=false`, `force=true`
     - Example runs: #22570032040 (first: `seededProposalKey=4`) and #22570089899 (second: `updated=4`, `seededProposalKey=0`)
-    - Broader batch example: #22570500995 (`tickers=HOOD,CIFR,COIN,HUT,IREN,WULF,SMLR,MSTR`, `force=true`) → `seededProposalKey=23`, `updated=4`, `failed=3` (all SMLR FK).
+    - Broad proof run: #22570858966 (`updated=30`, `failed=0`)
     - Example D1 query:
       - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS proposal_rows FROM datapoints WHERE proposal_key IS NOT NULL;"`
       - `wrangler d1 execute dat-tracker --remote --command "SELECT proposal_key, datapoint_id, created_at, confidence, status FROM datapoints WHERE proposal_key IS NOT NULL ORDER BY proposal_key LIMIT 5;"`
-    - **Ops guardrail:** `proposal_rows` should monotonically increase while legacy rows are being seeded. If `proposal_rows` stays flat after a run with high `noop`/`seededProposalKey=0`, investigate writer path or seeding logic drift.
+  - **Ops guardrail (weekly check):**
+    - expected steady-state: `proposal_rows` should monotonically increase while legacy rows are still being seeded
+    - if `proposal_rows` stays flat after write runs with non-trivial `noop`/`updated`, investigate writer path drift
+    - check queries:
+      - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS total_datapoints FROM datapoints;"`
+      - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS proposal_rows FROM datapoints WHERE proposal_key IS NOT NULL;"`
+      - `wrangler d1 execute dat-tracker --remote --command "SELECT method, COUNT(*) AS cnt FROM datapoints WHERE proposal_key IS NOT NULL GROUP BY 1 ORDER BY cnt DESC;"`
 
 - **Phase B: Backfill quarter-end `basic_shares` into D1**
   - **Owner:** Agent 5
