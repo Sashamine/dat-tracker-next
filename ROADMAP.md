@@ -136,6 +136,86 @@ Update this section whenever you start/stop work so other agents can instantly s
 
 ## Phase 10 — Near Real-Time, Correct, Full Provenance (Cloudflare)
 
+### Phase 10f — Historical dataset consolidation (D1) + correctness/citations loop
+
+**Goal:** Get the *entire* historical dataset into one place (**D1**) so it is queryable, auditable, and drives the site. Ensure each displayed metric is both **citeable** (receipt pointers) and **correct** (verified).
+
+#### 10f.1 — Define the canonical metric schema (names + units + semantics)
+**Why:** If we can’t name a metric unambiguously, we can’t backfill or verify it.
+
+**Core metrics (minimum):**
+- `holdings_native` (value + `asset`, e.g. BTC/ETH/SOL)
+- `basic_shares`
+- `cash_usd`
+- `debt_usd`
+- `preferred_equity_usd`
+- `other_investments_usd` (optional)
+
+**Required per datapoint:**
+- `entity_id` (ticker)
+- `as_of` (period end / effective date)
+- `reported_at` (filing/report date if different)
+- `unit` (shares/USD/native)
+- provenance pointers: `artifact_id` (+ optionally `source_url`, `accession`, `r2_key`)
+
+**DoD:** schema doc committed (could be in `schemas/` or ROADMAP) and used consistently by writers/readers.
+
+#### 10f.2 — Ensure raw artifacts are in R2 and indexed in D1 artifacts
+**Why:** D1 should not store giant blobs; R2 stores the bodies; D1 stores the index.
+
+**Work:**
+- Confirm all SEC filing bodies / XBRL / companyfacts snapshots are in R2 under stable key conventions.
+- Ensure `artifacts` rows exist for every relevant R2 object.
+
+**DoD:** inventory/backfill workflows cover the corpus; `artifacts` has 100% coverage for historical sources.
+
+#### 10f.3 — Backfill historical structured datapoints into D1
+**Why:** This is the “entire historical dataset in one place and queryable” milestone.
+
+**Work:**
+- Write backfill scripts that:
+  1) iterate historical sources (SEC XBRL/companyfacts, curated datasets, dashboards)
+  2) extract structured values per metric per `as_of`
+  3) upsert into `datapoints` with `proposal_key` idempotency
+
+**DoD:** D1 contains a time series for each core metric for each tracked company (where data exists).
+
+#### 10f.4 — Materialize “latest snapshot” views for the site
+**Why:** The UI needs a fast, consistent source of truth.
+
+**Work:**
+- Create a "latest per (entity_id, metric)" read path (view or query helper), used by:
+  - `/api/db/companies/[ticker]` (site)
+  - `/api/company/[ticker]/metrics` (agent read API)
+- Keep `companies.ts` as fallback only until D1 coverage reaches parity.
+
+**DoD:** site snapshot is driven by D1; `companies.ts` only provides metadata (name, urls, asset type).
+
+#### 10f.5 — Citation + correctness verification pipeline (at scale)
+**Why:** "Citeable" is not the same as "correct".
+
+**Two layers:**
+- **Citeable:** every displayed metric must have a receipt pointer (artifact/source_url/accession)
+- **Correct:** verified by automated checks + targeted manual review for edge cases
+
+**Work:**
+- Add invariants for missing receipts and regressions.
+- Run cross-source comparisons where possible (companyfacts vs extracted vs dashboard).
+- Use confidence scoring + DLQ (already built) for the tail.
+
+**DoD:**
+- For all displayed tickers, core metrics have receipts (or are explicitly flagged as missing)
+- Verification summary shows pass/warn/fail distribution; DLQ stays near zero.
+
+#### 10f.6 — UI surfacing for auditors
+**Work:**
+- Keep `/api/debug/balance-sheet/[ticker]` and extend to include:
+  - D1 latest datapoints
+  - provenance bundle per field
+  - diff vs companies.ts
+
+**DoD:** single JSON payload answers "what value is the site using and why?" for any ticker.
+
 **Goal**: Make data updates reliably within **30 minutes**, remain **reproducible/correct**, and expose **full provenance** that is easy for agents to consume.
 
 ### 10a — Provenance primitives (DONE)
