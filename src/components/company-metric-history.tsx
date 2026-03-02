@@ -1,6 +1,7 @@
 import React from 'react';
 import { formatLargeNumber } from '@/lib/calculations';
 import type { DatapointRow } from '@/lib/hooks/use-company-metric-history';
+import { useD1Artifact } from '@/lib/hooks/use-d1-artifact';
 
 function labelForMetric(metric: string): string {
   switch (metric) {
@@ -15,10 +16,52 @@ function labelForMetric(metric: string): string {
   }
 }
 
+function shortId(id: string, n: number = 6) {
+  return id.length > n * 2 ? `${id.slice(0, n)}…${id.slice(-n)}` : id;
+}
+
 function formatValue(row: DatapointRow): string {
   if (row.unit === 'USD') return `$${formatLargeNumber(row.value)}`;
   if (row.unit === 'shares') return `${formatLargeNumber(row.value)} shares`;
   return `${formatLargeNumber(row.value)} ${row.unit}`;
+}
+
+function HistoryRow(props: { metric: string; row: DatapointRow }) {
+  const { metric, row } = props;
+  const { data } = useD1Artifact(row.artifact_id);
+  const artifact = data?.artifact;
+
+  const href = artifact?.source_url || null;
+  const label = href
+    ? 'SEC'
+    : artifact?.accession
+      ? artifact.accession
+      : row.artifact_id
+        ? shortId(row.artifact_id)
+        : '—';
+
+  return (
+    <tr className="border-b last:border-b-0 border-gray-100 dark:border-gray-800">
+      <td className="py-2 pr-4 font-medium text-gray-900 dark:text-gray-100">{labelForMetric(metric)}</td>
+      <td className="py-2 pr-4 text-gray-600 dark:text-gray-300">{row.as_of || '—'}</td>
+      <td className="py-2 pr-4 text-gray-900 dark:text-gray-100">{formatValue(row)}</td>
+      <td className="py-2 pr-4 text-gray-500 dark:text-gray-400">{row.method || '—'}</td>
+      <td className="py-2 text-gray-500 dark:text-gray-400">
+        {href ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            {label}
+          </a>
+        ) : (
+          <span title={row.artifact_id || ''}>{label}</span>
+        )}
+      </td>
+    </tr>
+  );
 }
 
 export function CompanyMetricHistorySection(props: {
@@ -55,17 +98,13 @@ export function CompanyMetricHistorySection(props: {
             <th className="py-2 pr-4">Metric</th>
             <th className="py-2 pr-4">As of</th>
             <th className="py-2 pr-4">Value</th>
-            <th className="py-2">Method</th>
+            <th className="py-2 pr-4">Method</th>
+            <th className="py-2">Source</th>
           </tr>
         </thead>
         <tbody>
           {rows.map(({ metric, row }, idx) => (
-            <tr key={`${metric}-${row.datapoint_id}-${idx}`} className="border-b last:border-b-0 border-gray-100 dark:border-gray-800">
-              <td className="py-2 pr-4 font-medium text-gray-900 dark:text-gray-100">{labelForMetric(metric)}</td>
-              <td className="py-2 pr-4 text-gray-600 dark:text-gray-300">{row.as_of || '—'}</td>
-              <td className="py-2 pr-4 text-gray-900 dark:text-gray-100">{formatValue(row)}</td>
-              <td className="py-2 text-gray-500 dark:text-gray-400">{row.method || '—'}</td>
-            </tr>
+            <HistoryRow key={`${metric}-${row.datapoint_id}-${idx}`} metric={metric} row={row} />
           ))}
         </tbody>
       </table>
