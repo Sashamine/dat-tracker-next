@@ -92,6 +92,23 @@ export type LatestDatapointRow = {
   created_at: string;
 };
 
+export type DatapointHistoryRow = {
+  datapoint_id: string;
+  entity_id: string;
+  metric: string;
+  value: number;
+  unit: string;
+  scale: number;
+  as_of: string | null;
+  reported_at: string | null;
+  artifact_id: string;
+  run_id: string;
+  method: string | null;
+  confidence: number | null;
+  flags_json: string | null;
+  created_at: string;
+};
+
 export async function getLatestMetrics(
   ticker: string,
   metrics: string[] = ['cash_usd', 'debt_usd', 'basic_shares']
@@ -118,4 +135,35 @@ export async function getLatestMetrics(
   // Hybrid: normalize shares/prices using D1 corporate_actions when present.
   // (Fallback behavior: if no corporate_actions exist, normalization multiplier is 1.)
   return await normalizeLatestRowsForTicker(ticker, out.results, 'current');
+}
+
+export async function getMetricHistory(
+  ticker: string,
+  metric: string,
+  opts?: { limit?: number; order?: 'asc' | 'desc' }
+): Promise<DatapointHistoryRow[]> {
+  const d1 = D1Client.fromEnv();
+
+  const limit = Math.max(1, Math.min(2000, opts?.limit ?? 500));
+  const order = (opts?.order || 'desc').toLowerCase() === 'asc' ? 'ASC' : 'DESC';
+
+  const sql = `
+    SELECT
+      datapoint_id, entity_id, metric, value, unit, scale,
+      as_of, reported_at, artifact_id, run_id, method, confidence,
+      flags_json, created_at
+    FROM datapoints
+    WHERE entity_id = ?
+      AND metric = ?
+      AND as_of IS NOT NULL
+    ORDER BY as_of ${order}, reported_at ${order}, created_at ${order}
+    LIMIT ?;
+  `;
+
+  const params = [ticker.toUpperCase(), metric, limit];
+  const out = await d1.query<DatapointHistoryRow>(sql, params);
+
+  // Reuse same normalization pipeline as latest rows.
+  // For history, keep values on their historical basis (no forward-adjusting).
+  return await normalizeLatestRowsForTicker(ticker, out.results as any, 'historical');
 }
