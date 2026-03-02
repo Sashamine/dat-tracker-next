@@ -34,12 +34,75 @@ type MetricRow = {
   flags_json: string | null;
 };
 
+type ExistingProposalRow = {
+  value: number;
+  unit: string;
+  scale: number;
+  as_of: string | null;
+  reported_at: string | null;
+  artifact_id: string;
+  run_id: string;
+  method: string | null;
+  confidence: number | null;
+  flags_json: string | null;
+  confidence_details_json: string | null;
+  status: string;
+};
+
 async function tableExists(d1: D1Client, table: string): Promise<boolean> {
   const out = await d1.query<any>(
     `SELECT name FROM sqlite_master WHERE type='table' AND name = ? LIMIT 1;`,
     [table]
   );
   return (out.results?.length || 0) > 0;
+}
+
+function makeProposalKey(parts: {
+  entityId: string;
+  metric: string;
+  proposalSource: string;
+  asOf: string | null;
+  reportedAt: string | null;
+}): string {
+  const raw = [
+    'v1',
+    parts.entityId,
+    parts.metric,
+    parts.proposalSource,
+    parts.asOf || '',
+    parts.reportedAt || '',
+  ].join('|');
+  return crypto.createHash('sha256').update(raw).digest('hex');
+}
+
+function sameMutableFields(existing: ExistingProposalRow, incoming: {
+  value: number;
+  unit: string;
+  scale: number;
+  as_of: string | null;
+  reported_at: string | null;
+  artifact_id: string;
+  run_id: string;
+  method: string | null;
+  confidence: number;
+  flags_json: string | null;
+  confidence_details_json: string | null;
+  status: string;
+}): boolean {
+  return (
+    Number(existing.value) === Number(incoming.value) &&
+    existing.unit === incoming.unit &&
+    Number(existing.scale) === Number(incoming.scale) &&
+    (existing.as_of || null) === incoming.as_of &&
+    (existing.reported_at || null) === incoming.reported_at &&
+    existing.artifact_id === incoming.artifact_id &&
+    existing.run_id === incoming.run_id &&
+    (existing.method || null) === incoming.method &&
+    Number(existing.confidence ?? 0) === Number(incoming.confidence ?? 0) &&
+    (existing.flags_json || null) === (incoming.flags_json || null) &&
+    (existing.confidence_details_json || null) === (incoming.confidence_details_json || null) &&
+    existing.status === incoming.status
+  );
 }
 
 async function main() {
@@ -127,6 +190,8 @@ async function main() {
   let processed = 0;
   let extracted = 0;
   let inserted = 0;
+  let updated = 0;
+  let noop = 0;
   let skipped = 0;
   let failed = 0;
 
@@ -260,6 +325,13 @@ async function main() {
       }
 
       if (dryRun) {
+        const proposalKey = makeProposalKey({
+          entityId: ticker,
+          metric: r.metric,
+          proposalSource: x.accessionNumber || x.secUrl || artifactId,
+          asOf: r.as_of,
+          reportedAt: r.reported_at,
+        });
         console.log(JSON.stringify({
           ticker,
           metric: r.metric,
@@ -267,6 +339,7 @@ async function main() {
           unit: r.unit,
           as_of: r.as_of,
           reported_at: r.reported_at,
+          proposal_key: proposalKey,
           accession: x.accessionNumber || null,
           filingDate: x.filingDate || null,
         }, null, 2));
@@ -276,29 +349,110 @@ async function main() {
       try {
         // NOTE: datapoints has FKs to artifacts(artifact_id) and runs(run_id) only.
         // entity_id is a free-form string (ticker).
+        const proposalKey = makeProposalKey({
+          entityId: ticker,
+          metric: r.metric,
+          proposalSource: x.accessionNumber || x.secUrl || artifactId,
+          asOf: r.as_of,
+          reportedAt: r.reported_at,
+        });
+
+        const existingByProposal = await d1.query<ExistingProposalRow>(
+          `SELECT
+             value, unit, scale, as_of, reported_at, artifact_id, run_id,
+             method, confidence, flags_json, confidence_details_json, status
+           FROM datapoints
+           WHERE proposal_key = ?
+           LIMIT 1;`,
+          [proposalKey]
+        );
+
+        // Guard against collisions with historical rows that predate proposal_key.
+        // Those rows remain valid with proposal_key=NULL; treat as noop instead of violating ux_datapoints_dedupe.
+        const dedupeCollision = existingByProposal.results.length
+          ? { results: [] as Array<{ datapoint_id: string }> }
+          : await d1.query<{ datapoint_id: string }>(
+              `SELECT datapoint_id
+               FROM datapoints
+               WHERE entity_id = ?
+                 AND metric = ?
+                 AND COALESCE(as_of, '') = COALESCE(?, '')
+                 AND COALESCE(reported_at, '') = COALESCE(?, '')
+                 AND COALESCE(artifact_id, '') = COALESCE(?, '')
+                 AND value = ?
+                 AND unit = ?
+               LIMIT 1;`,
+              [ticker, r.metric, r.as_of, r.reported_at, artifactId, r.value, r.unit]
+            );
+
+        if (dedupeCollision.results.length) {
+          noop++;
+          continue;
+        }
+
+        const incoming = {
+          value: r.value,
+          unit: r.unit,
+          scale: 0,
+          as_of: r.as_of,
+          reported_at: r.reported_at,
+          artifact_id: artifactId,
+          run_id: runId,
+          method: r.method,
+          confidence: r.confidence,
+          flags_json: r.flags_json,
+          confidence_details_json: null as string | null,
+          status: 'candidate',
+        };
+
         await d1.query(
-          `INSERT OR IGNORE INTO datapoints (
+          `INSERT INTO datapoints (
              datapoint_id, entity_id, metric, value, unit, scale,
              as_of, reported_at, artifact_id, run_id,
-             method, confidence, flags_json, created_at
-           ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?);`,
+             method, confidence, flags_json, confidence_details_json, status,
+             proposal_key, created_at
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON CONFLICT(proposal_key) DO UPDATE SET
+             value = excluded.value,
+             unit = excluded.unit,
+             scale = excluded.scale,
+             as_of = excluded.as_of,
+             reported_at = excluded.reported_at,
+             artifact_id = excluded.artifact_id,
+             run_id = excluded.run_id,
+             method = excluded.method,
+             confidence = excluded.confidence,
+             flags_json = excluded.flags_json,
+             confidence_details_json = excluded.confidence_details_json,
+             status = excluded.status;`,
           [
             crypto.randomUUID(),
             ticker,
             r.metric,
-            r.value,
-            r.unit,
-            r.as_of,
-            r.reported_at,
-            artifactId,
-            runId,
-            r.method,
-            r.confidence,
-            r.flags_json,
+            incoming.value,
+            incoming.unit,
+            incoming.scale,
+            incoming.as_of,
+            incoming.reported_at,
+            incoming.artifact_id,
+            incoming.run_id,
+            incoming.method,
+            incoming.confidence,
+            incoming.flags_json,
+            incoming.confidence_details_json,
+            incoming.status,
+            proposalKey,
             new Date().toISOString(),
           ]
         );
-        inserted++;
+
+        if (!existingByProposal.results.length) {
+          inserted++;
+        } else if (sameMutableFields(existingByProposal.results[0], incoming)) {
+          noop++;
+        } else {
+          updated++;
+        }
       } catch (e) {
         failed++;
         console.log(
@@ -326,6 +480,8 @@ async function main() {
         processed,
         extracted,
         inserted,
+        updated,
+        noop,
         skipped,
         failed,
         runId,
