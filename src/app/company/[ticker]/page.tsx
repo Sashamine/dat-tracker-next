@@ -4,7 +4,6 @@ import { Suspense, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
-import { useLatestBasicShares } from "@/lib/hooks/use-latest-basic-shares";
 import { latestRowByMetric, useCompanyD1Latest } from "@/lib/hooks/use-company-d1-latest";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
@@ -197,10 +196,6 @@ export default function CompanyPage() {
     setMnavInterval(DEFAULT_INTERVAL[newRange]);
   };
 
-  // Preferred shares source for per-share metrics:
-  // IMPORTANT (Rules of Hooks): must be called before any conditional returns.
-  const { data: latestShares } = useLatestBasicShares(ticker);
-
   // D1 canonical inputs (Balance Sheet + shares)
   const D1_INPUT_METRICS = useMemo(
     () => ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
@@ -340,13 +335,14 @@ export default function CompanyPage() {
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
 
-  // Preferred shares source for per-share metrics:
-  // 1) D1 latest basic_shares (already normalized to current split basis using corporate_actions)
-  // 2) company.sharesForMnav (curated)
-  // 3) marketCap/price fallback
+  // Shares outstanding precedence (display-only: NAV/share, holdings/share):
+  //   1. D1 basic_shares  – from useCompanyD1Latest, already split-normalized
+  //      via normalizeLatestRowsForTicker() in the API layer.
+  //   2. Curated           – sharesForMnav from companies.ts (manually verified).
+  //   3. Computed fallback  – marketCap / stockPrice (last resort).
+  // NOTE: mNAV calculation uses sharesForMnav independently via getMarketCapForMnavSync().
   const sharesOutstanding =
     (d1ByMetric.basic_shares?.value && d1ByMetric.basic_shares.value > 0 ? d1ByMetric.basic_shares.value : 0) ||
-    (latestShares?.shares && latestShares.shares > 0 ? latestShares.shares : 0) ||
     displayCompany.sharesForMnav ||
     (marketCap && stockPrice ? marketCap / stockPrice : 0);
   const totalDebt = (d1ByMetric.debt_usd?.value ?? displayCompany.totalDebt ?? 0);
