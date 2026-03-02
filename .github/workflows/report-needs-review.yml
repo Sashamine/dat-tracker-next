@@ -1,6 +1,9 @@
 name: DLQ Report + Resolve
 
 on:
+  schedule:
+    - cron: '0 7 * * 1'  # Every Monday at 07:00 UTC (report-only)
+
   workflow_dispatch:
     inputs:
       mode:
@@ -66,7 +69,7 @@ jobs:
         run: npm ci
 
       - name: Run report
-        if: inputs.mode == 'report'
+        if: inputs.mode == 'report' || github.event_name == 'schedule'
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
