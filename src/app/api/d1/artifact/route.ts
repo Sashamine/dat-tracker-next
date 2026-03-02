@@ -17,7 +17,19 @@ export async function GET(request: NextRequest) {
 
   try {
     const d1 = D1Client.fromEnv();
-    const out = await d1.query<any>(
+    type ArtifactRow = {
+      artifact_id: string;
+      source_type: string | null;
+      source_url: string | null;
+      fetched_at: string | null;
+      r2_bucket: string | null;
+      r2_key: string | null;
+      cik: string | null;
+      ticker: string | null;
+      accession: string | null;
+    };
+
+    const out = await d1.query<ArtifactRow>(
       `SELECT artifact_id, source_type, source_url, fetched_at, r2_bucket, r2_key, cik, ticker, accession
        FROM artifacts
        WHERE artifact_id = ?
@@ -25,7 +37,7 @@ export async function GET(request: NextRequest) {
       [artifactId]
     );
 
-    const artifact = out.results?.[0] || null;
+    const artifact: ArtifactRow | null = out.results?.[0] || null;
     return NextResponse.json({ success: true, artifact_id: artifactId, artifact });
   } catch (err) {
     return NextResponse.json(
