@@ -296,7 +296,10 @@ export default function CompanyPage() {
   // 1) D1 latest basic_shares (already normalized to current split basis using corporate_actions)
   // 2) company.sharesForMnav (curated)
   // 3) marketCap/price fallback
-  const { data: latestShares } = useLatestBasicShares(displayCompany.ticker);
+  //
+  // IMPORTANT (Rules of Hooks): this hook must be called unconditionally, even on routes
+  // where we render a custom view component.
+  const { data: latestShares } = useLatestBasicShares(ticker);
   const sharesOutstanding =
     (latestShares?.shares && latestShares.shares > 0 ? latestShares.shares : 0) ||
     displayCompany.sharesForMnav ||
