@@ -7,6 +7,8 @@ import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
 import { latestRowByMetric, useCompanyD1Latest } from "@/lib/hooks/use-company-d1-latest";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
+import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
+import { applyD1Overlay } from "@/lib/d1-overlay";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { Company } from "@/lib/types";
@@ -143,10 +145,15 @@ export default function CompanyPage() {
   // Fetch all companies for sidebar stats (shared cache with main page)
   // This is the SAME data source as the main page, ensuring mNAV consistency
   const { data: companiesData, isLoading: isLoadingCompanies } = useCompanies();
-  const allCompanies = useMemo(() => {
+  const enrichedAllCompanies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
     return enrichAllCompanies(baseCompanies);
   }, [companiesData]);
+
+  // D1-first overlay for allCompanies — same pattern as overview pages
+  const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
+  const { data: d1BatchData } = useD1Fundamentals(allTickers);
+  const allCompanies = useMemo(() => applyD1Overlay(enrichedAllCompanies, d1BatchData), [enrichedAllCompanies, d1BatchData]);
 
   // Calculate sidebar stats
   const { assetStats, totalValue, mnavStats } = useMemo(() => {
@@ -584,6 +591,11 @@ export default function CompanyPage() {
         ) : (
           <>
         {/* Key Valuation Metrics */}
+        {process.env.NODE_ENV === 'development' && (displayCompany as any)._d1Fields && (
+          <div className="mb-2 text-[10px] font-mono text-gray-400 dark:text-gray-600">
+            D1: {((displayCompany as any)._d1Fields as string[]).join(', ')}
+          </div>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
