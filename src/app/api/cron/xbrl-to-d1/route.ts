@@ -24,9 +24,71 @@ const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdin
 type Metric = (typeof DEFAULT_METRICS)[number];
 
 type MetricRow = { metric: Metric; value: number; unit: string; as_of?: string | null; reported_at?: string | null };
+type ExistingProposalRow = {
+  value: number;
+  unit: string;
+  scale: number;
+  as_of: string | null;
+  reported_at: string | null;
+  artifact_id: string;
+  run_id: string;
+  method: string | null;
+  confidence: number | null;
+  flags_json: string | null;
+  confidence_details_json: string | null;
+  status: string;
+};
 
 function nowIso() {
   return new Date().toISOString();
+}
+
+function makeProposalKey(parts: {
+  entityId: string;
+  metric: string;
+  proposalSource: string;
+  asOf: string | null;
+  reportedAt: string | null;
+}): string {
+  const raw = [
+    'v1',
+    parts.entityId,
+    parts.metric,
+    parts.proposalSource,
+    parts.asOf || '',
+    parts.reportedAt || '',
+  ].join('|');
+  return crypto.createHash('sha256').update(raw).digest('hex');
+}
+
+function sameMutableFields(existing: ExistingProposalRow, incoming: {
+  value: number;
+  unit: string;
+  scale: number;
+  as_of: string | null;
+  reported_at: string | null;
+  artifact_id: string;
+  run_id: string;
+  method: string | null;
+  confidence: number;
+  flags_json: string | null;
+  confidence_details_json: string | null;
+  status: string;
+}): boolean {
+  return (
+    Number(existing.value) === Number(incoming.value) &&
+    existing.unit === incoming.unit &&
+    Number(existing.scale) === Number(incoming.scale) &&
+    (existing.as_of || null) === incoming.as_of &&
+    (existing.reported_at || null) === incoming.reported_at &&
+    existing.artifact_id === incoming.artifact_id &&
+    existing.run_id === incoming.run_id &&
+    (existing.method || null) === incoming.method &&
+    Number(existing.confidence ?? 0) === Number(incoming.confidence ?? 0) &&
+    (existing.flags_json || null) === (incoming.flags_json || null) &&
+    (existing.confidence_details_json || null) === (incoming.confidence_details_json || null) &&
+    existing.status === incoming.status
+  );
 }
 
 export async function GET(request: NextRequest) {
@@ -69,10 +131,11 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const summary: any[] = [];
+  const summary: Array<{ ticker: string; success: boolean; datapoints?: number; artifactId?: string; error?: string }> = [];
   let datapointsAttempted = 0;
   let datapointsInserted = 0;
-  let datapointsIgnored = 0;
+  let datapointsUpdated = 0;
+  let datapointsNoop = 0;
   let failures = 0;
 
   for (const ticker of tickers) {
@@ -141,45 +204,109 @@ export async function GET(request: NextRequest) {
     datapointsAttempted += rows.length;
 
     if (!dryRun && rows.length) {
-      // Prefetch existing rows for this ticker/metrics to avoid per-datapoint existence queries
-      const metricList = rows.map(r => r.metric);
-      const inList = metricList.map(() => '?').join(',');
-      const existing = await d1.query<{
-        metric: string;
-        value: number;
-        unit: string;
-        as_of: string | null;
-        reported_at: string | null;
-        artifact_id: string;
-      }>(
-        `SELECT metric, value, unit, as_of, reported_at, artifact_id
-         FROM datapoints
-         WHERE entity_id = ?
-           AND metric IN (${inList});`,
-        [ticker, ...metricList]
-      );
-
-      const key = (m: string, v: number, u: string, asOf: any, rep: any, art: string) =>
-        `${m}::${v}::${u}::${asOf || ''}::${rep || ''}::${art || ''}`;
-
-      const existingSet = new Set(
-        existing.results.map(r => key(r.metric, r.value, r.unit, r.as_of, r.reported_at, r.artifact_id))
-      );
-
       for (const r of rows) {
-        const k = key(r.metric, r.value, r.unit, r.as_of, r.reported_at, artifactId);
+        const proposalKey = makeProposalKey({
+          entityId: ticker,
+          metric: r.metric,
+          proposalSource: x.accessionNumber || x.secUrl || artifactId,
+          asOf: r.as_of || null,
+          reportedAt: r.reported_at || null,
+        });
 
-        await d1.query(
-          `INSERT OR IGNORE INTO datapoints (
-             datapoint_id, entity_id, metric, value, unit, scale,
-             as_of, reported_at, artifact_id, run_id,
-             method, confidence, flags_json, created_at
-           ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, 'sec_companyfacts_xbrl', 1.0, NULL, ?);`,
-          [crypto.randomUUID(), ticker, r.metric, r.value, r.unit, r.as_of, r.reported_at, artifactId, runId, nowIso()]
+        const existingByProposal = await d1.query<ExistingProposalRow>(
+          `SELECT
+             value, unit, scale, as_of, reported_at, artifact_id, run_id,
+             method, confidence, flags_json, confidence_details_json, status
+           FROM datapoints
+           WHERE proposal_key = ?
+           LIMIT 1;`,
+          [proposalKey]
         );
 
-        if (existingSet.has(k)) datapointsIgnored += 1;
-        else datapointsInserted += 1;
+        const dedupeCollision = existingByProposal.results.length
+          ? { results: [] as Array<{ datapoint_id: string }> }
+          : await d1.query<{ datapoint_id: string }>(
+              `SELECT datapoint_id
+               FROM datapoints
+               WHERE entity_id = ?
+                 AND metric = ?
+                 AND COALESCE(as_of, '') = COALESCE(?, '')
+                 AND COALESCE(reported_at, '') = COALESCE(?, '')
+                 AND COALESCE(artifact_id, '') = COALESCE(?, '')
+                 AND value = ?
+                 AND unit = ?
+               LIMIT 1;`,
+              [ticker, r.metric, r.as_of || null, r.reported_at || null, artifactId, r.value, r.unit]
+            );
+
+        if (dedupeCollision.results.length) {
+          datapointsNoop += 1;
+          continue;
+        }
+
+        const incoming = {
+          value: r.value,
+          unit: r.unit,
+          scale: 0,
+          as_of: r.as_of || null,
+          reported_at: r.reported_at || null,
+          artifact_id: artifactId,
+          run_id: runId,
+          method: 'sec_companyfacts_xbrl',
+          confidence: 1.0,
+          flags_json: null as string | null,
+          confidence_details_json: null as string | null,
+          status: 'candidate',
+        };
+
+        await d1.query(
+          `INSERT INTO datapoints (
+             datapoint_id, entity_id, metric, value, unit, scale,
+             as_of, reported_at, artifact_id, run_id,
+             method, confidence, flags_json, confidence_details_json, status,
+             proposal_key, created_at
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON CONFLICT(proposal_key) DO UPDATE SET
+             value = excluded.value,
+             unit = excluded.unit,
+             scale = excluded.scale,
+             as_of = excluded.as_of,
+             reported_at = excluded.reported_at,
+             artifact_id = excluded.artifact_id,
+             run_id = excluded.run_id,
+             method = excluded.method,
+             confidence = excluded.confidence,
+             flags_json = excluded.flags_json,
+             confidence_details_json = excluded.confidence_details_json,
+             status = excluded.status;`,
+          [
+            crypto.randomUUID(),
+            ticker,
+            r.metric,
+            incoming.value,
+            incoming.unit,
+            incoming.scale,
+            incoming.as_of,
+            incoming.reported_at,
+            incoming.artifact_id,
+            incoming.run_id,
+            incoming.method,
+            incoming.confidence,
+            incoming.flags_json,
+            incoming.confidence_details_json,
+            incoming.status,
+            proposalKey,
+            nowIso(),
+          ]
+        );
+
+        if (!existingByProposal.results.length) {
+          datapointsInserted += 1;
+        } else if (sameMutableFields(existingByProposal.results[0], incoming)) {
+          datapointsNoop += 1;
+        } else {
+          datapointsUpdated += 1;
+        }
       }
     }
 
@@ -205,7 +332,7 @@ export async function GET(request: NextRequest) {
     const msg = [
       `XBRL→D1 cron: ${failures}/${tickers.length} tickers failed (offset=${offset} limit=${limit}).`,
       `runId: ${runId}`,
-      `datapoints: +${datapointsInserted} new, ${datapointsIgnored} unchanged`,
+      `datapoints: +${datapointsInserted} inserted, ~${datapointsUpdated} updated, ${datapointsNoop} noop`,
       failedTickers.length ? `failed: ${failedTickers.join(', ')}${extra}` : undefined,
     ].filter(Boolean).join('\n');
 
@@ -217,7 +344,7 @@ export async function GET(request: NextRequest) {
     const msg = [
       `XBRL→D1 manual run OK: ${tickers.length}/${allTickers.length} tickers (offset=${offset} limit=${limit})`,
       `runId: ${runId}`,
-      `datapoints: +${datapointsInserted} new, ${datapointsIgnored} unchanged`,
+      `datapoints: +${datapointsInserted} inserted, ~${datapointsUpdated} updated, ${datapointsNoop} noop`,
     ].join('\n');
     await sendDiscordChannelMessage(updatesChannelId, msg);
   }
@@ -232,7 +359,8 @@ export async function GET(request: NextRequest) {
     limit,
     datapointsAttempted,
     datapointsInserted: dryRun ? 0 : datapointsInserted,
-    datapointsIgnored: dryRun ? 0 : datapointsIgnored,
+    datapointsUpdated: dryRun ? 0 : datapointsUpdated,
+    datapointsNoop: dryRun ? 0 : datapointsNoop,
     failures,
     summary,
     ...(isManual
