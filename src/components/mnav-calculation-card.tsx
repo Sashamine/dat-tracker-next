@@ -1,6 +1,8 @@
 "use client";
 
+import React from "react";
 import { formatLargeNumber } from "@/lib/calculations";
+import { MetricSourceModal } from "@/components/metric-source-modal";
 import { FilingCite } from "@/components/wiki-citation";
 import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
 
@@ -180,6 +182,8 @@ export function MnavCalculationCard({
   holdingsSource,
   holdingsAsOf,
 }: MnavCalculationCardProps) {
+  const [sourceModal, setSourceModal] = React.useState<null | { metric: string; title: string }>(null);
+
   // Calculate EV
   // Free cash = total cash minus restricted/operating cash
   const freeCash = cashReserves - (restrictedCash || 0);
@@ -249,45 +253,60 @@ export function MnavCalculationCard({
             </div>
           )}
           
-          <FormulaRow 
-            label="Debt" 
-            value={adjustedDebt}
-            color={adjustedDebt > 0 ? "text-red-400" : "text-gray-500"}
-            prefix="+ "
-            sourceUrl={debtSourceUrl}
-            sourceTicker={ticker}
-            sourceDate={debtAsOf}
-            sourceLabel={debtSource}
-            searchTerm={debtSearchTerm}
-            showZero={true}
-          />
+          <div
+            className="cursor-pointer"
+            onClick={() => setSourceModal({ metric: 'debt_usd', title: `${ticker} · Debt` })}
+          >
+            <FormulaRow 
+              label="Debt" 
+              value={adjustedDebt}
+              color={adjustedDebt > 0 ? "text-red-400" : "text-gray-500"}
+              prefix="+ "
+              sourceUrl={debtSourceUrl}
+              sourceTicker={ticker}
+              sourceDate={debtAsOf}
+              sourceLabel={debtSource}
+              searchTerm={debtSearchTerm}
+              showZero={true}
+            />
+          </div>
           
-          <FormulaRow 
-            label="Preferred" 
-            value={preferredEquity}
-            color={preferredEquity > 0 ? "text-red-400" : "text-gray-500"}
-            prefix="+ "
-            sourceUrl={preferredSourceUrl}
-            sourceTicker={ticker}
-            sourceDate={preferredAsOf}
-            sourceLabel={preferredSource}
-            showZero={true}
-          />
+          <div
+            className="cursor-pointer"
+            onClick={() => setSourceModal({ metric: 'preferred_equity_usd', title: `${ticker} · Preferred` })}
+          >
+            <FormulaRow 
+              label="Preferred" 
+              value={preferredEquity}
+              color={preferredEquity > 0 ? "text-red-400" : "text-gray-500"}
+              prefix="+ "
+              sourceUrl={preferredSourceUrl}
+              sourceTicker={ticker}
+              sourceDate={preferredAsOf}
+              sourceLabel={preferredSource}
+              showZero={true}
+            />
+          </div>
           
-          <FormulaRow 
-            label={restrictedCash && restrictedCash > 0 ? "Excess Cash" : "Cash"} 
-            value={freeCash}
-            color={freeCash > 0 ? "text-green-400" : "text-gray-500"}
-            prefix="− "
-            sourceUrl={cashSourceUrl}
-            sourceTicker={ticker}
-            sourceDate={cashAsOf}
-            sourceLabel={restrictedCash && restrictedCash > 0 
-              ? `${cashSource || ''} (${formatLargeNumber(restrictedCash)} restricted)`.trim()
-              : cashSource}
-            showZero={true}
-            searchTerm={cashSearchTerm}
-          />
+          <div
+            className="cursor-pointer"
+            onClick={() => setSourceModal({ metric: 'cash_usd', title: `${ticker} · Cash` })}
+          >
+            <FormulaRow 
+              label={restrictedCash && restrictedCash > 0 ? "Excess Cash" : "Cash"} 
+              value={freeCash}
+              color={freeCash > 0 ? "text-green-400" : "text-gray-500"}
+              prefix="− "
+              sourceUrl={cashSourceUrl}
+              sourceTicker={ticker}
+              sourceDate={cashAsOf}
+              sourceLabel={restrictedCash && restrictedCash > 0 
+                ? `${cashSource || ''} (${formatLargeNumber(restrictedCash)} restricted)`.trim()
+                : cashSource}
+              showZero={true}
+              searchTerm={cashSearchTerm}
+            />
+          </div>
           
           <div className="flex justify-between items-center pt-1 border-t border-gray-200 dark:border-gray-700 mt-1">
             <span className="text-gray-300 text-sm font-medium">= EV</span>
@@ -334,6 +353,15 @@ export function MnavCalculationCard({
           </div>
         </div>
       </div>
+
+      <MetricSourceModal
+        open={!!sourceModal}
+        onClose={() => setSourceModal(null)}
+        ticker={ticker}
+        metric={sourceModal?.metric || 'cash_usd'}
+        title={sourceModal?.title}
+        historyLimit={10}
+      />
 
       {/* Result */}
       <div className="mb-2 flex items-center gap-2">
