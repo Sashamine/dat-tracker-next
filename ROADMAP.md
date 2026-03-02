@@ -9,18 +9,12 @@
 
 **Legend:**
 - **Agent 1** = primary orchestrator (product + core data architecture)
-- **Agent 2** = D1 backfills / migration workflows
-- **Agent 3** = CI/lint ratchet + repo hygiene (this assistant in the #agent-3 thread)
+- **Agent 5** = Claude Code (local CLI) — D1 backfills, migrations, ops
+- **Agent 6** = Codex — ingestion hardening (proposal_key upserts, idempotency)
 
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
 ### Now (in progress)
-- **Phase B: Backfill quarter-end `basic_shares` into D1**
-  - **Owner:** Agent 2
-  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
-  - **Status:** D1 schema mismatch fixed (use `datapoints.as_of` instead of `artifacts.filed_at/period_end`). Needs merge + workflow dry-run + real run.
-  - **DoD:** Dry-run summary looks sane; then write mode for 1 ticker/date-range; then expand.
-
 - **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
   - **Status:** 10c v1 runs green (scheduled inventory + invariants).
@@ -32,8 +26,8 @@ Update this section whenever you start/stop work so other agents can instantly s
       - state-verify: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534835119 (failCount=0; gaps: missing_debt_evidence)
   - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
-- **10d: Verification plumbing (Agent 4)**
-  - **Owner:** Agent 4
+- **10d: Verification plumbing**
+  - **Owner:** unowned (was Agent 4)
   - **Status:** Implemented and validated end-to-end in D1 (write mode works).
   - **Merged PRs:**
     - #58 d1-migrate workflow + d1-apply-migration script
@@ -47,7 +41,7 @@ Update this section whenever you start/stop work so other agents can instantly s
     - 323 `artifacts` rows with `source_type='sec_filing'` have `source_url` NULL and `accession` NULL, so receipts can’t be reconstructed for those.
 
 - **CI/Lint ratchet (required checks scope expansion)**
-  - **Owner:** Agent 3
+  - **Owner:** unowned (was Agent 3)
   - **Status:** Ongoing: gradually expand `lint-app` scope (admin → key API routes) while keeping changes surgical.
   - **Recent:** merged multiple CI hygiene PRs; current open PR: #64 (expand lint-app to api/prices)
 
@@ -57,6 +51,12 @@ Update this section whenever you start/stop work so other agents can instantly s
 - **UI: Split miner vs treasury sector stats** (from older notes)
 
 ### Done (recent)
+- **10d: Phase B backfill quarter-end `basic_shares` into D1 (DONE 2026-03-02)**
+  - **Owner:** Agent 5
+  - **Status:** Backfilled **95** quarter-end `basic_shares` rows across **48** tickers.
+  - **Current D1 state:** 409 total datapoints.
+  - **Links:** (see ROADMAP entry updated by Agent 5 for workflow runs)
+
 - **10b: R2 inventory → artifacts backfill (DONE 2026-02-28)**
   - Prefix discovery: https://github.com/Sashamine/dat-tracker-next/actions/runs/22530779754
   - Full bucket dry-run (cap 2000): https://github.com/Sashamine/dat-tracker-next/actions/runs/22530831208
