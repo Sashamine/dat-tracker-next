@@ -1,6 +1,6 @@
 # DAT Tracker Data Architecture Roadmap
 
-> **Last Updated**: 2026-02-28
+> **Last Updated**: 2026-03-02
 > **Current Phase**: 10e-lite → 10b/10c/10d (Provenance + agent-read APIs + ingestion)
 
 ---
