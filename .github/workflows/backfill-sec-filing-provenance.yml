@@ -23,6 +23,10 @@ on:
         description: 'Optional cursor: process artifact_id > this value'
         required: false
         default: ''
+      report_unrecoverable:
+        description: 'Print unrecoverable rows with classification (true/false)'
+        required: false
+        default: 'false'
 
 jobs:
   run:
@@ -56,6 +60,7 @@ jobs:
           ARGS=(
             "--dry_run=${{ github.event.inputs.dry_run }}"
             "--limit=${{ github.event.inputs.limit }}"
+            "--report_unrecoverable=${{ github.event.inputs.report_unrecoverable }}"
           )
 
           if [[ -n "${{ github.event.inputs.ticker }}" ]]; then
@@ -70,4 +75,3 @@ jobs:
 
           echo "Running: npx tsx scripts/backfill-sec-filing-provenance.ts ${ARGS[*]}"
           npx tsx scripts/backfill-sec-filing-provenance.ts "${ARGS[@]}"
-

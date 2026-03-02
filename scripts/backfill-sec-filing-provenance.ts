@@ -20,6 +20,23 @@ type ProposedUpdate = {
   via: string[];
 };
 
+type UnrecoverableReason =
+  | 'pattern_missing'
+  | 'r2_body_fetch_failed'
+  | 'r2_body_regex_miss'
+  | 'multiple_candidates';
+
+type R2EnrichMeta = {
+  fetched: boolean;
+  parseHit: boolean;
+  ambiguousAccession: boolean;
+};
+
+type EnrichResult = {
+  proposal: ProposedUpdate;
+  meta: R2EnrichMeta;
+};
+
 function argVal(name: string): string | null {
   const prefix = `--${name}=`;
   const hit = process.argv.find((a) => a.startsWith(prefix));
@@ -102,18 +119,43 @@ function parseFromKey(r2Key: string): { cik10: string | null; accessionDashed: s
   return { cik10, accessionDashed: accessionToDashed(raw18) };
 }
 
-function parseFromBody(text: string): { sourceUrl: string | null; cik10: string | null; accessionDashed: string | null } {
-  const url = text.match(/https?:\/\/www\.sec\.gov\/Archives\/edgar\/data\/[^\s"'<>]+/i)?.[0] || null;
+function parseFromBody(text: string): {
+  sourceUrl: string | null;
+  cik10: string | null;
+  accessionDashed: string | null;
+  ambiguousAccession: boolean;
+} {
+  const rawUrl =
+    text.match(/https?:\/\/www\.sec\.gov\/Archives\/edgar\/data\/[^\s"'<>]+/i)?.[0] ||
+    text.match(/https?:\/\/www\.sec\.gov\/ixviewer\/ix\.html\?doc=([^"'<> ]+)/i)?.[1] ||
+    null;
+  const url = rawUrl && rawUrl.startsWith('/Archives/') ? `https://www.sec.gov${rawUrl}` : rawUrl;
   const fromUrl = url ? parseSecUrl(url) : { cik10: null, accessionDashed: null };
 
-  const dashed = text.match(/\b(\d{10}-\d{2}-\d{6})\b/)?.[1] || null;
-  const raw18 = text.match(/\b(\d{18})\b/)?.[1] || null;
-  const accessionDashed = fromUrl.accessionDashed || dashed || accessionToDashed(raw18);
+  const accessionCandidates = new Set<string>();
+  const dashedMatches = text.match(/\b\d{10}-\d{2}-\d{6}\b/g) || [];
+  for (const m of dashedMatches) {
+    const dashed = accessionToDashed(m);
+    if (dashed) accessionCandidates.add(dashed);
+  }
+  const raw18Matches = text.match(/\b\d{18}\b/g) || [];
+  for (const m of raw18Matches) {
+    const dashed = accessionToDashed(m);
+    if (dashed) accessionCandidates.add(dashed);
+  }
+  const labelMatch = text.match(
+    /ACCESSION(?:\s+NUMBER|\s+NO\.?)?\s*[:#]?\s*(\d{10})[\s-]?(\d{2})[\s-]?(\d{6})/i
+  );
+  if (labelMatch) accessionCandidates.add(`${labelMatch[1]}-${labelMatch[2]}-${labelMatch[3]}`);
+
+  const derivedCandidates = [...accessionCandidates];
+  const accessionDashed = fromUrl.accessionDashed || (derivedCandidates.length === 1 ? derivedCandidates[0] : null);
+  const ambiguousAccession = !fromUrl.accessionDashed && derivedCandidates.length > 1;
 
   const cikTag = text.match(/\bCIK(?:\s*[:=]\s*|\s+)(\d{1,10})\b/i)?.[1] || null;
   const cik10 = fromUrl.cik10 || normalizeCik10(cikTag);
 
-  return { sourceUrl: url, cik10, accessionDashed };
+  return { sourceUrl: url, cik10, accessionDashed, ambiguousAccession };
 }
 
 function proposeUpdate(row: ArtifactRow): ProposedUpdate {
@@ -160,19 +202,26 @@ async function enrichFromR2(
   r2: S3Client,
   row: ArtifactRow,
   current: ProposedUpdate
-): Promise<ProposedUpdate> {
-  if (!row.r2_bucket || !row.r2_key) return current;
-  if (row.r2_bucket.trim() === '' || row.r2_key.trim() === '') return current;
+): Promise<EnrichResult> {
+  if (!row.r2_bucket || !row.r2_key) {
+    return { proposal: current, meta: { fetched: false, parseHit: false, ambiguousAccession: false } };
+  }
+  if (row.r2_bucket.trim() === '' || row.r2_key.trim() === '') {
+    return { proposal: current, meta: { fetched: false, parseHit: false, ambiguousAccession: false } };
+  }
 
   const needsSource = !row.source_url || !row.source_url.trim();
   const needsAcc = !row.accession || !row.accession.trim();
   const needsCik = !row.cik || !row.cik.trim();
-  if (!needsSource && !needsAcc && !needsCik) return current;
+  if (!needsSource && !needsAcc && !needsCik) {
+    return { proposal: current, meta: { fetched: false, parseHit: false, ambiguousAccession: false } };
+  }
 
   const obj = await r2.send(new GetObjectCommand({ Bucket: row.r2_bucket, Key: row.r2_key }));
   const text = (await streamToBuffer(obj.Body)).toString('utf8');
   const parsed = parseFromBody(text);
   const nextVia = [...current.via];
+  const hasAnyParseHit = Boolean(parsed.sourceUrl || parsed.cik10 || parsed.accessionDashed || parsed.ambiguousAccession);
 
   let accession = current.accession;
   if (!accession && parsed.accessionDashed && needsAcc) {
@@ -198,11 +247,16 @@ async function enrichFromR2(
     nextVia.push('derived');
   }
 
-  return { sourceUrl, accession, cik, via: nextVia };
+  return {
+    proposal: { sourceUrl, accession, cik, via: nextVia },
+    meta: { fetched: true, parseHit: hasAnyParseHit, ambiguousAccession: parsed.ambiguousAccession },
+  };
 }
 
 async function main() {
   const dryRun = (argVal('dry_run') || process.env.DRY_RUN || 'true').toLowerCase() === 'true';
+  const reportUnrecoverable =
+    (argVal('report_unrecoverable') || process.env.REPORT_UNRECOVERABLE || 'false').toLowerCase() === 'true';
   const limit = Math.max(1, Math.min(2000, Number(argVal('limit') || process.env.LIMIT || '200')));
   const ticker = (argVal('ticker') || process.env.TICKER || '').trim().toUpperCase() || null;
   const r2Prefix = (argVal('r2_prefix') || process.env.R2_PREFIX || '').trim() || null;
@@ -249,14 +303,22 @@ async function main() {
   let updated = 0;
   let skippedNoCandidate = 0;
   let errors = 0;
+  let unrecoverablePatternMissing = 0;
+  let unrecoverableR2FetchFailed = 0;
+  let unrecoverableR2RegexMiss = 0;
+  let unrecoverableMultipleCandidates = 0;
   let lastArtifactId: string | null = null;
   const sample: Array<Record<string, any>> = [];
+  const unrecoverable: Array<Record<string, any>> = [];
 
   for (const row of out.results) {
     scanned++;
     lastArtifactId = row.artifact_id;
 
     let proposal = proposeUpdate(row);
+    let r2Meta: R2EnrichMeta = { fetched: false, parseHit: false, ambiguousAccession: false };
+    let r2FetchFailed = false;
+    const keyParsed = row.r2_key ? parseFromKey(row.r2_key) : { cik10: null, accessionDashed: null };
 
     const needsSource = (!row.source_url || !row.source_url.trim()) && !proposal.sourceUrl;
     const needsAcc = (!row.accession || !row.accession.trim()) && !proposal.accession;
@@ -265,10 +327,13 @@ async function main() {
     if (needsSource || needsAcc || needsCik) {
       try {
         const beforeVia = proposal.via.length;
-        proposal = await enrichFromR2(r2, row, proposal);
+        const enriched = await enrichFromR2(r2, row, proposal);
+        proposal = enriched.proposal;
+        r2Meta = enriched.meta;
         if (proposal.via.length > beforeVia && proposal.via.includes('r2_body')) fromR2Body++;
       } catch {
-        // ignore per-row R2 fetch failures; remaining derived fields may still be usable
+        // Keep a per-row failure bucket for report mode.
+        r2FetchFailed = true;
       }
     }
 
@@ -278,6 +343,32 @@ async function main() {
 
     if (!nextSource && !nextAcc && !nextCik) {
       skippedNoCandidate++;
+      let reason: UnrecoverableReason;
+      if (r2Meta.ambiguousAccession) {
+        reason = 'multiple_candidates';
+        unrecoverableMultipleCandidates++;
+      } else if (r2FetchFailed) {
+        reason = 'r2_body_fetch_failed';
+        unrecoverableR2FetchFailed++;
+      } else if ((needsSource || needsAcc || needsCik) && r2Meta.fetched && !r2Meta.parseHit) {
+        reason = 'r2_body_regex_miss';
+        unrecoverableR2RegexMiss++;
+      } else if (!keyParsed.accessionDashed && !keyParsed.cik10) {
+        reason = 'pattern_missing';
+        unrecoverablePatternMissing++;
+      } else {
+        reason = 'r2_body_regex_miss';
+        unrecoverableR2RegexMiss++;
+      }
+      if (reportUnrecoverable && unrecoverable.length < 200) {
+        unrecoverable.push({
+          artifact_id: row.artifact_id,
+          ticker: row.ticker,
+          r2_bucket: row.r2_bucket,
+          r2_key: row.r2_key,
+          reason,
+        });
+      }
       continue;
     }
 
@@ -321,14 +412,22 @@ async function main() {
       {
         mode: dryRun ? 'dry-run' : 'write',
         filters: { ticker, r2Prefix, afterArtifactId, limit },
+        report_unrecoverable: reportUnrecoverable,
         scanned,
         proposed,
         fromR2Body,
         skippedNoCandidate,
+        unrecoverable_counts: {
+          pattern_missing: unrecoverablePatternMissing,
+          r2_body_fetch_failed: unrecoverableR2FetchFailed,
+          r2_body_regex_miss: unrecoverableR2RegexMiss,
+          multiple_candidates: unrecoverableMultipleCandidates,
+        },
         updated: dryRun ? 0 : updated,
         errors,
         next_after_artifact_id: lastArtifactId,
         sample,
+        unrecoverable,
       },
       null,
       2
@@ -340,4 +439,3 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-
