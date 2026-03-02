@@ -68,7 +68,19 @@ async function main() {
     rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate, method: 'sec_companyfacts_xbrl' });
   }
   if (typeof x.bitcoinHoldingsNative === 'number') {
-    rows.push({ metric: 'holdings_native', value: x.bitcoinHoldingsNative, unit: 'BTC', as_of: x.bitcoinHoldingsDate, method: 'sec_companyfacts_xbrl' });
+    rows.push({
+      metric: 'holdings_native',
+      value: x.bitcoinHoldingsNative,
+      unit: 'BTC',
+      as_of: x.bitcoinHoldingsDate,
+      method: 'sec_companyfacts_xbrl',
+      flags_json: JSON.stringify({
+        native_extraction: {
+          concept: x.bitcoinHoldingsNativeConcept || null,
+          unit_key: x.bitcoinHoldingsNativeUnitKey || null,
+        },
+      }),
+    });
   }
 
   // reported_at: use SEC filed date if present, else as_of

@@ -142,6 +142,8 @@ export interface XBRLExtractionResult {
   bitcoinHoldingsUnit?: string;    // 'USD' or 'BTC'
   bitcoinHoldingsNative?: number;  // Native BTC amount when available
   bitcoinHoldingsNativeUnit?: string; // 'BTC'
+  bitcoinHoldingsNativeConcept?: string; // namespace:concept selected for native holdings
+  bitcoinHoldingsNativeUnitKey?: string; // Raw SEC companyfacts unit key selected
   bitcoinHoldingsDate?: string;    // YYYY-MM-DD
   bitcoinHoldingsSource?: string;  // Filing accession number
 
@@ -205,6 +207,25 @@ interface FactValue {
   end: string;
   start?: string;
 }
+
+type ConceptRef = {
+  namespace: string;
+  concept: string;
+  conceptName: string;
+  priority: number;
+};
+
+type NativeHoldingsCandidate = {
+  value: number;
+  date: string;
+  filed: string;
+  form: string;
+  accn: string;
+  unitKey: string;
+  conceptName: string;
+  priority: number;
+  unitScore: number;
+};
 
 /**
  * Fetch company facts from SEC EDGAR XBRL API
@@ -315,6 +336,133 @@ function findMostRecentValue(
   } : null;
 }
 
+function parseConceptName(conceptName: string): ConceptRef {
+  const [namespace, concept] = conceptName.includes(':')
+    ? conceptName.split(':')
+    : ['us-gaap', conceptName];
+  return { namespace, concept, conceptName: `${namespace}:${concept}`, priority: 0 };
+}
+
+function conceptLooksNativeHoldings(conceptName: string): boolean {
+  const c = conceptName.toLowerCase();
+  const bitcoinish = /(bitcoin|cryptoasset|digitalasset|cryptocurrency|virtualcurrency)/.test(c);
+  const unitsish = /(numberofunits|units|quantity|amount|held|holdings)/.test(c);
+  return bitcoinish && (unitsish || /bitcoin/.test(c));
+}
+
+function scoreNativeUnitKey(unitKey: string, conceptName: string): number {
+  const u = unitKey.toLowerCase();
+  if (/(^|[^a-z])(btc|xbt|bitcoin)([^a-z]|$)/.test(u)) return 3;
+
+  if (u === 'pure') {
+    const c = conceptName.toLowerCase();
+    const nativeConceptish = /(numberofunits|units|quantity|amount|held|holdings|bitcoin)/.test(c);
+    const valueConceptish = /(fairvalue|carryingvalue|value)/.test(c);
+    return nativeConceptish && !valueConceptish ? 1 : 0;
+  }
+
+  return 0;
+}
+
+function sortByMostRecent<T extends { date: string; filed: string }>(a: T, b: T): number {
+  const endCompare = new Date(b.date).getTime() - new Date(a.date).getTime();
+  if (endCompare !== 0) return endCompare;
+  return new Date(b.filed).getTime() - new Date(a.filed).getTime();
+}
+
+function extractBitcoinNativeHoldings(
+  facts: SECCompanyFacts['facts'],
+  ticker: string,
+): { value: number; date: string; form: string; accn: string; unitKey: string; conceptName: string } | null {
+  const configuredConcepts = getBitcoinConcepts(ticker).map((name) => {
+    const parsed = parseConceptName(name);
+    return { ...parsed, priority: 0 };
+  });
+
+  const tickerLower = ticker.toLowerCase();
+  const dynamicConcepts = [
+    `${tickerLower}:Bitcoin`,
+    `${tickerLower}:BitcoinHoldings`,
+    `${tickerLower}:DigitalAssets`,
+    `${tickerLower}:CryptoAssets`,
+  ].map((name) => {
+    const parsed = parseConceptName(name);
+    return { ...parsed, priority: 1 };
+  });
+
+  const fuzzyConcepts: ConceptRef[] = [];
+  for (const namespace of Object.keys(facts || {})) {
+    const namespaceFacts = facts[namespace];
+    if (!namespaceFacts) continue;
+    for (const concept of Object.keys(namespaceFacts)) {
+      const conceptName = `${namespace}:${concept}`;
+      if (!conceptLooksNativeHoldings(conceptName)) continue;
+      fuzzyConcepts.push({ namespace, concept, conceptName, priority: 2 });
+    }
+  }
+
+  const seen = new Set<string>();
+  const concepts = [...configuredConcepts, ...dynamicConcepts, ...fuzzyConcepts].filter((c) => {
+    if (seen.has(c.conceptName)) return false;
+    seen.add(c.conceptName);
+    return true;
+  });
+
+  const preferredForms = ['10-K', '10-Q'];
+  const candidates: NativeHoldingsCandidate[] = [];
+
+  for (const ref of concepts) {
+    const namespaceFacts = facts[ref.namespace];
+    if (!namespaceFacts) continue;
+    const factData = namespaceFacts[ref.concept];
+    if (!factData?.units) continue;
+
+    for (const unitKey of Object.keys(factData.units)) {
+      const unitScore = scoreNativeUnitKey(unitKey, ref.conceptName);
+      if (unitScore <= 0) continue;
+
+      const entries = factData.units[unitKey] || [];
+      for (const entry of entries) {
+        if (typeof entry.val !== 'number') continue;
+        candidates.push({
+          value: entry.val,
+          date: entry.end,
+          filed: entry.filed,
+          form: entry.form,
+          accn: entry.accn,
+          unitKey,
+          conceptName: ref.conceptName,
+          priority: ref.priority,
+          unitScore,
+        });
+      }
+    }
+  }
+
+  if (!candidates.length) return null;
+
+  const inPreferredForms = candidates.filter((c) => preferredForms.some((f) => c.form.startsWith(f)));
+  const pool = inPreferredForms.length ? inPreferredForms : candidates;
+
+  pool.sort((a, b) => {
+    const recency = sortByMostRecent(a, b);
+    if (recency !== 0) return recency;
+    if (b.unitScore !== a.unitScore) return b.unitScore - a.unitScore;
+    if (a.priority !== b.priority) return a.priority - b.priority;
+    return a.conceptName.localeCompare(b.conceptName);
+  });
+
+  const chosen = pool[0];
+  return {
+    value: chosen.value,
+    date: chosen.date,
+    form: chosen.form,
+    accn: chosen.accn,
+    unitKey: chosen.unitKey,
+    conceptName: chosen.conceptName,
+  };
+}
+
 /**
  * Search for Bitcoin/crypto holdings in XBRL data
  *
@@ -393,7 +541,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
         const hay = `${ns}:${concept}`.toLowerCase();
         if (!/(crypto|digitalasset|digitalassets|bitcoin|cryptocurrency)/.test(hay)) continue;
 
-        const factData = (nsFacts as any)[concept];
+        const factData = nsFacts[concept];
         const units = factData?.units ? Object.keys(factData.units) : [];
         candidates.push({ namespace: ns, concept, units });
       }
@@ -415,10 +563,12 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
     result.accessionNumber = btcUsdData.accn;
   }
 
-  const btcNativeData = extractBitcoinHoldings(facts.facts, ticker, ['BTC', 'pure']);
+  const btcNativeData = extractBitcoinNativeHoldings(facts.facts, ticker);
   if (btcNativeData) {
     result.bitcoinHoldingsNative = btcNativeData.value;
     result.bitcoinHoldingsNativeUnit = 'BTC';
+    result.bitcoinHoldingsNativeConcept = btcNativeData.conceptName;
+    result.bitcoinHoldingsNativeUnitKey = btcNativeData.unitKey;
     if (!result.bitcoinHoldingsDate) result.bitcoinHoldingsDate = btcNativeData.date;
     if (!result.bitcoinHoldingsSource) result.bitcoinHoldingsSource = btcNativeData.accn;
     if (!result.filingType) result.filingType = btcNativeData.form;
