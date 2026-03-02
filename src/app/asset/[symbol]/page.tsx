@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useAsset, useAssets } from "@/lib/hooks/use-companies";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
+import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
+import { applyD1Overlay } from "@/lib/d1-overlay";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -70,10 +72,15 @@ export default function AssetPage() {
   const { data: assetsData } = useAssets();
 
   // Enrich company data with holdings history and source tracking
-  const companies = useMemo(
+  const enrichedCompanies = useMemo(
     () => enrichAllCompanies(assetData?.companies || []),
     [assetData]
   );
+
+  // D1-first overlay: fetch latest balance sheet metrics from D1
+  const tickers = useMemo(() => enrichedCompanies.map(c => c.ticker), [enrichedCompanies]);
+  const { data: d1Data } = useD1Fundamentals(tickers);
+  const companies = useMemo(() => applyD1Overlay(enrichedCompanies, d1Data), [enrichedCompanies, d1Data]);
 
   const assetInfo = ASSET_INFO[symbol];
 

@@ -17,6 +17,8 @@ import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { useYesterdayMnav } from "@/lib/hooks/use-yesterday-mnav";
+import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
+import { applyD1Overlay } from "@/lib/d1-overlay";
 
 // Get unique assets and count companies
 function getAssetStats(companies: Company[], prices: any) {
@@ -70,12 +72,17 @@ function HomeContent() {
     return enrichAllCompanies(baseCompanies);
   }, [companiesData]);
 
-  const assetStats = getAssetStats(companies, prices);
+  // D1-first overlay: fetch latest balance sheet metrics from D1 and overlay onto static data
+  const tickers = useMemo(() => companies.map(c => c.ticker), [companies]);
+  const { data: d1Data } = useD1Fundamentals(tickers);
+  const d1Companies = useMemo(() => applyD1Overlay(companies, d1Data), [companies, d1Data]);
+
+  const assetStats = getAssetStats(d1Companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
-  const totalCompanies = companies.length;
+  const totalCompanies = d1Companies.length;
 
   // Use shared mNAV stats hook - single source of truth
-  const mnavStats = useMNAVStats(companies, prices);
+  const mnavStats = useMNAVStats(d1Companies, prices);
 
   // Fetch yesterday's mNAV for actual 24h change measurement
   const { data: yesterdayMnav } = useYesterdayMnav();
@@ -85,7 +92,7 @@ function HomeContent() {
       {/* Mobile Header */}
       <MobileHeader
         title="DAT Tracker"
-        companies={companies}
+        companies={d1Companies}
         prices={prices ?? undefined}
         mnavStats={mnavStats}
       />
@@ -196,12 +203,12 @@ function HomeContent() {
                   {/* Mobile: Pull to refresh wrapper */}
                   <div className="lg:hidden">
                     <PullToRefresh onRefresh={handleRefresh}>
-                      <DataTable companies={companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
+                      <DataTable companies={d1Companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
                     </PullToRefresh>
                   </div>
                   {/* Desktop: No pull to refresh */}
                   <div className="hidden lg:block">
-                    <DataTable companies={companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
+                    <DataTable companies={d1Companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
                   </div>
                 </>
               )}
