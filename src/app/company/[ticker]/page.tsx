@@ -23,6 +23,8 @@ import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { HoldingsHistoryTable } from "@/components/holdings-history-table";
 import { CompanyFilings } from "@/components/company-filings";
+import { useCompanyMetricHistory } from "@/lib/hooks/use-company-metric-history";
+import { CompanyMetricHistorySection } from "@/components/company-metric-history";
 import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
 import { DataFlagBadge, FPIBadge } from "@/components/ui/data-flag-badge";
@@ -197,6 +199,20 @@ export default function CompanyPage() {
   // Preferred shares source for per-share metrics:
   // IMPORTANT (Rules of Hooks): must be called before any conditional returns.
   const { data: latestShares } = useLatestBasicShares(ticker);
+
+  // D1 metric history (batch)
+  const HISTORY_METRICS = useMemo(
+    () => [
+      'cash_usd',
+      'restricted_cash_usd',
+      'other_investments_usd',
+      'debt_usd',
+      'preferred_equity_usd',
+      'basic_shares',
+    ],
+    []
+  );
+  const { data: metricHistory } = useCompanyMetricHistory(ticker, HISTORY_METRICS, 12, 'desc');
 
   // Wait for BOTH data sources to load to ensure consistency with main page
   if (isLoadingCompany || isLoadingCompanies) {
@@ -1242,6 +1258,17 @@ export default function CompanyPage() {
             {displayCompany.costBasisAvg && cryptoPrice > 0 && (
               <CostBasisCard company={displayCompany} assetPrice={cryptoPrice} />
             )}
+          </div>
+        )}
+
+        {/* D1 metric history (balance sheet + shares) */}
+        {metricHistory?.success && metricHistory.series && (
+          <div className="mb-4">
+            <CompanyMetricHistorySection
+              title="Balance sheet & shares history"
+              metrics={HISTORY_METRICS}
+              series={metricHistory.series}
+            />
           </div>
         )}
 
