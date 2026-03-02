@@ -140,6 +140,8 @@ export interface XBRLExtractionResult {
   // Holdings data
   bitcoinHoldings?: number;        // In USD (fair value)
   bitcoinHoldingsUnit?: string;    // 'USD' or 'BTC'
+  bitcoinHoldingsNative?: number;  // Native BTC amount when available
+  bitcoinHoldingsNativeUnit?: string; // 'BTC'
   bitcoinHoldingsDate?: string;    // YYYY-MM-DD
   bitcoinHoldingsSource?: string;  // Filing accession number
 
@@ -240,9 +242,10 @@ async function fetchCompanyFacts(cik: string): Promise<SECCompanyFacts | null> {
 function findMostRecentValue(
   facts: SECCompanyFacts['facts'],
   conceptNames: string[],
-  preferredForms: string[] = ['10-K', '10-Q']
-): { value: number; date: string; form: string; accn: string } | null {
-  let bestMatch: { value: number; date: string; form: string; accn: string; filed: string } | null = null;
+  preferredForms: string[] = ['10-K', '10-Q'],
+  unitPreference: string[] = ['USD', 'BTC', 'shares', 'pure']
+): { value: number; date: string; form: string; accn: string; unit: string } | null {
+  let bestMatch: { value: number; date: string; form: string; accn: string; filed: string; unit: string } | null = null;
 
   for (const conceptName of conceptNames) {
     // Parse namespace and concept
@@ -256,46 +259,49 @@ function findMostRecentValue(
     const factData = namespaceFacts[concept];
     if (!factData?.units) continue;
 
-    // Check common units
-    // - USD: monetary values
-    // - shares: share counts
-    // - pure: ratios / generic
-    // - BTC: crypto quantity (some filers)
-    const units = factData.units['USD'] || factData.units['BTC'] || factData.units['shares'] || factData.units['pure'];
-    if (!units || units.length === 0) continue;
+    for (const unitKey of unitPreference) {
+      const units = factData.units[unitKey];
+      if (!units || units.length === 0) continue;
 
-    // Sort by period end date descending (primary), then filed date (secondary)
-    // This ensures we get the current period, not comparative periods from the same filing
-    const sorted = [...units].sort((a, b) => {
-      const endCompare = new Date(b.end).getTime() - new Date(a.end).getTime();
-      if (endCompare !== 0) return endCompare;
-      return new Date(b.filed).getTime() - new Date(a.filed).getTime();
-    });
+      // Sort by period end date descending (primary), then filed date (secondary)
+      // This ensures we get the current period, not comparative periods from the same filing
+      const sorted = [...units].sort((a, b) => {
+        const endCompare = new Date(b.end).getTime() - new Date(a.end).getTime();
+        if (endCompare !== 0) return endCompare;
+        return new Date(b.filed).getTime() - new Date(a.filed).getTime();
+      });
 
-    // Find the most recent value from a preferred form
-    for (const entry of sorted) {
-      const isPreferredForm = preferredForms.some(f => entry.form.startsWith(f));
+      // Find the most recent value from a preferred form
+      for (const entry of sorted) {
+        const isPreferredForm = preferredForms.some(f => entry.form.startsWith(f));
 
-      if (typeof entry.val !== 'number') continue;
+        if (typeof entry.val !== 'number') continue;
 
-      // If this is better than what we have, use it
-      if (!bestMatch ||
-          (isPreferredForm && new Date(entry.end) > new Date(bestMatch.date))) {
-        bestMatch = {
-          value: entry.val,
-          date: entry.end,
-          form: entry.form,
-          accn: entry.accn,
-          filed: entry.filed,
-        };
+        // If this is better than what we have, use it
+        if (!bestMatch ||
+            (isPreferredForm && new Date(entry.end) > new Date(bestMatch.date))) {
+          bestMatch = {
+            value: entry.val,
+            date: entry.end,
+            form: entry.form,
+            accn: entry.accn,
+            filed: entry.filed,
+            unit: unitKey,
+          };
 
-        // If we found a preferred form, stop searching
-        if (isPreferredForm) break;
+          // If we found a preferred form, stop searching
+          if (isPreferredForm) break;
+        }
+      }
+
+      // If we found something in a preferred form, stop checking additional units
+      if (bestMatch && preferredForms.some(f => bestMatch.form.startsWith(f))) {
+        break;
       }
     }
 
     // If we found something in a preferred form, stop checking other concepts
-    if (bestMatch && preferredForms.some(f => bestMatch!.form.startsWith(f))) {
+    if (bestMatch && preferredForms.some(f => bestMatch.form.startsWith(f))) {
       break;
     }
   }
@@ -305,6 +311,7 @@ function findMostRecentValue(
     date: bestMatch.date,
     form: bestMatch.form,
     accn: bestMatch.accn,
+    unit: bestMatch.unit,
   } : null;
 }
 
@@ -316,8 +323,9 @@ function findMostRecentValue(
  */
 function extractBitcoinHoldings(
   facts: SECCompanyFacts['facts'],
-  ticker: string
-): { value: number; date: string; form: string; accn: string } | null {
+  ticker: string,
+  unitPreference: string[] = ['USD', 'BTC', 'pure']
+): { value: number; date: string; form: string; accn: string; unit: string } | null {
   // Get company-configured XBRL concepts (includes defaults)
   const configuredConcepts = getBitcoinConcepts(ticker);
   
@@ -336,7 +344,7 @@ function extractBitcoinHoldings(
   // Deduplicate
   const uniqueConcepts = [...new Set(allConcepts)];
 
-  return findMostRecentValue(facts, uniqueConcepts);
+  return findMostRecentValue(facts, uniqueConcepts, ['10-K', '10-Q'], unitPreference);
 }
 
 /**
@@ -397,15 +405,24 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   }
 
   // Extract Bitcoin holdings
-  const btcData = extractBitcoinHoldings(facts.facts, ticker);
-  if (btcData) {
-    result.bitcoinHoldings = btcData.value;
-    // NOTE: findMostRecentValue prefers USD when present, but will fall back to BTC units if a filer uses that.
-    result.bitcoinHoldingsUnit = 'USD';
-    result.bitcoinHoldingsDate = btcData.date;
-    result.bitcoinHoldingsSource = btcData.accn;
-    result.filingType = btcData.form;
-    result.accessionNumber = btcData.accn;
+  const btcUsdData = extractBitcoinHoldings(facts.facts, ticker, ['USD']);
+  if (btcUsdData) {
+    result.bitcoinHoldings = btcUsdData.value;
+    result.bitcoinHoldingsUnit = btcUsdData.unit;
+    result.bitcoinHoldingsDate = btcUsdData.date;
+    result.bitcoinHoldingsSource = btcUsdData.accn;
+    result.filingType = btcUsdData.form;
+    result.accessionNumber = btcUsdData.accn;
+  }
+
+  const btcNativeData = extractBitcoinHoldings(facts.facts, ticker, ['BTC', 'pure']);
+  if (btcNativeData) {
+    result.bitcoinHoldingsNative = btcNativeData.value;
+    result.bitcoinHoldingsNativeUnit = 'BTC';
+    if (!result.bitcoinHoldingsDate) result.bitcoinHoldingsDate = btcNativeData.date;
+    if (!result.bitcoinHoldingsSource) result.bitcoinHoldingsSource = btcNativeData.accn;
+    if (!result.filingType) result.filingType = btcNativeData.form;
+    if (!result.accessionNumber) result.accessionNumber = btcNativeData.accn;
   }
 
   // Extract shares outstanding

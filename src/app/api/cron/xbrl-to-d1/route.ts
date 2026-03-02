@@ -2,7 +2,7 @@
  * XBRL -> D1 Cron Endpoint
  *
  * Runs SEC XBRL extraction (companyfacts) for each ticker that exists in D1 artifacts
- * and writes datapoints (cash_usd, debt_usd, basic_shares, bitcoin_holdings_usd when available).
+ * and writes datapoints (cash_usd, debt_usd, basic_shares, bitcoin_holdings_usd, holdings_native when available).
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -19,7 +19,7 @@ function verifyCronSecret(request: NextRequest): boolean {
   return authHeader === `Bearer ${cronSecret}`;
 }
 
-const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd'] as const;
+const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'] as const;
 
 type Metric = (typeof DEFAULT_METRICS)[number];
 
@@ -207,6 +207,7 @@ export async function GET(request: NextRequest) {
     if (typeof x.totalDebt === 'number') rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate || null });
     if (typeof x.sharesOutstanding === 'number') rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate || null });
     if (typeof x.bitcoinHoldings === 'number') rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate || null });
+    if (typeof x.bitcoinHoldingsNative === 'number') rows.push({ metric: 'holdings_native', value: x.bitcoinHoldingsNative, unit: 'BTC', as_of: x.bitcoinHoldingsDate || null });
 
     for (const r of rows) r.reported_at = x.filingDate || r.as_of || null;
 

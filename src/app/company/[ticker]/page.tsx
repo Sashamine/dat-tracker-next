@@ -203,7 +203,7 @@ export default function CompanyPage() {
 
   // D1 canonical inputs (Balance Sheet + shares)
   const D1_INPUT_METRICS = useMemo(
-    () => ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd'],
+    () => ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
     []
   );
   const { data: d1LatestInputs } = useCompanyD1Latest(ticker, D1_INPUT_METRICS);
@@ -218,6 +218,7 @@ export default function CompanyPage() {
       'debt_usd',
       'preferred_equity_usd',
       'basic_shares',
+      'holdings_native',
     ],
     []
   );
@@ -272,15 +273,21 @@ export default function CompanyPage() {
   const otherAssets = cashReserves + otherInvestments;
 
   // Holdings (D1-first where possible)
+  const d1HoldingsNative = d1ByMetric.holdings_native?.value;
   const d1HoldingsUsd = d1ByMetric.bitcoin_holdings_usd?.value;
-  const holdingsValueUsd = (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0)
-    ? d1HoldingsUsd
-    : (displayCompany.holdings * cryptoPrice);
+  const holdingsNative = (typeof d1HoldingsNative === 'number' && d1HoldingsNative > 0)
+    ? d1HoldingsNative
+    : (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0 && cryptoPrice > 0)
+      ? (d1HoldingsUsd / cryptoPrice)
+      : displayCompany.holdings;
 
-  // Keep native holdings for per-share metrics / display
-  const holdingsNative = (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0 && cryptoPrice > 0)
-    ? (d1HoldingsUsd / cryptoPrice)
-    : displayCompany.holdings;
+  // Prefer native holdings from D1, derive USD from live price.
+  // Fallback to USD metric when native is absent.
+  const holdingsValueUsd = (typeof d1HoldingsNative === 'number' && d1HoldingsNative > 0 && cryptoPrice > 0)
+    ? (d1HoldingsNative * cryptoPrice)
+    : (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0)
+      ? d1HoldingsUsd
+      : (displayCompany.holdings * cryptoPrice);
 
   const cryptoHoldingsValue = holdingsValueUsd;
 

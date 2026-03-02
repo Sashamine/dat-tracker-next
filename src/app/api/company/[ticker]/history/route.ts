@@ -6,7 +6,7 @@ export const runtime = 'nodejs';
 /**
  * Batch metric history for a company.
  *
- * GET /api/company/:ticker/history?metrics=cash_usd,debt_usd,basic_shares&limit=200&order=desc&includeArtifacts=true
+ * GET /api/company/:ticker/history?metrics=cash_usd,debt_usd,basic_shares,holdings_native&limit=200&order=desc&includeArtifacts=true
  */
 export async function GET(
   request: NextRequest,
