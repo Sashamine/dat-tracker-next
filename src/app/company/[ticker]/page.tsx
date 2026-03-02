@@ -194,6 +194,10 @@ export default function CompanyPage() {
     setMnavInterval(DEFAULT_INTERVAL[newRange]);
   };
 
+  // Preferred shares source for per-share metrics:
+  // IMPORTANT (Rules of Hooks): must be called before any conditional returns.
+  const { data: latestShares } = useLatestBasicShares(ticker);
+
   // Wait for BOTH data sources to load to ensure consistency with main page
   if (isLoadingCompany || isLoadingCompanies) {
     return (
@@ -296,10 +300,6 @@ export default function CompanyPage() {
   // 1) D1 latest basic_shares (already normalized to current split basis using corporate_actions)
   // 2) company.sharesForMnav (curated)
   // 3) marketCap/price fallback
-  //
-  // IMPORTANT (Rules of Hooks): this hook must be called unconditionally, even on routes
-  // where we render a custom view component.
-  const { data: latestShares } = useLatestBasicShares(ticker);
   const sharesOutstanding =
     (latestShares?.shares && latestShares.shares > 0 ? latestShares.shares : 0) ||
     displayCompany.sharesForMnav ||
