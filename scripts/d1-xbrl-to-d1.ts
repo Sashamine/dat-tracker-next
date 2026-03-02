@@ -230,6 +230,8 @@ async function main() {
           sharesOutstandingDate?: string | null;
           bitcoinHoldings?: number | null;
           bitcoinHoldingsNative?: number | null;
+          bitcoinHoldingsNativeConcept?: string | null;
+          bitcoinHoldingsNativeUnitKey?: string | null;
           bitcoinHoldingsDate?: string | null;
           preferredEquity?: number | null;
           preferredEquityDate?: string | null;
@@ -350,6 +352,12 @@ async function main() {
     }
 
     if (typeof x.bitcoinHoldingsNative === 'number') {
+      const nativeFlags = JSON.stringify({
+        native_extraction: {
+          concept: x.bitcoinHoldingsNativeConcept || null,
+          unit_key: x.bitcoinHoldingsNativeUnitKey || null,
+        },
+      });
       rows.push({
         metric: 'holdings_native',
         value: x.bitcoinHoldingsNative,
@@ -358,7 +366,7 @@ async function main() {
         reported_at: x.filingDate || x.bitcoinHoldingsDate || null,
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
-        flags_json: null,
+        flags_json: nativeFlags,
       });
     }
 
