@@ -82,8 +82,23 @@ export async function GET(request: NextRequest) {
     const needsReview = results.filter(r => r.newHoldings !== undefined && r.newHoldings !== r.previousHoldings && !r.committed);
     const errors = results.filter(r => r.error);
     const unchanged = results.filter(r => r.success && !r.error && (r.newHoldings === undefined || r.newHoldings === r.previousHoldings));
+    const d1Writes = results
+      .map(r => r.d1HoldingsNativeWrite?.status)
+      .filter((s): s is NonNullable<typeof s> => Boolean(s));
+    const d1Summary = {
+      inserted: d1Writes.filter(s => s === 'inserted').length,
+      updated: d1Writes.filter(s => s === 'updated').length,
+      seededProposalKey: d1Writes.filter(s => s === 'seededProposalKey').length,
+      noop: d1Writes.filter(s => s === 'noop' || s === 'dry_run').length,
+      skipped: d1Writes.filter(s => s === 'skipped').length,
+      errors: d1Writes.filter(s => s === 'error').length,
+    };
 
-    console.log(`[SEC Update Cron] Complete in ${duration}ms: ${updated.length} updated, ${needsReview.length} need review, ${errors.length} errors, ${unchanged.length} unchanged`);
+    console.log(
+      `[SEC Update Cron] Complete in ${duration}ms: ` +
+      `${updated.length} updated, ${needsReview.length} need review, ${errors.length} errors, ${unchanged.length} unchanged, ` +
+      `D1 holdings_native {inserted:${d1Summary.inserted}, updated:${d1Summary.updated}, seeded:${d1Summary.seededProposalKey}, noop:${d1Summary.noop}, skipped:${d1Summary.skipped}, errors:${d1Summary.errors}}`
+    );
 
     // Alerting is now handled by the monitoring module in runSecAutoUpdate
 
@@ -101,6 +116,7 @@ export async function GET(request: NextRequest) {
           xbrl: { attempted: stats.xbrlAttempted, success: stats.xbrlSuccess, failed: stats.xbrlFailed },
           llm: { attempted: stats.llmAttempted, success: stats.llmSuccess, failed: stats.llmFailed, skipped: stats.llmSkipped },
         },
+        d1HoldingsNative: d1Summary,
       },
       updated: updated.map(r => ({
         ticker: r.ticker,
