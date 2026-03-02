@@ -1,0 +1,92 @@
+name: DLQ Report + Resolve
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'report = list DLQ items, resolve = update status + write verification'
+        required: true
+        default: 'report'
+        type: choice
+        options:
+          - report
+          - resolve
+      entity_id:
+        description: 'Optional entity filter (e.g. SDIG)'
+        required: false
+        type: string
+      metric:
+        description: 'Optional metric filter (e.g. basic_shares)'
+        required: false
+        type: string
+      limit:
+        description: 'Max rows for report mode'
+        required: false
+        default: '50'
+        type: string
+      datapoint_ids:
+        description: 'Comma-separated datapoint IDs (resolve mode)'
+        required: false
+        type: string
+      verdict:
+        description: 'Resolution verdict: pass, warn, or fail (resolve mode)'
+        required: false
+        default: 'pass'
+        type: string
+      new_status:
+        description: 'Target status after resolution (resolve mode)'
+        required: false
+        default: 'candidate'
+        type: string
+      notes:
+        description: 'Free-text reason for resolution (resolve mode)'
+        required: false
+        default: 'Manual DLQ resolution'
+        type: string
+      dry_run:
+        description: 'If true, no writes (resolve mode only)'
+        required: false
+        default: 'true'
+        type: string
+
+jobs:
+  dlq:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Run report
+        if: inputs.mode == 'report'
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ENTITY_ID: ${{ inputs.entity_id }}
+          METRIC: ${{ inputs.metric }}
+          LIMIT: ${{ inputs.limit || '50' }}
+        run: npx tsx scripts/report-needs-review.ts
+
+      - name: Run resolve
+        if: inputs.mode == 'resolve'
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DATAPOINT_IDS: ${{ inputs.datapoint_ids }}
+          ENTITY_ID: ${{ inputs.entity_id }}
+          VERDICT: ${{ inputs.verdict || 'pass' }}
+          NEW_STATUS: ${{ inputs.new_status || 'candidate' }}
+          NOTES: ${{ inputs.notes || 'Manual DLQ resolution' }}
+          DRY_RUN: ${{ inputs.dry_run || 'true' }}
+          CODE_SHA: ${{ github.sha }}
+        run: npx tsx scripts/resolve-needs-review.ts
