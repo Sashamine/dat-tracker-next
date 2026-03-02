@@ -1,6 +1,6 @@
 import type { DatapointForScoring, ConfidenceFactor, ConfidenceScoreResult } from './types';
 
-const VERSION = 'v1';
+const VERSION = 'v1.1';
 
 // --- Method trust ---
 
@@ -8,7 +8,7 @@ const METHOD_SCORES: Record<string, number> = {
   sec_companyfacts_xbrl: 1.0,
   jp_tdnet_pdf: 0.9,
   llm_pdf_extract: 0.7,
-  backfill_qe: 0.5,
+  backfill_qe: 0.2,
 };
 const METHOD_DEFAULT = 0.2;
 
@@ -68,7 +68,7 @@ function scoreReceiptPresent(sourceUrl: string | null, artifactId: string | null
     score = 1.0;
     detail = 'source_url present';
   } else if (artifactId && artifactId !== 'unknown') {
-    score = 0.5;
+    score = 0.3;
     detail = 'artifact_id present but no source_url';
   } else {
     score = 0.0;
@@ -100,7 +100,7 @@ function scoreVerificationStatus(verdict: 'pass' | 'warn' | 'fail' | null): Conf
     score = 0.1;
     detail = 'latest verdict=fail';
   } else {
-    score = 0.6;
+    score = 0.3;
     detail = 'no prior verification';
   }
 
@@ -260,7 +260,7 @@ export function scoreDatapoint(
 
 export const CONFIDENCE_THRESHOLDS = {
   HIGH: 0.85,
-  DLQ: 0.50,
+  DLQ: 0.55,
 } as const;
 
 export function classifyConfidence(confidence: number): 'high' | 'medium' | 'dlq' {
