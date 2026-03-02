@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
 import { useLatestBasicShares } from "@/lib/hooks/use-latest-basic-shares";
+import { latestRowByMetric, useCompanyD1Latest } from "@/lib/hooks/use-company-d1-latest";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -200,6 +201,14 @@ export default function CompanyPage() {
   // IMPORTANT (Rules of Hooks): must be called before any conditional returns.
   const { data: latestShares } = useLatestBasicShares(ticker);
 
+  // D1 canonical inputs (Balance Sheet + shares)
+  const D1_INPUT_METRICS = useMemo(
+    () => ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd'],
+    []
+  );
+  const { data: d1LatestInputs } = useCompanyD1Latest(ticker, D1_INPUT_METRICS);
+  const d1ByMetric = useMemo(() => latestRowByMetric(d1LatestInputs?.rows), [d1LatestInputs]);
+
   // D1 metric history (batch)
   const HISTORY_METRICS = useMemo(
     () => [
@@ -258,10 +267,22 @@ export default function CompanyPage() {
   const { marketCap } = getMarketCapForMnavSync(displayCompany, stockData, prices?.forex);
 
   // Other assets (cash + investments)
-  const cashReserves = displayCompany.cashReserves || 0;
+  const cashReserves = (d1ByMetric.cash_usd?.value ?? displayCompany.cashReserves ?? 0);
   const otherInvestments = displayCompany.otherInvestments || 0;
   const otherAssets = cashReserves + otherInvestments;
-  const cryptoHoldingsValue = displayCompany.holdings * cryptoPrice;
+
+  // Holdings (D1-first where possible)
+  const d1HoldingsUsd = d1ByMetric.bitcoin_holdings_usd?.value;
+  const holdingsValueUsd = (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0)
+    ? d1HoldingsUsd
+    : (displayCompany.holdings * cryptoPrice);
+
+  // Keep native holdings for per-share metrics / display
+  const holdingsNative = (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0 && cryptoPrice > 0)
+    ? (d1HoldingsUsd / cryptoPrice)
+    : displayCompany.holdings;
+
+  const cryptoHoldingsValue = holdingsValueUsd;
 
   // Calculate total crypto NAV including secondary holdings and crypto investments
   let totalCryptoNav = cryptoHoldingsValue;
@@ -303,11 +324,11 @@ export default function CompanyPage() {
   }
 
   // Leverage ratio = Net Debt / Crypto NAV (net debt = total debt - cash)
-  const netDebt = Math.max(0, (displayCompany.totalDebt || 0) - cashReserves);
+  const netDebt = Math.max(0, ((d1ByMetric.debt_usd?.value ?? displayCompany.totalDebt ?? 0)) - cashReserves);
   const debtToCryptoRatio = totalCryptoNav > 0 ? netDebt / totalCryptoNav : 0;
 
   // Calculate metrics (including other assets in NAV)
-  const nav = calculateNAV(displayCompany.holdings, cryptoPrice, cashReserves, otherInvestments);
+  const nav = calculateNAV(holdingsNative, cryptoPrice, cashReserves, otherInvestments);
 
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices);
@@ -317,14 +338,15 @@ export default function CompanyPage() {
   // 2) company.sharesForMnav (curated)
   // 3) marketCap/price fallback
   const sharesOutstanding =
+    (d1ByMetric.basic_shares?.value && d1ByMetric.basic_shares.value > 0 ? d1ByMetric.basic_shares.value : 0) ||
     (latestShares?.shares && latestShares.shares > 0 ? latestShares.shares : 0) ||
     displayCompany.sharesForMnav ||
     (marketCap && stockPrice ? marketCap / stockPrice : 0);
-  const totalDebt = displayCompany.totalDebt || 0;
-  const preferredEquity = displayCompany.preferredEquity || 0;
-  const navPerShare = calculateNAVPerShare(displayCompany.holdings, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity);
+  const totalDebt = (d1ByMetric.debt_usd?.value ?? displayCompany.totalDebt ?? 0);
+  const preferredEquity = (d1ByMetric.preferred_equity_usd?.value ?? displayCompany.preferredEquity ?? 0);
+  const navPerShare = calculateNAVPerShare(holdingsNative, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
-  const holdingsPerShare = calculateHoldingsPerShare(displayCompany.holdings, sharesOutstanding);
+  const holdingsPerShare = calculateHoldingsPerShare(holdingsNative, sharesOutstanding);
 
   // Network staking APY
   const networkStakingApy = NETWORK_STAKING_APY[displayCompany.asset] || 0;
@@ -332,7 +354,7 @@ export default function CompanyPage() {
 
   // Net yield calculation
   const { netYieldPct } = calculateNetYield(
-    displayCompany.holdings,
+    holdingsNative,
     displayCompany.stakingPct || 0,
     companyStakingApy,
     displayCompany.quarterlyBurnUsd || 0,
@@ -820,7 +842,7 @@ export default function CompanyPage() {
               preferredEquity={preferredEquity}
               cashReserves={cashReserves}
               restrictedCash={displayCompany.restrictedCash}
-              holdings={displayCompany.holdings}
+              holdings={holdingsNative}
               cryptoPrice={cryptoPrice}
               holdingsValue={cryptoHoldingsValue}
               mNAV={mNAV}

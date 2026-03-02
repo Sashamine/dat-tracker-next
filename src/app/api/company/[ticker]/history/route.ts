@@ -6,7 +6,7 @@ export const runtime = 'nodejs';
 /**
  * Batch metric history for a company.
  *
- * GET /api/company/:ticker/history?metrics=cash_usd,debt_usd,basic_shares&limit=200&order=desc
+ * GET /api/company/:ticker/history?metrics=cash_usd,debt_usd,basic_shares&limit=200&order=desc&includeArtifacts=true
  */
 export async function GET(
   request: NextRequest,
@@ -20,6 +20,7 @@ export async function GET(
     const metricsParam = (searchParams.get('metrics') || '').trim();
     const limitRaw = searchParams.get('limit');
     const orderRaw = (searchParams.get('order') || 'desc').toLowerCase();
+    const includeArtifactsRaw = (searchParams.get('includeArtifacts') || 'true').toLowerCase();
 
     if (!t) {
       return NextResponse.json({ success: false, error: 'Missing ticker' }, { status: 400 });
@@ -39,10 +40,11 @@ export async function GET(
 
     const limit = limitRaw ? Number(limitRaw) : undefined;
     const order = orderRaw === 'asc' ? 'asc' : 'desc';
+    const includeArtifacts = includeArtifactsRaw !== 'false';
 
     const entries = await Promise.all(
       metrics.map(async metric => {
-        const rows = await getMetricHistory(t, metric, { limit, order });
+        const rows = await getMetricHistory(t, metric, { limit, order, includeArtifacts });
         return [metric, rows] as const;
       })
     );
@@ -53,6 +55,7 @@ export async function GET(
       success: true,
       ticker: t,
       metrics,
+      includeArtifacts,
       series,
     });
   } catch (err) {

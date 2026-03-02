@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-export type DatapointRow = {
+export type LatestDatapointRow = {
   datapoint_id: string;
   entity_id: string;
   metric: string;
@@ -22,30 +22,29 @@ export type DatapointRow = {
   };
 };
 
-export type CompanyMetricHistoryResponse = {
+export type CompanyMetricLatestResponse = {
   success: boolean;
   ticker: string;
   metrics: string[];
-  includeArtifacts?: boolean;
-  series: Record<string, DatapointRow[]>;
+  rows: LatestDatapointRow[];
   error?: string;
 };
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-export function useCompanyMetricHistory(
-  ticker: string | null | undefined,
-  metrics: string[],
-  limit: number = 12,
-  order: 'asc' | 'desc' = 'desc',
-  includeArtifacts: boolean = true
-) {
+export function useCompanyD1Latest(ticker: string | null | undefined, metrics: string[]) {
   const t = (ticker || '').toUpperCase();
   const metricsParam = metrics.filter(Boolean).join(',');
 
   const key = t && metricsParam
-    ? `/api/company/${encodeURIComponent(t)}/history?metrics=${encodeURIComponent(metricsParam)}&limit=${limit}&order=${order}&includeArtifacts=${includeArtifacts ? 'true' : 'false'}`
+    ? `/api/d1/latest-metrics?ticker=${encodeURIComponent(t)}&metrics=${encodeURIComponent(metricsParam)}`
     : null;
 
-  return useSWR<CompanyMetricHistoryResponse>(key, fetcher);
+  return useSWR<CompanyMetricLatestResponse>(key, fetcher);
+}
+
+export function latestRowByMetric(rows: LatestDatapointRow[] | undefined | null): Record<string, LatestDatapointRow> {
+  const out: Record<string, LatestDatapointRow> = {};
+  for (const r of rows || []) out[r.metric] = r;
+  return out;
 }

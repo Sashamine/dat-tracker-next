@@ -107,6 +107,17 @@ export type DatapointHistoryRow = {
   confidence: number | null;
   flags_json: string | null;
   created_at: string;
+  artifact?: {
+    source_url: string | null;
+    accession: string | null;
+    source_type: string | null;
+  };
+};
+
+type DatapointHistoryQueryRow = Omit<DatapointHistoryRow, 'artifact'> & {
+  artifact_source_url?: string | null;
+  artifact_accession?: string | null;
+  artifact_source_type?: string | null;
 };
 
 export async function getLatestMetrics(
@@ -140,14 +151,32 @@ export async function getLatestMetrics(
 export async function getMetricHistory(
   ticker: string,
   metric: string,
-  opts?: { limit?: number; order?: 'asc' | 'desc' }
+  opts?: { limit?: number; order?: 'asc' | 'desc'; includeArtifacts?: boolean }
 ): Promise<DatapointHistoryRow[]> {
   const d1 = D1Client.fromEnv();
 
   const limit = Math.max(1, Math.min(2000, opts?.limit ?? 500));
   const order = (opts?.order || 'desc').toLowerCase() === 'asc' ? 'ASC' : 'DESC';
+  const includeArtifacts = opts?.includeArtifacts !== false;
 
-  const sql = `
+  const sql = includeArtifacts
+    ? `
+    SELECT
+      d.datapoint_id, d.entity_id, d.metric, d.value, d.unit, d.scale,
+      d.as_of, d.reported_at, d.artifact_id, d.run_id, d.method, d.confidence,
+      d.flags_json, d.created_at,
+      a.source_url AS artifact_source_url,
+      a.accession AS artifact_accession,
+      a.source_type AS artifact_source_type
+    FROM datapoints d
+    LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
+    WHERE d.entity_id = ?
+      AND d.metric = ?
+      AND d.as_of IS NOT NULL
+    ORDER BY d.as_of ${order}, d.reported_at ${order}, d.created_at ${order}
+    LIMIT ?;
+  `
+    : `
     SELECT
       datapoint_id, entity_id, metric, value, unit, scale,
       as_of, reported_at, artifact_id, run_id, method, confidence,
@@ -161,9 +190,32 @@ export async function getMetricHistory(
   `;
 
   const params = [ticker.toUpperCase(), metric, limit];
-  const out = await d1.query<DatapointHistoryRow>(sql, params);
+  const out = await d1.query<DatapointHistoryQueryRow>(sql, params);
+  const rows: DatapointHistoryRow[] = out.results.map((r) => ({
+    datapoint_id: r.datapoint_id,
+    entity_id: r.entity_id,
+    metric: r.metric,
+    value: r.value,
+    unit: r.unit,
+    scale: r.scale,
+    as_of: r.as_of,
+    reported_at: r.reported_at,
+    artifact_id: r.artifact_id,
+    run_id: r.run_id,
+    method: r.method,
+    confidence: r.confidence,
+    flags_json: r.flags_json,
+    created_at: r.created_at,
+    artifact: includeArtifacts
+      ? {
+          source_url: r.artifact_source_url ?? null,
+          accession: r.artifact_accession ?? null,
+          source_type: r.artifact_source_type ?? null,
+        }
+      : undefined,
+  }));
 
   // Reuse same normalization pipeline as latest rows.
   // For history, keep values on their historical basis (no forward-adjusting).
-  return await normalizeLatestRowsForTicker(ticker, out.results as any, 'historical');
+  return await normalizeLatestRowsForTicker(ticker, rows as unknown as LatestDatapointRow[], 'historical');
 }
