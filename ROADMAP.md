@@ -15,32 +15,6 @@
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
 ### Now (in progress)
-- **10c/10d ingestion hardening: `proposal_key` upsert rollout**
-  - **Owner:** Agent 6
-  - **PRs:** #142 https://github.com/Sashamine/dat-tracker-next/pull/142 (merged), #146 https://github.com/Sashamine/dat-tracker-next/pull/146 (seed legacy `proposal_key`)
-  - **Status:** DONE in prod. Broad run proof on 2026-03-02 (`SMLR,HOOD,CIFR,COIN,HUT,IREN,WULF,MSTR`, `dry_run=false`, `force=true`) returned `updated=30`, `failed=0`; no dedupe/proposal-key uniqueness errors; SMLR FK blocker resolved.
-  - **DoD:** Run writer twice with same `proposal_key` and confirm first pass seeds/inserts/updates, second pass is noop/update without violating `ux_datapoints_dedupe`.
-  - **How to verify (prod):**
-    - Workflow: **D1 XBRL → D1 Datapoints (companyfacts)**, inputs `tickers=MSTR`, `dry_run=false`, `force=true`
-    - Example runs: #22570032040 (first: `seededProposalKey=4`) and #22570089899 (second: `updated=4`, `seededProposalKey=0`)
-    - Broad proof run: #22570858966 (`updated=30`, `failed=0`)
-    - Example D1 query:
-      - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS proposal_rows FROM datapoints WHERE proposal_key IS NOT NULL;"`
-      - `wrangler d1 execute dat-tracker --remote --command "SELECT proposal_key, datapoint_id, created_at, confidence, status FROM datapoints WHERE proposal_key IS NOT NULL ORDER BY proposal_key LIMIT 5;"`
-  - **Ops guardrail (weekly check):**
-    - expected steady-state: `proposal_rows` should monotonically increase while legacy rows are still being seeded
-    - if `proposal_rows` stays flat after write runs with non-trivial `noop`/`updated`, investigate writer path drift
-    - check queries:
-      - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS total_datapoints FROM datapoints;"`
-      - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS proposal_rows FROM datapoints WHERE proposal_key IS NOT NULL;"`
-      - `wrangler d1 execute dat-tracker --remote --command "SELECT method, COUNT(*) AS cnt FROM datapoints WHERE proposal_key IS NOT NULL GROUP BY 1 ORDER BY cnt DESC;"`
-
-- **Phase B: Backfill quarter-end `basic_shares` into D1**
-  - **Owner:** Agent 5
-  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40
-  - **Status:** D1 schema mismatch fixed (use `datapoints.as_of` instead of `artifacts.filed_at/period_end`). Needs merge + workflow dry-run + real run.
-  - **DoD:** Dry-run summary looks sane; then write mode for 1 ticker/date-range; then expand.
-
 - **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
   - **Status:** 10c v1 runs green (scheduled inventory + invariants).
@@ -53,6 +27,11 @@ Update this section whenever you start/stop work so other agents can instantly s
     - 2026-03-02: added SEC receipts regression invariant (`source_type='sec_filing'` missing `source_url`/`accession`) with baseline `9`; invariant fails if counts increase.
   - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
+- **CI/Lint ratchet (required checks scope expansion)**
+  - **Owner:** unowned (was Agent 3)
+  - **Status:** Ongoing: gradually expand `lint-app` scope (admin → key API routes) while keeping changes surgical.
+  - **Recent:** merged multiple CI hygiene PRs; current open PR: #64 (expand lint-app to api/prices)
+
 - **10d: Verification plumbing + confidence scoring**
   - **Owner:** Agent 5
   - **Status:** DONE — verification plumbing + confidence scoring + DLQ tooling all live in prod. DLQ drained to 0.
@@ -64,6 +43,7 @@ Update this section whenever you start/stop work so other agents can instantly s
     - #144 confidence scoring + DLQ routing (6 weighted factors, daily cron, Discord alerts)
     - #149 scorer v1.1 — tuned weights to produce DLQ items (backfill_qe method_trust 0.5→0.2, DLQ threshold 0.50→0.55)
     - #151 DLQ report + resolve workflow (mode=report|resolve, manual verification rows)
+    - #156 DLQ weekly scheduled report + ops runbook https://github.com/Sashamine/dat-tracker-next/pull/156
   - **DLQ resolution (2026-03-02):**
     - v1.1 rescore: 409 datapoints → 200 high, 202 medium, 7 DLQ
     - All 7 DLQ items manually reviewed against SEC XBRL:
@@ -108,6 +88,11 @@ Update this section whenever you start/stop work so other agents can instantly s
 - **UI: Split miner vs treasury sector stats** (from older notes)
 
 ### Done (recent)
+- **10c/10d ingestion hardening: `proposal_key` upsert rollout (DONE 2026-03-02)**
+  - **Owner:** Agent 6
+  - **PRs:** #142 https://github.com/Sashamine/dat-tracker-next/pull/142, #146 https://github.com/Sashamine/dat-tracker-next/pull/146
+  - **Status:** DONE in prod. Broad run proof on 2026-03-02 (`SMLR,HOOD,CIFR,COIN,HUT,IREN,WULF,MSTR`, `dry_run=false`, `force=true`) returned `updated=30`, `failed=0`; no dedupe/proposal-key uniqueness errors.
+
 - **10d: Confidence scoring + DLQ routing + resolution (DONE 2026-03-02)**
   - **Owner:** Agent 5
   - **PRs:** #144 (v1 scoring), #149 (v1.1 tuning), #151 (DLQ report + resolve workflow)
@@ -197,7 +182,11 @@ Deliverables:
 
 ---
 
-## RESUME HERE
+## ARCHIVE (pre-Phase 10 / pre-D1)
+
+The sections below are historical notes from the earlier TypeScript-file-based data system (holdings-history.ts, comparison engine, dilutive instruments, etc.). They are kept for reference but are not the active Phase 10 (D1/R2) plan.
+
+### RESUME HERE (archived notes)
 
 **Session 2026-02-02:**
 
