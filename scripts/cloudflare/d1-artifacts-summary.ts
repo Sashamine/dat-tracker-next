@@ -37,6 +37,9 @@ async function d1Query<T>(sql: string, params: any[] = []): Promise<D1QueryResul
 }
 
 async function main() {
+  const secMissingSourceUrlBaseline = Number(process.env.SEC_MISSING_SOURCE_URL_BASELINE || '9');
+  const secMissingAccessionBaseline = Number(process.env.SEC_MISSING_ACCESSION_BASELINE || '9');
+
   const tableExists = await d1Query<{ name: string }>(
     `SELECT name FROM sqlite_master WHERE type='table' AND name='artifacts' LIMIT 1;`
   );
@@ -84,6 +87,35 @@ async function main() {
      LIMIT 50;`
   );
 
+  const secMissingSourceUrl = await d1Query<{ cnt: number }>(
+    `SELECT COUNT(*) as cnt
+     FROM artifacts
+     WHERE source_type='sec_filing'
+       AND (source_url IS NULL OR source_url='');`
+  );
+
+  const secMissingAccession = await d1Query<{ cnt: number }>(
+    `SELECT COUNT(*) as cnt
+     FROM artifacts
+     WHERE source_type='sec_filing'
+       AND (accession IS NULL OR accession='');`
+  );
+
+  const secMissingSample = await d1Query<{ artifact_id: string; ticker: string | null; r2_key: string }>(
+    `SELECT artifact_id, ticker, r2_key
+     FROM artifacts
+     WHERE source_type='sec_filing'
+       AND (source_url IS NULL OR source_url='')
+       AND (accession IS NULL OR accession='')
+     ORDER BY artifact_id
+     LIMIT 25;`
+  );
+
+  const missingSourceUrl = Number(secMissingSourceUrl.results?.[0]?.cnt ?? 0);
+  const missingAccession = Number(secMissingAccession.results?.[0]?.cnt ?? 0);
+  const sourceUrlRegression = missingSourceUrl > secMissingSourceUrlBaseline;
+  const accessionRegression = missingAccession > secMissingAccessionBaseline;
+
   console.log(
     JSON.stringify(
       {
@@ -94,6 +126,21 @@ async function main() {
         sampleUnknown: sampleUnknown.results || [],
         duplicates: dupes.results || [],
         unknownWithSibling: unknownWithSibling.results || [],
+        secFilingReceipts: {
+          baseline: {
+            missingSourceUrl: secMissingSourceUrlBaseline,
+            missingAccession: secMissingAccessionBaseline,
+          },
+          current: {
+            missingSourceUrl,
+            missingAccession,
+          },
+          regression: {
+            sourceUrl: sourceUrlRegression,
+            accession: accessionRegression,
+          },
+          sampleMissingBoth: secMissingSample.results || [],
+        },
       },
       null,
       2

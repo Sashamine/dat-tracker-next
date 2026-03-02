@@ -81,6 +81,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          SEC_MISSING_SOURCE_URL_BASELINE: "9"
+          SEC_MISSING_ACCESSION_BASELINE: "9"
         run: |
           set -euo pipefail
           npx tsx scripts/cloudflare/d1-artifacts-summary.ts | tee /tmp/d1-artifacts-summary.json
@@ -103,9 +105,31 @@ jobs:
           }
           const unknown = data.unknown || 0;
           const dupes = Array.isArray(data.duplicates) ? data.duplicates.length : 0;
-          if (unknown > 0 || dupes > 0) {
-            console.error('INVARIANT FAILED', { unknown, dupes });
+          const receipts = data.secFilingReceipts || {};
+          const current = receipts.current || {};
+          const regression = receipts.regression || {};
+          const missingSourceUrl = Number(current.missingSourceUrl || 0);
+          const missingAccession = Number(current.missingAccession || 0);
+          const sourceUrlRegression = Boolean(regression.sourceUrl);
+          const accessionRegression = Boolean(regression.accession);
+
+          if (unknown > 0 || dupes > 0 || sourceUrlRegression || accessionRegression) {
+            console.error('INVARIANT FAILED', {
+              unknown,
+              dupes,
+              missingSourceUrl,
+              missingAccession,
+              sourceUrlRegression,
+              accessionRegression
+            });
             process.exit(2);
           }
-          console.log('INVARIANTS OK', { total: data.total, unknown, dupes });
+          console.log('INVARIANTS OK', {
+            total: data.total,
+            unknown,
+            dupes,
+            missingSourceUrl,
+            missingAccession,
+            baseline: receipts.baseline || {}
+          });
           NODE

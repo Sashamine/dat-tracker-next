@@ -50,17 +50,30 @@ Update this section whenever you start/stop work so other agents can instantly s
     - Verified:
       - D1 Artifacts Summary: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534834348
       - state-verify: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534835119 (failCount=0; gaps: missing_debt_evidence)
+    - 2026-03-02: added SEC receipts regression invariant (`source_type='sec_filing'` missing `source_url`/`accession`) with baseline `9`; invariant fails if counts increase.
   - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
 - **10d: Verification plumbing + confidence scoring**
   - **Owner:** Agent 5
-  - **Status:** DONE — verification plumbing + confidence scoring both live in prod.
+  - **Status:** DONE — verification plumbing + confidence scoring + DLQ tooling all live in prod. DLQ drained to 0.
   - **Merged PRs:**
     - #58 d1-migrate workflow + d1-apply-migration script
     - #59 fix verifier to use schema-native `datapoints.entity_id`
     - #62 join `artifacts.source_url` (datapoints has no source_url)
     - #72 verifier workflow accepts `entity_id` (ticker alias) + new API `GET /api/d1/verifications/latest`
     - #144 confidence scoring + DLQ routing (6 weighted factors, daily cron, Discord alerts)
+    - #149 scorer v1.1 — tuned weights to produce DLQ items (backfill_qe method_trust 0.5→0.2, DLQ threshold 0.50→0.55)
+    - #151 DLQ report + resolve workflow (mode=report|resolve, manual verification rows)
+  - **DLQ resolution (2026-03-02):**
+    - v1.1 rescore: 409 datapoints → 200 high, 202 medium, 7 DLQ
+    - All 7 DLQ items manually reviewed against SEC XBRL:
+      - GLXY: `verdict=fail` — value=100 shares, sanity_bounds failure (clearly bad data)
+      - CWD Q2 2025: `verdict=fail` — 15.2M shares is pre-split value, actual post-split ~759K (1:20 reverse split Apr 2025)
+      - SDIG ×3: `verdict=warn` — values match Q3 2024 XBRL, company deregistered (15-12G filed Mar 2025)
+      - BITF: `verdict=warn` — matches FY2024 40-F, Canadian annual filer (no quarterly filings)
+      - CWD Q1 2025: `verdict=warn` — pre-split value correct for as_of date
+    - Final state: `needs_review=0`, `candidate=409`. Manual verification rows: 7 (5 warn, 2 fail).
+    - Workflow runs: report https://github.com/Sashamine/dat-tracker-next/actions/runs/22573287014 | SDIG resolve https://github.com/Sashamine/dat-tracker-next/actions/runs/22573775942 | BITF https://github.com/Sashamine/dat-tracker-next/actions/runs/22573886618 | CWD Q1 https://github.com/Sashamine/dat-tracker-next/actions/runs/22574010459 | CWD Q2 https://github.com/Sashamine/dat-tracker-next/actions/runs/22574044829
   - **Open gap (10b/10c provenance):**
     - 323 `artifacts` rows with `source_type=’sec_filing’` have `source_url` NULL and `accession` NULL.
 
@@ -73,27 +86,25 @@ Update this section whenever you start/stop work so other agents can instantly s
 - **UI: Split miner vs treasury sector stats** (from older notes)
 
 ### Done (recent)
-- **10d: Confidence scoring + DLQ routing (DONE 2026-03-02)**
+- **10d: Confidence scoring + DLQ routing + resolution (DONE 2026-03-02)**
   - **Owner:** Agent 5
-  - **PR:** #144 (merged)
-  - **Status:** All 409 candidate datapoints scored in prod write mode.
-  - **Baseline distribution:**
+  - **PRs:** #144 (v1 scoring), #149 (v1.1 tuning), #151 (DLQ report + resolve workflow)
+  - **Status:** All 409 datapoints scored, DLQ fully drained (0 needs_review).
+  - **v1.1 distribution (current):**
     | Level | Count | Avg Conf | Range |
     |-------|-------|----------|-------|
-    | High (>=0.85) | 208 | 0.92 | 0.85–1.00 |
-    | Medium (0.50–0.84) | 201 | 0.775 | 0.64–0.845 |
-    | DLQ (<0.50) | 0 | — | — |
-  - **By method:**
-    | Method | Count | Avg Conf |
-    |--------|-------|----------|
-    | `sec_companyfacts_xbrl` | 233 | 0.909 |
-    | `backfill_qe` | 171 | 0.768 |
-    | `llm_pdf_extract` | 4 | 0.77 |
-    | `jp_tdnet_pdf` | 1 | 0.82 |
-  - **Status transitions:** 0 → `needs_review` (no DLQ items this run)
-  - **Workflow runs:**
-    - MSTR write (limit=20): https://github.com/Sashamine/dat-tracker-next/actions/runs/22568264972
-    - Global write (limit=500): https://github.com/Sashamine/dat-tracker-next/actions/runs/22568605675
+    | High (>=0.85) | 200 | 0.92 | 0.85–1.00 |
+    | Medium (0.55–0.84) | 202 | 0.77 | 0.56–0.845 |
+    | DLQ (<0.55) | 7→0 | 0.528 | 0.51–0.535 |
+  - **DLQ resolution:** 7 items reviewed (2 fail: GLXY bad data + CWD post-split, 5 warn: stale but correct). All returned to `candidate`.
+  - **Manual verification rows:** 7 total (verifier='manual')
+  - **Verification distribution:**
+    | Verifier | pass | warn | fail |
+    |----------|------|------|------|
+    | auto | 24 | 55 | — |
+    | confidence_scorer_v1 | 208 | 201 | — |
+    | confidence_scorer_v1.1 | 200 | 202 | 7 |
+    | manual | — | 5 | 2 |
   - **Daily cron:** `0 6 * * *` UTC, scores up to 500 new unscored candidates per run.
 
 - **10d: Phase B backfill quarter-end `basic_shares` into D1 (DONE 2026-03-02)**
