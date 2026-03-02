@@ -25,47 +25,83 @@ export function CompanyMetricHistorySection(props: {
   title?: string;
   series: Record<string, DatapointRow[]>;
   metrics: string[];
+  defaultExpanded?: boolean;
+  perMetricLimit?: number;
 }) {
-  const { title = 'Balance sheet history', series, metrics } = props;
+  const {
+    title = 'Balance sheet history',
+    series,
+    metrics,
+    defaultExpanded = false,
+    perMetricLimit = 12,
+  } = props;
 
-  const rows = metrics
+  const [expanded, setExpanded] = React.useState(defaultExpanded);
+
+  const latestRows = metrics
     .map(metric => {
       const first = (series?.[metric] || [])[0];
       return { metric, row: first };
     })
     .filter(x => x.row);
 
-  if (!rows.length) return null;
+  if (!latestRows.length) return null;
+
+  const renderTable = (rows: Array<{ metric: string; row: DatapointRow }>, caption?: string) => (
+    <div className="overflow-x-auto">
+      <table className="min-w-full text-sm">
+        <thead>
+          <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+            <th className="py-2 pr-4">Metric</th>
+            <th className="py-2 pr-4">As of</th>
+            <th className="py-2 pr-4">Value</th>
+            <th className="py-2">Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(({ metric, row }, idx) => (
+            <tr key={`${metric}-${row.datapoint_id}-${idx}`} className="border-b last:border-b-0 border-gray-100 dark:border-gray-800">
+              <td className="py-2 pr-4 font-medium text-gray-900 dark:text-gray-100">{labelForMetric(metric)}</td>
+              <td className="py-2 pr-4 text-gray-600 dark:text-gray-300">{row.as_of || '—'}</td>
+              <td className="py-2 pr-4 text-gray-900 dark:text-gray-100">{formatValue(row)}</td>
+              <td className="py-2 text-gray-500 dark:text-gray-400">{row.method || '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {caption && <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">{caption}</div>}
+    </div>
+  );
+
+  const expandedRows: Array<{ metric: string; row: DatapointRow }> = [];
+  if (expanded) {
+    for (const metric of metrics) {
+      const rows = (series?.[metric] || []).slice(0, perMetricLimit);
+      for (const row of rows) expandedRows.push({ metric, row });
+    }
+  }
 
   return (
     <section className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
-        <span className="text-xs text-gray-500 dark:text-gray-400">(latest per metric)</span>
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+          <div className="text-xs text-gray-500 dark:text-gray-400">
+            {expanded ? `Showing up to ${perMetricLimit} rows per metric` : 'Latest per metric'}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setExpanded(v => !v)}
+          className="text-xs px-3 py-1 rounded border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
+        >
+          {expanded ? 'Collapse' : 'Show full series'}
+        </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead>
-            <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
-              <th className="py-2 pr-4">Metric</th>
-              <th className="py-2 pr-4">As of</th>
-              <th className="py-2 pr-4">Value</th>
-              <th className="py-2">Method</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(({ metric, row }) => (
-              <tr key={metric} className="border-b last:border-b-0 border-gray-100 dark:border-gray-800">
-                <td className="py-2 pr-4 font-medium text-gray-900 dark:text-gray-100">{labelForMetric(metric)}</td>
-                <td className="py-2 pr-4 text-gray-600 dark:text-gray-300">{row!.as_of || '—'}</td>
-                <td className="py-2 pr-4 text-gray-900 dark:text-gray-100">{formatValue(row!)}</td>
-                <td className="py-2 text-gray-500 dark:text-gray-400">{row!.method || '—'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {!expanded && renderTable(latestRows as any)}
+      {expanded && renderTable(expandedRows, 'Note: rows are ordered by as_of (desc) within each metric; methods may differ across runs.')}
     </section>
   );
 }
