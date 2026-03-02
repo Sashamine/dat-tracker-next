@@ -176,7 +176,13 @@ async function main() {
       ]
     );
 
-    return artifactId;
+    // INSERT OR IGNORE silently drops the row if content_hash or (r2_bucket,r2_key) collide.
+    // Re-query by content_hash to get the actual persisted artifact_id.
+    const actual = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id FROM artifacts WHERE content_hash = ? LIMIT 1;`,
+      [contentHash]
+    );
+    return actual.results?.[0]?.artifact_id || artifactId;
   };
 
   if (!dryRun && hasRuns) {

@@ -34,14 +34,14 @@ export async function ingestArtifactToR2AndD1(input: ArtifactIngestInput): Promi
   // Upload first. (If insert fails, we can still reinsert later; avoids D1 pointing at missing objects.)
   await r2PutObject({ key: input.r2Key, body: input.bytes, contentType: input.contentType });
 
-  const artifactId = crypto.randomUUID();
+  const newArtifactId = crypto.randomUUID();
   await d1.query(
     `INSERT OR IGNORE INTO artifacts (
        artifact_id, source_type, source_url, content_hash, fetched_at,
        r2_bucket, r2_key, cik, ticker, accession
      ) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?);`,
     [
-      artifactId,
+      newArtifactId,
       input.sourceType,
       input.sourceUrl || null,
       contentHash,
@@ -52,6 +52,14 @@ export async function ingestArtifactToR2AndD1(input: ArtifactIngestInput): Promi
       input.accession || null,
     ]
   );
+
+  // INSERT OR IGNORE silently drops the row if content_hash or (r2_bucket,r2_key) collide.
+  // Re-query to get the actual persisted artifact_id.
+  const actual = await d1.query<{ artifact_id: string }>(
+    `SELECT artifact_id FROM artifacts WHERE content_hash = ? LIMIT 1;`,
+    [contentHash]
+  );
+  const artifactId = actual.results?.[0]?.artifact_id || newArtifactId;
 
   return {
     artifactId,

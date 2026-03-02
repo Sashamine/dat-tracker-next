@@ -192,6 +192,14 @@ export async function GET(request: NextRequest) {
          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [artifactId, 'sec_companyfacts_xbrl', sourceUrl, contentHash, now, r2Bucket, r2Key, cik, ticker, accn2]
       );
+
+      // INSERT OR IGNORE silently drops the row if content_hash or (r2_bucket,r2_key) collide.
+      // Re-query to get the actual persisted artifact_id.
+      const actualArt = await d1.query<{ artifact_id: string }>(
+        `SELECT artifact_id FROM artifacts WHERE content_hash = ? LIMIT 1;`,
+        [contentHash]
+      );
+      if (actualArt.results?.[0]?.artifact_id) artifactId = actualArt.results[0].artifact_id;
     }
 
     const rows: MetricRow[] = [];
