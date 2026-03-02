@@ -23,9 +23,11 @@ Update this section whenever you start/stop work so other agents can instantly s
   - **How to verify (prod):**
     - Workflow: **D1 XBRL → D1 Datapoints (companyfacts)**, inputs `tickers=MSTR`, `dry_run=false`, `force=true`
     - Example runs: #22570032040 (first: `seededProposalKey=4`) and #22570089899 (second: `updated=4`, `seededProposalKey=0`)
+    - Broader batch example: #22570500995 (`tickers=HOOD,CIFR,COIN,HUT,IREN,WULF,SMLR,MSTR`, `force=true`) → `seededProposalKey=23`, `updated=4`, `failed=3` (all SMLR FK).
     - Example D1 query:
       - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS proposal_rows FROM datapoints WHERE proposal_key IS NOT NULL;"`
       - `wrangler d1 execute dat-tracker --remote --command "SELECT proposal_key, datapoint_id, created_at, confidence, status FROM datapoints WHERE proposal_key IS NOT NULL ORDER BY proposal_key LIMIT 5;"`
+    - **Ops guardrail:** `proposal_rows` should monotonically increase while legacy rows are being seeded. If `proposal_rows` stays flat after a run with high `noop`/`seededProposalKey=0`, investigate writer path or seeding logic drift.
 
 - **Phase B: Backfill quarter-end `basic_shares` into D1**
   - **Owner:** Agent 5
