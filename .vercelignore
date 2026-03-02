@@ -5,4 +5,5 @@
 /filings/
 /docs/filings/
 /public/sec-content/
+/public/sec-content/**
 mstr_xbrl.json
