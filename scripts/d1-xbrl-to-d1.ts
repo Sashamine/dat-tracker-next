@@ -191,6 +191,7 @@ async function main() {
   let extracted = 0;
   let inserted = 0;
   let updated = 0;
+  let seededProposalKey = 0;
   let noop = 0;
   let skipped = 0;
   let failed = 0;
@@ -370,9 +371,10 @@ async function main() {
         // Guard against collisions with historical rows that predate proposal_key.
         // Those rows remain valid with proposal_key=NULL; treat as noop instead of violating ux_datapoints_dedupe.
         const dedupeCollision = existingByProposal.results.length
-          ? { results: [] as Array<{ datapoint_id: string }> }
-          : await d1.query<{ datapoint_id: string }>(
+          ? { results: [] as Array<{ datapoint_id: string; proposal_key: string | null }> }
+          : await d1.query<{ datapoint_id: string; proposal_key: string | null }>(
               `SELECT datapoint_id
+                     , proposal_key
                FROM datapoints
                WHERE entity_id = ?
                  AND metric = ?
@@ -386,7 +388,25 @@ async function main() {
             );
 
         if (dedupeCollision.results.length) {
-          noop++;
+          const legacy = dedupeCollision.results[0];
+          if (legacy.proposal_key) {
+            noop++;
+            continue;
+          }
+
+          const seed = await d1.query(
+            `UPDATE datapoints
+             SET proposal_key = ?,
+                 status = 'candidate'
+             WHERE datapoint_id = ?
+               AND proposal_key IS NULL
+               AND NOT EXISTS (SELECT 1 FROM datapoints WHERE proposal_key = ?);`,
+            [proposalKey, legacy.datapoint_id, proposalKey]
+          );
+
+          const seeded = Number(seed.meta?.changes || 0) > 0;
+          if (seeded) seededProposalKey++;
+          else noop++;
           continue;
         }
 
@@ -481,6 +501,7 @@ async function main() {
         extracted,
         inserted,
         updated,
+        seededProposalKey,
         noop,
         skipped,
         failed,

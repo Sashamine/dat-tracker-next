@@ -255,6 +255,7 @@ async function main() {
 
   let inserted = 0;
   let updated = 0;
+  let seededProposalKey = 0;
   let noop = 0;
   let skipped = 0;
 
@@ -366,9 +367,10 @@ async function main() {
         );
 
         const dedupeCollision = existingByProposal.results.length
-          ? { results: [] as Array<{ datapoint_id: string }> }
-          : await d1.query<{ datapoint_id: string }>(
+          ? { results: [] as Array<{ datapoint_id: string; proposal_key: string | null }> }
+          : await d1.query<{ datapoint_id: string; proposal_key: string | null }>(
               `SELECT datapoint_id
+                     , proposal_key
                FROM datapoints
                WHERE entity_id = ?
                  AND metric = ?
@@ -382,8 +384,30 @@ async function main() {
             );
 
         if (dedupeCollision.results.length) {
-          noop += 1;
-          console.log(`  noop ${p.metric}: existing legacy dedupe row`);
+          const legacy = dedupeCollision.results[0];
+          if (legacy.proposal_key) {
+            noop += 1;
+            console.log(`  noop ${p.metric}: dedupe row already has proposal_key`);
+            continue;
+          }
+
+          const seed = await d1.query(
+            `UPDATE datapoints
+             SET proposal_key = ?,
+                 status = 'candidate'
+             WHERE datapoint_id = ?
+               AND proposal_key IS NULL
+               AND NOT EXISTS (SELECT 1 FROM datapoints WHERE proposal_key = ?);`,
+            [proposalKey, legacy.datapoint_id, proposalKey]
+          );
+          const seeded = Number(seed.meta?.changes || 0) > 0;
+          if (seeded) {
+            seededProposalKey += 1;
+            console.log(`  seeded proposal_key for legacy ${p.metric}`);
+          } else {
+            noop += 1;
+            console.log(`  noop ${p.metric}: existing legacy dedupe row`);
+          }
           continue;
         }
 
@@ -460,7 +484,7 @@ async function main() {
     }
   }
 
-  console.log(`\nDone. inserted=${inserted} updated=${updated} noop=${noop} skipped=${skipped}`);
+  console.log(`\nDone. inserted=${inserted} updated=${updated} seededProposalKey=${seededProposalKey} noop=${noop} skipped=${skipped}`);
 }
 
 main().catch(err => {

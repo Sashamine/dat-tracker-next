@@ -17,9 +17,15 @@ Update this section whenever you start/stop work so other agents can instantly s
 ### Now (in progress)
 - **10c/10d ingestion hardening: `proposal_key` upsert rollout**
   - **Owner:** Agent 6
-  - **PR:** #142 https://github.com/Sashamine/dat-tracker-next/pull/142
-  - **Status:** In review. Replaced `INSERT OR IGNORE INTO datapoints` with `INSERT ... ON CONFLICT(proposal_key) DO UPDATE` in active XBRL + LLM writer paths; added inserted/updated/noop counters and legacy dedupe-collision guard for `proposal_key IS NULL` rows.
-  - **DoD:** Merged; run writer twice with same `proposal_key` and confirm first pass inserts, second pass is noop/update without violating `ux_datapoints_dedupe`.
+  - **PRs:** #142 https://github.com/Sashamine/dat-tracker-next/pull/142 (merged), #146 https://github.com/Sashamine/dat-tracker-next/pull/146 (seed legacy `proposal_key`)
+  - **Status:** Prod proof successful on branch run. First pass on MSTR seeded proposal keys (`seededProposalKey=4`), second identical pass updated by proposal key (`updated=4`) with no dedupe unique errors.
+  - **DoD:** Run writer twice with same `proposal_key` and confirm first pass seeds/inserts/updates, second pass is noop/update without violating `ux_datapoints_dedupe`.
+  - **How to verify (prod):**
+    - Workflow: **D1 XBRL → D1 Datapoints (companyfacts)**, inputs `tickers=MSTR`, `dry_run=false`, `force=true`
+    - Example runs: #22570032040 (first: `seededProposalKey=4`) and #22570089899 (second: `updated=4`, `seededProposalKey=0`)
+    - Example D1 query:
+      - `wrangler d1 execute dat-tracker --remote --command "SELECT COUNT(*) AS proposal_rows FROM datapoints WHERE proposal_key IS NOT NULL;"`
+      - `wrangler d1 execute dat-tracker --remote --command "SELECT proposal_key, datapoint_id, created_at, confidence, status FROM datapoints WHERE proposal_key IS NOT NULL ORDER BY proposal_key LIMIT 5;"`
 
 - **Phase B: Backfill quarter-end `basic_shares` into D1**
   - **Owner:** Agent 5

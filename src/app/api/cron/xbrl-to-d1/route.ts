@@ -135,6 +135,7 @@ export async function GET(request: NextRequest) {
   let datapointsAttempted = 0;
   let datapointsInserted = 0;
   let datapointsUpdated = 0;
+  let datapointsSeededProposalKey = 0;
   let datapointsNoop = 0;
   let failures = 0;
 
@@ -224,9 +225,10 @@ export async function GET(request: NextRequest) {
         );
 
         const dedupeCollision = existingByProposal.results.length
-          ? { results: [] as Array<{ datapoint_id: string }> }
-          : await d1.query<{ datapoint_id: string }>(
+          ? { results: [] as Array<{ datapoint_id: string; proposal_key: string | null }> }
+          : await d1.query<{ datapoint_id: string; proposal_key: string | null }>(
               `SELECT datapoint_id
+                     , proposal_key
                FROM datapoints
                WHERE entity_id = ?
                  AND metric = ?
@@ -240,7 +242,25 @@ export async function GET(request: NextRequest) {
             );
 
         if (dedupeCollision.results.length) {
-          datapointsNoop += 1;
+          const legacy = dedupeCollision.results[0];
+          if (legacy.proposal_key) {
+            datapointsNoop += 1;
+            continue;
+          }
+
+          const seed = await d1.query(
+            `UPDATE datapoints
+             SET proposal_key = ?,
+                 status = 'candidate'
+             WHERE datapoint_id = ?
+               AND proposal_key IS NULL
+               AND NOT EXISTS (SELECT 1 FROM datapoints WHERE proposal_key = ?);`,
+            [proposalKey, legacy.datapoint_id, proposalKey]
+          );
+
+          const seeded = Number(seed.meta?.changes || 0) > 0;
+          if (seeded) datapointsSeededProposalKey += 1;
+          else datapointsNoop += 1;
           continue;
         }
 
@@ -332,7 +352,7 @@ export async function GET(request: NextRequest) {
     const msg = [
       `XBRL→D1 cron: ${failures}/${tickers.length} tickers failed (offset=${offset} limit=${limit}).`,
       `runId: ${runId}`,
-      `datapoints: +${datapointsInserted} inserted, ~${datapointsUpdated} updated, ${datapointsNoop} noop`,
+      `datapoints: +${datapointsInserted} inserted, ~${datapointsUpdated} updated, ${datapointsSeededProposalKey} seededProposalKey, ${datapointsNoop} noop`,
       failedTickers.length ? `failed: ${failedTickers.join(', ')}${extra}` : undefined,
     ].filter(Boolean).join('\n');
 
@@ -344,7 +364,7 @@ export async function GET(request: NextRequest) {
     const msg = [
       `XBRL→D1 manual run OK: ${tickers.length}/${allTickers.length} tickers (offset=${offset} limit=${limit})`,
       `runId: ${runId}`,
-      `datapoints: +${datapointsInserted} inserted, ~${datapointsUpdated} updated, ${datapointsNoop} noop`,
+      `datapoints: +${datapointsInserted} inserted, ~${datapointsUpdated} updated, ${datapointsSeededProposalKey} seededProposalKey, ${datapointsNoop} noop`,
     ].join('\n');
     await sendDiscordChannelMessage(updatesChannelId, msg);
   }
@@ -360,6 +380,7 @@ export async function GET(request: NextRequest) {
     datapointsAttempted,
     datapointsInserted: dryRun ? 0 : datapointsInserted,
     datapointsUpdated: dryRun ? 0 : datapointsUpdated,
+    datapointsSeededProposalKey: dryRun ? 0 : datapointsSeededProposalKey,
     datapointsNoop: dryRun ? 0 : datapointsNoop,
     failures,
     summary,
