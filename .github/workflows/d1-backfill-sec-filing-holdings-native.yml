@@ -1,0 +1,45 @@
+name: D1 Backfill SEC Filing holdings_native
+
+on:
+  workflow_dispatch:
+    inputs:
+      tickers:
+        description: "Comma-separated tickers to backfill (BTC only)"
+        required: false
+        default: "MSTR,BMNR,SBET"
+      dry_run:
+        description: "Dry run (no writes)"
+        required: false
+        default: "true"
+      limit:
+        description: "Max snapshots to scan"
+        required: false
+        default: "200"
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Backfill holdings_native from SEC filing history
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx scripts/d1-backfill-sec-filing-holdings-native.ts \
+            --tickers="${{ github.event.inputs.tickers }}" \
+            --dry-run="${{ github.event.inputs.dry_run }}" \
+            --limit="${{ github.event.inputs.limit }}"

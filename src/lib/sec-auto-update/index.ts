@@ -19,6 +19,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
+import crypto from 'node:crypto';
 
 // SEC EDGAR utilities
 import {
@@ -57,6 +58,11 @@ import {
 
 // Extraction accuracy tracking
 import { recordExtractionComparison } from '../verification/extraction-accuracy';
+import { D1Client } from '@/lib/d1';
+import {
+  writeSecFilingHoldingsNativeDatapoint,
+  type SecFilingHoldingsNativeWriteResult,
+} from '@/lib/d1/sec-filing-holdings-native';
 
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';
@@ -76,6 +82,7 @@ export interface SecUpdateResult {
   // New: extraction method used
   extractionMethod?: 'xbrl' | 'llm' | 'hybrid';
   xbrlResult?: XBRLExtractionResult;
+  d1HoldingsNativeWrite?: SecFilingHoldingsNativeWriteResult;
 }
 
 export interface SecUpdateConfig {
@@ -88,6 +95,7 @@ export interface SecUpdateConfig {
   // New: extraction mode
   extractionMode?: 'xbrl_only' | 'llm_only' | 'hybrid';  // default: hybrid
   skipXbrl?: boolean;           // Skip XBRL extraction (use LLM only)
+  writeHoldingsNativeToD1?: boolean; // default: true
 }
 
 /**
@@ -406,7 +414,9 @@ async function processCompanyHybrid(
   ticker: string,
   asset: string,
   currentHoldings: number,
-  config: SecUpdateConfig
+  config: SecUpdateConfig,
+  d1: D1Client | null,
+  d1RunId: string
 ): Promise<SecUpdateResult> {
   const cik = TICKER_TO_CIK[ticker.toUpperCase()];
   if (!cik) {
@@ -420,6 +430,10 @@ async function processCompanyHybrid(
   let llmConfidence: number = 0;
   let llmReasoning: string | undefined;
   let llmFiling: FilingForLLM | undefined;
+  let llmAsOfDate: string | null = null;
+  let llmRawNumbers: string[] = [];
+  let llmHoldingsExplicitlyStated: boolean | null = null;
+  let llmTransactionType: 'purchase' | 'sale' | null = null;
 
   try {
     // STEP 1: Try XBRL extraction (deterministic)
@@ -471,6 +485,10 @@ async function processCompanyHybrid(
                 llmHoldings = extraction.holdings;
                 llmConfidence = extraction.confidence;
                 llmReasoning = extraction.reasoning;
+                llmAsOfDate = extraction.asOfDate;
+                llmRawNumbers = extraction.rawNumbers || [];
+                llmHoldingsExplicitlyStated = extraction.holdingsExplicitlyStated;
+                llmTransactionType = extraction.transactionType;
                 console.log(`[SEC Update] ${ticker}: LLM extracted ${llmHoldings} (${(llmConfidence * 100).toFixed(0)}% confidence)`);
                 recordLlmAttempt(true);
               } else {
@@ -501,6 +519,9 @@ async function processCompanyHybrid(
     let finalFilingDate: string | undefined;
     let finalFilingUrl: string | undefined;
     let source: string = 'sec-filing';
+    let finalAsOfDate: string | null = null;
+    let finalAccession: string | null = null;
+    let finalFilingType: string | null = null;
 
     // Case 1: XBRL has Bitcoin holdings
     if (xbrlResult?.success && xbrlResult.bitcoinHoldings !== undefined) {
@@ -555,6 +576,8 @@ async function processCompanyHybrid(
 
       finalFilingDate = xbrlResult.bitcoinHoldingsDate;
       finalFilingUrl = xbrlResult.secUrl;
+      finalAsOfDate = xbrlResult.bitcoinHoldingsDate || null;
+      finalAccession = xbrlResult.accessionNumber || null;
       source = 'sec-xbrl';
     }
     // Case 2: Only LLM available
@@ -565,6 +588,9 @@ async function processCompanyHybrid(
       finalReasoning = llmReasoning || 'Extracted from 8-K text via LLM';
       finalFilingDate = llmFiling?.filingDate;
       finalFilingUrl = llmFiling?.documentUrl;
+      finalAsOfDate = llmAsOfDate || llmFiling?.filingDate || null;
+      finalAccession = llmFiling?.accessionNumber || null;
+      finalFilingType = llmFiling?.formType || null;
       source = 'sec-filing';
     }
     // Case 3: Neither available
@@ -613,6 +639,52 @@ async function processCompanyHybrid(
       };
     }
 
+    let d1HoldingsNativeWrite: SecFilingHoldingsNativeWriteResult | undefined;
+    if (
+      config.writeHoldingsNativeToD1 !== false &&
+      d1 &&
+      asset.toUpperCase() === 'BTC' &&
+      extractionMethod === 'llm'
+    ) {
+      const flags = {
+        source: {
+          filing_type: finalFilingType,
+          accession: finalAccession,
+          source_url: finalFilingUrl || null,
+        },
+        extraction: {
+          method: extractionMethod,
+          reasoning: finalReasoning,
+          holdings_explicitly_stated: llmHoldingsExplicitlyStated,
+          transaction_type: llmTransactionType,
+          raw_numbers: llmRawNumbers,
+        },
+      } satisfies Record<string, unknown>;
+
+      d1HoldingsNativeWrite = await writeSecFilingHoldingsNativeDatapoint(d1, {
+        ticker,
+        holdingsNative: finalHoldings,
+        asOf: finalAsOfDate || finalFilingDate || null,
+        reportedAt: finalFilingDate || null,
+        filingUrl: finalFilingUrl || null,
+        accession: finalAccession,
+        filingType: finalFilingType,
+        confidence: finalConfidence,
+        runId: d1RunId,
+        flags,
+        dryRun: config.dryRun || false,
+      });
+
+      if (d1HoldingsNativeWrite.status === 'error') {
+        console.error(`[SEC Update] ${ticker}: D1 holdings_native write failed: ${d1HoldingsNativeWrite.error}`);
+      } else {
+        console.log(
+          `[SEC Update] ${ticker}: D1 holdings_native ${d1HoldingsNativeWrite.status}` +
+          `${d1HoldingsNativeWrite.proposalKey ? ` (${d1HoldingsNativeWrite.proposalKey.slice(0, 12)}...)` : ''}`
+        );
+      }
+    }
+
     if (finalHoldings === currentHoldings) {
       return {
         ticker,
@@ -624,6 +696,7 @@ async function processCompanyHybrid(
         filingUrl: finalFilingUrl,
         extractionMethod,
         xbrlResult,
+        d1HoldingsNativeWrite,
       };
     }
 
@@ -684,6 +757,7 @@ async function processCompanyHybrid(
       committed,
       extractionMethod,
       xbrlResult,
+      d1HoldingsNativeWrite,
     };
 
   } catch (error) {
@@ -739,6 +813,17 @@ export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<{
     console.log('[SEC Update] DRY RUN - no changes will be made');
   }
 
+  let d1: D1Client | null = null;
+  if (config.writeHoldingsNativeToD1 !== false) {
+    try {
+      d1 = D1Client.fromEnv();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.log(`[SEC Update] D1 holdings_native writer disabled: ${msg}`);
+    }
+  }
+  const d1RunId = crypto.randomUUID();
+
   for (const ticker of tickers) {
     const companyInfo = getCompanyInfo(ticker);
     if (!companyInfo) {
@@ -747,7 +832,7 @@ export async function runSecAutoUpdate(config: SecUpdateConfig = {}): Promise<{
       continue;
     }
 
-    const result = await processCompanyHybrid(ticker, companyInfo.asset, companyInfo.holdings, config);
+    const result = await processCompanyHybrid(ticker, companyInfo.asset, companyInfo.holdings, config, d1, d1RunId);
     results.push(result);
 
     // Track result for monitoring
@@ -801,7 +886,23 @@ export async function checkTickerForSecUpdate(
     return { ticker, success: false, error: 'Company not found in companies.ts' };
   }
 
-  return processCompanyHybrid(ticker, companyInfo.asset, companyInfo.holdings, config);
+  let d1: D1Client | null = null;
+  if (config.writeHoldingsNativeToD1 !== false) {
+    try {
+      d1 = D1Client.fromEnv();
+    } catch {
+      d1 = null;
+    }
+  }
+
+  return processCompanyHybrid(
+    ticker,
+    companyInfo.asset,
+    companyInfo.holdings,
+    config,
+    d1,
+    crypto.randomUUID()
+  );
 }
 
 /**
