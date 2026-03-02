@@ -207,7 +207,15 @@ export async function GET(request: NextRequest) {
     if (typeof x.totalDebt === 'number') rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate || null });
     if (typeof x.sharesOutstanding === 'number') rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate || null });
     if (typeof x.bitcoinHoldings === 'number') rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate || null });
-    if (typeof x.bitcoinHoldingsNative === 'number') {
+    if (typeof x.bitcoinHoldingsNative === 'number' && x.bitcoinHoldingsNativeUnit === 'BTC') {
+      const impliedPriceUsd =
+        typeof x.bitcoinHoldings === 'number' && x.bitcoinHoldingsNative > 0
+          ? x.bitcoinHoldings / x.bitcoinHoldingsNative
+          : null;
+      const impliedPriceOutOfRange =
+        typeof impliedPriceUsd === 'number'
+          ? (impliedPriceUsd < 1000 || impliedPriceUsd > 500000)
+          : false;
       rows.push({
         metric: 'holdings_native',
         value: x.bitcoinHoldingsNative,
@@ -216,8 +224,16 @@ export async function GET(request: NextRequest) {
         flags_json: JSON.stringify({
           native_extraction: {
             concept: x.bitcoinHoldingsNativeConcept || null,
-            unit_key: x.bitcoinHoldingsNativeUnitKey || null,
+            unit_key: x.bitcoinHoldingsNativeUnitKey || 'BTC',
+            unit_key_original: x.bitcoinHoldingsNativeUnitKeyOriginal || x.bitcoinHoldingsNativeUnitKey || null,
           },
+          sanity: impliedPriceUsd !== null
+            ? {
+                implied_price_usd: impliedPriceUsd,
+                implied_price_out_of_range: impliedPriceOutOfRange,
+                implied_price_range_usd: [1000, 500000],
+              }
+            : undefined,
         }),
       });
     }

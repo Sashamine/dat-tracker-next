@@ -143,7 +143,8 @@ export interface XBRLExtractionResult {
   bitcoinHoldingsNative?: number;  // Native BTC amount when available
   bitcoinHoldingsNativeUnit?: string; // 'BTC'
   bitcoinHoldingsNativeConcept?: string; // namespace:concept selected for native holdings
-  bitcoinHoldingsNativeUnitKey?: string; // Raw SEC companyfacts unit key selected
+  bitcoinHoldingsNativeUnitKey?: string; // Normalized unit key used for writes ('BTC')
+  bitcoinHoldingsNativeUnitKeyOriginal?: string; // Raw SEC companyfacts unit key selected
   bitcoinHoldingsDate?: string;    // YYYY-MM-DD
   bitcoinHoldingsSource?: string;  // Filing accession number
 
@@ -176,6 +177,7 @@ export interface XBRLExtractionResult {
   // Raw data for debugging
   rawConcepts?: {
     cryptoCandidates?: Array<{ namespace: string; concept: string; units: string[] }>;
+    nativeRejectedUnitKeys?: Array<{ conceptName: string; unitKey: string }>;
   };
 }
 
@@ -224,7 +226,7 @@ type NativeHoldingsCandidate = {
   unitKey: string;
   conceptName: string;
   priority: number;
-  unitScore: number;
+  normalizedUnitKey: 'BTC';
 };
 
 /**
@@ -350,18 +352,11 @@ function conceptLooksNativeHoldings(conceptName: string): boolean {
   return bitcoinish && (unitsish || /bitcoin/.test(c));
 }
 
-function scoreNativeUnitKey(unitKey: string, conceptName: string): number {
-  const u = unitKey.toLowerCase();
-  if (/(^|[^a-z])(btc|xbt|bitcoin)([^a-z]|$)/.test(u)) return 3;
-
-  if (u === 'pure') {
-    const c = conceptName.toLowerCase();
-    const nativeConceptish = /(numberofunits|units|quantity|amount|held|holdings|bitcoin)/.test(c);
-    const valueConceptish = /(fairvalue|carryingvalue|value)/.test(c);
-    return nativeConceptish && !valueConceptish ? 1 : 0;
-  }
-
-  return 0;
+function normalizeBtcNativeUnitKey(unitKey: string): 'BTC' | null {
+  const u = unitKey.trim().toLowerCase();
+  // Explicit allow-list only. Avoid partial matches to prevent wrong-unit contamination.
+  if (u === 'btc' || u === 'bitcoin') return 'BTC';
+  return null;
 }
 
 function sortByMostRecent<T extends { date: string; filed: string }>(a: T, b: T): number {
@@ -373,7 +368,8 @@ function sortByMostRecent<T extends { date: string; filed: string }>(a: T, b: T)
 function extractBitcoinNativeHoldings(
   facts: SECCompanyFacts['facts'],
   ticker: string,
-): { value: number; date: string; form: string; accn: string; unitKey: string; conceptName: string } | null {
+  rejectedUnits?: Array<{ conceptName: string; unitKey: string }>,
+): { value: number; date: string; form: string; accn: string; unitKey: 'BTC'; unitKeyOriginal: string; conceptName: string } | null {
   const configuredConcepts = getBitcoinConcepts(ticker).map((name) => {
     const parsed = parseConceptName(name);
     return { ...parsed, priority: 0 };
@@ -418,8 +414,13 @@ function extractBitcoinNativeHoldings(
     if (!factData?.units) continue;
 
     for (const unitKey of Object.keys(factData.units)) {
-      const unitScore = scoreNativeUnitKey(unitKey, ref.conceptName);
-      if (unitScore <= 0) continue;
+      const normalizedUnitKey = normalizeBtcNativeUnitKey(unitKey);
+      if (!normalizedUnitKey) {
+        if (rejectedUnits && ref.conceptName.toLowerCase().includes('cryptoassetnumberofunits')) {
+          rejectedUnits.push({ conceptName: ref.conceptName, unitKey });
+        }
+        continue;
+      }
 
       const entries = factData.units[unitKey] || [];
       for (const entry of entries) {
@@ -433,7 +434,7 @@ function extractBitcoinNativeHoldings(
           unitKey,
           conceptName: ref.conceptName,
           priority: ref.priority,
-          unitScore,
+          normalizedUnitKey,
         });
       }
     }
@@ -447,7 +448,6 @@ function extractBitcoinNativeHoldings(
   pool.sort((a, b) => {
     const recency = sortByMostRecent(a, b);
     if (recency !== 0) return recency;
-    if (b.unitScore !== a.unitScore) return b.unitScore - a.unitScore;
     if (a.priority !== b.priority) return a.priority - b.priority;
     return a.conceptName.localeCompare(b.conceptName);
   });
@@ -458,7 +458,8 @@ function extractBitcoinNativeHoldings(
     date: chosen.date,
     form: chosen.form,
     accn: chosen.accn,
-    unitKey: chosen.unitKey,
+    unitKey: chosen.normalizedUnitKey,
+    unitKeyOriginal: chosen.unitKey,
     conceptName: chosen.conceptName,
   };
 }
@@ -563,16 +564,24 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
     result.accessionNumber = btcUsdData.accn;
   }
 
-  const btcNativeData = extractBitcoinNativeHoldings(facts.facts, ticker);
+  const nativeRejectedUnits: Array<{ conceptName: string; unitKey: string }> = [];
+  const btcNativeData = extractBitcoinNativeHoldings(facts.facts, ticker, nativeRejectedUnits);
   if (btcNativeData) {
     result.bitcoinHoldingsNative = btcNativeData.value;
-    result.bitcoinHoldingsNativeUnit = 'BTC';
+    result.bitcoinHoldingsNativeUnit = btcNativeData.unitKey;
     result.bitcoinHoldingsNativeConcept = btcNativeData.conceptName;
     result.bitcoinHoldingsNativeUnitKey = btcNativeData.unitKey;
+    result.bitcoinHoldingsNativeUnitKeyOriginal = btcNativeData.unitKeyOriginal;
     if (!result.bitcoinHoldingsDate) result.bitcoinHoldingsDate = btcNativeData.date;
     if (!result.bitcoinHoldingsSource) result.bitcoinHoldingsSource = btcNativeData.accn;
     if (!result.filingType) result.filingType = btcNativeData.form;
     if (!result.accessionNumber) result.accessionNumber = btcNativeData.accn;
+  }
+  if (nativeRejectedUnits.length) {
+    result.rawConcepts = {
+      ...(result.rawConcepts || {}),
+      nativeRejectedUnitKeys: nativeRejectedUnits.slice(0, 50),
+    };
   }
 
   // Extract shares outstanding

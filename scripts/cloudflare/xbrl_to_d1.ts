@@ -67,7 +67,15 @@ async function main() {
     // note: this is USD fair value per extractor
     rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate, method: 'sec_companyfacts_xbrl' });
   }
-  if (typeof x.bitcoinHoldingsNative === 'number') {
+  if (typeof x.bitcoinHoldingsNative === 'number' && x.bitcoinHoldingsNativeUnit === 'BTC') {
+    const impliedPriceUsd =
+      typeof x.bitcoinHoldings === 'number' && x.bitcoinHoldingsNative > 0
+        ? x.bitcoinHoldings / x.bitcoinHoldingsNative
+        : null;
+    const impliedPriceOutOfRange =
+      typeof impliedPriceUsd === 'number'
+        ? (impliedPriceUsd < 1000 || impliedPriceUsd > 500000)
+        : false;
     rows.push({
       metric: 'holdings_native',
       value: x.bitcoinHoldingsNative,
@@ -77,8 +85,16 @@ async function main() {
       flags_json: JSON.stringify({
         native_extraction: {
           concept: x.bitcoinHoldingsNativeConcept || null,
-          unit_key: x.bitcoinHoldingsNativeUnitKey || null,
+          unit_key: x.bitcoinHoldingsNativeUnitKey || 'BTC',
+          unit_key_original: x.bitcoinHoldingsNativeUnitKeyOriginal || x.bitcoinHoldingsNativeUnitKey || null,
         },
+        sanity: impliedPriceUsd !== null
+          ? {
+              implied_price_usd: impliedPriceUsd,
+              implied_price_out_of_range: impliedPriceOutOfRange,
+              implied_price_range_usd: [1000, 500000],
+            }
+          : undefined,
       }),
     });
   }
