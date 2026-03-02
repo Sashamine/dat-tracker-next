@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       ticker,
-      metrics: metrics || ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
+      metrics: metrics || ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
       rows,
     });
   } catch (err) {
