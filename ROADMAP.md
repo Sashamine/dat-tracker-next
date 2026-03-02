@@ -50,6 +50,7 @@ Update this section whenever you start/stop work so other agents can instantly s
     - Verified:
       - D1 Artifacts Summary: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534834348
       - state-verify: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534835119 (failCount=0; gaps: missing_debt_evidence)
+    - 2026-03-02: added SEC receipts regression invariant (`source_type='sec_filing'` missing `source_url`/`accession`) with baseline `9`; invariant fails if counts increase.
   - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
 - **10d: Verification plumbing + confidence scoring**
