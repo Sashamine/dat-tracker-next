@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
 
@@ -50,7 +49,7 @@ export default function AnchorsPage() {
             <div className="mb-6">
               <h1 className="text-2xl font-bold mb-2">SEC Filing Anchors</h1>
               <p className="text-muted-foreground">
-                Files with <code className="bg-muted px-1 rounded">id="dat-btc-holdings"</code> anchors for citation linking
+                Files with <code className="bg-muted px-1 rounded">id=&quot;dat-btc-holdings&quot;</code> anchors for citation linking
               </p>
             </div>
 
@@ -117,7 +116,7 @@ export default function AnchorsPage() {
                 </table>
                 {filtered.length === 0 && (
                   <div className="p-8 text-center text-muted-foreground">
-                    No anchors found matching "{filter}"
+                    No anchors found matching &quot;{filter}&quot;
                   </div>
                 )}
               </div>
