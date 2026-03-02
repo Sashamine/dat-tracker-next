@@ -295,13 +295,13 @@ function findMostRecentValue(
       }
 
       // If we found something in a preferred form, stop checking additional units
-      if (bestMatch && preferredForms.some(f => bestMatch.form.startsWith(f))) {
+      if (bestMatch?.form && preferredForms.some(f => bestMatch?.form?.startsWith(f))) {
         break;
       }
     }
 
     // If we found something in a preferred form, stop checking other concepts
-    if (bestMatch && preferredForms.some(f => bestMatch.form.startsWith(f))) {
+    if (bestMatch?.form && preferredForms.some(f => bestMatch?.form?.startsWith(f))) {
       break;
     }
   }
