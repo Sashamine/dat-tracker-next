@@ -23,7 +23,7 @@ const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdin
 
 type Metric = (typeof DEFAULT_METRICS)[number];
 
-type MetricRow = { metric: Metric; value: number; unit: string; as_of?: string | null; reported_at?: string | null };
+type MetricRow = { metric: Metric; value: number; unit: string; as_of?: string | null; reported_at?: string | null; flags_json?: string | null };
 type ExistingProposalRow = {
   value: number;
   unit: string;
@@ -207,7 +207,20 @@ export async function GET(request: NextRequest) {
     if (typeof x.totalDebt === 'number') rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate || null });
     if (typeof x.sharesOutstanding === 'number') rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate || null });
     if (typeof x.bitcoinHoldings === 'number') rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate || null });
-    if (typeof x.bitcoinHoldingsNative === 'number') rows.push({ metric: 'holdings_native', value: x.bitcoinHoldingsNative, unit: 'BTC', as_of: x.bitcoinHoldingsDate || null });
+    if (typeof x.bitcoinHoldingsNative === 'number') {
+      rows.push({
+        metric: 'holdings_native',
+        value: x.bitcoinHoldingsNative,
+        unit: 'BTC',
+        as_of: x.bitcoinHoldingsDate || null,
+        flags_json: JSON.stringify({
+          native_extraction: {
+            concept: x.bitcoinHoldingsNativeConcept || null,
+            unit_key: x.bitcoinHoldingsNativeUnitKey || null,
+          },
+        }),
+      });
+    }
 
     for (const r of rows) r.reported_at = x.filingDate || r.as_of || null;
 
@@ -283,7 +296,7 @@ export async function GET(request: NextRequest) {
           run_id: runId,
           method: 'sec_companyfacts_xbrl',
           confidence: 1.0,
-          flags_json: null as string | null,
+          flags_json: r.flags_json || null,
           confidence_details_json: null as string | null,
           status: 'candidate',
         };
