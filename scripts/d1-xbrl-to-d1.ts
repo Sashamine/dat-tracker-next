@@ -24,7 +24,14 @@ function argVal(name: string): string | null {
 }
 
 type MetricRow = {
-  metric: 'cash_usd' | 'debt_usd' | 'preferred_equity_usd' | 'basic_shares' | 'bitcoin_holdings_usd';
+  metric:
+    | 'cash_usd'
+    | 'restricted_cash_usd'
+    | 'debt_usd'
+    | 'preferred_equity_usd'
+    | 'other_investments_usd'
+    | 'basic_shares'
+    | 'bitcoin_holdings_usd';
   value: number;
   unit: 'USD' | 'shares';
   as_of: string | null;
@@ -222,6 +229,12 @@ async function main() {
           sharesOutstandingDate?: string | null;
           bitcoinHoldings?: number | null;
           bitcoinHoldingsDate?: string | null;
+          preferredEquity?: number | null;
+          preferredEquityDate?: string | null;
+          restrictedCash?: number | null;
+          restrictedCashDate?: string | null;
+          otherInvestments?: number | null;
+          otherInvestmentsDate?: string | null;
         }
       | { success: false; error: string };
 
@@ -263,6 +276,45 @@ async function main() {
         unit: 'USD',
         as_of: x.debtDate || null,
         reported_at: x.filingDate || x.debtDate || null,
+        method: 'sec_companyfacts_xbrl',
+        confidence: 1.0,
+        flags_json: null,
+      });
+    }
+
+    if (typeof x.restrictedCash === 'number') {
+      rows.push({
+        metric: 'restricted_cash_usd',
+        value: x.restrictedCash,
+        unit: 'USD',
+        as_of: x.restrictedCashDate || null,
+        reported_at: x.filingDate || x.restrictedCashDate || null,
+        method: 'sec_companyfacts_xbrl',
+        confidence: 1.0,
+        flags_json: null,
+      });
+    }
+
+    if (typeof x.preferredEquity === 'number') {
+      rows.push({
+        metric: 'preferred_equity_usd',
+        value: x.preferredEquity,
+        unit: 'USD',
+        as_of: x.preferredEquityDate || null,
+        reported_at: x.filingDate || x.preferredEquityDate || null,
+        method: 'sec_companyfacts_xbrl',
+        confidence: 1.0,
+        flags_json: null,
+      });
+    }
+
+    if (typeof x.otherInvestments === 'number') {
+      rows.push({
+        metric: 'other_investments_usd',
+        value: x.otherInvestments,
+        unit: 'USD',
+        as_of: x.otherInvestmentsDate || null,
+        reported_at: x.filingDate || x.otherInvestmentsDate || null,
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
