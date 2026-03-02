@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 
 export const runtime = 'nodejs';
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   if (!process.env.CLOUDFLARE_ACCOUNT_ID || !process.env.CLOUDFLARE_D1_DATABASE_ID || !process.env.CLOUDFLARE_API_TOKEN) {
     return NextResponse.json(
       {
