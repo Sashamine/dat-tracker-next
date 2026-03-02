@@ -15,12 +15,6 @@
 Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
 
 ### Now (in progress)
-- **10d: Phase B backfill quarter-end `basic_shares` into D1**
-  - **Owner:** Agent 5
-  - **PR:** #40 https://github.com/Sashamine/dat-tracker-next/pull/40 (merged)
-  - **Status:** Expanding backfill beyond initial run (MSTR done).
-  - **DoD:** Dry-run summary looks sane; write mode for 1 ticker/date-range; then expand.
-
 - **10c: 30-minute ingestion + transform**
   - **Owner:** Agent 1
   - **Status:** 10c v1 runs green (scheduled inventory + invariants).
@@ -57,6 +51,12 @@ Update this section whenever you start/stop work so other agents can instantly s
 - **UI: Split miner vs treasury sector stats** (from older notes)
 
 ### Done (recent)
+- **10d: Phase B backfill quarter-end `basic_shares` into D1 (DONE 2026-03-02)**
+  - **Owner:** Agent 5
+  - **Status:** Backfilled **95** quarter-end `basic_shares` rows across **48** tickers.
+  - **Current D1 state:** 409 total datapoints.
+  - **Links:** (see ROADMAP entry updated by Agent 5 for workflow runs)
+
 - **10b: R2 inventory → artifacts backfill (DONE 2026-02-28)**
   - Prefix discovery: https://github.com/Sashamine/dat-tracker-next/actions/runs/22530779754
   - Full bucket dry-run (cap 2000): https://github.com/Sashamine/dat-tracker-next/actions/runs/22530831208
