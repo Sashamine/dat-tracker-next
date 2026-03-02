@@ -122,7 +122,7 @@ type DatapointHistoryQueryRow = Omit<DatapointHistoryRow, 'artifact'> & {
 
 export async function getLatestMetrics(
   ticker: string,
-  metrics: string[] = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native']
+  metrics: string[] = ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native']
 ): Promise<LatestDatapointRow[]> {
   const d1 = D1Client.fromEnv();
 
