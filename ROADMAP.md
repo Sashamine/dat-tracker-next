@@ -38,19 +38,17 @@ Update this section whenever you start/stop work so other agents can instantly s
       - state-verify: https://github.com/Sashamine/dat-tracker-next/actions/runs/22534835119 (failCount=0; gaps: missing_debt_evidence)
   - **DoD:** Scheduled workflow runs green and fails only on real invariant regressions (`unknown>0` or duplicates present).
 
-- **10d: Verification plumbing**
-  - **Owner:** unowned (was Agent 4)
-  - **Status:** Implemented and validated end-to-end in D1 (write mode works).
+- **10d: Verification plumbing + confidence scoring**
+  - **Owner:** Agent 5
+  - **Status:** DONE — verification plumbing + confidence scoring both live in prod.
   - **Merged PRs:**
     - #58 d1-migrate workflow + d1-apply-migration script
     - #59 fix verifier to use schema-native `datapoints.entity_id`
     - #62 join `artifacts.source_url` (datapoints has no source_url)
     - #72 verifier workflow accepts `entity_id` (ticker alias) + new API `GET /api/d1/verifications/latest`
-  - **Ops executed:**
-    - Applied migration `010-datapoint-verifications.sql` to D1
-    - Smoke test: `verify-datapoints (10d)` wrote 5 rows for MSTR
-  - **Open gap discovered (10b/10c provenance):**
-    - 323 `artifacts` rows with `source_type='sec_filing'` have `source_url` NULL and `accession` NULL, so receipts can’t be reconstructed for those.
+    - #144 confidence scoring + DLQ routing (6 weighted factors, daily cron, Discord alerts)
+  - **Open gap (10b/10c provenance):**
+    - 323 `artifacts` rows with `source_type=’sec_filing’` have `source_url` NULL and `accession` NULL.
 
 - **CI/Lint ratchet (required checks scope expansion)**
   - **Owner:** unowned (was Agent 3)
@@ -58,11 +56,38 @@ Update this section whenever you start/stop work so other agents can instantly s
   - **Recent:** merged multiple CI hygiene PRs; current open PR: #64 (expand lint-app to api/prices)
 
 ### Next (queued)
-- **10d: Verification + confidence scoring**
-  - Automated checks + DLQ/manual review routing (per CLAUDE.md).
 - **UI: Split miner vs treasury sector stats** (from older notes)
 
 ### Done (recent)
+- **10d: Confidence scoring + DLQ routing (DONE 2026-03-02)**
+  - **Owner:** Agent 5
+  - **PR:** #144 (merged)
+  - **Status:** All 409 candidate datapoints scored in prod write mode.
+  - **Baseline distribution:**
+    | Level | Count | Avg Conf | Range |
+    |-------|-------|----------|-------|
+    | High (>=0.85) | 208 | 0.92 | 0.85–1.00 |
+    | Medium (0.50–0.84) | 201 | 0.775 | 0.64–0.845 |
+    | DLQ (<0.50) | 0 | — | — |
+  - **By method:**
+    | Method | Count | Avg Conf |
+    |--------|-------|----------|
+    | `sec_companyfacts_xbrl` | 233 | 0.909 |
+    | `backfill_qe` | 171 | 0.768 |
+    | `llm_pdf_extract` | 4 | 0.77 |
+    | `jp_tdnet_pdf` | 1 | 0.82 |
+  - **Status transitions:** 0 → `needs_review` (no DLQ items this run)
+  - **Workflow runs:**
+    - MSTR write (limit=20): https://github.com/Sashamine/dat-tracker-next/actions/runs/22568264972
+    - Global write (limit=500): https://github.com/Sashamine/dat-tracker-next/actions/runs/22568605675
+  - **Daily cron:** `0 6 * * *` UTC, scores up to 500 new unscored candidates per run.
+
+- **10d: Phase B backfill quarter-end `basic_shares` into D1 (DONE 2026-03-02)**
+  - **Owner:** Agent 5
+  - **Status:** Backfilled **95** quarter-end `basic_shares` rows across **48** tickers.
+  - **Current D1 state:** 409 total datapoints.
+  - **Links:** (see ROADMAP entry updated by Agent 5 for workflow runs)
+
 - **10b: R2 inventory → artifacts backfill (DONE 2026-02-28)**
   - Prefix discovery: https://github.com/Sashamine/dat-tracker-next/actions/runs/22530779754
   - Full bucket dry-run (cap 2000): https://github.com/Sashamine/dat-tracker-next/actions/runs/22530831208
