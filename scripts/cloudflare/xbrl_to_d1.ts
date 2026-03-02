@@ -67,6 +67,9 @@ async function main() {
     // note: this is USD fair value per extractor
     rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate, method: 'sec_companyfacts_xbrl' });
   }
+  if (typeof x.bitcoinHoldingsNative === 'number') {
+    rows.push({ metric: 'holdings_native', value: x.bitcoinHoldingsNative, unit: 'BTC', as_of: x.bitcoinHoldingsDate, method: 'sec_companyfacts_xbrl' });
+  }
 
   // reported_at: use SEC filed date if present, else as_of
   for (const r of rows) {

@@ -31,9 +31,10 @@ type MetricRow = {
     | 'preferred_equity_usd'
     | 'other_investments_usd'
     | 'basic_shares'
-    | 'bitcoin_holdings_usd';
+    | 'bitcoin_holdings_usd'
+    | 'holdings_native';
   value: number;
-  unit: 'USD' | 'shares';
+  unit: 'USD' | 'shares' | 'BTC';
   as_of: string | null;
   reported_at: string | null;
   method: 'sec_companyfacts_xbrl';
@@ -228,6 +229,7 @@ async function main() {
           sharesOutstanding?: number | null;
           sharesOutstandingDate?: string | null;
           bitcoinHoldings?: number | null;
+          bitcoinHoldingsNative?: number | null;
           bitcoinHoldingsDate?: string | null;
           preferredEquity?: number | null;
           preferredEquityDate?: string | null;
@@ -339,6 +341,19 @@ async function main() {
         metric: 'bitcoin_holdings_usd',
         value: x.bitcoinHoldings,
         unit: 'USD',
+        as_of: x.bitcoinHoldingsDate || null,
+        reported_at: x.filingDate || x.bitcoinHoldingsDate || null,
+        method: 'sec_companyfacts_xbrl',
+        confidence: 1.0,
+        flags_json: null,
+      });
+    }
+
+    if (typeof x.bitcoinHoldingsNative === 'number') {
+      rows.push({
+        metric: 'holdings_native',
+        value: x.bitcoinHoldingsNative,
+        unit: 'BTC',
         as_of: x.bitcoinHoldingsDate || null,
         reported_at: x.filingDate || x.bitcoinHoldingsDate || null,
         method: 'sec_companyfacts_xbrl',

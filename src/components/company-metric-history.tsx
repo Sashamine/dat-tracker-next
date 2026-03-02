@@ -10,6 +10,7 @@ function labelForMetric(metric: string): string {
     case 'debt_usd': return 'Debt';
     case 'preferred_equity_usd': return 'Preferred equity';
     case 'basic_shares': return 'Basic shares';
+    case 'holdings_native': return 'Holdings (native)';
     case 'bitcoin_holdings_usd': return 'BTC holdings (USD)';
     default: return metric;
   }

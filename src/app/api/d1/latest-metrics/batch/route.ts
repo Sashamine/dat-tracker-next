@@ -4,7 +4,7 @@ import { getLatestMetrics } from '@/lib/d1';
 // Returns latest filed fundamentals from Cloudflare D1.
 // Designed for client-side consumption on aggregate pages.
 
-const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd'] as const;
+const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'] as const;
 
 export async function POST(request: NextRequest) {
   try {
