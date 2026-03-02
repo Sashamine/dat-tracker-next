@@ -74,6 +74,28 @@ Update this section whenever you start/stop work so other agents can instantly s
       - CWD Q1 2025: `verdict=warn` — pre-split value correct for as_of date
     - Final state: `needs_review=0`, `candidate=409`. Manual verification rows: 7 (5 warn, 2 fail).
     - Workflow runs: report https://github.com/Sashamine/dat-tracker-next/actions/runs/22573287014 | SDIG resolve https://github.com/Sashamine/dat-tracker-next/actions/runs/22573775942 | BITF https://github.com/Sashamine/dat-tracker-next/actions/runs/22573886618 | CWD Q1 https://github.com/Sashamine/dat-tracker-next/actions/runs/22574010459 | CWD Q2 https://github.com/Sashamine/dat-tracker-next/actions/runs/22574044829
+  - **DLQ Operations Runbook:**
+    1. **Weekly report** (automated Monday 07:00 UTC, or manual):
+       - Workflow: **DLQ Report + Resolve** → `mode=report`, `limit=50`
+       - Output: per-item JSON with confidence factor breakdown, provenance bundle, verification history
+       - If `found=0` → DLQ is clean, no action needed
+    2. **Resolve items** (manual, per-entity or per-datapoint):
+       - Always dry-run first: `mode=resolve`, `entity_id=TICK` or `datapoint_ids=...`, `dry_run=true`
+       - Confirm targeting, then re-run with `dry_run=false`
+       - Verdict guide:
+         - `fail` → genuinely wrong data (bad extraction, post-split stale, sanity_bounds=0)
+         - `warn` → acceptable but low provenance (stale carry-forward, deregistered company, annual filer)
+         - `pass` → verified correct (cross-checked against primary source)
+       - Default `new_status=candidate` returns item to the pool; scorer will re-evaluate on next run
+    3. **Confirm state** (D1 ad-hoc queries):
+       - `SELECT status, COUNT(*) cnt FROM datapoints GROUP BY 1;` → expect `needs_review=0`
+       - `SELECT verifier, verdict, COUNT(*) cnt FROM datapoint_verifications GROUP BY 1,2;`
+       - `SELECT datapoint_id, verdict, verifier, checked_at FROM datapoint_verifications WHERE verifier=’manual’ ORDER BY checked_at DESC LIMIT 10;`
+    4. **Exit criteria for a DLQ item** (all must be true):
+       - `verifier=’manual’` row exists in `datapoint_verifications`
+       - `status` updated (`candidate` for re-score, or left as `needs_review` if genuinely blocked)
+       - Notes field documents: what was checked, why verdict was chosen, whether item should be re-scored later or is permanently suspect
+       - If `verdict=fail`: consider whether the underlying data should be deleted or corrected by a writer re-run
   - **Open gap (10b/10c provenance):**
     - 323 `artifacts` rows with `source_type=’sec_filing’` have `source_url` NULL and `accession` NULL.
 
