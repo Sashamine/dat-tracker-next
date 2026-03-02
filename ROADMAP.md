@@ -154,12 +154,12 @@ Update this section whenever you start/stop work so other agents can instantly s
    - Filing bodies / XBRL / companyfacts snapshots live in R2.
    - D1 stores the index and pointers (no giant blobs).
 
-3) **Backfill historical structured datapoints into D1 (idempotent)**
-   - Writers iterate historical sources and upsert into `datapoints` using `proposal_key` idempotency.
-
-4) **Make the dataset queryable via stable read APIs**
+3) **Make the dataset queryable via stable read APIs**
    - Latest snapshot: latest per `(entity_id, metric)`.
    - History: time-series per `(entity_id, metric)` with date range + pagination.
+
+4) **Backfill historical structured datapoints into D1 (idempotent)**
+   - Writers iterate historical sources and upsert into `datapoints` using `proposal_key` idempotency.
 
 5) **Switch the site to read from D1**
    - D1 becomes source of truth for snapshot + history.
