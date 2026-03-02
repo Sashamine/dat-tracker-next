@@ -1,0 +1,73 @@
+name: Backfill SEC Filing Provenance (source_url + accession)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run only (true/false)'
+        required: true
+        default: 'true'
+      limit:
+        description: 'Max candidate artifacts to process'
+        required: true
+        default: '200'
+      ticker:
+        description: 'Optional ticker filter (e.g., SMLR)'
+        required: false
+        default: ''
+      r2_prefix:
+        description: 'Optional R2 key prefix filter (e.g., sec/)'
+        required: false
+        default: ''
+      after_artifact_id:
+        description: 'Optional cursor: process artifact_id > this value'
+        required: false
+        default: ''
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Backfill SEC filing provenance
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_REGION: ${{ secrets.R2_REGION }}
+        run: |
+          set -euo pipefail
+
+          ARGS=(
+            "--dry_run=${{ github.event.inputs.dry_run }}"
+            "--limit=${{ github.event.inputs.limit }}"
+          )
+
+          if [[ -n "${{ github.event.inputs.ticker }}" ]]; then
+            ARGS+=("--ticker=${{ github.event.inputs.ticker }}")
+          fi
+          if [[ -n "${{ github.event.inputs.r2_prefix }}" ]]; then
+            ARGS+=("--r2_prefix=${{ github.event.inputs.r2_prefix }}")
+          fi
+          if [[ -n "${{ github.event.inputs.after_artifact_id }}" ]]; then
+            ARGS+=("--after_artifact_id=${{ github.event.inputs.after_artifact_id }}")
+          fi
+
+          echo "Running: npx tsx scripts/backfill-sec-filing-provenance.ts ${ARGS[*]}"
+          npx tsx scripts/backfill-sec-filing-provenance.ts "${ARGS[@]}"
+
