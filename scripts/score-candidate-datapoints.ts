@@ -37,12 +37,16 @@ async function main() {
   const entityId = process.env.ENTITY_ID;
   const limit = Number(process.env.LIMIT || '200');
   const dryRun = String(process.env.DRY_RUN || 'true').toLowerCase() !== 'false';
+  const rescore = String(process.env.RESCORE || 'false').toLowerCase() === 'true';
   const codeSha = process.env.CODE_SHA || null;
 
   const now = new Date();
 
-  // Build query for unscored candidate datapoints
-  const whereClauses = [`d.status = 'candidate'`, `d.confidence_details_json IS NULL`];
+  // Build query for candidate datapoints (unscored, or all if RESCORE=true)
+  const whereClauses = [`d.status IN ('candidate', 'needs_review')`];
+  if (!rescore) {
+    whereClauses.push(`d.confidence_details_json IS NULL`);
+  }
   const params: any[] = [];
 
   if (entityId) {
@@ -83,7 +87,7 @@ async function main() {
 
   const rows = await d1.query<RawRow>(sql, params);
 
-  console.log(`score-candidate-datapoints: entity=${entityId || '*'} limit=${limit} dryRun=${dryRun} found=${rows.results.length}`);
+  console.log(`score-candidate-datapoints: entity=${entityId || '*'} limit=${limit} dryRun=${dryRun} rescore=${rescore} found=${rows.results.length}`);
 
   if (rows.results.length === 0) {
     console.log('No unscored candidate datapoints found.');
@@ -137,7 +141,7 @@ async function main() {
       await d1.query(
         `INSERT INTO datapoint_verifications (verification_id, datapoint_id, verdict, checks_json, checked_at, verifier, code_sha)
          VALUES (?, ?, ?, ?, ?, ?, ?);`,
-        [verificationId, dp.datapoint_id, verdict, detailsJson, checkedAt, 'confidence_scorer_v1', codeSha]
+        [verificationId, dp.datapoint_id, verdict, detailsJson, checkedAt, 'confidence_scorer_v1.1', codeSha]
       );
 
       // DLQ: mark as needs_review
@@ -158,7 +162,7 @@ async function main() {
   // Discord notification if DLQ items exist
   if (stats.dlq > 0 && !dryRun) {
     const message = [
-      `**Scored:** ${total} | **High (>=0.85):** ${stats.high} | **Medium:** ${stats.medium} | **DLQ (<0.50):** ${stats.dlq}`,
+      `**Scored:** ${total} | **High (>=0.85):** ${stats.high} | **Medium:** ${stats.medium} | **DLQ (<0.55):** ${stats.dlq}`,
       '',
       '**DLQ samples:**',
       ...dlqSamples.map(s => `- ${s}`),
