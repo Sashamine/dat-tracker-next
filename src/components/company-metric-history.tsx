@@ -1,7 +1,6 @@
 import React from 'react';
 import { formatLargeNumber } from '@/lib/calculations';
 import type { DatapointRow } from '@/lib/hooks/use-company-metric-history';
-import { useD1Artifact } from '@/lib/hooks/use-d1-artifact';
 
 function labelForMetric(metric: string): string {
   switch (metric) {
@@ -28,8 +27,7 @@ function formatValue(row: DatapointRow): string {
 
 function HistoryRow(props: { metric: string; row: DatapointRow }) {
   const { metric, row } = props;
-  const { data } = useD1Artifact(row.artifact_id);
-  const artifact = data?.artifact;
+  const artifact = row.artifact;
 
   const href = artifact?.source_url || null;
   const label = href
@@ -81,12 +79,11 @@ export function CompanyMetricHistorySection(props: {
 
   const [expanded, setExpanded] = React.useState(defaultExpanded);
 
-  const latestRows = metrics
-    .map(metric => {
-      const first = (series?.[metric] || [])[0];
-      return { metric, row: first };
-    })
-    .filter(x => x.row);
+  const latestRows: Array<{ metric: string; row: DatapointRow }> = metrics.reduce((acc, metric) => {
+    const first = (series?.[metric] || [])[0];
+    if (first) acc.push({ metric, row: first });
+    return acc;
+  }, [] as Array<{ metric: string; row: DatapointRow }>);
 
   if (!latestRows.length) return null;
 
@@ -139,7 +136,7 @@ export function CompanyMetricHistorySection(props: {
         </button>
       </div>
 
-      {!expanded && renderTable(latestRows as any)}
+      {!expanded && renderTable(latestRows)}
       {expanded && renderTable(expandedRows, 'Note: rows are ordered by as_of (desc) within each metric; methods may differ across runs.')}
     </section>
   );

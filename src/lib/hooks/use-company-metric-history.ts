@@ -15,12 +15,18 @@ export type DatapointRow = {
   confidence: number | null;
   flags_json: string | null;
   created_at: string;
+  artifact?: {
+    source_url: string | null;
+    accession: string | null;
+    source_type: string | null;
+  };
 };
 
 export type CompanyMetricHistoryResponse = {
   success: boolean;
   ticker: string;
   metrics: string[];
+  includeArtifacts?: boolean;
   series: Record<string, DatapointRow[]>;
   error?: string;
 };
@@ -31,13 +37,14 @@ export function useCompanyMetricHistory(
   ticker: string | null | undefined,
   metrics: string[],
   limit: number = 12,
-  order: 'asc' | 'desc' = 'desc'
+  order: 'asc' | 'desc' = 'desc',
+  includeArtifacts: boolean = true
 ) {
   const t = (ticker || '').toUpperCase();
   const metricsParam = metrics.filter(Boolean).join(',');
 
   const key = t && metricsParam
-    ? `/api/company/${encodeURIComponent(t)}/history?metrics=${encodeURIComponent(metricsParam)}&limit=${limit}&order=${order}`
+    ? `/api/company/${encodeURIComponent(t)}/history?metrics=${encodeURIComponent(metricsParam)}&limit=${limit}&order=${order}&includeArtifacts=${includeArtifacts ? 'true' : 'false'}`
     : null;
 
   return useSWR<CompanyMetricHistoryResponse>(key, fetcher);
