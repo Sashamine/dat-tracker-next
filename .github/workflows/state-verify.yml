@@ -37,7 +37,6 @@ jobs:
           node -e "const j=require('./infra/latest-verified.json'); if ((j.failCount||0) !== 0) { console.error('failCount', j.failCount); process.exit(1);} console.log('ok failCount=0')"
 
       - name: D1 SEC receipt invariant (10c guardrail)
-        if: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' && secrets.CLOUDFLARE_D1_DATABASE_ID != '' && secrets.CLOUDFLARE_API_TOKEN != '' }}
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
@@ -46,6 +45,11 @@ jobs:
           SEC_MISSING_ACCESSION_BASELINE: "9"
         run: |
           set -euo pipefail
+          if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" || -z "${CLOUDFLARE_D1_DATABASE_ID:-}" || -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+            echo "SEC_RECEIPT_INVARIANT skipped (missing D1 secrets)"
+            exit 0
+          fi
+
           npx tsx scripts/cloudflare/d1-artifacts-summary.ts | tee /tmp/d1-artifacts-summary.json
 
           node - <<'NODE'
