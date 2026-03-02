@@ -26,6 +26,14 @@ export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Co
     const metrics = d1[c.ticker];
     if (!metrics) return c;
 
+    // Track which fields were sourced from D1 (dev-mode debug aid)
+    const d1Fields: string[] = [];
+    if (metrics.debt_usd            != null) d1Fields.push('totalDebt');
+    if (metrics.cash_usd            != null) d1Fields.push('cashReserves');
+    if (metrics.preferred_equity_usd != null) d1Fields.push('preferredEquity');
+    if (metrics.basic_shares        != null) d1Fields.push('sharesForMnav');
+    if (metrics.holdings_native != null && metrics.holdings_native > 0) d1Fields.push('holdings');
+
     return {
       ...c,
       totalDebt:       metrics.debt_usd            ?? c.totalDebt,
@@ -37,6 +45,8 @@ export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Co
       ...(metrics.holdings_native != null && metrics.holdings_native > 0
         ? { holdings: metrics.holdings_native }
         : {}),
-    };
+      // Debug metadata — not part of the Company type, accessed via (company as any)._d1Fields
+      _d1Fields: d1Fields.length > 0 ? d1Fields : undefined,
+    } as Company;
   });
 }
