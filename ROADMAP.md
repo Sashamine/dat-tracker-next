@@ -136,6 +136,52 @@ Update this section whenever you start/stop work so other agents can instantly s
 
 ## Phase 10 — Near Real-Time, Correct, Full Provenance (Cloudflare)
 
+### Single Plan — make the full historical dataset queryable (D1) + ensure metrics are citeable and correct
+
+**Goal:** Get the *entire* historical dataset into one place (**D1**) so it is queryable, auditable, and drives the site. Ensure each displayed metric is both **citeable** (receipt pointers) and **correct** (verified).
+
+1) **Define canonical metrics + semantics (names, units, definitions)**
+   - Minimum set:
+     - `holdings_native` (value + `asset`, e.g. BTC/ETH/SOL)
+     - `basic_shares`
+     - `cash_usd`
+     - `debt_usd`
+     - `preferred_equity_usd`
+     - `other_investments_usd` (optional)
+   - Required per datapoint: `entity_id`, `as_of`, `reported_at` (optional), `unit`, provenance pointers (`artifact_id` + optionally `source_url`, `accession`, `r2_key`).
+
+2) **Ensure raw artifacts are in R2 and indexed in D1 `artifacts`**
+   - Filing bodies / XBRL / companyfacts snapshots live in R2.
+   - D1 stores the index and pointers (no giant blobs).
+
+3) **Make the dataset queryable via stable read APIs**
+   - Latest snapshot: latest per `(entity_id, metric)`.
+   - History: time-series per `(entity_id, metric)` with date range + pagination.
+
+4) **Backfill historical structured datapoints into D1 (idempotent)**
+   - Writers iterate historical sources and upsert into `datapoints` using `proposal_key` idempotency.
+
+5) **Switch the site to read from D1**
+   - D1 becomes source of truth for snapshot + history.
+   - `companies.ts` becomes metadata/fallback only until parity.
+
+6) **Make every displayed metric citeable**
+   - Every displayed value must include a receipt pointer (artifact/source_url/accession/r2_key) or be explicitly flagged.
+
+7) **Make every displayed metric correct**
+   - Automated verifiers + cross-source checks where possible.
+   - Confidence scoring + DLQ/manual review for the tail.
+
+8) **Auditor tooling (single payload to answer “what value is the site using and why?”)**
+   - Extend `/api/debug/balance-sheet/[ticker]` to include:
+     - D1 latest datapoints
+     - provenance bundle per field
+     - diff vs `companies.ts`
+
+9) **Maintenance + regression prevention**
+   - Scheduled ingestion/backfills.
+   - Invariants (missing receipts, duplicates, regressions) + alerting.
+
 **Goal**: Make data updates reliably within **30 minutes**, remain **reproducible/correct**, and expose **full provenance** that is easy for agents to consume.
 
 ### 10a — Provenance primitives (DONE)
