@@ -55,6 +55,17 @@ const DEFAULT_BITCOIN_CONCEPTS = [
   'BitcoinHoldings',
 ];
 
+// Deterministic native-unit concept hints.
+// These are only accepted when the fact unit normalizes to BTC.
+const DEFAULT_BITCOIN_NATIVE_UNIT_CONCEPTS = [
+  'us-gaap:CryptoAssetNumberOfUnits',
+  'us-gaap:CryptocurrencyDenominatedAssetsNumberOfUnits',
+  'us-gaap:DigitalAssetsNumberOfUnits',
+  'us-gaap:BitcoinNumberOfUnits',
+  'us-gaap:CryptoAssetHeld',
+  'us-gaap:DigitalAssets',
+];
+
 /**
  * Get XBRL concepts for a company's crypto holdings
  * Uses company-specific concepts if configured, otherwise defaults
@@ -145,6 +156,12 @@ export interface XBRLExtractionResult {
   bitcoinHoldingsNativeConcept?: string; // namespace:concept selected for native holdings
   bitcoinHoldingsNativeUnitKey?: string; // Normalized unit key used for writes ('BTC')
   bitcoinHoldingsNativeUnitKeyOriginal?: string; // Raw SEC companyfacts unit key selected
+  bitcoinHoldingsNativeWhyChosen?: {
+    conceptSource: 'company_override' | 'default_native' | 'dynamic_ticker' | 'fuzzy_scan';
+    candidateCount: number;
+    usedPreferredFormPool: boolean;
+    sortRule: string;
+  };
   bitcoinHoldingsDate?: string;    // YYYY-MM-DD
   bitcoinHoldingsSource?: string;  // Filing accession number
 
@@ -178,6 +195,13 @@ export interface XBRLExtractionResult {
   rawConcepts?: {
     cryptoCandidates?: Array<{ namespace: string; concept: string; units: string[] }>;
     nativeRejectedUnitKeys?: Array<{ conceptName: string; unitKey: string }>;
+    nativeTopCandidates?: Array<{
+      conceptName: string;
+      conceptSource: 'company_override' | 'default_native' | 'dynamic_ticker' | 'fuzzy_scan';
+      unitKey: string;
+      form: string;
+      date: string;
+    }>;
   };
 }
 
@@ -215,6 +239,7 @@ type ConceptRef = {
   concept: string;
   conceptName: string;
   priority: number;
+  source: 'company_override' | 'default_native' | 'dynamic_ticker' | 'fuzzy_scan';
 };
 
 type NativeHoldingsCandidate = {
@@ -227,6 +252,7 @@ type NativeHoldingsCandidate = {
   conceptName: string;
   priority: number;
   normalizedUnitKey: 'BTC';
+  conceptSource: ConceptRef['source'];
 };
 
 /**
@@ -342,14 +368,21 @@ function parseConceptName(conceptName: string): ConceptRef {
   const [namespace, concept] = conceptName.includes(':')
     ? conceptName.split(':')
     : ['us-gaap', conceptName];
-  return { namespace, concept, conceptName: `${namespace}:${concept}`, priority: 0 };
+  return {
+    namespace,
+    concept,
+    conceptName: `${namespace}:${concept}`,
+    priority: 0,
+    source: 'fuzzy_scan',
+  };
 }
 
 function conceptLooksNativeHoldings(conceptName: string): boolean {
   const c = conceptName.toLowerCase();
-  const bitcoinish = /(bitcoin|cryptoasset|digitalasset|cryptocurrency|virtualcurrency)/.test(c);
+  const bitcoinish = /(bitcoin|btc|cryptoasset|digitalasset|cryptocurrency|virtualcurrency)/.test(c);
   const unitsish = /(numberofunits|units|quantity|amount|held|holdings)/.test(c);
-  return bitcoinish && (unitsish || /bitcoin/.test(c));
+  // Broad concept net with strict BTC-unit gate downstream.
+  return bitcoinish || unitsish;
 }
 
 function normalizeBtcNativeUnitKey(unitKey: string): 'BTC' | null {
@@ -369,10 +402,34 @@ function extractBitcoinNativeHoldings(
   facts: SECCompanyFacts['facts'],
   ticker: string,
   rejectedUnits?: Array<{ conceptName: string; unitKey: string }>,
-): { value: number; date: string; form: string; accn: string; unitKey: 'BTC'; unitKeyOriginal: string; conceptName: string } | null {
-  const configuredConcepts = getBitcoinConcepts(ticker).map((name) => {
+): {
+  value: number;
+  date: string;
+  form: string;
+  accn: string;
+  unitKey: 'BTC';
+  unitKeyOriginal: string;
+  conceptName: string;
+  conceptSource: ConceptRef['source'];
+  candidateCount: number;
+  usedPreferredFormPool: boolean;
+  topCandidates: Array<{
+    conceptName: string;
+    conceptSource: ConceptRef['source'];
+    unitKey: string;
+    form: string;
+    date: string;
+  }>;
+} | null {
+  const companyConfigured = getCompanySource(ticker)?.xbrlConcepts?.holdings || [];
+  const configuredConcepts = companyConfigured.map((name) => {
     const parsed = parseConceptName(name);
-    return { ...parsed, priority: 0 };
+    return { ...parsed, priority: 0, source: 'company_override' as const };
+  });
+
+  const defaultNativeConcepts = DEFAULT_BITCOIN_NATIVE_UNIT_CONCEPTS.map((name) => {
+    const parsed = parseConceptName(name);
+    return { ...parsed, priority: 1, source: 'default_native' as const };
   });
 
   const tickerLower = ticker.toLowerCase();
@@ -383,7 +440,7 @@ function extractBitcoinNativeHoldings(
     `${tickerLower}:CryptoAssets`,
   ].map((name) => {
     const parsed = parseConceptName(name);
-    return { ...parsed, priority: 1 };
+    return { ...parsed, priority: 2, source: 'dynamic_ticker' as const };
   });
 
   const fuzzyConcepts: ConceptRef[] = [];
@@ -393,12 +450,12 @@ function extractBitcoinNativeHoldings(
     for (const concept of Object.keys(namespaceFacts)) {
       const conceptName = `${namespace}:${concept}`;
       if (!conceptLooksNativeHoldings(conceptName)) continue;
-      fuzzyConcepts.push({ namespace, concept, conceptName, priority: 2 });
+      fuzzyConcepts.push({ namespace, concept, conceptName, priority: 3, source: 'fuzzy_scan' });
     }
   }
 
   const seen = new Set<string>();
-  const concepts = [...configuredConcepts, ...dynamicConcepts, ...fuzzyConcepts].filter((c) => {
+  const concepts = [...configuredConcepts, ...defaultNativeConcepts, ...dynamicConcepts, ...fuzzyConcepts].filter((c) => {
     if (seen.has(c.conceptName)) return false;
     seen.add(c.conceptName);
     return true;
@@ -435,6 +492,7 @@ function extractBitcoinNativeHoldings(
           conceptName: ref.conceptName,
           priority: ref.priority,
           normalizedUnitKey,
+          conceptSource: ref.source,
         });
       }
     }
@@ -461,6 +519,16 @@ function extractBitcoinNativeHoldings(
     unitKey: chosen.normalizedUnitKey,
     unitKeyOriginal: chosen.unitKey,
     conceptName: chosen.conceptName,
+    conceptSource: chosen.conceptSource,
+    candidateCount: candidates.length,
+    usedPreferredFormPool: inPreferredForms.length > 0,
+    topCandidates: pool.slice(0, 5).map((c) => ({
+      conceptName: c.conceptName,
+      conceptSource: c.conceptSource,
+      unitKey: c.unitKey,
+      form: c.form,
+      date: c.date,
+    })),
   };
 }
 
@@ -572,10 +640,20 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
     result.bitcoinHoldingsNativeConcept = btcNativeData.conceptName;
     result.bitcoinHoldingsNativeUnitKey = btcNativeData.unitKey;
     result.bitcoinHoldingsNativeUnitKeyOriginal = btcNativeData.unitKeyOriginal;
+    result.bitcoinHoldingsNativeWhyChosen = {
+      conceptSource: btcNativeData.conceptSource,
+      candidateCount: btcNativeData.candidateCount,
+      usedPreferredFormPool: btcNativeData.usedPreferredFormPool,
+      sortRule: 'preferred_forms(10-K/10-Q)_then_most_recent_end_then_filed_then_priority',
+    };
     if (!result.bitcoinHoldingsDate) result.bitcoinHoldingsDate = btcNativeData.date;
     if (!result.bitcoinHoldingsSource) result.bitcoinHoldingsSource = btcNativeData.accn;
     if (!result.filingType) result.filingType = btcNativeData.form;
     if (!result.accessionNumber) result.accessionNumber = btcNativeData.accn;
+    result.rawConcepts = {
+      ...(result.rawConcepts || {}),
+      nativeTopCandidates: btcNativeData.topCandidates,
+    };
   }
   if (nativeRejectedUnits.length) {
     result.rawConcepts = {
