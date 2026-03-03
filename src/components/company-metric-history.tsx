@@ -3,7 +3,6 @@
 import React from 'react';
 import { formatLargeNumber } from '@/lib/calculations';
 import type { DatapointRow } from '@/lib/hooks/use-company-metric-history';
-import { trackHistoryView } from '@/lib/client-events';
 
 function labelForMetric(metric: string): string {
   switch (metric) {
@@ -83,15 +82,6 @@ export function CompanyMetricHistorySection(props: {
 
   const [expanded, setExpanded] = React.useState(defaultExpanded);
 
-  // Derive ticker from first available datapoint for event tracking
-  const firstRow = React.useMemo(() => {
-    for (const m of metrics) {
-      const row = series?.[m]?.[0];
-      if (row) return row;
-    }
-    return null;
-  }, [series, metrics]);
-
   const latestRows: Array<{ metric: string; row: DatapointRow }> = metrics.reduce((acc, metric) => {
     const first = (series?.[metric] || [])[0];
     if (first) acc.push({ metric, row: first });
@@ -142,13 +132,7 @@ export function CompanyMetricHistorySection(props: {
 
         <button
           type="button"
-          onClick={() => {
-            const next = !expanded;
-            setExpanded(next);
-            if (next && firstRow) {
-              trackHistoryView(firstRow.entity_id, metrics.join(','));
-            }
-          }}
+          onClick={() => setExpanded(v => !v)}
           className="text-xs px-3 py-1 rounded border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
         >
           {expanded ? 'Collapse' : 'Show full series'}

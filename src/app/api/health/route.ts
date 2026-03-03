@@ -11,7 +11,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { runHealthCheck, formatHealthCheck } from '@/lib/monitoring/alerts';
+import { runHealthCheck } from '@/lib/monitoring/alerts';
 import { getCacheStats } from '@/lib/sec/filing-cache';
 
 export async function GET() {
