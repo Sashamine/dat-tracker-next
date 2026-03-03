@@ -1,25 +1,44 @@
-// @ts-nocheck
 "use client";
 
 import { STRV_PROVENANCE, STRV_CIK } from "@/lib/data/provenance/strv";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
+}
+
+interface ASSTMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  restrictedCash: number;
 }
 
 interface Props {
@@ -28,7 +47,7 @@ interface Props {
 }
 
 export function ASSTCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "ASST",
     asset: "BTC",
     cik: STRV_CIK,
@@ -40,7 +59,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
       searchTerm: ss,
     },
 
-    buildMetrics: ({ company, prices, marketCap }) => {
+    buildMetrics: ({ company, prices, marketCap: _marketCap }) => {
       if (!STRV_PROVENANCE.holdings || !STRV_PROVENANCE.totalDebt || !STRV_PROVENANCE.cashReserves) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
@@ -58,7 +77,6 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
       const cryptoNav = holdings * btcPrice;
       const freeCash = cashReserves - restrictedCash;
       const netDebt = Math.max(0, totalDebt - freeCash);
-      const ev = marketCap + totalDebt + preferredEquity - freeCash;
       const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
       const equityNav = cryptoNav + freeCash - totalDebt - preferredEquity;
@@ -82,7 +100,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
                   holdings: STRV_PROVENANCE.holdings,
                   cash: STRV_PROVENANCE.cashReserves,
                   debt: STRV_PROVENANCE.totalDebt,
-                  preferred: STRV_PROVENANCE.preferredEquity,
+                  ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
                 },
               }),
               `mNAV uses shared calculator (restricted cash treated as pre-crypto)`
@@ -112,7 +130,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
             holdings: STRV_PROVENANCE.holdings,
             cash: STRV_PROVENANCE.cashReserves,
             debt: STRV_PROVENANCE.totalDebt,
-            preferred: STRV_PROVENANCE.preferredEquity,
+            ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
           },
         }),
         `Free cash excludes restricted cash earmarked for crypto purchases`
@@ -128,7 +146,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
             shares: STRV_PROVENANCE.sharesOutstanding!,
             cash: STRV_PROVENANCE.cashReserves,
             debt: STRV_PROVENANCE.totalDebt,
-            preferred: STRV_PROVENANCE.preferredEquity,
+            ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
           },
         }),
         `Using ${(sharesOutstanding / 1_000_000).toFixed(1)}M shares`
@@ -153,11 +171,11 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
         equityNavPv,
         equityNavPerSharePv,
         restrictedCash,
-      } as any;
+      } satisfies ASSTMetrics;
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
