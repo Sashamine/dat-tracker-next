@@ -59,7 +59,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
       searchTerm: ss,
     },
 
-    buildMetrics: ({ company, prices, marketCap: _marketCap }) => {
+    buildMetrics: ({ company, prices }) => {
       if (!STRV_PROVENANCE.holdings || !STRV_PROVENANCE.totalDebt || !STRV_PROVENANCE.cashReserves) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
