@@ -4,7 +4,6 @@
  */
 
 import { NextResponse } from 'next/server';
-import { getSupportedTickers } from '@/lib/fetchers/mnav';
 
 // Map tickers to mNAV.com slugs (duplicated from fetchers/mnav.ts for API use)
 const MNAV_COMPANY_SLUGS: Record<string, string> = {
