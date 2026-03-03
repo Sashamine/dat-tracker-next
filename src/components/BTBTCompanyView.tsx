@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import {
@@ -11,22 +10,43 @@ import {
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
+}
+
+interface BTBTMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  adjustedDebt: number;
+  itmDebtAdjustment: number;
 }
 
 interface Props {
@@ -35,7 +55,7 @@ interface Props {
 }
 
 export function BTBTCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "BTBT",
     asset: "ETH",
     cik: BTBT_CIK,
@@ -153,7 +173,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
         equityNavPerSharePv,
         adjustedDebt,
         itmDebtAdjustment: inTheMoneyDebtValue || 0,
-      } as any;
+      } satisfies BTBTMetrics;
     },
 
     renderBalanceSheetExtras: ({ prices }) => {
@@ -210,7 +230,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
