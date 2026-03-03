@@ -12,20 +12,16 @@ import { applyD1Overlay, getHoldingsBasis } from "@/lib/d1-overlay";
 import { CORE_D1_METRICS, HISTORY_D1_METRICS } from "@/lib/metrics";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
-import { Company } from "@/lib/types";
 import {
   useStockHistory,
   TimeRange,
   ChartInterval,
-  VALID_INTERVALS,
   DEFAULT_INTERVAL,
-  INTERVAL_LABELS,
 } from "@/lib/hooks/use-stock-history";
 import { StockChart } from "@/components/stock-chart";
 import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { HoldingsHistoryTable } from "@/components/holdings-history-table";
-import { CompanyFilings } from "@/components/company-filings";
 import { useCompanyMetricHistory } from "@/lib/hooks/use-company-metric-history";
 import { CompanyMetricHistorySection } from "@/components/company-metric-history";
 import { ScheduledEvents } from "@/components/scheduled-events";
@@ -38,8 +34,6 @@ import {
   calculateNAVPerShare,
   calculateNAVDiscount,
   calculateHoldingsPerShare,
-  calculateNetYield,
-  determineDATPhase,
   formatLargeNumber,
   formatTokenAmount,
   formatPercent,
@@ -48,12 +42,9 @@ import {
 } from "@/lib/calculations";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
-import { CryptoPriceCell, StockPriceCell } from "@/components/price-cell";
-import { StalenessBadge } from "@/components/staleness-indicator";
-import { Citation } from "@/components/citation";
+import { StockPriceCell } from "@/components/price-cell";
 import { FilingCite } from "@/components/wiki-citation";
 import { getCompanyIntel } from "@/lib/data/company-intel";
-import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { MSTRCompanyView } from "@/components/MSTRCompanyView";
@@ -93,13 +84,6 @@ const assetColors: Record<string, string> = {
   BNB: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
   TAO: "bg-cyan-500/10 text-cyan-600 border-cyan-500/20",
   LINK: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-};
-
-// Tier colors
-const tierColors: Record<number, string> = {
-  1: "bg-green-500/10 text-green-600 border-green-500/20",
-  2: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  3: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
 // Source link component for provenance
@@ -254,7 +238,6 @@ export default function CompanyPage() {
 
   // Use displayCompany (from allCompanies) for all calculations - same source as main page
   const cryptoPrice = prices?.crypto[displayCompany.asset]?.price || 0;
-  const cryptoChange = prices?.crypto[displayCompany.asset]?.change24h;
   const stockData = prices?.stocks[displayCompany.ticker];
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
@@ -356,18 +339,6 @@ export default function CompanyPage() {
   // Network staking APY
   const networkStakingApy = NETWORK_STAKING_APY[displayCompany.asset] || 0;
   const companyStakingApy = displayCompany.stakingApy || networkStakingApy;
-
-  // Net yield calculation
-  const { netYieldPct } = calculateNetYield(
-    holdingsNative,
-    displayCompany.stakingPct || 0,
-    companyStakingApy,
-    displayCompany.quarterlyBurnUsd || 0,
-    cryptoPrice
-  );
-
-  // Phase determination
-  const phase = determineDATPhase(navDiscount, false, null);
 
   // Effective shares (for dilution tracking)
   const effectiveSharesResult = stockPrice > 0 
@@ -926,7 +897,7 @@ export default function CompanyPage() {
 
             {/* Equation breakdown */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 mb-4">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">How it's calculated</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">How it&apos;s calculated</p>
               <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
                 <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
                 <span className="text-gray-400"> {displayCompany.asset}</span>
@@ -1345,9 +1316,7 @@ export default function CompanyPage() {
             <SECFilingTimeline
               ticker={displayCompany.ticker}
               cik={SBET_CIK}
-              filings={getSBETFilingsList().map((f, idx, arr) => {
-                // Calculate holdings change from previous filing
-                const prevFiling = idx > 0 ? arr[idx - 1] : null;
+              filings={getSBETFilingsList().map((f) => {
                 return {
                   date: f.periodDate,
                   filedDate: f.filedDate,

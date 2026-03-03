@@ -20,8 +20,12 @@ import { useYesterdayMnav } from "@/lib/hooks/use-yesterday-mnav";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay } from "@/lib/d1-overlay";
 
+type PricesSnapshot = {
+  crypto?: Record<string, { price?: number }>;
+};
+
 // Get unique assets and count companies
-function getAssetStats(companies: Company[], prices: any) {
+function getAssetStats(companies: Company[], prices?: PricesSnapshot) {
   const assets = [...new Set(companies.map(c => c.asset))];
   return assets.map(asset => {
     const assetCompanies = companies.filter(c => c.asset === asset);
