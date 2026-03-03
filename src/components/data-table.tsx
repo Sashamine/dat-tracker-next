@@ -24,6 +24,7 @@ import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/component
 import { MNAVTooltip } from "@/components/mnav-tooltip";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -554,6 +555,7 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
         <div>
           <p className="text-xs text-gray-500 uppercase">Crypto</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
+          <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
         </div>
       </div>
     </div>
@@ -870,8 +872,9 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
                           />
                           <StalenessCompact lastUpdated={company.holdingsLastUpdated} sourceUrl={company.holdingsSourceUrl} />
                         </div>
-                        <span className="text-xs text-gray-500 font-mono">
+                        <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
                           {formatNumber(company.holdings)} {company.asset}
+                          <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
                         </span>
                       </div>
                     )}

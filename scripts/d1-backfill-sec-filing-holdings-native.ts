@@ -3,6 +3,7 @@
 import crypto from 'node:crypto';
 import { D1Client } from '../src/lib/d1';
 import { getHoldingsHistory } from '../src/lib/data/holdings-history';
+import { TICKER_TO_CIK } from '../src/lib/sec/sec-edgar';
 import {
   writeSecFilingHoldingsNativeDatapoint,
   type SecFilingHoldingsNativeWriteResult,
@@ -40,14 +41,17 @@ function mapConfidence(raw: 'high' | 'medium' | 'low' | undefined): number {
 }
 
 async function main() {
-  const tickersRaw = (argVal('tickers') || 'MSTR,BMNR,SBET').trim();
+  const tickersRaw = (argVal('tickers') || 'ALL').trim();
   const dryRun = (argVal('dry-run') || process.env.DRY_RUN || 'true') === 'true';
   const limit = Number(argVal('limit') || process.env.LIMIT || '200');
 
-  const tickers = tickersRaw
-    .split(',')
-    .map(t => t.trim().toUpperCase())
-    .filter(Boolean);
+  const useAllTickers = !tickersRaw || tickersRaw.toUpperCase() === 'ALL';
+  const tickers = useAllTickers
+    ? Array.from(new Set(Object.keys(TICKER_TO_CIK).map(t => t.toUpperCase()))).sort()
+    : tickersRaw
+        .split(',')
+        .map(t => t.trim().toUpperCase())
+        .filter(Boolean);
 
   const d1 = D1Client.fromEnv();
   const runId = crypto.randomUUID();
@@ -156,6 +160,7 @@ async function main() {
       {
         dryRun,
         tickers,
+        tickerMode: useAllTickers ? 'all_sec_cik_mapped' : 'explicit_list',
         limit,
         runId,
         scanned,
