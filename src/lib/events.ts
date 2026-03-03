@@ -104,7 +104,7 @@ export function logApiCallEvent(opts: {
   ticker?: string;
   metric?: string;
   status: number;
-  latencyMs: number;
+  latency_ms: number;
   sessionId?: string;
   client?: 'web' | 'agent' | 'cron' | 'unknown';
 }): void {
@@ -116,6 +116,6 @@ export function logApiCallEvent(opts: {
     route: opts.route,
     ticker: opts.ticker,
     metric: opts.metric,
-    meta: { status: opts.status, latencyMs: opts.latencyMs },
+    meta: { status: opts.status, latency_ms: opts.latency_ms },
   }).catch(() => {});
 }
