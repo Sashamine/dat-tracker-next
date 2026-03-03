@@ -3,6 +3,7 @@
 import { formatLargeNumber } from "@/lib/calculations";
 import { FilingCite } from "@/components/wiki-citation";
 import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
+import type { HoldingsBasis } from "@/lib/d1-overlay";
 
 interface MnavCalculationCardProps {
   ticker: string;
@@ -43,6 +44,8 @@ interface MnavCalculationCardProps {
   holdingsSourceUrl?: string;
   holdingsSource?: string;
   holdingsAsOf?: string;
+  // Holdings resolution basis
+  holdingsBasis?: HoldingsBasis;
   // Search terms for Ctrl+F verification
   holdingsSearchTerm?: string;
   debtSearchTerm?: string;
@@ -179,6 +182,7 @@ export function MnavCalculationCard({
   holdingsSourceUrl,
   holdingsSource,
   holdingsAsOf,
+  holdingsBasis,
 }: MnavCalculationCardProps) {
   // Calculate EV
   // Free cash = total cash minus restricted/operating cash
@@ -316,15 +320,15 @@ export function MnavCalculationCard({
             <span className="text-gray-400 text-sm flex items-center gap-1">
               {holdings.toLocaleString()} {asset} × ${cryptoPrice.toLocaleString()}
               {holdingsSourceUrl && (
-                <VerificationBadge 
+                <VerificationBadge
                   status={getVerificationStatus(
                     holdingsSourceUrl?.includes("sec.gov") ? "sec-filing" : holdingsSource,
                     holdingsSourceUrl,
                     holdingsAsOf
-                  )} 
-                  sourceUrl={holdingsSourceUrl} 
+                  )}
+                  sourceUrl={holdingsSourceUrl}
                   asOf={holdingsAsOf}
-                  compact 
+                  compact
                 />
               )}
             </span>
@@ -332,6 +336,21 @@ export function MnavCalculationCard({
               {formatLargeNumber(holdingsValue)}
             </span>
           </div>
+          {holdingsBasis && (
+            <div className="mt-1">
+              <span className={`inline-flex items-center text-[10px] font-medium px-1.5 py-0.5 rounded ${
+                holdingsBasis === 'native_units'
+                  ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                  : holdingsBasis === 'usd_fair_value'
+                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                    : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500'
+              }`}>
+                {holdingsBasis === 'native_units' ? 'D1 native'
+                  : holdingsBasis === 'usd_fair_value' ? 'D1 USD÷price'
+                  : 'static'}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
