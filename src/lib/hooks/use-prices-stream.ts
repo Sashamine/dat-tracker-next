@@ -17,10 +17,17 @@ interface StockPrice {
   lastTrade?: string;
 }
 
+export interface LSTRate {
+  exchangeRate: number;
+  provider: string;
+  fetchedAt: string;
+}
+
 export interface PricesData {
   crypto: Record<string, CryptoPrice>;
   stocks: Record<string, StockPrice>;
   forex?: Record<string, number>;  // Live forex rates (e.g., JPY: 156)
+  lst?: Record<string, LSTRate>;   // LST exchange rates (e.g., kHYPE → HYPE)
   timestamp: string;
   marketOpen?: boolean;
   extendedHours?: boolean;
