@@ -1,12 +1,13 @@
-// @ts-nocheck
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
+import type { PricesData } from "@/lib/hooks/use-prices-stream";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
+import type { EffectiveSharesResult } from "@/lib/data/dilutive-instruments";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
@@ -34,6 +35,17 @@ import {
 
 export type CompanyViewBaseExpandedCard = "mnav" | "leverage" | "equityNav" | null;
 
+type PvParam = ProvenanceValue<number> | undefined;
+
+/** Minimal provenance shape — only the fields CompanyViewBase reads directly */
+type ProvenanceData = {
+  holdings?: ProvenanceValue<number>;
+  totalDebt?: ProvenanceValue<number>;
+  cashReserves?: ProvenanceValue<number>;
+  sharesOutstanding?: ProvenanceValue<number>;
+  preferredEquity?: ProvenanceValue<number>;
+};
+
 export type CompanyViewBaseMetrics = {
   // numeric values
   holdings: number;
@@ -58,13 +70,18 @@ export type CompanyViewBaseMetrics = {
   leveragePv: ProvenanceValue<number>;
   equityNavPv: ProvenanceValue<number>;
   equityNavPerSharePv: ProvenanceValue<number>;
+
+  // Optional extended fields used by expandable cards / charts
+  leverage?: number;
+  adjustedDebt?: number;
+  itmDebtAdjustment?: number;
 };
 
-type SourceHelpers = {
-  sourceUrl?: (p: any) => string | undefined;
-  sourceType?: (p: any) => string | undefined;
-  sourceDate?: (p: any) => string | undefined;
-  searchTerm?: (p: any) => string | undefined;
+export type SourceHelpers = {
+  sourceUrl?: (p: PvParam) => string | undefined;
+  sourceType?: (p: PvParam) => string | undefined;
+  sourceDate?: (p: PvParam) => string | undefined;
+  searchTerm?: (p: PvParam) => string | undefined;
 };
 
 type ScheduledEventsProps = {
@@ -78,7 +95,10 @@ export type CompanyViewBaseConfig = {
   cik?: string;
 
   // provenance (passed through to calculation cards)
-  provenance: any;
+  provenance: ProvenanceData;
+
+  // Optional provenance source helpers (sourceUrl, sourceType, etc.)
+  provenanceHelpers?: SourceHelpers;
 
   // If company has dilutive instruments, provide basicShares for getEffectiveShares
   getEffectiveSharesBasic?: (company: Company) => number;
@@ -86,26 +106,26 @@ export type CompanyViewBaseConfig = {
   // Build all derived metrics; MUST preserve company-specific logic
   buildMetrics: (ctx: {
     company: Company;
-    prices: any;
+    prices: PricesData | null;
     marketCap: number;
-    effectiveShares: any;
+    effectiveShares: EffectiveSharesResult | null;
   }) => CompanyViewBaseMetrics | null;
 
   // Optional extra sections
-  renderStrategyAndOverview?: (ctx: { company: Company; prices: any }) => any;
-  renderBalanceSheetExtras?: (ctx: { company: Company; metrics: CompanyViewBaseMetrics; prices: any }) => any;
+  renderStrategyAndOverview?: (ctx: { company: Company; prices: PricesData | null }) => ReactNode;
+  renderBalanceSheetExtras?: (ctx: { company: Company; metrics: CompanyViewBaseMetrics; prices: PricesData | null }) => ReactNode;
 
   // Optional: customize ScheduledEvents props (some tickers pass stockPrice)
   scheduledEventsProps?: (ctx: { ticker: string; stockPrice: number }) => ScheduledEventsProps;
 
   // Optional: render extra accordion sections after Scheduled Events
-  renderAfterDataSections?: (ctx: { company: Company; prices: any; metrics: CompanyViewBaseMetrics; stockPrice: number }) => any;
+  renderAfterDataSections?: (ctx: { company: Company; prices: PricesData | null; metrics: CompanyViewBaseMetrics; stockPrice: number }) => ReactNode;
 
   // Optional: override staleness dates
   stalenessDates?: (ctx: { company: Company }) => (string | undefined)[];
 
   // Optional: if marketCap should be overridden for cards/charts
-  marketCapOverride?: (ctx: { company: Company; prices: any; marketCap: number }) => number;
+  marketCapOverride?: (ctx: { company: Company; prices: PricesData | null; marketCap: number }) => number;
 };
 
 export function CompanyViewBase({ company, className = "", config }: { company: Company; className?: string; config: CompanyViewBaseConfig }) {
@@ -134,11 +154,11 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
     if (!stockPrice) return null;
     const basic = config.getEffectiveSharesBasic ? config.getEffectiveSharesBasic(company) : company.sharesForMnav ?? 0;
     return getEffectiveShares(config.ticker, basic || 0, stockPrice);
-  }, [stockPrice, company.sharesForMnav]);
+  }, [stockPrice, company, config]);
 
   const metrics = useMemo(() => {
     return config.buildMetrics({ company, prices, marketCap, effectiveShares });
-  }, [company, prices, marketCap, effectiveShares]);
+  }, [company, prices, marketCap, effectiveShares, config]);
 
   const handleTimeRangeChange = (newRange: TimeRange) => {
     setTimeRange(newRange);
@@ -155,11 +175,14 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
 
   const intel = getCompanyIntel(config.ticker);
 
-  const helpers: SourceHelpers = (config as any).provenanceHelpers || {};
-  const sourceUrl = helpers.sourceUrl || ((p: any) => undefined);
-  const sourceType = helpers.sourceType || ((p: any) => (p?.source as any)?.type);
-  const sourceDate = helpers.sourceDate || ((p: any) => undefined);
-  const searchTerm = helpers.searchTerm || ((p: any) => (p?.source as any)?.searchTerm);
+  const helpers: SourceHelpers = config.provenanceHelpers || {};
+  const sourceUrl = helpers.sourceUrl || (() => undefined);
+  const sourceType = helpers.sourceType || ((p: PvParam) => p?.source?.type);
+  const sourceDate = helpers.sourceDate || (() => undefined);
+  const searchTerm = helpers.searchTerm || ((p: PvParam) => {
+    const src = p?.source;
+    return src && 'searchTerm' in src ? src.searchTerm : undefined;
+  });
 
   return (
     <div className={className}>
@@ -235,7 +258,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
             ticker={config.ticker}
             asset={config.asset}
             marketCap={marketCap}
-            totalDebt={(metrics as any).adjustedDebt ?? metrics.totalDebt}
+            totalDebt={metrics.adjustedDebt ?? metrics.totalDebt}
             preferredEquity={metrics.preferredEquity}
             cashReserves={metrics.cashReserves}
             holdings={metrics.holdings}
@@ -247,7 +270,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
             hasDilutiveInstruments={!!effectiveShares?.breakdown?.length}
             basicShares={effectiveShares?.basic}
             itmDilutionShares={effectiveShares ? effectiveShares.diluted - effectiveShares.basic : undefined}
-            itmDebtAdjustment={(metrics as any).itmDebtAdjustment}
+            itmDebtAdjustment={metrics.itmDebtAdjustment}
             sharesSourceUrl={sourceUrl(config.provenance.sharesOutstanding)}
             sharesSource={sourceType(config.provenance.sharesOutstanding)}
             sharesAsOf={sourceDate(config.provenance.sharesOutstanding)}
@@ -271,11 +294,11 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
         <div className="mb-8">
           <LeverageCalculationCard
             rawDebt={metrics.totalDebt}
-            adjustedDebt={(metrics as any).adjustedDebt ?? metrics.totalDebt}
-            itmDebtAdjustment={(metrics as any).itmDebtAdjustment || 0}
+            adjustedDebt={metrics.adjustedDebt ?? metrics.totalDebt}
+            itmDebtAdjustment={metrics.itmDebtAdjustment || 0}
             cashReserves={metrics.cashReserves}
             cryptoNav={metrics.cryptoNav}
-            leverage={(metrics as any).leverage}
+            leverage={metrics.leverage ?? 0}
             debtSourceUrl={sourceUrl(config.provenance.totalDebt)}
             cashSourceUrl={sourceUrl(config.provenance.cashReserves)}
             holdingsSourceUrl={sourceUrl(config.provenance.holdings)}
@@ -288,7 +311,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
           <EquityNavPerShareCalculationCard
             cryptoNav={metrics.cryptoNav}
             cashReserves={metrics.cashReserves}
-            totalDebt={(metrics as any).adjustedDebt ?? metrics.totalDebt}
+            totalDebt={metrics.adjustedDebt ?? metrics.totalDebt}
             preferredEquity={metrics.preferredEquity}
             sharesOutstanding={metrics.sharesOutstanding}
             equityNav={metrics.equityNav}
@@ -392,7 +415,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
             companyData={{
               holdings: metrics.holdings,
               sharesForMnav: metrics.sharesOutstanding,
-              totalDebt: (metrics as any).adjustedDebt ?? metrics.totalDebt,
+              totalDebt: metrics.adjustedDebt ?? metrics.totalDebt,
               preferredEquity: metrics.preferredEquity,
               cashReserves: metrics.cashReserves,
               restrictedCash: 0,
@@ -424,7 +447,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
               <span className="text-gray-400"> crypto</span>
               <span className="text-green-600"> + {formatLargeNumber(metrics.cashReserves)}</span>
               <span className="text-gray-400"> cash</span>
-              <span className="text-red-600"> − {formatLargeNumber((metrics as any).adjustedDebt ?? metrics.totalDebt)}</span>
+              <span className="text-red-600"> − {formatLargeNumber(metrics.adjustedDebt ?? metrics.totalDebt)}</span>
               <span className="text-gray-400"> debt</span>
               {metrics.preferredEquity ? (
                 <>
@@ -478,7 +501,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
             const props = config.scheduledEventsProps
               ? config.scheduledEventsProps({ ticker: config.ticker, stockPrice })
               : ({ ticker: config.ticker } as ScheduledEventsProps);
-            return <ScheduledEvents {...(props as any)} />;
+            return <ScheduledEvents {...props} />;
           })()}
         </div>
       </details>
