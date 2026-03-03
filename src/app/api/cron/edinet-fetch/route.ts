@@ -1,8 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'node:crypto';
 import { COMPANY_SOURCES } from '@/lib/data/company-sources';
-import { edinetDownloadDocument, edinetListDocuments } from '@/lib/jp/edinet';
+import { edinetDownloadDocument, edinetListDocuments, type EdinetDocumentListItem } from '@/lib/jp/edinet';
 import { ingestArtifactToR2AndD1 } from '@/lib/artifacts/ingest';
+
+type CompanySourceLite = {
+  edinetCode?: string;
+  edinetFilingsUrl?: string;
+};
+
+type DownloadResult = {
+  ticker: string;
+  edinetCode: string | null;
+  found?: number;
+  downloaded?: number;
+  docID?: string;
+  size?: number;
+  contentHash?: string;
+  r2Key?: string;
+  filerName?: string;
+  docDescription?: string | null;
+  submitDateTime?: string | null;
+  existedBefore?: boolean;
+};
 
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
@@ -14,6 +34,14 @@ function verifyCronSecret(request: NextRequest): boolean {
 
 function nowIso() {
   return new Date().toISOString();
+}
+
+function getCompanySource(ticker: string): CompanySourceLite | null {
+  const direct = COMPANY_SOURCES[ticker.toUpperCase()];
+  if (direct) return direct;
+  const keyed = (COMPANY_SOURCES as Record<string, unknown>)[ticker];
+  if (!keyed || typeof keyed !== 'object') return null;
+  return keyed as CompanySourceLite;
 }
 
 export async function GET(request: NextRequest) {
@@ -40,7 +68,7 @@ export async function GET(request: NextRequest) {
   const tickers = tickersParam.split(',').map(s => s.trim()).filter(Boolean);
 
   const resolved = tickers.map(t => {
-    const src = COMPANY_SOURCES[t.toUpperCase()] || (COMPANY_SOURCES as any)[t];
+    const src = getCompanySource(t);
     return {
       ticker: t,
       edinetCode: src?.edinetCode || null,
@@ -64,7 +92,7 @@ export async function GET(request: NextRequest) {
     const list = await edinetListDocuments({ date, type: 2 });
     const results = list.results || [];
 
-    const byCode = new Map<string, any[]>();
+    const byCode = new Map<string, EdinetDocumentListItem[]>();
     for (const r of resolved) byCode.set(String(r.edinetCode), []);
 
     for (const item of results) {
@@ -75,7 +103,7 @@ export async function GET(request: NextRequest) {
 
     let artifactsInserted = 0;
     let artifactsIgnored = 0;
-    const downloads: any[] = [];
+    const downloads: DownloadResult[] = [];
 
     for (const r of resolved) {
       const items = (byCode.get(String(r.edinetCode)) || []).slice(0, maxDocsPerTicker);
@@ -135,8 +163,9 @@ export async function GET(request: NextRequest) {
       artifactsIgnored,
       downloads,
     });
-  } catch (err: any) {
-    return NextResponse.json({ success: false, runId, startedAt, error: err?.message || String(err) }, { status: 500 });
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ success: false, runId, startedAt, error }, { status: 500 });
   }
 }
 
