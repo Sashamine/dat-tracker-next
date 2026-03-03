@@ -1,27 +1,46 @@
-// @ts-nocheck
 "use client";
 
 import { H100_PROVENANCE, H100_CAPITAL_PROGRAMS } from "@/lib/data/provenance/h100";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
 const CONV = H100_CAPITAL_PROGRAMS.convertible;
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+interface H100Metrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  adjustedDebt: number;
+  itmDebtAdjustment: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && "searchTerm" in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -30,7 +49,7 @@ interface Props {
 }
 
 export function H100CompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "H100.ST",
     asset: "BTC",
     provenance: H100_PROVENANCE,
@@ -134,7 +153,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
         equityNavPerSharePv,
         adjustedDebt,
         itmDebtAdjustment: inTheMoneyDebtValue,
-      } as any;
+      } satisfies H100Metrics;
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
@@ -166,7 +185,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
         </details>
       </div>
     ),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
