@@ -25,7 +25,7 @@ type PricesSnapshot = {
 };
 
 // Get unique assets and count companies
-function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {  
+function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {
   const assets = [...new Set(companies.map(c => c.asset))];
   return assets.map(asset => {
     const assetCompanies = companies.filter(c => c.asset === asset);

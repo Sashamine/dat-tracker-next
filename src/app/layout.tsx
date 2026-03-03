@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { BottomNavigation } from "@/components/bottom-navigation";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SiteJsonLd, DatasetJsonLd, FAQJsonLd } from "@/components/json-ld";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 import type { Viewport } from "next";
 
@@ -50,9 +39,7 @@ export default function RootLayout({
         <DatasetJsonLd />
         <FAQJsonLd />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <Providers>
           <ServiceWorkerRegister />
           <div className="pb-16 lg:pb-0">{children}</div>
