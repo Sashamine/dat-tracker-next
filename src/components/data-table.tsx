@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Table,
   TableBody,
@@ -298,17 +299,19 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     return (
       <div className="relative w-7 h-7">
         <FallbackLogo ticker={ticker} />
-        <img
+        <Image
           src={pngPath}
           alt={ticker}
+          width={28}
+          height={28}
           className="absolute inset-0 w-7 h-7 rounded-full object-cover"
           onError={(e) => {
             // Try SVG if PNG fails
-            const img = e.target as HTMLImageElement;
-            if (img.src.endsWith('.png')) {
+            const img = e.currentTarget as HTMLImageElement;
+            if (img.src.endsWith(".png")) {
               img.src = svgPath;
             } else {
-              img.style.display = 'none';
+              img.style.display = "none";
             }
           }}
         />
