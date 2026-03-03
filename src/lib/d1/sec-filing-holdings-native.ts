@@ -111,11 +111,12 @@ function extractAccession(accession: string | null, url: string | null): string 
   return m?.[1] || null;
 }
 
-function normalizeNativeUnit(unit: string | null | undefined): 'BTC' | 'ETH' | null {
+function normalizeNativeUnit(unit: string | null | undefined): 'BTC' | 'ETH' | 'SOL' | null {
   const raw = (unit || '').trim().toUpperCase();
   if (!raw) return null;
   if (raw === 'BTC' || raw === 'BITCOIN') return 'BTC';
   if (raw === 'ETH' || raw === 'ETHER' || raw === 'ETHEREUM') return 'ETH';
+  if (raw === 'SOL' || raw === 'SOLANA') return 'SOL';
   return null;
 }
 

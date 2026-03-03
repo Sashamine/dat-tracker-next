@@ -76,10 +76,11 @@ async function main() {
       continue;
     }
 
-    const normalizedUnit = ((): 'BTC' | 'ETH' | null => {
+    const normalizedUnit = ((): 'BTC' | 'ETH' | 'SOL' | null => {
       const raw = (company.asset || '').trim().toUpperCase();
       if (raw === 'BTC' || raw === 'BITCOIN') return 'BTC';
       if (raw === 'ETH' || raw === 'ETHER' || raw === 'ETHEREUM') return 'ETH';
+      if (raw === 'SOL' || raw === 'SOLANA') return 'SOL';
       return null;
     })();
     if (!normalizedUnit) {
