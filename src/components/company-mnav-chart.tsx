@@ -39,7 +39,6 @@ export function CompanyMNAVChart({
   const seriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const [selectedPoint, setSelectedPoint] = useState<MnavDataPoint | null>(null);
 
-  const isMstr = ticker.toUpperCase() === "MSTR";
   const hasCompanyData = !!companyData; // Can calculate intraday mNAV if we have company data
   const isIntraday = timeRange === "1d" || timeRange === "7d" || timeRange === "1mo";
 
@@ -245,7 +244,6 @@ export function CompanyMNAVChart({
         chartRef.current = null;
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasData, mnavHistory, hasCompanyData, dataPoints]);
 
   // Calculate current and change stats
