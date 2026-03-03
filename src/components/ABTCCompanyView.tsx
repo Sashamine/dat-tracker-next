@@ -1,26 +1,47 @@
-// @ts-nocheck
 "use client";
 
 import { ABTC_PROVENANCE } from "@/lib/data/provenance/abtc";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import { getCompanyEarnings } from "@/lib/data/earnings-data";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
+}
+
+interface ABTCMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  adjustedDebt: number;
+  itmDebtAdjustment: number;
+  satsPerShare: number;
 }
 
 interface Props {
@@ -29,7 +50,7 @@ interface Props {
 }
 
 export function ABTCCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "ABTC",
     asset: "BTC",
     provenance: ABTC_PROVENANCE,
@@ -118,12 +139,13 @@ export function ABTCCompanyView({ company, className = "" }: Props) {
         adjustedDebt,
         itmDebtAdjustment: inTheMoneyDebtValue,
         satsPerShare,
-      } as any;
+      } satisfies ABTCMetrics;
     },
 
     stalenessDates: ({ company }) => [company.holdingsLastUpdated, company.sharesAsOf, company.burnAsOf],
 
     renderBalanceSheetExtras: ({ metrics }) => {
+      const m = metrics as ABTCMetrics;
       // Q3 2025 SPS baseline for growth calculation (from earnings data)
       const earnings = getCompanyEarnings("ABTC");
       const q3 = earnings.find((e) => e.calendarYear === 2025 && e.calendarQuarter === 3);
@@ -135,10 +157,10 @@ export function ABTCCompanyView({ company, className = "" }: Props) {
             <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
               <p className="text-sm text-amber-700 dark:text-amber-400">SPS Growth</p>
               <p className="text-2xl font-bold text-amber-600">
-                +{(((metrics as any).satsPerShare - q3SpsBaseline) / q3SpsBaseline * 100).toFixed(0)}%
+                +{((m.satsPerShare - q3SpsBaseline) / q3SpsBaseline * 100).toFixed(0)}%
               </p>
               <p className="text-xs text-amber-500">
-                since Q3 2025 ({q3SpsBaseline} → {Math.round((metrics as any).satsPerShare)} sats)
+                since Q3 2025 ({q3SpsBaseline} → {Math.round(m.satsPerShare)} sats)
               </p>
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
@@ -152,7 +174,7 @@ export function ABTCCompanyView({ company, className = "" }: Props) {
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
