@@ -22,21 +22,27 @@ const TICKERS = [
 // Simple in-memory store for prices (will persist to KV/DB in production)
 // For now, we'll use the Vercel Blob storage or just log for verification
 
-interface PriceSnapshot {
-  timestamp: string;
-  prices: Record<string, {
-    price: number;
-    open: number;
-    high: number;
-    low: number;
-    volume: number;
-  }>;
-}
+type QuoteOut = {
+  price: number;
+  open: number;
+  high: number;
+  low: number;
+  volume: number;
+};
+
+type FmpQuote = {
+  symbol?: string;
+  price?: number;
+  open?: number;
+  dayHigh?: number;
+  dayLow?: number;
+  volume?: number;
+};
 
 /**
  * Fetch current quotes from FMP
  */
-async function fetchQuotes(): Promise<Record<string, any>> {
+async function fetchQuotes(): Promise<Record<string, QuoteOut>> {
   const tickerList = TICKERS.join(",");
   const url = `https://financialmodelingprep.com/stable/batch-quote?symbols=${tickerList}&apikey=${FMP_API_KEY}`;
   
@@ -45,19 +51,21 @@ async function fetchQuotes(): Promise<Record<string, any>> {
     throw new Error(`FMP error: ${response.status}`);
   }
   
-  const data = await response.json();
-  const quotes: Record<string, any> = {};
-  
+  const data = (await response.json()) as FmpQuote[];
+  const quotes: Record<string, QuoteOut> = {};
+
   for (const quote of data) {
-    if (quote.symbol && quote.price) {
-      quotes[quote.symbol] = {
-        price: quote.price,
-        open: quote.open || quote.price,
-        high: quote.dayHigh || quote.price,
-        low: quote.dayLow || quote.price,
-        volume: quote.volume || 0,
-      };
-    }
+    const symbol = quote.symbol;
+    const price = quote.price;
+    if (!symbol || typeof price !== 'number') continue;
+
+    quotes[symbol] = {
+      price,
+      open: typeof quote.open === 'number' ? quote.open : price,
+      high: typeof quote.dayHigh === 'number' ? quote.dayHigh : price,
+      low: typeof quote.dayLow === 'number' ? quote.dayLow : price,
+      volume: typeof quote.volume === 'number' ? quote.volume : 0,
+    };
   }
   
   return quotes;
@@ -79,11 +87,6 @@ export async function GET(request: NextRequest) {
     
     const quotes = await fetchQuotes();
     const timestamp = new Date().toISOString();
-    
-    const snapshot: PriceSnapshot = {
-      timestamp,
-      prices: quotes,
-    };
     
     // For now, we'll store to a simple endpoint that appends to files
     // In production, use Vercel KV, Blob, or external DB
