@@ -12,7 +12,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { runComparison, type ComparisonResult } from '@/lib/comparison/engine';
+import { runComparison } from '@/lib/comparison/engine';
 import { sendDiscrepancySummary, sendDiscordAlert } from '@/lib/discord';
 
 // Verify cron secret for scheduled runs
