@@ -1,29 +1,46 @@
-// @ts-nocheck
 "use client";
 
 import { DDC_PROVENANCE, DDC_CIK } from "@/lib/data/provenance/ddc";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
-import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { Company, DataWarning } from "@/lib/types";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
 const DDC_WEBSITE = "https://ir.ddc.xyz";
 const DDC_TWITTER = "https://x.com/ddcbtc_";
 const DDC_TREASURY = "https://treasury.ddc.xyz";
 const DDC_SEC_URL = `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${DDC_CIK}&type=&dateb=&owner=include&count=40`;
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+interface DDCMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && "searchTerm" in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -32,7 +49,7 @@ interface Props {
 }
 
 export function DDCCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "DDC",
     asset: "BTC",
     cik: DDC_CIK,
@@ -115,13 +132,13 @@ export function DDCCompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
-      } as any;
+      } satisfies DDCMetrics;
     },
 
     renderAfterDataSections: ({ company }) =>
       company.dataWarnings && company.dataWarnings.length > 0 ? (
         <div className="mt-6 space-y-2">
-          {company.dataWarnings.map((w: any, i: number) => (
+          {company.dataWarnings.map((w: DataWarning, i: number) => (
             <div
               key={i}
               className={`rounded-lg px-4 py-3 text-sm flex items-start gap-2 ${
@@ -137,7 +154,7 @@ export function DDCCompanyView({ company, className = "" }: Props) {
         </div>
       ) : null,
 
-    renderStrategyAndOverview: ({ company }) => (
+    renderStrategyAndOverview: () => (
       <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-6 group">
         <summary className="p-6 cursor-pointer flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Strategy & Overview</h3>
@@ -157,7 +174,7 @@ export function DDCCompanyView({ company, className = "" }: Props) {
     ),
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
