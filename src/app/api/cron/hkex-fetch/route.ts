@@ -6,6 +6,40 @@ import { fetchFilingPdf, getKnownFilings } from '@/lib/fetchers/hkex';
 import { discoverHkexFilings } from '@/lib/fetchers/hkex-search';
 import { ingestArtifactToR2AndD1 } from '@/lib/artifacts/ingest';
 
+type CompanySourceLite = {
+  hkexStockCode?: string;
+};
+
+type DiscoverySummary = {
+  attempted: boolean;
+  success: boolean;
+  discoveredCount: number;
+  error?: string;
+};
+
+type TickerFilingResult = {
+  url: string;
+  docId: string;
+  ok: boolean;
+  error?: string;
+  artifactId?: string | null;
+  r2Key?: string;
+  contentHash?: string;
+  size?: number;
+  date?: string;
+  title?: string;
+};
+
+type TickerSummary = {
+  ticker: string;
+  success?: boolean;
+  error?: string;
+  stockCode?: string;
+  discovery?: DiscoverySummary;
+  filingsAttempted?: number;
+  results?: TickerFilingResult[];
+};
+
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
@@ -16,6 +50,14 @@ function verifyCronSecret(request: NextRequest): boolean {
 
 function nowIso() {
   return new Date().toISOString();
+}
+
+function resolveCompanySource(ticker: string, tickerRaw: string): CompanySourceLite | null {
+  const fromCanonical = COMPANY_SOURCES[ticker];
+  if (fromCanonical) return fromCanonical;
+  const fromRaw = (COMPANY_SOURCES as Record<string, unknown>)[tickerRaw];
+  if (!fromRaw || typeof fromRaw !== 'object') return null;
+  return fromRaw as CompanySourceLite;
 }
 
 export async function GET(request: NextRequest) {
@@ -41,7 +83,7 @@ export async function GET(request: NextRequest) {
   const runId = crypto.randomUUID();
   const startedAt = nowIso();
 
-  const summary: any[] = [];
+  const summary: TickerSummary[] = [];
   let artifactsInserted = 0;
   let artifactsIgnored = 0;
   let failures = 0;
@@ -49,7 +91,7 @@ export async function GET(request: NextRequest) {
   for (const tickerRaw of tickers) {
     const ticker = tickerRaw.toUpperCase();
     try {
-      const src = COMPANY_SOURCES[ticker] || (COMPANY_SOURCES as any)[tickerRaw];
+      const src = resolveCompanySource(ticker, tickerRaw);
       const stockCodeRaw = String(src?.hkexStockCode || '').trim();
       if (!stockCodeRaw) {
         summary.push({ ticker, success: false, error: 'Missing hkexStockCode in COMPANY_SOURCES' });
@@ -76,12 +118,12 @@ export async function GET(request: NextRequest) {
         filings = discovered;
         discovery.success = true;
         discovery.discoveredCount = discovered.length;
-      } catch (e: any) {
-        discovery.error = e?.message || String(e);
+      } catch (e: unknown) {
+        discovery.error = e instanceof Error ? e.message : String(e);
         filings = getKnownFilings(stockCode).slice(0, limit);
       }
 
-      const perTicker: any[] = [];
+      const perTicker: TickerFilingResult[] = [];
       for (const f of filings) {
         const bytesBuf = await fetchFilingPdf(f.url);
         if (!bytesBuf) {
@@ -134,9 +176,9 @@ export async function GET(request: NextRequest) {
       }
 
       summary.push({ ticker, stockCode, discovery, filingsAttempted: filings.length, results: perTicker });
-    } catch (err: any) {
+    } catch (err: unknown) {
       failures += 1;
-      summary.push({ ticker: tickerRaw, success: false, error: err?.message || String(err) });
+      summary.push({ ticker: tickerRaw, success: false, error: err instanceof Error ? err.message : String(err) });
     }
   }
 
