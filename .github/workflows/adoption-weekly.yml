@@ -1,0 +1,36 @@
+name: adoption-weekly-snapshot
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'  # Every Monday at 07:00 UTC
+
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate weekly adoption snapshot
+        env:
+          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+        run: bash scripts/ops/generate-adoption-weekly.sh
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ops/adoption/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            DATE_UTC="$(date -u +%F)"
+            git commit -m "ops(adoption): weekly snapshot ${DATE_UTC}"
+            git push
+          fi
