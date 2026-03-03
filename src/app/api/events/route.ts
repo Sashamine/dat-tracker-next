@@ -4,6 +4,7 @@ import { insertEvent, type AdoptionEvent } from '@/lib/events';
 const VALID_EVENTS = new Set([
   'api_call',
   'page_view',
+  'company_view',
   'citation_modal_open',
   'citation_source_click',
   'history_view',

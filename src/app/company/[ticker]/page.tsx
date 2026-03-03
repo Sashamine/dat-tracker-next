@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense, useState, useMemo } from "react";
-import { useParams } from "next/navigation";
+import { Suspense, useState, useMemo, useEffect } from "react";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
 import { latestRowByMetric, useCompanyD1Latest } from "@/lib/hooks/use-company-d1-latest";
@@ -78,6 +78,7 @@ import { H100CompanyView } from "@/components/H100CompanyView";
 import { DDCCompanyView } from "@/components/DDCCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
+import { trackCompanyView } from "@/lib/client-events";
 import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
 import { CostBasisCard } from "@/components/cost-basis-card";
 import { SECFilingTimeline } from "@/components/sec-filing-timeline";
@@ -120,7 +121,12 @@ function SourceLink({ url, label }: { url?: string; label?: string }) {
 export default function CompanyPage() {
   const params = useParams();
   const ticker = params.ticker as string;
+  const pathname = usePathname();
   const { data: prices } = usePricesStream();
+
+  useEffect(() => {
+    if (ticker) trackCompanyView(ticker, pathname);
+  }, [ticker, pathname]);
 
   // Fetch company from database API
   const { data: companyData, isLoading: isLoadingCompany } = useCompany(ticker);
