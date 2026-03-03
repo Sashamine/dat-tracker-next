@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getLatestMetrics } from '@/lib/d1';
 import { getHoldingsBasis } from '@/lib/d1-overlay';
+import { CORE_D1_METRICS } from '@/lib/metrics';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       ticker,
-      metrics: metrics || ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
+      metrics: metrics || [...CORE_D1_METRICS],
       holdings_basis,
       rows,
     });

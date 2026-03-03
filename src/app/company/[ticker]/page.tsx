@@ -9,6 +9,7 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay, getHoldingsBasis } from "@/lib/d1-overlay";
+import { CORE_D1_METRICS, HISTORY_D1_METRICS } from "@/lib/metrics";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { Company } from "@/lib/types";
@@ -204,27 +205,11 @@ export default function CompanyPage() {
   };
 
   // D1 canonical inputs (Balance Sheet + shares)
-  const D1_INPUT_METRICS = useMemo(
-    () => ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
-    []
-  );
-  const { data: d1LatestInputs } = useCompanyD1Latest(ticker, D1_INPUT_METRICS);
+  const { data: d1LatestInputs } = useCompanyD1Latest(ticker, [...CORE_D1_METRICS]);
   const d1ByMetric = useMemo(() => latestRowByMetric(d1LatestInputs?.rows), [d1LatestInputs]);
 
   // D1 metric history (batch)
-  const HISTORY_METRICS = useMemo(
-    () => [
-      'cash_usd',
-      'restricted_cash_usd',
-      'other_investments_usd',
-      'debt_usd',
-      'preferred_equity_usd',
-      'basic_shares',
-      'holdings_native',
-    ],
-    []
-  );
-  const { data: metricHistory } = useCompanyMetricHistory(ticker, HISTORY_METRICS, 12, 'desc');
+  const { data: metricHistory } = useCompanyMetricHistory(ticker, [...HISTORY_D1_METRICS], 12, 'desc');
 
   // Wait for BOTH data sources to load to ensure consistency with main page
   if (isLoadingCompany || isLoadingCompanies) {
@@ -1307,7 +1292,7 @@ export default function CompanyPage() {
           <div className="mb-4">
             <CompanyMetricHistorySection
               title="Balance sheet & shares history"
-              metrics={HISTORY_METRICS}
+              metrics={[...HISTORY_D1_METRICS]}
               series={metricHistory.series}
             />
           </div>
