@@ -180,6 +180,38 @@ Deliverables:
   - `GET /company/:ticker/metric/:metric`
 - Each response includes: `as_of`, `reported_at`, `source_url`, `artifact_id`, `run_id`, `method`, `confidence`
 
+### 10f — Adoption instrumentation (D1 events; re-evaluate PostHog after 7 days)
+**Why**: correctness + provenance are necessary, but we also need to observe real usage patterns to prioritize work.
+
+Deliverables:
+- **D1 events sink**
+  - Add an `events` (or `adoption_events`) table in D1.
+  - Add ingestion endpoint: `POST /api/events`.
+  - Add retention + rate limiting (keep raw events ~7–30 days; keep aggregates longer).
+- **Server-side API call instrumentation** (structured, not just logs)
+  - Log key read endpoints (e.g. `/api/d1/latest-metrics`, `/api/d1/history`) with:
+    - route name, ticker/metric params, status, latency
+    - caller segmentation via `x-client: web|agent|cron|unknown` where possible
+- **Client-side UX instrumentation**
+  - Track: `citation_modal_open`, `citation_source_click`, `history_view`.
+- **Queryable adoption summaries**
+  - Add an admin endpoint or documented D1 queries that produce:
+    - most viewed companies
+    - most requested metrics
+    - most cited datapoints (by datapoint_id / metric+as_of)
+    - citation modal open frequency + click-through rate
+    - history usage heatmap (metric × ticker × range/limit)
+
+DoD:
+- After 7 days, we can answer with numbers:
+  - which tickers/metrics are actually used
+  - whether citations are being opened and clicked
+  - how often history endpoints are used and for what
+  - web vs agent vs cron usage split
+
+Decision gate:
+- After 7 days of D1 events data, re-evaluate whether PostHog is needed for funnels/cohorts/retention analysis.
+
 ---
 
 ## ARCHIVE (pre-Phase 10 / pre-D1)
