@@ -12,7 +12,7 @@ import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
 
-import type { Company } from "@/lib/types";
+import type { Company, Asset } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
 
 import { ProvenanceMetric } from "./ProvenanceMetric";
@@ -91,7 +91,7 @@ type ScheduledEventsProps = {
 
 export type CompanyViewBaseConfig = {
   ticker: string;
-  asset: "BTC" | "ETH";
+  asset: Asset;
   cik?: string;
 
   // provenance (passed through to calculation cards)
