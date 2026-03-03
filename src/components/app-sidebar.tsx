@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
@@ -211,7 +212,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
                   )}
                 >
                   {CRYPTO_ICONS[asset] && (
-                    <img src={CRYPTO_ICONS[asset]} alt={asset} className="w-5 h-5 rounded-full" />
+                    <Image src={CRYPTO_ICONS[asset]} alt={asset} width={20} height={20} className="w-5 h-5 rounded-full" />
                   )}
                   <span>{asset}</span>
                 </Link>
@@ -239,7 +240,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {CRYPTO_ICONS[asset] && (
-                      <img src={CRYPTO_ICONS[asset]} alt={asset} className="w-5 h-5 rounded-full" />
+                      <Image src={CRYPTO_ICONS[asset]} alt={asset} width={20} height={20} className="w-5 h-5 rounded-full" />
                     )}
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       {asset}
