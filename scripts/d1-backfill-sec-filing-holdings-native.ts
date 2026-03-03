@@ -61,6 +61,7 @@ async function main() {
   let skipped = 0;
   let failed = 0;
   let nonBtcSkipped = 0;
+  const failedRows: Array<{ ticker: string; as_of: string; sourceUrl?: string; error?: string }> = [];
 
   const samples: Array<{ ticker: string; as_of: string; sourceUrl?: string; status: string }> = [];
 
@@ -135,7 +136,17 @@ async function main() {
       else if (result.status === 'updated') updated++;
       else if (result.status === 'seededProposalKey') seededProposalKey++;
       else if (result.status === 'noop' || result.status === 'dry_run') noop++;
-      else if (result.status === 'error') failed++;
+      else if (result.status === 'error') {
+        failed++;
+        const rowError = {
+          ticker,
+          as_of: snapshot.date,
+          sourceUrl: snapshot.sourceUrl,
+          error: result.error || 'unknown error',
+        };
+        failedRows.push(rowError);
+        console.log(JSON.stringify({ ok: false, kind: 'write_error', ...rowError }));
+      }
       else skipped++;
     }
   }
@@ -156,6 +167,7 @@ async function main() {
         skipped,
         nonBtcSkipped,
         failed,
+        failedRows,
         samples,
       },
       null,

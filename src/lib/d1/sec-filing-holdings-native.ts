@@ -123,6 +123,21 @@ async function ensureArtifact(d1: D1Client, input: {
   filingUrl: string | null;
   accession: string | null;
 }): Promise<string> {
+  // Prefer global accession match first. Accessions are unique to filings and can
+  // predate ticker renames/rebrands, so ticker-scoped lookup can miss valid rows.
+  if (input.accession) {
+    const byAccessionGlobal = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type = 'sec_filing'
+         AND accession = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [input.accession]
+    );
+    if (byAccessionGlobal.results[0]?.artifact_id) return byAccessionGlobal.results[0].artifact_id;
+  }
+
   if (input.accession) {
     const byAccession = await d1.query<{ artifact_id: string }>(
       `SELECT artifact_id
@@ -138,6 +153,17 @@ async function ensureArtifact(d1: D1Client, input: {
   }
 
   if (input.filingUrl) {
+    const byUrlGlobal = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type = 'sec_filing'
+         AND source_url = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [input.filingUrl]
+    );
+    if (byUrlGlobal.results[0]?.artifact_id) return byUrlGlobal.results[0].artifact_id;
+
     const byUrl = await d1.query<{ artifact_id: string }>(
       `SELECT artifact_id
        FROM artifacts
@@ -182,7 +208,45 @@ async function ensureArtifact(d1: D1Client, input: {
     `SELECT artifact_id FROM artifacts WHERE content_hash = ? LIMIT 1;`,
     [contentHash]
   );
-  return actual.results?.[0]?.artifact_id || artifactId;
+  if (actual.results?.[0]?.artifact_id) return actual.results[0].artifact_id;
+
+  const byR2 = await d1.query<{ artifact_id: string }>(
+    `SELECT artifact_id
+     FROM artifacts
+     WHERE r2_bucket = ?
+       AND r2_key = ?
+     LIMIT 1;`,
+    ['dat-tracker-filings', r2Key]
+  );
+  if (byR2.results?.[0]?.artifact_id) return byR2.results[0].artifact_id;
+
+  if (input.filingUrl) {
+    const byUrlAny = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type = 'sec_filing'
+         AND source_url = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [input.filingUrl]
+    );
+    if (byUrlAny.results?.[0]?.artifact_id) return byUrlAny.results[0].artifact_id;
+  }
+
+  if (input.accession) {
+    const byAccessionAny = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type = 'sec_filing'
+         AND accession = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [input.accession]
+    );
+    if (byAccessionAny.results?.[0]?.artifact_id) return byAccessionAny.results[0].artifact_id;
+  }
+
+  throw new Error('unable to resolve artifact_id after insert-or-ignore');
 }
 
 export async function writeSecFilingHoldingsNativeDatapoint(
