@@ -9,7 +9,7 @@ import { MobileHeader } from "@/components/mobile-header";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { getCompanyEarnings, getNextEarnings } from "@/lib/data/earnings-data";
-import { formatLargeNumber, formatPercent, formatTokenAmountPrecise } from "@/lib/calculations";
+import { formatTokenAmountPrecise } from "@/lib/calculations";
 import type { EarningsRecord } from "@/lib/types";
 
 // Asset colors
@@ -82,7 +82,7 @@ function aggregateAnnualData(quarterlyData: EarningsRecord[]): EarningsRecord[] 
   const annualData: EarningsRecord[] = [];
 
   // For each year, select the best representative quarter
-  yearMap.forEach((records, year) => {
+  yearMap.forEach((records) => {
     // Sort quarters by quarter number descending (Q4, Q3, Q2, Q1)
     records.sort((a, b) => b.fiscalQuarter - a.fiscalQuarter);
 

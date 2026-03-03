@@ -9,7 +9,6 @@ import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay } from "@/lib/d1-overlay";
 import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -53,13 +52,6 @@ const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: bool
 };
 
 type SortableField = "holdings" | "holdingsValue" | "mNAV";
-
-// Tier colors
-const tierColors: Record<number, string> = {
-  1: "bg-green-500/10 text-green-600 border-green-500/20",
-  2: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  3: "bg-gray-500/10 text-gray-600 border-gray-500/20",
-};
 
 
 export default function AssetPage() {
