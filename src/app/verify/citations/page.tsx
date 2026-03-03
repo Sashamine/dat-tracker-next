@@ -131,21 +131,6 @@ export default function CitationVerificationPage() {
     return point.sourceUrl;
   };
 
-  const getOriginalUrl = (point: DataPoint): string | null => {
-    if (!point.sourceUrl) return null;
-    
-    const urlType = getUrlType(point.sourceUrl);
-    
-    if (urlType === "local-api" || urlType === "local-static") {
-      const parts = point.sourceUrl.replace("/filings/", "").replace("/sec/", "").split("/");
-      if (parts.length >= 1) {
-        return `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=${parts[0]}&type=&dateb=&owner=include&count=40`;
-      }
-    }
-    
-    return point.sourceUrl;
-  };
-
   const formatNumber = (n: number): string => {
     if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + "M";
     if (n >= 1_000) return (n / 1_000).toFixed(1) + "K";
