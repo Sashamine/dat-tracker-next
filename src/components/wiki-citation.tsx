@@ -2,6 +2,7 @@
 
 import { ReactNode, createContext, useContext, useState } from "react";
 import Link from "next/link";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface CitationSource {
   id: number;
@@ -114,6 +115,7 @@ export function FilingCite({
       href={url}
       className="text-[10px] text-blue-500 hover:text-blue-400 align-super ml-1 no-underline whitespace-nowrap"
       title={`View ${filingType} filing from ${date}`}
+      onClick={() => trackCitationSourceClick({ href: url, ticker })}
     >
       [{filingType}&nbsp;↗]
     </Link>
@@ -143,6 +145,7 @@ export function References() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:text-blue-400 hover:underline"
+                onClick={() => trackCitationSourceClick({ href: source.url })}
               >
                 {source.label}
               </a>
