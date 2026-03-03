@@ -28,6 +28,8 @@ interface DiscrepancyRow {
   created_date: string;
 }
 
+type SqlParam = string | number | null;
+
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
@@ -49,7 +51,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     let sql: string;
-    let params: any[];
+    let params: SqlParam[];
 
     // Set resolved_at if status is resolved or dismissed
     const shouldSetResolvedAt = status === 'resolved' || status === 'dismissed';
@@ -161,7 +163,7 @@ export async function GET(request: NextRequest) {
       WHERE d.created_at > NOW() - INTERVAL '${days} days'
     `;
 
-    const params: any[] = [];
+    const params: SqlParam[] = [];
     let paramIndex = 1;
 
     if (status) {

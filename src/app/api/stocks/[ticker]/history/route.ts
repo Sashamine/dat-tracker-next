@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStaticHistoryForRange } from "@/lib/data/stock-price-history";
 import { adjustPricesForSplits, STOCK_SPLITS } from "@/lib/data/stock-splits";
 import { D1Client } from "@/lib/d1";
+import type { StockSplit } from "@/lib/data/stock-splits";
 
 interface HistoricalPrice {
   time: string;
@@ -166,12 +167,12 @@ export async function GET(
 
           // Convert action ratios to price adjustment ratios:
           // price_post = price_pre / shares_ratio => multiply by (1/ratio) for pre-split prices.
-          const splitsForPrice = actions.map(a => ({
+          const splitsForPrice: StockSplit[] = actions.map(a => ({
             date: a.effective_date,
             ratio: 1 / a.ratio,
             description: 'from D1 corporate_actions',
           }));
-          yahooData = adjustPricesForSplits(ticker, yahooData, splitsForPrice as any);
+          yahooData = adjustPricesForSplits(ticker, yahooData, splitsForPrice);
         } else {
           yahooData = adjustPricesForSplits(ticker, yahooData);
         }
