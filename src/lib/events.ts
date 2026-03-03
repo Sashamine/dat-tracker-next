@@ -56,6 +56,39 @@ function isRateLimited(sessionId: string, event: string): boolean {
   return false;
 }
 
+function stripWrappingQuotes(value: string): string {
+  let out = value.trim();
+  while (
+    out.length >= 2 &&
+    ((out.startsWith('"') && out.endsWith('"')) || (out.startsWith("'") && out.endsWith("'")))
+  ) {
+    out = out.slice(1, -1).trim();
+  }
+  return out;
+}
+
+function sanitizeLoggedTicker(value?: string): string | undefined {
+  if (!value) return undefined;
+  const cleaned = stripWrappingQuotes(value);
+  if (!cleaned) return undefined;
+  return cleaned.toUpperCase();
+}
+
+function sanitizeLoggedRoute(value?: string): string | undefined {
+  if (!value) return undefined;
+  const cleaned = stripWrappingQuotes(value);
+  return cleaned || undefined;
+}
+
+function sanitizeLoggedMetric(value?: string): string | undefined {
+  if (!value) return undefined;
+  const noQuotes = stripWrappingQuotes(value);
+  if (!noQuotes) return undefined;
+  const first = noQuotes.split(',')[0];
+  const cleaned = stripWrappingQuotes(first);
+  return cleaned || undefined;
+}
+
 // ---------------------------------------------------------------------------
 // Core insert (best-effort, never throws)
 // ---------------------------------------------------------------------------
@@ -108,14 +141,18 @@ export function logApiCallEvent(opts: {
   sessionId?: string;
   client?: 'web' | 'agent' | 'cron' | 'unknown';
 }): void {
+  const route = sanitizeLoggedRoute(opts.route);
+  const ticker = sanitizeLoggedTicker(opts.ticker);
+  const metric = sanitizeLoggedMetric(opts.metric);
+
   // Fire-and-forget — do NOT await.
   insertEvent({
     event: 'api_call',
     client: opts.client ?? 'cron',
     session_id: opts.sessionId ?? 'server',
-    route: opts.route,
-    ticker: opts.ticker,
-    metric: opts.metric,
+    route,
+    ticker,
+    metric,
     meta: { status: opts.status, latency_ms: opts.latency_ms },
   }).catch(() => {});
 }
