@@ -39,6 +39,8 @@ async function d1Query<T>(sql: string, params: any[] = []): Promise<D1QueryResul
 async function main() {
   const secMissingSourceUrlBaseline = Number(process.env.SEC_MISSING_SOURCE_URL_BASELINE || '9');
   const secMissingAccessionBaseline = Number(process.env.SEC_MISSING_ACCESSION_BASELINE || '9');
+  const strictSecFilingAccessionInvariant =
+    (process.env.STRICT_SEC_FILING_ACCESSION_INVARIANT || 'false').toLowerCase() === 'true';
 
   const tableExists = await d1Query<{ name: string }>(
     `SELECT name FROM sqlite_master WHERE type='table' AND name='artifacts' LIMIT 1;`
@@ -115,6 +117,7 @@ async function main() {
   const missingAccession = Number(secMissingAccession.results?.[0]?.cnt ?? 0);
   const sourceUrlRegression = missingSourceUrl > secMissingSourceUrlBaseline;
   const accessionRegression = missingAccession > secMissingAccessionBaseline;
+  const secFilingRequiresAccession = missingAccession === 0;
 
   console.log(
     JSON.stringify(
@@ -139,6 +142,10 @@ async function main() {
             sourceUrl: sourceUrlRegression,
             accession: accessionRegression,
           },
+          invariant: {
+            secFilingRequiresAccession,
+            strictMode: strictSecFilingAccessionInvariant,
+          },
           sampleMissingBoth: secMissingSample.results || [],
         },
       },
@@ -146,6 +153,20 @@ async function main() {
       2
     )
   );
+
+  if (strictSecFilingAccessionInvariant && !secFilingRequiresAccession) {
+    console.error(
+      JSON.stringify(
+        {
+          success: false,
+          error: `Invariant failed: source_type='sec_filing' rows missing accession = ${missingAccession}`,
+        },
+        null,
+        2
+      )
+    );
+    process.exit(1);
+  }
 }
 
 main().catch((err) => {
