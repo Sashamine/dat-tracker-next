@@ -58,7 +58,6 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
       const cryptoNav = holdings * btcPrice;
       const freeCash = cashReserves - restrictedCash;
       const netDebt = Math.max(0, totalDebt - freeCash);
-      const ev = marketCap + totalDebt + preferredEquity - freeCash;
       const leverage = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
       const equityNav = cryptoNav + freeCash - totalDebt - preferredEquity;
@@ -112,7 +111,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
             holdings: STRV_PROVENANCE.holdings,
             cash: STRV_PROVENANCE.cashReserves,
             debt: STRV_PROVENANCE.totalDebt,
-            preferred: STRV_PROVENANCE.preferredEquity,
+            ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
           },
         }),
         `Free cash excludes restricted cash earmarked for crypto purchases`
@@ -128,7 +127,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
             shares: STRV_PROVENANCE.sharesOutstanding!,
             cash: STRV_PROVENANCE.cashReserves,
             debt: STRV_PROVENANCE.totalDebt,
-            preferred: STRV_PROVENANCE.preferredEquity,
+            ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
           },
         }),
         `Using ${(sharesOutstanding / 1_000_000).toFixed(1)}M shares`
