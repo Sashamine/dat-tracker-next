@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { HoldingsSource } from "@/lib/types";
+import { trackCitationOpen, trackCitationSourceClick } from "@/lib/client-events";
 
 // Source type labels for display
 const SOURCE_LABELS: Record<HoldingsSource, string> = {
@@ -91,7 +92,7 @@ export function Citation({
 
   return (
     <TooltipProvider delayDuration={200}>
-      <Tooltip>
+      <Tooltip onOpenChange={(open) => { if (open) trackCitationOpen(); }}>
         <TooltipTrigger asChild>
           <span
             className={`cursor-help ${className} ${showIndicator ? "border-b border-dotted border-gray-400 dark:border-gray-600" : ""}`}
@@ -129,7 +130,10 @@ export function Citation({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-[10px] text-blue-400 hover:text-blue-300 truncate mt-1"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  trackCitationSourceClick({ meta: { source_url: sourceUrl } });
+                }}
               >
                 View source
               </a>

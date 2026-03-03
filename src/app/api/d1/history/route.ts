@@ -5,15 +5,34 @@ import { logApiCallEvent } from '@/lib/events';
 export async function GET(request: NextRequest) {
   const t0 = Date.now();
   const { searchParams } = new URL(request.url);
+  const clientHeader = request.headers.get('x-client');
+  const client =
+    clientHeader === 'web' || clientHeader === 'agent' || clientHeader === 'cron' || clientHeader === 'unknown'
+      ? clientHeader
+      : undefined;
   const ticker = (searchParams.get('ticker') || '').toUpperCase();
   const metric = (searchParams.get('metric') || '').trim();
   const limitRaw = searchParams.get('limit');
   const orderRaw = (searchParams.get('order') || 'desc').toLowerCase();
 
   if (!ticker) {
+    logApiCallEvent({
+      route: '/api/d1/history',
+      metric,
+      status: 400,
+      latency_ms: Date.now() - t0,
+      client,
+    });
     return NextResponse.json({ success: false, error: 'Missing ticker' }, { status: 400 });
   }
   if (!metric) {
+    logApiCallEvent({
+      route: '/api/d1/history',
+      ticker,
+      status: 400,
+      latency_ms: Date.now() - t0,
+      client,
+    });
     return NextResponse.json({ success: false, error: 'Missing metric' }, { status: 400 });
   }
 
@@ -22,10 +41,24 @@ export async function GET(request: NextRequest) {
 
   try {
     const rows = await getMetricHistory(ticker, metric, { limit, order });
-    logApiCallEvent({ route: '/api/d1/history', ticker, metric, status: 200, latencyMs: Date.now() - t0 });
+    logApiCallEvent({
+      route: '/api/d1/history',
+      ticker,
+      metric,
+      status: 200,
+      latency_ms: Date.now() - t0,
+      client,
+    });
     return NextResponse.json({ success: true, ticker, metric, rows });
   } catch (err) {
-    logApiCallEvent({ route: '/api/d1/history', ticker, metric, status: 500, latencyMs: Date.now() - t0 });
+    logApiCallEvent({
+      route: '/api/d1/history',
+      ticker,
+      metric,
+      status: 500,
+      latency_ms: Date.now() - t0,
+      client,
+    });
     return NextResponse.json(
       { success: false, error: err instanceof Error ? err.message : String(err) },
       { status: 500 }
