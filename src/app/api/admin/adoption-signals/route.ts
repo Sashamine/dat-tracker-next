@@ -64,6 +64,7 @@ function fieldExpr(
   }
 
   if (!parts.length) return null;
+  if (parts.length === 1) return parts[0];
   return `COALESCE(${parts.join(', ')})`;
 }
 
@@ -143,13 +144,13 @@ export async function GET(request: NextRequest) {
       'timestamp',
       'ts',
     ]);
-    const eventExpr = fieldExpr(columns, ['event_name', 'event_type', 'name', 'action', 'type'], payloadCol, [
+    const eventExpr = fieldExpr(columns, ['event', 'event_name', 'event_type', 'name', 'action', 'type'], payloadCol, [
+      'event',
       'event_name',
       'event_type',
       'name',
       'action',
       'type',
-      'event',
     ]);
     const routeExpr = fieldExpr(columns, ['route', 'path', 'api_route', 'endpoint'], payloadCol, [
       'route',
