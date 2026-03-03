@@ -72,10 +72,6 @@ function cik10(cik: string): string {
     return digits.padStart(10, '0');
 }
 
-function accessionNoDashes(accession: string): string {
-    return accession.replace(/-/g, '');
-}
-
 function formBucket(form: string): string {
     const f = (form || '').toLowerCase();
     if (f.startsWith('8-k')) return '8k';
