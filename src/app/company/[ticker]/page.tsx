@@ -302,8 +302,9 @@ export default function CompanyPage() {
 
         // Get dynamic exchange rate from prices.lst or fall back to static
         let exchangeRate = investment.exchangeRate || 1;
-        if (investment.lstConfigId && (prices as any).lst?.[investment.lstConfigId]) {
-          exchangeRate = (prices as any).lst[investment.lstConfigId].exchangeRate;
+        const lstRate = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
+        if (lstRate) {
+          exchangeRate = lstRate.exchangeRate;
         }
 
         const underlyingAmount = investment.lstAmount * exchangeRate;
@@ -925,7 +926,7 @@ export default function CompanyPage() {
                 <span className="text-gray-400"> {displayCompany.asset}</span>
                 {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
                   // Get dynamic exchange rate if available
-                  const lstData = investment.lstConfigId && (prices as any)?.lst?.[investment.lstConfigId];
+                  const lstData = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
                   const exchangeRate = lstData?.exchangeRate || investment.exchangeRate || 1;
 
                   // Calculate value for this investment
@@ -1017,7 +1018,7 @@ export default function CompanyPage() {
               {/* Crypto fund/ETF/LST investments */}
               {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
                 // Get dynamic exchange rate if available, otherwise use static
-                const lstData = investment.lstConfigId && (prices as any)?.lst?.[investment.lstConfigId];
+                const lstData = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
                 const dynamicRate = lstData?.exchangeRate;
                 const exchangeRate = dynamicRate || investment.exchangeRate || 1;
                 const isLiveRate = !!dynamicRate;

@@ -52,6 +52,8 @@ const ASSET_INFO: Record<string, { name: string; color: string; hasStaking: bool
   HBAR: { name: "Hedera", color: "gray", hasStaking: true },
 };
 
+type SortableField = "holdings" | "holdingsValue" | "mNAV";
+
 // Tier colors
 const tierColors: Record<number, string> = {
   1: "bg-green-500/10 text-green-600 border-green-500/20",
@@ -65,7 +67,7 @@ export default function AssetPage() {
   const router = useRouter();
   const symbol = (params.symbol as string).toUpperCase();
   const { data: prices } = usePricesStream();
-  const [sortField, setSortField] = useState<string>("holdingsValue");
+  const [sortField, setSortField] = useState<SortableField>("holdingsValue");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
   // Fetch asset data from database API
@@ -147,17 +149,15 @@ export default function AssetPage() {
     } else if (sortField === "mNAV") {
       aVal = a.mNAV || 0;
       bVal = b.mNAV || 0;
-    } else if (sortField === "holdings") {
+    } else {
+      // sortField === "holdings"
       aVal = a.holdings ?? 0;
       bVal = b.holdings ?? 0;
-    } else {
-      aVal = (a as any)[sortField] ?? 0;
-      bVal = (b as any)[sortField] ?? 0;
     }
     return sortDirection === "desc" ? bVal - aVal : aVal - bVal;
   });
 
-  const handleSort = (field: string) => {
+  const handleSort = (field: SortableField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "desc" ? "asc" : "desc");
     } else {
