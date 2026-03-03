@@ -8,7 +8,7 @@ import { latestRowByMetric, useCompanyD1Latest } from "@/lib/hooks/use-company-d
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
-import { applyD1Overlay, getHoldingsBasis, HOLDINGS_BASIS_LABEL } from "@/lib/d1-overlay";
+import { applyD1Overlay, getHoldingsBasis } from "@/lib/d1-overlay";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { Company } from "@/lib/types";
@@ -594,12 +594,9 @@ export default function CompanyPage() {
         ) : (
           <>
         {/* Key Valuation Metrics */}
-        {process.env.NODE_ENV === 'development' && (
+        {process.env.NODE_ENV === 'development' && (displayCompany as any)._d1Fields && (
           <div className="mb-2 text-[10px] font-mono text-gray-400 dark:text-gray-600">
-            {(displayCompany as any)._d1Fields && (
-              <span>D1: {((displayCompany as any)._d1Fields as string[]).join(', ')} | </span>
-            )}
-            Holdings: {HOLDINGS_BASIS_LABEL[holdingsBasis]}
+            D1: {((displayCompany as any)._d1Fields as string[]).join(', ')}
           </div>
         )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
@@ -888,6 +885,7 @@ export default function CompanyPage() {
               holdingsSourceUrl={displayCompany.holdingsSourceUrl}
               holdingsSource={displayCompany.holdingsSource}
               holdingsAsOf={displayCompany.holdingsLastUpdated}
+              holdingsBasis={holdingsBasis}
             />
           </div>
         )}

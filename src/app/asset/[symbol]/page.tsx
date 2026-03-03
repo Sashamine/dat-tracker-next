@@ -8,6 +8,7 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay } from "@/lib/d1-overlay";
+import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -333,7 +334,10 @@ export default function AssetPage() {
                     ) : "—"}
                   </TableCell>
                   <TableCell className="text-right font-mono">
-                    {formatTokenAmount(company.holdings, symbol)}
+                    <span className="inline-flex items-center gap-1 justify-end">
+                      {formatTokenAmount(company.holdings, symbol)}
+                      <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
+                    </span>
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium">
                     {formatLargeNumber(company.holdingsValue)}

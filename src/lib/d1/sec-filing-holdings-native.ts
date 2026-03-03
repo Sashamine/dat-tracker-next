@@ -40,6 +40,7 @@ type ExistingProposalRow = {
 };
 
 const RUNS_TRIGGER = 'sec_filing_text_holdings_native';
+const SEC_FILING_TYPES = ['sec_filing', 'sec_filing_unmapped'] as const;
 
 async function tableExists(d1: D1Client, table: string): Promise<boolean> {
   const out = await d1.query<{ name: string }>(
@@ -123,32 +124,113 @@ async function ensureArtifact(d1: D1Client, input: {
   filingUrl: string | null;
   accession: string | null;
 }): Promise<string> {
+  const desiredSourceType = input.accession ? 'sec_filing' : 'sec_filing_unmapped';
+  const maybeHealClassification = async (artifactId: string): Promise<string> => {
+    const row = await d1.query<{ source_type: string | null; accession: string | null }>(
+      `SELECT source_type, accession
+       FROM artifacts
+       WHERE artifact_id = ?
+       LIMIT 1;`,
+      [artifactId]
+    );
+    const found = row.results?.[0];
+    if (!found) return artifactId;
+
+    // Self-healing classification:
+    // - accession present => force sec_filing and fill accession if missing
+    // - accession missing => force sec_filing_unmapped when currently sec_filing
+    if (input.accession) {
+      const currentAccession = (found.accession || '').trim();
+      const canFillAccession = !currentAccession || currentAccession === input.accession;
+      if ((found.source_type !== 'sec_filing') || (!currentAccession && canFillAccession)) {
+        await d1.query(
+          `UPDATE artifacts
+           SET source_type = 'sec_filing',
+               accession = CASE
+                 WHEN accession IS NULL OR accession = '' THEN ?
+                 ELSE accession
+               END
+           WHERE artifact_id = ?
+             AND (? IS NULL OR accession IS NULL OR accession = '' OR accession = ?);`,
+          [input.accession, artifactId, input.accession, input.accession]
+        );
+      }
+    } else {
+      const currentAccession = (found.accession || '').trim();
+      if (found.source_type === 'sec_filing' && !currentAccession) {
+        await d1.query(
+          `UPDATE artifacts
+           SET source_type = 'sec_filing_unmapped'
+           WHERE artifact_id = ?
+             AND source_type = 'sec_filing'
+             AND (accession IS NULL OR accession = '');`,
+          [artifactId]
+        );
+      }
+    }
+    return artifactId;
+  };
+
+  // Prefer global accession match first. Accessions are unique to filings and can
+  // predate ticker renames/rebrands, so ticker-scoped lookup can miss valid rows.
+  if (input.accession) {
+    const byAccessionGlobal = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type IN (?, ?)
+         AND accession = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [SEC_FILING_TYPES[0], SEC_FILING_TYPES[1], input.accession]
+    );
+    if (byAccessionGlobal.results[0]?.artifact_id) {
+      return maybeHealClassification(byAccessionGlobal.results[0].artifact_id);
+    }
+  }
+
   if (input.accession) {
     const byAccession = await d1.query<{ artifact_id: string }>(
       `SELECT artifact_id
        FROM artifacts
        WHERE ticker = ?
-         AND source_type = 'sec_filing'
+         AND source_type IN (?, ?)
          AND accession = ?
        ORDER BY fetched_at DESC
        LIMIT 1;`,
-      [input.ticker, input.accession]
+      [input.ticker, SEC_FILING_TYPES[0], SEC_FILING_TYPES[1], input.accession]
     );
-    if (byAccession.results[0]?.artifact_id) return byAccession.results[0].artifact_id;
+    if (byAccession.results[0]?.artifact_id) {
+      return maybeHealClassification(byAccession.results[0].artifact_id);
+    }
   }
 
   if (input.filingUrl) {
+    const byUrlGlobal = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type IN (?, ?)
+         AND source_url = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [SEC_FILING_TYPES[0], SEC_FILING_TYPES[1], input.filingUrl]
+    );
+    if (byUrlGlobal.results[0]?.artifact_id) {
+      return maybeHealClassification(byUrlGlobal.results[0].artifact_id);
+    }
+
     const byUrl = await d1.query<{ artifact_id: string }>(
       `SELECT artifact_id
        FROM artifacts
        WHERE ticker = ?
-         AND source_type = 'sec_filing'
+         AND source_type IN (?, ?)
          AND source_url = ?
        ORDER BY fetched_at DESC
        LIMIT 1;`,
-      [input.ticker, input.filingUrl]
+      [input.ticker, SEC_FILING_TYPES[0], SEC_FILING_TYPES[1], input.filingUrl]
     );
-    if (byUrl.results[0]?.artifact_id) return byUrl.results[0].artifact_id;
+    if (byUrl.results[0]?.artifact_id) {
+      return maybeHealClassification(byUrl.results[0].artifact_id);
+    }
   }
 
   const nowIso = new Date().toISOString();
@@ -161,12 +243,12 @@ async function ensureArtifact(d1: D1Client, input: {
 
   await d1.query(
     `INSERT OR IGNORE INTO artifacts (
-       artifact_id, source_type, source_url, content_hash, fetched_at,
+        artifact_id, source_type, source_url, content_hash, fetched_at,
        r2_bucket, r2_key, cik, ticker, accession
      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
     [
       artifactId,
-      'sec_filing',
+      desiredSourceType,
       input.filingUrl,
       contentHash,
       nowIso,
@@ -182,7 +264,53 @@ async function ensureArtifact(d1: D1Client, input: {
     `SELECT artifact_id FROM artifacts WHERE content_hash = ? LIMIT 1;`,
     [contentHash]
   );
-  return actual.results?.[0]?.artifact_id || artifactId;
+  if (actual.results?.[0]?.artifact_id) {
+    return maybeHealClassification(actual.results[0].artifact_id);
+  }
+
+  const byR2 = await d1.query<{ artifact_id: string }>(
+    `SELECT artifact_id
+     FROM artifacts
+     WHERE r2_bucket = ?
+       AND r2_key = ?
+     LIMIT 1;`,
+    ['dat-tracker-filings', r2Key]
+  );
+  if (byR2.results?.[0]?.artifact_id) {
+    return maybeHealClassification(byR2.results[0].artifact_id);
+  }
+
+  if (input.filingUrl) {
+    const byUrlAny = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type IN (?, ?)
+         AND source_url = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [SEC_FILING_TYPES[0], SEC_FILING_TYPES[1], input.filingUrl]
+    );
+    if (byUrlAny.results?.[0]?.artifact_id) {
+      return maybeHealClassification(byUrlAny.results[0].artifact_id);
+    }
+  }
+
+  if (input.accession) {
+    const byAccessionAny = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id
+       FROM artifacts
+       WHERE source_type IN (?, ?)
+         AND accession = ?
+       ORDER BY fetched_at DESC
+       LIMIT 1;`,
+      [SEC_FILING_TYPES[0], SEC_FILING_TYPES[1], input.accession]
+    );
+    if (byAccessionAny.results?.[0]?.artifact_id) {
+      return maybeHealClassification(byAccessionAny.results[0].artifact_id);
+    }
+  }
+
+  throw new Error('unable to resolve artifact_id after insert-or-ignore');
 }
 
 export async function writeSecFilingHoldingsNativeDatapoint(

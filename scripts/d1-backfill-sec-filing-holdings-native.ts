@@ -3,6 +3,7 @@
 import crypto from 'node:crypto';
 import { D1Client } from '../src/lib/d1';
 import { getHoldingsHistory } from '../src/lib/data/holdings-history';
+import { TICKER_TO_CIK } from '../src/lib/sec/sec-edgar';
 import {
   writeSecFilingHoldingsNativeDatapoint,
   type SecFilingHoldingsNativeWriteResult,
@@ -40,14 +41,17 @@ function mapConfidence(raw: 'high' | 'medium' | 'low' | undefined): number {
 }
 
 async function main() {
-  const tickersRaw = (argVal('tickers') || 'MSTR,BMNR,SBET').trim();
+  const tickersRaw = (argVal('tickers') || 'ALL').trim();
   const dryRun = (argVal('dry-run') || process.env.DRY_RUN || 'true') === 'true';
   const limit = Number(argVal('limit') || process.env.LIMIT || '200');
 
-  const tickers = tickersRaw
-    .split(',')
-    .map(t => t.trim().toUpperCase())
-    .filter(Boolean);
+  const useAllTickers = !tickersRaw || tickersRaw.toUpperCase() === 'ALL';
+  const tickers = useAllTickers
+    ? Array.from(new Set(Object.keys(TICKER_TO_CIK).map(t => t.toUpperCase()))).sort()
+    : tickersRaw
+        .split(',')
+        .map(t => t.trim().toUpperCase())
+        .filter(Boolean);
 
   const d1 = D1Client.fromEnv();
   const runId = crypto.randomUUID();
@@ -61,6 +65,7 @@ async function main() {
   let skipped = 0;
   let failed = 0;
   let nonBtcSkipped = 0;
+  const failedRows: Array<{ ticker: string; as_of: string; sourceUrl?: string; error?: string }> = [];
 
   const samples: Array<{ ticker: string; as_of: string; sourceUrl?: string; status: string }> = [];
 
@@ -135,7 +140,17 @@ async function main() {
       else if (result.status === 'updated') updated++;
       else if (result.status === 'seededProposalKey') seededProposalKey++;
       else if (result.status === 'noop' || result.status === 'dry_run') noop++;
-      else if (result.status === 'error') failed++;
+      else if (result.status === 'error') {
+        failed++;
+        const rowError = {
+          ticker,
+          as_of: snapshot.date,
+          sourceUrl: snapshot.sourceUrl,
+          error: result.error || 'unknown error',
+        };
+        failedRows.push(rowError);
+        console.log(JSON.stringify({ ok: false, kind: 'write_error', ...rowError }));
+      }
       else skipped++;
     }
   }
@@ -145,6 +160,7 @@ async function main() {
       {
         dryRun,
         tickers,
+        tickerMode: useAllTickers ? 'all_sec_cik_mapped' : 'explicit_list',
         limit,
         runId,
         scanned,
@@ -156,6 +172,7 @@ async function main() {
         skipped,
         nonBtcSkipped,
         failed,
+        failedRows,
         samples,
       },
       null,

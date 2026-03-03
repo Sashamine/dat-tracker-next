@@ -4,6 +4,8 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
 import { Company } from "@/lib/types";
+import type { HoldingsBasis } from "@/lib/d1-overlay";
+import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
 
 type CompanyType = "miners" | "treasuries" | "all";
 
@@ -28,6 +30,7 @@ interface CompanyStats {
   currentHoldings: number;
   currentShares: number;
   latestDate: string;
+  holdingsBasis?: HoldingsBasis;
 }
 
 function getHPSAtDate(ticker: string, targetDate: Date): number | null {
@@ -81,6 +84,7 @@ function calculateCompanyStats(company: Company): CompanyStats | null {
     currentHoldings: latest.holdings,
     currentShares: latest.sharesOutstanding,
     latestDate: latest.date,
+    holdingsBasis: (company as any)._holdingsBasis as HoldingsBasis | undefined,
   };
 }
 
@@ -177,7 +181,10 @@ export function HPSComparison({ companies, prices, compact, type = "all" }: HPSC
                 </Link>
               </td>
               <td className="text-right py-2 px-3 text-gray-900 dark:text-gray-100">
-                {company.currentHoldings.toLocaleString()}
+                <span className="inline-flex items-center gap-1 justify-end">
+                  {company.currentHoldings.toLocaleString()}
+                  <HoldingsBasisBadge basis={company.holdingsBasis} />
+                </span>
               </td>
               <td className="text-right py-2 px-3 font-mono text-gray-600 dark:text-gray-400">
                 {(company.currentHPS * 1000000).toFixed(1)}
