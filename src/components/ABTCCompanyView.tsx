@@ -46,10 +46,10 @@ export function ABTCCompanyView({ company, className = "" }: Props) {
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
       const holdings = ABTC_PROVENANCE.holdings.value;
-      const totalDebt = ABTC_PROVENANCE.totalDebt?.value || 0;
-      const cashReserves = ABTC_PROVENANCE.cashReserves?.value || 0;
+      const totalDebt = ABTC_PROVENANCE.totalDebt?.value ?? 0;
+      const cashReserves = ABTC_PROVENANCE.cashReserves?.value ?? 0;
       const preferredEquity = 0;
-      const sharesOutstanding = ABTC_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const sharesOutstanding = ABTC_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);

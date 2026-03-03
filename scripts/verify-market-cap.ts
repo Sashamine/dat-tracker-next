@@ -76,10 +76,10 @@ for (const test of testCases) {
     marketCap,
     company.holdings,
     cryptoPrice,
-    company.cashReserves || 0,
-    company.otherInvestments || 0,
-    company.totalDebt || 0,
-    company.preferredEquity || 0
+    company.cashReserves ?? 0,
+    company.otherInvestments ?? 0,
+    company.totalDebt ?? 0,
+    company.preferredEquity ?? 0
   );
 
   const expected = test.expectedMnav;

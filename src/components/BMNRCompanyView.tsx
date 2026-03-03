@@ -53,9 +53,9 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
       const ethPrice = prices?.crypto?.ETH?.price || 0;
 
       const holdings = BMNR_PROVENANCE.holdings.value;
-      const totalDebt = BMNR_PROVENANCE.totalDebt?.value || 0;
+      const totalDebt = BMNR_PROVENANCE.totalDebt?.value ?? 0;
       const cashReserves = BMNR_PROVENANCE.cashReserves.value;
-      const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value || 0;
+      const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value ?? 0;
 
       const shareEstimate = estimateBMNRShares();
       const estimatedShares = shareEstimate.totalEstimated;

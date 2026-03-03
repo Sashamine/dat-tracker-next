@@ -47,8 +47,8 @@ export function UPXICompanyView({ company, className = "" }: Props) {
       const holdings = UPXI_PROVENANCE.holdings.value;
       const totalDebt = UPXI_PROVENANCE.totalDebt.value;
       const cashReserves = UPXI_PROVENANCE.cashReserves.value;
-      const preferredEquity = UPXI_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = UPXI_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = UPXI_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = UPXI_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * solPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);

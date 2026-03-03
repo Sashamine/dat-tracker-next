@@ -125,7 +125,7 @@ export default function AssetPage() {
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 
-    const holdingsValue = calculateNAV(company.holdings, cryptoPrice, company.cashReserves || 0, company.otherInvestments || 0);
+    const holdingsValue = calculateNAV(company.holdings, cryptoPrice, company.cashReserves ?? 0, company.otherInvestments ?? 0);
     const mNAV = getCompanyMNAV(company, prices);
 
     return {
@@ -148,8 +148,8 @@ export default function AssetPage() {
       aVal = a.mNAV || 0;
       bVal = b.mNAV || 0;
     } else if (sortField === "holdings") {
-      aVal = a.holdings || 0;
-      bVal = b.holdings || 0;
+      aVal = a.holdings ?? 0;
+      bVal = b.holdings ?? 0;
     } else {
       aVal = (a as any)[sortField] ?? 0;
       bVal = (b as any)[sortField] ?? 0;

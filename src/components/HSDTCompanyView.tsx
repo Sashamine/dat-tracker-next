@@ -47,8 +47,8 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
       const holdings = HSDT_PROVENANCE.holdings.value;
       const totalDebt = HSDT_PROVENANCE.totalDebt.value;
       const cashReserves = HSDT_PROVENANCE.cashReserves.value;
-      const preferredEquity = HSDT_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = HSDT_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = HSDT_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = HSDT_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * solPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);

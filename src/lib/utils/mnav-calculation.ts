@@ -50,11 +50,11 @@ export function getCompanyMNAV(
   if (!marketCap || marketCap <= 0) return null;
 
   // Adjust debt by subtracting in-the-money convertible face values
-  const adjustedDebt = Math.max(0, (company.totalDebt || 0) - inTheMoneyDebtValue);
+  const adjustedDebt = Math.max(0, (company.totalDebt ?? 0) - inTheMoneyDebtValue);
 
   // Add in-the-money warrant exercise proceeds to cash
-  const adjustedCashReserves = (company.cashReserves || 0) + inTheMoneyWarrantProceeds;
-  const adjustedRestrictedCash = (company.restrictedCash || 0) + inTheMoneyWarrantProceeds;
+  const adjustedCashReserves = (company.cashReserves ?? 0) + inTheMoneyWarrantProceeds;
+  const adjustedRestrictedCash = (company.restrictedCash ?? 0) + inTheMoneyWarrantProceeds;
 
   // Calculate secondary crypto holdings value
   let secondaryCryptoValue = 0;
@@ -90,9 +90,9 @@ export function getCompanyMNAV(
     company.holdings,
     cryptoPrice,
     adjustedCashReserves,
-    company.otherInvestments || 0,
+    company.otherInvestments ?? 0,
     adjustedDebt,
-    company.preferredEquity || 0,
+    company.preferredEquity ?? 0,
     adjustedRestrictedCash,
     secondaryCryptoValue
   );
