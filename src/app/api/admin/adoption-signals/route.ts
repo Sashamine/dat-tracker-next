@@ -64,6 +64,7 @@ function fieldExpr(
   }
 
   if (!parts.length) return null;
+  if (parts.length === 1) return parts[0];
   return `COALESCE(${parts.join(', ')})`;
 }
 
