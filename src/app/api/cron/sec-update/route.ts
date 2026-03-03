@@ -12,7 +12,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { runSecAutoUpdate, type SecUpdateResult } from '@/lib/sec-auto-update';
+import { runSecAutoUpdate } from '@/lib/sec-auto-update';
 
 // Verify cron secret for scheduled runs
 function verifyCronSecret(request: NextRequest): boolean {
