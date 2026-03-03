@@ -43,11 +43,6 @@ export default function CitationVerificationPage() {
       .catch(() => {});
   }, []);
 
-  // Reset iframe error when selecting new point
-  useEffect(() => {
-    setIframeError(false);
-  }, [selectedPoint]);
-
   const filteredPoints = dataPoints.filter((dp) => {
     if (filter === "verified" && !dp.verified) return false;
     if (filter === "unverified" && dp.verified) return false;
@@ -228,7 +223,10 @@ export default function CitationVerificationPage() {
               return (
                 <button
                   key={`${point.ticker}-${point.date}-${idx}`}
-                  onClick={() => setSelectedPoint(point)}
+                  onClick={() => {
+                    setIframeError(false);
+                    setSelectedPoint(point);
+                  }}
                   className={`w-full text-left p-3 rounded-lg transition-colors ${
                     selectedPoint?.ticker === point.ticker && selectedPoint?.date === point.date
                       ? "bg-blue-900/50 border border-blue-500"
