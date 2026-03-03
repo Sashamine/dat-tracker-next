@@ -555,7 +555,7 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
         <div>
           <p className="text-xs text-gray-500 uppercase">Crypto</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
-          <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
+          <HoldingsBasisBadge basis={company.holdingsBasis} />
         </div>
       </div>
     </div>
@@ -874,7 +874,7 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
                         </div>
                         <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
                           {formatNumber(company.holdings)} {company.asset}
-                          <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
+                          <HoldingsBasisBadge basis={company.holdingsBasis} />
                         </span>
                       </div>
                     )}

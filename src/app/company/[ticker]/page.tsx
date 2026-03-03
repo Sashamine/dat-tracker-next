@@ -594,9 +594,9 @@ export default function CompanyPage() {
         ) : (
           <>
         {/* Key Valuation Metrics */}
-        {process.env.NODE_ENV === 'development' && (displayCompany as any)._d1Fields && (
+        {process.env.NODE_ENV === 'development' && displayCompany._d1Fields && (
           <div className="mb-2 text-[10px] font-mono text-gray-400 dark:text-gray-600">
-            D1: {((displayCompany as any)._d1Fields as string[]).join(', ')}
+            D1: {displayCompany._d1Fields.join(', ')}
           </div>
         )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
