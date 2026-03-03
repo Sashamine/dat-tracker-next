@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 
+type SchemaColumnRow = {
+  cid: number;
+  name: string;
+  type: string;
+  notnull: number;
+  dflt_value: string | null;
+  pk: number;
+};
+
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
@@ -31,7 +40,7 @@ export async function GET(request: NextRequest) {
   }
 
   const d1 = D1Client.fromEnv();
-  const info = await d1.query<any>(`PRAGMA table_info(${table});`);
+  const info = await d1.query<SchemaColumnRow>(`PRAGMA table_info(${table});`);
 
   return NextResponse.json({ success: true, table, columns: info.results });
 }

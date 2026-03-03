@@ -8,13 +8,25 @@ import { FALLBACK_RATES } from '@/lib/utils/currency';
 
 const FMP_API_KEY = process.env.FMP_API_KEY || '';
 
+type FmpBatchQuote = {
+  symbol?: string;
+  price?: number;
+  marketCap?: number;
+};
+
+type StockDebugRow = {
+  price: number;
+  marketCap: number;
+  raw: FmpBatchQuote;
+};
+
 export async function GET() {
   try {
     // 1. Get crypto prices (same as comparison engine)
     const crypto = await getBinancePrices();
 
     // 2. Get forex rates from FMP (using stable/batch-quote)
-    let forex: Record<string, number> = { ...FALLBACK_RATES };
+    const forex: Record<string, number> = { ...FALLBACK_RATES };
     let forexError = null;
     if (FMP_API_KEY) {
       try {
@@ -42,7 +54,7 @@ export async function GET() {
     }
 
     // 3. Get stock prices from FMP (using stable/batch-quote)
-    const stocks: Record<string, any> = {};
+    const stocks: Record<string, StockDebugRow> = {};
     let stockError = null;
     if (FMP_API_KEY) {
       const stockTickers = ['3350.T', 'MSTR'];
@@ -52,14 +64,15 @@ export async function GET() {
           { cache: 'no-store' }
         );
         if (stockResponse.ok) {
-          const stockData = await stockResponse.json();
+          const stockData: unknown = await stockResponse.json();
           if (Array.isArray(stockData)) {
             for (const stock of stockData) {
-              if (stock?.symbol) {
-                stocks[stock.symbol] = {
-                  price: stock.price || 0,
-                  marketCap: stock.marketCap || 0,
-                  raw: stock,
+              const row = stock as FmpBatchQuote;
+              if (row?.symbol) {
+                stocks[row.symbol] = {
+                  price: typeof row.price === 'number' ? row.price : 0,
+                  marketCap: typeof row.marketCap === 'number' ? row.marketCap : 0,
+                  raw: row,
                 };
               }
             }

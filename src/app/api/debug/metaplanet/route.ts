@@ -7,7 +7,6 @@ import { metaplanetFetcher } from '@/lib/fetchers/dashboards/metaplanet';
 import { allCompanies } from '@/lib/data/companies';
 import { calculateMNAV } from '@/lib/calculations';
 import { getMarketCapForMnavSync } from '@/lib/utils/market-cap';
-import { FALLBACK_RATES } from '@/lib/utils/currency';
 
 export async function GET() {
   try {
