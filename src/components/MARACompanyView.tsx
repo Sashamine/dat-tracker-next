@@ -1,25 +1,35 @@
-// @ts-nocheck
 "use client";
 
 import { MARA_PROVENANCE, MARA_CIK } from "@/lib/data/provenance/mara";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+interface MARAMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  adjustedDebt: number;
+  itmDebtAdjustment: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -153,7 +163,7 @@ export function MARACompanyView({ company, className = "" }: Props) {
         equityNavPerSharePv,
         adjustedDebt,
         itmDebtAdjustment: inTheMoneyDebtValue,
-      } as any;
+      } satisfies MARAMetrics;
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
@@ -182,7 +192,7 @@ export function MARACompanyView({ company, className = "" }: Props) {
         </div>
       </div>
     ),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
