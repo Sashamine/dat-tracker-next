@@ -35,7 +35,6 @@ async function findAnchors(dir: string, ticker: string): Promise<AnchorEntry[]> 
         if (!content.includes('id="dat-btc-holdings"')) continue;
         
         // Extract holdings number near the anchor
-        const anchorMatch = content.match(/id="dat-btc-holdings"[^>]*>([^<]*)/);
         let holdings: string | null = null;
         let context = "";
         
