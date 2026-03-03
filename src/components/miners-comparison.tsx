@@ -84,7 +84,7 @@ function calculateCompanyStats(company: Company): CompanyStats | null {
     currentHoldings: latest.holdings,
     currentShares: latest.sharesOutstanding,
     latestDate: latest.date,
-    holdingsBasis: (company as any)._holdingsBasis as HoldingsBasis | undefined,
+    holdingsBasis: company.holdingsBasis,
   };
 }
 

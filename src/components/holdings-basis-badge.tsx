@@ -7,26 +7,26 @@ const STYLE: Record<HoldingsBasis, string> = {
 };
 
 const LABEL: Record<HoldingsBasis, string> = {
-  native_units:    "D1",
-  usd_fair_value:  "D1 USD",
+  native_units:    "D1 native",
+  usd_fair_value:  "D1 USD÷price",
   static_fallback: "static",
 };
 
 const TITLE: Record<HoldingsBasis, string> = {
-  native_units:    "Holdings from D1 (native units)",
-  usd_fair_value:  "Holdings derived from D1 USD fair value ÷ price",
-  static_fallback: "Holdings from static data (companies.ts)",
+  native_units:    "Holdings count sourced from D1 SEC filings (native crypto units)",
+  usd_fair_value:  "Holdings derived from D1 USD fair value divided by live price",
+  static_fallback: "Holdings from static data (companies.ts) — no D1 data available",
 };
 
 /**
  * Tiny pill showing how a company's holdings were resolved.
- * Reads `(company as any)._holdingsBasis` set by applyD1Overlay.
+ * Reads `company.holdingsBasis` set by applyD1Overlay.
  */
 export function HoldingsBasisBadge({ basis }: { basis?: HoldingsBasis }) {
   if (!basis) return null;
   return (
     <span
-      className={`inline-flex items-center text-[9px] leading-tight font-medium px-1 py-px rounded border ${STYLE[basis]}`}
+      className={`inline-flex items-center text-[9px] leading-tight font-medium px-1 py-px rounded border cursor-help ${STYLE[basis]}`}
       title={TITLE[basis]}
     >
       {LABEL[basis]}

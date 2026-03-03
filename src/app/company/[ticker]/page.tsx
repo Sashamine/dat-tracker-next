@@ -9,6 +9,7 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay, getHoldingsBasis } from "@/lib/d1-overlay";
+import { CORE_D1_METRICS, HISTORY_D1_METRICS } from "@/lib/metrics";
 import { AppSidebar } from "@/components/app-sidebar";
 import { OverviewSidebar } from "@/components/overview-sidebar";
 import { Company } from "@/lib/types";
@@ -204,27 +205,11 @@ export default function CompanyPage() {
   };
 
   // D1 canonical inputs (Balance Sheet + shares)
-  const D1_INPUT_METRICS = useMemo(
-    () => ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'],
-    []
-  );
-  const { data: d1LatestInputs } = useCompanyD1Latest(ticker, D1_INPUT_METRICS);
+  const { data: d1LatestInputs } = useCompanyD1Latest(ticker, [...CORE_D1_METRICS]);
   const d1ByMetric = useMemo(() => latestRowByMetric(d1LatestInputs?.rows), [d1LatestInputs]);
 
   // D1 metric history (batch)
-  const HISTORY_METRICS = useMemo(
-    () => [
-      'cash_usd',
-      'restricted_cash_usd',
-      'other_investments_usd',
-      'debt_usd',
-      'preferred_equity_usd',
-      'basic_shares',
-      'holdings_native',
-    ],
-    []
-  );
-  const { data: metricHistory } = useCompanyMetricHistory(ticker, HISTORY_METRICS, 12, 'desc');
+  const { data: metricHistory } = useCompanyMetricHistory(ticker, [...HISTORY_D1_METRICS], 12, 'desc');
 
   // Wait for BOTH data sources to load to ensure consistency with main page
   if (isLoadingCompany || isLoadingCompanies) {
@@ -271,7 +256,7 @@ export default function CompanyPage() {
 
   // Other assets (cash + investments)
   const cashReserves = (d1ByMetric.cash_usd?.value ?? displayCompany.cashReserves ?? 0);
-  const otherInvestments = displayCompany.otherInvestments || 0;
+  const otherInvestments = displayCompany.otherInvestments ?? 0;
   const otherAssets = cashReserves + otherInvestments;
 
   // Holdings (D1-first where possible)
@@ -317,8 +302,9 @@ export default function CompanyPage() {
 
         // Get dynamic exchange rate from prices.lst or fall back to static
         let exchangeRate = investment.exchangeRate || 1;
-        if (investment.lstConfigId && (prices as any).lst?.[investment.lstConfigId]) {
-          exchangeRate = (prices as any).lst[investment.lstConfigId].exchangeRate;
+        const lstRate = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
+        if (lstRate) {
+          exchangeRate = lstRate.exchangeRate;
         }
 
         const underlyingAmount = investment.lstAmount * exchangeRate;
@@ -379,7 +365,7 @@ export default function CompanyPage() {
 
   // Effective shares (for dilution tracking)
   const effectiveSharesResult = stockPrice > 0 
-    ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav || 0, stockPrice)
+    ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav ?? 0, stockPrice)
     : null;
 
 
@@ -594,9 +580,9 @@ export default function CompanyPage() {
         ) : (
           <>
         {/* Key Valuation Metrics */}
-        {process.env.NODE_ENV === 'development' && (displayCompany as any)._d1Fields && (
+        {process.env.NODE_ENV === 'development' && displayCompany._d1Fields && (
           <div className="mb-2 text-[10px] font-mono text-gray-400 dark:text-gray-600">
-            D1: {((displayCompany as any)._d1Fields as string[]).join(', ')}
+            D1: {displayCompany._d1Fields.join(', ')}
           </div>
         )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
@@ -940,7 +926,7 @@ export default function CompanyPage() {
                 <span className="text-gray-400"> {displayCompany.asset}</span>
                 {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
                   // Get dynamic exchange rate if available
-                  const lstData = investment.lstConfigId && (prices as any)?.lst?.[investment.lstConfigId];
+                  const lstData = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
                   const exchangeRate = lstData?.exchangeRate || investment.exchangeRate || 1;
 
                   // Calculate value for this investment
@@ -1032,7 +1018,7 @@ export default function CompanyPage() {
               {/* Crypto fund/ETF/LST investments */}
               {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
                 // Get dynamic exchange rate if available, otherwise use static
-                const lstData = investment.lstConfigId && (prices as any)?.lst?.[investment.lstConfigId];
+                const lstData = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
                 const dynamicRate = lstData?.exchangeRate;
                 const exchangeRate = dynamicRate || investment.exchangeRate || 1;
                 const isLiveRate = !!dynamicRate;
@@ -1110,7 +1096,7 @@ export default function CompanyPage() {
               )}
               {totalDebt > 0 && (() => {
                 // Calculate ITM converts for display
-                const effectiveShares = stockPrice ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav || 0, stockPrice) : null;
+                const effectiveShares = stockPrice ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav ?? 0, stockPrice) : null;
                 const itmConvertValue = effectiveShares?.inTheMoneyDebtValue || 0;
                 const itmConverts = effectiveShares?.breakdown.filter(b => b.type === "convertible" && b.inTheMoney) || [];
                 
@@ -1253,11 +1239,11 @@ export default function CompanyPage() {
               className=""
               companyData={{
                 holdings: displayCompany.holdings,
-                sharesForMnav: displayCompany.sharesForMnav || 0,
-                totalDebt: displayCompany.totalDebt || 0,
-                preferredEquity: displayCompany.preferredEquity || 0,
-                cashReserves: displayCompany.cashReserves || 0,
-                restrictedCash: displayCompany.restrictedCash || 0,
+                sharesForMnav: displayCompany.sharesForMnav ?? 0,
+                totalDebt: displayCompany.totalDebt ?? 0,
+                preferredEquity: displayCompany.preferredEquity ?? 0,
+                cashReserves: displayCompany.cashReserves ?? 0,
+                restrictedCash: displayCompany.restrictedCash ?? 0,
                 asset: displayCompany.asset,
                 currency: displayCompany.currency,
               }}
@@ -1307,7 +1293,7 @@ export default function CompanyPage() {
           <div className="mb-4">
             <CompanyMetricHistorySection
               title="Balance sheet & shares history"
-              metrics={HISTORY_METRICS}
+              metrics={[...HISTORY_D1_METRICS]}
               series={metricHistory.series}
             />
           </div>

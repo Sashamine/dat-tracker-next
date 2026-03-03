@@ -5,6 +5,32 @@ import { getCompanyByTicker } from '@/lib/data/companies';
 
 export const dynamic = 'force-dynamic';
 
+type DbCompanyIdRow = { id: number };
+type DbHoldingsRow = {
+  holdings: number | string;
+  shares_outstanding: number | string | null;
+  holdings_per_share: number | string | null;
+  source: string | null;
+  source_document: string | null;
+  snapshot_date: string;
+  status: string;
+};
+
+type HoldingsHistoryRow = {
+  date: string;
+  holdings: number;
+  sharesOutstanding: number | null;
+  holdingsPerShare: number | null;
+  source: string | null;
+};
+
+function parseNumeric(value: number | string | null): number | null {
+  if (value === null) return null;
+  if (typeof value === 'number') return value;
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ ticker: string }> }
@@ -23,16 +49,16 @@ export async function GET(
     }
 
     // Get recent holdings snapshots from database (historical data for charts)
-    let holdingsHistory: any[] = [];
+    let holdingsHistory: HoldingsHistoryRow[] = [];
     try {
       // Need to find company ID in database for historical data
-      const dbCompany = await query(
+      const dbCompany = await query<DbCompanyIdRow>(
         `SELECT id FROM companies WHERE ticker = $1`,
         [ticker.toUpperCase()]
       );
 
       if (dbCompany && dbCompany.length > 0) {
-        const holdings = await query(`
+        const holdings = await query<DbHoldingsRow>(`
           SELECT
             holdings,
             shares_outstanding,
@@ -47,11 +73,11 @@ export async function GET(
           LIMIT 20
         `, [dbCompany[0].id]);
 
-        holdingsHistory = holdings.map((h: any) => ({
+        holdingsHistory = holdings.map((h) => ({
           date: h.snapshot_date,
-          holdings: parseFloat(h.holdings),
-          sharesOutstanding: h.shares_outstanding ? parseFloat(h.shares_outstanding) : null,
-          holdingsPerShare: h.holdings_per_share ? parseFloat(h.holdings_per_share) : null,
+          holdings: parseNumeric(h.holdings) ?? 0,
+          sharesOutstanding: parseNumeric(h.shares_outstanding),
+          holdingsPerShare: parseNumeric(h.holdings_per_share),
           source: h.source_document || h.source,
         }));
       }

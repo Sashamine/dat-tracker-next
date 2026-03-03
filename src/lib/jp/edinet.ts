@@ -20,7 +20,7 @@ export type EdinetDocumentListItem = {
 };
 
 export type EdinetDocumentListResponse = {
-  metadata?: any;
+  metadata?: Record<string, unknown>;
   results?: EdinetDocumentListItem[];
 };
 

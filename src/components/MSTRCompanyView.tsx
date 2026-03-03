@@ -49,8 +49,8 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
       const holdings = MSTR_PROVENANCE.holdings.value;
       const totalDebt = MSTR_PROVENANCE.totalDebt.value;
       const cashReserves = MSTR_PROVENANCE.cashReserves.value;
-      const preferredEquity = MSTR_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = MSTR_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = MSTR_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = MSTR_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       // ITM convertible adjustment: subtract face value of ITM converts from debt
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;

@@ -126,11 +126,11 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
     const isAfterHours = stockData?.isAfterHours || false;
 
     // Other assets (cash + investments)
-    const cashReserves = company.cashReserves || 0;
-    const otherInvestments = company.otherInvestments || 0;
+    const cashReserves = company.cashReserves ?? 0;
+    const otherInvestments = company.otherInvestments ?? 0;
     const otherAssets = cashReserves + otherInvestments;
-    const totalDebt = company.totalDebt || 0;
-    const preferredEquity = company.preferredEquity || 0;
+    const totalDebt = company.totalDebt ?? 0;
+    const preferredEquity = company.preferredEquity ?? 0;
 
     // Calculate crypto NAV including secondary holdings
     let cryptoNav = holdingsValue;
@@ -245,8 +245,8 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
         bVal = b.stockPrice || 0;
         break;
       case "holdings":
-        aVal = a.holdings || 0;
-        bVal = b.holdings || 0;
+        aVal = a.holdings ?? 0;
+        bVal = b.holdings ?? 0;
         break;
       case "mNAV":
         aVal = a.mNAV || 0;
@@ -555,7 +555,7 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
         <div>
           <p className="text-xs text-gray-500 uppercase">Crypto</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
-          <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
+          <HoldingsBasisBadge basis={company.holdingsBasis} />
         </div>
       </div>
     </div>
@@ -874,7 +874,7 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
                         </div>
                         <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
                           {formatNumber(company.holdings)} {company.asset}
-                          <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
+                          <HoldingsBasisBadge basis={company.holdingsBasis} />
                         </span>
                       </div>
                     )}

@@ -4,6 +4,7 @@ import { D1Client } from '../d1';
 export type SecFilingHoldingsNativeWriteInput = {
   ticker: string;
   holdingsNative: number;
+  assetUnit?: string | null;
   asOf: string | null;
   reportedAt: string | null;
   filingUrl: string | null;
@@ -108,6 +109,15 @@ function extractAccession(accession: string | null, url: string | null): string 
   if (!url) return null;
   const m = url.match(/\b(\d{10}-\d{2}-\d{6})\b/);
   return m?.[1] || null;
+}
+
+function normalizeNativeUnit(unit: string | null | undefined): 'BTC' | 'ETH' | 'SOL' | null {
+  const raw = (unit || '').trim().toUpperCase();
+  if (!raw) return null;
+  if (raw === 'BTC' || raw === 'BITCOIN') return 'BTC';
+  if (raw === 'ETH' || raw === 'ETHER' || raw === 'ETHEREUM') return 'ETH';
+  if (raw === 'SOL' || raw === 'SOLANA') return 'SOL';
+  return null;
 }
 
 async function ensureRun(d1: D1Client, runId: string, notes: string): Promise<void> {
@@ -327,6 +337,10 @@ export async function writeSecFilingHoldingsNativeDatapoint(
     if (!Number.isFinite(input.holdingsNative) || input.holdingsNative < 0) {
       return { status: 'skipped', reason: 'holdingsNative must be a finite non-negative number' };
     }
+    const nativeUnit = normalizeNativeUnit(input.assetUnit);
+    if (!nativeUnit) {
+      return { status: 'skipped', reason: `unsupported or missing native unit: ${input.assetUnit || 'null'}` };
+    }
     if (!asOf) {
       return { status: 'skipped', reason: 'missing asOf/reportedAt date' };
     }
@@ -371,12 +385,12 @@ export async function writeSecFilingHoldingsNativeDatapoint(
            WHERE entity_id = ?
              AND metric = 'holdings_native'
              AND COALESCE(as_of, '') = COALESCE(?, '')
-             AND COALESCE(reported_at, '') = COALESCE(?, '')
-             AND COALESCE(artifact_id, '') = COALESCE(?, '')
-             AND value = ?
-             AND unit = 'BTC'
+           AND COALESCE(reported_at, '') = COALESCE(?, '')
+           AND COALESCE(artifact_id, '') = COALESCE(?, '')
+           AND value = ?
+           AND unit = ?
            LIMIT 1;`,
-          [ticker, asOf, reportedAt, artifactId, input.holdingsNative]
+          [ticker, asOf, reportedAt, artifactId, input.holdingsNative, nativeUnit]
         );
 
     if (dedupeCollision.results.length) {
@@ -404,7 +418,7 @@ export async function writeSecFilingHoldingsNativeDatapoint(
     const flagsJson = input.flags ? JSON.stringify(input.flags) : null;
     const incoming = {
       value: input.holdingsNative,
-      unit: 'BTC',
+      unit: nativeUnit,
       scale: 0,
       as_of: asOf,
       reported_at: reportedAt,

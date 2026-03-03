@@ -7,7 +7,6 @@ import { metaplanetFetcher } from '@/lib/fetchers/dashboards/metaplanet';
 import { allCompanies } from '@/lib/data/companies';
 import { calculateMNAV } from '@/lib/calculations';
 import { getMarketCapForMnavSync } from '@/lib/utils/market-cap';
-import { FALLBACK_RATES } from '@/lib/utils/currency';
 
 export async function GET() {
   try {
@@ -44,7 +43,7 @@ export async function GET() {
 
     // Calculate components
     const priceInUsd = stockData.price / forexRates.JPY;
-    const calculatedMarketCap = priceInUsd * (company.sharesForMnav || 0);
+    const calculatedMarketCap = priceInUsd * (company.sharesForMnav ?? 0);
     const btcNav = company.holdings * btcPrice;
     const freeCash = (company.cashReserves ?? 0) - (company.restrictedCash ?? 0);
     const ev = marketCap + (company.totalDebt ?? 0) + (company.preferredEquity ?? 0) - freeCash;

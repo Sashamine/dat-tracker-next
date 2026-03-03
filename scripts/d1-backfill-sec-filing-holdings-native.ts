@@ -64,7 +64,7 @@ async function main() {
   let noop = 0;
   let skipped = 0;
   let failed = 0;
-  let nonBtcSkipped = 0;
+  let nonSupportedAssetSkipped = 0;
   const failedRows: Array<{ ticker: string; as_of: string; sourceUrl?: string; error?: string }> = [];
 
   const samples: Array<{ ticker: string; as_of: string; sourceUrl?: string; status: string }> = [];
@@ -76,9 +76,16 @@ async function main() {
       continue;
     }
 
-    if (company.asset.toUpperCase() !== 'BTC') {
-      nonBtcSkipped++;
-      console.log(JSON.stringify({ ticker, ok: true, skipped: true, reason: `asset=${company.asset}, BTC only` }));
+    const normalizedUnit = ((): 'BTC' | 'ETH' | 'SOL' | null => {
+      const raw = (company.asset || '').trim().toUpperCase();
+      if (raw === 'BTC' || raw === 'BITCOIN') return 'BTC';
+      if (raw === 'ETH' || raw === 'ETHER' || raw === 'ETHEREUM') return 'ETH';
+      if (raw === 'SOL' || raw === 'SOLANA') return 'SOL';
+      return null;
+    })();
+    if (!normalizedUnit) {
+      nonSupportedAssetSkipped++;
+      console.log(JSON.stringify({ ticker, ok: true, skipped: true, reason: `asset=${company.asset}, unsupported native unit` }));
       continue;
     }
 
@@ -116,6 +123,7 @@ async function main() {
       const result: SecFilingHoldingsNativeWriteResult = await writeSecFilingHoldingsNativeDatapoint(d1, {
         ticker,
         holdingsNative: snapshot.holdings,
+        assetUnit: normalizedUnit,
         asOf: snapshot.date || null,
         reportedAt: snapshot.date || null,
         filingUrl: snapshot.sourceUrl || null,
@@ -170,7 +178,7 @@ async function main() {
         seededProposalKey,
         noop,
         skipped,
-        nonBtcSkipped,
+        nonSupportedAssetSkipped,
         failed,
         failedRows,
         samples,

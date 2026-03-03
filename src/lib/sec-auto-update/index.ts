@@ -98,10 +98,23 @@ export interface SecUpdateConfig {
   writeHoldingsNativeToD1?: boolean; // default: true
 }
 
+type SecRecentFilings = {
+  form: string[];
+  filingDate: string[];
+  accessionNumber: string[];
+  items?: string[];
+};
+
+type SecSubmissionsResponse = {
+  filings?: {
+    recent?: SecRecentFilings;
+  };
+};
+
 /**
  * Fetch SEC submissions to find recent filings
  */
-async function fetchSECSubmissions(cik: string): Promise<any> {
+async function fetchSECSubmissions(cik: string): Promise<SecSubmissionsResponse> {
   const url = `https://data.sec.gov/submissions/CIK${cik}.json`;
   const response = await fetch(url, {
     headers: {
@@ -114,7 +127,7 @@ async function fetchSECSubmissions(cik: string): Promise<any> {
     throw new Error(`SEC API error: ${response.status}`);
   }
 
-  return response.json();
+  return (await response.json()) as SecSubmissionsResponse;
 }
 
 // Filing types that should be processed by LLM extraction
@@ -640,10 +653,11 @@ async function processCompanyHybrid(
     }
 
     let d1HoldingsNativeWrite: SecFilingHoldingsNativeWriteResult | undefined;
+    const normalizedNativeUnit = normalizeNativeAssetUnit(asset);
     if (
       config.writeHoldingsNativeToD1 !== false &&
       d1 &&
-      asset.toUpperCase() === 'BTC' &&
+      normalizedNativeUnit &&
       extractionMethod === 'llm'
     ) {
       const flags = {
@@ -654,6 +668,7 @@ async function processCompanyHybrid(
         },
         extraction: {
           method: extractionMethod,
+          asset_unit: normalizedNativeUnit,
           reasoning: finalReasoning,
           holdings_explicitly_stated: llmHoldingsExplicitlyStated,
           transaction_type: llmTransactionType,
@@ -664,6 +679,7 @@ async function processCompanyHybrid(
       d1HoldingsNativeWrite = await writeSecFilingHoldingsNativeDatapoint(d1, {
         ticker,
         holdingsNative: finalHoldings,
+        assetUnit: normalizedNativeUnit,
         asOf: finalAsOfDate || finalFilingDate || null,
         reportedAt: finalFilingDate || null,
         filingUrl: finalFilingUrl || null,
@@ -943,4 +959,11 @@ export async function runXBRLScan(tickers?: string[]): Promise<{
   console.log(`\n[XBRL Scan] Complete: ${withBitcoin} with Bitcoin, ${withShares} with shares, ${failed} failed`);
 
   return { results, summary: { total: tickerList.length, withBitcoin, withShares, withDebt, failed } };
+}
+function normalizeNativeAssetUnit(asset: string): 'BTC' | 'ETH' | 'SOL' | null {
+  const raw = (asset || '').trim().toUpperCase();
+  if (raw === 'BTC' || raw === 'BITCOIN') return 'BTC';
+  if (raw === 'ETH' || raw === 'ETHER' || raw === 'ETHEREUM') return 'ETH';
+  if (raw === 'SOL' || raw === 'SOLANA') return 'SOL';
+  return null;
 }

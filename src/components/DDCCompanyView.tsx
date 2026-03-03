@@ -52,8 +52,8 @@ export function DDCCompanyView({ company, className = "" }: Props) {
       const holdings = DDC_PROVENANCE.holdings.value;
       const totalDebt = DDC_PROVENANCE.totalDebt.value;
       const cashReserves = DDC_PROVENANCE.cashReserves.value;
-      const preferredEquity = DDC_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = DDC_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = DDC_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = DDC_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * btcPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);

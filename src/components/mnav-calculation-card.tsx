@@ -4,6 +4,7 @@ import { formatLargeNumber } from "@/lib/calculations";
 import { FilingCite } from "@/components/wiki-citation";
 import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
 import type { HoldingsBasis } from "@/lib/d1-overlay";
+import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
 
 interface MnavCalculationCardProps {
   ticker: string;
@@ -338,17 +339,7 @@ export function MnavCalculationCard({
           </div>
           {holdingsBasis && (
             <div className="mt-1">
-              <span className={`inline-flex items-center text-[10px] font-medium px-1.5 py-0.5 rounded ${
-                holdingsBasis === 'native_units'
-                  ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                  : holdingsBasis === 'usd_fair_value'
-                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                    : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500'
-              }`}>
-                {holdingsBasis === 'native_units' ? 'D1 native'
-                  : holdingsBasis === 'usd_fair_value' ? 'D1 USD÷price'
-                  : 'static'}
-              </span>
+              <HoldingsBasisBadge basis={holdingsBasis} />
             </div>
           )}
         </div>

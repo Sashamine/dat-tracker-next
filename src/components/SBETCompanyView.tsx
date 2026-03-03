@@ -48,7 +48,7 @@ export function SBETCompanyView({ company, className = "" }: Props) {
       const totalDebt = SBET_PROVENANCE.totalDebt.value;
       const cashReserves = SBET_PROVENANCE.cashReserves.value;
       const preferredEquity = 0;
-      const sharesOutstanding = SBET_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const sharesOutstanding = SBET_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * ethPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);

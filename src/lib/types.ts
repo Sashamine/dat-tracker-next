@@ -33,6 +33,12 @@ export type FilingType =
   | "US"    // Files 10-Q, 10-K, 8-K - quarterly XBRL data
   | "FPI";  // Foreign Private Issuer - files 20-F, 6-K - annual/semi-annual, limited XBRL
 
+/** How the holdings value for a given ticker was resolved by applyD1Overlay. */
+export type HoldingsBasis =
+  | 'native_units'      // holdings_native present in D1 (preferred)
+  | 'usd_fair_value'    // bitcoin_holdings_usd present in D1, divided by live price
+  | 'static_fallback';  // neither D1 metric present; using Company/static holdings
+
 // Data verification flags for fields that need manual review
 export type DataFlag =
   | "shares_unverified"     // Share count from non-XBRL source (Yahoo, manual)
@@ -232,6 +238,10 @@ export interface Company {
   // Indirect crypto exposure (funds, ETFs, equity in crypto companies)
   // Fair value is added to Crypto NAV, but displayed separately in UI
   cryptoInvestments?: CryptoInvestment[];
+
+  // D1 overlay metadata (set by applyD1Overlay)
+  holdingsBasis?: HoldingsBasis;   // How holdings were resolved (native, USD÷price, static)
+  _d1Fields?: string[];            // Which balance-sheet fields were sourced from D1 (dev debug)
 }
 
 // Secondary crypto holding for multi-asset treasury companies
