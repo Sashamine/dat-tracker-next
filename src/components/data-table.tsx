@@ -12,9 +12,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import {
-  formatMNAV,
-} from "@/lib/calculations";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { dilutiveInstruments, getEffectiveShares } from "@/lib/data/dilutive-instruments";
@@ -45,7 +42,6 @@ interface YesterdayMnavData {
 interface DataTableProps {
   companies: Company[];
   prices?: PriceData;
-  showFilters?: boolean;
   yesterdayMnav?: YesterdayMnavData;
 }
 
@@ -58,12 +54,6 @@ function formatNumber(num: number | undefined): string {
   return num.toLocaleString();
 }
 
-// Format percentage
-function formatPercent(num: number | undefined, includeSign = false): string {
-  if (num === undefined || num === null) return "—";
-  const sign = includeSign && num > 0 ? "+" : "";
-  return `${sign}${num.toFixed(1)}%`;
-}
 
 // All logos are stored locally in /public/logos/TICKER.png
 // No need for a mapping - just construct the path from ticker
@@ -89,7 +79,7 @@ const assetColors: Record<string, string> = {
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
-export function DataTable({ companies, prices, showFilters = true, yesterdayMnav }: DataTableProps) {
+export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) {
   const router = useRouter();
   const {
     minMarketCap,
@@ -108,7 +98,6 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
   // Calculate metrics for each company
   const companiesWithMetrics = companies.map((company) => {
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
-    const cryptoChange = prices?.crypto[company.asset]?.change24h;
     const stockData = prices?.stocks[company.ticker];
     const stockPrice = stockData?.price;
     // Use same market cap that's used for mNAV calculation (shares × price)
@@ -130,7 +119,6 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
     const otherInvestments = company.otherInvestments ?? 0;
     const otherAssets = cashReserves + otherInvestments;
     const totalDebt = company.totalDebt ?? 0;
-    const preferredEquity = company.preferredEquity ?? 0;
 
     // Calculate crypto NAV including secondary holdings
     let cryptoNav = holdingsValue;
@@ -277,8 +265,10 @@ export function DataTable({ companies, prices, showFilters = true, yesterdayMnav
           ? b.ticker.localeCompare(a.ticker)
           : a.ticker.localeCompare(b.ticker);
       default:
-        aVal = (a as any)[sortField] ?? 0;
-        bVal = (b as any)[sortField] ?? 0;
+        const aField = (a as unknown as Record<string, unknown>)[sortField];
+        const bField = (b as unknown as Record<string, unknown>)[sortField];
+        aVal = typeof aField === "number" ? aField : Number(aField ?? 0);
+        bVal = typeof bField === "number" ? bField : Number(bField ?? 0);
     }
 
     return sortDir === "desc" ? bVal - aVal : aVal - bVal;
