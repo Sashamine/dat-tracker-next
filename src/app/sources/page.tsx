@@ -173,7 +173,7 @@ export default function SourcesPage() {
             Data Sources & Methodology
           </h1>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
-            This page documents where our data comes from and how it's calculated.
+            This page documents where our data comes from and how it&apos;s calculated.
             We prioritize official sources (SEC filings, company websites) over aggregators.
           </p>
         </div>
@@ -224,7 +224,7 @@ export default function SourcesPage() {
             </h2>
             <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
               <p className="text-sm text-yellow-800 dark:text-yellow-300 mb-2">
-                These companies use holdings data but don't have detailed source documentation yet:
+                These companies use holdings data but don&apos;t have detailed source documentation yet:
               </p>
               <div className="flex flex-wrap gap-2">
                 {companiesWithoutSources.map((company) => (
