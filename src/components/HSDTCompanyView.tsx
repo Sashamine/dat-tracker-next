@@ -1,24 +1,41 @@
-// @ts-nocheck
 "use client";
 
 import { HSDT_PROVENANCE, HSDT_CIK } from "@/lib/data/provenance/hsdt";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+interface HSDTMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && "searchTerm" in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -27,7 +44,7 @@ interface Props {
 }
 
 export function HSDTCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "HSDT",
     asset: "SOL",
     cik: HSDT_CIK,
@@ -110,11 +127,11 @@ export function HSDTCompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
-      } as any;
+      } satisfies HSDTMetrics;
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
