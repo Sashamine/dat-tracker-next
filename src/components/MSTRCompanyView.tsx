@@ -106,6 +106,7 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
             url: "https://www.strategy.com/credit",
             quote: `$${(preferredEquity / 1e9).toFixed(2)}B preferred (STRF + STRC + STRE + STRK + STRD)`,
             anchor: "strategy.com/credit (Reg FD)",
+            documentDate: "2026-03-03",
           }),
           "5 preferred series from strategy.com/credit"
         );
