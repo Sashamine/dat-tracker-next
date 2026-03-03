@@ -25,11 +25,11 @@ type PricesSnapshot = {
 };
 
 // Get unique assets and count companies
-function getAssetStats(companies: Company[], prices?: PricesSnapshot) {
+function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {  
   const assets = [...new Set(companies.map(c => c.asset))];
   return assets.map(asset => {
     const assetCompanies = companies.filter(c => c.asset === asset);
-    const price = prices?.crypto[asset]?.price || 0;
+    const price = prices?.crypto?.[asset]?.price || 0;
     const totalHoldings = assetCompanies.reduce((sum, c) => sum + c.holdings, 0);
     const totalValue = totalHoldings * price;
     return { asset, count: assetCompanies.length, totalHoldings, totalValue, price };
