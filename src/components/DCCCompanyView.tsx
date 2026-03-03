@@ -1,29 +1,46 @@
-// @ts-nocheck
 "use client";
 
 import { DCC_PROVENANCE } from "@/lib/data/provenance/dcc";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
-import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { Company, DataWarning } from "@/lib/types";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
 const WEBSITE_URL = "https://www.digitalx.com";
 const TREASURY_DASHBOARD_URL = "https://treasury.digitalx.com";
 const ASX_FILINGS_URL = "https://www.asx.com.au/markets/company/DCC";
 const LISTCORP_URL = "https://www.listcorp.com/asx/dcc/digitalx-limited";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+interface DCCMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && "searchTerm" in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -32,7 +49,7 @@ interface Props {
 }
 
 export function DCCCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "DCC.AX",
     asset: "BTC",
     provenance: DCC_PROVENANCE,
@@ -114,10 +131,10 @@ export function DCCCompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
-      } as any;
+      } satisfies DCCMetrics;
     },
 
-    renderStrategyAndOverview: ({ company }) => (
+    renderStrategyAndOverview: () => (
       <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-6 group">
         <summary className="p-6 cursor-pointer flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Strategy & Overview</h3>
@@ -139,7 +156,7 @@ export function DCCCompanyView({ company, className = "" }: Props) {
     renderAfterDataSections: ({ company }) =>
       company.dataWarnings && company.dataWarnings.length > 0 ? (
         <div className="mt-6 space-y-2">
-          {company.dataWarnings.map((w: any, i: number) => (
+          {company.dataWarnings.map((w: DataWarning, i: number) => (
             <div
               key={i}
               className={`rounded-lg px-4 py-3 text-sm flex items-start gap-2 ${
@@ -156,7 +173,7 @@ export function DCCCompanyView({ company, className = "" }: Props) {
       ) : null,
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
