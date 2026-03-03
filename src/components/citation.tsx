@@ -132,7 +132,7 @@ export function Citation({
                 className="block text-[10px] text-blue-400 hover:text-blue-300 truncate mt-1"
                 onClick={(e) => {
                   e.stopPropagation();
-                  trackCitationSourceClick({ meta: { source_url: sourceUrl } });
+                  trackCitationSourceClick({ href: sourceUrl });
                 }}
               >
                 View source

@@ -37,11 +37,11 @@ function getSessionId(): string {
 const DEBOUNCE_MS = 2_000;
 const lastFired = new Map<string, number>();
 
-function shouldFire(event: string): boolean {
+function shouldFire(key: string): boolean {
   const now = Date.now();
-  const last = lastFired.get(event);
+  const last = lastFired.get(key);
   if (last && now - last < DEBOUNCE_MS) return false;
-  lastFired.set(event, now);
+  lastFired.set(key, now);
   return true;
 }
 
@@ -60,9 +60,14 @@ type EventPayload = {
   meta?: Record<string, unknown>;
 };
 
-export function sendEvent(payload: EventPayload): void {
+/**
+ * @param debounceKey — compound key for debounce (defaults to event name).
+ *   Use a more specific key when the same event type should be allowed
+ *   for different tickers/metrics within the debounce window.
+ */
+export function sendEvent(payload: EventPayload, debounceKey?: string): void {
   if (typeof window === "undefined") return;
-  if (!shouldFire(payload.event)) return;
+  if (!shouldFire(debounceKey ?? payload.event)) return;
 
   const body = JSON.stringify({
     ...payload,
@@ -98,8 +103,16 @@ export function trackCompanyView(ticker: string, route: string): void {
   sendEvent({ event: "company_view", route, ticker: ticker.toUpperCase() });
 }
 
-export function trackHistoryView(ticker: string, metric: string, route?: string): void {
-  sendEvent({ event: "history_view", ticker: ticker.toUpperCase(), metric, route });
+export function trackHistoryView(
+  ticker: string,
+  metric: string,
+  opts?: { route?: string; meta?: Record<string, unknown> },
+): void {
+  const t = ticker.toUpperCase();
+  sendEvent(
+    { event: "history_view", ticker: t, metric, route: opts?.route, meta: opts?.meta },
+    `history_view:${t}:${metric}`,
+  );
 }
 
 export function trackCitationOpen(opts?: {
@@ -110,11 +123,17 @@ export function trackCitationOpen(opts?: {
   sendEvent({ event: "citation_modal_open", ...opts });
 }
 
-export function trackCitationSourceClick(opts?: {
+export function trackCitationSourceClick(opts: {
+  href: string;
   ticker?: string;
   metric?: string;
   artifact_id?: string;
-  meta?: Record<string, unknown>;
 }): void {
-  sendEvent({ event: "citation_source_click", ...opts });
+  sendEvent({
+    event: "citation_source_click",
+    ticker: opts.ticker,
+    metric: opts.metric,
+    artifact_id: opts.artifact_id,
+    meta: { href: opts.href },
+  });
 }

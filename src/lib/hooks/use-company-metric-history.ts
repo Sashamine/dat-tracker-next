@@ -1,4 +1,6 @@
 import useSWR from 'swr';
+import { useRef } from 'react';
+import { trackHistoryView } from '@/lib/client-events';
 
 export type DatapointRow = {
   datapoint_id: string;
@@ -47,5 +49,18 @@ export function useCompanyMetricHistory(
     ? `/api/company/${encodeURIComponent(t)}/history?metrics=${encodeURIComponent(metricsParam)}&limit=${limit}&order=${order}&includeArtifacts=${includeArtifacts ? 'true' : 'false'}`
     : null;
 
-  return useSWR<CompanyMetricHistoryResponse>(key, fetcher);
+  // Track history_view once per unique (ticker, metrics) combination per mount.
+  const trackedRef = useRef<string | null>(null);
+
+  const result = useSWR<CompanyMetricHistoryResponse>(key, fetcher, {
+    onSuccess(data) {
+      const trackKey = `${t}:${metricsParam}`;
+      if (data?.success && trackedRef.current !== trackKey) {
+        trackedRef.current = trackKey;
+        trackHistoryView(t, metricsParam, { meta: { limit } });
+      }
+    },
+  });
+
+  return result;
 }
