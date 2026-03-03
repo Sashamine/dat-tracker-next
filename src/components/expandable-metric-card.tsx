@@ -1,29 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
-
-interface SourceLinkProps {
-  url?: string;
-  label?: string;
-}
-
-function SourceLink({ url, label }: SourceLinkProps) {
-  if (!url) return <span className="text-gray-500 text-[10px] ml-1">[—]</span>;
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-500 hover:text-blue-400 text-[10px] ml-1"
-      title={label || "View source"}
-      onClick={(e) => e.stopPropagation()}
-    >
-      [src↗]
-    </a>
-  );
-}
 
 // ============================================================================
 // LEVERAGE CALCULATION CARD
@@ -48,9 +26,6 @@ export function LeverageCalculationCard({
   cashReserves,
   cryptoNav,
   leverage,
-  debtSourceUrl,
-  cashSourceUrl,
-  holdingsSourceUrl,
 }: LeverageCardProps) {
   const netDebt = Math.max(0, adjustedDebt - cashReserves);
   const hasItmAdjustment = itmDebtAdjustment > 0;
@@ -171,11 +146,6 @@ export function EquityNavPerShareCalculationCard({
   equityNav,
   equityNavPerShare,
   stockPrice,
-  holdingsSourceUrl,
-  cashSourceUrl,
-  debtSourceUrl,
-  preferredSourceUrl,
-  sharesSourceUrl,
 }: EquityNavPerShareCardProps) {
   const premiumDiscount = stockPrice > 0 ? ((stockPrice - equityNavPerShare) / equityNavPerShare) * 100 : 0;
 
@@ -288,7 +258,6 @@ interface ExpandableMetricProps {
 }
 
 export function ExpandableMetric({
-  type,
   label,
   value,
   subLabel,
