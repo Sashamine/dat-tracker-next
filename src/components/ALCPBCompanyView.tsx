@@ -1,24 +1,42 @@
-// @ts-nocheck
 "use client";
 
 import { ALCPB_PROVENANCE } from "@/lib/data/provenance/alcpb";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
-import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { Company, DataWarning } from "@/lib/types";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
+}
+
+interface ALCPBMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
 }
 
 interface Props {
@@ -27,7 +45,7 @@ interface Props {
 }
 
 export function ALCPBCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "ALCPB",
     asset: "BTC",
     provenance: ALCPB_PROVENANCE,
@@ -109,13 +127,13 @@ export function ALCPBCompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
-      } as any;
+      } satisfies ALCPBMetrics;
     },
 
     renderAfterDataSections: ({ company }) =>
       company.dataWarnings && company.dataWarnings.length > 0 ? (
         <div className="mt-6 space-y-2">
-          {company.dataWarnings.map((w: any, i: number) => (
+          {company.dataWarnings.map((w: DataWarning, i: number) => (
             <div
               key={i}
               className={`px-4 py-3 rounded-lg text-sm flex items-start gap-2 ${
@@ -132,7 +150,7 @@ export function ALCPBCompanyView({ company, className = "" }: Props) {
       ) : null,
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
