@@ -11,8 +11,7 @@ import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay } from "@/lib/d1-overlay";
 import { cn } from "@/lib/utils";
-import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
-import { getQuarterlyYieldLeaderboard, getAvailableQuarters, getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
+import { getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { HPSComparison } from "@/components/miners-comparison";
 
@@ -22,28 +21,18 @@ type GrowthPeriod = "30d" | "90d" | "1y" | "all";
 
 interface MNAVChartProps {
   mnavStats: { median: number; average: number };
-  currentBTCPrice: number;
   timeRange: TimeRange;
   metric: MetricType;
   title: string;
 }
 
-function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNAVChartProps) {
+function MNAVChart({ mnavStats, timeRange, metric, title }: MNAVChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const [intradayData, setIntradayData] = useState<{ time: Time; value: number }[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const currentStats = mnavStats;
   const isMedian = metric === "median";
   const color = isMedian ? "#6366f1" : "#a855f7";
-
-  // Disable intraday API for now - we don't have proper intraday stock prices
-  // All timeframes will use MNAV_HISTORY weekly data + current live value
-  useEffect(() => {
-    setIntradayData(null);
-    setIsLoading(false);
-  }, [timeRange, isMedian]);
 
   // Generate historical data from pre-calculated MNAV_HISTORY
   const historicalData = useMemo(() => {
@@ -63,7 +52,7 @@ function MNAVChart({ mnavStats, currentBTCPrice, timeRange, metric, title }: MNA
     const cutoffDate = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000);
     const cutoffStr = cutoffDate.toISOString().split("T")[0];
 
-    let result: { time: Time; value: number }[] = [];
+    const result: { time: Time; value: number }[] = [];
 
     // Filter MNAV_HISTORY by date range
     for (const snapshot of MNAV_HISTORY) {
@@ -312,7 +301,7 @@ export default function MNAVPage() {
       leaderboard,  // Full sorted leaderboard for tooltip
       missingTickers,  // Companies without growth data
     };
-  }, [treasuries, growthPeriod, selectedAsset]);
+  }, [treasuries, growthPeriod, selectedAsset, companies.length]);
 
   const timeRangeOptions: { value: TimeRange; label: string }[] = [
     { value: "1d", label: "24H" },
@@ -665,7 +654,6 @@ export default function MNAVPage() {
             </div>
             <MNAVChart
               mnavStats={mnavStats}
-              currentBTCPrice={prices?.crypto?.BTC?.price || 0}
               timeRange={timeRange1}
               metric={selectedMetric}
               title="mNAV History"

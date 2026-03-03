@@ -41,13 +41,13 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
 
     // BMNR uses an estimated share count for mNAV/HPS (more current than verified 10-Q)
     // and a market-cap override consistent with the old view (back out stock price from API market cap).
-    marketCapOverride: ({ company, prices, marketCap }) => {
+    marketCapOverride: ({ company, marketCap }) => {
       const est = estimateBMNRShares();
       const impliedStockPrice = marketCap / (company.sharesForMnav || 1);
       return impliedStockPrice * est.totalEstimated;
     },
 
-    buildMetrics: ({ company, prices, marketCap }) => {
+    buildMetrics: ({ prices, marketCap }) => {
       if (!BMNR_PROVENANCE.holdings || !BMNR_PROVENANCE.cashReserves) return null;
 
       const ethPrice = prices?.crypto?.ETH?.price || 0;
