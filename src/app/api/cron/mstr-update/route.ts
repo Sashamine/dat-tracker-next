@@ -16,7 +16,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { runMSTRAutoUpdate } from '@/lib/mstr-auto-update';
-import path from 'path';
 
 // Verify cron secret for scheduled runs
 function verifyCronSecret(request: NextRequest): boolean {

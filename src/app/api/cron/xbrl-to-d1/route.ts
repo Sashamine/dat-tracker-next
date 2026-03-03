@@ -19,9 +19,7 @@ function verifyCronSecret(request: NextRequest): boolean {
   return authHeader === `Bearer ${cronSecret}`;
 }
 
-const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'] as const;
-
-type Metric = (typeof DEFAULT_METRICS)[number];
+type Metric = 'cash_usd' | 'debt_usd' | 'basic_shares' | 'bitcoin_holdings_usd' | 'holdings_native';
 
 type MetricRow = { metric: Metric; value: number; unit: string; as_of?: string | null; reported_at?: string | null; flags_json?: string | null };
 type ExistingProposalRow = {
