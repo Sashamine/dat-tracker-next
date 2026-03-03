@@ -1,24 +1,45 @@
-// @ts-nocheck
 "use client";
 
 import { BMNR_PROVENANCE, BMNR_CIK, BMNR_STAKING_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
+import type { ShareEstimate } from "@/lib/data/provenance/bmnr";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
+type ConfigWithHelpers = CompanyViewBaseConfig & {
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
+}
+
+interface BMNRMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  shareEstimate: ShareEstimate;
+  estimatedShares: number;
 }
 
 interface Props {
@@ -27,7 +48,7 @@ interface Props {
 }
 
 export function BMNRCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "BMNR",
     asset: "ETH",
     cik: BMNR_CIK,
@@ -90,7 +111,7 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Estimated from ATM activity",
           formula: shareEstimate.methodology,
-          inputs: { anchor: BMNR_PROVENANCE.sharesOutstanding },
+          inputs: { ...(BMNR_PROVENANCE.sharesOutstanding ? { anchor: BMNR_PROVENANCE.sharesOutstanding } : {}) },
         }),
         shareEstimate.methodology
       );
@@ -175,7 +196,7 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
         equityNavPerSharePv,
         shareEstimate,
         estimatedShares,
-      } as any;
+      } satisfies BMNRMetrics;
     },
 
     renderBalanceSheetExtras: () => (
@@ -185,18 +206,13 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
           {BMNR_STAKING_PROVENANCE.stakedAmount && (
             <div className="col-span-2 md:col-span-1">
               {/* reuse ProvenanceMetric by providing provenance directly */}
-              {/* @ts-ignore */}
               <div className="h-full">
-                {/* eslint-disable-next-line react/jsx-no-undef */}
               </div>
             </div>
           )}
 
           {BMNR_STAKING_PROVENANCE.stakedAmount && (
-            // inline to avoid adding more base API surface
-            // eslint-disable-next-line react/jsx-no-undef
             <div className="col-span-2 md:col-span-1">
-              {/* ProvenanceMetric imported in base; keep here minimal by dynamic import? simpler: render plain */}
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
                 <p className="text-sm text-gray-500 dark:text-gray-400">ETH Staked</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{BMNR_STAKING_PROVENANCE.stakedAmount.value.toLocaleString()}</p>
@@ -238,7 +254,7 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
         <strong>Data Provenance:</strong> All values are sourced from SEC EDGAR filings (XBRL data or document text). Click any metric to see its exact source and verify it yourself. Derived values show the formula and link to their SEC-filed inputs.
       </div>
     ),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
