@@ -98,10 +98,23 @@ export interface SecUpdateConfig {
   writeHoldingsNativeToD1?: boolean; // default: true
 }
 
+type SecRecentFilings = {
+  form: string[];
+  filingDate: string[];
+  accessionNumber: string[];
+  items?: string[];
+};
+
+type SecSubmissionsResponse = {
+  filings?: {
+    recent?: SecRecentFilings;
+  };
+};
+
 /**
  * Fetch SEC submissions to find recent filings
  */
-async function fetchSECSubmissions(cik: string): Promise<any> {
+async function fetchSECSubmissions(cik: string): Promise<SecSubmissionsResponse> {
   const url = `https://data.sec.gov/submissions/CIK${cik}.json`;
   const response = await fetch(url, {
     headers: {
@@ -114,7 +127,7 @@ async function fetchSECSubmissions(cik: string): Promise<any> {
     throw new Error(`SEC API error: ${response.status}`);
   }
 
-  return response.json();
+  return (await response.json()) as SecSubmissionsResponse;
 }
 
 // Filing types that should be processed by LLM extraction
@@ -947,9 +960,10 @@ export async function runXBRLScan(tickers?: string[]): Promise<{
 
   return { results, summary: { total: tickerList.length, withBitcoin, withShares, withDebt, failed } };
 }
-function normalizeNativeAssetUnit(asset: string): 'BTC' | 'ETH' | null {
+function normalizeNativeAssetUnit(asset: string): 'BTC' | 'ETH' | 'SOL' | null {
   const raw = (asset || '').trim().toUpperCase();
   if (raw === 'BTC' || raw === 'BITCOIN') return 'BTC';
   if (raw === 'ETH' || raw === 'ETHER' || raw === 'ETHEREUM') return 'ETH';
+  if (raw === 'SOL' || raw === 'SOLANA') return 'SOL';
   return null;
 }
