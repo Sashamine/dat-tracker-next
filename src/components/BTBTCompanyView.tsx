@@ -59,18 +59,18 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
       const holdings = BTBT_PROVENANCE.holdings.value;
       const rawDebt = BTBT_PROVENANCE.totalDebt.value;
       const cashReserves = BTBT_PROVENANCE.cashReserves.value;
-      const preferredEquity = BTBT_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = BTBT_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = BTBT_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = BTBT_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const adjustedDebt = Math.max(0, rawDebt - (inTheMoneyDebtValue || 0));
 
       // Add ITM warrant proceeds to cash (as in calculator)
       const adjustedCash = cashReserves + (inTheMoneyWarrantProceeds || 0);
-      const adjustedRestrictedCash = (company.restrictedCash || 0) + (inTheMoneyWarrantProceeds || 0);
+      const adjustedRestrictedCash = (company.restrictedCash ?? 0) + (inTheMoneyWarrantProceeds || 0);
       const freeCash = adjustedCash - adjustedRestrictedCash;
 
       const baseCryptoNav = holdings * ethPrice;
-      const otherInvestments = company.otherInvestments || 0;
+      const otherInvestments = company.otherInvestments ?? 0;
       const otherInvestmentsMaterial = baseCryptoNav > 0 && otherInvestments / baseCryptoNav > 0.05;
 
       const cryptoNav = baseCryptoNav + adjustedRestrictedCash + (otherInvestmentsMaterial ? otherInvestments : 0);

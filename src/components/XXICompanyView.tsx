@@ -41,12 +41,12 @@ export function XXICompanyView({ company, className = "" }: Props) {
 
     // XXI: dual-class share structure. Class B has zero economic rights.
     // Keep the economic share count override used by market cap + dilution.
-    getEffectiveSharesBasic: (c) => (c as any).sharesForMnav || 0,
+    getEffectiveSharesBasic: (c) => (c as any).sharesForMnav ?? 0,
     marketCapOverride: ({ company, prices, marketCap }) => {
       const stock = prices?.stocks?.XXI;
       const stockPrice = stock?.price || 0;
       if (!stockPrice) return marketCap;
-      const economicShares = company.sharesForMnav || 0;
+      const economicShares = company.sharesForMnav ?? 0;
       return economicShares * stockPrice;
     },
 
@@ -58,8 +58,8 @@ export function XXICompanyView({ company, className = "" }: Props) {
       const holdings = XXI_PROVENANCE.holdings.value;
       const totalDebt = XXI_PROVENANCE.totalDebt.value;
       const cashReserves = XXI_PROVENANCE.cashReserves.value;
-      const preferredEquity = XXI_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = XXI_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = XXI_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = XXI_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);

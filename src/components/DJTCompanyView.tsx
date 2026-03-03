@@ -35,8 +35,8 @@ export function DJTCompanyView({ company, className = "" }: Props) {
       const h = DJT_PROVENANCE.holdings.value;
       const d = DJT_PROVENANCE.totalDebt.value;
       const c = DJT_PROVENANCE.cashReserves.value;
-      const pf = DJT_PROVENANCE.preferredEquity?.value || 0;
-      const sh = DJT_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const pf = DJT_PROVENANCE.preferredEquity?.value ?? 0;
+      const sh = DJT_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const itm = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, d - itm);

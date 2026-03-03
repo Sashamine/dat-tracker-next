@@ -50,8 +50,8 @@ export function H100CompanyView({ company, className = "" }: Props) {
       const holdings = H100_PROVENANCE.holdings.value;
       const totalDebt = H100_PROVENANCE.totalDebt.value;
       const cashReserves = H100_PROVENANCE.cashReserves.value;
-      const preferredEquity = H100_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = H100_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = H100_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = H100_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);

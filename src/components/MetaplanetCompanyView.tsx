@@ -46,8 +46,8 @@ export function MetaplanetCompanyView({ company, className = "" }: Props) {
       const holdings = METAPLANET_PROVENANCE.holdings.value;
       const totalDebt = METAPLANET_PROVENANCE.totalDebt.value;
       const cashReserves = METAPLANET_PROVENANCE.cashReserves.value;
-      const preferredEquity = company.preferredEquity || 0;
-      const sharesOutstanding = METAPLANET_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = METAPLANET_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const adjustedDebt = totalDebt;
 

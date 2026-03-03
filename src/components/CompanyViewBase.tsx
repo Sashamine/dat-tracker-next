@@ -132,7 +132,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
 
   const effectiveShares = useMemo(() => {
     if (!stockPrice) return null;
-    const basic = config.getEffectiveSharesBasic ? config.getEffectiveSharesBasic(company) : company.sharesForMnav || 0;
+    const basic = config.getEffectiveSharesBasic ? config.getEffectiveSharesBasic(company) : company.sharesForMnav ?? 0;
     return getEffectiveShares(config.ticker, basic || 0, stockPrice);
   }, [stockPrice, company.sharesForMnav]);
 

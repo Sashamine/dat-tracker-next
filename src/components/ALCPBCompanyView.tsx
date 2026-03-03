@@ -46,8 +46,8 @@ export function ALCPBCompanyView({ company, className = "" }: Props) {
       const holdings = ALCPB_PROVENANCE.holdings.value;
       const totalDebt = ALCPB_PROVENANCE.totalDebt.value;
       const cashReserves = ALCPB_PROVENANCE.cashReserves.value;
-      const preferredEquity = ALCPB_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = ALCPB_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = ALCPB_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = ALCPB_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * btcPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);

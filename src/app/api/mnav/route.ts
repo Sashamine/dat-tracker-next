@@ -99,8 +99,8 @@ export async function GET() {
       results[ticker] = {
         ticker,
         holdings: data.latest.btcHeld,
-        debt: data.latest.totalDebt || 0,
-        cash: data.latest.totalCash || 0,
+        debt: data.latest.totalDebt ?? 0,
+        cash: data.latest.totalCash ?? 0,
         fdShares: data.latest.fullyDilutedShares || data.latest.issuedShares,
         preferredEquity: data.latest.totalPreferredStock || 0,
         lastUpdated: data.metadata?.preparedAt || new Date().toISOString(),

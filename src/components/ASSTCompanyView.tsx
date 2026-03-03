@@ -45,12 +45,12 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = STRV_PROVENANCE.holdings.value || company.holdings || 0;
-      const sharesOutstanding = STRV_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
-      const cashReserves = STRV_PROVENANCE.cashReserves.value || company.cashReserves || 0;
-      const restrictedCash = company.restrictedCash || 0;
-      const totalDebt = STRV_PROVENANCE.totalDebt.value || company.totalDebt || 0;
-      const preferredEquity = STRV_PROVENANCE.preferredEquity?.value || company.preferredEquity || 0;
+      const holdings = STRV_PROVENANCE.holdings.value ?? company.holdings ?? 0;
+      const sharesOutstanding = STRV_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const cashReserves = STRV_PROVENANCE.cashReserves.value ?? company.cashReserves ?? 0;
+      const restrictedCash = company.restrictedCash ?? 0;
+      const totalDebt = STRV_PROVENANCE.totalDebt.value ?? company.totalDebt ?? 0;
+      const preferredEquity = STRV_PROVENANCE.preferredEquity?.value ?? company.preferredEquity ?? 0;
 
       // ASST: uses shared getCompanyMNAV for consistency (includes restricted cash rules)
       const mNav = getCompanyMNAV(company, prices);

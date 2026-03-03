@@ -47,8 +47,8 @@ export function AVXCompanyView({ company, className = "" }: Props) {
       const holdings = AVX_PROVENANCE.holdings.value;
       const totalDebt = AVX_PROVENANCE.totalDebt.value;
       const cashReserves = AVX_PROVENANCE.cashReserves.value;
-      const preferredEquity = AVX_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = AVX_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = AVX_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = AVX_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
