@@ -177,7 +177,7 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
                     <div>
                       <div className="text-gray-600 dark:text-gray-400 text-xs">Source Quote</div>
                       <div className="text-gray-900 dark:text-gray-100 italic text-xs bg-gray-50 dark:bg-gray-900 p-2 rounded">
-                        "{data.source.quote}"
+                        &quot;{data.source.quote}&quot;
                       </div>
                     </div>
                   )}
