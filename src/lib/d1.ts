@@ -74,6 +74,7 @@ export class D1Client {
 }
 
 import { normalizeLatestRowsForTicker } from '@/lib/d1-normalization';
+import { CORE_D1_METRICS } from '@/lib/metrics';
 
 export type LatestDatapointRow = {
   datapoint_id: string;
@@ -122,7 +123,7 @@ type DatapointHistoryQueryRow = Omit<DatapointHistoryRow, 'artifact'> & {
 
 export async function getLatestMetrics(
   ticker: string,
-  metrics: string[] = ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native']
+  metrics: string[] = [...CORE_D1_METRICS]
 ): Promise<LatestDatapointRow[]> {
   const d1 = D1Client.fromEnv();
 

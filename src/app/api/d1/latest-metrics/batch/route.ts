@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getLatestMetrics } from '@/lib/d1';
 import { getHoldingsBasis, type HoldingsBasis } from '@/lib/d1-overlay';
+import { CORE_D1_METRICS } from '@/lib/metrics';
 
 // Returns latest filed fundamentals from Cloudflare D1.
 // Designed for client-side consumption on aggregate pages.
-
-const DEFAULT_METRICS = ['cash_usd', 'debt_usd', 'preferred_equity_usd', 'basic_shares', 'bitcoin_holdings_usd', 'holdings_native'] as const;
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,7 +26,7 @@ export async function POST(request: NextRequest) {
     // If this grows, we can optimize with a single IN-query.
     const entries = await Promise.all(
       tickers.map(async (ticker) => {
-        const rows = await getLatestMetrics(ticker, [...DEFAULT_METRICS]);
+        const rows = await getLatestMetrics(ticker, [...CORE_D1_METRICS]);
         return [ticker, rows] as const;
       })
     );
