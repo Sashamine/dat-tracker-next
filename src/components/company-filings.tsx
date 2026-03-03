@@ -112,7 +112,7 @@ function FilingRow({ filing }: { filing: Filing }) {
   );
 }
 
-export function CompanyFilings({ ticker, companyName, className }: CompanyFilingsProps) {
+export function CompanyFilings({ ticker, className }: CompanyFilingsProps) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["filings", ticker],
     queryFn: () => fetchFilings(ticker),
