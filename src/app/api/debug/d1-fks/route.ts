@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 
+type ForeignKeyRow = {
+  id: number;
+  seq: number;
+  table: string;
+  from: string;
+  to: string;
+  on_update: string;
+  on_delete: string;
+  match: string;
+};
+
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
@@ -30,7 +41,7 @@ export async function GET(request: NextRequest) {
   }
 
   const d1 = D1Client.fromEnv();
-  const out = await d1.query<any>(`PRAGMA foreign_key_list(${table});`);
+  const out = await d1.query<ForeignKeyRow>(`PRAGMA foreign_key_list(${table});`);
 
   return NextResponse.json({ success: true, table, fks: out.results });
 }
