@@ -1,8 +1,29 @@
+/**
+ * MANUAL REMEDIATION: Fix sec_filing artifacts missing accession numbers.
+ *
+ * Parses accession from R2-stored filing content and writes accession + source_url
+ * back to D1. This satisfies the SEC receipt invariant enforced by state-verify CI.
+ *
+ * Defaults to DRY-RUN. Pass --write to actually update D1.
+ *
+ * Required env vars:
+ *   CLOUDFLARE_ACCOUNT_ID    — Cloudflare account ID
+ *   CLOUDFLARE_D1_DATABASE_ID — D1 database ID
+ *   CLOUDFLARE_API_TOKEN     — Cloudflare API token (D1 read/write)
+ *   R2_ENDPOINT              — R2 S3-compatible endpoint URL
+ *   R2_ACCESS_KEY_ID         — R2 access key
+ *   R2_SECRET_ACCESS_KEY     — R2 secret key
+ *
+ * Usage:
+ *   # Dry-run (default) — shows what would be updated
+ *   npx tsx scripts/cloudflare/d1-artifacts-fix-missing-accessions.ts --limit=200
+ *
+ *   # Write mode — actually updates D1
+ *   npx tsx scripts/cloudflare/d1-artifacts-fix-missing-accessions.ts --limit=200 --write
+ */
+
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { D1Client } from '@/lib/d1';
-
-// Fix sec_filing artifacts missing accession by parsing accession from content and writing
-// accession + source_url. This is a targeted remediation to satisfy the SEC receipt invariant.
 
 type Row = {
   artifact_id: string;
