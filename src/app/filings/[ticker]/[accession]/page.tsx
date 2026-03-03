@@ -53,7 +53,7 @@ export default async function FilingViewerPage({ params, searchParams }: PagePro
   const { q: searchQuery, anchor, type, tab, fact, period } = await searchParams;
   
   let accession = rawAccession;
-  let resolvedAnchor = anchor;
+  const resolvedAnchor = anchor;
   
   // Check if accession contains an anchor (from hash in URL)
   // Note: Next.js doesn't pass hash to server, so anchor comes via searchParam
