@@ -1,24 +1,51 @@
-// @ts-nocheck
 "use client";
 
 import { AVX_PROVENANCE, AVX_CIK, AVX_PIPE, AVX_STAKING, AVX_CAPITAL_PROGRAMS } from "@/lib/data/provenance/avx";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
+type ConfigWithHelpers = {
+  ticker: string;
+  asset: "AVAX";
+  cik?: string;
+  provenance: CompanyViewBaseConfig["provenance"];
+  buildMetrics: CompanyViewBaseConfig["buildMetrics"];
+  scheduledEventsProps: CompanyViewBaseConfig["scheduledEventsProps"];
+  renderBalanceSheetExtras: CompanyViewBaseConfig["renderBalanceSheetExtras"];
+  provenanceHelpers: {
+    sourceUrl: (p: PvParam) => string | undefined;
+    sourceType: (p: PvParam) => string | undefined;
+    sourceDate: (p: PvParam) => string | undefined;
+    searchTerm: (p: PvParam) => string | undefined;
+  };
+};
+
+interface AVXMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+  adjustedDebt: number;
+  itmDebtAdjustment: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && "searchTerm" in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -27,7 +54,7 @@ interface Props {
 }
 
 export function AVXCompanyView({ company, className = "" }: Props) {
-  const config: CompanyViewBaseConfig = {
+  const config: ConfigWithHelpers = {
     ticker: "AVX",
     asset: "AVAX",
     cik: AVX_CIK,
@@ -131,7 +158,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
         equityNavPerSharePv,
         adjustedDebt,
         itmDebtAdjustment: inTheMoneyDebtValue,
-      } as any;
+      } satisfies AVXMetrics;
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
@@ -172,7 +199,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
         </div>
       </div>
     ),
-  } as any;
+  };
 
-  return <CompanyViewBase company={company} className={className} config={config} />;
+  return <CompanyViewBase company={company} className={className} config={config as unknown as CompanyViewBaseConfig} />;
 }
