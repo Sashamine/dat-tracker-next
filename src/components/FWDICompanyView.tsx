@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import {
@@ -11,22 +10,31 @@ import {
 } from "@/lib/data/provenance/fwdi";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
+}
+
+interface FWDIMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
 }
 
 interface Props {
@@ -37,10 +45,7 @@ interface Props {
 export function FWDICompanyView({ company, className = "" }: Props) {
   const config: CompanyViewBaseConfig = {
     ticker: "FWDI",
-    // Note: FWDI is SOL; base currently supports BTC|ETH only, but view previously passed SOL to cards.
-    // Keep it as BTC for base asset typing while still using SOL pricing in buildMetrics and cards.
-    // @ts-ignore
-    asset: "BTC",
+    asset: "SOL",
     cik: FWDI_CIK,
     provenance: FWDI_PROVENANCE,
     provenanceHelpers: {
@@ -160,7 +165,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
-      } as any;
+      } satisfies FWDIMetrics;
     },
 
     stalenessDates: ({ company }) => [company.holdingsLastUpdated, company.debtAsOf, company.cashAsOf, company.sharesAsOf],
@@ -192,7 +197,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
             <div className="mb-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
               <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wide mb-2">◎ SOL Treasury Company</h4>
               <ul className="text-sm text-purple-600 dark:text-purple-300 space-y-1">
-                <li>• <strong>World's largest SOL treasury company</strong> — pivoted from design/accessories in Sep 2025</li>
+                <li>• <strong>World&apos;s largest SOL treasury company</strong> — pivoted from design/accessories in Sep 2025</li>
                 <li>
                   • Galaxy Digital, Jump Crypto, Multicoin Capital backed —{" "}
                   <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_8k.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">$1.65B PIPE closed Sep 11, 2025</a>
@@ -214,23 +219,23 @@ export function FWDICompanyView({ company, className = "" }: Props) {
             </div>
 
             <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-              <h4 className="text-sm font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide mb-2">💰 Staking Revenue</h4>
+              <h4 className="text-sm font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide mb-2">Staking Revenue</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <div className="text-green-600 dark:text-green-400 font-semibold">{(FWDI_STAKING.q3FwdsolRewardsSol / 1_000_000).toFixed(2)}M SOL</div>
-                  <div className="text-gray-600 dark:text-gray-400">Q3 fwdSOL rewards</div>
+                  <div className="text-green-600 dark:text-green-400 font-semibold">{formatLargeNumber(FWDI_STAKING.stakingRevenueQ1FY2026)}</div>
+                  <div className="text-gray-600 dark:text-gray-400">Q1 FY2026 staking revenue</div>
                 </div>
                 <div>
-                  <div className="text-green-600 dark:text-green-400 font-semibold">${(FWDI_STAKING.q3FwdsolRewardsUsd / 1_000_000).toFixed(2)}M</div>
-                  <div className="text-gray-600 dark:text-gray-400">Q3 staking income</div>
+                  <div className="text-green-600 dark:text-green-400 font-semibold">{formatLargeNumber(FWDI_STAKING.stakingGrossProfit)}</div>
+                  <div className="text-gray-600 dark:text-gray-400">Q1 staking gross profit</div>
                 </div>
                 <div>
-                  <div className="text-green-600 dark:text-green-400 font-semibold">{(FWDI_STAKING.q3TotalStakingIncome / 1_000_000).toFixed(2)}M</div>
-                  <div className="text-gray-600 dark:text-gray-400">Q3 total income</div>
+                  <div className="text-green-600 dark:text-green-400 font-semibold">{formatLargeNumber(FWDI_STAKING.stakedAssetsValueDec31)}</div>
+                  <div className="text-gray-600 dark:text-gray-400">Staked assets (Dec 31)</div>
                 </div>
                 <div>
-                  <div className="text-green-600 dark:text-green-400 font-semibold">{(FWDI_STAKING.q3StakingYield * 100).toFixed(1)}%</div>
-                  <div className="text-gray-600 dark:text-gray-400">Annualized yield</div>
+                  <div className="text-green-600 dark:text-green-400 font-semibold">{(FWDI_STAKING.estimatedApy * 100).toFixed(1)}%</div>
+                  <div className="text-gray-600 dark:text-gray-400">Estimated APY</div>
                 </div>
               </div>
             </div>
@@ -247,13 +252,13 @@ export function FWDICompanyView({ company, className = "" }: Props) {
       <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Staking, Capital & Financials</h3>
         <div className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
-          <div>Balance sheet (Q3): Cash ${formatLargeNumber(FWDI_BALANCE_SHEET.cash)}; Total assets ${formatLargeNumber(FWDI_BALANCE_SHEET.totalAssets)}.</div>
-          <div>Income statement (Q3): Revenue ${formatLargeNumber(FWDI_INCOME_STATEMENT.revenue)}; Net income ${formatLargeNumber(FWDI_INCOME_STATEMENT.netIncome)}.</div>
-          <div>Capital: PIPE ${formatLargeNumber(FWDI_CAPITAL.pipeGrossProceeds)} gross.</div>
+          <div>Balance sheet (Q1 FY2026): Cash {formatLargeNumber(FWDI_BALANCE_SHEET.cashAndEquivalents)}; Total assets {formatLargeNumber(FWDI_BALANCE_SHEET.totalAssets)}.</div>
+          <div>Income statement (Q1 FY2026): Revenue {formatLargeNumber(FWDI_INCOME_STATEMENT.revenue.q1_fy2026)}; Net loss {formatLargeNumber(FWDI_INCOME_STATEMENT.netLoss.q1_fy2026)}.</div>
+          <div>Capital: PIPE {formatLargeNumber(FWDI_CAPITAL.pipeTotal)} gross.</div>
         </div>
       </div>
     ),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
