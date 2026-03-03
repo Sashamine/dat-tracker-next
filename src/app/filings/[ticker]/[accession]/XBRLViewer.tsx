@@ -56,7 +56,7 @@ const PRIORITY_FACTS = [
   "Liabilities",
 ];
 
-export default function XBRLViewer({ ticker, cik, accession, highlightFact, highlightPeriod }: XBRLViewerProps) {
+export default function XBRLViewer({ cik, accession, highlightFact, highlightPeriod }: XBRLViewerProps) {
   const [facts, setFacts] = useState<XBRLFact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

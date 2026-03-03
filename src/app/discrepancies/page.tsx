@@ -83,15 +83,6 @@ function formatNumber(num: number): string {
   return num.toFixed(0);
 }
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
 function FieldDiscrepancyRow({ discrepancy }: { discrepancy: Discrepancy }) {
   const StatusIcon = STATUS_ICONS[discrepancy.status];
   const sources = Object.entries(discrepancy.source_values);

@@ -27,7 +27,7 @@ const ANCHOR_KEYWORDS: Record<string, string[]> = {
   "investors": ["investor", "shareholders", "stockholders"],
 };
 
-export default function FilingViewer({ ticker, accession, content, searchQuery, anchor }: FilingViewerProps) {
+export default function FilingViewer({ content, searchQuery, anchor }: FilingViewerProps) {
   // If anchor is provided, use its keywords as the search query
   const effectiveSearchQuery = searchQuery || (anchor ? ANCHOR_KEYWORDS[anchor]?.[0] : undefined);
   const contentRef = useRef<HTMLDivElement>(null);
