@@ -1,12 +1,9 @@
-import { Company } from '@/lib/types';
+import { Company, type HoldingsBasis } from '@/lib/types';
+
+// Re-export so existing `import { HoldingsBasis } from '@/lib/d1-overlay'` continues to work.
+export type { HoldingsBasis };
 
 export type D1MetricMap = Record<string, Record<string, number>>; // ticker -> metric -> value
-
-/** How the holdings value for a given ticker was resolved. */
-export type HoldingsBasis =
-  | 'native_units'      // holdings_native present in D1 (preferred)
-  | 'usd_fair_value'    // bitcoin_holdings_usd present in D1, divided by live price
-  | 'static_fallback';  // neither D1 metric present; using Company/static holdings
 
 /**
  * Overlays D1 latest-metrics values onto enriched Company objects.
@@ -56,10 +53,10 @@ export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Co
       // Only override holdings if D1 has a positive holdings_native value.
       // bitcoin_holdings_usd is intentionally not used here — see precedence note above.
       ...(hasNative ? { holdings: metrics.holdings_native } : {}),
-      // Debug metadata — not part of the Company type, accessed via (company as any)._d1Fields / _holdingsBasis
+      // Overlay metadata (typed on Company interface)
       _d1Fields: d1Fields.length > 0 ? d1Fields : undefined,
-      _holdingsBasis: holdingsBasis,
-    } as Company;
+      holdingsBasis,
+    };
   });
 }
 

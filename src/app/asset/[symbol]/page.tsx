@@ -336,7 +336,7 @@ export default function AssetPage() {
                   <TableCell className="text-right font-mono">
                     <span className="inline-flex items-center gap-1 justify-end">
                       {formatTokenAmount(company.holdings, symbol)}
-                      <HoldingsBasisBadge basis={(company as any)._holdingsBasis} />
+                      <HoldingsBasisBadge basis={company.holdingsBasis} />
                     </span>
                   </TableCell>
                   <TableCell className="text-right font-mono font-medium">

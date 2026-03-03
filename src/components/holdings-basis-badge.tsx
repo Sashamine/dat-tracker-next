@@ -20,7 +20,7 @@ const TITLE: Record<HoldingsBasis, string> = {
 
 /**
  * Tiny pill showing how a company's holdings were resolved.
- * Reads `(company as any)._holdingsBasis` set by applyD1Overlay.
+ * Reads `company.holdingsBasis` set by applyD1Overlay.
  */
 export function HoldingsBasisBadge({ basis }: { basis?: HoldingsBasis }) {
   if (!basis) return null;
