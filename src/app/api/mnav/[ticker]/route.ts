@@ -11,7 +11,6 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   calculateMNAVHistory,
   getAvailableDateRange,
-  loadStockPrices,
 } from "@/lib/mnav-calculator";
 import { HOLDINGS_HISTORY, HoldingsSnapshot } from "@/lib/data/holdings-history";
 import { allCompanies } from "@/lib/data/companies";
