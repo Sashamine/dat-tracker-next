@@ -44,7 +44,7 @@ export async function GET() {
 
     // Calculate components
     const priceInUsd = stockData.price / forexRates.JPY;
-    const calculatedMarketCap = priceInUsd * (company.sharesForMnav || 0);
+    const calculatedMarketCap = priceInUsd * (company.sharesForMnav ?? 0);
     const btcNav = company.holdings * btcPrice;
     const freeCash = (company.cashReserves ?? 0) - (company.restrictedCash ?? 0);
     const ev = marketCap + (company.totalDebt ?? 0) + (company.preferredEquity ?? 0) - freeCash;

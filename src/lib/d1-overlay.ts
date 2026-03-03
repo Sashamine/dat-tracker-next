@@ -44,7 +44,7 @@ export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Co
     // on the company detail page (see getHoldingsBasis helper below).
     const holdingsBasis: HoldingsBasis = hasNative ? 'native_units' : 'static_fallback';
 
-    return {
+    const overlaid: Company = {
       ...c,
       totalDebt:       metrics.debt_usd            ?? c.totalDebt,
       cashReserves:    metrics.cash_usd             ?? c.cashReserves,
@@ -57,6 +57,13 @@ export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Co
       _d1Fields: d1Fields.length > 0 ? d1Fields : undefined,
       holdingsBasis,
     };
+
+    // Dev-only invariant: native_units basis implies positive holdings
+    if (process.env.NODE_ENV === 'development' && holdingsBasis === 'native_units' && overlaid.holdings <= 0) {
+      console.warn(`[d1-overlay] ${c.ticker}: holdingsBasis=native_units but holdings=${overlaid.holdings}`);
+    }
+
+    return overlaid;
   });
 }
 

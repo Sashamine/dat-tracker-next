@@ -48,8 +48,8 @@ export function DFDVCompanyView({ company, className = "" }: Props) {
       const holdings = DFDV_PROVENANCE.holdings.value;
       const totalDebt = DFDV_PROVENANCE.totalDebt.value;
       const cashReserves = DFDV_PROVENANCE.cashReserves.value;
-      const preferredEquity = DFDV_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = DFDV_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = DFDV_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = DFDV_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);

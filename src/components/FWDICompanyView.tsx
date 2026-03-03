@@ -60,8 +60,8 @@ export function FWDICompanyView({ company, className = "" }: Props) {
       const holdings = FWDI_PROVENANCE.holdings.value;
       const totalDebt = FWDI_PROVENANCE.totalDebt.value;
       const cashReserves = FWDI_PROVENANCE.cashReserves.value;
-      const preferredEquity = FWDI_PROVENANCE.preferredEquity?.value || 0;
-      const sharesOutstanding = FWDI_PROVENANCE.sharesOutstanding?.value || company.sharesForMnav || 0;
+      const preferredEquity = FWDI_PROVENANCE.preferredEquity?.value ?? 0;
+      const sharesOutstanding = FWDI_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * solPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);

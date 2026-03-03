@@ -324,13 +324,13 @@ async function fetchCompanyIntradayMnav(
     const marketCap = stockPriceUsd * effectiveShares.diluted;
     
     // Adjust debt for ITM convertibles (avoid double-counting)
-    const adjustedDebt = Math.max(0, (company.totalDebt || 0) - effectiveShares.inTheMoneyDebtValue);
-    
+    const adjustedDebt = Math.max(0, (company.totalDebt ?? 0) - effectiveShares.inTheMoneyDebtValue);
+
     // Free cash = total cash - restricted (operating) cash
-    const freeCash = (company.cashReserves || 0) - (company.restrictedCash || 0);
-    
-    const enterpriseValue = marketCap + adjustedDebt + (company.preferredEquity || 0) - freeCash;
-    const cryptoNav = company.holdings * cryptoPrice + (company.restrictedCash || 0);
+    const freeCash = (company.cashReserves ?? 0) - (company.restrictedCash ?? 0);
+
+    const enterpriseValue = marketCap + adjustedDebt + (company.preferredEquity ?? 0) - freeCash;
+    const cryptoNav = company.holdings * cryptoPrice + (company.restrictedCash ?? 0);
     const mnav = cryptoNav > 0 ? enterpriseValue / cryptoNav : 0;
 
     return {

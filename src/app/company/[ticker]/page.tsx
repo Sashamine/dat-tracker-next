@@ -256,7 +256,7 @@ export default function CompanyPage() {
 
   // Other assets (cash + investments)
   const cashReserves = (d1ByMetric.cash_usd?.value ?? displayCompany.cashReserves ?? 0);
-  const otherInvestments = displayCompany.otherInvestments || 0;
+  const otherInvestments = displayCompany.otherInvestments ?? 0;
   const otherAssets = cashReserves + otherInvestments;
 
   // Holdings (D1-first where possible)
@@ -364,7 +364,7 @@ export default function CompanyPage() {
 
   // Effective shares (for dilution tracking)
   const effectiveSharesResult = stockPrice > 0 
-    ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav || 0, stockPrice)
+    ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav ?? 0, stockPrice)
     : null;
 
 
@@ -1095,7 +1095,7 @@ export default function CompanyPage() {
               )}
               {totalDebt > 0 && (() => {
                 // Calculate ITM converts for display
-                const effectiveShares = stockPrice ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav || 0, stockPrice) : null;
+                const effectiveShares = stockPrice ? getEffectiveShares(displayCompany.ticker, displayCompany.sharesForMnav ?? 0, stockPrice) : null;
                 const itmConvertValue = effectiveShares?.inTheMoneyDebtValue || 0;
                 const itmConverts = effectiveShares?.breakdown.filter(b => b.type === "convertible" && b.inTheMoney) || [];
                 
@@ -1238,11 +1238,11 @@ export default function CompanyPage() {
               className=""
               companyData={{
                 holdings: displayCompany.holdings,
-                sharesForMnav: displayCompany.sharesForMnav || 0,
-                totalDebt: displayCompany.totalDebt || 0,
-                preferredEquity: displayCompany.preferredEquity || 0,
-                cashReserves: displayCompany.cashReserves || 0,
-                restrictedCash: displayCompany.restrictedCash || 0,
+                sharesForMnav: displayCompany.sharesForMnav ?? 0,
+                totalDebt: displayCompany.totalDebt ?? 0,
+                preferredEquity: displayCompany.preferredEquity ?? 0,
+                cashReserves: displayCompany.cashReserves ?? 0,
+                restrictedCash: displayCompany.restrictedCash ?? 0,
                 asset: displayCompany.asset,
                 currency: displayCompany.currency,
               }}
