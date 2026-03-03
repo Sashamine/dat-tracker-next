@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { MSTR_HOLDINGS_VERIFIED, getByAccession } from "@/lib/data/mstr-holdings-verified";
+import { MSTR_HOLDINGS_VERIFIED } from "@/lib/data/mstr-holdings-verified";
 
 interface VerificationResult {
   ticker: string;
