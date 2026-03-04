@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { MobileHeader } from "@/components/mobile-header";
 import { ExternalLink, AlertTriangle, CheckCircle, XCircle, Clock, ChevronDown, ChevronRight } from "lucide-react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface Discrepancy {
   id: number;
@@ -125,6 +126,13 @@ function FieldDiscrepancyRow({ discrepancy }: { discrepancy: Discrepancy }) {
                 href={sourceData.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackCitationSourceClick({
+                    href: sourceData.url,
+                    ticker: discrepancy.ticker,
+                    metric: discrepancy.field,
+                  })
+                }
                 className="text-blue-600 dark:text-blue-400 hover:underline"
               >
                 <ExternalLink className="w-3 h-3" />
