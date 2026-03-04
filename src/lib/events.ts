@@ -89,6 +89,15 @@ function sanitizeLoggedMetric(value?: string): string | undefined {
   return cleaned || undefined;
 }
 
+export function inferApiCallClient(
+  route?: string,
+  hintedClient?: 'web' | 'agent' | 'cron' | 'unknown'
+): 'web' | 'agent' | 'cron' | 'unknown' {
+  if (hintedClient) return hintedClient;
+  if (route?.startsWith('/api/cron/')) return 'cron';
+  return 'web';
+}
+
 // ---------------------------------------------------------------------------
 // Core insert (best-effort, never throws)
 // ---------------------------------------------------------------------------
@@ -144,11 +153,12 @@ export function logApiCallEvent(opts: {
   const route = sanitizeLoggedRoute(opts.route);
   const ticker = sanitizeLoggedTicker(opts.ticker);
   const metric = sanitizeLoggedMetric(opts.metric);
+  const client = inferApiCallClient(route, opts.client);
 
   // Fire-and-forget — do NOT await.
   insertEvent({
     event: 'api_call',
-    client: opts.client ?? 'cron',
+    client,
     session_id: opts.sessionId ?? 'server',
     route,
     ticker,
