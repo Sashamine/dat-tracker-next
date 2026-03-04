@@ -990,7 +990,9 @@ export default function CompanyPage() {
                 </p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
-                  {displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
+                  {holdingsSourceUrlResolved ? (
+                    <SourceLink url={holdingsSourceUrlResolved} label={displayCompany.holdingsSource} />
+                  ) : displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
                     <FilingCite 
                       ticker="MSTR" 
                       date="2026-02-02" 
@@ -1004,8 +1006,6 @@ export default function CompanyPage() {
                       anchor="holdings"
                       filingType="8-K"
                     />
-                  ) : holdingsSourceUrlResolved ? (
-                    <SourceLink url={holdingsSourceUrlResolved} label={displayCompany.holdingsSource} />
                   ) : null}
                 </p>
                 <p className="text-xs text-gray-400">
@@ -1070,7 +1070,9 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-green-600">
                     +{formatLargeNumber(cashReserves)}
-                    {displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
+                    {cashSourceUrlResolved ? (
+                      <SourceLink url={cashSourceUrlResolved} label={displayCompany.cashSource} />
+                    ) : displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
                         date="2026-01-05" 
@@ -1084,9 +1086,7 @@ export default function CompanyPage() {
                         anchor="holdings"
                         filingType="8-K"
                       />
-                    ) : (
-                      <SourceLink url={cashSourceUrlResolved} label={displayCompany.cashSource} />
-                    )}
+                    ) : null}
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
                 </div>
@@ -1104,16 +1104,16 @@ export default function CompanyPage() {
                     </p>
                     <p className="text-lg font-bold text-red-600">
                       −{formatLargeNumber(totalDebt)}
-                      {displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
+                      {debtSourceUrlResolved ? (
+                        <SourceLink url={debtSourceUrlResolved} label={displayCompany.debtSource} />
+                      ) : displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
                         <FilingCite 
                           ticker="MSTR" 
                           date="2025-11-03" 
                           anchor="long-term-debt"
                           filingType="10-Q"
                         />
-                      ) : (
-                        <SourceLink url={debtSourceUrlResolved} label={displayCompany.debtSource} />
-                      )}
+                      ) : null}
                     </p>
                     <p className="text-xs text-gray-400">
                       {itmConvertValue > 0 ? (
@@ -1134,16 +1134,16 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(preferredEquity)}
-                    {displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
+                    {preferredSourceUrlResolved ? (
+                      <SourceLink url={preferredSourceUrlResolved} label={displayCompany.preferredSource} />
+                    ) : displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
                         date="2026-01-26" 
                         anchor="preferred-equity"
                         filingType="8-K"
                       />
-                    ) : (
-                      <SourceLink url={preferredSourceUrlResolved} label={displayCompany.preferredSource} />
-                    )}
+                    ) : null}
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>
