@@ -200,7 +200,7 @@ export async function getStockBars(symbols: string[]): Promise<Record<string, Al
 
 // Fetch stock snapshots (combines quote, trade, bar, prevDailyBar)
 // Uses IEX feed (free) - real-time but ~2-3% market volume
-export async function getStockSnapshots(symbols: string[]): Promise<Record<string, any>> {
+export async function getStockSnapshots(symbols: string[]): Promise<Record<string, unknown>> {
   if (!ALPACA_API_KEY || !ALPACA_SECRET_KEY) {
     throw new Error("Alpaca API keys not configured");
   }
@@ -270,7 +270,14 @@ export async function getCryptoTrades(symbols: string[]): Promise<Record<string,
 }
 
 // Fetch crypto snapshots (combines trade, quote, bar, prevDailyBar)
-export async function getCryptoSnapshots(symbols: string[]): Promise<Record<string, any>> {
+export type AlpacaCryptoSnapshot = {
+  latestTrade?: { p?: number };
+  latestQuote?: { ap?: number };
+  latestBar?: { c?: number };
+  prevDailyBar?: { c?: number };
+};
+
+export async function getCryptoSnapshots(symbols: string[]): Promise<Record<string, AlpacaCryptoSnapshot>> {
   if (!ALPACA_API_KEY || !ALPACA_SECRET_KEY) {
     throw new Error("Alpaca API keys not configured");
   }
