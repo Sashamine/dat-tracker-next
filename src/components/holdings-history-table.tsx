@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { getHoldingsHistory, type HoldingsSnapshot } from "@/lib/data/holdings-history";
+import { type HoldingsSnapshot } from "@/lib/data/holdings-history";
 import { trackCitationSourceClick } from "@/lib/client-events";
+import { useHoldingsHistoryD1 } from "@/lib/hooks/use-holdings-history-d1";
 
 interface HoldingsHistoryTableProps {
   ticker: string;
@@ -48,7 +48,11 @@ function getSourceLink(snapshot: HoldingsSnapshot): { href: string; label: strin
 }
 
 export function HoldingsHistoryTable({ ticker, asset, className }: HoldingsHistoryTableProps) {
-  const historyData = useMemo(() => getHoldingsHistory(ticker), [ticker]);
+  const { data: historyData, isLoading } = useHoldingsHistoryD1(ticker);
+
+  if (isLoading) {
+    return null; // Don't flash empty state while loading
+  }
 
   if (!historyData || historyData.history.length < 2) {
     return null;
