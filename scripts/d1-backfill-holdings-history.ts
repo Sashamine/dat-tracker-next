@@ -150,42 +150,20 @@ async function resolveOrCreateArtifact(
     }
   }
 
-  // Create synthetic artifact
+  // Create synthetic artifact — content_hash is NOT NULL in schema,
+  // so we use a hash of the source info as a synthetic content_hash.
   const artifactId = crypto.randomUUID();
   if (!dryRun) {
     const sourceType = accession ? 'sec_filing' : (snapshot.sourceType || 'holdings_history_ts');
-    try {
-      await d1.query(
-        `INSERT INTO artifacts
-           (artifact_id, source_type, source_url, accession, ticker, fetched_at, r2_bucket, r2_key)
-         VALUES (?, ?, ?, ?, ?, ?, 'synthetic', ?);`,
-        [artifactId, sourceType, sourceUrl, accession, ticker, nowIso(), `synthetic/${artifactId}`],
-      );
-    } catch (err) {
-      // Log but don't throw — artifact may already exist via a different path
-      console.log(JSON.stringify({
-        warn: 'artifact_create_failed',
-        artifactId,
-        ticker,
-        sourceUrl,
-        error: err instanceof Error ? err.message : String(err),
-      }));
-    }
-
-    // Verify the artifact actually exists
-    const verify = await d1.query<{ artifact_id: string }>(
-      `SELECT artifact_id FROM artifacts WHERE artifact_id = ? LIMIT 1;`,
-      [artifactId],
+    const syntheticHash = crypto.createHash('sha256')
+      .update(`synthetic|${ticker}|${snapshot.date}|${sourceUrl || ''}`)
+      .digest('hex');
+    await d1.query(
+      `INSERT OR IGNORE INTO artifacts
+         (artifact_id, source_type, source_url, content_hash, accession, ticker, fetched_at, r2_bucket, r2_key)
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'synthetic', ?);`,
+      [artifactId, sourceType, sourceUrl, syntheticHash, accession, ticker, nowIso(), `synthetic/${artifactId}`],
     );
-    if (!verify.results.length) {
-      console.log(JSON.stringify({
-        warn: 'artifact_not_found_after_create',
-        artifactId,
-        ticker,
-        date: snapshot.date,
-      }));
-      // Return a placeholder that will cause FK failure — but now we'll see the real cause
-    }
   }
 
   artifactCache.set(cacheKey, artifactId);
@@ -279,19 +257,6 @@ async function main() {
   );
 
   const d1 = D1Client.fromEnv();
-
-  // Diagnostic: dump datapoints table schema to understand FK constraints
-  const tableInfo = await d1.query<{ sql: string }>(
-    `SELECT sql FROM sqlite_master WHERE type='table' AND name='datapoints';`,
-  );
-  console.log(JSON.stringify({ diagnostic: 'datapoints_schema', sql: tableInfo.results[0]?.sql }));
-
-  // Also check foreign_key_list
-  const fkList = await d1.query<{ id: number; seq: number; table: string; from: string; to: string }>(
-    `PRAGMA foreign_key_list(datapoints);`,
-  );
-  console.log(JSON.stringify({ diagnostic: 'datapoints_fk_list', fks: fkList.results }));
-
   const runId = crypto.randomUUID();
 
   // Create run record
