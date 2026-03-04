@@ -5,6 +5,7 @@ import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
 import { latestRowByMetric, useCompanyD1Latest } from "@/lib/hooks/use-company-d1-latest";
+import { useCompanyExplainBatch } from "@/lib/hooks/use-company-explain-batch";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { enrichCompany, enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
@@ -197,6 +198,14 @@ export default function CompanyPage() {
   // D1 canonical inputs (Balance Sheet + shares)
   const { data: d1LatestInputs } = useCompanyD1Latest(ticker, [...CORE_D1_METRICS]);
   const d1ByMetric = useMemo(() => latestRowByMetric(d1LatestInputs?.rows), [d1LatestInputs]);
+  const { data: d1ExplainInputs } = useCompanyExplainBatch(ticker, [
+    "holdings_native",
+    "bitcoin_holdings_usd",
+    "basic_shares",
+    "cash_usd",
+    "debt_usd",
+    "preferred_equity_usd",
+  ]);
 
   // D1 metric history (batch)
   const { data: metricHistory } = useCompanyMetricHistory(ticker, [...HISTORY_D1_METRICS], 12, 'desc');
@@ -259,6 +268,19 @@ export default function CompanyPage() {
 
   // Which tier resolved the holdings value?
   const holdingsBasis = getHoldingsBasis(d1HoldingsNative, d1HoldingsUsd);
+  const d1Explain = d1ExplainInputs?.explain || {};
+  const holdingsSourceUrlResolved =
+    d1Explain.holdings_native?.receipt?.source_url ||
+    d1Explain.bitcoin_holdings_usd?.receipt?.source_url ||
+    displayCompany.holdingsSourceUrl;
+  const sharesSourceUrlResolved =
+    d1Explain.basic_shares?.receipt?.source_url || displayCompany.sharesSourceUrl;
+  const cashSourceUrlResolved =
+    d1Explain.cash_usd?.receipt?.source_url || displayCompany.cashSourceUrl;
+  const debtSourceUrlResolved =
+    d1Explain.debt_usd?.receipt?.source_url || displayCompany.debtSourceUrl;
+  const preferredSourceUrlResolved =
+    d1Explain.preferred_equity_usd?.receipt?.source_url || displayCompany.preferredSourceUrl;
 
   // Prefer native holdings from D1, derive USD from live price.
   // Fallback to USD metric when native is absent.
@@ -833,19 +855,19 @@ export default function CompanyPage() {
               basicShares={effectiveSharesResult?.basic}
               itmDilutionShares={effectiveSharesResult ? effectiveSharesResult.diluted - effectiveSharesResult.basic : undefined}
               itmDebtAdjustment={effectiveSharesResult?.inTheMoneyDebtValue}
-              sharesSourceUrl={displayCompany.sharesSourceUrl}
+              sharesSourceUrl={sharesSourceUrlResolved}
               sharesSource={displayCompany.sharesSource}
               sharesAsOf={displayCompany.sharesAsOf}
-              debtSourceUrl={displayCompany.debtSourceUrl}
+              debtSourceUrl={debtSourceUrlResolved}
               debtSource={displayCompany.debtSource}
               debtAsOf={displayCompany.debtAsOf}
-              cashSourceUrl={displayCompany.cashSourceUrl}
+              cashSourceUrl={cashSourceUrlResolved}
               cashSource={displayCompany.cashSource}
               cashAsOf={displayCompany.cashAsOf}
-              preferredSourceUrl={displayCompany.preferredSourceUrl}
+              preferredSourceUrl={preferredSourceUrlResolved}
               preferredSource={displayCompany.preferredSource}
               preferredAsOf={displayCompany.preferredAsOf}
-              holdingsSourceUrl={displayCompany.holdingsSourceUrl}
+              holdingsSourceUrl={holdingsSourceUrlResolved}
               holdingsSource={displayCompany.holdingsSource}
               holdingsAsOf={displayCompany.holdingsLastUpdated}
               holdingsBasis={holdingsBasis}
@@ -1065,7 +1087,7 @@ export default function CompanyPage() {
                         filingType="8-K"
                       />
                     ) : (
-                      <SourceLink url={displayCompany.cashSourceUrl} label={displayCompany.cashSource} />
+                      <SourceLink url={cashSourceUrlResolved} label={displayCompany.cashSource} />
                     )}
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
@@ -1092,7 +1114,7 @@ export default function CompanyPage() {
                           filingType="10-Q"
                         />
                       ) : (
-                        <SourceLink url={displayCompany.debtSourceUrl} label={displayCompany.debtSource} />
+                        <SourceLink url={debtSourceUrlResolved} label={displayCompany.debtSource} />
                       )}
                     </p>
                     <p className="text-xs text-gray-400">
@@ -1122,7 +1144,7 @@ export default function CompanyPage() {
                         filingType="8-K"
                       />
                     ) : (
-                      <SourceLink url={displayCompany.preferredSourceUrl} label={displayCompany.preferredSource} />
+                      <SourceLink url={preferredSourceUrlResolved} label={displayCompany.preferredSource} />
                     )}
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
