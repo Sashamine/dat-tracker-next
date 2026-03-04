@@ -9,7 +9,6 @@ interface PriceCellProps {
   format?: "currency" | "number" | "percent";
   decimals?: number;
   className?: string;
-  showChange?: boolean;
 }
 
 export function PriceCell({
@@ -18,7 +17,6 @@ export function PriceCell({
   format = "currency",
   decimals = 2,
   className,
-  showChange = false,
 }: PriceCellProps) {
   const [flash, setFlash] = useState<"up" | "down" | null>(null);
   const prevPriceRef = useRef<number | undefined>(previousPrice);
