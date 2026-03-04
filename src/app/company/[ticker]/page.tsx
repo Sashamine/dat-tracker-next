@@ -1501,7 +1501,7 @@ export default function CompanyPage() {
         totalCompanies={allCompanies.length}
         totalValue={totalValue}
         companies={allCompanies}
-        prices={prices ?? undefined}
+        prices={prices}
         className="hidden lg:block fixed right-0 top-0 h-full"
       />
     </div>

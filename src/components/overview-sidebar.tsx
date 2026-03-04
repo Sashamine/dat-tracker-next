@@ -31,7 +31,7 @@ interface OverviewSidebarProps {
   prices?: {
     crypto: Record<string, { price: number }>;
     stocks: Record<string, { price: number; marketCap: number }>;
-  };
+  } | null;
   className?: string;
 }
 
