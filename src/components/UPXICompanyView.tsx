@@ -1,24 +1,32 @@
-// @ts-nocheck
 "use client";
 
 import { UPXI_PROVENANCE, UPXI_CIK } from "@/lib/data/provenance/upxi";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 
-import { CompanyViewBase, type CompanyViewBaseConfig } from "./CompanyViewBase";
+import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-function su(p: any) {
+type PvParam = ProvenanceValue<number> | undefined;
+type AnySource = XBRLSource | DocumentSource | DerivedSource;
+
+interface UPXIMetrics extends CompanyViewBaseMetrics {
+  leverage: number;
+}
+
+function su(p: PvParam) {
   return p?.source ? getSourceUrl(p.source) : undefined;
 }
-function st(p: any) {
+function st(p: PvParam) {
   return p?.source?.type;
 }
-function sd(p: any) {
+function sd(p: PvParam) {
   return p?.source ? getSourceDate(p.source) : undefined;
 }
-function ss(p: any) {
-  return (p?.source as any)?.searchTerm;
+function ss(p: PvParam) {
+  const src: AnySource | undefined = p?.source;
+  if (src && 'searchTerm' in src) return src.searchTerm;
+  return undefined;
 }
 
 interface Props {
@@ -110,11 +118,11 @@ export function UPXICompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
-      } as any;
+      } satisfies UPXIMetrics;
     },
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
-  } as any;
+  };
 
   return <CompanyViewBase company={company} className={className} config={config} />;
 }
