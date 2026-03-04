@@ -128,7 +128,11 @@ async function resolveOrCreateArtifact(
   dryRun: boolean,
 ): Promise<string> {
   const accession = snapshot.sourceUrl?.match(/\b(\d{10}-\d{2}-\d{6})\b/)?.[1] || null;
-  const sourceUrl = snapshot.sourceUrl || null;
+  // Ensure source_url is always non-null for synthetic artifacts; some D1 schemas
+  // enforce NOT NULL and will silently ignore INSERT OR IGNORE with null values.
+  const sourceUrl =
+    snapshot.sourceUrl ||
+    `holdings_history_ts://${ticker}/${snapshot.date}`;
 
   // Determine a cache key — prefer accession, then sourceUrl
   const cacheKey = accession || sourceUrl || `${ticker}|${snapshot.date}`;
