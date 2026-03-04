@@ -4,10 +4,8 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Company } from "@/lib/types";
 import {
-  calculateMNAV,
   formatLargeNumber,
   formatMNAV,
-  formatPercent,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { getMarketCap } from "@/lib/utils/market-cap";
