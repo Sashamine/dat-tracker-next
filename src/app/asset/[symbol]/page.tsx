@@ -74,8 +74,11 @@ export default function AssetPage() {
 
   // D1-first overlay: fetch latest balance sheet metrics from D1
   const tickers = useMemo(() => enrichedCompanies.map(c => c.ticker), [enrichedCompanies]);
-  const { data: d1Data, sources: d1Sources } = useD1Fundamentals(tickers);
-  const companies = useMemo(() => applyD1Overlay(enrichedCompanies, d1Data, d1Sources), [enrichedCompanies, d1Data, d1Sources]);
+  const { data: d1Data, sources: d1Sources, dates: d1Dates } = useD1Fundamentals(tickers);
+  const companies = useMemo(
+    () => applyD1Overlay(enrichedCompanies, d1Data, d1Sources, d1Dates),
+    [enrichedCompanies, d1Data, d1Sources, d1Dates]
+  );
 
   const assetInfo = ASSET_INFO[symbol];
 
