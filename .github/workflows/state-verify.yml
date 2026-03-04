@@ -5,6 +5,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   state-verify:
     runs-on: ubuntu-latest
@@ -41,8 +45,6 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          SEC_MISSING_SOURCE_URL_BASELINE: "9"
-          SEC_MISSING_ACCESSION_BASELINE: "9"
         run: |
           set -euo pipefail
           if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" || -z "${CLOUDFLARE_D1_DATABASE_ID:-}" || -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
@@ -50,37 +52,39 @@ jobs:
             exit 0
           fi
 
-          npx tsx scripts/cloudflare/d1-artifacts-summary.ts | tee /tmp/d1-artifacts-summary.json
+          npx tsx scripts/cloudflare/sec-receipt-invariant.ts --check --baseline-file infra/sec-receipt-baseline.json
 
-          node - <<'NODE'
-          const fs = require('fs');
-          const txt = fs.readFileSync('/tmp/d1-artifacts-summary.json','utf8');
-          const start = txt.indexOf('{');
-          const end = txt.lastIndexOf('}');
-          if (start === -1 || end === -1 || end <= start) {
-            console.error('Could not find JSON object in summary output');
-            process.exit(1);
-          }
-          const data = JSON.parse(txt.slice(start, end + 1));
-          const receipts = data.secFilingReceipts || {};
-          const current = receipts.current || {};
-          const regression = receipts.regression || {};
-          const missingSourceUrl = Number(current.missingSourceUrl || 0);
-          const missingAccession = Number(current.missingAccession || 0);
-          const sourceUrlRegression = Boolean(regression.sourceUrl);
-          const accessionRegression = Boolean(regression.accession);
+      - name: Ratchet SEC receipt baseline (master push only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" || -z "${CLOUDFLARE_D1_DATABASE_ID:-}" || -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+            echo "SEC_RECEIPT_BASELINE_RATCHET skipped (missing D1 secrets)"
+            exit 0
+          fi
 
-          console.log('SEC_RECEIPT_INVARIANT', {
-            baseline: receipts.baseline || {},
-            current: { missingSourceUrl, missingAccession },
-            regression: { sourceUrlRegression, accessionRegression },
-          });
+          npx tsx scripts/cloudflare/sec-receipt-invariant.ts --ratchet --baseline-file infra/sec-receipt-baseline.json
 
-          if (sourceUrlRegression || accessionRegression) {
-            console.error('INVARIANT FAILED: sec_filing receipt counts regressed above baseline');
-            process.exit(2);
-          }
-          NODE
+      - name: Create PR if baseline ratcheted
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(invariants): ratchet SEC receipt baseline"
+          title: "chore(invariants): ratchet SEC receipt baseline"
+          body: |
+            Automated SEC receipt baseline ratchet from state-verify.
+
+            Source: scripts/cloudflare/sec-receipt-invariant.ts --ratchet
+            Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          branch: ops/sec-receipt-baseline-ratchet
+          delete-branch: true
+          add-paths: |
+            infra/sec-receipt-baseline.json
 
       - name: D1 datapoints invariants (duplicates + sanity bounds)
         env:
