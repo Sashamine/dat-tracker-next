@@ -1,6 +1,7 @@
 "use client";
 
 import { formatHoldingsSource } from "@/lib/holdings-verification";
+import { trackCitationSourceClick } from "@/lib/client-events";
 import { ExternalLink, AlertTriangle, Clock } from "lucide-react";
 import {
   Tooltip,
@@ -51,6 +52,8 @@ interface LastUpdatedProps {
   lastUpdated?: string;
   source?: string;
   sourceUrl?: string;
+  ticker?: string;
+  metric?: string;
   showSource?: boolean;
   showFreshness?: boolean;
 }
@@ -63,6 +66,8 @@ export function LastUpdated({
   lastUpdated,
   source,
   sourceUrl,
+  ticker,
+  metric,
   showSource = false,
   showFreshness = true,
 }: LastUpdatedProps) {
@@ -112,6 +117,7 @@ export function LastUpdated({
         href={sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackCitationSourceClick({ href: sourceUrl, ticker, metric })}
         className="inline-flex items-center gap-1 text-xs hover:underline transition-colors"
       >
         {wrappedContent}
@@ -128,42 +134,81 @@ export function StalenessIndicator({
   lastUpdated,
   source,
   sourceUrl,
+  ticker,
+  metric,
   showFreshness = true,
 }: {
   lastUpdated?: string;
   source?: string;
   sourceUrl?: string;
+  ticker?: string;
+  metric?: string;
   showLabel?: boolean;
   size?: "sm" | "md";
   showFreshness?: boolean;
 }) {
-  return <LastUpdated lastUpdated={lastUpdated} source={source} sourceUrl={sourceUrl} showFreshness={showFreshness} />;
+  return (
+    <LastUpdated
+      lastUpdated={lastUpdated}
+      source={source}
+      sourceUrl={sourceUrl}
+      ticker={ticker}
+      metric={metric}
+      showFreshness={showFreshness}
+    />
+  );
 }
 
 export function StalenessBadge({
   lastUpdated,
   source,
   sourceUrl,
+  ticker,
+  metric,
   showFreshness = true,
 }: {
   lastUpdated?: string;
   source?: string;
   sourceUrl?: string;
+  ticker?: string;
+  metric?: string;
   showFreshness?: boolean;
 }) {
-  return <LastUpdated lastUpdated={lastUpdated} source={source} sourceUrl={sourceUrl} showSource showFreshness={showFreshness} />;
+  return (
+    <LastUpdated
+      lastUpdated={lastUpdated}
+      source={source}
+      sourceUrl={sourceUrl}
+      ticker={ticker}
+      metric={metric}
+      showSource
+      showFreshness={showFreshness}
+    />
+  );
 }
 
 export function StalenessCompact({
   lastUpdated,
   sourceUrl,
+  ticker,
+  metric,
   showFreshness = true,
 }: {
   lastUpdated?: string;
   sourceUrl?: string;
+  ticker?: string;
+  metric?: string;
   showFreshness?: boolean;
 }) {
-  return <LastUpdated lastUpdated={lastUpdated} sourceUrl={sourceUrl} showFreshness={showFreshness} />;
+  return (
+    <LastUpdated
+      lastUpdated={lastUpdated}
+      sourceUrl={sourceUrl}
+      ticker={ticker}
+      metric={metric}
+      showFreshness={showFreshness}
+    />
+  );
 }
 
 /**

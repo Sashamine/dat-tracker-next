@@ -863,7 +863,12 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                             value={company.holdingsValue}
                             className="font-mono font-medium text-gray-900 dark:text-gray-100"
                           />
-                          <StalenessCompact lastUpdated={company.holdingsLastUpdated} sourceUrl={company.holdingsSourceUrl} />
+                          <StalenessCompact
+                            lastUpdated={company.holdingsLastUpdated}
+                            sourceUrl={company.holdingsSourceUrl}
+                            ticker={company.ticker}
+                            metric="holdings_native"
+                          />
                         </div>
                         <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
                           {formatNumber(company.holdings)} {company.asset}
@@ -891,4 +896,3 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     </div>
   );
 }
-
