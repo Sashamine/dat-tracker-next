@@ -150,15 +150,17 @@ async function resolveOrCreateArtifact(
     }
   }
 
-  // Create synthetic artifact
+  // Create synthetic artifact — must include r2_bucket/r2_key to satisfy
+  // the UNIQUE INDEX artifacts_r2_bucket_key_unique ON artifacts(r2_bucket, r2_key).
+  // Use 'synthetic' bucket and artifact_id-based key to guarantee uniqueness.
   const artifactId = crypto.randomUUID();
   if (!dryRun) {
     const sourceType = accession ? 'sec_filing' : (snapshot.sourceType || 'holdings_history_ts');
     await d1.query(
       `INSERT OR IGNORE INTO artifacts
-         (artifact_id, source_type, source_url, accession, ticker, fetched_at)
-       VALUES (?, ?, ?, ?, ?, ?);`,
-      [artifactId, sourceType, sourceUrl, accession, ticker, nowIso()],
+         (artifact_id, source_type, source_url, accession, ticker, fetched_at, r2_bucket, r2_key)
+       VALUES (?, ?, ?, ?, ?, ?, 'synthetic', ?);`,
+      [artifactId, sourceType, sourceUrl, accession, ticker, nowIso(), `synthetic/${artifactId}`],
     );
   }
 
