@@ -1004,7 +1004,7 @@ export default function CompanyPage() {
                       anchor="holdings"
                       filingType="8-K"
                     />
-                  ) : displayCompany.holdingsSourceUrl && displayCompany.holdingsSource === "sec-filing" && (
+                  ) : holdingsSourceUrlResolved && displayCompany.holdingsSource === "sec-filing" && (
                     <FilingCite 
                       ticker={displayCompany.ticker} 
                       date={displayCompany.holdingsLastUpdated || ""} 

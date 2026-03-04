@@ -144,7 +144,8 @@ export function MNAVTooltip({
   const hasRestrictedCash = restrictedCash > 0;
 
   // Determine which links to show and their labels
-  const sourceUrl = secFilingsUrl || holdingsSourceUrl;
+  // Prefer per-company/per-metric holdings receipt URL over generic filings index.
+  const sourceUrl = holdingsSourceUrl || secFilingsUrl;
   const hasDashboard = officialDashboard;
   const hasSource = !!sourceUrl;
   const hasAnySource = hasSource || hasDashboard;
