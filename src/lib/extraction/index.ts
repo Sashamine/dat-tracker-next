@@ -6,7 +6,7 @@
  */
 
 import { query } from "@/lib/db";
-import { MSTR_CONFIG, type CompanyExtractionConfig, getExtractionRule, extractFromText } from "./mstr";
+import { MSTR_CONFIG, type CompanyExtractionConfig, extractFromText } from "./mstr";
 
 // R2 bucket for cached filings
 const R2_BASE_URL = "https://pub-1e4356c7aea34102aad6e3493b0c62f1.r2.dev";
@@ -288,10 +288,6 @@ export async function storeExtractedMetrics(
           
           if (existingCost.length > 0) {
             // Update existing record
-            const update = metric.metric === "totalCost" 
-              ? { total_cost: metric.value }
-              : { avg_cost_per_btc: metric.value };
-            
             await query(`
               UPDATE cost_basis_events 
               SET ${metric.metric === "totalCost" ? "total_cost" : "avg_cost_per_btc"} = $1,
@@ -333,6 +329,10 @@ interface XBRLFact {
   unit: string;
   periodEnd: string;
   periodStart?: string;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }
 
 /**
@@ -377,22 +377,28 @@ export async function processFiling(
         `https://data.sec.gov/api/xbrl/companyfacts/CIK${config.cik.padStart(10, "0")}.json`,
         { headers: { "User-Agent": "DAT-Tracker research@dat-tracker.com" } }
       );
-      const xbrlData = await xbrlRes.json();
+      const xbrlData: unknown = await xbrlRes.json();
       
       // Flatten XBRL facts for this accession
       xbrl = [];
-      for (const [namespace, facts] of Object.entries(xbrlData.facts)) {
-        for (const [factName, factData] of Object.entries(facts as Record<string, any>)) {
-          const units = factData.units || {};
+      const factsByNamespace =
+        isRecord(xbrlData) && isRecord(xbrlData.facts) ? xbrlData.facts : {};
+      for (const [namespace, facts] of Object.entries(factsByNamespace)) {
+        if (!isRecord(facts)) continue;
+        for (const [factName, factData] of Object.entries(facts)) {
+          if (!isRecord(factData)) continue;
+          const units = isRecord(factData.units) ? factData.units : {};
           for (const [unit, values] of Object.entries(units)) {
-            for (const v of (values as any[])) {
+            if (!Array.isArray(values)) continue;
+            for (const v of values) {
+              if (!isRecord(v)) continue;
               if (v.accn === accession) {
                 xbrl.push({
                   fact: `${namespace}:${factName}`,
-                  value: v.val,
+                  value: Number(v.val),
                   unit,
-                  periodEnd: v.end,
-                  periodStart: v.start
+                  periodEnd: String(v.end ?? ""),
+                  periodStart: typeof v.start === "string" ? v.start : undefined
                 });
               }
             }
