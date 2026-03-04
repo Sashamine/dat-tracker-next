@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getMetricHistory } from '@/lib/d1';
+import { logApiCallEvent } from '@/lib/events';
 
 export const runtime = 'nodejs';
 
@@ -7,6 +8,13 @@ export async function GET(
   request: NextRequest,
   props: { params: Promise<{ ticker: string; metric: string }> }
 ) {
+  const t0 = Date.now();
+  const clientHeader = request.headers.get('x-client');
+  const client =
+    clientHeader === 'web' || clientHeader === 'agent' || clientHeader === 'cron' || clientHeader === 'unknown'
+      ? clientHeader
+      : undefined;
+
   try {
     const { ticker, metric } = await props.params;
     const t = (ticker || '').toUpperCase();
@@ -17,9 +25,23 @@ export async function GET(
     const orderRaw = (searchParams.get('order') || 'desc').toLowerCase();
 
     if (!t) {
+      logApiCallEvent({
+        route: '/api/company/[ticker]/metric/[metric]/history',
+        metric: m,
+        status: 400,
+        latency_ms: Date.now() - t0,
+        client,
+      });
       return NextResponse.json({ success: false, error: 'Missing ticker' }, { status: 400 });
     }
     if (!m) {
+      logApiCallEvent({
+        route: '/api/company/[ticker]/metric/[metric]/history',
+        ticker: t,
+        status: 400,
+        latency_ms: Date.now() - t0,
+        client,
+      });
       return NextResponse.json({ success: false, error: 'Missing metric' }, { status: 400 });
     }
 
@@ -28,6 +50,15 @@ export async function GET(
 
     const rows = await getMetricHistory(t, m, { limit, order });
 
+    logApiCallEvent({
+      route: '/api/company/[ticker]/metric/[metric]/history',
+      ticker: t,
+      metric: m,
+      status: 200,
+      latency_ms: Date.now() - t0,
+      client,
+    });
+
     return NextResponse.json({
       success: true,
       ticker: t,
@@ -35,6 +66,12 @@ export async function GET(
       rows,
     });
   } catch (err) {
+    logApiCallEvent({
+      route: '/api/company/[ticker]/metric/[metric]/history',
+      status: 500,
+      latency_ms: Date.now() - t0,
+      client,
+    });
     return NextResponse.json(
       { success: false, error: err instanceof Error ? err.message : String(err) },
       { status: 500 }
