@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import type { FilingsResponse, Filing } from "@/app/api/filings/[ticker]/route";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface CompanyFilingsProps {
   ticker: string;
@@ -71,7 +72,7 @@ function getFormBadgeColor(type: string): string {
   return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
 }
 
-function FilingRow({ filing }: { filing: Filing }) {
+function FilingRow({ filing, ticker }: { filing: Filing; ticker: string }) {
   const formattedDate = new Date(filing.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -94,6 +95,7 @@ function FilingRow({ filing }: { filing: Filing }) {
       href={filing.url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackCitationSourceClick({ href: filing.url, ticker, metric: "filings" })}
       className="flex items-center gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group"
     >
       <span className={cn("px-2 py-1 text-xs font-medium rounded", getFormBadgeColor(filing.type))}>
@@ -143,6 +145,7 @@ export function CompanyFilings({ ticker, className }: CompanyFilingsProps) {
             href={data.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackCitationSourceClick({ href: data.sourceUrl || "", ticker, metric: "filings" })}
             className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"
           >
             View All
@@ -164,7 +167,7 @@ export function CompanyFilings({ ticker, className }: CompanyFilingsProps) {
       ) : data?.filings && data.filings.length > 0 ? (
         <div className="space-y-1 max-h-[400px] overflow-y-auto">
           {data.filings.map((filing, idx) => (
-            <FilingRow key={`${filing.type}-${filing.date}-${idx}`} filing={filing} />
+            <FilingRow key={`${filing.type}-${filing.date}-${idx}`} filing={filing} ticker={ticker} />
           ))}
         </div>
       ) : data?.jurisdiction && data.jurisdiction !== "US" && data.jurisdiction !== "US-OTC" ? (
@@ -178,6 +181,7 @@ export function CompanyFilings({ ticker, className }: CompanyFilingsProps) {
               href={data.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: data.sourceUrl || "", ticker, metric: "filings" })}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-2"
             >
               Visit {data.source}
@@ -198,6 +202,7 @@ export function CompanyFilings({ ticker, className }: CompanyFilingsProps) {
               href={data.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: data.sourceUrl || "", ticker, metric: "filings" })}
               className="mt-4 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm flex items-center gap-1"
             >
               Search {data.source} directly

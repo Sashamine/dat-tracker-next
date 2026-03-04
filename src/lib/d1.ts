@@ -91,6 +91,17 @@ export type LatestDatapointRow = {
   confidence: number | null;
   flags_json: string | null;
   created_at: string;
+  artifact?: {
+    source_url: string | null;
+    accession: string | null;
+    source_type: string | null;
+  };
+};
+
+type LatestDatapointQueryRow = Omit<LatestDatapointRow, 'artifact'> & {
+  artifact_source_url?: string | null;
+  artifact_accession?: string | null;
+  artifact_source_type?: string | null;
 };
 
 export type DatapointHistoryRow = {
@@ -132,21 +143,46 @@ export async function getLatestMetrics(
 
   const sql = `
     SELECT
-      datapoint_id, entity_id, metric, value, unit, scale,
-      as_of, reported_at, artifact_id, run_id, method, confidence,
-      flags_json, created_at
-    FROM latest_datapoints
-    WHERE entity_id = ?
-      AND metric IN (${inList})
+      d.datapoint_id, d.entity_id, d.metric, d.value, d.unit, d.scale,
+      d.as_of, d.reported_at, d.artifact_id, d.run_id, d.method, d.confidence,
+      d.flags_json, d.created_at,
+      a.source_url AS artifact_source_url,
+      a.accession AS artifact_accession,
+      a.source_type AS artifact_source_type
+    FROM latest_datapoints d
+    LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
+    WHERE d.entity_id = ?
+      AND d.metric IN (${inList})
     ORDER BY metric;
   `;
 
   const params = [ticker.toUpperCase(), ...metrics];
-  const out = await d1.query<LatestDatapointRow>(sql, params);
+  const out = await d1.query<LatestDatapointQueryRow>(sql, params);
+  const rows: LatestDatapointRow[] = out.results.map((r) => ({
+    datapoint_id: r.datapoint_id,
+    entity_id: r.entity_id,
+    metric: r.metric,
+    value: r.value,
+    unit: r.unit,
+    scale: r.scale,
+    as_of: r.as_of,
+    reported_at: r.reported_at,
+    artifact_id: r.artifact_id,
+    run_id: r.run_id,
+    method: r.method,
+    confidence: r.confidence,
+    flags_json: r.flags_json,
+    created_at: r.created_at,
+    artifact: {
+      source_url: r.artifact_source_url ?? null,
+      accession: r.artifact_accession ?? null,
+      source_type: r.artifact_source_type ?? null,
+    },
+  }));
 
   // Hybrid: normalize shares/prices using D1 corporate_actions when present.
   // (Fallback behavior: if no corporate_actions exist, normalization multiplier is 1.)
-  return await normalizeLatestRowsForTicker(ticker, out.results, 'current');
+  return await normalizeLatestRowsForTicker(ticker, rows, 'current');
 }
 
 export async function getMetricHistory(

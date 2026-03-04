@@ -214,8 +214,11 @@ export default function MNAVPage() {
 
   // D1-first overlay: fetch latest balance sheet metrics from D1
   const allTickers = useMemo(() => allCompanies.map(c => c.ticker), [allCompanies]);
-  const { data: d1Data } = useD1Fundamentals(allTickers);
-  const d1AllCompanies = useMemo(() => applyD1Overlay(allCompanies, d1Data), [allCompanies, d1Data]);
+  const { data: d1Data, sources: d1Sources, dates: d1Dates } = useD1Fundamentals(allTickers);
+  const d1AllCompanies = useMemo(
+    () => applyD1Overlay(allCompanies, d1Data, d1Sources, d1Dates),
+    [allCompanies, d1Data, d1Sources, d1Dates]
+  );
 
   // Filter companies by selected asset
   const companies = useMemo(() => {

@@ -70,7 +70,7 @@ import { H100CompanyView } from "@/components/H100CompanyView";
 import { DDCCompanyView } from "@/components/DDCCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
-import { trackCompanyView } from "@/lib/client-events";
+import { trackCitationSourceClick, trackCompanyView } from "@/lib/client-events";
 import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
 import { CostBasisCard } from "@/components/cost-basis-card";
 import { SECFilingTimeline } from "@/components/sec-filing-timeline";
@@ -88,13 +88,24 @@ const assetColors: Record<string, string> = {
 };
 
 // Source link component for provenance
-function SourceLink({ url, label }: { url?: string; label?: string }) {
+function SourceLink({
+  url,
+  label,
+  ticker,
+  metric,
+}: {
+  url?: string;
+  label?: string;
+  ticker?: string;
+  metric?: string;
+}) {
   if (!url) return null;
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackCitationSourceClick({ href: url, ticker, metric })}
       className="text-[10px] text-blue-500 hover:text-blue-400 align-super ml-1 no-underline whitespace-nowrap"
       title={label || "View source"}
     >
@@ -144,8 +155,11 @@ export default function CompanyPage() {
 
   // D1-first overlay for allCompanies — same pattern as overview pages
   const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
-  const { data: d1BatchData } = useD1Fundamentals(allTickers);
-  const allCompanies = useMemo(() => applyD1Overlay(enrichedAllCompanies, d1BatchData), [enrichedAllCompanies, d1BatchData]);
+  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates } = useD1Fundamentals(allTickers);
+  const allCompanies = useMemo(
+    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates),
+    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates]
+  );
 
   // Calculate sidebar stats
   const { assetStats, totalValue, mnavStats } = useMemo(() => {
@@ -670,6 +684,12 @@ export default function CompanyPage() {
                   href={displayCompany.stakingSourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: displayCompany.stakingSourceUrl || "",
+                      ticker: displayCompany.ticker,
+                    })
+                  }
                   className="inline-flex items-center gap-1 mt-2 text-xs text-blue-600 dark:text-blue-400 hover:underline"
                 >
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
@@ -745,7 +765,11 @@ export default function CompanyPage() {
                         filingType="8-K"
                       />
                     ) : (
-                      <SourceLink url={displayCompany.cashObligationsSourceUrl} label={displayCompany.cashObligationsSource} />
+                      <SourceLink
+                        url={displayCompany.cashObligationsSourceUrl}
+                        label={displayCompany.cashObligationsSource}
+                        ticker={displayCompany.ticker}
+                      />
                     )}
                   </p>
                   <p className="text-xs text-gray-400">
@@ -764,7 +788,11 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
               <p className="text-2xl font-bold text-orange-600">
                 +{displayCompany.btcMinedAnnual.toLocaleString()}
-                <SourceLink url={displayCompany.btcMinedSourceUrl} label={displayCompany.btcMinedSource} />
+                <SourceLink
+                  url={displayCompany.btcMinedSourceUrl}
+                  label={displayCompany.btcMinedSource}
+                  ticker={displayCompany.ticker}
+                />
               </p>
               <p className="text-xs text-gray-400">BTC/yr</p>
             </div>
@@ -987,7 +1015,14 @@ export default function CompanyPage() {
                 </p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
-                  {displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
+                  {holdingsSourceUrlResolved ? (
+                    <SourceLink
+                      url={holdingsSourceUrlResolved}
+                      label={displayCompany.holdingsSource}
+                      ticker={displayCompany.ticker}
+                      metric="holdings_native"
+                    />
+                  ) : displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
                     <FilingCite 
                       ticker="MSTR" 
                       date="2026-02-02" 
@@ -1001,14 +1036,7 @@ export default function CompanyPage() {
                       anchor="holdings"
                       filingType="8-K"
                     />
-                  ) : displayCompany.holdingsSourceUrl && displayCompany.holdingsSource === "sec-filing" && (
-                    <FilingCite 
-                      ticker={displayCompany.ticker} 
-                      date={displayCompany.holdingsLastUpdated || ""} 
-                      highlight={`${displayCompany.holdings.toLocaleString()}`}
-                      filingType="8-K"
-                    />
-                  )}
+                  ) : null}
                 </p>
                 <p className="text-xs text-gray-400">
                   {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
@@ -1072,7 +1100,14 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-green-600">
                     +{formatLargeNumber(cashReserves)}
-                    {displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
+                    {cashSourceUrlResolved ? (
+                      <SourceLink
+                        url={cashSourceUrlResolved}
+                        label={displayCompany.cashSource}
+                        ticker={displayCompany.ticker}
+                        metric="cash_usd"
+                      />
+                    ) : displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
                         date="2026-01-05" 
@@ -1086,9 +1121,7 @@ export default function CompanyPage() {
                         anchor="holdings"
                         filingType="8-K"
                       />
-                    ) : (
-                      <SourceLink url={cashSourceUrlResolved} label={displayCompany.cashSource} />
-                    )}
+                    ) : null}
                   </p>
                   <p className="text-xs text-gray-400">USD</p>
                 </div>
@@ -1106,16 +1139,21 @@ export default function CompanyPage() {
                     </p>
                     <p className="text-lg font-bold text-red-600">
                       −{formatLargeNumber(totalDebt)}
-                      {displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
+                      {debtSourceUrlResolved ? (
+                        <SourceLink
+                          url={debtSourceUrlResolved}
+                          label={displayCompany.debtSource}
+                          ticker={displayCompany.ticker}
+                          metric="debt_usd"
+                        />
+                      ) : displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
                         <FilingCite 
                           ticker="MSTR" 
                           date="2025-11-03" 
                           anchor="long-term-debt"
                           filingType="10-Q"
                         />
-                      ) : (
-                        <SourceLink url={debtSourceUrlResolved} label={displayCompany.debtSource} />
-                      )}
+                      ) : null}
                     </p>
                     <p className="text-xs text-gray-400">
                       {itmConvertValue > 0 ? (
@@ -1136,16 +1174,21 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(preferredEquity)}
-                    {displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
+                    {preferredSourceUrlResolved ? (
+                      <SourceLink
+                        url={preferredSourceUrlResolved}
+                        label={displayCompany.preferredSource}
+                        ticker={displayCompany.ticker}
+                        metric="preferred_equity_usd"
+                      />
+                    ) : displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
                         date="2026-01-26" 
                         anchor="preferred-equity"
                         filingType="8-K"
                       />
-                    ) : (
-                      <SourceLink url={preferredSourceUrlResolved} label={displayCompany.preferredSource} />
-                    )}
+                    ) : null}
                   </p>
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>

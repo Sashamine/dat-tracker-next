@@ -9,6 +9,7 @@ import {
   type ScheduledEvent,
   type ScheduledEventStatus,
 } from "@/lib/data/scheduled-events";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface ScheduledEventsProps {
   ticker: string;
@@ -145,6 +146,12 @@ function EventCard({ event, stockPrice }: { event: ScheduledEvent; stockPrice?: 
           href={event.sourceEvent.secUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackCitationSourceClick({
+              href: event.sourceEvent?.secUrl || "",
+              ticker: event.ticker,
+            })
+          }
           className="mt-3 inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
         >
           View Original Indenture
