@@ -82,6 +82,20 @@ jobs:
           }
           NODE
 
+      - name: D1 datapoints invariants (duplicates + sanity bounds)
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" || -z "${CLOUDFLARE_D1_DATABASE_ID:-}" || -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+            echo "D1_DATAPOINTS_INVARIANTS skipped (missing D1 secrets)"
+            exit 0
+          fi
+
+          npx tsx scripts/cloudflare/d1-datapoints-invariants.ts
+
       # Prefer latest-verified policy for hard requirements; don't fail the workflow on
       # 'verification-gaps.json' mismatches since it's derived/reporting and can be stale.
       - name: Warn on verification gaps (non-blocking)
