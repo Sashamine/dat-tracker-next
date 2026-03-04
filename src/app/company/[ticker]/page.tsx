@@ -70,7 +70,7 @@ import { H100CompanyView } from "@/components/H100CompanyView";
 import { DDCCompanyView } from "@/components/DDCCompanyView";
 import { MnavCalculationCard } from "@/components/mnav-calculation-card";
 import { DataFreshnessIndicator } from "@/components/data-freshness-indicator";
-import { trackCompanyView } from "@/lib/client-events";
+import { trackCitationSourceClick, trackCompanyView } from "@/lib/client-events";
 import { HoldingsBreakdownCard } from "@/components/holdings-breakdown-card";
 import { CostBasisCard } from "@/components/cost-basis-card";
 import { SECFilingTimeline } from "@/components/sec-filing-timeline";
@@ -88,13 +88,24 @@ const assetColors: Record<string, string> = {
 };
 
 // Source link component for provenance
-function SourceLink({ url, label }: { url?: string; label?: string }) {
+function SourceLink({
+  url,
+  label,
+  ticker,
+  metric,
+}: {
+  url?: string;
+  label?: string;
+  ticker?: string;
+  metric?: string;
+}) {
   if (!url) return null;
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackCitationSourceClick({ href: url, ticker, metric })}
       className="text-[10px] text-blue-500 hover:text-blue-400 align-super ml-1 no-underline whitespace-nowrap"
       title={label || "View source"}
     >
@@ -748,7 +759,11 @@ export default function CompanyPage() {
                         filingType="8-K"
                       />
                     ) : (
-                      <SourceLink url={displayCompany.cashObligationsSourceUrl} label={displayCompany.cashObligationsSource} />
+                      <SourceLink
+                        url={displayCompany.cashObligationsSourceUrl}
+                        label={displayCompany.cashObligationsSource}
+                        ticker={displayCompany.ticker}
+                      />
                     )}
                   </p>
                   <p className="text-xs text-gray-400">
@@ -767,7 +782,11 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
               <p className="text-2xl font-bold text-orange-600">
                 +{displayCompany.btcMinedAnnual.toLocaleString()}
-                <SourceLink url={displayCompany.btcMinedSourceUrl} label={displayCompany.btcMinedSource} />
+                <SourceLink
+                  url={displayCompany.btcMinedSourceUrl}
+                  label={displayCompany.btcMinedSource}
+                  ticker={displayCompany.ticker}
+                />
               </p>
               <p className="text-xs text-gray-400">BTC/yr</p>
             </div>
@@ -991,7 +1010,12 @@ export default function CompanyPage() {
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                   {formatLargeNumber(cryptoHoldingsValue)}
                   {holdingsSourceUrlResolved ? (
-                    <SourceLink url={holdingsSourceUrlResolved} label={displayCompany.holdingsSource} />
+                    <SourceLink
+                      url={holdingsSourceUrlResolved}
+                      label={displayCompany.holdingsSource}
+                      ticker={displayCompany.ticker}
+                      metric="holdings_native"
+                    />
                   ) : displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
                     <FilingCite 
                       ticker="MSTR" 
@@ -1071,7 +1095,12 @@ export default function CompanyPage() {
                   <p className="text-lg font-bold text-green-600">
                     +{formatLargeNumber(cashReserves)}
                     {cashSourceUrlResolved ? (
-                      <SourceLink url={cashSourceUrlResolved} label={displayCompany.cashSource} />
+                      <SourceLink
+                        url={cashSourceUrlResolved}
+                        label={displayCompany.cashSource}
+                        ticker={displayCompany.ticker}
+                        metric="cash_usd"
+                      />
                     ) : displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
@@ -1105,7 +1134,12 @@ export default function CompanyPage() {
                     <p className="text-lg font-bold text-red-600">
                       −{formatLargeNumber(totalDebt)}
                       {debtSourceUrlResolved ? (
-                        <SourceLink url={debtSourceUrlResolved} label={displayCompany.debtSource} />
+                        <SourceLink
+                          url={debtSourceUrlResolved}
+                          label={displayCompany.debtSource}
+                          ticker={displayCompany.ticker}
+                          metric="debt_usd"
+                        />
                       ) : displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
                         <FilingCite 
                           ticker="MSTR" 
@@ -1135,7 +1169,12 @@ export default function CompanyPage() {
                   <p className="text-lg font-bold text-red-600">
                     −{formatLargeNumber(preferredEquity)}
                     {preferredSourceUrlResolved ? (
-                      <SourceLink url={preferredSourceUrlResolved} label={displayCompany.preferredSource} />
+                      <SourceLink
+                        url={preferredSourceUrlResolved}
+                        label={displayCompany.preferredSource}
+                        ticker={displayCompany.ticker}
+                        metric="preferred_equity_usd"
+                      />
                     ) : displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
