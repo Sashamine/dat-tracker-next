@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { FilingsResponse, Filing } from "@/app/api/filings/[ticker]/route";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 async function fetchFilings(ticker: string): Promise<FilingsResponse> {
   const response = await fetch(`/api/filings/${ticker}`);
@@ -153,6 +154,13 @@ function FilingRow({ filing, ticker }: { filing: Filing; ticker: string }) {
       href={viewerUrl}
       target={isInternal ? undefined : "_blank"}
       rel={isInternal ? undefined : "noopener noreferrer"}
+      onClick={() =>
+        trackCitationSourceClick({
+          href: viewerUrl,
+          ticker,
+          metric: "filings",
+        })
+      }
       className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group"
     >
       <span className={cn("px-3 py-1.5 text-sm font-medium rounded", getFormBadgeColor(filing.type))}>

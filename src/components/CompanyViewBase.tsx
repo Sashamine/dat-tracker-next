@@ -11,6 +11,7 @@ import type { EffectiveSharesResult } from "@/lib/data/dilutive-instruments";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 import type { Company, Asset } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
@@ -340,7 +341,13 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
           <div className="px-6 pb-6">
             <div className="flex items-center gap-3 mb-6">
               {company.website && (
-                <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+                <a
+                  href={company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackCitationSourceClick({ href: company.website || "", ticker: company.ticker })}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                >
                   Website
                 </a>
               )}
@@ -349,6 +356,13 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
                   href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${config.cik || company.secCik}&type=&dateb=&owner=include&count=40`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${config.cik || company.secCik}&type=&dateb=&owner=include&count=40`,
+                      ticker: company.ticker,
+                      metric: "filings",
+                    })
+                  }
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                 >
                   SEC Filings
