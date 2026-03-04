@@ -1,5 +1,5 @@
 // Database client for PostgreSQL
-import { Pool } from 'pg';
+import { Pool, type QueryConfigValues, type QueryResultRow } from 'pg';
 
 // Create a connection pool (reused across requests)
 const pool = new Pool({
@@ -11,18 +11,18 @@ const pool = new Pool({
 });
 
 // Helper to run queries
-export async function query<T = any>(
+export async function query<T extends QueryResultRow = QueryResultRow>(
   text: string,
-  params?: any[]
+  params?: QueryConfigValues<unknown[]>
 ): Promise<T[]> {
   const result = await pool.query(text, params);
   return result.rows as T[];
 }
 
 // Helper to run a single query and get one result
-export async function queryOne<T = any>(
+export async function queryOne<T extends QueryResultRow = QueryResultRow>(
   text: string,
-  params?: any[]
+  params?: QueryConfigValues<unknown[]>
 ): Promise<T | null> {
   const result = await pool.query(text, params);
   return (result.rows[0] as T) || null;
