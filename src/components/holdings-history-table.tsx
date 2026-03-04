@@ -21,7 +21,7 @@ function formatChange(current: number, previous: number): { text: string; positi
   };
 }
 
-function getSourceLink(snapshot: HoldingsSnapshot, ticker: string): { href: string; label: string; external: boolean } | null {
+function getSourceLink(snapshot: HoldingsSnapshot): { href: string; label: string; external: boolean } | null {
   // If there's a sourceUrl that's internal (/filings/...), use it
   if (snapshot.sourceUrl?.startsWith("/filings/") || snapshot.sourceUrl?.startsWith("/data/")) {
     return {
@@ -88,7 +88,7 @@ export function HoldingsHistoryTable({ ticker, asset, className }: HoldingsHisto
               const change = previousSnapshot 
                 ? formatChange(snapshot.holdings, previousSnapshot.holdings)
                 : null;
-              const sourceLink = getSourceLink(snapshot, ticker);
+              const sourceLink = getSourceLink(snapshot);
 
               return (
                 <tr 
@@ -154,7 +154,7 @@ export function HoldingsHistoryTable({ ticker, asset, className }: HoldingsHisto
       </div>
 
       <p className="mt-4 text-xs text-gray-500">
-        Data from quarterly 10-Q/10-K filings and 8-K announcements. Click "SEC Filing" to view the source document.
+        Data from quarterly 10-Q/10-K filings and 8-K announcements. Click &quot;SEC Filing&quot; to view the source document.
       </p>
     </div>
   );
