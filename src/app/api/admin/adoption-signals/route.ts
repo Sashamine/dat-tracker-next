@@ -36,6 +36,12 @@ function parseTopN(raw: string | null, fallback: number): number {
   return Math.max(1, Math.min(100, n));
 }
 
+function parseOffsetDays(raw: string | null): number {
+  const n = parseInt(raw || '0', 10);
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(365, n));
+}
+
 function qident(name: string): string {
   return `"${name.replace(/"/g, '""')}"`;
 }
@@ -114,6 +120,7 @@ export async function GET(request: NextRequest) {
 
   const sp = request.nextUrl.searchParams;
   const days = parseWindowDays(sp.get('window'));
+  const offsetDays = parseOffsetDays(sp.get('offsetDays'));
   const topN = parseTopN(sp.get('topN'), 10);
   const heatmapTopN = parseTopN(sp.get('heatmapTopN'), 20);
 
@@ -198,13 +205,14 @@ export async function GET(request: NextRequest) {
         SELECT *
         FROM normalized
         WHERE event_ts >= datetime('now', ?)
-          AND event_ts < datetime('now')
+          AND event_ts < datetime('now', ?)
       )
     `;
 
-    const priorOffset = `-${days * 2} day`;
-    const currentOffset = `-${days} day`;
-    const currentWindowParam = `-${days} day`;
+    const windowStart = `-${offsetDays + days} day`;
+    const windowEnd = `-${offsetDays} day`;
+    const priorWindowStart = `-${offsetDays + days * 2} day`;
+    const priorWindowEnd = `-${offsetDays + days} day`;
 
     const queries: SqlSpec[] = [
       {
@@ -215,7 +223,7 @@ export async function GET(request: NextRequest) {
             SELECT DISTINCT session_id
             FROM normalized
             WHERE event_ts >= datetime('now', ?)
-              AND event_ts < datetime('now')
+              AND event_ts < datetime('now', ?)
               AND session_id IS NOT NULL
           ),
           prior_sessions AS (
@@ -233,7 +241,7 @@ export async function GET(request: NextRequest) {
               INNER JOIN prior_sessions p ON c.session_id = p.session_id
             ) AS returning_users;
         `,
-        params: [currentWindowParam, currentOffset, priorOffset, currentOffset],
+        params: [windowStart, windowEnd, priorWindowStart, priorWindowEnd],
       },
       {
         id: 'api_calls_by_route',
@@ -250,7 +258,7 @@ export async function GET(request: NextRequest) {
           ORDER BY count DESC, route ASC
           LIMIT ?;
         `,
-        params: [currentWindowParam, topN],
+        params: [windowStart, windowEnd, topN],
       },
       {
         id: 'api_calls_by_client',
@@ -268,7 +276,7 @@ export async function GET(request: NextRequest) {
           GROUP BY client
           ORDER BY count DESC, client ASC;
         `,
-        params: [currentWindowParam],
+        params: [windowStart, windowEnd],
       },
       {
         id: 'most_viewed_companies',
@@ -285,7 +293,7 @@ export async function GET(request: NextRequest) {
           ORDER BY count DESC, ticker ASC
           LIMIT ?;
         `,
-        params: [currentWindowParam, topN],
+        params: [windowStart, windowEnd, topN],
       },
       {
         id: 'most_queried_metrics',
@@ -302,7 +310,7 @@ export async function GET(request: NextRequest) {
           ORDER BY count DESC, metric ASC
           LIMIT ?;
         `,
-        params: [currentWindowParam, topN],
+        params: [windowStart, windowEnd, topN],
       },
       {
         id: 'citation_ctr',
@@ -323,7 +331,7 @@ export async function GET(request: NextRequest) {
             END AS ctr
           FROM agg;
         `,
-        params: [currentWindowParam],
+        params: [windowStart, windowEnd],
       },
       {
         id: 'history_usage_heatmap',
@@ -341,7 +349,7 @@ export async function GET(request: NextRequest) {
           ORDER BY count DESC, metric ASC, ticker ASC
           LIMIT ?;
         `,
-        params: [currentWindowParam, heatmapTopN],
+        params: [windowStart, windowEnd, heatmapTopN],
       },
     ];
 
@@ -360,17 +368,30 @@ export async function GET(request: NextRequest) {
     const clientCounts = new Map(
       apiCallsByClientRes.results.map(r => [String(r.client || 'unknown'), Number(r.count || 0)])
     );
+    const uniqueUsers = Number(users.unique_users || 0);
+    const citationOpens = Number(ctr.citation_opens || 0);
+    const sourceClicks = Number(ctr.source_clicks || 0);
+    const apiCallsTotal = apiCallsByClientRes.results.reduce((sum, r) => sum + Number(r.count || 0), 0);
+    const historyUsageTotal = heatmapRes.results.reduce((sum, r) => sum + Number(r.count || 0), 0);
+    const citationOpenRate = uniqueUsers === 0 ? 0 : Number((citationOpens / uniqueUsers).toFixed(4));
+    const sourceClickRate = uniqueUsers === 0 ? 0 : Number((sourceClicks / uniqueUsers).toFixed(4));
+    const historyUsageRate = uniqueUsers === 0 ? 0 : Number((historyUsageTotal / uniqueUsers).toFixed(4));
 
     return NextResponse.json({
       success: true,
       window: `${days}d`,
+      offsetDays,
       generated_at: new Date().toISOString(),
+      window_bounds: {
+        start_offset: windowStart,
+        end_offset: windowEnd,
+      },
       source: {
         table,
         columns: Array.from(columns).sort(),
       },
       metrics: {
-        unique_users: Number(users.unique_users || 0),
+        unique_users: uniqueUsers,
         returning_users: Number(users.returning_users || 0),
         api_calls_by_route: apiCallsRes.results.map(r => ({
           route: String(r.route),
@@ -389,8 +410,8 @@ export async function GET(request: NextRequest) {
           count: Number(r.count || 0),
         })),
         citations: {
-          opens: Number(ctr.citation_opens || 0),
-          source_clicks: Number(ctr.source_clicks || 0),
+          opens: citationOpens,
+          source_clicks: sourceClicks,
           ctr: Number(ctr.ctr || 0),
         },
         history_usage_heatmap: heatmapRes.results.map(r => ({
@@ -398,6 +419,12 @@ export async function GET(request: NextRequest) {
           ticker: String(r.ticker),
           count: Number(r.count || 0),
         })),
+        adoption_summary: {
+          api_calls_total: apiCallsTotal,
+          citation_open_rate: citationOpenRate,
+          source_click_rate: sourceClickRate,
+          history_usage_rate: historyUsageRate,
+        },
       },
       sql: queries,
     });

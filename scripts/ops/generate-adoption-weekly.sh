@@ -25,6 +25,7 @@ mkdir -p "${OUT_DIR}"
 
 echo "Fetching adoption signals (window=${WINDOW}) from ${BASE_URL} ..."
 TMP="/tmp/adoption-signals-${DATE_UTC}.json"
+TMP_PRIOR="/tmp/adoption-signals-${DATE_UTC}-prior.json"
 
 HTTP_CODE=$(curl -sS -o "${TMP}" -w '%{http_code}' \
   -H "x-admin-secret: ${ADMIN_SECRET}" \
@@ -43,7 +44,51 @@ if ! jq -e '.success' "${TMP}" > /dev/null 2>&1; then
   exit 1
 fi
 
+HTTP_CODE_PRIOR=$(curl -sS -o "${TMP_PRIOR}" -w '%{http_code}' \
+  -H "x-admin-secret: ${ADMIN_SECRET}" \
+  "${BASE_URL}/api/admin/adoption-signals?window=${WINDOW}&offsetDays=7")
+
+if [ "${HTTP_CODE_PRIOR}" != "200" ]; then
+  echo "ERROR: Prior-window API returned HTTP ${HTTP_CODE_PRIOR}" >&2
+  cat "${TMP_PRIOR}" >&2
+  exit 1
+fi
+
+if ! jq -e '.success' "${TMP_PRIOR}" > /dev/null 2>&1; then
+  echo "ERROR: Prior-window response is not valid JSON or success=false" >&2
+  cat "${TMP_PRIOR}" >&2
+  exit 1
+fi
+
 GENERATED_AT=$(jq -r '.generated_at // empty' "${TMP}")
+
+delta_value() {
+  local current="$1"
+  local prior="$2"
+  jq -nr --argjson c "${current}" --argjson p "${prior}" '($c - $p)'
+}
+
+delta_signed() {
+  local current="$1"
+  local prior="$2"
+  jq -nr --argjson c "${current}" --argjson p "${prior}" '
+    ($c - $p) as $d
+    | if $d > 0 then "+" + ($d|tostring) else ($d|tostring) end
+  '
+}
+
+CURRENT_UNIQUE_USERS=$(jq -r '.metrics.unique_users // 0' "${TMP}")
+PRIOR_UNIQUE_USERS=$(jq -r '.metrics.unique_users // 0' "${TMP_PRIOR}")
+CURRENT_RETURNING_USERS=$(jq -r '.metrics.returning_users // 0' "${TMP}")
+PRIOR_RETURNING_USERS=$(jq -r '.metrics.returning_users // 0' "${TMP_PRIOR}")
+CURRENT_API_CALLS_TOTAL=$(jq -r '.metrics.adoption_summary.api_calls_total // 0' "${TMP}")
+PRIOR_API_CALLS_TOTAL=$(jq -r '.metrics.adoption_summary.api_calls_total // 0' "${TMP_PRIOR}")
+CURRENT_CITATION_OPEN_RATE=$(jq -r '.metrics.adoption_summary.citation_open_rate // 0' "${TMP}")
+PRIOR_CITATION_OPEN_RATE=$(jq -r '.metrics.adoption_summary.citation_open_rate // 0' "${TMP_PRIOR}")
+CURRENT_SOURCE_CLICK_RATE=$(jq -r '.metrics.adoption_summary.source_click_rate // 0' "${TMP}")
+PRIOR_SOURCE_CLICK_RATE=$(jq -r '.metrics.adoption_summary.source_click_rate // 0' "${TMP_PRIOR}")
+CURRENT_HISTORY_USAGE_RATE=$(jq -r '.metrics.adoption_summary.history_usage_rate // 0' "${TMP}")
+PRIOR_HISTORY_USAGE_RATE=$(jq -r '.metrics.adoption_summary.history_usage_rate // 0' "${TMP_PRIOR}")
 
 cat > "${OUT_FILE}" <<SNAPSHOT
 # Adoption Signals — Week of ${DATE_UTC}
@@ -67,6 +112,26 @@ cat > "${OUT_FILE}" <<SNAPSHOT
 | Citation opens | $(jq -r '.metrics.citations.opens // 0' "${TMP}") |
 | Source clicks | $(jq -r '.metrics.citations.source_clicks // 0' "${TMP}") |
 | CTR | $(jq -r '.metrics.citations.ctr // 0' "${TMP}") |
+
+## Adoption Summary (<60s Read)
+
+| Metric | Value |
+|--------|-------|
+| API calls (7d) | ${CURRENT_API_CALLS_TOTAL} |
+| Citation open rate (opens / unique users) | ${CURRENT_CITATION_OPEN_RATE} |
+| Source click rate (clicks / unique users) | ${CURRENT_SOURCE_CLICK_RATE} |
+| History usage rate (history events / unique users) | ${CURRENT_HISTORY_USAGE_RATE} |
+
+## Week-over-Week Delta (current 7d vs prior 7d)
+
+| Metric | Current | Prior | Delta |
+|--------|---------|-------|-------|
+| Unique users | ${CURRENT_UNIQUE_USERS} | ${PRIOR_UNIQUE_USERS} | $(delta_signed "${CURRENT_UNIQUE_USERS}" "${PRIOR_UNIQUE_USERS}") |
+| Returning users | ${CURRENT_RETURNING_USERS} | ${PRIOR_RETURNING_USERS} | $(delta_signed "${CURRENT_RETURNING_USERS}" "${PRIOR_RETURNING_USERS}") |
+| API calls | ${CURRENT_API_CALLS_TOTAL} | ${PRIOR_API_CALLS_TOTAL} | $(delta_signed "${CURRENT_API_CALLS_TOTAL}" "${PRIOR_API_CALLS_TOTAL}") |
+| Citation open rate | ${CURRENT_CITATION_OPEN_RATE} | ${PRIOR_CITATION_OPEN_RATE} | $(delta_value "${CURRENT_CITATION_OPEN_RATE}" "${PRIOR_CITATION_OPEN_RATE}") |
+| Source click rate | ${CURRENT_SOURCE_CLICK_RATE} | ${PRIOR_SOURCE_CLICK_RATE} | $(delta_value "${CURRENT_SOURCE_CLICK_RATE}" "${PRIOR_SOURCE_CLICK_RATE}") |
+| History usage rate | ${CURRENT_HISTORY_USAGE_RATE} | ${PRIOR_HISTORY_USAGE_RATE} | $(delta_value "${CURRENT_HISTORY_USAGE_RATE}" "${PRIOR_HISTORY_USAGE_RATE}") |
 
 ## Top API Routes
 
