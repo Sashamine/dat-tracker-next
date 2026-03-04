@@ -117,7 +117,7 @@ export async function GET(
         reported_at: row.reported_at,
         method: row.method,
         confidence: row.confidence,
-        flags: row.flags_json ? JSON.parse(row.flags_json) : null,
+        flags: (() => { try { return row.flags_json ? JSON.parse(row.flags_json) : null; } catch { return null; } })(),
         created_at: row.created_at,
       },
       artifact: row.artifact_id
