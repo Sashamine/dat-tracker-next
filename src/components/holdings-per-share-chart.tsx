@@ -4,7 +4,6 @@ import { useEffect, useRef, useMemo, useState } from "react";
 import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { cn } from "@/lib/utils";
 import { getHoldingsHistory, calculateHoldingsGrowth } from "@/lib/data/holdings-history";
-import { VerificationDot } from "@/components/verification-badge";
 
 type TimeRange = "3mo" | "6mo" | "1y" | "all";
 
