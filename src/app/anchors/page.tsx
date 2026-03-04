@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface AnchorEntry {
   ticker: string;
@@ -105,6 +106,13 @@ export default function AnchorsPage() {
                             href={`${anchor.path}#dat-btc-holdings`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() =>
+                              trackCitationSourceClick({
+                                href: `${anchor.path}#dat-btc-holdings`,
+                                ticker: anchor.ticker,
+                                metric: "holdings_native",
+                              })
+                            }
                             className="text-blue-600 hover:underline"
                           >
                             Open →

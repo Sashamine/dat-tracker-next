@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MobileHeader } from "@/components/mobile-header";
+import { trackCitationSourceClick } from "@/lib/client-events";
 import { 
   ExternalLink, 
   AlertTriangle, 
@@ -82,6 +83,13 @@ function FilingCard({ filing }: { filing: ExpectedFiling }) {
           href={filing.sedarSearchUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackCitationSourceClick({
+              href: filing.sedarSearchUrl || "",
+              ticker: filing.ticker,
+              metric: "filings",
+            })
+          }
           className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600 text-white rounded-md text-sm hover:bg-indigo-700 transition-colors"
         >
           <ExternalLink className="w-4 h-4" />
@@ -139,6 +147,13 @@ function CompanyQuickLinks({ companies }: { companies: Company[] }) {
             href={`https://www.sedarplus.ca/csa-party/records/searchRecords.html?_=profile&profile=${company.sedarProfileNumber}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackCitationSourceClick({
+                href: `https://www.sedarplus.ca/csa-party/records/searchRecords.html?_=profile&profile=${company.sedarProfileNumber}`,
+                ticker: company.ticker,
+                metric: "filings",
+              })
+            }
             className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
           >
             <div>

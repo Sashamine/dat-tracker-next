@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 type Stats = {
   success: boolean;
@@ -239,7 +240,20 @@ export default function CorporateActionsAdminPage() {
                         artifact: <code>{a.source_artifact_id || '(none)'}</code>
                       </div>
                       {a.source_url && (
-                        <a href={a.source_url} target="_blank" rel="noreferrer">source_url</a>
+                        <a
+                          href={a.source_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() =>
+                            trackCitationSourceClick({
+                              href: a.source_url || "",
+                              ticker: a.entity_id,
+                              metric: "corporate_actions",
+                            })
+                          }
+                        >
+                          source_url
+                        </a>
                       )}
                     </div>
                   </div>
