@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { formatMNAV } from "@/lib/calculations";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface MNAVTooltipProps {
   mNAV: number;
@@ -64,7 +65,19 @@ function formatCompact(num: number): string {
 }
 
 // Format source citation as compact inline text
-function SourceCite({ source, asOf, sourceUrl }: { source?: string; asOf?: string; sourceUrl?: string }) {
+function SourceCite({
+  source,
+  asOf,
+  sourceUrl,
+  ticker,
+  metric,
+}: {
+  source?: string;
+  asOf?: string;
+  sourceUrl?: string;
+  ticker?: string;
+  metric?: string;
+}) {
   if (!source) return null;
 
   const text = asOf ? `${source} (${asOf})` : source;
@@ -75,7 +88,10 @@ function SourceCite({ source, asOf, sourceUrl }: { source?: string; asOf?: strin
         href={sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+          trackCitationSourceClick({ href: sourceUrl, ticker, metric });
+        }}
         className="text-[9px] text-blue-400/70 hover:text-blue-300 ml-1"
       >
         [{text}]
@@ -202,7 +218,13 @@ export function MNAVTooltip({
                     <div className="flex justify-between items-start text-[10px] text-gray-300 border-t border-gray-700/50 pt-0.5">
                       <span className="flex items-center flex-wrap">
                         Diluted × ${stockPrice.toFixed(2)}
-                        <SourceCite source={sharesSource} asOf={sharesAsOf} sourceUrl={sharesSourceUrl} />
+                        <SourceCite
+                          source={sharesSource}
+                          asOf={sharesAsOf}
+                          sourceUrl={sharesSourceUrl}
+                          ticker={ticker}
+                          metric="basic_shares"
+                        />
                       </span>
                       <span className="font-mono">{formatCompact(marketCap)}</span>
                     </div>
@@ -211,7 +233,13 @@ export function MNAVTooltip({
                   <div className="flex justify-between items-start text-[10px] text-gray-400">
                     <span className="flex items-center flex-wrap">
                       {(sharesForMnav / 1_000_000).toFixed(1)}M × ${stockPrice.toFixed(2)}
-                      <SourceCite source={sharesSource} asOf={sharesAsOf} sourceUrl={sharesSourceUrl} />
+                      <SourceCite
+                        source={sharesSource}
+                        asOf={sharesAsOf}
+                        sourceUrl={sharesSourceUrl}
+                        ticker={ticker}
+                        metric="basic_shares"
+                      />
                     </span>
                     <span className="font-mono">{formatCompact(marketCap)}</span>
                   </div>
@@ -238,7 +266,15 @@ export function MNAVTooltip({
                 <div className="flex justify-between items-start">
                   <span className="flex items-center flex-wrap">
                     + Debt
-                    {totalDebt > 0 && <SourceCite source={debtSource} asOf={debtAsOf} sourceUrl={debtSourceUrl} />}
+                    {totalDebt > 0 && (
+                      <SourceCite
+                        source={debtSource}
+                        asOf={debtAsOf}
+                        sourceUrl={debtSourceUrl}
+                        ticker={ticker}
+                        metric="debt_usd"
+                      />
+                    )}
                   </span>
                   <span className={`font-mono ${totalDebt > 0 ? 'text-red-400' : 'text-gray-500'}`}>
                     {totalDebt > 0 ? formatCompact(totalDebt + (itmDebtAdjustment || 0)) : '$0'}
@@ -254,7 +290,15 @@ export function MNAVTooltip({
                 <div className="flex justify-between items-start">
                   <span className="flex items-center flex-wrap">
                     + Preferred
-                    {preferredEquity > 0 && <SourceCite source={preferredSource} asOf={preferredAsOf} sourceUrl={preferredSourceUrl} />}
+                    {preferredEquity > 0 && (
+                      <SourceCite
+                        source={preferredSource}
+                        asOf={preferredAsOf}
+                        sourceUrl={preferredSourceUrl}
+                        ticker={ticker}
+                        metric="preferred_equity_usd"
+                      />
+                    )}
                   </span>
                   <span className={`font-mono ${preferredEquity > 0 ? 'text-red-400' : 'text-gray-500'}`}>
                     {preferredEquity > 0 ? formatCompact(preferredEquity) : '$0'}
@@ -264,7 +308,15 @@ export function MNAVTooltip({
                 <div className="flex justify-between items-start">
                   <span className="flex items-center flex-wrap">
                     − {hasRestrictedCash ? 'Free Cash' : 'Cash'}
-                    {freeCash > 0 && <SourceCite source={cashSource} asOf={cashAsOf} sourceUrl={cashSourceUrl} />}
+                    {freeCash > 0 && (
+                      <SourceCite
+                        source={cashSource}
+                        asOf={cashAsOf}
+                        sourceUrl={cashSourceUrl}
+                        ticker={ticker}
+                        metric="cash_usd"
+                      />
+                    )}
                   </span>
                   <span className={`font-mono ${freeCash > 0 ? 'text-green-400' : 'text-gray-500'}`}>
                     {freeCash > 0 ? `(${formatCompact(freeCash)})` : '$0'}
@@ -337,7 +389,10 @@ export function MNAVTooltip({
                     href={sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      trackCitationSourceClick({ href: sourceUrl, ticker, metric: "holdings_native" });
+                    }}
                     className="flex justify-between items-center text-[11px] text-blue-400 hover:text-blue-300"
                   >
                     <span>{sourceInfo.label}</span>
@@ -349,7 +404,10 @@ export function MNAVTooltip({
                     href={officialDashboard}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      trackCitationSourceClick({ href: officialDashboard, ticker });
+                    }}
                     className="flex justify-between items-center text-[11px] text-blue-400 hover:text-blue-300"
                   >
                     <span>Live Dashboard</span>
