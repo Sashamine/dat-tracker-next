@@ -4,6 +4,7 @@ import { AVX_PROVENANCE, AVX_CIK, AVX_PIPE, AVX_STAKING, AVX_CAPITAL_PROGRAMS } 
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
@@ -172,21 +173,47 @@ export function AVXCompanyView({ company, className = "" }: Props) {
             <p className="text-2xl font-bold text-green-600">&gt;90% staked</p>
             <p className="text-xs text-green-500">~8% target APY via validators</p>
             <p className="text-xs text-green-500 mt-1">Expected Q1 2026: ~{AVX_STAKING.expectedQ1_2026Rewards.toLocaleString()} AVAX</p>
-            <a href={AVX_STAKING.source} target="_blank" rel="noopener noreferrer" className="text-xs text-green-600 hover:underline mt-1 inline-block">Source: 8-K →</a>
+            <a
+              href={AVX_STAKING.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: AVX_STAKING.source, ticker: "AVX" })}
+              className="text-xs text-green-600 hover:underline mt-1 inline-block"
+            >
+              Source: 8-K →
+            </a>
           </div>
 
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
             <p className="text-sm text-blue-700 dark:text-blue-400 font-semibold">PIPE Details</p>
             <p className="text-2xl font-bold text-blue-600">${(AVX_PIPE.totalProceeds / 1e6).toFixed(0)}M</p>
             <p className="text-xs text-blue-500">Closed {AVX_PIPE.closingDate}</p>
-            <a href={AVX_PIPE.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline mt-1 inline-block">Source: 8-K →</a>
+            <a
+              href={AVX_PIPE.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: AVX_PIPE.sourceUrl, ticker: "AVX" })}
+              className="text-xs text-blue-600 hover:underline mt-1 inline-block"
+            >
+              Source: 8-K →
+            </a>
           </div>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
             <p className="text-sm text-purple-700 dark:text-purple-400 font-semibold">$40M Buyback</p>
             <p className="text-2xl font-bold text-purple-600">${(AVX_CAPITAL_PROGRAMS.buyback.executedValue / 1e6).toFixed(1)}M</p>
             <p className="text-xs text-purple-500">executed of ${(AVX_CAPITAL_PROGRAMS.buyback.authorized / 1e6).toFixed(0)}M authorized</p>
-            <a href={AVX_CAPITAL_PROGRAMS.buyback.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-purple-600 hover:underline mt-1 inline-block">Source: 8-K →</a>
+            <a
+              href={AVX_CAPITAL_PROGRAMS.buyback.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({ href: AVX_CAPITAL_PROGRAMS.buyback.sourceUrl, ticker: "AVX" })
+              }
+              className="text-xs text-purple-600 hover:underline mt-1 inline-block"
+            >
+              Source: 8-K →
+            </a>
           </div>
 
           {AVX_PROVENANCE.quarterlyBurn && (
