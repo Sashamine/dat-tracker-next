@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 type VerificationStatus = "sec-verified" | "company-reported" | "estimated" | "interpolated" | "stale";
 
@@ -80,6 +81,7 @@ export function VerificationBadge({
         href={sourceUrl} 
         target="_blank" 
         rel="noopener noreferrer"
+        onClick={() => trackCitationSourceClick({ href: sourceUrl })}
         className="hover:opacity-80 transition-opacity"
       >
         {badge}
