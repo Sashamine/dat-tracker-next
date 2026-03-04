@@ -2,11 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getLatestMetrics } from '@/lib/d1';
 import { getHoldingsBasis, type HoldingsBasis } from '@/lib/d1-overlay';
 import { CORE_D1_METRICS } from '@/lib/metrics';
+import { logApiCallEvent } from '@/lib/events';
 
 // Returns latest filed fundamentals from Cloudflare D1.
 // Designed for client-side consumption on aggregate pages.
 
 export async function POST(request: NextRequest) {
+  const t0 = Date.now();
+  const clientHeader = request.headers.get('x-client');
+  const client =
+    clientHeader === 'web' || clientHeader === 'agent' || clientHeader === 'cron' || clientHeader === 'unknown'
+      ? clientHeader
+      : undefined;
+
   try {
     const body = await request.json().catch(() => null);
     const tickersRaw: unknown = body?.tickers;
@@ -19,6 +27,12 @@ export async function POST(request: NextRequest) {
       : [];
 
     if (tickers.length === 0) {
+      logApiCallEvent({
+        route: '/api/d1/latest-metrics/batch',
+        status: 200,
+        latency_ms: Date.now() - t0,
+        client,
+      });
       return NextResponse.json({ success: true, tickers: 0, results: {} });
     }
 
@@ -40,9 +54,24 @@ export async function POST(request: NextRequest) {
       holdings_basis[ticker] = getHoldingsBasis(byMetric.holdings_native, byMetric.bitcoin_holdings_usd);
     }
 
+    logApiCallEvent({
+      route: '/api/d1/latest-metrics/batch',
+      metric: CORE_D1_METRICS[0],
+      status: 200,
+      latency_ms: Date.now() - t0,
+      client,
+    });
+
     return NextResponse.json({ success: true, tickers: tickers.length, holdings_basis, results });
   } catch (err) {
     // Hide D1 failures from the UI by returning a non-throwing payload.
+    logApiCallEvent({
+      route: '/api/d1/latest-metrics/batch',
+      metric: CORE_D1_METRICS[0],
+      status: 500,
+      latency_ms: Date.now() - t0,
+      client,
+    });
     return NextResponse.json({ success: false, error: err instanceof Error ? err.message : String(err) });
   }
 }
