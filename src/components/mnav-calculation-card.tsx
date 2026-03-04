@@ -1,7 +1,6 @@
 "use client";
 
 import { formatLargeNumber } from "@/lib/calculations";
-import { FilingCite } from "@/components/wiki-citation";
 import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
 import type { HoldingsBasis } from "@/lib/d1-overlay";
 import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
@@ -54,67 +53,24 @@ interface MnavCalculationCardProps {
   sharesSearchTerm?: string;
 }
 
-function SourceLink({ 
-  url, 
-  ticker,
-  date,
-  filingType = "8-K",
-  label 
-}: { 
-  url?: string; 
-  ticker?: string;
-  date?: string;
-  filingType?: "8-K" | "10-Q" | "10-K";
-  label?: string;
-}) {
-  // Use FilingCite for SEC filings
-  if (ticker && date && url?.includes("sec.gov")) {
-    return (
-      <FilingCite 
-        ticker={ticker} 
-        date={date} 
-        filingType={filingType}
-      />
-    );
-  }
-  
-  if (!url) return <span className="text-gray-500 text-[10px] ml-1">[—]</span>;
-  
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-500 hover:text-blue-400 text-[10px] ml-1"
-      title={label || "View source"}
-    >
-      [src↗]
-    </a>
-  );
-}
-
 function FormulaRow({ 
   label, 
   value, 
   color = "text-gray-300",
   sourceUrl,
-  sourceTicker,
   sourceDate,
   sourceLabel,
   prefix = "",
   showZero = true,
-  searchTerm,
 }: {
   label: string;
   value: number;
   color?: string;
   sourceUrl?: string;
-  sourceTicker?: string;
   sourceDate?: string;
   sourceLabel?: string;
   prefix?: string;
   showZero?: boolean;
-  searchTerm?: string;
 }) {
   if (!showZero && value === 0) return null;
   
@@ -147,7 +103,6 @@ function FormulaRow({
 }
 
 export function MnavCalculationCard({
-  ticker,
   asset,
   marketCap,
   totalDebt,
@@ -164,19 +119,12 @@ export function MnavCalculationCard({
   basicShares,
   itmDilutionShares,
   itmDebtAdjustment,
-  sharesSourceUrl,
-  sharesSource,
-  sharesAsOf,
   debtSourceUrl,
   debtSource,
   debtAsOf,
   cashSourceUrl,
   cashSource,
   cashAsOf,
-  holdingsSearchTerm,
-  debtSearchTerm,
-  cashSearchTerm,
-  sharesSearchTerm,
   preferredSourceUrl,
   preferredSource,
   preferredAsOf,
@@ -260,10 +208,8 @@ export function MnavCalculationCard({
             color={adjustedDebt > 0 ? "text-red-400" : "text-gray-500"}
             prefix="+ "
             sourceUrl={debtSourceUrl}
-            sourceTicker={ticker}
             sourceDate={debtAsOf}
             sourceLabel={debtSource}
-            searchTerm={debtSearchTerm}
             showZero={true}
           />
           
@@ -273,7 +219,6 @@ export function MnavCalculationCard({
             color={preferredEquity > 0 ? "text-red-400" : "text-gray-500"}
             prefix="+ "
             sourceUrl={preferredSourceUrl}
-            sourceTicker={ticker}
             sourceDate={preferredAsOf}
             sourceLabel={preferredSource}
             showZero={true}
@@ -285,13 +230,11 @@ export function MnavCalculationCard({
             color={freeCash > 0 ? "text-green-400" : "text-gray-500"}
             prefix="− "
             sourceUrl={cashSourceUrl}
-            sourceTicker={ticker}
             sourceDate={cashAsOf}
             sourceLabel={restrictedCash && restrictedCash > 0 
               ? `${cashSource || ''} (${formatLargeNumber(restrictedCash)} restricted)`.trim()
               : cashSource}
             showZero={true}
-            searchTerm={cashSearchTerm}
           />
           
           <div className="flex justify-between items-center pt-1 border-t border-gray-200 dark:border-gray-700 mt-1">
