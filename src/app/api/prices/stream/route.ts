@@ -128,12 +128,58 @@ async function fetchCryptoPricesFromKraken(): Promise<Record<string, { price: nu
 async function fetchCryptoPrices(): Promise<Record<string, { price: number; change24h: number }>> {
   // Try Kraken first (no rate limits, US-friendly)
   const krakenData = await fetchCryptoPricesFromKraken();
-  if (Object.keys(krakenData).length > 0) {
+
+  const requiredSymbols = Object.keys(COINGECKO_IDS);
+  const missingFromKraken = requiredSymbols.filter(
+    (s) => !krakenData[s] || krakenData[s].price <= 0,
+  );
+
+  // If Kraken returned full coverage, use it.
+  if (Object.keys(krakenData).length > 0 && missingFromKraken.length === 0) {
     geckoCache = { data: krakenData, timestamp: Date.now() };
     return krakenData;
   }
-  
-  // Fall back to CoinGecko if Binance fails
+
+  // If Kraken returned partial coverage (e.g. missing HYPE), fill missing symbols from CoinGecko.
+  if (Object.keys(krakenData).length > 0 && missingFromKraken.length > 0) {
+    try {
+      const ids = missingFromKraken
+        .map((s) => COINGECKO_IDS[s])
+        .filter(Boolean)
+        .join(",");
+      const url = `${COINGECKO_BASE_URL}/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+      const response = await fetch(url, { cache: "no-store" });
+
+      if (response.ok) {
+        const data = await response.json();
+        const filled: Record<string, { price: number; change24h: number }> = {
+          ...krakenData,
+        };
+
+        for (const symbol of missingFromKraken) {
+          const geckoId = COINGECKO_IDS[symbol];
+          const coinData = geckoId ? data[geckoId] : undefined;
+          if (coinData) {
+            filled[symbol] = {
+              price: coinData.usd || 0,
+              change24h: coinData.usd_24h_change || 0,
+            };
+          }
+        }
+
+        geckoCache = { data: filled, timestamp: Date.now() };
+        return filled;
+      }
+    } catch (error) {
+      console.error("CoinGecko fill fetch error:", error);
+    }
+
+    // If fill fails, still return Kraken data rather than empty.
+    geckoCache = { data: krakenData, timestamp: Date.now() };
+    return krakenData;
+  }
+
+  // Fall back to CoinGecko if Kraken fails
   if (geckoCache && Date.now() - geckoCache.timestamp < GECKO_CACHE_TTL) {
     return geckoCache.data;
   }
