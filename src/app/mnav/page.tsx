@@ -508,7 +508,7 @@ export default function MNAVPage() {
             </button>
             {showTreasuryHPS && (
               <div className="p-4 bg-white dark:bg-gray-950">
-                <HPSComparison companies={d1AllCompanies} prices={prices} type="treasuries" />
+                <HPSComparison companies={d1AllCompanies} type="treasuries" />
               </div>
             )}
           </div>
@@ -534,7 +534,7 @@ export default function MNAVPage() {
               </button>
               {showMinerHPS && (
                 <div className="p-4 bg-white dark:bg-gray-950">
-                  <HPSComparison companies={d1AllCompanies} prices={prices} type="miners" />
+                  <HPSComparison companies={d1AllCompanies} type="miners" />
                 </div>
               )}
             </div>
