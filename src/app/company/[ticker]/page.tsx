@@ -1004,14 +1004,9 @@ export default function CompanyPage() {
                       anchor="holdings"
                       filingType="8-K"
                     />
-                  ) : holdingsSourceUrlResolved && displayCompany.holdingsSource === "sec-filing" && (
-                    <FilingCite 
-                      ticker={displayCompany.ticker} 
-                      date={displayCompany.holdingsLastUpdated || ""} 
-                      highlight={`${displayCompany.holdings.toLocaleString()}`}
-                      filingType="8-K"
-                    />
-                  )}
+                  ) : holdingsSourceUrlResolved ? (
+                    <SourceLink url={holdingsSourceUrlResolved} label={displayCompany.holdingsSource} />
+                  ) : null}
                 </p>
                 <p className="text-xs text-gray-400">
                   {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
