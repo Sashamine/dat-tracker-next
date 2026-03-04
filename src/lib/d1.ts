@@ -7,17 +7,17 @@
  * This helper talks to D1 via the HTTP API.
  */
 
-export type D1QueryResult<T = any> = {
+export type D1QueryResult<T = unknown> = {
   results: T[];
   success: boolean;
-  meta?: Record<string, any>;
+  meta?: Record<string, unknown>;
 };
 
-export type D1Response<T = any> = {
+export type D1Response<T = unknown> = {
   result: D1QueryResult<T>[];
   success: boolean;
-  errors?: any[];
-  messages?: any[];
+  errors?: unknown[];
+  messages?: unknown[];
 };
 
 export class D1Client {
@@ -43,7 +43,7 @@ export class D1Client {
     return `https://api.cloudflare.com/client/v4/accounts/${this.accountId}/d1/database/${this.databaseId}/query`;
   }
 
-  async query<T = any>(sql: string, params?: any[]): Promise<D1QueryResult<T>> {
+  async query<T = unknown>(sql: string, params?: unknown[]): Promise<D1QueryResult<T>> {
     // Cloudflare D1 "query" endpoint expects an object payload, not a raw array.
     // Ref: errors like "Expected object, received array".
     const body = { sql, params: params || [] };
