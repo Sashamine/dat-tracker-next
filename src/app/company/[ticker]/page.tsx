@@ -445,7 +445,19 @@ export default function CompanyPage() {
                         .map((w, i) => (
                           <li key={i}>
                             {w.filingUrl ? (
-                              <a href={w.filingUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                              <a
+                                href={w.filingUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() =>
+                                  trackCitationSourceClick({
+                                    href: w.filingUrl || "",
+                                    ticker: displayCompany.ticker,
+                                    metric: "filings",
+                                  })
+                                }
+                                className="underline"
+                              >
                                 {w.message}
                               </a>
                             ) : (
@@ -477,6 +489,12 @@ export default function CompanyPage() {
                   href={displayCompany.website}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: displayCompany.website || "",
+                      ticker: displayCompany.ticker,
+                    })
+                  }
                   className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <span>Website</span>
@@ -488,6 +506,12 @@ export default function CompanyPage() {
                   href={displayCompany.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: displayCompany.twitter || "",
+                      ticker: displayCompany.ticker,
+                    })
+                  }
                   className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <span>Twitter</span>
@@ -499,6 +523,12 @@ export default function CompanyPage() {
                   href={`https://solscan.io/token/${displayCompany.tokenizedAddress}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: `https://solscan.io/token/${displayCompany.tokenizedAddress}`,
+                      ticker: displayCompany.ticker,
+                    })
+                  }
                   className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors"
                 >
                   <span>Tokenized ({displayCompany.tokenizedChain})</span>
@@ -1422,6 +1452,12 @@ export default function CompanyPage() {
                   href={displayCompany.website}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: displayCompany.website || "",
+                      ticker: displayCompany.ticker,
+                    })
+                  }
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1435,6 +1471,12 @@ export default function CompanyPage() {
                   href={`https://twitter.com/${displayCompany.twitter.replace('@', '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCitationSourceClick({
+                      href: displayCompany.twitter ? `https://twitter.com/${displayCompany.twitter.replace('@', '')}` : "",
+                      ticker: displayCompany.ticker,
+                    })
+                  }
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
