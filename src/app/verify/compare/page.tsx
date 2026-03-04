@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MobileHeader } from "@/components/mobile-header";
 import { ExternalLink, RefreshCw, CheckCircle, AlertTriangle, XCircle, Loader2 } from "lucide-react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface Company {
   ticker: string;
@@ -234,6 +235,13 @@ function CompanyRow({
                                 href={f.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() =>
+                                  trackCitationSourceClick({
+                                    href: f.url,
+                                    ticker: state.result?.ticker || company.ticker,
+                                    metric: field,
+                                  })
+                                }
                                 className="text-blue-600 hover:underline flex items-center gap-1"
                               >
                                 {f.source}

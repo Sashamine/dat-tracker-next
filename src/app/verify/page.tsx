@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface VerificationResult {
   ticker: string;
@@ -161,6 +162,13 @@ export default function VerifyPage() {
                             href={`${r.path}#dat-btc-holdings`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() =>
+                              trackCitationSourceClick({
+                                href: `${r.path}#dat-btc-holdings`,
+                                ticker: r.ticker,
+                                metric: "holdings_native",
+                              })
+                            }
                             className="text-blue-600 hover:underline text-xs"
                           >
                             View →
