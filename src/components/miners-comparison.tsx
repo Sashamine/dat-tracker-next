@@ -11,7 +11,7 @@ type CompanyType = "miners" | "treasuries" | "all";
 
 interface HPSComparisonProps {
   companies: Company[];
-  prices?: any;
+  prices?: unknown;
   compact?: boolean;
   type?: CompanyType;  // Filter by company type
 }
@@ -88,7 +88,7 @@ function calculateCompanyStats(company: Company): CompanyStats | null {
   };
 }
 
-export function HPSComparison({ companies, prices, compact, type = "all" }: HPSComparisonProps) {
+export function HPSComparison({ companies, compact, type = "all" }: HPSComparisonProps) {
   const stats = useMemo(() => {
     // Filter by type
     let filtered = companies;
