@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface DataPoint {
   ticker: string;
@@ -303,6 +304,13 @@ export default function CitationVerificationPage() {
                         href={selectedPoint.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() =>
+                          trackCitationSourceClick({
+                            href: selectedPoint.sourceUrl || "",
+                            ticker: selectedPoint.ticker,
+                            metric: "holdings_native",
+                          })
+                        }
                         className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 rounded text-sm"
                       >
                         Open {getSourceLabel(selectedPoint)} ↗
@@ -375,6 +383,13 @@ export default function CitationVerificationPage() {
                             href={selectedPoint.sourceUrl || "#"}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() =>
+                              trackCitationSourceClick({
+                                href: selectedPoint.sourceUrl || "",
+                                ticker: selectedPoint.ticker,
+                                metric: "holdings_native",
+                              })
+                            }
                             className="block px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg text-lg"
                           >
                             Open {getSourceLabel(selectedPoint)} Filing ↗
