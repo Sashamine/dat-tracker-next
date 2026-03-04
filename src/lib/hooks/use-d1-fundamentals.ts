@@ -1,13 +1,18 @@
 import useSWR from 'swr';
 
 type D1MetricMap = Record<string, Record<string, number>>; // ticker -> metric -> value
+type D1MetricSourceMap = Record<string, Record<string, string | null>>; // ticker -> metric -> source_url
 
 type D1FundamentalsResult = {
   data: D1MetricMap | null;
+  sources: D1MetricSourceMap | null;
   isLoading: boolean;
 };
 
-const fetcher = async (url: string, tickers: string[]): Promise<D1MetricMap> => {
+const fetcher = async (
+  url: string,
+  tickers: string[]
+): Promise<{ values: D1MetricMap; sources: D1MetricSourceMap }> => {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -19,17 +24,21 @@ const fetcher = async (url: string, tickers: string[]): Promise<D1MetricMap> => 
 
   // Transform: results[ticker] is an array of { metric, value } rows
   // Flatten into { ticker: { metric: value } }
-  const out: D1MetricMap = {};
+  const values: D1MetricMap = {};
+  const sources: D1MetricSourceMap = {};
   for (const [ticker, rows] of Object.entries(json.results)) {
     const map: Record<string, number> = {};
+    const sourceMap: Record<string, string | null> = {};
     if (Array.isArray(rows)) {
-      for (const row of rows as { metric: string; value: number }[]) {
+      for (const row of rows as { metric: string; value: number; artifact?: { source_url: string | null } }[]) {
         map[row.metric] = row.value;
+        sourceMap[row.metric] = row.artifact?.source_url ?? null;
       }
     }
-    out[ticker] = map;
+    values[ticker] = map;
+    sources[ticker] = sourceMap;
   }
-  return out;
+  return { values, sources };
 };
 
 /**
@@ -42,7 +51,7 @@ export function useD1Fundamentals(tickers: string[]): D1FundamentalsResult {
     ? `d1-fundamentals:${[...tickers].sort().join(',')}`
     : null;
 
-  const { data, isLoading } = useSWR<D1MetricMap>(
+  const { data, isLoading } = useSWR<{ values: D1MetricMap; sources: D1MetricSourceMap }>(
     sortedKey,
     () => fetcher('/api/d1/latest-metrics/batch', tickers),
     {
@@ -54,5 +63,5 @@ export function useD1Fundamentals(tickers: string[]): D1FundamentalsResult {
     },
   );
 
-  return { data: data ?? null, isLoading };
+  return { data: data?.values ?? null, sources: data?.sources ?? null, isLoading };
 }

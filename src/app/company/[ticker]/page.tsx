@@ -144,8 +144,11 @@ export default function CompanyPage() {
 
   // D1-first overlay for allCompanies — same pattern as overview pages
   const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
-  const { data: d1BatchData } = useD1Fundamentals(allTickers);
-  const allCompanies = useMemo(() => applyD1Overlay(enrichedAllCompanies, d1BatchData), [enrichedAllCompanies, d1BatchData]);
+  const { data: d1BatchData, sources: d1BatchSources } = useD1Fundamentals(allTickers);
+  const allCompanies = useMemo(
+    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources),
+    [enrichedAllCompanies, d1BatchData, d1BatchSources]
+  );
 
   // Calculate sidebar stats
   const { assetStats, totalValue, mnavStats } = useMemo(() => {

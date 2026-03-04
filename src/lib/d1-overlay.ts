@@ -4,6 +4,7 @@ import { Company, type HoldingsBasis } from '@/lib/types';
 export type { HoldingsBasis };
 
 export type D1MetricMap = Record<string, Record<string, number>>; // ticker -> metric -> value
+export type D1MetricSourceMap = Record<string, Record<string, string | null>>; // ticker -> metric -> source_url
 
 /**
  * Overlays D1 latest-metrics values onto enriched Company objects.
@@ -22,11 +23,16 @@ export type D1MetricMap = Record<string, Record<string, number>>; // ticker -> m
  *
  * Returns companies unchanged if d1 is null (graceful fallback).
  */
-export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Company[] {
+export function applyD1Overlay(
+  companies: Company[],
+  d1: D1MetricMap | null,
+  sources?: D1MetricSourceMap | null
+): Company[] {
   if (!d1) return companies;
 
   return companies.map(c => {
     const metrics = d1[c.ticker];
+    const sourceMap = sources?.[c.ticker];
     if (!metrics) return c;
 
     // Track which fields were sourced from D1 (dev-mode debug aid)
@@ -50,9 +56,19 @@ export function applyD1Overlay(companies: Company[], d1: D1MetricMap | null): Co
       cashReserves:    metrics.cash_usd             ?? c.cashReserves,
       preferredEquity: metrics.preferred_equity_usd ?? c.preferredEquity,
       sharesForMnav:   metrics.basic_shares         ?? c.sharesForMnav,
+      // Prefer D1 receipt URLs where the metric was sourced from D1.
+      sharesSourceUrl:   metrics.basic_shares != null ? (sourceMap?.basic_shares ?? c.sharesSourceUrl) : c.sharesSourceUrl,
+      debtSourceUrl:     metrics.debt_usd != null ? (sourceMap?.debt_usd ?? c.debtSourceUrl) : c.debtSourceUrl,
+      cashSourceUrl:     metrics.cash_usd != null ? (sourceMap?.cash_usd ?? c.cashSourceUrl) : c.cashSourceUrl,
+      preferredSourceUrl: metrics.preferred_equity_usd != null
+        ? (sourceMap?.preferred_equity_usd ?? c.preferredSourceUrl)
+        : c.preferredSourceUrl,
       // Only override holdings if D1 has a positive holdings_native value.
       // bitcoin_holdings_usd is intentionally not used here — see precedence note above.
       ...(hasNative ? { holdings: metrics.holdings_native } : {}),
+      ...(hasNative
+        ? { holdingsSourceUrl: sourceMap?.holdings_native ?? c.holdingsSourceUrl }
+        : {}),
       // Overlay metadata (typed on Company interface)
       _d1Fields: d1Fields.length > 0 ? d1Fields : undefined,
       holdingsBasis,

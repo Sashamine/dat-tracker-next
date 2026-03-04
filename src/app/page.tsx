@@ -78,8 +78,8 @@ function HomeContent() {
 
   // D1-first overlay: fetch latest balance sheet metrics from D1 and overlay onto static data
   const tickers = useMemo(() => companies.map(c => c.ticker), [companies]);
-  const { data: d1Data } = useD1Fundamentals(tickers);
-  const d1Companies = useMemo(() => applyD1Overlay(companies, d1Data), [companies, d1Data]);
+  const { data: d1Data, sources: d1Sources } = useD1Fundamentals(tickers);
+  const d1Companies = useMemo(() => applyD1Overlay(companies, d1Data, d1Sources), [companies, d1Data, d1Sources]);
 
   const assetStats = getAssetStats(d1Companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
