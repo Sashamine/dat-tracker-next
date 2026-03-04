@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { getHoldingsHistory, type HoldingsSnapshot } from "@/lib/data/holdings-history";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface HoldingsHistoryTableProps {
   ticker: string;
@@ -124,6 +125,13 @@ export function HoldingsHistoryTable({ ticker, asset, className }: HoldingsHisto
                           href={sourceLink.href}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() =>
+                            trackCitationSourceClick({
+                              href: sourceLink.href,
+                              ticker,
+                              metric: "holdings_native",
+                            })
+                          }
                           className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
                         >
                           {sourceLink.label}
@@ -134,6 +142,13 @@ export function HoldingsHistoryTable({ ticker, asset, className }: HoldingsHisto
                       ) : (
                         <Link
                           href={sourceLink.href}
+                          onClick={() =>
+                            trackCitationSourceClick({
+                              href: sourceLink.href,
+                              ticker,
+                              metric: "holdings_native",
+                            })
+                          }
                           className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors"
                         >
                           {sourceLink.label}
