@@ -6,6 +6,7 @@ import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { COMPANY_SOURCES, CompanyDataSources } from "@/lib/data/company-sources";
 import { MobileHeader } from "@/components/mobile-header";
 import { ExternalLink } from "lucide-react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 // Source type labels and colors
 const SOURCE_TYPE_INFO: Record<string, { label: string; color: string }> = {
@@ -18,12 +19,13 @@ const SOURCE_TYPE_INFO: Record<string, { label: string; color: string }> = {
   "manual": { label: "Manual", color: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300" },
 };
 
-function SourceLink({ url, label }: { url: string; label: string }) {
+function SourceLink({ url, label, ticker }: { url: string; label: string; ticker?: string }) {
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackCitationSourceClick({ href: url, ticker })}
       className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
     >
       {label}
@@ -53,13 +55,13 @@ function CompanySourceCard({ ticker, sources }: { ticker: string; sources: Compa
           </h4>
           <div className="flex flex-wrap gap-2">
             {sources.officialDashboard && (
-              <SourceLink url={sources.officialDashboard} label="Dashboard" />
+              <SourceLink url={sources.officialDashboard} label="Dashboard" ticker={ticker} />
             )}
             {sources.investorRelations && (
-              <SourceLink url={sources.investorRelations} label="Investor Relations" />
+              <SourceLink url={sources.investorRelations} label="Investor Relations" ticker={ticker} />
             )}
             {sources.secFilingsUrl && (
-              <SourceLink url={sources.secFilingsUrl} label="SEC Filings" />
+              <SourceLink url={sources.secFilingsUrl} label="SEC Filings" ticker={ticker} />
             )}
             {!sources.officialDashboard && !sources.investorRelations && !sources.secFilingsUrl && (
               <span className="text-sm text-gray-400">None documented</span>
@@ -75,13 +77,14 @@ function CompanySourceCard({ ticker, sources }: { ticker: string; sources: Compa
             </h4>
             <div className="flex flex-wrap gap-2">
               {sources.blockworksUrl && (
-                <SourceLink url={sources.blockworksUrl} label="Blockworks" />
+                <SourceLink url={sources.blockworksUrl} label="Blockworks" ticker={ticker} />
               )}
               {sources.trackers?.map((tracker) => (
                 <SourceLink
                   key={tracker}
                   url={`https://${tracker}`}
                   label={tracker}
+                  ticker={ticker}
                 />
               ))}
             </div>
