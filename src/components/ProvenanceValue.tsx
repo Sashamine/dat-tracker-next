@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { xbrlViewerUrl, filingViewerUrl, secEdgarUrl } from "@/lib/data/types/provenance";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface ProvenanceValueProps {
   data: ProvenanceValue<number>;
@@ -236,6 +237,10 @@ export default function ProvenanceValueDisplay({ data, format = "number", classN
                     href={secUrl || internalUrl || undefined}
                     target={secUrl ? "_blank" : undefined}
                     rel={secUrl ? "noopener noreferrer" : undefined}
+                    onClick={() => {
+                      const href = secUrl || internalUrl;
+                      if (href) trackCitationSourceClick({ href });
+                    }}
                     className="text-blue-500 hover:text-blue-400"
                   >
                     {secUrl ? "SEC Filing ↗" : "View Filing →"}

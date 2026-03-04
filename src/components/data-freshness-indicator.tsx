@@ -1,6 +1,7 @@
 "use client";
 
 import { Company } from "@/lib/types";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface DataFreshnessIndicatorProps {
   company: Company;
@@ -82,6 +83,13 @@ export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps)
               href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${company.secCik}&type=8-K`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({
+                  href: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${company.secCik}&type=8-K`,
+                  ticker: company.ticker,
+                  metric: "holdings_native",
+                })
+              }
               className="text-blue-600 dark:text-blue-400 hover:underline font-mono text-xs"
             >
               {accession.replace(/^0+/, '')}
@@ -114,6 +122,12 @@ export function DataFreshnessIndicator({ company }: DataFreshnessIndicatorProps)
               href={`https://github.com/reservelabs/dat-tracker-next/blob/master/src/lib/data/${company.provenanceFile}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({
+                  href: `https://github.com/reservelabs/dat-tracker-next/blob/master/src/lib/data/${company.provenanceFile}`,
+                  ticker: company.ticker,
+                })
+              }
               className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
             >
               <span>📁</span>
