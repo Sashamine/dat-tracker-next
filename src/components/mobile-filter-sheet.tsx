@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useFilters, ASSETS, COMPANY_TYPES } from "@/lib/hooks/use-filters";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
