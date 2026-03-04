@@ -47,7 +47,12 @@ import tbhData from './tbh.json';
 import btogData from './btog.json';
 import avxData from './avx.json';
 
-export const SEC_FILINGS: Record<string, any> = {
+type SecFilingsCompany = {
+  cik?: string | number;
+  [key: string]: unknown;
+};
+
+export const SEC_FILINGS: Record<string, SecFilingsCompany> = {
   'MSTR': mstrData,
   'MARA': maraData,
   'RIOT': riotData,
