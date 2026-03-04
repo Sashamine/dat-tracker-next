@@ -28,6 +28,10 @@
     {
       "path": "/api/cron/xbrl-to-d1?limit=50&offset=50",
       "schedule": "25 7 * * *"
+    },
+    {
+      "path": "/api/cron/adoption-events-retention",
+      "schedule": "50 7 * * *"
     }
   ]
 }
