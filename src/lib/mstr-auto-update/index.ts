@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * MSTR Auto-Update Module
  * 
@@ -47,6 +46,28 @@ interface SECFiling {
   primaryDocument: string;
 }
 
+interface SECSubmissionsResponse {
+  filings?: {
+    recent?: {
+      form: string[];
+      accessionNumber: string[];
+      filingDate: string[];
+      primaryDocument: string[];
+    };
+  };
+}
+
+interface SECIndexItem {
+  name: string;
+  size?: number;
+}
+
+interface SECIndexResponse {
+  directory?: {
+    item?: SECIndexItem[];
+  };
+}
+
 // ============================================================================
 // SEC EDGAR API
 // ============================================================================
@@ -62,9 +83,9 @@ export async function fetchRecentFilings(formType = '8-K', count = 20): Promise<
     throw new Error(`SEC API error: ${res.status}`);
   }
   
-  const data = await res.json();
+  const data: SECSubmissionsResponse = await res.json();
   const filings: SECFiling[] = [];
-  
+
   const recent = data.filings?.recent;
   if (!recent) throw new Error('No recent filings in SEC response');
   
@@ -95,13 +116,13 @@ export async function fetch8KContent(accession: string): Promise<{ html: string;
     throw new Error(`Could not fetch filing index: ${indexRes.status}`);
   }
   
-  const index = await indexRes.json();
-  
+  const index: SECIndexResponse = await indexRes.json();
+
   // Find main 8-K document (largest .htm that's not an exhibit)
   const docs = index.directory?.item || [];
   const mainDoc = docs
-    .filter((d: any) => (d.name.endsWith('.htm') || d.name.endsWith('.html')) && !d.name.includes('ex'))
-    .sort((a: any, b: any) => (b.size || 0) - (a.size || 0))[0];
+    .filter((d) => (d.name.endsWith('.htm') || d.name.endsWith('.html')) && !d.name.includes('ex'))
+    .sort((a, b) => (b.size || 0) - (a.size || 0))[0];
   
   if (!mainDoc) {
     throw new Error('Could not find main 8-K document');
@@ -501,7 +522,7 @@ export async function runMSTRAutoUpdate(options: MSTRUpdateOptions): Promise<MST
             date: eventDate,
             filingDate: filing.filingDate,
             accession: filing.accession,
-            holdings,
+            holdings: holdings ?? undefined,
             btcAcquired: purchase?.btcAcquired,
             totalCost: purchase?.totalCost,
             avgPrice: purchase?.avgPrice,
