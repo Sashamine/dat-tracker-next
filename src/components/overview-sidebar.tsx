@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
 import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
@@ -27,7 +28,10 @@ interface OverviewSidebarProps {
   totalCompanies: number;
   totalValue: number;
   companies: Company[];
-  prices: any;
+  prices?: {
+    crypto: Record<string, { price: number }>;
+    stocks: Record<string, { price: number; marketCap: number }>;
+  } | null;
   className?: string;
 }
 
@@ -120,9 +124,11 @@ export function OverviewSidebar({
                   title={`${asset}: ${stats?.count || 0} companies`}
                 >
                   {CRYPTO_ICONS[asset] && (
-                    <img
+                    <Image
                       src={CRYPTO_ICONS[asset]}
                       alt={asset}
+                      width={24}
+                      height={24}
                       className="w-6 h-6 rounded-full group-hover:scale-110 transition-transform"
                     />
                   )}
@@ -153,7 +159,7 @@ export function OverviewSidebar({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          {showChart && (
+          {showChart && prices && (
             <div
               className="bg-white dark:bg-gray-800 rounded-lg p-2 -mx-2 cursor-pointer hover:ring-2 hover:ring-indigo-500/50 transition-all"
               onClick={() => setShowModal(true)}
@@ -166,7 +172,7 @@ export function OverviewSidebar({
       </div>
 
       {/* Full Chart Modal */}
-      {showModal && (
+      {showModal && prices && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onClick={() => setShowModal(false)}
