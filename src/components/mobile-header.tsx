@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
 import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
@@ -13,12 +14,17 @@ interface MNAVStats {
   count: number;
 }
 
+interface PricesData {
+  crypto: Record<string, { price: number }>;
+  stocks: Record<string, { price: number; marketCap: number }>;
+}
+
 interface MobileHeaderProps {
   title?: string;
   showBack?: boolean;
   className?: string;
   companies?: Company[];
-  prices?: any;
+  prices?: PricesData;
   mnavStats?: MNAVStats;
 }
 
@@ -139,7 +145,7 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                       className="flex flex-col items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
                       {CRYPTO_ICONS[asset] && (
-                        <img src={CRYPTO_ICONS[asset]} alt={asset} className="w-8 h-8 rounded-full" />
+                        <Image src={CRYPTO_ICONS[asset]} alt={asset} width={32} height={32} className="w-8 h-8 rounded-full" />
                       )}
                       <span className="text-xs text-gray-600 dark:text-gray-400 mt-1">{asset}</span>
                     </Link>
