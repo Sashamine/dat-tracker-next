@@ -164,6 +164,11 @@ export async function GET(request: NextRequest) {
       'symbol',
     ]);
     const metricExpr = fieldExpr(columns, ['metric', 'metric_name'], payloadCol, ['metric', 'metric_name']);
+    const clientExpr = fieldExpr(columns, ['client', 'caller', 'source'], payloadCol, [
+      'client',
+      'caller',
+      'source',
+    ]);
 
     if (!sessionExpr || !tsExpr) {
       return NextResponse.json(
@@ -182,6 +187,7 @@ export async function GET(request: NextRequest) {
           CAST(${sessionExpr} AS TEXT) AS session_id,
           datetime(CAST(${tsExpr} AS TEXT)) AS event_ts,
           LOWER(COALESCE(CAST(${eventExpr || "''"} AS TEXT), '')) AS event_name,
+          LOWER(COALESCE(NULLIF(TRIM(CAST(${clientExpr || "''"} AS TEXT)), ''), 'unknown')) AS client_type,
           NULLIF(TRIM(CAST(${routeExpr || 'NULL'} AS TEXT)), '') AS route,
           UPPER(NULLIF(TRIM(CAST(${tickerExpr || 'NULL'} AS TEXT)), '')) AS ticker,
           LOWER(NULLIF(TRIM(CAST(${metricExpr || 'NULL'} AS TEXT)), '')) AS metric
@@ -245,6 +251,24 @@ export async function GET(request: NextRequest) {
           LIMIT ?;
         `,
         params: [currentWindowParam, topN],
+      },
+      {
+        id: 'api_calls_by_client',
+        sql: `
+          ${normalizedSql}
+          SELECT
+            CASE
+              WHEN client_type IN ('web', 'agent', 'cron', 'unknown') THEN client_type
+              ELSE 'unknown'
+            END AS client,
+            COUNT(1) AS count
+          FROM scoped
+          WHERE event_name IN ('api_call', 'api_request', 'api_hit')
+             OR route LIKE '/api/%'
+          GROUP BY client
+          ORDER BY count DESC, client ASC;
+        `,
+        params: [currentWindowParam],
       },
       {
         id: 'most_viewed_companies',
@@ -324,6 +348,7 @@ export async function GET(request: NextRequest) {
     const [
       usersRes,
       apiCallsRes,
+      apiCallsByClientRes,
       viewedRes,
       metricsRes,
       ctrRes,
@@ -332,6 +357,9 @@ export async function GET(request: NextRequest) {
 
     const users = usersRes.results[0] || { unique_users: 0, returning_users: 0 };
     const ctr = ctrRes.results[0] || { citation_opens: 0, source_clicks: 0, ctr: 0 };
+    const clientCounts = new Map(
+      apiCallsByClientRes.results.map(r => [String(r.client || 'unknown'), Number(r.count || 0)])
+    );
 
     return NextResponse.json({
       success: true,
@@ -347,6 +375,10 @@ export async function GET(request: NextRequest) {
         api_calls_by_route: apiCallsRes.results.map(r => ({
           route: String(r.route),
           count: Number(r.count || 0),
+        })),
+        api_calls_by_client: ['web', 'agent', 'cron', 'unknown'].map((client) => ({
+          client,
+          count: clientCounts.get(client) || 0,
         })),
         most_viewed_companies: viewedRes.results.map(r => ({
           ticker: String(r.ticker),

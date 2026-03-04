@@ -74,6 +74,12 @@ cat > "${OUT_FILE}" <<SNAPSHOT
 |-------|-------|
 $(jq -r '.metrics.api_calls_by_route[]? | "| \(.route) | \(.count) |"' "${TMP}")
 
+## API Calls by Caller Type
+
+| Caller | Calls |
+|--------|-------|
+$(jq -r '.metrics.api_calls_by_client[]? | "| \(.client) | \(.count) |"' "${TMP}")
+
 ## Most Viewed Companies
 
 | Ticker | Views |

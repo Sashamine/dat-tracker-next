@@ -45,6 +45,10 @@ Generated (UTC): $(jq -r '.generated_at // now | tostring' /tmp/adoption-signals
 
 $(jq -r '.metrics.api_calls_by_route[]? | "- \(.route): \(.count)"' /tmp/adoption-signals-weekly.json)
 
+## API Calls by Caller Type
+
+$(jq -r '.metrics.api_calls_by_client[]? | "- \(.client): \(.count)"' /tmp/adoption-signals-weekly.json)
+
 ## Most Viewed Companies
 
 $(jq -r '.metrics.most_viewed_companies[]? | "- \(.ticker): \(.count)"' /tmp/adoption-signals-weekly.json)
