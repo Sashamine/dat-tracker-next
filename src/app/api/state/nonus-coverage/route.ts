@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 import { allCompanies } from '@/lib/data/companies';
 import { COMPANY_SOURCES } from '@/lib/data/company-sources';
+import { logApiCallEvent } from '@/lib/events';
 
 const METRICS = ['cash_usd', 'debt_usd', 'basic_shares', 'bitcoin_holdings_usd'] as const;
 
@@ -14,6 +15,12 @@ function isLikelyNonUS(ticker: string, country?: string | null): boolean {
 }
 
 export async function GET(request: NextRequest) {
+  const t0 = Date.now();
+  const clientHeader = request.headers.get('x-client');
+  const client =
+    clientHeader === 'web' || clientHeader === 'agent' || clientHeader === 'cron' || clientHeader === 'unknown'
+      ? clientHeader
+      : undefined;
   const { searchParams } = new URL(request.url);
   const asset = (searchParams.get('asset') || 'BTC').trim().toUpperCase();
 
@@ -79,6 +86,14 @@ export async function GET(request: NextRequest) {
       },
     });
   }
+
+  logApiCallEvent({
+    route: '/api/state/nonus-coverage',
+    metric: asset,
+    status: 200,
+    latency_ms: Date.now() - t0,
+    client,
+  });
 
   return NextResponse.json({
     success: true,
