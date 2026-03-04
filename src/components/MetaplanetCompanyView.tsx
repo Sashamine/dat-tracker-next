@@ -4,6 +4,7 @@ import { METAPLANET_PROVENANCE } from "@/lib/data/provenance/metaplanet";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
@@ -174,11 +175,25 @@ export function MetaplanetCompanyView({ company, className = "" }: Props) {
         <div className="px-6 pb-6">
           <div className="flex items-center gap-3 mb-6">
             {company.website && (
-              <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+              <a
+                href={company.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCitationSourceClick({ href: company.website || "", ticker: "3350.T" })}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
                 Website
               </a>
             )}
-            <a href="https://metaplanet.jp/en/shareholders/disclosures" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+            <a
+              href="https://metaplanet.jp/en/shareholders/disclosures"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({ href: "https://metaplanet.jp/en/shareholders/disclosures", ticker: "3350.T" })
+              }
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+            >
               TDnet Filings
             </a>
           </div>

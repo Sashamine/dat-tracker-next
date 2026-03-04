@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface SECFiling {
   date: string;
@@ -53,6 +54,13 @@ export function SECFilingTimeline({ ticker, cik, filings, asset }: SECFilingTime
           href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}&type=8-K&count=40`}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackCitationSourceClick({
+              href: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}&type=8-K&count=40`,
+              ticker,
+              metric: "filings",
+            })
+          }
           className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
         >
           View all on EDGAR →
@@ -130,6 +138,13 @@ export function SECFilingTimeline({ ticker, cik, filings, asset }: SECFilingTime
                     href={filing.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCitationSourceClick({
+                        href: filing.url,
+                        ticker,
+                        metric: "filings",
+                      })
+                    }
                     className="text-xs text-blue-600 dark:text-blue-400 hover:underline mt-2 inline-block"
                   >
                     View filing →

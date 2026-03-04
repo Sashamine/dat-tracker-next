@@ -1,6 +1,7 @@
 "use client";
 
 import { Company } from "@/lib/types";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface CostBasisCardProps {
   company: Company;
@@ -95,6 +96,12 @@ export function CostBasisCard({ company, assetPrice }: CostBasisCardProps) {
               href={company.costBasisSourceUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({
+                  href: company.costBasisSourceUrl || "",
+                  ticker: company.ticker,
+                })
+              }
               className="text-blue-600 dark:text-blue-400 hover:underline"
             >
               📋 Source: {company.costBasisSource || "SEC Filing"}

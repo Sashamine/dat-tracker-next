@@ -12,6 +12,7 @@ import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
@@ -182,12 +183,34 @@ export function FWDICompanyView({ company, className = "" }: Props) {
           </summary>
           <div className="px-6 pb-6">
             <div className="flex items-center gap-3 mb-6">
-              <a href="https://www.forwardindustries.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">Website</a>
-              <a href="https://x.com/FWDI_io" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">Twitter</a>
+              <a
+                href="https://www.forwardindustries.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCitationSourceClick({ href: "https://www.forwardindustries.com", ticker: "FWDI" })}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
+                Website
+              </a>
+              <a
+                href="https://x.com/FWDI_io"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCitationSourceClick({ href: "https://x.com/FWDI_io", ticker: "FWDI" })}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
+                Twitter
+              </a>
               <a
                 href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${FWDI_CIK}&type=&dateb=&owner=include&count=40`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackCitationSourceClick({
+                    href: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${FWDI_CIK}&type=&dateb=&owner=include&count=40`,
+                    ticker: "FWDI",
+                  })
+                }
                 className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
               >
                 SEC Filings
@@ -200,19 +223,68 @@ export function FWDICompanyView({ company, className = "" }: Props) {
                 <li>• <strong>World&apos;s largest SOL treasury company</strong> — pivoted from design/accessories in Sep 2025</li>
                 <li>
                   • Galaxy Digital, Jump Crypto, Multicoin Capital backed —{" "}
-                  <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_8k.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">$1.65B PIPE closed Sep 11, 2025</a>
+                  <a
+                    href="https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_8k.htm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCitationSourceClick({
+                        href: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_8k.htm",
+                        ticker: "FWDI",
+                      })
+                    }
+                    className="underline hover:text-purple-800"
+                  >
+                    $1.65B PIPE closed Sep 11, 2025
+                  </a>
                 </li>
                 <li>
                   • <strong>{holdings.toLocaleString()} SOL-equivalent</strong> accumulated —{" "}
-                  <a href="https://forwardindustries.com/sol-treasury" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">SOL Treasury</a>
+                  <a
+                    href="https://forwardindustries.com/sol-treasury"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCitationSourceClick({ href: "https://forwardindustries.com/sol-treasury", ticker: "FWDI" })
+                    }
+                    className="underline hover:text-purple-800"
+                  >
+                    SOL Treasury
+                  </a>
                 </li>
                 <li>
                   • First equity tokenized on Solana via Superstate —{" "}
-                  <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">1,489,896 shares tokenized</a>
+                  <a
+                    href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCitationSourceClick({
+                        href: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+                        ticker: "FWDI",
+                      })
+                    }
+                    className="underline hover:text-purple-800"
+                  >
+                    1,489,896 shares tokenized
+                  </a>
                 </li>
                 <li>
                   • Active DeFi deployment: borrow-lend vaults, token exchanges, liquid staking —{" "}
-                  <a href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm" target="_blank" rel="noopener noreferrer" className="underline hover:text-purple-800">10-Q</a>
+                  <a
+                    href="https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCitationSourceClick({
+                        href: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+                        ticker: "FWDI",
+                      })
+                    }
+                    className="underline hover:text-purple-800"
+                  >
+                    10-Q
+                  </a>
                 </li>
                 <li>• Design segment ~$4M/qtr revenue, still profitable — legacy business</li>
               </ul>

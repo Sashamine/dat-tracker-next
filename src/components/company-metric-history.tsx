@@ -3,6 +3,7 @@
 import React from 'react';
 import { formatLargeNumber } from '@/lib/calculations';
 import type { DatapointRow } from '@/lib/hooks/use-company-metric-history';
+import { trackCitationSourceClick } from '@/lib/client-events';
 
 function labelForMetric(metric: string): string {
   switch (metric) {
@@ -28,8 +29,8 @@ function formatValue(row: DatapointRow): string {
   return `${formatLargeNumber(row.value)} ${row.unit}`;
 }
 
-function HistoryRow(props: { metric: string; row: DatapointRow }) {
-  const { metric, row } = props;
+function HistoryRow(props: { ticker?: string; metric: string; row: DatapointRow }) {
+  const { ticker, metric, row } = props;
   const artifact = row.artifact;
 
   const href = artifact?.source_url || null;
@@ -53,6 +54,7 @@ function HistoryRow(props: { metric: string; row: DatapointRow }) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackCitationSourceClick({ href, ticker: ticker || row.entity_id, metric })}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             {label}
@@ -104,7 +106,7 @@ export function CompanyMetricHistorySection(props: {
         </thead>
         <tbody>
           {rows.map(({ metric, row }, idx) => (
-            <HistoryRow key={`${metric}-${row.datapoint_id}-${idx}`} metric={metric} row={row} />
+            <HistoryRow key={`${metric}-${row.datapoint_id}-${idx}`} ticker={row.entity_id} metric={metric} row={row} />
           ))}
         </tbody>
       </table>

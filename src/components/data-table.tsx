@@ -23,6 +23,7 @@ import { MNAVTooltip } from "@/components/mnav-tooltip";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -380,7 +381,16 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                       {company.dataWarnings.map((w, i) => (
                         <p key={i} className="text-sm">
                           {w.filingUrl ? (
-                            <a href={w.filingUrl} target="_blank" rel="noopener noreferrer" className="underline" onClick={(e) => e.stopPropagation()}>
+                            <a
+                              href={w.filingUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                trackCitationSourceClick({ href: w.filingUrl || "", ticker: company.ticker, metric: "filings" });
+                              }}
+                            >
                               {w.message}
                             </a>
                           ) : w.message}
@@ -412,7 +422,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="underline"
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  trackCitationSourceClick({ href: w.filingUrl || "", ticker: company.ticker, metric: "filings" });
+                                }}
                               >
                                 {w.message}
                               </a>
@@ -688,7 +701,16 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                                 {company.dataWarnings.map((w, i) => (
                                   <p key={i} className="text-sm">
                                     {w.filingUrl ? (
-                                      <a href={w.filingUrl} target="_blank" rel="noopener noreferrer" className="underline" onClick={(e) => e.stopPropagation()}>
+                                      <a
+                                        href={w.filingUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="underline"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          trackCitationSourceClick({ href: w.filingUrl || "", ticker: company.ticker, metric: "filings" });
+                                        }}
+                                      >
                                         {w.message}
                                       </a>
                                     ) : w.message}

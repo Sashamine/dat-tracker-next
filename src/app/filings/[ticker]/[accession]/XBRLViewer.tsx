@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface XBRLFact {
   fact: string;
@@ -56,7 +57,7 @@ const PRIORITY_FACTS = [
   "Liabilities",
 ];
 
-export default function XBRLViewer({ cik, accession, highlightFact, highlightPeriod }: XBRLViewerProps) {
+export default function XBRLViewer({ ticker, cik, accession, highlightFact, highlightPeriod }: XBRLViewerProps) {
   const [facts, setFacts] = useState<XBRLFact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -119,6 +120,7 @@ export default function XBRLViewer({ cik, accession, highlightFact, highlightPer
     if (bIdx >= 0) return 1;
     return a.fact.localeCompare(b.fact);
   });
+  const secViewerUrl = `https://www.sec.gov/cgi-bin/viewer?action=view&cik=${cik}&accession_number=${accession.replace(/-/g, "")}`;
 
   // Format value for display
   function formatValue(value: number, unit: string): string {
@@ -154,9 +156,10 @@ export default function XBRLViewer({ cik, accession, highlightFact, highlightPer
       <div className="p-8 text-center">
         <p className="text-red-600 dark:text-red-400 mb-2">⚠️ {error}</p>
         <a
-          href={`https://www.sec.gov/cgi-bin/viewer?action=view&cik=${cik}&accession_number=${accession.replace(/-/g, "")}`}
+          href={secViewerUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackCitationSourceClick({ href: secViewerUrl, ticker, metric: "filings" })}
           className="text-blue-600 hover:underline"
         >
           View on SEC.gov →
@@ -286,9 +289,10 @@ export default function XBRLViewer({ cik, accession, highlightFact, highlightPer
       {/* SEC link */}
       <div className="text-center text-sm text-gray-500">
         <a
-          href={`https://www.sec.gov/cgi-bin/viewer?action=view&cik=${cik}&accession_number=${accession.replace(/-/g, "")}`}
+          href={secViewerUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackCitationSourceClick({ href: secViewerUrl, ticker, metric: "filings" })}
           className="text-blue-600 hover:underline"
         >
           View original on SEC.gov →

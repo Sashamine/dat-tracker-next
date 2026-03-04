@@ -4,6 +4,7 @@ import { DCC_PROVENANCE } from "@/lib/data/provenance/dcc";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company, DataWarning } from "@/lib/types";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
@@ -144,10 +145,42 @@ export function DCCCompanyView({ company, className = "" }: Props) {
         </summary>
         <div className="px-6 pb-6">
           <div className="flex items-center gap-3 mb-6">
-            <a href={WEBSITE_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">Website</a>
-            <a href={TREASURY_DASHBOARD_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">Treasury Dashboard</a>
-            <a href={LISTCORP_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">Listcorp</a>
-            <a href={ASX_FILINGS_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">ASX</a>
+            <a
+              href={WEBSITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: WEBSITE_URL, ticker: "DCC.AX" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Website
+            </a>
+            <a
+              href={TREASURY_DASHBOARD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: TREASURY_DASHBOARD_URL, ticker: "DCC.AX" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Treasury Dashboard
+            </a>
+            <a
+              href={LISTCORP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: LISTCORP_URL, ticker: "DCC.AX" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Listcorp
+            </a>
+            <a
+              href={ASX_FILINGS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: ASX_FILINGS_URL, ticker: "DCC.AX" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              ASX
+            </a>
           </div>
         </div>
       </details>

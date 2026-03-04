@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { EarningsCalendarEntry } from "@/lib/types";
 import { ExternalLink } from "lucide-react";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 // Asset colors (matching data-table.tsx)
 const assetColors: Record<string, string> = {
@@ -120,7 +121,14 @@ export function EarningsCard({ entry, onClick }: EarningsCardProps) {
             href={entry.earningsCallUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackCitationSourceClick({
+                href: entry.earningsCallUrl || "",
+                ticker: entry.ticker,
+                metric: "earnings",
+              });
+            }}
             className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
             <ExternalLink className="h-3 w-3" />

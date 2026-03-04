@@ -14,6 +14,7 @@ import type {
   DocumentSource, 
   DerivedSource 
 } from "@/lib/data/types/provenance";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 interface ProvenanceMetricProps {
   label: string;
@@ -331,7 +332,10 @@ export function ProvenanceMetric({
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
-                                  onClick={() => setShowPopover(false)}
+                                  onClick={() => {
+                                    setShowPopover(false);
+                                    trackCitationSourceClick({ href: inputUrl, ticker });
+                                  }}
                                 >
                                   {input.source.type === "regulatory" && (input.source as DocumentSource).sourceName 
                                     ? `View on ${(input.source as DocumentSource).sourceName} ↗`
@@ -343,7 +347,10 @@ export function ProvenanceMetric({
                                 <Link
                                   href={inputUrl}
                                   className="text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block"
-                                  onClick={() => setShowPopover(false)}
+                                  onClick={() => {
+                                    setShowPopover(false);
+                                    trackCitationSourceClick({ href: inputUrl, ticker });
+                                  }}
                                 >
                                   {inputUrl.startsWith("#") ? "See below ↓" : "View Source →"}
                                 </Link>
@@ -374,7 +381,10 @@ export function ProvenanceMetric({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 hover:text-blue-400"
-                      onClick={() => setShowPopover(false)}
+                      onClick={() => {
+                        setShowPopover(false);
+                        trackCitationSourceClick({ href: viewerUrl, ticker });
+                      }}
                     >
                       {data.source.type === "regulatory" && (data.source as DocumentSource).sourceName 
                         ? `View on ${(data.source as DocumentSource).sourceName} ↗`
@@ -390,7 +400,10 @@ export function ProvenanceMetric({
                     <Link
                       href={viewerUrl}
                       className="text-blue-500 hover:text-blue-400"
-                      onClick={() => setShowPopover(false)}
+                      onClick={() => {
+                        setShowPopover(false);
+                        trackCitationSourceClick({ href: viewerUrl, ticker });
+                      }}
                     >
                       View Filing →
                     </Link>

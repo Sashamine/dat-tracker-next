@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import FilingViewer from "./FilingViewer";
 import XBRLViewer from "./XBRLViewer";
 import Link from "next/link";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 // Ticker to CIK mapping
 const TICKER_CIKS: Record<string, string> = {
@@ -154,6 +155,13 @@ export default function FilingViewerClient({ ticker, accession, searchQuery, anc
               href={secIndexUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({
+                  href: secIndexUrl,
+                  ticker: ticker.toUpperCase(),
+                  metric: "filings",
+                })
+              }
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
               Open SEC Filing ↗

@@ -4,6 +4,7 @@ import { DDC_PROVENANCE, DDC_CIK } from "@/lib/data/provenance/ddc";
 import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
 import type { Company, DataWarning } from "@/lib/types";
 import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
@@ -164,10 +165,42 @@ export function DDCCompanyView({ company, className = "" }: Props) {
         </summary>
         <div className="px-6 pb-6">
           <div className="flex items-center gap-3 mb-6">
-            <a href={DDC_WEBSITE} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">IR Website</a>
-            <a href={DDC_TWITTER} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">@ddcbtc_</a>
-            <a href={DDC_TREASURY} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">Treasury</a>
-            <a href={DDC_SEC_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">SEC</a>
+            <a
+              href={DDC_WEBSITE}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: DDC_WEBSITE, ticker: "DDC" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              IR Website
+            </a>
+            <a
+              href={DDC_TWITTER}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: DDC_TWITTER, ticker: "DDC" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              @ddcbtc_
+            </a>
+            <a
+              href={DDC_TREASURY}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: DDC_TREASURY, ticker: "DDC" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Treasury
+            </a>
+            <a
+              href={DDC_SEC_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCitationSourceClick({ href: DDC_SEC_URL, ticker: "DDC" })}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              SEC
+            </a>
           </div>
         </div>
       </details>
