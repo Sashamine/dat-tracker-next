@@ -263,7 +263,7 @@ export default function AssetPage() {
               Higher growth = more BTC per share over time.
             </p>
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <MinersComparison companies={companies} prices={prices} />
+              <MinersComparison companies={companies} />
             </div>
           </div>
         )}

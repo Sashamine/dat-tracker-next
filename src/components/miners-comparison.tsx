@@ -11,7 +11,6 @@ type CompanyType = "miners" | "treasuries" | "all";
 
 interface HPSComparisonProps {
   companies: Company[];
-  prices?: unknown;
   compact?: boolean;
   type?: CompanyType;  // Filter by company type
 }
