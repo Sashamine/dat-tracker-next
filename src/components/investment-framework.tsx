@@ -49,7 +49,7 @@ export function InvestmentFramework() {
                 <div>
                   <p className="font-semibold text-gray-900 dark:text-gray-100">Value Sources:</p>
                   <ul className="list-disc list-inside space-y-1 ml-2">
-                    <li><strong>Excess Yield</strong> — yield above what you'd earn staking yourself</li>
+                    <li><strong>Excess Yield</strong> — yield above what you’d earn staking yourself</li>
                     <li><strong>Efficiency</strong> — low burn rate, more flows to shareholders</li>
                     <li><strong>Leverage</strong> — debt amplifies returns when asset outperforms financing cost</li>
                     <li><strong>Vol Harvesting</strong> — issuing shares at premium to buy more crypto</li>
