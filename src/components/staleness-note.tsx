@@ -1,5 +1,7 @@
 "use client";
 
+import { trackCitationSourceClick } from "@/lib/client-events";
+
 /**
  * Shows warnings when balance sheet data is stale.
  * 
@@ -55,6 +57,12 @@ export function StalenessNote({
               href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${secCik}&type=&dateb=&owner=include&count=10`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackCitationSourceClick({
+                  href: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${secCik}&type=&dateb=&owner=include&count=10`,
+                  metric: "filings",
+                })
+              }
               className="underline hover:text-amber-600"
             >
               SEC EDGAR
@@ -85,6 +93,12 @@ export function StalenessNote({
             href={`https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${secCik}&type=&dateb=&owner=include&count=10`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackCitationSourceClick({
+                href: `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${secCik}&type=&dateb=&owner=include&count=10`,
+                metric: "filings",
+              })
+            }
             className="underline hover:text-amber-600"
           >
             SEC EDGAR
