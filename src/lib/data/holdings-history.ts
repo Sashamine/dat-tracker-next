@@ -270,6 +270,8 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-06", holdings: 523_134, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02067, source: "Dec 2025 monthly update + Jan 7 credit facility conversion (2.3M shares)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update", sourceType: "company-website" },
   // Jan 2026: 530,251 SOL total (402,004 direct + 46,474 jitoSOL + 81,640 STKESOL). Shares carried from prior entry.
   { date: "2026-02-03", holdings: 530_251, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02096, source: "Jan 2026 monthly business update (Feb 5, 2026)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update", sourceType: "company-website" },
+  // Feb 2026 monthly update (published Mar 4): 518,139 treasury SOL. Shares carried from prior checkpoint.
+  { date: "2026-03-04", holdings: 518_139, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02048, source: "Feb 2026 monthly business update (Mar 4, 2026)", sourceUrl: "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/", sourceType: "company-website" },
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
@@ -378,9 +380,9 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   // Dec share counts may differ from Nov 13 cover page due to ATM issuances - using 927.6M as baseline
   { date: "2025-12-08", holdings: 4_783, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000516, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
   { date: "2025-12-14", holdings: 5_098, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000549, source: "PR Newswire Dec 14, 2025 (Top 20 milestone)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html", sourceType: "press-release" },
-  // Q4 quarter-end anchor - carried forward from Dec 14 PR (no Dec 31 disclosure)
-  // Must match earnings-data.ts Q4 2025 entry: 5,098 / 927,604,994 = 549 sats
-  { date: "2025-12-31", holdings: 5_098, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000549, source: "Carried forward from Dec 14 PR (no Q4 end disclosure yet)", sourceType: "press-release", methodology: "Interpolated Q4 anchor - will update when 10-K filed", confidence: "medium" },
+  // Q4 quarter-end anchor from FY2025 earnings release (8-K filed Feb 26, 2026)
+  // 5,401 / 927,604,994 = 0.00000582 BTC/share (~582 sats)
+  { date: "2025-12-31", holdings: 5_401, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000582, source: "SEC 8-K Feb 26, 2026 + Exhibit 99.1 FY2025 results", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312526073305/abtc-ex99_1.htm", methodology: "Year-end holdings disclosed in earnings release (5,401 BTC).", confidence: "high" },
   // TODO: Jan 2026 - no PR/8-K found, company discloses via X now
 ];
 
@@ -994,13 +996,21 @@ const DDC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-31", holdings: 1_183, sharesOutstanding: 23_309_005, holdingsPerShare: 0.0000508, source: "Q4 2025 end: 1,183 BTC", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2026-01-29", holdings: 1_783, sharesOutstanding: 23_310_000, holdingsPerShare: 0.0000765, source: "treasury.ddc.xyz Jan 2026", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2026-02-11", holdings: 1_988, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000692, source: "treasury.ddc.xyz Feb 11, 2026. Shares per 6-K Feb 6.", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
+  { date: "2026-02-28", holdings: 2_118, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000737, source: "SEC 6-K Mar 4, 2026 Ex99.1: As of Feb 28, 2026 holdings increased to 2,118 BTC", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm" },
+  { date: "2026-03-04", holdings: 2_183, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000760, source: "SEC 6-K Mar 4, 2026 Ex99.1: additional 65 BTC purchase; total holdings 2,183 BTC", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm" },
+];
+
+// OranjeBTC (OBTC3) - Brazilian BTC treasury
+// Source: B3 market announcement (legal disclosure channel)
+const OBTC3_HISTORY: HoldingsSnapshot[] = [
+  { date: "2026-03-01", holdings: 3_723, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000240, source: "B3 market announcement Mar 1, 2026: Total BTC em reservas 3.723,0 BTC; 155.300.500 ações ON emitidas fora de tesouraria", sourceType: "regulatory-filing", sourceUrl: "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2" },
 ];
 
 // Remixpoint (3825.T) - Japanese multi-asset treasury (BTC, ETH, XRP, SOL, DOGE)
 // Source: Company website + TDnet filings
 const REMIXPOINT_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-09-26", holdings: 500, sharesOutstanding: 149_039_800, holdingsPerShare: 0.00000336, source: "Initial BTC purchase", sourceType: "regulatory-filing", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
-  { date: "2026-02-02", holdings: 1_411, sharesOutstanding: 149_039_800, holdingsPerShare: 0.00000947, source: "Company website Feb 2026: 1,411.30 BTC", sourceType: "company-website", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
+  { date: "2026-02-02", holdings: 1_411.29831101, sharesOutstanding: 149_039_800, holdingsPerShare: 0.00000947, source: "Company website Feb 2026: 1,411.29831101 BTC", sourceType: "company-website", sourceUrl: "https://www.remixpoint.co.jp/digital-asset/" },
 ];
 
 // ANAP Holdings (3189.T) - Japanese BTC treasury
@@ -1030,6 +1040,8 @@ const BTCT_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-02-02", holdings: 771, sharesOutstanding: 10_027_880, holdingsPerShare: 0.0000769, source: "btctcorp.com Feb 2026: 771.37 BTC", sharesSource: "btctcorp.com basic shares (diluted 12,111,213 tracked in dilutive-instruments.ts; prior entry incorrectly used diluted)", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
   // Feb 17: Website updated - holdings decreased to 769.05 BTC, shares unchanged
   { date: "2026-02-17", holdings: 769, sharesOutstanding: 10_027_880, holdingsPerShare: 0.0000767, source: "btctcorp.com Feb 17, 2026: 769.05 BTC", sharesSource: "btctcorp.com basic shares", sourceType: "company-website", sourceUrl: "https://btctcorp.com" },
+  // Mar 4 release with Feb 28 close snapshot: lower BTC + lower basic/diluted shares after NCIB retirements
+  { date: "2026-02-28", holdings: 761.63, sharesOutstanding: 9_893_980, holdingsPerShare: 0.0000764, source: "BTCT Feb 28, 2026 update: 761.63 BTC; 9,893,980 basic shares; 11,977,313 diluted shares", sharesSource: "BTCT press release (NCIB update)", sourceType: "company-reported", sourceUrl: "https://btctcorp.com/bitcoin-treasury-corporation-provides-february-update-on-normal-course-issuer-bid/" },
 ];
 
 // Samara Asset Group (SRAG.DU) - Malta HQ, Frankfurt/XETRA listed BTC treasury
@@ -1149,6 +1161,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
 
   // Additional BTC
   CEPO: { ticker: "CEPO", asset: "BTC", history: CEPO_HISTORY },
+  OBTC3: { ticker: "OBTC3", asset: "BTC", history: OBTC3_HISTORY },
 
   // Additional TAO
   TWAV: { ticker: "TWAV", asset: "TAO", history: TWAV_HISTORY },

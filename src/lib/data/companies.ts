@@ -183,7 +183,7 @@ export const ethCompanies: Company[] = [
     holdings: 590_000,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2080334/000121390026020786/f425022626_ether.htm",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002080334",
     datStartDate: "2025-10-01",
     // stakingPct removed - SPAC pending, needs verification
     stakingMethod: "Native staking",
@@ -197,7 +197,7 @@ export const ethCompanies: Company[] = [
     marketCap: 230_000_000,  // ~$230M (Jan 2026)
     sharesForMnav: 60_000_000,  // From holdings-history.ts
     sharesSource: "Q3 2025 SEDAR+ checkpoint (mirrored in SEC foreign issuer feed)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2080334/000121390026020786/f425022626_ether.htm",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002080334",
     sharesAsOf: "2025-09-30",
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
@@ -926,10 +926,10 @@ export const btcCompanies: Company[] = [
     currency: "BRL",
     asset: "BTC",
     tier: 2,
-    holdings: 0,  // TBD - CVM filings hard to access, IR sparse
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://ri.oranjebtc.com",
+    holdings: 3_723,  // Market Announcement (Mar 1, 2026): "Total BTC held in reserves: 3,723.0 BTC"
+    holdingsLastUpdated: "2026-03-01",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2",
     datStartDate: "2025-01-01",
     website: "https://www.oranjebtc.com",
     isMiner: false,
@@ -940,18 +940,18 @@ export const btcCompanies: Company[] = [
     burnEstimated: true,
     avgDailyVolume: 1_000_000,  // ~R$5.3M/day = ~$1M USD
     marketCap: 450_000_000,  // ~R$2.51B = ~$450M USD (Feb 2026)
-    sharesForMnav: 318_000_000,  // Estimated from market cap / price
-    sharesSource: "B3 Exchange listing",
-    sharesSourceUrl: "https://ri.oranjebtc.com",
-    sharesAsOf: "2025-12-31",
+    sharesForMnav: 155_300_500,  // Market Announcement (Mar 1, 2026): common shares outstanding outside treasury
+    sharesSource: "Market Announcement (B3 disclosure channel) - Mar 1, 2026",
+    sharesSourceUrl: "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2",
+    sharesAsOf: "2026-03-01",
     totalDebt: 0,
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
-    notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
+    notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Mar 1, 2026 market announcement reports 3,723.0 BTC and 155,300,500 shares outstanding outside treasury (162,267,260 fully adjusted for debenture conversion). Historical quarterly stack still incomplete in local HOLDINGS_HISTORY and D1.",
     dataWarnings: [
       {
         type: "stale-data",
-        message: "Holdings not yet verified from CVM filings. Brazilian regulatory system (CVM) lacks API. Market cap (~$450M) suggests substantial BTC holdings.",
+        message: "Latest lock values are now filing-anchored via B3 market announcement, but D1 currently has no OBTC3 history rows; ingest/backfill required for full canon convergence.",
         severity: "warning",
       },
     ],
@@ -1330,7 +1330,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-02-28",
     // Note: Convertible debentures (~2.08M shares) tracked in dilutive-instruments.ts
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
-    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services (entire C-suite = Evolve execs). Basic shares: 9,893,980. Reported diluted: 11,977,313 (converts only). ⚠️ TRUE diluted may be higher if performance warrants are included. $25M CAD convertible debentures (1% interest, Jun 2030 maturity, $12 conversion). Zero revenue — pure BTC proxy. Shell RTO via 2680083 Alberta Ltd. Data quality: latest lock anchor is company-reported via legal press release channel (not yet reconciled to parsed SEDAR filing text in-repo). Data quality classification: COMPANY_REPORTED_LEGAL_CHANNEL with D1 lag mismatch (D1 latest still reflects Feb 17, 2026 snapshot).",
+    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services (entire C-suite = Evolve execs). Basic shares: 9,893,980. Reported diluted: 11,977,313 (converts only). ⚠️ TRUE diluted may be higher if performance warrants are included. $25M CAD convertible debentures (1% interest, Jun 2030 maturity, $12 conversion). Zero revenue — pure BTC proxy. Shell RTO via 2680083 Alberta Ltd. Data quality: latest lock anchor is company-reported via legal press release channel (not yet reconciled to parsed SEDAR filing text in-repo). Data quality classification: COMPANY_REPORTED_LEGAL_CHANNEL; lock and D1 latest now converge at Feb 28, 2026.",
   },
   // AKER (Aker ASA) removed 2026-02-02: Cannot verify BTC holdings
   // Seetee not listed among major unlisted investments in Q3 2025 report
@@ -2510,7 +2510,7 @@ export const ltcCompanies: Company[] = [
     holdings: 20_226,  // SEDAR+ FY2025 Note 12 checkpoint (Dec 9, 2025 placement period; holdings unchanged)
     holdingsLastUpdated: "2025-12-09",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
+    holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736",
     datStartDate: "2024-06-01",
     // stakingPct: 0.042 removed - needs verification
     stakingApy: 0.03,
@@ -2678,13 +2678,13 @@ export const dogeCompanies: Company[] = [
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 5_000_000,
     marketCap: 8_000_000,  // TBH pre-merger market cap ~$8M (10.8M shares × ~$0.75)
-    sharesForMnav: 10_800_000,  // TBH pre-merger shares (Nov 2025 10-Q)
-    sharesSource: "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025111616/ea0263575-10q_brag.htm",
-    sharesAsOf: "2025-11-12",
+    sharesForMnav: 10_800_000,  // TBH legal-entity shares at merger-update checkpoint
+    sharesSource: "SEC 8-K DOGE treasury update: existing TBH equity baseline at merger-update checkpoint",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html",
+    sharesAsOf: "2025-12-18",
     leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
-    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1). Audit note 2026-03-05: holdings anchor normalized to Dec 18, 2025 8-K (0 DOGE at TBH legal entity) to match canonical D1 history. Data quality classification: LEGAL_MATCH (lock mirrors filing-anchored D1 latest).",
+    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1). Audit note 2026-03-05: holdings and shares anchors normalized to Dec 18, 2025 8-K checkpoint (0 DOGE and 10.8M TBH-share baseline) to match canonical D1 history. Data quality classification: LEGAL_MATCH (lock mirrors filing-anchored D1 latest).",
   },
   {
     id: "btog",
@@ -2700,7 +2700,7 @@ export const dogeCompanies: Company[] = [
     holdings: 70_543_745,  // SEC 6-K Jan 20, 2026 (post 1:60 reverse split; units unchanged)
     holdingsLastUpdated: "2026-01-20",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/0001104659-26-005086-index.html",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=6-K&count=40",
     datStartDate: "2025-07-17",  // DOGE strategy announced
     quarterlyBurnUsd: 771_000,
     burnSource: "SEC 20-F FY2025 (Jun 30, 2025)",
@@ -2725,7 +2725,7 @@ export const dogeCompanies: Company[] = [
     secCik: "1735556",
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
-    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K accession 0001104659-26-005086 and cash normalized to D1/XBRL value ($55,639). Data quality classification: LEGAL_MATCH (holdings and basic shares filing-aligned).",
+    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K/legal channel and cash normalized to D1/XBRL value ($55,639). Data quality classification: LEGAL_MATCH for shares; holdings are legal-channel anchored but not yet mapped to a single exhibit-level quote URL in-repo.",
   },
 ];
 
