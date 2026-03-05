@@ -23,11 +23,11 @@
     ],
     "warnExact": []
   },
-  "generatedAt": "2026-03-05T13:35:19.349Z",
-  "runId": "cron-nonus-upgrade",
+  "generatedAt": "2026-03-05T14:05:31.707Z",
+  "runId": "cron-sec-upgrade",
   "total": 56,
-  "okCount": 56,
-  "failCount": 0,
+  "okCount": 55,
+  "failCount": 1,
   "okTickers": [
     "0434.HK",
     "3189.T",
@@ -44,7 +44,6 @@
     "BTCT.V",
     "BTOG",
     "CEPO",
-    "CWD",
     "CYPH",
     "DCC.AX",
     "DDC",

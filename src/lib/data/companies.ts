@@ -6,7 +6,7 @@ import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./proven
 import { NAKA_PROVENANCE, NAKA_PROVENANCE_DEBUG, getNakaProvenance } from "./provenance/naka";
 import { H100_PROVENANCE } from "./provenance/h100";
 
-// Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,098 (PR Dec 14; 5,427 ref'd Jan 20 but no public source found — await Feb 26 10-K)
+// Last verified: 2026-02-26 - HUT standalone 10,278, ABTC 5,401 (Q4/FY2025 8-K + earnings release)
 
 // ETH DAT Companies
 export const ethCompanies: Company[] = [
@@ -1613,10 +1613,10 @@ export const btcCompanies: Company[] = [
     secCik: "0001755953",  // Post-merger CIK (was Gryphon Digital Mining)
     asset: "BTC",
     tier: 1,
-    holdings: 5_098,  // Dec 14, 2025 - PR Newswire Top 20 milestone
-    holdingsLastUpdated: "2025-12-14",
+    holdings: 5_401,  // Q4/FY2025 results 8-K + earnings release (filed Feb 26, 2026): year-end 2025 holdings
+    holdingsLastUpdated: "2025-12-31",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312526073305/abtc-ex99_1.htm",
     datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
     // costBasisAvg: not verified - needs Q3 10-Q access
     isMiner: true,
@@ -1635,7 +1635,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-11-13",
     leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
     strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
-    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~550 sats/share (Dec 14). Trump family co-founded. Pure-play BTC miner with HODL commitment.",
+    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~550 sats/share (Dec 31, 2025). Trump family co-founded. Pure-play BTC miner with HODL commitment. Audit note 2026-03-05: holdings refreshed to 5,401 BTC from Feb 26, 2026 8-K earnings release (year-end 2025 anchor).",
     website: "https://abtc.com",
     twitter: "https://x.com/ABTC",
     // IR: https://abtc.com/investors
@@ -1707,7 +1707,7 @@ export const solCompanies: Company[] = [
     debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     debtAsOf: "2025-12-31",
-    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens).",
+    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens). Audit note 2026-03-05: lock values reconciled to D1 holdings ladder (latest 6,979,967 SOL as of 2026-01-15; 2025-12-31 retained as 10-Q SOL-equivalent anchor).",
   },
   {
     id: "hsdt",
@@ -1755,7 +1755,7 @@ export const solCompanies: Company[] = [
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
     strategy: "SOL treasury via Anchorage Digital custody. Partnered with Solana Foundation.",
-    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 40.3M basic + 35.6M PFWs @ $0.001 = 75.9M (Sep 30 consistent date). 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. Negative equity (-$152M) is accounting artifact from stapled warrant derivative liabilities. $500M PIPE closed Sep 15, 2025.",
+    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 40.3M basic + 35.6M PFWs @ $0.001 = 75.9M (Sep 30 consistent date). 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. Negative equity (-$152M) is accounting artifact from stapled warrant derivative liabilities. $500M PIPE closed Sep 15, 2025. Audit note 2026-03-05: lock values reconciled to D1 latest (2,340,757 SOL as of 2025-11-18 from 10-Q subsequent-events note).",
   },
   {
     id: "dfdv",
@@ -1810,7 +1810,7 @@ export const solCompanies: Company[] = [
     cashAsOf: "2026-01-01",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
-    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token. $152.2M SOL pledged as collateral (>50% of digital assets). BitGo Master Loan: 250% collateral / 200% margin call trigger — liquidation risk if SOL drops 15-20%. Flora Growth $23.1M convertible note investment (93.3K SOL, 8% rate, due Sep 2030) — credit risk, not liquid SOL.",
+    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token. $152.2M SOL pledged as collateral (>50% of digital assets). BitGo Master Loan: 250% collateral / 200% margin call trigger — liquidation risk if SOL drops 15-20%. Flora Growth $23.1M convertible note investment (93.3K SOL, 8% rate, due Sep 2030) — credit risk, not liquid SOL. Audit note 2026-03-05: lock values reconciled to D1 latest (2,221,329 SOL as of 2026-01-01 from Jan 2026 8-K business update).",
   },
   {
     id: "upxi",
@@ -1913,7 +1913,7 @@ export const solCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     leader: "Michael Hubbard (Interim CEO)",
     strategy: "Validator-first SOL treasury (DAT++ model). VanEck ETF staking provider. 99.999% uptime.",
-    notes: "4.04M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Credit facility fully settled Dec 2025. $50M ATM program est. Jan 2, 2026 (Cantor/Roth). STKESOL liquid staking launched Jan 2026 (683K SOL staked). Q1 FY2026 results March 17, 2026. Shareholder meeting Mar 31, 2026 re: board reconstitution. Equity investments: NGRAVE NV, Chia Network, Animoca Brands.",
+    notes: "4.04M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Credit facility fully settled Dec 2025. $50M ATM program est. Jan 2, 2026 (Cantor/Roth). STKESOL liquid staking launched Jan 2026 (683K SOL staked). Q1 FY2026 results March 17, 2026. Shareholder meeting Mar 31, 2026 re: board reconstitution. Equity investments: NGRAVE NV, Chia Network, Animoca Brands. Audit note 2026-03-05: lock and history ladder reconciled to D1 canonical series (2024-06-30 through 2026-02-03) with latest anchor from Jan 2026 monthly update.",
     website: "https://solstrategies.io/",
     twitter: "https://x.com/SolStrategies",
     investorRelationsUrl: "https://solstrategies.io/investor-relations",
@@ -2268,9 +2268,9 @@ export const linkCompanies: Company[] = [
     asset: "LINK",
     tier: 1,
     holdings: 562_535,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://ir.caliberco.com/",
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF",
     datStartDate: "2025-09-09",
     // costBasisAvg removed - needs verification
     stakingPct: 0.13,  // 75,000 LINK staked / 562,535 total = 13.3%
@@ -2300,7 +2300,7 @@ export const linkCompanies: Company[] = [
     ],
     avgDailyVolume: 5_000_000,
     sharesForMnav: 6_905_000,  // 6.53M Class A + 0.37M Class B = 6.9M per SEC DEF 14A Jan 7, 2026
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF",
     sharesAsOf: "2025-12-31",
     sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
     secCik: "1627282",
@@ -2309,7 +2309,7 @@ export const linkCompanies: Company[] = [
     twitter: "https://x.com/CaliberCompany",
     investorRelationsUrl: "https://ir.caliberco.com/",
     strategy: "First Nasdaq LINK treasury. DCA accumulation + staking.",
-    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner. ~1:19 reverse split early 2025.",
+    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner. ~1:19 reverse split early 2025. Audit note 2026-03-05: holdings and shares anchors normalized to SEC DEF 14A record-date snapshot (2025-12-31) to match canonical D1 latest.",
   },
 ];
 
@@ -2326,7 +2326,7 @@ export const trxCompanies: Company[] = [
     holdings: 677_000_000,  // Jan 23, 2026 8-K: "more than 677 million TRX in total"
     holdingsLastUpdated: "2026-01-23",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226006323/form8-k.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/form8-k.htm",
     datStartDate: "2025-07-01",
     website: "https://srmentertainment.com",
     twitter: "https://x.com/tron_inc",
@@ -2357,13 +2357,13 @@ export const trxCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 310_000_000,
     avgDailyVolume: 50_000_000,
-    sharesForMnav: 274_382_064,  // Dec 29, 2025 8-K: after $18M Justin Sun investment
-    sharesSource: "SEC 8-K Dec 29, 2025",
-    sharesAsOf: "2025-12-29",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/0001493152-25-029225-index.html",
+    sharesForMnav: 274_382_064,  // Jan 23, 2026 8-K confirms post-Dec 2025 share base
+    sharesSource: "SEC 8-K Jan 23, 2026",
+    sharesAsOf: "2026-01-23",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/form8-k.htm",
     leader: "Richard Miller (CEO)",
     strategy: "TRX treasury via JustLend staking, Justin Sun backing",
-    notes: "First US public company to hold its blockchain's native token. Formerly SRM Entertainment.",
+    notes: "First US public company to hold its blockchain's native token. Formerly SRM Entertainment. Audit note 2026-03-05: holdings/shares citation anchors normalized to the Jan 23, 2026 8-K accession used by canonical D1 history.",
   },
 ];
 
@@ -2377,10 +2377,10 @@ export const xrpCompanies: Company[] = [
     exchangeMic: "XNAS",
     asset: "XRP",
     tier: 1,
-    holdings: 473_276_430,
+    holdings: 520_000_000,
     holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2044009/000119312525279035/d17530d8k.htm",
     datStartDate: "2025-11-01",
     secCik: "0002044009",  // Armada Acquisition Corp II / Evernorth
     preferredEquity: 0,
@@ -2399,10 +2399,10 @@ export const xrpCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 1_000_000_000,
     pendingMerger: true,  // SPAC merger with Armada Acquisition Corp. II
-    expectedHoldings: 473_276_430,
+    expectedHoldings: 520_000_000,
     leader: "Asheesh Birla (CEO, ex-Ripple)",
     strategy: "Institutional-scale XRP adoption via SPAC. Yield through XRP loans/market making.",
-    notes: "SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed.",
+    notes: "SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed. Audit note 2026-03-05: holdings anchor normalized to 2025-09-30 SEC-filed stack and canonical D1 latest (520,000,000 XRP; 75M shares).",
   },
   // WKSP (Worksport) removed - Auto tech company, not beta to XRP
 ];
@@ -2648,7 +2648,7 @@ export const dogeCompanies: Company[] = [
     sharesAsOf: "2026-02-10",
     leader: "Clayton Adams (CEO)",
     strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
-    notes: "NYSE American. Q2 FY2026: 733M DOGE (Dec 31, 2025). No purchases Jan 1-Feb 10, 2026 per subsequent events. Partnership with House of Doge, 21Shares, Robinhood.",
+    notes: "NYSE American. Q2 FY2026: 733M DOGE (Dec 31, 2025). No purchases Jan 1-Feb 10, 2026 per subsequent events. Partnership with House of Doge, 21Shares, Robinhood. Audit note 2026-03-05: lock values and citation anchors reconciled to D1 latest (DOGE/cash/debt at 2025-12-31; shares at 2026-02-10).",
   },
   {
     id: "tbh",
@@ -2663,9 +2663,9 @@ export const dogeCompanies: Company[] = [
     // The 730M DOGE is held by House of Doge (private), NOT by TBH currently
     // Post-merger: ~663M new shares to HOD + ~50M existing TBH = ~713M shares
     holdings: 0,  // TBH has no DOGE - it's a gaming company pre-merger
-    holdingsLastUpdated: "2026-01-26",
+    holdingsLastUpdated: "2025-12-18",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390026015027/ea0276712-8k_brag.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html",
     datStartDate: "2025-09-05",  // House of Doge treasury started Sep 5, 2025
     pendingMerger: true,  // SPAC-style merger not yet closed
     expectedHoldings: 730_000_000,  // HOD holds 730M DOGE per Dec 18, 2025 shareholder letter
@@ -2683,7 +2683,7 @@ export const dogeCompanies: Company[] = [
     sharesAsOf: "2025-11-12",
     leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
-    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1).",
+    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1). Audit note 2026-03-05: holdings anchor normalized to Dec 18, 2025 8-K (0 DOGE at TBH legal entity) to match canonical D1 history.",
   },
   {
     id: "btog",
@@ -2696,10 +2696,10 @@ export const dogeCompanies: Company[] = [
     website: "https://www.bitorigin.io",
     twitter: "https://x.com/BitOriginLtd",
     investorRelationsUrl: "https://www.bitorigin.io/investors",
-    holdings: 70_543_745,  // Aug 2025 - was 40.5M (missed PIPE)
-    holdingsLastUpdated: "2025-08-11",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
+    holdings: 70_543_745,  // SEC 6-K Jan 20, 2026 (post 1:60 reverse split; units unchanged)
+    holdingsLastUpdated: "2026-01-20",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/0001104659-26-005086-index.html",
     datStartDate: "2025-07-17",  // DOGE strategy announced
     quarterlyBurnUsd: 771_000,
     burnSource: "SEC 20-F FY2025 (Jun 30, 2025)",
@@ -2710,21 +2710,21 @@ export const dogeCompanies: Company[] = [
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=20-F",
     avgDailyVolume: 3_000_000,
     sharesForMnav: 1_500_000,  // Post 1:60 reverse split Jan 20, 2026 (was 88.6M -> 1.5M)
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/0001104659-26-005086-index.html",
     sharesAsOf: "2026-01-20",
     sharesSource: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
     totalDebt: 16_338_506,  // $10M Series A-1 + $5M Series B-1 + $1.34M Series C-1 convertible notes
     debtSource: "SEC 20-F Oct 31, 2025 + 6-K Jan 20, 2026 (convertible notes)",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     debtAsOf: "2026-01-20",
-    cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
-    cashSource: "Yahoo Finance",
+    cashReserves: 55_639,  // SEC 20-F FY2025 XBRL: cash and cash equivalents
+    cashSource: "SEC 20-F FY2025 XBRL",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     cashAsOf: "2025-06-30",
     secCik: "1735556",
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
-    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding.",
+    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K accession 0001104659-26-005086 and cash normalized to D1/XBRL value ($55,639).",
   },
 ];
 
@@ -2743,7 +2743,7 @@ export const avaxCompanies: Company[] = [
     holdingsSource: "company-dashboard",  // PIPE closed after Q3 10-Q; dashboard is primary until 10-K
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
-    totalDebt: 1_689_415,  // SEC 10-Q Sep 30: debentures $1,372,679 + LT $41,736 + loan $275,000
+    totalDebt: 1_841_100,  // SEC 10-Q Sep 30 XBRL/D1 canonical debt datapoint
     debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
     debtAsOf: "2025-09-30",
@@ -2773,7 +2773,7 @@ export const avaxCompanies: Company[] = [
     website: "https://www.avax-one.com",
     twitter: "avax_one",
     strategy: "First publicly traded AVAX treasury. Staking + validator infra + fintech M&A.",
-    notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25, 649.8K shares at avg $1.71). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026.",
+    notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25, 649.8K shares at avg $1.71). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026. Audit note 2026-03-05: debt normalized to D1/XBRL canonical value ($1,841,100) at 2025-09-30; holdings/shares remain dashboard-anchored.",
   },
 ];
 
