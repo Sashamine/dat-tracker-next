@@ -438,7 +438,7 @@ const H100_HISTORY: HoldingsSnapshot[] = [
   // Jan 2026: Holdings confirmed stable
   { date: "2026-01-02", holdings: 1047, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000312, source: "MFN: Shareholder Letter", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
   // Feb 2026: 4.39 BTC purchase → 1,051 total
-  { date: "2026-02-06", holdings: 1051, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000313, source: "MFN filing Feb 6, 2026", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
+  { date: "2026-02-06", holdings: 1051, sharesOutstanding: 335_250_237, holdingsPerShare: 0.00000313, source: "MFN filing Feb 6, 2026", sourceUrl: "https://mfn.se/a/h100-group/h100-group-acquires-4-39-btc-total-holdings-reach-1-051-btc", sourceType: "regulatory-filing" },
   // Feb 12, 2026: Acquired Future Holdings AG, issued 3,146,456 new shares
   { date: "2026-02-12", holdings: 1051, sharesOutstanding: 338_396_693, holdingsPerShare: 0.00000311, source: "MFN: Future Holdings AG acquisition (3,146,456 new shares)", sourceUrl: "https://mfn.se/a/h100-group", sourceType: "regulatory-filing" },
 ];
@@ -744,8 +744,8 @@ const ZONE_HISTORY: HoldingsSnapshot[] = [
 const TBH_HISTORY: HoldingsSnapshot[] = [
   // TBH has no DOGE - these are TBH shares only for tracking purposes
   { date: "2025-03-07", holdings: 0, sharesOutstanding: 8_000_000, holdingsPerShare: 0, source: "TBH IPO on Nasdaq", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595", sourceType: "sec-filing" },
-  { date: "2025-10-12", holdings: 0, sharesOutstanding: 10_800_000, holdingsPerShare: 0, source: "8-K HOD merger", sourceUrl: "/filings/tbh/0001213900-25-099991", sourceType: "sec-filing" },
-  { date: "2025-12-18", holdings: 0, sharesOutstanding: 10_800_000, holdingsPerShare: 0, source: "8-K DOGE treasury update", sourceUrl: "/filings/tbh/0001213900-25-122463", sourceType: "sec-filing" },
+  { date: "2025-10-12", holdings: 0, sharesOutstanding: 10_800_000, holdingsPerShare: 0, source: "8-K HOD merger", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025099991/0001213900-25-099991-index.html", sourceType: "sec-filing" },
+  { date: "2025-12-18", holdings: 0, sharesOutstanding: 10_800_000, holdingsPerShare: 0, source: "8-K DOGE treasury update", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html", sourceType: "sec-filing" },
 ];
 
 // Bit Origin (BTOG) - DOGE treasury, Singapore-based (Cayman Islands incorporated)
@@ -848,10 +848,10 @@ const FUFU_HISTORY: HoldingsSnapshot[] = [
 // SEC 10-Q filings, ~1,526 BTC + 800 restricted
 // Debt: $66.3M ($20M June + $46.3M March converts)
 const FLD_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-30", holdings: 500, sharesOutstanding: 40_000_000, holdingsPerShare: 0.0000125, stockPrice: 8.0, totalDebt: 20_000_000, cash: 15_000_000, source: "Q3 2024 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/fld/10Q-2024-09-30#btc-holdings" },
-  { date: "2024-12-31", holdings: 800, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0000190, stockPrice: 10.0, totalDebt: 46_000_000, cash: 20_000_000, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "/filings/fld/10K-2024-12-31#btc-holdings" },
-  { date: "2025-03-31", holdings: 1000, sharesOutstanding: 44_000_000, holdingsPerShare: 0.0000227, stockPrice: 12.0, totalDebt: 66_300_000, cash: 25_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/fld/10Q-2025-03-31#btc-holdings" },
-  { date: "2025-06-30", holdings: 1200, sharesOutstanding: 46_000_000, holdingsPerShare: 0.0000261, stockPrice: 15.0, totalDebt: 66_300_000, cash: 30_000_000, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "/filings/fld/10Q-2025-06-30#btc-holdings" },
+  { date: "2024-09-30", holdings: 500, sharesOutstanding: 40_000_000, holdingsPerShare: 0.0000125, stockPrice: 8.0, totalDebt: 20_000_000, cash: 15_000_000, source: "Q3 2024 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001889123&type=10-Q&count=40" },
+  { date: "2024-12-31", holdings: 800, sharesOutstanding: 42_000_000, holdingsPerShare: 0.0000190, stockPrice: 10.0, totalDebt: 46_000_000, cash: 20_000_000, source: "Q4 2024 10-K", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001889123&type=10-K&count=40" },
+  { date: "2025-03-31", holdings: 1000, sharesOutstanding: 44_000_000, holdingsPerShare: 0.0000227, stockPrice: 12.0, totalDebt: 66_300_000, cash: 25_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001889123&type=10-Q&count=40" },
+  { date: "2025-06-30", holdings: 1200, sharesOutstanding: 46_000_000, holdingsPerShare: 0.0000261, stockPrice: 15.0, totalDebt: 66_300_000, cash: 30_000_000, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001889123&type=10-Q&count=40" },
   { date: "2025-09-30", holdings: 1575, sharesOutstanding: 48_307_642, holdingsPerShare: 0.0000326, stockPrice: 12.0, totalDebt: 66_300_000, cash: 35_000_000, source: "Q3 2025 10-Q (1,494 investment treasury + 81 rewards treasury)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm", sourceType: "sec-filing" },
 ];
 
@@ -961,28 +961,28 @@ const TWAV_HISTORY: HoldingsSnapshot[] = [
 // All share data verified from SEDAR+ audited filings (Dec 29, 2025 FY2025 annual)
 const LUXFF_HISTORY: HoldingsSnapshot[] = [
   // FY2024 audited annual (no LTC yet, 8.67M shares pre-split equivalent)
-  { date: "2024-08-31", holdings: 0, sharesOutstanding: 8_671_794, holdingsPerShare: 0, source: "SEDAR+ FY2024 audited annual (no LTC yet)", sharesSource: "SEDAR+ Note 8", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
+  { date: "2024-08-31", holdings: 0, sharesOutstanding: 8_671_794, holdingsPerShare: 0, source: "SEDAR+ FY2024 audited annual (no LTC yet)", sharesSource: "SEDAR+ Note 8", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
   // Mar 21, 2025: 1:10 reverse split - same shares, 10x consolidation already reflected
   { date: "2025-03-21", holdings: 0, sharesOutstanding: 8_671_797, holdingsPerShare: 0, source: "1:10 reverse split", sharesSource: "SEDAR+ FY2025 Note 8 (consolidation adjustment +3 shares)", sourceUrl: "https://thecse.com/bulletin/2025-0319-consolidation-luxxfolio-holdings-inc-luxx/", sourceType: "regulatory-filing" },
   // Mar 25, 2025: Private placement - 7.76M shares @ $0.15 CAD
-  { date: "2025-03-25", holdings: 0, sharesOutstanding: 16_430_164, holdingsPerShare: 0, source: "Mar 2025 private placement (pre-LTC)", sharesSource: "SEDAR+ Note 8b: +7,758,367 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
+  { date: "2025-03-25", holdings: 0, sharesOutstanding: 16_430_164, holdingsPerShare: 0, source: "Mar 2025 private placement (pre-LTC)", sharesSource: "SEDAR+ Note 8b: +7,758,367 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
   // May 31, 2025: Q3 FY2025 interim - 5,436 LTC, 16.59M shares (post 500K option exercise)
-  { date: "2025-05-31", holdings: 5_436, sharesOutstanding: 16_590_161, holdingsPerShare: 0.000328, source: "SEDAR+ Q3 FY2025 interim - Note 5 Digital Assets", sharesSource: "SEDAR+ Note 8: 16,590,161 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
+  { date: "2025-05-31", holdings: 5_436, sharesOutstanding: 16_590_161, holdingsPerShare: 0.000328, source: "SEDAR+ Q3 FY2025 interim - Note 5 Digital Assets", sharesSource: "SEDAR+ Note 8: 16,590,161 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
   // Jul 14, 2025: Private placement - 10M units @ $0.25 CAD (1 share + 0.5 warrant)
-  { date: "2025-07-14", holdings: 20_226, sharesOutstanding: 26_590_161, holdingsPerShare: 0.000760, source: "Major LTC purchase + Jul private placement", sharesSource: "SEDAR+ Note 8b: +10,000,000 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
+  { date: "2025-07-14", holdings: 20_226, sharesOutstanding: 26_590_161, holdingsPerShare: 0.000760, source: "Major LTC purchase + Jul private placement", sharesSource: "SEDAR+ Note 8b: +10,000,000 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
   // Aug 31, 2025: FY2025 audited annual - 20,226 LTC (Note 5), 26.93M shares (Note 8)
-  { date: "2025-08-31", holdings: 20_226, sharesOutstanding: 26_930_164, holdingsPerShare: 0.000751, source: "SEDAR+ FY2025 audited annual - Note 5: 20,226 LTC", sharesSource: "SEDAR+ FY2025 Note 8 (26,930,164 shares)", sourceUrl: "https://www.sedarplus.ca", sourceType: "regulatory-filing" },
+  { date: "2025-08-31", holdings: 20_226, sharesOutstanding: 26_930_164, holdingsPerShare: 0.000751, source: "SEDAR+ FY2025 audited annual - Note 5: 20,226 LTC", sharesSource: "SEDAR+ FY2025 Note 8 (26,930,164 shares)", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736", sourceType: "regulatory-filing" },
   // Dec 9, 2025: Private placement - 4.624M units @ $0.17 CAD (1 share + 1 warrant)
-  { date: "2025-12-09", holdings: 20_226, sharesOutstanding: 31_554_164, holdingsPerShare: 0.000641, source: "SEDAR+ FY2025 Note 12: Dec 9 placement", sharesSource: "SEDAR+ Note 12: +4,624,000 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
+  { date: "2025-12-09", holdings: 20_226, sharesOutstanding: 31_554_164, holdingsPerShare: 0.000641, source: "SEDAR+ FY2025 Note 12: Dec 9 placement", sharesSource: "SEDAR+ Note 12: +4,624,000 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
 ];
 
 // ==================== HBAR COMPANIES ====================
 
 // IHLDF (Immutable Holdings) - HBAR treasury, Hedera founding team
 const IHLDF_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-07-15", holdings: 20000000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.444, source: "Initial HBAR treasury", sourceType: "press-release", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
-  { date: "2025-09-30", holdings: 35000000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.636, stockPrice: 326.42, source: "Q3 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sedarplus.ca/landingpage/" },
-  { date: "2025-12-31", holdings: 48000000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.738, stockPrice: 155.61, source: "Q4 2025 filing", sourceUrl: "https://www.sedarplus.ca", sourceType: "regulatory-filing" },
+  { date: "2025-07-15", holdings: 20000000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.444, source: "Initial HBAR treasury", sourceType: "press-release", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016" },
+  { date: "2025-09-30", holdings: 35000000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.636, stockPrice: 326.42, source: "Q3 2025 filing", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016" },
+  { date: "2025-12-31", holdings: 48000000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.738, stockPrice: 155.61, source: "Q4 2025 filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016", sourceType: "regulatory-filing" },
 ];
 
 // DDC Enterprise - BTC treasury company
@@ -1030,7 +1030,7 @@ const ZOOZ_HISTORY: HoldingsSnapshot[] = [
   // Sep 26, 2025: 424B5 shows 153,472,712 shares; Sep 29: 161,899,782 (post-PP closings)
   { date: "2025-09-30", holdings: 525, sharesOutstanding: 161_899_782, holdingsPerShare: 0.00000324, source: "6-K Sep 30, 2025 (524.92 BTC per dashboard); shares from 424B5", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm" },
   // Dec 31, 2025: 6-K Jan 20, 2026 confirms 1,046 BTC + ~1.14M ATM shares sold
-  { date: "2025-12-31", holdings: 1_046, sharesOutstanding: 163_000_000, holdingsPerShare: 0.00000642, source: "SEC 6-K Jan 20, 2026: 1,046 BTC, $27.1M cash, no debt", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm" },
+  { date: "2025-12-31", holdings: 1_046, sharesOutstanding: 163_000_000, holdingsPerShare: 0.00000642, cash: 27_100_000, totalDebt: 0, source: "SEC 6-K Jan 20, 2026: 1,046 BTC, $27.1M cash, no debt", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm" },
 ];
 
 // Bitcoin Treasury Corp (BTCT.V) - Canadian BTC treasury
@@ -1053,7 +1053,7 @@ const SRAG_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-16", holdings: 421, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000457, source: "Company monthly commentary (Oct 2024): 'we hold 421 BTC on our balance sheet'", sourceType: "company-website", sourceUrl: "https://www.samara-ag.com/market-insights/bitcoin-rallies-past-72500" },
   { date: "2024-11-30", holdings: 525, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000570, source: "CEO Patrick Lowry X post (Nov 30, 2024): 421+104=525 BTC", sourceType: "company-reported", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
   { date: "2024-12-31", holdings: 540, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000586, source: "FY2024 Annual Report Note 10: 480 direct + 60 in DeFi funds", sourceType: "regulatory-filing", sourceUrl: "https://cdn.prod.website-files.com/660cd1216e255a8a370aa5ac/685d308f24fa70f5ffd193c2_SAG-Consolidated-2024-Signed%20financial%20statements_compressed.pdf" },
-  { date: "2025-09-30", holdings: 2_051, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00002225, source: "EST: Q3 2025 balance sheet €199.8M intangibles ÷ €97,441/BTC (CoinGecko Sep 30). Intangibles may include non-BTC digital assets.", sourceType: "company-website", sourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf" },
+  { date: "2025-09-30", holdings: 2_051, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00002225, totalDebt: 39_100_000, source: "EST: Q3 2025 balance sheet €199.8M intangibles ÷ €97,441/BTC (CoinGecko Sep 30). Intangibles may include non-BTC digital assets.", sourceType: "company-website", sourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf" },
 ];
 
 // SWC (The Smarter Web Company) - UK BTC Treasury
@@ -1062,8 +1062,8 @@ const SWC_HISTORY: HoldingsSnapshot[] = [
   // "The 10 Year Plan" launched Apr 2025
   // Note: Company reports "Fully Diluted Shares" separately from Companies House issued capital
   { date: "2025-11-04", holdings: 2664, sharesOutstanding: 380_000_000, holdingsPerShare: 0.00000701, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5447426", sourceType: "regulatory-filing" },
-  { date: "2026-01-22", holdings: 2674, sharesOutstanding: 395_188_479, holdingsPerShare: 0.00000677, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/", sourceType: "regulatory-filing" },  // Original PDF URL 404'd (Wix site reorganized)
-  { date: "2026-02-11", holdings: 2_689, sharesOutstanding: 396_602_526, holdingsPerShare: 0.00000678, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/", sourceType: "regulatory-filing" },  // Original PDF URL 404'd (Wix site reorganized)
+  { date: "2026-01-22", holdings: 2674, sharesOutstanding: 395_188_479, holdingsPerShare: 0.00000677, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/", sourceType: "company-reported" },  // Original PDF URL 404'd (Wix site reorganized)
+  { date: "2026-02-11", holdings: 2_689, sharesOutstanding: 396_602_526, holdingsPerShare: 0.00000678, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/", sourceType: "company-reported" },  // Original PDF URL 404'd (Wix site reorganized)
 ];
 
 // DCC.AX (DigitalX Limited) - Australia's first ASX-listed BTC treasury company

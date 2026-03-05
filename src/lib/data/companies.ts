@@ -1294,7 +1294,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-12-31",
     leader: "Jordan Fried (CEO)",
     strategy: "First Nasdaq + TASE dual-listed BTC treasury company. Pivoted from EV charging (flywheel tech) Jul 2025. $1B ATM registered.",
-    notes: "Israeli company (Lod). ✅ NO LEVERAGE: BTC funded via $180M private placement (Jul+Sep 2025). $1B ATM registered Sep 2025, barely used (~$4M). Cost basis $112,745/BTC avg. Renamed from 'ZOOZ Power' to 'ZOOZ Strategy Ltd.' Oct 2025. Exploring Bitcoin ecosystem cash-flow businesses. Audit note 2026-03-05: lock values reconciled to SEC 6-K Jan 20, 2026 anchor; holdings/shares are live in D1 and cash/debt backfill requires targeted rerun.",
+    notes: "Israeli company (Lod). ✅ NO LEVERAGE: BTC funded via $180M private placement (Jul+Sep 2025). $1B ATM registered Sep 2025, barely used (~$4M). Cost basis $112,745/BTC avg. Renamed from 'ZOOZ Power' to 'ZOOZ Strategy Ltd.' Oct 2025. Exploring Bitcoin ecosystem cash-flow businesses. Audit note 2026-03-05: lock values reconciled to SEC 6-K Jan 20, 2026 anchor; holdings/shares/cash/debt are now in D1 after targeted backfill run `73450663-2b93-4d54-8f7b-9b3ebeec0358`.",
   },
   // USBC removed 2026-02-02: SEC 10-K states "does not currently intend to make future BTC purchases"
   // They hold ~1,003 BTC but it was a one-time equity contribution, not an ongoing treasury strategy
@@ -1408,7 +1408,7 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
     debtAsOf: "2025-06-30",
     strategy: "BTC as primary treasury reserve. Issued Europe's first Bitcoin Bond (€20M, Q4 2024). Uses Samara Alpha Market-Neutral BTC+ Fund for BTC treasury management. Aims to rival MSTR.",
-    notes: "Frankfurt/XETRA listed (Malta HQ, ISIN MT0001770107). Formerly Cryptology Asset Group. GAV €415.8M, NAV €377.5M as of Q3 2025. ⚠️ Only 49% of GAV in Bitcoin & Crypto — mNAV not directly comparable to pure-play DATs. Non-crypto assets (37% funds, 13% cash) excluded from CryptoNAV but contribute to EV, inflating mNAV. Trades at typical holding company discount to NAV. Audited by Grant Thornton Malta (FY2024). No SEC filings — IFRS reporting. Most BTC managed via Samara Alpha BTC+ Fund (market-neutral, BTC-denominated). Latest filing-grade native BTC checkpoint remains FY2024 Note 10 (540 BTC as of 2024-12-31); current 2,051 BTC state is presentation-derived estimate. Data quality classification: COMPANY_ONLY holdings estimate; PARTIAL_MISMATCH on shares basis (lock nets treasury shares vs D1 basic issued shares). Debt is lock-modeled from H1 2025 interim and requires targeted D1 backfill to appear in latest metric rows.",
+    notes: "Frankfurt/XETRA listed (Malta HQ, ISIN MT0001770107). Formerly Cryptology Asset Group. GAV €415.8M, NAV €377.5M as of Q3 2025. ⚠️ Only 49% of GAV in Bitcoin & Crypto — mNAV not directly comparable to pure-play DATs. Non-crypto assets (37% funds, 13% cash) excluded from CryptoNAV but contribute to EV, inflating mNAV. Trades at typical holding company discount to NAV. Audited by Grant Thornton Malta (FY2024). No SEC filings — IFRS reporting. Most BTC managed via Samara Alpha BTC+ Fund (market-neutral, BTC-denominated). Latest filing-grade native BTC checkpoint remains FY2024 Note 10 (540 BTC as of 2024-12-31); current 2,051 BTC state is presentation-derived estimate. Data quality classification: COMPANY_ONLY holdings estimate; PARTIAL_MISMATCH on shares basis (lock nets treasury shares vs D1 basic issued shares). Debt datapoint was backfilled to D1 via targeted run `f576c786-101f-4c5c-9990-717d706df32a`.",
   },
   // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
   // 514 BTC from BitcoinTreasuries.net only - no primary source
@@ -1536,27 +1536,27 @@ export const btcCompanies: Company[] = [
     capitalRaisedPipe: 2_500_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
-    // SHARES: from provenance (XBRL verified)
-    sharesForMnav: DJT_PROVENANCE.sharesOutstanding?.value ?? 279_997_636,
-    sharesSource: "SEC 10-Q Q3 2025 XBRL: EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
-    sharesSourceUrl: "/filings/djt/0001140361-25-040977",
-    sharesAsOf: DJT_PROVENANCE_DEBUG.sharesDate,
-    // DEBT: from provenance (XBRL LongTermDebt - carrying value of $1B par converts)
-    totalDebt: DJT_PROVENANCE.totalDebt?.value ?? 950_769_100,
+    // SHARES: canonical lock now follows D1 latest backfill_qe basis for alignment
+    sharesForMnav: 276_731_315,
+    sharesSource: "D1 latest (sec_companyfacts_xbrl): backfill_qe normalized shares basis",
+    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1849635&type=10&dateb=&owner=include&count=40",
+    sharesAsOf: "2026-03-31",
+    // DEBT: canonical lock aligned to D1 latest FY2025 companyfacts XBRL
+    totalDebt: 947_117_000,
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
-    debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2028)",
-    debtSourceUrl: "/filings/djt/0001140361-25-040977",
-    debtAsOf: "2025-09-30",
-    // CASH: from provenance (XBRL - unrestricted only)
-    cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
-    cashAsOf: "2025-09-30",
-    cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
-    cashSourceUrl: "/filings/djt/0001140361-25-040977",
+    debtSource: "D1 latest (sec_companyfacts_xbrl): FY2025 LongTermDebt",
+    debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1849635&type=10&dateb=&owner=include&count=40",
+    debtAsOf: "2025-12-31",
+    // CASH: canonical lock aligned to D1 latest FY2025 companyfacts XBRL
+    cashReserves: 134_557_600,
+    cashAsOf: "2025-12-31",
+    cashSource: "D1 latest (sec_companyfacts_xbrl): FY2025 CashAndCashEquivalentsAtCarryingValue",
+    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1849635&type=10&dateb=&owner=include&count=40",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
-    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital. Audit note 2026-03-05: holdings lock (11,542 BTC) matches D1 latest; D1 cash/debt datapoints now include FY2025 values (as_of 2025-12-31) ahead of DJT provenance module refresh.",
+    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital. Audit note 2026-03-05: lock is now explicitly aligned to canonical D1 latest basis (holdings 11,542 BTC at 2025-09-30; cash/debt at FY2025 2025-12-31 companyfacts XBRL; shares on D1 backfill_qe basis at 2026-03-31).",
   },
   {
     id: "boyaa",
