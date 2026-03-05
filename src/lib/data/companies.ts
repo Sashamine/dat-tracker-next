@@ -553,7 +553,7 @@ export const btcCompanies: Company[] = [
     cashSourceUrl: "https://contents.xj-storage.jp/xcontents/33500/07d06a47/5b14/4ca6/a744/8415fa2bcc9e/140120251112597045.pdf",
     cashAsOf: "2026-02-14",
     preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
-    preferredSourceUrl: "https://metaplanet.jp/en/shareholders/disclosures",
+    preferredSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     preferredSource: "TDnet/IR disclosures (Metaplanet) — preferred terms via Mercury Class B preferred",
     preferredAsOf: "2026-02-14",
     leader: "Simon Gerovich (CEO)",
@@ -1552,7 +1552,7 @@ export const btcCompanies: Company[] = [
     cashSourceUrl: "/filings/djt/0001140361-25-040977",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
-    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital.",
+    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital. Audit note 2026-03-05: holdings lock (11,542 BTC) matches D1 latest; D1 cash/debt datapoints now include FY2025 values (as_of 2025-12-31) ahead of DJT provenance module refresh.",
   },
   {
     id: "boyaa",
@@ -1597,7 +1597,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Dai Zhikang (Chairman & Executive Director)",
     strategy: "Hong Kong's largest BTC treasury. 15.1% BTC Yield (9mo 2025). Active buyback program.",
-    notes: "Asia's MicroStrategy. Sep 2025 raised HK$410M via placement for BTC. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled.",
+    notes: "Asia's MicroStrategy. Sep 2025 raised HK$410M via placement for BTC. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled. Audit note 2026-03-05: holdings ladder reconciled to D1/HKEX PDF extract; D1 basic_shares reflects gross issued shares while lock remains treasury-adjusted for mNAV.",
   },
   // NXTT (Next Technology Holding) removed - formerly WeTrade Group, history of "untrue" financial reports (Nov 2023),
   // internal investigation found inconsistent expenditures, shareholder lawsuits, derivative suits against former officers.

@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "FUFU",
   "secCik": "0001921158",
-  "asOf": "2026-01-31",
-  "generatedAt": "2026-03-05T01:01:09.783Z",
+  "asOf": "2026-02-28",
+  "generatedAt": "2026-03-05T13:35:19.107Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1796,
+    "amount": 1830,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1921158/000121390026023884/ea028015601_ex99-1.htm",
       "holdingsAccession": null
     }
   },

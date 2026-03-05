@@ -3,7 +3,7 @@
   "ticker": "FLD",
   "secCik": "0001889123",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T01:01:09.783Z",
+  "generatedAt": "2026-03-05T13:35:19.107Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1526,
+    "amount": 1575,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://investor.foldapp.com/news-releases/news-release-details/fold-holdings-inc-nasdaq-fld-announces-third-quarter-2025",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
       "holdingsAccession": null
     }
   },

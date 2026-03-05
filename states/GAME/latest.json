@@ -3,7 +3,7 @@
   "ticker": "GAME",
   "secCik": "1714562",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T01:01:09.779Z",
+  "generatedAt": "2026-03-05T13:35:19.105Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 1608,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
       "holdingsAccession": null
     }
   },
