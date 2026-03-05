@@ -3,7 +3,7 @@
   "ticker": "CWD",
   "secCik": "1627282",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T17:35:25.430Z",
+  "generatedAt": "2026-03-05T19:36:34.275Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 562535,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000136/cwd-20251016.htm",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-12-31",
     "source": {
       "sharesSource": "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
-      "sharesSourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001627282&type=DEF"
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000160/cwd-20251117.htm"
     }
   },
   "balanceSheet": {

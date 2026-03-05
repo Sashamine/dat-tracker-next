@@ -1,17 +1,20 @@
 {
   "schemaVersion": "0.1",
-  "generatedAt": "2026-03-05T17:35:27.520Z",
+  "generatedAt": "2026-03-05T19:36:36.364Z",
   "runId": "cron-nonus-upgrade",
   "gaps": {
-    "missing_debt_evidence": [
-      "ALCPB",
-      "OBTC3"
+    "low_quality_evidence:holdings": [
+      "BTOG",
+      "H100.ST"
+    ],
+    "low_quality_evidence:cash": [
+      "H100.ST"
+    ],
+    "low_quality_evidence:debt": [
+      "H100.ST"
     ],
     "low_quality_evidence:shares": [
-      "CWD"
-    ],
-    "low_quality_evidence:holdings": [
-      "CWD"
+      "H100.ST"
     ]
   }
 }

@@ -3,7 +3,7 @@
   "ticker": "ALCPB",
   "secCik": null,
   "asOf": "2026-02-16",
-  "generatedAt": "2026-03-05T17:35:25.426Z",
+  "generatedAt": "2026-03-05T19:36:34.271Z",
   "listing": {
     "country": "DE",
     "exchangeMic": "XETR",
@@ -35,7 +35,7 @@
     "asOf": "2025-06-30",
     "source": {
       "cashSourceUrl": "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
-      "debtSourceUrl": null,
+      "debtSourceUrl": "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
       "preferredSourceUrl": null
     }
   },

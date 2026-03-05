@@ -3,7 +3,7 @@
   "ticker": "IHLDF",
   "secCik": "0001905459",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T17:35:25.431Z",
+  "generatedAt": "2026-03-05T19:36:34.277Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 48000000,
     "source": {
       "holdingsSource": "regulatory-filing",
-      "holdingsSourceUrl": "https://www.sedarplus.ca",
+      "holdingsSourceUrl": "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-12-31",
     "source": {
       "sharesSource": "SEDAR+ Q4 2025 filing",
-      "sharesSourceUrl": "https://www.sedarplus.ca"
+      "sharesSourceUrl": "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016"
     }
   },
   "balanceSheet": {

@@ -3,7 +3,7 @@
   "ticker": "ETHM",
   "secCik": "0002080334",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T17:35:25.424Z",
+  "generatedAt": "2026-03-05T19:36:34.268Z",
   "listing": {
     "country": "CA",
     "exchangeMic": "XTSE",
@@ -23,7 +23,7 @@
     "sharesOutstandingFD": null,
     "asOf": "2025-09-30",
     "source": {
-      "sharesSource": "Q3 2025 SEDAR+ checkpoint (mirrored in SEC foreign issuer feed)",
+      "sharesSource": "Q3 2025 filing checkpoint (SEC foreign issuer filing channel)",
       "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/2080334/000121390026020786/f425022626_ether.htm"
     }
   },
