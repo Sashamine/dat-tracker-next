@@ -61,11 +61,15 @@ export type CompanyType = "Treasury" | "Miner";
 // Stock currency (for non-USD exchanges)
 export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL" | "GBP" | "NOK" | "KRW" | "AED" | "AUD";
 
+// Jurisdiction bucket for discovery/scoring routing.
+export type Jurisdiction = "US" | "JP" | "CA" | "HK" | "AU" | "EU" | "OTHER";
+
 // Base company interface
 export interface Company {
   id: string;
   name: string;
   ticker: string;
+  jurisdiction?: Jurisdiction;
 
   // Listing metadata (agent-native routing)
   country?: string;        // ISO 3166-1 alpha-2 when known (e.g., "US", "CA", "JP").
@@ -81,6 +85,8 @@ export interface Company {
   website?: string;
   twitter?: string;
   investorRelationsUrl?: string;
+  hkexNewsUrl?: string;        // HKEX filings/news page or direct bulletin URL
+  asxAnnouncementsUrl?: string; // ASX announcements/company page URL
   tokenizedAddress?: string; // On-chain tokenized stock (e.g., Solana)
   tokenizedChain?: string; // Which chain the token is on
   logoUrl?: string;
@@ -96,6 +102,7 @@ export interface Company {
   costBasisSourceUrl?: string;
   costBasisAsOf?: string;  // ISO date the cost basis is calculated from
   stakingPct?: number;
+  stakingRatio?: number;       // Fraction of holdings actively staked (0..1) for yield modeling
   stakingApy?: number;
   stakingMethod?: string;
   stakingSource?: string;      // Source for staking percentage (SEC filing, PR, etc.)
