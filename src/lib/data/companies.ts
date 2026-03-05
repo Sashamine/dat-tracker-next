@@ -889,7 +889,7 @@ export const btcCompanies: Company[] = [
     holdings: 1_051,  // MFN Feb 6, 2026: 4.39 BTC purchase → 1,051 total
     holdingsLastUpdated: "2026-02-06",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.h100.group/investor-relations/shares",  // MFN Feb 6, 2026 filing (specific URL)
+    holdingsSourceUrl: "https://mfn.se/a/h100-group/h100-group-acquires-4-39-btc-total-holdings-reach-1-051-btc",  // MFN Feb 6, 2026 filing
     datStartDate: "2025-05-22",  // First BTC purchase May 22, 2025
     costBasisAvg: 114_606,  // treasury.h100.group avg cost
     costBasisSource: "company-website",
@@ -902,17 +902,17 @@ export const btcCompanies: Company[] = [
     burnEstimated: true,  // Swedish quarterly report estimate
     totalDebt: H100_PROVENANCE.totalDebt?.value || 20_736_000,  // SEK 219.8M zero-coupon convertible / 10.6 SEK/USD ≈ $20.7M. IFRS classification TBD Feb 24 Bokslutskommuniké.
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific IFRS period end
-    debtSourceUrl: "https://www.h100.group/investor-relations/shares", // MFN filings index (more specific than /investors)
+    debtSourceUrl: "https://mfn.se/a/h100-group", // MFN filings feed
     debtSource: "MFN filings index — needs specific interim/annual report link",
     cashReserves: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké
-    cashSourceUrl: "https://www.h100.group/investor-relations/shares", // MFN filings index
+    cashSourceUrl: "https://mfn.se/a/h100-group", // MFN filings feed
     cashSource: "MFN filings index — needs specific interim/annual report link",
     cashAsOf: "2025-12-31",
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 12, 2026)
     sharesSource: "H100 Group IR page + MFN acquisition filing",
-    sharesSourceUrl: "https://www.h100.group/investor-relations/shares",
+    sharesSourceUrl: "https://mfn.se/a/h100-group",
     sharesAsOf: "2026-02-12",  // MFN filing date for Future Holdings AG acquisition completion
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
@@ -1539,7 +1539,7 @@ export const btcCompanies: Company[] = [
     // SHARES: canonical lock now follows D1 latest backfill_qe basis for alignment
     sharesForMnav: 276_731_315,
     sharesSource: "D1 latest (sec_companyfacts_xbrl): backfill_qe normalized shares basis",
-    sharesSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1849635&type=10&dateb=&owner=include&count=40",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
     sharesAsOf: "2026-03-31",
     // DEBT: canonical lock aligned to D1 latest FY2025 companyfacts XBRL
     totalDebt: 947_117_000,
@@ -1547,13 +1547,13 @@ export const btcCompanies: Company[] = [
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
     debtSource: "D1 latest (sec_companyfacts_xbrl): FY2025 LongTermDebt",
-    debtSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1849635&type=10&dateb=&owner=include&count=40",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
     debtAsOf: "2025-12-31",
     // CASH: canonical lock aligned to D1 latest FY2025 companyfacts XBRL
     cashReserves: 134_557_600,
     cashAsOf: "2025-12-31",
     cashSource: "D1 latest (sec_companyfacts_xbrl): FY2025 CashAndCashEquivalentsAtCarryingValue",
-    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1849635&type=10&dateb=&owner=include&count=40",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
     leader: "Devin Nunes (CEO)",
     strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
     notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital. Audit note 2026-03-05: lock is now explicitly aligned to canonical D1 latest basis (holdings 11,542 BTC at 2025-09-30; cash/debt at FY2025 2025-12-31 companyfacts XBRL; shares on D1 backfill_qe basis at 2026-03-31).",
@@ -2703,7 +2703,7 @@ export const dogeCompanies: Company[] = [
     holdings: 70_543_745,  // SEC 6-K Jan 20, 2026 (post 1:60 reverse split; units unchanged)
     holdingsLastUpdated: "2026-01-20",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=6-K&count=40",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/0001104659-26-005086-index.html",
     datStartDate: "2025-07-17",  // DOGE strategy announced
     quarterlyBurnUsd: 771_000,
     burnSource: "SEC 20-F FY2025 (Jun 30, 2025)",
