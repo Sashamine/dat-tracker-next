@@ -1,4 +1,4 @@
-import { Company } from "../types";
+import { Company, Jurisdiction } from "../types";
 import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
@@ -174,6 +174,7 @@ export const ethCompanies: Company[] = [
     name: "The Ether Machine",
     ticker: "ETHM",
     country: "CA",
+    jurisdiction: "US",  // SEC-routed discovery until SEDAR profile metadata is available
     exchangeMic: "XTSE",
     currency: "CAD",  // Toronto Stock Exchange
     secCik: "0002080334",
@@ -1411,6 +1412,7 @@ export const btcCompanies: Company[] = [
     ticker: "DCC.AX",
     country: "AU",
     exchangeMic: "XASX",
+    asxAnnouncementsUrl: "https://www.asx.com.au/markets/company/DCC",
     currency: "AUD",
     asset: "BTC",
     tier: 1,  // ASX-verified + real-time dashboard
@@ -1554,6 +1556,7 @@ export const btcCompanies: Company[] = [
     ticker: "0434.HK",
     country: "HK",
     exchangeMic: "XHKG",
+    hkexNewsUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     currency: "HKD",
     asset: "BTC",
     tier: 1,
@@ -1718,6 +1721,7 @@ export const solCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     datStartDate: "2025-05-01",
+    stakingRatio: 1.0,
     stakingPct: 0.9996,  // 10-Q: 1,738,682 staked / 1,739,355 total = 99.96%
     stakingMethod: "Native staking via third-party validators (Anchorage Digital custody)",
     stakingSource: "SEC 10-Q Q3 2025 Note 3: 1,738,682/1,739,355 SOL staked (99.96%). $342K staking rewards (partial quarter, commenced Sep 2025). 7.03% APY.",
@@ -1872,6 +1876,7 @@ export const solCompanies: Company[] = [
     holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
     datStartDate: "2024-06-01",
     // costBasisAvg removed - needs verification
+    stakingRatio: 1.0,
     // stakingPct: 0.85 removed - needs verification
     stakingApy: 0.065,
     quarterlyBurnUsd: 1_200_000,
@@ -2163,8 +2168,8 @@ export const taoCompanies: Company[] = [
     id: "xtaif",
     name: "xTAO Inc",
     ticker: "XTAIF",
-    country: "US",
-    exchangeMic: "XNAS",
+    country: "CA",
+    exchangeMic: "XTSE",
     asset: "TAO",
     tier: 1,
     website: "https://www.xtao.co",
@@ -2183,6 +2188,7 @@ export const taoCompanies: Company[] = [
     burnSourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
+    sedarProfile: "000048521",
     cashReserves: 4_132_218,  // SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)
     cashSource: "SEDAR+ Q2 FY26 MD&A (filed Nov 29, 2025)",
     cashSourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
@@ -2372,6 +2378,17 @@ export const xrpCompanies: Company[] = [
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
     datStartDate: "2025-11-01",
+    secCik: "0002044009",  // Armada Acquisition Corp II / Evernorth
+    preferredEquity: 0,
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/2044009/000119312526051286/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2025-12-31).",
+        severity: "warning",
+      },
+    ],
     quarterlyBurnUsd: 0,
     burnSource: "SPAC - minimal operating expenses pre-merger",
     burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1991453&type=10-Q",
@@ -2481,8 +2498,8 @@ export const ltcCompanies: Company[] = [
     id: "luxff",
     name: "Luxxfolio Holdings",
     ticker: "LUXFF",
-    country: "US",
-    exchangeMic: "XNAS",
+    country: "CA",
+    exchangeMic: "XTSE",
     asset: "LTC",
     tier: 2,
     holdings: 20_226,  // SEDAR+ FY2025 audited annual (Aug 31, 2025)
@@ -2802,8 +2819,36 @@ export const hbarCompanies: Company[] = [
   },
 ];
 
+function inferJurisdiction(company: Company): Jurisdiction {
+  const ticker = company.ticker.toUpperCase();
+  const country = (company.country || "").toUpperCase();
+
+  if (ticker.endsWith(".T")) return "JP";
+  if (ticker.endsWith(".TO") || ticker.endsWith(".V")) return "CA";
+  if (ticker.endsWith(".HK")) return "HK";
+  if (ticker.endsWith(".AX")) return "AU";
+
+  if (country === "US") return "US";
+  if (country === "JP") return "JP";
+  if (country === "CA") return "CA";
+  if (country === "HK") return "HK";
+  if (country === "AU") return "AU";
+  if (country === "DE" || country === "FR" || country === "IT" || country === "ES" || country === "PT" || country === "NL" || country === "BE" || country === "SE" || country === "NO" || country === "DK" || country === "FI" || country === "PL" || country === "IE" || country === "AT" || country === "CH") {
+    return "EU";
+  }
+
+  return "OTHER";
+}
+
+function withJurisdiction(companies: Company[]): Company[] {
+  return companies.map((company) => ({
+    ...company,
+    jurisdiction: company.jurisdiction ?? inferJurisdiction(company),
+  }));
+}
+
 // All companies combined
-export const allCompanies: Company[] = [
+const allCompaniesRaw: Company[] = [
   ...ethCompanies,
   ...btcCompanies,
   ...solCompanies,
@@ -2821,6 +2866,7 @@ export const allCompanies: Company[] = [
   ...adaCompanies,
   ...hbarCompanies,
 ];
+export const allCompanies: Company[] = withJurisdiction(allCompaniesRaw);
 
 // Get company by ticker
 export function getCompanyByTicker(ticker: string): Company | undefined {
