@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "TBH",
   "secCik": "1903595",
-  "asOf": "2026-01-26",
-  "generatedAt": "2026-03-04T14:10:30.431Z",
+  "asOf": "2025-12-18",
+  "generatedAt": "2026-03-05T19:36:34.276Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,17 +14,17 @@
     "amount": 0,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1903595/000121390026015027/ea0276712-8k_brag.htm",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 10800000,
     "sharesOutstandingFD": null,
-    "asOf": "2025-11-12",
+    "asOf": "2025-12-18",
     "source": {
-      "sharesSource": "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1903595/000121390025111616/ea0263575-10q_brag.htm"
+      "sharesSource": "SEC 8-K DOGE treasury update: existing TBH equity baseline at merger-update checkpoint",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html"
     }
   },
   "balanceSheet": {

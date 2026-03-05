@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "IHLDF",
   "secCik": "0001905459",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-04T14:10:30.432Z",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-03-05T19:36:34.277Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -13,18 +13,18 @@
     "asset": "HBAR",
     "amount": 48000000,
     "source": {
-      "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://www.immutableholdings.com/",
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 65000000,
     "sharesOutstandingFD": null,
-    "asOf": "2025-09-30",
+    "asOf": "2025-12-31",
     "source": {
-      "sharesSource": "SEDAR+ Q3 2025 Interim MD&A",
-      "sharesSourceUrl": "https://www.sedarplus.ca/csa-party/viewInstance/resource.html?node=W1084&drmKey=1ad315a0899e6f02"
+      "sharesSource": "SEDAR+ Q4 2025 filing",
+      "sharesSourceUrl": "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016"
     }
   },
   "balanceSheet": {

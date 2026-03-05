@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "DDC",
   "secCik": "0001808110",
-  "asOf": "2026-02-11",
-  "generatedAt": "2026-03-04T14:10:30.428Z",
+  "asOf": "2026-03-04",
+  "generatedAt": "2026-03-05T19:36:34.272Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1988,
+    "amount": 2183,
     "source": {
-      "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://treasury.ddc.xyz",
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 30473005,
     "sharesOutstandingFD": null,
-    "asOf": "2026-02-06",
+    "asOf": "2026-03-04",
     "source": {
-      "sharesSource": "SEC 6-K Feb 6, 2026 + treasury.ddc.xyz",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm"
+      "sharesSource": "SEC 6-K Mar 4, 2026 Ex99.1 + treasury.ddc.xyz",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm"
     }
   },
   "balanceSheet": {
