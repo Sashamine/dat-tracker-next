@@ -101,6 +101,12 @@ function resolveAssetUnit(asset: string): string | null {
   return ASSET_UNIT_MAP[key] || null;
 }
 
+// Some MULTI-asset histories still track `holdings` as BTC-native for chart
+// continuity; allow explicit ticker-level unit overrides for holdings_native.
+const HOLDINGS_UNIT_OVERRIDES: Record<string, string> = {
+  '3825.T': 'BTC',
+};
+
 // ---------------------------------------------------------------------------
 // Artifact resolution — cache per sourceUrl/accession
 // ---------------------------------------------------------------------------
@@ -433,14 +439,18 @@ async function main() {
         const value = metricDef.getValue(snapshot);
         if (value === undefined || value === null) continue;
 
-        // Skip MULTI-asset tickers for holdings_native (ambiguous unit)
+        let unit = metricDef.getUnit(assetUnit);
+        // Default behavior is to skip ambiguous MULTI holdings. Allow only
+        // explicit ticker overrides where `snapshot.holdings` is known BTC-native.
         if (metricDef.metric === 'holdings_native' && assetUnit === 'MULTI') {
-          stats.skipped++;
-          totalSkipped++;
-          continue;
+          const overrideUnit = HOLDINGS_UNIT_OVERRIDES[entityId];
+          if (!overrideUnit) {
+            stats.skipped++;
+            totalSkipped++;
+            continue;
+          }
+          unit = overrideUnit;
         }
-
-        const unit = metricDef.getUnit(assetUnit);
         const proposalKey = makeProposalKey({
           entityId,
           metric: metricDef.metric,
