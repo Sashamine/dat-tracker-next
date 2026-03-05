@@ -3,7 +3,7 @@
   "ticker": "BTOG",
   "secCik": "1735556",
   "asOf": "2026-01-20",
-  "generatedAt": "2026-03-05T19:36:34.276Z",
+  "generatedAt": "2026-03-05T20:22:40.131Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 70543745,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=6-K&count=40",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/0001104659-26-005086-index.html",
       "holdingsAccession": null
     }
   },
