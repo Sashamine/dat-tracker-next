@@ -161,6 +161,20 @@
       "count": 1,
       "firstSeen": "2026-02-25T01:02:20.815Z",
       "lastSeen": "2026-02-25T01:02:20.815Z"
+    },
+    "cash::XRPN": {
+      "mode": "cash",
+      "ticker": "XRPN",
+      "count": 1,
+      "firstSeen": "2026-03-05T01:01:07.199Z",
+      "lastSeen": "2026-03-05T01:01:07.199Z"
+    },
+    "debt::XRPN": {
+      "mode": "debt",
+      "ticker": "XRPN",
+      "count": 1,
+      "firstSeen": "2026-03-05T01:01:08.128Z",
+      "lastSeen": "2026-03-05T01:01:08.128Z"
     }
   }
 }

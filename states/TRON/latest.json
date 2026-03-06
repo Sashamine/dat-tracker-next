@@ -3,7 +3,7 @@
   "ticker": "TRON",
   "secCik": "1956744",
   "asOf": "2026-01-23",
-  "generatedAt": "2026-03-04T14:10:30.430Z",
+  "generatedAt": "2026-03-05T20:22:40.130Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,17 +14,17 @@
     "amount": 677000000,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956744/000149315226006323/form8-k.htm",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/form8-k.htm",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 274382064,
     "sharesOutstandingFD": null,
-    "asOf": "2025-12-29",
+    "asOf": "2026-01-23",
     "source": {
-      "sharesSource": "SEC 8-K Dec 29, 2025",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/0001493152-25-029225-index.html"
+      "sharesSource": "SEC 8-K Jan 23, 2026",
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/form8-k.htm"
     }
   },
   "balanceSheet": {

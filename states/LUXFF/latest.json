@@ -2,11 +2,11 @@
   "schemaVersion": "0.1",
   "ticker": "LUXFF",
   "secCik": null,
-  "asOf": "2025-08-31",
-  "generatedAt": "2026-03-04T14:10:30.431Z",
+  "asOf": "2025-12-09",
+  "generatedAt": "2026-03-05T20:22:40.130Z",
   "listing": {
-    "country": "US",
-    "exchangeMic": "XNAS",
+    "country": "CA",
+    "exchangeMic": "XTSE",
     "currency": "USD"
   },
   "holdings": {
@@ -14,7 +14,7 @@
     "amount": 20226,
     "source": {
       "holdingsSource": "regulatory-filing",
-      "holdingsSourceUrl": "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
+      "holdingsSourceUrl": "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736",
       "holdingsAccession": null
     }
   },
