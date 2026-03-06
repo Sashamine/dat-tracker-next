@@ -114,7 +114,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "83,139,037",
-      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      url: "/filings/fwdi/0001683168-26-000960",
       quote: "83,139,037 shares of common stock outstanding as of January 31, 2026",
       anchor: "Common Stock Outstanding",
       cik: FWDI_CIK,
@@ -134,7 +134,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "12,084,535",
-      url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
+      url: `/filings/fwdi/0001683168-26-000960`,
       quote: "Total liabilities $12,084,535 (all current — taxes, accrued expenses, leases)",
       anchor: "Total liabilities",
       cik: FWDI_CIK,
@@ -155,7 +155,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "approximately $12 million",
-      url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
+      url: `/filings/fwdi/0001683168-26-000960`,
       quote: "approximately $12 million in cash as of January 31, 2026",
       anchor: "Cash and cash equivalents",
       cik: FWDI_CIK,
@@ -175,7 +175,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "3,252,629",
-      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      url: "/filings/fwdi/0001683168-26-000960",
       quote: "General and administrative expense $3,252,629",
       anchor: "General and administrative",
       cik: FWDI_CIK,
@@ -194,7 +194,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm`,
+      url: `/filings/fwdi/0001683168-26-000960`,
       quote: "Series A-1 Convertible Preferred: 0 shares outstanding",
       anchor: "Preferred stock",
       cik: FWDI_CIK,
@@ -214,7 +214,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "21,435,250",
-      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      url: "/filings/fwdi/0001683168-26-000960",
       quote: "Total revenues $21,435,250",
       anchor: "Revenues",
       cik: FWDI_CIK,
@@ -234,7 +234,7 @@ export const FWDI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "585,651,086",
-      url: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
+      url: "/filings/fwdi/0001683168-26-000960",
       quote: "Net loss $(585,651,086)",
       anchor: "Net loss",
       cik: FWDI_CIK,

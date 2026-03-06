@@ -52,11 +52,17 @@ const PIPE_8K_FILED = "2025-05-12";
 const LATEST_HOLDINGS = 5_398;
 const LATEST_HOLDINGS_DATE = "2025-11-12"; // Confirmed in Q3 earnings 8-K
 
-// Shares: XBRL EntityCommonStockSharesOutstanding
-const SHARES_OUTSTANDING = 439_850_889; // Common stock as of Nov 14, 2025
-const PREFUNDED_WARRANTS = 71_704_975;  // Pre-funded warrants at $0.001 exercise
-const TOTAL_SHARES_FOR_MNAV = 511_555_864; // Basic + pre-funded (effectively shares)
-const SHARES_DATE = Q3_2025_SHARES_DATE;
+// =========================================================================
+// POST-ACQUISITION DATA (Feb 2026: BTC Inc + UTXO Management)
+// =========================================================================
+// Shares: 688,942,624 common (basic) per David Bailey 13D (Feb 26, 2026)
+// Fully diluted: 890,148,039 per Feb 25, 2026 8-K
+const SHARES_OUTSTANDING = 688_942_624; 
+const SHARES_DATE = "2026-02-26";
+
+// Combined EBITDA/Revenue from acquired profitable entities
+const ACQUISITION_EBITDA = 34_200_000;
+const ACQUISITION_REVENUE = 80_500_000;
 
 // Debt: Kraken loan (replaced Yorkville → Two Prime → Kraken chain)
 const TOTAL_DEBT = 210_000_000; // $210M USDT, 8% annual, BTC-collateralized, due Dec 4, 2026
@@ -114,7 +120,7 @@ export const NAKA_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "210,000,000 USDT",
-      url: `https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm`,
+      url: `/filings/naka/0001493152-25-026862`,
       quote: "a fixed-term loan of 210,000,000 USDT...bearing a fee of 8.00% per annum, maturing on December 4, 2026",
       anchor: "Kraken Loan Agreement",
       cik: NAKA_CIK,
@@ -167,7 +173,7 @@ export const NAKA_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm`,
+      url: `/filings/naka/0001493152-25-024260`,
       quote: "No preferred stock outstanding",
       anchor: "Preferred stock",
       cik: NAKA_CIK,

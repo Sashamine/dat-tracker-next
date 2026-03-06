@@ -236,7 +236,7 @@ const BMNR_PURCHASES: Purchase[] = [
   // Jan 2026
   { date: "2026-01-04", quantity: 32_977, pricePerUnit: 3280, totalCost: 108_164_560, source: "8-K press release" },
   { date: "2026-01-20", quantity: 59_534, pricePerUnit: 3350, totalCost: 199_438_900, source: "8-K press release", sourceUrl: "https://www.prnewswire.com/news-releases/bitmine-immersion-technologies-bmnr-announces-eth-holdings-reach-4-203-million-tokens-and-total-crypto-and-total-cash-holdings-of-14-5-billion-302665064.html" },
-  { date: "2026-01-25", quantity: 40_302, pricePerUnit: 3320, totalCost: 133_802_640, source: "SEC 8-K Jan 26, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226003536/ex99-1.htm" },
+  { date: "2026-01-25", quantity: 40_302, pricePerUnit: 3320, totalCost: 133_802_640, source: "SEC 8-K Jan 26, 2026", sourceUrl: "/filings/bmnr/0001493152-26-003536" },
 ];
 
 // =============================================================================
@@ -247,14 +247,14 @@ const BMNR_PURCHASES: Purchase[] = [
 const SBET_PURCHASES: Purchase[] = [
   // Q2 2025 (Jun 2 - Jun 30): First quarter of ETH accumulation
   // 10-Q Note 2: 24,704 native ETH at $63,899,229 cost + 164,731 LsETH at $470,235,927 cost
-  { date: "2025-06-30", quantity: 24_704, pricePerUnit: 2587, totalCost: 63_899_229, source: "Q2 2025 10-Q (native ETH)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024107/" },
-  { date: "2025-06-30", quantity: 164_731, pricePerUnit: 2854, totalCost: 470_235_927, source: "Q2 2025 10-Q (LsETH at cost)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024107/" },
+  { date: "2025-06-30", quantity: 24_704, pricePerUnit: 2587, totalCost: 63_899_229, source: "Q2 2025 10-Q (native ETH)", sourceUrl: "/filings/sbet/0001641172-25-024107" },
+  { date: "2025-06-30", quantity: 164_731, pricePerUnit: 2854, totalCost: 470_235_927, source: "Q2 2025 10-Q (LsETH at cost)", sourceUrl: "/filings/sbet/0001641172-25-024107" },
 
   // Q3 2025 (Jul 1 - Sep 30): Massive accumulation phase
   // 10-Q Note: 580,841 native ETH at $2,304,908,135 + 236,906 LsETH at $717,419,123
   // Delta from Q2: 556,137 native ETH at ~$2,241M + 72,175 LsETH at ~$247M
-  { date: "2025-09-30", quantity: 556_137, pricePerUnit: 4030, totalCost: 2_241_008_906, source: "Q3 2025 10-Q (native ETH delta)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/" },
-  { date: "2025-09-30", quantity: 72_175, pricePerUnit: 3424, totalCost: 247_183_196, source: "Q3 2025 10-Q (LsETH delta)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/" },
+  { date: "2025-09-30", quantity: 556_137, pricePerUnit: 4030, totalCost: 2_241_008_906, source: "Q3 2025 10-Q (native ETH delta)", sourceUrl: "/filings/sbet/0001493152-25-021970" },
+  { date: "2025-09-30", quantity: 72_175, pricePerUnit: 3424, totalCost: 247_183_196, source: "Q3 2025 10-Q (LsETH delta)", sourceUrl: "/filings/sbet/0001493152-25-021970" },
 ];
 
 // =============================================================================

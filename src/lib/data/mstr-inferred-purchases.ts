@@ -39,13 +39,13 @@ export const MSTR_INFERRED_PURCHASES: InferredPurchase[] = [
     beforeFiling: {
       date: "2021-02-02",
       cumulative: 71079,
-      secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521025369/d67809d8k.htm",
+      secUrl: "/filings/mstr/0001193125-21-025369",
     },
     afterFiling: {
       date: "2021-03-01",
       cumulative: 90859,
       reported: 328,
-      secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521062322/d139633d8k.htm",
+      secUrl: "/filings/mstr/0001193125-21-062322",
     },
   },
   {
@@ -57,13 +57,13 @@ export const MSTR_INFERRED_PURCHASES: InferredPurchase[] = [
     beforeFiling: {
       date: "2021-05-18",
       cumulative: 92079,
-      secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521164617/d166462d8k.htm",
+      secUrl: "/filings/mstr/0001193125-21-164617",
     },
     afterFiling: {
       date: "2021-08-24",
       cumulative: 108992,
       reported: 3907,
-      secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521254452/d223448d8k.htm",
+      secUrl: "/filings/mstr/0001193125-21-254452",
     },
   },
   {
@@ -75,13 +75,13 @@ export const MSTR_INFERRED_PURCHASES: InferredPurchase[] = [
     beforeFiling: {
       date: "2022-09-20",
       cumulative: 130000,
-      secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522247427/d401193d8k.htm",
+      secUrl: "/filings/mstr/0001193125-22-247427",
     },
     afterFiling: {
       date: "2023-03-27",
       cumulative: 138955,
       reported: 6455,
-      secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523080814/d456232d8k.htm",
+      secUrl: "/filings/mstr/0001193125-23-080814",
     },
   },
 ];

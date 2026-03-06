@@ -21,7 +21,7 @@ export const XXI_CIK = "2070457";
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
+  `/filings/xxi/${accession}`;
 
 // =========================================================================
 // MERGER DATA (Dec 9, 2025) - from 8-K Dec 12, 2025
@@ -84,7 +84,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "84,863.57",
-      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
+      url: "/filings/xxi/0001213900-26-013482",
       quote: "at a value of $84,863.57 per Bitcoin",
       anchor: "Fair Value",
       cik: XXI_CIK,
@@ -144,7 +144,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "119.3",
-      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001285/ea0270549-s1_twenty.htm",
+      url: "/filings/xxi/0001213900-26-001285",
       quote: "$119.3 million in cash",
       anchor: "Cash",
       cik: XXI_CIK,
@@ -162,7 +162,7 @@ export const XXI_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
+      url: "/filings/xxi/0001213900-26-013482",
       quote: "no shares of Preferred Stock issued and outstanding",
       cik: XXI_CIK,
       accession: "0001213900-26-013482",

@@ -144,7 +144,7 @@ export const ddcHoldingsHistory: DDCHoldingsEntry[] = [
     basicShares: 23310000,
     dilutedShares: 29750000,
     source: "SEC 424B3 - treasury.ddc.xyz",
-    filingUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/",
+    filingUrl: "/filings/ddc/0001213900-26-007463",
   },
   {
     date: "2026-01-22",

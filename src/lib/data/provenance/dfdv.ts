@@ -64,7 +64,7 @@ const JUL8_8K_FILED = "2025-07-08";
 
 // Helper to build SEC filing URL
 const secDocUrl = (accession: string, docName: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${DFDV_CIK}/${accession.replace(/-/g, "")}/${docName}`;
+  `/filings/dfdv/${accession}`;
 
 // =========================================================================
 // LATEST DATA (as of Jan 1, 2026 business update)
@@ -150,7 +150,7 @@ export const DFDV_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "202,042",
-      url: `https://www.sec.gov/Archives/edgar/data/${DFDV_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/dfdv-20250930.htm`,
+      url: `/filings/dfdv/${Q3_2025_10Q_ACCESSION}`,
       quote:
         "Long-term debt, net $131,444K + Digital asset financing $70,331K + Loan payable $267K = $202,042K total",
       anchor: "debt",

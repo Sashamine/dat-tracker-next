@@ -50,7 +50,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-20-313349",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312520313349/d55072d8k.htm",
+    secUrl: "/filings/mstr/0001193125-20-313349",
   },
   {
     filingDate: "2020-12-11",
@@ -61,7 +61,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 397.99,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-20-315971",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315971/d225117d8k.htm",
+    secUrl: "/filings/mstr/0001193125-20-315971",
   },
   {
     filingDate: "2021-02-17",
@@ -72,7 +72,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-21-045792",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521045792/d119477d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-045792",
   },
   {
     filingDate: "2021-02-19",
@@ -83,7 +83,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 1432.46,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-21-048555",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521048555/d130600d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-048555",
   },
   {
     filingDate: "2021-06-08",
@@ -94,7 +94,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-21-185538",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521185538/d183783d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-185538",
   },
   {
     filingDate: "2022-03-29",
@@ -105,7 +105,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-22-087494",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522087494/d296323d8k.htm",
+    secUrl: "/filings/mstr/0001193125-22-087494",
   },
   {
     filingDate: "2024-03-06",
@@ -116,7 +116,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-060026",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524060026/d781150d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-060026",
   },
   {
     filingDate: "2024-03-11",
@@ -127,7 +127,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 1497.68,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-064321",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064321/d749312d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-064321",
   },
   {
     filingDate: "2024-03-15",
@@ -138,7 +138,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-068621",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524068621/d792611d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-068621",
   },
   {
     filingDate: "2024-03-19",
@@ -149,7 +149,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 2327.21,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-070793",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524070793/d792323d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-070793",
   },
   {
     filingDate: "2024-06-14",
@@ -160,7 +160,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 397.99,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-161184",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524161184/d792626d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-161184",
   },
   {
     filingDate: "2024-06-20",
@@ -171,7 +171,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 2043.32,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-164009",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524164009/d857957d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-164009",
   },
   {
     filingDate: "2024-09-18",
@@ -182,7 +182,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-221085",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524221085/d889953d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-221085",
   },
   {
     filingDate: "2024-09-20",
@@ -193,7 +193,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-222498",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524222498/d822569d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-222498",
   },
   {
     filingDate: "2024-09-20",
@@ -204,7 +204,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 183.19,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-222462",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524222462/d887785d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-222462",
   },
   {
     filingDate: "2024-11-20",
@@ -215,7 +215,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: null,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-262151",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524262151/d850321d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-262151",
   },
   {
     filingDate: "2024-11-21",
@@ -226,7 +226,7 @@ export const MSTR_DEBT_ISSUANCES: DebtIssuance[] = [
     conversionPrice: 672.4,
     useOfProceeds: "Bitcoin acquisition",
     accessionNumber: "0001193125-24-263404",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263404/d905221d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-263404",
   },
 ];
 

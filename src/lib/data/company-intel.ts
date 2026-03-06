@@ -38,8 +38,8 @@ const MSTR_INTEL: CompanyIntel = {
   pressReleases: [
     { date: "2026-01-19", title: "Purchased 22,305 BTC for $2.2B", summary: "Largest weekly purchase of 2026, funded by $1.8B ATM sales", url: "https://www.strategy.com/press" },
     { date: "2026-01-12", title: "Purchased 13,627 BTC for $1.25B", summary: "At $91,519/BTC average", url: "https://www.strategy.com/press/strategy-acquires-13627-btc" },
-    { date: "2025-11-12", title: "$46B Omnibus ATM Program", summary: "Announced capacity for 2B Class A shares + preferred (STRK, STRF, STRD, STRC, STRE)", url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525243601/0001193125-25-243601-index.htm" },
-    { date: "2025-11-12", title: "STRE 10% Perpetual Preferred Launched", summary: "Fifth preferred class, completing preferred stock suite", url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525280178/0001193125-25-280178-index.htm" },
+    { date: "2025-11-12", title: "$46B Omnibus ATM Program", summary: "Announced capacity for 2B Class A shares + preferred (STRK, STRF, STRD, STRC, STRE)", url: "/filings/mstr/0001193125-25-243601" },
+    { date: "2025-11-12", title: "STRE 10% Perpetual Preferred Launched", summary: "Fifth preferred class, completing preferred stock suite", url: "/filings/mstr/0001193125-25-280178" },
     { date: "2025-02-01", title: "Rebranded from MicroStrategy to Strategy", summary: "Corporate name change reflecting Bitcoin focus", url: "https://www.strategy.com/press/microstrategy-rebrands-to-strategy" },
   ],
   strategySummary: "The 'Bitcoin Treasury Company' - pioneered corporate BTC accumulation starting Aug 2020. Executing the '42/42 Plan' targeting $84B in capital ($42B equity + $42B fixed-income). Operates as a Bitcoin credit company: issues convertible notes at 0-2.25% to buy BTC, captures BTC appreciation minus low cost of capital. Has 5 perpetual preferred classes (STRK, STRF, STRD, STRC, STRE) at 8-10% yields for income investors. Reports 'BTC Yield' metric - BTC per share growth rate.",
@@ -205,8 +205,8 @@ const ASST_INTEL: CompanyIntel = {
   ticker: "ASST",
   lastResearched: "2026-02-12",
   pressReleases: [
-    { date: "2026-02-03", title: "1-for-20 reverse stock split effective", summary: "Class A: 29.6M, Class B: 11.1M post-split", url: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/" },
-    { date: "2026-01-28", title: "Holdings reached 13,131.82 BTC", summary: "Continued accumulation post-merger", url: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/" },
+    { date: "2026-02-03", title: "1-for-20 reverse stock split effective", summary: "Class A: 29.6M, Class B: 11.1M post-split", url: "/filings/asst/0000950103-26-001560" },
+    { date: "2026-01-28", title: "Holdings reached 13,131.82 BTC", summary: "Continued accumulation post-merger", url: "/filings/asst/0001140361-26-002606" },
     { date: "2026-01-16", title: "Completed acquisition of Semler Scientific", summary: "Combined BTC treasuries", url: "https://investors.strive.com" },
     { date: "2025-09-01", title: "Completed merger with Asset Entities", summary: "Became Strive, Inc.", url: "https://www.strive.com/press" },
     { date: "2025-05-27", title: "Secured $750M PIPE funding", summary: "For Bitcoin purchases", url: "https://www.strive.com/press" },
@@ -223,9 +223,9 @@ const ASST_INTEL: CompanyIntel = {
   keyBackers: ["Vivek Ramaswamy (Co-Founder)", "Matt Cole (CEO)", "Eric Semler (Exec Chair)", "Anson Frericks"],
   outlook2026: "Post-merger integration. Monetize Semler healthcare ops. Continue aggressive BTC accumulation.",
   strategyDocs: [
-    { title: "Jan 28, 2026 8-K (Holdings Update)", date: "2026-01-28", description: "13,131.82 BTC holdings confirmed", url: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/0001140361-26-002606-index.htm" },
-    { title: "Feb 3, 2026 8-K (Stock Split)", date: "2026-02-03", description: "1-for-20 reverse split details", url: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326001560/0000950103-26-001560-index.htm" },
-    { title: "Q3 2025 10-Q", date: "2025-11-14", description: "5,886 BTC holdings at Sep 30, 2025", url: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/0001628280-25-052343-index.htm" },
+    { title: "Jan 28, 2026 8-K (Holdings Update)", date: "2026-01-28", description: "13,131.82 BTC holdings confirmed", url: "/filings/asst/0001140361-26-002606" },
+    { title: "Feb 3, 2026 8-K (Stock Split)", date: "2026-02-03", description: "1-for-20 reverse split details", url: "/filings/asst/0000950103-26-001560" },
+    { title: "Q3 2025 10-Q", date: "2025-11-14", description: "5,886 BTC holdings at Sep 30, 2025", url: "/filings/asst/0001628280-25-052343" },
   ],
 };
 
@@ -445,8 +445,8 @@ const SBET_INTEL: CompanyIntel = {
   keyBackers: ["Joseph Chalom (CEO, ex-BlackRock)", "Joseph Lubin (Chairman, Ethereum co-founder)"],
   outlook2026: "Institutional buildout. Target consistent premium to NAV.",
   strategyDocs: [
-    { title: "ETH Treasury Strategy Launch", date: "2025-06-02", description: "Pivot from gaming to Ethereum treasury company", url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/form8-k.htm" },
-    { title: "Q3 2025 10-Q", date: "2025-11-12", description: "First full quarter financials post-pivot: +1,100% revenue YoY", url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm" },
+    { title: "ETH Treasury Strategy Launch", date: "2025-06-02", description: "Pivot from gaming to Ethereum treasury company", url: "/filings/sbet/0001641172-25-014970" },
+    { title: "Q3 2025 10-Q", date: "2025-11-12", description: "First full quarter financials post-pivot: +1,100% revenue YoY", url: "/filings/sbet/0001493152-25-021970" },
     { title: "Leadership Expansion", date: "2025-10-20", description: "BlackRock, Bridgewater, Bain Capital executives join", url: "https://sharplinkinc.com/news" },
   ],
 };
@@ -955,9 +955,9 @@ const SUIG_INTEL: CompanyIntel = {
   lastResearched: "2026-01-13",
   pressReleases: [
     { date: "2025-11-01", title: "Total holdings ~102 million tokens (~$403M)", summary: "Treasury update", url: "https://www.suig.io" },
-    { date: "2025-09-30", title: "Holdings exceeded 105 million SUI tokens", summary: "Major milestone", url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm" },
-    { date: "2025-08-26", title: "Rebranded to SUI Group Holdings, ticker changed to SUIG", summary: "Formerly Mill City Ventures", url: "https://www.sec.gov/Archives/edgar/data/1425355/000121390025080829/ea0254593-8k_suigroup.htm" },
-    { date: "2025-08-01", title: "Closed $450M PIPE; pivoted to SUI treasury strategy", summary: "Strategic transformation", url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm" },
+    { date: "2025-09-30", title: "Holdings exceeded 105 million SUI tokens", summary: "Major milestone", url: "/filings/suig/0001654954-25-012949" },
+    { date: "2025-08-26", title: "Rebranded to SUI Group Holdings, ticker changed to SUIG", summary: "Formerly Mill City Ventures", url: "/filings/suig/0001213900-25-080829" },
+    { date: "2025-08-01", title: "Closed $450M PIPE; pivoted to SUI treasury strategy", summary: "Strategic transformation", url: "/filings/suig/0001654954-25-008758" },
   ],
   strategySummary: "Only publicly traded company with official Sui Foundation partnership. Staking all SUI earning ~$26,000/day. Galaxy Asset Management serves as Asset Manager. Big Brain Holdings, Pantera Capital, Electric Capital, GSR, ParaFi, Borderless, FalconX as investors.",
   recentDevelopments: [

@@ -26,7 +26,7 @@ export const AVX_CIK = "1826397";
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
+  `/filings/avx/${accession}`;
 
 // =========================================================================
 // KEY FILINGS

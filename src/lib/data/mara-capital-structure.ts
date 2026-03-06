@@ -83,7 +83,7 @@ export const MARA_CONVERTIBLE_NOTES: MaraConvertibleNote[] = [
     status: "outstanding",
     notes: "Conv rate: 52.9451 shares per $1,000. Per Q3 2025 10-Q Note 14.",
     issuance8kAccession: "0001493152-24-032433",
-    issuance8kUrl: "https://www.sec.gov/Archives/edgar/data/0001507605/000149315224032433/form8-k.htm",
+    issuance8kUrl: "/filings/mara/0001493152-24-032433",
   },
   
   {
@@ -98,7 +98,7 @@ export const MARA_CONVERTIBLE_NOTES: MaraConvertibleNote[] = [
     status: "outstanding",
     notes: "Zero-coupon convertible. Conv rate: 38.5902 shares per $1,000. Per Q3 2025 10-Q Note 14.",
     issuance8kAccession: "0001493152-24-047078",
-    issuance8kUrl: "https://www.sec.gov/Archives/edgar/data/0001507605/000149315224047078/form8-k.htm",
+    issuance8kUrl: "/filings/mara/0001493152-24-047078",
   },
   
   {
@@ -113,7 +113,7 @@ export const MARA_CONVERTIBLE_NOTES: MaraConvertibleNote[] = [
     status: "outstanding",
     notes: "Zero-coupon convertible. Conv rate: 28.9159 shares per $1,000. Per Q3 2025 10-Q Note 14.",
     issuance8kAccession: "0001493152-24-048704",
-    issuance8kUrl: "https://www.sec.gov/Archives/edgar/data/0001507605/000149315224048704/form8-k.htm",
+    issuance8kUrl: "/filings/mara/0001493152-24-048704",
   },
 
   {

@@ -46,7 +46,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2026-02-19",
     periodDate: "2026-02-15",
     items: "7.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/",
+    url: "/filings/sbet/0001493152-26-007427",
     hasHoldingsUpdate: true,
   },
 
@@ -57,7 +57,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2026-02-03",
     periodDate: "2026-02-03",
     items: "5.03, 7.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226004839/",
+    url: "/filings/sbet/0001493152-26-004839",
     hasHoldingsUpdate: false,
   },
 
@@ -72,7 +72,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-12-17",
     periodDate: "2025-12-14",
     items: "5.02, 5.03, 7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/",
+    url: "/filings/sbet/0001493152-25-028063",
     hasHoldingsUpdate: true,
   },
 
@@ -83,7 +83,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-11-13",
     periodDate: "2025-11-09",
     items: "2.02, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/",
+    url: "/filings/sbet/0001493152-25-022065",
     hasHoldingsUpdate: true,
   },
 
@@ -94,7 +94,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-11-12",
     periodDate: "2025-11-09",
     items: "2.02, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022012/",
+    url: "/filings/sbet/0001493152-25-022012",
     hasHoldingsUpdate: false,
   },
 
@@ -105,7 +105,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-11-12",
     periodDate: "2025-09-30",
     items: "10-Q",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
+    url: "/filings/sbet/0001493152-25-021970",
     hasHoldingsUpdate: true, // Has official quarter-end holdings
   },
 
@@ -116,7 +116,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-10-28",
     periodDate: "2025-10-28",
     items: "8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225019828/",
+    url: "/filings/sbet/0001493152-25-019828",
     hasHoldingsUpdate: false,
   },
 
@@ -127,7 +127,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-10-21",
     periodDate: "2025-10-19",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/",
+    url: "/filings/sbet/0001493152-25-018731",
     hasHoldingsUpdate: true,
   },
 
@@ -138,7 +138,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-10-17",
     periodDate: "2025-10-17",
     items: "1.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018379/",
+    url: "/filings/sbet/0001493152-25-018379",
     hasHoldingsUpdate: false,
   },
 
@@ -149,7 +149,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-09-25",
     periodDate: "2025-09-25",
     items: "5.03, 5.07, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225014949/",
+    url: "/filings/sbet/0001493152-25-014949",
     hasHoldingsUpdate: false,
   },
   filing_sep_25_2025_b: {
@@ -158,7 +158,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-09-25",
     periodDate: "2025-09-25",
     items: "8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225014866/",
+    url: "/filings/sbet/0001493152-25-014866",
     hasHoldingsUpdate: false,
   },
 
@@ -169,7 +169,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-09-16",
     periodDate: "2025-09-14",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/",
+    url: "/filings/sbet/0001493152-25-013634",
     hasHoldingsUpdate: true,
   },
 
@@ -180,7 +180,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-09-09",
     periodDate: "2025-09-09",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012846/",
+    url: "/filings/sbet/0001493152-25-012846",
     hasHoldingsUpdate: false,
   },
 
@@ -191,7 +191,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-09-02",
     periodDate: "2025-08-31",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/",
+    url: "/filings/sbet/0001493152-25-012518",
     hasHoldingsUpdate: true,
   },
 
@@ -202,7 +202,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-26",
     periodDate: "2025-08-24",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/",
+    url: "/filings/sbet/0001641172-25-025469",
     hasHoldingsUpdate: true,
   },
 
@@ -213,7 +213,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-22",
     periodDate: "2025-08-22",
     items: "5.02, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025235/",
+    url: "/filings/sbet/0001641172-25-025235",
     hasHoldingsUpdate: false,
   },
   filing_aug_22_2025_b: {
@@ -222,7 +222,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-22",
     periodDate: "2025-08-22",
     items: "1.01, 7.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025218/",
+    url: "/filings/sbet/0001641172-25-025218",
     hasHoldingsUpdate: false,
   },
 
@@ -233,7 +233,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-20",
     periodDate: "2025-08-20",
     items: "1.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024925/",
+    url: "/filings/sbet/0001641172-25-024925",
     hasHoldingsUpdate: false,
   },
 
@@ -244,7 +244,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-19",
     periodDate: "2025-08-17",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/",
+    url: "/filings/sbet/0001641172-25-024734",
     hasHoldingsUpdate: true,
   },
 
@@ -255,7 +255,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-15",
     periodDate: "2025-08-13",
     items: "2.02, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024278/",
+    url: "/filings/sbet/0001641172-25-024278",
     hasHoldingsUpdate: false,
   },
 
@@ -266,7 +266,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-12",
     periodDate: "2025-08-10",
     items: "1.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225023115/",
+    url: "/filings/sbet/0001641172-25-023115",
     hasHoldingsUpdate: true,
   },
 
@@ -277,7 +277,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-08",
     periodDate: "2025-08-08",
     items: "1.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022680/",
+    url: "/filings/sbet/0001641172-25-022680",
     hasHoldingsUpdate: false,
   },
 
@@ -288,7 +288,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-08-05",
     periodDate: "2025-08-03",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/",
+    url: "/filings/sbet/0001641172-25-022149",
     hasHoldingsUpdate: true,
   },
 
@@ -299,7 +299,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-29",
     periodDate: "2025-07-27",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/",
+    url: "/filings/sbet/0001641172-25-021266",
     hasHoldingsUpdate: true,
   },
 
@@ -310,7 +310,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-28",
     periodDate: "2025-07-28",
     items: "5.07",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021111/",
+    url: "/filings/sbet/0001641172-25-021111",
     hasHoldingsUpdate: false,
   },
 
@@ -321,7 +321,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-25",
     periodDate: "2025-07-25",
     items: "5.02, 5.03, 5.07, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020953/",
+    url: "/filings/sbet/0001641172-25-020953",
     hasHoldingsUpdate: false,
   },
   filing_jul_25_2025_b: {
@@ -330,7 +330,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-25",
     periodDate: "2025-07-25",
     items: "5.02, 7.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020947/",
+    url: "/filings/sbet/0001641172-25-020947",
     hasHoldingsUpdate: false,
   },
 
@@ -341,7 +341,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-22",
     periodDate: "2025-07-20",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020521/",
+    url: "/filings/sbet/0001641172-25-020521",
     hasHoldingsUpdate: true,
   },
 
@@ -352,7 +352,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-17",
     periodDate: "2025-07-17",
     items: "1.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020054/",
+    url: "/filings/sbet/0001641172-25-020054",
     hasHoldingsUpdate: false,
   },
 
@@ -363,7 +363,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-15",
     periodDate: "2025-07-13",
     items: "7.01, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225019635/",
+    url: "/filings/sbet/0001641172-25-019635",
     hasHoldingsUpdate: true,
   },
 
@@ -374,7 +374,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-11",
     periodDate: "2025-07-11",
     items: "1.01, 7.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018680/",
+    url: "/filings/sbet/0001641172-25-018680",
     hasHoldingsUpdate: true,
   },
 
@@ -385,7 +385,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-09",
     periodDate: "2025-07-09",
     items: "4.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018312/",
+    url: "/filings/sbet/0001641172-25-018312",
     hasHoldingsUpdate: false,
   },
 
@@ -396,7 +396,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-08",
     periodDate: "2025-07-04",
     items: "7.01, 8.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/",
+    url: "/filings/sbet/0001641172-25-018094",
     hasHoldingsUpdate: true,
   },
 
@@ -407,7 +407,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-07-01",
     periodDate: "2025-06-27",
     items: "7.01, 8.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/",
+    url: "/filings/sbet/0001641172-25-017278",
     hasHoldingsUpdate: true,
   },
 
@@ -418,7 +418,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-06-24",
     periodDate: "2025-06-20",
     items: "7.01, 8.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/",
+    url: "/filings/sbet/0001641172-25-016228",
     hasHoldingsUpdate: true,
   },
 
@@ -429,7 +429,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-06-13",
     periodDate: "2025-06-12",
     items: "7.01, 8.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/",
+    url: "/filings/sbet/0001641172-25-014970",
     hasHoldingsUpdate: true,
   },
 
@@ -440,7 +440,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-06-05",
     periodDate: "2025-06-02",
     items: "8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225013718/",
+    url: "/filings/sbet/0001641172-25-013718",
     hasHoldingsUpdate: false,
   },
 
@@ -451,7 +451,7 @@ const SEC_FILINGS: Record<string, SECFiling> = {
     filedDate: "2025-05-30",
     periodDate: "2025-05-30",
     items: "1.01, 3.02, 5.02, 8.01, 9.01",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225013081/",
+    url: "/filings/sbet/0001641172-25-013081",
     hasHoldingsUpdate: false,
   },
 };
@@ -479,15 +479,15 @@ export const SBET_PROVENANCE = {
   
   // ---------------------------------------------------------------------------
   // ETH HOLDINGS (from Feb 19, 2026 8-K, Ex 99.1)
-  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/ex99-1.htm
+  // Source: /filings/sbet/0001493152-26-007427
   // ---------------------------------------------------------------------------
 
   // Total ETH holdings (native + LsETH + WeETH + staking rewards)
   holdings: pv(867_798, secDoc(
     SEC_FILINGS.holdings_feb_2026,
-    "Accumulated 867,798 ETH¹... ¹As of February 15, 2026, total ETH holdings were comprised of 587,232 native ETH, 225,429 LsETH, 55,137 WeETH and 13,615 ETH in staking rewards",
+    "As of February 15, 2026, the Company held 867,798 (1) ETH",
     "ex99-1.htm",
-    "867,798"  // Ctrl+F search term
+    "867,798 (1)"  // Ctrl+F search term
   ), "Feb 15, 2026: 587,232 native + 225,429 LsETH + 55,137 WeETH + 13,615 staking rewards"),
 
   // Breakdown: Native ETH
@@ -524,7 +524,7 @@ export const SBET_PROVENANCE = {
 
   // ---------------------------------------------------------------------------
   // SHARES OUTSTANDING (from Q3 2025 10-Q XBRL)
-  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
+  // Source: /filings/sbet/0001493152-25-021970
   // ---------------------------------------------------------------------------
   
   sharesOutstanding: pv(196_693_191, secDoc(
@@ -536,7 +536,7 @@ export const SBET_PROVENANCE = {
 
   // ---------------------------------------------------------------------------
   // CASH & FINANCIALS (from Q3 2025 10-Q)
-  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
+  // Source: /filings/sbet/0001493152-25-021970
   // ---------------------------------------------------------------------------
   
   // From Q3 2025 10-Q balance sheet (Sep 30, 2025)
@@ -564,7 +564,7 @@ export const SBET_PROVENANCE = {
 
   // ---------------------------------------------------------------------------
   // COST BASIS (from Q3 2025 10-Q Balance Sheet)
-  // Source: https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm
+  // Source: /filings/sbet/0001493152-25-021970
   // Note: Q3 10-Q shows 817,747 ETH (580,841 native + 236,906 LsETH), cost basis is from that date
   // ---------------------------------------------------------------------------
   
@@ -613,7 +613,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdingsLsETH: 225_429,
     stakingRewards: 13_615,
     accession: "0001493152-26-007427",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/",
+    url: "/filings/sbet/0001493152-26-007427",
   },
   // Dec 2025
   {
@@ -624,7 +624,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdingsLsETH: 224_183,
     stakingRewards: 9_241,
     accession: "0001493152-25-028063",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/",
+    url: "/filings/sbet/0001493152-25-028063",
   },
   // Nov 2025 (corrected via 8-K/A)
   {
@@ -634,7 +634,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdingsNative: 637_752,
     holdingsLsETH: 223_499,
     accession: "0001493152-25-022065",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225022065/",
+    url: "/filings/sbet/0001493152-25-022065",
   },
   // Oct 2025
   {
@@ -645,7 +645,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdingsLsETH: 258_710,
     stakingRewards: 5_671,
     accession: "0001493152-25-018731",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225018731/",
+    url: "/filings/sbet/0001493152-25-018731",
   },
   // Q3 2025 10-Q (official quarter-end)
   {
@@ -655,7 +655,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdingsNative: 580_841,
     holdingsLsETH: 236_906,
     accession: "0001493152-25-021970",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/",
+    url: "/filings/sbet/0001493152-25-021970",
   },
   // Sep 2025
   {
@@ -664,7 +664,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdings: 838_152,
     stakingRewards: 3_240,
     accession: "0001493152-25-013634",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225013634/",
+    url: "/filings/sbet/0001493152-25-013634",
   },
   // Aug 2025
   {
@@ -673,7 +673,7 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdings: 837_230,
     stakingRewards: 2_318,
     accession: "0001493152-25-012518",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225012518/",
+    url: "/filings/sbet/0001493152-25-012518",
   },
   {
     date: "2025-08-24",
@@ -681,28 +681,28 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     holdings: 797_704,
     stakingRewards: 1_799,
     accession: "0001641172-25-025469",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225025469/",
+    url: "/filings/sbet/0001641172-25-025469",
   },
   {
     date: "2025-08-17",
     filedDate: "2025-08-19",
     holdings: 740_760,
     accession: "0001641172-25-024734",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024734/",
+    url: "/filings/sbet/0001641172-25-024734",
   },
   {
     date: "2025-08-10",
     filedDate: "2025-08-12",
     holdings: 598_800,
     accession: "0001641172-25-023115",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225023115/",
+    url: "/filings/sbet/0001641172-25-023115",
   },
   {
     date: "2025-08-03",
     filedDate: "2025-08-05",
     holdings: 521_939,
     accession: "0001641172-25-022149",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225022149/",
+    url: "/filings/sbet/0001641172-25-022149",
   },
   // Jul 2025
   {
@@ -710,21 +710,21 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     filedDate: "2025-07-29",
     holdings: 438_190,
     accession: "0001641172-25-021266",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225021266/",
+    url: "/filings/sbet/0001641172-25-021266",
   },
   {
     date: "2025-07-20",
     filedDate: "2025-07-22",
     holdings: 360_807,
     accession: "0001641172-25-020521",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225020521/",
+    url: "/filings/sbet/0001641172-25-020521",
   },
   {
     date: "2025-07-13",
     filedDate: "2025-07-15",
     holdings: 280_706,
     accession: "0001641172-25-019635",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225019635/",
+    url: "/filings/sbet/0001641172-25-019635",
   },
   // Jul 11 - Ethereum Foundation 10K ETH purchase
   {
@@ -732,14 +732,14 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     filedDate: "2025-07-11",
     holdings: 270_000, // Estimated - 10K ETH from EF added
     accession: "0001641172-25-018680",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018680/",
+    url: "/filings/sbet/0001641172-25-018680",
   },
   {
     date: "2025-07-04",
     filedDate: "2025-07-08",
     holdings: 205_634,
     accession: "0001641172-25-018094",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225018094/",
+    url: "/filings/sbet/0001641172-25-018094",
   },
   // Jun 2025
   {
@@ -747,21 +747,21 @@ export const SBET_HOLDINGS_HISTORY: SBETHoldingsSnapshot[] = [
     filedDate: "2025-07-01",
     holdings: 198_167,
     accession: "0001641172-25-017278",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225017278/",
+    url: "/filings/sbet/0001641172-25-017278",
   },
   {
     date: "2025-06-20",
     filedDate: "2025-06-24",
     holdings: 188_478,
     accession: "0001641172-25-016228",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225016228/",
+    url: "/filings/sbet/0001641172-25-016228",
   },
   {
     date: "2025-06-12",
     filedDate: "2025-06-13",
     holdings: 176_270,
     accession: "0001641172-25-014970",
-    url: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014970/",
+    url: "/filings/sbet/0001641172-25-014970",
   },
 ];
 

@@ -21,7 +21,7 @@ export const MARA_CIK = "1507605";
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
+  `/filings/mara/${accession}`;
 
 // =========================================================================
 // FY2025 10-K DATA (filed March 2026, as of Dec 31, 2025)
@@ -63,7 +63,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "53,822",
-      url: "https://www.sec.gov/Archives/edgar/data/1507605/000150760526000014/mara-20251231.htm",
+      url: "/filings/mara/0001507605-26-000014",
       quote: "Total bitcoin holdings of 53,822 BTC as of December 31, 2025",
       cik: MARA_CIK,
       accession: FY2025_10K_ACCESSION,
@@ -209,7 +209,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
         lineOfCredit: pv(350_000_000, docSource({
           type: "sec-document",
           searchTerm: "Line of credit, current portion 350,000",
-          url: `https://www.sec.gov/Archives/edgar/data/${MARA_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/mara-20250930.htm`,
+          url: `/filings/mara/${Q3_2025_10Q_ACCESSION}`,
           quote: "Line of credit - current portion $350,000",
           anchor: "Line of credit",
           cik: MARA_CIK,

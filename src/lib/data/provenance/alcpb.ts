@@ -26,6 +26,9 @@ import {
 // =========================================================================
 // KEY FILINGS
 // =========================================================================
+const AMF_FEB27_2026_URL = "https://www.amf-france.org/en/news-publications/news/capital-structure-update-alcpb-20260227";
+const AMF_FEB27_2026_DATE = "2026-02-27";
+
 const AMF_FEB9_2026_URL = "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078219_20260209.pdf";
 const AMF_FEB9_2026_DATE = "2026-02-09";
 
@@ -40,9 +43,9 @@ const OCA_A04_B04_A05_URL = "https://www.finanzwire.com/press-release/capital-b-
 // =========================================================================
 
 // BTC Holdings
-// AMF filing Feb 9, 2026: 2,828 BTC total
-const BTC_HOLDINGS = 2_828;
-const HOLDINGS_DATE = AMF_FEB9_2026_DATE;
+// AMF filing Feb 27, 2026: 2,834 BTC total
+const BTC_HOLDINGS = 2_834;
+const HOLDINGS_DATE = AMF_FEB27_2026_DATE;
 
 // Shares Outstanding (basic)
 // AMF filing Feb 9, 2026: 227,468,631 basic shares

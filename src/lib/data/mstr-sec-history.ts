@@ -418,7 +418,7 @@ export const MSTR_SEC_HISTORY: MSTRSecFiling[] = [
     formType: "10-K",
     filedDate: "2026-02-19",
     accessionNumber: "0001050446-26-000020",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    secUrl: "/filings/mstr/0001050446-26-000020",
     digitalAssets: 66_625_344_000, // XBRL: us-gaap:CryptoAssetFairValue (digital assets at fair value)
     cashAndEquivalents: 2_301_470_000, // XBRL: us-gaap:CashAndCashEquivalentsAtCarryingValue
     totalAssets: 69_555_898_000, // XBRL: us-gaap:Assets

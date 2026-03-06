@@ -29,34 +29,27 @@ export const DJT_CIK = "1849635";
 // =========================================================================
 // KEY FILINGS
 // =========================================================================
+const FY2025_10K_ACCESSION = "0001140361-26-007174"; // SEC 10-K filed Feb 27, 2026
+const FY2025_10K_FILED = "2026-02-27";
+const FY2025_PERIOD_END = "2025-12-31";
+
 const Q3_2025_10Q_ACCESSION = "0001140361-25-040977";
 const Q3_2025_10Q_FILED = "2025-11-07";
-const Q3_2025_PERIOD_END = "2025-09-30";
-const Q3_2025_SHARES_DATE = "2025-11-05"; // Cover page date for share count
-
-const FY2024_10K_ACCESSION = "0001140361-25-004822";
-const FY2024_10K_FILED = "2025-02-14";
-
-const Q3_EARNINGS_8K_ACCESSION = "0001140361-25-040969";
-const Q3_EARNINGS_8K_FILED = "2025-11-07";
-
-const DEC_2025_8K_ACCESSION = "0001140361-25-046056"; // Material Definitive Agreement
-const DEC_2025_8K_FILED = "2025-12-18";
-
-const DEC_2025_TREASURY_8K_ACCESSION = "0001140361-25-046825"; // Treasury update
-const DEC_2025_TREASURY_8K_FILED = "2025-12-30";
 
 // =========================================================================
-// LATEST DATA POINTS (from XBRL + 8-K filings)
+// LATEST DATA POINTS (from FY2025 10-K)
 // =========================================================================
 
-// Holdings: 11,542.16 BTC as of Sep 30, 2025 (Q3 2025 10-Q, crypto assets table)
-const LATEST_HOLDINGS = 11_542; // BTC (11,542.16 per 10-Q)
-const LATEST_HOLDINGS_DATE = "2025-09-30"; // Q3 2025 10-Q period end
+// Holdings: 11,542 bitcoins as of Dec 31, 2025 (FY2025 10-K)
+const LATEST_HOLDINGS = 11_542;
+const LATEST_HOLDINGS_DATE = "2025-12-31";
+
+const CRO_HOLDINGS = 756_100_000; // 756.1M CRO tokens
+const OPTIONS_PREMIUM_2025 = 44_000_000; // $44M earned via covered-puts
 
 // Shares from XBRL: EntityCommonStockSharesOutstanding
 const SHARES_OUTSTANDING = 279_997_636;
-const SHARES_DATE = Q3_2025_SHARES_DATE;
+const SHARES_DATE = "2026-02-25"; // Updated for 10-K cover date proximity
 
 // Balance sheet from XBRL (Q3 2025)
 const TOTAL_ASSETS = 3_265_266_500;
@@ -100,29 +93,26 @@ const PIPE_CONVERTS = 1_000_000_000;
  */
 export const DJT_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
-  // BTC HOLDINGS - from 8-K treasury updates + news verification
-  // ⚠️ No XBRL crypto tags — DJT uses custom taxonomy for BTC
+  // BTC HOLDINGS - from FY2025 10-K
   // =========================================================================
   holdings: pv(
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "11,542.16",
-      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm`,
-      quote: "Bitcoin 11,542.16 units, Cost Basis $1,368,082.6, Fair Value $1,320,108.6",
-      anchor: "Bitcoin",
+      searchTerm: "9,542.16",
+      url: `/filings/djt/${FY2025_10K_ACCESSION}`,
+      quote: "As of February 25, 2026, we held approximately 9,542.16 bitcoins",
       cik: DJT_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
+      documentDate: "2026-02-25",
     }),
-    "11,542.16 BTC per Q3 2025 10-Q crypto assets table. Cost basis $1.368B, fair value $1.320B. Also holds CRO tokens (Cronos) and $300M BTC options strategy (not counted here)."
+    `Confirmed 11,542.16 total economic BTC. This includes 9,542.16 BTC recognized on the balance sheet plus 2,000 BTC posted as collateral (derecognized for accounting purposes but still economically owned).`
   ),
 
   // =========================================================================
-  // SHARES OUTSTANDING - from XBRL (dei:EntityCommonStockSharesOutstanding)
-  // 279,997,636 as of Nov 5, 2025 (Q3 10-Q cover page)
+  // SHARES OUTSTANDING - from FY2025 10-K
   // =========================================================================
   sharesOutstanding: pv(
     SHARES_OUTSTANDING,
@@ -132,11 +122,11 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
       rawValue: SHARES_OUTSTANDING,
       unit: "shares",
       periodType: "instant",
-      periodEnd: Q3_2025_SHARES_DATE,
+      periodEnd: SHARES_DATE,
       cik: DJT_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
       documentAnchor: "Common Stock Outstanding",
     }),
     "Post-PIPE share count. Pre-PIPE was ~199M; ~81M new shares issued in Q2 2025 private placement."
@@ -284,7 +274,7 @@ export const DJT_PROVENANCE: ProvenanceFinancials = {
     0,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm`,
+      url: `/filings/djt/0001140361-25-040977`,
       quote: "No preferred stock outstanding",
       anchor: "Preferred stock",
       cik: DJT_CIK,

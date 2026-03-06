@@ -9,10 +9,9 @@
  * - Pending verifications (events that occurred but await SEC filing)
  */
 
-import {
-  MSTR_CAPITAL_EVENTS,
-  type CapitalEvent,
-} from "./mstr-capital-events";
+import { MSTR_CAPITAL_EVENTS } from "./mstr-capital-events";
+import { dilutiveInstruments } from "./dilutive-instruments";
+import { debtInstruments } from "./debt-instruments";
 
 export type ScheduledEventType = "maturity" | "conversion" | "pending";
 export type ScheduledEventStatus =
@@ -31,9 +30,23 @@ export interface ScheduledEvent {
   coupon?: number; // Interest rate for debt
   conversionPrice?: number; // For convertibles
   conversionLikely?: boolean; // True if stock price > conversion price
-  sourceEvent?: CapitalEvent; // Original issuance event for reference
   ticker?: string; // e.g., "MSTR"
   notes?: string;
+  settlementType: "cash" | "shares" | "mixed";
+  sourceUrl?: string; // Link to primary source
+}
+
+/**
+ * Format currency amount for display
+ */
+export function formatAmount(amount: number): string {
+  if (amount >= 1_000_000_000) {
+    return `$${(amount / 1_000_000_000).toFixed(2)}B`;
+  }
+  if (amount >= 1_000_000) {
+    return `$${(amount / 1_000_000).toFixed(0)}M`;
+  }
+  return `$${amount.toLocaleString()}`;
 }
 
 /**
@@ -90,78 +103,104 @@ export function formatDaysUntil(eventDate: string): string {
 }
 
 /**
- * Format currency amount for display
- */
-export function formatAmount(amount: number): string {
-  if (amount >= 1_000_000_000) {
-    return `$${(amount / 1_000_000_000).toFixed(2)}B`;
-  }
-  if (amount >= 1_000_000) {
-    return `$${(amount / 1_000_000).toFixed(0)}M`;
-  }
-  return `$${amount.toLocaleString()}`;
-}
-
-/**
- * Get upcoming debt maturities for a ticker
+ * Get upcoming debt maturities for a ticker.
+ * Unifies data from capital-events, dilutive-instruments, and debt-instruments.
  */
 export function getUpcomingMaturities(
   ticker: string,
   stockPrice?: number
 ): ScheduledEvent[] {
-  if (ticker !== "MSTR") return []; // Only MSTR has capital events data for now
-
   const today = new Date().toISOString().split("T")[0];
+  const events: ScheduledEvent[] = [];
 
-  return MSTR_CAPITAL_EVENTS.filter(
-    (event) =>
-      event.type === "DEBT" &&
-      event.debtType === "convertible" &&
-      event.debtMaturity &&
-      event.debtMaturity > today // Future maturities only
-  ).map((event) => {
-    const conversionLikely =
-      stockPrice && event.conversionPrice
-        ? stockPrice > event.conversionPrice
+  // 1. Ingest from centralized debt-instruments.ts
+  const modeledDebt = debtInstruments[ticker] || [];
+  for (const inst of modeledDebt) {
+    if (inst.maturityDate > today) {
+      const isConvertible = inst.type === "convertible";
+      const conversionLikely = isConvertible && stockPrice && (inst as any).conversionPrice
+        ? stockPrice > (inst as any).conversionPrice
         : undefined;
 
-    return {
-      date: event.debtMaturity!,
-      type: "maturity" as ScheduledEventType,
-      status: getEventStatus(event.debtMaturity!),
-      description: event.description,
-      amount: event.debtPrincipal,
-      coupon: event.debtCoupon,
-      conversionPrice: event.conversionPrice,
-      conversionLikely,
-      sourceEvent: event,
-      ticker,
-    };
-  }).sort((a, b) => a.date.localeCompare(b.date));
+      events.push({
+        date: inst.maturityDate,
+        type: "maturity",
+        status: getEventStatus(inst.maturityDate),
+        description: `${inst.type.charAt(0).toUpperCase() + inst.type.slice(1)} Maturity`,
+        amount: inst.faceValue,
+        coupon: inst.couponRate * 100,
+        conversionPrice: (inst as any).conversionPrice,
+        conversionLikely,
+        ticker,
+        settlementType: isConvertible ? (conversionLikely ? "shares" : "cash") : "cash",
+        sourceUrl: inst.sourceUrl,
+        notes: inst.notes
+      });
+    }
+  }
+
+  // 2. Ingest from dilutive-instruments.ts (fallback for convertibles not yet in debt-instruments)
+  const dilutives = dilutiveInstruments[ticker] || [];
+  for (const inst of dilutives) {
+    if (inst.type === "convertible" && inst.expiration && inst.expiration > today) {
+      // Check if we already have this maturity from the debt-instruments layer
+      const exists = events.some(e => e.date === inst.expiration && e.amount === inst.faceValue);
+      if (exists) continue;
+
+      const conversionLikely = stockPrice ? stockPrice > inst.strikePrice : undefined;
+
+      events.push({
+        date: inst.expiration,
+        type: "maturity",
+        status: getEventStatus(inst.expiration),
+        description: `Convertible Note Maturity`,
+        amount: inst.faceValue,
+        conversionPrice: inst.strikePrice,
+        conversionLikely,
+        ticker,
+        settlementType: conversionLikely ? "shares" : "cash",
+        sourceUrl: inst.sourceUrl,
+        notes: inst.notes
+      });
+    }
+  }
+
+  // 3. Special handling for MSTR legacy capital events (to preserve detail)
+  if (ticker === "MSTR") {
+    const mstrSecuredNotesMaturity = "2028-06-15";
+    if (mstrSecuredNotesMaturity > today) {
+       const exists = events.some(e => e.date === mstrSecuredNotesMaturity);
+       if (!exists) {
+         events.push({
+           date: mstrSecuredNotesMaturity,
+           type: "maturity",
+           status: getEventStatus(mstrSecuredNotesMaturity),
+           description: "Senior Secured Notes Maturity",
+           amount: 400_000_000,
+           coupon: 0, // Zero coupon secured
+           ticker,
+           settlementType: "cash",
+           sourceUrl: "/filings/mstr/0001193125-21-191160",
+           notes: "Must be repaid in cash (not a convertible)"
+         });
+       }
+    }
+  }
+
+  return events.sort((a, b) => a.date.localeCompare(b.date));
 }
 
 /**
  * Get pending verifications - events that occurred but await SEC filing
- * These are manually defined based on known events awaiting confirmation
  */
 export function getPendingVerifications(ticker: string): ScheduledEvent[] {
   if (ticker !== "MSTR") return [];
 
   const pendingEvents: ScheduledEvent[] = [];
-
-  // Dec 2025 Notes matured - awaiting Q4 2025 10-Q for conversion confirmation
   const dec2025NotesMaturity = "2025-12-15";
   const today = new Date().toISOString().split("T")[0];
 
   if (today >= dec2025NotesMaturity) {
-    // Find the original issuance event
-    const originalEvent = MSTR_CAPITAL_EVENTS.find(
-      (e) =>
-        e.type === "DEBT" &&
-        e.debtMaturity === dec2025NotesMaturity &&
-        e.debtPrincipal === 650_000_000
-    );
-
     pendingEvents.push({
       date: dec2025NotesMaturity,
       type: "pending",
@@ -169,11 +208,10 @@ export function getPendingVerifications(ticker: string): ScheduledEvent[] {
       description: "Dec 2025 Notes Matured - $650M converted to equity",
       amount: 650_000_000,
       conversionPrice: 39.8,
-      conversionLikely: true, // MSTR was >$300 at maturity
-      sourceEvent: originalEvent,
+      conversionLikely: true,
       ticker,
-      notes:
-        "Awaiting Q4 2025 10-Q (~Feb 2026) for conversion details. Expected ~16.3M shares at ~$39.80/share.",
+      settlementType: "shares",
+      notes: "Awaiting Q4 2025 10-Q (~Feb 2026) for conversion details. Expected ~16.3M shares at ~$39.80/share.",
     });
   }
 
@@ -197,7 +235,8 @@ export function getScheduledEvents(
  * Check if a company has scheduled events data
  */
 export function hasScheduledEvents(ticker: string): boolean {
-  return ticker === "MSTR"; // Expand as more companies get capital events data
+  // If either debt-instruments or dilutive-instruments have entries, we have data.
+  return !!(debtInstruments[ticker] || (dilutiveInstruments[ticker] && dilutiveInstruments[ticker].some(i => i.type === 'convertible')));
 }
 
 /**
@@ -210,7 +249,7 @@ export function getScheduledEventsSummary(
   totalPending: number;
   totalUpcoming: number;
   totalDebtMaturing: number;
-  nearTermMaturities: number; // Within 2 years
+  nearTermMaturities: number; 
 } {
   const events = getScheduledEvents(ticker, stockPrice);
 

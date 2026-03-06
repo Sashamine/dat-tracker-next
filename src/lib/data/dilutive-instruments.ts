@@ -60,7 +60,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_280,
       source: "10-Q Q1 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+        "/filings/bmnr/0001493152-26-002084",
       notes: "C-3 legacy warrants (pre-pivot). Strike unknown, using $10 estimate.",
     },
     {
@@ -69,7 +69,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_043_654,
       source: "10-Q Q1 FY2026 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+        "/filings/bmnr/0001493152-26-002084",
       issuedDate: "2025-07-10",
       notes: "Strategic Advisor + Placement Agent (ThinkEquity) warrants from $250M PIPE. 3,107,114 issued, 63,460 exercised, 3,043,654 remaining.",
     },
@@ -79,7 +79,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 10_435_430,
       source: "10-Q Q1 FY2026 Note 7 + 8-K Sep 22 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+        "/filings/bmnr/0001493152-26-002084",
       issuedDate: "2025-09-22",
       expiration: "2027-03-22",
       notes: "CVI Warrants (liability-classified). Registered direct offering @ $70/share + warrants @ $87.50. Currently OTM. Fair value $98.6M at Nov 30.",
@@ -90,7 +90,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 26_954,
       source: "10-Q Q1 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+        "/filings/bmnr/0001493152-26-002084",
       notes: "RSUs from 2025 Omnibus Incentive Plan (S-8 filed Feb 9, 2026)",
     },
   ],
@@ -110,7 +110,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_382_007,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Strategic Advisor Warrants tranche (i) - Consensys. Fully vested, nonforfeitable.",
     },
     {
@@ -119,7 +119,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 691_004,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Strategic Advisor Warrants tranche (ii) - Consensys. Fully vested, nonforfeitable.",
     },
     {
@@ -128,7 +128,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 691_004,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Strategic Advisor Warrants tranche (iii) - Consensys. Fully vested, nonforfeitable.",
     },
     {
@@ -137,7 +137,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 691_004,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Strategic Advisor Warrants tranche (iv) - Consensys. Fully vested, nonforfeitable.",
     },
     // Placement Agent Warrants (ThinkEquity) from May 2025 PIPE
@@ -147,7 +147,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_764_013,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Placement agent warrants (ThinkEquity) from May 2025 PIPE. Fully vested.",
     },
     // Pre-Funded Warrants - exercise price $0.0001 (essentially free)
@@ -157,7 +157,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_496_612,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Pre-funded warrants - Consensys ($4.5M registered offering). Always ITM.",
     },
     {
@@ -166,7 +166,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_966_340,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Pre-funded warrants - Consensys (PIPE offering). Always ITM.",
     },
     {
@@ -175,7 +175,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 6_434_213,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Pre-funded warrants - Joseph Lubin (PIPE offering). Always ITM.",
     },
     // Stock Options - deep OTM
@@ -185,7 +185,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 9_022,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Stock options - deep OTM at ~$10 stock price. Weighted avg exercise price $91.06.",
     },
     // RSUs - always ITM (vest at $0)
@@ -195,7 +195,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_281_951,
       source: "10-Q Q3 2025 Note 8 RSU activity table",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Service-based RSUs (unvested). Weighted avg grant price $20.71. 2.84 years remaining.",
     },
     {
@@ -204,7 +204,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 115_069,
       source: "10-Q Q3 2025 Note 8",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+        "/filings/sbet/0001493152-25-021970",
       notes: "Performance-based RSUs (unvested). Granted to executive officers, 3-year vesting. Parameters not yet finalized.",
     },
   ],
@@ -229,7 +229,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 83_026,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
+        "/filings/suig/0001654954-26-000203",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 1) - vest 25% every 6mo starting Jul 2026",
@@ -240,7 +240,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 41_513,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
+        "/filings/suig/0001654954-26-000203",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 2)",
@@ -251,7 +251,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 41_513,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
+        "/filings/suig/0001654954-26-000203",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 3)",
@@ -262,7 +262,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 41_513,
       source: "8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000203/suig_8k.htm",
+        "/filings/suig/0001654954-26-000203",
       expiration: "2031-01-05",
       issuedDate: "2026-01-05",
       notes: "Brian Quintenz director warrants (tranche 4)",
@@ -276,7 +276,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_245_387,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Sui Foundation investor warrants (tranche 1) - 1,245,387 shares @ $5.42",
@@ -287,7 +287,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_245_387,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Sui Foundation investor warrants (tranche 2) - 1,245,387 shares @ $5.962",
@@ -298,7 +298,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 415_129,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Sui Foundation investor warrants (tranche 3) - 415,129 shares @ $6.504",
@@ -309,7 +309,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 207_565,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Sui Foundation investor warrants (tranche 4) - 207,565 shares @ $7.046",
@@ -323,7 +323,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 5_600_000,
       source: "S-1 / 8-K Jan 8, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
+        "/filings/suig/0001213900-25-088239",
       expiration: "9999-12-31",  // No expiration (pre-funded)
       issuedDate: "2025-01-01",
       notes: "Pre-funded warrants (PFW) — already included in 80.9M sharesForMnav base. Listed for transparency only. Do NOT add to diluted count.",
@@ -335,7 +335,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_113_469,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Placement Agent (A.G.P.) warrants — 3.75% of securities sold in PIPE",
@@ -348,7 +348,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_245_387,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 1) - 1,245,387 shares @ $5.42",
@@ -359,7 +359,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_245_387,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 2) - 1,245,387 shares @ $5.962",
@@ -370,7 +370,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 415_129,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 3) - 415,129 shares @ $6.504",
@@ -381,7 +381,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 207_565,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Lead Investor (Karatage Digital) warrants from PIPE closing (tranche 4) - 207,565 shares @ $7.046",
@@ -394,7 +394,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 622_694,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Management warrants from PIPE closing (tranche 1) - 622,694 shares @ $5.42",
@@ -405,7 +405,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 415_129,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Management warrants from PIPE closing (tranche 2) - 415,129 shares @ $6.504",
@@ -416,7 +416,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 207_565,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Management warrants from PIPE closing (tranche 3) - 207,565 shares @ $7.046",
@@ -429,7 +429,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 207_565,
       source: "8-K Jul 31, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1425355/000165495425008758/mcvt_8k.htm",
+        "/filings/suig/0001654954-25-008758",
       expiration: "2030-07-31",
       issuedDate: "2025-07-31",
       notes: "Advisor warrants from PIPE closing",
@@ -447,7 +447,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 40_938,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+        "/filings/kulr/0001104659-25-113662",
       notes: "Stock options - exercise price range $2.24-$7.92 (post-split)",
     },
     {
@@ -456,7 +456,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 66_667,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+        "/filings/kulr/0001104659-25-113662",
       notes: "Warrants @ $8 exercise price (post-split)",
     },
     {
@@ -465,7 +465,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 111_143, // 88,905 + 22,238
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+        "/filings/kulr/0001104659-25-113662",
       notes: "Warrants @ $10 exercise price (post-split)",
     },
   ],
@@ -490,7 +490,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 0, // Feb 13 6-K: full cash redemption via BTC sale, NOT conversion to shares
       faceValue: 94_500_000, // $94.5M remaining per Q4 6-K — being fully redeemed by Jun 2026
       source: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
+      sourceUrl: "/filings/meta3350/0001383395-26-000018",
       issuedDate: "2025-07-08",
       expiration: "2026-06-01", // Target full redemption date
       notes: "Original $189M (Jul 2025). $94.5M remaining. Feb 13 6-K: full cash redemption by selling 1,617 pledged BTC by Jun 1, 2026. NOT being converted to shares. After redemption: $0 debt, ~522 BTC unencumbered.",
@@ -521,7 +521,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
 
   // MARA Holdings - BTC miner with HODL strategy
   // Verified 2026-02-14 via 10-Q Q3 2025 Note 14 (CIK 0001507605)
-  // Source: https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm
+  // Source: /filings/mara/0001507605-25-000028
   // All 5 convertible tranches from the "key terms" table in Note 14
   MARA: [
     {
@@ -531,7 +531,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 48_077_000, // Remaining principal as of Q3 2025 (originally $747.5M)
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+        "/filings/mara/0001507605-25-000028",
       expiration: "2026-12-01",
       notes: "1.0% Convertible Senior Notes due Dec 2026 (13.1277 shares per $1,000). Most redeemed; $48M remaining.",
     },
@@ -542,7 +542,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 300_000_000,
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+        "/filings/mara/0001507605-25-000028",
       expiration: "2031-09-01",
       notes: "2.125% Convertible Senior Notes due Sep 2031 (52.9451 shares per $1,000)",
     },
@@ -553,7 +553,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 1_000_000_000,
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+        "/filings/mara/0001507605-25-000028",
       expiration: "2030-03-01",
       notes: "0% Convertible Senior Notes due Mar 2030 (38.5902 shares per $1,000)",
     },
@@ -564,7 +564,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 925_000_000,
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+        "/filings/mara/0001507605-25-000028",
       expiration: "2031-06-01",
       notes: "0% Convertible Senior Notes due Jun 2031 (28.9159 shares per $1,000)",
     },
@@ -575,7 +575,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 1_025_000_000,
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+        "/filings/mara/0001507605-25-000028",
       expiration: "2032-08-01",
       notes: "0% Convertible Senior Notes due Aug 2032 (49.3619 shares per $1,000). Capped call partially offsets dilution.",
     },
@@ -585,7 +585,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 324_375,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+        "/filings/mara/0001507605-25-000028",
       expiration: "2026-01-31", // ~0.3 years from Sep 30, 2025
       notes: "Warrants to purchase common stock at $25.00. Expiring ~Jan 2026 — may already be expired.",
     },
@@ -597,7 +597,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Shares: 651,390,912 (Class A: 346,548,153 + Class B: 304,842,759) per 10-Q XBRL
   // Twenty One Capital (XXI) - BTC treasury (Tether/SoftBank/Mallers)
   // Verified 2026-02-14 via 8-K Dec 12, 2025 (Indenture + Employment Agreements)
-  // Source: https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm
+  // Source: /filings/xxi/0001213900-25-121293
   XXI: [
     {
       type: "convertible",
@@ -606,7 +606,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 486_500_000,
       source: "8-K Dec 12, 2025 (Indenture)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+        "/filings/xxi/0001213900-25-121293",
       issuedDate: "2025-12-09",
       expiration: "2030-12-01",
       notes: "1.00% Convertible Senior Secured Notes due 2030, conversion rate 72.0841 shares/$1,000, collateralized by 16,116.32 BTC",
@@ -617,7 +617,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 12_179_268,
       source: "8-K Dec 12, 2025 (CEO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+        "/filings/xxi/0001213900-25-121293",
       issuedDate: "2025-12-09",
       notes: "CEO (Jack Mallers) stock options. Vest over time per employment agreement.",
     },
@@ -627,7 +627,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_215_732,
       source: "8-K Dec 12, 2025 (CEO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+        "/filings/xxi/0001213900-25-121293",
       issuedDate: "2025-12-09",
       notes: "CEO (Jack Mallers) RSUs. Vest over time per employment agreement.",
     },
@@ -637,7 +637,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 970_201, // Updated per 8-K Jan 6, 2026 (796,951 time + 173,250 performance)
       source: "8-K Jan 6, 2026 (CFO Option Amendment)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026001442/ea0271770-8k_twenty.htm",
+        "/filings/xxi/0001213900-26-001442",
       issuedDate: "2026-01-02",
       notes: "CFO (Steven Meehan) stock options. Amended from 941,620 to 970,201. Vest over time.",
     },
@@ -647,7 +647,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 248_619,
       source: "8-K Dec 12, 2025 (CFO Employment Agreement)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+        "/filings/xxi/0001213900-25-121293",
       issuedDate: "2025-12-09",
       notes: "CFO (Steven Meehan) RSUs. Vest over time per employment agreement.",
     },
@@ -657,7 +657,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 297_029, // S-1/A pro forma: 13,446,498 total - 12,179,268 CEO - 970,201 CFO
       source: "S-1/A Feb 9, 2026 (Pro Forma)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/2070457/000121390026013482/ea0275941-s1a1_twenty.htm",
+        "/filings/xxi/0001213900-26-013482",
       issuedDate: "2025-12-09",
       notes: "Other employee options under Incentive Plan. Derived from S-1/A pro forma total (13,446,498) less CEO and CFO grants.",
     },
@@ -677,7 +677,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 53_614, // Jan 5 8-K: 1,072,289 pre-split / 20 = 53,614
       source: "8-K Jan 5, 2026 (Dec 31 data, adjusted for 1:20 split)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+        "/filings/asst/0001628280-26-000225",
       notes: "Pre-funded warrants @ $0.002 - always ITM, essentially shares.",
     },
     {
@@ -686,7 +686,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 26_594_435, // Jan 5 8-K: 531,888,702 pre-split / 20 = 26,594,435
       source: "8-K Jan 5, 2026 (Dec 31 data, adjusted for 1:20 split)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000162828026000225/asst-20260105.htm",
+        "/filings/asst/0001628280-26-000225",
       notes: "Traditional warrants @ $27 post-split. OTM if stock below $27.",
     },
     {
@@ -696,7 +696,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 10_000_000,
       source: "8-K Jan 28, 2026 (Semler convertible notes)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
+        "/filings/asst/0001140361-26-002606",
       issuedDate: "2026-01-16",
       expiration: "2027-12-15",
       notes: "$10M remaining Semler convertible notes after $90M exchange. Pre-split conversion rate: 275.3887/1000. Post-split: 13.7694/1000.",
@@ -719,7 +719,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 7_810_526,
       source: "8-K May 2025 + Q3 10-Q Note 7",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+        "/filings/btcs/0001493152-25-022359",
       expiration: "2027-05-13",
       notes: "$7.81M face value convertible note (ATW Partners, 5% OID on $7.438M principal). " +
         "6% interest, secured by substantially all assets (excl. Aave collateral). " +
@@ -732,7 +732,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 10_050_000,
       source: "8-K Jul 2025 + Q3 10-Q Note 7",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+        "/filings/btcs/0001493152-25-022359",
       expiration: "2027-07-21",
       notes: "$10.05M face value convertible note (ATW Partners, 5% OID). " +
         "6% interest, secured by substantially all assets (excl. Aave collateral). " +
@@ -749,7 +749,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 974_000,  // ~69% of 1,411,566 remaining (proportional to original May/total)
       source: "Q3 10-Q Note 6 (post-exercise balance)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+        "/filings/btcs/0001493152-25-022359",
       issuedDate: "2025-05-13",
       expiration: "2030-05-13",
       notes: "May 2025 ATW convert warrants. Originally 1,901,916; ~928K exercised cashless in Q3. " +
@@ -761,7 +761,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 437_566,  // ~31% of 1,411,566 remaining
       source: "Q3 10-Q Note 6 (post-exercise balance)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+        "/filings/btcs/0001493152-25-022359",
       issuedDate: "2025-07-21",
       expiration: "2030-07-21",
       notes: "Jul 2025 ATW convert warrants. Originally 879,375; ~442K exercised cashless in Q3. " +
@@ -774,7 +774,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 712_500,
       source: "8-K Mar 4, 2021 + Q3 10-Q Note 6",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+        "/filings/btcs/0001493152-25-022359",
       issuedDate: "2021-03-02",
       expiration: "2026-03-02",
       notes: "Pre-existing warrants from Mar 2021 private placement. Originally 7,125,000 pre-reverse-split " +
@@ -787,7 +787,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_582_695,  // 1,892,395 (XBRL Q3) + 690,300 (Jan 5 8-K grants)
       source: "10-Q Q3 2025 + 8-K Jan 5 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000391/form8-k.htm",
+        "/filings/btcs/0001493152-26-000391",
       expiration: "2033-01-01",  // 7-year term from Jan 2026
       notes: "XBRL Q3: 1,892,395 @ $2.75 + Jan 5 8-K: 690,300 @ $2.64. Blended ~$2.72.",
     },
@@ -847,7 +847,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 10.00,  // $10.00 liquidation preference per share (effective conversion price)
       potentialShares: 1_000_000,  // 1M preferred shares, 1:1 convertible to common
       source: "Q3 2025 10-Q: 1,000,000 preferred shares, $10 liquidation pref, 1:1 convertible",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025110383/ea0263546-10q_bitdigital.htm",
+      sourceUrl: "/filings/btbt/0001213900-25-110383",
       notes: "Series A preferred. $10 liq pref, 1:1 convert, 8% dividend, 50:1 voting. Held by insiders (CFO + Chairman). 4.99% blocker.",
     },
   ],
@@ -883,7 +883,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 149_996_123,
       source: "10-Q Q2 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2027-07-16",
       notes: "$150M convertible @$4.25. 2% interest. Cannot repay in cash — converts or returns SOL. Forced conversion VWAP>$6.37 for 30 days.",
     },
@@ -897,7 +897,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 36_000_000,
       source: "8-K Jan 14, 2026 (Hivemind)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000207/upxi_ex41.htm",
+        "/filings/upxi/0001477932-26-000207",
       expiration: "2028-01-09",  // 24 months from Jan 9, 2026
       notes: "$36M Hivemind convertible @$2.39. 1% interest. For 265.5K locked SOL. First-priority security interest in SOL.",
     },
@@ -909,7 +909,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 560_000,
       source: "10-Q Q2 FY2026 Note 10",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2026-06-01",
       notes: "$560K promissory @$3.00. 12% interest. Subordinate to convertible notes.",
     },
@@ -920,7 +920,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_289_474,
       source: "10-Q Q2 FY2026 Note 18 (amendment)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2029-12-01",
       notes: "Dec 2025 PIPE warrants. Originally $4.00, amended to $2.83 in Feb 2026. Redemption trigger reduced from $8.50 to $7.00.",
     },
@@ -931,7 +931,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 6_337_000,
       source: "10-Q Q2 FY2026 Note 18 (subsequent event)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2031-02-01",  // 5 years from issuance
       notes: "Feb 2026 registered direct warrants @$1.50. Forced conversion at $5.00. 5-year term.",
     },
@@ -942,7 +942,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 138_889,  // 150,000 preferred → 138,889 common
       source: "10-Q Q2 FY2026 Note 12",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2099-12-31",  // No expiration
       notes: "150K Series A preferred (CEO Allan Marshall). Converts to 138,889 common. 10x voting.",
     },
@@ -953,7 +953,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 744_478,
       source: "10-Q Q2 FY2026 Note 13",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2030-12-31",  // Weighted avg remaining life 5.09 years from Dec 2025
       notes: "Stock options. 619,164 vested, 125,314 unvested. Weighted avg strike $3.40.",
     },
@@ -964,7 +964,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_673_665,  // Vested but not yet issued as common stock
       source: "10-Q Q2 FY2026 Note 13",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2026-06-30",  // Will be issued
       notes: "Vested RSUs not yet issued. 1,673,665 shares. Essentially guaranteed dilution. (Modeled as $0 strike options.)",
     },
@@ -975,7 +975,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_044_085,  // 4,717,750 total - 1,673,665 vested = 3,044,085 unvested
       source: "10-Q Q2 FY2026 Note 13",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+        "/filings/upxi/0001477932-26-000736",
       expiration: "2027-06-30",  // ~0.54 years weighted avg remaining
       notes: "Unvested RSUs. $11.6M unrecognized comp expense. (Modeled as $0 strike options.)",
     },
@@ -1009,8 +1009,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // Each tranche has 3 sub-tranches that vest at different stock price targets
     // (relative to $18.50 PIPE price). Perpetual (no expiration). Cashless exercise.
     // Source: 8-K Sep 8, 2025, EX-10.3 (Galaxy) and EX-10.4 (Jump/Multicoin)
-    // https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm
-    // https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm
+    // /filings/fwdi/0001683168-25-006734
+    // /filings/fwdi/0001683168-25-006734
     //
     // PREREQUISITE: Resale Registration Statement must be effective before ANY tranche can vest.
     // Clock for 20/30 trading day trigger doesn't start until registration is effective.
@@ -1019,30 +1019,30 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // 1/3 vests at $27.75 (150% of $18.50), 1/3 at $37.00 (200%), 1/3 at $46.25 (250%)
     // Actual exercise price is $0.01 (penny warrants w/ cashless exercise) — using vesting
     // trigger as strikePrice so mNAV calculator correctly includes only when vested/dilutive.
-    { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm", notes: "Galaxy Advisor — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm", notes: "Galaxy Advisor — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1003.htm", notes: "Galaxy Advisor — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Galaxy Advisor — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Galaxy Advisor — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.3", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Galaxy Advisor — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
 
     // Jump Crypto Lead Investor Warrants — 5% of PIPE shares (split pro rata with Multicoin)
-    { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Jump Crypto — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Jump Crypto — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Jump Crypto — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Jump Crypto — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Jump Crypto — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Jump Crypto — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
 
     // Multicoin Capital Lead Investor Warrants — 5% of PIPE shares (split pro rata with Jump)
-    { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
-    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825006734/forward_ex1004.htm", notes: "Multicoin — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 27.75, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Multicoin — exercise $0.01, vests at $27.75 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_486, strikePrice: 37.00, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Multicoin — exercise $0.01, vests at $37.00 (20/30 days). Perpetual, cashless." },
+    { type: "warrant", potentialShares: 1_486_487, strikePrice: 46.25, source: "8-K Sep 8, 2025 EX-10.4", sourceUrl: "/filings/fwdi/0001683168-25-006734", notes: "Multicoin — exercise $0.01, vests at $46.25 (20/30 days). Perpetual, cashless." },
   ],
 
   // HSDT (Solana Company, fka Helius Medical) - SOL treasury company
-  // Verified 2026-02-15 via SEC 10-Q Q3 2025 Note 6 warrant table (CIK 0001610853)
+  // Updated 2026-03-05 via 8-K Feb 20, 2026 (accn 0001104659-26-018212)
   //
-  // sharesForMnav = 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 = 75,926,867
+  // sharesForMnav = 52,802,604 basic + 23,930,181 PFWs @ $0.001 = 76,732,785 (Feb 20, 2026)
   // PFWs ALREADY INCLUDED in sharesForMnav — NOT listed here (would double-count)
   //
-  // Total XBRL warrants outstanding: 116,972,530 (ClassOfWarrantOrRightOutstanding Sep 30)
+  // Warrant counts below from 10-Q Q3 2025 (Sep 30) — may have changed slightly since.
   // Breakdown:
-  //   35,627,639 PFWs @ $0.001 (in sharesForMnav, NOT here)
+  //   23,930,181 PFWs @ $0.001 (in sharesForMnav, NOT here) — was 35.6M at Sep 30, ~11.7M exercised
   //   73,941,196 Stapled Warrants @ $10.134 (here — ITM tracking)
   //    7,394,119 Advisor Warrants @ $0.001 (here — nearly certain exercise)
   //          617 HSDTW Public Warrants @ $6.756 (here — negligible)
@@ -1053,14 +1053,14 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     // One stapled warrant per PFW/share purchased in PIPE
     // Strike $10.134 = PIPE purchase price. Exercisable upon stockholder approval (received Oct 30, 2025)
     // 73,941,196 = 36,261,239 (crypto portion, exp Jul 2028) + 37,679,957 (common portion, exp Jun 2028)
-    { type: "warrant", potentialShares: 73_941_196, strikePrice: 10.134, expiration: "2028-07-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "2025 Stapled Warrants (crypto + common portions). Strike = PIPE price $10.134. Exercisable post-stockholder approval Oct 30, 2025. Classified as derivative liability." },
+    { type: "warrant", potentialShares: 73_941_196, strikePrice: 10.134, expiration: "2028-07-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "/filings/hsdt/0001104659-25-113714", notes: "2025 Stapled Warrants (crypto + common portions). Strike = PIPE price $10.134. Exercisable post-stockholder approval Oct 30, 2025. Classified as derivative liability." },
     // Base Advisor Warrants — issued to advisors in connection with PIPE
     // Strike $0.001 — economically equivalent to shares, virtually certain exercise
     // Stockholder approval received Oct 30, 2025. Expire Oct 2030.
-    { type: "warrant", potentialShares: 7_394_119, strikePrice: 0.001, expiration: "2030-10-30", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "Base Advisor Warrants @ $0.001. Stockholder approval received Oct 30, 2025. Classified as equity. Virtually certain to be exercised." },
+    { type: "warrant", potentialShares: 7_394_119, strikePrice: 0.001, expiration: "2030-10-30", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "/filings/hsdt/0001104659-25-113714", notes: "Base Advisor Warrants @ $0.001. Stockholder approval received Oct 30, 2025. Classified as equity. Virtually certain to be exercised." },
     // HSDTW — 2022 Public Warrants (NASDAQ-listed)
     // Post 1:50 reverse split: 617 warrants remaining (negligible)
-    { type: "warrant", potentialShares: 617, strikePrice: 6.756, expiration: "2027-08-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm", notes: "HSDTW public warrants. Post 1:50 reverse split — negligible count. Classified as derivative liability." },
+    { type: "warrant", potentialShares: 617, strikePrice: 6.756, expiration: "2027-08-15", source: "10-Q Q3 2025 Note 6 warrant table", sourceUrl: "/filings/hsdt/0001104659-25-113714", notes: "HSDTW public warrants. Post 1:50 reverse split — negligible count. Classified as derivative liability." },
   ],
 
   // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)
@@ -1075,7 +1075,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.80,
       potentialShares: 3_689,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       expiration: "2027-11-21",
       notes: "Low-strike options - ITM at $1.57",
     },
@@ -1084,7 +1084,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 1.24,
       potentialShares: 125_000,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       expiration: "2029-08-07",
       notes: "ITM at $1.57 stock price",
     },
@@ -1093,7 +1093,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 13.71, // WAEP for remaining 514,937 options
       potentialShares: 514_937,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       notes: "Remaining options at WAEP - deep OTM at $1.57",
     },
     {
@@ -1101,7 +1101,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0, // RSUs vest at $0
       potentialShares: 15_106,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       notes: "RSUs (restricted share units) - always ITM",
     },
     {
@@ -1109,7 +1109,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 23.84,
       potentialShares: 562_500,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       expiration: "2028-03-17",
       notes: "Deep OTM at $1.57",
     },
@@ -1118,7 +1118,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 20.00,
       potentialShares: 922_667,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       expiration: "2030-01-16",
       notes: "Deep OTM at $1.57",
     },
@@ -1127,7 +1127,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 37.28,
       potentialShares: 66_875,
       source: "40-F FY2025",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930xex99d2.htm",
+      sourceUrl: "/filings/stke/0001104659-25-125666",
       expiration: "2030-01-21",
       notes: "Deep OTM at $1.57",
     },
@@ -1280,7 +1280,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 11.50,
       potentialShares: 6_022_500,
       source: "SEC 424B5 Sep 30, 2025: ZOOZW public warrants",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2029-09-30",  // Estimated 5yr from SPAC merger
       notes: "ZOOZW public warrants (trade on Nasdaq). From Keyarch SPAC merger.",
     },
@@ -1289,7 +1289,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.06,
       potentialShares: 5_350_000,
       source: "SEC 424B5 Sep 30, 2025: Private Placement warrants",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2030-07-29",  // Estimated 5yr from Jul 2025 PP
       notes: "Private Placement warrants from Jul/Sep 2025 equity raise",
     },
@@ -1298,7 +1298,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 2.17,  // Per filing
       potentialShares: 40_360_895,
       source: "SEC 424B5 Sep 30, 2025: Forest Hill / Sponsor Support Agreement warrants",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2029-09-30",  // Estimated
       notes: "Forest Hill 18, LP sponsor warrants at $2.17 strike. LARGEST dilutive block.",
     },
@@ -1307,7 +1307,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.31,
       potentialShares: 920_010,
       source: "SEC 424B5 Sep 30, 2025: outstanding options",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2030-09-30",  // Estimated
       notes: "Employee stock options, weighted avg exercise price $5.31",
     },
@@ -1316,7 +1316,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0,
       potentialShares: 20_180_448,  // CEO 13,453,632 + Chairman 6,726,816
       source: "SEC 424B5 Sep 30, 2025: RSUs granted to CEO + Chairman",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2030-09-30",  // Estimated vesting
       notes: "CEO Jordan Fried: 13.45M RSUs + Chairman Avi Cohen: 6.73M RSUs. Vesting unknown.",
     },
@@ -1325,7 +1325,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.001,
       potentialShares: 4_000_000,
       source: "SEC 424B5 Sep 30, 2025: Keyarch earnout shares at nominal strike",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2029-09-30",  // Estimated
       notes: "Keyarch SPAC earnout shares at ~$0.001 strike — effectively free. From pre-closing structure.",
     },
@@ -1334,7 +1334,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.001,
       potentialShares: 29_525_926,
       source: "SEC 424B5 Sep 30, 2025: Private Placement pre-funded warrants",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+      sourceUrl: "/filings/zooz/0001493152-25-016384",
       expiration: "2030-07-29",  // Estimated — no expiry typically for pre-funded
       notes: "Pre-funded warrants from Jul/Sep 2025 Private Placement at NIS 0.00286 (~$0.001). Permanently ITM. Cost ~$29K total to exercise.",
     },
@@ -1351,7 +1351,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 8_750_021,
       source: "8-K Sep 5, 2025 (EX-4.4, EX-4.5)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1956741/000121390025085107/0001213900-25-085107-index.htm",
+        "/filings/zone/0001213900-25-085107",
       expiration: "2030-09-05",
       notes: "Strategic Advisor warrants (Gresham Worldwide LLC) at $1.00 strike",
     },
@@ -1361,7 +1361,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 5_250_013,
       source: "8-K Sep 5, 2025 (EX-4.2, EX-4.3)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1956741/000121390025085107/0001213900-25-085107-index.htm",
+        "/filings/zone/0001213900-25-085107",
       expiration: "2030-09-05",
       notes: "Placement Agent warrants (Maxim 3.15M + Curvature 2.1M) at $1.33 strike",
     },
@@ -1479,7 +1479,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 650_000_000,
       source: "8-K Dec 2020",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315971/d225117dex41.htm",
+        "/filings/mstr/0001193125-20-315971",
       issuedDate: "2020-12-11",
       expiration: "2025-12-15", // MATURED - converted to shares
       notes: "$650M @ 0.75% convertible notes due Dec 2025 (MATURED)",
@@ -1492,7 +1492,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 1_050_000_000,
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
+        "/filings/mstr/0001193125-25-262568",
       issuedDate: "2021-02-17",
       expiration: "2025-03-31", // Fully redeemed/converted Q1 2025 per Q3 10-Q
       notes: "$1.05B @ 0% convertible notes due Feb 2027 (FULLY CONVERTED Q1 2025 — shares already in basic count)",
@@ -1505,7 +1505,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 800_000_000,
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
+        "/filings/mstr/0001193125-25-262568",
       issuedDate: "2024-03-08",
       expiration: "2030-03-15",
       notes: "$800M @ 0.625% convertible notes due Mar 2030 (2030A). Conversion rate: 6.677 per $1,000.",
@@ -1518,7 +1518,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 603_750_000,
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
+        "/filings/mstr/0001193125-25-262568",
       issuedDate: "2024-03-11",
       expiration: "2031-03-15",
       notes: "$603.75M @ 0.875% convertible notes due Mar 2031. Conversion rate: 4.297 per $1,000.",
@@ -1531,7 +1531,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 800_000_000,
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
+        "/filings/mstr/0001193125-25-262568",
       issuedDate: "2024-06-13",
       expiration: "2032-06-15",
       notes: "$800M @ 2.25% convertible notes due Jun 2032. Conversion rate: 4.894 per $1,000.",
@@ -1544,7 +1544,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 1_010_000_000,
       source: "8-K Sep 2024",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524220296/0001193125-24-220296-index.htm",
+        "/filings/mstr/0001193125-24-220296",
       issuedDate: "2024-09-16",
       expiration: "2028-09-15",
       notes: "$1.01B @ 0.625% convertible notes due Sep 2028 (first post-split)",
@@ -1557,7 +1557,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 3_000_000_000,
       source: "8-K Nov 2024",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263336/0001193125-24-263336-index.htm",
+        "/filings/mstr/0001193125-24-263336",
       issuedDate: "2024-11-20",
       expiration: "2029-12-01",
       notes: "$3B @ 0% convertible notes due Dec 2029 (largest single issuance)",
@@ -1570,7 +1570,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 2_000_000_000,
       source: "8-K Feb 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1050446/000119312525030212/0001193125-25-030212-index.htm",
+        "/filings/mstr/0001193125-25-030212",
       issuedDate: "2025-02-20",
       expiration: "2030-03-01",
       notes: "$2B @ 0% convertible notes due Mar 2030 (2030B Notes)",
@@ -1665,7 +1665,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 6_123_837,
       source: "8-K Nov 6, 2025 (PIPE closing)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1826397/000149315225021006/form8-k.htm",
+        "/filings/avx/0001493152-25-021006",
       issuedDate: "2025-11-05",
       notes:
         "Pre-funded warrants from $219M PIPE. Strike essentially zero - always ITM.",
@@ -1686,7 +1686,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 28_800_000, // $1B par × 28.8 / 1000 = 28,800,000 shares
       faceValue: 1_000_000_000, // $1B par value — subtracted from debt when ITM
       source: "8-K May 30, 2025 EX-4.1 Indenture (conversion rate 28.8 shares per $1,000)",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125020967/ef20049966_ex4-1.htm",
+      sourceUrl: "/filings/djt/0001140361-25-020967",
       expiration: "2028-05-29",
       issuedDate: "2025-05-29",
       notes:
@@ -1697,7 +1697,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 11.50,
       potentialShares: 11_019_766,
       source: "Q3 2025 10-Q Note 13 (DJTWW public warrants from DWAC merger)",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
+      sourceUrl: "/filings/djt/0001140361-25-040977",
       expiration: "2029-03-25",
       issuedDate: "2021-09-08",
       notes:
@@ -1708,7 +1708,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0, // RSUs have no exercise price — always dilutive
       potentialShares: 2_672_526,
       source: "Q3 2025 10-Q dilutive securities table (anti-dilutive exclusions)",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
+      sourceUrl: "/filings/djt/0001140361-25-040977",
       notes:
         "2,672,526 RSUs outstanding as of Q3 2025. No strike price — always ITM and dilutive. Part of 42.5M total anti-dilutive shares excluded from diluted EPS.",
     },
@@ -1729,7 +1729,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 384_936, // Nov 14, 2025 10-Q cover page. Down from 85.1M at Sep 30.
       source: "10-Q Q3 2025 cover page: 384,936 tradeable warrants as of Nov 14, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+        "/filings/naka/0001493152-25-024260",
       expiration: "2029-05-31", // 5 years from IPO (May 2024 424B4 prospectus)
       issuedDate: "2024-05-31",
       notes:
@@ -1741,7 +1741,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 101_783, // 203,565 non-tradeable warrants → 101,783 shares (2:1 exercise ratio per prospectus)
       source: "10-Q Q3 2025 cover page: 203,565 non-tradeable warrants as of Nov 14, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+        "/filings/naka/0001493152-25-024260",
       expiration: "2029-05-31",
       issuedDate: "2024-05-31",
       notes:
@@ -1780,7 +1780,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 71_985_605,
       source: "SEC 8-K Oct 9, 2025 (PIPE closing)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1509745/000110465925098082/tm2528058d2_8k.htm",
+        "/filings/cyph/0001104659-25-098082",
       expiration: "2035-10-08",
       issuedDate: "2025-10-08",
       notes: "Common warrants from $58.88M PIPE. 10-year term.",
@@ -1791,7 +1791,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 4_000_000,
       source: "SEC 8-K Oct 9, 2025 (placement agent warrants)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1509745/000110465925098082/tm2528058d2_8k.htm",
+        "/filings/cyph/0001104659-25-098082",
       expiration: "2035-10-08",
       issuedDate: "2025-10-08",
       notes: "Placement agent warrants (Parcrest). Same terms as common warrants.",
@@ -1815,7 +1815,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_655_928,
       source: "SEC 20-F FY2024",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/ea0241193-20f_ddcenter.htm",
+        "/filings/ddc/0001213900-25-043916",
       notes: "2023 ESOP stock options outstanding as of Dec 31, 2024. May be reduced post-Nov 2024 cancellation of underwater grants — verify with 20-F FY2025.",
     },
     {
@@ -1824,7 +1824,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_199_999,
       source: "SEC F-1 Jan 15, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026004713/ea0262408-f1_ddcenter.htm",
+        "/filings/ddc/0001213900-26-004713",
       issuedDate: "2025-06-01",
       expiration: "2035-06-01", // 10-year term
       notes: "2025 Warrant Program: CEO 1.7M + execs/directors 500K. Vest 3yr, expire 10yr. Strike TBD by Board.",
@@ -1836,7 +1836,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 27_000_000,
       source: "SEC 6-K Jul 11, 2025 Exhibit 10.2 (Form of Initial Note)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1808110/000121390025063293/ea024799501ex10-2_ddcenter.htm",
+        "/filings/ddc/0001213900-25-063293",
       expiration: "2027-07-01",
       issuedDate: "2025-07-01",
       notes: "Anson Initial Notes. $27M senior secured, 0% interest (12% on default). " +
@@ -1852,7 +1852,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_583_306,  // Doubled from 1,791,653 due to 70% warrant coverage (was 35%) per Sep 2025 Waiver
       source: "SEC 424B3 Jan 26, 2026 (Anson SPA) + treasury.ddc.xyz Shares tab",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+        "/filings/ddc/0001213900-26-007463",
       issuedDate: "2025-07-01",
       expiration: "2030-07-01",  // 5-year term from issuance
       notes: "Anson Initial Warrants from $27M convertible deal. Exercisable immediately. Strike undisclosed in prospectus. " +
@@ -1865,7 +1865,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 32_800_000,
       source: "SEC 6-K Feb 6, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
+        "/filings/ddc/0001213900-26-013341",
       issuedDate: "2025-12-30",
       notes: "Satoshi Strategic — 16M senior convertible preferred shares at $2.05 stated value. " +
         "4.5% annual dividend. Converts at 150% of 5-day VWAP preceding close — " +
@@ -1881,7 +1881,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   //    PUT OPTION DETAILS (SEC 6-K Jul 3, 2025): Strike $18.50, currently exercisable (~$75M mcap).
   //    Collateral: BTC from 'Charged Wallet'. Could force DDC to sell BTC to honor put obligation.
   //    Not modeled as dilutive instrument (no share dilution), but material risk to BTC holdings.
-  //    Source: https://www.sec.gov/Archives/edgar/data/1808110/000121390025063293/ea024799501ex10-2_ddcenter.htm
+  //    Source: /filings/ddc/0001213900-25-063293
   // At ~$2.60 stock: Options OTM ($3.85), Anson convert OTM ($8.97), Satoshi preferred TBD
   // 2023 ESOP allows up to 1.208M shares + 10% annual increase
   // 2025 Warrant Program: up to 5M for CEO in 2025, then 25% of outstanding annually
@@ -1898,7 +1898,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 925_590,
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+        "/filings/fld/0001193125-25-274317",
       notes: "March 2025 Warrants @ $15 - deep OTM at ~$2 stock",
     },
     {
@@ -1908,7 +1908,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 20_000_000,
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+        "/filings/fld/0001193125-25-274317",
       expiration: "2028-02-14",
       notes: "June 2025 Amended Investor Note @ $9/share. Secured by 300 BTC. Deep OTM at ~$2 stock.",
     },
@@ -1919,7 +1919,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 46_300_000,  // Principal (fair value is $60.8M)
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+        "/filings/fld/0001193125-25-274317",
       notes: "March 2025 Investor Note (SATS Credit Fund - related party) @ $12.50/share. Funded with 475 BTC. Triggering events at $15-$40 stock. Deep OTM at ~$2 stock.",
     },
     {
@@ -1928,7 +1928,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 12_434_658,
       source: "SEC 10-Q Q3 2025 Note 11 (Warrants)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+        "/filings/fld/0001193125-25-274317",
       notes: "FLDDW public warrants (legacy FTAC Emerald SPAC). Each warrant exercisable for one share @ $11.50. Trades on Nasdaq. Deep OTM at ~$2 stock.",
     },
     {
@@ -1937,7 +1937,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 869_565,
       source: "SEC 10-Q Q3 2025 Note 10 (December 2024 SPA)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+        "/filings/fld/0001193125-25-274317",
       issuedDate: "2024-12-01",
       notes: "Series A Warrants from December 2024 SPA. 8-year expiry. Deep OTM at ~$2 stock.",
     },
@@ -1947,7 +1947,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 869_565,
       source: "SEC 10-Q Q3 2025 Note 10 (June 2025 Amendment)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+        "/filings/fld/0001193125-25-274317",
       issuedDate: "2025-06-16",
       expiration: "2026-08-14",
       notes: "Series C Warrants (amended from $11.50 to $9.00 in June 2025). Expires Aug 14, 2026 — near-term! Deep OTM at ~$2 stock.",
@@ -1971,7 +1971,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 600_000,  // 3,000,000 pre-split ÷ 5
       source: "SEC 10-Q Q3 2025 Note 11",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+        "/filings/fgnx/0001493152-25-023550",
       issuedDate: "2025-07-29",
       expiration: "2035-07-29",  // ~10 year term
       notes: "Placement Agent Warrants (ThinkEquity). Post-split: 600K shares @ $27.50.",
@@ -1982,7 +1982,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 140_000,  // 700,000 pre-split ÷ 5
       source: "SEC 10-Q Q3 2025 Note 11",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+        "/filings/fgnx/0001493152-25-023550",
       notes: "OGroup LLC affiliate warrants. Post-split: 140K shares @ $25.00. CEO Cerminara is Managing Member of OGroup.",
     },
     {
@@ -1991,7 +1991,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 140_000,  // 700,000 pre-split ÷ 5
       source: "SEC 10-Q Q3 2025 Note 11",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+        "/filings/fgnx/0001493152-25-023550",
       notes: "FG Merchant Partners affiliate warrants. Post-split: 140K shares @ $25.00. CEO-affiliated entity.",
     },
     {
@@ -2000,7 +2000,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 5_298,  // 26,490 pre-split ÷ 5
       source: "SEC 10-Q Q3 2025 Note 10",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
+        "/filings/fgnx/0001493152-25-023550",
       notes: "2021 Equity Incentive Plan options. Deep OTM (~$358 strike vs ~$15-25 stock). Immaterial.",
     },
   ],
@@ -2026,7 +2026,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 5_382_292,  // 7,176,389 warrants × 0.75 shares each
       source: "SEC 20-F FY2024",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1921158/000121390025033733/ea0238119-20f_bitfu.htm",
+        "/filings/fufu/0001213900-25-033733",
       notes: "Public warrants @ $11.50 - each warrant = 3/4 share. Deep OTM at ~$2.80 stock.",
     },
     {
@@ -2035,7 +2035,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 297_444,
       source: "SEC 6-K H1 2025 XBRL: SharebasedCompensationArrangementBySharebasedPaymentAwardOptionsNonvestedNumberOfShares",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
+        "/filings/fufu/0001213900-25-084744",
       notes: "Unvested restricted shares under 2022 Share Incentive Plan. 6,512,781 granted, 6,176,756 vested, 297,444 unvested (Jun 2025). Grant date fair value $5.05/share. Always ITM.",
     },
     {
@@ -2044,7 +2044,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 207_000,  // 115,000 shares + 86,250 warrant shares (0.75 each) + 5,750 rights (1/20 each)
       source: "SEC 20-F FY2024 (Chardan Unit Purchase Option)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1921158/000121390025033733/ea0238119-20f_bitfu.htm",
+        "/filings/fufu/0001213900-25-033733",
       notes: "Chardan Unit Purchase Option: 115,000 units @ $11.50. Each unit = 1 share + 1 warrant (3/4 share) + 1 right (1/20 share) = ~1.8 shares. Deep OTM. Immaterial (~0.1% dilution).",
     },
   ],
@@ -2065,7 +2065,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 30_769_230,
       source: "424B3 Jan 9, 2026 (Purchaser Warrants)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm",
+        "/filings/hypd/0001104659-26-002496",
       issuedDate: "2025-06-20",
       notes: "Purchaser Warrants from Jun 2025 PIPE. ITM at $3.45 stock.",
     },
@@ -2075,7 +2075,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_846_153,
       source: "424B3 Jan 9, 2026 (Placement Agent Warrants)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm",
+        "/filings/hypd/0001104659-26-002496",
       issuedDate: "2025-06-20",
       notes: "Chardan placement agent warrants. ITM at $3.45 stock.",
     },
@@ -2085,7 +2085,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 350_000,
       source: "424B3 Jan 9, 2026 (Lender Warrants)",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1682639/000110465926002496/tm2521045d6_424b3.htm",
+        "/filings/hypd/0001104659-26-002496",
       notes: "Avenue Capital lender warrants. OTM at $3.45 stock.",
     },
   ],
@@ -2101,7 +2101,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.42,
       potentialShares: 584_795,
       source: "10-Q Q1 FY2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
+      sourceUrl: "/filings/lits/0001193125-25-283111",
       expiration: "2030-07-22",
       notes: "GSR 1 advisory warrants - OTM at ~$2.70",
     },
@@ -2110,7 +2110,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.93,
       potentialShares: 292_398,
       source: "10-Q Q1 FY2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
+      sourceUrl: "/filings/lits/0001193125-25-283111",
       expiration: "2030-07-22",
       notes: "GSR 2 advisory warrants - OTM at ~$2.70",
     },
@@ -2119,7 +2119,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 4.62,
       potentialShares: 292_398,
       source: "10-Q Q1 FY2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
+      sourceUrl: "/filings/lits/0001193125-25-283111",
       expiration: "2030-07-22",
       notes: "GSR 3 advisory warrants - OTM at ~$2.70",
     },
@@ -2128,7 +2128,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.13,
       potentialShares: 292_398,
       source: "10-Q Q1 FY2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
+      sourceUrl: "/filings/lits/0001193125-25-283111",
       expiration: "2030-07-22",
       notes: "GSR 4 advisory warrants - OTM at ~$2.70",
     },
@@ -2147,7 +2147,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_981_514,  // $10M / $3.354
       faceValue: 10_000_000,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2029-07-16",
       issuedDate: "2025-07-16",
       notes: "Series A-1 Senior Secured Convertible Note",
@@ -2158,7 +2158,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_490_757,  // $5M / $3.354
       faceValue: 5_000_000,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2029-07-16",
       issuedDate: "2025-07-16",
       notes: "Series B-1 Senior Secured Convertible Note",
@@ -2169,7 +2169,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 282_386,  // $1,338,506 / $4.74
       faceValue: 1_338_506,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2029-07-31",
       issuedDate: "2025-07-31",
       notes: "Series C-1 Senior Secured Convertible Note",
@@ -2180,7 +2180,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 30.24,
       potentialShares: 572_514,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2026-11-24",
       notes: "Deep OTM warrants",
     },
@@ -2189,7 +2189,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 28.80,
       potentialShares: 28_626,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2026-11-24",
       notes: "Deep OTM warrants",
     },
@@ -2198,7 +2198,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 30.24,
       potentialShares: 604_147,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2027-01-30",
       notes: "Deep OTM warrants",
     },
@@ -2207,7 +2207,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 26.70,
       potentialShares: 30_207,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2027-01-30",
       notes: "Deep OTM warrants",
     },
@@ -2216,7 +2216,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 15.30,
       potentialShares: 18_791,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2027-06-03",
       notes: "OTM warrants",
     },
@@ -2225,7 +2225,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 1.3552,  // Subject to VWAP adjustment post-split
       potentialShares: 1_945_333,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2030-04-22",
       notes: "Likely ITM - subject to price reset based on VWAP",
     },
@@ -2234,7 +2234,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.4383,  // Subject to VWAP adjustment post-split
       potentialShares: 1_070_719,
       source: "SEC 6-K Jan 20, 2026",
-      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/tm263427d1_6k.htm",
+      sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2034-06-29",
       notes: "OTM warrants - subject to price reset based on VWAP",
     },
@@ -2391,7 +2391,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 108_587,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+        "/filings/abtc/0001193125-25-281390",
       expiration: "2035-01-31",
       notes: "Legacy Gryphon Digital Mining warrants (pre-merger). Liability-classified. Near the money at ~$1.14 stock price.",
     },
@@ -2401,7 +2401,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 22_826,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+        "/filings/abtc/0001193125-25-281390",
       expiration: "2027-06-30",
       notes: "Legacy Akerna Corp warrants (prior entity). Equity-classified. Deeply OTM.",
     },
@@ -2425,7 +2425,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 17_847_000,
       source: "10-Q Q3 2025 (Note 9) + S-1 Dec 18, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+        "/filings/dfdv/0001193125-25-286660",
       expiration: "2030-04-04",
       issuedDate: "2025-04-04",
       notes:
@@ -2445,7 +2445,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       faceValue: 122_500_000,
       source: "10-Q Q3 2025 (Note 9) + S-1 Dec 18, 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+        "/filings/dfdv/0001193125-25-286660",
       expiration: "2030-07-15",
       issuedDate: "2025-07-01",
       notes:
@@ -2466,7 +2466,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 3_898_856,
       source: "S-1 Dec 18, 2025 + 8-K Oct 8, 2025 + 10-Q Q3 2025 Note 19",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025097242/ea0260652-8k_defi.htm",
+        "/filings/dfdv/0001213900-25-097242",
       issuedDate: "2025-10-27",
       notes:
         "DFDVW warrant dividend — 1 warrant per 10 shares (1:10 ratio), NOT 1:1. " +
@@ -2484,7 +2484,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_400_000,
       source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm",
+        "/filings/dfdv/0001213900-25-123331",
       expiration: "2030-04-04",
       issuedDate: "2025-04-04",
       notes:
@@ -2498,7 +2498,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 2_000_000,
       source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm",
+        "/filings/dfdv/0001213900-25-123331",
       expiration: "2030-04-04",
       issuedDate: "2025-04-04",
       notes:
@@ -2515,7 +2515,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 4_080_895,
       source: "S-1 Dec 18, 2025 + 10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000121390025123331/ea0269978-s1_defi.htm",
+        "/filings/dfdv/0001213900-25-123331",
       issuedDate: "2025-08-24",
       notes:
         "Pre-funded warrants from August 2025 PIPE. $0.0001 exercise price — near-certain conversion. " +
@@ -2531,7 +2531,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 1_483_992,
       source: "10-Q Q3 2025",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+        "/filings/dfdv/0001193125-25-286660",
       issuedDate: "2025-04-04",
       notes:
         "Stock options outstanding. Weighted average exercise price $5.24. " +
@@ -2546,7 +2546,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       potentialShares: 258_875,
       source: "10-Q Q3 2025 + 8-K Jan 29, 2026",
       sourceUrl:
-        "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+        "/filings/dfdv/0001193125-25-286660",
       issuedDate: "2025-04-04",
       notes:
         "Restricted Stock Units: 242,375 unvested per 10-Q Q3 2025, " +
