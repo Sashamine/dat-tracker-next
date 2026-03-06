@@ -91,15 +91,15 @@
 - companies.ts has `sourceQuote`, `holdingsSourceUrl`, `accessionNumber` for most companies
 - Cross-check script validates quote-value matches
 - Quote fields added to Company type: `debtSourceQuote`, `cashSourceQuote`, `sharesSourceQuote`, `preferredSourceQuote`
-- **Quote coverage**: holdings 95%, debt 80%, cash 84%, shares 89%, preferred 20%
+- **Quote coverage**: holdings 95%, debt 98%, cash 100%, shares 100%, preferred 100%
 
 **Deliverables:**
 - [x] Extend citation fields to ALL data types (type system + initial population):
-  - debt: debtSourceQuote — 32/40 (80%)
-  - cash: cashSourceQuote — 37/44 (84%)
-  - shares: sharesSourceQuote — 49/55 (89%)
-  - preferred: preferredSourceQuote — 4/20 (20%)
-- [ ] Fill remaining gaps (OBTC3, BTBT preferred, foreign companies)
+  - debt: debtSourceQuote — 39/40 (98%) — only BNC missing (no totalDebt field)
+  - cash: cashSourceQuote — 44/44 (100%)
+  - shares: sharesSourceQuote — 55/55 (100%)
+  - preferred: preferredSourceQuote — 20/20 (100%)
+- [x] Fill remaining gaps (OBTC3, BTBT preferred, foreign companies)
 - [ ] Upgrade promoted quotes to verbatim SEC filing extracts where possible
 - [ ] Provenance for derived values: show inputs + calculation
 

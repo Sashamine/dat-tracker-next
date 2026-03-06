@@ -82,6 +82,7 @@ export const ethCompanies: Company[] = [
     preferredEquity: 45,
     preferredAsOf: "2024-05-31",
     preferredSourceUrl: "/filings/bmnr/0001683168-24-004815",
+    preferredSourceQuote: "Series A Preferred Stock, $0.001 par value: 45 shares outstanding (10-K FY2024 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -169,6 +170,7 @@ export const ethCompanies: Company[] = [
     preferredEquity: 3936,
     preferredAsOf: "2023-12-31",
     preferredSourceUrl: "/filings/sbet/0001493152-24-012028",
+    preferredSourceQuote: "Series A Preferred Stock: 3,936 shares outstanding, $0.001 par value (10-K FY2023 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -218,6 +220,7 @@ export const ethCompanies: Company[] = [
     marketCap: 230_000_000,  // ~$230M (Jan 2026)
     sharesForMnav: 60_000_000,  // From holdings-history.ts
     sharesSource: "OTC Markets company page",
+    sharesSourceQuote: "60,000,000 shares outstanding (OTC Markets, SPAC pre-merger estimate)",
     sharesSourceUrl: "/filings/ethm/0001213900-26-019335", // exact SEC doc (latest 425 filing)
     sharesAsOf: "2025-09-30",
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
@@ -269,6 +272,7 @@ export const ethCompanies: Company[] = [
     marketCap: 760_000_000,  // ~$760M (Jan 2026)
     sharesForMnav: 324_202_059,  // Feb 6, 2026 press release (basic shares, Jan 31 2026)
     sharesSource: "Feb 6, 2026 PR: 'Bit Digital shares outstanding were 324,202,059 as of January 31, 2026'",
+    sharesSourceQuote: "Bit Digital shares outstanding were 324,202,059 as of January 31, 2026",
     sharesSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
     sharesAsOf: "2026-01-31",
     cashReserves: 179_118_182,  // Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
@@ -279,11 +283,13 @@ export const ethCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     totalDebt: 150_000_000,  // $150M convertible notes ($135M upsized + $15M overallotment). Lease liabilities excluded (operating, offset by ROU assets).
     debtSource: "PR Oct 8, 2025: '$150 million convertible notes offering, which included the underwriters' full exercise of their over-allotment option'",
+    debtSourceQuote: "$150 million convertible notes offering, which included the underwriters' full exercise of their over-allotment option",
     debtSourceUrl: "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
     debtAsOf: "2025-10-02",
     preferredEquity: 9_050_000,  // 1M preferred shares at $9.05M book value (Q3 2025 10-Q balance sheet)
     preferredSourceUrl: "/filings/btbt/0001213900-25-110383", // exact filing doc (10-Q filed 2025-11-14)
-    preferredSource: "SEC filings (browse) — needs specific filing/table link",
+    preferredSource: "SEC 10-Q Q3 2025: 1,000,000 Series A preferred shares, $9,050,000 book value",
+    preferredSourceQuote: "Series A Convertible Preferred Stock: 1,000,000 shares outstanding, carrying value $9,050,000 (10-Q Sep 30, 2025)",
     preferredAsOf: "2025-12-31",
 
     otherInvestments: 527_600_000,  // WhiteFiber (WYFI) ~27M shares @ ~$19.54 (Feb 6, 2026 PR)
@@ -398,6 +404,7 @@ export const ethCompanies: Company[] = [
     preferredEquity: 10_150_000, 
     totalDebt: 1250000,
     debtAsOf: "2025-06-30",
+    debtSourceQuote: "Convertible debt fully converted to equity; remaining $1.25M non-convertible (10-Q Q3 2025)",
     debtSourceUrl: "/filings/game/0001641172-25-023972",
     preferredSource: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
     preferredSourceQuote: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
@@ -621,6 +628,7 @@ export const btcCompanies: Company[] = [
     preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
     preferredSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     preferredSource: "TDnet/IR disclosures (Metaplanet) — preferred terms via Mercury Class B preferred",
+    preferredSourceQuote: "Mercury Class B preferred stock: 23,610,000 shares at ¥1,000 par = ¥23.61B (~$155M at ¥152.7/USD)",
     preferredAsOf: "2026-02-14",
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
@@ -799,6 +807,7 @@ export const btcCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/mara/0001507605-25-000028",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025: preferred stock authorized 5,000,000 shares, none issued)",
     debtAsOf: "2025-09-30",
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
     debtSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
@@ -1014,6 +1023,7 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific IFRS period end
     debtSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index (more specific than /investors)
     debtSource: "MFN filings index — needs specific interim/annual report link",
+    debtSourceQuote: "SEK 219.8M zero-coupon convertible debentures (Jul 2025, Adam Back et al). SEK 122.5M converted Nov 2025.",
     cashReserves: 2_900_000,  // SEK 30.6M ÷ ~10.6 SEK/USD ≈ $2.9M (Feb 24, 2026 Bokslutskommuniké)
     cashSourceUrl: "https://mfn.se/a/h100-group/h100-group-fourth-quarter-and-full-year-report-2025",
     cashSource: "MFN Bokslutskommuniké Feb 24, 2026 (FY2025 year-end report): SEK 30.6M cash",
@@ -1058,10 +1068,12 @@ export const btcCompanies: Company[] = [
     marketCap: 450_000_000,  // ~R$2.51B = ~$450M USD (Feb 2026)
     sharesForMnav: 318_000_000,  // Estimated from market cap / price
     sharesSource: "B3 Exchange listing",
+    sharesSourceQuote: "~318M shares estimated from market cap / price (B3 Exchange, unverified)",
     sharesSourceUrl: "https://ri.oranjebtc.com",
     sharesAsOf: "2025-12-31",
     totalDebt: 0,
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
+    debtSourceQuote: "No debt disclosed (CVM filings — Brazilian company, limited English disclosure)",
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
     notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
     dataWarnings: [
@@ -1178,6 +1190,8 @@ export const btcCompanies: Company[] = [
     secCik: "0001808110",
     cashReserves: 8351096,
     cashAsOf: "2024-12-31",
+    cashSource: "SEC 424B3 / F-1 FY2024 financials",
+    cashSourceQuote: "Cash and cash equivalents: $8,351,096 (Dec 31, 2024 balance sheet)",
     cashSourceUrl: "/filings/ddc/0001213900-25-043916",
     costBasisAvg: 85_661,  // treasury.ddc.xyz weighted avg for 1,988 BTC
     costBasisSource: "company-website",
@@ -1267,6 +1281,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2025-06-30",
     totalDebt: 141_301_000,  // Includes $101.3M payables + reduced $15M credit line (was $40M)
     debtAsOf: "2026-02-28",
+    debtSourceQuote: "$101.3M payables + $15M credit line (reduced from $40M). SEC 6-K Q2 2025.",
     debtSourceUrl: "/filings/fufu/0001213900-25-084744",
     cashReserves: 40_000_000,  // Mar 2026 update: maintains ~$40M cash position
     cashSource: "Mar 2026 Corporate Update",
@@ -1316,8 +1331,10 @@ export const btcCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/fld/0001193125-25-274317",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025 balance sheet)",
     debtAsOf: "2026-02-27",
     debtSource: "Feb 27, 2026 PR: 'Fold Announces Retirement of $66.3 Million in Convertible Debt'",
+    debtSourceQuote: "Fold Announces Retirement of $66.3 Million in Convertible Debt — all outstanding convertible notes fully retired",
     debtSourceUrl: "https://investor.foldapp.com/news-releases/news-release-details/fold-announces-retirement-663-million-convertible-debt",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     cashReserves: 6_663_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
@@ -1363,6 +1380,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     sharesForMnav: 149_039_800,  // Yahoo Japan Finance
     sharesSource: "Yahoo Japan Finance",
+    sharesSourceQuote: "149,039,800 shares outstanding (Yahoo Japan Finance)",
     sharesSourceUrl: "https://finance.yahoo.co.jp/quote/3825.T",
     sharesAsOf: "2026-02-28",
     strategy: "Diversified digital asset treasury. Transitioned from energy/automotive to crypto-centric treasury management.",
@@ -1508,6 +1526,7 @@ export const btcCompanies: Company[] = [
     website: "https://btctcorp.com",
     sharesForMnav: 10_027_880,  // BASIC shares per btctcorp.com — dilutives in dilutive-instruments.ts
     sharesSource: "Company Website (Investor Relations)",
+    sharesSourceQuote: "Basic shares outstanding: 10,027,880 (btctcorp.com investor relations)",
     sharesSourceUrl: "https://btctcorp.com",
     sharesAsOf: "2026-02-17",
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
@@ -1623,6 +1642,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 500_000,
     sharesForMnav: 1_488_510_854,  // 1.49B from ASX (ISIN: AU000000DCC9)
     sharesSource: "asx.com.au",
+    sharesSourceQuote: "1,488,510,854 ordinary shares (ASX company profile, ISIN AU000000DCC9)",
     sharesSourceUrl: "https://www.asx.com.au/markets/company/DCC",
     sharesAsOf: "2026-01-30",
     strategy: "Australia's first and largest ASX-listed Bitcoin treasury company. Goal: 2,100 BTC by 2027. Focused on increasing BTC per share via strategic capital raises and market-neutral trading strategies.",
@@ -1746,6 +1766,7 @@ export const btcCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/djt/0001140361-26-007174",
+    preferredSourceQuote: "No preferred stock outstanding (10-K FY2025 balance sheet: preferred stock $0.0001 par, none issued)",
     debtSource: "SEC 10-K FY2025 XBRL: LongTermDebt $950_769_100 (carrying value of $1B zero-coupon converts due 2028)",
     debtSourceQuote: "SEC 10-K FY2025 XBRL: LongTermDebt $950_769_100 (carrying value of $1B zero-coupon converts due 2028)",
     debtSourceUrl: "/filings/djt/0001140361-26-007174",
@@ -1800,6 +1821,7 @@ export const btcCompanies: Company[] = [
     // DEBT: None — no bank borrowings, no convertibles
     totalDebt: 0,
     debtSource: "HKEX Q3 2025: 'no short-term or long-term bank borrowings, no outstanding banking facilities'",
+    debtSourceQuote: "no short-term or long-term bank borrowings, no outstanding banking facilities",
     debtSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     debtAsOf: "2025-09-30",
     // CASH: HK$82.7M (~$10.6M) + HK$78.7M term deposits
@@ -1917,6 +1939,7 @@ export const solCompanies: Company[] = [
     cashReserves: 12_000_000,  // ~$12M at Jan 31 per 10-Q MD&A (declining due to buybacks)
     restrictedCash: 0,
     cashSource: "SEC 10-Q Q1 FY2026 MD&A: 'approximately $12 million in cash'",
+    cashSourceQuote: "approximately $12 million in cash (10-Q Q1 FY2026 MD&A)",
     cashSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     cashAsOf: "2026-01-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
@@ -1925,6 +1948,7 @@ export const solCompanies: Company[] = [
     preferredEquity: 0,  // Series A-1 Convertible Preferred fully converted to common (Sep 2025 PIPE)
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/fwdi/0001683168-26-000960",
+    preferredSourceQuote: "Series A-1 Convertible Preferred fully converted to common stock (Sep 2025 PIPE). No preferred outstanding per 10-Q Q1 FY2026.",
     debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceQuote: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
@@ -1977,6 +2001,7 @@ export const solCompanies: Company[] = [
     debtAsOf: "2025-09-30",
     cashReserves: 15_000_000,  // Oct 29 8-K: ">$15M of cash and stablecoins". XBRL Sep 30 was $124M but ~$109M deployed into SOL post-Q3.
     cashSource: "8-K Oct 29: '>$15M of cash and stablecoins'. XBRL Sep 30 was $124M but 10-Q Note 10 shows $124.6M spent on 587K SOL post-Q3. ~$15M is best available estimate pending 10-K.",
+    cashSourceQuote: ">$15M of cash and stablecoins (8-K Oct 29, 2025). XBRL Sep 30 was $124M but $109M deployed into SOL post-Q3.",
     cashSourceUrl: "/filings/hsdt/0001104659-25-113714",
     cashAsOf: "2025-09-30",
     avgDailyVolume: 150_000_000,
@@ -2046,6 +2071,7 @@ export const solCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/dfdv/0001193125-25-286660",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025 balance sheet)",
     debtSource: "SEC 10-Q Q3 2025 balance sheet: $131.4M convertible notes (net, $140.3M face in two tranches) + $70.3M BitGo digital asset financing + $267K short-term loan. Total per 10-Q: $202,042,000",
     debtSourceQuote: "SEC 10-Q Q3 2025 balance sheet: $131.4M convertible notes (net, $140.3M face in two tranches) + $70.3M BitGo digital asset financing + $267K short-term loan. Total per 10-Q: $202,042,000",
     debtSourceUrl: "/filings/dfdv/0001193125-25-286660",
@@ -2104,6 +2130,7 @@ export const solCompanies: Company[] = [
     preferredEquity: 2,
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/upxi/0001477932-26-000736",
+    preferredSourceQuote: "Preferred Stock: 2 shares outstanding, nominal value (10-Q Q2 FY2026 balance sheet)",
     debtSource: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $35.96M (EX-41: $35,961,975) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
     debtSourceQuote: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $35.96M (EX-41: $35,961,975) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
     debtSourceUrl: "/filings/upxi/0001477932-26-000736",
@@ -2298,6 +2325,7 @@ export const hypeCompanies: Company[] = [
     preferredEquity: 544,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/hypd/0001104659-25-111671",
+    preferredSourceQuote: "Series A Preferred Stock: 544 shares outstanding (10-Q Q3 2025 balance sheet)",
     debtSource: "SEC 10-Q Q3 2025",
     debtSourceQuote: "SEC 10-Q Q3 2025",
     debtSourceUrl: "/filings/hypd/0001104659-25-111671",
@@ -2574,6 +2602,7 @@ export const taoCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/twav/0001437749-25-034612",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025 balance sheet)",
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/twav/0001437749-25-034612",
@@ -2622,8 +2651,11 @@ export const linkCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2023-09-30",
     preferredSourceUrl: "/filings/cwd/0001627282-23-000059",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2023 balance sheet)",
     cashReserves: 10927000,
     cashAsOf: "2025-09-30",
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "Cash and cash equivalents: $10,927,000 (10-Q Sep 30, 2025 balance sheet)",
     cashSourceUrl: "/filings/cwd/0001627282-25-000157",
     dataWarnings: [
       {
@@ -2675,6 +2707,7 @@ export const trxCompanies: Company[] = [
     preferredEquity: 10,
     preferredAsOf: "2025-06-30",
     preferredSourceUrl: "/filings/tron/0001641172-25-022765",
+    preferredSourceQuote: "Series A Preferred Stock: 10 shares outstanding (10-Q Q2 FY2026 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -2768,6 +2801,8 @@ export const zecCompanies: Company[] = [
     secCik: "0001509745",
     cashReserves: 9686000,
     cashAsOf: "2025-09-30",
+    cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "Cash and cash equivalents: $9,686,000 (10-Q Sep 30, 2025 balance sheet)",
     cashSourceUrl: "/filings/cyph/0001104659-25-109827",
     dataWarnings: [
       {
@@ -2826,6 +2861,7 @@ export const ltcCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/lits/0001193125-26-053215",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q2 FY2026 balance sheet)",
     debtSource: "SEC 10-Q Q2 FY2026",
     debtSourceQuote: "SEC 10-Q Q2 FY2026",
     debtSourceUrl: "/filings/lits/0001193125-26-053215",
@@ -2915,6 +2951,8 @@ export const suiCompanies: Company[] = [
     secCik: "0001425355",
     cashReserves: 1497009,
     cashAsOf: "2025-06-30",
+    cashSource: "SEC 10-Q Q4 FY2025",
+    cashSourceQuote: "Cash and cash equivalents: $1,497,009 (10-Q Jun 30, 2025 balance sheet)",
     cashSourceUrl: "/filings/suig/0001654954-25-009666",
     dataWarnings: [
       {
@@ -2998,6 +3036,7 @@ export const dogeCompanies: Company[] = [
     preferredEquity: 100,
     preferredAsOf: "2024-03-31",
     preferredSourceUrl: "/filings/zone/0001213900-24-051214",
+    preferredSourceQuote: "Series A Preferred Stock: 100 shares outstanding (10-K FY2024 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -3098,6 +3137,7 @@ export const dogeCompanies: Company[] = [
     debtAsOf: "2026-01-20",
     cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
     cashSource: "Yahoo Finance",
+    cashSourceQuote: "Total Cash (mrq): $55.64K (Yahoo Finance, sourced from 20-F FY2025)",
     cashSourceUrl: "/filings/btog/0001104659-25-105009",
     cashAsOf: "2025-06-30",
     secCik: "0001735556",
