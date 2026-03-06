@@ -60,8 +60,6 @@ export type CompanyType = "Treasury" | "Miner";
 
 // Stock currency (for non-USD exchanges)
 export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL" | "GBP" | "NOK" | "KRW" | "AED" | "AUD";
-
-// Jurisdiction bucket for discovery/scoring routing.
 export type Jurisdiction = "US" | "JP" | "CA" | "HK" | "AU" | "EU" | "OTHER";
 
 // Base company interface
@@ -212,6 +210,8 @@ export interface Company {
   preferredSourceUrl?: string;
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
+  asxAnnouncementsUrl?: string; // ASX announcements/listing URL (AU tickers)
+  hkexNewsUrl?: string;         // HKEX news/filing URL (HK tickers)
   walletAddresses?: string[];   // Known wallet addresses for on-chain verification
 
   // Pending merger status (for SPACs that haven't closed yet)
@@ -248,7 +248,15 @@ export interface Company {
 
   // D1 overlay metadata (set by applyD1Overlay)
   holdingsBasis?: HoldingsBasis;   // How holdings were resolved (native, USD÷price, static)
+  d1HoldingsByAsset?: D1HoldingByAsset[]; // Optional per-asset holdings from D1 latest_datapoints.
   _d1Fields?: string[];            // Which balance-sheet fields were sourced from D1 (dev debug)
+}
+
+export interface D1HoldingByAsset {
+  asset: string;
+  value: number;
+  sourceUrl?: string | null;
+  asOf?: string | null;
 }
 
 // Secondary crypto holding for multi-asset treasury companies
