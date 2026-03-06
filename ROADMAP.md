@@ -59,17 +59,25 @@
 
 **Goal:** Every cited source document is cached in R2 so links never break, regardless of what SEC/SEDAR/company sites do.
 
-**Current state:**
+**Current state (2026-03-06):**
 - `/filings/{ticker}/{accession}` route exists (R2 first, SEC fallback)
-- `processed-sec-docs/` has partial coverage
-- `upload-processed-to-r2.ts` uploads to R2
+- 670+ SEC archive URLs converted to `/filings/` format
+- 165 processed SEC filings uploaded to R2 (`new-uploads/` prefix)
+- 23 external source documents cached in R2 (`external-sources/` prefix)
+- `scripts/verify-r2-citations.ts` reports coverage metrics
+- **SEC filing coverage: 99.1%** (105/106 citations in companies.ts)
+- **External source coverage: 39%** (23/59 unique URLs cached)
+- **Overall: 75.3%** (128/170 total source citations)
 
 **Deliverables:**
-- [ ] Audit: which cited documents (sourceUrl, holdingsSourceUrl, debtSourceUrl, etc.) are NOT in R2?
-- [ ] Bulk download + process missing SEC filings into R2
-- [ ] Cache non-SEC sources (press releases, company dashboards, SEDAR+ filings) where possible
+- [x] Audit: which cited documents are NOT in R2? (`verify-r2-citations.ts`)
+- [x] Bulk download + process missing SEC filings into R2 (165 filings, 41 tickers)
+- [x] Convert all SEC archive URLs to `/filings/` format (670+ URLs)
+- [x] Coverage metric: % of cited sources with R2 backup
+- [x] Cache static external sources (PDFs, press releases) — 23 docs cached
+- [ ] Cache remaining external sources (SEDAR+, foreign regulators)
 - [ ] For JS-rendered dashboards: store Playwright snapshots as dated artifacts
-- [ ] Coverage metric: % of cited sources with R2 backup
+- [ ] 1 missing SEC filing: tron/0001493152-26-012544 (may not exist on EDGAR)
 
 **DoD:**
 - Every `sourceUrl` in companies.ts resolves to a cached R2 document
@@ -107,16 +115,18 @@
 
 **Goal:** The cross-check script runs on every commit and blocks merges with data integrity failures.
 
-**Current state:**
-- `scripts/cross-check-data.ts` exists, runs manually
-- 0 FAIL, 15 WARN (all staleness), 15 INFO
+**Current state (2026-03-06):**
+- `scripts/cross-check-data.ts` runs: 0 FAIL, 15 WARN (all staleness), 15 INFO
 - Checks: quote-value match, staleness, field consistency, shares sanity, source type alignment
+- `.github/workflows/cross-check.yml` triggers on PR/push when data files change
+- Warning ratchet enforced via `.github/cross-check-baseline.json` (max: 15)
+- PR annotation via `actions/github-script` comments warnings/failures on PRs
 
 **Deliverables:**
-- [ ] Add cross-check to GitHub Actions / Vercel build
-- [ ] FAIL = block merge, WARN = annotate PR, INFO = silent
-- [ ] Staleness threshold config (currently 90d warn, 180d fail for tier 1)
-- [ ] Track warning count over time — must not increase (ratchet)
+- [x] Add cross-check to GitHub Actions (`.github/workflows/cross-check.yml`)
+- [x] FAIL = block merge (exit code 1), WARN = annotate PR, INFO = silent
+- [x] Staleness threshold config (90d warn, 180d fail for tier 1)
+- [x] Track warning count over time — ratchet via baseline file
 
 **DoD:**
 - No data change can merge if it introduces a FAIL
@@ -292,14 +302,18 @@
 Update this section when starting/stopping work so other agents see what's in-flight.
 
 ### Now (in progress)
-- **Cross-check enforcement** — cross-check-data.ts passing (0 FAIL), needs CI wiring
 - **Ingestion + transform loop** — runs green (scheduled inventory + invariants)
+- **R2 coverage audit (Phase 1.1)** — SEC 99.1%, external 39%, overall 75.3%
 
 ### Next (queued)
-- R2 coverage audit (Phase 1.1)
+- Remaining external source caching (SEDAR+, dashboards via Playwright)
 - Citation UX design (Phase 3.1)
+- Phase 0.5 Product Framing (separate agent — GPT 5.4)
 
 ### Done (recent)
+- Cross-check CI wiring — GitHub Actions workflow + warning ratchet (2026-03-06)
+- R2 coverage audit + SEC filing cache — 165 filings, 23 external docs in R2 (2026-03-06)
+- SEC URL conversion — 670+ URLs converted to /filings/ format (2026-03-06)
 - Cross-check data integrity sweep — 0 FAIL, all companies have source quotes (2026-03-06)
 - Staleness sweep — verified all 15 stale warnings have no newer data available (2026-03-06)
 - Proposal-key upsert rollout (writers idempotent)

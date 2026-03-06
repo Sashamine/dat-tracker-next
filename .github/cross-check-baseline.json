@@ -1,0 +1,5 @@
+{
+  "maxWarnings": 15,
+  "lastUpdated": "2026-03-06",
+  "note": "Warning count must not increase. Run npx tsx scripts/cross-check-data.ts to verify. Lower this number as warnings are resolved."
+}

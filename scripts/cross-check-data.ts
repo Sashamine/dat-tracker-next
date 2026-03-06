@@ -525,9 +525,27 @@ function run() {
     console.log(`  ${check.padEnd(25)} ${count}`);
   }
 
+  // Warning ratchet: check against baseline (must not increase)
+  const baselinePath = path.join(__dirname, "..", ".github", "cross-check-baseline.json");
+  let ratchetFail = false;
+  if (fs.existsSync(baselinePath)) {
+    const baseline = JSON.parse(fs.readFileSync(baselinePath, "utf-8"));
+    const maxWarnings = baseline.maxWarnings ?? Infinity;
+    if (warns.length > maxWarnings) {
+      console.log(`\nRATCHET FAIL: ${warns.length} warnings exceeds baseline of ${maxWarnings}`);
+      console.log(`  Update .github/cross-check-baseline.json if new warnings are intentional.`);
+      ratchetFail = true;
+    } else {
+      console.log(`\nRatchet: ${warns.length}/${maxWarnings} warnings (baseline ok)`);
+    }
+  }
+
   // Exit code
   if (fails.length > 0) {
     console.log(`\n** ${fails.length} FAILURES — data integrity issues found **`);
+    process.exit(1);
+  } else if (ratchetFail) {
+    console.log(`\n** Warning count regression — fix new warnings or update baseline **`);
     process.exit(1);
   } else if (warns.length > 0) {
     console.log(`\n${warns.length} warnings — review recommended, no blocking issues.`);

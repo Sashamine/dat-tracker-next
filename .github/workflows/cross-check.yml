@@ -1,0 +1,81 @@
+name: cross-check data integrity
+
+on:
+  pull_request:
+    paths:
+      - 'src/lib/data/companies.ts'
+      - 'src/lib/data/provenance/**'
+      - 'src/lib/data/*-holdings-history.ts'
+      - 'src/lib/data/dilutive-instruments.ts'
+      - 'src/lib/data/earnings-data.ts'
+      - 'scripts/cross-check-data.ts'
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/data/companies.ts'
+      - 'src/lib/data/provenance/**'
+
+jobs:
+  cross-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Cross-check data integrity
+        run: npx tsx scripts/cross-check-data.ts
+
+      - name: Annotate warnings on PR
+        if: failure() || success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const { execSync } = require('child_process');
+
+            // Re-run cross-check and capture output
+            let output;
+            try {
+              output = execSync('npx tsx scripts/cross-check-data.ts 2>&1', { encoding: 'utf-8' });
+            } catch (e) {
+              output = e.stdout || '';
+            }
+
+            // Only comment on PRs
+            if (!context.payload.pull_request) return;
+
+            const warns = output.match(/WARN.*$/gm) || [];
+            const fails = output.match(/FAIL.*$/gm) || [];
+            const summary = output.match(/Companies checked:.*\n.*FAIL:.*\n.*WARN:.*\n.*INFO:.*/s)?.[0] || '';
+
+            if (fails.length === 0 && warns.length === 0) return;
+
+            let body = '## Cross-Check Data Integrity\n\n';
+            body += '```\n' + summary + '\n```\n\n';
+
+            if (fails.length > 0) {
+              body += '### Failures (blocking)\n\n';
+              body += fails.map(f => '- ' + f).join('\n') + '\n\n';
+            }
+
+            if (warns.length > 0) {
+              body += '<details><summary>' + warns.length + ' warnings</summary>\n\n';
+              body += warns.map(w => '- ' + w).join('\n') + '\n';
+              body += '</details>\n';
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body,
+            });
