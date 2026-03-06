@@ -1,213 +1,267 @@
-# DAT Tracker Data Architecture Roadmap
+# DAT Tracker Roadmap
 
-> **Last Updated**: 2026-03-02
-
----
-
-## Roadmap (Canon-first, adoption-aware)
-
-This is the **active** roadmap for making the site fully provenanced with queryable data and full citation.
-
-Core principles:
-- **Canon before polish**
-- **Measurement before perfection**
-- **Adoption before expansion**
+> **Last Updated**: 2026-03-06
 
 ---
 
-## Phase 1 — Canon Spine (Ship Threshold)
+## Core Principles
 
-Complete these and we can honestly say:
-> “DAT Tracker is a defensible reference system.”
-
-### 1) Provenance primitives (R2 + D1 core)
-**Goal:** Immutable raw artifacts + queryable datapoints with lineage.
-
-Deliverables:
-- Cloudflare **R2** for immutable artifacts (filings, XBRL, companyfacts, dashboards)
-- Cloudflare **D1** schema: `artifacts`, `runs`, `datapoints`
-- Stable IDs everywhere
-- Every datapoint links: `datapoint → run_id + artifact_id`
-
-DoD:
-- For any number, we can programmatically trace:
-  `datapoint → run → artifact → source_url/accession`
-
-### 2) Deterministic ingestion + idempotent transforms
-**Goal:** Safe, reproducible updates.
-
-Deliverables:
-- Scheduled ingestion (**30–60 min is acceptable**) to start
-- Write artifact → write run → upsert datapoints
-- Content-hash (or key) dedupe
-- Stable identity upserts (proposal_key style)
-- Reruns produce **zero duplicates**
-
-DoD:
-- Re-running any job produces:
-  - no dupes
-  - clean counters
-  - queryable run lineage
-
-### 3) Eliminate “naked numbers” (site fully D1-backed)
-**Goal:** Everything displayed is D1-backed and queryable (latest + history).
-
-Deliverables:
-- Inventory of every UI metric and its source
-- Writers/backfills per metric family
-- Strict allowlist for native holdings (only explicit extraction; e.g. BTC/ETH/SOL)
-
-DoD:
-- UI renders from D1-backed endpoints; no ad-hoc TS/JSON data paths for displayed values
-
-### 4) Minimal citation surface (not perfect UX yet)
-**Goal:** Any number can be explained.
-
-Deliverables:
-- Standardized receipt schema:
-  - `value`, `unit`, `as_of`, `reported_at`
-  - `artifact_id`, `run_id`
-  - `source_url`, `accession`, `r2_key`
-  - `method`, `confidence`
-- “Explain” endpoint (latest datapoint + receipts)
-- Basic citation modal (functional > polished)
-
-DoD:
-- Agents + users can retrieve the provenance chain for any displayed metric
-
-### 5) Adoption instrumentation (D1 events; re-evaluate PostHog after 7 days)
-**Goal:** Measure real usage before polishing further.
-
-Deliverables:
-- D1 `events` table + `POST /api/events`
-- Server-side API call events for key read endpoints (latest/history)
-- Client-side UX events: citation opens, source clicks, history views
-- Retention + rate limiting
-
-DoD (after 7 days):
-- You can answer with numbers:
-  - most viewed companies
-  - most queried metrics
-  - citation open frequency + click-through rate
-  - history endpoint usage heatmap
-  - web vs agent vs cron split
-
-Decision gate:
-- After 7 days of D1 events data, re-evaluate whether PostHog is needed for funnels/cohorts/retention.
-
-### 6) Minimum invariants (canon guardrails)
-**Goal:** Prevent silent canon rot while we measure adoption.
-
-Deliverables:
-- Missing receipts regression invariant (must not increase)
-- Duplicate datapoints invariant
-- Coarse “impossible value” checks (bounds/sanity) for key metric families
-
-DoD:
-- Canon integrity regressions fail CI/workflows loudly.
-
-### 7) Adoption Signals Dashboard (measurement layer)
-**Goal:** Weekly canonical readout that grounds roadmap priorities.
-
-Track weekly:
-- unique users, returning users
-- API calls (total + by endpoint + by caller type)
-- citation opens + click-through rate
-- most queried metrics, most viewed companies
-- backlinks / organic mentions (start manual)
-
-Outputs:
-- one dashboard endpoint + one weekly markdown snapshot under `ops/`
-
-DoD:
-- <60 seconds to understand adoption + trend deltas week-over-week.
+- **Correctness before features** — every number must be verifiable
+- **Permanence before convenience** — source documents cached forever
+- **Measurement before expansion** — understand usage before scaling
 
 ---
 
-## Phase 2 — Trust Hardening (triggered by real usage)
+## Phase 1 — Immutable Provenance
 
-Only accelerate these if Phase 1 shows meaningful usage (and/or citations/history are being used heavily).
+> "Every number links to a permanent, cached source document."
 
-### 8) Verification + confidence loop
-**Goal:** Keep correctness high as coverage scales.
+### 1.1 R2 Document Coverage
 
-Deliverables:
-- Metric-specific verifiers
-- Confidence scoring + DLQ workflows + weekly resolve report
+**Goal:** Every cited source document is cached in R2 so links never break, regardless of what SEC/SEDAR/company sites do.
 
-DoD:
-- Low-confidence datapoints are actively resolved; DLQ stays near-zero.
+**Current state:**
+- `/filings/{ticker}/{accession}` route exists (R2 first, SEC fallback)
+- `processed-sec-docs/` has partial coverage
+- `upload-processed-to-r2.ts` uploads to R2
 
-### 9) Full citation UX everywhere
-**Goal:** No naked numbers across the entire site.
+**Deliverables:**
+- [ ] Audit: which cited documents (sourceUrl, holdingsSourceUrl, debtSourceUrl, etc.) are NOT in R2?
+- [ ] Bulk download + process missing SEC filings into R2
+- [ ] Cache non-SEC sources (press releases, company dashboards, SEDAR+ filings) where possible
+- [ ] For JS-rendered dashboards: store Playwright snapshots as dated artifacts
+- [ ] Coverage metric: % of cited sources with R2 backup
 
-Deliverables:
-- Expand citation modal to all surfaces
-- Include history + verification state
-- Frictionless source jump
+**DoD:**
+- Every `sourceUrl` in companies.ts resolves to a cached R2 document
+- If SEC/SEDAR goes down, every citation still works
 
-DoD:
-- Every metric is clickable → receipts + history.
+### 1.2 Provenance Chain Completeness
 
-### 10) Multi-asset + taxonomy first-class
-**Goal:** Model multi-asset treasuries correctly.
+**Goal:** Every data field traces to: value → quote → document → permanent URL.
 
-Deliverables:
-- Per-asset holdings schema (native + USD)
-- Multi-asset mNAV math + correct rollups
+**Current state:**
+- companies.ts has `sourceQuote`, `holdingsSourceUrl`, `accessionNumber` for most companies
+- Cross-check script validates quote-value matches
+- Some fields (debt, cash, preferred, shares) lack full citation chains
 
-DoD:
-- Multi-asset companies are accurate and fully queryable.
+**Deliverables:**
+- [ ] Extend citation fields to ALL data types (not just holdings):
+  - debt: debtSourceQuote
+  - cash: cashSourceQuote
+  - shares: sharesSourceQuote
+  - preferred: preferredSourceQuote
+- [ ] Every field with a value must have: source URL + quote + as-of date
+- [ ] Provenance for derived values: show inputs + calculation
 
-### 11) CI / invariants ratchet
-**Goal:** Green means safe.
+**DoD:**
+- For any number displayed on the site, you can programmatically retrieve:
+  `value → sourceQuote → sourceUrl → R2 cached document`
 
-Deliverables:
-- Expand lint scope, provenance regression tests, invariant suite, event schema stability
+---
 
-DoD:
-- Regressions are caught immediately; safety improves over time.
+## Phase 2 — Ground Truth Enforcement
 
-### 12) Retire legacy paths
+> "Data integrity is enforced automatically, not manually."
+
+### 2.1 Cross-Check in CI
+
+**Goal:** The cross-check script runs on every commit and blocks merges with data integrity failures.
+
+**Current state:**
+- `scripts/cross-check-data.ts` exists, runs manually
+- 0 FAIL, 15 WARN (all staleness), 15 INFO
+- Checks: quote-value match, staleness, field consistency, shares sanity, source type alignment
+
+**Deliverables:**
+- [ ] Add cross-check to GitHub Actions / Vercel build
+- [ ] FAIL = block merge, WARN = annotate PR, INFO = silent
+- [ ] Staleness threshold config (currently 90d warn, 180d fail for tier 1)
+- [ ] Track warning count over time — must not increase (ratchet)
+
+**DoD:**
+- No data change can merge if it introduces a FAIL
+- Warning count is tracked and ratcheted down
+
+### 2.2 Adversarial Verification Process (Automated)
+
+**Goal:** New data changes go through automated verification before landing.
+
+**Current state:**
+- CLAUDE.md documents the adversarial process (manual)
+- Provenance system exists for some companies (MSTR, MARA, BMNR, etc.)
+
+**Deliverables:**
+- [ ] PR bot: when companies.ts changes, auto-run cross-check and comment results
+- [ ] For holdings changes: verify new value appears in cited source document
+- [ ] For new companies: checklist validation (all required fields present)
+
+**DoD:**
+- Every data change is verified against its source before merging
+
+---
+
+## Phase 3 — Citation UX
+
+> "Click any number, see the source quote, jump to the document."
+
+### 3.1 Citation Click-Through
+
+**Goal:** Every displayed number on the site is clickable → shows source quote → links to cached document.
+
+**Current state:**
+- Data table shows holdingsLastUpdated date + source link
+- Company page shows some source info
+- No universal "click to cite" pattern
+
+**Deliverables:**
+- [ ] Citation popover component: click any metric → see:
+  - The value and as-of date
+  - Verbatim source quote
+  - Link to R2-cached document (with highlight/anchor if possible)
+  - Source type badge (SEC filing, press release, company dashboard, etc.)
+- [ ] Apply to: holdings, shares, debt, cash, mNAV inputs
+- [ ] Mobile-friendly (bottom sheet on mobile, popover on desktop)
+
+**DoD:**
+- Every number on the data table and company page is clickable → citation
+
+### 3.2 Filing Viewer Enhancement
+
+**Goal:** When users click through to a source document, the relevant quote is highlighted.
+
+**Current state:**
+- `/filings/{ticker}/{accession}` route serves cached filings
+- No quote highlighting
+
+**Deliverables:**
+- [ ] Anchor/highlight the specific quote in the filing viewer
+- [ ] "Back to company" navigation
+- [ ] Filing metadata header (company, date, filing type)
+
+**DoD:**
+- Click citation → filing opens with the relevant passage highlighted
+
+---
+
+## Phase 4 — Data Freshness
+
+> "Stale data is detected and resolved systematically."
+
+### 4.1 Staleness Monitoring
+
+**Goal:** Automated detection and alerting when data goes stale.
+
+**Current state:**
+- Cross-check script flags staleness (>90d warn, >180d fail for tier 1)
+- 15 companies currently stale (verified: no newer disclosures exist)
+- Manual web search to check for updates
+
+**Deliverables:**
+- [ ] Scheduled staleness report (weekly cron → Discord/email)
+- [ ] Per-company expected update cadence (quarterly filers vs. monthly dashboards)
+- [ ] Priority queue: tier 1 stale companies surfaced first
+- [ ] Track "days since last verification attempt" separately from "days since data updated"
+
+**DoD:**
+- Stale data is surfaced automatically; verification attempts are logged
+
+### 4.2 Source Monitoring
+
+**Goal:** Detect when source pages change (new filings, updated dashboards).
+
+**Current state:**
+- SEC EDGAR monitoring exists (hourly cron checks for new filings)
+- Company dashboards not monitored
+- Press releases not monitored
+
+**Deliverables:**
+- [ ] Monitor company IR pages for new press releases
+- [ ] Monitor dashboard URLs for content changes (hash-based)
+- [ ] When change detected: create verification task with diff
+
+**DoD:**
+- New filings and dashboard updates are detected within 24 hours
+
+---
+
+## Phase 5 — Adoption Monitoring
+
+> "Understand who uses what, so we build the right things next."
+
+### 5.1 Usage Instrumentation
+
+**Goal:** Measure real usage patterns.
+
+**Deliverables:**
+- [ ] D1 `events` table + `POST /api/events`
+- [ ] Server-side: API call events for key endpoints
+- [ ] Client-side: citation opens, source clicks, history views, company page views
+- [ ] Retention + rate limiting
+
+### 5.2 Adoption Dashboard
+
+**Goal:** Weekly canonical readout of usage.
+
+**Deliverables:**
+- [ ] Track: unique users, returning users, API calls by endpoint/caller type
+- [ ] Track: citation open rate, click-through to source, most viewed companies
+- [ ] Weekly markdown snapshot under `ops/`
+- [ ] Decision gate: after 7 days of data, evaluate if PostHog needed
+
+**DoD:**
+- <60 seconds to understand adoption trends week-over-week
+
+---
+
+## Phase 6 — D1 Migration (Eliminate Naked Numbers)
+
+> "Everything displayed comes from D1, not static TS files."
+
+### 6.1 D1-Backed UI
+
+**Goal:** Site renders from D1-backed endpoints, not companies.ts.
+
+**Current state:**
+- D1 schema exists (artifacts, runs, datapoints)
+- Some endpoints read from D1
+- companies.ts still the primary data source for most UI
+
+**Deliverables:**
+- [ ] Inventory every UI metric and its current source
+- [ ] Writers/backfills per metric family
+- [ ] Migrate data table to D1-backed endpoints
+- [ ] Migrate company pages to D1-backed endpoints
+- [ ] companies.ts becomes seed data / fallback only
+
+**DoD:**
+- UI renders from D1; no ad-hoc TS/JSON paths for displayed values
+
+### 6.2 Retire Legacy Paths
+
 **Goal:** One source of truth.
 
-Deliverables:
-- Remove TS/JSON legacy data paths; keep migration tooling only
-
-DoD:
-- D1/R2 is canonical for everything displayed.
+**Deliverables:**
+- [ ] Remove TS/JSON legacy data paths
+- [ ] Keep migration tooling only
+- [ ] D1/R2 is canonical for everything displayed
 
 ---
 
-## AGENTS WORKBOARD (live)
+## Agents Workboard (live)
 
-**Legend:**
-- **Agent 1** = primary orchestrator (product + core data architecture)
-- **Agent 5** = Claude Code (local CLI) — D1 backfills, migrations, ops
-- **Agent 6** = Codex (this thread) — proposal-key upsert for datapoint writers
-
-Update this section whenever you start/stop work so other agents can instantly see what’s in-flight.
+Update this section when starting/stopping work so other agents see what's in-flight.
 
 ### Now (in progress)
-- **Ingestion + transform loop**
-  - **Owner:** Agent 1
-  - **Status:** Runs green (scheduled inventory + invariants).
-  - **Notes:** keep pushing invariants down into CI so canon regressions fail loudly.
-
-- **CI/Lint ratchet (required checks scope expansion)**
-  - **Owner:** unowned
-  - **Status:** Ongoing.
+- **Cross-check enforcement** — cross-check-data.ts passing (0 FAIL), needs CI wiring
+- **Ingestion + transform loop** — runs green (scheduled inventory + invariants)
 
 ### Next (queued)
-- **Adoption instrumentation implementation** (Phase 1.5)
-- **Adoption signals dashboard** (Phase 1.7)
+- R2 coverage audit (Phase 1.1)
+- Citation UX design (Phase 3.1)
 
 ### Done (recent)
-- Proposal-key upsert rollout (writers idempotent) — DONE
-- Confidence scoring + DLQ routing + resolution — DONE
-
----
-
-## ARCHIVE (pre-provenance / pre-D1)
-
-Older notes from the earlier TS/JSON-based system are kept below for reference, but are not the active plan.
+- Cross-check data integrity sweep — 0 FAIL, all companies have source quotes (2026-03-06)
+- Staleness sweep — verified all 15 stale warnings have no newer data available (2026-03-06)
+- Proposal-key upsert rollout (writers idempotent)
+- Confidence scoring + DLQ routing + resolution
