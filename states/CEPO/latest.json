@@ -3,7 +3,7 @@
   "ticker": "CEPO",
   "secCik": "0002027708",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T19:36:34.270Z",
+  "generatedAt": "2026-03-06T12:18:17.515Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -34,7 +34,7 @@
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1865602/000121390025073158/0001213900-25-073158-index.html",
+      "cashSourceUrl": "/filings/cepo/0001213900-25-073158",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

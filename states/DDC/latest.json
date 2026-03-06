@@ -3,7 +3,7 @@
   "ticker": "DDC",
   "secCik": "0001808110",
   "asOf": "2026-03-04",
-  "generatedAt": "2026-03-05T19:36:34.272Z",
+  "generatedAt": "2026-03-06T12:18:17.517Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 2183,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm",
+      "holdingsSourceUrl": "/filings/ddc/0001213900-26-023418",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2026-03-04",
     "source": {
       "sharesSource": "SEC 6-K Mar 4, 2026 Ex99.1 + treasury.ddc.xyz",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm"
+      "sharesSourceUrl": "/filings/ddc/0001213900-26-023418"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2024-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+      "cashSourceUrl": "/filings/ddc/0001213900-25-043916",
+      "debtSourceUrl": "/filings/ddc/0001213900-26-007463",
       "preferredSourceUrl": null
     }
   },

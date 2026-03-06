@@ -3,7 +3,7 @@
   "ticker": "DFDV",
   "secCik": "0001805526",
   "asOf": "2026-01-01",
-  "generatedAt": "2026-03-05T19:36:34.274Z",
+  "generatedAt": "2026-03-06T12:18:17.519Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 2221329,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
+      "holdingsSourceUrl": "/filings/dfdv/0001193125-26-002668",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2026-01-01",
     "source": {
       "sharesSource": "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update - shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm"
+      "sharesSourceUrl": "/filings/dfdv/0001193125-26-002668"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 0,
     "asOf": "2026-01-01",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/"
+      "cashSourceUrl": "/filings/dfdv/0001193125-26-002668",
+      "debtSourceUrl": "/filings/dfdv/0001193125-25-286660",
+      "preferredSourceUrl": "/filings/dfdv/0001193125-25-286660"
     }
   },
   "verification": {

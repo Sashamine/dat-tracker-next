@@ -3,7 +3,7 @@
   "ticker": "FLD",
   "secCik": "0001889123",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T19:36:34.272Z",
+  "generatedAt": "2026-03-06T12:18:17.517Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 1575,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      "holdingsSourceUrl": "/filings/fld/0001193125-25-274317",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-11-10",
     "source": {
       "sharesSource": "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm"
+      "sharesSourceUrl": "/filings/fld/0001193125-25-274317"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 0,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/"
+      "cashSourceUrl": "/filings/fld/0001193125-25-274317",
+      "debtSourceUrl": "/filings/fld/0001193125-25-274317",
+      "preferredSourceUrl": "/filings/fld/0001193125-25-274317"
     }
   },
   "verification": {

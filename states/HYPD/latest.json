@@ -3,7 +3,7 @@
   "ticker": "HYPD",
   "secCik": "1682639",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T19:36:34.274Z",
+  "generatedAt": "2026-03-06T12:18:17.519Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 1459615,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465926000748/tm2534601d1_8k.htm",
+      "holdingsSourceUrl": "/filings/hypd/0001104659-26-000748",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-11-10",
     "source": {
       "sharesSource": "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm"
+      "sharesSourceUrl": "/filings/hypd/0001104659-25-111671"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 544,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/"
+      "cashSourceUrl": "/filings/hypd/0001104659-25-111671",
+      "debtSourceUrl": "/filings/hypd/0001104659-25-111671",
+      "preferredSourceUrl": "/filings/hypd/0001104659-25-111671"
     }
   },
   "verification": {

@@ -3,7 +3,7 @@
   "ticker": "ZOOZ",
   "secCik": "0001992818",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T19:36:34.272Z",
+  "generatedAt": "2026-03-06T12:18:17.517Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 1046,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+      "holdingsSourceUrl": "/filings/zooz/0001493152-26-002767",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-12-31",
     "source": {
       "sharesSource": "SEC 424B5 Sep 30, 2025: 161,899,782 outstanding + 6-K: ~1.14M ATM shares sold",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm"
+      "sharesSourceUrl": "/filings/zooz/0001493152-25-016384"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+      "cashSourceUrl": "/filings/zooz/0001493152-26-002767",
+      "debtSourceUrl": "/filings/zooz/0001493152-26-002767",
       "preferredSourceUrl": null
     }
   },

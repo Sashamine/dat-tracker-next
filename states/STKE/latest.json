@@ -3,7 +3,7 @@
   "ticker": "STKE",
   "secCik": "1846839",
   "asOf": "2026-03-04",
-  "generatedAt": "2026-03-05T19:36:34.274Z",
+  "generatedAt": "2026-03-06T12:18:17.519Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -24,7 +24,7 @@
     "asOf": "2025-09-30",
     "source": {
       "sharesSource": "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm"
+      "sharesSourceUrl": "/filings/stke/0001104659-25-125666"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
+      "cashSourceUrl": "/filings/stke/0001104659-25-125666",
+      "debtSourceUrl": "/filings/stke/0001104659-25-125666",
       "preferredSourceUrl": null
     }
   },

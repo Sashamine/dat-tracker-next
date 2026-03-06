@@ -3,7 +3,7 @@
   "ticker": "BTOG",
   "secCik": "1735556",
   "asOf": "2026-01-20",
-  "generatedAt": "2026-03-05T19:36:34.276Z",
+  "generatedAt": "2026-03-06T12:18:17.521Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 70543745,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=6-K&count=40",
+      "holdingsSourceUrl": "/filings/btog/0001104659-26-005086",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2026-01-20",
     "source": {
       "sharesSource": "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/0001104659-26-005086-index.html"
+      "sharesSourceUrl": "/filings/btog/0001104659-26-005086"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
+      "cashSourceUrl": "/filings/btog/0001104659-25-105009",
+      "debtSourceUrl": "/filings/btog/0001104659-25-105009",
       "preferredSourceUrl": null
     }
   },

@@ -1,19 +1,21 @@
 {
   "schemaVersion": "0.1",
-  "generatedAt": "2026-03-05T19:36:36.364Z",
+  "generatedAt": "2026-03-06T23:35:19.483Z",
   "runId": "cron-nonus-upgrade",
   "gaps": {
-    "low_quality_evidence:holdings": [
-      "BTOG",
-      "H100.ST"
-    ],
     "low_quality_evidence:cash": [
+      "DJT",
       "H100.ST"
     ],
     "low_quality_evidence:debt": [
+      "DJT",
       "H100.ST"
     ],
     "low_quality_evidence:shares": [
+      "DJT",
+      "H100.ST"
+    ],
+    "low_quality_evidence:holdings": [
       "H100.ST"
     ]
   }

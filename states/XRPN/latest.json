@@ -3,7 +3,7 @@
   "ticker": "XRPN",
   "secCik": "0002044009",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T19:36:34.275Z",
+  "generatedAt": "2026-03-06T12:18:17.520Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 520000000,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525279035/d17530d8k.htm",
+      "holdingsSourceUrl": "/filings/xrpn/0001193125-25-279035",
       "holdingsAccession": null
     }
   },
@@ -36,7 +36,7 @@
     "source": {
       "cashSourceUrl": null,
       "debtSourceUrl": null,
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/2044009/000119312526051286/"
+      "preferredSourceUrl": "/filings/xrpn/0001193125-26-051286"
     }
   },
   "verification": {
