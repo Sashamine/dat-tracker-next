@@ -160,18 +160,19 @@
 
 **Goal:** Every displayed number on the site is clickable → shows source quote → links to cached document.
 
-**Current state:**
-- Data table shows holdingsLastUpdated date + source link
-- Company page shows some source info
-- No universal "click to cite" pattern
+**Current state (2026-03-06):**
+- CitationPopover component built: click any metric → see source quote + link to document
+- sourceQuote wired into all metrics: holdings, shares, debt, cash, preferred, market cap
+- Filing viewer URLs auto-append `?q=` search param for quote highlighting
+- Quote coverage: debt 98%, cash 100%, shares 100%, preferred 100%, holdings 95%
 
 **Deliverables:**
-- [ ] Citation popover component: click any metric → see:
+- [x] Citation popover component: click any metric → see:
   - The value and as-of date
   - Verbatim source quote
   - Link to R2-cached document (with highlight/anchor if possible)
   - Source type badge (SEC filing, press release, company dashboard, etc.)
-- [ ] Apply to: holdings, shares, debt, cash, mNAV inputs
+- [x] Apply to: holdings, shares, debt, cash, mNAV inputs
 - [ ] Mobile-friendly (bottom sheet on mobile, popover on desktop)
 
 **DoD:**
@@ -306,13 +307,17 @@ Update this section when starting/stopping work so other agents see what's in-fl
 ### Now (in progress)
 - **Ingestion + transform loop** — runs green (scheduled inventory + invariants)
 - **R2 coverage audit (Phase 1.1)** — SEC 99.1%, external 39%, overall 75.3%
+- **Phase 0.5 Product Framing** — GPT 5.4 working on UI (separate agent)
 
 ### Next (queued)
 - Remaining external source caching (SEDAR+, dashboards via Playwright)
-- Citation UX design (Phase 3.1)
-- Phase 0.5 Product Framing (separate agent — GPT 5.4)
+- Phase 3.1 mobile citation UX (bottom sheet)
+- Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- Citation UX wiring (Phase 3.1) — sourceQuote passed to all CitationPopover usages (2026-03-06)
+- Source quote coverage complete — debt 98%, cash/shares/preferred 100% (2026-03-06)
+- Build fixes — djt.ts, naka.ts, AuditTrail type consolidation (2026-03-06)
 - Cross-check CI wiring — GitHub Actions workflow + warning ratchet (2026-03-06)
 - R2 coverage audit + SEC filing cache — 165 filings, 23 external docs in R2 (2026-03-06)
 - SEC URL conversion — 670+ URLs converted to /filings/ format (2026-03-06)
