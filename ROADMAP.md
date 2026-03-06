@@ -9,6 +9,45 @@
 - **Correctness before features** — every number must be verifiable
 - **Permanence before convenience** — source documents cached forever
 - **Measurement before expansion** — understand usage before scaling
+- **HPS is the core metric** — the site answers "who grows crypto per share best?"
+
+---
+
+## Phase 0.5 — Product Framing (parallel track, can be done by separate agent)
+
+> "A first-time visitor understands the DAT thesis in 3 seconds."
+
+**Goal:** Reframe the homepage from "who holds the most crypto" to "who is best at growing crypto per share."
+
+### 0.5.1 Homepage Leaderboard Pivot
+
+**Deliverables:**
+- [ ] Default sort: HPS Growth (90D) instead of treasury size
+- [ ] Core columns: Company, Asset, HPS Growth (90D), mNAV, Treasury Value, Leverage
+- [ ] Sector summary banner: Median HPS Growth, Median mNAV, Companies Growing HPS
+- [ ] mNAV color context relative to sector median (<0.9x green, 0.9-1.3 neutral, >1.3x red)
+
+**Data availability:** 55 companies have holdings + sharesForMnav. 54 have 90+ days of DAT history. HPS growth computable for nearly the entire universe.
+
+### 0.5.2 Dilution vs Accretion Chart (Company Page)
+
+**Deliverables:**
+- [ ] Dual-axis chart: BTC/share (line) + shares outstanding (bar) over time
+- [ ] Instantly shows: good managers (HPS up, shares stable) vs bad (shares exploding, HPS flat)
+- [ ] This is the "Moneyball chart" — the signature visualization
+
+### 0.5.3 mNAV vs HPS Growth Scatter Plot
+
+**Deliverables:**
+- [ ] X: mNAV (premium/discount), Y: HPS Growth
+- [ ] Quadrants: upper-left = efficient wrappers, lower-right = overpriced + weak
+- [ ] Every DAT as a labeled dot, sized by treasury value
+
+### 0.5.4 AHPS Growth (future metric)
+
+**Concept:** Accretive Holdings Per Share Growth — isolates management skill from crypto price movement. Measures how efficiently management converts capital access into more crypto per share. Could become the "EPS of the DAT sector."
+
+**Status:** Deferred. Requires granular capital events data (currently available for ~5 companies: MSTR, BMNR, MARA, SBET, DDC). As the pipeline matures, more companies get full AHPS decomposition. For now, plain HPS Growth % is the leaderboard metric.
 
 ---
 
