@@ -220,21 +220,25 @@ export interface Company {
   sharesAsOf?: string; // ISO date of share count
   sharesSource?: string; // e.g., "Q3 2025 10-Q", "mNAV.com", "strategy.com"
   sharesSourceUrl?: string; // Link to SEC filing or dashboard
+  sharesSourceQuote?: string; // Verbatim quote from source document
 
   // Debt tracking
   debtAsOf?: string; // ISO date of debt data
   debtSource?: string; // e.g., "Q3 2025 10-Q", "strategy.com"
   debtSourceUrl?: string;
+  debtSourceQuote?: string; // Verbatim quote from source document
 
   // Cash tracking
   cashAsOf?: string; // ISO date of cash data
   cashSource?: string;
   cashSourceUrl?: string;
+  cashSourceQuote?: string; // Verbatim quote from source document
 
   // Preferred equity tracking
   preferredAsOf?: string;
   preferredSource?: string;
   preferredSourceUrl?: string;
+  preferredSourceQuote?: string; // Verbatim quote from source document
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
   walletAddresses?: string[];   // Known wallet addresses for on-chain verification

@@ -66,6 +66,7 @@ export const ethCompanies: Company[] = [
     // SHARES: estimated (10-Q baseline + ATM estimate)
     sharesForMnav: estimateBMNRShares().totalEstimated,
     sharesSource: "Estimated: 10-Q baseline + ATM (ETH × price ÷ stock price)",
+    sharesSourceQuote: "Estimated: 10-Q baseline + ATM (ETH × price ÷ stock price)",
     sharesSourceUrl: "/filings/bmnr/0001493152-26-002084",
     sharesAsOf: "2026-03-01", // Latest 8-K (Mar 1, 2026 — estimated ATM through that date)
     // CASH: from provenance (8-K)
@@ -73,6 +74,7 @@ export const ethCompanies: Company[] = [
     cashAsOf: "2026-03-01",
     restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 868_000_000,  // Operating capital - not excess
     cashSource: "SEC-verified (provenance): 8-K Mar 2, 2026",
+    cashSourceQuote: "SEC-verified (provenance): 8-K Mar 2, 2026",
     cashSourceUrl: "/filings/bmnr/0001493152-26-008462",
     otherInvestments: 214_000_000,  // $200M Beast Industries + $14M Eightco Holdings (ORBS) — SEC 8-K Mar 2, 2026 (accn 008462)
     // DEBT: from provenance ($0)
@@ -88,6 +90,7 @@ export const ethCompanies: Company[] = [
       },
     ],
     debtSource: "SEC-verified (provenance): No debt financing",
+    debtSourceQuote: "SEC-verified (provenance): No debt financing",
     debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
     debtSourceUrl: "/filings/bmnr/0001493152-26-002084",
 
@@ -153,11 +156,13 @@ export const ethCompanies: Company[] = [
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     sharesForMnav: 196_693_191,  // 196,693,191 basic shares (SEC XBRL)
     sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
+    sharesSourceQuote: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
     sharesSourceUrl: "/filings/sbet/0001493152-25-021970",
     sharesAsOf: "2025-11-12",
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     restrictedCash: 11_100_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/sbet/0001493152-25-021970",
     cashAsOf: "2025-09-30",
     totalDebt: 0,
@@ -172,6 +177,7 @@ export const ethCompanies: Company[] = [
       },
     ],
     debtSource: "SEC 10-Q Q3 2025",
+    debtSourceQuote: "SEC 10-Q Q3 2025",
     debtSourceUrl: "/filings/sbet/0001493152-25-021970",
     debtAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
@@ -268,6 +274,7 @@ export const ethCompanies: Company[] = [
     cashReserves: 179_118_182,  // Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
     restrictedCash: 179_118_182,  // Operating capital (miner) - not excess
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/btbt/0001213900-25-110383",
     cashAsOf: "2025-09-30",
     totalDebt: 150_000_000,  // $150M convertible notes ($135M upsized + $15M overallotment). Lease liabilities excluded (operating, offset by ROU assets).
@@ -325,14 +332,17 @@ export const ethCompanies: Company[] = [
     sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K grants). Dilutives in dilutive-instruments.ts
     sharesSourceUrl: "/filings/btcs/0001493152-25-022359",
     sharesSource: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
+    sharesSourceQuote: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
     sharesAsOf: "2026-01-05",
     leader: "Charles Allen",
     totalDebt: 61_660_526,  // $7,810,526 May convert + $10,050,000 Jul convert + $43,800,000 Aave DeFi
     debtSource: "SEC 8-K Feb 6, 2026: $43.8M Aave DeFi debt + Q3 10-Q: $17.86M convertible notes face value",
+    debtSourceQuote: "SEC 8-K Feb 6, 2026: $43.8M Aave DeFi debt + Q3 10-Q: $17.86M convertible notes face value",
     debtSourceUrl: "/filings/btcs/0001493152-26-005565",
     debtAsOf: "2026-02-05",
     cashReserves: 4_486_051,
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceQuote: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "/filings/btcs/0001493152-25-022359",
     cashAsOf: "2025-09-30",
     stakingApy: 0.03,  // ~3% estimated from ETH network consensus rate; NodeOps + Builder+ revenues not separable in 10-Q
@@ -375,10 +385,12 @@ export const ethCompanies: Company[] = [
     sharesForMnav: 93_345_193,
     sharesSourceUrl: "/filings/game/0001493152-26-007687",
     sharesSource: "Feb 27, 2026 PR: 1.5M shares repurchased in Feb. Base 94.8M (Jan 6).",
+    sharesSourceQuote: "Feb 27, 2026 PR: 1.5M shares repurchased in Feb. Base 94.8M (Jan 6).",
     sharesAsOf: "2026-02-28",
     cashReserves: 6_012_219,  // SEC 10-Q Sep 30, 2025
     // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/game/0001493152-25-023589",
     cashAsOf: "2025-09-30",
     // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value (Series A-1)
@@ -388,6 +400,7 @@ export const ethCompanies: Company[] = [
     debtAsOf: "2025-06-30",
     debtSourceUrl: "/filings/game/0001641172-25-023972",
     preferredSource: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
+    preferredSourceQuote: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
     preferredSourceUrl: "/filings/game/0001493152-25-023589",
     preferredAsOf: "2026-02-23",
     avgDailyVolume: 10_000_000,
@@ -448,20 +461,24 @@ export const ethCompanies: Company[] = [
     // VERIFIED: 1-for-5 reverse split effective Feb 13, 2026
     sharesForMnav: 6_560_000,
     sharesSource: "SEC 8-K Feb 13, 2026 (Reverse split adjustment)",
+    sharesSourceQuote: "SEC 8-K Feb 13, 2026 (Reverse split adjustment)",
     sharesSourceUrl: "/filings/fgnx/0001493152-26-006729",
     sharesAsOf: "2026-02-13",
     // VERIFIED: SEC 8-K Dec 19, 2025 (cash + USDC)
     cashReserves: 25_200_000,
     cashSource: "SEC 8-K Dec 19, 2025 (cash + USDC)",
+    cashSourceQuote: "SEC 8-K Dec 19, 2025 (cash + USDC)",
     cashSourceUrl: "/filings/fgnx/0001493152-25-028609",
     cashAsOf: "2025-12-17",
     // VERIFIED: SEC 8-K Jan 21, 2026 - $1.9M total debt
     totalDebt: 1_900_000,
     debtSource: "SEC 8-K Jan 21, 2026",
+    debtSourceQuote: "SEC 8-K Jan 21, 2026",
     debtSourceUrl: "/filings/fgnx/0001493152-26-003101",
     debtAsOf: "2026-01-20",
     preferredEquity: 21_040_000,  // ~841,580 Series A preferred × $25 par (894,580 issued - ~53K repurchased)
     preferredSource: "SEC 10-Q Q3 2025 + 8-K Jan 21, 2026 (buyback ~53K shares)",
+    preferredSourceQuote: "SEC 10-Q Q3 2025 + 8-K Jan 21, 2026 (buyback ~53K shares)",
     preferredSourceUrl: "/filings/fgnx/0001493152-25-023550",
     leader: "Kyle Cerminara (CEO); Galaxy, Kraken, Hivemind, DCG backed",
     strategy: "ETH treasury focused on yield and risk control. Pivoted from aggressive accumulation Feb 2026.",
@@ -514,6 +531,7 @@ export const btcCompanies: Company[] = [
     // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
     sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 335_482_813,
     sharesSource: "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
+    sharesSourceQuote: "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
     sharesSourceUrl: "/filings/mstr/0001050446-26-000020",
     sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,
     // CONVERTS: 10-Q Q3 2025 Note 7
@@ -523,11 +541,13 @@ export const btcCompanies: Company[] = [
     // DEBT: 10-K FY2025 carrying value (XBRL us-gaap:ConvertibleLongTermNotesPayable)
     totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_190_155_000,
     debtSource: "SEC 10-K FY2025: $8,190M carrying value (notional $8,214M, Δ = OID)",
+    debtSourceQuote: "SEC 10-K FY2025: $8,190M carrying value (notional $8,214M, Δ = OID)",
     debtSourceUrl: "/filings/mstr/0001050446-26-000020",
     debtAsOf: "2025-12-31",
     // PREFERRED: 10-K FY2025 mezzanine equity carrying value (5 series: STRK/STRF/STRD/STRC/Stream)
     preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 6_919_514_000,
     preferredSource: "SEC 10-K FY2025: $6,920M carrying value (notional $8,383M per strategy.com/credit)",
+    preferredSourceQuote: "SEC 10-K FY2025: $6,920M carrying value (notional $8,383M per strategy.com/credit)",
     preferredSourceUrl: "/filings/mstr/0001050446-26-000020",
     preferredAsOf: "2025-12-31",
     // Cash obligations from SEC 8-K Dec 1, 2025
@@ -544,6 +564,7 @@ export const btcCompanies: Company[] = [
     // CASH: 10-K FY2025 balance sheet (XBRL us-gaap:CashAndCashEquivalentsAtCarryingValue)
     cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_301_470_000,
     cashSource: "SEC 10-K FY2025: $2,301M cash & equivalents (USD Reserve $2,250M per 8-K)",
+    cashSourceQuote: "SEC 10-K FY2025: $2,301M cash & equivalents (USD Reserve $2,250M per 8-K)",
     cashSourceUrl: "/filings/mstr/0001050446-26-000020",
     cashAsOf: "2025-12-31",
     leader: "Michael Saylor (Executive Chairman)",
@@ -582,16 +603,19 @@ export const btcCompanies: Company[] = [
     marketCap: 2_430_000_000,  // ~$2.4B (Feb 2026, 1.167B shares × ¥325 ÷ 152.7 JPY/USD)
     sharesForMnav: 1_166_803_340,  // 1,142,274,340 (Jan 29, 2026) + 24,529,000 (Feb 13 placement). Mercury preferred is a separate class, NOT in common count.
     sharesSource: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,529,000 new common shares (Feb 13, 2026 3rd-party allotment)",
+    sharesSourceQuote: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,529,000 new common shares (Feb 13, 2026 3rd-party allotment)",
     sharesSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     sharesAsOf: "2026-02-13",
     // Debt: 4 credit facilities totaling $355M (all zero-coupon bonds have been fully redeemed)
     totalDebt: 355_000_000,  // $355M: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4) credit facilities
     debtSource: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
+    debtSourceQuote: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
     debtSourceUrl: "https://metaplanet.jp/en/analytics",
     debtAsOf: "2026-02-14",
     cashReserves: 97_000_000,  // Estimated from capital flow trace: $18M (Q3) + $590M inflows - $511M outflows ≈ $97M. Mercury corrected to $155M (was $136M). Confirm with FY2025 annual report.
     restrictedCash: 0,
     cashSource: "Estimated: Q3 $18M + $355M credit + $155M Mercury preferred (corrected FX) + $80M Feb placement - $451M BTC - $60M redemptions/repayments/opex",
+    cashSourceQuote: "Estimated: Q3 $18M + $355M credit + $155M Mercury preferred (corrected FX) + $80M Feb placement - $451M BTC - $60M redemptions/repayments/opex",
     cashSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     cashAsOf: "2026-02-14",
     preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
@@ -647,11 +671,13 @@ export const btcCompanies: Company[] = [
     // Class B has ZERO economic rights (no dividends, no liquidation) per charter
     sharesForMnav: 346_548_153,  // Class A ONLY — Class B has no economic rights
     sharesSource: "SEC 8-K Dec 12, 2025",
+    sharesSourceQuote: "SEC 8-K Dec 12, 2025",
     sharesSourceUrl: "/filings/xxi/0001213900-25-121293",
     sharesAsOf: "2025-12-09",
     // Debt: $486.5M 1% convertible senior secured notes due 2030, collateralized by 16,116 BTC (~3:1 ratio)
     totalDebt: 486_500_000,
     debtSource: "SEC 8-K Dec 12, 2025 - 1% secured converts due 2030",
+    debtSourceQuote: "SEC 8-K Dec 12, 2025 - 1% secured converts due 2030",
     debtSourceUrl: "/filings/xxi/0001213900-25-121293",
     debtAsOf: "2025-12-09",
     // Cash obligations: $486.5M × 1% = $4.865M/year
@@ -663,6 +689,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 119_300_000,  // ~$119.3M net cash at Dec 2025 closing
     restrictedCash: 119_300_000,  // Debt service reserves - not excess
     cashSource: "SEC S-1 Jan 5, 2026",
+    cashSourceQuote: "SEC S-1 Jan 5, 2026",
     cashSourceUrl: "/filings/xxi/0001213900-26-001285",
     cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
@@ -681,6 +708,7 @@ export const btcCompanies: Company[] = [
     cashReserves: 207_000_000,  // SPAC trust ~$207M as of Dec 31, 2025 (per amended S-4)
     cashAsOf: "2025-12-31",
     cashSource: "Amended S-4: approximately $207 million of SPAC trust cash as of December 31, 2025",
+    cashSourceQuote: "Amended S-4: approximately $207 million of SPAC trust cash as of December 31, 2025",
     cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027708&type=S-4",
     asset: "BTC",
     tier: 1,
@@ -697,6 +725,7 @@ export const btcCompanies: Company[] = [
     // SPAC: 20,500,000 Class A + 5,000,000 Class B = 25,500,000 total (pre-merger)
     sharesForMnav: 25_500_000,
     sharesSource: "SEC 10-K FY2025 (CIK 0002027708): 20.5M Class A + 5M Class B",
+    sharesSourceQuote: "SEC 10-K FY2025 (CIK 0002027708): 20.5M Class A + 5M Class B",
     sharesAsOf: "2025-12-31",
     quarterlyBurnUsd: 5_000_000,
     burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $37,607 (2024-01-01 to 2024-03-31)",
@@ -753,6 +782,7 @@ export const btcCompanies: Company[] = [
     // SHARES: from provenance (basic shares, dilutives in dilutive-instruments.ts)
     sharesForMnav: MARA_PROVENANCE_DEBUG.sharesBasic,
     sharesSource: "SEC-verified (provenance): 10-Q Q3 2025 cover page",
+    sharesSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025 cover page",
     sharesSourceUrl: "/filings/mara/0001507605-25-000028",
     sharesAsOf: MARA_PROVENANCE_DEBUG.sharesDate,
     // CASH: from provenance (10-Q)
@@ -760,6 +790,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
     cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
+    cashSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025",
     cashSourceUrl: "/filings/mara/0001507605-25-000028",
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
@@ -770,6 +801,7 @@ export const btcCompanies: Company[] = [
     preferredSourceUrl: "/filings/mara/0001507605-25-000028",
     debtAsOf: "2025-09-30",
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
+    debtSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
     debtSourceUrl: "/filings/mara/0001507605-25-000028",
     notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-Q Note 14 + $350M line of credit. Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts.",
   },
@@ -809,6 +841,7 @@ export const btcCompanies: Company[] = [
     // Pre-funded warrants @ $0.002 tracked in dilutive-instruments.ts
     sharesForMnav: 63_048_519,  // Feb 13 8-K: Class A 53,168,237 + Class B 9,880,282 (post-split)
     sharesSource: "SEC 8-K Feb 13, 2026: 53,168,237 Class A + 9,880,282 Class B = 63,048,519 (post 1-for-20 split)",
+    sharesSourceQuote: "SEC 8-K Feb 13, 2026: 53,168,237 Class A + 9,880,282 Class B = 63,048,519 (post 1-for-20 split)",
     sharesSourceUrl: "/filings/asst/0001628280-26-007897",
     sharesAsOf: "2026-02-11",
     // CASH: SEC 8-K Jan 5, 2026 - $67.6M as of Dec 31, 2025
@@ -816,18 +849,21 @@ export const btcCompanies: Company[] = [
     cashReserves: 127_200_000,  // Feb 13 8-K: $127.2M as of Feb 11, 2026
     restrictedCash: 127_200_000,  // Operating capital earmarked for BTC - not excess
     cashSource: "SEC 8-K Feb 13, 2026: $127.2M as of Feb 11, 2026",
+    cashSourceQuote: "SEC 8-K Feb 13, 2026: $127.2M as of Feb 11, 2026",
     cashSourceUrl: "/filings/asst/0001628280-26-007897",
     cashAsOf: "2026-02-11",
     // DEBT: $100M Semler converts - $90M exchanged for SATA = $10M remaining (SEC 8-K Jan 28)
     // Coinbase $20M loan also paid off. 100% BTC unencumbered.
     totalDebt: 10_000_000,
     debtSource: "Company-derived: $100M Semler converts - $90M exchanged = $10M (SEC 8-K Jan 28, 2026)",
+    debtSourceQuote: "Company-derived: $100M Semler converts - $90M exchanged = $10M (SEC 8-K Jan 28, 2026)",
     debtSourceUrl: "/filings/asst/0001140361-26-002606",
     debtAsOf: "2026-01-28",
     // PREFERRED: SATA 12.25% perpetual preferred (NOT convertible to common)
     // Dec 31: 2,012,729 SATA (SEC 8-K Jan 5) + Jan: 1.32M underwritten + ~930K exchange = ~4.26M @ $100 stated value
     preferredEquity: 426_551_800,  // Feb 13 8-K: 4,265,518 SATA shares × $100 stated value
     preferredSource: "SEC 8-K Feb 13, 2026: 4,265,518 SATA shares outstanding × $100 stated value",
+    preferredSourceQuote: "SEC 8-K Feb 13, 2026: 4,265,518 SATA shares outstanding × $100 stated value",
     preferredSourceUrl: "/filings/asst/0001628280-26-007897",
     preferredAsOf: "2026-02-11",
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
@@ -867,15 +903,18 @@ export const btcCompanies: Company[] = [
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 45_674_420,  // SEC 10-Q Q3 2025 (as of Nov 14, 2025)
     sharesSource: "SEC 10-Q Q3 2025: EntityCommonStockSharesOutstanding",
+    sharesSourceQuote: "SEC 10-Q Q3 2025: EntityCommonStockSharesOutstanding",
     sharesSourceUrl: "/filings/kulr/0001104659-25-113662",
     sharesAsOf: "2025-11-14",
     totalDebt: 0,
     debtSource: "SEC 10-Q Q3 2025: no outstanding long-term debt",
+    debtSourceQuote: "SEC 10-Q Q3 2025: no outstanding long-term debt",
     debtSourceUrl: "/filings/kulr/0001104659-25-113662",
     debtAsOf: "2025-10-15",
     cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
     restrictedCash: 20_600_000,  // Earmarked for BTC purchases per 90% policy - not excess cash
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceQuote: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "/filings/kulr/0001104659-25-113662",
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
@@ -917,6 +956,7 @@ export const btcCompanies: Company[] = [
     marketCap: 200_000_000,
     sharesForMnav: 228_069_631,  // Basic shares per AMF Feb 16, 2026. Diluted: 392,278,260
     sharesSource: "AMF filing Feb 16, 2026",
+    sharesSourceQuote: "AMF filing Feb 16, 2026",
     sharesSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
     sharesAsOf: "2026-02-16",
     // Total convertible bond face value (all OCA tranches). The mNAV calculator dynamically
@@ -925,9 +965,11 @@ export const btcCompanies: Company[] = [
     // Remaining OTM: B-02 ($73.2M), B-03 ($13M), A-03/A-04/B-04 ($16.6M), A-05 ($6.8M) = ~$109.6M effective debt.
     totalDebt: 160_160_000,  // Sum of all OCA faceValues in dilutive-instruments.ts (USD)
     debtSource: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
+    debtSourceQuote: "Convertible bond face values (OCA A-01/B-01 through A-05). See dilutive-instruments.ts for breakdown.",
     debtAsOf: "2026-02-16",
     cashReserves: 1_531_000,  // €1.531M available cash per H1 2025 IFRS
     cashSource: "H1 2025 IFRS financials",
+    cashSourceQuote: "H1 2025 IFRS financials",
     cashSourceUrl: "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
     cashAsOf: "2025-06-30",
     strategy: "French BTC treasury company (Capital B). EUR300M ATM program.",
@@ -975,11 +1017,13 @@ export const btcCompanies: Company[] = [
     cashReserves: 2_900_000,  // SEK 30.6M ÷ ~10.6 SEK/USD ≈ $2.9M (Feb 24, 2026 Bokslutskommuniké)
     cashSourceUrl: "https://mfn.se/a/h100-group/h100-group-fourth-quarter-and-full-year-report-2025",
     cashSource: "MFN Bokslutskommuniké Feb 24, 2026 (FY2025 year-end report): SEK 30.6M cash",
+    cashSourceQuote: "MFN Bokslutskommuniké Feb 24, 2026 (FY2025 year-end report): SEK 30.6M cash",
     cashAsOf: "2025-12-31",
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
     sharesForMnav: 338_396_693,  // 335,250,237 + 3,146,456 (Future Holdings AG acquisition Feb 12, 2026)
     sharesSource: "H100 Group IR page + MFN acquisition filing",
+    sharesSourceQuote: "H100 Group IR page + MFN acquisition filing",
     sharesSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index (more specific than IR shares landing)
     sharesAsOf: "2026-02-12",  // MFN filing date for Future Holdings AG acquisition completion
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
@@ -1058,6 +1102,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 1_000_000,
     sharesForMnav: 351_919_126,  // RNS Mar 2, 2026: Total Voting Rights
     sharesSource: "LSE RNS Mar 2, 2026: Total Voting Rights",
+    sharesSourceQuote: "LSE RNS Mar 2, 2026: Total Voting Rights",
     sharesSourceUrl: "https://www.londonstockexchange.com/news-article/SWC/total-voting-rights/16926451",
     sharesAsOf: "2026-03-02",
     strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
@@ -1095,11 +1140,13 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     sharesForMnav: 15_504_809,  // Q4 2025 6-K weighted avg basic ADS. Best available until 20-F.
     sharesSource: "6-K Q4 2025 weighted avg basic ADS",
+    sharesSourceQuote: "6-K Q4 2025 weighted avg basic ADS",
     sharesSourceUrl: "/filings/sqns/0001383395-26-000013",
     sharesAsOf: "2025-12-31",
     totalDebt: 94_500_000,  // Q4 6-K: $94.5M convertible outstanding. Feb 13 6-K: full redemption via BTC sale by Jun 2026.
     debtAsOf: "2025-12-31",
     debtSource: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
+    debtSourceQuote: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
     debtSourceUrl: "/filings/sqns/0001383395-26-000018",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
     notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized.",
@@ -1147,10 +1194,12 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     sharesForMnav: 30_473_005,  // 28,723,005 Class A (6-K Feb 6) + 1,750,000 Class B (CEO, same economic rights)
     sharesSource: "SEC 6-K Feb 6, 2026 + treasury.ddc.xyz",
+    sharesSourceQuote: "SEC 6-K Feb 6, 2026 + treasury.ddc.xyz",
     sharesSourceUrl: "/filings/ddc/0001213900-26-013341",
     sharesAsOf: "2026-02-06",
     totalDebt: 27_000_000,  // Anson Senior Secured Convertible Notes (Initial Closing Jul 2025)
     debtSource: "SEC 424B3 Jan 26, 2026 / 6-K Jul 1, 2025 — Anson SPA Initial Notes",
+    debtSourceQuote: "SEC 424B3 Jan 26, 2026 / 6-K Jul 1, 2025 — Anson SPA Initial Notes",
     debtSourceUrl: "https://treasury.ddc.xyz",
     debtAsOf: "2026-01-26",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
@@ -1213,6 +1262,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
+    sharesSourceQuote: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
     sharesSourceUrl: "/filings/fufu/0001213900-25-084744",
     sharesAsOf: "2025-06-30",
     totalDebt: 141_301_000,  // Includes $101.3M payables + reduced $15M credit line (was $40M)
@@ -1220,6 +1270,7 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "/filings/fufu/0001213900-25-084744",
     cashReserves: 40_000_000,  // Mar 2026 update: maintains ~$40M cash position
     cashSource: "Mar 2026 Corporate Update",
+    cashSourceQuote: "Mar 2026 Corporate Update",
     cashSourceUrl: "https://bitfufu.com/investors",
     cashAsOf: "2026-02-28",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (641k+ users).",
@@ -1258,6 +1309,7 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
     sharesSource: "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
+    sharesSourceQuote: "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
     sharesSourceUrl: "/filings/fld/0001193125-25-274317",
     sharesAsOf: "2025-11-10",
     totalDebt: 0,  // VERIFIED: Extinguished $66.3M convertible debt on Feb 27, 2026
@@ -1270,6 +1322,7 @@ export const btcCompanies: Company[] = [
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     cashReserves: 6_663_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/fld/0001193125-25-274317",
     cashAsOf: "2025-09-30",
     notes: "Nasdaq: FLD. Russell 2000 Index (Dec 2025). Extinguished all $66.3M convertible debt Feb 27, 2026, unlocking 521 BTC previously held as collateral. 1,526 BTC now substantially unencumbered. Transitioning to 'free' model; launching Visa Bitcoin rewards card. FY2025 10-K due Mar 17, 2026.",
@@ -1345,14 +1398,17 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 5_000_000,
     sharesForMnav: 40_612_400,
     sharesSource: "TDnet Feb 3, 2026: 8th Series Warrant Exercise Update",
+    sharesSourceQuote: "TDnet Feb 3, 2026: 8th Series Warrant Exercise Update",
     sharesSourceUrl: "https://www.release.tdnet.info/inbs/140120260203558291.pdf",
     sharesAsOf: "2026-01-31",
     totalDebt: 46_300_000,  // ¥7,100M / 153.5 JPY/USD — Q1 FY2026 有利子負債 (interest-bearing debt)
     debtSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
+    debtSourceQuote: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
     debtSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     debtAsOf: "2025-11-30",
     cashReserves: 7_500_000,  // ¥1,159M / 153.5 JPY/USD — Q1 FY2026 現預金
     cashSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
+    cashSourceQuote: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
     cashSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     cashAsOf: "2025-11-30",
     strategy: "Integrated Bitcoin strategy combining treasury accumulation with RWA tokenization.",
@@ -1398,14 +1454,17 @@ export const btcCompanies: Company[] = [
     avgDailyVolume: 1_000_000,
     totalDebt: 0,
     debtSource: "SEC 6-K Jan 20, 2026: promissory notes fully repaid, no outstanding debt",
+    debtSourceQuote: "SEC 6-K Jan 20, 2026: promissory notes fully repaid, no outstanding debt",
     debtSourceUrl: "/filings/zooz/0001493152-26-002767",
     debtAsOf: "2025-12-31",
     cashReserves: 27_100_000,  // 6-K Jan 20, 2026: $27.1M as of Dec 31, 2025
     cashSource: "SEC 6-K Jan 20, 2026: cash and cash equivalents ~$27.1M",
+    cashSourceQuote: "SEC 6-K Jan 20, 2026: cash and cash equivalents ~$27.1M",
     cashSourceUrl: "/filings/zooz/0001493152-26-002767",
     cashAsOf: "2025-12-31",
     sharesForMnav: 163_000_000,  // 424B5 Sep 30, 2025: 161,899,782 + ATM ~1.14M shares sold through Dec 31 ≈ 163M
     sharesSource: "SEC 424B5 Sep 30, 2025: 161,899,782 outstanding + 6-K: ~1.14M ATM shares sold",
+    sharesSourceQuote: "SEC 424B5 Sep 30, 2025: 161,899,782 outstanding + 6-K: ~1.14M ATM shares sold",
     sharesSourceUrl: "/filings/zooz/0001493152-25-016384",
     sharesAsOf: "2025-12-31",
     leader: "Jordan Fried (CEO)",
@@ -1438,6 +1497,7 @@ export const btcCompanies: Company[] = [
     totalDebt: 25_000_000, // CAD - convertible debentures ($25M face, $12 implied conversion)
     debtAsOf: "2025-12-31",
     debtSource: "TSX Venture Bulletin V2025-1838",
+    debtSourceQuote: "TSX Venture Bulletin V2025-1838",
     debtSourceUrl: "https://btctcorp.com/investors",
     quarterlyBurnUsd: 500_000,
     burnSource: "SEDAR+ filings (estimate)",
@@ -1510,11 +1570,13 @@ export const btcCompanies: Company[] = [
     // SHARES: 92,190,761 issued - 406,021 treasury (buyback program through Feb 27, 2026)
     sharesForMnav: 91_784_740,
     sharesSource: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
+    sharesSourceQuote: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
     sharesSourceUrl: "https://www.samara-ag.com/investor-relations",
     sharesAsOf: "2026-02-27",
     // DEBT: €33M total as of H1 2025 → ~$39.1M USD
     totalDebt: 39_100_000,  // €33M × 1.185 EUR/USD (H1 2025 balance sheet)
     debtSource: "H1 2025 Interim: €17.7M Nordic bond (ISIN NO0013364398) + €15.3M interest-bearing loans = €33M",
+    debtSourceQuote: "H1 2025 Interim: €17.7M Nordic bond (ISIN NO0013364398) + €15.3M interest-bearing loans = €33M",
     debtSourceUrl: "https://www.samara-ag.com/investor-relations",
     debtAsOf: "2025-06-30",
     strategy: "BTC as primary treasury reserve. Uses Samara Alpha Market-Neutral BTC+ Fund for management.",
@@ -1555,6 +1617,7 @@ export const btcCompanies: Company[] = [
     burnEstimated: false,
     cashReserves: 1_782_000,  // A$2,829,509 × 0.63 AUD/USD ≈ US$1.78M
     cashSource: "ASX Appendix 4C Q2 FY2026: Cash at bank A$2,829,509",
+    cashSourceQuote: "ASX Appendix 4C Q2 FY2026: Cash at bank A$2,829,509",
     cashSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/quarterly-activities-appendix-4c-cash-flow-report-3308597.html",
     cashAsOf: "2025-12-31",
     avgDailyVolume: 500_000,
@@ -1610,11 +1673,13 @@ export const btcCompanies: Company[] = [
     // SHARES: from provenance (Post-acquisition basic common shares)
     sharesForMnav: 688_942_624,
     sharesSource: "SEC 13D Feb 26, 2026: 688,942,624 basic common shares outstanding post-acquisition",
+    sharesSourceQuote: "SEC 13D Feb 26, 2026: 688,942,624 basic common shares outstanding post-acquisition",
     sharesSourceUrl: "/filings/naka/0001493152-26-008387",
     sharesAsOf: "2026-02-26",
     // DEBT: from provenance (Kraken $210M BTC-backed loan Dec 2025)
     totalDebt: NAKA_PROVENANCE.totalDebt?.value || 210_000_000,
     debtSource: "SEC 8-K Dec 9, 2025: Kraken $210M USDT loan, 8% annual, BTC-collateralized, due Dec 4, 2026",
+    debtSourceQuote: "SEC 8-K Dec 9, 2025: Kraken $210M USDT loan, 8% annual, BTC-collateralized, due Dec 4, 2026",
     debtSourceUrl: "/filings/naka/0001493152-25-026862",
     debtAsOf: "2025-12-09",
     // Enterprise Shield (NAKA Conglomerate Pivot)
@@ -1625,6 +1690,7 @@ export const btcCompanies: Company[] = [
     // CASH: from provenance (XBRL CashAndCashEquivalentsAtCarryingValue)
     cashReserves: NAKA_PROVENANCE.cashReserves?.value || 24_185_083,
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceQuote: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "/filings/naka/0001493152-25-024260",
     cashAsOf: "2025-09-30",
     leader: "David Bailey (CEO, Bitcoin Magazine)",
@@ -1672,6 +1738,7 @@ export const btcCompanies: Company[] = [
     // SHARES: from provenance (XBRL verified)
     sharesForMnav: DJT_PROVENANCE.sharesOutstanding?.value ?? 279_997_636,
     sharesSource: "SEC 10-K FY2025: EntityCommonStockSharesOutstanding = 279,997,636 as of Feb 2026",
+    sharesSourceQuote: "SEC 10-K FY2025: EntityCommonStockSharesOutstanding = 279,997,636 as of Feb 2026",
     sharesSourceUrl: "/filings/djt/0001140361-26-007174",
     sharesAsOf: "2025-12-31",
     // DEBT: from provenance (XBRL LongTermDebt - carrying value of $1B par converts)
@@ -1680,12 +1747,14 @@ export const btcCompanies: Company[] = [
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/djt/0001140361-26-007174",
     debtSource: "SEC 10-K FY2025 XBRL: LongTermDebt $950_769_100 (carrying value of $1B zero-coupon converts due 2028)",
+    debtSourceQuote: "SEC 10-K FY2025 XBRL: LongTermDebt $950_769_100 (carrying value of $1B zero-coupon converts due 2028)",
     debtSourceUrl: "/filings/djt/0001140361-26-007174",
     debtAsOf: "2025-12-31",
     // CASH: from provenance (XBRL - unrestricted only)
     cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
     cashAsOf: "2025-12-31",
     cashSource: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
+    cashSourceQuote: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
     cashSourceUrl: "/filings/djt/0001140361-26-007174",
     leader: "Devin Nunes (CEO)",
     strategy: "High-leverage BTC treasury strategy + fintech pivot. Uses covered-put yield generation.",
@@ -1725,6 +1794,7 @@ export const btcCompanies: Company[] = [
     // Buybacks: 2,972,000 shares repurchased (held as treasury, not cancelled)
     sharesForMnav: 767_804_730,  // Jan 2026 Monthly Return: 770,976,730 total - 3,172,000 treasury = 767,804,730
     sharesSource: "HKEX Monthly Return Jan 2026 (filed Feb 3, 2026): excl. 3,172,000 treasury shares",
+    sharesSourceQuote: "HKEX Monthly Return Jan 2026 (filed Feb 3, 2026): excl. 3,172,000 treasury shares",
     sharesSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0203/2026020302066.pdf",
     sharesAsOf: "2026-01-31",
     // DEBT: None — no bank borrowings, no convertibles
@@ -1735,6 +1805,7 @@ export const btcCompanies: Company[] = [
     // CASH: HK$82.7M (~$10.6M) + HK$78.7M term deposits
     cashReserves: 10_600_000,  // HK$82.7M ÷ 7.8 ≈ $10.6M (bank + cash balances only)
     cashSource: "HKEX Q3 2025: HK$82.7M cash + HK$78.7M term deposits (non-current)",
+    cashSourceQuote: "HKEX Q3 2025: HK$82.7M cash + HK$78.7M term deposits (non-current)",
     cashSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     cashAsOf: "2025-09-30",
     leader: "Dai Zhikang (Chairman & Executive Director)",
@@ -1775,10 +1846,12 @@ export const btcCompanies: Company[] = [
     hasOptions: true,
     sharesForMnav: 927_604_994,
     sharesSource: "SEC 10-Q Q3 2025 cover page (Class A + Class B)",
+    sharesSourceQuote: "SEC 10-Q Q3 2025 cover page (Class A + Class B)",
     sharesSourceUrl: "/filings/abtc/0001193125-25-281390",
     sharesAsOf: "2025-11-13",
     totalDebt: 286_200_000,
     debtSource: "SEC 10-Q Q3 2025: Bitmain miner purchase agreement",
+    debtSourceQuote: "SEC 10-Q Q3 2025: Bitmain miner purchase agreement",
     debtSourceUrl: "/filings/abtc/0001193125-25-281390",
     debtAsOf: "2025-09-30",
     strategy: "Pure-play Bitcoin miner & accumulator. High-growth HODL strategy with Satoshis Per Share focus.",
@@ -1787,6 +1860,7 @@ export const btcCompanies: Company[] = [
     twitter: "https://x.com/ABTC",
     cashReserves: 7_976_000,
     cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
+    cashSourceQuote: "SEC 10-Q Q3 2025 XBRL: Cash",
     cashSourceUrl: "/filings/abtc/0001193125-25-281390",
     cashAsOf: "2025-09-30",
     },  // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
@@ -1835,6 +1909,7 @@ export const solCompanies: Company[] = [
     // PFWs included in basic EPS per 10-Q. Shares declining via $1B buyback program.
     sharesForMnav: 96_003_639,
     sharesSource: "SEC 10-Q Q1 FY2026: 83,139,037 common + 12,864,602 PFWs",
+    sharesSourceQuote: "SEC 10-Q Q1 FY2026: 83,139,037 common + 12,864,602 PFWs",
     sharesSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     sharesAsOf: "2026-01-31",
     avgDailyVolume: 400_000_000,
@@ -1851,6 +1926,7 @@ export const solCompanies: Company[] = [
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/fwdi/0001683168-26-000960",
     debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
+    debtSourceQuote: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     debtAsOf: "2025-12-31",
     notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens).",
@@ -1891,10 +1967,12 @@ export const solCompanies: Company[] = [
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 76_732_785,  // 52,802,604 basic + 23,930,181 PFWs @ $0.001 = 76,732,785 (Feb 20, 2026 8-K)
     sharesSource: "8-K Feb 20, 2026: 52,802,604 Class A common + 23,930,181 PFWs = 76,732,785. Prior (Sep 30): 40.3M basic + 35.6M PFWs = 75.9M. PFW exercises converted ~11.7M to common; net +806K from ATM.",
+    sharesSourceQuote: "8-K Feb 20, 2026: 52,802,604 Class A common + 23,930,181 PFWs = 76,732,785. Prior (Sep 30): 40.3M basic + 35.6M PFWs = 75.9M. PFW exercises converted ~11.7M to common; net +806K from ATM.",
     sharesSourceUrl: "/filings/hsdt/0001104659-26-018212",
     sharesAsOf: "2026-02-20",
     totalDebt: 0,
     debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
+    debtSourceQuote: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "/filings/hsdt/0001104659-25-113714",
     debtAsOf: "2025-09-30",
     cashReserves: 15_000_000,  // Oct 29 8-K: ">$15M of cash and stablecoins". XBRL Sep 30 was $124M but ~$109M deployed into SOL post-Q3.
@@ -1961,6 +2039,7 @@ export const solCompanies: Company[] = [
     // marketCap removed - calculated from sharesForMnav × FMP price
     sharesForMnav: 29_892_800,  // Q4 business update Jan 5, 2026: "29,892,800 shares outstanding as of January 1, 2026"
     sharesSource: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update - shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
+    sharesSourceQuote: "SEC 8-K (filed 2026-01-05): Q4 2025 Business Update - shares outstanding 29,892,800 (down from 31,401,212 after 2.05M share buyback)",
     sharesSourceUrl: "/filings/dfdv/0001193125-26-002668",
     sharesAsOf: "2026-01-01",
     totalDebt: 202_042_000,  // 10-Q: $131.4M converts (net) + $70.3M BitGo + $267K short-term
@@ -1968,11 +2047,13 @@ export const solCompanies: Company[] = [
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/dfdv/0001193125-25-286660",
     debtSource: "SEC 10-Q Q3 2025 balance sheet: $131.4M convertible notes (net, $140.3M face in two tranches) + $70.3M BitGo digital asset financing + $267K short-term loan. Total per 10-Q: $202,042,000",
+    debtSourceQuote: "SEC 10-Q Q3 2025 balance sheet: $131.4M convertible notes (net, $140.3M face in two tranches) + $70.3M BitGo digital asset financing + $267K short-term loan. Total per 10-Q: $202,042,000",
     debtSourceUrl: "/filings/dfdv/0001193125-25-286660",
     debtAsOf: "2026-01-01",
     cashReserves: 9_000_000,  // ~$9M cash, stablecoins, and liquid tokens
     restrictedCash: 9_000_000,  // Operating capital - not excess
     cashSource: "SEC 8-K Q4 2025 Business Update: approximately $9M in cash, stablecoins, and other tokens",
+    cashSourceQuote: "SEC 8-K Q4 2025 Business Update: approximately $9M in cash, stablecoins, and other tokens",
     cashSourceUrl: "/filings/dfdv/0001193125-26-002668",
     cashAsOf: "2026-01-01",
     leader: "Formerly Janover Inc.",
@@ -2016,6 +2097,7 @@ export const solCompanies: Company[] = [
     capitalRaisedAtmSourceUrl: "/filings/upxi/0001477932-25-009150",
     sharesForMnav: 69_760_581,  // 10-Q cover page as of Feb 9, 2026 (includes Feb 2026 offering of 6.34M + RSU vesting)
     sharesSource: "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
+    sharesSourceQuote: "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
     sharesSourceUrl: "/filings/upxi/0001477932-26-000736",
     sharesAsOf: "2026-02-09",
     totalDebt: 254_594_731,  // $150M convert @$4.25 + $35.96M Hivemind @$2.39 + $62.7M BitGo + $5.4M Cygnet + $560K promissory
@@ -2023,11 +2105,13 @@ export const solCompanies: Company[] = [
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/upxi/0001477932-26-000736",
     debtSource: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $35.96M (EX-41: $35,961,975) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
+    debtSourceQuote: "SEC 10-Q Q2 FY2026 + Jan 2026 subsequent event: Convertible $150M + Hivemind $35.96M (EX-41: $35,961,975) + BitGo $62.7M + Cygnet $5.4M + Promissory $560K",
     debtSourceUrl: "/filings/upxi/0001477932-26-000736",
     debtAsOf: "2026-01-09",
     cashReserves: 1_616_765,  // 10-Q Dec 31, 2025 balance sheet. NOTE: Post-offering cash ~$9.7M per Feb 10 earnings 8-K (EX-99.2), but using audited BS figure.
     restrictedCash: 1_616_765,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q2 FY2026 balance sheet",
+    cashSourceQuote: "SEC 10-Q Q2 FY2026 balance sheet",
     cashSourceUrl: "/filings/upxi/0001477932-26-000736",
     cashAsOf: "2025-12-31",
     capitalRaisedPipe: 217_400_000,  // $47M (Jul 2025) + $151M converts (Jul 2025) + $10M (Dec PIPE) + $7.4M (Feb 2026 offering)
@@ -2071,10 +2155,12 @@ export const solCompanies: Company[] = [
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839&type=40-F",
     sharesForMnav: 31_735_660,  // 6-K Q1 FY2026 (Feb 18, 2026): 31,735,660 as of Feb 17, 2026. Dec 31: 28,590,484. Growth from ATM + Guoga conversion (2.3M shares Jan 7).
     sharesSource: "6-K Q1 FY2026 (filed Feb 18, 2026): 31,735,660 shares as of Feb 17, 2026. Dec 31: 28,590,484. Sep 30 (40-F): 22,999,841. ATM ($50M Cantor Jan 2) + Guoga conversion (2.3M shares Jan 7).",
+    sharesSourceQuote: "6-K Q1 FY2026 (filed Feb 18, 2026): 31,735,660 shares as of Feb 17, 2026. Dec 31: 28,590,484. Sep 30 (40-F): 22,999,841. ATM ($50M Cantor Jan 2) + Guoga conversion (2.3M shares Jan 7).",
     sharesSourceUrl: "/filings/stke/0001104659-26-016788",
     sharesAsOf: "2026-02-17",
     totalDebt: 34_900_000,  // CAD $49.1M → ~$34.9M USD: Converts CAD $34.9M + Credit facilities CAD $14.2M (Kamino DeFi + residual Guoga pre-settlement)
     debtSource: "6-K Q1 FY2026 balance sheet (Dec 31, 2025): Convertible debentures CAD $34.9M + Credit facilities CAD $14.2M = CAD $49.1M. Guoga facility settled Jan 7 (2.3M shares + CAD $4.9M cash) but Kamino DeFi facility (~CAD $4M) persists.",
+    debtSourceQuote: "6-K Q1 FY2026 balance sheet (Dec 31, 2025): Convertible debentures CAD $34.9M + Credit facilities CAD $14.2M = CAD $49.1M. Guoga facility settled Jan 7 (2.3M shares + CAD $4.9M cash) but Kamino DeFi facility (~CAD $4M) persists.",
     debtSourceUrl: "/filings/stke/0001104659-26-016788",
     debtAsOf: "2025-12-31",
     // Cash obligations: Converts interest + Kamino facility
@@ -2085,6 +2171,7 @@ export const solCompanies: Company[] = [
     cashReserves: 160_000,  // CAD $222,466 → ~$160K USD (Dec 31, 2025 Q1 FY2026 balance sheet)
     restrictedCash: 0,  // Operating cash - available
     cashSource: "6-K Q1 FY2026 balance sheet: CAD $222,466 cash",
+    cashSourceQuote: "6-K Q1 FY2026 balance sheet: CAD $222,466 cash",
     cashSourceUrl: "/filings/stke/0001104659-26-016788",
     cashAsOf: "2025-12-31",
     avgDailyVolume: 50_000_000,
@@ -2139,15 +2226,18 @@ export const hypeCompanies: Company[] = [
     capitalRaisedPipe: 583_000_000,
     sharesForMnav: 123_967_508,  // 8-K Feb 11, 2026: basic shares after ~3M buyback ($10.5M at ~$3.42/share avg)
     sharesSource: "SEC 8-K (Feb 11, 2026): 123,967,508 shares. Down from 127M after $10.5M buyback (~3M shares at ~$3.42 avg). $19.5M remaining of $30M program.",
+    sharesSourceQuote: "SEC 8-K (Feb 11, 2026): 123,967,508 shares. Down from 127M after $10.5M buyback (~3M shares at ~$3.42 avg). $19.5M remaining of $30M program.",
     sharesSourceUrl: "/filings/purr/0001193125-26-045553",
     sharesAsOf: "2026-02-11",
     cashReserves: 281_900_000,  // 8-K Feb 11: Dec 31, 2025 balance sheet. Subsequently deployed $129.5M for HYPE → ~$152M remaining.
     restrictedCash: 281_900_000,  // No debt = cash not encumbered, don't subtract from EV
     cashSource: "SEC 8-K (Feb 11): Dec 31 balance sheet $281.9M. Subsequently deployed $129.5M for ~5M HYPE. Remaining deployable ~$125M.",
+    cashSourceQuote: "SEC 8-K (Feb 11): Dec 31 balance sheet $281.9M. Subsequently deployed $129.5M for ~5M HYPE. Remaining deployable ~$125M.",
     cashSourceUrl: "/filings/purr/0001193125-26-045553",
     cashAsOf: "2025-12-31",
     totalDebt: 0,
     debtSource: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
+    debtSourceQuote: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
     debtSourceUrl: "/filings/purr/0001193125-26-045553",
     debtAsOf: "2025-12-31",
     leader: "David Schamis (CEO), Bob Diamond (Board)",
@@ -2197,9 +2287,11 @@ export const hypeCompanies: Company[] = [
     sharesForMnav: 24_400_000,
     sharesSourceUrl: "/filings/hypd/0001104659-25-111671",
     sharesSource: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
+    sharesSourceQuote: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
     sharesAsOf: "2025-11-10",
     cashReserves: 8_223_180,  // SEC 10-Q Sep 30, 2025
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/hypd/0001104659-25-111671",
     cashAsOf: "2025-09-30",
     totalDebt: 7_656_005,  // Notes payable (Avenue loan)
@@ -2207,6 +2299,7 @@ export const hypeCompanies: Company[] = [
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/hypd/0001104659-25-111671",
     debtSource: "SEC 10-Q Q3 2025",
+    debtSourceQuote: "SEC 10-Q Q3 2025",
     debtSourceUrl: "/filings/hypd/0001104659-25-111671",
     debtAsOf: "2025-09-30",
     leader: "Hyunsu Jung (CEO)",
@@ -2271,11 +2364,13 @@ export const bnbCompanies: Company[] = [
     capitalRaisedPipe: 500_000_000,
     sharesForMnav: 44_062_938,  // SEC 10-Q Dec 2025
     sharesSource: "SEC 10-Q (filed 2025-12-15): EntityCommonStockSharesOutstanding = 44,062,938 as of 2025-12-12",
+    sharesSourceQuote: "SEC 10-Q (filed 2025-12-15): EntityCommonStockSharesOutstanding = 44,062,938 as of 2025-12-12",
     sharesSourceUrl: "/filings/bnc/0001493152-25-027782",
     sharesAsOf: "2025-12-12",
     cashReserves: 77_500_000,  // $77.5M cash (Oct 2025)
     restrictedCash: 77_500_000,  // Treat as restricted - actively deployed for BNB purchases + buybacks
     cashSource: "FY Q2 2026 earnings",
+    cashSourceQuote: "FY Q2 2026 earnings",
     cashSourceUrl: "/filings/bnc/0001493152-25-027782",
     cashAsOf: "2025-10-31",
     // totalDebt: 0 - "minimal debt" per press release
@@ -2314,17 +2409,20 @@ export const bnbCompanies: Company[] = [
     // VERIFIED from 20-F FY2024: Long-term RMB170.7M ($23.7M) + Short-term RMB18M ($2.5M) = ~$26.2M
     totalDebt: 26_200_000,
     debtSource: "SEC 20-F FY2024 balance sheet",
+    debtSourceQuote: "SEC 20-F FY2024 balance sheet",
     debtSourceUrl: "/filings/na/0001213900-25-031065",
     debtAsOf: "2024-12-31",
     // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
     cashReserves: 50_800_000,
     cashSource: "SEC XBRL 6-K Q2 2025",
+    cashSourceQuote: "SEC XBRL 6-K Q2 2025",
     cashSourceUrl: "/filings/na/0001213900-25-126828", // exact SEC 6-K doc (filed 2025-12-31)
     cashAsOf: "2025-06-30",
     // VERIFIED from 424B3 Oct 2025: 20,768,315 Class A + 2,858,909 Class B = 23,627,224
     // Significant dilution in 2025: 15.67M (Dec 2024) → 23.6M (Oct 2025) = +50%
     sharesForMnav: 23_627_224,
     sharesSource: "SEC 424B3 Oct 2025 (Class A: 20.77M + Class B: 2.86M)",
+    sharesSourceQuote: "SEC 424B3 Oct 2025 (Class A: 20.77M + Class B: 2.86M)",
     sharesSourceUrl: "/filings/na/0001213900-25-097024",
     sharesAsOf: "2025-10-07",
     leader: "Jianping Kong (CEO)",
@@ -2374,12 +2472,14 @@ export const taoCompanies: Company[] = [
     cashReserves: 1_445_427,  // 10-Q Sep 30, 2025 balance sheet
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 (filed Nov 14, 2025)",
+    cashSourceQuote: "SEC 10-Q Q3 2025 (filed Nov 14, 2025)",
     cashSourceUrl: "/filings/taox/0001104659-25-112570",
     capitalRaisedPipe: 11_000_000,
     sharesForMnav: 7_128_912,  // 10-Q Nov 14, 2025 cover page (7,128,912 shares as of Nov 11, 2025)
     sharesSourceUrl: "/filings/taox/0001104659-25-112570",
     sharesAsOf: "2025-11-11",
     sharesSource: "SEC 10-Q cover page Nov 14, 2025 (7,128,912 shares as of Nov 11)",
+    sharesSourceQuote: "SEC 10-Q cover page Nov 14, 2025 (7,128,912 shares as of Nov 11)",
     secCik: "0001571934",
     leader: "Joshua Silverman (Executive Chairman)",
     strategy: "First pure-play Bittensor treasury company",
@@ -2416,11 +2516,13 @@ export const taoCompanies: Company[] = [
     capitalRaisedPipe: 30_100_000,  // $22.78M IPO (Jul 2025) + $7.3M Off the Chain (Nov 2025)
     cashReserves: 4_132_218,  // SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)
     cashSource: "SEDAR+ Q2 FY26 MD&A (filed Nov 29, 2025)",
+    cashSourceQuote: "SEDAR+ Q2 FY26 MD&A (filed Nov 29, 2025)",
     cashSourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
     cashAsOf: "2025-09-30",
     sharesForMnav: 38_031_285,  // 28,552,195 shares + 9,479,090 pre-funded warrants (auto-convert)
     sharesAsOf: "2025-09-30",
     sharesSource: "SEDAR+ MD&A Sep 30, 2025 (page 11: shares, page 5: warrants)",
+    sharesSourceQuote: "SEDAR+ MD&A Sep 30, 2025 (page 11: shares, page 5: warrants)",
     sharesSourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=b51c12a3ab4a6c90cf8f1a2b7f6e9d8a",
     lowLiquidity: true,  // Canadian OTC - limited data feed coverage
     leader: "Karia Samaroo",
@@ -2465,6 +2567,7 @@ export const taoCompanies: Company[] = [
     sharesSourceUrl: "/filings/twav/0001437749-25-034612",
     sharesAsOf: "2025-11-10",
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
+    sharesSourceQuote: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "0000746210",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
     restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
@@ -2472,6 +2575,7 @@ export const taoCompanies: Company[] = [
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/twav/0001437749-25-034612",
     cashSource: "SEC 10-Q Q3 2025",
+    cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/twav/0001437749-25-034612",
     cashAsOf: "2025-09-30",
     website: "https://taoweave.com",
@@ -2533,6 +2637,7 @@ export const linkCompanies: Company[] = [
     sharesSourceUrl: "/filings/cwd/0001627282-25-000028",
     sharesAsOf: "2025-12-31",
     sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
+    sharesSourceQuote: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
     secCik: "0001627282",
     leader: "John C. Loeffler II (CEO)",
     website: "https://caliberco.com",
@@ -2594,6 +2699,7 @@ export const trxCompanies: Company[] = [
     avgDailyVolume: 50_000_000,
     sharesForMnav: 274_382_064,  // Dec 29, 2025 8-K: after $18M Justin Sun investment
     sharesSource: "SEC 8-K Dec 29, 2025",
+    sharesSourceQuote: "SEC 8-K Dec 29, 2025",
     sharesAsOf: "2025-12-29",
     sharesSourceUrl: "/filings/tron/0001493152-25-029225",
     leader: "Richard Miller (CEO)",
@@ -2677,6 +2783,7 @@ export const zecCompanies: Company[] = [
     sharesForMnav: 137_420_344,  // Basic (56.6M) + Pre-funded warrants (80.8M) per SEC filings
     sharesSourceUrl: "/filings/cyph/0001104659-25-109827",
     sharesSource: "SEC 10-Q Q3 2025 + 8-K Oct 9, 2025 (basic + pre-funded warrants)",
+    sharesSourceQuote: "SEC 10-Q Q3 2025 + 8-K Oct 9, 2025 (basic + pre-funded warrants)",
     sharesAsOf: "2025-11-10",
     leader: "Douglas Onsi (CEO)",
     strategy: "Target 5% of ZEC supply (~540K ZEC). Winklevoss backed.",
@@ -2720,15 +2827,18 @@ export const ltcCompanies: Company[] = [
     preferredAsOf: "2025-12-31",
     preferredSourceUrl: "/filings/lits/0001193125-26-053215",
     debtSource: "SEC 10-Q Q2 FY2026",
+    debtSourceQuote: "SEC 10-Q Q2 FY2026",
     debtSourceUrl: "/filings/lits/0001193125-26-053215",
     debtAsOf: "2025-12-31",
     cashReserves: 8_758_000,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue $8,758,000
     cashSource: "SEC 10-Q Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceQuote: "SEC 10-Q Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "/filings/lits/0001193125-26-053215",
     cashAsOf: "2025-12-31",
     sharesForMnav: 36_361_999,  // Q2 FY2026 10-Q cover page (Feb 9, 2026). Down from 36.8M due to $25M buyback program.
     sharesSourceUrl: "/filings/lits/0001193125-26-053215",
     sharesSource: "SEC 10-Q Q2 FY2026 cover page (Feb 9, 2026)",
+    sharesSourceQuote: "SEC 10-Q Q2 FY2026 cover page (Feb 9, 2026)",
     sharesAsOf: "2026-02-09",
     leader: "Justin File (CEO)",
     strategy: "First US-listed LTC treasury. GSR as treasury manager. Covered call options program generating ~$600K/qtr in premiums.",
@@ -2771,6 +2881,7 @@ export const ltcCompanies: Company[] = [
     sharesForMnav: 31_554_164,  // SEDAR+ FY2025 + Dec 9, 2025 private placement
     sharesAsOf: "2025-12-09",
     sharesSource: "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
+    sharesSourceQuote: "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
     sharesSourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736",
     leader: "Tomek Antoniak (CEO)",
     website: "https://www.luxxfolio.com",
@@ -2836,6 +2947,7 @@ export const suiCompanies: Company[] = [
     sharesForMnav: 80_900_000,  // SEC 8-K Jan 8, 2026: "fully adjusted shares issued and outstanding as of January 7, 2026"
     sharesAsOf: "2026-01-07",
     sharesSource: "SEC 8-K Jan 8, 2026",
+    sharesSourceQuote: "SEC 8-K Jan 8, 2026",
     sharesSourceUrl: "/filings/suig/0001654954-26-000201",
     leader: "Douglas Polinsky (CEO)",
     strategy: "Only public company with Sui Foundation relationship",
@@ -2879,6 +2991,7 @@ export const dogeCompanies: Company[] = [
     marketCap: 150_000_000,
     cashReserves: 5_443_655,  // Q2 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue
     cashSource: "SEC 10-Q Q2 FY2026 XBRL",
+    cashSourceQuote: "SEC 10-Q Q2 FY2026 XBRL",
     cashSourceUrl: "/filings/zone/0001213900-26-015016",
     cashAsOf: "2025-12-31",
     totalDebt: 800_000,  // Q2 FY2026 10-Q: NotesPayable ~$800K at 10% interest (XBRL last tagged $690K at Jun 30; verify from filing text)
@@ -2893,11 +3006,13 @@ export const dogeCompanies: Company[] = [
       },
     ],
     debtSource: "SEC 10-Q Q2 FY2026: NotesPayable",
+    debtSourceQuote: "SEC 10-Q Q2 FY2026: NotesPayable",
     debtSourceUrl: "/filings/zone/0001213900-26-015016",
     debtAsOf: "2025-12-31",
     sharesForMnav: 210_556_229,  // SEC 10-Q Q2 FY2026 cover page (Feb 10, 2026)
     sharesSourceUrl: "/filings/zone/0001213900-26-015016",
     sharesSource: "SEC 10-Q Q2 FY2026 cover page",
+    sharesSourceQuote: "SEC 10-Q Q2 FY2026 cover page",
     sharesAsOf: "2026-02-10",
     leader: "Clayton Adams (CEO)",
     strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
@@ -2936,6 +3051,7 @@ export const dogeCompanies: Company[] = [
     marketCap: 8_000_000,  // TBH pre-merger market cap ~$8M (10.8M shares × ~$0.75)
     sharesForMnav: 10_800_000,  // TBH pre-merger shares (Nov 2025 10-Q)
     sharesSource: "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
+    sharesSourceQuote: "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
     sharesSourceUrl: "/filings/tbh/0001213900-25-111616",
     sharesAsOf: "2025-11-12",
     leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
@@ -2974,8 +3090,10 @@ export const dogeCompanies: Company[] = [
     sharesSourceUrl: "/filings/btog/0001104659-25-105009",
     sharesAsOf: "2026-01-20",
     sharesSource: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
+    sharesSourceQuote: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
     totalDebt: 16_338_506,  // $10M Series A-1 + $5M Series B-1 + $1.34M Series C-1 convertible notes
     debtSource: "SEC 20-F Oct 31, 2025 + 6-K Jan 20, 2026 (convertible notes)",
+    debtSourceQuote: "SEC 20-F Oct 31, 2025 + 6-K Jan 20, 2026 (convertible notes)",
     debtSourceUrl: "/filings/btog/0001104659-25-105009",
     debtAsOf: "2026-01-20",
     cashReserves: 56_000,  // Yahoo Finance Total Cash (mrq): $55.64k
@@ -3011,11 +3129,13 @@ export const avaxCompanies: Company[] = [
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
     totalDebt: 1_689_415,  // SEC 10-Q Sep 30: debentures $1,372,679 + LT $41,736 + loan $275,000
     debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
+    debtSourceQuote: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
     debtSourceUrl: "/filings/avx/0001493152-25-023464",
     debtAsOf: "2025-09-30",
     cashReserves: 894_701,  // ⚠️ Pre-PIPE figure from 10-Q Sep 30, 2025. $145M+ PIPE cash received Nov 5, 2025. Actual balance pending 10-K (~March 2026).
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceQuote: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
     cashSourceUrl: "/filings/avx/0001493152-25-023464",
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     stakingPct: 0.90,  // "more than 90% of AVAX holdings staked"
@@ -3034,6 +3154,7 @@ export const avaxCompanies: Company[] = [
     sharesForMnav: 90_688_765,  // 93,112,148 post-PIPE minus 2,423,383 buybacks as of Mar 5, 2026
     sharesAsOf: "2026-03-05",
     sharesSource: "Mar 2, 2026 Strategic Update: 2,423,383 shares repurchased total",
+    sharesSourceQuote: "Mar 2, 2026 Strategic Update: 2,423,383 shares repurchased total",
     sharesSourceUrl: "https://www.avax-one.com/news",
     secCik: "0001826397",
     website: "https://www.avax-one.com",
@@ -3085,6 +3206,7 @@ export const hbarCompanies: Company[] = [
     marketCap: 10_000_000,
     sharesForMnav: 65_000_000,  // From holdings-history.ts
     sharesSource: "SEDAR+ Q3 2025 Interim MD&A",
+    sharesSourceQuote: "SEDAR+ Q3 2025 Interim MD&A",
     sharesSourceUrl: "https://www.sedarplus.ca/csa-party/viewInstance/resource.html?node=W1084&drmKey=1ad315a0899e6f02",
     sharesAsOf: "2025-09-30",
     leader: "Melyssa Charlton (CEO)",  // Jordan Fried was previous CEO

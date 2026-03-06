@@ -87,18 +87,20 @@
 
 **Goal:** Every data field traces to: value → quote → document → permanent URL.
 
-**Current state:**
+**Current state (2026-03-06):**
 - companies.ts has `sourceQuote`, `holdingsSourceUrl`, `accessionNumber` for most companies
 - Cross-check script validates quote-value matches
-- Some fields (debt, cash, preferred, shares) lack full citation chains
+- Quote fields added to Company type: `debtSourceQuote`, `cashSourceQuote`, `sharesSourceQuote`, `preferredSourceQuote`
+- **Quote coverage**: holdings 95%, debt 80%, cash 84%, shares 89%, preferred 20%
 
 **Deliverables:**
-- [ ] Extend citation fields to ALL data types (not just holdings):
-  - debt: debtSourceQuote
-  - cash: cashSourceQuote
-  - shares: sharesSourceQuote
-  - preferred: preferredSourceQuote
-- [ ] Every field with a value must have: source URL + quote + as-of date
+- [x] Extend citation fields to ALL data types (type system + initial population):
+  - debt: debtSourceQuote — 32/40 (80%)
+  - cash: cashSourceQuote — 37/44 (84%)
+  - shares: sharesSourceQuote — 49/55 (89%)
+  - preferred: preferredSourceQuote — 4/20 (20%)
+- [ ] Fill remaining gaps (OBTC3, BTBT preferred, foreign companies)
+- [ ] Upgrade promoted quotes to verbatim SEC filing extracts where possible
 - [ ] Provenance for derived values: show inputs + calculation
 
 **DoD:**
