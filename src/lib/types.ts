@@ -83,8 +83,6 @@ export interface Company {
   website?: string;
   twitter?: string;
   investorRelationsUrl?: string;
-  hkexNewsUrl?: string;        // HKEX filings/news page or direct bulletin URL
-  asxAnnouncementsUrl?: string; // ASX announcements/company page URL
   tokenizedAddress?: string; // On-chain tokenized stock (e.g., Solana)
   tokenizedChain?: string; // Which chain the token is on
   logoUrl?: string;
