@@ -60,6 +60,7 @@ export type CompanyType = "Treasury" | "Miner";
 
 // Stock currency (for non-USD exchanges)
 export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL" | "GBP" | "NOK" | "KRW" | "AED" | "AUD";
+export type Jurisdiction = "US" | "JP" | "CA" | "HK" | "AU" | "EU" | "OTHER";
 
 // Base company interface
 export interface Company {
@@ -70,6 +71,7 @@ export interface Company {
   // Listing metadata (agent-native routing)
   country?: string;        // ISO 3166-1 alpha-2 when known (e.g., "US", "CA", "JP").
   exchangeMic?: string;    // ISO 10383 MIC when known (e.g., "XNAS", "XNYS", "XTSE").
+  jurisdiction?: Jurisdiction; // Regional filing/source regime for analytics and routing.
 
   currency?: StockCurrency;  // Stock trading currency (default: USD). Used for price display conversion.
   asset: Asset;
@@ -96,6 +98,7 @@ export interface Company {
   costBasisSourceUrl?: string;
   costBasisAsOf?: string;  // ISO date the cost basis is calculated from
   stakingPct?: number;
+  stakingRatio?: number; // 0-1 fraction of treasury assets currently staked.
   stakingApy?: number;
   stakingMethod?: string;
   stakingSource?: string;      // Source for staking percentage (SEC filing, PR, etc.)
@@ -205,6 +208,8 @@ export interface Company {
   preferredSourceUrl?: string;
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
+  asxAnnouncementsUrl?: string; // ASX announcements/listing URL (AU tickers)
+  hkexNewsUrl?: string;         // HKEX news/filing URL (HK tickers)
   walletAddresses?: string[];   // Known wallet addresses for on-chain verification
 
   // Pending merger status (for SPACs that haven't closed yet)
@@ -241,7 +246,15 @@ export interface Company {
 
   // D1 overlay metadata (set by applyD1Overlay)
   holdingsBasis?: HoldingsBasis;   // How holdings were resolved (native, USD÷price, static)
+  d1HoldingsByAsset?: D1HoldingByAsset[]; // Optional per-asset holdings from D1 latest_datapoints.
   _d1Fields?: string[];            // Which balance-sheet fields were sourced from D1 (dev debug)
+}
+
+export interface D1HoldingByAsset {
+  asset: string;
+  value: number;
+  sourceUrl?: string | null;
+  asOf?: string | null;
 }
 
 // Secondary crypto holding for multi-asset treasury companies
