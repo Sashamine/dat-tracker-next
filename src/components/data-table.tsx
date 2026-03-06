@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
-import { getCompanyMNAVDetailed } from "@/lib/hooks/use-mnav-stats";
+import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import { dilutiveInstruments, getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
@@ -181,11 +181,15 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const totalDebt = company.totalDebt ?? 0;
     const hpsGrowth90d = calculateHpsGrowth90d(company.ticker, company.holdings, company.sharesForMnav);
 
-    // mNAV uses canonical engine with warnings/breakdown support.
-    const mnavDetailed = getCompanyMNAVDetailed(company, prices);
-    const mNAV = mnavDetailed.mnav;
-    const holdingsValueFromEngine = mnavDetailed.lines.reduce((sum, line) => sum + line.valueUsd, 0);
-    const effectiveHoldingsValue = holdingsValueFromEngine > 0 ? holdingsValueFromEngine : holdingsValue;
+    let effectiveHoldingsValue = holdingsValue;
+    if (company.secondaryCryptoHoldings && prices) {
+      for (const holding of company.secondaryCryptoHoldings) {
+        const secondaryPrice = prices.crypto[holding.asset]?.price || 0;
+        effectiveHoldingsValue += holding.amount * secondaryPrice;
+      }
+    }
+
+    const mNAV = getCompanyMNAV(company, prices);
 
     // Adjust debt for ITM convertibles (same as mNAV calculation)
     // ITM converts are counted in diluted shares, so subtract their face value from debt
@@ -215,8 +219,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       stockVolume,
       cryptoPrice,
       mNAV: mNAV || 0,
-      mnavWarnings: mnavDetailed.warnings,
-      mnavLines: mnavDetailed.lines,
       mNAVChange,
       companyType,
       isAfterHours,
@@ -563,11 +565,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
         <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
           <p className="inline-flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
-            {company.mnavWarnings?.length ? (
-              <span title={`mNAV warnings: ${company.mnavWarnings.join(", ")}`} className="text-amber-500">
-                ⚠️
-              </span>
-            ) : null}
             {company.pendingMerger ? "—" : (
               <MNAVTooltip
                 mNAV={company.mNAV}
@@ -591,8 +588,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                 itmDilutionShares={dilutionInfo.itmDilutionShares}
                 itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
                 holdingsSourceUrl={company.holdingsSourceUrl}
-                holdingsBreakdown={company.mnavLines}
-                warnings={company.mnavWarnings}
                 officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                 secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                 officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
@@ -829,11 +824,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                       <span className="text-gray-400" title="mNAV not available for pre-merger SPACs">—</span>
                     ) : (
                       <span className="inline-flex items-center gap-1">
-                        {company.mnavWarnings?.length ? (
-                          <span title={`mNAV warnings: ${company.mnavWarnings.join(", ")}`} className="text-amber-500">
-                            ⚠️
-                          </span>
-                        ) : null}
                         <MNAVTooltip
                           mNAV={company.mNAV}
                           marketCap={company.marketCap}
@@ -856,8 +846,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                           itmDilutionShares={dilutionInfo.itmDilutionShares}
                           itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
                           holdingsSourceUrl={company.holdingsSourceUrl}
-                          holdingsBreakdown={company.mnavLines}
-                          warnings={company.mnavWarnings}
                           officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
                           secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
                           officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
