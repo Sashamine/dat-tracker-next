@@ -35,6 +35,9 @@ const FY2025_PERIOD_END = "2025-12-31";
 
 const Q3_2025_10Q_ACCESSION = "0001140361-25-040977";
 const Q3_2025_10Q_FILED = "2025-11-07";
+const Q3_2025_PERIOD_END = "2025-09-30";
+
+const DEC_2025_TREASURY_8K_FILED = "2025-12-30"; // Dec 2025 treasury update 8-K
 
 // =========================================================================
 // LATEST DATA POINTS (from FY2025 10-K)

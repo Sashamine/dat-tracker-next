@@ -57,8 +57,10 @@ const LATEST_HOLDINGS_DATE = "2025-11-12"; // Confirmed in Q3 earnings 8-K
 // =========================================================================
 // Shares: 688,942,624 common (basic) per David Bailey 13D (Feb 26, 2026)
 // Fully diluted: 890,148,039 per Feb 25, 2026 8-K
-const SHARES_OUTSTANDING = 688_942_624; 
+const SHARES_OUTSTANDING = 688_942_624;
 const SHARES_DATE = "2026-02-26";
+const PREFUNDED_WARRANTS = 0; // Pre-funded warrants tracked in dilutive-instruments.ts, not added to basic
+const TOTAL_SHARES_FOR_MNAV = SHARES_OUTSTANDING; // Basic shares only; dilution is dynamic
 
 // Combined EBITDA/Revenue from acquired profitable entities
 const ACQUISITION_EBITDA = 34_200_000;
