@@ -70,7 +70,7 @@ function getGrowthColor(value: number | null): string {
   return "text-gray-500";
 }
 
-function calculateHpsGrowth90d(
+function calculateAhpsGrowth90d(
   ticker: string,
   currentHoldings: number,
   currentShares: number | undefined
@@ -111,7 +111,7 @@ function calculateHpsGrowth90d(
   }
 
   const growth = calculateHoldingsGrowth(historyForGrowth);
-  return growth?.totalGrowth ?? null;
+  return growth?.annualizedGrowth ?? null;
 }
 
 
@@ -179,7 +179,9 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const otherInvestments = company.otherInvestments ?? 0;
     const otherAssets = cashReserves + otherInvestments;
     const totalDebt = company.totalDebt ?? 0;
-    const hpsGrowth90d = calculateHpsGrowth90d(company.ticker, company.holdings, company.sharesForMnav);
+    // Uses native crypto holdings and the adjusted mNAV share base, so price moves are excluded.
+    // Keep the existing sort key stable while switching the displayed metric to annualized AHPS growth.
+    const hpsGrowth90d = calculateAhpsGrowth90d(company.ticker, company.holdings, company.sharesForMnav);
 
     let effectiveHoldingsValue = holdingsValue;
     if (company.secondaryCryptoHoldings && prices) {
@@ -557,7 +559,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       </div>
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
-          <p className="text-xs text-gray-500 uppercase">HPS 90D</p>
+          <p className="text-xs text-gray-500 uppercase">AHPS 90D</p>
           <p className={cn("font-semibold", getGrowthColor(company.hpsGrowth90d))}>
             {formatGrowthPct(company.hpsGrowth90d)}
           </p>
@@ -636,10 +638,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       {filteredCompanies.length === 0 ? (
         <div className="p-8 text-center">
           <p className="text-gray-700 dark:text-gray-200 font-medium">
-            No companies match the current HPS leaderboard filters.
+            No companies match the current AHPS leaderboard filters.
           </p>
           <p className="mt-1 text-sm text-gray-500">
-            Clear one or more filters to repopulate the 90-day holdings-per-share rankings.
+            Clear one or more filters to repopulate the annualized 90-day adjusted holdings-per-share rankings.
           </p>
         </div>
       ) : (
@@ -669,7 +671,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("hpsGrowth90d")}
                 >
-                  HPS Growth (90D) {sortField === "hpsGrowth90d" && (sortDir === "desc" ? "↓" : "↑")}
+                  AHPS Growth (90D) {sortField === "hpsGrowth90d" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
