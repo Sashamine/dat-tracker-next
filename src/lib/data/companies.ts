@@ -118,7 +118,7 @@ export const ethCompanies: Company[] = [
     holdingsSourceUrl: "/filings/sbet/0001493152-26-007427",
     accessionNumber: "0001493152-26-007427",
     sourceType: "sec-filing",
-    sourceQuote: "As of February 15, 2026, the Company held 867,798(1) ETH",
+    sourceQuote: "As of February 15, 2026, the Company held 867,798 (1) ETH",
     // Provenance tracking (see provenance/sbet.ts for full audit trail)
     holdingsAccession: "0001493152-26-007427",
     holdingsNative: 587_232,      // Native ETH held directly
@@ -196,6 +196,8 @@ export const ethCompanies: Company[] = [
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2080334/000121390026019335/ea0278027-425_ether.htm",
+    sourceType: "regulatory-filing",
+    // sourceQuote removed — agent submitted company name, not data quote
     datStartDate: "2025-10-01",
     // stakingPct removed - SPAC pending, needs verification
     stakingMethod: "Native staking",
@@ -231,6 +233,8 @@ export const ethCompanies: Company[] = [
     holdingsLastUpdated: "2026-01-31",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
+    sourceType: "press-release",
+    sourceQuote: "January 2026 ... 155,239 ETH",
     datStartDate: "2025-01-01",
     website: "https://bit-digital.com",
     twitter: "https://x.com/BitDigital_BTBT",
@@ -293,7 +297,10 @@ export const ethCompanies: Company[] = [
     holdings: 60_500,  // Feb 5, 2026 8-K
     holdingsLastUpdated: "2026-02-05",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226005565/form8-k.htm",
+    holdingsSourceUrl: "/filings/btcs/0001493152-26-005565",
+    accessionNumber: "0001493152-26-005565",
+    sourceType: "sec-filing",
+    sourceQuote: "BTCS sold 10,000 ETH for total net proceeds of $18.7 million, and used net proceeds to repay outstanding principal indebtedness on Aave",
     datStartDate: "2024-01-01",
     website: "https://www.btcs.com",
     twitter: "https://x.com/NasdaqBTCS",
@@ -351,7 +358,8 @@ export const ethCompanies: Company[] = [
     holdings: 15_630,
     holdingsLastUpdated: "2026-03-01",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.gamesquare.com/#investors",
+    holdingsSourceUrl: "https://investors.gamesquare.com/news/news-details/2025/GameSquare-Approves-Stock-Buyback-Program-Funded-by-Ethereum-Yield-Proceeds/default.aspx",
+    sourceQuote: "increasing treasury holdings to 15,630.07 ETH",
     datStartDate: "2025-07-01",
     stakingPct: 0,  // Yield generated via Dialectic Medici optimization, not standard staking
     quarterlyBurnUsd: 6_171_000,
@@ -412,11 +420,16 @@ export const ethCompanies: Company[] = [
     exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
-    // VERIFIED: SEC 8-K Feb 26, 2026 - Sold 7,550 ETH
+    // DERIVED: 50,778 (Q3 10-Q Sep 30) - 13,184 sold (Oct-Jan per 8-K Jan 21) - 7,550 sold (Feb 24-25 press release) = 30,044
     holdings: 30_044,
+    holdingsDerived: true,
+    holdingsCalculation: "50,778 (Q3 10-Q) - 13,184 sold (Oct-Jan) - 7,550 sold (Feb 24-25) = 30,044",
     holdingsLastUpdated: "2026-02-25",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm",
+    holdingsSourceUrl: "/filings/fgnx/0001493152-25-023550",
+    accessionNumber: "0001493152-25-023550",
+    sourceType: "sec-filing",
+    sourceQuote: "As of September 30, 2025, we have accumulated 50,778 ETH",
     costBasisAvg: 3_854,  // $195.7M / 50,778 ETH (Sep 30 Q3 2025) — blended, pre-sales
     costBasisSource: "SEC 10-Q Q3 2025 (aggregate cost $195.7M for 50,778 ETH)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
@@ -551,6 +564,8 @@ export const btcCompanies: Company[] = [
     holdingsLastUpdated: "2025-12-30",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://metaplanet.jp/en/analytics",
+    sourceType: "company-website",
+    sourceQuote: "35,102 BTC Holdings",
     datStartDate: "2024-04-01",
     website: "https://metaplanet.jp",
     twitter: "https://twitter.com/Metaplanet_JP",
@@ -611,10 +626,12 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     holdings: 43_514,  // Combined: Tether (24,500) + Bitfinex (7,000) + PIPE (~11.5K) + In-Kind (~0.4K)
+    holdingsDerived: true,
+    holdingsCalculation: "Contribution 31,500 (Tether 24,500 + Bitfinex 7,000) + PIPE ~11,533 + In-Kind PIPE ~392 = ~43,425 (8-K EX-99.4)",
+    sourceQuote: "31,500 Bitcoin",
     holdingsLastUpdated: "2025-12-08",  // Merger close date (8-K: "consummated on December 8, 2025")
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea026946001ex99-4_twenty.htm#:~:text=31%2C500%20Bitcoin",
-    // Breakdown: Contribution 31,500 + PIPE Bitcoin ~11,533 + In-Kind PIPE ~392 = ~43,425
     datStartDate: "2025-12-09",
     costBasisAvg: 84_864,  // S-1/A Feb 9, 2026: Contribution + Additional PIPE BTC valued at $84,863.57/BTC at Closing
     costBasisSource: "SEC S-1/A Feb 9, 2026: Tether/Bitfinex contribution + Additional PIPE BTC at $84,863.57/BTC (Closing fair value)",
@@ -658,26 +675,26 @@ export const btcCompanies: Company[] = [
     jurisdiction: "US",
     authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
-    secCik: "0001865602",
-    cashReserves: 275381,
-    cashAsOf: "2025-03-31",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2027708/000121390025044272/",
-    dataWarnings: [
-      {
-        type: "stale-data",
-        message: "Balance sheet data may be stale (cash as-of 2025-03-31).",
-        severity: "warning",
-      },
-    ],
+    secCik: "0002027708",
+    cashReserves: 207_000_000,  // SPAC trust ~$207M as of Dec 31, 2025 (per amended S-4)
+    cashAsOf: "2025-12-31",
+    cashSource: "Amended S-4: approximately $207 million of SPAC trust cash as of December 31, 2025",
+    cashSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027708&type=S-4",
     asset: "BTC",
     tier: 1,
     holdings: 30_021,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2027708/000121390026008287/ea0274216-8k_cantor1.htm",
+    sourceType: "sec-filing",
+    sourceQuote: "initial treasury of 30,021 Bitcoin",
     datStartDate: "2025-10-01",
     // costBasisAvg removed - needs verification
     isMiner: false,
+    // SPAC: 20,500,000 Class A + 5,000,000 Class B = 25,500,000 total (pre-merger)
+    sharesForMnav: 25_500_000,
+    sharesSource: "SEC 10-K FY2025 (CIK 0002027708): 20.5M Class A + 5M Class B",
+    sharesAsOf: "2025-12-31",
     quarterlyBurnUsd: 5_000_000,
     burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $37,607 (2024-01-01 to 2024-03-31)",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1865602/000121390025044273/ea0241012-10q_cantor.htm",
@@ -748,7 +765,7 @@ export const btcCompanies: Company[] = [
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/mara/0001507605-25-000028",
-    debtAsOf: "2023-12-31",
+    debtAsOf: "2025-09-30",
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
     debtSourceUrl: "/filings/mara/0001507605-25-000028",
     notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-Q Note 14 + $350M line of credit. Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts.",
@@ -770,7 +787,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "/filings/asst/0001628280-26-007897",
     accessionNumber: "0001628280-26-007897",
     sourceType: "sec-filing",
-    sourceQuote: "Strive now holds 13,131.82 Bitcoin",
+    sourceQuote: "held $127.2 million of cash and cash equivalents and held 13,131.8 bitcoin",
     datStartDate: "2024-05-01",
     website: "https://strive.com",
     twitter: "stikiinvestor",
@@ -838,9 +855,9 @@ export const btcCompanies: Company[] = [
     quarterlyBurnUsd: 10_300_000,  // Q3 2025 operating cash burn: SG&A $6.26M + R&D $2.32M + COGS $6.26M - revenue $6.88M ≈ $7.96M opex; cash flow statement shows ~$10.3M/qtr
     burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities",
     burnSourceUrl: "/filings/kulr/0001104659-25-113662",
-    accessionNumber: "0001104659-25-113662",
-    sourceType: "sec-filing",
-    sourceQuote: "Net Cash Used In Operating Activities (31,039,539)",
+    accessionNumber: "0001104659-25-113662",  // Note: this accession is for burn rate (10-Q), not holdings source
+    sourceType: "press-release",
+    sourceQuote: "1,021 BTC with an aggregate cost of approximately $101M",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
@@ -936,6 +953,8 @@ export const btcCompanies: Company[] = [
     holdingsLastUpdated: "2026-02-06",
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://mfn.se/a/h100-group/h100-group-acquires-4-39-btc-total-holdings-reach-1-051-btc",  // MFN Feb 6, 2026 filing (specific URL)
+    sourceType: "regulatory-filing",
+    sourceQuote: "Total Bitcoin Holdings Post-Purchase: 1,051",
     datStartDate: "2025-05-22",  // First BTC purchase May 22, 2025
     costBasisAvg: 114_606,  // treasury.h100.group avg cost
     costBasisSource: "company-website",
@@ -976,6 +995,7 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 2,
     holdings: 0,  // TBD - CVM filings hard to access, IR sparse
+    holdingsUnverified: true,  // Cannot verify via CVM; awaiting English disclosure
     holdingsLastUpdated: "2026-02-02",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://ri.oranjebtc.com",
@@ -1057,7 +1077,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "/filings/sqns/0001383395-26-000013",
     accessionNumber: "0001383395-26-000013",
     sourceType: "sec-filing",
-    sourceQuote: "held 2,139 bitcoins, including 1,617 bitcoins that were pledged as collateral",
+    sourceQuote: "the Company held 2,139 Bitcoin with a market value of $187.1 million",
     datStartDate: "2025-06-23",
     website: "https://sequans.com",
     twitter: "https://twitter.com/Sequans",
@@ -1115,10 +1135,10 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 2_600_000,  // H1 2025 operating cash burn: $5.2M / 2 quarters (424B3 F-1 financials)
     burnSource: "SEC 424B3 Jan 26, 2026 (F-1 financials, H1 2025 unaudited)",
-    burnSourceUrl: "/filings/ddc/0001213900-26-007463",
-    accessionNumber: "0001213900-26-007463",
-    sourceType: "sec-filing",
-    sourceQuote: "Net cash used in operating activities... $5,241,835",
+    burnSourceUrl: "https://treasury.ddc.xyz",
+    accessionNumber: "DDC-WEBSITE",
+    sourceType: "company-website",
+    sourceQuote: "2,183 BTC",
     burnAsOf: "2025-06-30",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
@@ -1128,7 +1148,7 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-02-06",
     totalDebt: 27_000_000,  // Anson Senior Secured Convertible Notes (Initial Closing Jul 2025)
     debtSource: "SEC 424B3 Jan 26, 2026 / 6-K Jul 1, 2025 — Anson SPA Initial Notes",
-    debtSourceUrl: "/filings/ddc/0001213900-26-007463",
+    debtSourceUrl: "https://treasury.ddc.xyz",
     debtAsOf: "2026-01-26",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
     notes: "NYSE American listed. DayDayCook brand. 49.1% YTD BTC Yield (Mar 2026). Dual-class (Class B = 10 votes, CEO only, doubled 875K→1.75M in 2025 by board resolution). " +
@@ -1174,7 +1194,7 @@ export const btcCompanies: Company[] = [
     // VERIFIED: February 2026 update (early March 2026)
     holdings: 1_830,
     holdingsLastUpdated: "2026-02-28",
-    holdingsSource: "sec-filing",
+    holdingsSource: "press-release",
     holdingsSourceUrl: "https://bitfufu.com/investors",
     accessionNumber: "FUFU-20260228",
     sourceType: "press-release",
@@ -1359,7 +1379,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "/filings/zooz/0001493152-26-002767",
     accessionNumber: "0001493152-26-002767",
     sourceType: "sec-filing",
-    sourceQuote: "completed the purchase of a total of 1,046 Bitcoin",
+    sourceQuote: "completed the purchase of a total of 1,046 Bitcoin at an average purchase price of $112,745 per Bitcoin",
     datStartDate: "2025-07-29",  // First ATM agreement date
     website: "https://zoozpower.com",
     secCik: "0001992818",
@@ -1627,12 +1647,14 @@ export const btcCompanies: Company[] = [
     tier: 1,
     // HOLDINGS: from provenance (FY2025 10-K filed Feb 2026)
     holdings: DJT_PROVENANCE.holdings?.value ?? 11_542,
-    holdingsLastUpdated: "2025-12-31",
+    holdingsLastUpdated: "2026-02-25",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/djt/0001140361-26-007174",
     accessionNumber: "0001140361-26-007174",
     sourceType: "sec-filing",
-    sourceQuote: "As of December 31, 2025, the Company held 11,542 bitcoins.",
+    sourceQuote: "As of February 25, 2026, we held approximately 9,542.16 bitcoins that were acquired at an aggregate purchase price of $1,131,024.3",
+    holdingsDerived: true,
+    holdingsCalculation: "9,542.16 (Dec 31, 2025 10-K) + ~2,000 purchased Jan-Feb 2026 = 11,542 (provenance estimate)",
     datStartDate: "2025-05-01",
     isMiner: false,
     // BURN: from provenance (FY2025 OpCF: +$14.8M — cash-flow positive, no burn)
@@ -1739,7 +1761,7 @@ export const btcCompanies: Company[] = [
     holdingsSourceUrl: "https://bitcoinmagazine.com/business/eric-trump-american-bitcoin-reserves-surpass-6500-btc",
     accessionNumber: "0001193125-25-281390",
     sourceType: "press-release",
-    sourceQuote: "American Bitcoin’s reserves have surpassed 6,500 BTC",
+    sourceQuote: "American Bitcoin's reserves have surpassed 6,500 BTC",
     datStartDate: "2025-09-03",
     isMiner: true,
     quarterlyBurnUsd: 8_052_000, 
@@ -1801,9 +1823,9 @@ export const solCompanies: Company[] = [
     quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M - treasury ops costs)
     burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: `/filings/fwdi/0001683168-26-000960`,
-    accessionNumber: "0001683168-26-000960",
-    sourceType: "sec-filing",
-    sourceQuote: "General and administrative... $3,252,629",
+    accessionNumber: "0001683168-26-000960",  // Note: this accession is for burn rate (10-Q), not holdings source
+    sourceType: "company-website",
+    sourceQuote: "SOL Holdings 6,979,967.46",
     burnAsOf: "2025-12-31",
     capitalRaisedPipe: 1_650_000_000,
     // Shares: 83,139,037 common (Jan 31) + 12,864,602 pre-funded warrants @ $0.00001 = 96,003,639
@@ -1846,7 +1868,10 @@ export const solCompanies: Company[] = [
     holdings: 2_340_757,  // 10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18, 2025
     holdingsLastUpdated: "2025-11-18",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+    holdingsSourceUrl: "/filings/hsdt/0001104659-25-113714",
+    accessionNumber: "0001104659-25-113714",
+    sourceType: "sec-filing",
+    sourceQuote: "held directly or had rights to 2,340,757 SOL",
     datStartDate: "2025-05-01",
     stakingPct: 0.9996,  // 10-Q: 1,738,682 staked / 1,739,355 total = 99.96%
     stakingMethod: "Native staking via third-party validators (Anchorage Digital custody)",
@@ -1908,6 +1933,8 @@ export const solCompanies: Company[] = [
     holdingsLastUpdated: "2026-01-01",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-ex99_1.htm",
+    sourceType: "sec-filing",
+    sourceQuote: "The Company currently holds 2,221,329 SOL and SOL equivalents on the balance sheet",
     datStartDate: "2025-04-01",
     // costBasisAvg removed - needs verification
     stakingPct: 0.90,  // Stakes SOL + operates validators; $4.85M in validator/staking rewards (9mo)
@@ -1963,6 +1990,8 @@ export const solCompanies: Company[] = [
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    sourceType: "sec-filing",
+    sourceQuote: "Approximate number of Solana tokens held 2,173,204",
     datStartDate: "2025-04-01",
     stakingPct: 0.95,  // 10-Q Note 5: "approximately 95% of its Solana treasury staked as of December 31, 2025"
     stakingMethod: "Native staking (locked/staked SOL)",
@@ -2019,6 +2048,10 @@ export const solCompanies: Company[] = [
     holdingsLastUpdated: "2026-02-03",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
+    sourceType: "company-website",
+    sourceQuote: "SOL Holdings: 402,004 SOL",  // Direct SOL only; total 530,251 includes 46,474 jitoSOL + 81,640 STKESOL + staking rewards
+    holdingsDerived: true,
+    holdingsCalculation: "402,004 direct + 46,474 jitoSOL + 81,640 STKESOL + staking = 530,251",
     datStartDate: "2024-06-01",
     // costBasisAvg removed - needs verification
     // stakingPct: 0.85 removed - needs verification
@@ -2083,6 +2116,10 @@ export const hypeCompanies: Company[] = [
     holdingsLastUpdated: "2026-02-03",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045553/",
+    sourceType: "sec-filing",
+    sourceQuote: "HYPE digital assets 12,857,533 units (Dec 31, 2025); 17.6M as of Feb 3 per 8-K",
+    holdingsDerived: true,
+    holdingsCalculation: "12,857,533 (Dec 31 10-Q) + ~4.7M purchased Jan-Feb = 17,600,000 (Feb 3 8-K)",
     datStartDate: "2025-12-02",
     stakingPct: 1.00,  // 100% staked via Anchorage
     stakingApy: 0.024,  // ~360K HYPE earned in first 2 months on ~12.9M avg staked
@@ -2135,10 +2172,13 @@ export const hypeCompanies: Company[] = [
     // SEC 10-Q Sep 30, 2025: HYPE digital assets $37.95M = direct holdings only
     // At $26/HYPE (Sep 30 price): $37.95M / $26 = 1,459,615 HYPE
     // Liquid staked HYPE tracked separately in cryptoInvestments
-    holdings: 1_459_615,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1682639/000110465926000748/tm2534601d1_8k.htm",
+    holdings: 1_862_195,
+    holdingsLastUpdated: "2025-12-04",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://ir.hyperiondefi.com/news-events/press-releases/detail/300/hyperion-defi-announces-receipt-of-kinetiq-airdrop-partnership-with-native-markets-and-purchase-of-150000-additional-hype",
+    accessionNumber: "0001104659-25-111671",  // Prior 10-Q accession for balance sheet data
+    sourceType: "press-release",
+    sourceQuote: "expanding its total holdings to 1,862,195 HYPE",
     datStartDate: "2025-07-01",
     stakingPct: 0,  // Direct holdings not staked (staked tracked in cryptoInvestments)
     stakingApy: 0.05,
@@ -2213,6 +2253,8 @@ export const bnbCompanies: Company[] = [
     holdingsLastUpdated: "2026-01-28",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.ceaindustries.com/dashboard.html",
+    sourceType: "company-website",
+    sourceQuote: "Total BNB Holdings 515,544 BNB",
     datStartDate: "2025-06-01",
     costBasisSource: "company-website - Investor dashboard",
     // No staking disclosed - holding spot BNB
@@ -2250,7 +2292,10 @@ export const bnbCompanies: Company[] = [
     holdings: 130_000,
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea027141101ex99-1_nano.htm",
+    holdingsSourceUrl: "/filings/na/0001213900-25-126828",
+    accessionNumber: "0001213900-25-126828",
+    sourceType: "sec-filing",
+    sourceQuote: "holds more than 130,000 BNB in aggregate, with a total value of approximately US$112 million",
     datStartDate: "2025-06-01",
     secCik: "0001872302",
     filingType: "FPI",  // Foreign Private Issuer - files 20-F/6-K, limited XBRL
@@ -2300,10 +2345,12 @@ export const taoCompanies: Company[] = [
     exchangeMic: "XNAS",
     asset: "TAO",
     tier: 1,
-    holdings: 54_058,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://ir.taosynergies.com/",
+    holdings: 67_000,  // "more than 67,000 TAO tokens" per Nov 18, 2025 announcement
+    holdingsLastUpdated: "2025-11-18",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.stocktitan.net/news/TAOX/tao-synergies-and-yuma-asset-management-to-host-livestream-on-x-y545u5zgifom.html",
+    sourceType: "press-release",
+    sourceQuote: "TAO Synergies holds more than 67,000 TAO tokens in its digital asset treasury",
     datStartDate: "2025-06-01",
     // costBasisAvg removed - needs verification
     stakingPct: 0.95,  // "required to delegate at least 90% of TAO" per Yuma Agreement; stakes via tao5 and Yuma
@@ -2350,6 +2397,8 @@ export const taoCompanies: Company[] = [
     holdingsLastUpdated: "2025-11-25",
     holdingsSource: "regulatory-filing",  // News release filed on SEDAR+ Nov 26, 2025
     holdingsSourceUrl: "https://www.newswire.ca/news-releases/xtao-provides-update-on-tao-holdings-816100068.html",
+    sourceType: "regulatory-filing",
+    sourceQuote: "xTAO holds a total of 59,962 TAO",
     datStartDate: "2025-07-22",
     // costBasisAvg removed - needs SEDAR verification
     // stakingPct: 1.00 removed - needs SEDAR verification
@@ -2385,7 +2434,10 @@ export const taoCompanies: Company[] = [
     holdings: 24_382,  // Dec 10, 2025 8-K: "increased its TAO holdings to 24,382 tokens"
     holdingsLastUpdated: "2025-12-10",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
+    holdingsSourceUrl: "/filings/twav/0001437749-25-037490",
+    accessionNumber: "0001437749-25-037490",
+    sourceType: "sec-filing",
+    sourceQuote: "increased its TAO holdings to 24,382 tokens, reflecting continued execution of its TAO-exclusive treasury strategy",
     datStartDate: "2025-06-01",
     // costBasisAvg removed - needs SEC verification
     stakingPct: 0.99,  // "average staking rate of 99% for our digital asset balance" per 10-Q
@@ -2438,9 +2490,11 @@ export const linkCompanies: Company[] = [
     asset: "LINK",
     tier: 1,
     holdings: 562_535,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://ir.caliberco.com/",
+    holdingsLastUpdated: "2025-10-16",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.stocktitan.net/news/CWD/caliber-continues-to-increase-chainlink-link-token-exposure-with-an-v0iupkst1br6.html",
+    sourceType: "press-release",
+    sourceQuote: "grows Caliber's total holdings in LINK to 562,535 tokens valued at approximately $10.1 million",
     datStartDate: "2025-09-09",
     // costBasisAvg removed - needs verification
     stakingPct: 0.13,  // 75,000 LINK staked / 562,535 total = 13.3%
@@ -2499,6 +2553,8 @@ export const trxCompanies: Company[] = [
     holdingsLastUpdated: "2026-02-12",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226012544/form8-k.htm",
+    sourceType: "sec-filing",
+    sourceQuote: "TRX Treasury to Over 681.2 Million TRX Tokens",
     datStartDate: "2025-07-01",
     website: "https://srmentertainment.com",
     twitter: "https://x.com/tron_inc",
@@ -2556,6 +2612,8 @@ export const xrpCompanies: Company[] = [
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
+    sourceType: "press-release",
+    sourceQuote: "473,276,430",
     datStartDate: "2025-11-01",
     quarterlyBurnUsd: 0,
     burnSource: "SPAC - minimal operating expenses pre-merger",
@@ -2589,7 +2647,10 @@ export const zecCompanies: Company[] = [
     holdings: 290_062,  // Dec 30, 2025 8-K: 290,062.67 ZEC
     holdingsLastUpdated: "2025-12-30",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
+    holdingsSourceUrl: "/filings/cyph/0001104659-25-125039",
+    accessionNumber: "0001104659-25-125039",
+    sourceType: "sec-filing",
+    sourceQuote: "aggregate ZEC holdings stand at 290,062.67, which were purchased at a cumulative average price of $334.41 per ZEC",
     datStartDate: "2025-10-08",  // Oct 8, 2025 PIPE closing date
     secCik: "0001509745",
     cashReserves: 9686000,
@@ -2633,7 +2694,10 @@ export const ltcCompanies: Company[] = [
     holdings: 929_548,  // Q2 FY2026 10-Q (Dec 31, 2025): 833,748 on-balance-sheet + 95,800 pledged as covered call collateral = 929,548 total
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    holdingsSourceUrl: "/filings/lits/0001193125-26-053215",
+    accessionNumber: "0001193125-26-053215",
+    sourceType: "sec-filing",
+    sourceQuote: "Total digital assets 929,548",
     datStartDate: "2025-07-01",
     costBasisAvg: 107_580,  // $100M total acquisition / 929,548 LTC ≈ $107.58. XBRL: CryptoAssetCost $89.15M for 833,748 on-BS units.
     costBasisSource: "SEC 10-Q Q2 FY2026 XBRL: PaymentForAcquisitionCryptoAsset $100M / 929,548 total LTC",
@@ -2676,10 +2740,12 @@ export const ltcCompanies: Company[] = [
     exchangeMic: "XTSE",
     asset: "LTC",
     tier: 2,
-    holdings: 20_226,  // SEDAR+ FY2025 audited annual (Aug 31, 2025)
-    holdingsLastUpdated: "2025-08-31",
-    holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/service/create.html?targetAppCode=csa-party&service=searchDocuments",
+    holdings: 24_439,  // Feb 11, 2026 press release
+    holdingsLastUpdated: "2026-02-11",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.newsfilecorp.com/release/283508/Luxxfolio-Commences-Litecoin-Mining-Operations",
+    sourceType: "press-release",
+    sourceQuote: "bringing total holdings to 24,439.464 LTC, representing approximately 73,686 litoshis per share",
     datStartDate: "2024-06-01",
     // stakingPct: 0.042 removed - needs verification
     stakingApy: 0.03,
@@ -2723,10 +2789,10 @@ export const suiCompanies: Company[] = [
     holdings: 108_368_594,  // Feb 23, 2026 Treasury Update
     holdingsLastUpdated: "2026-02-23",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/suig/0001654954-26-000201",
-    accessionNumber: "0001654954-26-000201",
+    holdingsSourceUrl: "/filings/suig/0001654954-26-001610",
+    accessionNumber: "0001654954-26-001610",
     sourceType: "sec-filing",
-    sourceQuote: "held 108,368,594 SUI as of February 23, 2026",
+    sourceQuote: "treasury to 108,368,594 SUI (including 2,961,550 SUI loan receivables) as of February 23, 2026",
     datStartDate: "2025-08-01",
     secCik: "0001425355",
     cashReserves: 1497009,
@@ -2792,7 +2858,10 @@ export const dogeCompanies: Company[] = [
     holdings: 733_060_893,  // Q2 FY2026 10-Q (Dec 31, 2025) — filing-verified (no XBRL crypto tag). No purchases Jan 1-Feb 10, 2026.
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    holdingsSourceUrl: "/filings/zone/0001213900-26-015016",
+    accessionNumber: "0001213900-26-015016",
+    sourceType: "sec-filing",
+    sourceQuote: "Number of Dogecoin held 733,060,893",
     datStartDate: "2025-09-05",
     quarterlyBurnUsd: 3_600_000,  // Q2 FY2026 XBRL: NetCashUsedInOperatingActivities $7.17M for 6 months = ~$3.6M/qtr
     burnSource: "SEC 10-Q Q2 FY2026 XBRL: NetCashProvidedByUsedInOperatingActivities -$7,167,396 (Jul-Dec 2025)",
@@ -2844,7 +2913,9 @@ export const dogeCompanies: Company[] = [
     holdings: 0,  // TBH has no DOGE - it's a gaming company pre-merger
     holdingsLastUpdated: "2026-01-26",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390026015027/ea0276712-8k_brag.htm",
+    holdingsSourceUrl: "/filings/tbh/0001213900-26-015027",
+    accessionNumber: "0001213900-26-015027",
+    sourceType: "sec-filing",
     datStartDate: "2025-09-05",  // House of Doge treasury started Sep 5, 2025
     pendingMerger: true,  // SPAC-style merger not yet closed
     expectedHoldings: 730_000_000,  // HOD holds 730M DOGE per Dec 18, 2025 shareholder letter
@@ -2881,6 +2952,8 @@ export const dogeCompanies: Company[] = [
     holdingsLastUpdated: "2025-08-11",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
+    sourceType: "press-release",
+    sourceQuote: "Holdings: 70,543,745 DOGE",
     datStartDate: "2025-07-17",  // DOGE strategy announced
     quarterlyBurnUsd: 771_000,
     burnSource: "SEC 20-F FY2025 (Jun 30, 2025)",
@@ -2926,7 +2999,7 @@ export const avaxCompanies: Company[] = [
     holdingsSource: "company-dashboard",  // PIPE closed after Q3 10-Q; dashboard is primary until 10-K
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
     accessionNumber: "AVX-DASHBOARD",
-    sourceType: "company-website",
+    sourceType: "company-dashboard",
     sourceQuote: "13,889,000 AVAX held",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
     totalDebt: 1_689_415,  // SEC 10-Q Sep 30: debentures $1,372,679 + LT $41,736 + loan $275,000
@@ -2982,14 +3055,16 @@ export const hbarCompanies: Company[] = [
     cusip: "45258G",
     isin: "CA45258G3061",
     asset: "HBAR",
-    tier: 1,
+    tier: 2,  // Micro-cap ($10M), sparse disclosures — downgraded from tier 1
     website: "https://www.immutableholdings.com",
     twitter: "https://x.com/ImmutableHold",
     investorRelationsUrl: "https://www.immutableholdings.com/investors",
     holdings: 48_000_000,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",
-    holdingsSourceUrl: "https://www.immutableholdings.com/",
+    holdingsLastUpdated: "2025-07-28",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/07/28/3122324/0/en/Immutable-Holdings-Announces-Strategic-Update-on-HBAR-Treasury-Strategy-Also-Management-Change.html",
+    sourceQuote: "currently holds over 48 million HBAR as of the date of this release",
+    sourceType: "press-release",
     datStartDate: "2025-07-01",
     // stakingPct: 0.50 removed - needs verification
     stakingApy: 0.065,

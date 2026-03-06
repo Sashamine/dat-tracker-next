@@ -202,6 +202,8 @@ export interface Company {
   accessionNumber?: string;        // SEC accession number (XXXXXXXXXX-YY-ZZZZZZ) for primary holdings source
   sourceType?: HoldingsSource;     // Alias for holdingsSource on citation (sec-filing, regulatory-filing, etc.)
   sourceQuote?: string;            // Verbatim quote from the cited document containing the holdings value
+  holdingsDerived?: boolean;       // True if holdings count is calculated across multiple filings (not stated in any single doc)
+  holdingsCalculation?: string;    // Human-readable calculation chain, e.g. "50,778 (Q3 10-Q) - 7,550 sold = 30,044"
   
   // Provenance tracking (detailed audit trail)
   holdingsAccession?: string;     // SEC accession number for holdings source
@@ -239,6 +241,7 @@ export interface Company {
 
   // Pending merger status (for SPACs that haven't closed yet)
   pendingMerger?: boolean;        // True if this is a pre-merger SPAC
+  holdingsUnverified?: boolean;   // True if holdings cannot be verified (e.g., foreign filings)
   expectedHoldings?: number;      // Expected holdings after merger closes
   mergerExpectedClose?: string;   // Expected merger close date (ISO date)
 
