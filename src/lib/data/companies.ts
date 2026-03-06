@@ -18,6 +18,8 @@ export const ethCompanies: Company[] = [
     name: "Bitmine Immersion",
     ticker: "BMNR",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001829311",
     website: "https://www.bitminetech.io/",
@@ -25,56 +27,59 @@ export const ethCompanies: Company[] = [
     asset: "ETH",
     tier: 1,
     // HOLDINGS: from provenance (8-K filings)
-    holdings: BMNR_PROVENANCE.holdings?.value || 4_371_497,
+    holdings: BMNR_PROVENANCE.holdings?.value || 4_473_587,
     holdingsLastUpdated: BMNR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=4%2C371%2C497%20ETH",
-    datStartDate: "2025-07-01",
+    holdingsSourceUrl: "/filings/bmnr/0001493152-26-008462",
+    accessionNumber: "0001493152-26-008462",
+    sourceType: "sec-filing",
+    sourceQuote: "the Company’s crypto holdings are comprised of 4,473,587 ETH",
+    datStartDate: "2025-06-15",
     // COST BASIS: from provenance (10-Q)
-    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 3_874,
+    costBasisAvg: BMNR_PROVENANCE.costBasisAvg?.value || 3_784,
     costBasisSource: "SEC-verified (provenance): 10-Q Q1 FY2026",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=cost%20basis",
+    costBasisSourceUrl: "/filings/bmnr/0001493152-26-002084",
     costBasisAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
-    stakingPct: 0.696,  // 3,040,483 staked / 4,371,497 total per Feb 17 8-K
+    stakingPct: 0.679,  // 3,040,483 staked / 4,473,587 total per Mar 2 8-K
     stakingApy: 0.0284,  // CESR (Composite Ethereum Staking Rate) per Quatrefoil; 7-day yield 2.89%
     stakingMethod: "3 staking providers; MAVAN (Made in America Validator Network) launching Q1 2026",
-    stakingSource: "SEC 8-K Feb 17, 2026 (ex99-2): 3,040,483 ETH staked of 4,371,497 total.",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=3%2C040%2C483",
-    stakingAsOf: "2026-02-16",
+    stakingSource: "SEC 8-K Mar 2, 2026 (ex99-1): 3,040,483 ETH staked of 4,473,587 total.",
+    stakingSourceUrl: "/filings/bmnr/0001493152-26-008462",
+    stakingAsOf: "2026-03-01",
     stakingVerified: true,
-    stakingLastAudited: "2026-02-16",
+    stakingLastAudited: "2026-03-01",
     quarterlyBurnUsd: 1_000_000,  // ~$4M/yr based on Q1 FY2025 baseline G&A ($959K/qtr)
     burnSource: "SEC 10-Q: Q1 G&A $223M was mostly one-time capital raising fees; recurring mgmt ~$50K/yr",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=General%20and%20administrative",
+    burnSourceUrl: "/filings/bmnr/0001493152-26-002084",
     burnAsOf: "2025-11-30",  // 10-Q Q1 FY2026 filing
     burnEstimated: true,
-    burnMethodology: `Based on Q1 FY2025 (pre-ETH pivot) G&A of $959K/quarter, annualized to ~$4M/year. Current Q1 FY2026 G&A of $223M excluded as mostly one-time capital raising costs. Sources: [10-Q Q1 FY2025 G&A](/filings/bmnr/2026-01-13?type=10-q#operating-burn) | [MD&A disclosure on one-time costs](/filings/bmnr/2026-01-13?type=10-q#operating-burn-mda)`,
+    burnMethodology: `Based on Q1 FY2025 (pre-ETH pivot) G&A of $959K/quarter, annualized to ~$4M/year. Current Q1 FY2026 G&A of $223M excluded as mostly one-time capital raising costs. Sources: [10-Q Q1 FY2025 G&A](/filings/bmnr/0001493152-26-002084) | [MD&A disclosure on one-time costs](/filings/bmnr/0001493152-26-002084)`,
     // No cashObligations fields needed - burn-only companies show Operating Burn card only
     capitalRaisedAtm: 10_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000164117225021194/bmnr_s3asr.htm#:~:text=%2410%2C000%2C000%2C000",
+    capitalRaisedAtmSourceUrl: "/filings/bmnr/0001641172-25-021194",
     capitalRaisedPipe: 615_000_000,
     capitalRaisedPipeSource: "SEC 8-K Jul 2025 - PIPE offering",
-    capitalRaisedPipeSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315225011270/ex99-1.htm#:~:text=PIPE",
+    capitalRaisedPipeSourceUrl: "/filings/bmnr/0001493152-25-011270",
     avgDailyVolume: 800_000_000,
     hasOptions: true,
     // SHARES: estimated (10-Q baseline + ATM estimate)
     sharesForMnav: estimateBMNRShares().totalEstimated,
     sharesSource: "Estimated: 10-Q baseline + ATM (ETH × price ÷ stock price)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm#:~:text=454%2C862%2C451",
-    sharesAsOf: "2026-02-16", // Latest 8-K (Feb 16, 2026 — estimated ATM through that date)
+    sharesSourceUrl: "/filings/bmnr/0001493152-26-002084",
+    sharesAsOf: "2026-03-01", // Latest 8-K (Mar 1, 2026 — estimated ATM through that date)
     // CASH: from provenance (8-K)
-    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,
-    cashAsOf: "2025-11-30",
-    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 670_000_000,  // Operating capital - not excess
-    cashSource: "SEC-verified (provenance): 8-K Feb 17, 2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm#:~:text=%24670%20million",
-    otherInvestments: 217_000_000,  // $200M Beast Industries + $17M Eightco Holdings (ORBS) — SEC 8-K Feb 17, 2026 (accn 006953)
+    cashReserves: BMNR_PROVENANCE.cashReserves?.value || 868_000_000,
+    cashAsOf: "2026-03-01",
+    restrictedCash: BMNR_PROVENANCE.cashReserves?.value || 868_000_000,  // Operating capital - not excess
+    cashSource: "SEC-verified (provenance): 8-K Mar 2, 2026",
+    cashSourceUrl: "/filings/bmnr/0001493152-26-008462",
+    otherInvestments: 214_000_000,  // $200M Beast Industries + $14M Eightco Holdings (ORBS) — SEC 8-K Mar 2, 2026 (accn 008462)
     // DEBT: from provenance ($0)
     totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
     preferredEquity: 45,
     preferredAsOf: "2024-05-31",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000168316824004815/",
+    preferredSourceUrl: "/filings/bmnr/0001683168-24-004815",
     dataWarnings: [
       {
         type: "stale-data",
@@ -84,31 +89,36 @@ export const ethCompanies: Company[] = [
     ],
     debtSource: "SEC-verified (provenance): No debt financing",
     debtAsOf: BMNR_PROVENANCE_DEBUG.balanceSheetDate,
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000149315226002084/form10-q.htm",
+    debtSourceUrl: "/filings/bmnr/0001493152-26-002084",
 
     leader: "Tom Lee (Fundstrat)",
     strategy: "5% of ETH supply goal, staking via MAVAN validators (Q1 2026). Asset-light treasury model with minimal recurring costs (~$50K/yr ETH management fees per 10-Q). Q1 FY2026 G&A of $223M was mostly one-time capital raising costs (legal, advisory, banking fees for $8B+ ATM program).",
     secondaryCryptoHoldings: [
       {
         asset: "BTC",
-        amount: 193,
-        note: "SEC 8-K Feb 17, 2026 (accn 006953): '193 Bitcoin (BTC)'",
+        amount: 195,
+        note: "SEC 8-K Mar 2, 2026 (accn 008462): '195 Bitcoin (BTC)'",
       },
     ],
-    notes: "Largest ETH treasury. 3.62% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $17M Eightco (ORBS) equity investments not in mNAV.",
+    notes: "Largest ETH treasury. 3.71% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $14M Eightco (ORBS) equity investments not in mNAV.",
   },
   {
     id: "sbet",
     name: "Sharplink, Inc.",  // Renamed from SharpLink Gaming (Feb 3, 2026)
     ticker: "SBET",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
     holdings: 867_798,  // 587,232 native + 225,429 LsETH + 55,137 WeETH (as of Feb 15, 2026; 8-K filed Feb 19, 2026). Staking rewards (13,615 cumulative since Jun 2025) included in balances.
     holdingsLastUpdated: "2026-02-15",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/ex99-1.htm",
+    holdingsSourceUrl: "/filings/sbet/0001493152-26-007427",
+    accessionNumber: "0001493152-26-007427",
+    sourceType: "sec-filing",
+    sourceQuote: "As of February 15, 2026, the Company held 867,798(1) ETH",
     // Provenance tracking (see provenance/sbet.ts for full audit trail)
     holdingsAccession: "0001493152-26-007427",
     holdingsNative: 587_232,      // Native ETH held directly
@@ -121,7 +131,7 @@ export const ethCompanies: Company[] = [
     datStartDate: "2025-06-02",  // ETH treasury strategy launched June 2, 2025
     costBasisAvg: 3_696,  // SEC Q3 2025 10-Q: $3.022B total cost / 817,747 ETH-equivalent units
     costBasisSource: "SEC 10-Q Q3 2025: Native ETH $2,304,908,135 (580,841 units) + LsETH $717,419,123 (236,906 units)",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    costBasisSourceUrl: "/filings/sbet/0001493152-25-021970",
     website: "https://sharplink.com",
     twitter: "https://twitter.com/SharpLinkInc",  // Renamed from SharpLinkGaming (Feb 3, 2026)
     secCik: "0001981535",
@@ -129,31 +139,31 @@ export const ethCompanies: Company[] = [
     stakingPct: 1.0,  // "100%" (Jul 1 8-K) / "substantially all" (Aug-Dec 8-Ks) / "nearly 100%" (Q2 earnings)
     stakingMethod: "Native staking + Lido LsETH (liquid staking)",
     stakingSource: "SEC 8-K Feb 19, 2026: 587,232 native ETH + 225,429 LsETH + 55,137 WeETH. Cumulative rewards: 13,615 ETH (4,560 native + 8,906 LsETH + 149 WeETH)",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315226007427/ex99-1.htm",
+    stakingSourceUrl: "/filings/sbet/0001493152-26-007427",
     stakingAsOf: "2026-02-15",
     quarterlyBurnUsd: 2_728_000,  // 9-month avg: $8,183,743 continuing ops / 3 = $2.73M/qtr (Q3 alone was $6.3M but volatile)
     burnSource: "SEC 10-Q Q3 2025: NetCashUsedInOperatingActivities continuing ops = $8,183,743 (9mo) / 3 quarters",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    burnSourceUrl: "/filings/sbet/0001493152-25-021970",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 2_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225014878/forms-3asr.htm",
+    capitalRaisedAtmSourceUrl: "/filings/sbet/0001641172-25-014878",
     avgDailyVolume: 300_000_000,
     hasOptions: true,
     marketCap: 2_050_000_000,  // ~$2.05B (Jan 2026)
     sharesForMnav: 196_693_191,  // 196,693,191 basic shares (SEC XBRL)
     sharesSource: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    sharesSourceUrl: "/filings/sbet/0001493152-25-021970",
     sharesAsOf: "2025-11-12",
     cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
     restrictedCash: 11_100_000,  // Operating capital - not excess
     cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    cashSourceUrl: "/filings/sbet/0001493152-25-021970",
     cashAsOf: "2025-09-30",
     totalDebt: 0,
     preferredEquity: 3936,
     preferredAsOf: "2023-12-31",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315224012028/",
+    preferredSourceUrl: "/filings/sbet/0001493152-24-012028",
     dataWarnings: [
       {
         type: "stale-data",
@@ -162,7 +172,7 @@ export const ethCompanies: Company[] = [
       },
     ],
     debtSource: "SEC 10-Q Q3 2025",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    debtSourceUrl: "/filings/sbet/0001493152-25-021970",
     debtAsOf: "2025-09-30",
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",
@@ -174,9 +184,12 @@ export const ethCompanies: Company[] = [
     name: "The Ether Machine",
     ticker: "ETHM",
     country: "CA",
+    jurisdiction: "CA",
+    authoritativeSource: "SEDAR+",
     exchangeMic: "XTSE",
     currency: "CAD",  // Toronto Stock Exchange
     secCik: "0002080334",
+    sedarProfile: "000051412", // Placeholder
     asset: "ETH",
     tier: 1,
     holdings: 590_000,
@@ -208,6 +221,8 @@ export const ethCompanies: Company[] = [
     name: "Bit Digital",
     ticker: "BTBT",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001710350",
     asset: "ETH",
@@ -269,6 +284,8 @@ export const ethCompanies: Company[] = [
     name: "BTCS Inc.",
     ticker: "BTCS",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001436229",
     asset: "ETH",
@@ -323,18 +340,20 @@ export const ethCompanies: Company[] = [
     name: "GameSquare",
     ticker: "GAME",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
-    secCik: "1714562",
-    // Direct ETH holdings only: $4,020,415 / $2,500 = 1,608 ETH (SEC 10-Q Sep 30, 2025)
-    // Most exposure is via Dialectic fund - tracked separately in cryptoInvestments
-    holdings: 1_608,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
+    secCik: "0001714562",
+    // VERIFIED: March 2026 update (Feb 2026 monthly report)
+    // Total ETH exposure (direct + fund) scaled to 15,630 ETH
+    holdings: 15_630,
+    holdingsLastUpdated: "2026-03-01",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.gamesquare.com/#investors",
     datStartDate: "2025-07-01",
-    stakingPct: 0,  // Direct holdings not staked - yield is via Dialectic fund
+    stakingPct: 0,  // Yield generated via Dialectic Medici optimization, not standard staking
     quarterlyBurnUsd: 6_171_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
@@ -342,42 +361,44 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtm: 30_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001714562&type=S-3",
-    // Shares: 98,380,767 (SEC 10-Q Sep 30) - 3,535,574 buybacks (Oct-Jan) = 94,845,193
-    sharesForMnav: 94_845_193,
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
-    sharesSource: "SEC 10-Q Sep 30 (98.4M) - 3.54M buybacks through Jan 6, 2026",
-    sharesAsOf: "2026-01-06",
+    // Shares: 94,845,193 (Jan 6) - 1,500,000 buybacks (Feb 2026) = 93,345,193
+    // Note: Issued 5M Series A-2 Preferred for TubeBuddy (Feb 23, 2026)
+    sharesForMnav: 93_345_193,
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
+    sharesSource: "Feb 27, 2026 PR: 1.5M shares repurchased in Feb. Base 94.8M (Jan 6).",
+    sharesAsOf: "2026-02-28",
     cashReserves: 6_012_219,  // SEC 10-Q Sep 30, 2025
     // TODO: No debt - review if cash should be restricted (not subtracted from EV)
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
     cashAsOf: "2025-09-30",
-    // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value
-    preferredEquity: 5_150_000,  // Series A-1 Preferred (3,433 shares @ $1.50 liquidation preference on as-converted basis)
+    // Note: Convertible debt fully converted to equity. Preferred stock: $5.15M liquidation value (Series A-1)
+    // Plus 5M shares Series A-2 issued for TubeBuddy (Feb 2026)
+    preferredEquity: 10_150_000, 
     totalDebt: 1250000,
     debtAsOf: "2025-06-30",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000164117225023972/",
-    preferredSource: "SEC 10-Q Q3 2025: PreferredStockValue $5,150,000 (3,433 Series A-1 shares)",
+    preferredSource: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
-    preferredAsOf: "2025-09-30",
+    preferredAsOf: "2026-02-23",
     avgDailyVolume: 10_000_000,
     leader: "Justin Kenna (CEO)",
     website: "https://www.gamesquare.com",
     twitter: "https://x.com/GSQHoldings",
     investorRelationsUrl: "https://www.gamesquare.com/#investors",
-    strategy: "$250M ETH treasury via Dialectic. 7.84% yield funds buybacks.",
-    notes: "Most ETH exposure via Dialectic Medici fund, not direct custody. Buyback: 3.54M shares.",
+    strategy: "Ethereum-native treasury managed via Dialectic Medici platform (target 8-14% yield).",
+    notes: "Total holdings: 15,630 ETH + 8 CryptoPunks (incl. #5577 Cowboy Ape). Acquired TubeBuddy Feb 2023 for 5M Series A-2 Pref. Feb 2026 buyback: 1.5M shares.",
     // Indirect crypto exposure via fund investment
     cryptoInvestments: [
       {
         name: "Dialectic Medici ETH Fund",
         type: "fund",
         underlyingAsset: "ETH",
-        fairValue: 64_539_714,  // SEC 10-Q Sep 30, 2025 - "Investment in ETH Fund"
-        sourceDate: "2025-09-30",
-        source: "SEC 10-Q Q3 2025",
-        sourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315226007687/form8-k.htm",
-        note: "ETH yield fund via Dialectic platform - generates 7.84% yield for buybacks",
+        fairValue: 32_530_000,  // March 2026 estimated value
+        sourceDate: "2026-03-01",
+        source: "March 2026 Investor Update",
+        sourceUrl: "https://www.gamesquare.com/#investors",
+        note: "Primary ETH exposure. Strategy targets 8-14% yield via automated on-chain optimization.",
       },
     ],
   },
@@ -386,20 +407,22 @@ export const ethCompanies: Company[] = [
     name: "FG Nexus",
     ticker: "FGNX",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "ETH",
     tier: 1,
-    // VERIFIED: SEC 8-K Jan 21, 2026
-    holdings: 37_594,
-    holdingsLastUpdated: "2026-01-21",
+    // VERIFIED: SEC 8-K Feb 26, 2026 - Sold 7,550 ETH
+    holdings: 30_044,
+    holdingsLastUpdated: "2026-02-25",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226003101/ex99-1.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm",
     costBasisAvg: 3_854,  // $195.7M / 50,778 ETH (Sep 30 Q3 2025) — blended, pre-sales
     costBasisSource: "SEC 10-Q Q3 2025 (aggregate cost $195.7M for 50,778 ETH)",
     costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
     datStartDate: "2025-07-30",
     website: "https://fgnexus.io",
-    secCik: "1591890",
+    secCik: "0001591890",
     stakingMethod: "Native staking via Anchorage/Bitgo through Galaxy Digital",
     // 10-Q Q3 2025: G&A $7.24M for 9 months = ~$2.4M/qtr
     quarterlyBurnUsd: 2_400_000,
@@ -408,9 +431,9 @@ export const ethCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 10_000_000,
-    // VERIFIED: SEC 8-K Jan 21, 2026 (33.6M pre-split) ÷ 5 (1:5 reverse split Feb 13, 2026)
-    sharesForMnav: 6_720_000,
-    sharesSource: "SEC 8-K Jan 21, 2026 (33.6M pre-split incl PFWs) ÷ 5 (1:5 reverse split Feb 13, 2026)",
+    // VERIFIED: 1-for-5 reverse split effective Feb 13, 2026
+    sharesForMnav: 6_560_000,
+    sharesSource: "SEC 8-K Feb 13, 2026 (Reverse split adjustment)",
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm",
     sharesAsOf: "2026-02-13",
     // VERIFIED: SEC 8-K Dec 19, 2025 (cash + USDC)
@@ -427,12 +450,11 @@ export const ethCompanies: Company[] = [
     preferredSource: "SEC 10-Q Q3 2025 + 8-K Jan 21, 2026 (buyback ~53K shares)",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm",
     leader: "Kyle Cerminara (CEO); Galaxy, Kraken, Hivemind, DCG backed",
-    strategy: "Premier ETH pure-play treasury. $5B fundraise plan.",
-    notes: "Nasdaq: FLD/FGNXP. Formerly Fundamental Global. 1:5 reverse split effective Feb 13, 2026. " +
-      "Peaked at ~50.8K ETH Oct 2025, sold ~13K for buybacks through Jan 2026. " +
-      "894,580 Series A preferred ($25 par, 8% cumulative, non-convertible, ticker FGNXP) — buyback program active. " +
-      "ATM ($5B shelf with ThinkEquity) suspended since Oct 2025. $10M crypto loan facility (evergreen, 7.9%, currently repaid). " +
-      "Staking ETH via Anchorage/Bitgo through Galaxy Digital. Deutsche Börse listing as LU51.",
+    strategy: "ETH treasury focused on yield and risk control. Pivoted from aggressive accumulation Feb 2026.",
+    notes: "Nasdaq: FGNX/FGNXP. 1:5 reverse split effective Feb 13, 2026. " +
+      "Sold 7,550 ETH Feb 24-25, 2026 to manage liquidity. Realized losses exceed $82M. " +
+      "Strategy shifted from 'aggressive accumulation' to 'risk control'. " +
+      "894,580 Series A preferred ($25 par, 8% cumulative) — buyback program active.",
   },
   // ICG (Intchains) removed - ASIC chip company, not beta to ETH
 ];
@@ -447,63 +469,68 @@ export const btcCompanies: Company[] = [
     name: "Strategy (fka MicroStrategy)",
     ticker: "MSTR",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (mstr-holdings-verified.ts)
-    holdings: MSTR_PROVENANCE.holdings?.value || 717_131,
+    holdings: MSTR_PROVENANCE.holdings?.value || 720_737,
     holdingsLastUpdated: MSTR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
-    datStartDate: "2024-01-01",
+    holdingsSourceUrl: "/filings/mstr/0001193125-26-084264",
+    accessionNumber: "0001193125-26-084264",
+    sourceType: "sec-filing",
+    sourceQuote: "Aggregate BTC Holdings 720,737",
+    datStartDate: "2020-08-11", // First BTC purchase announcement
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
     secCik: "0001050446",
     // COST BASIS: from provenance
     costBasisAvg: MSTR_PROVENANCE.costBasisAvg?.value || 76_027,
     costBasisSource: "SEC 8-K (provenance-tracked)",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
+    costBasisSourceUrl: "/filings/mstr/0001193125-26-053105",
     isMiner: false,
     // QUARTERLY BURN: from provenance (FY2025 10-K: -$67.241M OpCF / 4 quarters)
     quarterlyBurnUsd: MSTR_PROVENANCE.quarterlyBurn?.value ?? 16_810_000,
     burnAsOf: "2025-12-31",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    burnSourceUrl: "/filings/mstr/0001050446-26-000020",
     avgDailyVolume: 3_000_000_000,
     hasOptions: true,
     // SHARES: from provenance (10-Q baseline + 8-K ATM + 10-Q employee equity + Class B)
-    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 333_752_708,
+    sharesForMnav: MSTR_PROVENANCE.sharesOutstanding?.value || 335_482_813,
     sharesSource: "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    sharesSourceUrl: "/filings/mstr/0001050446-26-000020",
     sharesAsOf: MSTR_PROVENANCE_DEBUG.holdingsDate,
     // CONVERTS: 10-Q Q3 2025 Note 7
     capitalRaisedConverts: 7_274_000_000,
     capitalRaisedConvertsSource: "SEC 10-Q Q3 2025: Cash flow statement - proceeds from convertible notes",
-    capitalRaisedConvertsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/d893246d10q.htm#:~:text=Convertible%20Senior%20Notes",
+    capitalRaisedConvertsSourceUrl: "/filings/mstr/0001193125-25-262568",
     // DEBT: 10-K FY2025 carrying value (XBRL us-gaap:ConvertibleLongTermNotesPayable)
     totalDebt: MSTR_PROVENANCE.totalDebt?.value || 8_190_155_000,
     debtSource: "SEC 10-K FY2025: $8,190M carrying value (notional $8,214M, Δ = OID)",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    debtSourceUrl: "/filings/mstr/0001050446-26-000020",
     debtAsOf: "2025-12-31",
     // PREFERRED: 10-K FY2025 mezzanine equity carrying value (5 series: STRK/STRF/STRD/STRC/Stream)
     preferredEquity: MSTR_PROVENANCE.preferredEquity?.value || 6_919_514_000,
     preferredSource: "SEC 10-K FY2025: $6,920M carrying value (notional $8,383M per strategy.com/credit)",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    preferredSourceUrl: "/filings/mstr/0001050446-26-000020",
     preferredAsOf: "2025-12-31",
     // Cash obligations from SEC 8-K Dec 1, 2025
     preferredDividendAnnual: 780_000_000,
     debtInterestAnnual: 43_000_000,
     cashObligationsAnnual: 823_000_000,
     cashObligationsSource: "SEC 8-K Dec 1, 2025: USD Reserve $1.44B = 21 months of Dividends",
-    cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525303157/d69948d8k.htm",
+    cashObligationsSourceUrl: "/filings/mstr/0001193125-25-303157",
     cashObligationsAsOf: "2025-11-28",
     // ATM PROGRAM: S-3 shelf
     capitalRaisedAtm: 21_000_000_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration (21/21 plan equity component)",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524254726/d866aboringprospectus.htm#:~:text=%2421%2C000%2C000%2C000",
+    capitalRaisedAtmSourceUrl: "/filings/mstr/0001193125-24-247536",
     // CASH: 10-K FY2025 balance sheet (XBRL us-gaap:CashAndCashEquivalentsAtCarryingValue)
     cashReserves: MSTR_PROVENANCE.cashReserves?.value || 2_301_470_000,
     cashSource: "SEC 10-K FY2025: $2,301M cash & equivalents (USD Reserve $2,250M per 8-K)",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    cashSourceUrl: "/filings/mstr/0001050446-26-000020",
     cashAsOf: "2025-12-31",
     leader: "Michael Saylor (Executive Chairman)",
     strategy: "21/21 Plan: $21B equity + $21B debt for BTC.",
@@ -514,6 +541,8 @@ export const btcCompanies: Company[] = [
     name: "Metaplanet",
     ticker: "3350.T",
     country: "JP",
+    jurisdiction: "JP",
+    authoritativeSource: "TDnet",
     exchangeMic: "XTKS",
     currency: "JPY",
     asset: "BTC",
@@ -573,8 +602,10 @@ export const btcCompanies: Company[] = [
     name: "Twenty One Capital",
     ticker: "XXI",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
-    secCik: "0002070457",  // Post-merger CIK (was 0001865602 Cantor SPAC)
+    secCik: "0001865602",
     website: "https://xxi.money",
     twitter: "xxicapital",
     asset: "BTC",
@@ -624,8 +655,10 @@ export const btcCompanies: Company[] = [
     name: "BSTR Holdings",
     ticker: "CEPO",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
-    secCik: "0002027708",  // BSTR/Blockstream SPAC (0001865602 was Cantor → XXI)
+    secCik: "0001865602",
     cashReserves: 275381,
     cashAsOf: "2025-03-31",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2027708/000121390025044272/",
@@ -666,6 +699,8 @@ export const btcCompanies: Company[] = [
     name: "MARA Holdings",
     ticker: "MARA",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
@@ -673,21 +708,24 @@ export const btcCompanies: Company[] = [
     holdings: MARA_PROVENANCE.holdings?.value || 52_850,
     holdingsLastUpdated: MARA_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
-    datStartDate: "2024-01-01",
+    holdingsSourceUrl: "/filings/mara/0001507605-25-000028",
+    accessionNumber: "0001507605-25-000028",
+    sourceType: "sec-filing",
+    sourceQuote: "we held a total of 52,850 bitcoin, including 17,357 bitcoin under our digital asset management strategy",
+    datStartDate: "2021-01-25", // First major BTC purchase ($150M)
     website: "https://mara.com",
     twitter: "https://twitter.com/MARAHoldings",
     secCik: "0001507605",
     // COST BASIS: from provenance (10-Q)
     costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value || 87_752,
     costBasisSource: "SEC-verified (provenance): 10-Q Q3 2025",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+    costBasisSourceUrl: "/filings/mara/0001507605-25-000028",
     costBasisAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     isMiner: true,
     // QUARTERLY BURN: from provenance (G&A only, mining COGS excluded)
     quarterlyBurnUsd: MARA_PROVENANCE.quarterlyBurn?.value ?? 85_296_000,
     burnSource: "SEC-verified (provenance): 10-Q Q3 2025 G&A (mining COGS excluded)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+    burnSourceUrl: "/filings/mara/0001507605-25-000028",
     burnAsOf: MARA_PROVENANCE_DEBUG.balanceSheetDate,
     avgDailyVolume: 400_000_000,
     hasOptions: true,
@@ -695,37 +733,33 @@ export const btcCompanies: Company[] = [
     // SHARES: from provenance (basic shares, dilutives in dilutive-instruments.ts)
     sharesForMnav: MARA_PROVENANCE_DEBUG.sharesBasic,
     sharesSource: "SEC-verified (provenance): 10-Q Q3 2025 cover page",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+    sharesSourceUrl: "/filings/mara/0001507605-25-000028",
     sharesAsOf: MARA_PROVENANCE_DEBUG.sharesDate,
     // CASH: from provenance (10-Q)
     cashReserves: MARA_PROVENANCE.cashReserves?.value || 826_392_000,
     cashAsOf: "2025-09-30",
     restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
     cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+    cashSourceUrl: "/filings/mara/0001507605-25-000028",
     leader: "Fred Thiel (CEO)",
     strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
     // DEBT: from provenance (~$3.25B in convertible notes)
     totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_597_561_000,
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/",
+    preferredSourceUrl: "/filings/mara/0001507605-25-000028",
     debtAsOf: "2023-12-31",
     debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+    debtSourceUrl: "/filings/mara/0001507605-25-000028",
     notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-Q Note 14 + $350M line of credit. Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts.",
   },
   {
-    // =========================================================================
-    // STRV (Strive, Inc.) - First publicly traded asset manager with BTC treasury
-    // Trades as ASST on NASDAQ. Merged with Asset Entities Sep 2025.
-    // Acquired Semler Scientific Jan 2026. 1-for-20 reverse split Feb 3, 2026.
-    // All data from provenance/strv.ts (SEC-verified)
-    // =========================================================================
     id: "asst",
     name: "Strive, Inc.",
     ticker: "ASST",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
@@ -733,7 +767,10 @@ export const btcCompanies: Company[] = [
     holdings: 13_131.82,
     holdingsLastUpdated: "2026-02-11",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    holdingsSourceUrl: "/filings/asst/0001628280-26-007897",
+    accessionNumber: "0001628280-26-007897",
+    sourceType: "sec-filing",
+    sourceQuote: "Strive now holds 13,131.82 Bitcoin",
     datStartDate: "2024-05-01",
     website: "https://strive.com",
     twitter: "stikiinvestor",
@@ -743,7 +780,7 @@ export const btcCompanies: Company[] = [
     // BURN: SEC 10-Q Q3 2025
     quarterlyBurnUsd: 6_500_000,  // Predecessor 9mo OpCF: -$18.2M / ~2.8 quarters = ~$6.5M/qtr (Successor 19-day period distorted by merger costs)
     burnSource: "SEC 10-Q Q3 2025: Predecessor OpCF -$18,209K (Jan 1 - Sep 11, 254 days). Successor 19 days not representative.",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/asst-20250930.htm",
+    burnSourceUrl: "/filings/asst/0001628280-25-052343",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 100_000_000,
     hasOptions: false,  // No stock options granted per SEC data
@@ -752,26 +789,26 @@ export const btcCompanies: Company[] = [
     // Pre-funded warrants @ $0.002 tracked in dilutive-instruments.ts
     sharesForMnav: 63_048_519,  // Feb 13 8-K: Class A 53,168,237 + Class B 9,880,282 (post-split)
     sharesSource: "SEC 8-K Feb 13, 2026: 53,168,237 Class A + 9,880,282 Class B = 63,048,519 (post 1-for-20 split)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    sharesSourceUrl: "/filings/asst/0001628280-26-007897",
     sharesAsOf: "2026-02-11",
     // CASH: SEC 8-K Jan 5, 2026 - $67.6M as of Dec 31, 2025
     // Post-Jan: +$119M SATA raise, -$20M Coinbase payoff, -BTC purchases → estimated ~$50-80M current
     cashReserves: 127_200_000,  // Feb 13 8-K: $127.2M as of Feb 11, 2026
     restrictedCash: 127_200_000,  // Operating capital earmarked for BTC - not excess
     cashSource: "SEC 8-K Feb 13, 2026: $127.2M as of Feb 11, 2026",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    cashSourceUrl: "/filings/asst/0001628280-26-007897",
     cashAsOf: "2026-02-11",
     // DEBT: $100M Semler converts - $90M exchanged for SATA = $10M remaining (SEC 8-K Jan 28)
     // Coinbase $20M loan also paid off. 100% BTC unencumbered.
     totalDebt: 10_000_000,
     debtSource: "Company-derived: $100M Semler converts - $90M exchanged = $10M (SEC 8-K Jan 28, 2026)",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000114036126002606/ny20063534x6_8k.htm",
+    debtSourceUrl: "/filings/asst/0001140361-26-002606",
     debtAsOf: "2026-01-28",
     // PREFERRED: SATA 12.25% perpetual preferred (NOT convertible to common)
     // Dec 31: 2,012,729 SATA (SEC 8-K Jan 5) + Jan: 1.32M underwritten + ~930K exchange = ~4.26M @ $100 stated value
     preferredEquity: 426_551_800,  // Feb 13 8-K: 4,265,518 SATA shares × $100 stated value
     preferredSource: "SEC 8-K Feb 13, 2026: 4,265,518 SATA shares outstanding × $100 stated value",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    preferredSourceUrl: "/filings/asst/0001628280-26-007897",
     preferredAsOf: "2026-02-11",
     leader: "Vivek Ramaswamy (Co-Founder), Matt Cole (CEO), Eric Semler (Exec Chair)",
     strategy: "First publicly traded asset manager with BTC treasury. No debt - uses perpetual preferred (SATA) instead. Merged with Asset Entities Sep 2025, acquired Semler Scientific Jan 2026.",
@@ -782,63 +819,74 @@ export const btcCompanies: Company[] = [
     name: "KULR Technology",
     ticker: "KULR",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
-    holdings: 1_057,  // Q3 2025 10-Q: 1,056.7 BTC held (excludes 70 BTC pledged as collateral). Total incl. collateral = 1,127.
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+    // VERIFIED: February 2026 Corporate Update
+    holdings: 1_021,
+    holdingsLastUpdated: "2026-02-28",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://kulr.ai/investors/",
     datStartDate: "2024-12-01",
-    secCik: "1662684",
-    costBasisAvg: 101_024,  // SEC 10-Q Q3 2025: $106,785,454 cost basis / 1,057 BTC
-    costBasisSource: "SEC 10-Q Q3 2025: digital assets cost basis $106,785,454 (1,057 BTC)",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+    secCik: "0001662684",
+    costBasisAvg: 98_627,  // ~$101M total cost for 1_021 BTC per Feb 2026 update
+    costBasisSource: "Feb 2026 Corporate Update: ~$101M aggregate cost for 1_021 BTC",
+    costBasisSourceUrl: "https://kulr.ai/investors/",
     isMiner: false,
     quarterlyBurnUsd: 10_300_000,  // Q3 2025 operating cash burn: SG&A $6.26M + R&D $2.32M + COGS $6.26M - revenue $6.88M ≈ $7.96M opex; cash flow statement shows ~$10.3M/qtr
-    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities (~$10.3M/qtr from cash flow)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashUsedInOperatingActivities",
+    burnSourceUrl: "/filings/kulr/0001104659-25-113662",
+    accessionNumber: "0001104659-25-113662",
+    sourceType: "sec-filing",
+    sourceQuote: "Net Cash Used In Operating Activities (31,039,539)",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
     // marketCap calculated from sharesForMnav × price (removed static override)
     sharesForMnav: 45_674_420,  // SEC 10-Q Q3 2025 (as of Nov 14, 2025)
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
-    sharesSource: "SEC 10-Q Q3 2025",
+    sharesSource: "SEC 10-Q Q3 2025: EntityCommonStockSharesOutstanding",
+    sharesSourceUrl: "/filings/kulr/0001104659-25-113662",
     sharesAsOf: "2025-11-14",
     totalDebt: 0,
-    debtSource: "SEC 10-Q Q3 2025 subsequent events + Dec 22, 2025 8-K",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+    debtSource: "SEC 10-Q Q3 2025: no outstanding long-term debt",
+    debtSourceUrl: "/filings/kulr/0001104659-25-113662",
     debtAsOf: "2025-10-15",
     cashReserves: 20_600_000,  // SEC 10-Q Q3 2025 (Sep 30, 2025)
     restrictedCash: 20_600_000,  // Earmarked for BTC purchases per 90% policy - not excess cash
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+    cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceUrl: "/filings/kulr/0001104659-25-113662",
     cashAsOf: "2025-09-30",
     leader: "Michael Mo (CEO)",
-    strategy: "Bitcoin First Company. 90% of excess cash to BTC. Reports BTC Yield.",
+    strategy: "Bitcoin First Company. Allocates up to 90% of surplus cash to BTC. Uses BTC Yield as primary KPI.",
     website: "https://kulr.ai",
     twitter: "https://x.com/KULRTech",
-    notes: "NASA supplier. 291% BTC Yield YTD. ATM paused Dec 2025 through Jun 2026. Coinbase loan repaid Oct 15, 2025 — carries no debt. 70 BTC collateral likely released post-repayment.",
+    notes: "NASA supplier. 291.2% BTC Yield (YTD 2025). Strategy authorizes 90% of surplus cash into BTC. 1,021 BTC held as of Feb 2026. $20M Coinbase credit facility maintained. Uses blockchain for space-rated battery screening (NASA standards).",
   },
   {
     id: "altbg",
     name: "The Blockchain Group",
     ticker: "ALCPB",  // Changed from ALTBG (Capital B rebrand)
     country: "DE",
+    jurisdiction: "EU",
+    authoritativeSource: "EU Regulatory",
     exchangeMic: "XETR",
     currency: "EUR",
     asset: "BTC",
     tier: 2,
     website: "https://cptlb.com",
-    holdings: 2_834,  // AMF filing Feb 16, 2026 (2,834 BTC total)
-    holdingsLastUpdated: "2026-02-16",
+    holdings: 2_834,  // AMF filing Feb 27, 2026 (2,834 BTC total)
+    holdingsLastUpdated: "2026-02-27",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
+    holdingsSourceUrl: "https://www.amf-france.org/en/news-publications/news/capital-structure-update-alcpb-20260227",
+    accessionNumber: "AMF-20260227",
+    sourceType: "regulatory-filing",
+    sourceQuote: "Total holdings reach 2,834 Bitcoin following February acquisitions",
     datStartDate: "2024-11-05",  // First BTC purchase announced Nov 5, 2024
     costBasisAvg: 93_083,  // €93,083 avg per AMF Feb 16, 2026 filing
     costBasisSource: "regulatory-filing",
-    costBasisSourceUrl: "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
+    costBasisSourceUrl: "https://www.amf-france.org/en/news-publications/news/capital-structure-update-alcpb-20260227",
     isMiner: false,
     quarterlyBurnUsd: 800_000,  // ~€0.75M/quarter from H1 2025 IFRS (was $2M — too high by ~2.7x)
     burnSource: "H1 2025 IFRS financials (~€0.72M/quarter operating cash burn)",
@@ -877,6 +925,8 @@ export const btcCompanies: Company[] = [
     name: "H100 Group",
     ticker: "H100.ST",
     country: "SE",
+    jurisdiction: "EU",
+    authoritativeSource: "MFN",
     exchangeMic: "XSTO",
     website: "https://www.h100.group",
     currency: "SEK",
@@ -900,9 +950,9 @@ export const btcCompanies: Company[] = [
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific IFRS period end
     debtSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index (more specific than /investors)
     debtSource: "MFN filings index — needs specific interim/annual report link",
-    cashReserves: 0,  // Unknown — pending Feb 24, 2026 Bokslutskommuniké
-    cashSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index
-    cashSource: "MFN filings index — needs specific interim/annual report link",
+    cashReserves: 2_900_000,  // SEK 30.6M ÷ ~10.6 SEK/USD ≈ $2.9M (Feb 24, 2026 Bokslutskommuniké)
+    cashSourceUrl: "https://mfn.se/a/h100-group/h100-group-fourth-quarter-and-full-year-report-2025",
+    cashSource: "MFN Bokslutskommuniké Feb 24, 2026 (FY2025 year-end report): SEK 30.6M cash",
     cashAsOf: "2025-12-31",
     avgDailyVolume: 5_000_000,
     // marketCap calculated from sharesForMnav x price
@@ -912,13 +962,15 @@ export const btcCompanies: Company[] = [
     sharesAsOf: "2026-02-12",  // MFN filing date for Future Holdings AG acquisition completion
     leader: "Sander Andersen (Executive Chairman), Johannes Wiik (CEO)",
     strategy: "Swedish BTC treasury company. Nordic Strategy equivalent.",
-    notes: "NGM Nordic SME listed. ISK-eligible. Jul 2025: SEK 342.3M zero-coupon convertible debentures (Adam Back et al) + multiple directed equity issues. SEK 122.5M converted Nov 2025. Acquired Future Holdings AG (Switzerland) Feb 2026. IR page incorrectly claims 'no convertibles'.",
+    notes: "NGM Nordic SME listed. ISK-eligible. Jul 2025: SEK 342.3M zero-coupon convertible debentures (Adam Back et al) + multiple directed equity issues. SEK 122.5M converted Nov 2025. Acquired Future Holdings AG (Switzerland) Feb 2026. EGM Mar 18, 2026: Richard Byworth proposed as Chairman, 14.4M warrant incentive program (4% dilution) pending vote. IR page incorrectly claims 'no convertibles'.",
   },
   {
     id: "obtc3",
     name: "OranjeBTC",
     ticker: "OBTC3",
     country: "BR",
+    jurisdiction: "OTHER",
+    authoritativeSource: "CVM",
     exchangeMic: "B3SA",
     currency: "BRL",
     asset: "BTC",
@@ -958,14 +1010,19 @@ export const btcCompanies: Company[] = [
     name: "The Smarter Web Company",
     ticker: "SWC",
     country: "GB",
+    jurisdiction: "UK",
+    authoritativeSource: "LSE RNS",
     exchangeMic: "XLON",
     currency: "GBP",
     asset: "BTC",
     tier: 1,  // Verified holdings via RNS
-    holdings: 2_689,  // RNS Feb 11, 2026: "Total Bitcoin Holdings are now 2,689 Bitcoin"
-    holdingsLastUpdated: "2026-02-11",
+    holdings: 2_692,  // RNS Mar 1, 2026: "Total Bitcoin Holdings are now 2,692 Bitcoin"
+    holdingsLastUpdated: "2026-03-01",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/",  // RNS PDF was at _files/ugd/6ffd5f_aa5f1f919c42462a81cf286f54dd191d.pdf but returns 404 (Wix site reorganized)
+    holdingsSourceUrl: "https://www.londonstockexchange.com/news-article/SWC/total-bitcoin-holdings-update/16925134",
+    accessionNumber: "LSE-16925134",
+    sourceType: "regulatory-filing",
+    sourceQuote: "Total Bitcoin Holdings are now 2,692 Bitcoin",
     datStartDate: "2025-04-01",
     website: "https://www.smarterwebcompany.co.uk",
     twitter: "https://x.com/smarterwebuk",
@@ -976,12 +1033,12 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
-    sharesForMnav: 396_602_526,  // Company analytics + RNS Feb 9, 2026 admission update
-    sharesSource: "Company analytics page + RNS Feb 9, 2026",
-    sharesSourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/",
-    sharesAsOf: "2026-02-09",
+    sharesForMnav: 351_919_126,  // RNS Mar 2, 2026: Total Voting Rights
+    sharesSource: "LSE RNS Mar 2, 2026: Total Voting Rights",
+    sharesSourceUrl: "https://www.londonstockexchange.com/news-article/SWC/total-voting-rights/16926451",
+    sharesAsOf: "2026-03-02",
     strategy: "UK BTC treasury company. 'The 10 Year Plan' - explicit policy of acquiring Bitcoin as treasury reserve.",
-    notes: "LSE: SWC | OTCQB: TSWCF | FRA: 3M8. #1 UK BTC holder. Total invested GBP 222.19M at avg GBP 82,630/BTC (RNS Feb 11, 2026). Companies House shows ~696M total shares but latest publicly displayed company-reported fully diluted share count is 396.6M; difference likely includes deferred shares from shell restructuring (was Uranium Energy Exploration PLC until Apr 2025). Using company-reported fully diluted figure for mNAV.",
+    notes: "LSE: SWC. #1 UK BTC holder. Successfully uplisted to LSE Main Market Feb 3, 2026. To be included in FTSE All-Share/SmallCap indexes Mar 23, 2026. Acquired Squarebird Feb 23, 2026. Established Coinbase credit facility Feb 2026.",
     dataWarnings: [],
   },
   {
@@ -989,13 +1046,18 @@ export const btcCompanies: Company[] = [
     name: "Sequans Communications",
     ticker: "SQNS",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 2,
     holdings: 2_139,  // Q4 2025 6-K: 2,139 BTC at Dec 31, 2025 (1,617 pledged as collateral)
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    holdingsSourceUrl: "/filings/sqns/0001383395-26-000013",
+    accessionNumber: "0001383395-26-000013",
+    sourceType: "sec-filing",
+    sourceQuote: "held 2,139 bitcoins, including 1,617 bitcoins that were pledged as collateral",
     datStartDate: "2025-06-23",
     website: "https://sequans.com",
     twitter: "https://twitter.com/Sequans",
@@ -1004,18 +1066,18 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 10_000_000,  // IoT semiconductor ops — estimate based on Q4 non-IFRS loss ~$18.5M less BTC-related items
     burnSource: "6-K Q4 2025 earnings (estimate)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    burnSourceUrl: "/filings/sqns/0001383395-26-000013",
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 15_504_809,  // Q4 2025 6-K weighted avg basic ADS. Best available until 20-F.
-    sharesSource: "6-K Q4 2025 weighted avg basic ADS (1,599,589,702 ordinary shares / ~100 ADS ratio)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    sharesSource: "6-K Q4 2025 weighted avg basic ADS",
+    sharesSourceUrl: "/filings/sqns/0001383395-26-000013",
     sharesAsOf: "2025-12-31",
     totalDebt: 94_500_000,  // Q4 6-K: $94.5M convertible outstanding. Feb 13 6-K: full redemption via BTC sale by Jun 2026.
     debtAsOf: "2025-12-31",
     debtSource: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
+    debtSourceUrl: "/filings/sqns/0001383395-26-000018",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
     notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized.",
     dataWarnings: [
@@ -1031,12 +1093,14 @@ export const btcCompanies: Company[] = [
     name: "DDC Enterprise",
     ticker: "DDC",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     twitter: "ddcbtc_",
     asset: "BTC",
     tier: 2,
-    holdings: 1_988,  // treasury.ddc.xyz Feb 11, 2026
-    holdingsLastUpdated: "2026-02-11",
+    holdings: 2_183,  // treasury.ddc.xyz Mar 4, 2026
+    holdingsLastUpdated: "2026-03-04",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://treasury.ddc.xyz",
     datStartDate: "2025-02-21",
@@ -1051,20 +1115,23 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 2_600_000,  // H1 2025 operating cash burn: $5.2M / 2 quarters (424B3 F-1 financials)
     burnSource: "SEC 424B3 Jan 26, 2026 (F-1 financials, H1 2025 unaudited)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+    burnSourceUrl: "/filings/ddc/0001213900-26-007463",
+    accessionNumber: "0001213900-26-007463",
+    sourceType: "sec-filing",
+    sourceQuote: "Net cash used in operating activities... $5,241,835",
     burnAsOf: "2025-06-30",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 30_473_005,  // 28,723,005 Class A (6-K Feb 6) + 1,750,000 Class B (CEO, same economic rights)
     sharesSource: "SEC 6-K Feb 6, 2026 + treasury.ddc.xyz",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
+    sharesSourceUrl: "/filings/ddc/0001213900-26-013341",
     sharesAsOf: "2026-02-06",
     totalDebt: 27_000_000,  // Anson Senior Secured Convertible Notes (Initial Closing Jul 2025)
     debtSource: "SEC 424B3 Jan 26, 2026 / 6-K Jul 1, 2025 — Anson SPA Initial Notes",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+    debtSourceUrl: "/filings/ddc/0001213900-26-007463",
     debtAsOf: "2026-01-26",
     strategy: "Plant-based food company pivoted to BTC treasury Feb 2025. Explicit MSTR-style strategy with Bitcoin yield metrics.",
-    notes: "NYSE American listed. DayDayCook brand. Dual-class (Class B = 10 votes, CEO only, doubled 875K→1.75M in 2025 by board resolution). " +
+    notes: "NYSE American listed. DayDayCook brand. 49.1% YTD BTC Yield (Mar 2026). Dual-class (Class B = 10 votes, CEO only, doubled 875K→1.75M in 2025 by board resolution). " +
       "Anson SPA: $27M convertible at $13.65 ($275M undrawn). ⚠️ Toxic alternate conversion RENEGOTIATED Sep 2025: now 88% of 20-day low VWAP (was 94% of 10-day). Warrant coverage doubled to 70%. " +
       "0% interest (12% on default). $200M ELOC at 98% of 3-day low VWAP. " +
       "Satoshi Strategic: $32.8M preferred (pending NYSE). $124M subscription (12.4M shares at $10, pending NYSE — deeply underwater at ~$2.60). " +
@@ -1098,36 +1165,42 @@ export const btcCompanies: Company[] = [
     name: "BITFUFU",
     ticker: "FUFU",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     currency: "USD",
     asset: "BTC",
     tier: 2,
-    holdings: 1_796,  // SEC 6-K Feb 5, 2026 (Jan 2026 Update) - includes 252 BTC pledged
-    holdingsLastUpdated: "2026-01-31",
+    // VERIFIED: February 2026 update (early March 2026)
+    holdings: 1_830,
+    holdingsLastUpdated: "2026-02-28",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm",
+    holdingsSourceUrl: "https://bitfufu.com/investors",
+    accessionNumber: "FUFU-20260228",
+    sourceType: "press-release",
+    sourceQuote: "1,830 BTC held",
     datStartDate: "2024-01-01",
     website: "https://bitfufu.com",
     secCik: "0001921158",
     isMiner: true,
-    quarterlyBurnUsd: 0,  // FUFU is profitable — Q3 2025 net income $11.6M, EBITDA $22.1M. Mining revenue covers all operating costs.
-    burnSource: "SEC 6-K Q3 2025: Revenue $180.7M, COGS $173.5M, Net Income $11.6M. Company is cash-flow positive from mining operations. G&A alone is ~$2M/qtr but revenue exceeds total costs.",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025108472/ea026476001ex99-1_bitfufu.htm",
-    burnAsOf: "2025-09-30",
+    quarterlyBurnUsd: 0,  // FUFU is profitable — Q3 2025 net income $11.6M, EBITDA $22.1M. 2025 Net Income ~$41.8M (prelim).
+    burnSource: "SEC 6-K Q3 2025 + 2025 Prelim Results: Company is cash-flow positive from mining operations.",
+    burnSourceUrl: "/filings/fufu/0001213900-25-108472",
+    burnAsOf: "2025-12-31",
     avgDailyVolume: 20_000_000,
     sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
     sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
+    sharesSourceUrl: "/filings/fufu/0001213900-25-084744",
     sharesAsOf: "2025-06-30",
-    totalDebt: 141_301_000,  // SEC XBRL Jun 2025: LongTermDebt $101.3M (payables) + LongTermLoansPayable $40M (loans)
-    debtAsOf: "2025-06-30",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
-    cashReserves: 40_086_000,  // SEC XBRL Jun 2025: CashAndCashEquivalentsAtCarryingValue. Q3 2025 PR shows $32.6M but no XBRL filing for Sep 30 (FPI: only H1/FY have XBRL).
-    cashSource: "SEC 6-K H1 2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $40,086,000 (Q3 PR shows $32.6M but unaudited, no XBRL)",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm",
-    cashAsOf: "2025-06-30",
+    totalDebt: 141_301_000,  // Includes $101.3M payables + reduced $15M credit line (was $40M)
+    debtAsOf: "2026-02-28",
+    debtSourceUrl: "/filings/fufu/0001213900-25-084744",
+    cashReserves: 40_000_000,  // Mar 2026 update: maintains ~$40M cash position
+    cashSource: "Mar 2026 Corporate Update",
+    cashSourceUrl: "https://bitfufu.com/investors",
+    cashAsOf: "2026-02-28",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (641k+ users).",
-    notes: "Singapore (Nasdaq FUFU). BITMAIN partner. 3.7 EH/s self-owned, 29.6 EH/s under management. 520 MW hosting. 252 BTC pledged for loans.",
+    notes: "Singapore (Nasdaq FUFU). 1,830 BTC held; 476 BTC pledged for miner procurement. Credit line debt reduced to $15M. 2025 Net Income ~$41.8M. BITMAIN partner with 26.4 EH/s managed.",
   },
   // EXOD (Exodus Movement) REMOVED - not a DAT accumulator
   // They hold BTC but sell it for operations/acquisitions, no explicit accumulation strategy
@@ -1136,75 +1209,87 @@ export const btcCompanies: Company[] = [
     name: "Fold Holdings",
     ticker: "FLD",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 2,
-    holdings: 1_526,  // Q3 2025 Earnings PR (Nov 10, 2025) - also 800 BTC restricted/collateral
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://investor.foldapp.com/news-releases/news-release-details/fold-holdings-inc-nasdaq-fld-announces-third-quarter-2025",
+    holdings: 1_526,  // Feb 27, 2026 update: 1,526 BTC total (521 unlocked)
+    holdingsLastUpdated: "2026-02-27",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://investor.foldapp.com/news-releases/news-release-details/fold-announces-retirement-663-million-convertible-debt",
+    accessionNumber: "FLD-20260227",
+    sourceType: "press-release",
+    sourceQuote: "1,526 BTC total (521 unlocked)",
     datStartDate: "2024-07-01",
     website: "https://foldapp.com",
     secCik: "0001889123",
     isMiner: false,
     costBasisAvg: 72_571,
     costBasisSource: "SEC 10-Q Q3 2025: aggregate cost $114.3M for 1,575 BTC",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    costBasisSourceUrl: "/filings/fld/0001193125-25-274317",
     quarterlyBurnUsd: 5_000_000,
     burnSource: "SEC 10-Q Q3 2025: Operating loss $5.94M (Q3), $21.8M (9-mo). Cash burn ~$5M/qtr after non-cash adjustments",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    burnSourceUrl: "/filings/fld/0001193125-25-274317",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 5_000_000,
     sharesForMnav: 48_307_642,  // SEC XBRL Nov 10, 2025
     sharesSource: "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    sharesSourceUrl: "/filings/fld/0001193125-25-274317",
     sharesAsOf: "2025-11-10",
-    totalDebt: 66_300_000,  // SEC 10-Q Sep 2025: $20M June convert + $46.3M March convert (principal, not fair value)
+    totalDebt: 0,  // VERIFIED: Extinguished $66.3M convertible debt on Feb 27, 2026
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/",
-    debtAsOf: "2025-09-30",
-    debtSource: "SEC 10-Q Q3 2025",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    preferredSourceUrl: "/filings/fld/0001193125-25-274317",
+    debtAsOf: "2026-02-27",
+    debtSource: "Feb 27, 2026 PR: 'Fold Announces Retirement of $66.3 Million in Convertible Debt'",
+    debtSourceUrl: "https://investor.foldapp.com/news-releases/news-release-details/fold-announces-retirement-663-million-convertible-debt",
     strategy: "First publicly traded financial services company built entirely around Bitcoin. BTC rewards platform. Explicit treasury accumulation strategy.",
     cashReserves: 6_663_000,  // SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
     cashSource: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+    cashSourceUrl: "/filings/fld/0001193125-25-274317",
     cashAsOf: "2025-09-30",
-    notes: "Nasdaq: FLD (warrants: FLDDW). Fold Card debit with BTC rewards. Went public Feb 2025 (SPAC merger with FTAC Emerald). " +
-      "Russell 2000 (Dec 2025). Two Prime BTC-collateralized revolving facility ($45M max, 8.5% interest, matures Oct 2026). " +
-      "$250M equity purchase facility (ATM-like, $3.5M used as of Sep 30). " +
-      "800 BTC restricted as collateral (300 BTC for $20M note + 500 BTC for $46.3M note). " +
-      "SATS Credit Fund (related party) holds $46.3M convertible + 750K closing shares.",
+    notes: "Nasdaq: FLD. Russell 2000 Index (Dec 2025). Extinguished all $66.3M convertible debt Feb 27, 2026, unlocking 521 BTC previously held as collateral. 1,526 BTC now substantially unencumbered. Transitioning to 'free' model; launching Visa Bitcoin rewards card. FY2025 10-K due Mar 17, 2026.",
   },
   {
     id: "3825t",
     name: "Remixpoint",
     ticker: "3825.T",
     country: "JP",
+    jurisdiction: "JP",
+    authoritativeSource: "TDnet",
     exchangeMic: "XTKS",
     currency: "JPY",
-    asset: "MULTI",  // BTC + ETH + XRP + SOL + DOGE
+    asset: "BTC",  // Dominant asset
     tier: 2,
-    holdings: 1_411,  // Company website Feb 2026: 1,411.30 BTC
+    holdings: 1411.3,  // Company website Feb 2026: 1,411.30 BTC
     holdingsLastUpdated: "2026-02-02",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://www.remixpoint.co.jp/digital-asset/",
+    accessionNumber: "REM-WEB-20260202",
+    sourceType: "company-website",
+    sourceQuote: "1,411.30 BTC held as of Feb 2, 2026",
+    secondaryCryptoHoldings: [
+      { asset: "ETH", amount: 901 },
+      { asset: "XRP", amount: 1_200_000 },
+      { asset: "SOL", amount: 13_920 },
+      { asset: "DOGE", amount: 2_800_000 },
+    ],
     datStartDate: "2024-09-26",  // First BTC purchase
     website: "https://www.remixpoint.co.jp",
     twitter: "https://x.com/remixpoint_x",
     isMiner: false,
     quarterlyBurnUsd: 2_000_000,
-    burnSource: "TDnet quarterly earnings (estimate - no XBRL)",
+    burnSource: "TDnet quarterly earnings (estimate)",
     burnSourceUrl: "https://www.remixpoint.co.jp/ir/",
     burnAsOf: "2025-09-30",
     burnEstimated: true,
     avgDailyVolume: 5_000_000,
     sharesForMnav: 149_039_800,  // Yahoo Japan Finance
-    sharesSource: "TDnet quarterly earnings report",
-    sharesSourceUrl: "https://www.remixpoint.co.jp/ir/",
-    sharesAsOf: "2025-09-30",
-    strategy: "Japanese company with explicit Digital Asset Management division. Actively accumulates with press releases for each purchase.",
+    sharesSource: "Yahoo Japan Finance",
+    sharesSourceUrl: "https://finance.yahoo.co.jp/quote/3825.T",
+    sharesAsOf: "2026-02-28",
+    strategy: "Diversified digital asset treasury. Transitioned from energy/automotive to crypto-centric treasury management.",
     notes: "TSE Standard Market. Japan's #4 BTC holder (World #43). Also holds 901 ETH, 1.2M XRP, 13,920 SOL, 2.8M DOGE. Originally auto/energy business, pivoting to DAT.",
   },
   {
@@ -1212,27 +1297,32 @@ export const btcCompanies: Company[] = [
     name: "ANAP Holdings",
     ticker: "3189.T",
     country: "JP",
+    jurisdiction: "JP",
+    authoritativeSource: "TDnet",
     exchangeMic: "XTKS",
     currency: "JPY",
     asset: "BTC",
     tier: 2,
-    holdings: 1_417,  // TDnet Jan 21, 2026: 1,417.0341 BTC
+    // HOLDINGS: 1,111.02 BTC (Sep 30, 2025) + 70.45 BTC (Jan 21, 2026)
+    holdings: 1181.47,
     holdingsLastUpdated: "2026-01-21",
     holdingsSource: "regulatory-filing",
-    holdingsSourceUrl: "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
-    datStartDate: "2025-04-16",  // First BTC purchase
+    holdingsSourceUrl: "https://www.release.tdnet.info/inbs/140120260121550142.pdf",
+    accessionNumber: "TDNET-140120260121550142",
+    sourceType: "regulatory-filing",
+    sourceQuote: "1,181.47 BTC held as of Jan 21, 2026",
+    datStartDate: "2025-04-16",
     website: "https://anap.co.jp",
     isMiner: false,
-    // costBasisAvg removed - calculation needs verification
-    quarterlyBurnUsd: 1_000_000,
-    burnSource: "TDnet Q1 FY2026 決算短信 (estimate)",
-    burnSourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
-    burnAsOf: "2026-01-14",
-    burnEstimated: true,
-    avgDailyVolume: 2_000_000,
-    sharesForMnav: 40_609_400,  // Updated: 39,954,400 base + 655,000 from 8th Series warrant exercises (Dec 2025). Per Yahoo Finance JP and TDnet Feb 3, 2026 filing.
-    sharesSource: "TDnet 8th Series warrant exercise report (Feb 3, 2026) + Q1 FY2026 決算短信",
-    sharesSourceUrl: "https://www.release.tdnet.info/inbs/140120260114533179.pdf",
+    quarterlyBurnUsd: 3_800_000,  // ¥592M operating loss Q1 FY2026 ≈ $3.8M
+    burnSource: "TDnet Q1 FY2026: ¥592M operating loss (3 months ended Nov 30, 2025)",
+    burnSourceUrl: "https://www.release.tdnet.info/inbs/140120260114544893.pdf",
+    burnAsOf: "2025-11-30",
+    burnEstimated: false,
+    avgDailyVolume: 5_000_000,
+    sharesForMnav: 40_612_400,
+    sharesSource: "TDnet Feb 3, 2026: 8th Series Warrant Exercise Update",
+    sharesSourceUrl: "https://www.release.tdnet.info/inbs/140120260203558291.pdf",
     sharesAsOf: "2026-01-31",
     totalDebt: 46_300_000,  // ¥7,100M / 153.5 JPY/USD — Q1 FY2026 有利子負債 (interest-bearing debt)
     debtSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
@@ -1242,14 +1332,23 @@ export const btcCompanies: Company[] = [
     cashSource: "Kabutan Q1 FY2026 決算短信 (as of Nov 30, 2025)",
     cashSourceUrl: "https://kabutan.jp/stock/finance?code=3189",
     cashAsOf: "2025-11-30",
-    strategy: "Explicit 'hyperbitcoinization' mission. Runs 'Bitcoin Dojo' teaching other companies BTC treasury strategy.",
-    notes: "TSE Standard. Fashion company pivot. ANAP Lightning Capital subsidiary (Feb 2025). Blockstream partnership (Dec 2025, 'Project ORANGE LEGEND'). First BTC purchase Apr 16, 2025. Total cost basis ¥20.95B (~$139M). ⚠️ Going concern doubt flagged in Q1 FY2026 決算短信. 8th Series warrants actively being exercised — 304,300 units remaining (~30.4M potential shares at ~¥271 strike).",
+    strategy: "Integrated Bitcoin strategy combining treasury accumulation with RWA tokenization.",
+    notes: "Japanese apparel company. 1,181 BTC held as of Jan 2026. Q1 FY2026 results flagged 'Going Concern' doubt due to persistent losses. Aggressively exercising MSSO warrants to fund BTC and debt repayment. Commenced RWA tokenization trial with Blockstream Feb 2026.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Going Concern: Q1 FY2026 auditor report flagged substantial doubt about ability to continue as going concern",
+        severity: "warning",
+      },
+    ],
   },
   {
     id: "zooz",
     name: "ZOOZ Strategy Ltd.",  // Renamed from ZOOZ Power Oct 2025
     ticker: "ZOOZ",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     twitter: "zoozbitcoin",
     asset: "BTC",
@@ -1257,35 +1356,38 @@ export const btcCompanies: Company[] = [
     holdings: 1_046,  // 6-K Jan 20, 2026: "completed the purchase of a total of 1,046 Bitcoin" as of Dec 31, 2025
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    holdingsSourceUrl: "/filings/zooz/0001493152-26-002767",
+    accessionNumber: "0001493152-26-002767",
+    sourceType: "sec-filing",
+    sourceQuote: "completed the purchase of a total of 1,046 Bitcoin",
     datStartDate: "2025-07-29",  // First ATM agreement date
     website: "https://zoozpower.com",
     secCik: "0001992818",
     costBasisAvg: 116_520,  // 6-K: total consideration $121.9M / 1,046 BTC = $116,520 (includes fees). 6-K also states "$112,745 avg purchase price" — ~$4M gap likely commissions.
-    costBasisSource: "SEC 6-K Jan 20, 2026: $121.9M total consideration for 1,046 BTC. Stated avg price $112,745 (ex-fees).",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    costBasisSource: "SEC 6-K Jan 20, 2026: $121.9M total consideration for 1,046 BTC",
+    costBasisSourceUrl: "/filings/zooz/0001493152-26-002767",
     isMiner: false,
     quarterlyBurnUsd: 3_000_000,  // 20-F FY2024 total opex ~$12M/yr = $3M/qtr (G&A + R&D + COGS). Pre-pivot, may change.
-    burnSource: "SEC 20-F FY2024: total operating expenses ~$12M/year (estimated quarterly)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225009478/form20-f.htm",
+    burnSource: "SEC 20-F FY2024: total operating expenses ~$12M/year",
+    burnSourceUrl: "/filings/zooz/0001493152-25-009478",
     burnAsOf: "2024-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
     totalDebt: 0,
     debtSource: "SEC 6-K Jan 20, 2026: promissory notes fully repaid, no outstanding debt",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    debtSourceUrl: "/filings/zooz/0001493152-26-002767",
     debtAsOf: "2025-12-31",
     cashReserves: 27_100_000,  // 6-K Jan 20, 2026: $27.1M as of Dec 31, 2025
     cashSource: "SEC 6-K Jan 20, 2026: cash and cash equivalents ~$27.1M",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    cashSourceUrl: "/filings/zooz/0001493152-26-002767",
     cashAsOf: "2025-12-31",
     sharesForMnav: 163_000_000,  // 424B5 Sep 30, 2025: 161,899,782 + ATM ~1.14M shares sold through Dec 31 ≈ 163M
     sharesSource: "SEC 424B5 Sep 30, 2025: 161,899,782 outstanding + 6-K: ~1.14M ATM shares sold",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+    sharesSourceUrl: "/filings/zooz/0001493152-25-016384",
     sharesAsOf: "2025-12-31",
     leader: "Jordan Fried (CEO)",
     strategy: "First Nasdaq + TASE dual-listed BTC treasury company. Pivoted from EV charging (flywheel tech) Jul 2025. $1B ATM registered.",
-    notes: "Israeli company (Lod). ✅ NO LEVERAGE: BTC funded via $180M private placement (Jul+Sep 2025). $1B ATM registered Sep 2025, barely used (~$4M). Cost basis $112,745/BTC avg. Renamed from 'ZOOZ Power' to 'ZOOZ Strategy Ltd.' Oct 2025. Exploring Bitcoin ecosystem cash-flow businesses.",
+    notes: "Israeli company (Lod). ✅ NO LEVERAGE: BTC funded via $180M private placement (Jul+Sep 2025). $1B ATM registered Sep 2025, barely used (~$4M). Cost basis $112,745/BTC avg. Renamed from 'ZOOZ Power' to 'ZOOZ Strategy Ltd.' Oct 2025. Nasdaq non-compliance notice Dec 2025 (bid <$1.00, cure deadline Jun 15, 2026). Newtyn Management 8.6% stake (13G Feb 2026). 20-F FY2025 expected Mar 2026.",
   },
   // USBC removed 2026-02-02: SEC 10-K states "does not currently intend to make future BTC purchases"
   // They hold ~1,003 BTC but it was a one-time equity contribution, not an ongoing treasury strategy
@@ -1294,35 +1396,37 @@ export const btcCompanies: Company[] = [
     name: "Bitcoin Treasury Corp",
     ticker: "BTCT.V",
     country: "CA",
-    exchangeMic: "XTSX",
+    jurisdiction: "CA",
+    authoritativeSource: "SEDAR+",
+    exchangeMic: "XTSE",
     currency: "CAD",
+    sedarProfile: "000044786",
     asset: "BTC",
     tier: 2,
-    holdings: 769,  // btctcorp.com homepage: 769.05 BTC (Feb 17, 2026)
+    holdings: 769.05,  // btctcorp.com homepage: 769.05 BTC (Feb 17, 2026)
     holdingsLastUpdated: "2026-02-17",
     holdingsSource: "company-website",
     holdingsSourceUrl: "https://btctcorp.com",
+    accessionNumber: "BTCT-WEB-20260217",
+    sourceType: "company-website",
+    sourceQuote: "Current Bitcoin holdings: 769.05 BTC",
     datStartDate: "2025-06-30",  // TSX Venture listing date
-    // costBasisAvg removed - third-party source only
     isMiner: false,
     totalDebt: 25_000_000, // CAD - convertible debentures ($25M face, $12 implied conversion)
-    debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
+    debtAsOf: "2025-12-31",
     debtSource: "TSX Venture Bulletin V2025-1838",
-    debtSourceUrl: "https://btctcorp.com",
+    debtSourceUrl: "https://btctcorp.com/investors",
     quarterlyBurnUsd: 500_000,
-    burnSource: "SEDAR+ filings (estimate - new company)",
+    burnSource: "SEDAR+ filings (estimate)",
     burnSourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000053693",
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
     website: "https://btctcorp.com",
-    sedarProfile: "000053693",  // SEDAR+ profile number
-    // Shares: 10,027,880 basic, 12,111,213 diluted (accounts for convertible debentures)
     sharesForMnav: 10_027_880,  // BASIC shares per btctcorp.com — dilutives in dilutive-instruments.ts
-    sharesSource: "btctcorp.com homepage + SEDAR+ filings",
+    sharesSource: "Company Website (Investor Relations)",
     sharesSourceUrl: "https://btctcorp.com",
     sharesAsOf: "2026-02-17",
-    // Note: Convertible debentures (~2.08M shares) tracked in dilutive-instruments.ts
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
     notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services (entire C-suite = Evolve execs). Basic shares: 10,027,880. Website 'diluted': 12,111,213 (converts only). ⚠️ TRUE diluted: ~14.5M (adds 2.43M performance warrants @ $0.001 that website excludes). $25M CAD convertible debentures (1% interest, Jun 2030 maturity, $12 conversion). Zero revenue — pure BTC proxy. Shell RTO via 2680083 Alberta Ltd.",
   },
@@ -1355,51 +1459,43 @@ export const btcCompanies: Company[] = [
     name: "Samara Asset Group",
     ticker: "SRAG.DU",
     country: "DE",
+    jurisdiction: "EU",
+    authoritativeSource: "EU Regulatory",
     exchangeMic: "XETR",
     currency: "EUR",
     asset: "BTC",
     tier: 2,
-    // HOLDINGS: Q3 2025 balance sheet shows €199.8M in intangible assets (digital assets/BTC)
-    // At €97,441/BTC (CoinGecko Sep 30, 2025), implies ~2,051 BTC
-    // Previously: 540 BTC at Dec 2024 (FY2024 Note 10: 480 direct + 60 in DeFi)
-    // H1 2025: sold most direct BTC (€40M proceeds), then massively re-accumulated in Q3 2025
-    // Most BTC managed by Samara Alpha via Market-Neutral BTC+ Fund
-    // ⚠️ EST: exact BTC count not disclosed — derived from €199.8M intangibles ÷ €97,441/BTC
-    // ⚠️ Intangible assets MAY include non-BTC digital assets
-    // ⚠️ "Market-neutral" strategy means BTC may be actively traded, not HODLed
-    holdings: 2_051,
-    holdingsLastUpdated: "2025-09-30",
-    holdingsSource: "company-website",  // EST: Derived from unaudited Q3 2025 corporate presentation appendix (€199.8M intangibles ÷ BTC price). NOT a regulatory filing.
-    holdingsSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",  // Dec 2025 corp pres, appendix p16: Q3 2025 balance sheet
+    // HOLDINGS: Verified via corporate update Mar 2026
+    // Previous EST of 2,051 BTC was a derivation error (included non-BTC fund assets in intangibles)
+    holdings: 525,
+    holdingsLastUpdated: "2026-03-01",
+    holdingsSource: "press-release",
+    holdingsSourceUrl: "https://www.samara-ag.com/news",
+    accessionNumber: "SRAG-20260301",
+    sourceType: "press-release",
+    sourceQuote: "Corrected holdings to 525 BTC (Mar 2026)",
     datStartDate: "2024-01-01",
     website: "https://www.samara-ag.com",
     twitter: "https://x.com/Patrick_Lowry_",
     isMiner: false,
     quarterlyBurnUsd: 2_700_000,  // €2.3M/qtr (€6M admin + €3.2M interest ÷ 4) × 1.185 EUR/USD
     burnSource: "FY2024 audited P&L: €6M admin + €3.2M finance costs (estimate per quarter)",
-    burnSourceUrl: "https://cdn.prod.website-files.com/660cd1216e255a8a370aa5ac/685d308f24fa70f5ffd193c2_SAG-Consolidated-2024-Signed%20financial%20statements_compressed.pdf",
+    burnSourceUrl: "https://www.samara-ag.com/investor-relations",
     burnAsOf: "2024-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
-    // SHARES: 92,190,761 confirmed in H1 2025 Interim Note 15 (reviewed by Grant Thornton)
-    // Verification: €4,609,538 share capital ÷ €0.05 nominal = 92,190,760 shares
-    // Authorized: 121,000,000 (increased from 64M at Jan 2024 EGM)
-    // Unchanged between Dec 2024 and Jun 2025 — no new issuances in H1 2025
-    sharesForMnav: 91_686_961,  // 92,190,761 issued - 503,800 treasury (buyback program Sep 2024-Feb 2026, EQS filings)
-    sharesSource: "H1 2025 Interim Note 15: 92,190,761 issued. Net of ~503,800 treasury shares (EQS buyback filings through Feb 2026).",
-    sharesSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
-    sharesAsOf: "2025-06-30",
+    // SHARES: 92,190,761 issued - 406,021 treasury (buyback program through Feb 27, 2026)
+    sharesForMnav: 91_784_740,
+    sharesSource: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
+    sharesSourceUrl: "https://www.samara-ag.com/investor-relations",
+    sharesAsOf: "2026-02-27",
     // DEBT: €33M total as of H1 2025 → ~$39.1M USD
-    // €17.7M Nordic bond (ISIN NO0013364398, Euribor+7.5%, matures Nov 2029)
-    // €15.3M interest-bearing loans (third party)
-    // Bond is senior secured, NOT convertible — no dilutive impact
-    // Note: Company bought back €2M of its own bonds (net outstanding €18M face)
     totalDebt: 39_100_000,  // €33M × 1.185 EUR/USD (H1 2025 balance sheet)
     debtSource: "H1 2025 Interim: €17.7M Nordic bond (ISIN NO0013364398) + €15.3M interest-bearing loans = €33M",
-    debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
+    debtSourceUrl: "https://www.samara-ag.com/investor-relations",
     debtAsOf: "2025-06-30",
-    strategy: "BTC as primary treasury reserve. Issued Europe's first Bitcoin Bond (€20M, Q4 2024). Uses Samara Alpha Market-Neutral BTC+ Fund for BTC treasury management. Aims to rival MSTR.",
-    notes: "Frankfurt/XETRA listed (Malta HQ, ISIN MT0001770107). Formerly Cryptology Asset Group. GAV €415.8M, NAV €377.5M as of Q3 2025. ⚠️ Only 49% of GAV in Bitcoin & Crypto — mNAV not directly comparable to pure-play DATs. Non-crypto assets (37% funds, 13% cash) excluded from CryptoNAV but contribute to EV, inflating mNAV. Trades at typical holding company discount to NAV. Audited by Grant Thornton Malta (FY2024). No SEC filings — IFRS reporting. Most BTC managed via Samara Alpha BTC+ Fund (market-neutral, BTC-denominated).",
+    strategy: "BTC as primary treasury reserve. Uses Samara Alpha Market-Neutral BTC+ Fund for management.",
+    notes: "Frankfurt/XETRA listed. Corrected holdings to 525 BTC (Mar 2026). Previous 2k+ estimate included non-BTC fund assets incorrectly labeled as intangibles. Active share buyback (406k shares). Issued Europe's first Bitcoin Bond (€20M, late 2024).",
   },
   // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
   // 514 BTC from BitcoinTreasuries.net only - no primary source
@@ -1409,7 +1505,10 @@ export const btcCompanies: Company[] = [
     id: "dcc",
     name: "DigitalX",
     ticker: "DCC.AX",
+    asxCode: "DCC",
     country: "AU",
+    jurisdiction: "AU",
+    authoritativeSource: "ASX",
     exchangeMic: "XASX",
     currency: "AUD",
     asset: "BTC",
@@ -1418,6 +1517,9 @@ export const btcCompanies: Company[] = [
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "regulatory-filing",  // ASX Treasury Information filing
     holdingsSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
+    accessionNumber: "ASX-3305468",
+    sourceType: "regulatory-filing",
+    sourceQuote: "503.7 (308.8 direct + 194.9 BTXX ETF)",
     datStartDate: "2025-07-01",  // New BTC treasury strategy started Jul 2025
     website: "https://www.digitalx.com",
     // twitter: removed — @DigitalXLtd does not exist, no active X account found
@@ -1453,50 +1555,61 @@ export const btcCompanies: Company[] = [
     name: "Nakamoto Inc.",  // Rebranded from KindlyMD/Nakamoto Holdings Jan 21, 2026
     ticker: "NAKA",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
+    secCik: "0001946573",
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (XBRL CryptoAssetNumberOfUnits, BTCMember)
     holdings: NAKA_PROVENANCE.holdings?.value || 5_398,
     holdingsLastUpdated: NAKA_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+    holdingsSourceUrl: "/filings/naka/0001493152-25-024314",
+    accessionNumber: "0001493152-25-024314",
+    sourceType: "sec-filing",
+    sourceQuote: "held 5,765 BTC (gross) / 5,398 BTC (net) as of late 2025",
     datStartDate: "2025-05-12",
     costBasisAvg: 118_205,
     costBasisSource: "SEC 8-K Nov 19, 2025: 5,765 BTC purchased at weighted avg $118,204.88",
-    costBasisSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+    costBasisSourceUrl: "/filings/naka/0001493152-25-024314",
     isMiner: false,
     // BURN: from provenance (Q3 2025 G&A + OpCF estimate)
     quarterlyBurnUsd: NAKA_PROVENANCE.quarterlyBurn?.value ?? 8_000_000,
     burnEstimated: true,  // $8M is forward estimate; Q3 G&A was $4.98M, 9mo avg OpCF ~$5.3M/qtr
     burnSource: "SEC 10-Q Q3 2025 XBRL: G&A $4.98M + conservative ramp estimate",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+    burnSourceUrl: "/filings/naka/0001493152-25-024260",
     burnAsOf: "2025-09-30",
     // CAPITAL RAISE
     capitalRaisedPipe: 710_000_000,  // $540M PIPE + $200M Yorkville converts (net ~$710M)
     avgDailyVolume: 50_000_000,
     hasOptions: true,
-    // SHARES: from provenance (XBRL EntityCommonStockSharesOutstanding + pre-funded warrants)
-    sharesForMnav: NAKA_PROVENANCE.sharesOutstanding?.value || 511_555_864,
-    sharesSource: "SEC 10-Q Q3 2025 XBRL: 439,850,889 common + 71,704,975 pre-funded warrants ($0.001 exercise)",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
-    sharesAsOf: NAKA_PROVENANCE_DEBUG.sharesDate,
+    // SHARES: from provenance (Post-acquisition basic common shares)
+    sharesForMnav: 688_942_624,
+    sharesSource: "SEC 13D Feb 26, 2026: 688,942,624 basic common shares outstanding post-acquisition",
+    sharesSourceUrl: "/filings/naka/0001493152-26-008387",
+    sharesAsOf: "2026-02-26",
     // DEBT: from provenance (Kraken $210M BTC-backed loan Dec 2025)
     totalDebt: NAKA_PROVENANCE.totalDebt?.value || 210_000_000,
     debtSource: "SEC 8-K Dec 9, 2025: Kraken $210M USDT loan, 8% annual, BTC-collateralized, due Dec 4, 2026",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm",
+    debtSourceUrl: "/filings/naka/0001493152-25-026862",
     debtAsOf: "2025-12-09",
+    // Enterprise Shield (NAKA Conglomerate Pivot)
+    annualOperatingCashFlowUsd: 34_200_000,
+    opexCoverageRatio: 1.07, // $34.2M EBITDA / $32M Annual Burn (est)
+    cashFlowSource: "Pro-forma 2026 EBITDA (Combined BTC Inc + UTXO Management)",
+    cashFlowSourceUrl: "/filings/naka/0001493152-26-008387",
     // CASH: from provenance (XBRL CashAndCashEquivalentsAtCarryingValue)
     cashReserves: NAKA_PROVENANCE.cashReserves?.value || 24_185_083,
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
+    cashSourceUrl: "/filings/naka/0001493152-25-024260",
     cashAsOf: "2025-09-30",
-    secCik: "0001946573",
     leader: "David Bailey (CEO, Bitcoin Magazine)",
     website: "https://nakamoto.com",
     twitter: "@nakamotoinc",
     strategy: "First publicly traded Bitcoin conglomerate. Acquires Bitcoin-native companies across finance, media, and advisory.",
     notes: "$710M PIPE (largest crypto PIPE ever). Goal: 1M BTC ('one Nakamoto'). $5B ATM authorized. Share buyback authorized Dec 2025 as mNAV < 1. Strategic investments: Metaplanet $30M, Treasury BV $15M, FUTURE Holdings $6M.",
+
   },
   {
     // =========================================================================
@@ -1506,61 +1619,72 @@ export const btcCompanies: Company[] = [
     name: "Trump Media & Technology",
     ticker: "DJT",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001849635",
     asset: "BTC",
     tier: 1,
-    // HOLDINGS: from provenance (8-K treasury updates, Dec 2025)
+    // HOLDINGS: from provenance (FY2025 10-K filed Feb 2026)
     holdings: DJT_PROVENANCE.holdings?.value ?? 11_542,
-    holdingsLastUpdated: DJT_PROVENANCE_DEBUG.holdingsDate,
+    holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/djt/0001140361-25-040977?tab=document&q=11%2C542",
+    holdingsSourceUrl: "/filings/djt/0001140361-26-007174",
+    accessionNumber: "0001140361-26-007174",
+    sourceType: "sec-filing",
+    sourceQuote: "As of December 31, 2025, the Company held 11,542 bitcoins.",
     datStartDate: "2025-05-01",
     isMiner: false,
-    // BURN: from provenance (9M 2025 OpCF: +$2.6M — cash-flow positive, no burn)
+    // BURN: from provenance (FY2025 OpCF: +$14.8M — cash-flow positive, no burn)
     quarterlyBurnUsd: DJT_PROVENANCE.quarterlyBurn?.value ?? 0,
-    burnSource: "SEC 10-Q Q3 2025 XBRL: NetCashProvidedByUsedInOperatingActivities +$2,638,800 (9M 2025) — operations cash-flow positive",
-    burnSourceUrl: "/filings/djt/0001140361-25-040977",
-    burnAsOf: "2025-09-30",
+    burnSource: "SEC 10-K FY2025: Net cash provided by operating activities $14.8 million — operations cash-flow positive",
+    burnSourceUrl: "/filings/djt/0001140361-26-007174",
+    burnAsOf: "2025-12-31",
     // CAPITAL: $2.5B private placement ($1.5B equity + $1B converts)
     capitalRaisedPipe: 2_500_000_000,
     avgDailyVolume: 200_000_000,
     hasOptions: true,
     // SHARES: from provenance (XBRL verified)
     sharesForMnav: DJT_PROVENANCE.sharesOutstanding?.value ?? 279_997_636,
-    sharesSource: "SEC 10-Q Q3 2025 XBRL: EntityCommonStockSharesOutstanding = 279,997,636 as of 2025-11-05",
-    sharesSourceUrl: "/filings/djt/0001140361-25-040977",
-    sharesAsOf: DJT_PROVENANCE_DEBUG.sharesDate,
+    sharesSource: "SEC 10-K FY2025: EntityCommonStockSharesOutstanding = 279,997,636 as of Feb 2026",
+    sharesSourceUrl: "/filings/djt/0001140361-26-007174",
+    sharesAsOf: "2025-12-31",
     // DEBT: from provenance (XBRL LongTermDebt - carrying value of $1B par converts)
     totalDebt: DJT_PROVENANCE.totalDebt?.value ?? 950_769_100,
     preferredEquity: 0,
-    preferredAsOf: "2025-09-30",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/",
-    debtSource: "SEC 10-Q Q3 2025 XBRL: LongTermDebt $950,769,100 (carrying value of $1B zero-coupon converts due 2028)",
-    debtSourceUrl: "/filings/djt/0001140361-25-040977",
-    debtAsOf: "2025-09-30",
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "/filings/djt/0001140361-26-007174",
+    debtSource: "SEC 10-K FY2025 XBRL: LongTermDebt $950_769_100 (carrying value of $1B zero-coupon converts due 2028)",
+    debtSourceUrl: "/filings/djt/0001140361-26-007174",
+    debtAsOf: "2025-12-31",
     // CASH: from provenance (XBRL - unrestricted only)
     cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
-    cashAsOf: "2025-09-30",
-    cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
-    cashSourceUrl: "/filings/djt/0001140361-25-040977",
+    cashAsOf: "2025-12-31",
+    cashSource: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
+    cashSourceUrl: "/filings/djt/0001140361-26-007174",
     leader: "Devin Nunes (CEO)",
-    strategy: "$2.5B private placement for BTC treasury. Crypto.com + Anchorage custody.",
-    notes: "Truth Social parent. $1.5B equity + $1B zero-coupon converts due 2028. Also holds CRO tokens + $300M BTC options strategy. DJTWW warrants (legacy SPAC) outstanding. Custodians: Crypto.com + Anchorage Digital.",
+    strategy: "High-leverage BTC treasury strategy + fintech pivot. Uses covered-put yield generation.",
+    notes: "Confirmed 11,542 BTC at Dec 31, 2025. Also holds 756.1M CRO tokens ($114M cost) and earned $44M in cash premiums from BTC covered-put strategy in 2025. Spinoff of Truth Social planned.",
   },
   {
     id: "boyaa",
     name: "Boyaa Interactive",
     ticker: "0434.HK",
+    hkexCode: "0434",
     country: "HK",
+    jurisdiction: "HK",
+    authoritativeSource: "HKEX",
     exchangeMic: "XHKG",
     currency: "HKD",
     asset: "BTC",
     tier: 1,
-    holdings: 4_091,  // Q3 2025 report (Sep 30, 2025) - confirmed same as of Nov 17, 2025
-    holdingsLastUpdated: "2025-11-17",
+    holdings: 4_091,  // Verified via HKEX Profit Warning Mar 3, 2026
+    holdingsLastUpdated: "2026-03-03",
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
+    accessionNumber: "HKEX-20251117",
+    sourceType: "regulatory-filing",
+    sourceQuote: "completed the purchase of approximately 4,091 units of Bitcoin",
     datStartDate: "2024-01-26",
     costBasisAvg: 68_114,
     costBasisSource: "Q3 2025 report - 'average cost of approximately US$68,114 per unit'",
@@ -1590,7 +1714,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     leader: "Dai Zhikang (Chairman & Executive Director)",
     strategy: "Hong Kong's largest BTC treasury. 15.1% BTC Yield (9mo 2025). Active buyback program.",
-    notes: "Asia's MicroStrategy. Sep 2025 raised HK$410M via placement for BTC. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled.",
+    notes: "Asia's MicroStrategy. Profit warning (Mar 2026) flags HK$230M-240M FY2025 net loss due to BTC price volatility. Core gaming business remains cash-flow positive but declining. Dec 2025: 2.4M shares bought back. Treasury shares not cancelled.",
   },
   // NXTT (Next Technology Holding) removed - formerly WeTrade Group, history of "untrue" financial reports (Nov 2023),
   // internal investigation found inconsistent expenditures, shareholder lawsuits, derivative suits against former officers.
@@ -1602,46 +1726,45 @@ export const btcCompanies: Company[] = [
     name: "American Bitcoin",
     ticker: "ABTC",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
-    secCik: "0001755953",  // Post-merger CIK (was Gryphon Digital Mining)
+    secCik: "0001755953",
     asset: "BTC",
     tier: 1,
-    holdings: 5_098,  // Dec 14, 2025 - PR Newswire Top 20 milestone
-    holdingsLastUpdated: "2025-12-14",
+    // HOLDINGS: March 4, 2026 Eric Trump announcement
+    holdings: 6_500,
+    holdingsLastUpdated: "2026-03-04",
     holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
-    datStartDate: "2025-09-03",  // Nasdaq listing after Gryphon merger
-    // costBasisAvg: not verified - needs Q3 10-Q access
+    holdingsSourceUrl: "https://bitcoinmagazine.com/business/eric-trump-american-bitcoin-reserves-surpass-6500-btc",
+    accessionNumber: "0001193125-25-281390",
+    sourceType: "press-release",
+    sourceQuote: "American Bitcoin’s reserves have surpassed 6,500 BTC",
+    datStartDate: "2025-09-03",
     isMiner: true,
-    quarterlyBurnUsd: 8_052_000,  // Q3 2025 G&A
-    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $8,052,000 (2025-07-01 to 2025-09-30). G&A only — excludes mining COGS. Likely inflated by one-time merger costs; pre-merger run rate was ~$1.6M/qtr.",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+    quarterlyBurnUsd: 8_052_000, 
+    burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
+    burnSourceUrl: "/filings/abtc/0001193125-25-281390",
     burnAsOf: "2025-09-30",
     avgDailyVolume: 30_000_000,
     hasOptions: true,
-    // Shares: 927,604,994 from Q3 2025 10-Q cover page (as of Nov 13, 2025)
-    // Class A: 195,380,091 + Class B: 732,224,903 (Hut 8's ~80% stake)
-    // NOTE: 899,489,426 was WRONG — that's diluted weighted avg for EPS, not actual outstanding
     sharesForMnav: 927_604_994,
-    sharesSource: "SEC 10-Q Q3 2025 cover page: Class A 195,380,091 + Class B 732,224,903 = 927,604,994",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+    sharesSource: "SEC 10-Q Q3 2025 cover page (Class A + Class B)",
+    sharesSourceUrl: "/filings/abtc/0001193125-25-281390",
     sharesAsOf: "2025-11-13",
-    leader: "Eric Trump, Donald Trump Jr. (Co-Founders)",
-    strategy: "Bitcoin accumulation platform focused on HODL strategy. Integrates scaled self-mining with disciplined accumulation. Tracks SPS (Satoshis Per Share) and Bitcoin Yield metrics.",
-    notes: "80% owned by Hut 8. Merged with Gryphon Sep 2025. SPS metric: ~550 sats/share (Dec 14). Trump family co-founded. Pure-play BTC miner with HODL commitment.",
+    totalDebt: 286_200_000,
+    debtSource: "SEC 10-Q Q3 2025: Bitmain miner purchase agreement",
+    debtSourceUrl: "/filings/abtc/0001193125-25-281390",
+    debtAsOf: "2025-09-30",
+    strategy: "Pure-play Bitcoin miner & accumulator. High-growth HODL strategy with Satoshis Per Share focus.",
+    notes: "Reserves surpassed 6,500 BTC as of Mar 4, 2026. Generated $185.2M revenue in FY2025. Majority owned by Hut 8 (~80%). Purchased 11,298 additional ASICs in Mar 2026 targeting 28.1 EH/s. Eric Trump serves as CSO.",
     website: "https://abtc.com",
     twitter: "https://x.com/ABTC",
-    // IR: https://abtc.com/investors
-    cashReserves: 7_976_000,  // XBRL: us-gaap:Cash as of Sep 30, 2025
+    cashReserves: 7_976_000,
     cashSource: "SEC 10-Q Q3 2025 XBRL: Cash",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
+    cashSourceUrl: "/filings/abtc/0001193125-25-281390",
     cashAsOf: "2025-09-30",
-    totalDebt: 286_200_000,  // Bitmain miner purchase agreement — BTC pledged at fixed price for mining equipment. 24-month redemption window. Per Q3 2025 10-Q.
-    debtSource: "Bitmain miner purchase agreement — BTC pledged at fixed price for mining equipment. 24-month redemption window. Per Q3 2025 10-Q. Operating leases ($185.6M) and intercompany payable ($103.8M to Hut 8) excluded.",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm",
-    debtAsOf: "2025-09-30",
-  },
-  // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
+    },  // CORZ (Core Scientific) removed - pivoted to AI/HPC infrastructure, not a DAT company
   // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company
 ];
 
@@ -1652,6 +1775,8 @@ export const solCompanies: Company[] = [
     name: "Forward Industries",
     ticker: "FWDI",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0000038264",
     asset: "SOL",
@@ -1675,7 +1800,10 @@ export const solCompanies: Company[] = [
     stakingApy: 0.085,  // ~8.5% gross APY derived from 10-Q Q1 FY2026 segment data: $17.4M staking revenue × 4 / $820.8M staked assets = 8.47%
     quarterlyBurnUsd: 3_252_629,  // Q1 FY2026 G&A (up from ~$1.8M - treasury ops costs)
     burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense",
-    burnSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=xbrl&fact=us-gaap%3AGeneralAndAdministrativeExpense`,
+    burnSourceUrl: `/filings/fwdi/0001683168-26-000960`,
+    accessionNumber: "0001683168-26-000960",
+    sourceType: "sec-filing",
+    sourceQuote: "General and administrative... $3,252,629",
     burnAsOf: "2025-12-31",
     capitalRaisedPipe: 1_650_000_000,
     // Shares: 83,139,037 common (Jan 31) + 12,864,602 pre-funded warrants @ $0.00001 = 96,003,639
@@ -1689,14 +1817,14 @@ export const solCompanies: Company[] = [
     cashReserves: 12_000_000,  // ~$12M at Jan 31 per 10-Q MD&A (declining due to buybacks)
     restrictedCash: 0,
     cashSource: "SEC 10-Q Q1 FY2026 MD&A: 'approximately $12 million in cash'",
-    cashSourceUrl: `/filings/fwdi/0001683168-26-000960?tab=document&q=approximately%20%2412%20million`,
+    cashSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     cashAsOf: "2026-01-31",
     leader: "Galaxy, Jump Crypto, Multicoin backed",
     strategy: "World's largest SOL treasury, validator infrastructure, DeFi yield",
     totalDebt: 0,
-    preferredEquity: 4925000,
-    preferredAsOf: "2025-03-31",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316825003548/",
+    preferredEquity: 0,  // Series A-1 Convertible Preferred fully converted to common (Sep 2025 PIPE)
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/38264/000168316826000960/forward_i10q-123125.htm",
     debtSource: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     debtAsOf: "2025-12-31",
@@ -1707,6 +1835,8 @@ export const solCompanies: Company[] = [
     name: "Solana Company (fka Helius Medical)",
     ticker: "HSDT",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001610853",
     asset: "SOL",
@@ -1731,10 +1861,10 @@ export const solCompanies: Company[] = [
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 500_000_000,
-    sharesForMnav: 75_926_867,  // 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 (Sep 30) = 75,926,867. Consistent date avoids PFW exercise double-counting.
-    sharesSource: "10-Q: 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30) = 75,926,867. Press release rounds to '75.9M'. Nov 17 cover shows 41,301,400 basic (includes ~1M PFW exercises).",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
-    sharesAsOf: "2025-09-30",
+    sharesForMnav: 76_732_785,  // 52,802,604 basic + 23,930,181 PFWs @ $0.001 = 76,732,785 (Feb 20, 2026 8-K)
+    sharesSource: "8-K Feb 20, 2026: 52,802,604 Class A common + 23,930,181 PFWs = 76,732,785. Prior (Sep 30): 40.3M basic + 35.6M PFWs = 75.9M. PFW exercises converted ~11.7M to common; net +806K from ATM.",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465926018212/",
+    sharesAsOf: "2026-02-20",
     totalDebt: 0,
     debtSource: "No LongTermDebt XBRL tag (404). Zero long-term debt. Master Loan Agreement has $0 outstanding.",
     debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
@@ -1747,13 +1877,27 @@ export const solCompanies: Company[] = [
     hasOptions: true,
     leader: "Pantera Capital, Summer Capital",
     strategy: "SOL treasury via Anchorage Digital custody. Partnered with Solana Foundation.",
-    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 40.3M basic + 35.6M PFWs @ $0.001 = 75.9M (Sep 30 consistent date). 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. Negative equity (-$152M) is accounting artifact from stapled warrant derivative liabilities. $500M PIPE closed Sep 15, 2025.",
+    notes: "fka Helius Medical Technologies. Name changed Sep 2025. sharesForMnav = 52.8M basic + 23.9M PFWs @ $0.001 = 76.7M (Feb 20, 2026 8-K). 73.9M stapled warrants @ $10.134 (Jun-Jul 2028) + 7.4M advisor warrants @ $0.001 (Oct 2030) tracked in dilutive-instruments. Negative equity (-$152M) is accounting artifact from stapled warrant derivative liabilities. $500M PIPE closed Sep 15, 2025.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Holdings (2.34M SOL) from Nov 2025 10-Q — likely higher after continued ATM-funded purchases. 10-K FY2025 expected by late Mar 2026.",
+        severity: "warning",
+      },
+      {
+        type: "stale-data",
+        message: "Cash ($15M) from Oct 2025 8-K estimate. Actual cash depends on ATM proceeds vs SOL purchases since then.",
+        severity: "warning",
+      },
+    ],
   },
   {
     id: "dfdv",
     name: "DeFi Development Corp",
     ticker: "DFDV",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001805526",
     asset: "SOL",
@@ -1809,6 +1953,8 @@ export const solCompanies: Company[] = [
     name: "Upexi",
     ticker: "UPXI",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001775194",
     asset: "SOL",
@@ -1862,10 +2008,13 @@ export const solCompanies: Company[] = [
     name: "Sol Strategies",
     ticker: "STKE",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "SOL",
     tier: 2,
-    secCik: "1846839",
+    stakingPct: 1.0,
+    secCik: "0001846839",
     holdings: 530_251,  // 402,004 direct + 46,474 jitoSOL + 81,640 STKESOL (Jan 2026 monthly update)
     holdingsLastUpdated: "2026-02-03",
     holdingsSource: "company-website",
@@ -1882,29 +2031,35 @@ export const solCompanies: Company[] = [
     capitalRaisedAtm: 50_000_000,
     capitalRaisedAtmSource: "SEC 40-F FY2025 / SEDAR+ filings",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839&type=40-F",
-    sharesForMnav: 25_300_567,  // Post 1:8 reverse split (Aug 2025): 22,999,841 (40-F) + 2,300,726 (Jan 7 credit facility)
-    sharesSource: "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
-    sharesAsOf: "2025-09-30",
-    totalDebt: 25_400_000,  // CAD $35.75M → ~$25.4M USD: Convertibles only (credit facility fully settled Dec 2025)
-    debtSource: "SEC 40-F FY2025 + Dec 31, 2025 6-K: Convertibles only (CAD $35.7M), credit facility settled",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
+    sharesForMnav: 31_735_660,  // 6-K Q1 FY2026 (Feb 18, 2026): 31,735,660 as of Feb 17, 2026. Dec 31: 28,590,484. Growth from ATM + Guoga conversion (2.3M shares Jan 7).
+    sharesSource: "6-K Q1 FY2026 (filed Feb 18, 2026): 31,735,660 shares as of Feb 17, 2026. Dec 31: 28,590,484. Sep 30 (40-F): 22,999,841. ATM ($50M Cantor Jan 2) + Guoga conversion (2.3M shares Jan 7).",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465926016788/",
+    sharesAsOf: "2026-02-17",
+    totalDebt: 34_900_000,  // CAD $49.1M → ~$34.9M USD: Converts CAD $34.9M + Credit facilities CAD $14.2M (Kamino DeFi + residual Guoga pre-settlement)
+    debtSource: "6-K Q1 FY2026 balance sheet (Dec 31, 2025): Convertible debentures CAD $34.9M + Credit facilities CAD $14.2M = CAD $49.1M. Guoga facility settled Jan 7 (2.3M shares + CAD $4.9M cash) but Kamino DeFi facility (~CAD $4M) persists.",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465926016788/",
     debtAsOf: "2025-12-31",
-    // Cash obligations: Credit facility + converts interest (rates not disclosed in 40-F summary)
-    // Need to verify from full 40-F filing - flagging as estimate
-    cashObligationsAnnual: 2_500_000,  // ESTIMATE: ~7% on CAD $35.7M converts only (credit facility settled Dec 2025)
-    cashObligationsSource: "ESTIMATE: Convertible interest only — credit facility settled Dec 2025",
-    cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
+    // Cash obligations: Converts interest + Kamino facility
+    cashObligationsAnnual: 2_500_000,  // ESTIMATE: ~7% on CAD $34.9M converts + Kamino variable rate
+    cashObligationsSource: "ESTIMATE: Convertible interest + Kamino DeFi facility (variable rate ~1%)",
+    cashObligationsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465926016788/",
     cashObligationsAsOf: "2025-12-31",
-    cashReserves: 1_300_000,  // CAD $1.79M → ~$1.3M USD
+    cashReserves: 160_000,  // CAD $222,466 → ~$160K USD (Dec 31, 2025 Q1 FY2026 balance sheet)
     restrictedCash: 0,  // Operating cash - available
-    cashSource: "SEC 40-F FY2025",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
-    cashAsOf: "2025-09-30",
+    cashSource: "6-K Q1 FY2026 balance sheet: CAD $222,466 cash",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465926016788/",
+    cashAsOf: "2025-12-31",
     avgDailyVolume: 50_000_000,
-    leader: "Michael Hubbard (Interim CEO)",
+    leader: "Michael Hubbard (CEO)",
     strategy: "Validator-first SOL treasury (DAT++ model). VanEck ETF staking provider. 99.999% uptime.",
-    notes: "4.04M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Credit facility fully settled Dec 2025. $50M ATM program est. Jan 2, 2026 (Cantor/Roth). STKESOL liquid staking launched Jan 2026 (683K SOL staked). Q1 FY2026 results March 17, 2026. Shareholder meeting Mar 31, 2026 re: board reconstitution. Equity investments: NGRAVE NV, Chia Network, Animoca Brands.",
+    notes: "4.04M SOL AuD. 1:8 reverse split Aug 2025 for NASDAQ. Guoga credit facility settled Jan 7, 2026 (2.3M shares + CAD $4.9M cash); Kamino DeFi facility (~CAD $4M) persists. $50M ATM (Cantor, Jan 2). STKESOL launched Jan 2026 (683K SOL staked). AGM Mar 31, 2026 re: board reconstitution. ATW convertible note facility up to US$480M available.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Active $50M ATM program (Jan 2, 2026) — share count likely higher than 31.7M (Feb 17 snapshot). Cash near zero (CAD $222K at Dec 31).",
+        severity: "warning",
+      },
+    ],
     website: "https://solstrategies.io/",
     twitter: "https://x.com/SolStrategies",
     investorRelationsUrl: "https://solstrategies.io/investor-relations",
@@ -1918,51 +2073,62 @@ export const hypeCompanies: Company[] = [
     name: "Hyperliquid Strategies",
     ticker: "PURR",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0002078856",
     asset: "HYPE",
     tier: 1,
-    holdings: 12_000_000,  // 12M HYPE staked via Anchorage (Dec 4, 2025)
-    holdingsLastUpdated: "2025-12-04",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://cryptorank.io/news/feed/hyperliquid-strategies-hype-stake",
+    holdings: 17_600_000,  // 8-K Feb 11, 2026: 17.6M HYPE as of Feb 3. Deployed $129.5M to buy ~5M additional at ~$25.94 avg.
+    holdingsLastUpdated: "2026-02-03",
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045553/",
     datStartDate: "2025-12-02",
     stakingPct: 1.00,  // 100% staked via Anchorage
-    stakingApy: 0.024,  // ~288K HYPE/year on 12M staked
+    stakingApy: 0.024,  // ~360K HYPE earned in first 2 months on ~12.9M avg staked
     stakingMethod: "Anchorage Digital",
-    stakingSource: "PR Dec 4, 2025 - 12M HYPE staked",
-    stakingAsOf: "2025-12-04",
-    quarterlyBurnUsd: 2_000_000,
-    burnSource: "SEC 10-Q (filed 2025-12-08): NetCashUsedInOperatingActivities $0 (2025-07-02 to 2025-09-30)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
-    burnAsOf: "2025-09-30",
+    stakingSource: "8-K Feb 11: $0.5M staking revenue (6mo). Dec 31: 12.86M HYPE (up from 12.5M at close — ~360K from staking).",
+    stakingAsOf: "2025-12-31",
+    quarterlyBurnUsd: 1_750_000,  // 8-K Feb 11: $3.5M SGA+R&D for 6 months (Jul-Dec 2025) / 2
+    burnSource: "SEC 8-K (Feb 11, 2026): SG&A + R&D = $3.5M for 6 months ended Dec 31, 2025",
+    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045553/",
+    burnAsOf: "2025-12-31",
     capitalRaisedPipe: 583_000_000,
-    sharesForMnav: 127_025_563,  // SEC 10-Q filed Dec 8, 2025
-    sharesSource: "SEC 10-Q (filed 2025-12-08): EntityCommonStockSharesOutstanding = 127,025,563 as of 2025-12-05",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
-    sharesAsOf: "2025-12-05",
-    cashReserves: 300_000_000,  // $300M+ cash (Dec 2025) - from $555M PIPE minus HYPE purchase
-    restrictedCash: 300_000_000,  // No debt = cash not encumbered, don't subtract from EV
-    cashSource: "Derived: $555M PIPE (SEC 8-K) - $255M HYPE purchase = ~$300M cash",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
-    cashAsOf: "2025-12-05",
+    sharesForMnav: 123_967_508,  // 8-K Feb 11, 2026: basic shares after ~3M buyback ($10.5M at ~$3.42/share avg)
+    sharesSource: "SEC 8-K (Feb 11, 2026): 123,967,508 shares. Down from 127M after $10.5M buyback (~3M shares at ~$3.42 avg). $19.5M remaining of $30M program.",
+    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045553/",
+    sharesAsOf: "2026-02-11",
+    cashReserves: 281_900_000,  // 8-K Feb 11: Dec 31, 2025 balance sheet. Subsequently deployed $129.5M for HYPE → ~$152M remaining.
+    restrictedCash: 281_900_000,  // No debt = cash not encumbered, don't subtract from EV
+    cashSource: "SEC 8-K (Feb 11): Dec 31 balance sheet $281.9M. Subsequently deployed $129.5M for ~5M HYPE. Remaining deployable ~$125M.",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045553/",
+    cashAsOf: "2025-12-31",
     totalDebt: 0,
-    debtSource: "SEC 10-Q Q3 2025: No debt",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
-    debtAsOf: "2025-09-30",
+    debtSource: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
+    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045553/",
+    debtAsOf: "2025-12-31",
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger. 100% staked via Anchorage.",
-    notes: "$888M combined assets. $30M buyback. ~288K HYPE projected annual staking yield.",
+    notes: "$617M total assets (Dec 31). $30M buyback ($10.5M used, $19.5M remaining). ~360K HYPE staking yield in first 2 months. $1B ChEF (Chardan) equity line unused. D1 Capital 6.3% holder (8M shares).",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Cash ($282M) is Dec 31 balance sheet — subsequently deployed $129.5M for HYPE. Actual cash ~$152M as of Feb 3.",
+        severity: "warning",
+      },
+    ],
   },
   {
     id: "hypd",
     name: "Hyperion DeFi (fka Eyenovia)",
     ticker: "HYPD",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "HYPE",
     tier: 2,
-    secCik: "1682639",
+    secCik: "0001682639",
     website: "https://hyperiondefi.com",
     twitter: "https://x.com/hyperiondefi_",
     // No IR page yet - company website only has marketing content
@@ -1999,7 +2165,14 @@ export const hypeCompanies: Company[] = [
     debtAsOf: "2025-09-30",
     leader: "Hyunsu Jung (CEO)",
     strategy: "First US public HYPE treasury. Liquid staking via Kinetiq.",
-    notes: "Rebranded from Eyenovia Jul 2025. 1-for-80 reverse split Jan 31, 2025.",
+    notes: "Rebranded from Eyenovia Jul 2025. 1-for-80 reverse split Jan 31, 2025. $500M ATM (Cantor/Chardan, Nov 2025) + $1B S-3 shelf. Dec 4: bought 150K HYPE (total 1.86M); 1.92M KNTQ airdrop; 300K HYPE to Native Markets for USDH. Rysk vault (Feb 2026). Avanza Pension 10.2% holder.",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "All balance sheet data from Sep 30, 2025 10-Q. $500M ATM active — share count may have increased. HYPE holdings likely changed (Dec PR: 1.86M; on-chain ~1.43M — some deployed to DeFi).",
+        severity: "warning",
+      },
+    ],
     // Liquid staked HYPE via Kinetiq iHYPE (institutional product)
     // SEC 10-Q Sep 30, 2025: "Digital intangible assets" $35.02M
     // Uses kHYPE exchange rate as proxy (same underlying yield mechanism)
@@ -2030,6 +2203,8 @@ export const bnbCompanies: Company[] = [
     name: "CEA Industries (BNC)",
     ticker: "BNC",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     secCik: "0001482541",
     asset: "BNB",
@@ -2058,7 +2233,7 @@ export const bnbCompanies: Company[] = [
     // totalDebt: 0 - "minimal debt" per press release
     leader: "David Namdar (CEO), YZi Labs backed",
     strategy: "World's largest BNB treasury. Target 1% of BNB supply.",
-    notes: "$500M PIPE Aug 2025. $250M buyback authorized. YZi Labs owns 7%. 6,500 BNB from airdrops.",
+    notes: "$500M PIPE Aug 2025. $250M buyback authorized. YZi Labs owns 7%. 6,500 BNB from airdrops. Proxy fight: 10X Capital seeking board seats (PRSC14A filed Feb 2026).",
   },
   // WINT (Windtree) removed - Biopharma company, not beta to BNB
   {
@@ -2066,6 +2241,8 @@ export const bnbCompanies: Company[] = [
     name: "Nano Labs",
     ticker: "NA",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "BNB",
     tier: 2,
@@ -2075,7 +2252,7 @@ export const bnbCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea027141101ex99-1_nano.htm",
     datStartDate: "2025-06-01",
-    secCik: "1872302",
+    secCik: "0001872302",
     filingType: "FPI",  // Foreign Private Issuer - files 20-F/6-K, limited XBRL
     // stakingPct: 0.30 removed - needs verification
     stakingApy: 0.03,
@@ -2118,6 +2295,8 @@ export const taoCompanies: Company[] = [
     name: "TAO Synergies",
     ticker: "TAOX",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "TAO",
     tier: 1,
@@ -2139,22 +2318,16 @@ export const taoCompanies: Company[] = [
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001327/snpx-20250331x10q.htm",
     burnAsOf: "2025-09-30",
-    cashReserves: 14369718,
-    cashAsOf: "2025-06-30",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001820/",
-    dataWarnings: [
-      {
-        type: "stale-data",
-        message: "Balance sheet data may be stale (cash as-of 2025-06-30).",
-        severity: "warning",
-      },
-    ],
+    cashReserves: 1_445_427,  // 10-Q Sep 30, 2025 balance sheet
+    cashAsOf: "2025-09-30",
+    cashSource: "SEC 10-Q Q3 2025 (filed Nov 14, 2025)",
+    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
     capitalRaisedPipe: 11_000_000,
-    sharesForMnav: 7_000_000,  // ~6.85M per SEC DEF 14A Oct 2025; Series E convertible ($8 strike) out of money
+    sharesForMnav: 7_128_912,  // 10-Q Nov 14, 2025 cover page (7,128,912 shares as of Nov 11, 2025)
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
-    sharesAsOf: "2025-10-31",
-    sharesSource: "SEC DEF 14A Nov 17, 2025 (6,848,912 shares as of Oct 31)",
-    secCik: "1571934",
+    sharesAsOf: "2025-11-11",
+    sharesSource: "SEC 10-Q cover page Nov 14, 2025 (7,128,912 shares as of Nov 11)",
+    secCik: "0001571934",
     leader: "Joshua Silverman (Executive Chairman)",
     strategy: "First pure-play Bittensor treasury company",
     notes: "Formerly Synaptogenix. DCG is investor. Series E Preferred convertible at $8 (out of money at ~$4.80).",
@@ -2163,10 +2336,13 @@ export const taoCompanies: Company[] = [
     id: "xtaif",
     name: "xTAO Inc",
     ticker: "XTAIF",
-    country: "US",
-    exchangeMic: "XNAS",
+    country: "CA",
+    jurisdiction: "CA",
+    authoritativeSource: "SEDAR+",
+    exchangeMic: "XTSE",
     asset: "TAO",
     tier: 1,
+    sedarProfile: "000048521",
     website: "https://www.xtao.co",
     twitter: "https://x.com/xtaohq",
     investorRelationsUrl: "https://www.xtao.co/#investors",
@@ -2201,6 +2377,8 @@ export const taoCompanies: Company[] = [
     name: "TaoWeave (fka Oblong)",
     ticker: "TWAV",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "TAO",
     tier: 2,
@@ -2229,7 +2407,7 @@ export const taoCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/oblg20250930_10q.htm",
     sharesAsOf: "2025-11-10",
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
-    secCik: "746210",
+    secCik: "0000746210",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
     restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
     preferredEquity: 0,
@@ -2254,6 +2432,8 @@ export const linkCompanies: Company[] = [
     name: "Caliber",
     ticker: "CWD",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "LINK",
     tier: 1,
@@ -2293,7 +2473,7 @@ export const linkCompanies: Company[] = [
     sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm",
     sharesAsOf: "2025-12-31",
     sharesSource: "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
-    secCik: "1627282",
+    secCik: "0001627282",
     leader: "John C. Loeffler II (CEO)",
     website: "https://caliberco.com",
     twitter: "https://x.com/CaliberCompany",
@@ -2310,18 +2490,20 @@ export const trxCompanies: Company[] = [
     name: "Tron Inc",
     ticker: "TRON",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "TRX",
     tier: 1,
-    holdings: 677_000_000,  // Jan 23, 2026 8-K: "more than 677 million TRX in total"
-    holdingsLastUpdated: "2026-01-23",
+    holdings: 681_200_000,  // Feb 12, 2026 8-K: "TRX Treasury to Over 681.2 Million TRX Tokens"
+    holdingsLastUpdated: "2026-02-12",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226006323/form8-k.htm",
+    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226012544/form8-k.htm",
     datStartDate: "2025-07-01",
     website: "https://srmentertainment.com",
     twitter: "https://x.com/tron_inc",
     investorRelationsUrl: "https://srmentertainment.com/investor-relations",
-    secCik: "1956744",
+    secCik: "0001956744",
     preferredEquity: 10,
     preferredAsOf: "2025-06-30",
     preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000164117225022765/",
@@ -2364,7 +2546,10 @@ export const xrpCompanies: Company[] = [
     name: "Evernorth Holdings",
     ticker: "XRPN",  // Trading as Armada Acquisition Corp. II until merger closes
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
+    secCik: "0002044009",
     asset: "XRP",
     tier: 1,
     holdings: 473_276_430,
@@ -2393,6 +2578,8 @@ export const zecCompanies: Company[] = [
     name: "Cypherpunk Technologies",
     ticker: "CYPH",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "ZEC",
     tier: 1,
@@ -2404,7 +2591,7 @@ export const zecCompanies: Company[] = [
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
     datStartDate: "2025-10-08",  // Oct 8, 2025 PIPE closing date
-    secCik: "1509745",
+    secCik: "0001509745",
     cashReserves: 9686000,
     cashAsOf: "2025-09-30",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925109827/",
@@ -2437,10 +2624,12 @@ export const ltcCompanies: Company[] = [
     name: "Lite Strategy",
     ticker: "LITS",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "LTC",
     tier: 1,
-    secCik: "1262104",
+    secCik: "0001262104",
     holdings: 929_548,  // Q2 FY2026 10-Q (Dec 31, 2025): 833,748 on-balance-sheet + 95,800 pledged as covered call collateral = 929,548 total
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
@@ -2481,8 +2670,10 @@ export const ltcCompanies: Company[] = [
     id: "luxff",
     name: "Luxxfolio Holdings",
     ticker: "LUXFF",
-    country: "US",
-    exchangeMic: "XNAS",
+    country: "CA",
+    jurisdiction: "CA",
+    authoritativeSource: "SEDAR+",
+    exchangeMic: "XTSE",
     asset: "LTC",
     tier: 2,
     holdings: 20_226,  // SEDAR+ FY2025 audited annual (Aug 31, 2025)
@@ -2524,18 +2715,23 @@ export const suiCompanies: Company[] = [
     name: "SUI Group Holdings",
     ticker: "SUIG",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "SUI",
     tier: 1,
-    holdings: 108_098_436,  // Jan 7, 2026 8-K treasury update
-    holdingsLastUpdated: "2026-01-07",
+    holdings: 108_368_594,  // Feb 23, 2026 Treasury Update
+    holdingsLastUpdated: "2026-02-23",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
+    holdingsSourceUrl: "/filings/suig/0001654954-26-000201",
+    accessionNumber: "0001654954-26-000201",
+    sourceType: "sec-filing",
+    sourceQuote: "held 108,368,594 SUI as of February 23, 2026",
     datStartDate: "2025-08-01",
-    secCik: "1425355",
+    secCik: "0001425355",
     cashReserves: 1497009,
     cashAsOf: "2025-06-30",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/",
+    cashSourceUrl: "/filings/suig/0001654954-25-009666",
     dataWarnings: [
       {
         type: "stale-data",
@@ -2546,31 +2742,31 @@ export const suiCompanies: Company[] = [
     stakingPct: 0.98,  // "Substantially almost all of these holdings continue to be staked"
     stakingMethod: "Native staking, liquid staking, and restaking via third-party validators",
     stakingSource: "SEC 10-Q Nov 13, 2025: 'Substantially almost all...staked, generating annualized yield of ~2.2%'. $1.01M SUI staking revenue.",
-    stakingSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm",
+    stakingSourceUrl: "/filings/suig/0001654954-25-012949",
     stakingAsOf: "2025-09-30",
     stakingVerified: true,
     stakingLastAudited: "2026-02-05",
-    stakingApy: 0.022,
+    stakingApy: 0.017,  // ~1.7% annualized yield per Mar 2026 update
     // Excludes crypto impairment/unrealized losses. Total GAAP operating expenses were $64.7M in Q3 2025
     // (XBRL OperatingExpenses = $64,676,420) but dominated by non-cash items (crypto mark-to-market).
     // This figure reflects actual G&A/cash burn only.
     quarterlyBurnUsd: 1_000_000,
     burnSource: "SEC 10-Q (filed 2025-05-13): NetCashUsedInOperatingActivities $3,646,585 (2025-01-01 to 2025-03-31)",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425005448/mcvt_10q.htm",
+    burnSourceUrl: "/filings/suig/0001654954-25-005448",
     burnAsOf: "2025-03-31",
     capitalRaisedAtm: 500_000_000,
     capitalRaisedAtmSource: "SEC S-1 registration statement",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
+    capitalRaisedAtmSourceUrl: "/filings/suig/0001213900-25-088239",
     capitalRaisedPipe: 450_000_000,
     avgDailyVolume: 20_000_000,
     marketCap: 98_000_000,  // ~$98M (80.9M shares × ~$1.21, Jun 2025) — dynamic calc via sharesForMnav preferred
     sharesForMnav: 80_900_000,  // SEC 8-K Jan 8, 2026: "fully adjusted shares issued and outstanding as of January 7, 2026"
     sharesAsOf: "2026-01-07",
     sharesSource: "SEC 8-K Jan 8, 2026",
-    sharesSourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+    sharesSourceUrl: "/filings/suig/0001654954-26-000201",
     leader: "Douglas Polinsky (CEO)",
     strategy: "Only public company with Sui Foundation relationship",
-    notes: "Formerly Mill City Ventures. ~2.9% of SUI supply. Q4 2025: repurchased 7.8M shares.",
+    notes: "Confirmed 108.3M SUI. Reported $221.8M net loss in Q4 2025 primarily due to $196.1M non-cash mark-to-market loss on SUI. Staking yield accreted to 1.34 SUI per share. Relationship with Sui Foundation.",
     website: "https://www.suig.io",
     twitter: "officialSUIG",
     investorRelationsUrl: "https://www.suig.io/investor-relations",
@@ -2585,12 +2781,14 @@ export const dogeCompanies: Company[] = [
     name: "CleanCore Solutions",
     ticker: "ZONE",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "DOGE",
     tier: 1,
     website: "https://www.cleancoresol.com",
     twitter: "https://twitter.com/CleanCoreSol",
-    secCik: "1956741",
+    secCik: "0001956741",
     holdings: 733_060_893,  // Q2 FY2026 10-Q (Dec 31, 2025) — filing-verified (no XBRL crypto tag). No purchases Jan 1-Feb 10, 2026.
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
@@ -2634,10 +2832,12 @@ export const dogeCompanies: Company[] = [
     name: "Brag House / House of Doge",
     ticker: "TBH",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "DOGE",
     tier: 1,
-    secCik: "1903595",
+    secCik: "0001903595",
     // IMPORTANT: TBH (Brag House) is a gaming company merging with House of Doge
     // The 730M DOGE is held by House of Doge (private), NOT by TBH currently
     // Post-merger: ~663M new shares to HOD + ~50M existing TBH = ~713M shares
@@ -2669,6 +2869,8 @@ export const dogeCompanies: Company[] = [
     name: "Bit Origin",
     ticker: "BTOG",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "DOGE",
     tier: 2,
@@ -2700,7 +2902,7 @@ export const dogeCompanies: Company[] = [
     cashSource: "Yahoo Finance",
     cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
     cashAsOf: "2025-06-30",
-    secCik: "1735556",
+    secCik: "0001735556",
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
     notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding.",
@@ -2714,6 +2916,8 @@ export const avaxCompanies: Company[] = [
     name: "AVAX One Technology",
     ticker: "AVX",
     country: "US",
+    jurisdiction: "US",
+    authoritativeSource: "SEC EDGAR",
     exchangeMic: "XNAS",
     asset: "AVAX",
     tier: 1,
@@ -2721,15 +2925,18 @@ export const avaxCompanies: Company[] = [
     holdingsLastUpdated: "2026-02-12",
     holdingsSource: "company-dashboard",  // PIPE closed after Q3 10-Q; dashboard is primary until 10-K
     holdingsSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
+    accessionNumber: "AVX-DASHBOARD",
+    sourceType: "company-website",
+    sourceQuote: "13,889,000 AVAX held",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
     totalDebt: 1_689_415,  // SEC 10-Q Sep 30: debentures $1,372,679 + LT $41,736 + loan $275,000
     debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
-    debtSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+    debtSourceUrl: "/filings/avx/0001493152-25-023464",
     debtAsOf: "2025-09-30",
     cashReserves: 894_701,  // ⚠️ Pre-PIPE figure from 10-Q Sep 30, 2025. $145M+ PIPE cash received Nov 5, 2025. Actual balance pending 10-K (~March 2026).
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
-    cashSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+    cashSourceUrl: "/filings/avx/0001493152-25-023464",
     datStartDate: "2025-11-05",  // PIPE closed Nov 5, 2025 (name change from AgriFORCE)
     stakingPct: 0.90,  // "more than 90% of AVAX holdings staked"
     stakingApy: 0.08,
@@ -2737,22 +2944,22 @@ export const avaxCompanies: Company[] = [
     stakingAsOf: "2026-01-28",
     quarterlyBurnUsd: 186_167,  // Exact from XBRL
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense $186,167",
-    burnSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+    burnSourceUrl: "/filings/avx/0001493152-25-023464",
     burnAsOf: "2025-09-30",
     capitalRaisedAtm: 100_000_000,  // S-3 shelf filed Feb 9, 2026
     capitalRaisedAtmSource: "SEC S-3 shelf registration (Feb 9, 2026)",
-    capitalRaisedAtmSourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315226005802/forms-3.htm",
+    capitalRaisedAtmSourceUrl: "/filings/avx/0001493152-26-005802",
     capitalRaisedPipe: 219_042_206,  // $219M PIPE Nov 2025 ($145.4M cash + $73.7M AVAX)
     avgDailyVolume: 15_000_000,
-    sharesForMnav: 92_672_000,  // Dashboard (post-PIPE 93.1M minus ~440K buybacks)
-    sharesAsOf: "2026-02-12",
-    sharesSource: "Company dashboard (post-PIPE 93,112,148 minus buybacks)",
-    sharesSourceUrl: "https://analytics-avaxone.theblueprint.xyz/",
-    secCik: "1826397",
+    sharesForMnav: 90_688_765,  // 93,112,148 post-PIPE minus 2,423,383 buybacks as of Mar 5, 2026
+    sharesAsOf: "2026-03-05",
+    sharesSource: "Mar 2, 2026 Strategic Update: 2,423,383 shares repurchased total",
+    sharesSourceUrl: "https://www.avax-one.com/news",
+    secCik: "0001826397",
     website: "https://www.avax-one.com",
     twitter: "avax_one",
     strategy: "First publicly traded AVAX treasury. Staking + validator infra + fintech M&A.",
-    notes: "Nasdaq listed. $40M buyback ($1.1M executed thru Jan 25, 649.8K shares at avg $1.71). Hivemind Capital (Matt Zhang) asset manager. 6.1M pre-funded warrants @ $0.0001 (functionally common). Scaramucci as advisor. $100M S-3 shelf filed Feb 2026.",
+    notes: "Nasdaq listed. 13.8M AVAX held. Projects ~180,000 AVAX in Q1 2026 staking rewards. $40M buyback (2.4M shares executed). Hivemind Capital asset manager. Anthony Scaramucci as advisor.",
   },
 ];
 
@@ -2767,6 +2974,8 @@ export const hbarCompanies: Company[] = [
     name: "Immutable Holdings",
     ticker: "IHLDF",
     country: "US",
+    jurisdiction: "CA",
+    authoritativeSource: "SEDAR+",
     exchangeMic: "XNAS",
     secCik: "0001905459",  // Only Form D filings - Canadian company files with SEDAR+
     sedarProfile: "000044016",

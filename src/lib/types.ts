@@ -61,6 +61,20 @@ export type CompanyType = "Treasury" | "Miner";
 // Stock currency (for non-USD exchanges)
 export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL" | "GBP" | "NOK" | "KRW" | "AED" | "AUD";
 
+// Debt instrument type
+export type DebtType = "convertible" | "bond" | "loan" | "credit-facility";
+
+export interface DebtInstrument {
+  ticker: string;
+  type: DebtType;
+  maturityDate: string; // ISO date
+  couponRate: number;   // Annual interest rate (e.g., 0.0075 for 0.75%)
+  faceValue: number;    // Principal amount in USD
+  source: string;       // e.g., "8-K Dec 2024"
+  sourceUrl: string;    // Link to primary source
+  notes?: string;
+}
+
 // Base company interface
 export interface Company {
   id: string;
@@ -69,6 +83,8 @@ export interface Company {
 
   // Listing metadata (agent-native routing)
   country?: string;        // ISO 3166-1 alpha-2 when known (e.g., "US", "CA", "JP").
+  jurisdiction?: 'US' | 'JP' | 'CA' | 'HK' | 'UK' | 'EU' | 'AU' | 'OTHER';
+  authoritativeSource?: string; // e.g., 'SEC EDGAR', 'TDnet', 'SEDAR+'
   exchangeMic?: string;    // ISO 10383 MIC when known (e.g., "XNAS", "XNYS", "XTSE").
 
   currency?: StockCurrency;  // Stock trading currency (default: USD). Used for price display conversion.
@@ -85,8 +101,10 @@ export interface Company {
   tokenizedChain?: string; // Which chain the token is on
   logoUrl?: string;
   
-  // Regulatory identifiers (Canadian)
+  // Regulatory identifiers (International)
   sedarProfile?: string;    // SEDAR+ profile number (Canadian companies)
+  asxCode?: string;         // ASX Ticker (e.g. "DCC")
+  hkexCode?: string;        // HKEX Code (e.g. "0777")
   cusip?: string;           // CUSIP identifier
   isin?: string;            // International Securities Identification Number
 
@@ -95,7 +113,6 @@ export interface Company {
   costBasisSource?: string;
   costBasisSourceUrl?: string;
   costBasisAsOf?: string;  // ISO date the cost basis is calculated from
-  stakingPct?: number;
   stakingApy?: number;
   stakingMethod?: string;
   stakingSource?: string;      // Source for staking percentage (SEC filing, PR, etc.)
@@ -167,11 +184,24 @@ export interface Company {
   // Leverage/optionality (for non-yielding assets)
   leverageRatio?: number; // > 1 means company uses debt/converts to amplify exposure
 
+  // Enterprise Shield Framework (Cash Flow & Valuation)
+  // Used for companies with operating businesses that "shield" the treasury
+  annualOperatingCashFlowUsd?: number; // Recurring AOCF/EBITDA (USD)
+  opexCoverageRatio?: number;          // AOCF / Annual Burn (Ratio > 1.0 is "Shielded")
+  enterpriseValueExCrypto?: number;    // Market Cap + Debt - Cash - Crypto NAV
+  cashFlowSource?: string;             // e.g., "Pro-forma 2026 EBITDA"
+  cashFlowSourceUrl?: string;
+
   // Holdings tracking
   holdingsLastUpdated?: string; // ISO date when holdings were last verified
   holdingsSource?: HoldingsSource; // Where the holdings data came from
   holdingsSourceUrl?: string; // Direct link to the source (SEC filing, press release, etc.)
   secReferenced?: boolean; // True if non-SEC source is referenced in SEC filings (legal accountability)
+
+  // Citation metadata (links data to specific document + quote)
+  accessionNumber?: string;        // SEC accession number (XXXXXXXXXX-YY-ZZZZZZ) for primary holdings source
+  sourceType?: HoldingsSource;     // Alias for holdingsSource on citation (sec-filing, regulatory-filing, etc.)
+  sourceQuote?: string;            // Verbatim quote from the cited document containing the holdings value
   
   // Provenance tracking (detailed audit trail)
   holdingsAccession?: string;     // SEC accession number for holdings source
@@ -222,6 +252,9 @@ export interface Company {
   // When set, use this instead of calculating mNAV
   officialMnav?: number;
 
+  // Staking details
+  stakingPct?: number;            // Percentage of treasury currently staked (0.0 - 1.0)
+
   // Data warnings for pending filings/events that may affect accuracy
   dataWarnings?: DataWarning[];
 
@@ -242,6 +275,8 @@ export interface Company {
   // D1 overlay metadata (set by applyD1Overlay)
   holdingsBasis?: HoldingsBasis;   // How holdings were resolved (native, USD÷price, static)
   _d1Fields?: string[];            // Which balance-sheet fields were sourced from D1 (dev debug)
+  confidenceScores?: Record<string, number | null>; // Confidence per metric (e.g., holdings_native)
+  multiHoldings?: Record<string, number>; // asset -> amount (e.g., {"BTC": 100, "ETH": 500})
 }
 
 // Secondary crypto holding for multi-asset treasury companies
@@ -294,6 +329,33 @@ export interface MnavCalculation {
   };
   enterpriseValue: number;
   cryptoNav: number;
+}
+
+export interface HoldingsSnapshot {
+  date: string;
+  holdings: number;
+  sharesOutstanding: number;
+  holdingsPerShare: number;
+  source?: string;
+  sourceUrl?: string;
+  sourceType?: HoldingsSource;
+  accessionNumber?: string;
+  sourceQuote?: string;
+  confidence?: "high" | "medium" | "low";
+  confidenceScore?: number; // Numeric score (0.0-1.0)
+  artifactId?: string;
+  datapointId?: string;
+  stockPrice?: number;
+  cash?: number;
+  totalDebt?: number;
+  preferredEquity?: number;
+  methodology?: string;
+}
+
+export interface CompanyHoldingsHistory {
+  ticker: string;
+  asset: string;
+  history: HoldingsSnapshot[];
 }
 
 // Live price data
@@ -360,6 +422,7 @@ export interface EarningsRecord {
   // Metadata
   source: EarningsSource;
   sourceUrl?: string;
+  accessionNumber?: string;           // SEC filing accession number
   earningsCallUrl?: string;           // Link to earnings call webcast/registration
   status: EarningsStatus;
   isEstimated?: boolean;              // True if holdings/shares are dashboard estimates, not SEC-verified
