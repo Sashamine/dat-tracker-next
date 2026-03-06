@@ -20,14 +20,18 @@ export function MobileCardSkeleton() {
           <div className="w-12 h-4 skeleton rounded ml-auto" />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+      <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
-          <div className="w-10 h-3 skeleton rounded mb-1" />
+          <div className="w-12 h-3 skeleton rounded mb-1" />
           <div className="w-12 h-5 skeleton rounded" />
         </div>
         <div>
           <div className="w-16 h-3 skeleton rounded mb-1" />
           <div className="w-14 h-5 skeleton rounded" />
+        </div>
+        <div>
+          <div className="w-16 h-3 skeleton rounded mb-1" />
+          <div className="w-16 h-5 skeleton rounded" />
         </div>
         <div>
           <div className="w-14 h-3 skeleton rounded mb-1" />
@@ -54,7 +58,7 @@ export function TableSkeleton() {
       <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
         {/* Header */}
         <div className="h-12 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-800 flex items-center px-4 gap-4">
-          {[40, 40, 120, 60, 80, 80, 80, 80, 80, 100, 100, 80].map((w, i) => (
+          {[40, 40, 140, 60, 120, 80, 100, 90].map((w, i) => (
             <div key={i} className="skeleton rounded" style={{ width: w, height: 16 }} />
           ))}
         </div>
@@ -71,14 +75,9 @@ export function TableSkeleton() {
               <div className="w-24 h-3 skeleton rounded" />
             </div>
             <div className="w-10 h-5 skeleton rounded" />
-            <div className="w-12 h-5 skeleton rounded" />
-            <div className="w-12 h-4 skeleton rounded" />
-            <div className="w-14 h-5 skeleton rounded" />
-            <div className="w-12 h-4 skeleton rounded" />
-            <div className="w-14 h-4 skeleton rounded" />
-            <div className="w-16 h-4 skeleton rounded" />
+            <div className="w-16 h-5 skeleton rounded" />
             <div className="w-20 h-5 skeleton rounded" />
-            <div className="w-14 h-4 skeleton rounded" />
+            <div className="w-14 h-5 skeleton rounded" />
           </div>
         ))}
       </div>

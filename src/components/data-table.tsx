@@ -639,8 +639,13 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden lg:border-0">
       {filteredCompanies.length === 0 ? (
-        <div className="p-8 text-center text-gray-500">
-          No companies match the current filters.
+        <div className="p-8 text-center">
+          <p className="text-gray-700 dark:text-gray-200 font-medium">
+            No companies match the current HPS leaderboard filters.
+          </p>
+          <p className="mt-1 text-sm text-gray-500">
+            Clear one or more filters to repopulate the 90-day holdings-per-share rankings.
+          </p>
         </div>
       ) : (
         <>
