@@ -55,6 +55,7 @@ function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {
 
 function HomeContent() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [visibleSummary, setVisibleSummary] = useState<{ visibleCount: number; visibleTreasuryValue: number } | null>(null);
   const { data: prices, isConnected } = usePricesStream();
   const { assets, companyTypes, minMarketCap, maxMarketCap, minMNAV, maxMNAV, search } = useFilters();
 
@@ -103,6 +104,8 @@ function HomeContent() {
   const assetStats = getAssetStats(d1Companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
   const totalCompanies = d1Companies.length;
+  const isFiltered = activeFilterCount > 0;
+  const visibleCount = visibleSummary?.visibleCount ?? totalCompanies;
 
   // Use shared mNAV stats hook - single source of truth
   const mnavStats = useMNAVStats(d1Companies, prices);
@@ -137,6 +140,11 @@ function HomeContent() {
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
               </p>
+              {!isLoadingCompanies && isFiltered && (
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Showing {visibleCount} of {totalCompanies} companies
+                </p>
+              )}
               <p className="mt-1 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
                 Ranked by 90-day adjusted holdings-per-share growth so dilution-adjusted treasury execution shows up first.
               </p>
@@ -198,6 +206,11 @@ function HomeContent() {
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
                 </p>
+                {!isLoadingCompanies && isFiltered && (
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Showing {visibleCount} of {totalCompanies} companies
+                  </p>
+                )}
                 <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
                   Default ranking: 90D AHPS growth.
                 </p>
@@ -239,12 +252,22 @@ function HomeContent() {
                   {/* Mobile: Pull to refresh wrapper */}
                   <div className="lg:hidden">
                     <PullToRefresh onRefresh={handleRefresh}>
-                      <DataTable companies={d1Companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
+                      <DataTable
+                        companies={d1Companies}
+                        prices={prices ?? undefined}
+                        yesterdayMnav={yesterdayMnav}
+                        onVisibleSummaryChange={setVisibleSummary}
+                      />
                     </PullToRefresh>
                   </div>
                   {/* Desktop: No pull to refresh */}
                   <div className="hidden lg:block">
-                    <DataTable companies={d1Companies} prices={prices ?? undefined} yesterdayMnav={yesterdayMnav} />
+                    <DataTable
+                      companies={d1Companies}
+                      prices={prices ?? undefined}
+                      yesterdayMnav={yesterdayMnav}
+                      onVisibleSummaryChange={setVisibleSummary}
+                    />
                   </div>
                 </>
               )}
