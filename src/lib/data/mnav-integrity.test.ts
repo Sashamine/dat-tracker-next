@@ -1702,3 +1702,70 @@ describe("Check 40: Debt without dilution acknowledgment", () => {
     // expect(violations).toHaveLength(0);
   });
 });
+
+// ─────────────────────────────────────────────────────────────
+// Check 41: Source quote vs holdings cross-validation
+//
+// The sourceQuote field contains a verbatim excerpt from the cited
+// source document. If holdings doesn't match any number extractable
+// from sourceQuote, either the holdings or the quote is wrong.
+// This is what caught the XRPN 520M vs 473M discrepancy — the D1
+// pipeline overwrote holdings without updating the source citation.
+// ─────────────────────────────────────────────────────────────
+describe("Check 41: Source quote vs holdings cross-validation", () => {
+  it("holdings should match a number in sourceQuote", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const quote = (company as any).sourceQuote as string | undefined;
+      if (!quote) continue;
+      if (company.holdings === 0) continue;
+      if (company.pendingMerger && company.holdings === 0) continue;
+
+      // Extract all numbers from the quote (handle commas, decimals, abbreviations)
+      // Match patterns like "681.2 Million", "48 million", "17.6M", "31,500"
+      // Avoid matching "BTC", "Bitcoin", "BRL" etc as "B" multiplier
+      const numberPatterns = /[\d,]+\.?\d*\s*(?:million|billion)?/gi;
+      const rawMatches = quote.match(numberPatterns);
+      if (!rawMatches?.length) continue;
+
+      // Also check for abbreviated forms: "17.6M" but NOT "17.6M BTC" where M is millions
+      const abbrMatches = quote.match(/[\d,]+\.?\d*\s*[MB](?=\s|$|[^A-Za-z])/g) || [];
+
+      const allMatches = [...rawMatches, ...abbrMatches];
+      const quoteNumbers = allMatches.map((raw) => {
+        const numStr = raw.replace(/,/g, "").trim();
+        let value = parseFloat(numStr);
+        if (/million/i.test(raw) || /M$/i.test(raw)) value *= 1_000_000;
+        if (/billion/i.test(raw) || /B$/i.test(raw)) value *= 1_000_000_000;
+        return value;
+      }).filter((n) => n > 0);
+
+      if (quoteNumbers.length === 0) continue;
+
+      // Check if holdings matches any extracted number within 1%
+      const matchFound = quoteNumbers.some((qn) => {
+        const deviation = Math.abs(qn - company.holdings) / Math.max(qn, company.holdings);
+        return deviation < 0.01;
+      });
+
+      if (!matchFound) {
+        violations.push(
+          `${company.ticker}: holdings (${company.holdings.toLocaleString()}) does not match ` +
+            `any number in sourceQuote "${quote}" → extracted [${quoteNumbers.join(", ")}]. ` +
+            `Either holdings or the citation is wrong.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== SOURCE QUOTE MISMATCH ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // HARD fail target — if holdings doesn't match the cited source, something is wrong.
+    // Currently soft while 6 stale quotes are fixed:
+    // BTCS, FGNX, XXI, MARA, DJT, STKE
+    // TODO: make hard once quotes are updated
+    // expect(violations).toHaveLength(0);
+  });
+});
