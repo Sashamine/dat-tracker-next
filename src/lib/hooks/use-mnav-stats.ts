@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import { Company } from "@/lib/types";
-// Import and re-export server-safe getCompanyMNAV for backwards compatibility
-import { getCompanyMNAV, type PricesData } from "@/lib/utils/mnav-calculation";
+// Use the centralized mNAV engine — single source of truth
+import { getCompanyMNAV, type PricesData } from "@/lib/math/mnav-engine";
 export { getCompanyMNAV, type PricesData };
 
 export interface MNAVStats {
