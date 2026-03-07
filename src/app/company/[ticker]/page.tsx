@@ -236,6 +236,20 @@ export default function CompanyPage() {
   // D1 metric history (batch)
   const { data: metricHistory } = useCompanyMetricHistory(ticker, [...HISTORY_D1_METRICS], 12, 'desc');
 
+  // Prefer company from allCompanies (same source as main page) for consistency
+  // Fall back to separately fetched company if not found
+  const companyFromAllCompanies = allCompanies.find(c => c.ticker === ticker);
+  const displayCompany = companyFromAllCompanies || company;
+
+  // Determine average confidence for the audit summary
+  // NOTE: Must be above the early return to avoid Rules of Hooks violation
+  const avgConfidence = useMemo(() => {
+    if (!displayCompany?.confidenceScores) return null;
+    const scores = Object.values(displayCompany.confidenceScores).filter(s => s !== null) as number[];
+    if (scores.length === 0) return null;
+    return scores.reduce((a, b) => a + b, 0) / scores.length;
+  }, [displayCompany?.confidenceScores]);
+
   // Wait for BOTH data sources to load to ensure consistency with main page
   if (isLoadingCompany || isLoadingCompanies) {
     return (
@@ -247,19 +261,6 @@ export default function CompanyPage() {
       </div>
     );
   }
-
-  // Prefer company from allCompanies (same source as main page) for consistency
-  // Fall back to separately fetched company if not found
-  const companyFromAllCompanies = allCompanies.find(c => c.ticker === ticker);
-  const displayCompany = companyFromAllCompanies || company;
-
-  // Determine average confidence for the audit summary
-  const avgConfidence = useMemo(() => {
-    if (!displayCompany?.confidenceScores) return null;
-    const scores = Object.values(displayCompany.confidenceScores).filter(s => s !== null) as number[];
-    if (scores.length === 0) return null;
-    return scores.reduce((a, b) => a + b, 0) / scores.length;
-  }, [displayCompany?.confidenceScores]);
 
   if (!displayCompany) {
     return (
