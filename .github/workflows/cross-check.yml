@@ -7,13 +7,22 @@ on:
       - 'src/lib/data/provenance/**'
       - 'src/lib/data/*-holdings-history.ts'
       - 'src/lib/data/dilutive-instruments.ts'
+      - 'src/lib/data/debt-instruments.ts'
       - 'src/lib/data/earnings-data.ts'
+      - 'src/lib/data/market-cap-overrides.ts'
+      - 'src/lib/data/assumptions.ts'
+      - 'src/lib/utils/mnav-calculation.ts'
+      - 'src/lib/math/**'
+      - 'src/lib/d1-normalization.ts'
       - 'scripts/cross-check-data.ts'
   push:
     branches: [main]
     paths:
       - 'src/lib/data/companies.ts'
       - 'src/lib/data/provenance/**'
+      - 'src/lib/data/dilutive-instruments.ts'
+      - 'src/lib/data/market-cap-overrides.ts'
+      - 'src/lib/utils/mnav-calculation.ts'
 
 permissions:
   contents: read
