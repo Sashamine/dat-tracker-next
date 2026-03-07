@@ -145,13 +145,17 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
   const companiesWithMetrics = companies.map((company) => {
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
     const stockData = prices?.stocks[company.ticker];
-    const stockPrice = stockData?.price;
+    const yesterdayData = yesterdayMnav?.[company.ticker];
+    // Use live price when available, fall back to yesterday's closing price
+    const livePrice = stockData?.price;
+    const stockPrice = (livePrice && livePrice > 0) ? livePrice : (yesterdayData?.stockPrice || 0);
+    // Build effective stock data for market cap calculation, using fallback price
+    const effectiveStockData = (livePrice && livePrice > 0) ? stockData : stockData ? { ...stockData, price: stockPrice } : { price: stockPrice, marketCap: 0, volume: 0, change24h: 0 };
     // Use same market cap that's used for mNAV calculation (shares × price)
     // This ensures tooltip EV matches the actual mNAV calculation
-    const marketCapResult = getMarketCapForMnavSync(company, stockData, prices?.forex);
+    const marketCapResult = getMarketCapForMnavSync(company, effectiveStockData, prices?.forex);
     const marketCap = marketCapResult.marketCap;
     // True 24hr change using yesterday's price (not Yahoo's "from previous close")
-    const yesterdayData = yesterdayMnav?.[company.ticker];
     const stockChange = yesterdayData?.stockPrice && stockPrice && yesterdayData.stockPrice > 0
       ? ((stockPrice - yesterdayData.stockPrice) / yesterdayData.stockPrice) * 100
       : stockData?.change24h; // fallback to Yahoo if no yesterday data
@@ -210,11 +214,9 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const mnavWarnings = mnavResult.warnings;
     
     // Calculate ACTUAL mNAV change using yesterday's measured mNAV
-    // Only show when we have a real live stock price (0 = no data, not a real drop)
     let mNAVChange: number | null = null;
-    const yesterday = yesterdayMnav?.[company.ticker];
-    if (mNAV && stockPrice && stockPrice > 0 && yesterday?.mnav && yesterday.mnav > 0) {
-      mNAVChange = ((mNAV / yesterday.mnav) - 1) * 100;
+    if (mNAV && mNAV > 0 && yesterdayData?.mnav && yesterdayData.mnav > 0) {
+      mNAVChange = ((mNAV / yesterdayData.mnav) - 1) * 100;
     }
 
     // Determine company type
