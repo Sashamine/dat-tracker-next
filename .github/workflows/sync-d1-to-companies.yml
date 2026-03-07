@@ -1,0 +1,55 @@
+name: sync-d1-to-companies
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 08:00 UTC
+
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Sync D1 latest metrics to companies.ts
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DRY_RUN: 'false'
+        run: npx tsx scripts/sync-d1-to-companies.ts
+
+      - name: Create PR if changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "data: sync companies.ts from D1 latest metrics"
+          title: "data: sync companies.ts from D1 latest metrics"
+          body: |
+            Automated weekly sync of D1 extracted values → companies.ts.
+
+            The SEC auto-update pipeline writes extraction results to D1 hourly.
+            This PR syncs those values back to companies.ts so the git source of
+            truth stays current.
+
+            **Review the diff** to verify changes look correct before merging.
+            **Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          branch: data/sync-d1-companies
+          delete-branch: true
+          add-paths: |
+            src/lib/data/companies.ts
