@@ -3021,11 +3021,24 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
-  // OBTC3 (Bitcoin Banco S.A.) - Brazilian BTC treasury
-  // TODO: Convertible debenture exists but terms still blocked.
-  // Latest accessible market announcement implies 6,966,760 incremental shares on conversion:
-  //   162,267,260 fully adjusted shares - 155,300,500 shares outstanding outside treasury = 6,966,760.
-  // Do not add strikePrice / faceValue / expiration until actual debenture filing is accessible.
+  // OBTC3 (OranjeBTC S.A.) - Brazilian BTC treasury
+  // Convertible debenture held by Parafi Capital (US)
+  // R$ 128.16M face value, zero interest, 5-year term, no covenants
+  // Conversion: 6,966,760 shares → R$ 18.40/share conversion price
+  // USD values at R$ 5.15/USD (Mar 1, 2026 filing FX rate)
+  "OBTC3": [
+    {
+      type: "convertible",
+      strikePrice: 3.57, // R$ 18.40 / 5.15 = $3.57 USD conversion price
+      potentialShares: 6_966_760,
+      faceValue: 24_886_408, // R$ 128,160,000 / 5.15 = ~$24.89M USD
+      issuedDate: "2025-10-01", // Pre-listing, Oct 2025 per press reports
+      expiration: "2030-10-01", // 5-year term
+      source: "NeoFeed Feb 2026 + B3 market announcements (R$128M zero-interest 5yr with Parafi Capital)",
+      sourceUrl: "https://neofeed.com.br/negocios/o-preco-da-tese-cripto-na-b3-oranjebtc-perde-quase-metade-do-valor-em-um-mes/",
+      notes: "R$ 128.16M face, zero interest, no covenants, no payments. Conversion price R$18.40/share (~$3.57 USD at R$5.15). Deep OTM at current ~R$7/share. Face value derived: R$128,160,000 / 6,966,760 shares = R$18.395/share.",
+    },
+  ],
 };
 
 /**
