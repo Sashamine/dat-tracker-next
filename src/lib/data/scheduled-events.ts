@@ -10,6 +10,7 @@
  */
 
 import { MSTR_CAPITAL_EVENTS } from "./mstr-capital-events";
+import { MSTR_DEBT_ISSUANCES } from "./mstr-debt-issuances";
 import { dilutiveInstruments } from "./dilutive-instruments";
 import { debtInstruments } from "./debt-instruments";
 
@@ -34,6 +35,34 @@ export interface ScheduledEvent {
   notes?: string;
   settlementType: "cash" | "shares" | "mixed";
   sourceUrl?: string; // Link to primary source
+}
+
+function resolveDebtInstrumentSourceUrl(
+  ticker: string,
+  maturityDate: string,
+  couponRate: number,
+  sourceUrl: string
+): string {
+  if (
+    ticker !== "MSTR" ||
+    sourceUrl !== "/filings/mstr/0001193125-25-262568"
+  ) {
+    return sourceUrl;
+  }
+
+  const matchedIssuance = MSTR_DEBT_ISSUANCES.find((issuance) => {
+    const issuanceCoupon = issuance.interestRate ?? 0;
+    return (
+      issuance.maturityDate === maturityDate ||
+      issuance.maturityDate === new Date(maturityDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    ) && Math.abs(issuanceCoupon - couponRate * 100) < 0.0001;
+  });
+
+  return matchedIssuance?.secUrl || sourceUrl;
 }
 
 /**
@@ -133,7 +162,12 @@ export function getUpcomingMaturities(
         conversionLikely,
         ticker,
         settlementType: isConvertible ? (conversionLikely ? "shares" : "cash") : "cash",
-        sourceUrl: inst.sourceUrl,
+        sourceUrl: resolveDebtInstrumentSourceUrl(
+          ticker,
+          inst.maturityDate,
+          inst.couponRate,
+          inst.sourceUrl
+        ),
         notes: inst.notes
       });
     }
