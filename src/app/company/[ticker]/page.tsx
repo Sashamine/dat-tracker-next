@@ -167,10 +167,10 @@ export default function CompanyPage() {
 
   // D1-first overlay for allCompanies — same pattern as overview pages
   const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
-  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates, confidence: d1BatchConfidence } = useD1Fundamentals(allTickers);
+  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates } = useD1Fundamentals(allTickers);
   const allCompanies = useMemo(
-    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchConfidence),
-    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchConfidence]
+    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates),
+    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates]
   );
 
   // Calculate sidebar stats
@@ -326,7 +326,7 @@ export default function CompanyPage() {
   const debtToCryptoRatio = totalCryptoNav > 0 ? netDebt / totalCryptoNav : 0;
 
   // Calculate metrics (including other assets in NAV)
-  const nav = calculateNAV(holdingsNative, cryptoPrice, cashReserves, otherInvestments, secondaryCryptoValue);
+  const nav = calculateNAV(holdingsNative, cryptoPrice, cashReserves, otherInvestments + secondaryCryptoValue);
 
   // mNAV uses shared function with displayCompany (same source as main page)
   const mNAV = getCompanyMNAV(displayCompany, prices ?? null);
@@ -348,7 +348,7 @@ export default function CompanyPage() {
     (marketCap && stockPrice ? marketCap / stockPrice : 0);
   const totalDebt = (d1ByMetric.debt_usd?.value ?? displayCompany.totalDebt ?? 0);
   const preferredEquity = (d1ByMetric.preferred_equity_usd?.value ?? displayCompany.preferredEquity ?? 0);
-  const navPerShare = calculateNAVPerShare(holdingsNative, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity, secondaryCryptoValue);
+  const navPerShare = calculateNAVPerShare(holdingsNative, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments + secondaryCryptoValue, totalDebt, preferredEquity);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(holdingsNative, sharesOutstanding);
 

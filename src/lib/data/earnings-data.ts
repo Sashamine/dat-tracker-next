@@ -19,7 +19,6 @@
 
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter, YieldPeriod } from "../types";
 import { allCompanies } from "./companies";
-import { calculateHoldingsGrowth } from "../utils";
 const HOLDINGS_HISTORY: Record<string, any> = {};
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";

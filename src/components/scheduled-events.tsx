@@ -141,14 +141,14 @@ function EventCard({ event, stockPrice }: { event: ScheduledEvent; stockPrice?: 
         </div>
       </div>
 
-      {event.sourceEvent?.secUrl && (
+      {event.sourceUrl && (
         <a
-          href={event.sourceEvent.secUrl}
+          href={event.sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() =>
             trackCitationSourceClick({
-              href: event.sourceEvent?.secUrl || "",
+              href: event.sourceUrl || "",
               ticker: event.ticker,
             })
           }
