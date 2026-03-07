@@ -61,18 +61,25 @@ export async function generateAuditReportData(
 ): Promise<AuditReportData> {
   const d1 = D1Client.fromEnv();
   
-  // 1. Fetch D1 history for provenance log
-  const holdingsHistory = await getMetricHistory(ticker, 'holdings_native', { limit: 10 });
-  const debtHistory = await getMetricHistory(ticker, 'debt_usd', { limit: 1 });
-  const cashHistory = await getMetricHistory(ticker, 'cash_usd', { limit: 1 });
-  const sharesHistory = await getMetricHistory(ticker, 'basic_shares', { limit: 1 });
+  // 1. Fetch D1 history for provenance log (graceful if tables missing)
+  const [holdingsHistory, debtHistory, cashHistory, sharesHistory] = await Promise.all([
+    getMetricHistory(ticker, 'holdings_native', { limit: 10 }).catch(() => []),
+    getMetricHistory(ticker, 'debt_usd', { limit: 1 }).catch(() => []),
+    getMetricHistory(ticker, 'cash_usd', { limit: 1 }).catch(() => []),
+    getMetricHistory(ticker, 'basic_shares', { limit: 1 }).catch(() => []),
+  ]);
 
-  // 2. Fetch Adoption Timeline
-  const eventsOut = await d1.query(
-    `SELECT * FROM corporate_adoption_events WHERE ticker = ? ORDER BY event_date DESC`,
-    [ticker.toUpperCase()]
-  );
-  const events = (eventsOut.results as any[]) || [];
+  // 2. Fetch Adoption Timeline (graceful if table missing)
+  let events: any[] = [];
+  try {
+    const eventsOut = await d1.query(
+      `SELECT * FROM corporate_adoption_events WHERE ticker = ? ORDER BY event_date DESC`,
+      [ticker.toUpperCase()]
+    );
+    events = (eventsOut.results as any[]) || [];
+  } catch {
+    // Table may not exist yet
+  }
 
   // 3. Calculate Financials
   const debtStats = getDebtMaturity(company, prices.stocks[ticker]?.price || 0);
