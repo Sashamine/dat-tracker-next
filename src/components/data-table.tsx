@@ -210,10 +210,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const mnavWarnings = mnavResult.warnings;
     
     // Calculate ACTUAL mNAV change using yesterday's measured mNAV
-    // Uses same getCompanyMNAV function with historical prices (from API)
+    // Only show when we have a real live stock price (0 = no data, not a real drop)
     let mNAVChange: number | null = null;
     const yesterday = yesterdayMnav?.[company.ticker];
-    if (mNAV && yesterday?.mnav && yesterday.mnav > 0) {
+    if (mNAV && stockPrice && stockPrice > 0 && yesterday?.mnav && yesterday.mnav > 0) {
       mNAVChange = ((mNAV / yesterday.mnav) - 1) * 100;
     }
 
