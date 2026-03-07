@@ -268,10 +268,11 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
   // Post 1:8 reverse split (Aug 5, 2025 for NASDAQ listing)
   { date: "2025-09-30", holdings: 435_159, sharesOutstanding: 22_999_841, holdingsPerShare: 0.01892, stockPrice: 326.42, source: "SEC 40-F FY2025 annual report", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001846839&type=40-F", sourceType: "sec-filing" },
   { date: "2026-01-06", holdings: 523_134, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02067, source: "Dec 2025 monthly update + Jan 7 credit facility conversion (2.3M shares)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-december-2025-monthly-business-update", sourceType: "company-website" },
-  // Jan 2026: 530,251 SOL total (402,004 direct + 46,474 jitoSOL + 81,640 STKESOL). Shares carried from prior entry.
-  { date: "2026-02-03", holdings: 530_251, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02096, source: "Jan 2026 monthly business update (Feb 5, 2026)", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update", sourceType: "company-website" },
-  // Feb 2026 monthly update (published Mar 4): 518,139 treasury SOL. Shares carried from prior checkpoint.
-  { date: "2026-03-04", holdings: 518_139, sharesOutstanding: 25_300_567, holdingsPerShare: 0.02048, source: "Feb 2026 monthly business update (Mar 4, 2026)", sourceUrl: "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/", sourceType: "company-website" },
+  // Jan 2026: 530,251 SOL total (402,004 direct + 46,474 jitoSOL + 81,640 STKESOL).
+  // Shares updated to 31,735,660 per 6-K Q1 FY2026 (filed Feb 18, 2026)
+  { date: "2026-02-03", holdings: 530_251, sharesOutstanding: 31_735_660, holdingsPerShare: 0.01671, source: "Jan 2026 monthly business update (Feb 5, 2026)", sharesSource: "SEC 6-K Q1 FY2026 (filed Feb 18, 2026): 31,735,660 shares as of Feb 17", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update", sourceType: "company-website" },
+  // Feb 2026 monthly update (published Mar 4): 518,139 treasury SOL.
+  { date: "2026-03-04", holdings: 518_139, sharesOutstanding: 31_735_660, holdingsPerShare: 0.01633, source: "Feb 2026 monthly business update (Mar 4, 2026)", sharesSource: "SEC 6-K Q1 FY2026: 31,735,660 shares (active $50M ATM may have increased since)", sourceUrl: "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/", sourceType: "company-website" },
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
@@ -357,6 +358,8 @@ const NAKA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-14", holdings: 5398, sharesOutstanding: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 0, cash: 24_185_083, source: "SEC 10-Q Q3 2025", sharesSource: "Shares (439.85M) + pre-funded warrants (71.7M)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm", sourceType: "sec-filing" },
   // Dec 9: Kraken $210M BTC-backed loan closed
   { date: "2025-12-09", holdings: 5398, sharesOutstanding: 511_555_864, holdingsPerShare: 0.0000106, totalDebt: 210_000_000, cash: 24_185_083, source: "SEC 8-K Dec 9, 2025: Kraken $210M loan", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm", sourceType: "sec-filing" },
+  // Feb 26, 2026: Post-acquisition share count from SEC 13D (BTC Inc + UTXO merger)
+  { date: "2026-02-26", holdings: 5398, sharesOutstanding: 688_942_624, holdingsPerShare: 0.00000784, totalDebt: 210_000_000, cash: 24_185_083, source: "SEC 13D Feb 26, 2026: 688,942,624 basic common shares post-acquisition", sourceUrl: "/filings/naka/0001493152-26-008387", sourceType: "sec-filing" },
 ];
 
 // American Bitcoin Corp (ABTC) - Pure-play miner with HODL strategy
@@ -836,12 +839,12 @@ const FUFU_HISTORY: HoldingsSnapshot[] = [
   // Shares: XBRL 164,131,946 | Cash: XBRL $40,086,000 | Debt: XBRL LongTermDebt $101,301,000 + LongTermLoansPayable $40,000,000 = $141,301,000
   { date: "2025-06-30", holdings: 1792, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000109, stockPrice: 3.23, totalDebt: 141_301_000, cash: 40_086_000, source: "H1 2025 6-K + Q2 earnings PR (XBRL-verified)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390025084744/ea025548901ex99-1_bitfufu.htm" },
   // Dec 2025 monthly 6-K (filed 2026-01-07): 1,780 BTC held, 274 BTC pledged
-  // No audited financials for this date yet - shares/debt/cash carried from H1 2025
-  { date: "2025-12-31", holdings: 1780, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000108, stockPrice: 2.64, totalDebt: 141_301_000, cash: 40_086_000, source: "SEC 6-K Jan 7, 2026 (monthly production update)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026001965/ea027210501ex99-1_bitfufu.htm", methodology: "BTC from monthly 6-K. Shares/debt/cash carried from H1 2025 (no FY 2025 financials filed yet).", confidence: "medium" },
+  // Shares updated to Q3 2025 weighted avg basic (164,516,040) from Q3 earnings press release
+  { date: "2025-12-31", holdings: 1780, sharesOutstanding: 164_516_040, holdingsPerShare: 0.0000108, stockPrice: 2.64, totalDebt: 141_301_000, cash: 40_086_000, source: "SEC 6-K Jan 7, 2026 (monthly production update)", sharesSource: "Q3 2025 earnings: weighted avg basic 164,516,040", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026001965/ea027210501ex99-1_bitfufu.htm", confidence: "medium" },
   // Jan 2026 monthly 6-K (filed 2026-02-05): 1,796 BTC held, 252 BTC pledged
-  { date: "2026-01-31", holdings: 1796, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000109, source: "SEC 6-K Feb 5, 2026 (monthly production update)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm", methodology: "BTC from monthly 6-K. Shares carried from H1 2025.", confidence: "medium" },
+  { date: "2026-01-31", holdings: 1796, sharesOutstanding: 164_516_040, holdingsPerShare: 0.0000109, source: "SEC 6-K Feb 5, 2026 (monthly production update)", sharesSource: "Q3 2025 earnings: weighted avg basic 164,516,040", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026012561/ea027576101ex99-1_bitfufu.htm", confidence: "medium" },
   // Feb 2026 monthly 6-K (filed 2026-03-05): 1,830 BTC held, 227 BTC pledged
-  { date: "2026-02-28", holdings: 1830, sharesOutstanding: 164_131_946, holdingsPerShare: 0.0000111, source: "SEC 6-K Mar 5, 2026 (monthly production update)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026023884/ea028015601_ex99-1.htm", methodology: "BTC from monthly 6-K. Shares carried from H1 2025 pending FY 2025 XBRL filing.", confidence: "medium" },
+  { date: "2026-02-28", holdings: 1830, sharesOutstanding: 164_516_040, holdingsPerShare: 0.0000111, source: "SEC 6-K Mar 5, 2026 (monthly production update)", sharesSource: "Q3 2025 earnings: weighted avg basic 164,516,040", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1921158/000121390026023884/ea028015601_ex99-1.htm", confidence: "medium" },
 ];
 
 // Fold Holdings (FLD) - BTC rewards fintech, Nasdaq listed July 2024
@@ -932,10 +935,12 @@ const NA_HISTORY: HoldingsSnapshot[] = [
 // ==================== ADDITIONAL BTC ====================
 
 // CEPO (Blockstream SPAC) - Adam Back's BTC treasury play
+// CEPO share counts: 20.5M Class A + 5M Class B = 25.5M (SPAC pre-merger, SEC 10-K FY2025)
+// Post-merger share count will be very different — pendingMerger: true
 const CEPO_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-10-15", holdings: 25000, sharesOutstanding: 120_000_000, holdingsPerShare: 0.0002083, source: "Initial contribution from Adam Back", sourceType: "press-release", sourceUrl: "https://cypherpunkholdings.com/press-releases/" },
-  { date: "2025-11-30", holdings: 28000, sharesOutstanding: 135_000_000, holdingsPerShare: 0.0002074, source: "Additional purchases", sourceType: "press-release", sourceUrl: "https://cypherpunkholdings.com/press-releases/" },
-  { date: "2025-12-31", holdings: 30021, sharesOutstanding: 145_000_000, holdingsPerShare: 0.0002070, stockPrice: 155.61, source: "Year-end 8-K", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027708&type=8-K", sourceType: "sec-filing" },
+  { date: "2025-10-15", holdings: 25_000, sharesOutstanding: 25_500_000, holdingsPerShare: 0.000980, source: "Initial contribution from Adam Back", sourceType: "press-release", sourceUrl: "/filings/cepo/0001213900-26-008287" },
+  { date: "2025-11-30", holdings: 28_000, sharesOutstanding: 25_500_000, holdingsPerShare: 0.001098, source: "Additional purchases", sourceType: "press-release", sourceUrl: "/filings/cepo/0001213900-26-008287" },
+  { date: "2025-12-31", holdings: 30_021, sharesOutstanding: 25_500_000, holdingsPerShare: 0.001177, stockPrice: 155.61, source: "SEC 10-K FY2025: 30,021 BTC year-end", sourceUrl: "/filings/cepo/0001213900-26-008287", sourceType: "sec-filing", sharesSource: "SEC 10-K FY2025: 20.5M Class A + 5M Class B = 25.5M" },
 ];
 
 // ==================== ADDITIONAL TAO ====================

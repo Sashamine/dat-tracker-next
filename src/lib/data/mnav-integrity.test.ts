@@ -91,9 +91,11 @@ describe("Check 2: Hidden debt", () => {
       const instruments = dilutiveInstruments[company.ticker];
       if (!instruments?.length) continue;
 
-      // Sum face values of all convertibles (they're debt until converted)
+      // Sum face values of active convertibles (they're debt until converted/expired)
+      const now = new Date().toISOString().slice(0, 10);
       const convertibles = instruments.filter(
-        (inst) => inst.type === "convertible" && inst.faceValue,
+        (inst) => inst.type === "convertible" && inst.faceValue &&
+          (!inst.expiration || inst.expiration > now),
       );
       if (!convertibles.length) continue;
 
@@ -323,6 +325,8 @@ describe("Check 9: Double-counting prevention", () => {
       );
       for (const conv of convertibles) {
         if (conv.strikePrice === 0) continue; // $0 strike = preferred/RSU, not debt
+        // Skip if tracked in preferredEquity instead of debt (e.g., Metaplanet Mercury)
+        if (conv.notes?.includes("preferredEquity")) continue;
 
         if (!conv.faceValue || conv.faceValue === 0) {
           violations.push(

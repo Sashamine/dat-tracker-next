@@ -803,6 +803,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       type: "convertible",
       strikePrice: 12.00,  // CAD - implied from $25M / 2,083,333 shares
       potentialShares: 2_083_333,
+      faceValue: 18_120_000,  // CAD $25M / 1.38 CAD/USD = ~$18.1M USD
+      issuedDate: "2025-06-23",
+      expiration: "2030-06-23",  // 5-year maturity
       source: "TSX Venture Bulletin V2025-1838 + btctcorp.com",
       sourceUrl: "https://btctcorp.com",
       notes: "25,000 convertible debentures × $1,000 CAD face = $25M total. Conversion price $12.00 CAD. 1% annual interest, 5yr maturity (Jun 2030). Senior unsecured, non-redeemable first 3 years. Confidence: IR (terms from Q3 financials).",
@@ -1909,8 +1912,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "/filings/fld/0001193125-25-274317",
-      expiration: "2028-02-14",
-      notes: "June 2025 Amended Investor Note @ $9/share. Secured by 300 BTC. Deep OTM at ~$2 stock.",
+      expiration: "2026-02-27",  // Retired Feb 27, 2026 (original maturity 2028-02-14)
+      notes: "June 2025 Amended Investor Note @ $9/share. Secured by 300 BTC. RETIRED Feb 27, 2026.",
     },
     {
       type: "convertible",
@@ -1920,7 +1923,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "/filings/fld/0001193125-25-274317",
-      notes: "March 2025 Investor Note (SATS Credit Fund - related party) @ $12.50/share. Funded with 475 BTC. Triggering events at $15-$40 stock. Deep OTM at ~$2 stock.",
+      expiration: "2026-02-27",  // Retired Feb 27, 2026
+      notes: "March 2025 Investor Note (SATS Credit Fund - related party) @ $12.50/share. Funded with 475 BTC. RETIRED Feb 27, 2026.",
     },
     {
       type: "warrant",
@@ -3005,21 +3009,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 
-  // BTCT.V (Bitcoin Treasury Corporation) - Canadian BTC treasury
-  // Researched by GPT 5.4 via company disclosures
-  // Conversion price and maturity NOT confirmed from primary filing text
-  "BTCT.V": [
-    {
-      type: "convertible",
-      strikePrice: 0, // Conversion price unknown — not found in accessible primary docs
-      potentialShares: 2_083_333,
-      faceValue: 18_120_000, // CAD 25.0M / 1.38 CAD/USD
-      issuedDate: "2025-06-23",
-      source: "BTCT company disclosures (closing announcement)",
-      sourceUrl: "https://btctcorp.com/bitcoin-treasury-corporation-announces-closing-of-amalgamation-and-concurrent-financing/",
-      notes: "25,000 convertible debenture subscription receipts at CAD $1,000 each. Diluted shares (11,977,313) minus basic (9,893,980) = 2,083,333 potential shares per Feb 28, 2026 disclosure. Exact conversion price and maturity NOT confirmed from accessible primary text — use $0 strike as placeholder (always ITM).",
-    },
-  ],
+  // BTCT.V removed — duplicate of BTCT entry above (same company, same instruments)
 
   // OBTC3 (OranjeBTC S.A.) - Brazilian BTC treasury
   // Convertible debenture held by Parafi Capital (US)
@@ -3040,6 +3030,9 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
     },
   ],
 };
+
+// Ticker aliases — same company, different exchange tickers
+dilutiveInstruments["BTCT.V"] = dilutiveInstruments["BTCT"];
 
 /**
  * Calculate effective diluted shares based on current stock price.

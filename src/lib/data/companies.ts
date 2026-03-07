@@ -223,6 +223,12 @@ export const ethCompanies: Company[] = [
     sharesSourceQuote: "60,000,000 shares outstanding (OTC Markets, SPAC pre-merger estimate)",
     sharesSourceUrl: "/filings/ethm/0001213900-26-019335", // exact SEC doc (latest 425 filing)
     sharesAsOf: "2025-09-30",
+    // $156.25M Senior Secured Convertible Notes @ $3.445/share (Aug 2025, 3-year maturity)
+    totalDebt: 156_250_000,
+    debtSource: "Note Purchase Agreement Aug 8, 2025",
+    debtSourceQuote: "Senior Secured Convertible Notes, $156.25M face value, conversion price $3.445/share",
+    debtSourceUrl: "/filings/ethm/0001213900-25-073158",
+    debtAsOf: "2025-08-08",
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
@@ -276,7 +282,7 @@ export const ethCompanies: Company[] = [
     sharesSourceUrl: "https://bit-digital.com/news/bit-digital-inc-reports-monthly-ethereum-treasury-and-staking-metrics-for-january-2026/",
     sharesAsOf: "2026-01-31",
     cashReserves: 179_118_182,  // Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue
-    restrictedCash: 179_118_182,  // Operating capital (miner) - not excess
+    restrictedCash: 0,  // XBRL tag is unrestricted cash; no SEC-defined restricted cash found
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceQuote: "SEC 10-Q Q3 2025",
     cashSourceUrl: "/filings/btbt/0001213900-25-110383",
@@ -742,6 +748,12 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2024-03-31",
     avgDailyVolume: 80_000_000,
     hasOptions: true,
+    // $500M + $30.5M = $530.5M in 1.00% Convertible Senior Secured Notes @ $13/share
+    totalDebt: 530_500_000,
+    debtSource: "SEC 8-K Jul 17, 2025 ($500M) + SEC 8-K Aug 7, 2025 ($30.5M)",
+    debtSourceQuote: "1.00% Convertible Senior Secured Notes: $500M main + $30.5M additional tranche @ $13 conversion",
+    debtSourceUrl: "/filings/cepo/0001213900-25-064922",
+    debtAsOf: "2025-08-07",
     pendingMerger: true,  // SPAC merger not yet closed - no mNAV
     expectedHoldings: 30_021,  // Confirmed BTC from Adam Back + investors
     leader: "Adam Back (CEO)",
@@ -797,7 +809,7 @@ export const btcCompanies: Company[] = [
     // CASH: from provenance (10-Q)
     cashReserves: MARA_PROVENANCE.cashReserves?.value || 826_392_000,
     cashAsOf: "2025-09-30",
-    restrictedCash: 12_000_000,  // SEC 10-Q Q3 2025: $12,000K restricted cash
+    restrictedCash: 34_400_000,  // XBRL us-gaap:RestrictedCash (Q3 2025 balance sheet, matches provenance)
     cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
     cashSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025",
     cashSourceUrl: "/filings/mara/0001507605-25-000028",
@@ -1190,11 +1202,11 @@ export const btcCompanies: Company[] = [
     datStartDate: "2025-02-21",
     website: "https://ir.ddc.xyz",
     secCik: "0001808110",
-    cashReserves: 8351096,
-    cashAsOf: "2024-12-31",
-    cashSource: "SEC 424B3 / F-1 FY2024 financials",
-    cashSourceQuote: "Cash and cash equivalents: $8,351,096 (Dec 31, 2024 balance sheet)",
-    cashSourceUrl: "/filings/ddc/0001213900-25-043916",
+    cashReserves: 6_752_917,
+    cashAsOf: "2025-06-30",
+    cashSource: "SEC 424B3 Jan 26, 2026 (H1 2025 unaudited balance sheet)",
+    cashSourceQuote: "Cash and cash equivalents: US$6,752,917 (June 30, 2025 unaudited)",
+    cashSourceUrl: "/filings/ddc/0001213900-26-007465",
     costBasisAvg: 85_661,  // treasury.ddc.xyz weighted avg for 1,988 BTC
     costBasisSource: "company-website",
     costBasisSourceUrl: "https://treasury.ddc.xyz",
@@ -1278,11 +1290,11 @@ export const btcCompanies: Company[] = [
     burnSourceUrl: "/filings/fufu/0001213900-25-108472",
     burnAsOf: "2025-12-31",
     avgDailyVolume: 20_000_000,
-    sharesForMnav: 164_131_946,  // SEC XBRL Jun 2025
-    sharesSource: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
-    sharesSourceQuote: "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
-    sharesSourceUrl: "/filings/fufu/0001213900-25-084744",
-    sharesAsOf: "2025-06-30",
+    sharesForMnav: 164_516_040,  // Q3 2025 weighted avg basic shares
+    sharesSource: "SEC 6-K Q3 2025 earnings: weighted avg basic shares 164,516,040 (Q3 2025)",
+    sharesSourceQuote: "Weighted average shares outstanding - basic: 164,516,040 (Q3 2025)",
+    sharesSourceUrl: "/filings/fufu/0001213900-25-108472",
+    sharesAsOf: "2025-09-30",
     totalDebt: 141_301_000,  // Includes $101.3M payables + reduced $15M credit line (was $40M)
     debtAsOf: "2026-02-28",
     debtSourceQuote: "$101.3M payables + $15M credit line (reduced from $40M). SEC 6-K Q2 2025.",
@@ -1331,7 +1343,7 @@ export const btcCompanies: Company[] = [
     sharesSourceQuote: "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
     sharesSourceUrl: "/filings/fld/0001193125-25-274317",
     sharesAsOf: "2025-11-10",
-    totalDebt: 0,  // VERIFIED: Extinguished $66.3M convertible debt on Feb 27, 2026
+    totalDebt: 0,  // VERIFIED: Extinguished $66.3M convertible debt on Feb 27, 2026. Dilutive instruments updated with expiration.
     preferredEquity: 0,
     preferredAsOf: "2025-09-30",
     preferredSourceUrl: "/filings/fld/0001193125-25-274317",
@@ -2440,12 +2452,13 @@ export const bnbCompanies: Company[] = [
     burnSource: "SEC 6-K H1 2025",
     burnSourceUrl: "/filings/na/0001213900-25-088368",
     burnAsOf: "2025-06-30",
-    // VERIFIED from 20-F FY2024: Long-term RMB170.7M ($23.7M) + Short-term RMB18M ($2.5M) = ~$26.2M
-    totalDebt: 26_200_000,
-    debtSource: "SEC 20-F FY2024 balance sheet",
-    debtSourceQuote: "SEC 20-F FY2024 balance sheet",
+    // 20-F FY2024: RMB170.7M + RMB18M = ~$26.2M operating debt
+    // + $500M 0% convertible notes (Jul 2025, 424B3) = ~$526.2M total
+    totalDebt: 526_200_000,
+    debtSource: "SEC 20-F FY2024 ($26.2M operating) + SEC 424B3 Jul 2025 ($500M converts)",
+    debtSourceQuote: "$500M 0% convertible notes @ $20/share (360-day term, Jul 2025) + $26.2M operating debt from 20-F FY2024",
     debtSourceUrl: "/filings/na/0001213900-25-031065",
-    debtAsOf: "2024-12-31",
+    debtAsOf: "2025-07-01",
     // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
     cashReserves: 50_800_000,
     cashSource: "SEC XBRL 6-K Q2 2025",
