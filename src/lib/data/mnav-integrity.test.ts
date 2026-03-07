@@ -1567,6 +1567,8 @@ describe("Check 38: Instrument value reasonableness", () => {
       for (const inst of instruments) {
         if (inst.type !== "convertible") continue;
         if (!inst.faceValue || !inst.strikePrice || inst.strikePrice === 0) continue;
+        // Skip instruments with potentialShares=0 — these are being redeemed, not converted
+        if (inst.potentialShares === 0) continue;
 
         const impliedShares = inst.faceValue / inst.strikePrice;
         const deviation = Math.abs(impliedShares - inst.potentialShares) / impliedShares;
