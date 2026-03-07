@@ -5,6 +5,21 @@ import { getCompanyMNAV } from "@/lib/utils/mnav-calculation";
 import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
 import { BMNR_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
+import { convertToUSDSync } from "@/lib/utils/currency";
+
+// Tickers whose stock history API returns prices in local currency
+const TICKER_CURRENCIES: Record<string, string> = {
+  "3350.T": "JPY",
+  "3189.T": "JPY",
+  "3825.T": "JPY",
+  "0434.HK": "HKD",
+  "H100.ST": "SEK",
+  "ALCPB": "EUR",
+  "SRAG.DU": "EUR",
+  "DCC.AX": "AUD",
+  "NDA.V": "CAD",
+  "DMGI.V": "CAD",
+};
 
 /**
  * GET /api/mnav/yesterday
@@ -131,6 +146,21 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Fetch current forex rates (needed before stock price conversion)
+    let forexRates: Record<string, number> = {};
+    try {
+      const res = await fetch(
+        `${origin}/api/prices`,
+        { cache: 'no-store' }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        forexRates = data.forex || {};
+      }
+    } catch (e) {
+      console.warn('Failed to fetch forex:', e);
+    }
+
     // Fetch yesterday's stock prices
     const stockPrices: Record<string, number> = {};
     for (const ticker of tickers) {
@@ -157,27 +187,15 @@ export async function GET(request: NextRequest) {
             }
           }
           if (bestMatch) {
-            stockPrices[ticker] = bestMatch.close;
+            const currency = TICKER_CURRENCIES[ticker];
+            stockPrices[ticker] = currency
+              ? convertToUSDSync(bestMatch.close, currency, forexRates)
+              : bestMatch.close;
           }
         }
       } catch (e) {
         console.warn(`Failed to fetch ${ticker} history:`, e);
       }
-    }
-
-    // Fetch current forex rates
-    let forexRates: Record<string, number> = {};
-    try {
-      const res = await fetch(
-        `${origin}/api/prices`,
-        { cache: 'no-store' }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        forexRates = data.forex || {};
-      }
-    } catch (e) {
-      console.warn('Failed to fetch forex:', e);
     }
 
     // Calculate yesterday's mNAV for each company
