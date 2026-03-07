@@ -15,6 +15,10 @@ on:
       - 'src/lib/data/companies.ts'
       - 'src/lib/data/provenance/**'
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   cross-check:
     runs-on: ubuntu-latest
