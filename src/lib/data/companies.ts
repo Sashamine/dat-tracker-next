@@ -80,9 +80,10 @@ export const ethCompanies: Company[] = [
     // DEBT: from provenance ($0)
     totalDebt: BMNR_PROVENANCE.totalDebt?.value || 0,
     preferredEquity: 45,
-    preferredAsOf: "2024-05-31",
-    preferredSourceUrl: "/filings/bmnr/0001683168-24-004815",
-    preferredSourceQuote: "Series A Preferred Stock, $0.001 par value: 45 shares outstanding (10-K FY2024 balance sheet)",
+    preferredAsOf: "2025-11-30",
+    preferredSource: "SEC 10-Q Q1 FY2026 balance sheet",
+    preferredSourceUrl: "/filings/bmnr/0001493152-26-002084",
+    preferredSourceQuote: "Series A Preferred Stock, $0.001 par value: 45 shares outstanding (10-Q Q1 FY2026 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -168,9 +169,10 @@ export const ethCompanies: Company[] = [
     cashAsOf: "2025-09-30",
     totalDebt: 0,
     preferredEquity: 3936,
-    preferredAsOf: "2023-12-31",
-    preferredSourceUrl: "/filings/sbet/0001493152-24-012028",
-    preferredSourceQuote: "Series A Preferred Stock: 3,936 shares outstanding, $0.001 par value (10-K FY2023 balance sheet)",
+    preferredAsOf: "2025-09-30",
+    preferredSource: "SEC 10-Q Q3 2025 balance sheet: 3,936 Series A preferred shares outstanding",
+    preferredSourceUrl: "/filings/sbet/0001493152-25-021970",
+    preferredSourceQuote: "Series A Preferred Stock: 3,936 shares outstanding, $0.001 par value (10-Q Q3 2025 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -185,7 +187,7 @@ export const ethCompanies: Company[] = [
     otherInvestments: 26_700_000,  // $26.7M USDC stablecoins (Q3 2025)
     leader: "Joseph Chalom (BlackRock)",
     strategy: "Staking, Linea partnership, tokenized equity via Superstate",
-    notes: "#2 ETH treasury. $1.5B buyback program. Trades at ~0.83x mNAV.",
+    notes: "#2 ETH treasury. $1.5B buyback program. Trades at ~0.83x mNAV. $26.7M USDC stablecoin investment (Q3 2025 balance sheet).",
   },
   {
     id: "ethm",
@@ -361,6 +363,9 @@ export const ethCompanies: Company[] = [
     cashSourceUrl: "/filings/btcs/0001493152-25-022359",
     cashAsOf: "2025-09-30",
     stakingApy: 0.03,  // ~3% estimated from ETH network consensus rate; NodeOps + Builder+ revenues not separable in 10-Q
+    encumberedHoldings: 39_000,  // ~39K ETH pledged as Aave DeFi collateral (8-K Feb 6, 2026)
+    encumberedSource: "SEC 8-K Feb 6, 2026: ~39K ETH collateral for $43.8M Aave USDT borrow. Board max LTV 40%, liquidation at 80%.",
+    encumberedSourceUrl: "/filings/btcs/0001493152-26-005565",
     strategy: "ETH 'Bividend,' DeFi/TradFi flywheel, Builder+",
     notes: "Verified 2026-02-16. Aave DeFi leverage: $43.8M USDT borrowed (~6% variable) against ~39K ETH collateral. " +
       "Board max LTV 40%, Aave liquidation at 80%. Q3 LTV was 34.9%. " +
@@ -710,6 +715,9 @@ export const btcCompanies: Company[] = [
     cashSourceQuote: "SEC S-1 Jan 5, 2026",
     cashSourceUrl: "/filings/xxi/0001213900-26-001285",
     cashAsOf: "2025-12-09",
+    encumberedHoldings: 16_116,  // 16,116 BTC collateralizes $486.5M convertible debt at ~3:1 ratio
+    encumberedSource: "SEC 8-K Dec 12, 2025: 16,116 BTC pledged as collateral for 1% convertible senior secured notes",
+    encumberedSourceUrl: "/filings/xxi/0001213900-25-121293",
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services. Tether/SoftBank/Cantor backed.",
     notes: "Merged Dec 2025. 16,116 BTC collateralizes debt at ~3:1 ratio. #3 corporate BTC holder. Audit note 2026-03-05: canonical 2025-12-09 anchor normalized to 8-K accession 0001213900-25-121293 (filed Dec 12, 2025). D1 also contains pre-merger SPAC cash rows at 2025-09-30 ($25k) from legacy CIK history; treat as pre-launch context, not post-launch treasury state.",
@@ -1072,6 +1080,8 @@ export const btcCompanies: Company[] = [
     holdingsLastUpdated: "2026-03-01",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://ri.oranjebtc.com",
+    sourceQuote: "3,723.0 BTC held as of March 1, 2026 (B3 Comunicado ao Mercado)",
+    sourceType: "press-release",
     datStartDate: "2025-09-23",  // B3 listing via reverse merger with Intergraus
     website: "https://www.oranjebtc.com",
     isMiner: false,
@@ -1177,6 +1187,9 @@ export const btcCompanies: Company[] = [
     debtSource: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
     debtSourceQuote: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
     debtSourceUrl: "/filings/sqns/0001383395-26-000018",
+    encumberedHoldings: 1_617,  // 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible
+    encumberedSource: "6-K Feb 13, 2026: 1,617 BTC pledged, full cash redemption by Jun 2026",
+    encumberedSourceUrl: "/filings/sqns/0001383395-26-000018",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
     notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized. Audit note 2026-03-05: lock values reconciled to D1 latest at 2025-12-31 using 6-K Q4 2025 anchor.",
     dataWarnings: [
@@ -1279,7 +1292,7 @@ export const btcCompanies: Company[] = [
     // VERIFIED: February 2026 update (early March 2026)
     holdings: 1_830,
     holdingsLastUpdated: "2026-02-28",
-    holdingsSource: "press-release",
+    holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/fufu/0001213900-25-108472",
     accessionNumber: "0001213900-25-108472",
     sourceType: "sec-filing",
@@ -1307,6 +1320,9 @@ export const btcCompanies: Company[] = [
     cashSourceQuote: "Mar 2026 Corporate Update",
     cashSourceUrl: "/filings/fufu/0001213900-25-084744",
     cashAsOf: "2026-02-28",
+    encumberedHoldings: 476,  // 476 BTC pledged for miner procurement
+    encumberedSource: "SEC 6-K Q2 2025: 476 BTC pledged as collateral for mining equipment procurement",
+    encumberedSourceUrl: "/filings/fufu/0001213900-25-084744",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (641k+ users).",
     notes: "Singapore (Nasdaq FUFU). 1,830 BTC held; 476 BTC pledged for miner procurement. Credit line debt reduced to $15M. 2025 Net Income ~$41.8M. BITMAIN partner with 26.4 EH/s managed.",
   },
@@ -1722,6 +1738,10 @@ export const btcCompanies: Company[] = [
     debtSourceQuote: "SEC 8-K Dec 9, 2025: Kraken $210M USDT loan, 8% annual, BTC-collateralized, due Dec 4, 2026",
     debtSourceUrl: "/filings/naka/0001493152-25-026862",
     debtAsOf: "2025-12-09",
+    // ENCUMBRANCE: Kraken loan is BTC-collateralized — pledged BTC is not freely available
+    encumberedHoldings: 2_100,  // ~$210M / ~$100K per BTC at loan origination (estimated collateral)
+    encumberedSource: "SEC 8-K Dec 9, 2025: Kraken $210M loan secured by BTC treasury",
+    encumberedSourceUrl: "/filings/naka/0001493152-25-026862",
     // Enterprise Shield (NAKA Conglomerate Pivot)
     annualOperatingCashFlowUsd: 34_200_000,
     opexCoverageRatio: 1.07, // $34.2M EBITDA / $32M Annual Burn (est)
@@ -2103,6 +2123,9 @@ export const solCompanies: Company[] = [
     cashSourceQuote: "SEC 8-K Q4 2025 Business Update: approximately $9M in cash, stablecoins, and other tokens",
     cashSourceUrl: "/filings/dfdv/0001193125-26-002668",
     cashAsOf: "2026-01-01",
+    encumberedHoldings: 1_127_000,  // ~$152.2M SOL at Sep 30 price (~$135). BitGo 250% collateral / 200% margin call.
+    encumberedSource: "SEC 10-Q Q3 2025: $152.2M digital assets pledged as collateral (>50% of holdings). BitGo Master Loan at 250% collateral level.",
+    encumberedSourceUrl: "/filings/dfdv/0001193125-25-286660",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
     notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token. $152.2M SOL pledged as collateral (>50% of digital assets). BitGo Master Loan: 250% collateral / 200% margin call trigger — liquidation risk if SOL drops 15-20%. Flora Growth $23.1M convertible note investment (93.3K SOL, 8% rate, due Sep 2030) — credit risk, not liquid SOL. Audit note 2026-03-05: lock values reconciled to D1 latest (2,221,329 SOL as of 2026-01-01 from Jan 2026 8-K business update).",
@@ -2671,9 +2694,10 @@ export const linkCompanies: Company[] = [
     burnSourceUrl: "/filings/cwd/0001627282-25-000059",
     burnAsOf: "2025-03-31",
     preferredEquity: 0,
-    preferredAsOf: "2023-09-30",
-    preferredSourceUrl: "/filings/cwd/0001627282-23-000059",
-    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2023 balance sheet)",
+    preferredAsOf: "2025-09-30",
+    preferredSource: "SEC 10-Q Q3 2025 balance sheet",
+    preferredSourceUrl: "/filings/cwd/0001627282-25-000157",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025 balance sheet)",
     cashReserves: 10927000,
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025",
@@ -2727,9 +2751,10 @@ export const trxCompanies: Company[] = [
     investorRelationsUrl: "https://srmentertainment.com/investor-relations",
     secCik: "0001956744",
     preferredEquity: 10,
-    preferredAsOf: "2025-06-30",
-    preferredSourceUrl: "/filings/tron/0001641172-25-022765",
-    preferredSourceQuote: "Series A Preferred Stock: 10 shares outstanding (10-Q Q2 FY2026 balance sheet)",
+    preferredAsOf: "2025-09-30",
+    preferredSource: "SEC 10-Q Q3 FY2026 balance sheet",
+    preferredSourceUrl: "/filings/tron/0001493152-25-021526",
+    preferredSourceQuote: "Series A Preferred Stock: 10 shares outstanding (10-Q Q3 FY2026 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -3066,9 +3091,10 @@ export const dogeCompanies: Company[] = [
     cashAsOf: "2025-12-31",
     totalDebt: 800_000,  // Q2 FY2026 10-Q: NotesPayable ~$800K at 10% interest (XBRL last tagged $690K at Jun 30; verify from filing text)
     preferredEquity: 100,
-    preferredAsOf: "2024-03-31",
-    preferredSourceUrl: "/filings/zone/0001213900-24-051214",
-    preferredSourceQuote: "Series A Preferred Stock: 100 shares outstanding (10-K FY2024 balance sheet)",
+    preferredAsOf: "2025-12-31",
+    preferredSource: "SEC 10-Q Q2 FY2026 balance sheet",
+    preferredSourceUrl: "/filings/zone/0001213900-26-015016",
+    preferredSourceQuote: "Series A Preferred Stock: 100 shares outstanding (10-Q Q2 FY2026 balance sheet)",
     dataWarnings: [
       {
         type: "stale-data",
@@ -3260,11 +3286,11 @@ export const hbarCompanies: Company[] = [
     twitter: "https://x.com/ImmutableHold",
     investorRelationsUrl: "https://www.immutableholdings.com/investors",
     holdings: 48_000_000,
-    holdingsLastUpdated: "2025-07-28",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/07/28/3122324/0/en/Immutable-Holdings-Announces-Strategic-Update-on-HBAR-Treasury-Strategy-Also-Management-Change.html",
-    sourceQuote: "currently holds over 48 million HBAR as of the date of this release",
-    sourceType: "press-release",
+    holdingsLastUpdated: "2025-12-31",
+    holdingsSource: "regulatory-filing",
+    holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016",
+    sourceQuote: "Q4 2025 SEDAR+ filing: 48,000,000 HBAR",
+    sourceType: "regulatory-filing",
     datStartDate: "2025-07-01",
     // stakingPct: 0.50 removed - needs verification
     stakingApy: 0.065,

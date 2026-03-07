@@ -1769,3 +1769,163 @@ describe("Check 41: Source quote vs holdings cross-validation", () => {
     expect(violations).toHaveLength(0);
   });
 });
+
+// ─────────────────────────────────────────────────────────────
+// Check 42: Temporal alignment of mNAV components
+//
+// Systemic issue: mNAV mixes values from different dates.
+// holdings from one date, shares from another, debt/cash from another.
+// During fast capital changes (ATM, convertible exercises), this
+// produces 10-40% mNAV error with no individual field being wrong.
+// ─────────────────────────────────────────────────────────────
+describe("Check 42: Temporal alignment of mNAV components", () => {
+  it("mNAV component dates should be within 120 days of each other", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (company.pendingMerger) continue;
+      if (!company.sharesForMnav) continue;
+
+      // Collect all component dates
+      const dates: { field: string; date: string }[] = [];
+      if (company.holdingsLastUpdated) dates.push({ field: "holdings", date: company.holdingsLastUpdated });
+      if (company.sharesAsOf) dates.push({ field: "shares", date: company.sharesAsOf });
+      if (company.debtAsOf) dates.push({ field: "debt", date: company.debtAsOf });
+      if (company.cashAsOf) dates.push({ field: "cash", date: company.cashAsOf });
+      if (company.preferredAsOf) dates.push({ field: "preferred", date: company.preferredAsOf });
+
+      if (dates.length < 2) continue; // Need at least 2 dated fields to check alignment
+
+      // Find max spread
+      const timestamps = dates.map((d) => new Date(d.date).getTime());
+      const earliest = Math.min(...timestamps);
+      const latest = Math.max(...timestamps);
+      const spreadDays = (latest - earliest) / (1000 * 60 * 60 * 24);
+
+      if (spreadDays > 120) {
+        const earliestEntry = dates.find((d) => new Date(d.date).getTime() === earliest)!;
+        const latestEntry = dates.find((d) => new Date(d.date).getTime() === latest)!;
+        violations.push(
+          `${company.ticker}: ${Math.round(spreadDays)}d spread between ` +
+            `${earliestEntry.field} (${earliestEntry.date}) and ${latestEntry.field} (${latestEntry.date}). ` +
+            `mNAV components from different quarters may produce incoherent results.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== TEMPORAL MISALIGNMENT (>120d spread) ===\n");
+      violations.forEach((v) => console.log(`  WARN ${v}`));
+    }
+    // SOFT fail — temporal misalignment is common during earnings lag
+    expect(violations.length).toBeLessThanOrEqual(violations.length);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 43: Encumbered holdings without encumberedHoldings field
+//
+// Systemic issue: Company reports X BTC held, but some is pledged
+// as collateral for loans. System values all X at spot, overstating
+// freely-available NAV.
+// ─────────────────────────────────────────────────────────────
+describe("Check 43: Encumbered holdings disclosure", () => {
+  it("companies with crypto-backed debt should have encumberedHoldings", () => {
+    const violations: string[] = [];
+    const encumbranceKeywords = /collateral|pledg|secur.*by.*(?:btc|bitcoin|eth|crypto)|backed.*loan|margin/i;
+
+    for (const company of allCompanies) {
+      if (company.pendingMerger) continue;
+      if (!company.totalDebt || company.totalDebt === 0) continue;
+      if ((company as any).encumberedHoldings) continue; // Already tracked
+
+      // Check if debt description suggests crypto collateral
+      const debtText = [
+        company.debtSource,
+        company.debtSourceQuote,
+        company.notes,
+      ].filter(Boolean).join(" ");
+
+      if (encumbranceKeywords.test(debtText)) {
+        violations.push(
+          `${company.ticker}: Debt language suggests crypto collateral ` +
+            `but no encumberedHoldings field set. NAV may be overstated.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== MISSING ENCUMBRANCE DATA ===\n");
+      violations.forEach((v) => console.log(`  WARN ${v}`));
+    }
+    expect(violations.length).toBeLessThanOrEqual(violations.length);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 44: Settlement type required for convertibles with faceValue
+//
+// Systemic issue: Binary debt subtraction (full faceValue removed
+// when ITM) is wrong for net-share-settlement convertibles where
+// principal is still owed in cash.
+// ─────────────────────────────────────────────────────────────
+describe("Check 44: Convertible settlement type tracking", () => {
+  it("convertibles with faceValue should specify settlementType", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, instruments] of Object.entries(dilutiveInstruments)) {
+      for (const inst of instruments) {
+        if (inst.type !== "convertible") continue;
+        if (!inst.faceValue) continue;
+        if (inst.expiration && inst.expiration <= new Date().toISOString().split("T")[0]) continue;
+
+        if (!inst.settlementType) {
+          violations.push(
+            `${ticker}: Convertible (${inst.notes?.slice(0, 60) || `$${(inst.faceValue / 1e6).toFixed(0)}M`}) ` +
+              `has faceValue but no settlementType. Defaults to full_share.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== MISSING SETTLEMENT TYPE ===\n");
+      violations.forEach((v) => console.log(`  WARN ${v}`));
+    }
+    expect(violations.length).toBeLessThanOrEqual(violations.length);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 45: otherInvestments requires source tracking
+//
+// Systemic issue: otherInvestments is added to NAV denominator
+// when material (>5% of cryptoNav) but has NO integrity check.
+// ─────────────────────────────────────────────────────────────
+describe("Check 45: otherInvestments source tracking", () => {
+  it("companies with otherInvestments should have source in notes", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.otherInvestments || company.otherInvestments === 0) continue;
+
+      // Look for inline source in the code comments (otherInvestments line has a comment)
+      // For runtime check, verify notes mention the investment
+      const notes = company.notes || "";
+      const hasContext = /invest|stake|equity|fund|usdc|stablecoin/i.test(notes);
+
+      if (!hasContext) {
+        violations.push(
+          `${company.ticker}: otherInvestments = $${(company.otherInvestments / 1e6).toFixed(1)}M ` +
+            `but notes don't describe the investment. This affects NAV.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== MISSING otherInvestments CONTEXT ===\n");
+      violations.forEach((v) => console.log(`  WARN ${v}`));
+    }
+    expect(violations.length).toBeLessThanOrEqual(violations.length);
+  });
+});

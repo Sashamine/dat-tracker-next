@@ -52,9 +52,11 @@ export function getCompanyMNAV(
   // Adjust debt by subtracting in-the-money convertible face values
   const adjustedDebt = Math.max(0, (company.totalDebt ?? 0) - inTheMoneyDebtValue);
 
-  // Add in-the-money warrant exercise proceeds to cash
+  // Warrant proceeds are free cash (exercise price × shares).
+  // Previously these were added to BOTH cash and restrictedCash, causing them
+  // to cancel out in the freeCash calculation. Now passed separately.
   const adjustedCashReserves = (company.cashReserves ?? 0) + inTheMoneyWarrantProceeds;
-  const adjustedRestrictedCash = (company.restrictedCash ?? 0) + inTheMoneyWarrantProceeds;
+  const adjustedRestrictedCash = (company.restrictedCash ?? 0);
 
   // Calculate secondary crypto holdings value
   let secondaryCryptoValue = 0;

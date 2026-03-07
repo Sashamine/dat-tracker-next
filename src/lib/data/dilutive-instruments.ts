@@ -13,11 +13,20 @@
 
 export type InstrumentType = "convertible" | "option" | "warrant" | "preferred" | "rsu" | "free_shares";
 
+// Settlement type for convertible instruments
+// Determines how debt is adjusted when the instrument is in-the-money
+export type SettlementType =
+  | "full_share"      // Company must deliver shares for full value (faceValue removed from debt entirely)
+  | "net_share"       // Principal settled in cash, only excess value delivered in shares (faceValue stays in debt)
+  | "cash_only"       // Settled entirely in cash (no share dilution, faceValue stays in debt)
+  | "issuer_election"; // Company chooses settlement method (conservative: treat as net_share)
+
 export interface DilutiveInstrument {
   type: InstrumentType;
   strikePrice: number; // Conversion or exercise price in USD
   potentialShares: number; // Number of shares if fully converted/exercised
   faceValue?: number; // Face/principal value in USD (for convertibles - used to adjust debt)
+  settlementType?: SettlementType; // How the convertible settles (default: full_share for backwards compat)
   source: string; // e.g., "8-K Jul 2025", "10-Q Q3 2025"
   sourceUrl: string; // Link to SEC filing or primary source
   expiration?: string; // ISO date when instrument expires/matures (optional)
@@ -489,6 +498,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 58.40, // Estimated conversion basis — moot since being redeemed not converted
       potentialShares: 0, // Feb 13 6-K: full cash redemption via BTC sale, NOT conversion to shares
       faceValue: 94_500_000, // $94.5M remaining per Q4 6-K — being fully redeemed by Jun 2026
+      settlementType: "cash_only",  // Being redeemed at par via BTC sale, not converted to shares
       source: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
       sourceUrl: "/filings/meta3350/0001383395-26-000018",
       issuedDate: "2025-07-08",
@@ -509,6 +519,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.80, // SEK 8.48 / 10.6 SEK/USD = ~$0.80
       potentialShares: 25_919_811, // SEK 219,800,000 / SEK 8.48 per share
       faceValue: 20_736_000, // SEK 219,800,000 / 10.6 = ~$20.7M USD
+      settlementType: "full_share",  // Zero-coupon convertible debenture — converts to shares at holder option
       source: "MFN Jul 9, 2025 (issuance) + Nov 21, 2025 (partial conversion)",
       sourceUrl: "https://mfn.se/a/h100-group/h100-group-has-converted-sek-122-5-million-of-its-outstanding-convertible-loans",
       issuedDate: "2025-07-09",
@@ -529,6 +540,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 76.17, // $1,000 / 13.1277 = $76.17
       potentialShares: 631_265, // $48,077K × 13.1277 / 1000
       faceValue: 48_077_000, // Remaining principal as of Q3 2025 (originally $747.5M)
+      settlementType: "net_share",  // Combination settlement per indenture — cash for principal, shares for excess
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
         "/filings/mara/0001507605-25-000028",
@@ -540,6 +552,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 18.89, // $1,000 / 52.9451 = $18.89
       potentialShares: 15_883_530, // $300,000K × 52.9451 / 1000
       faceValue: 300_000_000,
+      settlementType: "net_share",  // Combination settlement per indenture — cash for principal, shares for excess
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
         "/filings/mara/0001507605-25-000028",
@@ -551,6 +564,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 25.91, // $1,000 / 38.5902 = $25.91
       potentialShares: 38_590_200, // $1,000,000K × 38.5902 / 1000
       faceValue: 1_000_000_000,
+      settlementType: "net_share",  // Combination settlement per indenture — cash for principal, shares for excess
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
         "/filings/mara/0001507605-25-000028",
@@ -562,6 +576,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 34.58, // $1,000 / 28.9159 = $34.58
       potentialShares: 26_747_208, // $925,000K × 28.9159 / 1000
       faceValue: 925_000_000,
+      settlementType: "net_share",  // Combination settlement per indenture — cash for principal, shares for excess
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
         "/filings/mara/0001507605-25-000028",
@@ -573,6 +588,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 20.26, // $1,000 / 49.3619 = $20.26
       potentialShares: 50_596_048, // $1,025,000K × 49.3619 / 1000
       faceValue: 1_025_000_000,
+      settlementType: "net_share",  // Combination settlement per indenture — cash for principal, shares for excess
       source: "10-Q Q3 2025 Note 14",
       sourceUrl:
         "/filings/mara/0001507605-25-000028",
@@ -604,6 +620,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 13.87, // $1,000 / 72.0841 conversion rate = $13.87
       potentialShares: 35_068_912, // $486.5M × 72.0841 / 1000 = 35.07M shares
       faceValue: 486_500_000,
+      settlementType: "issuer_election",  // S-1: Cash, Physical, or Combination at XXI's election. Default = Combination ($1K cash per $1K principal)
       source: "8-K Dec 12, 2025 (Indenture)",
       sourceUrl:
         "/filings/xxi/0001213900-25-121293",
@@ -694,6 +711,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 72.60, // Post-split: $3.63 pre-split × 20 = $72.60 ($1,000 / 13.7694 post-split conversion rate)
       potentialShares: 137_694, // Post-split: 2,753,887 pre-split / 20 = 137,694 shares
       faceValue: 10_000_000,
+      settlementType: "full_share",  // Semler convertible — standard share delivery
       source: "8-K Jan 28, 2026 (Semler convertible notes)",
       sourceUrl:
         "/filings/asst/0001140361-26-002606",
@@ -717,6 +735,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.85,
       potentialShares: 1_335_133,
       faceValue: 7_810_526,
+      settlementType: "full_share",  // ATW Partners private placement — standard share delivery
       source: "8-K May 2025 + Q3 10-Q Note 7",
       sourceUrl:
         "/filings/btcs/0001493152-25-022359",
@@ -730,6 +749,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 13.0,
       potentialShares: 773_077,
       faceValue: 10_050_000,
+      settlementType: "full_share",  // ATW Partners private placement — standard share delivery
       source: "8-K Jul 2025 + Q3 10-Q Note 7",
       sourceUrl:
         "/filings/btcs/0001493152-25-022359",
@@ -804,6 +824,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 12.00,  // CAD - implied from $25M / 2,083,333 shares
       potentialShares: 2_083_333,
       faceValue: 18_120_000,  // CAD $25M / 1.38 CAD/USD = ~$18.1M USD
+      settlementType: "full_share",  // Canadian convertible debenture — standard share delivery
       issuedDate: "2025-06-23",
       expiration: "2030-06-23",  // 5-year maturity
       source: "TSX Venture Bulletin V2025-1838 + btctcorp.com",
@@ -839,6 +860,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 4.16,
       potentialShares: 36_057_692,  // 240.3846 shares per $1,000 × 150,000 = 36,057,692
       faceValue: 150_000_000,  // $135M upsized + $15M overallotment fully exercised
+      settlementType: "full_share",  // Underwritten convertible senior notes — share delivery
       source: "8-K Oct 2, 2025 + PR Oct 8, 2025",
       sourceUrl:
         "https://bit-digital.com/press-releases/bit-digital-inc-purchases-31057-eth-with-convertible-notes-proceeds-raising-capital-at-a-premium-to-mnav/",
@@ -884,6 +906,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 4.25,
       potentialShares: 35_293_206,  // 10-Q Note 10: "approximately 35,293,206 shares"
       faceValue: 149_996_123,
+      settlementType: "full_share",  // Cannot repay in cash — converts to shares or returns SOL
       source: "10-Q Q2 FY2026 Note 10",
       sourceUrl:
         "/filings/upxi/0001477932-26-000736",
@@ -898,6 +921,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 2.39,
       potentialShares: 15_062_761,  // $36M / $2.39
       faceValue: 36_000_000,
+      settlementType: "full_share",  // Cannot repay in cash — converts or returns pro rata SOL
       source: "8-K Jan 14, 2026 (Hivemind)",
       sourceUrl:
         "/filings/upxi/0001477932-26-000207",
@@ -910,6 +934,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.00,
       potentialShares: 186_667,  // $560K / $3.00
       faceValue: 560_000,
+      settlementType: "full_share",  // Convertible promissory, no cash settlement option
       source: "10-Q Q2 FY2026 Note 10",
       sourceUrl:
         "/filings/upxi/0001477932-26-000736",
@@ -1156,6 +1181,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.57, // €0.544 × 1.04
       potentialShares: 89_367_393,
       faceValue: 50_544_000, // €48.6M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion, no cash settlement
       source: "Euronext Mar 2025 (OCA A-01 + B-01)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -1179,6 +1205,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.74, // €0.707 × 1.04
       potentialShares: 82_451_903, // Fulgur (78.2M) + UTXO (4.3M)
       faceValue: 60_632_000, // €58.3M × 1.04 (Fulgur €55.3M + UTXO €3M)
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext May 2025 (OCA B-02 Fulgur/UTXO)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -1190,6 +1217,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 0.74, // €0.707 × 1.04
       potentialShares: 17_176_106,
       faceValue: 12_584_000, // €12.1M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext May 2025 (OCA B-02 Adam Back)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-12-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -1201,6 +1229,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.96, // €3.809 × 1.04
       potentialShares: 1_312_680,
       faceValue: 5_200_000, // €5M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext May 2025 (OCA B-03 T1)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -1212,6 +1241,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.15, // €4.9517 × 1.04
       potentialShares: 1_514_631,
       faceValue: 7_800_000, // €7.5M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext May 2025 (OCA B-03 T2)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-05-26-blockchain-group-announces-convertible-bond-issuance-eur",
@@ -1223,6 +1253,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 6.49, // €6.24 × 1.04
       potentialShares: 961_538,
       faceValue: 6_240_000, // €6M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext Jun 2025 (OCA A-03)",
       sourceUrl:
         "https://live.euronext.com/en/products/equities/company-news/2025-06-12-blockchain-group-announces-equity-and-convertible-bond",
@@ -1234,6 +1265,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.38, // €5.174 × 1.04
       potentialShares: 966_370,
       faceValue: 5_200_000, // €5M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext Jul 2025 (OCA A-04)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
@@ -1245,6 +1277,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 5.38, // €5.174 × 1.04
       potentialShares: 975_071,
       faceValue: 5_200_000, // €5M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext Jul 2025 (OCA B-04)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
@@ -1256,6 +1289,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.80, // €3.6557 × 1.04
       potentialShares: 1_778_045,
       faceValue: 6_760_000, // €6.5M × 1.04
+      settlementType: "full_share",  // French OCA — mandatory conversion
       source: "Euronext Aug 2025 (OCA A-05 T1)",
       sourceUrl:
         "https://www.finanzwire.com/press-release/capital-b-capital-increase-and-convertible-bonds-issuance-for-eur115-million-with-tobam-bitcoin-alpha-fund-to-pursue-its-bitcoin-treasury-company-strategy-0WAE500EF0o",
@@ -1480,6 +1514,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 39.8, // $398 pre-split / 10
       potentialShares: 16_331_658, // $650M / $39.80
       faceValue: 650_000_000,
+      settlementType: "net_share",  // MSTR converts are all net_share per indentures
       source: "8-K Dec 2020",
       sourceUrl:
         "/filings/mstr/0001193125-20-315971",
@@ -1493,6 +1528,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 143.25, // $1,432.46 pre-split / 10
       potentialShares: 7_329_843, // $1.05B / $143.25
       faceValue: 1_050_000_000,
+      settlementType: "net_share",  // MSTR converts are all net_share per indentures
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
         "/filings/mstr/0001193125-25-262568",
@@ -1511,6 +1547,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "/filings/mstr/0001193125-25-262568",
       issuedDate: "2024-03-08",
       expiration: "2030-03-15",
+      settlementType: "net_share", // Per indenture: principal in cash, excess in shares
       notes: "$800M @ 0.625% convertible notes due Mar 2030 (2030A). Conversion rate: 6.677 per $1,000.",
     },
     // === Mar 2024 Convertible #2 - $603.75M @ 0.875% ===
@@ -1519,6 +1556,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 232.72, // Initial conversion price per 10-Q Q3 2025 Note 5
       potentialShares: 2_594_314, // 4.297 shares per $1,000 × 603,750 units
       faceValue: 603_750_000,
+      settlementType: "net_share", // Per indenture: principal in cash, excess in shares
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
         "/filings/mstr/0001193125-25-262568",
@@ -1532,6 +1570,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 204.33, // Initial conversion price per 10-Q Q3 2025 Note 5
       potentialShares: 3_915_200, // 4.894 shares per $1,000 × 800,000 units
       faceValue: 800_000_000,
+      settlementType: "net_share", // Per indenture: principal in cash, excess in shares
       source: "10-Q Q3 2025 (Note 5: Long-term Debt)",
       sourceUrl:
         "/filings/mstr/0001193125-25-262568",
@@ -1545,6 +1584,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 183.19, // Post-split price
       potentialShares: 5_513_403, // $1.01B / $183.19
       faceValue: 1_010_000_000,
+      settlementType: "net_share", // Per indenture: principal in cash, excess in shares
       source: "8-K Sep 2024",
       sourceUrl:
         "/filings/mstr/0001193125-24-220296",
@@ -1558,6 +1598,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 672.4, // Post-split price
       potentialShares: 4_462_998, // $3B / $672.40
       faceValue: 3_000_000_000,
+      settlementType: "net_share", // Per indenture: principal in cash, excess in shares
       source: "8-K Nov 2024",
       sourceUrl:
         "/filings/mstr/0001193125-24-263336",
@@ -1571,6 +1612,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 433.43, // 2.3072 shares per $1,000
       potentialShares: 4_614_400, // 2.3072 × 2,000,000
       faceValue: 2_000_000_000,
+      settlementType: "net_share", // Per indenture: principal in cash, excess in shares
       source: "8-K Feb 2025",
       sourceUrl:
         "/filings/mstr/0001193125-25-030212",
@@ -1623,6 +1665,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 20.00,
       potentialShares: 25_000_000,  // $500M / $20 = 25M shares max
       faceValue: 500_000_000,
+      settlementType: "issuer_election",  // Notes say "if can't convert, repay in BTC" — company chooses method
       source: "SEC 424B3 Jul 2025",
       sourceUrl:
         "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=424B3",
@@ -1688,6 +1731,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 34.72, // $1,000 / 28.8 shares per $1,000 = $34.72 per share
       potentialShares: 28_800_000, // $1B par × 28.8 / 1000 = 28,800,000 shares
       faceValue: 1_000_000_000, // $1B par value — subtracted from debt when ITM
+      settlementType: "full_share",  // Physical settlement only — no cash or combination option per indenture
       source: "8-K May 30, 2025 EX-4.1 Indenture (conversion rate 28.8 shares per $1,000)",
       sourceUrl: "/filings/djt/0001140361-25-020967",
       expiration: "2028-05-29",
@@ -1837,6 +1881,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 13.65,  // SEC Exhibit 10.2 (6-K Jul 11, 2025): Conversion Price $13.65/share
       potentialShares: 1_978_022,  // $27,000,000 / $13.65 = 1,978,022
       faceValue: 27_000_000,
+      settlementType: "full_share",  // Senior secured convertible — toxic conversion feature, share delivery
       source: "SEC 6-K Jul 11, 2025 Exhibit 10.2 (Form of Initial Note)",
       sourceUrl:
         "/filings/ddc/0001213900-25-063293",
@@ -1909,6 +1954,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 9.00,
       potentialShares: 2_222_222,  // $20M / $9
       faceValue: 20_000_000,
+      settlementType: "full_share",  // Investor note — RETIRED Feb 2026
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "/filings/fld/0001193125-25-274317",
@@ -1920,6 +1966,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 12.50,
       potentialShares: 3_702_360,  // $46,279,500 / $12.50
       faceValue: 46_300_000,  // Principal (fair value is $60.8M)
+      settlementType: "full_share",  // Investor note — RETIRED Feb 2026
       source: "SEC 10-Q Q3 2025",
       sourceUrl:
         "/filings/fld/0001193125-25-274317",
@@ -2150,6 +2197,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.354,  // Floor price post-split (was $0.0559 pre-split)
       potentialShares: 2_981_514,  // $10M / $3.354
       faceValue: 10_000_000,
+      settlementType: "full_share",  // Senior secured convertible — no cash settlement option
       source: "SEC 6-K Jan 20, 2026",
       sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2029-07-16",
@@ -2161,6 +2209,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.354,  // Floor price post-split
       potentialShares: 1_490_757,  // $5M / $3.354
       faceValue: 5_000_000,
+      settlementType: "full_share",  // Senior secured convertible — no cash settlement option
       source: "SEC 6-K Jan 20, 2026",
       sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2029-07-16",
@@ -2172,6 +2221,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 4.74,  // Floor price post-split (was $0.079 pre-split)
       potentialShares: 282_386,  // $1,338,506 / $4.74
       faceValue: 1_338_506,
+      settlementType: "full_share",  // Senior secured convertible — no cash settlement option
       source: "SEC 6-K Jan 20, 2026",
       sourceUrl: "/filings/btog/0001104659-26-005086",
       expiration: "2029-07-31",
@@ -2427,6 +2477,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 9.74,
       potentialShares: 1_832_851,
       faceValue: 17_847_000,
+      settlementType: "full_share",  // Convertible senior notes — standard share delivery per indenture
       source: "10-Q Q3 2025 (Note 9) + S-1 Dec 18, 2025",
       sourceUrl:
         "/filings/dfdv/0001193125-25-286660",
@@ -2447,6 +2498,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 23.11,
       potentialShares: 5_305_502,
       faceValue: 122_500_000,
+      settlementType: "full_share",  // Convertible senior notes — standard share delivery per indenture
       source: "10-Q Q3 2025 (Note 9) + S-1 Dec 18, 2025",
       sourceUrl:
         "/filings/dfdv/0001193125-25-286660",
@@ -2716,6 +2768,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.445,
       potentialShares: 45_355_588,
       faceValue: 156_250_000,
+      settlementType: "full_share",  // Senior secured convertible — pendingMerger, no active mNAV impact
       source: "Note Purchase Agreement Aug 8, 2025",
       sourceUrl:
         "/filings/ethm/0001213900-25-073158",
@@ -2759,6 +2812,8 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // SPAC merger pending (expected early Q2 2026). Post-merger ticker: BSTR
   // Basic shares: 25,500,000 (20.5M Class A + 5M Class B founder shares)
   // Holdings: 30,021 BTC | All convertible instruments at $13.00 strike
+  // Settlement: S-4 not public yet. Likely issuer_election (Cantor playbook matches XXI).
+  // Using full_share (conservative) until indenture is available.
   CEPO: [
     // 1.00% Convertible Senior Secured Notes — Main tranche
     {
@@ -2766,6 +2821,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 13.00,
       potentialShares: 38_461_538,
       faceValue: 500_000_000,
+      settlementType: "full_share",  // Conservative default — S-4 not public. Likely issuer_election per Cantor playbook.
       source: "8-K Jul 17, 2025",
       sourceUrl:
         "/filings/cepo/0001213900-25-064922",
@@ -2781,6 +2837,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 13.00,
       potentialShares: 2_346_154,
       faceValue: 30_500_000,
+      settlementType: "full_share",  // Conservative default — S-4 not public. Likely issuer_election per Cantor playbook.
       source: "8-K Aug 7, 2025",
       sourceUrl:
         "/filings/cepo/0001213900-25-073158",
@@ -3022,6 +3079,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       strikePrice: 3.57, // R$ 18.40 / 5.15 = $3.57 USD conversion price
       potentialShares: 6_966_760,
       faceValue: 24_886_408, // R$ 128,160,000 / 5.15 = ~$24.89M USD
+      settlementType: "full_share",  // Brazilian convertible — zero interest, share delivery at conversion
       issuedDate: "2025-10-01", // Pre-listing, Oct 2025 per press reports
       expiration: "2030-10-01", // 5-year term
       source: "NeoFeed Feb 2026 + B3 market announcements (R$128M zero-interest 5yr with Parafi Capital)",
@@ -3076,11 +3134,18 @@ export function getEffectiveShares(
     .filter((b) => b.inTheMoney)
     .reduce((sum, b) => sum + b.potentialShares, 0);
 
-  // Calculate face value of in-the-money CONVERTIBLES only
-  // This should be subtracted from debt to avoid double-counting
-  const inTheMoneyDebtValue = breakdown
-    .filter((b) => b.inTheMoney && b.type === "convertible" && b.faceValue)
-    .reduce((sum, b) => sum + (b.faceValue || 0), 0);
+  // Calculate face value of in-the-money CONVERTIBLES to subtract from debt.
+  // Settlement-aware: only subtract faceValue for full_share settlement.
+  // For net_share: principal is owed in cash, so faceValue stays in debt.
+  // For cash_only/issuer_election: conservatively keep debt.
+  const inTheMoneyDebtValue = activeInstruments
+    .filter((inst) => {
+      if (!inst.faceValue || inst.type !== "convertible") return false;
+      if (stockPrice <= inst.strikePrice) return false; // OTM
+      const settlement = inst.settlementType || "full_share"; // backwards compat
+      return settlement === "full_share";
+    })
+    .reduce((sum, inst) => sum + (inst.faceValue || 0), 0);
 
   // Calculate exercise proceeds from in-the-money WARRANTS
   // Symmetric treatment: if we count warrant dilution, we should also count the incoming cash
@@ -3149,10 +3214,15 @@ export function getEffectiveSharesAt(
     .filter((b) => b.inTheMoney)
     .reduce((sum, b) => sum + b.potentialShares, 0);
 
-  // Calculate face value of in-the-money CONVERTIBLES only
-  const inTheMoneyDebtValue = breakdown
-    .filter((b) => b.inTheMoney && b.type === "convertible" && b.faceValue)
-    .reduce((sum, b) => sum + (b.faceValue || 0), 0);
+  // Settlement-aware debt subtraction (same logic as getEffectiveShares)
+  const inTheMoneyDebtValue = activeInstruments
+    .filter((inst) => {
+      if (!inst.faceValue || inst.type !== "convertible") return false;
+      if (stockPrice <= inst.strikePrice) return false;
+      const settlement = inst.settlementType || "full_share";
+      return settlement === "full_share";
+    })
+    .reduce((sum, inst) => sum + (inst.faceValue || 0), 0);
 
   // Calculate exercise proceeds from in-the-money WARRANTS
   const inTheMoneyWarrantProceeds = breakdown

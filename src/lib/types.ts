@@ -55,8 +55,14 @@ export interface DataWarning {
   severity: "info" | "warning";  // info = FYI, warning = may affect mNAV
 }
 
-// Company type
+// Company type (economic model classification)
 export type CompanyType = "Treasury" | "Miner";
+
+// Treasury model classification — affects how mNAV should be interpreted
+export type TreasuryModel =
+  | "pure_treasury"              // Crypto is the business (MSTR, 3350.T, SBET)
+  | "hybrid"                     // Significant operating business + treasury (GAME, BTBT, CORZ miners)
+  | "operating_with_treasury";   // Treasury is incidental to core business
 
 // Stock currency (for non-USD exchanges)
 export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL" | "GBP" | "NOK" | "KRW" | "AED" | "AUD";
@@ -245,6 +251,14 @@ export interface Company {
   asxAnnouncementsUrl?: string; // ASX announcements/listing URL (AU tickers)
   hkexNewsUrl?: string;         // HKEX news/filing URL (HK tickers)
   walletAddresses?: string[];   // Known wallet addresses for on-chain verification
+
+  // Treasury model classification
+  treasuryModel?: TreasuryModel;  // How to interpret mNAV (pure_treasury, hybrid, operating_with_treasury)
+
+  // Encumbered/pledged holdings (not freely available to common shareholders)
+  encumberedHoldings?: number;    // Crypto pledged as collateral, lent out, or otherwise restricted
+  encumberedSource?: string;      // Source for encumbrance data
+  encumberedSourceUrl?: string;
 
   // Pending merger status (for SPACs that haven't closed yet)
   pendingMerger?: boolean;        // True if this is a pre-merger SPAC
