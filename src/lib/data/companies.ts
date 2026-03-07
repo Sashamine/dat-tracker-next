@@ -230,6 +230,7 @@ export const ethCompanies: Company[] = [
     debtSourceUrl: "/filings/ethm/0001213900-25-073158",
     debtAsOf: "2025-08-08",
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
+    expectedHoldings: 590_000,  // Dynamix target holds ~590K ETH
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
     notes: "SPAC merger with Dynamix. 3rd largest ETH treasury. Audit note 2026-03-05: holdings/shares sources re-anchored to SEC issuer filing index (CIK 0002080334) to avoid false precision from non-checkpoint Form 425 links.",
@@ -2877,7 +2878,7 @@ export const ltcCompanies: Company[] = [
     sourceType: "sec-filing",
     sourceQuote: "Total digital assets 929,548",
     datStartDate: "2025-07-01",
-    costBasisAvg: 107_580,  // $100M total acquisition / 929,548 LTC ≈ $107.58. XBRL: CryptoAssetCost $89.15M for 833,748 on-BS units.
+    costBasisAvg: 107.58,  // $100M total acquisition / 929,548 LTC ≈ $107.58. XBRL: CryptoAssetCost $89.15M for 833,748 on-BS units.
     costBasisSource: "SEC 10-Q Q2 FY2026 XBRL: PaymentForAcquisitionCryptoAsset $100M / 929,548 total LTC",
     costBasisSourceUrl: "/filings/lits/0001193125-26-053215",
     quarterlyBurnUsd: 3_305_000,  // Q2 FY2026 XBRL: GeneralAndAdministrativeExpense $3,305,000
@@ -3109,7 +3110,7 @@ export const dogeCompanies: Company[] = [
     datStartDate: "2025-09-05",  // House of Doge treasury started Sep 5, 2025
     pendingMerger: true,  // SPAC-style merger not yet closed
     expectedHoldings: 730_000_000,  // HOD holds 730M DOGE per Dec 18, 2025 shareholder letter
-    mergerExpectedClose: "2026-Q1",
+    mergerExpectedClose: "2026-03-31",  // Q1 2026
     quarterlyBurnUsd: 713_000,
     burnSource: "SEC 10-Q Q3 2025 XBRL: SellingGeneralAndAdministrativeExpense",
     burnSourceUrl: "/filings/tbh/0001213900-25-111616",

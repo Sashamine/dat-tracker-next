@@ -12,6 +12,7 @@ import { describe, it, expect } from "vitest";
 import { allCompanies } from "./companies";
 import { HOLDINGS_HISTORY } from "./holdings-history";
 import { dilutiveInstruments } from "./dilutive-instruments";
+import type { Company } from "../types";
 
 // ─────────────────────────────────────────────────────────────
 // Check 1: Diluted-as-basic swap
@@ -383,6 +384,1003 @@ describe("Check 7: Preferred equity omission", () => {
       violations.forEach((v) => console.log(`  ${v}`));
     }
     // Soft fail
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 11: Impossible restrictedCash
+//
+// restrictedCash > cashReserves is an impossible state — you can't
+// restrict more cash than you have. Also catches restrictedCash ==
+// cashReserves (100% restricted means freeCash = 0, may be wrong).
+// ─────────────────────────────────────────────────────────────
+describe("Check 11: Impossible restrictedCash", () => {
+  it("restrictedCash should not exceed cashReserves", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const cash = company.cashReserves ?? 0;
+      const restricted = company.restrictedCash ?? 0;
+      if (restricted === 0) continue;
+
+      if (restricted > cash) {
+        violations.push(
+          `${company.ticker}: restrictedCash ($${(restricted / 1e6).toFixed(1)}M) > ` +
+            `cashReserves ($${(cash / 1e6).toFixed(1)}M). Impossible state.`,
+        );
+      } else if (restricted === cash && cash > 0) {
+        violations.push(
+          `${company.ticker}: restrictedCash ($${(restricted / 1e6).toFixed(1)}M) == ` +
+            `cashReserves ($${(cash / 1e6).toFixed(1)}M). 100% restricted — ` +
+            `verify this is intentional (freeCash = $0).`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== IMPOSSIBLE RESTRICTED CASH ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations.filter((v) => v.includes("Impossible"))).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 12: Currency mismatch on balance sheet items
+//
+// Exploit: Enter JPY/HKD/BRL balance sheet values as USD.
+// Impact: A ¥1B debt (~$6.5M) entered as $1B inflates EV by 150x.
+// Detection: If company.currency is non-USD and balance sheet items
+// seem too large relative to market cap, flag for review.
+// ─────────────────────────────────────────────────────────────
+describe("Check 12: Currency mismatch on balance sheet", () => {
+  // Rough USD conversion factors — used only for sanity bounds
+  const FX_RATES: Record<string, number> = {
+    JPY: 155, HKD: 7.8, BRL: 5.1, SEK: 10.5, CAD: 1.35,
+    EUR: 0.92, GBP: 0.79, NOK: 10.7, KRW: 1350, AED: 3.67, AUD: 1.55,
+  };
+
+  it("non-USD companies should not have suspiciously large USD-denominated balance sheet items", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.currency || company.currency === "USD") continue;
+      const rate = FX_RATES[company.currency];
+      if (!rate) continue;
+
+      const marketCap = company.marketCap ?? 0;
+      if (marketCap === 0) continue;
+
+      // Check each balance sheet item — if it's > 5x market cap, it might be in local currency
+      const fields: Array<{ name: string; value: number }> = [
+        { name: "totalDebt", value: company.totalDebt ?? 0 },
+        { name: "cashReserves", value: company.cashReserves ?? 0 },
+        { name: "preferredEquity", value: company.preferredEquity ?? 0 },
+      ];
+
+      for (const field of fields) {
+        if (field.value === 0) continue;
+        const ratio = field.value / marketCap;
+        if (ratio > 5 && field.value > 1_000_000) {
+          // Check if dividing by FX rate makes it more reasonable
+          const convertedRatio = (field.value / rate) / marketCap;
+          if (convertedRatio < 2) {
+            violations.push(
+              `${company.ticker} (${company.currency}): ${field.name} ($${(field.value / 1e6).toFixed(1)}M) ` +
+                `is ${ratio.toFixed(0)}x marketCap ($${(marketCap / 1e6).toFixed(0)}M). ` +
+                `Dividing by ${rate} (${company.currency}/USD) gives ${convertedRatio.toFixed(1)}x — ` +
+                `value may be in ${company.currency}, not USD.`,
+            );
+          }
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== POSSIBLE CURRENCY MISMATCH ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — needs manual review
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 13: Market cap override staleness
+//
+// MARKET_CAP_OVERRIDES and FALLBACK_STOCKS are static values that
+// drift from reality over time. Flag overrides that are stale.
+// ─────────────────────────────────────────────────────────────
+import { MARKET_CAP_OVERRIDES, FALLBACK_STOCKS } from "./market-cap-overrides";
+
+describe("Check 13: Market cap override staleness", () => {
+  it("companies with sharesForMnav should not need market cap overrides", () => {
+    const violations: string[] = [];
+
+    for (const ticker of Object.keys(MARKET_CAP_OVERRIDES)) {
+      const company = allCompanies.find((c) => c.ticker === ticker);
+      if (!company) continue;
+      if (!company.sharesForMnav) continue;
+
+      // If company has sharesForMnav, calculated market cap is more accurate
+      // than a static override — the override may be stale
+      violations.push(
+        `${ticker}: has both sharesForMnav (${company.sharesForMnav.toLocaleString()}) ` +
+          `and MARKET_CAP_OVERRIDES ($${(MARKET_CAP_OVERRIDES[ticker] / 1e6).toFixed(0)}M). ` +
+          `Override may be stale — calculated market cap is more accurate.`,
+      );
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== REDUNDANT MARKET CAP OVERRIDES ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some overrides may still be needed (e.g., non-USD price feeds)
+    // expect(violations).toHaveLength(0);
+  });
+
+  it("FALLBACK_STOCKS should have matching entries in allCompanies", () => {
+    const violations: string[] = [];
+
+    for (const ticker of Object.keys(FALLBACK_STOCKS)) {
+      const company = allCompanies.find((c) => c.ticker === ticker);
+      if (!company) {
+        violations.push(
+          `${ticker}: in FALLBACK_STOCKS but not found in allCompanies. ` +
+            `Orphaned fallback entry.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== ORPHANED FALLBACK STOCKS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 14: Duplicate companies
+//
+// Same company appearing twice (e.g., ticker alias, copy-paste).
+// Duplicates corrupt aggregates (total BTC held, etc.).
+// ─────────────────────────────────────────────────────────────
+describe("Check 14: Duplicate companies", () => {
+  it("no duplicate tickers", () => {
+    const seen = new Map<string, string>();
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const existing = seen.get(company.ticker);
+      if (existing) {
+        violations.push(
+          `${company.ticker}: appears twice — "${existing}" and "${company.name}"`,
+        );
+      }
+      seen.set(company.ticker, company.name);
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+
+  it("no duplicate company IDs", () => {
+    const seen = new Map<string, string>();
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const existing = seen.get(company.id);
+      if (existing) {
+        violations.push(
+          `id "${company.id}": used by both "${existing}" and "${company.name}" (${company.ticker})`,
+        );
+      }
+      seen.set(company.id, company.name);
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 15: Pending merger consistency
+//
+// Pre-merger SPACs should have pendingMerger=true and holdings=0
+// (or expectedHoldings set). If they have real holdings but no
+// pendingMerger flag, the mNAV is misleading.
+// ─────────────────────────────────────────────────────────────
+describe("Check 15: Pending merger consistency", () => {
+  it("pendingMerger companies should have holdings=0 or expectedHoldings", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.pendingMerger) continue;
+
+      if (company.holdings > 0 && !company.expectedHoldings) {
+        violations.push(
+          `${company.ticker}: pendingMerger=true but holdings=${company.holdings.toLocaleString()} ` +
+            `with no expectedHoldings. Pre-merger SPACs should have holdings=0.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== PENDING MERGER INCONSISTENCY ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 16: HPS sanity bounds
+//
+// Holdings per share (HPS) should be within reasonable bounds.
+// Extremely high or low HPS may indicate a share count error.
+// ─────────────────────────────────────────────────────────────
+describe("Check 16: HPS sanity bounds", () => {
+  it("holdingsPerShare in history should be within plausible range", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+      if (!data?.history?.length) continue;
+
+      for (const entry of data.history) {
+        if (!entry.holdingsPerShare || !entry.sharesOutstanding) continue;
+
+        // Verify HPS = holdings / shares (allow 1% tolerance for rounding)
+        const calculatedHps = entry.holdings / entry.sharesOutstanding;
+        const deviation = Math.abs(entry.holdingsPerShare - calculatedHps) / calculatedHps;
+
+        if (deviation > 0.01 && entry.holdings > 0) {
+          violations.push(
+            `${ticker} (${entry.date}): holdingsPerShare (${entry.holdingsPerShare.toFixed(6)}) ` +
+              `!= holdings/shares (${calculatedHps.toFixed(6)}). ` +
+              `${(deviation * 100).toFixed(1)}% deviation.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== HPS CALCULATION ERRORS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — many existing entries may have rounding differences
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 17: Cost basis sanity
+//
+// costBasisAvg should be within plausible range for the asset.
+// A BTC cost basis of $500 or $5M is almost certainly wrong.
+// ─────────────────────────────────────────────────────────────
+describe("Check 17: Cost basis sanity", () => {
+  // Rough all-time price ranges per asset
+  const PRICE_BOUNDS: Record<string, { min: number; max: number }> = {
+    BTC: { min: 1_000, max: 200_000 },
+    ETH: { min: 80, max: 5_000 },
+    SOL: { min: 1, max: 300 },
+    HYPE: { min: 1, max: 50 },
+    DOGE: { min: 0.001, max: 1 },
+    LTC: { min: 20, max: 500 },
+    TRX: { min: 0.01, max: 1 },
+    XRP: { min: 0.1, max: 4 },
+    SUI: { min: 0.3, max: 6 },
+    ZEC: { min: 10, max: 1000 },
+    AVAX: { min: 2, max: 150 },
+    BNB: { min: 10, max: 800 },
+    TAO: { min: 50, max: 1000 },
+    LINK: { min: 1, max: 60 },
+    ADA: { min: 0.02, max: 4 },
+    HBAR: { min: 0.01, max: 1 },
+  };
+
+  it("costBasisAvg should be within all-time price range", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.costBasisAvg) continue;
+      const bounds = PRICE_BOUNDS[company.asset];
+      if (!bounds) continue;
+
+      if (company.costBasisAvg < bounds.min * 0.5 || company.costBasisAvg > bounds.max * 1.5) {
+        violations.push(
+          `${company.ticker} (${company.asset}): costBasisAvg $${company.costBasisAvg.toLocaleString()} ` +
+            `outside plausible range [$${bounds.min.toLocaleString()} - $${bounds.max.toLocaleString()}]`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== IMPLAUSIBLE COST BASIS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 18: Holdings history consistency
+//
+// The latest entry in HOLDINGS_HISTORY should match the company's
+// current holdings in companies.ts.
+// ─────────────────────────────────────────────────────────────
+describe("Check 18: Holdings history sync", () => {
+  it("latest history entry should match companies.ts holdings", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const data = HOLDINGS_HISTORY[company.ticker];
+      if (!data?.history?.length) continue;
+
+      const latest = data.history[data.history.length - 1];
+
+      // Holdings check (allow 1% tolerance)
+      if (company.holdings > 0 && latest.holdings > 0) {
+        const holdingsDeviation =
+          Math.abs(company.holdings - latest.holdings) / company.holdings;
+        if (holdingsDeviation > 0.01) {
+          violations.push(
+            `${company.ticker}: companies.ts holdings (${company.holdings.toLocaleString()}) ` +
+              `!= latest history (${latest.holdings.toLocaleString()}). ` +
+              `${(holdingsDeviation * 100).toFixed(1)}% deviation.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== HOLDINGS HISTORY DESYNC ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — history may lag companies.ts updates
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 19: Preferred equity cross-check
+//
+// Preferred equity tracked in dilutive-instruments (as convertible
+// with notes containing "preferredEquity") should have a matching
+// preferredEquity value in companies.ts.
+// ─────────────────────────────────────────────────────────────
+describe("Check 19: Preferred equity cross-check", () => {
+  it("companies with preferred instruments should have preferredEquity set", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, instruments] of Object.entries(dilutiveInstruments)) {
+      const hasPreferred = instruments.some(
+        (inst) => inst.notes?.includes("preferredEquity") || inst.notes?.includes("preferred"),
+      );
+      if (!hasPreferred) continue;
+
+      const company = allCompanies.find((c) => c.ticker === ticker);
+      if (!company) continue;
+
+      if (!company.preferredEquity || company.preferredEquity === 0) {
+        violations.push(
+          `${ticker}: has preferred instruments in dilutive-instruments.ts ` +
+            `but preferredEquity is ${company.preferredEquity ?? "undefined"} in companies.ts`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== PREFERRED EQUITY MISSING ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some preferred instruments may not have a face value
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 20: Strike price currency
+//
+// For non-USD companies, dilutive instrument strike prices should
+// be in the same currency as the stock. A JPY strike entered as
+// USD would make everything look deep ITM.
+// ─────────────────────────────────────────────────────────────
+describe("Check 20: Strike price currency", () => {
+  const HIGH_FX: Record<string, number> = {
+    JPY: 155, KRW: 1350, HKD: 7.8,
+  };
+
+  it("non-USD instrument strikes should not look like local currency entered as USD", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, instruments] of Object.entries(dilutiveInstruments)) {
+      const company = allCompanies.find((c) => c.ticker === ticker);
+      if (!company?.currency || company.currency === "USD") continue;
+
+      const fxRate = HIGH_FX[company.currency];
+      if (!fxRate) continue; // Only check high-FX currencies where confusion is likely
+
+      for (const inst of instruments) {
+        if (!inst.strikePrice || inst.strikePrice === 0) continue;
+
+        // If strike / fxRate gives a more "normal" stock-price-like value,
+        // the strike might be in local currency
+        const stockFallback = FALLBACK_STOCKS[ticker];
+        if (!stockFallback) continue;
+
+        const localPrice = stockFallback.price; // Already in local currency
+        const strikeInUsd = inst.strikePrice;
+
+        // If strike is > 10x the local stock price, it's likely in local currency
+        if (strikeInUsd > localPrice * 10) {
+          violations.push(
+            `${ticker} (${company.currency}): instrument strike $${strikeInUsd} ` +
+              `is ${(strikeInUsd / localPrice).toFixed(0)}x the local stock price ` +
+              `(${company.currency} ${localPrice}). Strike may be in ${company.currency}, not USD.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== STRIKE PRICE CURRENCY MISMATCH ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 21: Holdings non-negative and shares positive
+//
+// Basic sanity: holdings should be >= 0, shares should be > 0
+// when set. Negative values indicate data entry errors.
+// ─────────────────────────────────────────────────────────────
+describe("Check 21: Basic field sanity", () => {
+  it("holdings should not be negative", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (company.holdings < 0) {
+        violations.push(
+          `${company.ticker}: holdings is negative (${company.holdings})`,
+        );
+      }
+      if (company.sharesForMnav !== undefined && company.sharesForMnav <= 0) {
+        violations.push(
+          `${company.ticker}: sharesForMnav is ${company.sharesForMnav} (should be > 0)`,
+        );
+      }
+      if ((company.totalDebt ?? 0) < 0) {
+        violations.push(
+          `${company.ticker}: totalDebt is negative ($${company.totalDebt})`,
+        );
+      }
+      if ((company.cashReserves ?? 0) < 0) {
+        violations.push(
+          `${company.ticker}: cashReserves is negative ($${company.cashReserves})`,
+        );
+      }
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 22: Holdings history chronological order
+//
+// History entries should be in chronological order and have no
+// duplicate dates. Out-of-order entries produce wrong "latest".
+// ─────────────────────────────────────────────────────────────
+describe("Check 22: Holdings history order", () => {
+  it("history entries should be in chronological order", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+      if (!data?.history?.length) continue;
+
+      for (let i = 1; i < data.history.length; i++) {
+        const prev = data.history[i - 1].date;
+        const curr = data.history[i].date;
+        if (curr < prev) {
+          violations.push(
+            `${ticker}: history out of order — "${prev}" before "${curr}" at index ${i}`,
+          );
+        } else if (curr === prev) {
+          violations.push(
+            `${ticker}: duplicate date "${curr}" at index ${i - 1} and ${i}`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== HISTORY ORDER VIOLATIONS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 23: Missing SEC CIK for US companies
+//
+// US-listed companies (no currency override, USD-denominated)
+// should have a secCik for EDGAR monitoring.
+// ─────────────────────────────────────────────────────────────
+describe("Check 23: Missing SEC CIK", () => {
+  it("US-listed companies should have secCik", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      // Skip non-US companies
+      if (company.currency && company.currency !== "USD") continue;
+      // Skip if has non-US indicators
+      if (company.ticker.includes(".")) continue; // .T, .HK, .V, .AX, etc.
+      // Skip pending mergers
+      if (company.pendingMerger) continue;
+
+      if (!company.secCik) {
+        violations.push(
+          `${company.ticker} (${company.name}): US-listed but no secCik set`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== MISSING SEC CIK ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some OTC companies may not have CIKs
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 24: Shares consistency (companies.ts vs holdings-history.ts)
+//
+// sharesForMnav in companies.ts should match the latest
+// sharesOutstanding in holdings-history.ts.
+// ─────────────────────────────────────────────────────────────
+describe("Check 24: Shares consistency", () => {
+  it("sharesForMnav should match latest holdings-history sharesOutstanding", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.sharesForMnav) continue;
+
+      const data = HOLDINGS_HISTORY[company.ticker];
+      if (!data?.history?.length) continue;
+
+      const latest = data.history[data.history.length - 1];
+      if (!latest.sharesOutstanding) continue;
+
+      const deviation =
+        Math.abs(company.sharesForMnav - latest.sharesOutstanding) /
+        company.sharesForMnav;
+
+      if (deviation > 0.02) {
+        violations.push(
+          `${company.ticker}: sharesForMnav (${company.sharesForMnav.toLocaleString()}) ` +
+            `vs history (${latest.sharesOutstanding.toLocaleString()}) — ` +
+            `${(deviation * 100).toFixed(1)}% deviation`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== SHARES CONSISTENCY VIOLATIONS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some deviation expected during updates
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 25: Missing holdings history
+//
+// Every company in allCompanies should have a HOLDINGS_HISTORY entry.
+// Without it, HPS charts are empty and the "latest" snapshot lookup
+// returns undefined.
+// ─────────────────────────────────────────────────────────────
+describe("Check 25: Missing holdings history", () => {
+  it("every company should have a holdings-history entry", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const data = HOLDINGS_HISTORY[company.ticker];
+      if (!data || !data.history?.length) {
+        violations.push(
+          `${company.ticker} (${company.name}): no entry in HOLDINGS_HISTORY`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== MISSING HOLDINGS HISTORY ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — new companies may not have history yet
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 26: Asset mismatch between companies and holdings history
+//
+// company.asset should match HOLDINGS_HISTORY[ticker].asset.
+// A mismatch means HPS is calculated against the wrong crypto price.
+// ─────────────────────────────────────────────────────────────
+describe("Check 26: Asset mismatch", () => {
+  it("company asset should match holdings-history asset", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      const data = HOLDINGS_HISTORY[company.ticker];
+      if (!data) continue;
+
+      // Allow MULTI in history when company tracks a dominant asset
+      if (data.asset !== company.asset && data.asset !== "MULTI") {
+        violations.push(
+          `${company.ticker}: companies.ts asset="${company.asset}" ` +
+            `but holdings-history asset="${data.asset}"`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== ASSET MISMATCH ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 27: Orphaned dilutive instruments
+//
+// Instruments for tickers not in allCompanies waste memory and
+// never get audited for staleness or correctness.
+// ─────────────────────────────────────────────────────────────
+describe("Check 27: Orphaned dilutive instruments", () => {
+  it("all dilutive instrument tickers should exist in allCompanies", () => {
+    const violations: string[] = [];
+    const companyTickers = new Set(allCompanies.map((c) => c.ticker));
+
+    for (const ticker of Object.keys(dilutiveInstruments)) {
+      if (companyTickers.has(ticker)) continue;
+
+      // Check if this is a base ticker whose alias (e.g., BTCT → BTCT.V) IS in allCompanies
+      const isAliasBase = [...companyTickers].some(
+        (t) => dilutiveInstruments[t] === dilutiveInstruments[ticker],
+      );
+      if (isAliasBase) continue;
+
+      violations.push(
+        `${ticker}: has ${dilutiveInstruments[ticker].length} dilutive instruments ` +
+          `but no matching company in allCompanies`,
+      );
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== ORPHANED DILUTIVE INSTRUMENTS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 28: Excessive dilution
+//
+// If total potential dilutive shares > 200% of basic shares,
+// something is likely wrong (duplicate instrument, shares entered
+// instead of warrant count, etc.).
+// ─────────────────────────────────────────────────────────────
+describe("Check 28: Excessive dilution", () => {
+  it("total dilutive shares should not exceed 200% of basic shares", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.sharesForMnav) continue;
+      const instruments = dilutiveInstruments[company.ticker];
+      if (!instruments?.length) continue;
+
+      const now = new Date().toISOString().slice(0, 10);
+      const activeInstruments = instruments.filter(
+        (inst) => !inst.expiration || inst.expiration > now,
+      );
+      const totalPotential = activeInstruments.reduce(
+        (sum, inst) => sum + inst.potentialShares,
+        0,
+      );
+
+      const dilutionPct = totalPotential / company.sharesForMnav;
+      if (dilutionPct > 2.0) {
+        violations.push(
+          `${company.ticker}: dilutive instruments total ${totalPotential.toLocaleString()} shares ` +
+            `= ${(dilutionPct * 100).toFixed(0)}% of basic shares (${company.sharesForMnav.toLocaleString()}). ` +
+            `Check for duplicates or data entry errors.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== EXCESSIVE DILUTION ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some companies genuinely have heavy dilution (SPACs, warrants)
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 29: Market cap override vs fallback inconsistency
+//
+// If a ticker appears in both MARKET_CAP_OVERRIDES and
+// FALLBACK_STOCKS with different marketCap values, the result
+// depends on which code path runs first — non-deterministic mNAV.
+// ─────────────────────────────────────────────────────────────
+describe("Check 29: Override vs fallback consistency", () => {
+  it("tickers in both MARKET_CAP_OVERRIDES and FALLBACK_STOCKS should have consistent marketCap", () => {
+    const violations: string[] = [];
+
+    for (const ticker of Object.keys(MARKET_CAP_OVERRIDES)) {
+      const fallback = FALLBACK_STOCKS[ticker];
+      if (!fallback) continue;
+
+      const overrideValue = MARKET_CAP_OVERRIDES[ticker];
+      const fallbackValue = fallback.marketCap;
+      const deviation = Math.abs(overrideValue - fallbackValue) / overrideValue;
+
+      if (deviation > 0.10) {
+        violations.push(
+          `${ticker}: MARKET_CAP_OVERRIDES ($${(overrideValue / 1e6).toFixed(0)}M) vs ` +
+            `FALLBACK_STOCKS ($${(fallbackValue / 1e6).toFixed(0)}M) — ` +
+            `${(deviation * 100).toFixed(0)}% difference`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== OVERRIDE vs FALLBACK MISMATCH ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — small drift is expected, large drift is dangerous
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 30: Secondary/investment holdings sanity
+//
+// secondaryCryptoHoldings and cryptoInvestments add to NAV.
+// Catch: wrong asset, negative amounts, zero fairValue on funds.
+// ─────────────────────────────────────────────────────────────
+describe("Check 30: Secondary holdings and crypto investments sanity", () => {
+  it("secondaryCryptoHoldings should have positive amounts", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.secondaryCryptoHoldings?.length) continue;
+
+      for (const holding of company.secondaryCryptoHoldings) {
+        if (holding.amount <= 0) {
+          violations.push(
+            `${company.ticker}: secondaryCryptoHolding ${holding.asset} has ` +
+              `amount=${holding.amount} (should be > 0)`,
+          );
+        }
+      }
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+
+  it("cryptoInvestments should have positive fairValue", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.cryptoInvestments?.length) continue;
+
+      for (const inv of company.cryptoInvestments) {
+        if (inv.type === "lst") {
+          // LSTs use underlyingAmount × price, fairValue is static fallback
+          if (!inv.lstAmount || inv.lstAmount <= 0) {
+            violations.push(
+              `${company.ticker}: LST "${inv.name}" has lstAmount=${inv.lstAmount} (should be > 0)`,
+            );
+          }
+          if (!inv.exchangeRate || inv.exchangeRate <= 0) {
+            violations.push(
+              `${company.ticker}: LST "${inv.name}" has exchangeRate=${inv.exchangeRate} (should be > 0)`,
+            );
+          }
+        } else {
+          // Funds/ETFs need fairValue
+          if (!inv.fairValue || inv.fairValue <= 0) {
+            violations.push(
+              `${company.ticker}: investment "${inv.name}" (${inv.type}) has ` +
+                `fairValue=${inv.fairValue} (should be > 0)`,
+            );
+          }
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== INVALID CRYPTO INVESTMENTS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 31: stakingPct bounds
+//
+// stakingPct should be 0.0–1.0 (a ratio). A value > 1.0 suggests
+// someone entered a percentage (e.g., 85 instead of 0.85).
+// ─────────────────────────────────────────────────────────────
+describe("Check 31: stakingPct bounds", () => {
+  it("stakingPct should be between 0 and 1", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (company.stakingPct === undefined) continue;
+
+      if (company.stakingPct < 0) {
+        violations.push(
+          `${company.ticker}: stakingPct is negative (${company.stakingPct})`,
+        );
+      } else if (company.stakingPct > 1.0) {
+        violations.push(
+          `${company.ticker}: stakingPct is ${company.stakingPct} (should be 0.0–1.0, ` +
+            `not a percentage). Did you mean ${(company.stakingPct / 100).toFixed(2)}?`,
+        );
+      }
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 32: Large holdings drops in history
+//
+// A >50% drop between adjacent history entries is unusual.
+// Could be a sale (legit) or a data error (source confusion).
+// ─────────────────────────────────────────────────────────────
+describe("Check 32: Large holdings drops", () => {
+  it("holdings should not drop >50% between adjacent entries without explanation", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+      if (!data?.history?.length || data.history.length < 2) continue;
+
+      for (let i = 1; i < data.history.length; i++) {
+        const prev = data.history[i - 1];
+        const curr = data.history[i];
+        if (prev.holdings === 0 || curr.holdings === 0) continue;
+
+        const dropPct = (prev.holdings - curr.holdings) / prev.holdings;
+        if (dropPct > 0.5) {
+          violations.push(
+            `${ticker} (${curr.date}): holdings dropped ${(dropPct * 100).toFixed(0)}% ` +
+              `from ${prev.holdings.toLocaleString()} to ${curr.holdings.toLocaleString()}. ` +
+              `Verify this is a real sale, not a data error.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== LARGE HOLDINGS DROPS ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some companies do sell large portions
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 33: ISO date format validation
+//
+// All date fields should be YYYY-MM-DD. Invalid dates like
+// "03/15/2026" or "2026-13-01" silently produce NaN timestamps,
+// corrupting staleness checks and sorting.
+// ─────────────────────────────────────────────────────────────
+describe("Check 33: Date format validation", () => {
+  const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+  it("all date fields in companies should be valid ISO dates", () => {
+    const violations: string[] = [];
+    const dateFields: Array<keyof Company> = [
+      "holdingsLastUpdated", "sharesAsOf", "debtAsOf", "cashAsOf",
+      "preferredAsOf", "datStartDate", "burnAsOf", "costBasisAsOf",
+      "stakingAsOf", "stakingLastAudited", "mergerExpectedClose",
+      "cashObligationsAsOf",
+    ];
+
+    for (const company of allCompanies) {
+      for (const field of dateFields) {
+        const value = company[field];
+        if (typeof value !== "string") continue;
+
+        if (!ISO_DATE.test(value)) {
+          violations.push(
+            `${company.ticker}: ${String(field)} = "${value}" (not YYYY-MM-DD format)`,
+          );
+          continue;
+        }
+
+        // Validate it parses to a real date
+        const parsed = new Date(value + "T00:00:00Z");
+        if (isNaN(parsed.getTime())) {
+          violations.push(
+            `${company.ticker}: ${String(field)} = "${value}" (invalid date)`,
+          );
+        }
+      }
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+
+  it("all dates in holdings history should be valid ISO dates", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+      if (!data?.history?.length) continue;
+
+      for (const entry of data.history) {
+        if (!ISO_DATE.test(entry.date)) {
+          violations.push(
+            `${ticker}: history date "${entry.date}" is not YYYY-MM-DD format`,
+          );
+        } else {
+          const parsed = new Date(entry.date + "T00:00:00Z");
+          if (isNaN(parsed.getTime())) {
+            violations.push(
+              `${ticker}: history date "${entry.date}" is invalid`,
+            );
+          }
+        }
+      }
+    }
+
+    expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 34: Orphaned holdings history
+//
+// Entries in HOLDINGS_HISTORY for tickers not in allCompanies.
+// These consume memory and may confuse lookups.
+// ─────────────────────────────────────────────────────────────
+describe("Check 34: Orphaned holdings history", () => {
+  it("all HOLDINGS_HISTORY tickers should exist in allCompanies", () => {
+    const violations: string[] = [];
+    const companyTickers = new Set(allCompanies.map((c) => c.ticker));
+
+    for (const ticker of Object.keys(HOLDINGS_HISTORY)) {
+      if (!companyTickers.has(ticker)) {
+        violations.push(
+          `${ticker}: in HOLDINGS_HISTORY but not in allCompanies. Orphaned history.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== ORPHANED HOLDINGS HISTORY ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — we may keep history for removed companies
     // expect(violations).toHaveLength(0);
   });
 });

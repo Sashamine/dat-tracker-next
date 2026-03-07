@@ -74,8 +74,7 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   "SRAG.DU": { price: 1.74, marketCap: 190_000_000 },      // Samara Asset Group (EUR, Frankfurt) - 92.2M shares × €1.74 × 1.185 ≈ $190M
   "H100.ST": { price: 1.93, marketCap: 62_000_000 },       // H100 Group (SEK price, USD market cap) — fallback only; sharesForMnav enables dynamic calc
   "DCC.AX": { price: 0.038, marketCap: 39_600_000 },       // DigitalX (AUD) - 1.49B shares × A$0.038 ÷ 1.60 = ~$35M (dashboard: $39.6M)
-  "NDA.V": { price: 0.065, marketCap: 13_000_000 },        // Neptune Digital (CAD) - ~200M shares × C$0.065
-  "DMGI.V": { price: 0.015, marketCap: 5_000_000 },        // DMG Blockchain (CAD) - estimated
+  // NDA.V, DMGI.V removed — companies dropped below threshold and removed from allCompanies
 
   // SPACs/Pre-merger (limited data availability)
   "ETHM": { price: 10.00, marketCap: 230_000_000 },        // Ether Machine (pending SPAC merger)
