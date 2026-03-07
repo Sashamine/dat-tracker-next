@@ -1066,16 +1066,16 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,  // ~R$5.3M/day = ~$1M USD
-    sharesForMnav: 162_267_260,  // Mar 1, 2026 announcement: 162,267,260 fully adjusted for debenture conversion
-    sharesSource: "Mar 1, 2026 market announcement",
-    sharesSourceQuote: "155,300,500 shares outstanding outside treasury (162,267,260 fully adjusted for debenture conversion)",
-    sharesSourceUrl: "https://ri.oranjebtc.com",
+    sharesForMnav: 155_300_500,  // BASIC: Mar 1, 2026 announcement: 155,300,500 shares outstanding outside treasury. Dilution (6,966,760 debenture shares) handled dynamically via dilutive-instruments.ts
+    sharesSource: "Mar 1, 2026 B3 market announcement (Comunicado ao Mercado)",
+    sharesSourceQuote: "155,300,500 common shares outstanding (excluding treasury shares). In the event of conversion of the issued debentures, an additional 6,966,760 common shares will be issued.",
+    sharesSourceUrl: "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2",
     sharesAsOf: "2026-03-01",
-    totalDebt: 0,
-    debtSource: "B3/CVM disclosures: no debt value stated in Mar 1, 2026 market announcement; provisional 0 pending full financial statement extraction",
-    debtSourceUrl: "https://ri.oranjebtc.com",
-    debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
-    debtSourceQuote: "No debt disclosed (CVM filings — Brazilian company, limited English disclosure)",
+    totalDebt: 24_886_408,  // R$ 128,160,000 / 5.15 = ~$24.89M USD — Parafi Capital zero-interest 5yr convertible debenture
+    debtSource: "NeoFeed Feb 2026: R$128M zero-interest 5yr convertible debenture with Parafi Capital. Face value derived from 6,966,760 potential shares × R$18.40 conversion price",
+    debtSourceUrl: "https://neofeed.com.br/negocios/o-preco-da-tese-cripto-na-b3-oranjebtc-perde-quase-metade-do-valor-em-um-mes/",
+    debtAsOf: "2025-10-01",
+    debtSourceQuote: "A companhia possui uma dívida de cinco anos com juros zero, firmada com a americana Parafi Capital, no valor de R$ 128 milhões, com possibilidade de conversão em ações.",
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
     notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Mar 1, 2026 market announcement reports 3,723.0 BTC and 155,300,500 shares outstanding outside treasury (162,267,260 fully adjusted for debenture conversion). OBTC3 latest holdings/shares are now in D1 after targeted backfill; quarterly financial stack remains incomplete.",
     dataWarnings: [
