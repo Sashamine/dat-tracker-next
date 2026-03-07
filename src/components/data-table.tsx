@@ -1,5 +1,6 @@
 "use client";
 
+import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
@@ -26,7 +27,7 @@ import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
 import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
 import { CitationPopover } from "@/components/ui/citation-popover";
 import { trackCitationSourceClick } from "@/lib/client-events";
-import { calculateHoldingsGrowth, getHoldingsHistory, type HoldingsSnapshot } from "@/lib/data/holdings-history";
+import { getCompanyAhpsMetrics, type AhpsHistoryEntry } from "@/lib/utils/ahps";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -50,6 +51,23 @@ interface DataTableProps {
   yesterdayMnav?: YesterdayMnavData;
 }
 
+interface HpsGrowthApiSnapshot {
+  date: string;
+  holdings: number;
+  sharesOutstanding: number;
+  holdingsPerShare: number;
+}
+
+interface HpsGrowthApiRow {
+  ticker: string;
+  currentSnapshot: HpsGrowthApiSnapshot;
+  snapshot30d: HpsGrowthApiSnapshot | null;
+  snapshot90d: HpsGrowthApiSnapshot | null;
+  snapshot1y: HpsGrowthApiSnapshot | null;
+}
+
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
 // Format large numbers (e.g., 1,234,567 -> 1.23M)
 function formatNumber(num: number | undefined): string {
   if (num === undefined || num === null) return "—";
@@ -71,51 +89,6 @@ function getGrowthColor(value: number | null): string {
   if (value < 0) return "text-red-600";
   return "text-gray-500";
 }
-
-function calculateHpsGrowth90d(
-  ticker: string,
-  currentHoldings: number,
-  currentShares: number | undefined
-): number | null {
-  if (!currentShares || currentShares <= 0 || currentHoldings < 0) return null;
-
-  const historyData = getHoldingsHistory(ticker);
-  if (!historyData || historyData.history.length === 0) return null;
-
-  const ninetyDaysAgo = new Date();
-  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-  const filteredHistory = historyData.history.filter((snapshot) => {
-    const snapshotDate = new Date(snapshot.date);
-    return !Number.isNaN(snapshotDate.getTime()) && snapshotDate >= ninetyDaysAgo;
-  });
-
-  const historyForGrowth: HoldingsSnapshot[] = [...filteredHistory];
-  const lastSnapshot = historyForGrowth[historyForGrowth.length - 1];
-  const today = new Date().toISOString().split("T")[0];
-  const currentHoldingsPerShare = currentHoldings / currentShares;
-
-  if (!lastSnapshot) {
-    return null;
-  }
-
-  if (
-    today > lastSnapshot.date &&
-    Math.abs(lastSnapshot.holdingsPerShare - currentHoldingsPerShare) > Number.EPSILON
-  ) {
-    historyForGrowth.push({
-      ...lastSnapshot,
-      date: today,
-      holdings: currentHoldings,
-      sharesOutstanding: currentShares,
-      holdingsPerShare: currentHoldingsPerShare,
-    });
-  }
-
-  const growth = calculateHoldingsGrowth(historyForGrowth);
-  return growth?.totalGrowth ?? null;
-}
-
 
 // All logos are stored locally in /public/logos/TICKER.png
 // No need for a mapping - just construct the path from ticker
@@ -143,6 +116,10 @@ const assetColors: Record<string, string> = {
 
 export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) {
   const router = useRouter();
+  const { data: ahpsData } = useSWR<{
+    success: boolean;
+    results: HpsGrowthApiRow[];
+  }>("/api/d1/hps-growth", fetcher, { revalidateOnFocus: false });
   const {
     minMarketCap,
     maxMarketCap,
@@ -156,6 +133,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     setSortField,
     setSortDir,
   } = useFilters();
+
+  const ahpsByTicker = new Map(
+    (ahpsData?.results || []).map((row) => [row.ticker.toUpperCase(), row])
+  );
 
   // Calculate metrics for each company
   const companiesWithMetrics = companies.map((company) => {
@@ -185,7 +166,32 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const otherInvestments = company.otherInvestments ?? 0;
     const otherAssets = cashReserves + otherInvestments;
     const totalDebt = company.totalDebt ?? 0;
-    const hpsGrowth90d = calculateHpsGrowth90d(company.ticker, company.holdings, company.sharesForMnav);
+    const ahpsRow = ahpsByTicker.get(company.ticker.toUpperCase());
+    const ahpsHistory: AhpsHistoryEntry[] | undefined = ahpsRow
+      ? [ahpsRow.snapshot30d, ahpsRow.snapshot90d, ahpsRow.snapshot1y, ahpsRow.currentSnapshot]
+          .filter((snapshot): snapshot is HpsGrowthApiSnapshot => Boolean(snapshot))
+          .sort((a, b) => a.date.localeCompare(b.date))
+          .map((snapshot) => ({
+            date: snapshot.date,
+            holdings: snapshot.holdings,
+            sharesOutstanding: snapshot.sharesOutstanding,
+            holdingsPerShare: snapshot.holdingsPerShare,
+          }))
+      : undefined;
+    const ahpsCompany = ahpsRow
+      ? {
+          ...company,
+          holdings: ahpsRow.currentSnapshot.holdings,
+          sharesForMnav: ahpsRow.currentSnapshot.sharesOutstanding,
+          holdingsLastUpdated: ahpsRow.currentSnapshot.date,
+        }
+      : company;
+    const ahpsMetrics = getCompanyAhpsMetrics({
+      ticker: company.ticker,
+      company: ahpsCompany,
+      history: ahpsHistory,
+      currentStockPrice: stockPrice,
+    });
 
     // Adjust debt for ITM convertibles (same as mNAV calculation)
     // ITM converts are counted in diluted shares, so subtract their face value from debt
@@ -226,7 +232,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       isAfterHours,
       otherAssets,
       leverageRatio,
-      hpsGrowth90d,
+      currentAhps: ahpsMetrics.currentAhps,
+      ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
+      ahpsMethod: ahpsMetrics.method,
+      usesAdjustedShares: ahpsMetrics.usesAdjustedShares,
     };
   });
 
@@ -282,8 +291,8 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
 
     switch (sortField) {
       case "hpsGrowth90d":
-        aVal = a.hpsGrowth90d ?? Number.NEGATIVE_INFINITY;
-        bVal = b.hpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        aVal = a.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        bVal = b.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
         break;
       case "holdingsValue":
         // When prices haven't loaded, sort by ticker alphabetically for stability
@@ -559,10 +568,17 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       </div>
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
-          <p className="text-xs text-gray-500 uppercase">HPS 90D</p>
-          <p className={cn("font-semibold", getGrowthColor(company.hpsGrowth90d))}>
-            {formatGrowthPct(company.hpsGrowth90d)}
-          </p>
+          <p className="text-xs text-gray-500 uppercase">AHPS 90D</p>
+          <div className="flex items-center gap-1">
+            <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+              {formatGrowthPct(company.ahpsGrowth90d)}
+            </p>
+            {company.usesAdjustedShares && (
+              <Badge variant="outline" className="text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
+                Adj
+              </Badge>
+            )}
+          </div>
         </div>
         <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
@@ -643,10 +659,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       {filteredCompanies.length === 0 ? (
         <div className="p-8 text-center">
           <p className="text-gray-700 dark:text-gray-200 font-medium">
-            No companies match the current HPS leaderboard filters.
+            No companies match the current AHPS leaderboard filters.
           </p>
           <p className="mt-1 text-sm text-gray-500">
-            Clear one or more filters to repopulate the 90-day holdings-per-share rankings.
+            Clear one or more filters to repopulate the 90-day adjusted holdings-per-share rankings.
           </p>
         </div>
       ) : (
@@ -676,7 +692,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("hpsGrowth90d")}
                 >
-                  HPS Growth (90D) {sortField === "hpsGrowth90d" && (sortDir === "desc" ? "↓" : "↑")}
+                  AHPS Growth (90D) {sortField === "hpsGrowth90d" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
@@ -843,9 +859,14 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right font-mono">
-                    <span className={cn("font-semibold", getGrowthColor(company.hpsGrowth90d))}>
-                      {formatGrowthPct(company.hpsGrowth90d)}
+                    <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+                      {formatGrowthPct(company.ahpsGrowth90d)}
                     </span>
+                    {company.usesAdjustedShares && (
+                      <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
+                        Adj
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     {company.pendingMerger ? (
