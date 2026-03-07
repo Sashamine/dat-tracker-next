@@ -106,6 +106,9 @@ function HomeContent() {
   const totalCompanies = d1Companies.length;
   const isFiltered = activeFilterCount > 0;
   const visibleCount = visibleSummary?.visibleCount ?? totalCompanies;
+  const overviewSummaryText = isLoadingCompanies
+    ? "Loading..."
+    : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`;
 
   // Use shared mNAV stats hook - single source of truth
   const mnavStats = useMNAVStats(d1Companies, prices);
@@ -138,7 +141,7 @@ function HomeContent() {
                 Crypto Per Share Leaderboard
               </h1>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
+                {overviewSummaryText}
               </p>
               {!isLoadingCompanies && isFiltered && (
                 <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -204,7 +207,7 @@ function HomeContent() {
                   Crypto Per Share Leaderboard
                 </h1>
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
+                  {overviewSummaryText}
                 </p>
                 {!isLoadingCompanies && isFiltered && (
                   <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
