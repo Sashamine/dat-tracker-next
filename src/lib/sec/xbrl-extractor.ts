@@ -355,13 +355,22 @@ function findMostRecentValue(
     }
   }
 
-  return bestMatch ? {
+  if (!bestMatch) return null;
+
+  // Cap the as-of date at the filing date. Non-calendar fiscal years
+  // produce XBRL `end` dates in the future (e.g. FGNX FYE Jun 30 →
+  // Q1 FY2027 end = Sep 30, 2026 even though filed in Feb 2026).
+  const effectiveDate = bestMatch.filed && bestMatch.date > bestMatch.filed
+    ? bestMatch.filed
+    : bestMatch.date;
+
+  return {
     value: bestMatch.value,
-    date: bestMatch.date,
+    date: effectiveDate,
     form: bestMatch.form,
     accn: bestMatch.accn,
     unit: bestMatch.unit,
-  } : null;
+  };
 }
 
 function parseConceptName(conceptName: string): ConceptRef {
