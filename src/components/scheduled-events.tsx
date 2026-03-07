@@ -64,6 +64,10 @@ function EventCard({ event, stockPrice }: { event: ScheduledEvent; stockPrice?: 
   });
 
   const isPendingVerification = event.status === "pending-verification";
+  const formattedCoupon =
+    event.coupon !== undefined
+      ? event.coupon.toFixed(3).replace(/\.?0+$/, "")
+      : null;
 
   return (
     <div
@@ -99,7 +103,7 @@ function EventCard({ event, stockPrice }: { event: ScheduledEvent; stockPrice?: 
               {formatAmount(event.amount)}
               {event.coupon !== undefined && event.coupon > 0 && (
                 <span className="text-sm font-normal text-gray-500 ml-1">
-                  @ {event.coupon}%
+                  @ {formattedCoupon}%
                 </span>
               )}
             </p>
