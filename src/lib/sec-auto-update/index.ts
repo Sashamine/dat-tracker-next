@@ -88,7 +88,8 @@ export interface SecUpdateResult {
 export interface SecUpdateConfig {
   tickers?: string[];           // Specific tickers to check (default: all with CIKs)
   sinceDays?: number;           // How far back to look (default: 7)
-  dryRun?: boolean;             // Don't actually update files or commit
+  dryRun?: boolean;             // Don't update files or commit (filesystem operations)
+  d1DryRun?: boolean;           // Don't write to D1 (default: false, independent of dryRun)
   autoCommit?: boolean;         // Commit changes automatically (default: true)
   minConfidence?: number;       // Minimum confidence to accept (default: 0.7)
   maxChangePct?: number;        // Max % change to auto-accept (default: 50)
@@ -688,7 +689,7 @@ async function processCompanyHybrid(
         confidence: finalConfidence,
         runId: d1RunId,
         flags,
-        dryRun: config.dryRun || false,
+        dryRun: config.d1DryRun || false,
       });
 
       if (d1HoldingsNativeWrite.status === 'error') {

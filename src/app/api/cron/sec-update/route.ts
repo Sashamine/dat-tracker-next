@@ -1,14 +1,16 @@
 /**
  * SEC Auto-Update Cron Endpoint
  *
- * Triggered hourly by Vercel Cron to check for new 8-K filings
- * and automatically update companies.ts when holdings changes are detected.
+ * Triggered hourly by Vercel Cron to check for new SEC filings
+ * and extract holdings data via hybrid XBRL + LLM pipeline.
  *
- * Schedule: 0 * * * * (every hour at minute 0)
+ * Schedule: 30 * * * * (every hour at minute 30)
  *
- * This implements the ROADMAP architecture:
- * - SEC is authoritative, auto-update + notify
- * - Changes are committed to git for review via diffs
+ * Architecture:
+ * - Extraction results are written to D1 (works on Vercel)
+ * - D1 overlay serves live values to the UI at runtime
+ * - Filesystem writes (companies.ts, git) are blocked on Vercel (read-only)
+ * - companies.ts is periodically synced from D1 via local script
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -31,10 +33,10 @@ export async function GET(request: NextRequest) {
   const isManual = searchParams.get('manual') === 'true';
 
   // Feature flag: allow disabling this cron without removing the Vercel schedule.
-  // Default is disabled unless explicitly enabled.
-  const enabled = process.env.SEC_UPDATE_ENABLED === 'true';
+  // Default is ENABLED. Set SEC_UPDATE_ENABLED=false to disable.
+  const enabled = process.env.SEC_UPDATE_ENABLED !== 'false';
   if (!enabled) {
-    return NextResponse.json({ success: true, skipped: true, reason: 'SEC_UPDATE_ENABLED is not true' });
+    return NextResponse.json({ success: true, skipped: true, reason: 'SEC_UPDATE_ENABLED is false' });
   }
 
   // Verify authorization for cron runs
@@ -51,26 +53,28 @@ export async function GET(request: NextRequest) {
     const tickers = tickersParam ? tickersParam.split(',').map(t => t.trim().toUpperCase()) : undefined;
     const sinceDays = parseInt(searchParams.get('sinceDays') || '7');
     
-    // Force dryRun on Vercel (read-only filesystem)
+    // Filesystem dryRun: always true on Vercel (read-only filesystem).
+    // D1 writes are independent — they work fine on Vercel.
     const isVercel = !!process.env.VERCEL;
-    const dryRun = searchParams.get('dryRun') === 'true' || isVercel;
-    
-    if (isVercel && searchParams.get('dryRun') !== 'true') {
-      console.log('[SEC Update Cron] Auto-enabled dryRun on Vercel (read-only filesystem)');
-    }
+    const explicitDryRun = searchParams.get('dryRun') === 'true';
+    const fsDryRun = explicitDryRun || isVercel;
 
     console.log(`[SEC Update Cron] Starting ${isManual ? 'manual' : 'scheduled'} run...`);
-    if (dryRun) {
-      console.log('[SEC Update Cron] DRY RUN mode enabled');
+    if (isVercel) {
+      console.log('[SEC Update Cron] Vercel mode: filesystem writes blocked, D1 writes enabled');
+    }
+    if (explicitDryRun) {
+      console.log('[SEC Update Cron] Full DRY RUN mode (filesystem + D1)');
     }
 
     const startTime = Date.now();
 
     const { results, stats } = await runSecAutoUpdate({
       tickers,
-      dryRun,
+      dryRun: fsDryRun,          // Block filesystem writes on Vercel
+      d1DryRun: explicitDryRun,  // Only block D1 writes on explicit dryRun
       sinceDays,
-      autoCommit: !dryRun, // Only commit if not dry run
+      autoCommit: !fsDryRun,     // Only commit if not dry run
       minConfidence: 0.7,
       maxChangePct: 50,
     });
