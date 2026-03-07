@@ -3,7 +3,7 @@
   "ticker": "H100.ST",
   "secCik": null,
   "asOf": "2026-02-06",
-  "generatedAt": "2026-03-05T20:22:40.127Z",
+  "generatedAt": "2026-03-07T00:36:04.387Z",
   "listing": {
     "country": "SE",
     "exchangeMic": "XSTO",
@@ -28,13 +28,13 @@
     }
   },
   "balanceSheet": {
-    "cashReserves": 0,
+    "cashReserves": 2900000,
     "restrictedCash": null,
     "totalDebt": 20736000,
     "preferredEquity": null,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://mfn.se/a/h100-group",
+      "cashSourceUrl": "https://mfn.se/a/h100-group/h100-group-fourth-quarter-and-full-year-report-2025",
       "debtSourceUrl": "https://mfn.se/a/h100-group",
       "preferredSourceUrl": null
     }

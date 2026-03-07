@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "HYPD",
-  "secCik": "1682639",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "secCik": "0001682639",
+  "asOf": "2025-12-04",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "HYPE",
-    "amount": 1459615,
+    "amount": 1862195,
     "source": {
-      "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465926000748/tm2534601d1_8k.htm",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://ir.hyperiondefi.com/news-events/press-releases/detail/300/hyperion-defi-announces-receipt-of-kinetiq-airdrop-partnership-with-native-markets-and-purchase-of-150000-additional-hype",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-11-10",
     "source": {
       "sharesSource": "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm"
+      "sharesSourceUrl": "/filings/hypd/0001104659-25-111671"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 544,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/hypd-20250930x10q.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1682639/000110465925111671/"
+      "cashSourceUrl": "/filings/hypd/0001104659-25-111671",
+      "debtSourceUrl": "/filings/hypd/0001104659-25-111671",
+      "preferredSourceUrl": "/filings/hypd/0001104659-25-111671"
     }
   },
   "verification": {

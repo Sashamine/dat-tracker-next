@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "TWAV",
-  "secCik": "746210",
+  "secCik": "0000746210",
   "asOf": "2025-12-10",
-  "generatedAt": "2026-03-05T20:22:40.130Z",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,17 +14,17 @@
     "amount": 24382,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
+      "holdingsSourceUrl": "/filings/twav/0001437749-25-037490",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 3207210,
     "sharesOutstandingFD": null,
-    "asOf": "2025-12-10",
+    "asOf": "2025-11-10",
     "source": {
-      "sharesSource": "SEC 8-K Dec 11, 2025 (share base carried from Q3 2025 10-Q)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html"
+      "sharesSource": "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
+      "sharesSourceUrl": "/filings/twav/0001437749-25-034612"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 0,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/oblg20250930_10q.htm",
+      "cashSourceUrl": "/filings/twav/0001437749-25-034612",
       "debtSourceUrl": null,
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/"
+      "preferredSourceUrl": "/filings/twav/0001437749-25-034612"
     }
   },
   "verification": {

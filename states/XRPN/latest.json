@@ -3,7 +3,7 @@
   "ticker": "XRPN",
   "secCik": "0002044009",
   "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.130Z",
+  "generatedAt": "2026-03-07T00:36:04.390Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -13,8 +13,8 @@
     "asset": "XRP",
     "amount": 520000000,
     "source": {
-      "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/2044009/000119312525279035/d17530d8k.htm",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
       "holdingsAccession": null
     }
   },

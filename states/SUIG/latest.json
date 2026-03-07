@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "SUIG",
-  "secCik": "1425355",
-  "asOf": "2026-01-07",
-  "generatedAt": "2026-03-05T20:22:40.130Z",
+  "secCik": "0001425355",
+  "asOf": "2026-02-23",
+  "generatedAt": "2026-03-07T00:36:04.390Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "SUI",
-    "amount": 108098436,
+    "amount": 108368594,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
+      "holdingsSourceUrl": "/filings/suig/0001654954-26-001610",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 76802872,
+    "sharesForMnav": 80900000,
     "sharesOutstandingFD": null,
-    "asOf": "2026-02-20",
+    "asOf": "2026-01-07",
     "source": {
-      "sharesSource": "SEC 10-K FY2025 cover page (filed Feb 27, 2026)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1425355/000165495426001672/suig_10k.htm"
+      "sharesSource": "SEC 8-K Jan 8, 2026",
+      "sharesSourceUrl": "/filings/suig/0001654954-26-000201"
     }
   },
   "balanceSheet": {
@@ -34,7 +34,7 @@
     "preferredEquity": null,
     "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/",
+      "cashSourceUrl": "/filings/suig/0001654954-25-009666",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

@@ -3,7 +3,7 @@
   "ticker": "UPXI",
   "secCik": "0001775194",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 2173204,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+      "holdingsSourceUrl": "/filings/upxi/0001477932-26-000736",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2026-02-09",
     "source": {
       "sharesSource": "SEC 10-Q Q2 FY2026 cover: 69,760,581 shares as of Feb 9, 2026",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm"
+      "sharesSourceUrl": "/filings/upxi/0001477932-26-000736"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 2,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/"
+      "cashSourceUrl": "/filings/upxi/0001477932-26-000736",
+      "debtSourceUrl": "/filings/upxi/0001477932-26-000736",
+      "preferredSourceUrl": "/filings/upxi/0001477932-26-000736"
     }
   },
   "verification": {

@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "MSTR",
   "secCik": "0001050446",
-  "asOf": "2026-02-16",
-  "generatedAt": "2026-03-05T20:22:40.125Z",
+  "asOf": "2026-03-01",
+  "generatedAt": "2026-03-07T00:36:04.386Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 717131,
+    "amount": 720737,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526053105/mstr-20260105.htm",
+      "holdingsSourceUrl": "/filings/mstr/0001193125-26-084264",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 333082250,
+    "sharesForMnav": 333752250,
     "sharesOutstandingFD": null,
-    "asOf": "2026-02-16",
+    "asOf": "2026-03-01",
     "source": {
       "sharesSource": "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm"
+      "sharesSourceUrl": "/filings/mstr/0001050446-26-000020"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 6919514000,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm"
+      "cashSourceUrl": "/filings/mstr/0001050446-26-000020",
+      "debtSourceUrl": "/filings/mstr/0001050446-26-000020",
+      "preferredSourceUrl": "/filings/mstr/0001050446-26-000020"
     }
   },
   "verification": {

@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "DJT",
   "secCik": "0001849635",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.128Z",
+  "asOf": "2026-02-25",
+  "generatedAt": "2026-03-07T00:36:04.388Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,29 +14,29 @@
     "amount": 11542,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "/filings/djt/0001140361-25-040977?tab=document&q=11%2C542",
+      "holdingsSourceUrl": "/filings/djt/0001140361-26-007174",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 276731315,
+    "sharesForMnav": 279997636,
     "sharesOutstandingFD": null,
-    "asOf": "2026-03-31",
+    "asOf": "2025-12-31",
     "source": {
-      "sharesSource": "D1 latest (sec_companyfacts_xbrl): backfill_qe normalized shares basis",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm"
+      "sharesSource": "SEC 10-K FY2025: EntityCommonStockSharesOutstanding = 279,997,636 as of Feb 2026",
+      "sharesSourceUrl": "/filings/djt/0001140361-26-007174"
     }
   },
   "balanceSheet": {
-    "cashReserves": 134557600,
+    "cashReserves": 166072700,
     "restrictedCash": null,
-    "totalDebt": 947117000,
+    "totalDebt": 950769100,
     "preferredEquity": 0,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/ef20054981_10q.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1849635/000114036125040977/"
+      "cashSourceUrl": "/filings/djt/0001140361-26-007174",
+      "debtSourceUrl": "/filings/djt/0001140361-26-007174",
+      "preferredSourceUrl": "/filings/djt/0001140361-26-007174"
     }
   },
   "verification": {

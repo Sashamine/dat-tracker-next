@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "AVX",
-  "secCik": "1826397",
+  "secCik": "0001826397",
   "asOf": "2026-02-12",
-  "generatedAt": "2026-03-05T20:22:40.131Z",
+  "generatedAt": "2026-03-07T00:36:04.390Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -19,12 +19,12 @@
     }
   },
   "shares": {
-    "sharesForMnav": 92672000,
+    "sharesForMnav": 90688765,
     "sharesOutstandingFD": null,
-    "asOf": "2026-02-12",
+    "asOf": "2026-03-05",
     "source": {
-      "sharesSource": "Company dashboard (post-PIPE 93,112,148 minus buybacks)",
-      "sharesSourceUrl": "https://analytics-avaxone.theblueprint.xyz/"
+      "sharesSource": "Mar 2, 2026 Strategic Update: 2,423,383 shares repurchased total",
+      "sharesSourceUrl": "https://www.avax-one.com/news"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+      "cashSourceUrl": "/filings/avx/0001493152-25-023464",
+      "debtSourceUrl": "/filings/avx/0001493152-25-023464",
       "preferredSourceUrl": null
     }
   },

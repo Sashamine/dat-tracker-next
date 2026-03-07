@@ -3,7 +3,7 @@
   "ticker": "3189.T",
   "secCik": null,
   "asOf": "2026-01-21",
-  "generatedAt": "2026-03-05T20:22:40.128Z",
+  "generatedAt": "2026-03-07T00:36:04.387Z",
   "listing": {
     "country": "JP",
     "exchangeMic": "XTKS",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1417,
+    "amount": 1181.47,
     "source": {
       "holdingsSource": "regulatory-filing",
-      "holdingsSourceUrl": "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
+      "holdingsSourceUrl": "https://www.release.tdnet.info/inbs/140120260121550142.pdf",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 40609400,
+    "sharesForMnav": 40612400,
     "sharesOutstandingFD": null,
-    "asOf": "2026-01-21",
+    "asOf": "2026-01-31",
     "source": {
-      "sharesSource": "TDnet Jan 21, 2026 BTC purchase disclosure (share count checkpoint)",
-      "sharesSourceUrl": "https://www.release.tdnet.info/inbs/140120260121536720.pdf"
+      "sharesSource": "TDnet Feb 3, 2026: 8th Series Warrant Exercise Update",
+      "sharesSourceUrl": "https://www.release.tdnet.info/inbs/140120260203558291.pdf"
     }
   },
   "balanceSheet": {

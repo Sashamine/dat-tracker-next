@@ -1,6 +1,13 @@
 {
   "schemaVersion": "0.1",
-  "generatedAt": "2026-03-05T20:22:40.190Z",
-  "runId": "next-gate",
-  "gaps": {}
+  "generatedAt": "2026-03-07T00:36:04.759Z",
+  "runId": "local3",
+  "gaps": {
+    "missing_debt_evidence": [
+      "ALCPB"
+    ],
+    "missing_sec_shares_evidence": [
+      "CEPO"
+    ]
+  }
 }

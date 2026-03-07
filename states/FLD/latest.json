@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "FLD",
   "secCik": "0001889123",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.127Z",
+  "asOf": "2026-02-27",
+  "generatedAt": "2026-03-07T00:36:04.387Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1575,
+    "amount": 1526,
     "source": {
-      "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://investor.foldapp.com/news-releases/news-release-details/fold-announces-retirement-663-million-convertible-debt",
       "holdingsAccession": null
     }
   },
@@ -24,19 +24,19 @@
     "asOf": "2025-11-10",
     "source": {
       "sharesSource": "SEC 10-Q (filed 2025-11-10): EntityCommonStockSharesOutstanding = 48,307,642 as of 2025-11-10",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm"
+      "sharesSourceUrl": "/filings/fld/0001193125-25-274317"
     }
   },
   "balanceSheet": {
     "cashReserves": 6663000,
     "restrictedCash": null,
-    "totalDebt": 66300000,
+    "totalDebt": 0,
     "preferredEquity": 0,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/"
+      "cashSourceUrl": "/filings/fld/0001193125-25-274317",
+      "debtSourceUrl": "https://investor.foldapp.com/news-releases/news-release-details/fold-announces-retirement-663-million-convertible-debt",
+      "preferredSourceUrl": "/filings/fld/0001193125-25-274317"
     }
   },
   "verification": {

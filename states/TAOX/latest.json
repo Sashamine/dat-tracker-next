@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "TAOX",
-  "secCik": "1571934",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "secCik": "0001571934",
+  "asOf": "2025-11-18",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,30 +11,30 @@
   },
   "holdings": {
     "asset": "TAO",
-    "amount": 54058,
+    "amount": 67000,
     "source": {
-      "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://ir.taosynergies.com/",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://www.stocktitan.net/news/TAOX/tao-synergies-and-yuma-asset-management-to-host-livestream-on-x-y545u5zgifom.html",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 7000000,
+    "sharesForMnav": 7128912,
     "sharesOutstandingFD": null,
-    "asOf": "2025-10-31",
+    "asOf": "2025-11-11",
     "source": {
-      "sharesSource": "SEC DEF 14A Nov 17, 2025 (6,848,912 shares as of Oct 31)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm"
+      "sharesSource": "SEC 10-Q cover page Nov 14, 2025 (7,128,912 shares as of Nov 11)",
+      "sharesSourceUrl": "/filings/taox/0001104659-25-112570"
     }
   },
   "balanceSheet": {
-    "cashReserves": 14369718,
+    "cashReserves": 1445427,
     "restrictedCash": null,
     "totalDebt": null,
     "preferredEquity": null,
-    "asOf": "2025-06-30",
+    "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1571934/000141057825001820/",
+      "cashSourceUrl": "/filings/taox/0001104659-25-112570",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "STKE",
-  "secCik": "1846839",
-  "asOf": "2026-03-04",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "secCik": "0001846839",
+  "asOf": "2026-02-03",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,31 +11,31 @@
   },
   "holdings": {
     "asset": "SOL",
-    "amount": 518139,
+    "amount": 530251,
     "source": {
       "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/",
+      "holdingsSourceUrl": "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 25300567,
+    "sharesForMnav": 31735660,
     "sharesOutstandingFD": null,
-    "asOf": "2025-09-30",
+    "asOf": "2026-02-17",
     "source": {
-      "sharesSource": "SEC 40-F FY2025 + Jan 7 2026 credit facility conversion",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm"
+      "sharesSource": "6-K Q1 FY2026 (filed Feb 18, 2026): 31,735,660 shares as of Feb 17, 2026. Dec 31: 28,590,484. Sep 30 (40-F): 22,999,841. ATM ($50M Cantor Jan 2) + Guoga conversion (2.3M shares Jan 7).",
+      "sharesSourceUrl": "/filings/stke/0001104659-26-016788"
     }
   },
   "balanceSheet": {
-    "cashReserves": 1300000,
+    "cashReserves": 160000,
     "restrictedCash": 0,
-    "totalDebt": 25400000,
+    "totalDebt": 34900000,
     "preferredEquity": null,
-    "asOf": "2025-09-30",
+    "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666/stke-20250930x40f.htm",
+      "cashSourceUrl": "/filings/stke/0001104659-26-016788",
+      "debtSourceUrl": "/filings/stke/0001104659-26-016788",
       "preferredSourceUrl": null
     }
   },

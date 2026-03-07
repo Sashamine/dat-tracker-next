@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "SRAG.DU",
   "secCik": null,
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.128Z",
+  "asOf": "2026-03-01",
+  "generatedAt": "2026-03-07T00:36:04.388Z",
   "listing": {
     "country": "DE",
     "exchangeMic": "XETR",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 2051,
+    "amount": 525,
     "source": {
-      "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://www.samara-ag.com/news",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 91686961,
+    "sharesForMnav": 91784740,
     "sharesOutstandingFD": null,
-    "asOf": "2025-06-30",
+    "asOf": "2026-02-27",
     "source": {
-      "sharesSource": "H1 2025 Interim Note 15: 92,190,761 issued. Net of ~503,800 treasury shares (EQS buyback filings through Feb 2026).",
-      "sharesSourceUrl": "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf"
+      "sharesSource": "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
+      "sharesSourceUrl": "https://www.samara-ag.com/news"
     }
   },
   "balanceSheet": {
@@ -35,7 +35,7 @@
     "asOf": "2025-06-30",
     "source": {
       "cashSourceUrl": null,
-      "debtSourceUrl": "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/68d4e60b8aafa8c7f4b1eac9_ce52c3a4ca8b19bbf175eb980afc729e_SAG%20Consolidated%20-%20Signed%20Interim%20Financial%20Statements%2030%20June%202025-final.pdf",
+      "debtSourceUrl": "https://www.samara-ag.com/news",
       "preferredSourceUrl": null
     }
   },

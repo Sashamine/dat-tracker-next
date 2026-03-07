@@ -3,7 +3,7 @@
   "ticker": "FWDI",
   "secCik": "0000038264",
   "asOf": "2026-01-15",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "generatedAt": "2026-03-07T00:36:04.388Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -31,12 +31,12 @@
     "cashReserves": 12000000,
     "restrictedCash": 0,
     "totalDebt": 0,
-    "preferredEquity": 4925000,
+    "preferredEquity": 0,
     "asOf": "2026-01-31",
     "source": {
-      "cashSourceUrl": "/filings/fwdi/0001683168-26-000960?tab=document&q=approximately%20%2412%20million",
+      "cashSourceUrl": "/filings/fwdi/0001683168-26-000960",
       "debtSourceUrl": "/filings/fwdi/0001683168-26-000960",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/38264/000168316825003548/"
+      "preferredSourceUrl": "/filings/fwdi/0001683168-26-000960"
     }
   },
   "verification": {

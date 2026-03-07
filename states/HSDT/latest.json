@@ -3,7 +3,7 @@
   "ticker": "HSDT",
   "secCik": "0001610853",
   "asOf": "2025-11-18",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "generatedAt": "2026-03-07T00:36:04.388Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,17 +14,17 @@
     "amount": 2340757,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+      "holdingsSourceUrl": "/filings/hsdt/0001104659-25-113714",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 75926867,
+    "sharesForMnav": 76732785,
     "sharesOutstandingFD": null,
-    "asOf": "2025-09-30",
+    "asOf": "2026-02-20",
     "source": {
-      "sharesSource": "10-Q: 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs @ $0.001 (Note 6 warrant table Sep 30) = 75,926,867. Press release rounds to '75.9M'. Nov 17 cover shows 41,301,400 basic (includes ~1M PFW exercises).",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm"
+      "sharesSource": "8-K Feb 20, 2026: 52,802,604 Class A common + 23,930,181 PFWs = 76,732,785. Prior (Sep 30): 40.3M basic + 35.6M PFWs = 75.9M. PFW exercises converted ~11.7M to common; net +806K from ATM.",
+      "sharesSourceUrl": "/filings/hsdt/0001104659-26-018212"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+      "cashSourceUrl": "/filings/hsdt/0001104659-25-113714",
+      "debtSourceUrl": "/filings/hsdt/0001104659-25-113714",
       "preferredSourceUrl": null
     }
   },

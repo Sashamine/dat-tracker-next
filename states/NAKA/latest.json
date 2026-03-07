@@ -3,7 +3,7 @@
   "ticker": "NAKA",
   "secCik": "0001946573",
   "asOf": "2025-11-12",
-  "generatedAt": "2026-03-05T20:22:40.128Z",
+  "generatedAt": "2026-03-07T00:36:04.388Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,17 +14,17 @@
     "amount": 5398,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+      "holdingsSourceUrl": "/filings/naka/0001493152-25-024314",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 511555864,
+    "sharesForMnav": 688942624,
     "sharesOutstandingFD": null,
-    "asOf": "2025-11-14",
+    "asOf": "2026-02-26",
     "source": {
-      "sharesSource": "SEC 10-Q Q3 2025 XBRL: 439,850,889 common + 71,704,975 pre-funded warrants ($0.001 exercise)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm"
+      "sharesSource": "SEC 13D Feb 26, 2026: 688,942,624 basic common shares outstanding post-acquisition",
+      "sharesSourceUrl": "/filings/naka/0001493152-26-008387"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024260/form10-q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1946573/000149315225026862/form8-k.htm",
+      "cashSourceUrl": "/filings/naka/0001493152-25-024260",
+      "debtSourceUrl": "/filings/naka/0001493152-25-026862",
       "preferredSourceUrl": null
     }
   },

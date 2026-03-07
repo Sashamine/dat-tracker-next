@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "KULR",
-  "secCik": "1662684",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.126Z",
+  "secCik": "0001662684",
+  "asOf": "2026-02-28",
+  "generatedAt": "2026-03-07T00:36:04.386Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1057,
+    "amount": 1021,
     "source": {
-      "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://kulr.ai/investors/",
       "holdingsAccession": null
     }
   },
@@ -23,19 +23,19 @@
     "sharesOutstandingFD": null,
     "asOf": "2025-11-14",
     "source": {
-      "sharesSource": "SEC 10-Q Q3 2025",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm"
+      "sharesSource": "SEC 10-Q Q3 2025: EntityCommonStockSharesOutstanding",
+      "sharesSourceUrl": "/filings/kulr/0001104659-25-113662"
     }
   },
   "balanceSheet": {
-    "cashReserves": 20588596,
-    "restrictedCash": 20588596,
+    "cashReserves": 20600000,
+    "restrictedCash": 20600000,
     "totalDebt": 0,
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+      "cashSourceUrl": "/filings/kulr/0001104659-25-113662",
+      "debtSourceUrl": "/filings/kulr/0001104659-25-113662",
       "preferredSourceUrl": null
     }
   },
