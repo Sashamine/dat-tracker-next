@@ -138,6 +138,7 @@ export function MnavCalculationCard({
   const freeCash = cashReserves - (restrictedCash || 0);
   const adjustedDebt = totalDebt - (itmDebtAdjustment || 0);
   const ev = marketCap + adjustedDebt + preferredEquity - freeCash;
+  const evFormulaText = `EV = ${formatLargeNumber(marketCap)} + ${formatLargeNumber(adjustedDebt)} debt + ${formatLargeNumber(preferredEquity)} preferred - ${formatLargeNumber(freeCash)} cash = ${formatLargeNumber(ev)}`;
   
   // Use calculated mNAV if not provided or null
   const mNAV = mNAVProp ?? (holdingsValue > 0 ? ev / holdingsValue : null);
@@ -242,6 +243,9 @@ export function MnavCalculationCard({
             <span className="font-mono text-sm text-white font-semibold">
               {formatLargeNumber(ev)}
             </span>
+          </div>
+          <div className="text-[10px] text-gray-500 mt-1">
+            {evFormulaText}
           </div>
         </div>
       </div>
