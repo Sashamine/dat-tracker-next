@@ -259,10 +259,10 @@ export default function AssetPage() {
         {symbol === "BTC" && (
           <div className="mb-8">
             <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
-              <span>⛏️</span> Miners HPS Growth
+              <span>⛏️</span> BTC Holdings Per Share Growth
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              Holdings per share (HPS) growth shows whether miners are accumulating BTC faster than dilution.
+              Holdings per share (HPS) growth shows whether companies are accumulating BTC faster than share dilution.
               Higher growth = more BTC per share over time.
             </p>
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
