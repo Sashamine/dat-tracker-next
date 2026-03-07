@@ -1547,7 +1547,7 @@ export const btcCompanies: Company[] = [
     sourceQuote: "Current Bitcoin holdings: 769.05 BTC",
     datStartDate: "2025-06-30",  // TSX Venture listing date
     isMiner: false,
-    totalDebt: 25_000_000, // CAD - convertible debentures ($25M face, $12 implied conversion)
+    totalDebt: 18_120_000, // USD (~CAD $25M / 1.38) - convertible debentures (CAD $25M face, CAD $12 implied conversion)
     debtAsOf: "2025-12-31",
     debtSource: "TSX Venture Bulletin V2025-1838",
     debtSourceQuote: "TSX Venture Bulletin V2025-1838",
