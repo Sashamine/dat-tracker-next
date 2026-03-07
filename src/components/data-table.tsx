@@ -145,13 +145,17 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
   const companiesWithMetrics = companies.map((company) => {
     const cryptoPrice = prices?.crypto[company.asset]?.price || 0;
     const stockData = prices?.stocks[company.ticker];
-    const stockPrice = stockData?.price;
+    const yesterdayData = yesterdayMnav?.[company.ticker];
+    // Use live price when available, fall back to yesterday's closing price
+    const livePrice = stockData?.price;
+    const stockPrice = (livePrice && livePrice > 0) ? livePrice : (yesterdayData?.stockPrice || 0);
+    // Build effective stock data for market cap calculation, using fallback price
+    const effectiveStockData = (livePrice && livePrice > 0) ? stockData : stockData ? { ...stockData, price: stockPrice } : { price: stockPrice, marketCap: 0, volume: 0, change24h: 0 };
     // Use same market cap that's used for mNAV calculation (shares × price)
     // This ensures tooltip EV matches the actual mNAV calculation
-    const marketCapResult = getMarketCapForMnavSync(company, stockData, prices?.forex);
+    const marketCapResult = getMarketCapForMnavSync(company, effectiveStockData, prices?.forex);
     const marketCap = marketCapResult.marketCap;
     // True 24hr change using yesterday's price (not Yahoo's "from previous close")
-    const yesterdayData = yesterdayMnav?.[company.ticker];
     const stockChange = yesterdayData?.stockPrice && stockPrice && yesterdayData.stockPrice > 0
       ? ((stockPrice - yesterdayData.stockPrice) / yesterdayData.stockPrice) * 100
       : stockData?.change24h; // fallback to Yahoo if no yesterday data
@@ -204,17 +208,51 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const netDebt = Math.max(0, adjustedDebt - cashReserves);
     const leverageRatio = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
-    // mNAV uses shared calculation for consistency across all pages
-    const mnavResult = getCompanyMNAVDetailed(company, prices ?? null);
+    // Build effective prices with frozen closing price for stocks without live data.
+    // This ensures mNAV is always calculable — stock price holds at last close.
+    const effectivePrices = {
+      crypto: prices?.crypto || {},
+      stocks: {
+        ...(prices?.stocks || {}),
+        ...((!stockData?.price || stockData.price <= 0) && stockPrice > 0
+          ? { [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 } }
+          : {}),
+      },
+      forex: prices?.forex || {},
+      lst: (prices as any)?.lst,
+    };
+
+    // mNAV uses shared calculation with effective prices (includes frozen close)
+    const mnavResult = getCompanyMNAVDetailed(company, effectivePrices);
     const mNAV = mnavResult.mnav;
     const mnavWarnings = mnavResult.warnings;
-    
-    // Calculate ACTUAL mNAV change using yesterday's measured mNAV
-    // Uses same getCompanyMNAV function with historical prices (from API)
+
+    // Calculate mNAV 24h change client-side using same company data + yesterday prices.
+    // Uses yesterday stock/crypto prices; if no yesterday stock price, falls back to
+    // current live price (stock frozen, only crypto moves).
     let mNAVChange: number | null = null;
-    const yesterday = yesterdayMnav?.[company.ticker];
-    if (mNAV && yesterday?.mnav && yesterday.mnav > 0) {
-      mNAVChange = ((mNAV / yesterday.mnav) - 1) * 100;
+    const ydayStockPrice = yesterdayData?.stockPrice && yesterdayData.stockPrice > 0
+      ? yesterdayData.stockPrice
+      : stockPrice; // fall back to current price (frozen close)
+    const ydayCryptoPrice = yesterdayData?.cryptoPrice && yesterdayData.cryptoPrice > 0
+      ? yesterdayData.cryptoPrice
+      : 0;
+    if (mNAV && mNAV !== 0 && ydayStockPrice > 0 && ydayCryptoPrice > 0) {
+      const ydayPrices = {
+        ...effectivePrices,
+        crypto: {
+          ...effectivePrices.crypto,
+          [company.asset]: { ...(effectivePrices.crypto[company.asset] || { change24h: 0 }), price: ydayCryptoPrice },
+        },
+        stocks: {
+          ...effectivePrices.stocks,
+          [company.ticker]: { ...(effectivePrices.stocks[company.ticker] || { change24h: 0, volume: 0, marketCap: 0 }), price: ydayStockPrice },
+        },
+      };
+      const yesterdayMnavVal = getCompanyMNAV(company, ydayPrices);
+      if (yesterdayMnavVal && yesterdayMnavVal !== 0) {
+        mNAVChange = ((mNAV / yesterdayMnavVal) - 1) * 100;
+      }
     }
 
     // Determine company type
@@ -750,15 +788,40 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("holdingsValue")}
+                  onClick={() => handleSort("mNAVChange")}
                 >
-                  Treasury Value {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
+                  mNAV 24h {sortField === "mNAVChange" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("leverageRatio")}
                 >
                   Leverage {sortField === "leverageRatio" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockPrice")}
+                >
+                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead className="text-right">Change</TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockVolume")}
+                >
+                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("marketCap")}
+                >
+                  Market Cap {sortField === "marketCap" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("holdingsValue")}
+                >
+                  Treasury {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -1083,31 +1146,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                           <HoldingsBasisBadge basis={company.holdingsBasis} />
                         </span>
                       </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm">
-                    {company.leverageRatio > 0 ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <span className={cn(
-                              "inline-flex items-center gap-1",
-                              company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
-                            )}>
-                              {company.leverageRatio >= 1 && <span>⚠️</span>}
-                              {company.leverageRatio.toFixed(2)}x
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Debt / Crypto NAV</p>
-                            {company.leverageRatio >= 1 && (
-                              <p className="text-xs text-amber-500">High leverage - mNAV elevated by debt structure</p>
-                            )}
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ) : (
-                      <span className="text-gray-400">—</span>
                     )}
                   </TableCell>
                 </TableRow>

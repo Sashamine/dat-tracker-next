@@ -83,6 +83,9 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   // UK/AQUIS (FMP has bad data for TSWCF)
   "SWC": { price: 0.43, marketCap: 171_000_000 },  // Smarter Web Company - GBP 0.34 ~= $0.43 USD, ~396.6M fully diluted shares
 
+  // Brazilian
+  "OBTC3": { price: 14.20, marketCap: 450_000_000 },  // OranjeBTC (BRL) - R$14.20 × 162.3M shares ÷ 5.12 BRL/USD ≈ $450M
+
   // OTC/Illiquid
   "CEPO": { price: 10.50, marketCap: 3_500_000_000 },
   "TAOX": { price: 3.39, marketCap: 23_700_000 },   // Updated Feb 5, 2026 - MarketWatch (7M shares × $3.39)

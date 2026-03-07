@@ -369,22 +369,13 @@ async function fetchAllPrices() {
   const yahooStocks = yahooStocksRaw as Record<string, { price: number; marketCap?: number; [k: string]: unknown }>;
 
   // Convert foreign stock prices to USD
-  console.log("[Stream DEBUG] Forex rates:", forexRates);
+  // Skip isStatic stocks (FALLBACK_STOCKS) - already converted to USD in fetchFMPStockQuotes
   for (const [ticker, data] of Object.entries(stockPrices)) {
+    if ((data as { isStatic?: boolean }).isStatic) continue;
     const currency = TICKER_CURRENCY[ticker];
     if (currency) {
       const rate = forexRates[currency] || FALLBACK_RATES[currency];
       if (rate && rate > 0) {
-        // Debug logging for 3189.T
-        if (ticker === "3189.T") {
-          console.log(`[Stream DEBUG] 3189.T conversion:`, {
-            rawPrice: data.price,
-            currency,
-            rate,
-            convertedPrice: (data.price ?? 0) / rate,
-            rawMarketCap: data.marketCap,
-          });
-        }
         stockPrices[ticker] = {
           ...data,
           price: convertPriceToUsd(data.price ?? 0, currency, forexRates),
@@ -505,10 +496,12 @@ export async function GET(request: NextRequest) {
           // Send individual trade events for changed prices
           for (const [symbol, data] of Object.entries(newStockPrices)) {
             let newPrice = (data as { price?: number }).price || 0;
-            
+
             // Convert foreign currency prices to USD
+            // Skip isStatic stocks (FALLBACK_STOCKS) - already converted in fetchFMPStockQuotes
+            const isStatic = (data as { isStatic?: boolean }).isStatic;
             const currency = TICKER_CURRENCY[symbol];
-            if (currency && newPrice > 0) {
+            if (!isStatic && currency && newPrice > 0) {
               const rate = forexRates[currency] || FALLBACK_RATES[currency];
               if (rate && rate > 0) {
                 newPrice = newPrice / rate;

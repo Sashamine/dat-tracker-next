@@ -1052,10 +1052,10 @@ export const btcCompanies: Company[] = [
     currency: "BRL",
     asset: "BTC",
     tier: 2,
-    holdings: 0,  // TBD - CVM filings hard to access, IR sparse
-    holdingsUnverified: true,  // Cannot verify via CVM; awaiting English disclosure
-    holdingsLastUpdated: "2026-02-02",
-    holdingsSource: "company-website",
+    holdings: 3_723,  // Mar 1, 2026 market announcement: 3,723.0 BTC
+    holdingsUnverified: true,  // CVM filing not independently verified
+    holdingsLastUpdated: "2026-03-01",
+    holdingsSource: "press-release",
     holdingsSourceUrl: "https://ri.oranjebtc.com",
     datStartDate: "2025-01-01",
     website: "https://www.oranjebtc.com",
@@ -1066,12 +1066,11 @@ export const btcCompanies: Company[] = [
     burnAsOf: "2025-12-31",
     burnEstimated: true,
     avgDailyVolume: 1_000_000,  // ~R$5.3M/day = ~$1M USD
-    marketCap: 450_000_000,  // ~R$2.51B = ~$450M USD (Feb 2026)
-    sharesForMnav: 318_000_000,  // Estimated from market cap / price
-    sharesSource: "B3 Exchange listing",
-    sharesSourceQuote: "~318M shares estimated from market cap / price (B3 Exchange, unverified)",
+    sharesForMnav: 162_267_260,  // Mar 1, 2026 announcement: 162,267,260 fully adjusted for debenture conversion
+    sharesSource: "Mar 1, 2026 market announcement",
+    sharesSourceQuote: "155,300,500 shares outstanding outside treasury (162,267,260 fully adjusted for debenture conversion)",
     sharesSourceUrl: "https://ri.oranjebtc.com",
-    sharesAsOf: "2025-12-31",
+    sharesAsOf: "2026-03-01",
     totalDebt: 0,
     debtSource: "B3/CVM disclosures: no debt value stated in Mar 1, 2026 market announcement; provisional 0 pending full financial statement extraction",
     debtSourceUrl: "https://ri.oranjebtc.com",

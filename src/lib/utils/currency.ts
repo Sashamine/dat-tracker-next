@@ -34,6 +34,7 @@ export const FALLBACK_RATES: Record<string, number> = {
   EUR: 0.95,    // 1 USD = 0.95 EUR (Feb 2026, ~1 EUR = $1.053)
   AUD: 1.43,    // 1 USD = 1.43 AUD (Feb 2026) - 1 AUD = ~$0.70 USD
   GBP: 0.80,    // 1 USD = 0.80 GBP (Feb 2026)
+  BRL: 5.12,    // 1 USD = 5.12 BRL (Mar 2026)
 };
 
 /**

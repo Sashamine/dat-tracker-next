@@ -1,10 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { allCompanies } from "@/lib/data/companies";
 import { Company } from "@/lib/types";
-import { getCompanyMNAV } from "@/lib/utils/mnav-calculation";
+import { getCompanyMNAV } from "@/lib/math/mnav-engine";
 import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
 import { BMNR_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
+import { convertToUSDSync } from "@/lib/utils/currency";
+
+// Tickers whose stock history API returns prices in local currency
+const TICKER_CURRENCIES: Record<string, string> = {
+  "3350.T": "JPY",
+  "3189.T": "JPY",
+  "3825.T": "JPY",
+  "0434.HK": "HKD",
+  "H100.ST": "SEK",
+  "ALCPB": "EUR",
+  "SRAG.DU": "EUR",
+  "DCC.AX": "AUD",
+  "NDA.V": "CAD",
+  "DMGI.V": "CAD",
+  "OBTC3": "BRL",
+};
 
 /**
  * GET /api/mnav/yesterday
@@ -93,8 +109,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Get unique assets needed
-    const assets: string[] = [...new Set(allCompanies.map((c: Company) => c.asset))];
+    // Get unique assets needed (primary + secondary + investment underlying)
+    const assetSet = new Set(allCompanies.map((c: Company) => c.asset));
+    for (const c of allCompanies) {
+      if (c.secondaryCryptoHoldings) {
+        for (const h of c.secondaryCryptoHoldings) assetSet.add(h.asset);
+      }
+      if (c.cryptoInvestments) {
+        for (const inv of c.cryptoInvestments) assetSet.add(inv.underlyingAsset);
+      }
+    }
+    const assets: string[] = [...assetSet];
     const tickers: string[] = allCompanies.map((c: Company) => c.ticker);
 
     // Fetch yesterday's crypto prices (use 7d history, find price from at least 24h ago)
@@ -131,6 +156,21 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Fetch current forex rates (needed before stock price conversion)
+    let forexRates: Record<string, number> = {};
+    try {
+      const res = await fetch(
+        `${origin}/api/prices`,
+        { cache: 'no-store' }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        forexRates = data.forex || {};
+      }
+    } catch (e) {
+      console.warn('Failed to fetch forex:', e);
+    }
+
     // Fetch yesterday's stock prices
     const stockPrices: Record<string, number> = {};
     for (const ticker of tickers) {
@@ -157,27 +197,15 @@ export async function GET(request: NextRequest) {
             }
           }
           if (bestMatch) {
-            stockPrices[ticker] = bestMatch.close;
+            const currency = TICKER_CURRENCIES[ticker];
+            stockPrices[ticker] = currency
+              ? convertToUSDSync(bestMatch.close, currency, forexRates)
+              : bestMatch.close;
           }
         }
       } catch (e) {
         console.warn(`Failed to fetch ${ticker} history:`, e);
       }
-    }
-
-    // Fetch current forex rates
-    let forexRates: Record<string, number> = {};
-    try {
-      const res = await fetch(
-        `${origin}/api/prices`,
-        { cache: 'no-store' }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        forexRates = data.forex || {};
-      }
-    } catch (e) {
-      console.warn('Failed to fetch forex:', e);
     }
 
     // Calculate yesterday's mNAV for each company
@@ -203,10 +231,13 @@ export async function GET(request: NextRequest) {
       
       // Fall back to getCompanyMNAV for other companies
       if (mnav === null) {
+        // Build full crypto price map so secondary holdings + investments get priced
+        const cryptoPriceMap: Record<string, { price: number }> = {};
+        for (const [asset, price] of Object.entries(cryptoPrices)) {
+          cryptoPriceMap[asset] = { price };
+        }
         const yesterdayPrices = {
-          crypto: {
-            [company.asset]: { price: cryptoPrice, change24h: 0 },
-          },
+          crypto: cryptoPriceMap,
           stocks: {
             [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 },
           },
