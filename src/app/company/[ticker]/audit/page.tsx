@@ -200,8 +200,17 @@ export default function AuditReportPage() {
               ))}
             </div>
             {data.debtLadder.unmodeledDebtAmount > 0 && (
-              <div className="p-3 bg-amber-50 border border-amber-100 rounded-lg text-xs text-amber-700 font-medium">
-                ⚠️ UNMODELED DEBT DISCLOSURE: System detected {formatLargeNumber(data.debtLadder.unmodeledDebtAmount)} in principal not mapped to specific instruments.
+              <div className="space-y-2">
+                {data.debtLadder.nonConvertibleDebt > 0 && (
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900 rounded-lg text-xs text-blue-700 dark:text-blue-300 font-medium">
+                    NON-CONVERTIBLE DEBT: {formatLargeNumber(data.debtLadder.nonConvertibleDebt)} in credit facilities, secured loans, or other non-convertible obligations. No dilution risk.
+                  </div>
+                )}
+                {data.debtLadder.unmodeledConvertibleDebt > 0 && (
+                  <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900 rounded-lg text-xs text-amber-700 dark:text-amber-300 font-medium">
+                    UNMODELED CONVERTIBLE DEBT: {formatLargeNumber(data.debtLadder.unmodeledConvertibleDebt)} in convertible instruments missing face value data. Dilution may be undermodeled.
+                  </div>
+                )}
               </div>
             )}
           </section>

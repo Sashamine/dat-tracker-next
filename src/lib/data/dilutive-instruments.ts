@@ -1092,12 +1092,62 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // STKE (Sol Strategies) - SOL treasury company (Canadian, NASDAQ cross-listed)
-  // Verified 2026-01-29 via SEC 40-F FY2025 (CIK 0001846839)
+  // Verified 2026-03-07 via SEC 6-K Q1 FY2026 (Dec 31, 2025) + 40-F FY2025 (CIK 0001846839)
+  // Balance sheet Dec 31, 2025: Convertible debentures CAD $34.9M (current $13.0M + LT $21.9M)
+  // Three convertible tranches: First PP (CAD $27.5M @ $20), Second PP (CAD $2.5M @ $37.50), ATW (USD $20M floating)
   // As of Sep 30, 2025: 643,626 options (WAEP $13.71), 1,552,042 warrants (WAEP $22.14), 15,106 RSUs
-  // At ~$1.57 stock price: Most options/warrants deep OTM, only low-strike options + RSUs ITM
-  // Credit facility fully settled Dec 2025 (converted + repaid) — no credit facility dilutives remain
-  // TODO: Verify 4.38M LIFE Offering warrants @ CAD $8.90 — mentioned in provenance but NOT found in 6-K deep dive. Check Q1 FY2026 6-K (March 17, 2026).
+  // At ~$1.57 stock price: Most options/warrants deep OTM, convertibles deep OTM (except ATW floating)
+  // Credit facilities (Kamino DeFi ~CAD $4M) are non-convertible — not modeled here
+  // CAD→USD rate: ~0.71 (March 2026)
   STKE: [
+    // ── Convertible Debentures ──────────────────────────────────────────
+    // First Private Placement (Jan 16, 2025): CAD $27.5M, 2.5% interest, convertible at CAD $20/share
+    // Redeemable after 3 years at 112% of principal
+    {
+      type: "convertible",
+      strikePrice: 14.20,  // CAD $20.00 × 0.71 USD/CAD
+      potentialShares: 1_375_000,  // CAD $27.5M / CAD $20
+      faceValue: 19_525_000,  // CAD $27.5M × 0.71
+      source: "6-K Q1 FY2026 (Note 11) + 40-F FY2025",
+      sourceUrl: "/filings/stke/0001104659-26-016788",
+      expiration: "2028-01-16",  // Redeemable after 3 years
+      issuedDate: "2025-01-16",
+      notes:
+        "First Private Placement convertible debenture. CAD $27.5M principal, 2.5% annual interest. " +
+        "Convertible at any time at CAD $20/share. Redeemable by company after 3 years at 112% of principal. " +
+        "Deep OTM at ~$1.57 stock price.",
+    },
+    // Second Private Placement (Jan 21, 2025): CAD $2.5M, 2.5% interest, convertible at CAD $37.50/share
+    {
+      type: "convertible",
+      strikePrice: 26.63,  // CAD $37.50 × 0.71 USD/CAD
+      potentialShares: 66_667,  // CAD $2.5M / CAD $37.50
+      faceValue: 1_775_000,  // CAD $2.5M × 0.71
+      source: "6-K Q1 FY2026 (Note 11) + 40-F FY2025",
+      sourceUrl: "/filings/stke/0001104659-26-016788",
+      expiration: "2028-01-21",  // Redeemable after 3 years
+      issuedDate: "2025-01-21",
+      notes:
+        "Second Private Placement convertible debenture. CAD $2.5M principal, 2.5% annual interest. " +
+        "Convertible at any time at CAD $37.50/share. Deep OTM.",
+    },
+    // ATW Convertible Note Facility (May 2025): USD $500M facility, $20M drawn (Initial Tranche)
+    // Converts at prior trading day closing price (floating) — always at-the-money
+    {
+      type: "convertible",
+      strikePrice: 0.01,  // Floating: converts at prior day close price — effectively always ITM
+      potentialShares: 12_738_854,  // USD $20M / $1.57 current price (changes with stock price)
+      faceValue: 20_000_000,  // USD $20M initial tranche drawn
+      source: "6-K Q1 FY2026 (Note 11)",
+      sourceUrl: "/filings/stke/0001104659-26-016788",
+      issuedDate: "2025-05-01",
+      notes:
+        "ATW convertible note facility. USD $500M total capacity, $20M Initial Tranche drawn (May 2025). " +
+        "Converts at prior trading day closing price (floating — always at-the-money). " +
+        "$480M remaining available for future drawdowns. " +
+        "Company must delegate Note-Purchased SOL to company-owned validator. " +
+        "Revenue share: 85% staking rewards ($15-20M outstanding), 62.5% ($20M+).",
+    },
     {
       type: "option",
       strikePrice: 0.80,
