@@ -208,15 +208,51 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const netDebt = Math.max(0, adjustedDebt - cashReserves);
     const leverageRatio = cryptoNav > 0 ? netDebt / cryptoNav : 0;
 
-    // mNAV uses shared calculation for consistency across all pages
-    const mnavResult = getCompanyMNAVDetailed(company, prices ?? null);
+    // Build effective prices with frozen closing price for stocks without live data.
+    // This ensures mNAV is always calculable — stock price holds at last close.
+    const effectivePrices = {
+      crypto: prices?.crypto || {},
+      stocks: {
+        ...(prices?.stocks || {}),
+        ...((!stockData?.price || stockData.price <= 0) && stockPrice > 0
+          ? { [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 } }
+          : {}),
+      },
+      forex: prices?.forex || {},
+      lst: (prices as any)?.lst,
+    };
+
+    // mNAV uses shared calculation with effective prices (includes frozen close)
+    const mnavResult = getCompanyMNAVDetailed(company, effectivePrices);
     const mNAV = mnavResult.mnav;
     const mnavWarnings = mnavResult.warnings;
-    
-    // Calculate ACTUAL mNAV change using yesterday's measured mNAV
+
+    // Calculate mNAV 24h change client-side using same company data + yesterday prices.
+    // Uses yesterday stock/crypto prices; if no yesterday stock price, falls back to
+    // current live price (stock frozen, only crypto moves).
     let mNAVChange: number | null = null;
-    if (mNAV && mNAV > 0 && yesterdayData?.mnav && yesterdayData.mnav > 0) {
-      mNAVChange = ((mNAV / yesterdayData.mnav) - 1) * 100;
+    const ydayStockPrice = yesterdayData?.stockPrice && yesterdayData.stockPrice > 0
+      ? yesterdayData.stockPrice
+      : stockPrice; // fall back to current price (frozen close)
+    const ydayCryptoPrice = yesterdayData?.cryptoPrice && yesterdayData.cryptoPrice > 0
+      ? yesterdayData.cryptoPrice
+      : 0;
+    if (mNAV && mNAV !== 0 && ydayStockPrice > 0 && ydayCryptoPrice > 0) {
+      const ydayPrices = {
+        ...effectivePrices,
+        crypto: {
+          ...effectivePrices.crypto,
+          [company.asset]: { ...(effectivePrices.crypto[company.asset] || { change24h: 0 }), price: ydayCryptoPrice },
+        },
+        stocks: {
+          ...effectivePrices.stocks,
+          [company.ticker]: { ...(effectivePrices.stocks[company.ticker] || { change24h: 0, volume: 0, marketCap: 0 }), price: ydayStockPrice },
+        },
+      };
+      const yesterdayMnavVal = getCompanyMNAV(company, ydayPrices);
+      if (yesterdayMnavVal && yesterdayMnavVal !== 0) {
+        mNAVChange = ((mNAV / yesterdayMnavVal) - 1) * 100;
+      }
     }
 
     // Determine company type

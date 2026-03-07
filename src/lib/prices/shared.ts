@@ -23,6 +23,7 @@ export const TICKER_CURRENCY: Record<string, string> = {
   "DCC.AX": "AUD", // DigitalX (ASX Australia)
   "NDA.V": "CAD", // Neptune Digital Assets (TSX Venture)
   "DMGI.V": "CAD", // DMG Blockchain (TSX Venture)
+  "OBTC3": "BRL", // OranjeBTC (B3 Brazil)
 };
 
 // Fetch forex rates from exchangerate-api.com (free, no API key needed)
@@ -36,7 +37,7 @@ export async function fetchExchangeRateApi(): Promise<Record<string, number> | n
 
     // Map to our format (1 USD = X currency)
     const rates: Record<string, number> = {};
-    const currencies = ["AUD", "CAD", "EUR", "GBP", "JPY", "HKD", "SEK"];
+    const currencies = ["AUD", "BRL", "CAD", "EUR", "GBP", "JPY", "HKD", "SEK"];
     for (const cur of currencies) {
       if (data.rates[cur]) {
         rates[cur] = data.rates[cur];

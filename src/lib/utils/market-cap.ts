@@ -42,6 +42,7 @@ const TICKER_CURRENCIES: Record<string, string> = {
   "DCC.AX": "AUD",
   "NDA.V": "CAD",
   "DMGI.V": "CAD",
+  "OBTC3": "BRL",
 };
 
 export interface StockPriceData {

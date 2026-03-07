@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { allCompanies } from "@/lib/data/companies";
 import { Company } from "@/lib/types";
-import { getCompanyMNAV } from "@/lib/utils/mnav-calculation";
+import { getCompanyMNAV } from "@/lib/math/mnav-engine";
 import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
 import { BMNR_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
@@ -19,6 +19,7 @@ const TICKER_CURRENCIES: Record<string, string> = {
   "DCC.AX": "AUD",
   "NDA.V": "CAD",
   "DMGI.V": "CAD",
+  "OBTC3": "BRL",
 };
 
 /**
@@ -108,8 +109,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Get unique assets needed
-    const assets: string[] = [...new Set(allCompanies.map((c: Company) => c.asset))];
+    // Get unique assets needed (primary + secondary + investment underlying)
+    const assetSet = new Set(allCompanies.map((c: Company) => c.asset));
+    for (const c of allCompanies) {
+      if (c.secondaryCryptoHoldings) {
+        for (const h of c.secondaryCryptoHoldings) assetSet.add(h.asset);
+      }
+      if (c.cryptoInvestments) {
+        for (const inv of c.cryptoInvestments) assetSet.add(inv.underlyingAsset);
+      }
+    }
+    const assets: string[] = [...assetSet];
     const tickers: string[] = allCompanies.map((c: Company) => c.ticker);
 
     // Fetch yesterday's crypto prices (use 7d history, find price from at least 24h ago)
@@ -221,10 +231,13 @@ export async function GET(request: NextRequest) {
       
       // Fall back to getCompanyMNAV for other companies
       if (mnav === null) {
+        // Build full crypto price map so secondary holdings + investments get priced
+        const cryptoPriceMap: Record<string, { price: number }> = {};
+        for (const [asset, price] of Object.entries(cryptoPrices)) {
+          cryptoPriceMap[asset] = { price };
+        }
         const yesterdayPrices = {
-          crypto: {
-            [company.asset]: { price: cryptoPrice, change24h: 0 },
-          },
+          crypto: cryptoPriceMap,
           stocks: {
             [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 },
           },
