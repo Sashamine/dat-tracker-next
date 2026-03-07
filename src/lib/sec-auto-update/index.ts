@@ -58,6 +58,7 @@ import {
 
 // Extraction accuracy tracking
 import { recordExtractionComparison } from '../verification/extraction-accuracy';
+import { allCompanies } from '@/lib/data/companies';
 import { D1Client } from '@/lib/d1';
 import {
   writeSecFilingHoldingsNativeDatapoint,
@@ -717,38 +718,46 @@ async function processCompanyHybrid(
       };
     }
 
-    const updateResult = updateCompaniesFile(
-      ticker,
-      finalHoldings,
-      finalFilingDate || new Date().toISOString().split('T')[0],
-      finalFilingUrl || '',
-      config.dryRun || false,
-      source
-    );
+    // Filesystem updates (companies.ts, holdings-history.ts)
+    // Skip entirely on Vercel — read-only filesystem. D1 is the update path there.
+    const isVercel = !!process.env.VERCEL;
+    let updateResult: { success: boolean; previousHoldings?: number } = { success: true, previousHoldings: currentHoldings };
 
-    if (!updateResult.success) {
-      return {
+    if (!isVercel) {
+      updateResult = updateCompaniesFile(
         ticker,
-        success: false,
-        error: 'Failed to update companies.ts - ticker pattern not found',
-        newHoldings: finalHoldings,
-        extractionMethod,
-        xbrlResult,
-      };
-    }
+        finalHoldings,
+        finalFilingDate || new Date().toISOString().split('T')[0],
+        finalFilingUrl || '',
+        config.dryRun || false,
+        source
+      );
 
-    // Also update holdings history for historical tracking
-    const historyResult = updateHoldingsHistory(
-      ticker,
-      finalHoldings,
-      finalFilingDate || new Date().toISOString().split('T')[0],
-      finalFilingUrl || '',
-      config.dryRun || false,
-      `SEC ${extractionMethod === 'xbrl' ? 'XBRL' : '8-K'} auto-update`
-    );
-    if (!historyResult.success) {
-      console.log(`[SEC Update] Warning: Could not update holdings history for ${ticker}: ${historyResult.error}`);
-      // Continue anyway - companies.ts is the primary update
+      if (!updateResult.success) {
+        return {
+          ticker,
+          success: false,
+          error: 'Failed to update companies.ts - ticker pattern not found',
+          newHoldings: finalHoldings,
+          extractionMethod,
+          xbrlResult,
+        };
+      }
+
+      // Also update holdings history for historical tracking
+      const historyResult = updateHoldingsHistory(
+        ticker,
+        finalHoldings,
+        finalFilingDate || new Date().toISOString().split('T')[0],
+        finalFilingUrl || '',
+        config.dryRun || false,
+        `SEC ${extractionMethod === 'xbrl' ? 'XBRL' : '8-K'} auto-update`
+      );
+      if (!historyResult.success) {
+        console.log(`[SEC Update] Warning: Could not update holdings history for ${ticker}: ${historyResult.error}`);
+      }
+    } else {
+      console.log(`[SEC Update] ${ticker}: Vercel mode — skipping filesystem writes, D1 is the update path`);
     }
 
     let committed = false;
@@ -788,23 +797,15 @@ async function processCompanyHybrid(
 }
 
 /**
- * Get company info from companies.ts
+ * Get company info from the companies module (works on Vercel).
  */
 function getCompanyInfo(ticker: string): { asset: string; holdings: number } | null {
-  const filePath = path.join(process.cwd(), COMPANIES_FILE);
-  const content = fs.readFileSync(filePath, 'utf-8');
-
-  const pattern = new RegExp(
-    `ticker:\\s*["']${ticker}["'][\\s\\S]*?asset:\\s*["']([^"']+)["'][\\s\\S]*?holdings:\\s*([\\d_,]+)`,
-    'i'
-  );
-
-  const match = content.match(pattern);
-  if (!match) return null;
+  const company = allCompanies.find(c => c.ticker.toUpperCase() === ticker.toUpperCase());
+  if (!company) return null;
 
   return {
-    asset: match[1],
-    holdings: parseInt(match[2].replace(/[_,]/g, '')),
+    asset: company.asset,
+    holdings: company.holdings ?? 0,
   };
 }
 
