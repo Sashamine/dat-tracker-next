@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -49,6 +50,10 @@ interface DataTableProps {
   companies: Company[];
   prices?: PriceData;
   yesterdayMnav?: YesterdayMnavData;
+  onVisibleSummaryChange?: (summary: {
+    visibleCount: number;
+    visibleTreasuryValue: number;
+  }) => void;
 }
 
 interface HpsGrowthApiSnapshot {
@@ -117,7 +122,7 @@ const assetColors: Record<string, string> = {
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
-export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) {
+export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryChange }: DataTableProps) {
   const router = useRouter();
   const { data: ahpsData } = useSWR<{
     success: boolean;
@@ -325,6 +330,14 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
 
   // Check if crypto prices have loaded (at least one company has non-zero holdingsValue)
   const pricesLoaded = filteredCompanies.some(c => c.holdingsValue > 0);
+  const visibleTreasuryValue = filteredCompanies.reduce((sum, company) => sum + company.holdingsValue, 0);
+
+  useEffect(() => {
+    onVisibleSummaryChange?.({
+      visibleCount: filteredCompanies.length,
+      visibleTreasuryValue,
+    });
+  }, [filteredCompanies.length, onVisibleSummaryChange, visibleTreasuryValue]);
 
   // Sort companies
   const sortedCompanies = [...filteredCompanies].sort((a, b) => {
