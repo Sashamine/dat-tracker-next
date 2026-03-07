@@ -33,6 +33,7 @@ interface CompanyStats {
   ticker: string;
   name: string;
   isMiner: boolean;
+  displayHoldings: number;
   currentHPS: number;
   growth30d: number | null;
   growth90d: number | null;
@@ -75,6 +76,7 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
         ticker: row.ticker,
         name: company.name,
         isMiner: company.isMiner || false,
+        displayHoldings: company.holdings,
         currentHPS: row.currentHps,
         growth30d: row.growth30d,
         growth90d: row.growth90d,
@@ -122,6 +124,12 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
     const sign = growth >= 0 ? "+" : "";
     return `${sign}${growth.toFixed(1)}%`;
   };
+
+  const formatHoldings = (holdings: number) =>
+    holdings.toLocaleString(undefined, {
+      minimumFractionDigits: Number.isInteger(holdings) ? 0 : 3,
+      maximumFractionDigits: 3,
+    });
 
   const getGrowthColor = (growth: number | null) => {
     if (growth === null) return "text-gray-400";
@@ -184,7 +192,7 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
               </td>
               <td className="text-right py-2 px-3 text-gray-900 dark:text-gray-100">
                 <span className="inline-flex items-center gap-1 justify-end">
-                  {company.currentHoldings.toLocaleString()}
+                  {formatHoldings(company.displayHoldings)}
                   <HoldingsBasisBadge basis={company.holdingsBasis} />
                 </span>
               </td>
