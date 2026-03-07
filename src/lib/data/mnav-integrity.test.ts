@@ -1384,3 +1384,319 @@ describe("Check 34: Orphaned holdings history", () => {
     // expect(violations).toHaveLength(0);
   });
 });
+
+// ─────────────────────────────────────────────────────────────
+// Check 35: cryptoInvestments fairValue coherence
+//
+// For fund/ETF investments, fairValue is used directly in NAV.
+// A wrong fairValue directly corrupts mNAV with no other check.
+// For LSTs, fairValue is a static fallback — lstAmount * exchangeRate
+// * price is used at runtime. But fairValue should still be reasonable.
+//
+// Heuristic: fairValue should not exceed 5x the company's direct
+// holdings value (at a reference price). A fund worth more than 5x
+// the company's direct crypto is suspicious.
+// ─────────────────────────────────────────────────────────────
+describe("Check 35: cryptoInvestments fairValue coherence", () => {
+  // Reference prices for sanity bounds (rough current prices)
+  const REF_PRICES: Record<string, number> = {
+    BTC: 90_000, ETH: 2_500, SOL: 150, HYPE: 25, BNB: 650,
+    TAO: 400, LINK: 15, TRX: 0.25, XRP: 2.5, ZEC: 50,
+    LTC: 120, SUI: 4, DOGE: 0.30, AVAX: 35, ADA: 0.70, HBAR: 0.30,
+  };
+
+  it("LST fairValue should be coherent with underlyingAmount * asset price", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.cryptoInvestments?.length) continue;
+
+      for (const inv of company.cryptoInvestments) {
+        if (inv.type !== "lst") continue;
+        if (!inv.underlyingAmount || !inv.fairValue) continue;
+
+        const refPrice = REF_PRICES[inv.underlyingAsset];
+        if (!refPrice) continue;
+
+        const impliedValue = inv.underlyingAmount * refPrice;
+        const deviation = Math.abs(inv.fairValue - impliedValue) / impliedValue;
+
+        // Allow 50% tolerance for price movement since sourceDate
+        if (deviation > 0.50) {
+          violations.push(
+            `${company.ticker}: LST "${inv.name}" fairValue ($${(inv.fairValue / 1e6).toFixed(1)}M) ` +
+              `vs implied ${inv.underlyingAmount.toLocaleString()} ${inv.underlyingAsset} × $${refPrice} ` +
+              `= $${(impliedValue / 1e6).toFixed(1)}M (${(deviation * 100).toFixed(0)}% off). ` +
+              `fairValue may be stale or wrong.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== LST FAIR VALUE INCOHERENT ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — price movement can cause drift
+    // expect(violations).toHaveLength(0);
+  });
+
+  it("fund/ETF fairValue should not dominate direct holdings value", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.cryptoInvestments?.length) continue;
+
+      const refPrice = REF_PRICES[company.asset] ?? 0;
+      if (!refPrice || !company.holdings) continue;
+
+      const directValue = company.holdings * refPrice;
+      const totalFundValue = company.cryptoInvestments
+        .filter((inv) => inv.type === "fund" || inv.type === "etf" || inv.type === "equity")
+        .reduce((sum, inv) => sum + (inv.fairValue ?? 0), 0);
+
+      if (totalFundValue === 0) continue;
+
+      // Fund value exceeding 20x direct holdings is suspicious
+      if (totalFundValue > directValue * 20 && totalFundValue > 10_000_000) {
+        violations.push(
+          `${company.ticker}: fund/ETF fairValue ($${(totalFundValue / 1e6).toFixed(1)}M) ` +
+            `is ${(totalFundValue / directValue).toFixed(0)}x direct holdings value ` +
+            `($${(directValue / 1e6).toFixed(1)}M). Verify fairValue is correct.`,
+        );
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== FUND VALUE DOMINANCE ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some companies genuinely have most exposure via funds
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 36: cryptoInvestments source staleness
+//
+// Fund/ETF fairValues are static from SEC filings. If the sourceDate
+// is far from holdingsLastUpdated, the value may be stale.
+// ─────────────────────────────────────────────────────────────
+describe("Check 36: cryptoInvestments source staleness", () => {
+  it("cryptoInvestments sourceDate should be within 120 days of holdingsLastUpdated", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (!company.cryptoInvestments?.length) continue;
+      if (!company.holdingsLastUpdated) continue;
+
+      const holdingsDate = new Date(company.holdingsLastUpdated).getTime();
+
+      for (const inv of company.cryptoInvestments) {
+        if (!inv.sourceDate) continue;
+        const invDate = new Date(inv.sourceDate).getTime();
+        const daysDiff = Math.abs(holdingsDate - invDate) / 86_400_000;
+
+        if (daysDiff > 120) {
+          violations.push(
+            `${company.ticker}: "${inv.name}" sourceDate (${inv.sourceDate}) is ` +
+              `${Math.round(daysDiff)}d from holdingsLastUpdated (${company.holdingsLastUpdated}). ` +
+              `fairValue ($${(inv.fairValue / 1e6).toFixed(1)}M) may be stale.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== STALE CRYPTO INVESTMENT VALUES ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 37: Missing sharesForMnav when history exists
+//
+// If a company has holdings-history with sharesOutstanding, it should
+// have sharesForMnav set. Without it, market cap falls back to static
+// overrides or API data — both can be stale/wrong.
+// ─────────────────────────────────────────────────────────────
+describe("Check 37: Missing sharesForMnav", () => {
+  it("companies with holdings history should have sharesForMnav", () => {
+    const violations: string[] = [];
+
+    for (const company of allCompanies) {
+      if (company.sharesForMnav) continue;
+      if (company.pendingMerger) continue; // SPACs may not have meaningful shares
+
+      const data = HOLDINGS_HISTORY[company.ticker];
+      if (!data?.history?.length) continue;
+
+      const latest = data.history[data.history.length - 1];
+      if (!latest.sharesOutstanding) continue;
+
+      violations.push(
+        `${company.ticker}: has sharesOutstanding (${latest.sharesOutstanding.toLocaleString()}) ` +
+          `in holdings-history but no sharesForMnav. Market cap falls back to ` +
+          `static override/API — may be stale.`,
+      );
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== MISSING sharesForMnav ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some companies may intentionally use overrides
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 38: Instrument faceValue vs potentialShares coherence
+//
+// For convertibles: faceValue / strikePrice ≈ potentialShares.
+// A large discrepancy suggests a data entry error.
+// ─────────────────────────────────────────────────────────────
+describe("Check 38: Instrument value reasonableness", () => {
+  it("convertible faceValue / strikePrice should approximate potentialShares", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, instruments] of Object.entries(dilutiveInstruments)) {
+      for (const inst of instruments) {
+        if (inst.type !== "convertible") continue;
+        if (!inst.faceValue || !inst.strikePrice || inst.strikePrice === 0) continue;
+
+        const impliedShares = inst.faceValue / inst.strikePrice;
+        const deviation = Math.abs(impliedShares - inst.potentialShares) / impliedShares;
+
+        if (deviation > 0.25) {
+          violations.push(
+            `${ticker}: convertible at $${inst.strikePrice} strike — ` +
+              `faceValue ($${(inst.faceValue / 1e6).toFixed(1)}M) / strike = ` +
+              `${Math.round(impliedShares).toLocaleString()} implied shares, ` +
+              `but potentialShares = ${inst.potentialShares.toLocaleString()} ` +
+              `(${(deviation * 100).toFixed(0)}% off). ${inst.source}`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== INSTRUMENT VALUE INCOHERENT ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — some converts have complex terms (make-whole, caps)
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 39: History upward spike check
+//
+// Detect suspicious holdings or share increases (>100% jump)
+// between adjacent history entries, not just drops.
+// ─────────────────────────────────────────────────────────────
+describe("Check 39: History upward spikes", () => {
+  it("holdings should not spike >100% between adjacent entries", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+      if (!data?.history?.length || data.history.length < 2) continue;
+
+      for (let i = 1; i < data.history.length; i++) {
+        const prev = data.history[i - 1];
+        const curr = data.history[i];
+        if (prev.holdings === 0 || curr.holdings === 0) continue;
+
+        const spikePct = (curr.holdings - prev.holdings) / prev.holdings;
+        if (spikePct > 1.0) {
+          violations.push(
+            `${ticker} (${curr.date}): holdings spiked ${(spikePct * 100).toFixed(0)}% ` +
+              `from ${prev.holdings.toLocaleString()} to ${curr.holdings.toLocaleString()}. ` +
+              `Verify this is a real acquisition.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== HOLDINGS UPWARD SPIKES ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — large acquisitions do happen (SPACs, PIPEs)
+    // expect(violations).toHaveLength(0);
+  });
+
+  it("shares should not spike >50% between adjacent entries", () => {
+    const violations: string[] = [];
+
+    for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
+      if (!data?.history?.length || data.history.length < 2) continue;
+
+      for (let i = 1; i < data.history.length; i++) {
+        const prev = data.history[i - 1];
+        const curr = data.history[i];
+        if (!prev.sharesOutstanding || !curr.sharesOutstanding) continue;
+        if (prev.sharesOutstanding === 0) continue;
+
+        const spikePct = (curr.sharesOutstanding - prev.sharesOutstanding) / prev.sharesOutstanding;
+        if (spikePct > 0.50) {
+          violations.push(
+            `${ticker} (${curr.date}): shares spiked ${(spikePct * 100).toFixed(0)}% ` +
+              `from ${prev.sharesOutstanding.toLocaleString()} to ${curr.sharesOutstanding.toLocaleString()}. ` +
+              `Verify dilution event.`,
+          );
+        }
+      }
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== SHARES UPWARD SPIKES ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — PIPEs, ATMs, mergers cause large dilution
+    // expect(violations).toHaveLength(0);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Check 40: Debt without dilution acknowledgment
+//
+// If a company has totalDebt > 0 but no dilutive instruments and
+// notes don't explicitly say "no conversion features", the debt
+// might include untracked convertibles.
+// ─────────────────────────────────────────────────────────────
+describe("Check 40: Debt without dilution acknowledgment", () => {
+  it("companies with material debt should have instruments or explicit no-conversion note", () => {
+    const violations: string[] = [];
+    const NO_CONVERT_PATTERN = /no\s+conver|non-convert|plain\s+debt|term\s+loan|credit\s+facility|secured\s+loan|mortgage/i;
+
+    for (const company of allCompanies) {
+      const debt = company.totalDebt ?? 0;
+      if (debt < 5_000_000) continue; // Only flag material debt (>$5M)
+
+      const hasInstruments = (dilutiveInstruments[company.ticker]?.length ?? 0) > 0;
+      if (hasInstruments) continue;
+
+      const text = [company.notes, company.debtSourceQuote, company.debtSource]
+        .filter(Boolean)
+        .join(" ");
+
+      if (NO_CONVERT_PATTERN.test(text)) continue;
+
+      violations.push(
+        `${company.ticker}: totalDebt ($${(debt / 1e6).toFixed(1)}M) but no dilutive instruments ` +
+          `and no explicit "non-convertible" note. Verify debt has no conversion features.`,
+      );
+    }
+
+    if (violations.length > 0) {
+      console.log("\n=== DEBT WITHOUT DILUTION ACKNOWLEDGMENT ===\n");
+      violations.forEach((v) => console.log(`  ${v}`));
+    }
+    // Soft fail — many companies have plain debt
+    // expect(violations).toHaveLength(0);
+  });
+});
