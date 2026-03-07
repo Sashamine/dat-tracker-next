@@ -750,15 +750,40 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("holdingsValue")}
+                  onClick={() => handleSort("mNAVChange")}
                 >
-                  Treasury Value {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
+                  mNAV 24h {sortField === "mNAVChange" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("leverageRatio")}
                 >
                   Leverage {sortField === "leverageRatio" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockPrice")}
+                >
+                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead className="text-right">Change</TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("stockVolume")}
+                >
+                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("marketCap")}
+                >
+                  Market Cap {sortField === "marketCap" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("holdingsValue")}
+                >
+                  Treasury {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -1083,31 +1108,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                           <HoldingsBasisBadge basis={company.holdingsBasis} />
                         </span>
                       </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm">
-                    {company.leverageRatio > 0 ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <span className={cn(
-                              "inline-flex items-center gap-1",
-                              company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
-                            )}>
-                              {company.leverageRatio >= 1 && <span>⚠️</span>}
-                              {company.leverageRatio.toFixed(2)}x
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Debt / Crypto NAV</p>
-                            {company.leverageRatio >= 1 && (
-                              <p className="text-xs text-amber-500">High leverage - mNAV elevated by debt structure</p>
-                            )}
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ) : (
-                      <span className="text-gray-400">—</span>
                     )}
                   </TableCell>
                 </TableRow>
