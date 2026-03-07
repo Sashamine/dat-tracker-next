@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "CWD",
   "secCik": "1627282",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-04T14:10:30.430Z",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-03-05T20:22:40.130Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -13,8 +13,8 @@
     "asset": "LINK",
     "amount": 562535,
     "source": {
-      "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://ir.caliberco.com/",
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000136/cwd-20251016.htm",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-12-31",
     "source": {
       "sharesSource": "SEC DEF 14A Jan 7, 2026 (Record Date Dec 31, 2025)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000028/cwd-20241231.htm"
+      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1627282/000162728225000160/cwd-20251117.htm"
     }
   },
   "balanceSheet": {

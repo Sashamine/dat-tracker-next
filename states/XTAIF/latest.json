@@ -3,10 +3,10 @@
   "ticker": "XTAIF",
   "secCik": null,
   "asOf": "2025-11-25",
-  "generatedAt": "2026-03-04T14:10:30.430Z",
+  "generatedAt": "2026-03-05T20:22:40.130Z",
   "listing": {
-    "country": "US",
-    "exchangeMic": "XNAS",
+    "country": "CA",
+    "exchangeMic": "XTSE",
     "currency": "USD"
   },
   "holdings": {

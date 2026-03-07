@@ -101,12 +101,31 @@ function resolveAssetUnit(asset: string): string | null {
   return ASSET_UNIT_MAP[key] || null;
 }
 
+// Some MULTI-asset histories still track `holdings` as BTC-native for chart
+// continuity; allow explicit ticker-level unit overrides for holdings_native.
+const HOLDINGS_UNIT_OVERRIDES: Record<string, string> = {
+  '3825.T': 'BTC',
+};
+
 // ---------------------------------------------------------------------------
 // Artifact resolution — cache per sourceUrl/accession
 // ---------------------------------------------------------------------------
 
 type ArtifactCacheKey = string; // accession or sourceUrl
 const artifactCache = new Map<ArtifactCacheKey, string>();
+
+async function getSqliteObjectType(
+  d1: D1Client,
+  name: string,
+): Promise<'table' | 'view' | null> {
+  const r = await d1.query<{ type: string }>(
+    `SELECT type FROM sqlite_master WHERE name = ? LIMIT 1;`,
+    [name],
+  );
+  const t = r.results[0]?.type;
+  if (t === 'table' || t === 'view') return t;
+  return null;
+}
 
 async function resolveOrCreateArtifact(
   d1: D1Client,
@@ -115,7 +134,11 @@ async function resolveOrCreateArtifact(
   dryRun: boolean,
 ): Promise<string> {
   const accession = snapshot.sourceUrl?.match(/\b(\d{10}-\d{2}-\d{6})\b/)?.[1] || null;
-  const sourceUrl = snapshot.sourceUrl || null;
+  // Ensure source_url is always non-null for synthetic artifacts; some D1 schemas
+  // enforce NOT NULL and will silently ignore INSERT OR IGNORE with null values.
+  const sourceUrl =
+    snapshot.sourceUrl ||
+    `holdings_history_ts://${ticker}/${snapshot.date}`;
 
   // Determine a cache key — prefer accession, then sourceUrl
   const cacheKey = accession || sourceUrl || `${ticker}|${snapshot.date}`;
@@ -166,8 +189,51 @@ async function resolveOrCreateArtifact(
     );
   }
 
-  artifactCache.set(cacheKey, artifactId);
-  return artifactId;
+  // Resolve canonical row id after INSERT OR IGNORE so we never return a UUID
+  // that failed to insert due conflicts.
+  if (accession) {
+    const byAccession = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id FROM artifacts
+       WHERE accession = ?
+       ORDER BY fetched_at DESC LIMIT 1;`,
+      [accession],
+    );
+    if (byAccession.results[0]?.artifact_id) {
+      artifactCache.set(cacheKey, byAccession.results[0].artifact_id);
+      return byAccession.results[0].artifact_id;
+    }
+  }
+
+  if (sourceUrl) {
+    const byUrl = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id FROM artifacts
+       WHERE source_url = ?
+       ORDER BY fetched_at DESC LIMIT 1;`,
+      [sourceUrl],
+    );
+    if (byUrl.results[0]?.artifact_id) {
+      artifactCache.set(cacheKey, byUrl.results[0].artifact_id);
+      return byUrl.results[0].artifact_id;
+    }
+  }
+
+  if (!dryRun) {
+    const byId = await d1.query<{ artifact_id: string }>(
+      `SELECT artifact_id FROM artifacts WHERE artifact_id = ? LIMIT 1;`,
+      [artifactId],
+    );
+    if (byId.results[0]?.artifact_id) {
+      artifactCache.set(cacheKey, byId.results[0].artifact_id);
+      return byId.results[0].artifact_id;
+    }
+  }
+
+  if (dryRun) {
+    artifactCache.set(cacheKey, artifactId);
+    return artifactId;
+  }
+
+  throw new Error(`artifact_resolution_failed ticker=${ticker} as_of=${snapshot.date} key=${cacheKey}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -258,6 +324,8 @@ async function main() {
 
   const d1 = D1Client.fromEnv();
   const runId = crypto.randomUUID();
+  const latestObjectType = await getSqliteObjectType(d1, 'latest_datapoints');
+  const canWriteLatest = latestObjectType === 'table';
 
   // Create run record
   if (!dryRun) {
@@ -371,14 +439,18 @@ async function main() {
         const value = metricDef.getValue(snapshot);
         if (value === undefined || value === null) continue;
 
-        // Skip MULTI-asset tickers for holdings_native (ambiguous unit)
+        let unit = metricDef.getUnit(assetUnit);
+        // Default behavior is to skip ambiguous MULTI holdings. Allow only
+        // explicit ticker overrides where `snapshot.holdings` is known BTC-native.
         if (metricDef.metric === 'holdings_native' && assetUnit === 'MULTI') {
-          stats.skipped++;
-          totalSkipped++;
-          continue;
+          const overrideUnit = HOLDINGS_UNIT_OVERRIDES[entityId];
+          if (!overrideUnit) {
+            stats.skipped++;
+            totalSkipped++;
+            continue;
+          }
+          unit = overrideUnit;
         }
-
-        const unit = metricDef.getUnit(assetUnit);
         const proposalKey = makeProposalKey({
           entityId,
           metric: metricDef.metric,
@@ -532,7 +604,7 @@ async function main() {
 
   // Update latest_datapoints
   let latestUpdated = 0;
-  if (!dryRun) {
+  if (!dryRun && canWriteLatest) {
     for (const row of latestByEntityMetric.values()) {
       try {
         await d1.query(
@@ -564,6 +636,7 @@ async function main() {
         );
         latestUpdated++;
       } catch (err) {
+        totalFailed++;
         console.log(JSON.stringify({
           ok: false,
           kind: 'latest_datapoints_update_error',
@@ -573,7 +646,21 @@ async function main() {
         }));
       }
     }
+  } else if (!dryRun && latestObjectType === 'view') {
+    console.log(JSON.stringify({
+      ok: true,
+      kind: 'latest_datapoints_update_skipped',
+      reason: 'latest_datapoints_is_view',
+    }));
+  } else if (!dryRun && latestObjectType === null) {
+    console.log(JSON.stringify({
+      ok: true,
+      kind: 'latest_datapoints_update_skipped',
+      reason: 'latest_datapoints_missing',
+    }));
+  }
 
+  if (!dryRun) {
     // Close run
     await d1.query(`UPDATE runs SET ended_at = ? WHERE run_id = ?;`, [nowIso(), runId]);
   }
@@ -593,6 +680,11 @@ async function main() {
     latestDatapointsUpdated: latestUpdated,
     perTicker,
   }, null, 2));
+
+  // Fail wet runs if any row-level operation failed.
+  if (!dryRun && totalFailed > 0) {
+    throw new Error(`backfill_failed totalFailed=${totalFailed}`);
+  }
 }
 
 main().catch(err => {

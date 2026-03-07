@@ -26,6 +26,7 @@ import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
 import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
 import { CitationPopover } from "@/components/ui/citation-popover";
 import { trackCitationSourceClick } from "@/lib/client-events";
+import { calculateHoldingsGrowth, getHoldingsHistory, type HoldingsSnapshot } from "@/lib/data/holdings-history";
 
 interface PriceData {
   crypto: Record<string, { price: number; change24h: number }>;
@@ -56,6 +57,63 @@ function formatNumber(num: number | undefined): string {
   if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M`;
   if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
   return num.toLocaleString();
+}
+
+function formatGrowthPct(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return "—";
+  const sign = value >= 0 ? "+" : "";
+  return `${sign}${value.toFixed(1)}%`;
+}
+
+function getGrowthColor(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return "text-gray-400";
+  if (value > 0) return "text-green-600";
+  if (value < 0) return "text-red-600";
+  return "text-gray-500";
+}
+
+function calculateHpsGrowth90d(
+  ticker: string,
+  currentHoldings: number,
+  currentShares: number | undefined
+): number | null {
+  if (!currentShares || currentShares <= 0 || currentHoldings < 0) return null;
+
+  const historyData = getHoldingsHistory(ticker);
+  if (!historyData || historyData.history.length === 0) return null;
+
+  const ninetyDaysAgo = new Date();
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+
+  const filteredHistory = historyData.history.filter((snapshot) => {
+    const snapshotDate = new Date(snapshot.date);
+    return !Number.isNaN(snapshotDate.getTime()) && snapshotDate >= ninetyDaysAgo;
+  });
+
+  const historyForGrowth: HoldingsSnapshot[] = [...filteredHistory];
+  const lastSnapshot = historyForGrowth[historyForGrowth.length - 1];
+  const today = new Date().toISOString().split("T")[0];
+  const currentHoldingsPerShare = currentHoldings / currentShares;
+
+  if (!lastSnapshot) {
+    return null;
+  }
+
+  if (
+    today > lastSnapshot.date &&
+    Math.abs(lastSnapshot.holdingsPerShare - currentHoldingsPerShare) > Number.EPSILON
+  ) {
+    historyForGrowth.push({
+      ...lastSnapshot,
+      date: today,
+      holdings: currentHoldings,
+      sharesOutstanding: currentShares,
+      holdingsPerShare: currentHoldingsPerShare,
+    });
+  }
+
+  const growth = calculateHoldingsGrowth(historyForGrowth);
+  return growth?.totalGrowth ?? null;
 }
 
 
@@ -127,6 +185,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const otherInvestments = company.otherInvestments ?? 0;
     const otherAssets = cashReserves + otherInvestments;
     const totalDebt = company.totalDebt ?? 0;
+    const hpsGrowth90d = calculateHpsGrowth90d(company.ticker, company.holdings, company.sharesForMnav);
 
     // Adjust debt for ITM convertibles (same as mNAV calculation)
     // ITM converts are counted in diluted shares, so subtract their face value from debt
@@ -167,6 +226,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       isAfterHours,
       otherAssets,
       leverageRatio,
+      hpsGrowth90d,
     };
   });
 
@@ -221,6 +281,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     let aVal: number, bVal: number;
 
     switch (sortField) {
+      case "hpsGrowth90d":
+        aVal = a.hpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        bVal = b.hpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        break;
       case "holdingsValue":
         // When prices haven't loaded, sort by ticker alphabetically for stability
         // This prevents random reordering while waiting for price data
@@ -495,6 +559,12 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       </div>
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
+          <p className="text-xs text-gray-500 uppercase">HPS 90D</p>
+          <p className={cn("font-semibold", getGrowthColor(company.hpsGrowth90d))}>
+            {formatGrowthPct(company.hpsGrowth90d)}
+          </p>
+        </div>
+        <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
           <div className="flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
             {company.pendingMerger ? "—" : (
@@ -548,6 +618,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
           </div>
         </div>
         <div>
+          <p className="text-xs text-gray-500 uppercase">Treasury</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
+        </div>
+        <div>
           <p className="text-xs text-gray-500 uppercase">Leverage</p>
           <p className={cn(
             "font-semibold",
@@ -561,15 +635,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
             ) : "—"}
           </p>
         </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase">Mkt Cap</p>
-          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.marketCap)}</p>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase">Crypto</p>
-          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
-          <HoldingsBasisBadge basis={company.holdingsBasis} />
-        </div>
       </div>
     </div>
     );
@@ -578,8 +643,13 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden lg:border-0">
       {filteredCompanies.length === 0 ? (
-        <div className="p-8 text-center text-gray-500">
-          No companies match the current filters.
+        <div className="p-8 text-center">
+          <p className="text-gray-700 dark:text-gray-200 font-medium">
+            No companies match the current HPS leaderboard filters.
+          </p>
+          <p className="mt-1 text-sm text-gray-500">
+            Clear one or more filters to repopulate the 90-day holdings-per-share rankings.
+          </p>
         </div>
       ) : (
         <>
@@ -606,52 +676,27 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                 <TableHead>Asset</TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                  onClick={() => handleSort("hpsGrowth90d")}
+                >
+                  HPS Growth (90D) {sortField === "hpsGrowth90d" && (sortDir === "desc" ? "↓" : "↑")}
+                </TableHead>
+                <TableHead
+                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("mNAV")}
                 >
                   mNAV {sortField === "mNAV" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("mNAVChange")}
+                  onClick={() => handleSort("holdingsValue")}
                 >
-                  mNAV 24h {sortField === "mNAVChange" && (sortDir === "desc" ? "↓" : "↑")}
+                  Treasury Value {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
                 <TableHead
                   className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
                   onClick={() => handleSort("leverageRatio")}
                 >
                   Leverage {sortField === "leverageRatio" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("stockPrice")}
-                >
-                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead className="text-right">24h %</TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("stockVolume")}
-                >
-                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("marketCap")}
-                >
-                  Market Cap {sortField === "marketCap" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("holdingsValue")}
-                >
-                  Crypto {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("otherAssets")}
-                >
-                  Other {sortField === "otherAssets" && (sortDir === "desc" ? "↓" : "↑")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -798,6 +843,11 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                     >
                       {company.asset}
                     </Badge>
+                  </TableCell>
+                  <TableCell className="text-right font-mono">
+                    <span className={cn("font-semibold", getGrowthColor(company.hpsGrowth90d))}>
+                      {formatGrowthPct(company.hpsGrowth90d)}
+                    </span>
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     {company.pendingMerger ? (
@@ -970,8 +1020,30 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                       </div>
                     )}
                   </TableCell>
-                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
-                    {company.otherAssets > 0 ? formatNumber(company.otherAssets) : "—"}
+                  <TableCell className="text-right font-mono text-sm">
+                    {company.leverageRatio > 0 ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className={cn(
+                              "inline-flex items-center gap-1",
+                              company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
+                            )}>
+                              {company.leverageRatio >= 1 && <span>⚠️</span>}
+                              {company.leverageRatio.toFixed(2)}x
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-sm">Debt / Crypto NAV</p>
+                            {company.leverageRatio >= 1 && (
+                              <p className="text-xs text-amber-500">High leverage - mNAV elevated by debt structure</p>
+                            )}
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      <span className="text-gray-400">—</span>
+                    )}
                   </TableCell>
                 </TableRow>
                 );

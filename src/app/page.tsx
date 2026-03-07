@@ -26,14 +26,30 @@ type PricesSnapshot = {
 
 // Get unique assets and count companies
 function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {
-  const assets = [...new Set(companies.map(c => c.asset))];
-  return assets.map(asset => {
-    const assetCompanies = companies.filter(c => c.asset === asset);
-    const price = prices?.crypto?.[asset]?.price || 0;
-    const totalHoldings = assetCompanies.reduce((sum, c) => sum + c.holdings, 0);
-    const totalValue = totalHoldings * price;
-    return { asset, count: assetCompanies.length, totalHoldings, totalValue, price };
-  }).sort((a, b) => b.totalValue - a.totalValue);
+  const assetCounts: Record<string, { count: number; totalHoldings: number; totalValue: number }> = {};
+  
+  for (const c of companies) {
+    if (c.multiHoldings) {
+      for (const [asset, amount] of Object.entries(c.multiHoldings)) {
+        if (!assetCounts[asset]) assetCounts[asset] = { count: 0, totalHoldings: 0, totalValue: 0 };
+        assetCounts[asset].count += 1;
+        assetCounts[asset].totalHoldings += amount;
+        assetCounts[asset].totalValue += amount * (prices?.crypto?.[asset]?.price || 0);
+      }
+    } else if (c.holdings > 0 && c.asset && c.asset !== 'MULTI') {
+      const asset = c.asset;
+      if (!assetCounts[asset]) assetCounts[asset] = { count: 0, totalHoldings: 0, totalValue: 0 };
+      assetCounts[asset].count += 1;
+      assetCounts[asset].totalHoldings += c.holdings;
+      assetCounts[asset].totalValue += c.holdings * (prices?.crypto?.[asset]?.price || 0);
+    }
+  }
+
+  return Object.entries(assetCounts).map(([asset, stats]) => ({
+    asset,
+    ...stats,
+    price: prices?.crypto?.[asset]?.price || 0
+  })).sort((a, b) => b.totalValue - a.totalValue);
 }
 
 
@@ -78,10 +94,10 @@ function HomeContent() {
 
   // D1-first overlay: fetch latest balance sheet metrics from D1 and overlay onto static data
   const tickers = useMemo(() => companies.map(c => c.ticker), [companies]);
-  const { data: d1Data, sources: d1Sources, dates: d1Dates } = useD1Fundamentals(tickers);
+  const { data: d1Data, sources: d1Sources, dates: d1Dates, confidence: d1Confidence } = useD1Fundamentals(tickers);
   const d1Companies = useMemo(
-    () => applyD1Overlay(companies, d1Data, d1Sources, d1Dates),
-    [companies, d1Data, d1Sources, d1Dates]
+    () => applyD1Overlay(companies, d1Data, d1Sources, d1Dates, d1Confidence),
+    [companies, d1Data, d1Sources, d1Dates, d1Confidence]
   );
 
   const assetStats = getAssetStats(d1Companies, prices);
@@ -116,10 +132,13 @@ function HomeContent() {
           <div className="mb-4 lg:mb-6 hidden lg:flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                All DAT Companies
+                Crypto Per Share Leaderboard
               </h1>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury`}
+                {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
+              </p>
+              <p className="mt-1 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
+                Ranked by 90-day holdings-per-share growth so dilution-adjusted treasury execution shows up first.
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -170,24 +189,34 @@ function HomeContent() {
           </div>
 
           {/* Mobile Stats Bar */}
-          <div className="lg:hidden mb-4 flex items-center justify-between text-sm">
-            <p className="text-gray-500 dark:text-gray-400">
-              {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B`}
-            </p>
-            <div className="flex items-center gap-3">
-              <MobileFilterButton onClick={() => setIsFilterOpen(true)} activeCount={activeFilterCount} />
-              <div className="flex items-center gap-2 text-xs">
-                {isConnected ? (
-                  <span className="inline-flex items-center gap-1 text-green-600">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                    Live
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-yellow-500">
-                    <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
-                    Connecting
-                  </span>
-                )}
+          <div className="lg:hidden mb-4 rounded-lg border border-gray-200 bg-gray-50 px-3 py-3 dark:border-gray-800 dark:bg-gray-900">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h1 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                  Crypto Per Share Leaderboard
+                </h1>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
+                </p>
+                <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
+                  Default ranking: 90D holdings-per-share growth.
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <MobileFilterButton onClick={() => setIsFilterOpen(true)} activeCount={activeFilterCount} />
+                <div className="flex items-center gap-2 text-xs">
+                  {isConnected ? (
+                    <span className="inline-flex items-center gap-1 text-green-600">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                      Live
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-yellow-500">
+                      <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
+                      Connecting
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

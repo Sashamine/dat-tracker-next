@@ -1,4 +1,4 @@
-import { Company } from "../types";
+import { Company, Jurisdiction } from "../types";
 import { MSTR_PROVENANCE, MSTR_PROVENANCE_DEBUG } from "./provenance/mstr";
 import { BMNR_PROVENANCE, BMNR_PROVENANCE_DEBUG, getBMNRProvenance, estimateBMNRShares } from "./provenance/bmnr";
 import { MARA_PROVENANCE, MARA_PROVENANCE_DEBUG, getMARAProvenance } from "./provenance/mara";
@@ -6,7 +6,7 @@ import { DJT_PROVENANCE, DJT_PROVENANCE_DEBUG, getDJTProvenance } from "./proven
 import { NAKA_PROVENANCE, NAKA_PROVENANCE_DEBUG, getNakaProvenance } from "./provenance/naka";
 import { H100_PROVENANCE } from "./provenance/h100";
 
-// Last verified: 2026-01-20 - HUT standalone 10,278, ABTC 5,098 (PR Dec 14; 5,427 ref'd Jan 20 but no public source found — await Feb 26 10-K)
+// Last verified: 2026-02-26 - HUT standalone 10,278, ABTC 5,401 (Q4/FY2025 8-K + earnings release)
 
 // ETH DAT Companies
 export const ethCompanies: Company[] = [
@@ -226,7 +226,7 @@ export const ethCompanies: Company[] = [
     pendingMerger: true,     // SPAC merger not yet closed - no mNAV
     leader: "Andrew Keys",
     strategy: "DeFi/staking 'machine' to grow ETH",
-    notes: "SPAC merger with Dynamix. 3rd largest ETH treasury.",
+    notes: "SPAC merger with Dynamix. 3rd largest ETH treasury. Audit note 2026-03-05: holdings/shares sources re-anchored to SEC issuer filing index (CIK 0002080334) to avoid false precision from non-checkpoint Form 425 links.",
   },
   {
     id: "btbt",
@@ -295,7 +295,7 @@ export const ethCompanies: Company[] = [
     otherInvestments: 527_600_000,  // WhiteFiber (WYFI) ~27M shares @ ~$19.54 (Feb 6, 2026 PR)
     leader: "Sam Tabar",
     strategy: "89% staked, fully exited BTC. $150M 4% converts due 2030. Majority stake in WhiteFiber (WYFI) AI/HPC.",
-    notes: "Staking yield ~2.9% annualized. $528M WhiteFiber (WYFI) stake - AI infrastructure.",
+    notes: "Staking yield ~2.9% annualized. $528M WhiteFiber (WYFI) stake - AI infrastructure. Audit note 2026-03-05: lock values (holdings/shares/cash/debt) reconciled to D1 latest as-of 2026-01-31 from the Jan 2026 treasury update.",
   },
   {
     id: "btcs",
@@ -357,6 +357,7 @@ export const ethCompanies: Company[] = [
       "Board max LTV 40%, Aave liquidation at 80%. Q3 LTV was 34.9%. " +
       "Converts secured by all assets (excl. Aave collateral), 6% interest. " +
       "15.7M Series V Preferred outstanding (non-convertible per 10-K FY2024, no dilutive impact). " +
+      "Audit note 2026-03-05: sharesForMnav normalized to 50.0M to match canonical BTCS history and D1 latest anchor at 2026-02-05. " +
       "712,500 pre-2021 warrants expiring ~Mar 2026 (deeply OTM at $11.50).",
   },
   {
@@ -632,7 +633,7 @@ export const btcCompanies: Company[] = [
     preferredAsOf: "2026-02-14",
     leader: "Simon Gerovich (CEO)",
     strategy: "Japan's BTC treasury leader. Targeting 210K BTC by 2027 ('555 Million Plan'). Uses moving-strike warrants + preferred shares for capital efficiency. Currently raising via 25th series warrants (Jan 2026) for BTC purchases.",
-    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M in credit facilities outstanding (4 draws from BTC-backed facility). All zero-coupon bonds (series 2-19) fully redeemed.",
+    notes: "Largest Asian public BTC holder. Reports BTC Yield (growth in BTC per share). Capital strategy: issue equity when mNAV > 1x, pivot to preferred shares when near 1x. $355M in credit facilities outstanding (4 draws from BTC-backed facility). All zero-coupon bonds (series 2-19) fully redeemed. Audit note 2026-03-05: historical precision reconciled for 2024-11-19 and 2025-02-17 holdings, and 2026-02-13 post-placement shares checkpoint added to history stack. Data quality classification: LEGAL_MATCH for holdings (TDnet/disclosures anchor); PARTIAL_MISMATCH for shares (lock includes Feb 13, 2026 placement while D1 latest basic_shares remains on Jan 29, 2026 filing anchor).",
     // Key strategy documents (TDnet disclosures):
     // - 2025-2027 BITCOIN PLAN (Jun 6, 2025): 210K BTC target, warrant framework
     // - Phase II: Bitcoin Platform (Oct 1, 2025): BTC income generation for preferred dividends
@@ -702,7 +703,7 @@ export const btcCompanies: Company[] = [
     cashAsOf: "2025-12-09",
     leader: "Jack Mallers (CEO)",
     strategy: "BTC treasury + Bitcoin-native financial services. Tether/SoftBank/Cantor backed.",
-    notes: "Merged Dec 2025. 16,116 BTC collateralizes debt at ~3:1 ratio. #3 corporate BTC holder.",
+    notes: "Merged Dec 2025. 16,116 BTC collateralizes debt at ~3:1 ratio. #3 corporate BTC holder. Audit note 2026-03-05: canonical 2025-12-09 anchor normalized to 8-K accession 0001213900-25-121293 (filed Dec 12, 2025). D1 also contains pre-merger SPAC cash rows at 2025-09-30 ($25k) from legacy CIK history; treat as pre-launch context, not post-launch treasury state.",
   },
   {
     id: "cepo",  // BSTR Holdings pre-merger
@@ -721,7 +722,7 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     holdings: 30_021,
-    holdingsLastUpdated: "2025-09-30",
+    holdingsLastUpdated: "2025-12-31",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/cepo/0001213900-26-008287",
     accessionNumber: "0001213900-26-008287",
@@ -745,7 +746,7 @@ export const btcCompanies: Company[] = [
     expectedHoldings: 30_021,  // Confirmed BTC from Adam Back + investors
     leader: "Adam Back (CEO)",
     strategy: "Hashcash inventor's BTC treasury play. Target 50K+ BTC.",
-    notes: "SPAC merger pending (expected Q1 2026). 25K BTC from Adam Back + 5K from investors. Will trade as BSTR post-merger.",
+    notes: "SPAC merger pending. 25K BTC from Adam Back + 5K from investors (30,021 BTC year-end anchor). Will trade as BSTR post-merger. Audit note 2026-03-05: holdingsLastUpdated normalized to 2025-12-31 to match canonical history/D1; latest SEC 10-K (filed 2026-03-02) still frames BSTR transaction as a pending business combination.",
   },
   {
     // =========================================================================
@@ -1016,12 +1017,12 @@ export const btcCompanies: Company[] = [
     isMiner: false,
     quarterlyBurnUsd: 1_000_000,
     burnSource: "MFN Interim Report Nov 19, 2025 (estimate - no XBRL)",
-    burnSourceUrl: "https://mfn.se/a/h100-group",
+    burnSourceUrl: "https://www.h100.group/investor-relations/shares",
     burnAsOf: "2025-09-30",
     burnEstimated: true,  // Swedish quarterly report estimate
     totalDebt: H100_PROVENANCE.totalDebt?.value || 20_736_000,  // SEK 219.8M zero-coupon convertible / 10.6 SEK/USD ≈ $20.7M. IFRS classification TBD Feb 24 Bokslutskommuniké.
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific IFRS period end
-    debtSourceUrl: "https://mfn.se/a/h100-group", // MFN filings index (more specific than /investors)
+    debtSourceUrl: "https://mfn.se/a/h100-group", // MFN filings feed
     debtSource: "MFN filings index — needs specific interim/annual report link",
     debtSourceQuote: "SEK 219.8M zero-coupon convertible debentures (Jul 2025, Adam Back et al). SEK 122.5M converted Nov 2025.",
     cashReserves: 2_900_000,  // SEK 30.6M ÷ ~10.6 SEK/USD ≈ $2.9M (Feb 24, 2026 Bokslutskommuniké)
@@ -1072,14 +1073,16 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://ri.oranjebtc.com",
     sharesAsOf: "2025-12-31",
     totalDebt: 0,
+    debtSource: "B3/CVM disclosures: no debt value stated in Mar 1, 2026 market announcement; provisional 0 pending full financial statement extraction",
+    debtSourceUrl: "https://ri.oranjebtc.com",
     debtAsOf: "2025-12-31",  // best-available placeholder; replace with specific period end
     debtSourceQuote: "No debt disclosed (CVM filings — Brazilian company, limited English disclosure)",
     strategy: "First LatAm BTC treasury company. Mission: build largest BTC treasury in Latin America.",
-    notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Holdings TBD - CVM filings system difficult to navigate. Market cap suggests significant BTC holdings.",
+    notes: "B3 listed (Brazil). Explicit MSTR-style strategy. Mar 1, 2026 market announcement reports 3,723.0 BTC and 155,300,500 shares outstanding outside treasury (162,267,260 fully adjusted for debenture conversion). OBTC3 latest holdings/shares are now in D1 after targeted backfill; quarterly financial stack remains incomplete.",
     dataWarnings: [
       {
         type: "stale-data",
-        message: "Holdings not yet verified from CVM filings. Brazilian regulatory system (CVM) lacks API. Market cap (~$450M) suggests substantial BTC holdings.",
+        message: "Debt/cash evidence quality remains lower than holdings/shares: latest checkpoint is anchored to market announcement + IR channel while full CVM statement extraction is still pending.",
         severity: "warning",
       },
     ],
@@ -1161,7 +1164,7 @@ export const btcCompanies: Company[] = [
     debtSourceQuote: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
     debtSourceUrl: "/filings/sqns/0001383395-26-000018",
     strategy: "IoT semiconductor company with BTC treasury strategy. Raised $189M convertible debt for BTC. Actively selling 1,617 pledged BTC to fully redeem $94.5M convertible by Jun 2026.",
-    notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized.",
+    notes: "NYSE listed (French HQ). 1,617 of 2,139 BTC pledged as collateral — being sold to redeem convertible (Feb 13 6-K). Post-redemption holdings will be ~522 BTC unencumbered. ADS buyback: ~9.7% repurchased in Q4, additional 10% authorized. Audit note 2026-03-05: lock values reconciled to D1 latest at 2025-12-31 using 6-K Q4 2025 anchor.",
     dataWarnings: [
       {
         type: "stale-data",
@@ -1223,7 +1226,9 @@ export const btcCompanies: Company[] = [
       "Satoshi Strategic: $32.8M preferred (pending NYSE). $124M subscription (12.4M shares at $10, pending NYSE — deeply underwater at ~$2.60). " +
       "Put Option risk: BTC subscription investors can put at $18.50 if mcap < $500M (currently exercisable). " +
       "⚠️ GOVERNANCE: 3 auditors in 30 days (KPMG→Marcum→Enrome); Marcum fired after requesting investigation of undisclosed related party allegations. " +
-      "Going concern in FY2023+FY2024 audits. Accumulated deficit $248M. Tontec $584K judgment with HK winding-up threat.",
+      "Going concern in FY2023+FY2024 audits. Accumulated deficit $248M. Tontec $584K judgment with HK winding-up threat. " +
+      "Audit note 2026-03-05: holdings/shares anchors upgraded to SEC 6-K (Mar 4, 2026 Ex99.1): 2,118 BTC as of Feb 28 and 2,183 BTC after additional purchase; D1 basic_shares tracks Class A only while mNAV lock uses Class A + Class B economic shares. " +
+      "Data quality classification: LEGAL_MATCH for holdings; PARTIAL_MISMATCH on shares basis (basic-only vs economic total).",
     dataWarnings: [
       {
         type: "stale-data",
@@ -1530,7 +1535,7 @@ export const btcCompanies: Company[] = [
     sharesSourceUrl: "https://btctcorp.com",
     sharesAsOf: "2026-02-17",
     strategy: "Grow Bitcoin per Share (BPS) through strategic corporate finance and institutional Bitcoin lending, liquidity and collateral services.",
-    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services (entire C-suite = Evolve execs). Basic shares: 10,027,880. Website 'diluted': 12,111,213 (converts only). ⚠️ TRUE diluted: ~14.5M (adds 2.43M performance warrants @ $0.001 that website excludes). $25M CAD convertible debentures (1% interest, Jun 2030 maturity, $12 conversion). Zero revenue — pure BTC proxy. Shell RTO via 2680083 Alberta Ltd.",
+    notes: "TSX Venture (Canada). SEDAR+ #000053693. Evolve Funds Group administrative services (entire C-suite = Evolve execs). Basic shares: 9,893,980. Reported diluted: 11,977,313 (converts only). ⚠️ TRUE diluted may be higher if performance warrants are included. $25M CAD convertible debentures (1% interest, Jun 2030 maturity, $12 conversion). Zero revenue — pure BTC proxy. Shell RTO via 2680083 Alberta Ltd. Data quality: latest lock anchor is company-reported via legal press release channel (not yet reconciled to parsed SEDAR filing text in-repo). Data quality classification: COMPANY_REPORTED_LEGAL_CHANNEL; lock and D1 latest now converge at Feb 28, 2026.",
   },
   // AKER (Aker ASA) removed 2026-02-02: Cannot verify BTC holdings
   // Seetee not listed among major unlisted investments in Q3 2025 report
@@ -1614,10 +1619,11 @@ export const btcCompanies: Company[] = [
     jurisdiction: "AU",
     authoritativeSource: "ASX",
     exchangeMic: "XASX",
+    asxAnnouncementsUrl: "https://www.asx.com.au/markets/company/DCC",
     currency: "AUD",
     asset: "BTC",
     tier: 1,  // ASX-verified + real-time dashboard
-    holdings: 504,  // ASX Dec 2025: 503.7 (308.8 direct + 194.9 BTXX ETF)
+    holdings: 503.7,  // ASX Dec 2025 Treasury Information: 308.8 direct + 194.85 via BTXX ETF
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "regulatory-filing",  // ASX Treasury Information filing
     holdingsSourceUrl: "https://www.listcorp.com/asx/dcc/digitalx-limited/news/treasury-information-december-2025-3305468.html",
@@ -1790,6 +1796,7 @@ export const btcCompanies: Company[] = [
     jurisdiction: "HK",
     authoritativeSource: "HKEX",
     exchangeMic: "XHKG",
+    hkexNewsUrl: "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1117/2025111700291.pdf",
     currency: "HKD",
     asset: "BTC",
     tier: 1,
@@ -1953,7 +1960,7 @@ export const solCompanies: Company[] = [
     debtSourceQuote: "SEC 10-Q Q1 FY2026: zero long-term debt, total liabilities $12,084,535 all current",
     debtSourceUrl: `/filings/fwdi/0001683168-26-000960`,
     debtAsOf: "2025-12-31",
-    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens).",
+    notes: "Raised $1.65B PIPE Sep 2025. Debt free. 12.9M pre-funded warrants @ $0.00001. $1B buyback program active. First equity tokenized on Solana via Superstate. Galaxy/Jump/Multicoin backed. Holdings = SOL-equivalent (raw SOL + fwdSOL liquid staking tokens). Audit note 2026-03-05: legal checkpoint confirmed from SEC 10-Q (2025-12-31) at 4,973,000 raw SOL; latest lock remains 6,979,967 SOL-equivalent from company treasury page (2026-01-15), so latest holdings classification stays COMPANY_ONLY. Shares remain PARTIAL_MISMATCH by design (lock includes pre-funded warrants; D1 basic_shares is common-only).",
   },
   {
     id: "hsdt",
@@ -2084,7 +2091,7 @@ export const solCompanies: Company[] = [
     cashAsOf: "2026-01-01",
     leader: "Formerly Janover Inc.",
     strategy: "First US public company with SOL-focused treasury.",
-    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token. $152.2M SOL pledged as collateral (>50% of digital assets). BitGo Master Loan: 250% collateral / 200% margin call trigger — liquidation risk if SOL drops 15-20%. Flora Growth $23.1M convertible note investment (93.3K SOL, 8% rate, due Sep 2030) — credit risk, not liquid SOL.",
+    notes: "$5B ELOC. Validator operations. dfdvSOL liquid staking token. $152.2M SOL pledged as collateral (>50% of digital assets). BitGo Master Loan: 250% collateral / 200% margin call trigger — liquidation risk if SOL drops 15-20%. Flora Growth $23.1M convertible note investment (93.3K SOL, 8% rate, due Sep 2030) — credit risk, not liquid SOL. Audit note 2026-03-05: lock values reconciled to D1 latest (2,221,329 SOL as of 2026-01-01 from Jan 2026 8-K business update).",
   },
   {
     id: "upxi",
@@ -2612,7 +2619,7 @@ export const taoCompanies: Company[] = [
     investorRelationsUrl: "https://taoweave.com/investor-relations",
     leader: "Peter Holst (President & CEO)",
     strategy: "Decentralized AI treasury strategy via TAO accumulation",
-    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo. ~2.3M warrants @ $1.72.",
+    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo. ~2.3M warrants @ $1.72. Audit note 2026-03-05: shares anchor date normalized to Dec 10, 2025 checkpoint to match canonical D1 latest metadata.",
   },
 ];
 
@@ -2676,7 +2683,7 @@ export const linkCompanies: Company[] = [
     twitter: "https://x.com/CaliberCompany",
     investorRelationsUrl: "https://ir.caliberco.com/",
     strategy: "First Nasdaq LINK treasury. DCA accumulation + staking.",
-    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner. ~1:19 reverse split early 2025.",
+    notes: "Real estate asset manager pivoting to LINK. 75K LINK staked. StoneX custody partner. ~1:19 reverse split early 2025. Audit note 2026-03-05: replaced browse-level evidence URLs with accession-specific SEC filings; holdings uses Oct 16, 2025 8-K checkpoint (562,535 LINK) carried to Dec 31 state, and shares use DEF 14A filing path for record-date basis.",
   },
 ];
 
@@ -2737,7 +2744,7 @@ export const trxCompanies: Company[] = [
     sharesSourceUrl: "/filings/tron/0001493152-25-029225",
     leader: "Richard Miller (CEO)",
     strategy: "TRX treasury via JustLend staking, Justin Sun backing",
-    notes: "First US public company to hold its blockchain's native token. Formerly SRM Entertainment.",
+    notes: "First US public company to hold its blockchain's native token. Formerly SRM Entertainment. Audit note 2026-03-05: holdings/shares citation anchors normalized to the Jan 23, 2026 8-K accession used by canonical D1 history.",
   },
 ];
 
@@ -2754,23 +2761,33 @@ export const xrpCompanies: Company[] = [
     secCik: "0002044009",
     asset: "XRP",
     tier: 1,
-    holdings: 473_276_430,
+    holdings: 520_000_000,
     holdingsLastUpdated: "2025-09-30",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://www.prnewswire.com/news-releases/evernorth-acquires-additional-214m-in-xrp-bringing-total-xrp-purchased-and-committed-to-over-473-276-430--302603558.html",
     sourceType: "press-release",
     sourceQuote: "473,276,430",
     datStartDate: "2025-11-01",
+    preferredEquity: 0,
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/2044009/000119312526051286/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2025-12-31).",
+        severity: "warning",
+      },
+    ],
     quarterlyBurnUsd: 0,
     burnSource: "SPAC - minimal operating expenses pre-merger",
     burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1991453&type=10-Q",
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 1_000_000_000,
     pendingMerger: true,  // SPAC merger with Armada Acquisition Corp. II
-    expectedHoldings: 473_276_430,
+    expectedHoldings: 520_000_000,
     leader: "Asheesh Birla (CEO, ex-Ripple)",
     strategy: "Institutional-scale XRP adoption via SPAC. Yield through XRP loans/market making.",
-    notes: "SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed.",
+    notes: "SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed. Audit note 2026-03-05: holdings anchor normalized to 2025-09-30 SEC-filed stack and canonical D1 latest (520,000,000 XRP; 75M shares).",
   },
   // WKSP (Worksport) removed - Auto tech company, not beta to XRP
 ];
@@ -2822,7 +2839,7 @@ export const zecCompanies: Company[] = [
     sharesAsOf: "2025-11-10",
     leader: "Douglas Onsi (CEO)",
     strategy: "Target 5% of ZEC supply (~540K ZEC). Winklevoss backed.",
-    notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply. ~76M common warrants @ $0.5335 (expire Oct 2035).",
+    notes: "Formerly Leap Therapeutics. 1.76% of ZEC supply. ~76M common warrants @ $0.5335 (expire Oct 2035). Audit note 2026-03-05: shares metadata normalized to Dec 30, 2025 SEC checkpoint to match canonical D1 latest.",
   },
   // RELI (Reliance Global) removed - InsurTech company, not beta to ZEC
 ];
@@ -3055,7 +3072,7 @@ export const dogeCompanies: Company[] = [
     sharesAsOf: "2026-02-10",
     leader: "Clayton Adams (CEO)",
     strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
-    notes: "NYSE American. Q2 FY2026: 733M DOGE (Dec 31, 2025). No purchases Jan 1-Feb 10, 2026 per subsequent events. Partnership with House of Doge, 21Shares, Robinhood.",
+    notes: "NYSE American. Q2 FY2026: 733M DOGE (Dec 31, 2025). No purchases Jan 1-Feb 10, 2026 per subsequent events. Partnership with House of Doge, 21Shares, Robinhood. Audit note 2026-03-05: lock values and citation anchors reconciled to D1 latest (DOGE/cash/debt at 2025-12-31; shares at 2026-02-10).",
   },
   {
     id: "tbh",
@@ -3072,7 +3089,7 @@ export const dogeCompanies: Company[] = [
     // The 730M DOGE is held by House of Doge (private), NOT by TBH currently
     // Post-merger: ~663M new shares to HOD + ~50M existing TBH = ~713M shares
     holdings: 0,  // TBH has no DOGE - it's a gaming company pre-merger
-    holdingsLastUpdated: "2026-01-26",
+    holdingsLastUpdated: "2025-12-18",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/tbh/0001213900-26-015027",
     accessionNumber: "0001213900-26-015027",
@@ -3095,7 +3112,7 @@ export const dogeCompanies: Company[] = [
     sharesAsOf: "2025-11-12",
     leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
-    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1).",
+    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1). Audit note 2026-03-05: holdings and shares anchors normalized to Dec 18, 2025 8-K checkpoint (0 DOGE and 10.8M TBH-share baseline) to match canonical D1 history. Data quality classification: LEGAL_MATCH (lock mirrors filing-anchored D1 latest).",
   },
   {
     id: "btog",
@@ -3143,7 +3160,7 @@ export const dogeCompanies: Company[] = [
     secCik: "0001735556",
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
-    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding.",
+    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K/legal channel and cash normalized to D1/XBRL value ($55,639). Data quality classification: LEGAL_MATCH for shares; holdings are legal-channel anchored but not yet mapped to a single exhibit-level quote URL in-repo.",
   },
 ];
 
@@ -3167,7 +3184,7 @@ export const avaxCompanies: Company[] = [
     sourceType: "company-dashboard",
     sourceQuote: "13,889,000 AVAX held",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
-    totalDebt: 1_689_415,  // SEC 10-Q Sep 30: debentures $1,372,679 + LT $41,736 + loan $275,000
+    totalDebt: 1_841_100,  // SEC 10-Q Sep 30 XBRL/D1 canonical debt datapoint
     debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
     debtSourceQuote: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
     debtSourceUrl: "/filings/avx/0001493152-25-023464",
@@ -3251,12 +3268,40 @@ export const hbarCompanies: Company[] = [
     sharesAsOf: "2025-09-30",
     leader: "Melyssa Charlton (CEO)",  // Jordan Fried was previous CEO
     strategy: "HBAR treasury via Immutable Asset Management subsidiary.",
-    notes: "CBOE Canada: HOLD | OTCQB: IHLDF. Canadian company (BC), files with SEDAR+. Owns NFT.com, HBAR Labs, MyHBARWallet.",
+    notes: "CBOE Canada: HOLD | OTCQB: IHLDF. Canadian company (BC), files with SEDAR+. Owns NFT.com, HBAR Labs, MyHBARWallet. Audit note 2026-03-05: holdings/shares anchors normalized to Q4 2025 SEDAR+ snapshot (48M HBAR; 65M shares) to match canonical D1 latest.",
   },
 ];
 
+function inferJurisdiction(company: Company): Jurisdiction {
+  const ticker = company.ticker.toUpperCase();
+  const country = (company.country || "").toUpperCase();
+
+  if (ticker.endsWith(".T")) return "JP";
+  if (ticker.endsWith(".TO") || ticker.endsWith(".V")) return "CA";
+  if (ticker.endsWith(".HK")) return "HK";
+  if (ticker.endsWith(".AX")) return "AU";
+
+  if (country === "US") return "US";
+  if (country === "JP") return "JP";
+  if (country === "CA") return "CA";
+  if (country === "HK") return "HK";
+  if (country === "AU") return "AU";
+  if (country === "DE" || country === "FR" || country === "IT" || country === "ES" || country === "PT" || country === "NL" || country === "BE" || country === "SE" || country === "NO" || country === "DK" || country === "FI" || country === "PL" || country === "IE" || country === "AT" || country === "CH") {
+    return "EU";
+  }
+
+  return "OTHER";
+}
+
+function withJurisdiction(companies: Company[]): Company[] {
+  return companies.map((company) => ({
+    ...company,
+    jurisdiction: company.jurisdiction ?? inferJurisdiction(company),
+  }));
+}
+
 // All companies combined
-export const allCompanies: Company[] = [
+const allCompaniesRaw: Company[] = [
   ...ethCompanies,
   ...btcCompanies,
   ...solCompanies,
@@ -3274,6 +3319,7 @@ export const allCompanies: Company[] = [
   ...adaCompanies,
   ...hbarCompanies,
 ];
+export const allCompanies: Company[] = withJurisdiction(allCompaniesRaw);
 
 // Get company by ticker
 export function getCompanyByTicker(ticker: string): Company | undefined {

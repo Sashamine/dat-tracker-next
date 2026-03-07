@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "OBTC3",
   "secCik": null,
-  "asOf": "2026-02-02",
-  "generatedAt": "2026-03-04T14:10:30.427Z",
+  "asOf": "2026-03-01",
+  "generatedAt": "2026-03-05T20:22:40.127Z",
   "listing": {
     "country": "BR",
     "exchangeMic": "B3SA",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 0,
+    "amount": 3723,
     "source": {
-      "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://ri.oranjebtc.com",
+      "holdingsSource": "regulatory-filing",
+      "holdingsSourceUrl": "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 318000000,
+    "sharesForMnav": 155300500,
     "sharesOutstandingFD": null,
-    "asOf": "2025-12-31",
+    "asOf": "2026-03-01",
     "source": {
-      "sharesSource": "B3 Exchange listing",
-      "sharesSourceUrl": "https://ri.oranjebtc.com"
+      "sharesSource": "Market Announcement (B3 disclosure channel) - Mar 1, 2026",
+      "sharesSourceUrl": "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2"
     }
   },
   "balanceSheet": {
@@ -35,7 +35,7 @@
     "asOf": "2025-12-31",
     "source": {
       "cashSourceUrl": null,
-      "debtSourceUrl": null,
+      "debtSourceUrl": "https://ri.oranjebtc.com",
       "preferredSourceUrl": null
     }
   },

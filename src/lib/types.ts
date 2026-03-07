@@ -60,6 +60,7 @@ export type CompanyType = "Treasury" | "Miner";
 
 // Stock currency (for non-USD exchanges)
 export type StockCurrency = "USD" | "JPY" | "HKD" | "SEK" | "CAD" | "EUR" | "BRL" | "GBP" | "NOK" | "KRW" | "AED" | "AUD";
+export type Jurisdiction = "US" | "JP" | "CA" | "HK" | "UK" | "AU" | "EU" | "OTHER";
 
 // Debt instrument type
 export type DebtType = "convertible" | "bond" | "loan" | "credit-facility";
@@ -80,10 +81,10 @@ export interface Company {
   id: string;
   name: string;
   ticker: string;
+  jurisdiction?: Jurisdiction;
 
   // Listing metadata (agent-native routing)
   country?: string;        // ISO 3166-1 alpha-2 when known (e.g., "US", "CA", "JP").
-  jurisdiction?: 'US' | 'JP' | 'CA' | 'HK' | 'UK' | 'EU' | 'AU' | 'OTHER';
   authoritativeSource?: string; // e.g., 'SEC EDGAR', 'TDnet', 'SEDAR+'
   exchangeMic?: string;    // ISO 10383 MIC when known (e.g., "XNAS", "XNYS", "XTSE").
 
@@ -241,6 +242,8 @@ export interface Company {
   preferredSourceQuote?: string; // Verbatim quote from source document
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
+  asxAnnouncementsUrl?: string; // ASX announcements/listing URL (AU tickers)
+  hkexNewsUrl?: string;         // HKEX news/filing URL (HK tickers)
   walletAddresses?: string[];   // Known wallet addresses for on-chain verification
 
   // Pending merger status (for SPACs that haven't closed yet)
@@ -281,9 +284,17 @@ export interface Company {
 
   // D1 overlay metadata (set by applyD1Overlay)
   holdingsBasis?: HoldingsBasis;   // How holdings were resolved (native, USD÷price, static)
+  d1HoldingsByAsset?: D1HoldingByAsset[]; // Optional per-asset holdings from D1 latest_datapoints.
   _d1Fields?: string[];            // Which balance-sheet fields were sourced from D1 (dev debug)
   confidenceScores?: Record<string, number | null>; // Confidence per metric (e.g., holdings_native)
   multiHoldings?: Record<string, number>; // asset -> amount (e.g., {"BTC": 100, "ETH": 500})
+}
+
+export interface D1HoldingByAsset {
+  asset: string;
+  value: number;
+  sourceUrl?: string | null;
+  asOf?: string | null;
 }
 
 // Secondary crypto holding for multi-asset treasury companies
