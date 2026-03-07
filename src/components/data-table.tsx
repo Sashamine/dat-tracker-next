@@ -610,8 +610,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                   preferredSource={company.preferredSource}
                   preferredAsOf={company.preferredAsOf}
                   preferredSourceUrl={company.preferredSourceUrl}
-                  multiHoldings={company.multiHoldings}
-                  prices={prices}
                 />
               </>
             )}
@@ -909,8 +907,6 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                           preferredSource={company.preferredSource}
                           preferredAsOf={company.preferredAsOf}
                           preferredSourceUrl={company.preferredSourceUrl}
-                          multiHoldings={company.multiHoldings}
-                          prices={prices}
                         />
                       </div>
                     )}
