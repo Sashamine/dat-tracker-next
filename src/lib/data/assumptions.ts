@@ -144,6 +144,23 @@ export const ASSUMPTIONS: Assumption[] = [
     introducedBy: 'Market cap overrides review',
   },
 
+  // ── Critically Stale Holdings ────────────────────────────────────
+  {
+    ticker: 'BTOG',
+    field: 'holdings',
+    assumption: '70,543,745 DOGE (last confirmed Aug 11, 2025 press release)',
+    reason: 'Foreign private issuer (Cayman/Singapore); FY ends Jun 30; DOGE treasury started Jul 2025 so FY2025 20-F predates it',
+    trigger: 'FY2026 20-F filing (expected late 2026) or new press release/6-K',
+    sourceNeeded: '20-F annual report or 6-K with updated DOGE holdings',
+    resolutionPath: 'Check SEC EDGAR for new 6-K/20-F; verify DOGE count and update holdingsLastUpdated',
+    sensitivity: 'low',
+    materiality: 'low',
+    status: 'monitoring',
+    lastReviewed: '2026-03-07',
+    introducedBy: 'Phase 2 queue burn-down',
+    reviewNotes: 'No newer data found. $500M facility announced but no purchases disclosed since Aug 2025.',
+  },
+
   // ── Foreign Companies (No SEC Pipeline) ───────────────────────────
   {
     ticker: '3350.T',

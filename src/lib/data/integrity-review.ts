@@ -247,6 +247,15 @@ export function getCompanyReview(company: Company): CompanyReviewResult {
     confidenceReasons.push('current filings, shares-based market cap, no open assumptions');
   }
 
+  // Flag low-confidence companies with no assumption explaining why
+  if (confidence === 'low' && openAssumptions.length === 0 && !company.pendingMerger) {
+    flags.push({
+      category: 'coverage',
+      reason: 'Low confidence with no open assumption — add one to track resolution',
+      severity: 'critical',
+    });
+  }
+
   return {
     ticker,
     confidence,

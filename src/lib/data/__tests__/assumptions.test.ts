@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { ASSUMPTIONS, ASSUMPTION_REVIEW_MAX_AGE_DAYS } from '../assumptions';
 import { allCompanies } from '../companies';
+import { getAllCompanyReviews } from '../integrity-review';
 
 const validTickers = new Set(allCompanies.map(c => c.ticker));
 const today = new Date();
@@ -118,6 +119,24 @@ describe('Assumption Register', () => {
     if (bad.length > 0) {
       const list = bad.map(a => `${a.ticker}.${a.field}`).join(', ');
       expect.fail(`Open assumptions with blank resolutionPath or sourceNeeded: ${list}`);
+    }
+  });
+
+  it('every low-confidence company must have an open assumption or pending merger', () => {
+    const reviews = getAllCompanyReviews(allCompanies);
+    const lowWithoutCoverage = reviews
+      .filter(r => r.confidence === 'low')
+      .filter(r => r.openAssumptions.length === 0)
+      .filter(r => {
+        const company = allCompanies.find(c => c.ticker === r.ticker);
+        return !company?.pendingMerger;
+      });
+
+    if (lowWithoutCoverage.length > 0) {
+      const list = lowWithoutCoverage.map(r =>
+        `${r.ticker}: ${r.confidenceReasons.join('; ')}`
+      ).join('\n  ');
+      expect.fail(`Low-confidence companies with no assumption or pendingMerger:\n  ${list}`);
     }
   });
 });
