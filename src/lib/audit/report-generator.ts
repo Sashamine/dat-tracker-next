@@ -1,6 +1,7 @@
 import { Company } from "@/lib/types";
 import { getDebtMaturity, DebtMaturityStats } from "@/lib/math/debt-engine";
 import { calculateStakingYield, StakingYieldResult } from "@/lib/math/yield-engine";
+import { dilutiveInstruments } from "@/lib/data/dilutive-instruments";
 import { D1Client, getMetricHistory } from "@/lib/d1";
 import crypto from 'node:crypto';
 
@@ -32,6 +33,8 @@ export interface AuditReportData {
   }[];
   debtLadder: DebtMaturityStats & {
     unmodeledDebtAmount: number;
+    nonConvertibleDebt: number;
+    unmodeledConvertibleDebt: number;
   };
   staking: StakingYieldResult;
   timeline: {
@@ -88,7 +91,19 @@ export async function generateAuditReportData(
   const cryptoPrice = prices.crypto[company.asset]?.price || 0;
   const holdingsUsd = company.holdings * cryptoPrice;
   
-  const unmodeledDebtAmount = Math.max(0, (company.totalDebt || 0) - debtStats.totalFaceValue);
+  // Classify unmodeled debt: non-convertible (no dilution risk) vs missing convertible data
+  const dilutiveInsts = dilutiveInstruments[company.ticker] || [];
+  const convertibles = dilutiveInsts.filter(i => i.type === 'convertible');
+  const convertibleFaceValue = convertibles.reduce((sum, i) => sum + (i.faceValue || 0), 0);
+  const convertiblesMissingFaceValue = convertibles.filter(i => !i.faceValue);
+  // Total modeled = debt instruments (for ladder) + dilutive convertible faceValues (may overlap)
+  const totalModeledDebt = Math.max(debtStats.totalFaceValue, convertibleFaceValue);
+  const unmodeledDebtAmount = Math.max(0, (company.totalDebt || 0) - totalModeledDebt);
+  // If there are convertibles missing faceValue, some of the gap might be unmodeled convertible debt
+  const unmodeledConvertibleDebt = convertiblesMissingFaceValue.length > 0
+    ? unmodeledDebtAmount  // Conservative: attribute gap to missing convertible data
+    : 0;
+  const nonConvertibleDebt = unmodeledDebtAmount - unmodeledConvertibleDebt;
   const totalAnnualObligations = (company.quarterlyBurnUsd || 0) * 4 + (company.debtInterestAnnual || 0) + (company.preferredDividendAnnual || 0);
 
   // 4. Aggregate Provenance Log
@@ -154,7 +169,9 @@ export async function generateAuditReportData(
     provenance: provenanceLog,
     debtLadder: {
       ...debtStats,
-      unmodeledDebtAmount
+      unmodeledDebtAmount,
+      nonConvertibleDebt,
+      unmodeledConvertibleDebt,
     },
     staking: stakingStats,
     timeline: events.map(e => ({
@@ -167,7 +184,7 @@ export async function generateAuditReportData(
     caveats: [
       "DATA LOCKING: This report is a point-in-time snapshot. Market values reflect prices at the reference time.",
       "FX DISCLOSURE: All non-USD balance sheet items are converted at historical point-in-time FX rates. Real-time market cap uses live forex rates.",
-      "UNMODELED DEBT: Discrepancies between total reported debt and modeled instruments are flagged. Unmodeled debt may carry unknown interest rates.",
+      "DEBT CLASSIFICATION: Debt is classified as convertible (dilution risk, modeled as instruments) or non-convertible (credit facilities, secured loans, DeFi positions — no dilution risk). Gaps between total reported debt and modeled instruments are categorized accordingly.",
       "SOLVENCY: Self-Sustaining status is based on gross network yield vs. (Opex Burn + Debt Interest + Preferred Dividends). It does not account for corporate tax."
     ]
   };
