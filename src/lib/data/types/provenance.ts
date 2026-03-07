@@ -134,6 +134,9 @@ export interface ProvenanceValue<T = number> {
   
   /** Optional notes about data quality or caveats */
   notes?: string;
+
+  /** Numeric confidence score (0.0-1.0) */
+  confidence?: number | null;
 }
 
 // ============================================================================
@@ -290,7 +293,7 @@ export const MSTR_Q3_2025_EXAMPLE: ProvenanceFinancials = {
   // BTC count from 8-K announcement
   holdings: pv(471107, docSource({
     type: "sec-document",
-    url: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/",
+    url: "/filings/mstr/0001193125-25-262568",
     quote: "As of September 30, 2025, MicroStrategy held approximately 471,107 bitcoins",
     anchor: "bitcoins",
     cik: "1050446",

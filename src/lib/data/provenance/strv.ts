@@ -32,7 +32,7 @@ const Q3_10Q_DOC = "asst-20250930.htm";
 
 // Helper to build SEC filing URL (with document filename)
 const secDocUrl = (accession: string, docName: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${STRV_CIK}/${accession.replace(/-/g, "")}/${docName}`;
+  `/filings/strv/${accession}`;
 
 // =========================================================================
 // KEY FILINGS

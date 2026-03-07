@@ -3,7 +3,7 @@
   "ticker": "CEPO",
   "secCik": "0002027708",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T20:22:40.126Z",
+  "generatedAt": "2026-03-07T00:36:04.386Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,27 +14,27 @@
     "amount": 30021,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/2027708/000121390026008287/ea0274216-8k_cantor1.htm",
+      "holdingsSourceUrl": "/filings/cepo/0001213900-26-008287",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": null,
+    "sharesForMnav": 25500000,
     "sharesOutstandingFD": null,
-    "asOf": null,
+    "asOf": "2025-12-31",
     "source": {
-      "sharesSource": null,
+      "sharesSource": "SEC 10-K FY2025 (CIK 0002027708): 20.5M Class A + 5M Class B",
       "sharesSourceUrl": null
     }
   },
   "balanceSheet": {
-    "cashReserves": 25000,
+    "cashReserves": 207000000,
     "restrictedCash": null,
     "totalDebt": null,
     "preferredEquity": null,
-    "asOf": "2025-09-30",
+    "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1865602/000121390025073158/0001213900-25-073158-index.html",
+      "cashSourceUrl": "/filings/cepo/0001213900-26-008287",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

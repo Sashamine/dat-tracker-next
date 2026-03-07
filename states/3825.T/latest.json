@@ -3,15 +3,15 @@
   "ticker": "3825.T",
   "secCik": null,
   "asOf": "2026-02-02",
-  "generatedAt": "2026-03-05T20:22:40.127Z",
+  "generatedAt": "2026-03-07T00:36:04.387Z",
   "listing": {
     "country": "JP",
     "exchangeMic": "XTKS",
     "currency": "JPY"
   },
   "holdings": {
-    "asset": "MULTI",
-    "amount": 1411.29831101,
+    "asset": "BTC",
+    "amount": 1411.3,
     "source": {
       "holdingsSource": "company-website",
       "holdingsSourceUrl": "https://www.remixpoint.co.jp/digital-asset/",
@@ -21,10 +21,10 @@
   "shares": {
     "sharesForMnav": 149039800,
     "sharesOutstandingFD": null,
-    "asOf": "2026-02-02",
+    "asOf": "2026-02-28",
     "source": {
-      "sharesSource": "TDnet FY2026 Q3 filing (carry-forward into Feb 2026 company update)",
-      "sharesSourceUrl": "https://www.remixpoint.co.jp/digital-asset/"
+      "sharesSource": "Yahoo Japan Finance",
+      "sharesSourceUrl": "https://finance.yahoo.co.jp/quote/3825.T"
     }
   },
   "balanceSheet": {

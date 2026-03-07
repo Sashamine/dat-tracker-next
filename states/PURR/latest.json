@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "PURR",
   "secCik": "0002078856",
-  "asOf": "2025-12-04",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "asOf": "2026-02-03",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,31 +11,31 @@
   },
   "holdings": {
     "asset": "HYPE",
-    "amount": 12000000,
+    "amount": 17600000,
     "source": {
-      "holdingsSource": "press-release",
-      "holdingsSourceUrl": "https://cryptorank.io/news/feed/hyperliquid-strategies-hype-stake",
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "/filings/purr/0001193125-26-045553",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 127025563,
+    "sharesForMnav": 123967508,
     "sharesOutstandingFD": null,
-    "asOf": "2025-12-05",
+    "asOf": "2026-02-11",
     "source": {
-      "sharesSource": "SEC 10-Q (filed 2025-12-08): EntityCommonStockSharesOutstanding = 127,025,563 as of 2025-12-05",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm"
+      "sharesSource": "SEC 8-K (Feb 11, 2026): 123,967,508 shares. Down from 127M after $10.5M buyback (~3M shares at ~$3.42 avg). $19.5M remaining of $30M program.",
+      "sharesSourceUrl": "/filings/purr/0001193125-26-045553"
     }
   },
   "balanceSheet": {
-    "cashReserves": 300000000,
-    "restrictedCash": 300000000,
+    "cashReserves": 281900000,
+    "restrictedCash": 281900000,
     "totalDebt": 0,
     "preferredEquity": null,
-    "asOf": "2025-12-05",
+    "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312525311400/d47504d10q.htm",
+      "cashSourceUrl": "/filings/purr/0001193125-26-045553",
+      "debtSourceUrl": "/filings/purr/0001193125-26-045553",
       "preferredSourceUrl": null
     }
   },

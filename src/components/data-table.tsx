@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
-import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
+import { getCompanyMNAV, getCompanyMNAVDetailed, calculateTotalCryptoNAV } from "@/lib/math/mnav-engine";
 import { dilutiveInstruments, getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
@@ -23,6 +23,8 @@ import { MNAVTooltip } from "@/components/mnav-tooltip";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
+import { VerificationBadge, getVerificationStatus } from "@/components/verification-badge";
+import { CitationPopover } from "@/components/ui/citation-popover";
 import { trackCitationSourceClick } from "@/lib/client-events";
 import { calculateHoldingsGrowth, getHoldingsHistory, type HoldingsSnapshot } from "@/lib/data/holdings-history";
 
@@ -170,8 +172,12 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       ? ((stockPrice - yesterdayData.stockPrice) / yesterdayData.stockPrice) * 100
       : stockData?.change24h; // fallback to Yahoo if no yesterday data
     const stockVolume = stockData?.volume || company.avgDailyVolume || 0;
-    // Pending merger companies don't actually have the holdings yet - use 0 for sorting
-    const holdingsValue = company.pendingMerger ? 0 : company.holdings * cryptoPrice;
+    
+    // Calculate crypto NAV including multi-asset support from D1
+    const cryptoNavResult = calculateTotalCryptoNAV(company, prices ?? null);
+    const holdingsValue = company.pendingMerger ? 0 : cryptoNavResult.totalUsd;
+    const cryptoNav = holdingsValue;
+    
     const isAfterHours = stockData?.isAfterHours || false;
 
     // Other assets (cash + investments)
@@ -181,23 +187,18 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     const totalDebt = company.totalDebt ?? 0;
     const hpsGrowth90d = calculateHpsGrowth90d(company.ticker, company.holdings, company.sharesForMnav);
 
-    let effectiveHoldingsValue = holdingsValue;
-    if (company.secondaryCryptoHoldings && prices) {
-      for (const holding of company.secondaryCryptoHoldings) {
-        const secondaryPrice = prices.crypto[holding.asset]?.price || 0;
-        effectiveHoldingsValue += holding.amount * secondaryPrice;
-      }
-    }
-
-    const mNAV = getCompanyMNAV(company, prices);
-
     // Adjust debt for ITM convertibles (same as mNAV calculation)
     // ITM converts are counted in diluted shares, so subtract their face value from debt
     const adjustedDebt = Math.max(0, totalDebt - (marketCapResult.inTheMoneyDebtValue || 0));
 
     // Leverage ratio = Net Debt / Crypto NAV (using adjusted debt for consistency with company page)
     const netDebt = Math.max(0, adjustedDebt - cashReserves);
-    const leverageRatio = effectiveHoldingsValue > 0 ? netDebt / effectiveHoldingsValue : 0;
+    const leverageRatio = cryptoNav > 0 ? netDebt / cryptoNav : 0;
+
+    // mNAV uses shared calculation for consistency across all pages
+    const mnavResult = getCompanyMNAVDetailed(company, prices ?? null);
+    const mNAV = mnavResult.mnav;
+    const mnavWarnings = mnavResult.warnings;
     
     // Calculate ACTUAL mNAV change using yesterday's measured mNAV
     // Uses same getCompanyMNAV function with historical prices (from API)
@@ -212,7 +213,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
 
     return {
       ...company,
-      holdingsValue: effectiveHoldingsValue,
+      holdingsValue,
       marketCap,
       stockPrice,
       stockChange,
@@ -220,6 +221,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       cryptoPrice,
       mNAV: mNAV || 0,
       mNAVChange,
+      mnavWarnings,
       companyType,
       isAfterHours,
       otherAssets,
@@ -564,49 +566,56 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
         </div>
         <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
-          <p className="inline-flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
+          <div className="flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
             {company.pendingMerger ? "—" : (
-              <MNAVTooltip
-                mNAV={company.mNAV}
-                marketCap={company.marketCap}
-                holdingsValue={company.holdingsValue}
-                totalDebt={company.totalDebt}
-                preferredEquity={company.preferredEquity}
-                cashReserves={company.cashReserves}
-                restrictedCash={company.restrictedCash}
-                otherInvestments={company.otherInvestments}
-                ticker={company.ticker}
-                asset={company.asset}
-                holdings={company.holdings}
-                sharesForMnav={company.sharesForMnav}
-                stockPrice={company.stockPrice}
-                cryptoPrice={company.cryptoPrice}
-                hasLiveData={company.hasLiveBalanceSheet}
-                hasDilutiveInstruments={hasDilutiveInstruments}
-                basicShares={dilutionInfo.basicShares}
-                dilutedShares={dilutionInfo.dilutedShares}
-                itmDilutionShares={dilutionInfo.itmDilutionShares}
-                itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
-                holdingsSourceUrl={company.holdingsSourceUrl}
-                officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
-                secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
-                officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
-                sharesSource={company.sharesSource}
-                sharesAsOf={company.sharesAsOf}
-                sharesSourceUrl={company.sharesSourceUrl}
-                debtSource={company.debtSource}
-                debtAsOf={company.debtAsOf}
-                debtSourceUrl={company.debtSourceUrl}
-                cashSource={company.cashSource}
-                cashAsOf={company.cashAsOf}
-                cashSourceUrl={company.cashSourceUrl}
-                preferredSource={company.preferredSource}
-                preferredAsOf={company.preferredAsOf}
-                preferredSourceUrl={company.preferredSourceUrl}
-              />
+              <>
+                {company.mnavWarnings && company.mnavWarnings.length > 0 && (
+                  <span className="text-amber-500 text-xs">⚠️</span>
+                )}
+                <MNAVTooltip
+                  mNAV={company.mNAV}
+                  marketCap={company.marketCap}
+                  holdingsValue={company.holdingsValue}
+                  totalDebt={company.totalDebt}
+                  preferredEquity={company.preferredEquity}
+                  cashReserves={company.cashReserves}
+                  restrictedCash={company.restrictedCash}
+                  otherInvestments={company.otherInvestments}
+                  ticker={company.ticker}
+                  asset={company.asset}
+                  holdings={company.holdings}
+                  sharesForMnav={company.sharesForMnav}
+                  stockPrice={company.stockPrice}
+                  cryptoPrice={company.cryptoPrice}
+                  hasLiveData={company.hasLiveBalanceSheet}
+                  hasDilutiveInstruments={hasDilutiveInstruments}
+                  basicShares={dilutionInfo.basicShares}
+                  dilutedShares={dilutionInfo.dilutedShares}
+                  itmDilutionShares={dilutionInfo.itmDilutionShares}
+                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
+                  holdingsSourceUrl={company.holdingsSourceUrl}
+                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                  sharesSource={company.sharesSource}
+                  sharesAsOf={company.sharesAsOf}
+                  sharesSourceUrl={company.sharesSourceUrl}
+                  debtSource={company.debtSource}
+                  debtAsOf={company.debtAsOf}
+                  debtSourceUrl={company.debtSourceUrl}
+                  cashSource={company.cashSource}
+                  cashAsOf={company.cashAsOf}
+                  cashSourceUrl={company.cashSourceUrl}
+                  preferredSource={company.preferredSource}
+                  preferredAsOf={company.preferredAsOf}
+                  preferredSourceUrl={company.preferredSourceUrl}
+                  multiHoldings={company.multiHoldings}
+                  prices={prices}
+                />
+              </>
             )}
-          </p>
+          </div>
         </div>
         <div>
           <p className="text-xs text-gray-500 uppercase">Treasury</p>
@@ -720,8 +729,29 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-col">
-                      <span className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-gray-100">
-                        {company.ticker}
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {company.ticker}
+                        </span>
+                        <CitationPopover
+                          sourceUrl={company.holdingsSourceUrl}
+                          sourceLabel={company.holdingsSource}
+                          ticker={company.ticker}
+                          metric="holdings_native"
+                          confidenceScore={company.confidenceScores?.['holdings_native']}
+                          jurisdiction={company.jurisdiction}
+                          legacy={company.holdingsBasis === 'static_fallback'}
+                          sourceQuote={company.sourceQuote}
+                        >
+                          <VerificationBadge
+                            status={getVerificationStatus(
+                              company.holdingsSourceUrl?.includes("sec.gov") ? "sec-filing" : company.holdingsSource,
+                              company.holdingsSourceUrl,
+                              company.holdingsLastUpdated
+                            )}
+                            compact
+                          />
+                        </CitationPopover>
                         {company.notes && company.notes.toLowerCase().includes("no sec") && (
                           <TooltipProvider>
                             <Tooltip>
@@ -800,7 +830,7 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                             </Tooltip>
                           </TooltipProvider>
                         )}
-                      </span>
+                      </div>
                       <span className="text-sm text-gray-500 truncate max-w-[180px]">
                         {company.name}
                       </span>
@@ -823,7 +853,24 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                     {company.pendingMerger ? (
                       <span className="text-gray-400" title="mNAV not available for pre-merger SPACs">—</span>
                     ) : (
-                      <span className="inline-flex items-center gap-1">
+                      <div className="flex items-center justify-end gap-1">
+                        {company.mnavWarnings && company.mnavWarnings.length > 0 && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <span className="text-amber-500 cursor-help text-xs">⚠️</span>
+                              </TooltipTrigger>
+                              <TooltipContent className="max-w-xs">
+                                <div className="space-y-1">
+                                  <p className="font-semibold text-amber-500">Calculation Warning</p>
+                                  {company.mnavWarnings.map((w: string, i: number) => (
+                                    <p key={i} className="text-[10px]">{w}</p>
+                                  ))}
+                                </div>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
                         <MNAVTooltip
                           mNAV={company.mNAV}
                           marketCap={company.marketCap}
@@ -862,9 +909,76 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                           preferredSource={company.preferredSource}
                           preferredAsOf={company.preferredAsOf}
                           preferredSourceUrl={company.preferredSourceUrl}
+                          multiHoldings={company.multiHoldings}
+                          prices={prices}
                         />
-                      </span>
+                      </div>
                     )}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm">
+                    {company.pendingMerger ? (
+                      <span className="text-gray-400">—</span>
+                    ) : (
+                      <FlashingPercent value={company.mNAVChange} />
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm">
+                    {company.leverageRatio > 0 ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className={cn(
+                              "inline-flex items-center gap-1",
+                              company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
+                            )}>
+                              {company.leverageRatio >= 1 && <span>⚠️</span>}
+                              {company.leverageRatio.toFixed(2)}x
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-sm">Debt / Crypto NAV</p>
+                            {company.leverageRatio >= 1 && (
+                              <p className="text-xs text-amber-500">High leverage - mNAV elevated by debt structure</p>
+                            )}
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      <span className="text-gray-400">—</span>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
+                    <span className="inline-flex items-center gap-1">
+                      <FlashingPrice
+                        value={company.stockPrice}
+                        format={(v) => `$${v.toFixed(2)}`}
+                      />
+                      {company.isAfterHours && (
+                        <span className="text-[10px] px-1 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded font-medium">
+                          AH
+                        </span>
+                      )}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm">
+                    <FlashingPercent value={company.stockChange} />
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
+                    {company.stockVolume > 0 ? formatNumber(company.stockVolume) : "—"}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
+                    <CitationPopover
+                      sourceUrl={company.sharesSourceUrl}
+                      sourceLabel={company.sharesSource}
+                      sourceQuote={company.sharesSourceQuote}
+                      ticker={company.ticker}
+                      metric="basic_shares"
+                      confidenceScore={company.confidenceScores?.['basic_shares']}
+                      jurisdiction={company.jurisdiction}
+                      legacy={!company.sharesSourceUrl}
+                    >
+                      <FlashingLargeNumber value={company.marketCap} />
+                    </CitationPopover>
                   </TableCell>
                   <TableCell className="text-right">
                     {company.pendingMerger ? (
@@ -877,10 +991,21 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
                     ) : (
                       <div className="flex flex-col items-end">
                         <div className="flex items-center gap-1.5">
-                          <FlashingLargeNumber
-                            value={company.holdingsValue}
-                            className="font-mono font-medium text-gray-900 dark:text-gray-100"
-                          />
+                          <CitationPopover
+                            sourceUrl={company.holdingsSourceUrl}
+                            sourceLabel={company.holdingsSource}
+                            ticker={company.ticker}
+                            metric="holdings_native"
+                            confidenceScore={company.confidenceScores?.['holdings_native']}
+                            jurisdiction={company.jurisdiction}
+                            legacy={company.holdingsBasis === 'static_fallback'}
+                            sourceQuote={company.sourceQuote}
+                          >
+                            <FlashingLargeNumber
+                              value={company.holdingsValue}
+                              className="font-mono font-medium text-gray-900 dark:text-gray-100"
+                            />
+                          </CitationPopover>
                           <StalenessCompact
                             lastUpdated={company.holdingsLastUpdated}
                             sourceUrl={company.holdingsSourceUrl}

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "NA",
-  "secCik": "1872302",
+  "secCik": "0001872302",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 130000,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea027141101ex99-1_nano.htm",
+      "holdingsSourceUrl": "/filings/na/0001213900-25-126828",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2025-10-07",
     "source": {
       "sharesSource": "SEC 424B3 Oct 2025 (Class A: 20.77M + Class B: 2.86M)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025097024/ea0204760-11.htm"
+      "sharesSourceUrl": "/filings/na/0001213900-25-097024"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": null,
     "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025126828/ea0271411-6k_nano.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1872302/000121390025031065/ea0235323-20f_nanolabs.htm",
+      "cashSourceUrl": "/filings/na/0001213900-25-126828",
+      "debtSourceUrl": "/filings/na/0001213900-25-031065",
       "preferredSourceUrl": null
     }
   },

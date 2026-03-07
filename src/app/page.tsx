@@ -26,14 +26,30 @@ type PricesSnapshot = {
 
 // Get unique assets and count companies
 function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {
-  const assets = [...new Set(companies.map(c => c.asset))];
-  return assets.map(asset => {
-    const assetCompanies = companies.filter(c => c.asset === asset);
-    const price = prices?.crypto?.[asset]?.price || 0;
-    const totalHoldings = assetCompanies.reduce((sum, c) => sum + c.holdings, 0);
-    const totalValue = totalHoldings * price;
-    return { asset, count: assetCompanies.length, totalHoldings, totalValue, price };
-  }).sort((a, b) => b.totalValue - a.totalValue);
+  const assetCounts: Record<string, { count: number; totalHoldings: number; totalValue: number }> = {};
+  
+  for (const c of companies) {
+    if (c.multiHoldings) {
+      for (const [asset, amount] of Object.entries(c.multiHoldings)) {
+        if (!assetCounts[asset]) assetCounts[asset] = { count: 0, totalHoldings: 0, totalValue: 0 };
+        assetCounts[asset].count += 1;
+        assetCounts[asset].totalHoldings += amount;
+        assetCounts[asset].totalValue += amount * (prices?.crypto?.[asset]?.price || 0);
+      }
+    } else if (c.holdings > 0 && c.asset && c.asset !== 'MULTI') {
+      const asset = c.asset;
+      if (!assetCounts[asset]) assetCounts[asset] = { count: 0, totalHoldings: 0, totalValue: 0 };
+      assetCounts[asset].count += 1;
+      assetCounts[asset].totalHoldings += c.holdings;
+      assetCounts[asset].totalValue += c.holdings * (prices?.crypto?.[asset]?.price || 0);
+    }
+  }
+
+  return Object.entries(assetCounts).map(([asset, stats]) => ({
+    asset,
+    ...stats,
+    price: prices?.crypto?.[asset]?.price || 0
+  })).sort((a, b) => b.totalValue - a.totalValue);
 }
 
 
@@ -78,10 +94,10 @@ function HomeContent() {
 
   // D1-first overlay: fetch latest balance sheet metrics from D1 and overlay onto static data
   const tickers = useMemo(() => companies.map(c => c.ticker), [companies]);
-  const { data: d1Data, sources: d1Sources, dates: d1Dates } = useD1Fundamentals(tickers);
+  const { data: d1Data, sources: d1Sources, dates: d1Dates, confidence: d1Confidence } = useD1Fundamentals(tickers);
   const d1Companies = useMemo(
-    () => applyD1Overlay(companies, d1Data, d1Sources, d1Dates),
-    [companies, d1Data, d1Sources, d1Dates]
+    () => applyD1Overlay(companies, d1Data, d1Sources, d1Dates, d1Confidence),
+    [companies, d1Data, d1Sources, d1Dates, d1Confidence]
   );
 
   const assetStats = getAssetStats(d1Companies, prices);

@@ -33,7 +33,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 11653,
     cumulativeHoldings: null,
     accessionNumber: "0001193125-20-215604",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312520215604/d921849d8k.htm",
+    secUrl: "/filings/mstr/0001193125-20-215604",
   },
   {
     filingDate: "2020-09-15",
@@ -42,7 +42,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 10419,
     cumulativeHoldings: 38250,
     accessionNumber: "0001193125-20-245835",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312520245835/d42524d8k.htm",
+    secUrl: "/filings/mstr/0001193125-20-245835",
   },
   {
     filingDate: "2020-12-04",
@@ -51,7 +51,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 19427,
     cumulativeHoldings: 40824,
     accessionNumber: "0001193125-20-310787",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312520310787/d22733d8k.htm",
+    secUrl: "/filings/mstr/0001193125-20-310787",
   },
   // Dec 2020: Purchased ~29,646 BTC with $650M convertible note proceeds
   // Announced Dec 21, 2020 - brings total to ~70,470 BTC
@@ -61,8 +61,8 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     totalCost: 650000000,
     avgPrice: 21925,
     cumulativeHoldings: 70470,
-    accessionNumber: "0001193125-20-323326",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312520323326/d102025d8k.htm",
+    accessionNumber: "0001193125-20-315971",
+    secUrl: "/filings/mstr/0001193125-20-315971",
   },
   {
     filingDate: "2021-01-22",
@@ -71,7 +71,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 31808,
     cumulativeHoldings: 70784,
     accessionNumber: "0001193125-21-014227",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521014227/d113711d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-014227",
   },
   {
     filingDate: "2021-02-02",
@@ -80,7 +80,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 33810,
     cumulativeHoldings: 71079,
     accessionNumber: "0001193125-21-025369",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521025369/d124926d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-025369",
   },
   // INFERRED: 19,452 BTC purchased with $1.03B from Feb 19 convertible note
   // Evidence: Cumulative jumps from 71,079 (Feb 2) to 90,859 (Mar 1)
@@ -92,7 +92,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 52750,
     cumulativeHoldings: 90531,  // 71,079 + 19,452
     accessionNumber: "INFERRED-2021-02",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521062322/d139633d8k.htm",  // Mar 1 filing that confirms cumulative
+    secUrl: "/filings/mstr/0001193125-21-062322",  // Mar 1 filing that confirms cumulative
   },
   {
     filingDate: "2021-03-01",
@@ -101,7 +101,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 45710,
     cumulativeHoldings: 90859,
     accessionNumber: "0001193125-21-062322",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521062322/d103788d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-062322",
   },
   {
     filingDate: "2021-03-05",
@@ -110,7 +110,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 48888,
     cumulativeHoldings: 91064,
     accessionNumber: "0001193125-21-070446",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521070446/d145869d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-070446",
   },
   {
     filingDate: "2021-03-12",
@@ -119,7 +119,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 57146,
     cumulativeHoldings: 91326,
     accessionNumber: "0001193125-21-078715",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521078715/d154639d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-078715",
   },
   {
     filingDate: "2021-04-05",
@@ -128,7 +128,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 59339,
     cumulativeHoldings: 91579,
     accessionNumber: "0001193125-21-105625",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521105625/d113059d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-105625",
   },
   {
     filingDate: "2021-05-13",
@@ -137,7 +137,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 55387,
     cumulativeHoldings: 91850,
     accessionNumber: "0001193125-21-159855",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521159855/d540617d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-159855",
   },
   {
     filingDate: "2021-05-18",
@@ -146,7 +146,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 43663,
     cumulativeHoldings: 92079,
     accessionNumber: "0001193125-21-164617",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521164617/d167554d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-164617",
   },
   // INFERRED: 13,006 BTC purchased with ~$489M from June 2021 secured notes
   // Evidence: Cumulative jumps from 92,079 (May 18) to 108,992 (Aug 24)
@@ -158,7 +158,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 37600,
     cumulativeHoldings: 105085,  // 92,079 + 13,006
     accessionNumber: "INFERRED-2021-06",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521254529/d384256d8k.htm",  // Aug 24 filing that confirms cumulative
+    secUrl: "/filings/mstr/0001193125-21-254529",  // Aug 24 filing that confirms cumulative
   },
   {
     filingDate: "2021-08-24",
@@ -167,7 +167,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 45294,
     cumulativeHoldings: 108992,
     accessionNumber: "0001193125-21-254529",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521254529/d384256d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-254529",
   },
   // Note: Filing says "8,957 Q3 to date" but Aug 24 already reported 3,907 Q3 to date
   // Incremental = 8,957 - 3,907 = 5,050 BTC
@@ -178,7 +178,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 48099,
     cumulativeHoldings: 114042,
     accessionNumber: "0001193125-21-270915",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521270915/d232429d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-270915",
   },
   {
     filingDate: "2021-11-29",
@@ -187,7 +187,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 59187,
     cumulativeHoldings: 121044,
     accessionNumber: "0001193125-21-341815",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521341815/d191335d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-341815",
   },
   {
     filingDate: "2021-12-09",
@@ -196,7 +196,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 57477,
     cumulativeHoldings: 122478,
     accessionNumber: "0001193125-21-352140",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521352140/d270832d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-352140",
   },
   {
     filingDate: "2021-12-30",
@@ -205,7 +205,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 49229,
     cumulativeHoldings: 124391,
     accessionNumber: "0001193125-21-369767",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312521369767/d261142d8k.htm",
+    secUrl: "/filings/mstr/0001193125-21-369767",
   },
   {
     filingDate: "2022-02-01",
@@ -214,7 +214,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 37865,
     cumulativeHoldings: 125051,
     accessionNumber: "0001193125-22-024027",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522024027/d275576d8k.htm",
+    secUrl: "/filings/mstr/0001193125-22-024027",
   },
   {
     filingDate: "2022-04-05",
@@ -223,7 +223,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 45714,
     cumulativeHoldings: 129218,
     accessionNumber: "0001193125-22-095632",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522095632/d292215d8k.htm",
+    secUrl: "/filings/mstr/0001193125-22-095632",
   },
   {
     filingDate: "2022-06-29",
@@ -232,7 +232,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 20817,
     cumulativeHoldings: 129699,
     accessionNumber: "0001193125-22-184423",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522184423/d374401d8k.htm",
+    secUrl: "/filings/mstr/0001193125-22-184423",
   },
   {
     filingDate: "2022-09-20",
@@ -241,7 +241,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 19851,
     cumulativeHoldings: 130000,
     accessionNumber: "0001193125-22-247427",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522247427/d355455d8k.htm",
+    secUrl: "/filings/mstr/0001193125-22-247427",
   },
   {
     filingDate: "2022-12-28",
@@ -250,7 +250,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 17871,
     cumulativeHoldings: 132395,  // 130,000 + 2,395
     accessionNumber: "0001193125-22-313098",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312522313098/d398241d8k.htm",
+    secUrl: "/filings/mstr/0001193125-22-313098",
   },
   {
     filingDate: "2023-03-27",
@@ -259,7 +259,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 23238,
     cumulativeHoldings: 138955,
     accessionNumber: "0001193125-23-079839",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523079839/d467124d8k.htm",
+    secUrl: "/filings/mstr/0001193125-23-079839",
   },
   {
     filingDate: "2023-04-05",
@@ -268,7 +268,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 28016,
     cumulativeHoldings: 140000,
     accessionNumber: "0001193125-23-091616",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523091616/d486424d8k.htm",
+    secUrl: "/filings/mstr/0001193125-23-091616",
   },
   {
     filingDate: "2023-06-28",
@@ -277,7 +277,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 28136,
     cumulativeHoldings: 152333,
     accessionNumber: "0001193125-23-176793",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523176793/d520680d8k.htm",
+    secUrl: "/filings/mstr/0001193125-23-176793",
   },
   {
     filingDate: "2023-09-25",
@@ -286,7 +286,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 27053,
     cumulativeHoldings: 158245,
     accessionNumber: "0001193125-23-240932",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523240932/d390258d8k.htm",
+    secUrl: "/filings/mstr/0001193125-23-240932",
   },
   {
     filingDate: "2023-11-30",
@@ -295,7 +295,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 36785,
     cumulativeHoldings: 174530,
     accessionNumber: "0001193125-23-285756",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523285756/d618268d8k.htm",
+    secUrl: "/filings/mstr/0001193125-23-285756",
   },
   {
     filingDate: "2023-12-27",
@@ -304,7 +304,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 42110,
     cumulativeHoldings: 189150,
     accessionNumber: "0001193125-23-303488",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312523303488/d517550d8k.htm",
+    secUrl: "/filings/mstr/0001193125-23-303488",
   },
   {
     filingDate: "2024-02-26",
@@ -313,7 +313,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 51813,
     cumulativeHoldings: 193000,
     accessionNumber: "0001193125-24-045396",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524045396/d786266d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-045396",
   },
   {
     filingDate: "2024-03-11",
@@ -322,7 +322,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 68477,
     cumulativeHoldings: 205000,
     accessionNumber: "0001193125-24-064331",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064331/d738431d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-064331",
   },
   {
     filingDate: "2024-03-19",
@@ -331,7 +331,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 67382,
     cumulativeHoldings: 214246,
     accessionNumber: "0001193125-24-070801",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524070801/d805979d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-070801",
   },
   {
     filingDate: "2024-06-20",
@@ -340,7 +340,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 65883,
     cumulativeHoldings: 226331,
     accessionNumber: "0001193125-24-164014",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524164014/d851818d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-164014",
   },
   {
     filingDate: "2024-09-13",
@@ -349,7 +349,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 60408,
     cumulativeHoldings: 244800,
     accessionNumber: "0001193125-24-218462",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524218462/d808510d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-218462",
   },
   {
     filingDate: "2024-09-20",
@@ -358,7 +358,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 61750,
     cumulativeHoldings: 252220,
     accessionNumber: "0001193125-24-222498",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524222498/d822569d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-222498",
   },
   {
     filingDate: "2024-11-12",
@@ -367,7 +367,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 74463,
     cumulativeHoldings: 279420,
     accessionNumber: "0001193125-24-255184",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524255184/d908568d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-255184",
   },
   {
     filingDate: "2024-11-18",
@@ -376,7 +376,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 88837,
     cumulativeHoldings: 331200,
     accessionNumber: "0001193125-24-260452",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524260452/d828461d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-260452",
   },
   {
     filingDate: "2024-11-25",
@@ -385,7 +385,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 97862,
     cumulativeHoldings: 386700,
     accessionNumber: "0001193125-24-264733",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524264733/d844494d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-264733",
   },
   {
     filingDate: "2024-12-02",
@@ -394,7 +394,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 95976,
     cumulativeHoldings: 402100,
     accessionNumber: "0001193125-24-268429",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524268429/d898104d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-268429",
   },
   {
     filingDate: "2024-12-09",
@@ -403,7 +403,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 98783,
     cumulativeHoldings: 423650,
     accessionNumber: "0001193125-24-272923",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524272923/d873652d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-272923",
   },
   {
     filingDate: "2024-12-16",
@@ -412,7 +412,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 100386,
     cumulativeHoldings: 439000,
     accessionNumber: "0001193125-24-279044",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524279044/d843539d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-279044",
   },
   {
     filingDate: "2024-12-23",
@@ -421,7 +421,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 106662,
     cumulativeHoldings: 444262,
     accessionNumber: "0001193125-24-283686",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524283686/d892375d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-283686",
   },
   {
     filingDate: "2024-12-30",
@@ -430,7 +430,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 97837,
     cumulativeHoldings: 446400,
     accessionNumber: "0001193125-24-286217",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312524286217/d896561d8k.htm",
+    secUrl: "/filings/mstr/0001193125-24-286217",
   },
   {
     filingDate: "2025-01-06",
@@ -439,7 +439,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 94004,
     cumulativeHoldings: 447470,
     accessionNumber: "0001193125-25-001854",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525001854/d878544d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-001854",
   },
   {
     filingDate: "2025-01-13",
@@ -448,7 +448,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 95972,
     cumulativeHoldings: 450000,
     accessionNumber: "0001193125-25-005000",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525005000/d884652d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-005000",
   },
   {
     filingDate: "2025-01-21",
@@ -457,7 +457,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 101191,
     cumulativeHoldings: 461000,
     accessionNumber: "0001193125-25-009102",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525009102/d853769d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-009102",
   },
   {
     filingDate: "2025-01-27",
@@ -466,7 +466,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 105596,
     cumulativeHoldings: 471107,
     accessionNumber: "0001193125-25-012671",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525012671/d923383d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-012671",
   },
   {
     filingDate: "2025-02-10",
@@ -475,7 +475,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 97255,
     cumulativeHoldings: 478740,
     accessionNumber: "0001193125-25-023183",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525023183/d914889d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-023183",
   },
   {
     filingDate: "2025-02-24",
@@ -484,7 +484,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 97514,
     cumulativeHoldings: 499096,
     accessionNumber: "0000950170-25-025233",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025025233/mstr-20250224.htm",
+    secUrl: "/filings/mstr/0000950170-25-025233",
   },
   {
     filingDate: "2025-03-17",
@@ -493,7 +493,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 82981,
     cumulativeHoldings: 499226,
     accessionNumber: "0000950170-25-039835",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025039835/mstr-20250317.htm",
+    secUrl: "/filings/mstr/0000950170-25-039835",
   },
   {
     filingDate: "2025-03-24",
@@ -502,7 +502,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 84529,
     cumulativeHoldings: 506137,
     accessionNumber: "0000950170-25-043494",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025043494/mstr-20250324.htm",
+    secUrl: "/filings/mstr/0000950170-25-043494",
   },
   {
     filingDate: "2025-03-31",
@@ -511,7 +511,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 86969,
     cumulativeHoldings: 528185,
     accessionNumber: "0000950170-25-047219",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025047219/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-047219",
   },
   {
     filingDate: "2025-04-07",
@@ -520,7 +520,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 577,
     cumulativeHoldings: 202,
     accessionNumber: "0001193125-25-073989",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525073989/d938485d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-073989",
   },
   {
     filingDate: "2025-04-14",
@@ -529,7 +529,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 82618,
     cumulativeHoldings: 531644,
     accessionNumber: "0000950170-25-053501",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025053501/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-053501",
   },
   {
     filingDate: "2025-04-21",
@@ -538,7 +538,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 84785,
     cumulativeHoldings: 538200,
     accessionNumber: "0000950170-25-056007",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025056007/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-056007",
   },
   {
     filingDate: "2025-04-28",
@@ -547,7 +547,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 92737,
     cumulativeHoldings: 553555,
     accessionNumber: "0000950170-25-058962",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025058962/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-058962",
   },
   {
     filingDate: "2025-05-05",
@@ -556,7 +556,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 95167,
     cumulativeHoldings: 555450,
     accessionNumber: "0000950170-25-063168",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025063168/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-063168",
   },
   {
     filingDate: "2025-05-12",
@@ -565,7 +565,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 99856,
     cumulativeHoldings: 568840,
     accessionNumber: "0000950170-25-068580",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025068580/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-068580",
   },
   {
     filingDate: "2025-05-19",
@@ -574,7 +574,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 103498,
     cumulativeHoldings: 576230,
     accessionNumber: "0000950170-25-073962",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025073962/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-073962",
   },
   // INFERRED: 4,020 BTC from May 27 8-K press release
   // Evidence: Cumulative jumps from 576,230 (May 19) to 580,955 (Jun 2)
@@ -586,7 +586,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 106219,
     cumulativeHoldings: 580250,
     accessionNumber: "INFERRED-2025-05-27",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525077387/d77387d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-077387",
   },
   {
     filingDate: "2025-06-02",
@@ -595,7 +595,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 106495,
     cumulativeHoldings: 580955,
     accessionNumber: "0000950170-25-080022",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025080022/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-080022",
   },
   {
     filingDate: "2025-06-09",
@@ -604,7 +604,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 105426,
     cumulativeHoldings: 582000,
     accessionNumber: "0000950170-25-083448",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025083448/mstr-20250331.htm",
+    secUrl: "/filings/mstr/0000950170-25-083448",
   },
   {
     filingDate: "2025-06-16",
@@ -613,7 +613,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 104080,
     cumulativeHoldings: 592100,
     accessionNumber: "0000950170-25-086545",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025086545/mstr-20250616.htm",
+    secUrl: "/filings/mstr/0000950170-25-086545",
   },
   {
     filingDate: "2025-06-23",
@@ -622,7 +622,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 105856,
     cumulativeHoldings: 592345,
     accessionNumber: "0000950170-25-088711",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025088711/mstr-20250616.htm",
+    secUrl: "/filings/mstr/0000950170-25-088711",
   },
   {
     filingDate: "2025-06-30",
@@ -631,7 +631,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 106801,
     cumulativeHoldings: 597325,
     accessionNumber: "0000950170-25-091211",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025091211/mstr-20250616.htm",
+    secUrl: "/filings/mstr/0000950170-25-091211",
   },
   {
     filingDate: "2025-07-07",
@@ -640,7 +640,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 585,
     cumulativeHoldings: 202,
     accessionNumber: "0000950170-25-094137",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025094137/mstr-20250707.htm",
+    secUrl: "/filings/mstr/0000950170-25-094137",
   },
   {
     filingDate: "2025-07-14",
@@ -649,7 +649,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 111827,
     cumulativeHoldings: 601550,
     accessionNumber: "0000950170-25-095461",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025095461/mstr-20250714.htm",
+    secUrl: "/filings/mstr/0000950170-25-095461",
   },
   {
     filingDate: "2025-07-21",
@@ -658,7 +658,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 118940,
     cumulativeHoldings: 607770,
     accessionNumber: "0000950170-25-097081",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025097081/mstr-20250616.htm",
+    secUrl: "/filings/mstr/0000950170-25-097081",
   },
   {
     filingDate: "2025-08-04",
@@ -667,7 +667,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 117256,
     cumulativeHoldings: 628791,
     accessionNumber: "0000950170-25-101634",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025101634/mstr-20250804.htm",
+    secUrl: "/filings/mstr/0000950170-25-101634",
   },
   {
     filingDate: "2025-08-11",
@@ -676,7 +676,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 116401,
     cumulativeHoldings: 628946,
     accessionNumber: "0000950170-25-106241",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025106241/mstr-20250804.htm",
+    secUrl: "/filings/mstr/0000950170-25-106241",
   },
   {
     filingDate: "2025-08-18",
@@ -685,7 +685,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 119666,
     cumulativeHoldings: 629376,
     accessionNumber: "0000950170-25-109566",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025109566/mstr-20250818.htm",
+    secUrl: "/filings/mstr/0000950170-25-109566",
   },
   {
     filingDate: "2025-08-25",
@@ -694,7 +694,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 115829,
     cumulativeHoldings: 632457,
     accessionNumber: "0000950170-25-111093",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025111093/mstr-20250818.htm",
+    secUrl: "/filings/mstr/0000950170-25-111093",
   },
   {
     filingDate: "2025-09-02",
@@ -703,7 +703,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 110981,
     cumulativeHoldings: 636505,
     accessionNumber: "0001050446-25-000008",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044625000008/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001050446-25-000008",
   },
   {
     filingDate: "2025-09-08",
@@ -712,7 +712,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 111196,
     cumulativeHoldings: 638460,
     accessionNumber: "0000950170-25-113360",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025113360/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0000950170-25-113360",
   },
   {
     filingDate: "2025-09-15",
@@ -721,7 +721,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 114562,
     cumulativeHoldings: 638985,
     accessionNumber: "0001193125-25-202827",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525202827/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-202827",
   },
   {
     filingDate: "2025-09-22",
@@ -730,7 +730,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 117344,
     cumulativeHoldings: 639835,
     accessionNumber: "0001193125-25-210048",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525210048/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-210048",
   },
   {
     filingDate: "2025-09-29",
@@ -739,7 +739,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 113048,
     cumulativeHoldings: 640031,
     accessionNumber: "0001193125-25-221772",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525221772/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-221772",
   },
   {
     filingDate: "2025-10-06",
@@ -748,7 +748,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 592,
     cumulativeHoldings: 202,
     accessionNumber: "0001193125-25-230977",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525230977/d49048d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-230977",
   },
   {
     filingDate: "2025-10-20",
@@ -757,7 +757,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 112051,
     cumulativeHoldings: 640418,
     accessionNumber: "0001193125-25-243049",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525243049/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-243049",
   },
   {
     filingDate: "2025-10-27",
@@ -766,7 +766,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 111117,
     cumulativeHoldings: 640808,
     accessionNumber: "0001193125-25-250751",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525250751/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-250751",
   },
   {
     filingDate: "2025-11-03",
@@ -775,7 +775,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 114771,
     cumulativeHoldings: 641205,
     accessionNumber: "0001193125-25-261714",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525261714/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-261714",
   },
   {
     filingDate: "2025-11-10",
@@ -784,7 +784,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 102557,
     cumulativeHoldings: 641692,
     accessionNumber: "0001193125-25-273310",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525273310/mstr-20250902.htm",
+    secUrl: "/filings/mstr/0001193125-25-273310",
   },
   {
     filingDate: "2025-11-17",
@@ -793,7 +793,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 102171,
     cumulativeHoldings: 649870,
     accessionNumber: "0001193125-25-283991",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525283991/mstr-20251117.htm",
+    secUrl: "/filings/mstr/0001193125-25-283991",
   },
   {
     filingDate: "2025-12-01",
@@ -802,7 +802,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 89960,
     cumulativeHoldings: 650000,
     accessionNumber: "0001193125-25-303157",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525303157/d69948d8k.htm",
+    secUrl: "/filings/mstr/0001193125-25-303157",
   },
   {
     filingDate: "2025-12-08",
@@ -811,7 +811,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 90615,
     cumulativeHoldings: 660624,
     accessionNumber: "0001193125-25-310607",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525310607/mstr-20251117.htm",
+    secUrl: "/filings/mstr/0001193125-25-310607",
   },
   {
     filingDate: "2025-12-15",
@@ -820,7 +820,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 92098,
     cumulativeHoldings: 671268,
     accessionNumber: "0001193125-25-318468",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525318468/mstr-20251117.htm",
+    secUrl: "/filings/mstr/0001193125-25-318468",
   },
   {
     filingDate: "2025-12-29",
@@ -829,7 +829,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 88568,
     cumulativeHoldings: 672497,
     accessionNumber: "0001193125-25-332296",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525332296/mstr-20251117.htm",
+    secUrl: "/filings/mstr/0001193125-25-332296",
   },
   {
     filingDate: "2026-01-05",
@@ -838,7 +838,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 88210,
     cumulativeHoldings: 672500,
     accessionNumber: "0001193125-26-001550",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/mstr-20260105.htm",
+    secUrl: "/filings/mstr/0001193125-26-001550",
   },
   {
     filingDate: "2026-01-12",
@@ -847,7 +847,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 91519,
     cumulativeHoldings: 687410,
     accessionNumber: "0001193125-26-009811",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526009811/mstr-20260105.htm",
+    secUrl: "/filings/mstr/0001193125-26-009811",
   },
   {
     filingDate: "2026-01-20",
@@ -856,7 +856,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 95284,
     cumulativeHoldings: 709715,
     accessionNumber: "0001193125-26-016002",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526016002/mstr-20260105.htm",
+    secUrl: "/filings/mstr/0001193125-26-016002",
   },
   {
     filingDate: "2026-01-26",
@@ -865,7 +865,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 90061,
     cumulativeHoldings: 712647,
     accessionNumber: "0001193125-26-021726",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/mstr-20260105.htm",
+    secUrl: "/filings/mstr/0001193125-26-021726",
   },
   {
     filingDate: "2026-02-02",
@@ -874,7 +874,7 @@ export const MSTR_BTC_PURCHASES: BTCPurchaseEvent[] = [
     avgPrice: 87974,
     cumulativeHoldings: 713502,
     accessionNumber: "0001193125-26-032731",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526032731/mstr-20260131.htm",
+    secUrl: "/filings/mstr/0001193125-26-032731",
   },
 ];
 

@@ -112,7 +112,7 @@ export const DDC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "28,723,005",
-      url: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
+      url: "/filings/ddc/0001213900-26-013341",
       quote: "there are 28,723,005 Class A ordinary shares issued and outstanding",
       anchor: "Class A ordinary shares",
       cik: DDC_CIK,
@@ -129,7 +129,7 @@ export const DDC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "27,000,000",
-      url: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+      url: "/filings/ddc/0001213900-26-007463",
       quote: "aggregate subscription amount of $27,000,000, comprising of senior secured convertible notes",
       anchor: "Anson SPA",
       cik: DDC_CIK,
@@ -146,7 +146,7 @@ export const DDC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "48,375,196",
-      url: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+      url: "/filings/ddc/0001213900-26-007463",
       quote: "Cash and cash equivalents 48,375,196 (RMB) = US$6,752,917 as of June 30, 2025",
       anchor: "Cash and cash equivalents",
       cik: DDC_CIK,
@@ -163,7 +163,7 @@ export const DDC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "3,189,849",
-      url: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026007463/ea0274060-424b3_ddcenter.htm",
+      url: "/filings/ddc/0001213900-26-007463",
       quote: "Total operating expenses (3,189,849) for the six months ended June 30, 2025 (US$)",
       anchor: "Total operating expenses",
       cik: DDC_CIK,
@@ -180,7 +180,7 @@ export const DDC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "28,723,005",
-      url: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026013341/ea027596901-6k_ddcenter.htm",
+      url: "/filings/ddc/0001213900-26-013341",
       quote: "Satoshi Strategic: 16M senior convertible preferred shares at $2.05 stated value ($32.8M). Subject to NYSE approval. NOT YET CLOSED.",
       anchor: "Satoshi Strategic",
       cik: DDC_CIK,

@@ -37,8 +37,8 @@ const FY2024_10K_ACCESSION = "0001213900-25-026404"; // Filed 2025-03-31 (pre-me
 // =========================================================================
 // LATEST DATA
 // =========================================================================
-const LATEST_HOLDINGS = 5_098; // Dec 14, 2025 press release
-const LATEST_HOLDINGS_DATE = "2025-12-14";
+const LATEST_HOLDINGS = 6_500; // March 4, 2026 Eric Trump announcement
+const LATEST_HOLDINGS_DATE = "2026-03-04";
 
 // Shares: 927,604,994 from Q3 2025 10-Q cover page (as of Nov 13, 2025)
 // Class A: 195,380,091 + Class B: 732,224,903 + Class C: 0 = 927,604,994
@@ -65,25 +65,22 @@ const QUARTERLY_BURN = 8_052_000;
 
 export const ABTC_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
-  // BTC HOLDINGS - from Dec 14, 2025 Press Release
-  // "held approximately 5,098 Bitcoin in its strategic reserve as of December 14, 2025"
-  // Includes BTC acquired through mining + strategic purchases + held in custody/pledged
+  // BTC HOLDINGS - from March 4, 2026 Corporate Update (Eric Trump)
+  // "American Bitcoin’s reserves have surpassed 6,500 BTC"
   // =========================================================================
   holdings: pv(
     LATEST_HOLDINGS,
     docSource({
       type: "press-release",
-      searchTerm: "5,098 Bitcoin",
-      url: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html",
-      quote: "held approximately 5,098 Bitcoin in its strategic reserve as of December 14, 2025",
+      searchTerm: "6,500 Bitcoin",
+      url: "https://bitcoinmagazine.com/business/eric-trump-american-bitcoin-reserves-surpass-6500-btc",
+      quote: "American Bitcoin’s reserves have surpassed 6,500 BTC... added more than 500 BTC in the 21 days leading up to the announcement.",
       anchor: "bitcoin-reserve",
-      // No accession — this is a standalone PR Newswire release, not attached to any SEC filing
       documentDate: LATEST_HOLDINGS_DATE,
     }),
-    "Source says 'approximately 5,098 Bitcoin' — standard PR hedging language. " +
-    "Includes BTC held in custody or pledged for miner purchases under BITMAIN agreement. " +
-    "Acquired through combination of mining and strategic purchases. " +
-    "XBRL has CryptoAssetNumberOfUnits (3,418 BTC at Sep 30, 2025) but holdings source uses more recent PR data (5,098 at Dec 14, 2025)."
+    "Confirmed 6,500+ BTC as of March 4, 2026. Company generated $185.2M revenue in FY2025. " +
+    "Includes BTC acquired through mining + strategic purchases + held in custody/pledged. " +
+    "Majority owned by Hut 8 (~80% voting power)."
   ),
 
   // =========================================================================
@@ -97,7 +94,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "195,380,091",
-      url: `https://www.sec.gov/Archives/edgar/data/1755953/000119312525281390/abtc-20250930.htm`,
+      url: `/filings/abtc/0001193125-25-281390`,
       quote: "195,380,091 shares of Class A common stock, 732,224,903 shares of Class B common stock",
       anchor: "shares-outstanding",
       cik: ABTC_CIK,
@@ -120,7 +117,7 @@ export const ABTC_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "Bitmain",
-      url: `https://www.sec.gov/Archives/edgar/data/${ABTC_CIK}/000119312525281390/abtc-20250930.htm`,
+      url: `/filings/abtc/0001193125-25-281390`,
       quote: "Bitmain miner purchase agreement — BTC pledged at fixed price for mining equipment",
       anchor: "bitmain-agreement",
       cik: ABTC_CIK,

@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "MARA",
   "secCik": "0001507605",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.126Z",
+  "asOf": "2025-12-31",
+  "generatedAt": "2026-03-07T00:36:04.386Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,20 +11,20 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 52850,
+    "amount": 53822,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
+      "holdingsSourceUrl": "/filings/mara/0001507605-25-000028",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 378184353,
     "sharesOutstandingFD": null,
-    "asOf": "2025-10-28",
+    "asOf": "2025-11-03",
     "source": {
       "sharesSource": "SEC-verified (provenance): 10-Q Q3 2025 cover page",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm"
+      "sharesSourceUrl": "/filings/mara/0001507605-25-000028"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 0,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/mara-20250930.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1507605/000150760525000028/"
+      "cashSourceUrl": "/filings/mara/0001507605-25-000028",
+      "debtSourceUrl": "/filings/mara/0001507605-25-000028",
+      "preferredSourceUrl": "/filings/mara/0001507605-25-000028"
     }
   },
   "verification": {

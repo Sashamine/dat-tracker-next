@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "LITS",
-  "secCik": "1262104",
+  "secCik": "0001262104",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T20:22:40.130Z",
+  "generatedAt": "2026-03-07T00:36:04.390Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 929548,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+      "holdingsSourceUrl": "/filings/lits/0001193125-26-053215",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2026-02-09",
     "source": {
       "sharesSource": "SEC 10-Q Q2 FY2026 cover page (Feb 9, 2026)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm"
+      "sharesSourceUrl": "/filings/lits/0001193125-26-053215"
     }
   },
   "balanceSheet": {
@@ -34,9 +34,9 @@
     "preferredEquity": 0,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/"
+      "cashSourceUrl": "/filings/lits/0001193125-26-053215",
+      "debtSourceUrl": "/filings/lits/0001193125-26-053215",
+      "preferredSourceUrl": "/filings/lits/0001193125-26-053215"
     }
   },
   "verification": {

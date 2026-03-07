@@ -54,7 +54,7 @@ export const MSTR_ANNUAL_CASH_FLOW: MSTRCashFlowFiling[] = [
     formType: "10-K",
     filedDate: "2021-02-12",
     accessionNumber: "0001564590-21-005783",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000156459021005783/mstr-10k_20201231.htm",
+    secUrl: "/filings/mstr/0001564590-21-005783",
     operatingCashFlow: 53_619_000, // $53.6M provided - SEC XBRL verified
     investingCashFlow: -1_018_693_000, // $(1.02B) used - SEC XBRL verified
     financingCashFlow: 563_233_000, // $563M provided - SEC XBRL verified
@@ -68,7 +68,7 @@ export const MSTR_ANNUAL_CASH_FLOW: MSTRCashFlowFiling[] = [
     formType: "10-K",
     filedDate: "2022-02-16",
     accessionNumber: "0001564590-22-005287",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000156459022005287/mstr-10k_20211231.htm",
+    secUrl: "/filings/mstr/0001564590-22-005287",
     operatingCashFlow: 93_833_000, // $93.8M provided - SEC XBRL verified
     investingCashFlow: -2_629_235_000, // $(2.63B) used - SEC XBRL verified
     financingCashFlow: 2_541_685_000, // $2.54B provided - SEC XBRL verified
@@ -82,7 +82,7 @@ export const MSTR_ANNUAL_CASH_FLOW: MSTRCashFlowFiling[] = [
     formType: "10-K",
     filedDate: "2023-02-16",
     accessionNumber: "0001564590-23-002012",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000156459023002012/mstr-10k_20221231.htm",
+    secUrl: "/filings/mstr/0001564590-23-002012",
     operatingCashFlow: 3_211_000, // $3.2M provided - SEC XBRL verified
     investingCashFlow: -278_590_000, // $(279M) used - SEC XBRL verified
     financingCashFlow: 265_188_000, // $265M provided - SEC XBRL verified
@@ -96,7 +96,7 @@ export const MSTR_ANNUAL_CASH_FLOW: MSTRCashFlowFiling[] = [
     formType: "10-K",
     filedDate: "2024-02-15",
     accessionNumber: "0000950170-24-015847",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017024015847/mstr-20231231.htm",
+    secUrl: "/filings/mstr/0000950170-24-015847",
     operatingCashFlow: 12_712_000, // $12.7M provided - SEC XBRL verified
     investingCashFlow: -1_905_237_000, // $(1.91B) used - SEC XBRL verified
     financingCashFlow: 1_889_886_000, // $1.89B provided - SEC XBRL verified
@@ -110,7 +110,7 @@ export const MSTR_ANNUAL_CASH_FLOW: MSTRCashFlowFiling[] = [
     formType: "10-K",
     filedDate: "2025-02-18",
     accessionNumber: "0000950170-25-021814",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000095017025021814/mstr-20241231.htm",
+    secUrl: "/filings/mstr/0000950170-25-021814",
     operatingCashFlow: -53_032_000, // $(53M) used - SEC XBRL verified
     investingCashFlow: -22_086_237_000, // $(22.09B) used - SEC XBRL verified
     financingCashFlow: 22_132_641_000, // $22.13B provided - SEC XBRL verified
@@ -130,7 +130,7 @@ export const MSTR_QUARTERLY_CASH_FLOW: MSTRCashFlowFiling[] = [
     formType: "10-Q",
     filedDate: "2025-11-03",
     accessionNumber: "0001193125-25-262568",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm",
+    secUrl: "/filings/mstr/0001193125-25-262568",
     operatingCashFlow: -45_612_000, // $(45.6M) used - 9 months YTD
     investingCashFlow: -19_417_576_000, // $(19.42B) used - BTC purchases YTD
     financingCashFlow: 19_476_842_000, // $19.48B provided - capital raises YTD
@@ -203,6 +203,6 @@ export function getCumulativeOperatingCashFlow(): number {
  * All figures verified directly from SEC EDGAR XBRL filings.
  *
  * Sources:
- * - SEC 10-K FY2024: https://www.sec.gov/Archives/edgar/data/1050446/000095017025021814/mstr-20241231.htm
- * - SEC 10-Q Q3 2025: https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/mstr-20250930.htm
+ * - SEC 10-K FY2024: /filings/mstr/0000950170-25-021814
+ * - SEC 10-Q Q3 2025: /filings/mstr/0001193125-25-262568
  */

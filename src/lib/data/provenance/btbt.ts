@@ -57,7 +57,7 @@ const COST_BASIS = 3_045;                 // Average ETH acquisition price
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
+  `/filings/btbt/${accession}`;
 
 // =========================================================================
 // PROVENANCE
@@ -80,7 +80,7 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
     anchor: "155,239",
     cik: BTBT_CIK,
     documentDate: LATEST_HOLDINGS_DATE,
-    // SEC cross-ref: https://www.sec.gov/Archives/edgar/data/1710350/000121390026011802/ea027549101ex99-1_bitdigital.htm
+    // SEC cross-ref: /filings/btbt/0001213900-26-011802
   }), "Monthly ETH treasury PR. SEC 8-K cross-ref: 0001213900-26-011802. Includes ~15,236 ETH in externally managed fund."),
 
   // =========================================================================
@@ -148,8 +148,8 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   quarterlyBurn: pv(QUARTERLY_BURN, docSource({
     type: "sec-document",
     searchTerm: "17,401,915",
-    url: `https://www.sec.gov/Archives/edgar/data/${BTBT_CIK}/000121390025044155/ea0241656-10q_bitdigital.htm`,
-    quote: "NetCashUsedInOperatingActivities $17,401,915 (2025-01-01 to 2025-03-31)",
+    url: `/filings/btbt/0001213900-25-044155`,
+    quote: "17,401,915",
     anchor: "Operating Activities",
     cik: BTBT_CIK,
     accession: "0001213900-25-044155",
@@ -165,8 +165,8 @@ export const BTBT_PROVENANCE: ProvenanceFinancials = {
   preferredEquity: pv(9_050_000, docSource({
     type: "sec-document",
     searchTerm: "9,050,000",
-    url: `https://www.sec.gov/Archives/edgar/data/${BTBT_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/ea0263546-10q_bitdigital.htm`,
-    quote: "Preferred shares, $0.01 par value, 10,000,000 shares authorized, 1,000,000 shares issued and outstanding — $9,050,000",
+    url: `/filings/btbt/${Q3_2025_10Q_ACCESSION}`,
+    quote: "9,050,000",
     anchor: "Preferred shares",
     cik: BTBT_CIK,
     accession: Q3_2025_10Q_ACCESSION,

@@ -20,7 +20,7 @@
  * Last updated: 2026-02-10
  */
 
-import type { HoldingsSnapshot } from "./holdings-history";
+import type { HoldingsSnapshot } from "../types";
 
 // Share count anchors from SEC filings - BASIC shares from cover page
 // ALL verified 2026-02-10 via SEC EDGAR (dei:EntityCommonStockSharesOutstanding)
@@ -264,7 +264,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "8-K BTC Yield (47.6% YTD)",
-    sourceUrl: "/filings/mara/0001493152-24-048150",
+    sourceUrl: "/filings/mara/0001493152-24-049365",
     sourceType: "sec-filing",
     methodology: "BTC Yield disclosure. Shares interpolated between Q3 and Q4 2024.",
     confidence: "medium",
@@ -279,7 +279,7 @@ export const MARA_HOLDINGS_HISTORY: HoldingsSnapshot[] = [
     totalDebt: 2_600_000_000,
     cash: 350_000_000,
     source: "8-K BTC Yield (60.9% YTD)",
-    sourceUrl: "/filings/mara/0001493152-24-048535",
+    sourceUrl: "/filings/mara/0001493152-24-050693",
     sourceType: "sec-filing",
     methodology: "BTC Yield disclosure. Shares interpolated between Q3 and Q4 2024.",
     confidence: "medium",
@@ -391,7 +391,7 @@ export function getMARAQuarterEndDataForEarnings(quarterEnd: string): {
     ? snapshot.sourceUrl.split("/").pop() || ""
     : "";
   const sourceUrl = accession
-    ? `https://www.sec.gov/Archives/edgar/data/1507605/${accession.replace(/-/g, "")}/${accession}-index.htm`
+    ? `/filings/mara/${accession}`
     : snapshot.sourceUrl || "";
   
   return {

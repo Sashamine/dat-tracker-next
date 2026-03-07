@@ -3,7 +3,7 @@
   "ticker": "SQNS",
   "secCik": "0001383395",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-05T20:22:40.127Z",
+  "generatedAt": "2026-03-07T00:36:04.387Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,7 +14,7 @@
     "amount": 2139,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+      "holdingsSourceUrl": "/filings/sqns/0001383395-26-000013",
       "holdingsAccession": null
     }
   },
@@ -23,8 +23,8 @@
     "sharesOutstandingFD": null,
     "asOf": "2025-12-31",
     "source": {
-      "sharesSource": "6-K Q4 2025 weighted avg basic ADS (1,599,589,702 ordinary shares / ~100 ADS ratio)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm"
+      "sharesSource": "6-K Q4 2025 weighted avg basic ADS",
+      "sharesSourceUrl": "/filings/sqns/0001383395-26-000013"
     }
   },
   "balanceSheet": {
@@ -35,7 +35,7 @@
     "asOf": "2025-12-31",
     "source": {
       "cashSourceUrl": null,
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000018/form6k-2026xfebruaryxdebtr.htm",
+      "debtSourceUrl": "/filings/sqns/0001383395-26-000018",
       "preferredSourceUrl": null
     }
   },

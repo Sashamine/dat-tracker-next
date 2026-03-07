@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "BTOG",
-  "secCik": "1735556",
-  "asOf": "2026-01-20",
-  "generatedAt": "2026-03-05T20:22:40.131Z",
+  "secCik": "0001735556",
+  "asOf": "2025-08-11",
+  "generatedAt": "2026-03-07T00:36:04.390Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -13,8 +13,8 @@
     "asset": "DOGE",
     "amount": 70543745,
     "source": {
-      "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/000110465926005086/0001104659-26-005086-index.html",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
       "holdingsAccession": null
     }
   },
@@ -24,18 +24,18 @@
     "asOf": "2026-01-20",
     "source": {
       "sharesSource": "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/0001104659-26-005086-index.html"
+      "sharesSourceUrl": "/filings/btog/0001104659-25-105009"
     }
   },
   "balanceSheet": {
-    "cashReserves": 55639,
+    "cashReserves": 56000,
     "restrictedCash": null,
     "totalDebt": 16338506,
     "preferredEquity": null,
     "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009/btog-20250630x20f.htm",
+      "cashSourceUrl": "/filings/btog/0001104659-25-105009",
+      "debtSourceUrl": "/filings/btog/0001104659-25-105009",
       "preferredSourceUrl": null
     }
   },

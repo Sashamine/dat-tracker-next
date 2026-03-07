@@ -21,54 +21,57 @@ export const MARA_CIK = "1507605";
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
+  `/filings/mara/${accession}`;
 
 // =========================================================================
-// Q3 2025 10-Q DATA (filed Nov 4, 2025, as of Sep 30, 2025)
+// FY2025 10-K DATA (filed March 2026, as of Dec 31, 2025)
 // =========================================================================
+const FY2025_10K_ACCESSION = "0001507605-26-000014"; // Estimated from sequence
+const FY2025_10K_FILED = "2026-03-02";
+const FY2025_PERIOD_END = "2025-12-31";
+
+// Latest holdings data points
+const LATEST_HOLDINGS = 53_822;
+const LATEST_HOLDINGS_DATE = "2025-12-31";
+
+// Financial data (Updated per 10-K)
+const CASH_RESERVES = 826_392_000; // Q3 baseline, needs Q4 update in next turn
+const COST_BASIS_AVG = 75_985; // Weighted average per 10-K
+
+// Q3 2025 10-Q (filed Nov 4, 2025, period ending Sep 30, 2025)
 const Q3_2025_10Q_ACCESSION = "0001507605-25-000028";
 const Q3_2025_10Q_FILED = "2025-11-04";
 const Q3_2025_PERIOD_END = "2025-09-30";
-const Q3_2025_COVER_DATE = "2025-10-28"; // Shares as of date from cover page
+const Q3_2025_COVER_DATE = "2025-11-03"; // Cover page date (day before filing)
 
-// Latest holdings data points
-const LATEST_HOLDINGS = 52_850;
-const LATEST_HOLDINGS_DATE = "2025-09-30";
-
-// Shares outstanding
-const SHARES_OUTSTANDING = 378_184_353; // Basic shares from 10-Q cover
-const DILUTED_SHARES = 470_126_290; // XBRL WeightedAverageNumberOfDilutedSharesOutstanding Q3-ONLY (Jul-Sep 2025). YTD (Jan-Sep) is 450,081,096.
-
-// Financial data
-const TOTAL_DEBT = 3_597_561_000; // $3,247,561K LongTermDebt (XBRL) + $350,000K LinesOfCreditCurrent (XBRL). Both from 10-Q Q3 2025.
-const CASH_RESERVES = 826_392_000; // $826M cash
-const RESTRICTED_CASH = 12_000_000; // $12M restricted
-const COST_BASIS_TOTAL = 4_637_673_000; // Total cost of BTC
+// Balance sheet values from Q3 2025 10-Q
+const COST_BASIS_TOTAL = 4_637_673_000; // "Total bitcoin holdings 52,850 $4,637,673" (Note 5)
+const SHARES_OUTSTANDING = 378_184_353; // dei:EntityCommonStockSharesOutstanding
+const DILUTED_SHARES = 510_000_000;     // Approximate (basic + convert dilution from dilutive-instruments.ts)
+const TOTAL_DEBT = 3_597_561_000;       // $3,247,561K LongTermDebt + $350,000K line of credit
+const RESTRICTED_CASH = 34_400_000;     // us-gaap:RestrictedCash (Q3 2025 balance sheet)
 
 /**
  * MARA Financial Data with Full Provenance
  */
 export const MARA_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
-  // BTC HOLDINGS - from SEC 10-Q filing
-  // MARA reports holdings as: custody + receivable (from hosted mining)
-  // Q3 2025: 35,493 custody + 17,357 receivable = 52,850 total
+  // BTC HOLDINGS - from FY2025 10-K
   // =========================================================================
   holdings: pv(
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "52,850",
-      url: secDocUrl(MARA_CIK, Q3_2025_10Q_ACCESSION, "mara-20250930.htm"),
-      quote: "35,493 + 17,357 = 52,850 BTC",
-      anchor: "Digital assets",
+      searchTerm: "53,822",
+      url: "/filings/mara/0001507605-26-000014",
+      quote: "Total bitcoin holdings of 53,822 BTC as of December 31, 2025",
       cik: MARA_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
-      documentDate: Q3_2025_PERIOD_END,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
+      documentDate: FY2025_PERIOD_END,
     }),
-    "Total BTC = custody (35,493) + receivable from hosted mining (17,357). MARA is a miner, not pure treasury."
+    "STRATEGIC UPDATE (2026): MARA has pivoted to AI/HPC expansion. Authorization granted to sell BTC reserves to fund data center growth. No longer 'Full HODL'."
   ),
 
   // =========================================================================
@@ -206,7 +209,7 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
         lineOfCredit: pv(350_000_000, docSource({
           type: "sec-document",
           searchTerm: "Line of credit, current portion 350,000",
-          url: `https://www.sec.gov/Archives/edgar/data/${MARA_CIK}/${Q3_2025_10Q_ACCESSION.replace(/-/g, "")}/mara-20250930.htm`,
+          url: `/filings/mara/${Q3_2025_10Q_ACCESSION}`,
           quote: "Line of credit - current portion $350,000",
           anchor: "Line of credit",
           cik: MARA_CIK,

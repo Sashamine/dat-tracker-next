@@ -121,7 +121,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2020-08-11",
     accessionNumber: "0001193125-20-215604",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520215604/0001193125-20-215604-index.htm",
+      "/filings/mstr/0001193125-20-215604",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Investment",
@@ -138,7 +138,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2020-09-15",
     accessionNumber: "0001193125-20-245835",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520245835/0001193125-20-245835-index.htm",
+      "/filings/mstr/0001193125-20-245835",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Investment",
@@ -154,7 +154,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2020-12-04",
     accessionNumber: "0001193125-20-310787",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520310787/0001193125-20-310787-index.htm",
+      "/filings/mstr/0001193125-20-310787",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -170,7 +170,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2020-12-11",
     accessionNumber: "0001193125-20-315971",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520315971/d225117dex41.htm",
+      "/filings/mstr/0001193125-20-315971",
     type: "DEBT",
     item: "1.01",
     section: "Entry into a Material Definitive Agreement",
@@ -185,10 +185,10 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
   },
   {
     date: "2020-12-21",
-    filedDate: "2020-12-21",
-    accessionNumber: "0001193125-20-323284",
+    filedDate: "2020-12-11",
+    accessionNumber: "0001193125-20-315971",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312520323284/0001193125-20-323284-index.htm",
+      "/filings/mstr/0001193125-20-315971",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Purchase",
@@ -207,7 +207,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-01-22",
     accessionNumber: "0001193125-21-014227",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521014227/0001193125-21-014227-index.htm",
+      "/filings/mstr/0001193125-21-014227",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -223,7 +223,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-02-02",
     accessionNumber: "0001193125-21-025369",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521025369/0001193125-21-025369-index.htm",
+      "/filings/mstr/0001193125-21-025369",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -239,7 +239,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-02-19",
     accessionNumber: "0001193125-21-048555",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521048555/d130600dex41.htm",
+      "/filings/mstr/0001193125-21-048555",
     type: "DEBT",
     item: "1.01",
     section: "Entry into a Material Definitive Agreement",
@@ -253,10 +253,10 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
   },
   {
     date: "2021-02-24",
-    filedDate: "2021-02-24",
-    accessionNumber: "0001193125-21-057643",
+    filedDate: "2021-02-19",
+    accessionNumber: "0001193125-21-048555",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521057643/0001193125-21-057643-index.htm",
+      "/filings/mstr/0001193125-21-048555",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Purchase",
@@ -272,7 +272,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-03-01",
     accessionNumber: "0001193125-21-062322",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521062322/0001193125-21-062322-index.htm",
+      "/filings/mstr/0001193125-21-062322",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -288,7 +288,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-03-05",
     accessionNumber: "0001193125-21-070446",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521070446/0001193125-21-070446-index.htm",
+      "/filings/mstr/0001193125-21-070446",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -304,7 +304,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-03-12",
     accessionNumber: "0001193125-21-078715",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521078715/0001193125-21-078715-index.htm",
+      "/filings/mstr/0001193125-21-078715",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -320,7 +320,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-04-05",
     accessionNumber: "0001193125-21-105625",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521105625/0001193125-21-105625-index.htm",
+      "/filings/mstr/0001193125-21-105625",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -336,7 +336,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-05-13",
     accessionNumber: "0001193125-21-159855",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521159855/0001193125-21-159855-index.htm",
+      "/filings/mstr/0001193125-21-159855",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -352,7 +352,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-05-18",
     accessionNumber: "0001193125-21-164617",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521164617/0001193125-21-164617-index.htm",
+      "/filings/mstr/0001193125-21-164617",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -368,7 +368,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-06-14",
     accessionNumber: "0001193125-21-189600",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521189600/d148411dex41.htm",
+      "/filings/mstr/0001193125-21-189600",
     type: "DEBT",
     item: "1.01",
     section: "Term Loan Agreement",
@@ -381,10 +381,10 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
   },
   {
     date: "2021-06-21",
-    filedDate: "2021-06-21",
-    accessionNumber: "0001193125-21-195413",
+    filedDate: "2021-06-14",
+    accessionNumber: "0001193125-21-189600",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521195413/0001193125-21-195413-index.htm",
+      "/filings/mstr/0001193125-21-189600",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Purchase",
@@ -400,7 +400,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-08-24",
     accessionNumber: "0001193125-21-254529",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521254529/0001193125-21-254529-index.htm",
+      "/filings/mstr/0001193125-21-254529",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -416,7 +416,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-09-13",
     accessionNumber: "0001193125-21-270915",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521270915/0001193125-21-270915-index.htm",
+      "/filings/mstr/0001193125-21-270915",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -432,7 +432,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-11-29",
     accessionNumber: "0001193125-21-341815",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521341815/0001193125-21-341815-index.htm",
+      "/filings/mstr/0001193125-21-341815",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -448,7 +448,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-12-09",
     accessionNumber: "0001193125-21-352140",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521352140/0001193125-21-352140-index.htm",
+      "/filings/mstr/0001193125-21-352140",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -464,7 +464,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2021-12-30",
     accessionNumber: "0001193125-21-369767",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312521369767/0001193125-21-369767-index.htm",
+      "/filings/mstr/0001193125-21-369767",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -482,7 +482,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-02-01",
     accessionNumber: "0001193125-22-024027",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522024027/0001193125-22-024027-index.htm",
+      "/filings/mstr/0001193125-22-024027",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -498,7 +498,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-03-29",
     accessionNumber: "0001193125-22-087494",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522087494/d312252dex41.htm",
+      "/filings/mstr/0001193125-22-087494",
     type: "DEBT",
     item: "1.01",
     section: "Credit and Security Agreement",
@@ -514,7 +514,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-04-05",
     accessionNumber: "0001193125-22-095632",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522095632/0001193125-22-095632-index.htm",
+      "/filings/mstr/0001193125-22-095632",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -530,7 +530,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-06-29",
     accessionNumber: "0001193125-22-184423",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522184423/0001193125-22-184423-index.htm",
+      "/filings/mstr/0001193125-22-184423",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -546,7 +546,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-09-09",
     accessionNumber: "0001193125-22-242015",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522242015/0001193125-22-242015-index.htm",
+      "/filings/mstr/0001193125-22-242015",
     type: "ATM",
     item: "1.01",
     section: "Sales Agreement",
@@ -560,7 +560,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-09-20",
     accessionNumber: "0001193125-22-247427",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522247427/0001193125-22-247427-index.htm",
+      "/filings/mstr/0001193125-22-247427",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -576,7 +576,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2022-12-28",
     accessionNumber: "0001193125-22-313098",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312522313098/0001193125-22-313098-index.htm",
+      "/filings/mstr/0001193125-22-313098",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -594,7 +594,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-03-27",
     accessionNumber: "0001193125-23-079839",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523079839/0001193125-23-079839-index.htm",
+      "/filings/mstr/0001193125-23-079839",
     type: "DEBT_EVENT",
     item: "1.02",
     section: "Termination of a Material Definitive Agreement",
@@ -607,7 +607,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-03-27",
     accessionNumber: "0001193125-23-079839",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523079839/0001193125-23-079839-index.htm",
+      "/filings/mstr/0001193125-23-079839",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Activity",
@@ -623,7 +623,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-04-05",
     accessionNumber: "0001193125-23-091616",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523091616/0001193125-23-091616-index.htm",
+      "/filings/mstr/0001193125-23-091616",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -639,7 +639,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-05-01",
     accessionNumber: "0001193125-23-130703",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523130703/0001193125-23-130703-index.htm",
+      "/filings/mstr/0001193125-23-130703",
     type: "ATM",
     item: "1.01",
     section: "Sales Agreement",
@@ -653,7 +653,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-06-28",
     accessionNumber: "0001193125-23-176793",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523176793/0001193125-23-176793-index.htm",
+      "/filings/mstr/0001193125-23-176793",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -669,7 +669,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-08-01",
     accessionNumber: "0001193125-23-200633",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523200633/0001193125-23-200633-index.htm",
+      "/filings/mstr/0001193125-23-200633",
     type: "ATM",
     item: "1.01",
     section: "Sales Agreement",
@@ -683,7 +683,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-09-25",
     accessionNumber: "0001193125-23-240932",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523240932/0001193125-23-240932-index.htm",
+      "/filings/mstr/0001193125-23-240932",
     type: "BTC",
     item: "8.01",
     section: "Other Events",
@@ -699,7 +699,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-11-30",
     accessionNumber: "0001193125-23-285756",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523285756/0001193125-23-285756-index.htm",
+      "/filings/mstr/0001193125-23-285756",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Activity Update",
@@ -715,7 +715,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2023-12-27",
     accessionNumber: "0001193125-23-303488",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312523303488/0001193125-23-303488-index.htm",
+      "/filings/mstr/0001193125-23-303488",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Activity Update",
@@ -734,7 +734,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-02-26",
     accessionNumber: "0001193125-24-045396",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524045396/0001193125-24-045396-index.htm",
+      "/filings/mstr/0001193125-24-045396",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -750,7 +750,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-03-11",
     accessionNumber: "0001193125-24-064321",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064321/d749312dex41.htm",
+      "/filings/mstr/0001193125-24-064321",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -767,7 +767,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-03-11",
     accessionNumber: "0001193125-24-064331",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524064331/0001193125-24-064331-index.htm",
+      "/filings/mstr/0001193125-24-064331",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -783,7 +783,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-03-19",
     accessionNumber: "0001193125-24-070793",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524070793/d792323dex41.htm",
+      "/filings/mstr/0001193125-24-070793",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -800,7 +800,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-03-19",
     accessionNumber: "0001193125-24-070801",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524070801/0001193125-24-070801-index.htm",
+      "/filings/mstr/0001193125-24-070801",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -817,7 +817,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-06-20",
     accessionNumber: "0001193125-24-164009",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524164009/d857957dex41.htm",
+      "/filings/mstr/0001193125-24-164009",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -834,7 +834,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-06-20",
     accessionNumber: "0001193125-24-164014",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524164014/0001193125-24-164014-index.htm",
+      "/filings/mstr/0001193125-24-164014",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -851,7 +851,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-07-11",
     accessionNumber: "0001193125-24-177515",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524177515/0001193125-24-177515-index.htm",
+      "/filings/mstr/0001193125-24-177515",
     type: "CORP",
     item: "5.03",
     section: "Amendment to Charter",
@@ -865,7 +865,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-09-13",
     accessionNumber: "0001193125-24-218462",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524218462/0001193125-24-218462-index.htm",
+      "/filings/mstr/0001193125-24-218462",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -881,7 +881,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-09-20",
     accessionNumber: "0001193125-24-222462",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524222462/d887785dex41.htm",
+      "/filings/mstr/0001193125-24-222462",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -898,7 +898,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-09-20",
     accessionNumber: "0001193125-24-222498",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524222498/0001193125-24-222498-index.htm",
+      "/filings/mstr/0001193125-24-222498",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -915,7 +915,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-10-30",
     accessionNumber: "0001193125-24-247543",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524247543/0001193125-24-247543-index.htm",
+      "/filings/mstr/0001193125-24-247543",
     type: "ATM",
     item: "1.01",
     section: "Sales Agreement",
@@ -929,7 +929,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-11-12",
     accessionNumber: "0001193125-24-255184",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524255184/0001193125-24-255184-index.htm",
+      "/filings/mstr/0001193125-24-255184",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -945,7 +945,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-11-18",
     accessionNumber: "0001193125-24-260452",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524260452/0001193125-24-260452-index.htm",
+      "/filings/mstr/0001193125-24-260452",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -961,7 +961,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-11-21",
     accessionNumber: "0001193125-24-263404",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524263404/d905221dex41.htm",
+      "/filings/mstr/0001193125-24-263404",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -978,7 +978,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-11-25",
     accessionNumber: "0001193125-24-264733",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524264733/0001193125-24-264733-index.htm",
+      "/filings/mstr/0001193125-24-264733",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -994,7 +994,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-12-02",
     accessionNumber: "0001193125-24-268429",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524268429/0001193125-24-268429-index.htm",
+      "/filings/mstr/0001193125-24-268429",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -1010,7 +1010,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-12-09",
     accessionNumber: "0001193125-24-272923",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524272923/0001193125-24-272923-index.htm",
+      "/filings/mstr/0001193125-24-272923",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -1026,7 +1026,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-12-16",
     accessionNumber: "0001193125-24-279044",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524279044/0001193125-24-279044-index.htm",
+      "/filings/mstr/0001193125-24-279044",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -1042,7 +1042,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-12-23",
     accessionNumber: "0001193125-24-283686",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524283686/0001193125-24-283686-index.htm",
+      "/filings/mstr/0001193125-24-283686",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -1058,7 +1058,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2024-12-30",
     accessionNumber: "0001193125-24-286217",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312524286217/0001193125-24-286217-index.htm",
+      "/filings/mstr/0001193125-24-286217",
     type: "BTC",
     item: "8.01",
     section: "Bitcoin Holdings Update",
@@ -1077,7 +1077,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-01-06",
     accessionNumber: "0001193125-25-001854",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525001854/0001193125-25-001854-index.htm",
+      "/filings/mstr/0001193125-25-001854",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1092,7 +1092,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-01-13",
     accessionNumber: "0001193125-25-005000",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525005000/0001193125-25-005000-index.htm",
+      "/filings/mstr/0001193125-25-005000",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1107,7 +1107,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-01-21",
     accessionNumber: "0001193125-25-009102",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525009102/0001193125-25-009102-index.htm",
+      "/filings/mstr/0001193125-25-009102",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1122,7 +1122,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-01-24",
     accessionNumber: "0001193125-25-011819",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525011819/0001193125-25-011819-index.htm",
+      "/filings/mstr/0001193125-25-011819",
     type: "CORP",
     item: "5.03",
     section: "Amendment to Charter",
@@ -1135,7 +1135,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-02-24",
     accessionNumber: "0001193125-25-032800",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525032800/d851880dex41.htm",
+      "/filings/mstr/0001193125-25-032800",
     type: "DEBT",
     item: "1.01",
     section: "Indenture",
@@ -1154,7 +1154,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-01-27",
     accessionNumber: "0001193125-25-012671",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525012671/0001193125-25-012671-index.htm",
+      "/filings/mstr/0001193125-25-012671",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1169,7 +1169,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-02-10",
     accessionNumber: "0001193125-25-023183",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525023183/0001193125-25-023183-index.htm",
+      "/filings/mstr/0001193125-25-023183",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1184,7 +1184,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-02-24",
     accessionNumber: "0000950170-25-025233",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025025233/0000950170-25-025233-index.htm",
+      "/filings/mstr/0000950170-25-025233",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1200,7 +1200,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-03-10",
     accessionNumber: "0001193125-25-050411",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525050411/0001193125-25-050411-index.htm",
+      "/filings/mstr/0001193125-25-050411",
     type: "PREF",
     item: "3.03",
     section: "Material Modification to Rights of Security Holders",
@@ -1215,7 +1215,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-03-17",
     accessionNumber: "0000950170-25-039835",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025039835/0000950170-25-039835-index.htm",
+      "/filings/mstr/0000950170-25-039835",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1231,7 +1231,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-03-24",
     accessionNumber: "0000950170-25-043494",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025043494/0000950170-25-043494-index.htm",
+      "/filings/mstr/0000950170-25-043494",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1246,7 +1246,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-03-31",
     accessionNumber: "0000950170-25-047219",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025047219/0000950170-25-047219-index.htm",
+      "/filings/mstr/0000950170-25-047219",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1261,7 +1261,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-04-14",
     accessionNumber: "0000950170-25-053501",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025053501/0000950170-25-053501-index.htm",
+      "/filings/mstr/0000950170-25-053501",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1276,7 +1276,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-04-21",
     accessionNumber: "0000950170-25-056007",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025056007/0000950170-25-056007-index.htm",
+      "/filings/mstr/0000950170-25-056007",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1291,7 +1291,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-04-28",
     accessionNumber: "0000950170-25-058962",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000095017025058962/0000950170-25-058962-index.htm",
+      "/filings/mstr/0000950170-25-058962",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1307,7 +1307,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-05-01",
     accessionNumber: "0001193125-25-109959",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525109959/0001193125-25-109959-index.htm",
+      "/filings/mstr/0001193125-25-109959",
     type: "ATM",
     item: "1.01",
     section: "Sales Agreement",
@@ -1321,7 +1321,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-05-22",
     accessionNumber: "0001193125-25-124568",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525124568/0001193125-25-124568-index.htm",
+      "/filings/mstr/0001193125-25-124568",
     type: "PREF",
     item: "3.03",
     section: "Material Modification to Rights of Security Holders",
@@ -1335,7 +1335,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-07-07",
     accessionNumber: "0001193125-25-155918",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525155918/0001193125-25-155918-index.htm",
+      "/filings/mstr/0001193125-25-155918",
     type: "PREF",
     item: "3.03",
     section: "Material Modification to Rights of Security Holders",
@@ -1349,7 +1349,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-07-29",
     accessionNumber: "0001193125-25-167987",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525167987/0001193125-25-167987-index.htm",
+      "/filings/mstr/0001193125-25-167987",
     type: "PREF",
     item: "3.03",
     section: "Material Modification to Rights of Security Holders",
@@ -1365,7 +1365,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-11-04",
     accessionNumber: "0001193125-25-263914",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525263914/0001193125-25-263914-index.htm",
+      "/filings/mstr/0001193125-25-263914",
     type: "ATM",
     item: "1.01",
     section: "Sales Agreement",
@@ -1380,7 +1380,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-11-13",
     accessionNumber: "0001193125-25-280178",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525280178/0001193125-25-280178-index.htm",
+      "/filings/mstr/0001193125-25-280178",
     type: "PREF",
     item: "3.03",
     section: "Material Modification to Rights of Security Holders",
@@ -1399,7 +1399,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-05-05",
     accessionNumber: "0000950170-25-063168",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-063168-index.html",
+      "/filings/mstr/0000950170-25-063168",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1414,7 +1414,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-05-12",
     accessionNumber: "0000950170-25-068580",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-068580-index.html",
+      "/filings/mstr/0000950170-25-068580",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1429,7 +1429,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-05-19",
     accessionNumber: "0000950170-25-073962",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-073962-index.html",
+      "/filings/mstr/0000950170-25-073962",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1444,7 +1444,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-06-02",
     accessionNumber: "0000950170-25-080022",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-080022-index.html",
+      "/filings/mstr/0000950170-25-080022",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1459,7 +1459,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-06-09",
     accessionNumber: "0000950170-25-083448",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-083448-index.html",
+      "/filings/mstr/0000950170-25-083448",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1474,7 +1474,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-06-16",
     accessionNumber: "0000950170-25-086545",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-086545-index.html",
+      "/filings/mstr/0000950170-25-086545",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1490,7 +1490,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-06-23",
     accessionNumber: "0000950170-25-088711",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-088711-index.html",
+      "/filings/mstr/0000950170-25-088711",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1505,7 +1505,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-06-30",
     accessionNumber: "0000950170-25-091211",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-091211-index.html",
+      "/filings/mstr/0000950170-25-091211",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1529,7 +1529,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-07-14",
     accessionNumber: "0000950170-25-095461",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-095461-index.html",
+      "/filings/mstr/0000950170-25-095461",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1553,7 +1553,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-07-21",
     accessionNumber: "0000950170-25-097081",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-097081-index.html",
+      "/filings/mstr/0000950170-25-097081",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1577,7 +1577,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-08-04",
     accessionNumber: "0000950170-25-101634",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-101634-index.html",
+      "/filings/mstr/0000950170-25-101634",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1593,7 +1593,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-08-11",
     accessionNumber: "0000950170-25-106241",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-106241-index.html",
+      "/filings/mstr/0000950170-25-106241",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1614,7 +1614,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-08-18",
     accessionNumber: "0000950170-25-109566",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-109566-index.html",
+      "/filings/mstr/0000950170-25-109566",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1637,7 +1637,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-08-25",
     accessionNumber: "0000950170-25-111093",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-111093-index.html",
+      "/filings/mstr/0000950170-25-111093",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1661,7 +1661,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-09-08",
     accessionNumber: "0000950170-25-113360",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/0000950170-25-113360-index.html",
+      "/filings/mstr/0000950170-25-113360",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1684,7 +1684,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-09-15",
     accessionNumber: "0001193125-25-202827",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525202827/0001193125-25-202827-index.htm",
+      "/filings/mstr/0001193125-25-202827",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1707,7 +1707,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-09-22",
     accessionNumber: "0001193125-25-210048",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525210048/0001193125-25-210048-index.htm",
+      "/filings/mstr/0001193125-25-210048",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1729,7 +1729,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-09-29",
     accessionNumber: "0001193125-25-221772",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525221772/0001193125-25-221772-index.htm",
+      "/filings/mstr/0001193125-25-221772",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1753,7 +1753,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-10-20",
     accessionNumber: "0001193125-25-243049",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525243049/0001193125-25-243049-index.htm",
+      "/filings/mstr/0001193125-25-243049",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1776,7 +1776,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-10-27",
     accessionNumber: "0001193125-25-250751",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525250751/0001193125-25-250751-index.htm",
+      "/filings/mstr/0001193125-25-250751",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1799,7 +1799,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-11-03",
     accessionNumber: "0001193125-25-261714",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525261714/0001193125-25-261714-index.htm",
+      "/filings/mstr/0001193125-25-261714",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1824,7 +1824,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-11-10",
     accessionNumber: "0001193125-25-273310",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525273310/0001193125-25-273310-index.htm",
+      "/filings/mstr/0001193125-25-273310",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1848,7 +1848,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-11-17",
     accessionNumber: "0001193125-25-283991",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525283991/0001193125-25-283991-index.htm",
+      "/filings/mstr/0001193125-25-283991",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1872,7 +1872,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-12-01",
     accessionNumber: "0001193125-25-303157",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525303157/0001193125-25-303157-index.htm",
+      "/filings/mstr/0001193125-25-303157",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1891,7 +1891,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-12-08",
     accessionNumber: "0001193125-25-310607",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525310607/0001193125-25-310607-index.htm",
+      "/filings/mstr/0001193125-25-310607",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1911,7 +1911,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-12-15",
     accessionNumber: "0001193125-25-318468",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525318468/0001193125-25-318468-index.htm",
+      "/filings/mstr/0001193125-25-318468",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1935,7 +1935,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-12-22",
     accessionNumber: "0001193125-25-327598",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525327598/0001193125-25-327598-index.htm",
+      "/filings/mstr/0001193125-25-327598",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1952,7 +1952,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2025-12-29",
     accessionNumber: "0001193125-25-332296",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312525332296/0001193125-25-332296-index.htm",
+      "/filings/mstr/0001193125-25-332296",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1970,7 +1970,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2026-01-05",
     accessionNumber: "0001193125-26-001550",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/0001193125-26-001550-index.htm",
+      "/filings/mstr/0001193125-26-001550",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -1989,7 +1989,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2026-01-05",
     accessionNumber: "0001193125-26-001550",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312526001550/0001193125-26-001550-index.htm",
+      "/filings/mstr/0001193125-26-001550",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -2004,11 +2004,46 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     notes: "Jan 1-4 period (same filing as Dec 31 update)",
   },
   {
+    date: "2026-02-16",
+    filedDate: "2026-02-17",
+    accessionNumber: "0001193125-26-053105",
+    secUrl: "/filings/mstr/0001193125-26-053105",
+    type: "BTC",
+    item: "8.01",
+    section: "BTC Update",
+    description: "Weekly BTC Update - 43,348 BTC for $4.18B",
+    btcAcquired: 43348,
+    btcPurchasePrice: 4_180_000_000,
+    btcAvgPrice: 96428,
+    btcCumulative: 717131,
+  },
+  {
+    date: "2026-03-01",
+    filedDate: "2026-03-02",
+    accessionNumber: "0001193125-26-084264",
+    secUrl: "/filings/mstr/0001193125-26-084264",
+    type: "BTC",
+    item: "8.01",
+    section: "BTC Update",
+    description: "Weekly BTC Update (101st Purchase) - 3,015 BTC for $204.1M",
+    btcAcquired: 3015,
+    btcPurchasePrice: 204_100_000,
+    btcAvgPrice: 67695,
+    btcCumulative: 720737,
+    atmMstrShares: 1730563,
+    atmMstrProceeds: 229_900_000,
+    atmPrefSales: [
+      { ticker: "STRC", shares: 71590, proceeds: 7_100_000 }
+    ],
+    atmTotalProceeds: 237_000_000,
+    notes: "Feb 23 - March 1 period. Funded by ATM sales. Holdings now 720,737 BTC.",
+  },
+  {
     date: "2026-01-11",
     filedDate: "2026-01-12",
     accessionNumber: "0001193125-26-009811",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312526009811/0001193125-26-009811-index.htm",
+      "/filings/mstr/0001193125-26-009811",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -2028,7 +2063,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2026-01-20",
     accessionNumber: "0001193125-26-016002",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312526016002/0001193125-26-016002-index.htm",
+      "/filings/mstr/0001193125-26-016002",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -2052,7 +2087,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     filedDate: "2026-01-26",
     accessionNumber: "0001193125-26-021726",
     secUrl:
-      "https://www.sec.gov/Archives/edgar/data/1050446/000119312526021726/0001193125-26-021726-index.htm",
+      "/filings/mstr/0001193125-26-021726",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",
@@ -2072,7 +2107,7 @@ export const MSTR_CAPITAL_EVENTS: CapitalEvent[] = [
     date: "2026-02-08",
     filedDate: "2026-02-09",
     accessionNumber: "0001193125-26-041944",
-    secUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312526041944/d947535d8k.htm",
+    secUrl: "/filings/mstr/0001193125-26-041944",
     type: "BTC",
     item: "8.01",
     section: "BTC Update",

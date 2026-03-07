@@ -27,6 +27,13 @@ import { useCompanyMetricHistory } from "@/lib/hooks/use-company-metric-history"
 import { CompanyMetricHistorySection } from "@/components/company-metric-history";
 import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
+import { CitationPopover } from "@/components/ui/citation-popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { DataFlagBadge, FPIBadge } from "@/components/ui/data-flag-badge";
 import { cn } from "@/lib/utils";
 import { StalenessNote } from "@/components/staleness-note";
@@ -42,7 +49,11 @@ import {
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
-import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
+import { getCompanyMNAV, calculateTotalCryptoNAV } from "@/lib/math/mnav-engine";
+import { calculateStakingYield } from "@/lib/math/yield-engine";
+import { getDebtMaturity } from "@/lib/math/debt-engine";
+import { DebtMaturityChart } from "@/components/debt-maturity-chart";
+import { AdoptionTimeline } from "@/components/adoption-timeline";
 import { StockPriceCell } from "@/components/price-cell";
 import { FilingCite } from "@/components/wiki-citation";
 import { getCompanyIntel } from "@/lib/data/company-intel";
@@ -76,6 +87,7 @@ import { CostBasisCard } from "@/components/cost-basis-card";
 import { SECFilingTimeline } from "@/components/sec-filing-timeline";
 import { getSBETFilingsList, SBET_CIK } from "@/lib/data/provenance/sbet";
 
+import { ExternalLink, FileText, Star, ChevronDown, ChevronUp } from "lucide-react";
 // Asset colors
 const assetColors: Record<string, string> = {
   ETH: "bg-indigo-500/10 text-indigo-600 border-indigo-500/20",
@@ -155,10 +167,10 @@ export default function CompanyPage() {
 
   // D1-first overlay for allCompanies — same pattern as overview pages
   const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
-  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates } = useD1Fundamentals(allTickers);
+  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates, confidence: d1BatchConfidence } = useD1Fundamentals(allTickers);
   const allCompanies = useMemo(
-    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates),
-    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates]
+    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchConfidence),
+    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchConfidence]
   );
 
   // Calculate sidebar stats
@@ -241,6 +253,14 @@ export default function CompanyPage() {
   const companyFromAllCompanies = allCompanies.find(c => c.ticker === ticker);
   const displayCompany = companyFromAllCompanies || company;
 
+  // Determine average confidence for the audit summary
+  const avgConfidence = useMemo(() => {
+    if (!displayCompany?.confidenceScores) return null;
+    const scores = Object.values(displayCompany.confidenceScores).filter(s => s !== null) as number[];
+    if (scores.length === 0) return null;
+    return scores.reduce((a, b) => a + b, 0) / scores.length;
+  }, [displayCompany?.confidenceScores]);
+
   if (!displayCompany) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
@@ -260,7 +280,6 @@ export default function CompanyPage() {
   }
 
   // Use displayCompany (from allCompanies) for all calculations - same source as main page
-  const cryptoPrice = prices?.crypto[displayCompany.asset]?.price || 0;
   const stockData = prices?.stocks[displayCompany.ticker];
   const stockPrice = stockData?.price || 0;
   const stockChange = stockData?.change24h;
@@ -271,17 +290,19 @@ export default function CompanyPage() {
   const otherInvestments = displayCompany.otherInvestments ?? 0;
   const otherAssets = cashReserves + otherInvestments;
 
-  // Holdings (D1-first where possible)
-  const d1HoldingsNative = d1ByMetric.holdings_native?.value;
-  const d1HoldingsUsd = d1ByMetric.bitcoin_holdings_usd?.value;
-  const holdingsNative = (typeof d1HoldingsNative === 'number' && d1HoldingsNative > 0)
-    ? d1HoldingsNative
-    : (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0 && cryptoPrice > 0)
-      ? (d1HoldingsUsd / cryptoPrice)
-      : displayCompany.holdings;
+  // Calculate total crypto NAV using unified engine (multi-asset aware)
+  const { 
+    totalUsd: totalCryptoNav, 
+    primaryAssetAmount: holdingsNative, 
+    primaryAssetPrice: cryptoPrice,
+    secondaryCryptoValue
+  } = calculateTotalCryptoNAV(displayCompany, prices ?? null);
+
+  const cryptoHoldingsValue = holdingsNative * cryptoPrice;
+  const cryptoInvestmentsValue = totalCryptoNav - cryptoHoldingsValue;
 
   // Which tier resolved the holdings value?
-  const holdingsBasis = getHoldingsBasis(d1HoldingsNative, d1HoldingsUsd);
+  const holdingsBasis = getHoldingsBasis(d1ByMetric.holdings_native?.value, d1ByMetric.bitcoin_holdings_usd?.value);
   const d1Explain = d1ExplainInputs?.explain || {};
   const holdingsSourceUrlResolved =
     d1Explain.holdings_native?.receipt?.source_url ||
@@ -296,65 +317,24 @@ export default function CompanyPage() {
   const preferredSourceUrlResolved =
     d1Explain.preferred_equity_usd?.receipt?.source_url || displayCompany.preferredSourceUrl;
 
-  // Prefer native holdings from D1, derive USD from live price.
-  // Fallback to USD metric when native is absent.
-  const holdingsValueUsd = (typeof d1HoldingsNative === 'number' && d1HoldingsNative > 0 && cryptoPrice > 0)
-    ? (d1HoldingsNative * cryptoPrice)
-    : (typeof d1HoldingsUsd === 'number' && d1HoldingsUsd > 0)
-      ? d1HoldingsUsd
-      : (displayCompany.holdings * cryptoPrice);
-
-  const cryptoHoldingsValue = holdingsValueUsd;
-
-  // Calculate total crypto NAV including secondary holdings and crypto investments
-  let totalCryptoNav = cryptoHoldingsValue;
-  if (displayCompany.secondaryCryptoHoldings && prices) {
-    for (const holding of displayCompany.secondaryCryptoHoldings) {
-      const holdingPrice = prices.crypto[holding.asset]?.price || 0;
-      totalCryptoNav += holding.amount * holdingPrice;
-    }
-  }
-
-  // Crypto investments (fund/ETF/LST positions)
-  // - For LSTs: use dynamic exchange rate × lstAmount × cryptoPrice
-  // - For funds/ETFs: use fairValue (static USD value from SEC filing)
-  let cryptoInvestmentsValue = 0;
-  if (displayCompany.cryptoInvestments && prices) {
-    for (const investment of displayCompany.cryptoInvestments) {
-      if (investment.type === "lst" && investment.lstAmount) {
-        // LST: calculate using dynamic exchange rate if available
-        const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
-
-        // Get dynamic exchange rate from prices.lst or fall back to static
-        let exchangeRate = investment.exchangeRate || 1;
-        const lstRate = investment.lstConfigId ? prices?.lst?.[investment.lstConfigId] : undefined;
-        if (lstRate) {
-          exchangeRate = lstRate.exchangeRate;
-        }
-
-        const underlyingAmount = investment.lstAmount * exchangeRate;
-        cryptoInvestmentsValue += underlyingAmount * lstPrice;
-      } else if (investment.type === "lst" && investment.underlyingAmount) {
-        // LST with static underlyingAmount (legacy/fallback)
-        const lstPrice = prices.crypto[investment.underlyingAsset]?.price || 0;
-        cryptoInvestmentsValue += investment.underlyingAmount * lstPrice;
-      } else {
-        // Fund/ETF/equity: use fair value from balance sheet
-        cryptoInvestmentsValue += investment.fairValue;
-      }
-    }
-    totalCryptoNav += cryptoInvestmentsValue;
-  }
+  // Calculate staking yield and revenue offset
+  const stakingYield = calculateStakingYield(displayCompany, prices);
+  const { annualRevenueUsd, isSelfSustaining, yieldToBurnRatio } = stakingYield;
 
   // Leverage ratio = Net Debt / Crypto NAV (net debt = total debt - cash)
   const netDebt = Math.max(0, ((d1ByMetric.debt_usd?.value ?? displayCompany.totalDebt ?? 0)) - cashReserves);
   const debtToCryptoRatio = totalCryptoNav > 0 ? netDebt / totalCryptoNav : 0;
 
   // Calculate metrics (including other assets in NAV)
-  const nav = calculateNAV(holdingsNative, cryptoPrice, cashReserves, otherInvestments);
+  const nav = calculateNAV(holdingsNative, cryptoPrice, cashReserves, otherInvestments, secondaryCryptoValue);
 
   // mNAV uses shared function with displayCompany (same source as main page)
-  const mNAV = getCompanyMNAV(displayCompany, prices);
+  const mNAV = getCompanyMNAV(displayCompany, prices ?? null);
+
+  // Debt maturity stats
+  const debtStats = getDebtMaturity(displayCompany, stockPrice, annualRevenueUsd);
+  const debtDiscrepancy = Math.abs((displayCompany.totalDebt || 0) - debtStats.totalFaceValue);
+  const hasUnmodeledDebt = debtDiscrepancy > (displayCompany.totalDebt || 0) * 0.1;
 
   // Shares outstanding precedence (display-only: NAV/share, holdings/share):
   //   1. D1 basic_shares  – from useCompanyD1Latest, already split-normalized
@@ -368,7 +348,7 @@ export default function CompanyPage() {
     (marketCap && stockPrice ? marketCap / stockPrice : 0);
   const totalDebt = (d1ByMetric.debt_usd?.value ?? displayCompany.totalDebt ?? 0);
   const preferredEquity = (d1ByMetric.preferred_equity_usd?.value ?? displayCompany.preferredEquity ?? 0);
-  const navPerShare = calculateNAVPerShare(holdingsNative, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity);
+  const navPerShare = calculateNAVPerShare(holdingsNative, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments, totalDebt, preferredEquity, secondaryCryptoValue);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(holdingsNative, sharesOutstanding);
 
@@ -429,8 +409,30 @@ export default function CompanyPage() {
                   Shares: Company Reported
                 </Badge>
               )}
+              {isSelfSustaining && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="outline" className="font-bold bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30 animate-pulse cursor-help">
+                        ✨ Self-Sustaining
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs">
+                      <p className="text-sm font-bold text-green-600 mb-1">Treasury Yield Logic</p>
+                      <p className="text-xs">This company generates enough estimated gross staking yield (${formatLargeNumber(annualRevenueUsd)}/yr) to cover its operational burn ({(yieldToBurnRatio).toFixed(1)}x coverage).</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
-            <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{displayCompany.name}</p>
+            <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">
+              {displayCompany.name}
+              {displayCompany.datStartDate && (
+                <span className="ml-2 text-sm font-normal text-gray-400">
+                  • Tracking since {new Date(displayCompany.datStartDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                </span>
+              )}
+            </p>
 
             {/* Stale balance sheet banner */}
             {displayCompany.dataWarnings?.some(w => w.type === 'stale-data') && (
@@ -482,6 +484,14 @@ export default function CompanyPage() {
               >
                 <span>Earnings</span>
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+              </Link>
+              {/* Audit report link */}
+              <Link
+                href={`/company/${displayCompany.ticker}/audit`}
+                className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+              >
+                <span>Audit Report (PDF)</span>
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
               </Link>
               {/* Hide website/twitter for companies with custom views (they show in Strategy & Overview) */}
               {displayCompany.website && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX","DJT","FWDI","ABTC","NAKA","BTBT","UPXI","DFDV","HSDT","ALCPB","DCC.AX","DDC"].includes(displayCompany.ticker) && (
@@ -638,7 +648,17 @@ export default function CompanyPage() {
               >?</span>
             </p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
+              <CitationPopover
+                sourceUrl={displayCompany.holdingsSourceUrl}
+                sourceLabel={displayCompany.holdingsSource}
+                ticker={displayCompany.ticker}
+                metric="mnav"
+                confidenceScore={displayCompany.confidenceScores?.['mnav']}
+                jurisdiction={displayCompany.jurisdiction}
+                legacy={displayCompany.holdingsBasis === 'static_fallback'}
+              >
+                {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
+              </CitationPopover>
             </p>
             <p className="text-xs text-gray-400">
               {displayCompany.pendingMerger ? "N/A for pre-merger" : "EV / Crypto NAV"}
@@ -656,7 +676,17 @@ export default function CompanyPage() {
               "text-2xl font-bold",
               debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
             )}>
-              {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
+              <CitationPopover
+                sourceUrl={displayCompany.debtSourceUrl}
+                sourceLabel={displayCompany.debtSource}
+                ticker={displayCompany.ticker}
+                metric="debt_usd"
+                confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
+                jurisdiction={displayCompany.jurisdiction}
+                legacy={!displayCompany.debtSourceUrl}
+              >
+                {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
+              </CitationPopover>
             </p>
             <p className="text-xs text-gray-400 font-mono">
               {debtToCryptoRatio >= 1 ? (
@@ -679,7 +709,17 @@ export default function CompanyPage() {
               >?</span>
             </p>
             <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {navPerShare ? `$${navPerShare.toFixed(2)}` : "—"}
+              <CitationPopover
+                sourceUrl={displayCompany.sharesSourceUrl}
+                sourceLabel={displayCompany.sharesSource}
+                ticker={displayCompany.ticker}
+                metric="basic_shares"
+                confidenceScore={displayCompany.confidenceScores?.['basic_shares']}
+                jurisdiction={displayCompany.jurisdiction}
+                legacy={!displayCompany.sharesSourceUrl}
+              >
+                {navPerShare ? `$${navPerShare.toFixed(2)}` : "—"}
+              </CitationPopover>
             </p>
             <p className="text-xs text-gray-400">
               {navPerShare && displayCompany.sharesForMnav ? (
@@ -817,12 +857,17 @@ export default function CompanyPage() {
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
               <p className="text-2xl font-bold text-orange-600">
-                +{displayCompany.btcMinedAnnual.toLocaleString()}
-                <SourceLink
-                  url={displayCompany.btcMinedSourceUrl}
-                  label={displayCompany.btcMinedSource}
+                <CitationPopover
+                  sourceUrl={displayCompany.btcMinedSourceUrl}
+                  sourceLabel={displayCompany.btcMinedSource}
                   ticker={displayCompany.ticker}
-                />
+                  metric="holdings_native"
+                  confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
+                  jurisdiction={displayCompany.jurisdiction}
+                  legacy={!displayCompany.btcMinedSourceUrl}
+                >
+                  +{displayCompany.btcMinedAnnual.toLocaleString()}
+                </CitationPopover>
               </p>
               <p className="text-xs text-gray-400">BTC/yr</p>
             </div>
@@ -963,13 +1008,34 @@ export default function CompanyPage() {
                     >?</span>
                   </p>
                   <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                    {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}
+                    <CitationPopover
+                      sourceUrl={displayCompany.holdingsSourceUrl}
+                      sourceLabel={displayCompany.holdingsSource}
+                      ticker={displayCompany.ticker}
+                      metric="holdings_native"
+                      confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
+                      jurisdiction={displayCompany.jurisdiction}
+                      legacy={displayCompany.holdingsBasis === 'static_fallback'}
+                    >
+                      {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}
+                    </CitationPopover>
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
                   <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
-                    {formatLargeNumber(marketCap)}
+                    <CitationPopover
+                      sourceUrl={displayCompany.sharesSourceUrl}
+                      sourceLabel={displayCompany.sharesSource}
+                      sourceQuote={displayCompany.sharesSourceQuote}
+                      ticker={displayCompany.ticker}
+                      metric="basic_shares"
+                      confidenceScore={displayCompany.confidenceScores?.['basic_shares']}
+                      jurisdiction={displayCompany.jurisdiction}
+                      legacy={!displayCompany.sharesSourceUrl}
+                    >
+                      {formatLargeNumber(marketCap)}
+                    </CitationPopover>
                   </p>
                 </div>
               </div>
@@ -979,7 +1045,17 @@ export default function CompanyPage() {
             <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 mb-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">How it&apos;s calculated</p>
               <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
-                <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
+                <CitationPopover
+                  sourceUrl={holdingsSourceUrlResolved}
+                  sourceLabel={displayCompany.holdingsSource}
+                  ticker={displayCompany.ticker}
+                  metric="holdings_native"
+                  confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
+                  jurisdiction={displayCompany.jurisdiction}
+                  legacy={displayCompany.holdingsBasis === 'static_fallback'}
+                >
+                  <span className="text-gray-900 dark:text-gray-100">{formatLargeNumber(cryptoHoldingsValue)}</span>
+                </CitationPopover>
                 <span className="text-gray-400"> {displayCompany.asset}</span>
                 {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
                   // Get dynamic exchange rate if available
@@ -1006,19 +1082,51 @@ export default function CompanyPage() {
                 })}
                 {cashReserves > 0 && (
                   <>
-                    <span className="text-green-600"> + {formatLargeNumber(cashReserves)}</span>
+                    <CitationPopover
+                      sourceUrl={cashSourceUrlResolved}
+                      sourceLabel={displayCompany.cashSource}
+                      ticker={displayCompany.ticker}
+                      metric="cash_usd"
+                      confidenceScore={displayCompany.confidenceScores?.['cash_usd']}
+                      jurisdiction={displayCompany.jurisdiction}
+                      legacy={!cashSourceUrlResolved}
+                    >
+                      <span className="text-green-600"> + {formatLargeNumber(cashReserves)}</span>
+                    </CitationPopover>
                     <span className="text-gray-400"> cash</span>
                   </>
                 )}
                 {totalDebt > 0 && (
                   <>
-                    <span className="text-red-600"> − {formatLargeNumber(totalDebt)}</span>
+                    <CitationPopover
+                      sourceUrl={debtSourceUrlResolved}
+                      sourceLabel={displayCompany.debtSource}
+                      sourceQuote={displayCompany.debtSourceQuote}
+                      ticker={displayCompany.ticker}
+                      metric="debt_usd"
+                      confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
+                      jurisdiction={displayCompany.jurisdiction}
+                      legacy={!debtSourceUrlResolved}
+                    >
+                      <span className="text-red-600"> − {formatLargeNumber(totalDebt)}</span>
+                    </CitationPopover>
                     <span className="text-gray-400"> debt</span>
                   </>
                 )}
                 {preferredEquity > 0 && (
                   <>
-                    <span className="text-red-600"> − {formatLargeNumber(preferredEquity)}</span>
+                    <CitationPopover
+                      sourceUrl={preferredSourceUrlResolved}
+                      sourceLabel={displayCompany.preferredSource}
+                      sourceQuote={displayCompany.preferredSourceQuote}
+                      ticker={displayCompany.ticker}
+                      metric="preferred_equity_usd"
+                      confidenceScore={displayCompany.confidenceScores?.['preferred_equity_usd']}
+                      jurisdiction={displayCompany.jurisdiction}
+                      legacy={!preferredSourceUrlResolved}
+                    >
+                      <span className="text-red-600"> − {formatLargeNumber(preferredEquity)}</span>
+                    </CitationPopover>
                     <span className="text-gray-400"> preferred</span>
                   </>
                 )}
@@ -1044,22 +1152,25 @@ export default function CompanyPage() {
                   {displayCompany.asset} Holdings {cryptoInvestmentsValue > 0 && "(Direct)"}
                 </p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  {formatLargeNumber(cryptoHoldingsValue)}
-                  {holdingsSourceUrlResolved ? (
-                    <SourceLink
-                      url={holdingsSourceUrlResolved}
-                      label={displayCompany.holdingsSource}
-                      ticker={displayCompany.ticker}
-                      metric="holdings_native"
-                    />
-                  ) : displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
+                  <CitationPopover
+                    sourceUrl={holdingsSourceUrlResolved}
+                    sourceLabel={displayCompany.holdingsSource}
+                    ticker={displayCompany.ticker}
+                    metric="holdings_native"
+                    confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
+                    jurisdiction={displayCompany.jurisdiction}
+                    legacy={displayCompany.holdingsBasis === 'static_fallback'}
+                  >
+                    {formatLargeNumber(cryptoHoldingsValue)}
+                  </CitationPopover>
+                  {!holdingsSourceUrlResolved && displayCompany.ticker === "MSTR" && displayCompany.holdingsSource === "sec-filing" ? (
                     <FilingCite 
                       ticker="MSTR" 
                       date="2026-02-02" 
                       anchor="btc-holdings"
                       filingType="8-K"
                     />
-                  ) : displayCompany.ticker === "BMNR" && displayCompany.holdingsSource === "sec-filing" ? (
+                  ) : !holdingsSourceUrlResolved && displayCompany.ticker === "BMNR" && displayCompany.holdingsSource === "sec-filing" ? (
                     <FilingCite 
                       ticker="BMNR" 
                       date="2026-02-01" 
@@ -1072,6 +1183,80 @@ export default function CompanyPage() {
                   {formatTokenAmount(displayCompany.holdings, displayCompany.asset)}
                 </p>
               </div>
+
+              {/* Audit & Verification Summary */}
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-blue-200 dark:border-blue-900/30">
+                <p className="text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wide">Audit Status</p>
+                <div className="mt-1 flex items-center justify-between">
+                  <span className={cn(
+                    "text-xs font-bold px-2 py-0.5 rounded uppercase tracking-tighter",
+                    (avgConfidence || 0) >= 0.85 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"
+                  )}>
+                    { (avgConfidence || 0) >= 0.85 ? "Institutionally Verified" : "Community Verified" }
+                  </span>
+                  <span className="text-xs font-mono text-gray-500">
+                    {avgConfidence !== null ? Math.round(avgConfidence * 100) + "%" : "N/A"}
+                  </span>
+                </div>
+                <div className="mt-3 flex flex-col gap-2">
+                  <Link 
+                    href={`/company/${displayCompany.ticker}/audit`}
+                    className="text-[10px] font-bold text-blue-600 hover:underline flex items-center gap-1"
+                  >
+                    <FileText size={10} /> View Full Audit Report (PDF)
+                  </Link>
+                  <a 
+                    href={`/api/company/${displayCompany.ticker}/audit-report?format=json`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[10px] font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 flex items-center gap-1"
+                  >
+                    <div className="w-1 h-1 rounded-full bg-gray-400" /> Inspect Raw Payload (JSON)
+                  </a>
+                </div>
+              </div>
+
+              {/* Annual Staking Revenue (if applicable) */}
+              {annualRevenueUsd > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-green-200 dark:border-green-900/30">
+                  <p className="text-xs text-green-600 dark:text-green-400 uppercase tracking-wide flex items-center gap-1">
+                    Est. Gross Yield
+                    {isSelfSustaining && <span title="Covers 100%+ of burn">✨</span>}
+                  </p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="cursor-help border-b border-dotted border-gray-300">
+                            ${formatLargeNumber(annualRevenueUsd)}
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent className="p-0 border-none shadow-none">
+                          <div className="bg-gray-900 text-white p-3 rounded-lg shadow-xl w-64">
+                            <p className="font-bold mb-2 border-b border-gray-700 pb-1">Yield Breakdown</p>
+                            <div className="space-y-1">
+                              {stakingYield.breakdown.map((b, i) => (
+                                <div key={i} className="flex justify-between text-[10px]">
+                                  <span>{b.asset} staking</span>
+                                  <span>${formatLargeNumber(b.annualYieldUsd)}/yr</span>
+                                </div>
+                              ))}
+                              <div className="mt-2 pt-1 border-t border-gray-700 flex justify-between text-xs font-bold text-green-400">
+                                <span>Total Gross Yield</span>
+                                <span>${formatLargeNumber(annualRevenueUsd)}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    Annual Network Revenue
+                  </p>
+                </div>
+              )}
+
               {/* Crypto fund/ETF/LST investments */}
               {displayCompany.cryptoInvestments && displayCompany.cryptoInvestments.map((investment, idx) => {
                 // Get dynamic exchange rate if available, otherwise use static
@@ -1129,31 +1314,34 @@ export default function CompanyPage() {
                     Cash Reserves <DataFlagBadge flags={displayCompany.dataFlags} field="cash" />
                   </p>
                   <p className="text-lg font-bold text-green-600">
-                    +{formatLargeNumber(cashReserves)}
-                    {cashSourceUrlResolved ? (
-                      <SourceLink
-                        url={cashSourceUrlResolved}
-                        label={displayCompany.cashSource}
-                        ticker={displayCompany.ticker}
-                        metric="cash_usd"
-                      />
-                    ) : displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
-                      <FilingCite 
-                        ticker="MSTR" 
-                        date="2026-01-05" 
-                        anchor="cash-reserves"
-                        filingType="8-K"
-                      />
-                    ) : displayCompany.ticker === "BMNR" && displayCompany.cashAsOf ? (
-                      <FilingCite 
-                        ticker="BMNR" 
-                        date="2026-02-01" 
-                        anchor="holdings"
-                        filingType="8-K"
-                      />
-                    ) : null}
-                  </p>
-                  <p className="text-xs text-gray-400">USD</p>
+                   <CitationPopover
+                     sourceUrl={cashSourceUrlResolved}
+                     sourceLabel={displayCompany.cashSource}
+                     sourceQuote={displayCompany.cashSourceQuote}
+                     ticker={displayCompany.ticker}
+                     metric="cash_usd"
+                     confidenceScore={displayCompany.confidenceScores?.['cash_usd']}
+                     jurisdiction={displayCompany.jurisdiction}
+                     legacy={!cashSourceUrlResolved}
+                   >
+                     +{formatLargeNumber(cashReserves)}
+                   </CitationPopover>
+                   {!cashSourceUrlResolved && displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
+                     <FilingCite 
+                       ticker="MSTR" 
+                       date="2026-01-05" 
+                       anchor="cash-reserves"
+                       filingType="8-K"
+                     />
+                   ) : !cashSourceUrlResolved && displayCompany.ticker === "BMNR" && displayCompany.cashAsOf ? (
+                     <FilingCite 
+                       ticker="BMNR" 
+                       date="2026-02-01" 
+                       anchor="holdings"
+                       filingType="8-K"
+                     />
+                   ) : null}
+                  </p>                  <p className="text-xs text-gray-400">USD</p>
                 </div>
               )}
               {totalDebt > 0 && (() => {
@@ -1168,15 +1356,18 @@ export default function CompanyPage() {
                       Total Debt <DataFlagBadge flags={displayCompany.dataFlags} field="debt" />
                     </p>
                     <p className="text-lg font-bold text-red-600">
-                      −{formatLargeNumber(totalDebt)}
-                      {debtSourceUrlResolved ? (
-                        <SourceLink
-                          url={debtSourceUrlResolved}
-                          label={displayCompany.debtSource}
-                          ticker={displayCompany.ticker}
-                          metric="debt_usd"
-                        />
-                      ) : displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
+                      <CitationPopover
+                        sourceUrl={debtSourceUrlResolved}
+                        sourceLabel={displayCompany.debtSource}
+                        ticker={displayCompany.ticker}
+                        metric="debt_usd"
+                        confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
+                        jurisdiction={displayCompany.jurisdiction}
+                        legacy={!debtSourceUrlResolved}
+                      >
+                        −{formatLargeNumber(totalDebt)}
+                      </CitationPopover>
+                      {!debtSourceUrlResolved && displayCompany.ticker === "MSTR" && displayCompany.debtAsOf ? (
                         <FilingCite 
                           ticker="MSTR" 
                           date="2025-11-03" 
@@ -1203,15 +1394,19 @@ export default function CompanyPage() {
                     Preferred Equity
                   </p>
                   <p className="text-lg font-bold text-red-600">
-                    −{formatLargeNumber(preferredEquity)}
-                    {preferredSourceUrlResolved ? (
-                      <SourceLink
-                        url={preferredSourceUrlResolved}
-                        label={displayCompany.preferredSource}
-                        ticker={displayCompany.ticker}
-                        metric="preferred_equity_usd"
-                      />
-                    ) : displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
+                    <CitationPopover
+                      sourceUrl={preferredSourceUrlResolved}
+                      sourceLabel={displayCompany.preferredSource}
+                      sourceQuote={displayCompany.preferredSourceQuote}
+                      ticker={displayCompany.ticker}
+                      metric="preferred_equity_usd"
+                      confidenceScore={displayCompany.confidenceScores?.['preferred_equity_usd']}
+                      jurisdiction={displayCompany.jurisdiction}
+                      legacy={!preferredSourceUrlResolved}
+                    >
+                      −{formatLargeNumber(preferredEquity)}
+                    </CitationPopover>
+                    {!preferredSourceUrlResolved && displayCompany.ticker === "MSTR" && displayCompany.preferredAsOf ? (
                       <FilingCite 
                         ticker="MSTR" 
                         date="2026-01-26" 
@@ -1370,6 +1565,60 @@ export default function CompanyPage() {
             />
           </div>
         )}
+
+        {/* Liquidity & Debt Section */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 uppercase tracking-tight">
+              Liquidity &amp; Debt
+            </h2>
+            {hasUnmodeledDebt && (
+              <Badge variant="outline" className="bg-amber-100 text-amber-700 border-amber-200">
+                ⚠️ {formatLargeNumber(debtDiscrepancy)} Unmodeled Debt
+              </Badge>
+            )}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <DebtMaturityChart stats={debtStats} />
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+              <h3 className="font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-tight mb-4">Solvency &amp; Interest</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-[10px] text-gray-500 uppercase mb-1">Interest Coverage Ratio</p>
+                  <p className={cn(
+                    "text-2xl font-bold",
+                    annualRevenueUsd > (debtStats.annualInterestExpense || 0) ? "text-green-600" : "text-amber-600"
+                  )}>
+                    {debtStats.annualInterestExpense > 0 
+                      ? (annualRevenueUsd / debtStats.annualInterestExpense).toFixed(1) + "x"
+                      : "∞"}
+                  </p>
+                  <p className="text-xs text-gray-400">Yield Revenue / Annual Interest</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-500 uppercase mb-1">Maturity Risk</p>
+                  <p className={cn(
+                    "text-2xl font-bold",
+                    debtStats.maturityConcentration > 0.3 ? "text-red-600" : "text-gray-900 dark:text-gray-100"
+                  )}>
+                    {debtStats.maturityConcentration > 0.3 ? "HIGH" : "LOW"}
+                  </p>
+                  <p className="text-xs text-gray-400">{formatPercent(debtStats.maturityConcentration)} of principal due &lt; 24mo</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Company Journey (Adoption Milestones) */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 uppercase tracking-tight mb-4">
+            Company Journey
+          </h2>
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+            <AdoptionTimeline ticker={displayCompany.ticker} />
+          </div>
+        </div>
 
         {/* Holdings History Table - shows each acquisition with SEC links */}
         <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">

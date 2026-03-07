@@ -52,16 +52,19 @@ const LATEST_HOLDINGS = SOL_10Q_NOTE10;  // Most current — 10-Q Subsequent Eve
 const LATEST_HOLDINGS_DATE = "2025-11-18";
 
 // Shares
-// Use Sep 30 consistent date for both basic and PFWs to avoid double-counting PFW exercises
-// Sep 30 basic: 40,299,228 (balance sheet) — Nov 17 cover page shows 41,301,400 (includes ~1M PFW exercises)
-// Sep 30 PFWs: 35,627,639 (Note 6 warrant table)
-// Total: 75,926,867 (40,299,228 + 35,627,639) — press release rounds to "75.9 million"
-// Pre-funded warrants at $0.001 are economically equivalent to shares
-const SHARES_BASIC_SEP30 = 40_299_228;  // Balance sheet Sep 30
-const SHARES_BASIC_NOV17 = 41_301_400;  // Cover page Nov 17 (includes PFW exercises)
-const PREFUNDED_WARRANTS = 35_627_639;  // 10-Q Note 6 warrant table (Sep 30)
-const SHARES_FOR_MNAV = 75_926_867;  // Sep 30 basic + Sep 30 PFWs (consistent date)
-const SHARES_DATE = "2025-09-30";
+// Feb 20, 2026 8-K (accn 0001104659-26-018212):
+//   52,802,604 Class A common shares issued and outstanding
+//   23,930,181 pre-funded warrants outstanding
+//   Total: 76,732,785
+// Change from Sep 30: basic +12.5M (ATM issuance), PFWs -11.7M (exercised into common), net +806K
+// Prior (Sep 30): 40,299,228 basic + 35,627,639 PFWs = 75,926,867
+const FEB20_8K_ACCESSION = "0001104659-26-018212";
+const SHARES_BASIC_FEB20 = 52_802_604;  // 8-K Feb 20, 2026
+const SHARES_BASIC_SEP30 = 40_299_228;  // Balance sheet Sep 30 (historical)
+const SHARES_BASIC_NOV17 = 41_301_400;  // Cover page Nov 17 (historical)
+const PREFUNDED_WARRANTS = 23_930_181;  // 8-K Feb 20, 2026 (was 35,627,639 at Sep 30)
+const SHARES_FOR_MNAV = 76_732_785;  // Feb 20 basic + Feb 20 PFWs
+const SHARES_DATE = "2026-02-20";
 
 // Financial data (Q3 2025 10-Q XBRL + Oct 29 8-K update)
 // XBRL Sep 30: $124,051,000. But 10-Q Note 10 shows $124.6M spent on SOL post-Q3.
@@ -98,7 +101,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "2,340,757 SOL",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
+      url: `/filings/hsdt/0001104659-25-113714`,
       quote: "the Company held directly or had rights to 2,340,757 SOL",
       anchor: "SOL Holdings",
       cik: HSDT_CIK,
@@ -114,17 +117,17 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     SHARES_FOR_MNAV,
     docSource({
       type: "sec-document",
-      searchTerm: "40,299,228",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
-      quote: "40,299,228 shares issued and outstanding as of September 30, 2025",
+      searchTerm: "52,802,604",
+      url: `/filings/hsdt/0001104659-26-018212`,
+      quote: "52,802,604 shares of Class A common stock issued and outstanding; 23,930,181 pre-funded warrants outstanding",
       anchor: "Shares Outstanding",
       cik: HSDT_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
+      accession: FEB20_8K_ACCESSION,
+      filingType: "8-K",
+      filingDate: "2026-02-20",
       documentDate: SHARES_DATE,
     }),
-    `Basic: ${SHARES_BASIC_SEP30.toLocaleString()} (Sep 30 balance sheet) + PFWs: ${PREFUNDED_WARRANTS.toLocaleString()} @ $0.001 (Note 6 warrant table Sep 30) = ${SHARES_FOR_MNAV.toLocaleString()}. Consistent Sep 30 date avoids PFW exercise double-counting. Press release rounds to "75.9M". Nov 17 cover: ${SHARES_BASIC_NOV17.toLocaleString()} (includes ~1M exercised PFWs).`
+    `8-K Feb 20, 2026: ${SHARES_BASIC_FEB20.toLocaleString()} basic + ${PREFUNDED_WARRANTS.toLocaleString()} PFWs @ $0.001 = ${SHARES_FOR_MNAV.toLocaleString()}. Prior (Sep 30): 40.3M basic + 35.6M PFWs = 75.9M. PFW exercises converted ~11.7M to common; net +806K from ATM issuance.`
   ),
 
   totalDebt: pv(
@@ -150,7 +153,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "$15 million",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925103714/hsdt-20251029xex99d1.htm`,
+      url: `/filings/hsdt/0001104659-25-103714`,
       quote: "more than $15 million of cash and stablecoins",
       anchor: "Cash",
       cik: HSDT_CIK,
@@ -185,7 +188,7 @@ export const HSDT_PROVENANCE: ProvenanceFinancials = {
     PREFERRED_EQUITY,
     docSource({
       type: "sec-document",
-      url: `https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm`,
+      url: `/filings/hsdt/0001104659-25-113714`,
       quote: "No preferred stock line item on balance sheet",
       anchor: "Preferred Stock",
       cik: HSDT_CIK,
@@ -205,8 +208,9 @@ export const HSDT_PROVENANCE_DEBUG = {
   holdingsDate: LATEST_HOLDINGS_DATE,
   sharesDate: SHARES_DATE,
   balanceSheetDate: Q3_2025_PERIOD_END,
-  lastFilingChecked: Q3_2025_10Q_FILED,
+  lastFilingChecked: "2026-02-20",
   holdings: LATEST_HOLDINGS,
+  sharesBasicFeb20: SHARES_BASIC_FEB20,
   sharesBasicSep30: SHARES_BASIC_SEP30,
   sharesBasicNov17: SHARES_BASIC_NOV17,
   sharesFD: SHARES_FOR_MNAV,
@@ -214,7 +218,7 @@ export const HSDT_PROVENANCE_DEBUG = {
   totalDebt: TOTAL_DEBT,
   cash: CASH,
   quarterlyBurn: QUARTERLY_BURN,
-  notes: "Holdings from 10-Q Note 10 (Nov 18). 10-K FY2025 expected ~Mar 2026. Dilutives: 73.9M stapled @ $10.134, 7.4M advisor @ $0.001, 617 HSDTW @ $6.756.",
+  notes: "Shares updated from 8-K Feb 20, 2026. Holdings still from 10-Q Note 10 (Nov 18) — STALE, likely higher after continued ATM-funded SOL purchases. Cash ($15M) from Oct 29, 2025 8-K — STALE. 10-K FY2025 expected ~Mar 2026 will update all fields. Dilutives: 73.9M stapled @ $10.134, 7.4M advisor @ $0.001, 617 HSDTW @ $6.756.",
 };
 
 // =========================================================================

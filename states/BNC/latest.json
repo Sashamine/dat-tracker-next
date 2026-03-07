@@ -3,7 +3,7 @@
   "ticker": "BNC",
   "secCik": "0001482541",
   "asOf": "2026-01-28",
-  "generatedAt": "2026-03-05T20:22:40.129Z",
+  "generatedAt": "2026-03-07T00:36:04.389Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -24,7 +24,7 @@
     "asOf": "2025-12-12",
     "source": {
       "sharesSource": "SEC 10-Q (filed 2025-12-15): EntityCommonStockSharesOutstanding = 44,062,938 as of 2025-12-12",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm"
+      "sharesSourceUrl": "/filings/bnc/0001493152-25-027782"
     }
   },
   "balanceSheet": {
@@ -34,7 +34,7 @@
     "preferredEquity": null,
     "asOf": "2025-10-31",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1482541/000149315225027782/form10-q.htm",
+      "cashSourceUrl": "/filings/bnc/0001493152-25-027782",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

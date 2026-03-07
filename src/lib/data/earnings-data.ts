@@ -7,12 +7,20 @@
 // exactly what period the data covers.
 //
 // Legacy fiscal year mappings (kept for backwards compatibility):
-// - (CLSK removed - not a HODL treasury, 83% BTC classified as current/for-sale)
+// - (CLSK re-added Feb 2026: Maintaining 13.5k BTC HODL despite AI pivot)
+// - (RIOT removed Mar 2026: Pivoted to reserve liquidation; authorized selling balance sheet BTC to fund AI/HPC CapEx)
+// - (IREN removed Mar 2026: Non-accumulator; liquidates 100% of mined BTC daily to fund AI expansion)
+// - (CORZ removed Mar 2026: Non-accumulator; authorized monetization of substantially all remaining BTC in 2026 to fund AI pivot)
+// - (WULF removed Mar 2026: Non-accumulator; sells production to fund $12.8B AI/HPC infrastructure backlog)
+// - (CIFR removed Mar 2026: Non-accumulator; rebranded to Cipher Digital; authorized full liquidation of BTC by end of 2026 to fund AI/HPC pivot)
+// - (BTDR removed Mar 2026: Non-accumulator; 100% liquidation of BTC treasury as of Feb 20, 2026 to fund AI/HPC scaling)
+// - (HIVE removed 2026-02-02 - not a DAT accumulator)
 // - All others use calendar year (fiscal = calendar)
 
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter, YieldPeriod } from "../types";
 import { allCompanies } from "./companies";
-import { HOLDINGS_HISTORY, calculateHoldingsGrowth } from "./holdings-history";
+import { calculateHoldingsGrowth } from "../utils";
+const HOLDINGS_HISTORY: Record<string, any> = {};
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
 import { getBMNRQuarterEndData } from "./bmnr-holdings-history";
@@ -115,7 +123,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     ...getMSTRQuarterData(2025, 4),
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000020/mstr-20251231.htm",
+    sourceUrl: "/filings/mstr/0001050446-26-000020",
     status: "reported",
   },
   // Q3 2025
@@ -134,7 +142,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     netIncome: 2_785_024_000,
     ...getMSTRQuarterData(2025, 3),
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1050446/000119312525262568/0001193125-25-262568-index.htm",
+    sourceUrl: "/filings/mstr/0001193125-25-262568",
     status: "reported",
   },
   // Q2 2025
@@ -960,7 +968,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 45_674_420,  // Post-split shares (SEC 10-Q cover page, XBRL-verified)
     holdingsPerShare: 0.0000231,  // 1057 / 45,674,420
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm",
+    sourceUrl: "/filings/kulr/0001104659-25-113662",
     status: "reported",
   },
   // Q2 2025 - Verified 2026-01-29
@@ -982,7 +990,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 41_108_543,  // Post-split shares
     holdingsPerShare: 0.0000224,  // 920 / 41.1M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001816/tmb-20250630x10q.htm",
+    sourceUrl: "/filings/kulr/0001410578-25-001816",
     status: "reported",
   },
   // Q1 2025 - Added 2026-01-29
@@ -999,7 +1007,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 284_389_637,  // Pre-split shares
     holdingsPerShare: 0.00000235,  // 668 / 284.4M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825001326/tmb-20250331x10q.htm",
+    sourceUrl: "/filings/kulr/0001410578-25-001326",
     status: "reported",
   },
   // Q4 2024 - Verified 2026-01-29
@@ -1022,7 +1030,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 214_227_808,  // Pre-split shares from Dec 26 8-K
     holdingsPerShare: 0.00000101,  // 217 / 214.2M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000141057825000383/0001410578-25-000383-index.htm",
+    sourceUrl: "/filings/kulr/0001410578-25-000383",
     status: "reported",
   },
 
@@ -1046,7 +1054,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 15_504_809,  // 6-K Q4 weighted avg basic ADS
     holdingsPerShare: 0.0001379,  // 2139 / 15,504,809
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm",
+    sourceUrl: "/filings/meta3350/0001383395-26-000013",
     status: "reported",
   },
   // Q3 2025 - Peak holdings before Nov sale
@@ -1062,7 +1070,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 13_933_963,  // SEC 6-K Q3 2025 weighted avg basic ADS
     holdingsPerShare: 0.0002321,  // 3234 / 13.93M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339525000116/form6-kq3x2025.htm",
+    sourceUrl: "/filings/meta3350/0001383395-25-000116",
     status: "reported",
   },
 
@@ -1137,7 +1145,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 511_555_864,  // 439.85M shares + 71.7M pre-funded warrants
     holdingsPerShare: 0.00001055,  // 5,398 / 511,555,864
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000149315225024314/ex99-1.htm",
+    sourceUrl: "/filings/naka/0001493152-25-024314",
     status: "reported",
   },
   // Q2 2025 - 10-Q filed Aug 5, 2025 (first quarter with BTC strategy; merger completed Aug 2025)
@@ -1154,7 +1162,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 7_606_339,  // XBRL Q2 2025 cover page (EntityCommonStockSharesOutstanding)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1946573/000164117225022128/form10-q.htm",
+    sourceUrl: "/filings/naka/0001641172-25-022128",
     status: "reported",
   },
 
@@ -1286,7 +1294,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 63_048_519,  // Feb 13, 2026 8-K: Class A 53,168,237 + Class B 9,880,282 (post-split)
     holdingsPerShare: 0.0002083,  // 13132 / 63,048,519
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm",
+    sourceUrl: "/filings/asst/0001628280-26-007897",
     status: "upcoming",
   },
   // Q3 2025 - SEC 10-Q (Sep 30, 2025)
@@ -1304,7 +1312,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 40_774_181,  // Post-split adjusted: 815,483,610 / 20
     holdingsPerShare: 0.0001444,  // 5886 / 40,774,181
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/0001628280-25-052343-index.htm",
+    sourceUrl: "/filings/asst/0001628280-25-052343",
     status: "reported",
   },
 
@@ -1336,7 +1344,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 346_548_153,  // Class A only — Class B has no economic rights
     holdingsPerShare: 0.0001256,  // 43,514 / 346,548,153
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/2070457/000121390025121293/ea0269460-8k_twenty.htm",
+    sourceUrl: "/filings/xxi/0001213900-25-121293",
     status: "upcoming",  // 10-K not yet filed
   },
 
@@ -1727,7 +1735,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 25_000_000,
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1829311/000168316825004889/bitmine_i10q-053125.htm",
+    sourceUrl: "/filings/bmnr/0001683168-25-004889",
     status: "reported",
   },
 
@@ -1755,7 +1763,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 50_298_201,  // Q3 diluted + estimated small increase
     holdingsPerShare: 0.001402,  // 70500 / 50298201
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315226000734/form8-k.htm",
+    sourceUrl: "/filings/btcs/0001493152-26-000734",
     status: "upcoming",
   },
   // Q3 2025 - Major ETH accumulation quarter (380% growth)
@@ -1776,7 +1784,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 50_298_201,  // SEC XBRL WeightedAverageNumberOfDilutedSharesOutstanding
     holdingsPerShare: 0.001398,  // 70322 / 50298201
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000149315225022359/form10-q.htm",
+    sourceUrl: "/filings/btcs/0001493152-25-022359",
     status: "reported",
   },
   // Q2 2025
@@ -1797,7 +1805,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 27_938_660,  // SEC XBRL Q2 2025 diluted
     holdingsPerShare: 0.000526,  // 14700 / 27938660
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1436229/000164117225023517/form10-q.htm",
+    sourceUrl: "/filings/btcs/0001641172-25-023517",
     status: "reported",
   },
   // Q4 2024
@@ -1849,7 +1857,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 196_693_191,  // SEC XBRL EntityCommonStockSharesOutstanding at Nov 12 filing
     holdingsPerShare: 0.004390,  // 863424 / 196693191
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225028063/form8-k.htm",
+    sourceUrl: "/filings/sbet/0001493152-25-028063",
     status: "upcoming",  // Full financials (EPS, revenue) pending 10-K in March
   },
   // Q3 2025 - First full quarter post-ETH pivot (filed 2025-11-12)
@@ -1868,7 +1876,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 192_193_183,  // SEC XBRL CommonStockSharesOutstanding at Sep 30, 2025
     holdingsPerShare: 0.004255,  // 817747 / 192193183
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000149315225021970/form10-q.htm",
+    sourceUrl: "/filings/sbet/0001493152-25-021970",
     status: "reported",
   },
   // Q2 2025 - ETH pivot initiated June 2025 (filed 2025-08-14)
@@ -1888,7 +1896,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 145_000_000,  // Interpolated from weekly ATM dilution
     holdingsPerShare: 0.001379,  // 200000 / 145000000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225024107/form10-q.htm",
+    sourceUrl: "/filings/sbet/0001641172-25-024107",
     status: "reported",
   },
   // Q1 2025 - Pre-ETH pivot (filed 2025-05-15)
@@ -1907,7 +1915,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 575_255,  // SEC XBRL CommonStockSharesOutstanding at Mar 31
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1981535/000164117225010881/form10-q.htm",
+    sourceUrl: "/filings/sbet/0001641172-25-010881",
     status: "reported",
   },
 
@@ -1963,7 +1971,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 321_432_722,  // XBRL Q2 10-Q cover (Aug 13, 2025)
     holdingsPerShare: 0.000095,  // 30,663 / 321,432,722
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025076608/",
+    sourceUrl: "/filings/btbt/0001213900-25-076608",
     status: "reported",
   },
   // Q1 2025 - Pre-pivot, minimal ETH holdings
@@ -1979,7 +1987,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 207_780_871,  // XBRL Q1 10-Q cover (May 12, 2025)
     holdingsPerShare: 0.000048,  // 10,000 / 207,780,871
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1710350/000121390025044155/",
+    sourceUrl: "/filings/btbt/0001213900-25-044155",
     status: "reported",
   },
 
@@ -2064,11 +2072,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-12-31",
     earningsTime: null,
-    holdingsAtQuarterEnd: 435_000,
+    holdingsAtQuarterEnd: 435_159,  // H-SVG fix: 40-F shows 435,159 SOL (was 435,000 rounded)
     sharesAtQuarterEnd: 22_999_841,
-    holdingsPerShare: 0.0189,
+    holdingsPerShare: 0.01892,  // 435,159 / 22,999,841
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1846839/000110465925125666",
+    sourceUrl: "/filings/stke/0001104659-25-125666",
+    accessionNumber: "0001104659-25-125666",
     status: "reported",
   },
   // Q2 2025 (Apr-Jun)
@@ -2135,7 +2144,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 29_892_800,
     holdingsPerShare: 0.0743,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312526002668/dfdv-20260105.htm",
+    sourceUrl: "/filings/dfdv/0001193125-26-002668",
+    accessionNumber: "0001193125-26-002668",
     status: "upcoming",
   },
   // Q3 2025 - 10-Q filed 2025-11-19
@@ -2156,7 +2166,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsPerShare: 0.0368,
     netIncome: 56_026_000,  // Q3 only: 9mo total $70.7M - H1 $14.7M = $56M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000119312525286660/dfdv-20250930.htm",
+    sourceUrl: "/filings/dfdv/0001193125-25-286660",
+    accessionNumber: "0001193125-25-286660",
     status: "reported",
   },
   // Q2 2025 - 10-Q filed 2025-08-14
@@ -2176,7 +2187,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsPerShare: 0.0272,
     netIncome: 14_654_000,  // H1 2025 net income (XBRL)
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000095017025108479/dfdv-20250630.htm",
+    sourceUrl: "/filings/dfdv/0000950170-25-108479",
+    accessionNumber: "0000950170-25-108479",
     status: "reported",
   },
   // Q1 2025 - 10-Q filed 2025-05-14
@@ -2195,7 +2207,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 2_066_711,
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1805526/000121390025042977/ea0240826-10q_defi.htm",
+    sourceUrl: "/filings/dfdv/0001213900-25-042977",
+    accessionNumber: "0001213900-25-042977",
     status: "reported",
   },
 
@@ -2219,10 +2232,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 75_926_867,  // 40,299,228 basic (Sep 30) + 35,627,639 PFWs (consistent date)
     holdingsPerShare: 0.03083,  // 2,340,757 / 75,926,867
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+    sourceUrl: `/filings/hsdt/0001104659-25-113714`,
     status: "upcoming",
   },
   // Q3 2025 - Reported (10-Q Nov 18, 2025)
+  // H-SVG verified 2026-03-05: all fields MATCH XBRL
   {
     ticker: "HSDT",
     fiscalYear: 2025,
@@ -2231,11 +2245,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-18",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 1_739_355,  // SEC XBRL CryptoAssetNumberOfUnits: 1,739,355 SOL at Sep 30
-    sharesAtQuarterEnd: 75_926_867,  // 40,299,228 basic (Sep 30 balance sheet) + 35,627,639 PFWs (Note 6 warrant table)
+    holdingsAtQuarterEnd: 1_739_355,  // XBRL CryptoAssetNumberOfUnits at Sep 30
+    sharesAtQuarterEnd: 75_926_867,  // XBRL: 40,299,228 basic + 35,627,639 PFWs at Sep 30
     holdingsPerShare: 0.02291,  // 1,739,355 / 75,926,867
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm",
+    sourceUrl: `/filings/hsdt/0001104659-25-113714`,
+    accessionNumber: "0001104659-25-113714",
     status: "reported",
   },
   // Q2 2025 - Reported (10-Q Aug 14, 2025) — SOL treasury just beginning, pre-PIPE
@@ -2248,11 +2263,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 0,  // SOL pivot not yet closed; no CryptoAssetNumberOfUnits in Q2 XBRL
-    sharesAtQuarterEnd: 1_077_257,  // XBRL EntityCommonStockSharesOutstanding (post-reverse-split, pre-PIPE, no PFWs yet)
+    holdingsAtQuarterEnd: 0,  // No crypto — SOL pivot not yet closed
+    sharesAtQuarterEnd: 1_077_257,  // XBRL EntityCommonStockSharesOutstanding as of Aug 8 (post-1:50 split, pre-PIPE)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025011568/hsdt-20250630x10q.htm",
+    sourceUrl: `/filings/hsdt/0001558370-25-011568`,
+    accessionNumber: "0001558370-25-011568",
     status: "reported",
   },
   // Q1 2025 - Reported (10-Q May 1, 2025) — Still medical device company (pre-split)
@@ -2265,10 +2281,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-05-01",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // Pre-pivot, no SOL holdings
-    sharesAtQuarterEnd: 7_920_928,  // XBRL EntityCommonStockSharesOutstanding (pre-reverse-split)
+    sharesAtQuarterEnd: 7_920_928,  // XBRL EntityCommonStockSharesOutstanding as of Apr 28 (pre-reverse-split)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000155837025006120/hsdt-20250331x10q.htm",
+    sourceUrl: `/filings/hsdt/0001558370-25-006120`,
+    accessionNumber: "0001558370-25-006120",
     status: "reported",
   },
 
@@ -2292,8 +2309,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     status: "upcoming",
   },
   // FY 2026 Q1 (Oct-Dec 2025) - 10-Q filed Feb 12, 2026
-  // 10-Q: 4,973,000 raw SOL + $201.6M in LSTs. Website Jan 15: 6,979,967 SOL-eq.
+  // XBRL: 4,973,000 raw SOL + LSTs in separate line items. Website Jan 15: 6,979,967 SOL-eq.
   // Shares: 84,924,272 common at Dec 31 + 12,864,602 PFWs = 97,788,874
+  // H-SVG verified 2026-03-05: all fields MATCH XBRL
   {
     ticker: "FWDI",
     fiscalYear: 2026,
@@ -2302,18 +2320,23 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-02-12",
     earningsTime: "AMC",
-    revenueActual: 21_435_250,   // $17.4M staking + $4.1M design
-    netIncome: -585_651_086,     // Massive unrealized SOL FV loss (non-cash)
-    holdingsAtQuarterEnd: 4_973_000,  // Raw SOL per 10-Q (+ ~2M in LST form)
-    sharesAtQuarterEnd: 97_788_874,   // 84,924,272 common + 12,864,602 PFWs at Dec 31
+    revenueActual: 21_435_250,   // XBRL Revenues (Q1 only)
+    netIncome: -585_651_086,     // XBRL NetIncomeLoss (Q1 only — massive unrealized SOL FV loss)
+    holdingsAtQuarterEnd: 4_973_000,  // XBRL CryptoAssetNumberOfUnits (raw SOL only; LSTs in separate line items)
+    sharesAtQuarterEnd: 97_788_874,   // XBRL: 84,924,272 common + 12,864,602 PFWs at Dec 31
     holdingsPerShare: 0.05085,        // 4,973,000 / 97,788,874 (raw SOL only)
     source: "sec-filing",
     sourceUrl: `/filings/fwdi/0001683168-26-000960`,
+    accessionNumber: "0001683168-26-000960",
     status: "reported",
   },
   // FY 2025 Q4 (Jul-Sep 2025) - First SOL quarter (10-K)
   // 6,854,000 SOL per XBRL CryptoAssetNumberOfUnits
-  // Shares: 86,145,514 common + ~13.8M PFWs = ~99.9M (using 10-K common + total PFW issued)
+  // Shares: 86,145,514 common + 11,081,083 PFWs outstanding = 97,226,597
+  // H-SVG verified 2026-03-05: PFW fix (was 13,814,883 = total issued, not outstanding)
+  //   XBRL CommonStockCapitalSharesReservedForFutureIssuance(PFW) = 11,081,083 at Sep 30
+  //   Galaxy PFWs (1,783,519) not yet issued at Sep 30; 950,282 SPA PFWs already exercised
+  // Revenue/NetIncome are FULL FISCAL YEAR (10-K), not quarterly
   {
     ticker: "FWDI",
     fiscalYear: 2025,
@@ -2322,13 +2345,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-12-11",
     earningsTime: "AMC",
-    revenueActual: 18_187_525,   // FY2025 total (mostly design; staking started late Sep)
-    netIncome: -166_974_340,     // FY2025 total
+    revenueActual: 18_187_525,   // XBRL Revenues (FY2025 total — 10-K)
+    netIncome: -166_974_340,     // XBRL NetIncomeLoss (FY2025 total — 10-K)
     holdingsAtQuarterEnd: 6_854_000,  // XBRL CryptoAssetNumberOfUnits
-    sharesAtQuarterEnd: 99_960_397,   // 86,145,514 common + 13,814,883 PFWs issued
-    holdingsPerShare: 0.06857,        // 6,854,000 / 99,960,397
+    sharesAtQuarterEnd: 97_226_597,   // XBRL: 86,145,514 common + 11,081,083 PFWs outstanding at Sep 30
+    holdingsPerShare: 0.07050,        // 6,854,000 / 97,226,597
     source: "sec-filing",
     sourceUrl: `/filings/fwdi/0001683168-25-009068`,
+    accessionNumber: "0001683168-25-009068",
     status: "reported",
   },
 
@@ -2367,7 +2391,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 62_796_362,  // 10-Q balance sheet: 62,796,362 issued (416,226 treasury)
     holdingsPerShare: 0.0346,  // 2,173,204 / 62,796,362
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793226000736/upxi_10q.htm",
+    sourceUrl: "/filings/upxi/0001477932-26-000736",
+    accessionNumber: "0001477932-26-000736",
     status: "reported",
   },
   // FY 2026 Q1 (Jul-Sep 2025) = CY Q3 2025 - Reported (10-Q Nov 12, 2025)
@@ -2380,10 +2405,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-12",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 2_066_827,  // SEC 10-Q Q1 FY2026 Note 5: 2,066,827 SOL as of Sep 30, 2025
-    sharesAtQuarterEnd: 58_888_756,  // SEC XBRL: EntityCommonStockSharesOutstanding as of Sep 23, 2025
-    holdingsPerShare: 0.0351,  // 2,066,827 / 58,888,756
+    sharesAtQuarterEnd: 58_893_261,  // SEC XBRL: EntityCommonStockSharesOutstanding as of Sep 23, 2025
+    holdingsPerShare: 0.0351,  // 2,066,827 / 58,893,261
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225008025/upxi_10q.htm",
+    sourceUrl: "/filings/upxi/0001477932-25-008025",
+    accessionNumber: "0001477932-25-008025",
     status: "reported",
   },
   // FY 2025 Q4 (Apr-Jun 2025) = CY Q2 2025 - First full SOL quarter - Reported (10-K Sep 24, 2025)
@@ -2399,7 +2425,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 38_270_571,  // 10-K: common shares issued as of Jun 30, 2025 (from equity table)
     holdingsPerShare: 0.0194,  // 744,026 / 38,270,571
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225006996/upxi_10k.htm",
+    sourceUrl: "/filings/upxi/0001477932-25-006996",
+    accessionNumber: "0001477932-25-006996",
     status: "reported",
   },
   // FY 2025 Q3 (Jan-Mar 2025) = CY Q1 2025 - SOL strategy began (10-Q May 16, 2025)
@@ -2412,10 +2439,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-05-16",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // SOL strategy began in April 2025; no holdings at Mar 31
-    sharesAtQuarterEnd: 1_320_924,  // XBRL: 1,320,924 shares as of Feb 14, 2025 (pre-reverse-split adjusted, pre-SOL pivot)
+    sharesAtQuarterEnd: 1_430_429,  // XBRL: 1,430,429 shares as of Feb 14, 2025 (pre-reverse-split adjusted, pre-SOL pivot)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1775194/000147793225003866/upxi_10q.htm",
+    sourceUrl: "/filings/upxi/0001477932-25-003866",
+    accessionNumber: "0001477932-25-003866",
     status: "reported",
   },
 
@@ -2442,7 +2470,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 80_900_000,  // Jan 8, 2026 8-K "fully adjusted shares"
     holdingsPerShare: 1.336,  // 108,098,436 / 80,900,000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+    sourceUrl: "/filings/suig/0001654954-26-000201",
     status: "upcoming",
   },
   // Q3 2025 - SEC 10-Q filed Nov 13, 2025
@@ -2458,7 +2486,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 83_068_868,  // XBRL: CommonStockSharesOutstanding = 83,068,868 at Sep 30, 2025 (basic common, excl. pre-funded warrants)
     holdingsPerShare: 1.276,  // 106,000,000 / 83,068,868 = 1.2761 (note: 10-Q says "~1.19 per share" using fully-adjusted shares incl. PFWs)
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm",
+    sourceUrl: "/filings/suig/0001654954-25-012949",
     status: "reported",
   },
   // Q2 2025 - SEC 10-Q filed Aug 14, 2025
@@ -2474,7 +2502,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 82_110_648,  // XBRL EntityCommonStockSharesOutstanding (post-PIPE, massive jump from 6M)
     holdingsPerShare: 1.315,  // 108,000,000 / 82,110,648
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425009666/mcvt_10q.htm",
+    sourceUrl: "/filings/suig/0001654954-25-009666",
     status: "reported",
   },
   // Q1 2025 - SEC 10-Q filed May 13, 2025
@@ -2490,7 +2518,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_062_773,  // XBRL EntityCommonStockSharesOutstanding (pre-PIPE basic shares)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425005448/mcvt_10q.htm",
+    sourceUrl: "/filings/suig/0001654954-25-005448",
     status: "reported",
   },
   // Q4 2024 (FY2024) - SEC 10-K filed Mar 10, 2025
@@ -2506,7 +2534,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
     holdingsPerShare: 12.215,  // 78,000,000 / 6,385,255 — pre-PIPE, very high HPS on tiny float
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425002487/mcvt_10k.htm",
+    sourceUrl: "/filings/suig/0001654954-25-002487",
     status: "reported",
   },
   // Q3 2024 - SEC 10-Q filed Nov 12, 2024
@@ -2522,7 +2550,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
     holdingsPerShare: 7.047,  // 45,000,000 / 6,385,255 — SUI treasury just announced
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424014099/mcvt_10q.htm",
+    sourceUrl: "/filings/suig/0001654954-24-014099",
     status: "reported",
   },
   // Q2 2024 - SEC 10-Q filed Aug 14, 2024 (pre-crypto pivot)
@@ -2538,7 +2566,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424010649/mcvt_10q.htm",
+    sourceUrl: "/filings/suig/0001654954-24-010649",
     status: "reported",
   },
   // Q1 2024 - SEC 10-Q filed May 15, 2024 (pre-crypto pivot)
@@ -2554,7 +2582,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424006409/mcvt_10q.htm",
+    sourceUrl: "/filings/suig/0001654954-24-006409",
     status: "reported",
   },
   // Q4 2023 (FY2023) - SEC 10-K filed Apr 2, 2024 (pre-crypto pivot, Mill City Ventures era)
@@ -2570,7 +2598,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 6_385_255,  // XBRL EntityCommonStockSharesOutstanding
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495424004122/mcvt_10k.htm",
+    sourceUrl: "/filings/suig/0001654954-24-004122",
     status: "reported",
   },
 
@@ -2595,7 +2623,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 274_382_064,  // Dec 29, 2025 8-K
     holdingsPerShare: 2.468,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=8-K",
+    sourceUrl: "/filings/tron/0001493152-26-003321",
+    accessionNumber: "0001493152-26-003321",
     status: "upcoming",
   },
   // Q3 2025 - SEC 10-Q filed Nov 10, 2025
@@ -2611,13 +2640,15 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 257_115_400,  // SEC XBRL
     holdingsPerShare: 2.636,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1956744&type=10-Q",
+    sourceUrl: "/filings/tron/0001493152-25-021526",
+    accessionNumber: "0001493152-25-021526",
     status: "reported",
   },
 
   // ==================== BNB COMPANIES ====================
 
   // ========== CEA Industries (BNC) ==========
+  // SEC CIK: 0001482541
   // Fiscal year ends April 30
   // FY Q1 = May-Jul (CY Q3), FY Q2 = Aug-Oct (CY Q4), FY Q3 = Nov-Jan (CY Q1), FY Q4 = Feb-Apr (CY Q2)
   // DAT strategy began June 2025 with $500M PIPE
@@ -2647,10 +2678,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     epsActual: 5.36,
     netIncome: 283_600_000,
     holdingsAtQuarterEnd: 512_000,
-    sharesAtQuarterEnd: 44_062_938,
-    holdingsPerShare: 11.62,
-    source: "press-release",
-    sourceUrl: "https://www.globenewswire.com/news-release/2025/12/15/3205902/0/en/CEA-Industries-BNC-Reports-FY-Q2-2026-Earnings-Results.html",
+    sharesAtQuarterEnd: 45_321_002,  // H-SVG fix: SEC filing shows 45,321,002 (was 44,062,938)
+    holdingsPerShare: 0.01130,  // H-SVG fix: 512,000 / 45,321,002 (was 11.62, decimal error)
+    source: "sec-filing",
+    sourceUrl: "/filings/bnc/0001493152-25-027782",
+    accessionNumber: "0001493152-25-027782",
     status: "reported",
   },
   // FY Q1 2026 (May-Jul 2025) - Initial treasury setup
@@ -2662,10 +2694,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-09-15",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 150_000,
-    sharesAtQuarterEnd: 45_000_000,
-    holdingsPerShare: 3.333,
+    holdingsAtQuarterEnd: 0,  // H-SVG fix: No BNB at Jul 31 (PIPE just closed, accumulation began Aug)
+    sharesAtQuarterEnd: 860_457,  // H-SVG fix: SEC 10-Q shows 860,457 pre-PIPE shares (was 45M)
+    holdingsPerShare: 0,
     source: "sec-filing",
+    sourceUrl: "/filings/bnc/0001493152-25-014503",
+    accessionNumber: "0001493152-25-014503",
     status: "reported",
   },
 
@@ -2688,7 +2722,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 20_700_000,  // Estimated from holdings-history
     holdingsPerShare: 6.280,  // 130,000 / 20,700,000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
+    sourceUrl: "/filings/na/0001213900-25-126828",
+    accessionNumber: "0001213900-25-126828",
     status: "upcoming",
   },
   // H1 2025 (Jan-Jun 2025) - Pre-treasury baseline
@@ -2701,10 +2736,11 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-09-30",
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 0,  // No BNB yet - DAT started Jul 2025
-    sharesAtQuarterEnd: 15_674_052,  // FY2024 20-F share count
+    sharesAtQuarterEnd: 23_117_191,  // H-SVG fix: 20-F shows 23,117,191 ADS (was 15,674,052)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K",
+    sourceUrl: "/filings/na/0001213900-25-077422",
+    accessionNumber: "0001213900-25-077422",
     status: "reported",
   },
 
@@ -2734,11 +2770,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 4,
     earningsDate: "2026-03-15",  // Estimated ~75 days after Q4 end (10-K timing)
     earningsTime: null,
-    holdingsAtQuarterEnd: 12_000_000,  // 12M HYPE staked via Anchorage
-    sharesAtQuarterEnd: 127_025_563,  // SEC 10-Q Dec 8, 2025
-    holdingsPerShare: 0.0944,
+    holdingsAtQuarterEnd: 12_857_533,  // H-SVG fix: SEC filing shows 12,857,533 HYPE (was 12M rounded)
+    sharesAtQuarterEnd: 124_093_048,  // H-SVG fix: SEC filing shares (was 127,025,563)
+    holdingsPerShare: 0.1036,  // 12,857,533 / 124,093,048
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm",
+    sourceUrl: "/filings/purr/0001193125-26-045901",
+    accessionNumber: "0001193125-26-045901",
     status: "upcoming",
   },
 
@@ -2764,9 +2801,9 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2026-03-31",  // 10-K expected ~90 days after Dec 31
     earningsTime: "AMC",
     // Using Q3 holdings as placeholder - no 8-K updates with Q4 holdings
-    holdingsAtQuarterEnd: 1_459_615,  // Q3 holdings (placeholder)
+    holdingsAtQuarterEnd: 839_889,  // Q3 holdings (placeholder, updated per H-SVG)
     sharesAtQuarterEnd: 24_400_000,  // 8.1M common + 16.3M from preferred
-    holdingsPerShare: 0.0598,
+    holdingsPerShare: 0.03442,  // 839,889 / 24,400,000
     source: "sec-filing",
     sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
     status: "upcoming",
@@ -2782,15 +2819,14 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-14",
     earningsTime: "AMC",
     netIncome: -5_800_000,  // Q3 net loss from operations + crypto mark-to-market
-    // Direct HYPE only (iHYPE tracked separately in cryptoInvestments)
-    // SEC 10-Q: "Digital assets" $37.95M at Sep 30, 2025
-    // At ~$26/HYPE (Sep 30 price): $37.95M / $26 = ~1,459,615 HYPE
-    holdingsAtQuarterEnd: 1_459_615,
-    // Shares: 8,097,659 common + 5,435,897 preferred × 3 = 24.4M FD
+    // H-SVG fix: Direct HYPE from SEC 10-Q XBRL (was derived from $37.95M/~$26)
+    holdingsAtQuarterEnd: 839_889,  // H-SVG fix: SEC 10-Q shows 839,889 direct HYPE (was 1,459,615 derived)
+    // Shares: SEC 10-Q XBRL verified
     sharesAtQuarterEnd: 24_400_000,
-    holdingsPerShare: 0.0598,  // 1,459,615 / 24,400,000
+    holdingsPerShare: 0.03442,  // 839,889 / 24,400,000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1682639&type=10-Q",
+    sourceUrl: "/filings/hypd/0001104659-25-111671",
+    accessionNumber: "0001104659-25-111671",
     status: "reported",
   },
   // Q2 2025 (Apr-Jun) - Partial quarter (DAT pivot announced Jun 17, 2025)
@@ -2803,10 +2839,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 0,  // DAT pivot announced Jun 17, first purchases in Q3
-    sharesAtQuarterEnd: 8_097_659,  // Pre-PIPE shares only
-    holdingsPerShare: 0,
+    holdingsAtQuarterEnd: 1_306_452,  // H-SVG fix: SEC 10-Q shows digital assets at Jun 30 (was 0)
+    sharesAtQuarterEnd: 4_854_827,  // H-SVG fix: SEC 10-Q shows 4,854,827 shares (was 8,097,659)
+    holdingsPerShare: 0.2691,  // 1,306,452 / 4,854,827
     source: "sec-filing",
+    sourceUrl: "/filings/hypd/0001410578-25-001740",
+    accessionNumber: "0001410578-25-001740",
     status: "reported",
   },
 
@@ -3079,9 +3117,10 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsTime: "AMC",
     holdingsAtQuarterEnd: 290_062, // Dec 30, 2025 8-K: 290,062.67 ZEC
     sharesAtQuarterEnd: 137_420_344, // Basic (56.6M) + Pre-funded warrants (80.8M)
-    holdingsPerShare: 2.111, // 290,062 / 137,420,344
+    holdingsPerShare: 0.002111, // 290,062 / 137,420,344 (H-SVG fix: was 2.111, 1000x error)
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1509745/000110465925125039/tm2534480d2_8k.htm",
+    sourceUrl: "/filings/cyph/0001104659-25-125039",
+    accessionNumber: "0001104659-25-125039",
     status: "upcoming", // Awaiting 10-K
   },
   // Q3 2025 (Jul-Sep) - Pre-DAT (was Leap Therapeutics pharma company, no ZEC)
@@ -3097,7 +3136,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 56_600_000, // Pre-PIPE basic shares
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1509745&type=10-Q",
+    sourceUrl: "/filings/cyph/0001104659-25-109827",
+    accessionNumber: "0001104659-25-109827",
     status: "reported",
   },
 
@@ -3153,7 +3193,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 4_128_089, // Pre-PIPE share count (10-Q XBRL, post 1:9 reverse split Jul 2025)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1826397/000149315225023464/form10-q.htm",
+    sourceUrl: "/filings/avx/0001493152-25-023464",
     status: "reported",
   },
 
@@ -3177,7 +3217,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 36_361_999,  // 10-Q cover page (Feb 9, 2026)
     holdingsPerShare: 0.02556,  // 929,548 / 36,361,999
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312526053215/lits-20251231.htm",
+    sourceUrl: "/filings/lits/0001193125-26-053215",
+    accessionNumber: "0001193125-26-053215",
     status: "reported",
   },
   // Q1 FY2026 (Jul-Sep 2025)
@@ -3193,7 +3234,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 35_655_155,  // 10-Q cover page (Nov 8, 2025)
     holdingsPerShare: 0.02607,  // 929,548 / 35,655,155
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1262104/000119312525283111/lits-20250930.htm",
+    sourceUrl: "/filings/lits/0001193125-25-283111",
+    accessionNumber: "0001193125-25-283111",
     status: "reported",
   },
 
@@ -3312,7 +3354,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 210_556_229,  // Feb 10, 2026 cover page
     holdingsPerShare: 3.482,  // 733.06M / 210.56M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm",
+    sourceUrl: "/filings/zone/0001213900-26-015016",
     status: "reported",
   },
   // Q1 FY2026 (Jul-Sep 2025) - Reported Nov 13, 2025
@@ -3328,7 +3370,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 186_598_270,  // Sep 30, 2025 quarter-end shares (not Nov 10 cover page)
     holdingsPerShare: 3.770,  // 703.6M / 186.6M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025109642/ea0264475-10q_cleancore.htm",
+    sourceUrl: "/filings/zone/0001213900-25-109642",
     status: "reported",
   },
   // Q4 FY2025 (Apr-Jun 2025) - Pre-treasury (no DOGE holdings)
@@ -3344,7 +3386,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 11_837_022,  // Basic shares before PIPE
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390025079975/ea0254073-10k_clean.htm",
+    sourceUrl: "/filings/zone/0001213900-25-079975",
     status: "reported",
   },
 
@@ -3368,7 +3410,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 0,  // Pre-IPO - no TAO holdings yet
     sharesAtQuarterEnd: 0,  // Pre-IPO - company not yet public
     holdingsPerShare: 0,
-    source: "sec-filing",  // SEDAR+ = Canadian equivalent of SEC
+    source: "regulatory-filing",  // H-SVG fix: SEDAR+ is Canadian regulatory, not SEC
     sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
     status: "reported",
   },
@@ -3385,7 +3427,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     holdingsAtQuarterEnd: 42_051,  // TAO holdings from SEDAR+ MD&A
     sharesAtQuarterEnd: 38_031_285,  // 28,552,195 basic + 9,479,090 pre-funded warrants
     holdingsPerShare: 0.001106,  // 42,051 / 38,031,285
-    source: "sec-filing",  // SEDAR+ = Canadian equivalent of SEC
+    source: "regulatory-filing",  // H-SVG fix: SEDAR+ is Canadian regulatory, not SEC
     sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
     status: "reported",
   },
@@ -3425,11 +3467,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 2,
     earningsDate: "2025-08-14",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 20_800,  // Per 10-Q: ~$8M purchase at ~$385/TAO
-    sharesAtQuarterEnd: 2_350_307,  // EntityCommonStockSharesOutstanding
-    holdingsPerShare: 8.85,  // 20,800 / 2,350,307
+    holdingsAtQuarterEnd: 5_031,  // H-SVG fix: SEC 10-Q shows 5,031 TAO (was 20,800 — likely confused with cost $)
+    sharesAtQuarterEnd: 1_594_953,  // H-SVG fix: SEC XBRL shows 1,594,953 shares (was 2,350,307)
+    holdingsPerShare: 3.154,  // 5,031 / 1,594,953
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=746210&type=10-Q",
+    sourceUrl: "/filings/twav/0001437749-25-026680",
+    accessionNumber: "0001437749-25-026680",
     status: "reported",
   },
   // Q3 2025 (Jul-Sep)
@@ -3442,11 +3485,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     earningsDate: "2025-11-13",
     earningsTime: "AMC",
     netIncome: -2_290_000,  // XBRL NetIncomeLoss Q3 2025
-    holdingsAtQuarterEnd: 21_943,  // 10-Q shows $6.6M digital assets / ~$300 TAO price
+    holdingsAtQuarterEnd: 21_822,  // H-SVG fix: SEC 10-Q shows 21,822 TAO (was 21,943 derived)
     sharesAtQuarterEnd: 3_207_210,  // EntityCommonStockSharesOutstanding
-    holdingsPerShare: 6.84,  // 21,943 / 3,207,210
+    holdingsPerShare: 6.804,  // 21,822 / 3,207,210
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-034612-index.html",
+    sourceUrl: "/filings/twav/0001437749-25-034612",
+    accessionNumber: "0001437749-25-034612",
     status: "reported",
   },
   // Q4 2025 (Oct-Dec) - Latest 8-K update
@@ -3462,7 +3506,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 3_207_210,  // No new issuance announced
     holdingsPerShare: 7.60,  // 24,382 / 3,207,210
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html",
+    sourceUrl: "/filings/twav/0001437749-25-037490",
+    accessionNumber: "0001437749-25-037490",
     status: "upcoming",
   },
 
@@ -3490,7 +3535,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 88_600_000,  // Pre-split shares
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1735556/000110465925105009",
+    sourceUrl: "/filings/btog/0001104659-25-105009",
     status: "reported",
   },
   // Q1 FY2026 (Jul-Sep 2025) = Calendar Q3 2025 - First DOGE quarter
@@ -3566,11 +3611,12 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     calendarQuarter: 3,
     earningsDate: "2025-11-13",
     earningsTime: "AMC",
-    holdingsAtQuarterEnd: 562_535,  // Sep 30, 2025 - LINK treasury launched
+    holdingsAtQuarterEnd: 467_632,  // H-SVG fix: SEC 10-Q shows 467,632 LINK at Sep 30 (was 562,535)
     sharesAtQuarterEnd: 2_615_000,  // SEC XBRL diluted (post-split + capital raise)
-    holdingsPerShare: 0.2151,  // 562535 / 2615000
+    holdingsPerShare: 0.1789,  // 467,632 / 2,615,000
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    sourceUrl: "/filings/cwd/0001627282-25-000157",
+    accessionNumber: "0001627282-25-000157",
     status: "reported",
   },
   // Q2 2025 - Pre-LINK strategy (post-split)
@@ -3586,7 +3632,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 1_278_000,  // SEC XBRL diluted Q2 2025 (post-split)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    sourceUrl: "/filings/cwd/0001627282-25-000100",
+    accessionNumber: "0001627282-25-000100",
     status: "reported",
   },
   // Q1 2025 - Pre-LINK strategy (post-split)
@@ -3602,7 +3649,8 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 1_146_000,  // SEC XBRL diluted Q1 2025 (post-split)
     holdingsPerShare: 0,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1627282&type=10-Q",
+    sourceUrl: "/filings/cwd/0001627282-25-000061",
+    accessionNumber: "0001627282-25-000061",
     status: "reported",
   },
   // Q4 2024 - Pre-LINK, pre-split (adjusted to post-split equivalent)
@@ -3847,7 +3895,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 8_307_583,
     holdingsPerShare: 0.0001273,
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390025043916/ea0241193-20f_ddcenter.htm",
+    sourceUrl: "/filings/ddc/0001213900-25-043916",
     status: "reported",
   },
   // Q2 2025 - First quarter with BTC
@@ -3897,7 +3945,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 163_000_000,  // 161.9M + ~1.14M ATM
     holdingsPerShare: 0.00000642,  // 1046 / 163M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315226002767/ex99-1.htm",
+    sourceUrl: "/filings/zooz/0001493152-26-002767",
     status: "reported",
   },
   // Q3 2025 - First full quarter with BTC
@@ -3913,7 +3961,7 @@ export const EARNINGS_DATA: EarningsRecord[] = [
     sharesAtQuarterEnd: 161_899_782,  // 424B5 Sep 30, 2025
     holdingsPerShare: 0.00000324,  // 525 / 161.9M
     source: "sec-filing",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1992818/000149315225016384/form424b5.htm",
+    sourceUrl: "/filings/zooz/0001493152-25-016384",
     status: "reported",
   },
 ];
@@ -3965,14 +4013,8 @@ export function getEarningsCalendar(options?: {
 
     // Calculate holdings per share growth from holdings history
     let holdingsPerShareGrowth: number | undefined;
-    const history = HOLDINGS_HISTORY[earnings.ticker];
-    if (history) {
-      const growth = calculateHoldingsGrowth(history.history);
-      if (growth) {
-        // Use annualized growth for comparable metric
-        holdingsPerShareGrowth = growth.annualizedGrowth;
-      }
-    }
+    // D1 MIGRATION: Holdings growth calculation must be migrated to async D1 fetching
+    // For now, we return undefined to eliminate "naked numbers"
 
     entries.push({
       ticker: earnings.ticker,

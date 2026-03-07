@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "ALCPB",
   "secCik": null,
-  "asOf": "2026-02-16",
-  "generatedAt": "2026-03-05T20:22:40.126Z",
+  "asOf": "2026-02-27",
+  "generatedAt": "2026-03-07T00:36:04.386Z",
   "listing": {
     "country": "DE",
     "exchangeMic": "XETR",
@@ -14,7 +14,7 @@
     "amount": 2834,
     "source": {
       "holdingsSource": "regulatory-filing",
-      "holdingsSourceUrl": "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
+      "holdingsSourceUrl": "https://www.amf-france.org/en/news-publications/news/capital-structure-update-alcpb-20260227",
       "holdingsAccession": null
     }
   },
@@ -35,7 +35,7 @@
     "asOf": "2025-06-30",
     "source": {
       "cashSourceUrl": "https://www.actusnews.com/en/amp/capital-b/pr/2025/10/31/capital-b-publishes-its-results-for-the-first-half-of-2025",
-      "debtSourceUrl": "https://fr.ftp.opendatasoft.com/datadila/INFOFI/ACT/2026/02/FCACT078298_20260216.pdf",
+      "debtSourceUrl": null,
       "preferredSourceUrl": null
     }
   },

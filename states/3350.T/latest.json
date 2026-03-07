@@ -3,7 +3,7 @@
   "ticker": "3350.T",
   "secCik": null,
   "asOf": "2025-12-30",
-  "generatedAt": "2026-03-05T20:22:40.126Z",
+  "generatedAt": "2026-03-07T00:36:04.386Z",
   "listing": {
     "country": "JP",
     "exchangeMic": "XTKS",
@@ -13,8 +13,8 @@
     "asset": "BTC",
     "amount": 35102,
     "source": {
-      "holdingsSource": "regulatory-filing",
-      "holdingsSourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://metaplanet.jp/en/analytics",
       "holdingsAccession": null
     }
   },
@@ -24,7 +24,7 @@
     "asOf": "2026-02-13",
     "source": {
       "sharesSource": "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,529,000 new common shares (Feb 13, 2026 3rd-party allotment)",
-      "sharesSourceUrl": "https://contents.xj-storage.jp/xcontents/33500/14f2f8ca/c3d9/45de/b66f/3ef45fd64ab1/140120260213582133.pdf"
+      "sharesSourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf"
     }
   },
   "balanceSheet": {
@@ -34,8 +34,8 @@
     "preferredEquity": 155000000,
     "asOf": "2026-02-14",
     "source": {
-      "cashSourceUrl": "https://contents.xj-storage.jp/xcontents/33500/07d06a47/5b14/4ca6/a744/8415fa2bcc9e/140120251112597045.pdf",
-      "debtSourceUrl": "https://contents.xj-storage.jp/xcontents/33500/02f0c329/c996/4597/ab84/6b2474a8f46a/140120260130543874.pdf",
+      "cashSourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
+      "debtSourceUrl": "https://metaplanet.jp/en/analytics",
       "preferredSourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf"
     }
   },

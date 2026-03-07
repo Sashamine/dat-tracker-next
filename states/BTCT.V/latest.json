@@ -2,29 +2,29 @@
   "schemaVersion": "0.1",
   "ticker": "BTCT.V",
   "secCik": null,
-  "asOf": "2026-02-28",
-  "generatedAt": "2026-03-05T20:22:40.128Z",
+  "asOf": "2026-02-17",
+  "generatedAt": "2026-03-07T00:36:04.388Z",
   "listing": {
     "country": "CA",
-    "exchangeMic": "XTSX",
+    "exchangeMic": "XTSE",
     "currency": "CAD"
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 761.63,
+    "amount": 769.05,
     "source": {
-      "holdingsSource": "company-reported",
-      "holdingsSourceUrl": "https://btctcorp.com/bitcoin-treasury-corporation-provides-february-update-on-normal-course-issuer-bid/",
+      "holdingsSource": "company-website",
+      "holdingsSourceUrl": "https://btctcorp.com",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 9893980,
+    "sharesForMnav": 10027880,
     "sharesOutstandingFD": null,
-    "asOf": "2026-02-28",
+    "asOf": "2026-02-17",
     "source": {
-      "sharesSource": "Company press release (Feb 28, 2026 snapshot; legal disclosure channel, non-XBRL)",
-      "sharesSourceUrl": "https://btctcorp.com/bitcoin-treasury-corporation-provides-february-update-on-normal-course-issuer-bid/"
+      "sharesSource": "Company Website (Investor Relations)",
+      "sharesSourceUrl": "https://btctcorp.com"
     }
   },
   "balanceSheet": {
@@ -35,7 +35,7 @@
     "asOf": "2025-12-31",
     "source": {
       "cashSourceUrl": null,
-      "debtSourceUrl": "https://btctcorp.com",
+      "debtSourceUrl": "https://btctcorp.com/bitcoin-treasury-corporation-announces-closing-of-amalgamation-and-concurrent-financing/",
       "preferredSourceUrl": null
     }
   },

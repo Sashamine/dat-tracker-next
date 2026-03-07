@@ -1,9 +1,9 @@
 {
   "schemaVersion": "0.1",
   "ticker": "GAME",
-  "secCik": "1714562",
-  "asOf": "2025-09-30",
-  "generatedAt": "2026-03-05T20:22:40.125Z",
+  "secCik": "0001714562",
+  "asOf": "2026-03-01",
+  "generatedAt": "2026-03-07T00:36:04.385Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,32 +11,32 @@
   },
   "holdings": {
     "asset": "ETH",
-    "amount": 1608,
+    "amount": 15630,
     "source": {
-      "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
+      "holdingsSource": "press-release",
+      "holdingsSourceUrl": "https://investors.gamesquare.com/news/news-details/2025/GameSquare-Approves-Stock-Buyback-Program-Funded-by-Ethereum-Yield-Proceeds/default.aspx",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 94845193,
+    "sharesForMnav": 93345193,
     "sharesOutstandingFD": null,
-    "asOf": "2026-01-06",
+    "asOf": "2026-02-28",
     "source": {
-      "sharesSource": "SEC 10-Q Sep 30 (98.4M) - 3.54M buybacks through Jan 6, 2026",
-      "sharesSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm"
+      "sharesSource": "Feb 27, 2026 PR: 1.5M shares repurchased in Feb. Base 94.8M (Jan 6).",
+      "sharesSourceUrl": "/filings/game/0001493152-26-007687"
     }
   },
   "balanceSheet": {
     "cashReserves": 6012219,
     "restrictedCash": null,
     "totalDebt": 1250000,
-    "preferredEquity": 5150000,
+    "preferredEquity": 10150000,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm",
-      "debtSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000164117225023972/",
-      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm"
+      "cashSourceUrl": "/filings/game/0001493152-25-023589",
+      "debtSourceUrl": "/filings/game/0001641172-25-023972",
+      "preferredSourceUrl": "/filings/game/0001493152-25-023589"
     }
   },
   "verification": {

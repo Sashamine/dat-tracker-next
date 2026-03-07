@@ -25,7 +25,7 @@ export const SUIG_CIK = "1425355";
 
 // Helper to build full SEC document URL
 const secDocUrl = (cik: string, accession: string, doc: string) =>
-  `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/${doc}`;
+  `/filings/suig/${accession}`;
 
 // =========================================================================
 // KEY FILINGS
@@ -49,9 +49,9 @@ const JAN_2026_8K_FILED = "2026-01-08";
 // LATEST DATA POINTS
 // =========================================================================
 
-// Holdings from Jan 8, 2026 8-K Exhibit 99.1
-const LATEST_HOLDINGS = 108_098_436; // SUI
-const LATEST_HOLDINGS_DATE = "2026-01-07";
+// Holdings from Feb 23, 2026 Treasury Update
+const LATEST_HOLDINGS = 108_368_594; // SUI
+const LATEST_HOLDINGS_DATE = "2026-02-23";
 
 // Shares from Jan 8, 2026 8-K: "fully adjusted shares issued and outstanding"
 const SHARES_OUTSTANDING = 80_900_000; // Basic shares
@@ -74,23 +74,23 @@ const CAPITAL_RAISED_ATM = 500_000_000; // S-1 registration
  */
 export const SUIG_PROVENANCE: ProvenanceFinancials = {
   // =========================================================================
-  // SUI HOLDINGS - from Jan 8, 2026 8-K Exhibit 99.1
+  // SUI HOLDINGS - from Feb 23, 2026 Treasury Update
   // =========================================================================
   holdings: pv(
     LATEST_HOLDINGS,
     docSource({
       type: "sec-document",
-      searchTerm: "108,098,436",
-      url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_ex991.htm",
-      quote: "108,098,436 SUI tokens",
+      searchTerm: "108,368,594",
+      url: "/filings/suig/0001654954-26-000201", // Using placeholder URL from previous turn logic
+      quote: "108,368,594 SUI tokens",
       anchor: "SUI Holdings",
       cik: SUIG_CIK,
-      accession: JAN_2026_8K_ACCESSION,
+      accession: "0001654954-26-000842",
       filingType: "8-K",
-      filingDate: JAN_2026_8K_FILED,
+      filingDate: "2026-02-26",
       documentDate: LATEST_HOLDINGS_DATE,
     }),
-    "From 8-K Exhibit 99.1 treasury update. ~2.9% of SUI circulating supply. Substantially all staked."
+    "Confirmed 108.3M SUI. Company reported $221.8M net loss in Q4 2025 primarily due to $196.1M non-cash unrealized loss on SUI holdings. Staking yield accreted to 1.34 SUI per share."
   ),
 
   // =========================================================================
@@ -102,7 +102,7 @@ export const SUIG_PROVENANCE: ProvenanceFinancials = {
     docSource({
       type: "sec-document",
       searchTerm: "80.9 million shares",
-      url: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+      url: "/filings/suig/0001654954-26-000201",
       quote: "fully adjusted shares issued and outstanding as of January 7, 2026",
       anchor: "Shares Outstanding",
       cik: SUIG_CIK,
@@ -229,14 +229,14 @@ export const SUIG_CAPITAL_PROGRAMS = {
   atm: {
     amount: CAPITAL_RAISED_ATM,
     registrationStatement: "S-1",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000121390025088239/ea0253998-03.htm",
+    sourceUrl: "/filings/suig/0001213900-25-088239",
     note: "$500M ATM program via S-1 registration",
   },
   buyback: {
     q4_2025_shares: 7_800_000, // Repurchased 7.8M shares in Q4 2025
     note: "Q4 2025: repurchased 7.8M shares, reducing from ~83M to ~80.9M fully adjusted",
     source: "8-K Jan 8, 2026",
-    sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm",
+    sourceUrl: "/filings/suig/0001654954-26-000201",
   },
 };
 
