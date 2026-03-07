@@ -629,6 +629,7 @@ const TAOX_HISTORY: HoldingsSnapshot[] = [
   // Oct 2025: $11M PIPE - Series E Preferred + warrants (convertible at $8, out of money)
   // Oct 31, 2025: 6,848,912 shares per SEC DEF 14A (excludes Series E preferred/warrants)
   { date: "2025-10-31", holdings: 54_058, sharesOutstanding: 7_000_000, holdingsPerShare: 0.00772, source: "SEC DEF 14A Nov 17, 2025", sharesSource: "6,848,912 per DEF 14A + est. small increases", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/0001104659-25-113227-index.html", sourceType: "sec-filing" },
+  { date: "2025-11-18", holdings: 67_000, sharesOutstanding: 7_128_912, holdingsPerShare: 0.00940, source: "Press release Nov 18, 2025: 67,000 TAO", sharesSource: "SEC 10-Q cover page Nov 11, 2025", sourceType: "press-release" },
 ];
 
 // xTAO Inc (XTAIF) - TSX Venture TAO treasury (IPO'd July 2025)
@@ -721,6 +722,8 @@ const AVX_HISTORY: HoldingsSnapshot[] = [
   // exercises outpaced buybacks in this period. See PIPE 8-K for warrant terms.
   // Feb 12, 2026: Latest dashboard reading (includes staking rewards accrual)
   { date: "2026-02-12", holdings: 13_889_000, sharesOutstanding: 92_672_000, holdingsPerShare: 0.1499, source: "Company dashboard", sourceUrl: "https://analytics-avaxone.theblueprint.xyz/", sourceType: "company-reported" },
+  // Mar 5, 2026: Shares reduced by buybacks (2.42M repurchased total)
+  { date: "2026-03-05", holdings: 13_889_000, sharesOutstanding: 90_688_765, holdingsPerShare: 0.1531, source: "Dashboard holdings + Mar 2 Strategic Update (2.42M shares repurchased)", sharesSource: "93,112,148 - 2,423,383 buybacks", sourceUrl: "https://www.avax-one.com/news", sourceType: "company-reported" },
 ];
 
 // CleanCore Solutions (ZONE) - Official Dogecoin Treasury backed by Dogecoin Foundation
@@ -769,6 +772,7 @@ const BTOG_HISTORY: HoldingsSnapshot[] = [
 // 100% staked via Anchorage Digital
 const PURR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-02", holdings: 12_000_000, sharesOutstanding: 127_025_563, holdingsPerShare: 0.0944, source: "Business combination 8-K (12M HYPE staked via Anchorage)", sharesSource: "10-Q filed Dec 8, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000149315225025886/form8-k.htm", sourceType: "sec-filing" },
+  { date: "2026-02-03", holdings: 17_600_000, sharesOutstanding: 123_967_508, holdingsPerShare: 0.1420, source: "8-K Feb 11, 2026: 17.6M HYPE as of Feb 3. ~3M share buyback.", sharesSource: "8-K Feb 11, 2026", sourceUrl: "/filings/purr/0001193125-26-045553", sourceType: "sec-filing" },
 ];
 
 // Hyperion DeFi (HYPD) - HYPE treasury
@@ -777,6 +781,7 @@ const HYPD_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-12-31", holdings: 1200000, sharesOutstanding: 18_000_000, holdingsPerShare: 0.0667, stockPrice: 302.96, source: "Q4 2024 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=10-K" },
   { date: "2025-06-30", holdings: 1700000, sharesOutstanding: 22_000_000, holdingsPerShare: 0.0773, stockPrice: 404.23, source: "Q2 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=10-Q" },
   { date: "2025-09-30", holdings: 1459615, sharesOutstanding: 25_000_000, holdingsPerShare: 0.0584, stockPrice: 326.42, source: "Q3 2025 10-Q: $37.95M digital assets / $26 HYPE price", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001682639&type=10-Q", sourceType: "sec-filing" },
+  { date: "2026-02-28", holdings: 1_862_195, sharesOutstanding: 24_400_000, holdingsPerShare: 0.0763, source: "companies.ts: 1,459,615 direct + 402,580 additional purchases", sourceType: "company-reported" },
 ];
 
 // Tron Inc (TRON) - TRX treasury, formerly SRM Entertainment
@@ -979,6 +984,7 @@ const LUXFF_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-08-31", holdings: 20_226, sharesOutstanding: 26_930_164, holdingsPerShare: 0.000751, source: "SEDAR+ FY2025 audited annual - Note 5: 20,226 LTC", sharesSource: "SEDAR+ FY2025 Note 8 (26,930,164 shares)", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736", sourceType: "regulatory-filing" },
   // Dec 9, 2025: Private placement - 4.624M units @ $0.17 CAD (1 share + 1 warrant)
   { date: "2025-12-09", holdings: 20_226, sharesOutstanding: 31_554_164, holdingsPerShare: 0.000641, source: "SEDAR+ FY2025 Note 12: Dec 9 placement", sharesSource: "SEDAR+ Note 12: +4,624,000 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
+  { date: "2026-02-11", holdings: 24_439, sharesOutstanding: 31_554_164, holdingsPerShare: 0.000774, source: "Press release Feb 11, 2026: 24,439 LTC", sharesSource: "Unchanged from Dec 9 placement", sourceType: "press-release" },
 ];
 
 // ==================== HBAR COMPANIES ====================
@@ -1002,7 +1008,8 @@ const DDC_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-29", holdings: 1_783, sharesOutstanding: 23_310_000, holdingsPerShare: 0.0000765, source: "treasury.ddc.xyz Jan 2026", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2026-02-11", holdings: 1_988, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000692, source: "treasury.ddc.xyz Feb 11, 2026. Shares per 6-K Feb 6.", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2026-02-28", holdings: 2_118, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000737, source: "SEC 6-K Mar 4, 2026 Ex99.1: As of Feb 28, 2026 holdings increased to 2,118 BTC", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm" },
-  { date: "2026-03-04", holdings: 2_183, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000760, source: "SEC 6-K Mar 4, 2026 Ex99.1: additional 65 BTC purchase; total holdings 2,183 BTC", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm" },
+  // Note: sharesOutstanding below is Class A only (28.72M). companies.ts uses 30.47M = Class A (28.72M) + Class B (1.75M)
+  { date: "2026-03-04", holdings: 2_183, sharesOutstanding: 30_473_005, holdingsPerShare: 0.0000716, source: "SEC 6-K Mar 4, 2026 Ex99.1: additional 65 BTC purchase; total holdings 2,183 BTC", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1808110/000121390026023418/ea027997801_ex99-1.htm" },
 ];
 
 // OranjeBTC (OBTC3) - Brazilian BTC treasury
@@ -1078,6 +1085,7 @@ const SWC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-04", holdings: 2664, sharesOutstanding: 380_000_000, holdingsPerShare: 0.00000701, source: "RNS Bitcoin Purchase", sourceUrl: "https://www.aquis.eu/stock-exchange/announcements/5447426", sourceType: "regulatory-filing" },
   { date: "2026-01-22", holdings: 2674, sharesOutstanding: 395_188_479, holdingsPerShare: 0.00000677, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/", sourceType: "company-reported" },  // Original PDF URL 404'd (Wix site reorganized)
   { date: "2026-02-11", holdings: 2_689, sharesOutstanding: 396_602_526, holdingsPerShare: 0.00000678, source: "RNS Bitcoin Purchase + company analytics", sourceUrl: "https://www.smarterwebcompany.co.uk/bitcoin-treasury/analytics-/", sourceType: "company-reported" },  // Original PDF URL 404'd (Wix site reorganized)
+  { date: "2026-03-01", holdings: 2_692, sharesOutstanding: 351_919_126, holdingsPerShare: 0.00000765, source: "RNS Mar 1: 2,692 BTC. Shares per RNS Mar 2 Total Voting Rights.", sharesSource: "LSE RNS Mar 2, 2026: Total Voting Rights", sourceUrl: "https://www.londonstockexchange.com/news-article/SWC/total-bitcoin-holdings-update/16925134", sourceType: "regulatory-filing" },
 ];
 
 // DCC.AX (DigitalX Limited) - Australia's first ASX-listed BTC treasury company
