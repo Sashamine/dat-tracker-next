@@ -368,6 +368,131 @@ Companies with multiple share classes (like XXI) require special handling:
 
 ---
 
+## Operating Instructions
+
+Use the dataset as a controlled financial system, not a living note pile.
+
+### Core Commands
+
+Run these and trust them as the operational entry points:
+
+```bash
+# Weekly review (start of one weekly Claude session)
+npx tsx scripts/weekly-review.ts
+
+# Daily health (every day, or after suspicious pipeline/mNAV events)
+npx tsx scripts/daily-health.ts
+
+# Monthly reconciliation (first Monday of each month)
+npx tsx scripts/monthly-reconciliation.ts
+```
+
+### When To Run
+
+| Command | Schedule | Also Run After |
+|---------|----------|----------------|
+| `daily-health.ts` | Every day | Suspicious pipeline alert or unexplained mNAV move |
+| `weekly-review.ts` | Start of one weekly session | Material filing, financing, or merger event |
+| `monthly-reconciliation.ts` | First Monday of month | Major release or public dataset-confidence claim |
+
+### What Counts As A Blocker
+
+Treat these as blocking until resolved. Do not merge around blockers.
+
+- Any integrity hard fail
+- Quote verification failure for a touched ticker
+- Broken build or failing financial/data CI gate
+- Unexplained structural mNAV move in a high-confidence name
+- Low-confidence company with no open assumption explaining why
+- Financial/data PR that bypasses path-sensitive cross-checks
+- Formula parity mismatch between calculation layers
+- Orphaned or invalid assumption entry
+- Market-cap source degradation for a high-impact company without explanation
+
+### What Is Non-Blocking
+
+These are review items, not immediate blockers. Do not reopen unless a trigger fires.
+
+- Stale fields with documented "no newer source exists"
+- Pending-merger assumptions with clear trigger and resolution path
+- Override market-cap names that have active assumptions and review triggers
+- Foreign/manual names with recent "checked, no update" status
+- Known provisional modeling with bounded impact and explicit review date
+
+### Weekly Session Workflow
+
+Run `npx tsx scripts/weekly-review.ts`, then work the output in this order:
+
+1. Blocking issues
+2. Low-confidence names
+3. Open high-sensitivity assumptions
+4. Recent structural mNAV movers
+5. Override market-cap names
+6. Foreign/manual stale names
+7. Upcoming convert maturity / ITM-OTM flips
+
+If the queue shows no actionable change, stop. A no-op weekly session is valid.
+
+### When To Open A Deep Review
+
+Run the full adversarial review only for affected names when one of these happens:
+
+- New company onboarding
+- New convertible / warrant / preferred issuance
+- Merger / de-SPAC / exchange ratio event
+- Debt restructuring or redemption
+- Encumbrance / collateral change
+- Large source-driven mNAV move
+- Material discrepancy vs external benchmark
+- Unresolved contradiction between filings and dataset fields
+
+Deep review is per-company, not full-universe.
+
+### When To Do Nothing
+
+Do nothing if:
+
+- Daily health is clean
+- Weekly review shows only known, documented assumptions
+- Staleness is already explained and no newer source exists
+- mNAV movement is market-driven and classified as such
+- No new filing or capital-structure trigger occurred
+
+This is important. Do not create churn by re-auditing stable names without a trigger.
+
+### Assumption Register Rules
+
+`src/lib/data/assumptions.ts` is mandatory operational state.
+
+Every unresolved material issue must have: ticker, field, assumption, reason, trigger, sourceNeeded, resolutionPath, sensitivity, materiality, status, lastReviewed.
+
+If a company is low-confidence and does not map to an assumption or explicit stale-source explanation, that is a process failure. The test suite enforces this.
+
+### Foreign Companies
+
+Foreign/manual names are not second-class. For non-SEC names:
+
+- Rely on the weekly review foreign/manual queue
+- Document "checked, no newer source" when applicable
+- Treat regulator / exchange / IR source freshness explicitly
+- Open assumptions where capital-structure or holdings uncertainty remains
+
+### Market-Cap Overrides
+
+Overrides are tolerated only if they are tracked, have a reason, have a trigger for removal, and are reviewed during weekly/monthly runs. Removing overrides opportunistically is good. Blindly trusting them is not.
+
+### Safe Status Language
+
+Use: "No known blocking integrity failures" / "Internally consistent with documented residual assumptions" / "Residual risk is concentrated in named assumptions and source freshness, not untracked gaps"
+
+Avoid: "100% confidence" / "fully correct" / "fully complete"
+
+### Healthy System State
+
+The system is healthy when: no blockers, weekly queue is small and explained, low-confidence names are known and justified, assumptions are current, overrides are controlled, stale data is either updated or explicitly source-limited.
+
+---
+
 ## Working Memory Protocol
 
 **CLAUDE.local.md is the rolling context buffer.** Update it to maintain state across sessions.
