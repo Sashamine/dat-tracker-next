@@ -157,8 +157,10 @@ export function getCompanyMNAVDetailed(
   if (totalCV <= 0) return { ...empty, assets, warnings: [...warnings, "Total Crypto NAV is zero"] };
 
   const adjustedDebt = Math.max(0, (company.totalDebt ?? 0) - inTheMoneyDebtValue);
+  // Warrant proceeds add to cash but NOT restricted cash — they represent
+  // real incoming cash that increases free cash and reduces EV.
   const adjustedCashReserves = (company.cashReserves ?? 0) + inTheMoneyWarrantProceeds;
-  const adjustedRestrictedCash = (company.restrictedCash ?? 0) + inTheMoneyWarrantProceeds;
+  const adjustedRestrictedCash = (company.restrictedCash ?? 0);
 
   const mnav = calculateMNAV(
     marketCap,
