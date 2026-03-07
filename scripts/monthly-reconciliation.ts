@@ -16,6 +16,7 @@ import { allCompanies } from '../src/lib/data/companies';
 import {
   getAllCompanyReviews,
   getReviewQueue,
+  STALE_HOLDINGS_DAYS,
 } from '../src/lib/data/integrity-review';
 import { ASSUMPTIONS, ASSUMPTION_REVIEW_MAX_AGE_DAYS } from '../src/lib/data/assumptions';
 import { MARKET_CAP_OVERRIDES } from '../src/lib/data/market-cap-overrides';
@@ -139,7 +140,7 @@ if (foreignReviews.length === 0) {
 } else {
   for (const r of foreignReviews.sort((a, b) => (b.holdingsAgeDays ?? 0) - (a.holdingsAgeDays ?? 0))) {
     const age = r.holdingsAgeDays !== null ? `${r.holdingsAgeDays}d` : 'unknown';
-    const flag = (r.holdingsAgeDays ?? 0) > 90 ? ' ⚠️' : '';
+    const flag = (r.holdingsAgeDays ?? 0) > STALE_HOLDINGS_DAYS ? ' ⚠️' : '';
     console.log(`    ${r.ticker}: holdings ${age} old${flag}`);
   }
 }

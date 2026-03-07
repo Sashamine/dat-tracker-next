@@ -19,7 +19,7 @@ import {
   STALE_BALANCE_SHEET_DAYS,
   type CompanyReviewResult,
 } from '../src/lib/data/integrity-review';
-import { ASSUMPTIONS } from '../src/lib/data/assumptions';
+import { ASSUMPTIONS, ASSUMPTION_REVIEW_MAX_AGE_DAYS } from '../src/lib/data/assumptions';
 
 const jsonMode = process.argv.includes('--json');
 const today = new Date().toISOString().split('T')[0];
@@ -71,7 +71,7 @@ const overdueAssumptions = ASSUMPTIONS
   .filter(a => a.status !== 'resolved')
   .filter(a => {
     const age = Math.floor((Date.now() - new Date(a.lastReviewed).getTime()) / (1000 * 60 * 60 * 24));
-    return age > 90;
+    return age > ASSUMPTION_REVIEW_MAX_AGE_DAYS;
   }).length;
 
 // ── Output ──────────────────────────────────────────────────────────
@@ -85,10 +85,26 @@ if (jsonMode) {
     pipeline: { secCovered, foreign },
     assumptions: { open: openAssumptions, monitoring: monitoringAssumptions, overdue: overdueAssumptions },
     staleItems,
-    lowConfidence: reviews.filter(r => r.confidence === 'low').map(r => ({
-      ticker: r.ticker,
-      reasons: r.confidenceReasons,
-    })),
+    staleByField: Object.fromEntries(
+      Object.entries(
+        staleItems.reduce((acc, s) => { (acc[s.field] ??= []).push(s); return acc; }, {} as Record<string, StaleItem[]>)
+      )
+    ),
+    lowConfidence: reviews.filter(r => r.confidence === 'low').map(r => {
+      const hasMarketCapIssue = r.marketCapSource === 'fallback' || r.marketCapSource === 'override';
+      const hasStaleness = r.holdingsAgeDays !== null && r.holdingsAgeDays > STALE_HOLDINGS_DAYS;
+      const hasPendingMerger = r.flags.some(f => f.reason.includes('Pending merger'));
+      const hasAssumption = r.openAssumptions.some(a => a.sensitivity === 'high');
+
+      let anomalyType: string;
+      if (hasPendingMerger) anomalyType = 'pending_merger';
+      else if (hasMarketCapIssue && hasStaleness) anomalyType = 'mixed';
+      else if (hasMarketCapIssue) anomalyType = 'market_only';
+      else if (hasStaleness || hasAssumption) anomalyType = 'source_update';
+      else anomalyType = 'unexplained';
+
+      return { ticker: r.ticker, anomalyType, reasons: r.confidenceReasons };
+    }),
   };
   console.log(JSON.stringify(report, null, 2));
   process.exit(0);
@@ -110,24 +126,50 @@ console.log(`  Pipeline:    SEC=${secCovered}  foreign/manual=${foreign}`);
 // Assumptions
 console.log(`  Assumptions: open=${openAssumptions}  monitoring=${monitoringAssumptions}  overdue=${overdueAssumptions}`);
 
-// Stale items
+// Stale items — grouped by field type
 if (staleItems.length > 0) {
   console.log(`\n  ⚠️  STALE FIELDS (${staleItems.length}):`);
-  // Sort by age descending
-  staleItems.sort((a, b) => b.ageDays - a.ageDays);
+
+  const byField: Record<string, StaleItem[]> = {};
   for (const s of staleItems) {
-    console.log(`    ${s.ticker}.${s.field}: ${s.ageDays}d (threshold ${s.threshold}d)`);
+    (byField[s.field] ??= []).push(s);
+  }
+
+  const openAssumptionTickers = new Set(
+    ASSUMPTIONS.filter(a => a.status !== 'resolved').map(a => a.ticker)
+  );
+
+  for (const [field, items] of Object.entries(byField)) {
+    items.sort((a, b) => b.ageDays - a.ageDays);
+    console.log(`    ${field} (${items.length}):`);
+    for (const s of items) {
+      const hasAssumption = openAssumptionTickers.has(s.ticker) ? ' [assumption]' : '';
+      console.log(`      ${s.ticker}: ${s.ageDays}d (threshold ${s.threshold}d)${hasAssumption}`);
+    }
   }
 } else {
   console.log(`\n  ✅ No stale fields`);
 }
 
-// Low confidence
+// Low confidence — classified by anomaly type
 const lowConf = reviews.filter(r => r.confidence === 'low');
 if (lowConf.length > 0) {
   console.log(`\n  🔴 LOW CONFIDENCE (${lowConf.length}):`);
+
   for (const r of lowConf) {
-    console.log(`    ${r.ticker}: ${r.confidenceReasons.join('; ')}`);
+    const hasMarketCapIssue = r.marketCapSource === 'fallback' || r.marketCapSource === 'override';
+    const hasStaleness = r.holdingsAgeDays !== null && r.holdingsAgeDays > STALE_HOLDINGS_DAYS;
+    const hasPendingMerger = r.flags.some(f => f.reason.includes('Pending merger'));
+    const hasAssumption = r.openAssumptions.some(a => a.sensitivity === 'high');
+
+    let anomalyType: string;
+    if (hasPendingMerger) anomalyType = 'pending_merger';
+    else if (hasMarketCapIssue && hasStaleness) anomalyType = 'mixed';
+    else if (hasMarketCapIssue) anomalyType = 'market_only';
+    else if (hasStaleness || hasAssumption) anomalyType = 'source_update';
+    else anomalyType = 'unexplained';
+
+    console.log(`    ${r.ticker} [${anomalyType}]: ${r.confidenceReasons.join('; ')}`);
   }
 }
 

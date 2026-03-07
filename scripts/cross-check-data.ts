@@ -9,7 +9,7 @@
  * 1. QUOTE-VALUE MATCH: Does the sourceQuote contain a number consistent with holdings?
  * 2. SHARES SANITY: shares × recent price ≈ reasonable market cap?
  * 3. mNAV RANGE: Is mNAV in a plausible range (0.1x–10x)?
- * 4. STALENESS: Is any source > 90 days old?
+ * 4. STALENESS: Is any source older than STALE_HOLDINGS_DAYS?
  * 5. FIELD CONSISTENCY: Do related fields agree (e.g., holdingsSource matches sourceType)?
  * 6. DERIVED CHECK: If holdingsDerived, does the calculation parse correctly?
  * 7. MISSING FIELDS: Are critical fields present?
@@ -17,6 +17,7 @@
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { STALE_HOLDINGS_DAYS, CRITICAL_STALE_DAYS } from '../src/lib/data/integrity-review';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -284,14 +285,14 @@ function run() {
     // -----------------------------------------------------------------------
     if (co.holdingsLastUpdated) {
       const days = daysSince(co.holdingsLastUpdated);
-      if (days > 180) {
+      if (days > CRITICAL_STALE_DAYS) {
         issues.push({
           ticker: co.ticker,
           severity: co.tier === 1 ? "FAIL" : "WARN",
           check: "STALE-HOLDINGS",
           message: `Holdings data is ${days} days old (updated ${co.holdingsLastUpdated})`,
         });
-      } else if (days > 90) {
+      } else if (days > STALE_HOLDINGS_DAYS) {
         issues.push({
           ticker: co.ticker,
           severity: "WARN",

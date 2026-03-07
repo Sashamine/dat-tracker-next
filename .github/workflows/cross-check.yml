@@ -11,6 +11,8 @@ on:
       - 'src/lib/data/earnings-data.ts'
       - 'src/lib/data/market-cap-overrides.ts'
       - 'src/lib/data/assumptions.ts'
+      - 'src/lib/data/integrity-review.ts'
+      - 'src/lib/data/stock-splits.ts'
       - 'src/lib/utils/mnav-calculation.ts'
       - 'src/lib/math/**'
       - 'src/lib/d1-normalization.ts'

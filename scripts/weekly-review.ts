@@ -22,6 +22,8 @@ import {
 } from '../src/lib/data/integrity-review';
 import { ASSUMPTIONS, ASSUMPTION_REVIEW_MAX_AGE_DAYS } from '../src/lib/data/assumptions';
 import { MARKET_CAP_OVERRIDES } from '../src/lib/data/market-cap-overrides';
+import { dilutiveInstruments, getEffectiveShares } from '../src/lib/data/dilutive-instruments';
+import { MATURITY_ALERT_DAYS } from '../src/lib/data/integrity-review';
 
 // ── CLI args ────────────────────────────────────────────────────────
 
@@ -154,6 +156,54 @@ printSection('OVERRIDE / FALLBACK MARKET CAP', queue.overrideMarketCap);
 // ── Section 7: Expiring Instruments ─────────────────────────────────
 
 printSection('INSTRUMENTS EXPIRING WITHIN 90 DAYS', queue.expiringInstruments);
+
+// ── Section 8: Instrument Moneyness & Maturity ───────────────────────
+
+const companiesWithInstruments = companies.filter(c => (dilutiveInstruments[c.ticker]?.length ?? 0) > 0);
+if (companiesWithInstruments.length > 0) {
+  console.log(`\n${'─'.repeat(60)}`);
+  console.log(`  DILUTIVE INSTRUMENT STATUS (${companiesWithInstruments.length} companies)`);
+  console.log(`${'─'.repeat(60)}`);
+
+  for (const co of companiesWithInstruments) {
+    const instruments = dilutiveInstruments[co.ticker];
+    if (!instruments || instruments.length === 0) continue;
+
+    // We don't have live stock prices in this script, so show instrument details
+    // and flag maturity proximity
+    console.log(`\n  ${co.ticker} — ${instruments.length} instrument(s)`);
+
+    for (const inst of instruments) {
+      const parts: string[] = [];
+      parts.push(inst.type);
+      parts.push(`strike $${inst.strikePrice}`);
+      parts.push(`${inst.potentialShares.toLocaleString()} shares`);
+
+      if (inst.faceValue) {
+        parts.push(`face $${(inst.faceValue / 1e6).toFixed(0)}M`);
+      }
+
+      if (inst.settlementType && inst.settlementType !== 'full_share') {
+        parts.push(`settlement: ${inst.settlementType}`);
+      }
+
+      // Maturity proximity
+      let maturityFlag = '';
+      if (inst.expiration) {
+        const daysToExpiry = Math.floor((new Date(inst.expiration).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+        if (daysToExpiry < 0) {
+          maturityFlag = ' [EXPIRED]';
+        } else if (daysToExpiry <= MATURITY_ALERT_DAYS) {
+          maturityFlag = ` [MATURES IN ${daysToExpiry}d]`;
+        } else {
+          parts.push(`expires ${inst.expiration}`);
+        }
+      }
+
+      console.log(`    ${parts.join(' | ')}${maturityFlag}`);
+    }
+  }
+}
 
 // ── Assumption Age Check ────────────────────────────────────────────
 

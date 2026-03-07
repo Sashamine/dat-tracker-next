@@ -75,4 +75,49 @@ describe('Assumption Register', () => {
       }
     }
   });
+
+  it('no duplicate open assumptions for the same (ticker, field)', () => {
+    const open = ASSUMPTIONS.filter(a => a.status !== 'resolved');
+    const seen = new Set<string>();
+    const dupes: string[] = [];
+
+    for (const a of open) {
+      const key = `${a.ticker}:${a.field}`;
+      if (seen.has(key)) {
+        dupes.push(key);
+      }
+      seen.add(key);
+    }
+
+    if (dupes.length > 0) {
+      expect.fail(`Duplicate open assumptions: ${dupes.join(', ')}`);
+    }
+  });
+
+  it('sensitivity must be low, medium, or high', () => {
+    const valid = new Set(['low', 'medium', 'high']);
+    const bad = ASSUMPTIONS.filter(a => !valid.has(a.sensitivity));
+    if (bad.length > 0) {
+      expect.fail(`Invalid sensitivity: ${bad.map(a => `${a.ticker}.${a.field}="${a.sensitivity}"`).join(', ')}`);
+    }
+  });
+
+  it('materiality must be low, medium, or high', () => {
+    const valid = new Set(['low', 'medium', 'high']);
+    const bad = ASSUMPTIONS.filter(a => !valid.has(a.materiality));
+    if (bad.length > 0) {
+      expect.fail(`Invalid materiality: ${bad.map(a => `${a.ticker}.${a.field}="${a.materiality}"`).join(', ')}`);
+    }
+  });
+
+  it('open assumptions must have non-blank resolutionPath and sourceNeeded', () => {
+    const bad = ASSUMPTIONS
+      .filter(a => a.status === 'open')
+      .filter(a => !a.resolutionPath?.trim() || !a.sourceNeeded?.trim());
+
+    if (bad.length > 0) {
+      const list = bad.map(a => `${a.ticker}.${a.field}`).join(', ');
+      expect.fail(`Open assumptions with blank resolutionPath or sourceNeeded: ${list}`);
+    }
+  });
 });
