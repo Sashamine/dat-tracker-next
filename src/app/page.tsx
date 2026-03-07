@@ -138,7 +138,7 @@ function HomeContent() {
                 {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
               </p>
               <p className="mt-1 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
-                Ranked by 90-day holdings-per-share growth so dilution-adjusted treasury execution shows up first.
+                Ranked by 90-day adjusted holdings-per-share growth so dilution-adjusted treasury execution shows up first.
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -199,7 +199,7 @@ function HomeContent() {
                   {isLoadingCompanies ? "Loading..." : `${totalCompanies} companies · ${(totalValue / 1_000_000_000).toFixed(1)}B treasury tracked`}
                 </p>
                 <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
-                  Default ranking: 90D holdings-per-share growth.
+                  Default ranking: 90D AHPS growth.
                 </p>
               </div>
               <div className="flex items-center gap-3">

@@ -34,6 +34,30 @@ interface HpsGrowthResult {
   currentHoldings: number;
   currentShares: number;
   latestDate: string;
+  currentSnapshot: {
+    date: string;
+    holdings: number;
+    sharesOutstanding: number;
+    holdingsPerShare: number;
+  };
+  snapshot30d: {
+    date: string;
+    holdings: number;
+    sharesOutstanding: number;
+    holdingsPerShare: number;
+  } | null;
+  snapshot90d: {
+    date: string;
+    holdings: number;
+    sharesOutstanding: number;
+    holdingsPerShare: number;
+  } | null;
+  snapshot1y: {
+    date: string;
+    holdings: number;
+    sharesOutstanding: number;
+    holdingsPerShare: number;
+  } | null;
 }
 
 export async function GET() {
@@ -88,17 +112,20 @@ export async function GET() {
       const currentHps = latest.holdings / latest.shares;
 
       // Find closest snapshot on or before each target date
-      const findHps = (target: string): number | null => {
+      const findSnapshot = (target: string): HpsGrowthRow | null => {
         let best: HpsGrowthRow | null = null;
         for (const s of snapshots) {
           if (s.as_of <= target) best = s;
         }
-        return best ? best.holdings / best.shares : null;
+        return best;
       };
 
-      const hps30dAgo = findHps(d30);
-      const hps90dAgo = findHps(d90);
-      const hps1yAgo = findHps(d1y);
+      const snapshot30d = findSnapshot(d30);
+      const snapshot90d = findSnapshot(d90);
+      const snapshot1y = findSnapshot(d1y);
+      const hps30dAgo = snapshot30d ? snapshot30d.holdings / snapshot30d.shares : null;
+      const hps90dAgo = snapshot90d ? snapshot90d.holdings / snapshot90d.shares : null;
+      const hps1yAgo = snapshot1y ? snapshot1y.holdings / snapshot1y.shares : null;
 
       const growth = (current: number, past: number | null): number | null =>
         past && past > 0 ? ((current - past) / past) * 100 : null;
@@ -115,6 +142,36 @@ export async function GET() {
         currentHoldings: latest.holdings,
         currentShares: latest.shares,
         latestDate: latest.as_of,
+        currentSnapshot: {
+          date: latest.as_of,
+          holdings: latest.holdings,
+          sharesOutstanding: latest.shares,
+          holdingsPerShare: currentHps,
+        },
+        snapshot30d: snapshot30d
+          ? {
+              date: snapshot30d.as_of,
+              holdings: snapshot30d.holdings,
+              sharesOutstanding: snapshot30d.shares,
+              holdingsPerShare: hps30dAgo!,
+            }
+          : null,
+        snapshot90d: snapshot90d
+          ? {
+              date: snapshot90d.as_of,
+              holdings: snapshot90d.holdings,
+              sharesOutstanding: snapshot90d.shares,
+              holdingsPerShare: hps90dAgo!,
+            }
+          : null,
+        snapshot1y: snapshot1y
+          ? {
+              date: snapshot1y.as_of,
+              holdings: snapshot1y.holdings,
+              sharesOutstanding: snapshot1y.shares,
+              holdingsPerShare: hps1yAgo!,
+            }
+          : null,
       });
     }
 
