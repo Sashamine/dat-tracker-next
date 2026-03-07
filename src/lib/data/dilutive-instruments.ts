@@ -2554,6 +2554,478 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "Total: 258,875. Strike price $0 (vest to shares).",
     },
   ],
+
+  // TRON Inc (f/k/a SRM Entertainment) - TRX treasury company
+  // Verified 2026-03-06 via SEC filings (CIK 0001956744)
+  // Basic shares: 274,382,064 (Dec 29, 2025 after Justin Sun investment)
+  // Key dilutive instruments: Series A/B convertible preferred, May PIPE warrants, equity plan options
+  // June PIPE warrants (220M shares) ALREADY EXERCISED Aug 2025 — baked into basic count
+  // Series B has 19.99% blocker: max ~54.9M shares until stockholder vote
+  TRON: [
+    // Series A Convertible Preferred Stock (May 2025 PIPE)
+    {
+      type: "preferred",
+      strikePrice: 0.56,
+      potentialShares: 8_928_571,
+      source: "8-K May 21, 2025 PIPE",
+      sourceUrl:
+        "/filings/tron/0001493152-25-019000",
+      issuedDate: "2025-05-21",
+      notes:
+        "Series A Convertible Preferred (5,000 shares). " +
+        "Conversion ratio: 1:1,785.7 → 8,928,571 common shares. " +
+        "Conversion price $0.56/share. Holder has 4.99%-9.99% ownership cap.",
+    },
+    // Series B Convertible Preferred Stock (June 2025 PIPE) — PARTIAL conversion only
+    // Full conversion = 200M shares, but 19.99% blocker limits to ~54.9M until shareholder vote
+    {
+      type: "preferred",
+      strikePrice: 0.50,
+      potentialShares: 54_878_000,
+      source: "8-K Jun 16, 2025 PIPE + 19.99% blocker",
+      sourceUrl:
+        "/filings/tron/0001493152-25-022000",
+      issuedDate: "2025-06-16",
+      notes:
+        "Series B Convertible Preferred (100,000 shares). " +
+        "Full conversion = 200,000,000 shares at $0.50/share. " +
+        "BLOCKER: Cannot convert >19.99% of outstanding without stockholder approval. " +
+        "At 274.4M basic shares, max convertible = ~54.9M until vote. " +
+        "Remaining ~145M shares tracked as contingent (not included here).",
+    },
+    // May 2025 PIPE Warrants
+    {
+      type: "warrant",
+      strikePrice: 0.65,
+      potentialShares: 8_928_571,
+      source: "8-K May 21, 2025 PIPE",
+      sourceUrl:
+        "/filings/tron/0001493152-25-019000",
+      issuedDate: "2025-05-21",
+      expiration: "2027-05-21",
+      notes:
+        "Common stock purchase warrants from May 2025 PIPE. " +
+        "Exercise price $0.65/share. 2-year term.",
+    },
+    // 2024 Equity Incentive Plan — estimated from Form 4 filings
+    {
+      type: "option",
+      strikePrice: 0.56,
+      potentialShares: 500_000,
+      source: "Form 4 filings + 2024 Equity Incentive Plan (estimate)",
+      sourceUrl:
+        "/filings/tron/0001493152-25-019000",
+      notes:
+        "Estimated outstanding options under 2024 Equity Plan. " +
+        "CFO McKinnon: 200K options @ $0.56. " +
+        "Other grants not fully disclosed. Conservative estimate 500K total.",
+    },
+  ],
+
+  // PURR (Hyperliquid Strategies Inc, f/k/a Sonnet BioTherapeutics) - HYPE treasury company
+  // Verified 2026-03-06 via SEC 10-Q + merger documents (CIK 0002078856)
+  // Basic shares: 123,967,508 (Feb 11, 2026 8-K). Fully diluted ~150.6M.
+  // Holdings: 17.6M HYPE | Cash: $281.9M | Zero debt
+  // Advisor shares (~7.75M) already in basic count. Advisor warrants all OTM at ~$3.64.
+  PURR: [
+    // Advisor Warrants — 3 tranches, 15% of fully diluted (~23M shares total)
+    // All well OUT of the money at current ~$3.64 price
+    {
+      type: "warrant",
+      strikePrice: 9.375,
+      potentialShares: 7_666_667,
+      source: "DEFM14A / Business Combination Agreement",
+      sourceUrl:
+        "/filings/purr/0001193125-25-311400",
+      issuedDate: "2025-12-02",
+      expiration: "2030-12-02",
+      notes:
+        "Advisor warrants tranche 1 (1/3 of ~23M total). " +
+        "Rorschach Advisor LLC. 5-year term from merger close.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 12.50,
+      potentialShares: 7_666_667,
+      source: "DEFM14A / Business Combination Agreement",
+      sourceUrl:
+        "/filings/purr/0001193125-25-311400",
+      issuedDate: "2025-12-02",
+      expiration: "2030-12-02",
+      notes:
+        "Advisor warrants tranche 2 (1/3 of ~23M total). " +
+        "Rorschach Advisor LLC. 5-year term from merger close.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 18.75,
+      potentialShares: 7_666_667,
+      source: "DEFM14A / Business Combination Agreement",
+      sourceUrl:
+        "/filings/purr/0001193125-25-311400",
+      issuedDate: "2025-12-02",
+      expiration: "2030-12-02",
+      notes:
+        "Advisor warrants tranche 3 (1/3 of ~23M total). " +
+        "Rorschach Advisor LLC. 5-year term from merger close.",
+    },
+    // June 2025 Convertible Note Warrants (from pre-merger Sonnet $2M notes)
+    {
+      type: "warrant",
+      strikePrice: 1.156,
+      potentialShares: 865_052,
+      source: "8-K Jun 2025 convertible notes",
+      sourceUrl:
+        "/filings/purr/0001193125-25-311400",
+      issuedDate: "2025-06-01",
+      expiration: "2030-06-01",
+      notes:
+        "Warrants attached to $2M convertible notes sold by Sonnet Jun 2025. " +
+        "Exercise price $1.156/share. 5-year term.",
+    },
+    // Conditional extra warrants (triggered if $5M issuance didn't occur within 90 days)
+    {
+      type: "warrant",
+      strikePrice: 0.25,
+      potentialShares: 3_460_208,
+      source: "8-K Jun 2025 convertible note terms",
+      sourceUrl:
+        "/filings/purr/0001193125-25-311400",
+      issuedDate: "2025-10-01",
+      expiration: "2030-10-01",
+      notes:
+        "Conditional warrants from Jun 2025 notes. Triggered if $5M+ issuance " +
+        "didn't occur within 90 days. Exercise price $0.25/share. " +
+        "Status uncertain — may have been obviated by Jul 14 $5.5M placement.",
+    },
+  ],
+
+  // ETHM (The Ether Machine) - ETH treasury company
+  // Verified 2026-03-06 via SEC Form 425 filings + press releases (CIK 0002080334)
+  // Basic shares: 60,000,000 (via Dynamix SPAC merger, ticker changed Aug 27, 2025)
+  // Holdings: 590,000 ETH as of Sep 30, 2025
+  // Note: Still in SPAC merger process; no 10-Q/10-K filings yet
+  ETHM: [
+    // Senior Secured Convertible Notes (August 2025)
+    {
+      type: "convertible",
+      strikePrice: 3.445,
+      potentialShares: 45_355_588,
+      faceValue: 156_250_000,
+      source: "Note Purchase Agreement Aug 8, 2025",
+      sourceUrl:
+        "/filings/ethm/0001213900-25-073158",
+      issuedDate: "2025-08-08",
+      expiration: "2028-08-08",
+      notes:
+        "Senior Secured Convertible Notes. $156.25M face value. " +
+        "Conversion price $3.445/share. 3-year maturity. " +
+        "Collateral: $44.5M in ETH + $156.25M cash (restricted).",
+    },
+    // Pre-Funded Warrants (July 2025 equity offering)
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 17_495_849,
+      source: "Securities Purchase Agreement Jul 29, 2025",
+      sourceUrl:
+        "/filings/ethm/0001213900-25-065907",
+      issuedDate: "2025-07-29",
+      notes:
+        "Pre-funded warrants from July 2025 equity offering. " +
+        "Exercise price $0.0001 (effectively free). Always ITM.",
+    },
+    // Strategic Advisor Warrants
+    {
+      type: "warrant",
+      strikePrice: 3.445,
+      potentialShares: 9_071_110,
+      source: "Investor documents Aug 2025",
+      sourceUrl:
+        "/filings/ethm/0001213900-25-073158",
+      issuedDate: "2025-08-08",
+      notes:
+        "Strategic advisor warrants. Exercise price $3.445/share " +
+        "(matching convertible note conversion price).",
+    },
+  ],
+
+  // CEPO (Cantor Equity Partners I / BSTR Holdings) - BTC treasury company
+  // Verified 2026-03-06 via SEC 8-K filings (CIK 0002027708)
+  // SPAC merger pending (expected early Q2 2026). Post-merger ticker: BSTR
+  // Basic shares: 25,500,000 (20.5M Class A + 5M Class B founder shares)
+  // Holdings: 30,021 BTC | All convertible instruments at $13.00 strike
+  CEPO: [
+    // 1.00% Convertible Senior Secured Notes — Main tranche
+    {
+      type: "convertible",
+      strikePrice: 13.00,
+      potentialShares: 38_461_538,
+      faceValue: 500_000_000,
+      source: "8-K Jul 17, 2025",
+      sourceUrl:
+        "/filings/cepo/0001213900-25-064922",
+      issuedDate: "2025-07-17",
+      notes:
+        "1.00% Convertible Senior Secured Notes. $500M face. " +
+        "5-year maturity from closing. Conversion price $13.00 (30% premium over $10 IPO). " +
+        "Non-callable for 3 years; callable thereafter if stock >130% of strike for 20/30 days.",
+    },
+    // 1.00% Convertible Senior Secured Notes — Additional tranche
+    {
+      type: "convertible",
+      strikePrice: 13.00,
+      potentialShares: 2_346_154,
+      faceValue: 30_500_000,
+      source: "8-K Aug 7, 2025",
+      sourceUrl:
+        "/filings/cepo/0001213900-25-073158",
+      issuedDate: "2025-08-07",
+      notes:
+        "Additional 1.00% Convertible Senior Secured Notes. $30.5M face. " +
+        "Same terms as main $500M tranche. Conversion price $13.00.",
+    },
+    // 7.00% Perpetual Convertible Preferred Stock — Large tranche
+    {
+      type: "preferred",
+      strikePrice: 13.00,
+      potentialShares: 23_076_923,
+      source: "8-K Aug 25, 2025",
+      sourceUrl:
+        "/filings/cepo/0001213900-25-078000",
+      issuedDate: "2025-08-25",
+      notes:
+        "7.00% Perpetual Convertible Preferred (300,000 shares @ $1,000 par). " +
+        "~$300M notional. Conversion price $13.00. Perpetual (no maturity). " +
+        "7% annual dividend obligation (~$21M/year).",
+    },
+    // 7.00% Perpetual Convertible Preferred Stock — Secondary placement
+    {
+      type: "preferred",
+      strikePrice: 13.00,
+      potentialShares: 3_715_385,
+      source: "8-K Aug 25, 2025 (secondary placement)",
+      sourceUrl:
+        "/filings/cepo/0001213900-25-078000",
+      issuedDate: "2025-08-25",
+      notes:
+        "7.00% Perpetual Convertible Preferred (secondary placement). " +
+        "~$48.3M at $85/share (~480K preferred shares). " +
+        "Conversion price $13.00. Perpetual. Same dividend terms.",
+    },
+  ],
+
+  // IHLDF (Intelli Holdings) - Canadian BTC treasury company
+  // Verified by GPT 5.4 via SEDAR+ Q3 2025 interim financial statements
+  // All strike prices converted from CAD at ~1.43 CAD/USD
+  IHLDF: [
+    {
+      type: "option",
+      strikePrice: 0.52, // CAD 0.75 / 1.43
+      potentialShares: 1_110_000,
+      expiration: "2026-09-27",
+      source: "SEDAR+ Q3 2025 interim financial statements",
+      sourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=486bb93cacb6adaf46458544260c8c73770fe23f970c2c6a16571e11cc9c55aa",
+      notes: "CAD 0.75 exercise price converted at ~1.43 CAD/USD.",
+    },
+    {
+      type: "option",
+      strikePrice: 1.71, // CAD 2.45 / 1.43
+      potentialShares: 370_000,
+      expiration: "2026-12-13",
+      source: "SEDAR+ Q3 2025 interim financial statements",
+      sourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=486bb93cacb6adaf46458544260c8c73770fe23f970c2c6a16571e11cc9c55aa",
+      notes: "CAD 2.45 exercise price converted at ~1.43 CAD/USD.",
+    },
+    {
+      type: "option",
+      strikePrice: 1.82, // CAD 2.60 / 1.43
+      potentialShares: 2_325_000,
+      expiration: "2026-12-28",
+      source: "SEDAR+ Q3 2025 interim financial statements",
+      sourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=486bb93cacb6adaf46458544260c8c73770fe23f970c2c6a16571e11cc9c55aa",
+      notes: "CAD 2.60 exercise price converted at ~1.43 CAD/USD.",
+    },
+    {
+      type: "option",
+      strikePrice: 0.52, // CAD 0.75 / 1.43
+      potentialShares: 1_101_100,
+      expiration: "2027-06-16",
+      source: "SEDAR+ Q3 2025 interim financial statements",
+      sourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=486bb93cacb6adaf46458544260c8c73770fe23f970c2c6a16571e11cc9c55aa",
+      notes: "CAD 0.75 exercise price converted at ~1.43 CAD/USD.",
+    },
+    {
+      type: "option",
+      strikePrice: 0.21, // CAD 0.30 / 1.43
+      potentialShares: 370_000,
+      expiration: "2028-04-12",
+      source: "SEDAR+ Q3 2025 interim financial statements",
+      sourceUrl: "https://www.sedarplus.ca/csa-party/records/document.html?id=486bb93cacb6adaf46458544260c8c73770fe23f970c2c6a16571e11cc9c55aa",
+      notes: "CAD 0.30 exercise price converted at ~1.43 CAD/USD.",
+    },
+  ],
+
+  // TAOX (Tao Automations) - BTC treasury company
+  // Verified by GPT 5.4 via SEC 8-K Oct 2025 + 10-Q Sep 30, 2025 (CIK 1571934)
+  TAOX: [
+    // Series E preferred + warrants (Oct 2025 financing)
+    {
+      type: "preferred",
+      strikePrice: 8,
+      potentialShares: 1_375_000,
+      faceValue: 11_000_000,
+      issuedDate: "2025-10-13",
+      source: "SEC 8-K Oct. 13, 2025 Series E financing",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925098909/tm2528153d1_8k.htm",
+      notes: "11,000 Series E preferred shares with $1,000 stated value, initially convertible into up to 1,375,000 common shares at $8.00.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 8,
+      potentialShares: 1_375_000,
+      issuedDate: "2025-10-13",
+      expiration: "2030-10-15",
+      source: "SEC 8-K Oct. 13, 2025 Series E financing",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925098909/tm2528153d1_8k.htm",
+      notes: "Investor warrants issued alongside Series E preferred; exercisable immediately at $8.00 and expire five years from issuance.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 8,
+      potentialShares: 55_000,
+      issuedDate: "2025-10-13",
+      expiration: "2030-10-15",
+      source: "SEC 8-K Oct. 13, 2025 placement agent terms",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925098909/tm2528153d1_8k.htm",
+      notes: "Placement agent warrants equal to 4.0% of the initial conversion shares.",
+    },
+    // Series D preferred (partially converted)
+    {
+      type: "preferred",
+      strikePrice: 3,
+      potentialShares: 401_187,
+      faceValue: 1_203_562,
+      issuedDate: "2025-06-09",
+      source: "SEC 10-Q Sep. 30, 2025 Series D reconciliation",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Remaining Series D preferred: originally 5,500 shares at $1,000 stated value. $4,296,438 converted into 1,432,146 shares by Sep 30, 2025; ~$1.204M face / 401,187 shares remaining.",
+    },
+    // Series D warrants
+    {
+      type: "warrant",
+      strikePrice: 3,
+      potentialShares: 1_888_334,
+      issuedDate: "2025-06-09",
+      expiration: "2030-06-09",
+      source: "SEC 10-Q Sep. 30, 2025 warrant issuance table",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Series D investor warrants at $3.00.",
+    },
+    // Series C warrants (repriced)
+    {
+      type: "warrant",
+      strikePrice: 3,
+      potentialShares: 1_716_668,
+      issuedDate: "2024-09-10",
+      expiration: "2029-09-10",
+      source: "SEC 10-Q Sep. 30, 2025 Series C warrant footnote",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Series C investor warrants repriced and increased to 1,666,668 at $3.00.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 3,
+      potentialShares: 50_000,
+      issuedDate: "2024-09-10",
+      expiration: "2029-09-10",
+      source: "SEC 10-Q Sep. 30, 2025 Series C broker warrant footnote",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Series C broker warrants increased to 50,000 at $3.00.",
+    },
+    // Consulting warrants
+    {
+      type: "warrant",
+      strikePrice: 4,
+      potentialShares: 400_000,
+      issuedDate: "2025-08-26",
+      expiration: "2030-08-26",
+      source: "SEC 10-Q Sep. 30, 2025 Altucher consulting warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "First tranche consultant warrant.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 6,
+      potentialShares: 200_000,
+      issuedDate: "2025-08-26",
+      expiration: "2030-08-26",
+      source: "SEC 10-Q Sep. 30, 2025 Altucher consulting warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Second tranche consultant warrant.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 8,
+      potentialShares: 200_000,
+      issuedDate: "2025-08-26",
+      expiration: "2030-08-26",
+      source: "SEC 10-Q Sep. 30, 2025 Altucher consulting warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Third tranche consultant warrant.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 12,
+      potentialShares: 400_000,
+      issuedDate: "2025-08-26",
+      expiration: "2030-08-26",
+      source: "SEC 10-Q Sep. 30, 2025 Altucher consulting warrants",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Fourth tranche consultant warrant.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 8.4,
+      potentialShares: 100_000,
+      issuedDate: "2025-08-26",
+      expiration: "2030-08-26",
+      source: "SEC 10-Q Sep. 30, 2025 Jacks consulting warrant",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Advisor warrant.",
+    },
+    // Stock options
+    {
+      type: "option",
+      strikePrice: 48.98, // Weighted avg exercise price
+      potentialShares: 109_274,
+      source: "SEC 10-Q Sep. 30, 2025 stock option table",
+      sourceUrl: "https://www.sec.gov/Archives/edgar/data/1571934/000110465925112570/taox-20250930x10q.htm",
+      notes: "Aggregate options outstanding as of Sep 30, 2025. Deeply OTM — weighted-average strike $48.98.",
+    },
+  ],
+
+  // BTCT.V (Bitcoin Treasury Corporation) - Canadian BTC treasury
+  // Researched by GPT 5.4 via company disclosures
+  // Conversion price and maturity NOT confirmed from primary filing text
+  "BTCT.V": [
+    {
+      type: "convertible",
+      strikePrice: 0, // Conversion price unknown — not found in accessible primary docs
+      potentialShares: 2_083_333,
+      faceValue: 18_120_000, // CAD 25.0M / 1.38 CAD/USD
+      issuedDate: "2025-06-23",
+      source: "BTCT company disclosures (closing announcement)",
+      sourceUrl: "https://btctcorp.com/bitcoin-treasury-corporation-announces-closing-of-amalgamation-and-concurrent-financing/",
+      notes: "25,000 convertible debenture subscription receipts at CAD $1,000 each. Diluted shares (11,977,313) minus basic (9,893,980) = 2,083,333 potential shares per Feb 28, 2026 disclosure. Exact conversion price and maturity NOT confirmed from accessible primary text — use $0 strike as placeholder (always ITM).",
+    },
+  ],
+
+  // OBTC3 (Bitcoin Banco S.A.) - Brazilian BTC treasury
+  // TODO: Convertible debenture exists but terms still blocked.
+  // Latest accessible market announcement implies 6,966,760 incremental shares on conversion:
+  //   162,267,260 fully adjusted shares - 155,300,500 shares outstanding outside treasury = 6,966,760.
+  // Do not add strikePrice / faceValue / expiration until actual debenture filing is accessible.
 };
 
 /**
