@@ -315,7 +315,9 @@ export const ethCompanies: Company[] = [
     secCik: "0001436229",
     asset: "ETH",
     tier: 2,
-    holdings: 60_500,  // Feb 5, 2026 8-K
+    holdings: 60_500,  // 70,500 (Jan 7 8-K) - 10,000 sold (Feb 5 8-K) = 60,500
+    holdingsDerived: true,
+    holdingsCalculation: "70,500 (Jan 7 8-K) - 10,000 sold (Feb 5 8-K) = 60,500",
     holdingsLastUpdated: "2026-02-05",
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/btcs/0001493152-26-005565",
@@ -775,14 +777,14 @@ export const btcCompanies: Company[] = [
     exchangeMic: "XNAS",
     asset: "BTC",
     tier: 1,
-    // HOLDINGS: from provenance (10-Q filing)
-    holdings: MARA_PROVENANCE.holdings?.value || 52_850,
+    // HOLDINGS: from provenance (FY2025 10-K)
+    holdings: MARA_PROVENANCE.holdings?.value || 53_822,
     holdingsLastUpdated: MARA_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/mara/0001507605-25-000028",
-    accessionNumber: "0001507605-25-000028",
+    holdingsSourceUrl: "/filings/mara/0001507605-26-000014",
+    accessionNumber: "0001507605-26-000014",
     sourceType: "sec-filing",
-    sourceQuote: "we held a total of 52,850 bitcoin, including 17,357 bitcoin under our digital asset management strategy",
+    sourceQuote: "Total bitcoin holdings of 53,822 BTC as of December 31, 2025",
     datStartDate: "2021-01-25", // First major BTC purchase ($150M)
     website: "https://mara.com",
     twitter: "https://twitter.com/MARAHoldings",

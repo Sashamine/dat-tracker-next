@@ -1721,6 +1721,8 @@ describe("Check 41: Source quote vs holdings cross-validation", () => {
       if (!quote) continue;
       if (company.holdings === 0) continue;
       if (company.pendingMerger && company.holdings === 0) continue;
+      // Skip derived holdings — the quote references a base value, not the derived total
+      if ((company as any).holdingsDerived) continue;
 
       // Extract all numbers from the quote (handle commas, decimals, abbreviations)
       // Match patterns like "681.2 Million", "48 million", "17.6M", "31,500"
@@ -1762,10 +1764,8 @@ describe("Check 41: Source quote vs holdings cross-validation", () => {
       console.log("\n=== SOURCE QUOTE MISMATCH ===\n");
       violations.forEach((v) => console.log(`  ${v}`));
     }
-    // HARD fail target — if holdings doesn't match the cited source, something is wrong.
-    // Currently soft while 6 stale quotes are fixed:
-    // BTCS, FGNX, XXI, MARA, DJT, STKE
-    // TODO: make hard once quotes are updated
-    // expect(violations).toHaveLength(0);
+    // HARD fail — if holdings doesn't match the cited source, something is wrong.
+    // This prevents automated pipelines from overwriting verified data.
+    expect(violations).toHaveLength(0);
   });
 });
