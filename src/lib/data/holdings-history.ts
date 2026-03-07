@@ -1001,8 +1001,15 @@ const DDC_HISTORY: HoldingsSnapshot[] = [
 ];
 
 // OranjeBTC (OBTC3) - Brazilian BTC treasury
-// Source: B3 market announcement (legal disclosure channel)
+// Source: B3 market announcements + press releases
+// Listed B3 Oct 2025 via reverse merger with Intergraus (education company)
+// Share count ~155M throughout (minor buyback of 99,600 shares Oct 2025)
 const OBTC3_HISTORY: HoldingsSnapshot[] = [
+  { date: "2025-09-23", holdings: 3_675, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000237, source: "B3 listing via reverse merger with ~3,675 BTC (CoinDesk Sep 23, 2025)", sourceType: "press-release", sourceUrl: "https://www.coindesk.com/business/2025/09/23/oranjebtc-to-become-brazil-s-largest-publicly-traded-bitcoin-treasury-firm-with-b3-listing" },
+  { date: "2025-10-13", holdings: 3_691, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000238, source: "Bitcoin Magazine Oct 13, 2025: purchased 16 BTC for $1.94M", sourceType: "press-release", sourceUrl: "https://bitcoinmagazine.com/business/the-strategy-of-latin-america-oranjebtc-expands-holdings-with-1-94m-bitcoin-purchase" },
+  { date: "2025-10-20", holdings: 3_701, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000238, source: "CryptoTimes Oct 20, 2025: purchased 10 BTC for $1.09M", sourceType: "press-release", sourceUrl: "https://www.cryptotimes.io/2025/10/20/oranjebtc-adds-10-btc-and-lifts-treasury-to-3701-btc/" },
+  { date: "2025-10-27", holdings: 3_708, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000239, source: "COINOTAG Oct 27, 2025: purchased 7 BTC for ~$774k", sourceType: "press-release", sourceUrl: "https://en.coinotag.com/oranjebtc-adds-7-bitcoin-to-holdings-before-b3-listing/" },
+  { date: "2025-11-16", holdings: 3_713, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000239, source: "Press Nov 16, 2025: purchased 5 BTC for ~$474k", sourceType: "press-release", sourceUrl: "https://bitcoinethereumnews.com/bitcoin/bitcoin-news-btc-buying-spree-largest-latin-america-bitcoin-treasury-adds-to-its-stack/" },
   { date: "2026-03-01", holdings: 3_723, sharesOutstanding: 155_300_500, holdingsPerShare: 0.0000240, source: "B3 market announcement Mar 1, 2026: Total BTC em reservas 3.723,0 BTC; 155.300.500 ações ON emitidas fora de tesouraria", sourceType: "regulatory-filing", sourceUrl: "https://api.mziq.com/mzfilemanager/v2/d/1c906e2c-8d06-4a32-a1a8-a240167c77f2/49272f57-866a-97f7-eb9e-22b3bcac1733?origin=2" },
 ];
 

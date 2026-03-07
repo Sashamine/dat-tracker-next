@@ -1057,7 +1057,7 @@ export const btcCompanies: Company[] = [
     holdingsLastUpdated: "2026-03-01",
     holdingsSource: "press-release",
     holdingsSourceUrl: "https://ri.oranjebtc.com",
-    datStartDate: "2025-01-01",
+    datStartDate: "2025-09-23",  // B3 listing via reverse merger with Intergraus
     website: "https://www.oranjebtc.com",
     isMiner: false,
     quarterlyBurnUsd: 500_000,  // Education business minimal burn
