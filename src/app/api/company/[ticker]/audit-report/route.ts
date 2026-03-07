@@ -25,7 +25,7 @@ export async function GET(
       stocks: {} 
     };
 
-    const reportData = await generateAuditReportData(ticker, company, prices as any);
+    const reportData = await generateAuditReportData(ticker, company, prices as { crypto: Record<string, { price: number }>; stocks: Record<string, { price: number }> });
 
     // STOP CONDITION: If a report has 0 provenance links, it's non-defensible.
     const hasSourceLinks = reportData.provenance.some(p => p.sourceUrl);
