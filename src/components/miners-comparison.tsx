@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { HOLDINGS_HISTORY } from "@/lib/data/holdings-history";
+import useSWR from "swr";
 import { Company } from "@/lib/types";
 import type { HoldingsBasis } from "@/lib/d1-overlay";
 import { HoldingsBasisBadge } from "@/components/holdings-basis-badge";
@@ -12,7 +12,21 @@ type CompanyType = "miners" | "treasuries" | "all";
 interface HPSComparisonProps {
   companies: Company[];
   compact?: boolean;
-  type?: CompanyType;  // Filter by company type
+  type?: CompanyType;
+}
+
+interface HpsGrowthApiRow {
+  ticker: string;
+  currentHps: number;
+  hps30dAgo: number | null;
+  hps90dAgo: number | null;
+  hps1yAgo: number | null;
+  growth30d: number | null;
+  growth90d: number | null;
+  growth1y: number | null;
+  currentHoldings: number;
+  currentShares: number;
+  latestDate: string;
 }
 
 interface CompanyStats {
@@ -20,9 +34,6 @@ interface CompanyStats {
   name: string;
   isMiner: boolean;
   currentHPS: number;
-  hps30dAgo: number;
-  hps90dAgo: number;
-  hps1yAgo: number;
   growth30d: number | null;
   growth90d: number | null;
   growth1y: number | null;
@@ -32,78 +43,71 @@ interface CompanyStats {
   holdingsBasis?: HoldingsBasis;
 }
 
-function getHPSAtDate(ticker: string, targetDate: Date): number | null {
-  const history = HOLDINGS_HISTORY[ticker]?.history;
-  if (!history || history.length === 0) return null;
-
-  // Find the closest snapshot on or before the target date
-  const sorted = [...history].sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-
-  for (const snapshot of sorted) {
-    if (new Date(snapshot.date) <= targetDate) {
-      return snapshot.holdingsPerShare;
-    }
-  }
-  return null;
-}
-
-function calculateCompanyStats(company: Company): CompanyStats | null {
-  const history = HOLDINGS_HISTORY[company.ticker]?.history;
-  if (!history || history.length === 0) return null;
-
-  // Get latest snapshot
-  const sorted = [...history].sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-  const latest = sorted[0];
-  
-  const now = new Date();
-  const d30 = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const d90 = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-  const d1y = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-
-  const currentHPS = latest.holdingsPerShare;
-  const hps30dAgo = getHPSAtDate(company.ticker, d30) || currentHPS;
-  const hps90dAgo = getHPSAtDate(company.ticker, d90) || currentHPS;
-  const hps1yAgo = getHPSAtDate(company.ticker, d1y);
-
-  return {
-    ticker: company.ticker,
-    name: company.name,
-    isMiner: company.isMiner || false,
-    currentHPS,
-    hps30dAgo,
-    hps90dAgo,
-    hps1yAgo: hps1yAgo || 0,
-    growth30d: hps30dAgo ? ((currentHPS - hps30dAgo) / hps30dAgo) * 100 : null,
-    growth90d: hps90dAgo ? ((currentHPS - hps90dAgo) / hps90dAgo) * 100 : null,
-    growth1y: hps1yAgo ? ((currentHPS - hps1yAgo) / hps1yAgo) * 100 : null,
-    currentHoldings: latest.holdings,
-    currentShares: latest.sharesOutstanding,
-    latestDate: latest.date,
-    holdingsBasis: company.holdingsBasis,
-  };
-}
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export function HPSComparison({ companies, compact, type = "all" }: HPSComparisonProps) {
-  const stats = useMemo(() => {
-    // Filter by type
-    let filtered = companies;
-    if (type === "miners") {
-      filtered = companies.filter(c => c.isMiner);
-    } else if (type === "treasuries") {
-      filtered = companies.filter(c => !c.isMiner);
+  const { data, error, isLoading } = useSWR<{
+    success: boolean;
+    results: HpsGrowthApiRow[];
+  }>("/api/d1/hps-growth", fetcher, { revalidateOnFocus: false });
+
+  const companyMap = useMemo(() => {
+    const map = new Map<string, Company>();
+    for (const c of companies) {
+      map.set(c.ticker.toUpperCase(), c);
     }
-    
-    return filtered
-      .map(calculateCompanyStats)
-      .filter((s): s is CompanyStats => s !== null)
-      .sort((a, b) => (b.growth1y || 0) - (a.growth1y || 0));
-  }, [companies, type]);
+    return map;
+  }, [companies]);
+
+  const stats = useMemo(() => {
+    if (!data?.results) return [];
+
+    const merged: CompanyStats[] = [];
+    for (const row of data.results) {
+      const company = companyMap.get(row.ticker.toUpperCase());
+      if (!company) continue;
+
+      // Filter by type
+      if (type === "miners" && !company.isMiner) continue;
+      if (type === "treasuries" && company.isMiner) continue;
+
+      merged.push({
+        ticker: row.ticker,
+        name: company.name,
+        isMiner: company.isMiner || false,
+        currentHPS: row.currentHps,
+        growth30d: row.growth30d,
+        growth90d: row.growth90d,
+        growth1y: row.growth1y,
+        currentHoldings: row.currentHoldings,
+        currentShares: row.currentShares,
+        latestDate: row.latestDate,
+        holdingsBasis: company.holdingsBasis,
+      });
+    }
+
+    // Sort by 1Y growth descending (nulls last)
+    merged.sort((a, b) => (b.growth1y ?? -Infinity) - (a.growth1y ?? -Infinity));
+    return merged;
+  }, [data, companyMap, type]);
 
   const typeLabel = type === "miners" ? "miner" : type === "treasuries" ? "treasury" : "company";
+
+  if (isLoading) {
+    return (
+      <div className="text-xs text-gray-400 p-2">
+        Loading {typeLabel} HPS data...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-xs text-red-400 p-2">
+        Failed to load HPS data
+      </div>
+    );
+  }
 
   if (stats.length === 0) {
     return (
@@ -114,7 +118,7 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
   }
 
   const formatGrowth = (growth: number | null) => {
-    if (growth === null) return "—";
+    if (growth === null) return "\u2014";
     const sign = growth >= 0 ? "+" : "";
     return `${sign}${growth.toFixed(1)}%`;
   };
@@ -127,7 +131,6 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
   };
 
   if (compact) {
-    // Compact view for sidebar
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 px-1">
@@ -169,7 +172,7 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
         </thead>
         <tbody>
           {stats.map((company) => (
-            <tr 
+            <tr
               key={company.ticker}
               className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50"
             >
@@ -202,7 +205,7 @@ export function HPSComparison({ companies, compact, type = "all" }: HPSCompariso
         </tbody>
       </table>
       <p className="text-xs text-gray-400 mt-2 px-3">
-        HPS = Holdings per share (×10⁶). Growth based on SEC filings.
+        HPS = Holdings per share (x10^6). Growth based on SEC filings.
       </p>
     </div>
   );
