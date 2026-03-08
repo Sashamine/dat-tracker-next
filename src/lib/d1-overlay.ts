@@ -62,6 +62,7 @@ export function applyD1Overlay(
       sharesAsOf:      metrics.basic_shares != null ? (dateMap?.basic_shares ?? c.sharesAsOf) : c.sharesAsOf,
       debtAsOf:        metrics.debt_usd != null ? (dateMap?.debt_usd ?? c.debtAsOf) : c.debtAsOf,
       cashAsOf:        metrics.cash_usd != null ? (dateMap?.cash_usd ?? c.cashAsOf) : c.cashAsOf,
+      _staticCashAsOf: c.cashAsOf,  // Preserve original source date for staleness checks (D1 backfill can stamp carry-forward dates)
       preferredAsOf:   metrics.preferred_equity_usd != null
         ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf)
         : c.preferredAsOf,

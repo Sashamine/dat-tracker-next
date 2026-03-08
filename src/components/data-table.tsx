@@ -483,8 +483,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       otherAssets,
       leverageRatio,
       cashStale: (() => {
-        if (!company.cashAsOf || !company.totalDebt) return false;
-        const age = Date.now() - new Date(company.cashAsOf).getTime();
+        if (!company.totalDebt) return false;
+        // Use original source date (D1 overlay can stamp carry-forward dates that mask staleness)
+        const sourceDate = company._staticCashAsOf || company.cashAsOf;
+        if (!sourceDate) return false;
+        const age = Date.now() - new Date(sourceDate).getTime();
         return age > 90 * 24 * 60 * 60 * 1000;
       })(),
       currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
@@ -1339,7 +1342,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                               <span className={cn(
                                 company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
                                 company.cashStale && "border-b border-dashed border-amber-400/60"
-                              )} title={company.cashStale ? `Cash data from ${company.cashAsOf} — may be stale` : undefined}>
+                              )} title={company.cashStale ? `Cash data from ${company._staticCashAsOf || company.cashAsOf} — may be stale` : undefined}>
                                 {company.cashStale && <span className="text-amber-400/70">~</span>}
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
@@ -1371,7 +1374,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                               <span className={cn(
                                 company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
                                 company.cashStale && "border-b border-dashed border-amber-400/60"
-                              )} title={company.cashStale ? `Cash data from ${company.cashAsOf} — may be stale` : undefined}>
+                              )} title={company.cashStale ? `Cash data from ${company._staticCashAsOf || company.cashAsOf} — may be stale` : undefined}>
                                 {company.cashStale && <span className="text-amber-400/70">~</span>}
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
