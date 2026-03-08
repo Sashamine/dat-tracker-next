@@ -711,7 +711,7 @@ function AnalyticsContent() {
         </div>
 
         <div className="mb-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
-          <SummaryCard title="HPS Growth Summary">
+          <SummaryCard title="AHPS Growth Summary">
             <div className="flex items-center justify-between gap-2">
               <div className="flex gap-1 rounded-lg bg-white p-1 dark:bg-gray-950">
                 {(["30d", "90d", "1y", "all"] as const).map((period) => (
@@ -795,7 +795,7 @@ function AnalyticsContent() {
           <FlywheelPlaceholder />
           <HistogramCard
             title="Sector Growth Distribution"
-            subtitle={`Median HPS Growth (${growthPeriod.toUpperCase()}): ${formatSignedPercent(growthStats.median)}`}
+            subtitle={`Median AHPS Growth (${growthPeriod.toUpperCase()}): ${formatSignedPercent(growthStats.median)}`}
             bins={growthBins}
           />
           <SectorMnavHistoryCard
