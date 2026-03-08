@@ -257,26 +257,6 @@ function SummaryCard({ title, children }: { title: string; children: React.React
   );
 }
 
-function FlywheelPlaceholder() {
-  return (
-    <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-900">
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Flywheel Dynamics</h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Waiting on a canonical 90-day mNAV change series. The current data model supports current mNAV and AHPS growth, but not a trustworthy sector-wide historical mNAV delta for this chart yet.
-        </p>
-      </div>
-      <div className="flex h-[320px] items-center justify-center rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 sm:h-[380px]">
-        <div className="max-w-sm text-center">
-          <p className="text-base font-semibold text-gray-900 dark:text-gray-100">Coming soon</p>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            This view will map AHPS growth against mNAV change once the historical sector mNAV series is exposed as a canonical metric.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function SectorMnavHistoryCard({
   mnavStats,
@@ -790,7 +770,17 @@ function AnalyticsContent() {
             sizeAccessor={(point) => point.marketCap}
             onSelect={(ticker) => (window.location.href = `/company/${ticker}`)}
           />
-          <FlywheelPlaceholder />
+          <ScatterCard
+            title="AHPS Growth vs. mNAV"
+            subtitle="Per-share treasury growth on the y-axis, wrapper valuation on the x-axis. Dot size uses treasury value."
+            xLabel="mNAV"
+            yLabel="AHPS Growth (90D)"
+            points={points}
+            xAccessor={(point) => point.mNAV}
+            yAccessor={(point) => point.ahpsGrowth90d}
+            sizeAccessor={(point) => point.treasuryValue}
+            onSelect={(ticker) => (window.location.href = `/company/${ticker}`)}
+          />
           <HistogramCard
             title="Sector Growth Distribution"
             subtitle={`Median AHPS Growth (${growthPeriod.toUpperCase()}): ${formatSignedPercent(growthStats.median)}`}
