@@ -564,15 +564,16 @@ const GAME_HISTORY: HoldingsSnapshot[] = [
 // SEC CIK: 1591890
 // Note: Company launched ETH treasury strategy in July 2025 (Private Placement)
 // Pre-July 2025 data is pre-treasury strategy era (minimal shares, different business)
+// All share counts retroactively adjusted for 1:5 reverse split (effective Feb 13, 2026)
 const FGNX_HISTORY: HoldingsSnapshot[] = [
-  // Pre-treasury strategy (Dec 2024: only 1.27M shares)
-  { date: "2024-12-31", holdings: 0, sharesOutstanding: 1_267_904, holdingsPerShare: 0, stockPrice: 302.96, source: "10-K 2024", sharesSource: "10-Q Q3 2025 balance sheet", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
+  // Pre-treasury strategy (Dec 2024: only 1.27M shares pre-split = 253,581 post-split)
+  { date: "2024-12-31", holdings: 0, sharesOutstanding: 253_581, holdingsPerShare: 0, stockPrice: 302.96, source: "10-K 2024", sharesSource: "10-Q Q3 2025 balance sheet (split-adjusted)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
   // Post Private Placement (Aug 2025) - ~40M pre-funded warrants converted
-  { date: "2025-09-30", holdings: 50_770, sharesOutstanding: 39_834_188, holdingsPerShare: 1.274, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q cover page", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm", sourceType: "sec-filing" },
-  { date: "2025-11-12", holdings: 50_770, sharesOutstanding: 39_574_350, holdingsPerShare: 1.283, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page (Nov 12)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
-  // Sold ETH for buybacks - repurchased 9.9M shares
-  { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 33_600_000, holdingsPerShare: 1.119, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks) - PRE-SPLIT", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
-  // Post 1:5 reverse split (effective Feb 13, 2026): 33,600,000 / 5 = 6,720,000 shares
+  { date: "2025-09-30", holdings: 50_770, sharesOutstanding: 7_966_838, holdingsPerShare: 6.373, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q cover page (split-adjusted: 39,834,188 / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm", sourceType: "sec-filing" },
+  { date: "2025-11-12", holdings: 50_770, sharesOutstanding: 7_914_870, holdingsPerShare: 6.414, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page Nov 12 (split-adjusted: 39,574,350 / 5)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
+  // Sold ETH for buybacks - repurchased 9.9M pre-split shares
+  { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 5.594, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks, split-adjusted: 33,600,000 / 5)", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
+  // Post 1:5 reverse split (effective Feb 13, 2026) - shares already adjusted above
   { date: "2026-02-13", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 5.595, source: "1:5 reverse split effective Feb 13, 2026", sharesSource: "SEC 8-K Feb 13, 2026 (33.6M pre-split / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm", sourceType: "sec-filing", methodology: "Holdings carried from Jan 21 PR. Shares adjusted for 1:5 reverse split." },
 ];
 
@@ -907,10 +908,12 @@ const XXI_HISTORY: HoldingsSnapshot[] = [
 const ASST_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: SEC 10-Q (Sep 30, 2025) - shares adjusted for 1-for-20 split
   { date: "2025-09-30", holdings: 5886, sharesOutstanding: 40_774_181, holdingsPerShare: 0.0001444, totalDebt: 0, preferredEquity: 0, cash: 109_000_000, source: "SEC 10-Q Q3 2025 (shares adjusted for 1-for-20 split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828025052343/asst-20250930.htm", sourceType: "sec-filing" },
-  // Jan 16, 2026: Strive + Semler merger closed. Semler adds ~2,300 BTC + $100M converts
-  // Combined holdings: ~10,500 BTC (Strive) + ~2,300 BTC (Semler) = 12,798 BTC
-  // Shares: pre-merger 40.77M + Semler merger shares (TBD exact) - using pre-merger as lower bound
-  { date: "2026-01-16", holdings: 12798, sharesOutstanding: 40_774_181, holdingsPerShare: 0.0003138, totalDebt: 100_000_000, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - Semler acquired", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326000616/dp240082_8k.htm", sourceType: "sec-filing" },
+  // Jan 16, 2026: Strive + Semler merger closed. Semler adds ~5,048 BTC + $100M converts
+  // Combined: ~7,750 BTC (Strive organic) + ~5,048 BTC (Semler 10-Q Q3) = 12,798 BTC
+  // Semler shares: 15,142,195 × 21.05 exchange ratio = 318.7M pre-split = 15,937,160 post-split
+  // Post-merger shares: 40,774,181 (pre-merger) + 15,937,160 (Semler) = ~56,711,341 post-split
+  // Additional ~6.3M shares from SATA/PIPE by Feb 11 → 63,048,519
+  { date: "2026-01-16", holdings: 12798, sharesOutstanding: 56_711_341, holdingsPerShare: 0.0002257, totalDebt: 100_000_000, preferredEquity: 200_000_000, cash: 50_000_000, source: "Merger closed - Semler acquired (15.14M Semler shares × 21.05 ratio / 20 split)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000095010326000616/dp240082_8k.htm", sourceType: "sec-filing" },
   // Jan 28, 2026: SEC 8-K - 13,131.82 BTC. $90M Semler converts exchanged for SATA ? $10M debt remaining
   // SATA preferred grew to ~4.26M shares ($426M) from offerings + exchange
   { date: "2026-02-11", holdings: 13131.82, sharesOutstanding: 63_048_519, holdingsPerShare: 0.0002083, totalDebt: 10_000_000, preferredEquity: 426_551_800, cash: 127_200_000, source: "SEC 8-K Feb 13, 2026 (as of Feb 11): 13,131.8 BTC, $127.2M cash, 63M shares", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1920406/000162828026007897/asst-20260213.htm", sourceType: "sec-filing" },

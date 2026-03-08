@@ -66,21 +66,34 @@ export async function GET() {
 
     // Get all holdings_native and basic_shares datapoints in one query.
     // We pivot holdings + shares by (entity_id, as_of) date.
+    // Dedup: when multiple entries exist for the same (entity, metric, date),
+    // prefer backfill_holdings_history_ts (manually verified) over XBRL
+    // (which can report subsets like staked-only holdings). Fall back to MAX.
     const sql = `
-      WITH holdings AS (
-        SELECT entity_id, as_of, value AS holdings
+      WITH holdings_deduped AS (
+        SELECT entity_id, as_of,
+          COALESCE(
+            MAX(CASE WHEN method = 'backfill_holdings_history_ts' THEN value END),
+            MAX(value)
+          ) AS holdings
         FROM datapoints
         WHERE metric = 'holdings_native' AND as_of IS NOT NULL AND value > 0
+        GROUP BY entity_id, as_of
       ),
-      shares AS (
-        SELECT entity_id, as_of, value AS shares
+      shares_deduped AS (
+        SELECT entity_id, as_of,
+          COALESCE(
+            MAX(CASE WHEN method = 'backfill_holdings_history_ts' THEN value END),
+            MAX(value)
+          ) AS shares
         FROM datapoints
         WHERE metric = 'basic_shares' AND as_of IS NOT NULL AND value > 0
+        GROUP BY entity_id, as_of
       ),
       joined AS (
         SELECT h.entity_id, h.as_of, h.holdings, s.shares
-        FROM holdings h
-        INNER JOIN shares s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
+        FROM holdings_deduped h
+        INNER JOIN shares_deduped s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
       )
       SELECT entity_id, as_of, holdings, shares
       FROM joined
