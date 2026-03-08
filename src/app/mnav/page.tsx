@@ -317,7 +317,7 @@ export default function MNAVPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-950">
-        <MobileHeader title="Sector Statistics" showBack />
+        <MobileHeader title="Sector Overview" showBack />
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
         </div>
@@ -333,7 +333,7 @@ export default function MNAVPage() {
         {/* Page Header */}
         <div className="mb-6">
           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            Sector Statistics
+            Sector Overview
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm lg:text-base">
             Aggregate metrics across {companies.length} DAT companies ({treasuries.length} treasuries, {miners.length} miners)
