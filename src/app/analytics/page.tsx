@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
+import { createChart, ColorType, IChartApi, LineSeries, Time } from "lightweight-charts";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
 import { useCompanies } from "@/lib/hooks/use-companies";
@@ -11,8 +12,11 @@ import { enrichAllCompanies } from "@/lib/hooks/use-company-data";
 import { useD1Fundamentals } from "@/lib/hooks/use-d1-fundamentals";
 import { applyD1Overlay } from "@/lib/d1-overlay";
 import { getCompanyMNAV } from "@/lib/math/mnav-engine";
+import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { getCompanyAhpsMetrics, type AhpsHistoryEntry } from "@/lib/utils/ahps";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
+import { getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
+import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { cn } from "@/lib/utils";
 
 type HpsGrowthApiSnapshot = {
@@ -42,6 +46,11 @@ type ChartPoint = {
   mNAV: number | null;
 };
 
+type AssetFilter = "ALL" | "BTC" | "ETH" | "SOL" | "HYPE" | "TAO" | "OTHER";
+type TimeRange = "1d" | "7d" | "1mo" | "1y" | "all";
+type MetricType = "median" | "average";
+type GrowthPeriod = "30d" | "90d" | "1y" | "all";
+
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const assetDotColors: Record<string, string> = {
@@ -63,6 +72,14 @@ const assetDotColors: Record<string, string> = {
   HBAR: "bg-gray-500 border-gray-600",
   MULTI: "bg-pink-500 border-pink-600",
 };
+
+const timeRangeOptions: { value: TimeRange; label: string }[] = [
+  { value: "1d", label: "24H" },
+  { value: "7d", label: "7D" },
+  { value: "1mo", label: "1M" },
+  { value: "1y", label: "1Y" },
+  { value: "all", label: "ALL" },
+];
 
 function formatCompactUsd(value: number): string {
   if (!Number.isFinite(value) || value <= 0) return "—";
@@ -230,19 +247,326 @@ function HistogramCard({
   );
 }
 
+function SummaryCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+      <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{title}</h2>
+      <div className="mt-3">{children}</div>
+    </div>
+  );
+}
+
+function FlywheelPlaceholder() {
+  return (
+    <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-900">
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Flywheel Dynamics</h2>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Waiting on a canonical 90-day mNAV change series. The current data model supports current mNAV and HPS growth, but not a trustworthy sector-wide historical mNAV delta for this chart yet.
+        </p>
+      </div>
+      <div className="flex h-[320px] items-center justify-center rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 sm:h-[380px]">
+        <div className="max-w-sm text-center">
+          <p className="text-base font-semibold text-gray-900 dark:text-gray-100">Coming soon</p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            This view will map HPS growth against mNAV change once the historical sector mNAV series is exposed as a canonical metric.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SectorMnavHistoryCard({
+  mnavStats,
+  timeRange,
+  setTimeRange,
+  metric,
+  setMetric,
+}: {
+  mnavStats: { median: number; average: number };
+  timeRange: TimeRange;
+  setTimeRange: (value: TimeRange) => void;
+  metric: MetricType;
+  setMetric: (value: MetricType) => void;
+}) {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<IChartApi | null>(null);
+  const isMedian = metric === "median";
+  const color = isMedian ? "#6366f1" : "#a855f7";
+
+  const historicalData = useMemo(() => {
+    const now = new Date();
+    const today = now.toISOString().split("T")[0];
+    const daysForRange: Record<TimeRange, number> = {
+      "1d": 1,
+      "7d": 7,
+      "1mo": 30,
+      "1y": 365,
+      "all": 99999,
+    };
+
+    const cutoffDate = new Date(now.getTime() - daysForRange[timeRange] * 24 * 60 * 60 * 1000);
+    const cutoffStr = cutoffDate.toISOString().split("T")[0];
+    const result: { time: Time; value: number }[] = [];
+
+    for (const snapshot of MNAV_HISTORY) {
+      if (snapshot.date < cutoffStr) continue;
+      if (snapshot.date === today) continue;
+      result.push({
+        time: snapshot.date as Time,
+        value: isMedian ? snapshot.median : snapshot.average,
+      });
+    }
+
+    result.push({
+      time: today as Time,
+      value: isMedian ? mnavStats.median : mnavStats.average,
+    });
+
+    return result;
+  }, [isMedian, mnavStats.average, mnavStats.median, timeRange]);
+
+  const change = useMemo(() => {
+    if (historicalData.length < 2) return 0;
+    const first = historicalData[0].value;
+    const last = historicalData[historicalData.length - 1].value;
+    return ((last - first) / first) * 100;
+  }, [historicalData]);
+
+  useEffect(() => {
+    if (!chartContainerRef.current || historicalData.length === 0) return;
+
+    if (chartRef.current) {
+      chartRef.current.remove();
+      chartRef.current = null;
+    }
+
+    const chart = createChart(chartContainerRef.current, {
+      layout: {
+        background: { type: ColorType.Solid, color: "transparent" },
+        textColor: "#9ca3af",
+      },
+      grid: {
+        vertLines: { color: "rgba(156, 163, 175, 0.1)" },
+        horzLines: { color: "rgba(156, 163, 175, 0.1)" },
+      },
+      width: chartContainerRef.current.clientWidth,
+      height: 250,
+      rightPriceScale: { borderVisible: false },
+      timeScale: {
+        borderVisible: false,
+        timeVisible: timeRange === "1d" || timeRange === "7d" || timeRange === "1mo",
+        secondsVisible: false,
+      },
+    });
+
+    const mainSeries = chart.addSeries(LineSeries, {
+      color,
+      lineWidth: 2,
+      title: isMedian ? "Median" : "Average",
+      priceFormat: {
+        type: "custom",
+        formatter: (price: number) => `${price.toFixed(2)}x`,
+      },
+    });
+    mainSeries.setData(historicalData);
+
+    const baselineSeries = chart.addSeries(LineSeries, {
+      color: "rgba(156, 163, 175, 0.5)",
+      lineWidth: 1,
+      lineStyle: 2,
+      priceLineVisible: false,
+      lastValueVisible: false,
+    });
+    baselineSeries.setData(historicalData.map((point) => ({ time: point.time, value: 1.0 })));
+
+    if (historicalData.length > 0) {
+      chart.timeScale().setVisibleRange({
+        from: historicalData[0].time,
+        to: historicalData[historicalData.length - 1].time,
+      });
+    }
+
+    chartRef.current = chart;
+
+    const handleResize = () => {
+      if (chartContainerRef.current && chartRef.current) {
+        chartRef.current.applyOptions({ width: chartContainerRef.current.clientWidth });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (chartRef.current) {
+        chartRef.current.remove();
+        chartRef.current = null;
+      }
+    };
+  }, [color, historicalData, isMedian, timeRange]);
+
+  return (
+    <div className="rounded-lg border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900 xl:col-span-2">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Sector mNAV History</h2>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            Canonical sector-level mNAV trend from the pre-calculated history stack.
+          </p>
+        </div>
+        <div className="flex flex-col gap-2 sm:items-end">
+          <div className="flex gap-1 rounded-lg bg-white p-1 dark:bg-gray-950">
+            <button
+              onClick={() => setMetric("median")}
+              className={cn(
+                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                metric === "median"
+                  ? "bg-indigo-600 text-white"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+              )}
+            >
+              Median
+            </button>
+            <button
+              onClick={() => setMetric("average")}
+              className={cn(
+                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                metric === "average"
+                  ? "bg-indigo-600 text-white"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+              )}
+            >
+              Average
+            </button>
+          </div>
+          <div className="flex gap-1 rounded-lg bg-white p-1 dark:bg-gray-950">
+            {timeRangeOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setTimeRange(option.value)}
+                className={cn(
+                  "rounded-md px-2.5 py-1 text-xs font-medium transition-colors sm:px-3 sm:text-sm",
+                  timeRange === option.value
+                    ? "bg-indigo-600 text-white"
+                    : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="mb-3 flex items-center gap-2 text-sm">
+        <span className="inline-flex h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
+        <span className="text-gray-600 dark:text-gray-400">
+          {(isMedian ? mnavStats.median : mnavStats.average).toFixed(2)}x
+        </span>
+        <span className={cn("text-xs font-medium", change >= 0 ? "text-green-600" : "text-red-600")}>
+          ({change >= 0 ? "+" : ""}{change.toFixed(1)}%)
+        </span>
+      </div>
+      <div ref={chartContainerRef} className="w-full" />
+    </div>
+  );
+}
+
 function AnalyticsContent() {
+  const [selectedAsset, setSelectedAsset] = useState<AssetFilter>("ALL");
+  const [growthPeriod, setGrowthPeriod] = useState<GrowthPeriod>("90d");
+  const [historyRange, setHistoryRange] = useState<TimeRange>("1y");
+  const [historyMetric, setHistoryMetric] = useState<MetricType>("median");
+
   const { data: prices } = usePricesStream();
   const { data: companiesData, isLoading } = useCompanies();
   const allCompanies = useMemo(() => {
     const baseCompanies = companiesData?.companies || [];
     return enrichAllCompanies(baseCompanies);
   }, [companiesData]);
+
   const tickers = useMemo(() => allCompanies.map((company) => company.ticker), [allCompanies]);
   const { data: d1Data, sources: d1Sources, dates: d1Dates } = useD1Fundamentals(tickers);
-  const companies = useMemo(
+  const d1AllCompanies = useMemo(
     () => applyD1Overlay(allCompanies, d1Data, d1Sources, d1Dates),
     [allCompanies, d1Data, d1Sources, d1Dates]
   );
+
+  const companies = useMemo(() => {
+    if (selectedAsset === "ALL") return d1AllCompanies;
+    if (selectedAsset === "OTHER") {
+      const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
+      return d1AllCompanies.filter((company) => !mainAssets.includes(company.asset));
+    }
+    return d1AllCompanies.filter((company) => company.asset === selectedAsset);
+  }, [d1AllCompanies, selectedAsset]);
+
+  const availableAssets = useMemo(() => {
+    const assetCounts: Record<string, number> = {};
+    d1AllCompanies.forEach((company) => {
+      assetCounts[company.asset] = (assetCounts[company.asset] || 0) + 1;
+    });
+    return assetCounts;
+  }, [d1AllCompanies]);
+
+  const treasuries = useMemo(() => companies.filter((company) => !company.isMiner), [companies]);
+  const mnavStats = useMNAVStats(treasuries, prices ?? null);
+
+  const growthStats = useMemo(() => {
+    const daysMap: Record<GrowthPeriod, number | undefined> = {
+      "30d": 30,
+      "90d": 90,
+      "1y": 365,
+      "all": undefined,
+    };
+    const days = daysMap[growthPeriod];
+    const assetFilter = selectedAsset === "ALL" || selectedAsset === "OTHER"
+      ? undefined
+      : selectedAsset as "BTC" | "ETH" | "SOL" | "HYPE" | "TAO";
+
+    let allGrowthData = getHoldingsGrowthByPeriod({ days, asset: assetFilter });
+
+    if (selectedAsset === "OTHER") {
+      const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
+      allGrowthData = allGrowthData.filter((metric) => !mainAssets.includes(metric.asset));
+    }
+
+    const treasuryTickers = new Set(treasuries.map((company) => company.ticker));
+    const leaderboard = allGrowthData.filter((metric) => treasuryTickers.has(metric.ticker));
+    const companiesWithData = new Set(leaderboard.map((metric) => metric.ticker));
+    const insufficientData = treasuries.filter((company) => !companiesWithData.has(company.ticker)).length;
+
+    if (leaderboard.length === 0) {
+      return {
+        median: 0,
+        average: 0,
+        positiveCount: 0,
+        totalCount: 0,
+        best: null as (typeof leaderboard)[number] | null,
+        worst: null as (typeof leaderboard)[number] | null,
+        insufficientData,
+      };
+    }
+
+    const growths = leaderboard.map((metric) => metric.growthPct);
+    const sortedGrowths = [...growths].sort((a, b) => a - b);
+    const mid = Math.floor(sortedGrowths.length / 2);
+    const medianGrowth = sortedGrowths.length % 2
+      ? sortedGrowths[mid]
+      : (sortedGrowths[mid - 1] + sortedGrowths[mid]) / 2;
+    const averageGrowth = growths.reduce((sum, value) => sum + value, 0) / growths.length;
+
+    return {
+      median: medianGrowth,
+      average: averageGrowth,
+      positiveCount: growths.filter((value) => value > 0).length,
+      totalCount: leaderboard.length,
+      best: leaderboard[0],
+      worst: leaderboard[leaderboard.length - 1],
+      insufficientData,
+    };
+  }, [growthPeriod, selectedAsset, treasuries]);
+
   const { data: ahpsData } = useSWR<{ success: boolean; results: HpsGrowthApiRow[] }>(
     "/api/d1/hps-growth",
     fetcher,
@@ -297,8 +621,9 @@ function AnalyticsContent() {
   }, [ahpsData?.results, companies, prices]);
 
   const companyCount = companies.length;
-  const growthValues = points.map((point) => point.ahpsGrowth90d).filter((value): value is number => value !== null && Number.isFinite(value));
-  const mnavValues = points.map((point) => point.mNAV).filter((value): value is number => value !== null && Number.isFinite(value));
+  const growthValues = points
+    .map((point) => point.ahpsGrowth90d)
+    .filter((value): value is number => value !== null && Number.isFinite(value));
   const growthBins = [
     { label: "< -20%", min: Number.NEGATIVE_INFINITY, max: -20, tone: "negative" as const },
     { label: "-20 to -10%", min: -20, max: -10, tone: "negative" as const },
@@ -312,20 +637,6 @@ function AnalyticsContent() {
     tone: bin.tone,
     count: growthValues.filter((value) => value >= bin.min && value < bin.max).length,
   }));
-  const mnavBins = [
-    { label: "<0.5x", min: Number.NEGATIVE_INFINITY, max: 0.5 },
-    { label: "0.5-1.0x", min: 0.5, max: 1.0 },
-    { label: "1.0-1.5x", min: 1.0, max: 1.5 },
-    { label: "1.5-2.0x", min: 1.5, max: 2.0 },
-    { label: "2.0-3.0x", min: 2.0, max: 3.0 },
-    { label: "3.0x+", min: 3.0, max: Number.POSITIVE_INFINITY },
-  ].map((bin) => ({
-    label: bin.label,
-    tone: "neutral" as const,
-    count: mnavValues.filter((value) => value >= bin.min && value < bin.max).length,
-  }));
-  const medianGrowth = median(growthValues);
-  const medianMnav = median(mnavValues);
 
   if (isLoading) {
     return (
@@ -337,7 +648,7 @@ function AnalyticsContent() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
-      <MobileHeader title="Analytics" showBack />
+      <MobileHeader title="Sector" showBack />
       <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
         <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
       </Suspense>
@@ -356,6 +667,119 @@ function AnalyticsContent() {
           </p>
         </div>
 
+        <div className="mb-6 flex flex-wrap gap-2">
+          <button
+            onClick={() => setSelectedAsset("ALL")}
+            className={cn(
+              "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              selectedAsset === "ALL"
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+            )}
+          >
+            All ({d1AllCompanies.length})
+          </button>
+          {(["BTC", "ETH", "SOL", "HYPE", "TAO"] as const).map((asset) =>
+            availableAssets[asset] > 0 ? (
+              <button
+                key={asset}
+                onClick={() => setSelectedAsset(asset)}
+                className={cn(
+                  "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                  selectedAsset === asset
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                )}
+              >
+                {asset} ({availableAssets[asset]})
+              </button>
+            ) : null
+          )}
+          {Object.keys(availableAssets).filter((asset) => !["BTC", "ETH", "SOL", "HYPE", "TAO"].includes(asset)).length > 0 && (
+            <button
+              onClick={() => setSelectedAsset("OTHER")}
+              className={cn(
+                "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                selectedAsset === "OTHER"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+              )}
+            >
+              Other ({Object.entries(availableAssets).filter(([asset]) => !["BTC", "ETH", "SOL", "HYPE", "TAO"].includes(asset)).reduce((sum, [, count]) => sum + count, 0)})
+            </button>
+          )}
+        </div>
+
+        <div className="mb-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
+          <SummaryCard title="HPS Growth Summary">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex gap-1 rounded-lg bg-white p-1 dark:bg-gray-950">
+                {(["30d", "90d", "1y", "all"] as const).map((period) => (
+                  <button
+                    key={period}
+                    onClick={() => setGrowthPeriod(period)}
+                    className={cn(
+                      "rounded-md px-3 py-1.5 text-xs font-medium uppercase transition-colors sm:text-sm",
+                      growthPeriod === period
+                        ? "bg-indigo-600 text-white"
+                        : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                    )}
+                  >
+                    {period}
+                  </button>
+                ))}
+              </div>
+              {growthStats.insufficientData > 0 && (
+                <span className="text-xs text-amber-600 dark:text-amber-400">
+                  {growthStats.insufficientData} lack history
+                </span>
+              )}
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Median</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">{formatSignedPercent(growthStats.median)}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Average</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">{formatSignedPercent(growthStats.average)}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Positive</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  {growthStats.positiveCount}/{growthStats.totalCount}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Best / Worst</p>
+                <p className="mt-1 text-sm font-semibold text-green-600">{growthStats.best ? `${growthStats.best.ticker} ${formatSignedPercent(growthStats.best.growthPct)}` : "—"}</p>
+                <p className="text-sm font-semibold text-red-600">{growthStats.worst ? `${growthStats.worst.ticker} ${formatSignedPercent(growthStats.worst.growthPct)}` : "—"}</p>
+              </div>
+            </div>
+          </SummaryCard>
+
+          <SummaryCard title="mNAV Aggregate Stats">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Median</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">{mnavStats.median.toFixed(2)}x</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Average</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">{mnavStats.average.toFixed(2)}x</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Companies</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">{mnavStats.count}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Asset Filter</p>
+                <p className="mt-1 text-sm font-semibold text-gray-900 dark:text-gray-100">{selectedAsset === "ALL" ? "All assets" : selectedAsset}</p>
+              </div>
+            </div>
+          </SummaryCard>
+        </div>
+
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
           <ScatterCard
             title="Treasury Density vs Scale"
@@ -368,26 +792,18 @@ function AnalyticsContent() {
             sizeAccessor={(point) => point.marketCap}
             onSelect={(ticker) => (window.location.href = `/company/${ticker}`)}
           />
-          <ScatterCard
-            title="Flywheel Dynamics"
-            subtitle="Fallback framing: current mNAV on x-axis because 90D mNAV change is not yet exposed as a canonical series."
-            xLabel="Current mNAV"
-            yLabel="HPS Growth (90D)"
-            points={points}
-            xAccessor={(point) => point.mNAV}
-            yAccessor={(point) => point.ahpsGrowth90d}
-            sizeAccessor={(point) => point.treasuryValue}
-            onSelect={(ticker) => (window.location.href = `/company/${ticker}`)}
-          />
+          <FlywheelPlaceholder />
           <HistogramCard
             title="Sector Growth Distribution"
-            subtitle={`Median HPS Growth (90D): ${formatSignedPercent(medianGrowth)}`}
+            subtitle={`Median HPS Growth (${growthPeriod.toUpperCase()}): ${formatSignedPercent(growthStats.median)}`}
             bins={growthBins}
           />
-          <HistogramCard
-            title="Sector mNAV Distribution (Current)"
-            subtitle={`Median mNAV: ${medianMnav ? `${medianMnav.toFixed(2)}x` : "—"}`}
-            bins={mnavBins}
+          <SectorMnavHistoryCard
+            mnavStats={{ median: mnavStats.median, average: mnavStats.average }}
+            timeRange={historyRange}
+            setTimeRange={setHistoryRange}
+            metric={historyMetric}
+            setMetric={setHistoryMetric}
           />
         </div>
       </main>

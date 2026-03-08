@@ -103,15 +103,15 @@ export function AppSidebar({ className }: AppSidebarProps) {
             Overview
           </Link>
           <Link
-            href="/mnav"
+            href="/analytics"
             className={cn(
               "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/mnav"
+              pathname === "/analytics" || pathname === "/mnav"
                 ? "bg-indigo-600 text-white"
                 : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
             )}
           >
-            Sector Statistics
+            Sector
           </Link>
           <Link
             href="/earnings"
@@ -123,17 +123,6 @@ export function AppSidebar({ className }: AppSidebarProps) {
             )}
           >
             Earnings
-          </Link>
-          <Link
-            href="/analytics"
-            className={cn(
-              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/analytics"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-            )}
-          >
-            Analytics
           </Link>
           <Link
             href="/anchors"
