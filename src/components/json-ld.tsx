@@ -221,7 +221,7 @@ export function AnalysisJsonLd({
     dateModified: dateModified || new Date().toISOString().split("T")[0],
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": "https://datcap.co/mnav",
+      "@id": "https://datcap.co/analytics",
     },
   };
 

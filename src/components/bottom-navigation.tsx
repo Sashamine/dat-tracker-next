@@ -55,9 +55,6 @@ export function BottomNavigation() {
   const pathname = usePathname();
 
   const isActive = (item: NavItem) => {
-    if (item.href === "/analytics") {
-      return pathname === "/analytics" || pathname === "/mnav";
-    }
     if (item.matchExact) {
       return pathname === item.href;
     }
