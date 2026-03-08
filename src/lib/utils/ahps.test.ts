@@ -123,6 +123,33 @@ describe("getCompanyAhpsMetrics", () => {
     expect(result.ahpsGrowth90dAnnualized).not.toBeNull();
   });
 
+  it("returns null 90d growth when the nearest prior snapshot is too stale", () => {
+    const now = new Date();
+    const stale = new Date(now.getTime() - 250 * 24 * 60 * 60 * 1000);
+    const recent = new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000);
+
+    const company = makeCompany({
+      ticker: "UNKNOWN_TICKER",
+      holdings: 1200,
+      sharesForMnav: 100_000_000,
+      holdingsLastUpdated: recent.toISOString().split("T")[0],
+    });
+
+    const history: AhpsHistoryEntry[] = [
+      makeSnapshot(stale.toISOString().split("T")[0], 1000, 100_000_000),
+      makeSnapshot(recent.toISOString().split("T")[0], 1200, 100_000_000),
+    ];
+
+    const result = getCompanyAhpsMetrics({
+      ticker: "UNKNOWN_TICKER",
+      company,
+      history,
+    });
+
+    expect(result.ahpsGrowth90d).toBeNull();
+    expect(result.ahpsGrowth90dAnnualized).toBeNull();
+  });
+
   it("detects dilution-driven AHPS decline", () => {
     const now = new Date();
     const d100 = new Date(now.getTime() - 100 * 24 * 60 * 60 * 1000);

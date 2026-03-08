@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
+import { findSnapshotOnOrBefore, GROWTH_LOOKBACK_GRACE_DAYS } from '@/lib/utils/growth-snapshots';
 
 /**
  * GET /api/d1/hps-growth
@@ -20,6 +21,9 @@ interface HpsGrowthRow {
   as_of: string;
   holdings: number;
   shares: number;
+  method: string | null;
+  reported_at: string | null;
+  confidence: number | null;
 }
 
 interface HpsGrowthResult {
@@ -66,36 +70,42 @@ export async function GET() {
 
     // Get all holdings_native and basic_shares datapoints in one query.
     // We pivot holdings + shares by (entity_id, as_of) date.
-    // Dedup: when multiple entries exist for the same (entity, metric, date),
-    // prefer backfill_holdings_history_ts (manually verified) over XBRL
-    // (which can report subsets like staked-only holdings). Fall back to MAX.
     const sql = `
-      WITH holdings_deduped AS (
-        SELECT entity_id, as_of,
-          COALESCE(
-            MAX(CASE WHEN method = 'backfill_holdings_history_ts' THEN value END),
-            MAX(value)
-          ) AS holdings
+      WITH holdings AS (
+        SELECT entity_id, as_of, value AS holdings, method, reported_at, confidence
         FROM datapoints
         WHERE metric = 'holdings_native' AND as_of IS NOT NULL AND value > 0
         GROUP BY entity_id, as_of
       ),
-      shares_deduped AS (
-        SELECT entity_id, as_of,
-          COALESCE(
-            MAX(CASE WHEN method = 'backfill_holdings_history_ts' THEN value END),
-            MAX(value)
-          ) AS shares
+      shares AS (
+        SELECT entity_id, as_of, value AS shares, method, reported_at, confidence
         FROM datapoints
         WHERE metric = 'basic_shares' AND as_of IS NOT NULL AND value > 0
         GROUP BY entity_id, as_of
       ),
       joined AS (
-        SELECT h.entity_id, h.as_of, h.holdings, s.shares
-        FROM holdings_deduped h
-        INNER JOIN shares_deduped s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
+        SELECT
+          h.entity_id,
+          h.as_of,
+          h.holdings,
+          s.shares,
+          h.method AS holdings_method,
+          s.method AS shares_method,
+          h.reported_at AS holdings_reported_at,
+          s.reported_at AS shares_reported_at,
+          h.confidence AS holdings_confidence,
+          s.confidence AS shares_confidence
+        FROM holdings h
+        INNER JOIN shares s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
       )
-      SELECT entity_id, as_of, holdings, shares
+      SELECT
+        entity_id,
+        as_of,
+        holdings,
+        shares,
+        holdings_method AS method,
+        holdings_reported_at AS reported_at,
+        holdings_confidence AS confidence
       FROM joined
       ORDER BY entity_id ASC, as_of ASC
     `;
@@ -103,12 +113,47 @@ export async function GET() {
     const raw = await d1.query<HpsGrowthRow>(sql, []);
     const rows = raw.results;
 
-    // Group by ticker
-    const byTicker = new Map<string, HpsGrowthRow[]>();
+    const methodPriority = (method: string | null): number => {
+      switch (method) {
+        case 'backfill_holdings_history_ts':
+          return 4;
+        case 'backfill_qe':
+          return 3;
+        case 'sec_filing_text':
+          return 2;
+        case 'sec_companyfacts_xbrl':
+          return 1;
+        default:
+          return 0;
+      }
+    };
+
+    const preferRow = (current: HpsGrowthRow, candidate: HpsGrowthRow): HpsGrowthRow => {
+      const currentPriority = methodPriority(current.method);
+      const candidatePriority = methodPriority(candidate.method);
+      if (candidatePriority !== currentPriority) {
+        return candidatePriority > currentPriority ? candidate : current;
+      }
+      const currentConfidence = current.confidence ?? 0;
+      const candidateConfidence = candidate.confidence ?? 0;
+      if (candidateConfidence !== currentConfidence) {
+        return candidateConfidence > currentConfidence ? candidate : current;
+      }
+      const currentReported = current.reported_at || current.as_of;
+      const candidateReported = candidate.reported_at || candidate.as_of;
+      if (candidateReported !== currentReported) {
+        return candidateReported > currentReported ? candidate : current;
+      }
+      return candidate;
+    };
+
+    // Group by ticker/date and resolve duplicate datapoints deterministically.
+    const byTicker = new Map<string, Map<string, HpsGrowthRow>>();
     for (const row of rows) {
-      const arr = byTicker.get(row.entity_id) || [];
-      arr.push(row);
-      byTicker.set(row.entity_id, arr);
+      const tickerRows = byTicker.get(row.entity_id) || new Map<string, HpsGrowthRow>();
+      const existing = tickerRows.get(row.as_of);
+      tickerRows.set(row.as_of, existing ? preferRow(existing, row) : row);
+      byTicker.set(row.entity_id, tickerRows);
     }
 
     const now = new Date();
@@ -118,24 +163,26 @@ export async function GET() {
 
     const results: HpsGrowthResult[] = [];
 
-    for (const [ticker, snapshots] of byTicker) {
+    for (const [ticker, snapshotsByDate] of byTicker) {
+      const snapshots = Array.from(snapshotsByDate.values()).sort((a, b) => a.as_of.localeCompare(b.as_of));
       if (snapshots.length === 0) continue;
 
       const latest = snapshots[snapshots.length - 1];
       const currentHps = latest.holdings / latest.shares;
 
       // Find closest snapshot on or before each target date
-      const findSnapshot = (target: string): HpsGrowthRow | null => {
-        let best: HpsGrowthRow | null = null;
-        for (const s of snapshots) {
-          if (s.as_of <= target) best = s;
-        }
-        return best;
-      };
-
-      const snapshot30d = findSnapshot(d30);
-      const snapshot90d = findSnapshot(d90);
-      const snapshot1y = findSnapshot(d1y);
+      const snapshot30d = findSnapshotOnOrBefore(snapshots.slice(0, -1), new Date(`${d30}T00:00:00Z`), {
+        getDate: (snapshot) => snapshot.as_of,
+        maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[30],
+      });
+      const snapshot90d = findSnapshotOnOrBefore(snapshots.slice(0, -1), new Date(`${d90}T00:00:00Z`), {
+        getDate: (snapshot) => snapshot.as_of,
+        maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[90],
+      });
+      const snapshot1y = findSnapshotOnOrBefore(snapshots.slice(0, -1), new Date(`${d1y}T00:00:00Z`), {
+        getDate: (snapshot) => snapshot.as_of,
+        maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[365],
+      });
       const hps30dAgo = snapshot30d ? snapshot30d.holdings / snapshot30d.shares : null;
       const hps90dAgo = snapshot90d ? snapshot90d.holdings / snapshot90d.shares : null;
       const hps1yAgo = snapshot1y ? snapshot1y.holdings / snapshot1y.shares : null;
