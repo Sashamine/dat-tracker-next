@@ -56,11 +56,24 @@ const YAHOO_TICKERS: Record<string, string> = {
   "XTAIF": "XTAO-U.V",   // xTAO Inc (TSX Venture USD) - also trades as XTAO.V in CAD
   // SWC removed - Yahoo TSWCF returns wrong price (~$11 vs actual ~$0.57). Using FALLBACK_STOCKS instead.
   "DCC.AX": "DCC.AX",    // DigitalX - ASX (Yahoo supports .AX suffix, returns AUD)
+  // International tickers not covered by Alpaca or FMP
+  "SATS.L": "SATS.L",    // Satsuma Technology (London Stock Exchange)
+  "CASH3.SA": "CASH3.SA", // Méliuz (B3 Brazil)
+  "377030.KQ": "377030.KQ", // bitmax (KOSDAQ Korea)
+  "PHX.AD": "PHX.AD",    // Phoenix Group (ADX Abu Dhabi) — may not work on Yahoo
+  "BTCT.V": "BTCT.V",    // Bitcoin Treasury Corp (TSX Venture)
+  "AKER": "AKER.OL",     // Aker ASA (Oslo Børs)
 };
 
 // Yahoo tickers that need currency conversion (ticker -> currency)
 const YAHOO_CURRENCIES: Record<string, string> = {
   "DCC.AX": "AUD",
+  "SATS.L": "GBP",
+  "CASH3.SA": "BRL",
+  "377030.KQ": "KRW",
+  "PHX.AD": "AED",
+  "BTCT.V": "CAD",
+  "AKER": "NOK",
 };
 
 // Cache for prices (2 second TTL)
@@ -266,10 +279,11 @@ export async function GET() {
     const marketOpen = isMarketOpen();
     const extendedHours = isExtendedHours();
 
-    const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t));
+    const yahooTickerSet = new Set(Object.keys(YAHOO_TICKERS));
+    const alpacaStockTickers = STOCK_TICKERS.filter(t => !FMP_ONLY_STOCKS.includes(t) && !yahooTickerSet.has(t));
 
     // Parallel fetch - CoinGecko now handles all crypto including HYPE
-    const [cryptoPrices, stockSnapshots, fmpStocks, yahooStocks, marketCaps, forexRates, lstRatesMap] = await Promise.all([
+    const [cryptoPrices, stockSnapshots, fmpStocksExplicit, yahooStocks, marketCaps, forexRates, lstRatesMap] = await Promise.all([
       getBinancePrices(),
       getStockSnapshots(alpacaStockTickers).catch(e => { console.error("Alpaca error:", e.message); return {}; }),
       fetchFMPStocks(FMP_ONLY_STOCKS),
@@ -281,6 +295,23 @@ export async function GET() {
         return new Map();
       }),
     ]);
+
+    // Find Alpaca tickers that returned no data and fetch from FMP as fallback
+    const alpacaMissing = alpacaStockTickers.filter(t => {
+      const snap = (stockSnapshots as Record<string, unknown>)[t];
+      return !snap;
+    });
+    let fmpFallbackStocks: Record<string, unknown> = {};
+    if (alpacaMissing.length > 0) {
+      console.log(`[Prices] Alpaca missing ${alpacaMissing.length} tickers, fetching from FMP:`, alpacaMissing.join(","));
+      fmpFallbackStocks = await fetchFMPStocks(alpacaMissing).catch(e => {
+        console.error("FMP fallback error:", e.message);
+        return {};
+      });
+    }
+
+    // Merge explicit FMP stocks + fallback FMP stocks
+    const fmpStocks = { ...fmpFallbackStocks, ...fmpStocksExplicit };
 
     // Convert LST rates Map to plain object for JSON serialization
     const lstRates: Record<string, { exchangeRate: number; provider: string; fetchedAt: string }> = {};
